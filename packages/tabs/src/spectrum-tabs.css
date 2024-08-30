@@ -37,6 +37,25 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
+:host([emphasized]) #list {
+    --mod-tabs-color-selected: var(
+        --mod-tabs-color-selected-emphasized,
+        var(--spectrum-tabs-color-selected)
+    );
+    --mod-tabs-color-hover: var(
+        --mod-tabs-color-hover-emphasized,
+        var(--spectrum-tabs-color-hover)
+    );
+    --mod-tabs-color-key-focus: var(
+        --mod-tabs-color-key-focus-emphasized,
+        var(--spectrum-tabs-color-key-focus)
+    );
+    --mod-tabs-selection-indicator-color: var(
+        --mod-tabs-selection-indicator-color-emphasized,
+        var(--spectrum-tabs-selection-indicator-color)
+    );
+}
+
 ::slotted([selected]:not([slot])) {
     color: var(
         --highcontrast-tabs-color-selected,
@@ -115,6 +134,13 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([direction^='vertical']) #list {
+    --mod-tabs-list-background-direction: var(
+        --mod-tabs-list-background-direction-vertical,
+        right
+    );
+}
+
 :host([direction^='vertical']) #list,
 :host([direction^='vertical-right']) #list {
     flex-direction: column;
@@ -167,8 +193,48 @@ governing permissions and limitations under the License.
     inset-inline-start: 0;
 }
 
+:host([direction^='vertical-right']) #list {
+    --mod-tabs-list-background-direction: var(
+        --mod-tabs-list-background-direction-vertical-right,
+        left
+    );
+}
+
 :host([direction^='vertical-right']) #list #selection-indicator {
     inset-inline: auto 0;
+}
+
+:host([direction^='vertical']) #list:dir(rtl) {
+    --mod-tabs-list-background-direction: var(
+        --mod-tabs-list-background-direction-vertical,
+        left
+    );
+}
+
+:host([direction^='vertical-right']) #list:dir(rtl) {
+    --mod-tabs-list-background-direction: var(
+        --mod-tabs-list-background-direction-vertical,
+        right
+    );
+}
+
+:host([compact]) #list {
+    --spectrum-tabs-item-height: var(
+        --mod-tabs-item-height-compact,
+        var(--spectrum-tab-item-compact-height-medium)
+    );
+    --spectrum-tabs-top-to-text: var(
+        --mod-tabs-top-to-text-compact,
+        var(--spectrum-tab-item-top-to-text-compact-medium)
+    );
+    --spectrum-tabs-bottom-to-text: var(
+        --mod-tabs-bottom-to-text-compact,
+        var(--spectrum-tab-item-top-to-text-compact-medium)
+    );
+    --spectrum-tabs-top-to-icon: var(
+        --mod-tabs-top-to-icon-compact,
+        var(--spectrum-tab-item-top-to-workflow-icon-compact-medium)
+    );
 }
 
 @media (forced-colors: active) {

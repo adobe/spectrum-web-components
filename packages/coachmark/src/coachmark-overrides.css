@@ -19,8 +19,6 @@
     --spectrum-coachmark-media-min-height: var(
         --system-coach-mark-media-min-height
     );
-    --spectrum-coachmark-border-size: var(--system-coach-mark-border-size);
-    --spectrum-coachmark-border-radius: var(--system-coach-mark-border-radius);
     --spectrum-coachmark-padding: var(--system-coach-mark-padding);
     --spectrum-coachmark-heading-to-action-button: var(
         --system-coach-mark-heading-to-action-button

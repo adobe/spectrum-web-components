@@ -471,8 +471,33 @@ governing permissions and limitations under the License.
             );
 }
 
-:host([static='black']),
 :host([static='white']) {
+    --spectrum-button-focus-indicator-color: var(
+        --mod-static-black-focus-indicator-color,
+        var(--spectrum-static-black-focus-indicator-color)
+    );
+}
+
+:host([static='white'][selected]) {
+    --spectrum-button-content-color-default: var(
+        --mod-button-static-content-color,
+        var(--spectrum-button-static-white-content-color-default)
+    );
+    --spectrum-button-content-color-hover: var(
+        --mod-button-static-content-color,
+        var(--spectrum-button-static-white-content-color-hover)
+    );
+    --spectrum-button-content-color-down: var(
+        --mod-button-static-content-color,
+        var(--spectrum-button-static-white-content-color-down)
+    );
+    --spectrum-button-content-color-focus: var(
+        --mod-button-static-content-color,
+        var(--spectrum-button-static-white-content-color-focus)
+    );
+}
+
+:host([static='black']) {
     --spectrum-button-focus-indicator-color: var(
         --mod-static-black-focus-indicator-color,
         var(--spectrum-static-black-focus-indicator-color)

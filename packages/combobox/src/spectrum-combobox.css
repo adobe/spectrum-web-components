@@ -518,8 +518,16 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet]) {
+    --spectrum-combobox-button-inline-offset: calc(
+        var(--mod-combobox-block-size, var(--spectrum-combobox-block-size)) / 2 -
+            var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size)) /
+            2
+    );
     --mod-picker-button-background-color-quiet: transparent;
     --mod-picker-button-border-color-quiet: transparent;
+    --mod-picker-button-border-color: var(
+        --mod-picker-button-border-color-quiet
+    );
     border-radius: 0;
 }
 

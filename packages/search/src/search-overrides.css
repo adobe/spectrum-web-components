@@ -109,9 +109,6 @@
 }
 
 :host([quiet]) {
-    --spectrum-search-quiet-button-offset: var(
-        --system-search-quiet-quiet-button-offset
-    );
     --spectrum-search-background-color: var(
         --system-search-quiet-background-color
     );

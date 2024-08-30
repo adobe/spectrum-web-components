@@ -49,7 +49,4 @@
     --spectrum-colorhandle-fill-color-disabled: var(
         --system-color-handle-fill-color-disabled
     );
-    --mod-opacity-checkerboard-position: var(
-        --system-color-handle-opacity-checkerboard-position
-    );
 }

@@ -80,30 +80,10 @@
 }
 
 :host([quiet]) {
-    --spectrum-coach-indicator-min-inline-size: var(
-        --system-coach-indicator-quiet-min-inline-size
+    --spectrum-coach-indicator-quiet-ring-diameter-size: var(
+        --system-coach-indicator-quiet-quiet-ring-diameter-size
     );
-    --spectrum-coach-indicator-min-block-size: var(
-        --system-coach-indicator-quiet-min-block-size
-    );
-    --spectrum-coach-indicator-inline-size: var(
-        --system-coach-indicator-quiet-inline-size
-    );
-    --spectrum-coach-indicator-block-size: var(
-        --system-coach-indicator-quiet-block-size
-    );
-    --spectrum-coach-indicator-ring-inline-size: var(
-        --system-coach-indicator-quiet-ring-inline-size
-    );
-    --spectrum-coach-indicator-ring-block-size: var(
-        --system-coach-indicator-quiet-ring-block-size
-    );
-    --spectrum-coach-indicator-top: var(--system-coach-indicator-quiet-top);
-    --spectrum-coach-indicator-left: var(--system-coach-indicator-quiet-left);
     --spectrum-coach-indicator-animation-name: var(
         --system-coach-indicator-quiet-animation-name
-    );
-    --spectrum-coach-indicator-inner-animation-delay-multiple: var(
-        --system-coach-indicator-quiet-inner-animation-delay-multiple
     );
 }

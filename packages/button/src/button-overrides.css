@@ -704,17 +704,17 @@
     --spectrum-button-background-color-focus: var(
         --system-button-static-white-selected-background-color-focus
     );
-    --spectrum-button-content-color-default: var(
-        --system-button-static-white-selected-content-color-default
+    --spectrum-button-static-white-content-color-default: var(
+        --system-button-static-white-selected-static-white-content-color-default
     );
-    --spectrum-button-content-color-hover: var(
-        --system-button-static-white-selected-content-color-hover
+    --spectrum-button-static-white-content-color-hover: var(
+        --system-button-static-white-selected-static-white-content-color-hover
     );
-    --spectrum-button-content-color-down: var(
-        --system-button-static-white-selected-content-color-down
+    --spectrum-button-static-white-content-color-down: var(
+        --system-button-static-white-selected-static-white-content-color-down
     );
-    --spectrum-button-content-color-focus: var(
-        --system-button-static-white-selected-content-color-focus
+    --spectrum-button-static-white-content-color-focus: var(
+        --system-button-static-white-selected-static-white-content-color-focus
     );
     --spectrum-button-background-color-disabled: var(
         --system-button-static-white-selected-background-color-disabled

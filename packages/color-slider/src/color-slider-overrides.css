@@ -27,7 +27,4 @@
     --spectrum-color-slider-checkerboard-light-color: var(
         --system-color-slider-checkerboard-light-color
     );
-    --mod-colorhandle-hitarea-border-radius: var(
-        --system-color-slider-colorhandle-hitarea-border-radius
-    );
 }

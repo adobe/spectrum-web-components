@@ -203,7 +203,8 @@ governing permissions and limitations under the License.
         --highcontrast-table-selected-row-text-color
     );
     --spectrum-table-cell-background-color: var(
-        --spectrum-table-selected-cell-background-color
+        --highcontrast-table-selected-row-background-color,
+        var(--spectrum-table-selected-cell-background-color)
     );
 }
 
@@ -216,7 +217,8 @@ governing permissions and limitations under the License.
         --highcontrast-table-selected-row-text-color-focus
     );
     --spectrum-table-cell-background-color: var(
-        --spectrum-table-selected-cell-background-color-focus
+        --highcontrast-table-selected-row-background-color-focus,
+        var(--spectrum-table-selected-cell-background-color-focus)
     );
 }
 
@@ -498,7 +500,8 @@ governing permissions and limitations under the License.
             --highcontrast-table-selected-row-text-color-focus
         );
         --spectrum-table-cell-background-color: var(
-            --spectrum-table-selected-cell-background-color-focus
+            --highcontrast-table-selected-row-background-color-focus,
+            var(--spectrum-table-selected-cell-background-color-focus)
         );
     }
 

@@ -21,6 +21,10 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    --mod-colorhandle-hitarea-border-radius: var(
+        --mod-color-slider-handle-hitarea-border-radius,
+        0px
+    );
     cursor: default;
     -webkit-user-select: none;
     user-select: none;

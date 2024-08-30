@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --mod-opacity-checkerboard-position: 50%;
     z-index: 1;
     box-sizing: border-box;
     inline-size: var(--mod-colorhandle-size, var(--spectrum-colorhandle-size));

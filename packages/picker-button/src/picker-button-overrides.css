@@ -115,24 +115,6 @@
     );
 }
 
-:host([quiet]) .root {
-    --spectrum-picker-button-background-color: var(
-        --system-picker-button-quiet-background-color
-    );
-    --spectrum-picker-button-background-color-hover: var(
-        --system-picker-button-quiet-background-color-hover
-    );
-    --spectrum-picker-button-background-color-down: var(
-        --system-picker-button-quiet-background-color-down
-    );
-    --spectrum-picker-button-background-color-key-focus: var(
-        --system-picker-button-quiet-background-color-key-focus
-    );
-    --spectrum-picker-button-border-color: var(
-        --system-picker-button-quiet-border-color
-    );
-}
-
 :host([size='s']) .root {
     --spectrum-picker-button-height: var(--system-picker-button-size-s-height);
     --spectrum-picker-button-width: var(--system-picker-button-size-s-width);

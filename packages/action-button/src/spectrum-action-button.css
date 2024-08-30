@@ -16,6 +16,18 @@ governing permissions and limitations under the License.
         var(--spectrum-actionbutton-border-radius) +
             var(--spectrum-actionbutton-focus-indicator-gap)
     );
+    --spectrum-actionbutton-edge-to-visual: calc(
+        var(--spectrum-actionbutton-edge-to-visual-size) -
+            var(--spectrum-actionbutton-border-width)
+    );
+    --spectrum-actionbutton-edge-to-text: calc(
+        var(--spectrum-actionbutton-edge-to-visual-size) -
+            var(--spectrum-actionbutton-border-width)
+    );
+    --spectrum-actionbutton-edge-to-visual-only: calc(
+        var(--spectrum-actionbutton-edge-to-visual-size) -
+            var(--spectrum-actionbutton-border-width)
+    );
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
@@ -436,6 +448,81 @@ governing permissions and limitations under the License.
                 --mod-actionbutton-border-width,
                 var(--spectrum-actionbutton-border-width)
             )
+    );
+}
+
+:host([emphasized]) {
+    --spectrum-actionbutton-background-color-default: var(
+        --mod-actionbutton-background-color-default-selected-emphasized,
+        var(
+            --spectrum-actionbutton-background-color-default-selected-emphasized
+        )
+    );
+    --spectrum-actionbutton-background-color-hover: var(
+        --mod-actionbutton-background-color-hover-selected-emphasized,
+        var(--spectrum-actionbutton-background-color-hover-selected-emphasized)
+    );
+    --spectrum-actionbutton-background-color-down: var(
+        --mod-actionbutton-background-color-down-selected-emphasized,
+        var(--spectrum-actionbutton-background-color-down-selected-emphasized)
+    );
+    --spectrum-actionbutton-background-color-focus: var(
+        --mod-actionbutton-background-color-focus-selected-emphasized,
+        var(--spectrum-actionbutton-background-color-focus-selected-emphasized)
+    );
+    --spectrum-actionbutton-content-color-default: var(
+        --mod-actionbutton-content-color-default-selected-emphasized,
+        var(--spectrum-actionbutton-content-color-default-selected-emphasized)
+    );
+    --spectrum-actionbutton-content-color-hover: var(
+        --mod-actionbutton-content-color-hover-selected-emphasized,
+        var(--spectrum-actionbutton-content-color-hover-selected-emphasized)
+    );
+    --spectrum-actionbutton-content-color-down: var(
+        --mod-actionbutton-content-color-down-selected-emphasized,
+        var(--spectrum-actionbutton-content-color-down-selected-emphasized)
+    );
+    --spectrum-actionbutton-content-color-focus: var(
+        --mod-actionbutton-content-color-focus-selected-emphasized,
+        var(--spectrum-actionbutton-content-color-focus-selected-emphasized)
+    );
+}
+
+:host([static='black'][selected]) {
+    --spectrum-actionbutton-content-color-default: var(
+        --mod-actionbutton-static-content-color,
+        var(--spectrum-actionbutton-static-black-content-color)
+    );
+    --spectrum-actionbutton-content-color-hover: var(
+        --mod-actionbutton-static-content-color,
+        var(--spectrum-actionbutton-static-black-content-color)
+    );
+    --spectrum-actionbutton-content-color-down: var(
+        --mod-actionbutton-static-content-color,
+        var(--spectrum-actionbutton-static-black-content-color)
+    );
+    --spectrum-actionbutton-content-color-focus: var(
+        --mod-actionbutton-static-content-color,
+        var(--spectrum-actionbutton-static-black-content-color)
+    );
+}
+
+:host([static='white'][selected]) {
+    --spectrum-actionbutton-content-color-default: var(
+        --mod-actionbutton-static-content-color,
+        var(--spectrum-actionbutton-static-white-content-color)
+    );
+    --spectrum-actionbutton-content-color-hover: var(
+        --mod-actionbutton-static-content-color,
+        var(--spectrum-actionbutton-static-white-content-color)
+    );
+    --spectrum-actionbutton-content-color-down: var(
+        --mod-actionbutton-static-content-color,
+        var(--spectrum-actionbutton-static-white-content-color)
+    );
+    --spectrum-actionbutton-content-color-focus: var(
+        --mod-actionbutton-static-content-color,
+        var(--spectrum-actionbutton-static-white-content-color)
     );
 }
 

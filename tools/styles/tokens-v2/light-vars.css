@@ -513,5 +513,7 @@
     --spectrum-swatch-border-color: rgba(0, 0, 0, 0.51);
 
     --spectrum-blue-800-rgb: 75, 117, 255;
+    --spectrum-blue-900-rgb: 59, 99, 251;
     --spectrum-gray-800-rgb: 41, 41, 41;
+    --spectrum-gray-900-rgb: 19, 19, 19;
 }

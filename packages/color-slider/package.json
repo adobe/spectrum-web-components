@@ -70,7 +70,7 @@
         "@spectrum-web-components/shared": "^0.44.0"
     },
     "devDependencies": {
-        "@spectrum-css/colorslider": "^7.0.0-s2-foundations.12"
+        "@spectrum-css/colorslider": "^7.0.0-s2-foundations.13"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

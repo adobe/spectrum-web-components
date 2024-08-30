@@ -349,18 +349,6 @@
     --system-action-button-edge-to-hold-icon: var(
         --spectrum-action-button-edge-to-hold-icon-medium
     );
-    --system-action-button-edge-to-visual: calc(
-        var(--spectrum-component-edge-to-visual-100) -
-            var(--system-action-button-border-width)
-    );
-    --system-action-button-edge-to-text: calc(
-        var(--spectrum-component-edge-to-text-100) -
-            var(--system-action-button-border-width)
-    );
-    --system-action-button-edge-to-visual-only: calc(
-        var(--spectrum-component-edge-to-visual-only-100) -
-            var(--system-action-button-border-width)
-    );
     --system-action-button-content-color-default: var(
         --spectrum-neutral-content-color-default
     );
@@ -382,6 +370,52 @@
     --system-action-button-focus-indicator-color: var(
         --spectrum-focus-indicator-color
     );
+    --system-action-button-background-color-default-selected: var(
+        --spectrum-neutral-background-color-selected-default
+    );
+    --system-action-button-background-color-hover-selected: var(
+        --spectrum-neutral-background-color-selected-hover
+    );
+    --system-action-button-background-color-down-selected: var(
+        --spectrum-neutral-background-color-selected-down
+    );
+    --system-action-button-background-color-focus-selected: var(
+        --spectrum-neutral-background-color-selected-key-focus
+    );
+    --system-action-button-content-color-default-selected: var(
+        --spectrum-gray-50
+    );
+    --system-action-button-content-color-hover-selected: var(
+        --spectrum-gray-50
+    );
+    --system-action-button-content-color-down-selected: var(--spectrum-gray-50);
+    --system-action-button-content-color-focus-selected: var(
+        --spectrum-gray-50
+    );
+    --system-action-button-background-color-default-selected-emphasized: var(
+        --spectrum-accent-background-color-default
+    );
+    --system-action-button-background-color-hover-selected-emphasized: var(
+        --spectrum-accent-background-color-hover
+    );
+    --system-action-button-background-color-down-selected-emphasized: var(
+        --spectrum-accent-background-color-down
+    );
+    --system-action-button-background-color-focus-selected-emphasized: var(
+        --spectrum-accent-background-color-key-focus
+    );
+    --system-action-button-content-color-default-selected-emphasized: var(
+        --spectrum-white
+    );
+    --system-action-button-content-color-hover-selected-emphasized: var(
+        --spectrum-white
+    );
+    --system-action-button-content-color-down-selected-emphasized: var(
+        --spectrum-white
+    );
+    --system-action-button-content-color-focus-selected-emphasized: var(
+        --spectrum-white
+    );
     --system-action-button-quiet-background-color-default: transparent;
     --system-action-button-quiet-background-color-hover: var(
         --spectrum-gray-300
@@ -398,38 +432,6 @@
     --system-action-button-quiet-border-color-focus: transparent;
     --system-action-button-quiet-background-color-disabled: transparent;
     --system-action-button-quiet-border-color-disabled: transparent;
-    --system-action-button-selected-background-color-default: var(
-        --mod-actionbutton-background-color-default-selected,
-        var(--spectrum-neutral-background-color-selected-default)
-    );
-    --system-action-button-selected-background-color-hover: var(
-        --mod-actionbutton-background-color-hover-selected,
-        var(--spectrum-neutral-background-color-selected-hover)
-    );
-    --system-action-button-selected-background-color-down: var(
-        --mod-actionbutton-background-color-down-selected,
-        var(--spectrum-neutral-background-color-selected-down)
-    );
-    --system-action-button-selected-background-color-focus: var(
-        --mod-actionbutton-background-color-focus-selected,
-        var(--spectrum-neutral-background-color-selected-key-focus)
-    );
-    --system-action-button-selected-content-color-default: var(
-        --mod-actionbutton-content-color-default-selected,
-        var(--spectrum-gray-50)
-    );
-    --system-action-button-selected-content-color-hover: var(
-        --mod-actionbutton-content-color-hover-selected,
-        var(--spectrum-gray-50)
-    );
-    --system-action-button-selected-content-color-down: var(
-        --mod-actionbutton-content-color-down-selected,
-        var(--spectrum-gray-50)
-    );
-    --system-action-button-selected-content-color-focus: var(
-        --mod-actionbutton-content-color-focus-selected,
-        var(--spectrum-gray-50)
-    );
     --system-action-button-selected-border-color-default: transparent;
     --system-action-button-selected-border-color-hover: transparent;
     --system-action-button-selected-border-color-down: transparent;
@@ -438,38 +440,6 @@
         --spectrum-disabled-background-color
     );
     --system-action-button-selected-border-color-disabled: transparent;
-    --system-action-button-selected-emphasized-background-color-default: var(
-        --mod-actionbutton-background-color-default-selected-emphasized,
-        var(--spectrum-accent-background-color-default)
-    );
-    --system-action-button-selected-emphasized-background-color-hover: var(
-        --mod-actionbutton-background-color-hover-selected-emphasized,
-        var(--spectrum-accent-background-color-hover)
-    );
-    --system-action-button-selected-emphasized-background-color-down: var(
-        --mod-actionbutton-background-color-down-selected-emphasized,
-        var(--spectrum-accent-background-color-down)
-    );
-    --system-action-button-selected-emphasized-background-color-focus: var(
-        --mod-actionbutton-background-color-focus-selected-emphasized,
-        var(--spectrum-accent-background-color-key-focus)
-    );
-    --system-action-button-selected-emphasized-content-color-default: var(
-        --mod-actionbutton-content-color-default-selected-emphasized,
-        var(--spectrum-white)
-    );
-    --system-action-button-selected-emphasized-content-color-hover: var(
-        --mod-actionbutton-content-color-hover-selected-emphasized,
-        var(--spectrum-white)
-    );
-    --system-action-button-selected-emphasized-content-color-down: var(
-        --mod-actionbutton-content-color-down-selected-emphasized,
-        var(--spectrum-white)
-    );
-    --system-action-button-selected-emphasized-content-color-focus: var(
-        --mod-actionbutton-content-color-focus-selected-emphasized,
-        var(--spectrum-white)
-    );
     --system-action-button-size-xs-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-50) * 2 +
             var(--spectrum-workflow-icon-size-50)
@@ -485,17 +455,8 @@
     --system-action-button-size-xs-edge-to-hold-icon: var(
         --spectrum-action-button-edge-to-hold-icon-extra-small
     );
-    --system-action-button-size-xs-edge-to-visual: calc(
-        var(--spectrum-component-edge-to-visual-50) -
-            var(--system-action-button-border-width)
-    );
-    --system-action-button-size-xs-edge-to-text: calc(
-        var(--spectrum-component-edge-to-text-50) -
-            var(--system-action-button-border-width)
-    );
-    --system-action-button-size-xs-edge-to-visual-only: calc(
-        var(--spectrum-component-edge-to-visual-only-50) -
-            var(--system-action-button-border-width)
+    --system-action-button-size-xs-edge-to-visual-size: var(
+        --spectrum-component-edge-to-visual-50
     );
     --system-action-button-size-s-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-75) * 2 +
@@ -512,17 +473,8 @@
     --system-action-button-size-s-edge-to-hold-icon: var(
         --spectrum-action-button-edge-to-hold-icon-small
     );
-    --system-action-button-size-s-edge-to-visual: calc(
-        var(--spectrum-component-edge-to-visual-75) -
-            var(--system-action-button-border-width)
-    );
-    --system-action-button-size-s-edge-to-text: calc(
-        var(--spectrum-component-edge-to-text-75) -
-            var(--system-action-button-border-width)
-    );
-    --system-action-button-size-s-edge-to-visual-only: calc(
-        var(--spectrum-component-edge-to-visual-only-75) -
-            var(--system-action-button-border-width)
+    --system-action-button-size-s-edge-to-visual-size: var(
+        --spectrum-component-edge-to-visual-75
     );
     --system-action-button-size-m-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-100) * 2 +
@@ -539,17 +491,11 @@
     --system-action-button-size-m-edge-to-hold-icon: var(
         --spectrum-action-button-edge-to-hold-icon-medium
     );
-    --system-action-button-size-m-edge-to-visual: calc(
-        var(--spectrum-component-edge-to-visual-100) -
-            var(--system-action-button-border-width)
+    --system-action-button-edge-to-visual-size: var(
+        --spectrum-component-edge-to-visual-100
     );
-    --system-action-button-size-m-edge-to-text: calc(
-        var(--spectrum-component-edge-to-text-100) -
-            var(--system-action-button-border-width)
-    );
-    --system-action-button-size-m-edge-to-visual-only: calc(
-        var(--spectrum-component-edge-to-visual-only-100) -
-            var(--system-action-button-border-width)
+    --system-action-button-size-m-edge-to-visual-size: var(
+        --spectrum-component-edge-to-visual-100
     );
     --system-action-button-size-l-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-200) * 2 +
@@ -566,17 +512,8 @@
     --system-action-button-size-l-edge-to-hold-icon: var(
         --spectrum-action-button-edge-to-hold-icon-large
     );
-    --system-action-button-size-l-edge-to-visual: calc(
-        var(--spectrum-component-edge-to-visual-200) -
-            var(--system-action-button-border-width)
-    );
-    --system-action-button-size-l-edge-to-text: calc(
-        var(--spectrum-component-edge-to-text-200) -
-            var(--system-action-button-border-width)
-    );
-    --system-action-button-size-l-edge-to-visual-only: calc(
-        var(--spectrum-component-edge-to-visual-only-200) -
-            var(--system-action-button-border-width)
+    --system-action-button-size-l-edge-to-visual-size: var(
+        --spectrum-component-edge-to-visual-200
     );
     --system-action-button-size-xl-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-300) * 2 +
@@ -593,28 +530,9 @@
     --system-action-button-size-xl-edge-to-hold-icon: var(
         --spectrum-action-button-edge-to-hold-icon-extra-large
     );
-    --system-action-button-size-xl-edge-to-visual: calc(
-        var(--spectrum-component-edge-to-visual-300) -
-            var(--system-action-button-border-width)
+    --system-action-button-size-xl-edge-to-visual-size: var(
+        --spectrum-component-edge-to-visual-300
     );
-    --system-action-button-size-xl-edge-to-text: calc(
-        var(--spectrum-component-edge-to-text-300) -
-            var(--system-action-button-border-width)
-    );
-    --system-action-button-size-xl-edge-to-visual-only: calc(
-        var(--spectrum-component-edge-to-visual-only-300) -
-            var(--system-action-button-border-width)
-    );
-    --system-action-button-static-black-quiet-border-color-default: transparent;
-    --system-action-button-static-white-quiet-border-color-default: transparent;
-    --system-action-button-static-black-quiet-border-color-hover: transparent;
-    --system-action-button-static-white-quiet-border-color-hover: transparent;
-    --system-action-button-static-black-quiet-border-color-down: transparent;
-    --system-action-button-static-white-quiet-border-color-down: transparent;
-    --system-action-button-static-black-quiet-border-color-focus: transparent;
-    --system-action-button-static-white-quiet-border-color-focus: transparent;
-    --system-action-button-static-black-quiet-border-color-disabled: transparent;
-    --system-action-button-static-white-quiet-border-color-disabled: transparent;
     --system-action-button-static-black-background-color-default: var(
         --spectrum-transparent-black-200
     );
@@ -665,21 +583,8 @@
     --system-action-button-static-black-selected-background-color-focus: var(
         --spectrum-transparent-black-900
     );
-    --system-action-button-static-black-selected-content-color-default: var(
-        --mod-actionbutton-static-content-color,
-        var(--spectrum-white)
-    );
-    --system-action-button-static-black-selected-content-color-hover: var(
-        --mod-actionbutton-static-content-color,
-        var(--spectrum-white)
-    );
-    --system-action-button-static-black-selected-content-color-down: var(
-        --mod-actionbutton-static-content-color,
-        var(--spectrum-white)
-    );
-    --system-action-button-static-black-selected-content-color-focus: var(
-        --mod-actionbutton-static-content-color,
-        var(--spectrum-white)
+    --system-action-button-static-black-selected-static-black-content-color: var(
+        --spectrum-white
     );
     --system-action-button-static-black-selected-background-color-disabled: var(
         --spectrum-disabled-static-black-background-color
@@ -735,26 +640,23 @@
     --system-action-button-static-white-selected-background-color-focus: var(
         --spectrum-transparent-white-900
     );
-    --system-action-button-static-white-selected-content-color-default: var(
-        --mod-actionbutton-static-content-color,
-        var(--spectrum-black)
-    );
-    --system-action-button-static-white-selected-content-color-hover: var(
-        --mod-actionbutton-static-content-color,
-        var(--spectrum-black)
-    );
-    --system-action-button-static-white-selected-content-color-down: var(
-        --mod-actionbutton-static-content-color,
-        var(--spectrum-black)
-    );
-    --system-action-button-static-white-selected-content-color-focus: var(
-        --mod-actionbutton-static-content-color,
-        var(--spectrum-black)
+    --system-action-button-static-white-selected-static-white-content-color: var(
+        --spectrum-black
     );
     --system-action-button-static-white-selected-background-color-disabled: var(
         --spectrum-disabled-static-white-background-color
     );
     --system-action-button-static-white-selected-border-color-disabled: transparent;
+    --system-action-button-static-black-quiet-border-color-default: transparent;
+    --system-action-button-static-white-quiet-border-color-default: transparent;
+    --system-action-button-static-black-quiet-border-color-hover: transparent;
+    --system-action-button-static-white-quiet-border-color-hover: transparent;
+    --system-action-button-static-black-quiet-border-color-down: transparent;
+    --system-action-button-static-white-quiet-border-color-down: transparent;
+    --system-action-button-static-black-quiet-border-color-focus: transparent;
+    --system-action-button-static-white-quiet-border-color-focus: transparent;
+    --system-action-button-static-black-quiet-border-color-disabled: transparent;
+    --system-action-button-static-white-quiet-border-color-disabled: transparent;
 }
 
 :host,
@@ -1585,21 +1487,17 @@
     --system-button-static-white-selected-background-color-focus: var(
         --spectrum-transparent-white-900
     );
-    --system-button-static-white-selected-content-color-default: var(
-        --mod-button-static-content-color,
-        var(--spectrum-black)
+    --system-button-static-white-selected-static-white-content-color-default: var(
+        --spectrum-black
     );
-    --system-button-static-white-selected-content-color-hover: var(
-        --mod-button-static-content-color,
-        var(--spectrum-black)
+    --system-button-static-white-selected-static-white-content-color-hover: var(
+        --spectrum-black
     );
-    --system-button-static-white-selected-content-color-down: var(
-        --mod-button-static-content-color,
-        var(--spectrum-black)
+    --system-button-static-white-selected-static-white-content-color-down: var(
+        --spectrum-black
     );
-    --system-button-static-white-selected-content-color-focus: var(
-        --mod-button-static-content-color,
-        var(--spectrum-black)
+    --system-button-static-white-selected-static-white-content-color-focus: var(
+        --spectrum-black
     );
     --system-button-static-white-selected-background-color-disabled: var(
         --spectrum-disabled-static-white-background-color
@@ -2178,6 +2076,8 @@
     --system-card-preview-background-color-hover: var(--spectrum-gray-300);
     --system-card-horizontal-body-padding: var(--spectrum-spacing-300);
     --system-card-horizontal-preview-padding: var(--spectrum-spacing-200);
+    --system-card-content-margin-top-quiet: var(--spectrum-spacing-100);
+    --system-card-minimum-width-quiet: var(--spectrum-card-minimum-width);
     --system-card-light-selected-background-color-rgb: var(
         --spectrum-blue-900-rgb
     );
@@ -2186,22 +2086,6 @@
     );
     --system-card-dark-selected-background-color-rgb: var(
         --spectrum-blue-500-rgb
-    );
-    --system-card-quiet-content-margin-top: var(
-        --mod-card-content-margin-top-quiet,
-        var(--spectrum-spacing-100)
-    );
-    --system-card-gallery-content-margin-top: var(
-        --mod-card-content-margin-top-quiet,
-        var(--spectrum-spacing-100)
-    );
-    --system-card-quiet-minimum-width: var(
-        --mod-card-minimum-width-quiet,
-        var(--spectrum-card-minimum-width)
-    );
-    --system-card-gallery-minimum-width: var(
-        --mod-card-minimum-width-quiet,
-        var(--spectrum-card-minimum-width)
     );
 }
 
@@ -2281,8 +2165,7 @@
         var(--spectrum-transparent-white-300)
     );
     --system-clear-button-disabled-icon-color: var(
-        --mod-clear-button-icon-color-disabled,
-        var(--spectrum-disabled-content-color)
+        --spectrum-disabled-content-color
     );
     --system-clear-button-disabled-icon-color-hover: var(
         --spectrum-clear-button-icon-color-hover-disabled,
@@ -2292,10 +2175,7 @@
         --spectrum-clear-button-icon-color-down-disabled,
         var(--spectrum-disabled-content-color)
     );
-    --system-clear-button-disabled-background-color: var(
-        --mod-clear-button-background-color-disabled,
-        transparent
-    );
+    --system-clear-button-disabled-background-color: transparent;
 }
 
 :host,
@@ -2450,51 +2330,10 @@
     --system-coach-indicator-animation-keyframe-100-scale: 2;
     --system-coach-indicator-animation-keyframe-100-opacity: 0;
     --system-coach-indicator-quiet-animation-keyframe-0-scale: 0.8;
-    --system-coach-indicator-quiet-min-inline-size: calc(
-        var(
-                --mod-coach-indicator-quiet-ring-diameter,
-                var(--spectrum-coach-indicator-quiet-ring-diameter)
-            ) * 2.75
-    );
-    --system-coach-indicator-quiet-min-block-size: calc(
-        var(
-                --mod-coach-indicator-quiet-ring-diameter,
-                var(--spectrum-coach-indicator-quiet-ring-diameter)
-            ) * 2.75
-    );
-    --system-coach-indicator-quiet-inline-size: calc(
-        var(
-                --mod-coach-indicator-quiet-ring-diameter,
-                var(--spectrum-coach-indicator-quiet-ring-diameter)
-            ) * 2.75
-    );
-    --system-coach-indicator-quiet-block-size: calc(
-        var(
-                --mod-coach-indicator-quiet-ring-diameter,
-                var(--spectrum-coach-indicator-quiet-ring-diameter)
-            ) * 2.75
-    );
-    --system-coach-indicator-quiet-ring-inline-size: var(
-        --mod-coach-indicator-quiet-ring-diameter,
-        var(--spectrum-coach-indicator-quiet-ring-diameter)
-    );
-    --system-coach-indicator-quiet-ring-block-size: var(
-        --mod-coach-indicator-quiet-ring-diameter,
-        var(--spectrum-coach-indicator-quiet-ring-diameter)
-    );
-    --system-coach-indicator-quiet-top: calc(
-        var(--mod-coach-indicator-min-inline-size) / 3 -
-            var(--system-coach-indicator-ring-border-size)
-    );
-    --system-coach-indicator-quiet-left: calc(
-        var(--mod-coach-indicator-min-inline-size) / 3 -
-            var(--system-coach-indicator-ring-border-size)
+    --system-coach-indicator-quiet-quiet-ring-diameter-size: var(
+        --spectrum-coach-indicator-quiet-ring-diameter
     );
     --system-coach-indicator-quiet-animation-name: pulse-quiet;
-    --system-coach-indicator-quiet-inner-animation-delay-multiple: var(
-        --mod-coach-indicator-quiet-animation-ring-inner-delay-multiple,
-        var(--system-coach-indicator-quiet-animation-ring-inner-delay-multiple)
-    );
 }
 
 :host,
@@ -2506,8 +2345,6 @@
     --system-coach-mark-media-min-height: var(
         --spectrum-coach-mark-media-minimum-height
     );
-    --system-coach-mark-border-size: var(--mod-popover-border-width);
-    --system-coach-mark-border-radius: var(--mod-popover-corner-radius);
     --system-coach-mark-padding: var(--spectrum-coach-mark-edge-to-content);
     --system-coach-mark-heading-to-action-button: var(--spectrum-spacing-300);
     --system-coach-mark-header-to-body: var(--spectrum-spacing-200);
@@ -2611,7 +2448,6 @@
     --system-color-handle-fill-color-disabled: var(
         --spectrum-disabled-background-color
     );
-    --system-color-handle-opacity-checkerboard-position: 50%;
 }
 
 :host,
@@ -2669,10 +2505,6 @@
     );
     --system-color-slider-checkerboard-light-color: var(
         --spectrum-opacity-checkerboard-square-light
-    );
-    --system-color-slider-colorhandle-hitarea-border-radius: var(
-        --mod-color-slider-handle-hitarea-border-radius,
-        0px
     );
 }
 
@@ -2764,111 +2596,6 @@
     );
     --system-combobox-border-color-invalid-key-focus: var(
         --spectrum-negative-border-color-key-focus
-    );
-    --system-combobox-textfield-focus-indicator-gap: var(
-        --mod-combobox-focus-indicator-gap,
-        var(--system-combobox-focus-indicator-gap)
-    );
-    --system-combobox-textfield-focus-indicator-width: var(
-        --mod-combobox-focus-indicator-thickness,
-        var(--system-combobox-focus-indicator-thickness)
-    );
-    --system-combobox-textfield-focus-indicator-color: var(
-        --mod-combobox-focus-indicator-color,
-        var(--system-combobox-focus-indicator-color)
-    );
-    --system-combobox-textfield-background-color: var(
-        --mod-combobox-background-color-default
-    );
-    --system-combobox-textfield-background-color-disabled: var(
-        --mod-combobox-background-color-disabled
-    );
-    --system-combobox-textfield-font-family: var(--mod-combobox-font-family);
-    --system-combobox-textfield-font-weight: var(--mod-combobox-font-weight);
-    --system-combobox-textfield-text-color-default: var(
-        --mod-combobox-font-color-default
-    );
-    --system-combobox-textfield-text-color-hover: var(
-        --mod-combobox-font-color-hover
-    );
-    --system-combobox-textfield-text-color-focus: var(
-        --mod-combobox-font-color-focus
-    );
-    --system-combobox-textfield-text-color-focus-hover: var(
-        --mod-combobox-font-color-focus-hover
-    );
-    --system-combobox-textfield-text-color-keyboard-focus: var(
-        --mod-combobox-font-color-key-focus
-    );
-    --system-combobox-textfield-text-color-disabled: var(
-        --mod-combobox-font-color-disabled
-    );
-    --system-combobox-textfield-border-width: var(
-        --mod-combobox-border-width,
-        var(--system-combobox-border-width)
-    );
-    --system-combobox-textfield-border-color: var(
-        --mod-combobox-border-color-default,
-        var(--system-combobox-border-color-default)
-    );
-    --system-combobox-textfield-border-color-disabled: var(
-        --mod-combobox-border-color-disabled
-    );
-    --system-combobox-textfield-border-color-focus: var(
-        --mod-combobox-border-color-focus,
-        var(--system-combobox-border-color-focus)
-    );
-    --system-combobox-textfield-border-color-focus-hover: var(
-        --mod-combobox-border-color-focus-hover,
-        var(--system-combobox-border-color-focus-hover)
-    );
-    --system-combobox-textfield-border-color-hover: var(
-        --mod-combobox-border-color-hover,
-        var(--system-combobox-border-color-hover)
-    );
-    --system-combobox-textfield-border-color-keyboard-focus: var(
-        --mod-combobox-border-color-key-focus,
-        var(--system-combobox-border-color-key-focus)
-    );
-    --system-combobox-textfield-border-color-invalid-default: var(
-        --mod-combobox-border-color-invalid-default,
-        var(--system-combobox-border-color-invalid-default)
-    );
-    --system-combobox-textfield-border-color-invalid-hover: var(
-        --mod-combobox-border-color-invalid-hover,
-        var(--system-combobox-border-color-invalid-hover)
-    );
-    --system-combobox-textfield-border-color-invalid-focus: var(
-        --mod-combobox-border-color-invalid-focus,
-        var(--system-combobox-border-color-invalid-focus)
-    );
-    --system-combobox-textfield-border-color-invalid-focus-hover: var(
-        --mod-combobox-border-color-invalid-focus-hover,
-        var(--system-combobox-border-color-invalid-focus-hover)
-    );
-    --system-combobox-textfield-border-color-invalid-keyboard-focus: var(
-        --mod-combobox-border-color-invalid-key-focus,
-        var(--system-combobox-border-color-invalid-key-focus)
-    );
-    --system-combobox-textfield-icon-color-invalid: var(
-        --mod-combobox-alert-icon-color
-    );
-    --system-combobox-picker-button-border-width: var(
-        --mod-combobox-border-width,
-        var(--system-combobox-border-width)
-    );
-    --system-combobox-picker-button-border-color: var(
-        --mod-combobox-border-color-default,
-        var(--system-combobox-border-color-default)
-    );
-    --system-combobox-picker-button-background-color: var(
-        --mod-combobox-background-color-default
-    );
-    --system-combobox-picker-button-background-color-disabled: var(
-        --mod-combobox-background-color-disabled
-    );
-    --system-combobox-picker-button-font-color-disabled: var(
-        --mod-combobox-font-color-disabled
     );
     --system-combobox-size-s-block-size: var(--spectrum-component-height-75);
     --system-combobox-size-s-icon-size: var(--spectrum-workflow-icon-size-75);
@@ -2990,15 +2717,6 @@
     );
     --system-combobox-quiet-spacing-label-to: var(
         --spectrum-field-label-to-component-quiet-medium
-    );
-    --system-combobox-quiet-button-inline-offset: calc(
-        var(--mod-combobox-block-size, var(--system-combobox-block-size)) / 2 -
-            var(--mod-combobox-icon-size, var(--system-combobox-icon-size)) / 2
-    );
-    --system-combobox-quiet-picker-button-background-color-quiet: transparent;
-    --system-combobox-quiet-picker-button-border-color-quiet: transparent;
-    --system-combobox-quiet-picker-button-border-color: var(
-        --system-combobox-quiet-picker-button-border-color-quiet
     );
     --system-combobox-quiet-size-s-spacing-label-to: var(
         --spectrum-field-label-to-component-quiet-small
@@ -3445,108 +3163,87 @@
     --system-ui-icon-chevron-right-50-icon-size: var(
         --spectrum-chevron-icon-size-50
     );
+    --system-ui-icon-chevron-down-50-icon-size: var(
+        --spectrum-chevron-icon-size-50
+    );
     --system-ui-icon-chevron-right-75-icon-size: var(
+        --spectrum-chevron-icon-size-75
+    );
+    --system-ui-icon-chevron-down-75-icon-size: var(
         --spectrum-chevron-icon-size-75
     );
     --system-ui-icon-chevron-right-100-icon-size: var(
         --spectrum-chevron-icon-size-100
     );
+    --system-ui-icon-chevron-down-100-icon-size: var(
+        --spectrum-chevron-icon-size-100
+    );
     --system-ui-icon-chevron-right-200-icon-size: var(
+        --spectrum-chevron-icon-size-200
+    );
+    --system-ui-icon-chevron-down-200-icon-size: var(
         --spectrum-chevron-icon-size-200
     );
     --system-ui-icon-chevron-right-300-icon-size: var(
         --spectrum-chevron-icon-size-300
     );
+    --system-ui-icon-chevron-down-300-icon-size: var(
+        --spectrum-chevron-icon-size-300
+    );
     --system-ui-icon-chevron-right-400-icon-size: var(
+        --spectrum-chevron-icon-size-400
+    );
+    --system-ui-icon-chevron-down-400-icon-size: var(
         --spectrum-chevron-icon-size-400
     );
     --system-ui-icon-chevron-right-500-icon-size: var(
         --spectrum-chevron-icon-size-500
     );
-    --system-ui-icon-chevron-down-50-icon-size: var(
-        --spectrum-chevron-icon-size-50
-    );
-    --system-ui-icon-chevron-down-50-icon-transform: rotate(90deg);
-    --system-ui-icon-chevron-down-75-icon-size: var(
-        --spectrum-chevron-icon-size-75
-    );
-    --system-ui-icon-chevron-down-75-icon-transform: rotate(90deg);
-    --system-ui-icon-chevron-down-100-icon-size: var(
-        --spectrum-chevron-icon-size-100
-    );
-    --system-ui-icon-chevron-down-100-icon-transform: rotate(90deg);
-    --system-ui-icon-chevron-down-200-icon-size: var(
-        --spectrum-chevron-icon-size-200
-    );
-    --system-ui-icon-chevron-down-200-icon-transform: rotate(90deg);
-    --system-ui-icon-chevron-down-300-icon-size: var(
-        --spectrum-chevron-icon-size-300
-    );
-    --system-ui-icon-chevron-down-300-icon-transform: rotate(90deg);
-    --system-ui-icon-chevron-down-400-icon-size: var(
-        --spectrum-chevron-icon-size-400
-    );
-    --system-ui-icon-chevron-down-400-icon-transform: rotate(90deg);
     --system-ui-icon-chevron-down-500-icon-size: var(
         --spectrum-chevron-icon-size-500
     );
-    --system-ui-icon-chevron-down-500-icon-transform: rotate(90deg);
     --system-ui-icon-chevron-left-50-icon-size: var(
         --spectrum-chevron-icon-size-50
     );
-    --system-ui-icon-chevron-left-50-icon-transform: rotate(180deg);
     --system-ui-icon-chevron-left-75-icon-size: var(
         --spectrum-chevron-icon-size-75
     );
-    --system-ui-icon-chevron-left-75-icon-transform: rotate(180deg);
     --system-ui-icon-chevron-left-100-icon-size: var(
         --spectrum-chevron-icon-size-100
     );
-    --system-ui-icon-chevron-left-100-icon-transform: rotate(180deg);
     --system-ui-icon-chevron-left-200-icon-size: var(
         --spectrum-chevron-icon-size-200
     );
-    --system-ui-icon-chevron-left-200-icon-transform: rotate(180deg);
     --system-ui-icon-chevron-left-300-icon-size: var(
         --spectrum-chevron-icon-size-300
     );
-    --system-ui-icon-chevron-left-300-icon-transform: rotate(180deg);
     --system-ui-icon-chevron-left-400-icon-size: var(
         --spectrum-chevron-icon-size-400
     );
-    --system-ui-icon-chevron-left-400-icon-transform: rotate(180deg);
     --system-ui-icon-chevron-left-500-icon-size: var(
         --spectrum-chevron-icon-size-500
     );
-    --system-ui-icon-chevron-left-500-icon-transform: rotate(180deg);
     --system-ui-icon-chevron-up-50-icon-size: var(
         --spectrum-chevron-icon-size-50
     );
-    --system-ui-icon-chevron-up-50-icon-transform: rotate(270deg);
     --system-ui-icon-chevron-up-75-icon-size: var(
         --spectrum-chevron-icon-size-75
     );
-    --system-ui-icon-chevron-up-75-icon-transform: rotate(270deg);
     --system-ui-icon-chevron-up-100-icon-size: var(
         --spectrum-chevron-icon-size-100
     );
-    --system-ui-icon-chevron-up-100-icon-transform: rotate(270deg);
     --system-ui-icon-chevron-up-200-icon-size: var(
         --spectrum-chevron-icon-size-200
     );
-    --system-ui-icon-chevron-up-200-icon-transform: rotate(270deg);
     --system-ui-icon-chevron-up-300-icon-size: var(
         --spectrum-chevron-icon-size-300
     );
-    --system-ui-icon-chevron-up-300-icon-transform: rotate(270deg);
     --system-ui-icon-chevron-up-400-icon-size: var(
         --spectrum-chevron-icon-size-400
     );
-    --system-ui-icon-chevron-up-400-icon-transform: rotate(270deg);
     --system-ui-icon-chevron-up-500-icon-size: var(
         --spectrum-chevron-icon-size-500
     );
-    --system-ui-icon-chevron-up-500-icon-transform: rotate(270deg);
     --system-ui-icon-arrow-right-75-icon-size: var(
         --spectrum-arrow-icon-size-75
     );
@@ -3571,85 +3268,64 @@
     --system-ui-icon-arrow-down-75-icon-size: var(
         --spectrum-arrow-icon-size-75
     );
-    --system-ui-icon-arrow-down-75-icon-transform: rotate(90deg);
     --system-ui-icon-arrow-down-100-icon-size: var(
         --spectrum-arrow-icon-size-100
     );
-    --system-ui-icon-arrow-down-100-icon-transform: rotate(90deg);
     --system-ui-icon-arrow-down-200-icon-size: var(
         --spectrum-arrow-icon-size-200
     );
-    --system-ui-icon-arrow-down-200-icon-transform: rotate(90deg);
     --system-ui-icon-arrow-down-300-icon-size: var(
         --spectrum-arrow-icon-size-300
     );
-    --system-ui-icon-arrow-down-300-icon-transform: rotate(90deg);
     --system-ui-icon-arrow-down-400-icon-size: var(
         --spectrum-arrow-icon-size-400
     );
-    --system-ui-icon-arrow-down-400-icon-transform: rotate(90deg);
     --system-ui-icon-arrow-down-500-icon-size: var(
         --spectrum-arrow-icon-size-500
     );
-    --system-ui-icon-arrow-down-500-icon-transform: rotate(90deg);
     --system-ui-icon-arrow-down-600-icon-size: var(
         --spectrum-arrow-icon-size-600
     );
-    --system-ui-icon-arrow-down-600-icon-transform: rotate(90deg);
     --system-ui-icon-arrow-left-75-icon-size: var(
         --spectrum-arrow-icon-size-75
     );
-    --system-ui-icon-arrow-left-75-icon-transform: rotate(180deg);
     --system-ui-icon-arrow-left-100-icon-size: var(
         --spectrum-arrow-icon-size-100
     );
-    --system-ui-icon-arrow-left-100-icon-transform: rotate(180deg);
     --system-ui-icon-arrow-left-200-icon-size: var(
         --spectrum-arrow-icon-size-200
     );
-    --system-ui-icon-arrow-left-200-icon-transform: rotate(180deg);
     --system-ui-icon-arrow-left-300-icon-size: var(
         --spectrum-arrow-icon-size-300
     );
-    --system-ui-icon-arrow-left-300-icon-transform: rotate(180deg);
     --system-ui-icon-arrow-left-400-icon-size: var(
         --spectrum-arrow-icon-size-400
     );
-    --system-ui-icon-arrow-left-400-icon-transform: rotate(180deg);
     --system-ui-icon-arrow-left-500-icon-size: var(
         --spectrum-arrow-icon-size-500
     );
-    --system-ui-icon-arrow-left-500-icon-transform: rotate(180deg);
     --system-ui-icon-arrow-left-600-icon-size: var(
         --spectrum-arrow-icon-size-600
     );
-    --system-ui-icon-arrow-left-600-icon-transform: rotate(180deg);
     --system-ui-icon-arrow-up-75-icon-size: var(--spectrum-arrow-icon-size-75);
-    --system-ui-icon-arrow-up-75-icon-transform: rotate(270deg);
     --system-ui-icon-arrow-up-100-icon-size: var(
         --spectrum-arrow-icon-size-100
     );
-    --system-ui-icon-arrow-up-100-icon-transform: rotate(270deg);
     --system-ui-icon-arrow-up-200-icon-size: var(
         --spectrum-arrow-icon-size-200
     );
-    --system-ui-icon-arrow-up-200-icon-transform: rotate(270deg);
     --system-ui-icon-arrow-up-300-icon-size: var(
         --spectrum-arrow-icon-size-300
     );
-    --system-ui-icon-arrow-up-300-icon-transform: rotate(270deg);
     --system-ui-icon-arrow-up-400-icon-size: var(
         --spectrum-arrow-icon-size-400
     );
-    --system-ui-icon-arrow-up-400-icon-transform: rotate(270deg);
     --system-ui-icon-arrow-up-500-icon-size: var(
         --spectrum-arrow-icon-size-500
     );
-    --system-ui-icon-arrow-up-500-icon-transform: rotate(270deg);
     --system-ui-icon-arrow-up-600-icon-size: var(
         --spectrum-arrow-icon-size-600
     );
-    --system-ui-icon-arrow-up-600-icon-transform: rotate(270deg);
     --system-ui-icon-checkmark-50-icon-size: var(
         --spectrum-checkmark-icon-size-50
     );
@@ -3773,36 +3449,28 @@
     );
     --system-infield-button-fill-justify-content: center;
     --system-infield-button-disabled-background-color: var(
-        --mod-infield-button-background-color-disabled,
-        var(--spectrum-disabled-background-color)
+        --spectrum-disabled-background-color
     );
     --system-infield-button-disabled-background-color-hover: var(
-        --mod-infield-button-background-color-hover-disabled,
-        var(--spectrum-disabled-background-color)
+        --spectrum-disabled-background-color
     );
     --system-infield-button-disabled-background-color-down: var(
-        --mod-infield-button-background-color-down-disabled,
-        var(--spectrum-disabled-background-color)
+        --spectrum-disabled-background-color
     );
     --system-infield-button-disabled-border-color: var(
-        --mod-infield-button-border-color-disabled,
-        var(--spectrum-disabled-background-color)
+        --spectrum-disabled-background-color
     );
     --system-infield-button-disabled-icon-color: var(
-        --mod-infield-button-icon-color-disabled,
-        var(--spectrum-disabled-content-color)
+        --spectrum-disabled-content-color
     );
     --system-infield-button-disabled-icon-color-hover: var(
-        --mod-infield-button-icon-color-hover-disabled,
-        var(--spectrum-disabled-content-color)
+        --spectrum-disabled-content-color
     );
     --system-infield-button-disabled-icon-color-down: var(
-        --mod-infield-button-icon-color-down-disabled,
-        var(--spectrum-disabled-content-color)
+        --spectrum-disabled-content-color
     );
     --system-infield-button-disabled-icon-color-key-focus: var(
-        --mod-infield-button-icon-color-key-focus-disabled,
-        var(--spectrum-disabled-content-color)
+        --spectrum-disabled-content-color
     );
     --system-infield-button-size-s-height: var(--spectrum-component-height-75);
     --system-infield-button-size-s-width: var(--spectrum-component-height-75);
@@ -3840,69 +3508,37 @@
         --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large
     );
     --system-infield-button-top-width: var(
-        --mod-infield-button-width-stacked,
-        var(--spectrum-in-field-button-width-stacked-medium)
+        --spectrum-in-field-button-width-stacked-medium
     );
     --system-infield-button-bottom-width: var(
-        --mod-infield-button-width-stacked,
-        var(--spectrum-in-field-button-width-stacked-medium)
+        --spectrum-in-field-button-width-stacked-medium
     );
     --system-infield-button-top-size-s-width: var(
-        --mod-infield-button-width-stacked,
-        var(--spectrum-in-field-button-width-stacked-small)
+        --spectrum-in-field-button-width-stacked-small
     );
     --system-infield-button-bottom-size-s-width: var(
-        --mod-infield-button-width-stacked,
-        var(--spectrum-in-field-button-width-stacked-small)
+        --spectrum-in-field-button-width-stacked-small
     );
     --system-infield-button-top-size-l-width: var(
-        --mod-infield-button-width-stacked,
-        var(--spectrum-in-field-button-width-stacked-large)
+        --spectrum-in-field-button-width-stacked-large
     );
     --system-infield-button-bottom-size-l-width: var(
-        --mod-infield-button-width-stacked,
-        var(--spectrum-in-field-button-width-stacked-large)
+        --spectrum-in-field-button-width-stacked-large
     );
     --system-infield-button-top-size-xl-width: var(
-        --mod-infield-button-width-stacked,
-        var(--spectrum-in-field-button-width-stacked-extra-large)
+        --spectrum-in-field-button-width-stacked-extra-large
     );
     --system-infield-button-bottom-size-xl-width: var(
-        --mod-infield-button-width-stacked,
-        var(--spectrum-in-field-button-width-stacked-extra-large)
+        --spectrum-in-field-button-width-stacked-extra-large
     );
-    --system-infield-button-quiet-background-color: var(
-        --mod-infield-button-background-color-quiet,
-        transparent
-    );
-    --system-infield-button-quiet-background-color-hover: var(
-        --mod-infield-button-background-color-hover-quiet,
-        transparent
-    );
-    --system-infield-button-quiet-background-color-down: var(
-        --mod-infield-button-background-color-down-quiet,
-        transparent
-    );
-    --system-infield-button-quiet-background-color-key-focus: var(
-        --mod-infield-button-background-color-key-focus-quiet,
-        transparent
-    );
-    --system-infield-button-quiet-infield-border-color: var(
-        --mod-infield-border-color-quiet,
-        transparent
-    );
-    --system-infield-button-quiet-border-width: var(
-        --mod-infield-button-border-width-quiet,
-        0
-    );
-    --system-infield-button-quiet-disabled-background-color: var(
-        --mod-infield-button-background-color-quiet-disabled,
-        transparent
-    );
-    --system-infield-button-quiet-disabled-border-color: var(
-        --mod-infield-button-border-color-quiet-disabled,
-        transparent
-    );
+    --system-infield-button-quiet-background-color: transparent;
+    --system-infield-button-quiet-background-color-hover: transparent;
+    --system-infield-button-quiet-background-color-down: transparent;
+    --system-infield-button-quiet-background-color-key-focus: transparent;
+    --system-infield-button-quiet-infield-border-color: transparent;
+    --system-infield-button-quiet-border-width: 0;
+    --system-infield-button-quiet-disabled-background-color: transparent;
+    --system-infield-button-quiet-disabled-border-color: transparent;
 }
 
 :host,
@@ -4562,64 +4198,34 @@
         --spectrum-animation-duration-100
     );
     --system-picker-button-background-color-disabled: var(
-        --mod-picker-button-background-color-disabled,
-        var(--spectrum-disabled-background-color)
+        --spectrum-disabled-background-color
     );
     --system-picker-button-background-color-hover-disabled: var(
-        --mod-picker-button-background-color-hover-disabled,
-        var(--spectrum-disabled-background-color)
+        --spectrum-disabled-background-color
     );
     --system-picker-button-background-color-down-disabled: var(
-        --mod-picker-button-background-color-down-disabled,
-        var(--spectrum-disabled-background-color)
+        --spectrum-disabled-background-color
     );
     --system-picker-button-border-color-disabled: var(
-        --mod-picker-button-border-color-disabled,
-        var(--spectrum-disabled-background-color)
+        --spectrum-disabled-background-color
     );
     --system-picker-button-font-color-disabled: var(
-        --mod-picker-button-font-color-disabled,
-        var(--spectrum-disabled-content-color)
+        --spectrum-disabled-content-color
     );
     --system-picker-button-font-color-hover-disabled: var(
-        --mod-picker-button-font-color-hover-disabled,
-        var(--spectrum-disabled-content-color)
+        --spectrum-disabled-content-color
     );
     --system-picker-button-font-color-down-disabled: var(
-        --mod-picker-button-font-color-down-disabled,
-        var(--spectrum-disabled-content-color)
+        --spectrum-disabled-content-color
     );
     --system-picker-button-icon-color-disabled: var(
-        --mod-picker-button-icon-color-disabled,
-        var(--spectrum-disabled-content-color)
+        --spectrum-disabled-content-color
     );
     --system-picker-button-icon-color-hover-disabled: var(
-        --mod-picker-button-icon-color-hover-disabled,
-        var(--spectrum-disabled-content-color)
+        --spectrum-disabled-content-color
     );
     --system-picker-button-icon-color-down-disabled: var(
-        --mod-picker-button-icon-color-down-disabled,
-        var(--spectrum-disabled-content-color)
-    );
-    --system-picker-button-quiet-background-color: var(
-        --mod-picker-button-background-color-quiet,
-        transparent
-    );
-    --system-picker-button-quiet-background-color-hover: var(
-        --mod-picker-button-background-color-hover-quiet,
-        transparent
-    );
-    --system-picker-button-quiet-background-color-down: var(
-        --mod-picker-button-background-color-down-quiet,
-        transparent
-    );
-    --system-picker-button-quiet-background-color-key-focus: var(
-        --mod-picker-button-background-color-key-focus-quiet,
-        transparent
-    );
-    --system-picker-button-quiet-border-color: var(
-        --mod-picker-button-border-color-quiet,
-        transparent
+        --spectrum-disabled-content-color
     );
     --system-picker-button-size-s-height: var(--spectrum-component-height-75);
     --system-picker-button-size-s-width: var(--spectrum-component-height-75);
@@ -4792,18 +4398,6 @@
     );
     --system-progress-bar-size-xl-spacing-top-to-text: var(
         --spectrum-component-top-to-text-300
-    );
-    --system-meter-progressbar-size-default: var(
-        --mod-meter-inline-size,
-        var(--system-progress-bar-meter-inline-size)
-    );
-    --system-meter-progressbar-max-size: var(
-        --mod-meter-max-width,
-        var(--system-progress-bar-meter-max-width)
-    );
-    --system-meter-progressbar-min-size: var(
-        --mod-meter-min-width,
-        var(--system-progress-bar-meter-min-width)
     );
 }
 
@@ -5069,13 +4663,6 @@
     --system-search-size-xl-block-size: var(--spectrum-component-height-300);
     --system-search-size-xl-icon-size: var(--spectrum-workflow-icon-size-300);
     --system-search-size-xl-text-to-icon: var(--spectrum-text-to-visual-300);
-    --system-search-quiet-quiet-button-offset: calc(
-        var(--mod-search-block-size, var(--system-search-block-size)) / 2 -
-            var(
-                --mod-workflow-icon-size-100,
-                var(--spectrum-workflow-icon-size-100)
-            ) / 2
-    );
     --system-search-quiet-background-color: transparent;
     --system-search-quiet-background-color-disabled: transparent;
     --system-search-quiet-border-color-disabled: var(
@@ -5573,6 +5160,9 @@
     --system-stepper-buttons-border-color-hover: transparent;
     --system-stepper-buttons-border-color-focus: transparent;
     --system-stepper-buttons-border-color-keyboard-focus: transparent;
+    --system-stepper-buttons-border-color-quiet-disabled: var(
+        --spectrum-disabled-border-color
+    );
     --system-stepper-button-border-radius-reset: var(
         --spectrum-in-field-button-fill-stacked-inner-border-rounding
     );
@@ -5586,6 +5176,9 @@
     --system-stepper-border-color-focus-invalid: transparent;
     --system-stepper-border-color-focus-hover-invalid: transparent;
     --system-stepper-border-color-keyboard-focus-invalid: transparent;
+    --system-stepper-min-width-multiplier: var(
+        --spectrum-text-field-minimum-width-multiplier
+    );
     --system-stepper-button-background-color-focus: var(--spectrum-gray-400);
     --system-stepper-button-background-color-keyboard-focus: var(
         --spectrum-gray-300
@@ -5598,16 +5191,6 @@
     --system-stepper-button-padding: var(
         --spectrum-in-field-button-edge-to-fill
     );
-    --system-stepper-width: calc(
-        var(--mod-stepper-height, var(--system-stepper-height)) *
-            var(
-                --mod-stepper-min-width-multiplier,
-                var(--spectrum-text-field-minimum-width-multiplier)
-            ) +
-            var(--mod-stepper-button-width, var(--system-stepper-button-width)) +
-            var(--mod-stepper-border-width, var(--system-stepper-border-width)) *
-            2
-    );
     --system-stepper-focus-indicator-width: var(
         --spectrum-focus-indicator-thickness
     );
@@ -5619,21 +5202,6 @@
         var(--system-stepper-button-width) / 2
     );
     --system-stepper-animation-duration: var(--spectrum-animation-duration-100);
-    --system-stepper-infield-button-border-color: var(
-        --highcontrast-stepper-border-color,
-        var(
-            --mod-stepper-buttons-border-color,
-            var(--system-stepper-buttons-border-color)
-        )
-    );
-    --system-stepper-infield-button-border-width: var(
-        --mod-stepper-button-border-width,
-        var(--system-stepper-button-border-width)
-    );
-    --system-stepper-textfield-border-width: var(
-        --mod-stepper-border-width,
-        var(--system-stepper-border-width)
-    );
     --system-stepper-size-s-button-width: var(
         --spectrum-in-field-button-width-stacked-small
     );
@@ -5646,67 +5214,6 @@
         --spectrum-in-field-button-width-stacked-extra-large
     );
     --system-stepper-size-xl-height: var(--spectrum-component-height-300);
-    --system-stepper-quiet-infield-button-width-stacked: var(
-        --mod-stepper-button-width-quiet,
-        var(--system-stepper-button-width)
-    );
-    --system-stepper-quiet-textfield-focus-indicator-color: transparent;
-    --system-stepper-disabled-infield-button-border-color-quiet-disabled: var(
-        --spectrum-disabled-border-color
-    );
-    --system-stepper-invalid-border-color: var(
-        --mod-stepper-border-color-invalid,
-        var(--spectrum-negative-border-color-default)
-    );
-    --system-stepper-invalid-border-color-hover: var(
-        --mod-stepper-border-color-hover-invalid,
-        var(--spectrum-negative-border-color-hover)
-    );
-    --system-stepper-invalid-border-color-focus: var(
-        --mod-stepper-border-color-focus-invalid,
-        var(--spectrum-negative-border-color-focus)
-    );
-    --system-stepper-invalid-border-color-focus-hover: var(
-        --mod-stepper-border-color-focus-hover-invalid,
-        var(--spectrum-negative-border-color-focus-hover)
-    );
-    --system-stepper-invalid-border-color-keyboard-focus: var(
-        --mod-stepper-border-color-keyboard-focus-invalid,
-        var(--spectrum-negative-border-color-key-focus)
-    );
-    --system-stepper-invalid-infield-button-border-color: var(
-        --mod-stepper-border-color-invalid,
-        var(--system-stepper-border-color-invalid)
-    );
-    --system-stepper-invalid-textfield-icon-spacing-inline-start-invalid: 0;
-    --system-stepper-invalid-focused-infield-button-border-color: var(
-        --mod-stepper-border-color-focus-invalid,
-        var(--system-stepper-border-color-focus-invalid)
-    );
-    --system-stepper-invalid-focus-infield-button-border-color: var(
-        --mod-stepper-border-color-focus-invalid,
-        var(--system-stepper-border-color-focus-invalid)
-    );
-    --system-stepper-invalid-hover-infield-button-border-color: var(
-        --mod-stepper-border-color-hover-invalid,
-        var(--spectrum-negative-border-color-hover)
-    );
-    --system-stepper-invalid-focused-hover-infield-button-border-color: var(
-        --mod-stepper-border-color-focus-hover-invalid,
-        var(--system-stepper-border-color-focus-hover-invalid)
-    );
-    --system-stepper-invalid-focus-hover-infield-button-border-color: var(
-        --mod-stepper-border-color-focus-hover-invalid,
-        var(--system-stepper-border-color-focus-hover-invalid)
-    );
-    --system-stepper-invalid-keyboard-focused-infield-button-border-color: var(
-        --mod-stepper-border-color-keyboard-focus-invalid,
-        var(--system-stepper-border-color-keyboard-focus-invalid)
-    );
-    --system-stepper-invalid-focus-visible-infield-button-border-color: var(
-        --mod-stepper-border-color-keyboard-focus-invalid,
-        var(--system-stepper-border-color-keyboard-focus-invalid)
-    );
     --system-stepper-disabled-buttons-background-color: var(
         --spectrum-disabled-background-color
     );
@@ -5826,8 +5333,7 @@
         --spectrum-neutral-background-color-selected-key-focus
     );
     --system-switch-focus-indicator-thickness: var(
-        --mod-focus-indicator-thickness,
-        var(--spectrum-focus-indicator-thickness)
+        --spectrum-focus-indicator-thickness
     );
     --system-switch-focus-indicator-color: var(
         --spectrum-focus-indicator-color
@@ -6061,27 +5567,13 @@
     );
     --system-table-thumbnail-size: var(--spectrum-thumbnail-size-300);
     --system-table-cell-background-color: var(
-        --highcontrast-table-row-background-color,
-        var(
-            --mod-table-row-background-color,
-            var(--system-table-row-background-color)
-        )
+        --system-table-row-background-color
     );
     --system-table-selected-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color,
-        var(
-            --mod-table-selected-row-background-color-non-emphasized,
-            var(--system-table-selected-row-background-color-non-emphasized)
-        )
+        --system-table-selected-row-background-color-non-emphasized
     );
     --system-table-selected-cell-background-color-focus: var(
-        --highcontrast-table-selected-row-background-color-focus,
-        var(
-            --mod-table-selected-row-background-color-non-emphasized-focus,
-            var(
-                --system-table-selected-row-background-color-non-emphasized-focus
-            )
-        )
+        --system-table-selected-row-background-color-non-emphasized-focus
     );
     --system-table-size-s-min-header-height: var(
         --spectrum-component-height-100
@@ -6215,226 +5707,158 @@
     );
     --system-table-size-xl-thumbnail-size: var(--spectrum-thumbnail-size-700);
     --system-table-compact-min-row-height: var(
-        --mod-table-min-row-height--compact,
-        var(--spectrum-table-row-height-medium-compact)
+        --spectrum-table-row-height-medium-compact
     );
     --system-table-compact-row-top-to-text: var(
-        --mod-table-row-top-to-text--compact,
-        var(--spectrum-table-row-top-to-text-medium-compact)
+        --spectrum-table-row-top-to-text-medium-compact
     );
     --system-table-compact-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--compact,
-        var(--spectrum-table-row-bottom-to-text-medium-compact)
+        --spectrum-table-row-bottom-to-text-medium-compact
     );
     --system-table-compact-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--compact,
-        var(--spectrum-table-row-checkbox-to-top-medium-compact)
+        --spectrum-table-row-checkbox-to-top-medium-compact
     );
     --system-table-compact-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-compact,
-        var(--spectrum-table-thumbnail-to-top-minimum-medium-compact)
+        --spectrum-table-thumbnail-to-top-minimum-medium-compact
     );
-    --system-table-compact-thumbnail-size: var(
-        --mod-table-thumbnail-size-compact,
-        var(--spectrum-thumbnail-size-200)
-    );
+    --system-table-compact-thumbnail-size: var(--spectrum-thumbnail-size-200);
     --system-table-compact-size-s-min-row-height: var(
-        --mod-table-min-row-height--compact,
-        var(--spectrum-table-row-height-small-compact)
+        --spectrum-table-row-height-small-compact
     );
     --system-table-compact-size-s-row-top-to-text: var(
-        --mod-table-row-top-to-text--compact,
-        var(--spectrum-table-row-top-to-text-small-compact)
+        --spectrum-table-row-top-to-text-small-compact
     );
     --system-table-compact-size-s-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--compact,
-        var(--spectrum-table-row-bottom-to-text-small-compact)
+        --spectrum-table-row-bottom-to-text-small-compact
     );
     --system-table-compact-size-s-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--compact,
-        var(--spectrum-table-row-checkbox-to-top-small-compact)
+        --spectrum-table-row-checkbox-to-top-small-compact
     );
     --system-table-compact-size-s-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-compact,
-        var(--spectrum-table-thumbnail-to-top-minimum-small-compact)
+        --spectrum-table-thumbnail-to-top-minimum-small-compact
     );
     --system-table-compact-size-s-thumbnail-size: var(
-        --mod-table-thumbnail-size-compact,
-        var(--spectrum-thumbnail-size-50)
+        --spectrum-thumbnail-size-50
     );
     --system-table-compact-size-l-min-row-height: var(
-        --mod-table-min-row-height--compact,
-        var(--spectrum-table-row-height-large-compact)
+        --spectrum-table-row-height-large-compact
     );
     --system-table-compact-size-l-row-top-to-text: var(
-        --mod-table-row-top-to-text--compact,
-        var(--spectrum-table-row-top-to-text-large-compact)
+        --spectrum-table-row-top-to-text-large-compact
     );
     --system-table-compact-size-l-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--compact,
-        var(--spectrum-table-row-bottom-to-text-large-compact)
+        --spectrum-table-row-bottom-to-text-large-compact
     );
     --system-table-compact-size-l-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--compact,
-        var(--spectrum-table-row-checkbox-to-top-large-compact)
+        --spectrum-table-row-checkbox-to-top-large-compact
     );
     --system-table-compact-size-l-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-compact,
-        var(--spectrum-table-thumbnail-to-top-minimum-large-compact)
+        --spectrum-table-thumbnail-to-top-minimum-large-compact
     );
     --system-table-compact-size-l-thumbnail-size: var(
-        --mod-table-thumbnail-size-compact,
-        var(--spectrum-thumbnail-size-300)
+        --spectrum-thumbnail-size-300
     );
     --system-table-compact-size-xl-min-row-height: var(
-        --mod-table-min-row-height--compact,
-        var(--spectrum-table-row-height-extra-large-compact)
+        --spectrum-table-row-height-extra-large-compact
     );
     --system-table-compact-size-xl-row-top-to-text: var(
-        --mod-table-row-top-to-text--compact,
-        var(--spectrum-table-row-top-to-text-extra-large-compact)
+        --spectrum-table-row-top-to-text-extra-large-compact
     );
     --system-table-compact-size-xl-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--compact,
-        var(--spectrum-table-row-bottom-to-text-extra-large-compact)
+        --spectrum-table-row-bottom-to-text-extra-large-compact
     );
     --system-table-compact-size-xl-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--compact,
-        var(--spectrum-table-row-checkbox-to-top-extra-large-compact)
+        --spectrum-table-row-checkbox-to-top-extra-large-compact
     );
     --system-table-compact-size-xl-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-compact,
-        var(--spectrum-table-thumbnail-to-top-minimum-extra-large-compact)
+        --spectrum-table-thumbnail-to-top-minimum-extra-large-compact
     );
     --system-table-compact-size-xl-thumbnail-size: var(
-        --mod-table-thumbnail-size-compact,
-        var(--spectrum-thumbnail-size-500)
+        --spectrum-thumbnail-size-500
     );
     --system-table-spacious-min-row-height: var(
-        --mod-table-min-row-height--spacious,
-        var(--spectrum-table-row-height-medium-spacious)
+        --spectrum-table-row-height-medium-spacious
     );
     --system-table-spacious-row-top-to-text: var(
-        --mod-table-row-top-to-text--spacious,
-        var(--spectrum-table-row-top-to-text-medium-spacious)
+        --spectrum-table-row-top-to-text-medium-spacious
     );
     --system-table-spacious-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--spacious,
-        var(--spectrum-table-row-bottom-to-text-medium-spacious)
+        --spectrum-table-row-bottom-to-text-medium-spacious
     );
     --system-table-spacious-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--spacious,
-        var(--spectrum-table-row-checkbox-to-top-medium-spacious)
+        --spectrum-table-row-checkbox-to-top-medium-spacious
     );
     --system-table-spacious-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-spacious,
-        var(--spectrum-table-thumbnail-to-top-minimum-medium-spacious)
+        --spectrum-table-thumbnail-to-top-minimum-medium-spacious
     );
-    --system-table-spacious-thumbnail-size: var(
-        --mod-table-thumbnail-size-spacious,
-        var(--spectrum-thumbnail-size-500)
-    );
+    --system-table-spacious-thumbnail-size: var(--spectrum-thumbnail-size-500);
     --system-table-spacious-size-s-min-row-height: var(
-        --mod-table-min-row-height--spacious,
-        var(--spectrum-table-row-height-small-spacious)
+        --spectrum-table-row-height-small-spacious
     );
     --system-table-spacious-size-s-row-top-to-text: var(
-        --mod-table-row-top-to-text--spacious,
-        var(--spectrum-table-row-top-to-text-small-spacious)
+        --spectrum-table-row-top-to-text-small-spacious
     );
     --system-table-spacious-size-s-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--spacious,
-        var(--spectrum-table-row-bottom-to-text-small-spacious)
+        --spectrum-table-row-bottom-to-text-small-spacious
     );
     --system-table-spacious-size-s-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--spacious,
-        var(--spectrum-table-row-checkbox-to-top-small-spacious)
+        --spectrum-table-row-checkbox-to-top-small-spacious
     );
     --system-table-spacious-size-s-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-spacious,
-        var(--spectrum-table-thumbnail-to-top-minimum-small-spacious)
+        --spectrum-table-thumbnail-to-top-minimum-small-spacious
     );
     --system-table-spacious-size-s-thumbnail-size: var(
-        --mod-table-thumbnail-size-spacious,
-        var(--spectrum-thumbnail-size-300)
+        --spectrum-thumbnail-size-300
     );
     --system-table-spacious-size-l-min-row-height: var(
-        --mod-table-min-row-height--spacious,
-        var(--spectrum-table-row-height-large-spacious)
+        --spectrum-table-row-height-large-spacious
     );
     --system-table-spacious-size-l-row-top-to-text: var(
-        --mod-table-row-top-to-text--spacious,
-        var(--spectrum-table-row-top-to-text-large-spacious)
+        --spectrum-table-row-top-to-text-large-spacious
     );
     --system-table-spacious-size-l-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--spacious,
-        var(--spectrum-table-row-bottom-to-text-large-spacious)
+        --spectrum-table-row-bottom-to-text-large-spacious
     );
     --system-table-spacious-size-l-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--spacious,
-        var(--spectrum-table-row-checkbox-to-top-large-spacious)
+        --spectrum-table-row-checkbox-to-top-large-spacious
     );
     --system-table-spacious-size-l-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-spacious,
-        var(--spectrum-table-thumbnail-to-top-minimum-large-spacious)
+        --spectrum-table-thumbnail-to-top-minimum-large-spacious
     );
     --system-table-spacious-size-l-thumbnail-size: var(
-        --mod-table-thumbnail-size-spacious,
-        var(--spectrum-thumbnail-size-700)
+        --spectrum-thumbnail-size-700
     );
     --system-table-spacious-size-xl-min-row-height: var(
-        --mod-table-min-row-height--spacious,
-        var(--spectrum-table-row-height-extra-large-spacious)
+        --spectrum-table-row-height-extra-large-spacious
     );
     --system-table-spacious-size-xl-row-top-to-text: var(
-        --mod-table-row-top-to-text--spacious,
-        var(--spectrum-table-row-top-to-text-extra-large-spacious)
+        --spectrum-table-row-top-to-text-extra-large-spacious
     );
     --system-table-spacious-size-xl-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--spacious,
-        var(--spectrum-table-row-bottom-to-text-extra-large-spacious)
+        --spectrum-table-row-bottom-to-text-extra-large-spacious
     );
     --system-table-spacious-size-xl-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--spacious,
-        var(--spectrum-table-row-checkbox-to-top-extra-large-spacious)
+        --spectrum-table-row-checkbox-to-top-extra-large-spacious
     );
     --system-table-spacious-size-xl-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-spacious,
-        var(--spectrum-table-thumbnail-to-top-minimum-extra-large-spacious)
+        --spectrum-table-thumbnail-to-top-minimum-extra-large-spacious
     );
     --system-table-spacious-size-xl-thumbnail-size: var(
-        --mod-table-thumbnail-size-spacious,
-        var(--spectrum-thumbnail-size-800)
+        --spectrum-thumbnail-size-800
     );
     --system-table-emphasized-selected-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color,
-        var(
-            --mod-table-selected-row-background-color,
-            var(--system-table-selected-row-background-color)
-        )
+        --system-table-selected-row-background-color
     );
     --system-table-emphasized-selected-cell-background-color-focus: var(
-        --highcontrast-table-selected-row-background-color-focus,
-        var(
-            --mod-table-selected-row-background-color-focus,
-            var(--system-table-selected-row-background-color-focus)
-        )
+        --system-table-selected-row-background-color-focus
     );
-    --system-table-quiet-border-radius: var(
-        --mod-table-border-radius--quiet,
-        0px
-    );
-    --system-table-quiet-outer-border-inline-width: var(
-        --mod-table-outer-border-inline-width--quiet,
-        0px
-    );
+    --system-table-quiet-border-radius: 0px;
+    --system-table-quiet-outer-border-inline-width: 0px;
     --system-table-quiet-header-background-color: var(
-        --mod-table-header-background-color--quiet,
-        var(--spectrum-transparent-white-100)
+        --spectrum-transparent-white-100
     );
     --system-table-quiet-row-background-color: var(
-        --mod-table-row-background-color--quiet,
-        var(--spectrum-transparent-white-100)
+        --spectrum-transparent-white-100
     );
 }
 
@@ -6570,100 +5994,16 @@
     );
     --system-tabs-size-xl-font-size: var(--spectrum-font-size-300);
     --system-tabs-emphasized-color-selected: var(
-        --mod-tabs-color-selected-emphasized,
-        var(--spectrum-accent-content-color-default)
+        --spectrum-accent-content-color-default
     );
     --system-tabs-emphasized-color-hover: var(
-        --mod-tabs-color-hover-emphasized,
-        var(--spectrum-accent-content-color-hover)
+        --spectrum-accent-content-color-hover
     );
     --system-tabs-emphasized-color-key-focus: var(
-        --mod-tabs-color-key-focus-emphasized,
-        var(--spectrum-accent-content-color-key-focus)
+        --spectrum-accent-content-color-key-focus
     );
     --system-tabs-emphasized-selection-indicator-color: var(
-        --mod-tabs-selection-indicator-color-emphasized,
-        var(--spectrum-accent-content-color-default)
-    );
-    --system-tabs-vertical-list-background-direction: var(
-        --mod-tabs-list-background-direction-vertical,
-        right
-    );
-    --system-tabs-vertical-right-list-background-direction: var(
-        --mod-tabs-list-background-direction-vertical-right,
-        left
-    );
-    --system-tabs-vertical-dir-rtl-list-background-direction: var(
-        --mod-tabs-list-background-direction-vertical,
-        left
-    );
-    --system-tabs-vertical-right-dir-rtl-list-background-direction: var(
-        --mod-tabs-list-background-direction-vertical,
-        right
-    );
-    --system-tabs-compact-item-height: var(
-        --mod-tabs-item-height-compact,
-        var(--spectrum-tab-item-compact-height-medium)
-    );
-    --system-tabs-compact-top-to-text: var(
-        --mod-tabs-top-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-medium)
-    );
-    --system-tabs-compact-bottom-to-text: var(
-        --mod-tabs-bottom-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-medium)
-    );
-    --system-tabs-compact-top-to-icon: var(
-        --mod-tabs-top-to-icon-compact,
-        var(--spectrum-tab-item-top-to-workflow-icon-compact-medium)
-    );
-    --system-tabs-compact-size-s-item-height: var(
-        --mod-tabs-item-height-compact,
-        var(--spectrum-tab-item-compact-height-small)
-    );
-    --system-tabs-compact-size-s-top-to-text: var(
-        --mod-tabs-top-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-small)
-    );
-    --system-tabs-compact-size-s-bottom-to-text: var(
-        --mod-tabs-bottom-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-small)
-    );
-    --system-tabs-compact-size-s-top-to-icon: var(
-        --mod-tabs-top-to-icon-compact,
-        var(--spectrum-tab-item-top-to-workflow-icon-compact-small)
-    );
-    --system-tabs-compact-size-l-item-height: var(
-        --mod-tabs-item-height-compact,
-        var(--spectrum-tab-item-compact-height-large)
-    );
-    --system-tabs-compact-size-l-top-to-text: var(
-        --mod-tabs-top-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-large)
-    );
-    --system-tabs-compact-size-l-bottom-to-text: var(
-        --mod-tabs-bottom-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-large)
-    );
-    --system-tabs-compact-size-l-top-to-icon: var(
-        --mod-tabs-top-to-icon-compact,
-        var(--spectrum-tab-item-top-to-workflow-icon-compact-large)
-    );
-    --system-tabs-compact-size-xl-item-height: var(
-        --mod-tabs-item-height-compact,
-        var(--spectrum-tab-item-compact-height-extra-large)
-    );
-    --system-tabs-compact-size-xl-top-to-text: var(
-        --mod-tabs-top-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-extra-large)
-    );
-    --system-tabs-compact-size-xl-bottom-to-text: var(
-        --mod-tabs-bottom-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-extra-large)
-    );
-    --system-tabs-compact-size-xl-top-to-icon: var(
-        --mod-tabs-top-to-icon-compact,
-        var(--spectrum-tab-item-top-to-workflow-icon-compact-extra-large)
+        --spectrum-accent-content-color-default
     );
 }
 
@@ -7533,11 +6873,11 @@
     --system-underlay-background-entry-animation-ease: var(
         --spectrum-animation-ease-out
     );
-    --system-underlay-background-exit-animation-duration: var(
-        --spectrum-animation-duration-300
-    );
     --system-underlay-background-entry-animation-duration: var(
         --spectrum-animation-duration-600
+    );
+    --system-underlay-background-exit-animation-duration: var(
+        --spectrum-animation-duration-300
     );
     --system-underlay-background-exit-animation-delay: var(
         --spectrum-animation-duration-200
