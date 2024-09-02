@@ -484,7 +484,7 @@ export const withScrollEvent = (): TemplateResult => {
     }
 
     return html`
-        <sp-action-menu @scroll=${handleActionMenuScroll}>
+        <sp-action-menu @scroll=${handleActionMenuScroll} open>
             <span slot="label">This is an Action Menu</span>
             ${renderMenuItems()}
         </sp-action-menu>
