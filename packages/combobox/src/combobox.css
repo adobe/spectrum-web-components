@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-combobox.css');
 @import url('./combobox-overrides.css');
+@import url('./spectrum-combobox.css');
 
 :host {
     display: inline-flex;

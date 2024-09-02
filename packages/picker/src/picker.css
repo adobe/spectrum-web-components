@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-picker.css');
 @import url('./picker-overrides.css');
+@import url('./spectrum-picker.css');
 
 :host {
     display: inline-flex;

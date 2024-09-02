@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-meter.css');
 @import url('./meter-overrides.css');
+@import url('./spectrum-meter.css');
 
 .fill {
     transform-origin: left;

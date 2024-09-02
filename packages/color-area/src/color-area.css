@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-color-area.css');
 @import url('./color-area-overrides.css');
+@import url('./spectrum-color-area.css');
 
 :host {
     touch-action: none;

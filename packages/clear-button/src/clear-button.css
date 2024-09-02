@@ -10,5 +10,5 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-clear-button.css');
 @import url('./clear-button-overrides.css');
+@import url('./spectrum-clear-button.css');

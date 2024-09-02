@@ -423,5 +423,6 @@
         "projects/*",
         "tools/*",
         "react/*"
-    ]
+    ],
+    "packageManager": "yarn@1.22.22"
 }
