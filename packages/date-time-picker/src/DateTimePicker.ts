@@ -56,9 +56,9 @@ import { Calendar, type DateValue } from '@spectrum-web-components/calendar';
 import styles from './date-time-picker.css.js';
 import {
     AM,
-    dateSegmentTypes,
+    DateSegmentTypes,
     DateTimePickerValue,
-    EditableSegmentType,
+    MandatorySegmentTypes,
     MAX_DAYS_PER_MONTH,
     MAX_HOUR_AM,
     MAX_HOUR_PM,
@@ -68,8 +68,10 @@ import {
     Precision,
     Segment,
     SegmentDetails,
+    SegmentPlaceholders,
+    SegmentType,
     SegmentValueAndLimits,
-    timeSegmentTypes,
+    TimeSegmentTypes,
 } from './types.js';
 
 // TODO: Load dependencies lazily when possible
@@ -186,32 +188,36 @@ export class DateTimePicker extends ManageHelpText(
         return Boolean(this.formatter.resolvedOptions().hour12);
     }
 
-    protected get daySegment(): Segment | undefined {
-        return this.segment('day');
+    private get daySegment(): Segment | undefined {
+        return this.editableSegment(SegmentType.Day);
     }
 
-    protected get monthSegment(): Segment | undefined {
-        return this.segment('month');
+    private get monthSegment(): Segment | undefined {
+        return this.editableSegment(SegmentType.Month);
     }
 
-    protected get yearSegment(): Segment | undefined {
-        return this.segment('year');
+    private get yearSegment(): Segment | undefined {
+        return this.editableSegment(SegmentType.Year);
     }
 
-    protected get hourSegment(): Segment | undefined {
-        return this.segment('hour');
+    private get hourSegment(): Segment | undefined {
+        return this.editableSegment(SegmentType.Hour);
     }
 
-    protected get minuteSegment(): Segment | undefined {
-        return this.segment('minute');
+    private get minuteSegment(): Segment | undefined {
+        return this.editableSegment(SegmentType.Minute);
     }
 
-    protected get secondSegment(): Segment | undefined {
-        return this.segment('second');
+    private get secondSegment(): Segment | undefined {
+        return this.editableSegment(SegmentType.Second);
     }
 
-    protected get amPmSegment(): Segment | undefined {
-        return this.segment('dayPeriod');
+    private get amPmSegment(): Segment | undefined {
+        return this.editableSegment(SegmentType.DayPeriod);
+    }
+
+    private editableSegment(type: SegmentType): Segment | undefined {
+        return this.segments.find((segment) => segment.type === type);
     }
 
     private get includesTime(): boolean {
@@ -387,7 +393,7 @@ export class DateTimePicker extends ManageHelpText(
                 >
                     ${this.segments.map((segment) =>
                         when(
-                            segment.type === 'literal',
+                            segment.type === SegmentType.Literal,
                             () => this.renderLiteralSegment(segment),
                             () => this.renderEditableSegment(segment)
                         )
@@ -454,7 +460,7 @@ export class DateTimePicker extends ManageHelpText(
                 aria-hidden=${ifDefined(usePlaceholder ? 'true' : undefined)}
                 class=${classMap(segmentClasses)}
                 style=${styleMap(segmentStyles)}
-                data-testid=${segment.type}
+                data-type=${segment.type}
                 @keydown=${(event: KeyboardEvent) => {
                     this.handleKeydown(segment, event);
                 }}
@@ -564,7 +570,7 @@ export class DateTimePicker extends ManageHelpText(
             return;
         }
 
-        const isDate = dateSegmentTypes.includes(segment.type);
+        const isDate = segment.type in DateSegmentTypes;
         const isAmPmHour = this.is12HourClock && segment.type === 'hour';
 
         segment.value = isAmPmHour
@@ -853,15 +859,6 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     /**
-     * Returns data from the editable segment that corresponds to the given type
-     *
-     * @param type - Type of segment
-     */
-    protected segment(type: EditableSegmentType): Segment | undefined {
-        return this.segments.find((segment) => segment.type === type);
-    }
-
-    /**
      * Indicates whether the hour entered is PM or not
      *
      * @param hour - The hour to check
@@ -1037,14 +1034,13 @@ export class DateTimePicker extends ManageHelpText(
     private setSegments(): void {
         const dateTime = this.currentDate.toDate();
 
-        const segmentTypes = [
-            ...dateSegmentTypes,
-            ...(this.includesTime ? timeSegmentTypes : []),
-        ];
-
         this.segments = this.formatter
             .formatToParts(dateTime)
-            .filter((part) => segmentTypes.includes(part.type))
+            .filter((part) => {
+                if (part.type in MandatorySegmentTypes) return true;
+                if (this.includesTime) return part.type in TimeSegmentTypes;
+                return false;
+            })
             .map(this.partToSegment.bind(this));
     }
 
@@ -1055,16 +1051,16 @@ export class DateTimePicker extends ManageHelpText(
      * @param part - Part to be converted to `Segment`
      */
     private partToSegment(part: Intl.DateTimeFormatPart): Segment {
-        const type = part.type;
+        const type = part.type as SegmentType;
         const formatted = part.value;
 
-        if (type === 'literal')
+        if (type === SegmentType.Literal)
             return {
                 type,
                 formatted,
             };
 
-        const placeholder = this.getPlaceholder(type, part.value);
+        const placeholder = SegmentPlaceholders[type];
 
         const segment: Segment = {
             type,
@@ -1085,9 +1081,7 @@ export class DateTimePicker extends ManageHelpText(
      *
      * @param type - Type of segment
      */
-    private getValueAndLimits(
-        type: Intl.DateTimeFormatPartTypes
-    ): SegmentValueAndLimits {
+    private getValueAndLimits(type: SegmentType): SegmentValueAndLimits {
         const value = this.parseSegmentValue(type);
 
         switch (type) {
@@ -1158,30 +1152,19 @@ export class DateTimePicker extends ManageHelpText(
         }
     }
 
-    private parseSegmentValue(
-        type: Intl.DateTimeFormatPartTypes
-    ): number | undefined {
+    private parseSegmentValue(type: SegmentType): number | undefined {
         let previousValue: number | undefined;
         let currentValue: number;
 
-        switch (type) {
-            case 'year':
-            case 'month':
-            case 'day':
-            case 'hour':
-            case 'minute':
-            case 'second':
-                previousValue = this.segment(type)?.value;
-                currentValue = this.currentDate[type];
-                break;
-            case 'dayPeriod':
-                previousValue =
-                    this.hourSegment?.value &&
-                    this.getAmPmModifier(this.hourSegment.value);
-                currentValue = this.getAmPmModifier(this.currentDate.hour);
-                break;
-            default:
-                return undefined;
+        if (type === SegmentType.Literal) return undefined;
+        if (type === SegmentType.DayPeriod) {
+            previousValue =
+                this.hourSegment?.value &&
+                this.getAmPmModifier(this.hourSegment.value);
+            currentValue = this.getAmPmModifier(this.currentDate.hour);
+        } else {
+            previousValue = this.editableSegment(type)?.value;
+            currentValue = this.currentDate[type];
         }
 
         if (this.value && isNumber(currentValue)) return currentValue;
@@ -1270,7 +1253,8 @@ export class DateTimePicker extends ManageHelpText(
          */
         if (
             !this.yearSegment?.value &&
-            (['day', 'month'] as typeof dateSegmentTypes).includes(segment.type)
+            (segment.type === SegmentType.Day ||
+                segment.type === SegmentType.Month)
         ) {
             year = 2000;
         }
@@ -1288,28 +1272,6 @@ export class DateTimePicker extends ManageHelpText(
             .find((part) => part.type === segment.type)!.value;
 
         segment.formatted = formatted?.padStart(padMaxLength, '0');
-    }
-
-    /**
-     * Returns the placeholder that will be used according to the segment type
-     *
-     * @param type - Type of segment
-     * @param value - The value of the segment
-     */
-    private getPlaceholder(
-        type: Intl.DateTimeFormatPartTypes,
-        value: string
-    ): string | undefined {
-        switch (type) {
-            case 'literal':
-                return undefined;
-            case 'dayPeriod':
-                return value;
-            case 'year':
-                return '––––';
-            default:
-                return '––';
-        }
     }
 
     /**
@@ -1396,7 +1358,7 @@ export class DateTimePicker extends ManageHelpText(
      */
     private resetHourAndAmPm(): void {
         if (this.amPmSegment) {
-            const amPm = this.getValueAndLimits('dayPeriod');
+            const amPm = this.getValueAndLimits(SegmentType.DayPeriod);
 
             this.amPmSegment.value = amPm.value;
             this.amPmSegment.minValue = amPm.minValue;
@@ -1409,7 +1371,7 @@ export class DateTimePicker extends ManageHelpText(
         }
 
         if (this.hourSegment) {
-            const hour = this.getValueAndLimits('hour');
+            const hour = this.getValueAndLimits(SegmentType.Hour);
 
             this.hourSegment.minValue = hour.minValue;
             this.hourSegment.maxValue = hour.maxValue;

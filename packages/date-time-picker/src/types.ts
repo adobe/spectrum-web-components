@@ -12,44 +12,60 @@ import { DateValue } from '@spectrum-web-components/calendar';
 
 export type DateTimePickerValue = DateValue;
 
-export const dateSegmentTypes: ReadonlyArray<Intl.DateTimeFormatPartTypes> = [
-    'day',
-    'month',
-    'year',
-    'literal',
-];
+export enum SegmentType {
+    Year = 'year',
+    Month = 'month',
+    Day = 'day',
+    Hour = 'hour',
+    Minute = 'minute',
+    Second = 'second',
+    DayPeriod = 'dayPeriod',
+    Literal = 'literal',
+}
 
-export const timeSegmentTypes: ReadonlyArray<Intl.DateTimeFormatPartTypes> = [
-    'hour',
-    'minute',
-    'second',
-    'dayPeriod',
-    'literal',
-];
+export type EditableSegmentType = Exclude<SegmentType, 'literal'>;
 
-type EditableSegmentTypes = Pick<
-    Intl.DateTimeFormatPartTypesRegistry,
-    'day' | 'month' | 'year' | 'hour' | 'minute' | 'second' | 'dayPeriod'
->;
+export const SegmentPlaceholders: Readonly<
+    Record<EditableSegmentType, string>
+> = {
+    [SegmentType.Year]: '––––',
+    [SegmentType.Month]: '––',
+    [SegmentType.Day]: '––',
+    [SegmentType.Hour]: '––',
+    [SegmentType.Minute]: '––',
+    [SegmentType.Second]: '––',
+    [SegmentType.DayPeriod]: 'AM',
+};
 
-export type EditableSegmentType = keyof EditableSegmentTypes;
+export type SegmentPlaceholder =
+    typeof SegmentPlaceholders[EditableSegmentType];
 
-export interface Segment extends Omit<Intl.DateTimeFormatPart, 'value'> {
-    /** A placeholder string for the segment */
-    placeholder?: string;
-
-    /** The formatted text for the segment */
+export interface Segment {
+    type: SegmentType;
     formatted: string;
-
-    /** The numeric value for the segment, if applicable */
+    placeholder?: SegmentPlaceholder;
     value?: number;
-
-    /** The minimum numeric value for the segment, if applicable */
     minValue?: number;
-
-    /** The maximum numeric value for the segment, if applicable */
     maxValue?: number;
 }
+
+export const DateSegmentTypes = {
+    [SegmentType.Day]: SegmentType.Day,
+    [SegmentType.Month]: SegmentType.Month,
+    [SegmentType.Year]: SegmentType.Year,
+} as const;
+
+export const MandatorySegmentTypes = {
+    ...DateSegmentTypes,
+    [SegmentType.Literal]: SegmentType.Literal,
+} as const;
+
+export const TimeSegmentTypes = {
+    [SegmentType.Hour]: SegmentType.Hour,
+    [SegmentType.Minute]: SegmentType.Minute,
+    [SegmentType.Second]: SegmentType.Second,
+    [SegmentType.DayPeriod]: SegmentType.DayPeriod,
+} as const;
 
 /**
  * Value and limits of a segment. They are all optional, as literal segments have none of these properties
