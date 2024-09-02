@@ -5348,6 +5348,9 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-9.0.8.tgz#6af3bcdace903b8461f5fcd4c9aa23e70128a456"
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
+"@spectrum-web-components/eslint-plugin@file:./linters/eslint":
+  version "0.47.0"
+
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"
   resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-7.6.19.tgz#8b684edfb3a387d24398e81517dc734f0b76a1db"
