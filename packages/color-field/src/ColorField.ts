@@ -49,7 +49,7 @@ export class ColorField extends TextfieldBase {
 
     private cachedColor: string | null = null;
 
-    private getColorValue(): string {
+    public getColorValue(): string {
         if (!this.value) {
             return '';
         }
