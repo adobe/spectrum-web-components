@@ -29,6 +29,10 @@
             "development": "./src/Color.dev.js",
             "default": "./src/Color.js"
         },
+        "./src/ColorController.js": {
+            "development": "./src/ColorController.dev.js",
+            "default": "./src/ColorController.js"
+        },
         "./src/DependencyManger.js": {
             "development": "./src/DependencyManger.dev.js",
             "default": "./src/DependencyManger.js"
