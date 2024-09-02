@@ -706,10 +706,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected hasRenderedOverlay = false;
 
-    private onScroll(): void {
-        this.dispatchEvent(new Event('scroll', { composed: true }));
-    }
-
     protected get renderMenu(): TemplateResult {
         const menu = html`
             <sp-menu
@@ -720,7 +716,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
                 }}
-                @scroll=${this.onScroll}
                 role=${this.listRole}
                 .selects=${this.selects}
                 .selected=${this.value ? [this.value] : []}
