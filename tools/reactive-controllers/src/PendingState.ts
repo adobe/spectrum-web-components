@@ -67,29 +67,25 @@ export class PendingStateController<T extends HostWithPendingState>
      * Updates the ARIA label of the host element based on the pending state.
      * Manages Cached Aria Label
      */
-    private updateAriaLabel(): void {
-        if (
-            this.host.pending &&
-            !this.host.disabled &&
-            this.host.getAttribute('aria-label') != this.host.pendingLabel
-        ) {
-            this.cachedAriaLabel = this.host.getAttribute('aria-label');
-            this.host.setAttribute(
-                'aria-label',
-                this.host.pendingLabel || 'Pending'
-            );
-        } else if (!this.host.pending) {
-            if (this.cachedAriaLabel) {
-                this.host.setAttribute('aria-label', this.cachedAriaLabel);
-            } else {
-                this.host.removeAttribute('aria-label');
-            }
-        } else if (this.host.disabled) {
-            if (this.cachedAriaLabel) {
-                this.host.setAttribute('aria-label', this.cachedAriaLabel);
-            }
+   private updateAriaLabel(): void {
+    const { pending, disabled, pendingLabel } = this.host;
+    const currentAriaLabel = this.host.getAttribute('aria-label');
+
+    if (pending && !disabled && currentAriaLabel !== pendingLabel) {
+        // Cache the current `aria-label` to be restored when no longer `pending`
+        this.cachedAriaLabel = currentAriaLabel;
+        // Since it is pending, we set the aria-label to `pendingLabel` or "Pending"
+        this.host.setAttribute('aria-label', pendingLabel || 'Pending');
+    } else if (!pending || disabled) {
+        // Restore the cached `aria-label` if it exists
+        if (this.cachedAriaLabel) {
+            this.host.setAttribute('aria-label', this.cachedAriaLabel);
+        } else if (!pending) {
+            // If no cached `aria-label` and not `pending`, remove the `aria-label`
+            this.host.removeAttribute('aria-label');
         }
     }
+}
 
     hostConnected(): void {
         if (!this.cachedAriaLabel)
