@@ -25,7 +25,6 @@ import {
     ifDefined,
     StyleInfo,
     styleMap,
-    when,
 } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
@@ -434,9 +433,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                           ></sp-icon-alert>
                       `
                     : nothing}
-                ${when(this.pending, () => {
-                    return this.pendingStateController.renderPendingState();
-                })}
+                ${this.pendingStateController.renderPendingState()}
                 <sp-icon-chevron100
                     class="picker ${chevronClass[
                         this.size as DefaultElementSize

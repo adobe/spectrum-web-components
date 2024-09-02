@@ -52,40 +52,42 @@ export class PendingStateController<T extends HostWithPendingState>
      */
     public renderPendingState(): TemplateResult {
         const pendingLabel = this.host.pendingLabel || 'Pending';
-        return html`
-            <sp-progress-circle
-                id="loader"
-                size="s"
-                indeterminate
-                aria-valuetext=${pendingLabel}
-                class="progress-circle"
-            ></sp-progress-circle>
-        `;
+        return this.host.pending
+            ? html`
+                  <sp-progress-circle
+                      id="loader"
+                      size="s"
+                      indeterminate
+                      aria-valuetext=${pendingLabel}
+                      class="progress-circle"
+                  ></sp-progress-circle>
+              `
+            : html``;
     }
 
     /**
      * Updates the ARIA label of the host element based on the pending state.
      * Manages Cached Aria Label
      */
-   private updateAriaLabel(): void {
-    const { pending, disabled, pendingLabel } = this.host;
-    const currentAriaLabel = this.host.getAttribute('aria-label');
+    private updateAriaLabel(): void {
+        const { pending, disabled, pendingLabel } = this.host;
+        const currentAriaLabel = this.host.getAttribute('aria-label');
 
-    if (pending && !disabled && currentAriaLabel !== pendingLabel) {
-        // Cache the current `aria-label` to be restored when no longer `pending`
-        this.cachedAriaLabel = currentAriaLabel;
-        // Since it is pending, we set the aria-label to `pendingLabel` or "Pending"
-        this.host.setAttribute('aria-label', pendingLabel || 'Pending');
-    } else if (!pending || disabled) {
-        // Restore the cached `aria-label` if it exists
-        if (this.cachedAriaLabel) {
-            this.host.setAttribute('aria-label', this.cachedAriaLabel);
-        } else if (!pending) {
-            // If no cached `aria-label` and not `pending`, remove the `aria-label`
-            this.host.removeAttribute('aria-label');
+        if (pending && !disabled && currentAriaLabel !== pendingLabel) {
+            // Cache the current `aria-label` to be restored when no longer `pending`
+            this.cachedAriaLabel = currentAriaLabel;
+            // Since it is pending, we set the aria-label to `pendingLabel` or "Pending"
+            this.host.setAttribute('aria-label', pendingLabel || 'Pending');
+        } else if (!pending || disabled) {
+            // Restore the cached `aria-label` if it exists
+            if (this.cachedAriaLabel) {
+                this.host.setAttribute('aria-label', this.cachedAriaLabel);
+            } else if (!pending) {
+                // If no cached `aria-label` and not `pending`, remove the `aria-label`
+                this.host.removeAttribute('aria-label');
+            }
         }
     }
-}
 
     hostConnected(): void {
         if (!this.cachedAriaLabel)

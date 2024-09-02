@@ -27,7 +27,6 @@ import {
     ifDefined,
     live,
     repeat,
-    when,
 } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
@@ -427,9 +426,7 @@ export class Combobox extends Textfield {
                 ?required=${this.required}
                 ?readonly=${this.readonly}
             />
-            ${when(this.pending && !this.disabled && !this.readonly, () => {
-                return this.pendingStateController.renderPendingState();
-            })}
+            ${this.pendingStateController.renderPendingState()}
         `;
     }
 

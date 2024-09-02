@@ -21,7 +21,6 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from './ButtonBase.js';
 import buttonStyles from './button.css.js';
 import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
-import { when } from '@spectrum-web-components/base/src/directives.js';
 
 export type DeprecatedButtonVariants = 'cta' | 'overBackground';
 export type ButtonStatics = 'white' | 'black';
@@ -184,9 +183,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     protected override renderButton(): TemplateResult {
         return html`
             ${this.buttonContent}
-            ${when(this.pending, () => {
-                return this.pendingStateController.renderPendingState();
-            })}
+            ${this.pendingStateController.renderPendingState()}
         `;
     }
 }
