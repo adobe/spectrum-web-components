@@ -309,7 +309,7 @@ export const withShortCut = (props: Properties): TemplateResult => {
             secondary-cta="Previous"
             current-step=${currentStep}
             total-steps=${totalSteps}
-            shortcut-key="Z"
+            shortcut-key="M"
             .content=${{
                 title: 'Coachmark Shortcut',
                 description:

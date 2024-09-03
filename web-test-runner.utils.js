@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { playwrightLauncher } from '@web/test-runner-playwright';
+import { devices, playwrightLauncher } from '@web/test-runner-playwright';
 import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 import fs from 'fs';
 import path from 'path';
@@ -113,6 +113,16 @@ export const webkit = playwrightLauncher({
         }),
 });
 
+export const webkitMobile = playwrightLauncher({
+    product: 'webkit',
+    concurrency: 4,
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+            ...devices['iPhone X'],
+        }),
+});
+
 const tools = fs
     .readdirSync('tools')
     .filter((dir) => fs.statSync(`tools/${dir}`).isDirectory());
@@ -183,7 +193,7 @@ themeVariants.forEach((themeVariant) => {
                     name: `vrt-${themeVariant}-${color}-${scale}-${dir}`,
                     files: '(packages|tools)/*/test/*.test-vrt.js',
                     testRunnerHtml: testHTML,
-                    browsers: [chromium],
+                    browsers: [chromium, webkitMobile],
                 });
             });
         });
@@ -201,7 +211,7 @@ vrtGroups = [
                 testRunnerHtml: vrtHTML({
                     reduceMotion: true,
                 }),
-                browsers: [chromium],
+                browsers: [chromium, webkitMobile],
             });
             acc.push({
                 name: `vrt-${pkg}-single`,
@@ -213,7 +223,7 @@ vrtGroups = [
                     dir: 'ltr',
                     reduceMotion: true,
                 }),
-                browsers: [chromium],
+                browsers: [chromium, webkitMobile],
             });
         }
         return acc;
@@ -229,7 +239,28 @@ vrtGroups = [
             hcm: true,
             reduceMotion: true,
         }),
-        browsers: [chromium],
+        browsers: [chromium, webkitMobile],
+    },
+    {
+        name: `vrt-mobile`,
+        files: '(packages|tools)/*/test/*.test-vrt.js',
+        testRunnerHtml: vrtHTML({
+            themeVariant: 'spectrum',
+            color: 'dark',
+            scale: 'medium',
+            dir: 'ltr',
+            hcm: true,
+            reduceMotion: true,
+        }),
+        browsers: [
+            playwrightLauncher({
+                product: 'webkit',
+                createBrowserContext: ({ browser }) =>
+                    browser.newContext({
+                        ...devices['iPhone X'],
+                    }),
+            }),
+        ],
     },
 ];
 

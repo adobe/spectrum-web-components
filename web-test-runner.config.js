@@ -24,6 +24,7 @@ import {
     packages,
     vrtGroups,
     webkit,
+    webkitMobile,
 } from './web-test-runner.utils.js';
 import { fromRollup } from '@web/dev-server-rollup';
 import rollupJson from '@rollup/plugin-json';
@@ -138,7 +139,7 @@ export default {
                 'packages/split-button/test/*.test.js',
                 'packages/tooltip/test/*.test.js',
             ],
-            browsers: [chromium, firefox, webkit],
+            browsers: [chromium, firefox, webkit, webkitMobile],
         },
         {
             name: 'memory',
@@ -167,5 +168,5 @@ export default {
         },
     ],
     group: 'unit',
-    browsers: [firefox, chromiumWithMemoryTooling, webkit],
+    browsers: [firefox, chromiumWithMemoryTooling, webkit, webkitMobile],
 };
