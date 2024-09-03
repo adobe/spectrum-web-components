@@ -4975,10 +4975,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/quickaction/-/quickaction-3.1.1.tgz#1095cc68b6e182721aa141d490b79f6ed6ca1d6d"
   integrity sha512-PCp/83ctAWrYlDYjZU+9vRMLte2GBaxiKOBvm1g9UH0XqTvocjlyVRNIvVbE0ywdefVtbKGFr30x+Yk9HTdaRQ==
 
-"@spectrum-css/radio@^9.1.0":
-  version "9.2.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-9.2.2.tgz#3c0dbc6ca17444be333d0f335025659da50b46aa"
-  integrity sha512-jQjXJVGYrulJHYFsdNc9xTvvQj8kEg/TVHOjpkyI2XkzvWiuXbh4eeMb8xaD3SmcKZ2hrArcNaZoYqIYYmTuuQ==
+"@spectrum-css/radio@^9.2.3":
+  version "9.2.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-9.2.3.tgz#1e0f60134fd76089f166ebac3d4b41bbc9cb9cc9"
+  integrity sha512-1yteEEZ3KsFECE+2CKkD/C+H7aESouqpEOQsc7bNhl9t89E4wIycGF5T54GOrGuRm1ztSike9p7kKndAtaKC7Q==
 
 "@spectrum-css/search@^7.1.0":
   version "7.1.2"
