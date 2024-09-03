@@ -170,7 +170,13 @@ governing permissions and limitations under the License.
 :host([readonly][checked][disabled]) #input ~ #label,
 :host([readonly][disabled]) #input ~ #label,
 :host([readonly]) #label {
-    color: inherit;
+    color: var(
+        --highcontrast-radio-neutral-content-color,
+        var(
+            --mod-radio-neutral-content-color,
+            var(--spectrum-radio-neutral-content-color)
+        )
+    );
     margin-inline-start: auto;
 }
 
@@ -297,7 +303,7 @@ governing permissions and limitations under the License.
   transform: translateX(-50%)translateY(-50%);
 }
 
-#button:dir(rtl):after,
+:host:dir(rtl) #button:after,
 :host([dir='rtl']) #button:after {
     transform: translateX(50%) translateY(-50%);
 }
