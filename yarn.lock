@@ -5218,10 +5218,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/quickaction/-/quickaction-3.1.1.tgz#1095cc68b6e182721aa141d490b79f6ed6ca1d6d"
   integrity sha512-PCp/83ctAWrYlDYjZU+9vRMLte2GBaxiKOBvm1g9UH0XqTvocjlyVRNIvVbE0ywdefVtbKGFr30x+Yk9HTdaRQ==
 
-"@spectrum-css/radio@^9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-9.1.0.tgz#62c16073515aeda494d5c9e0f2c9aac33d9a2e6c"
-  integrity sha512-rCBt1YYp+azFFbUYwmK7G1SztgDKW04F2Kq73vC2qIaiKik8KpYJdmG86xdqRmuXn6cOqN3Qi0NHQR/4f3OoyA==
+"@spectrum-css/radio@^9.2.3":
+  version "9.2.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-9.2.3.tgz#1e0f60134fd76089f166ebac3d4b41bbc9cb9cc9"
+  integrity sha512-1yteEEZ3KsFECE+2CKkD/C+H7aESouqpEOQsc7bNhl9t89E4wIycGF5T54GOrGuRm1ztSike9p7kKndAtaKC7Q==
 
 "@spectrum-css/search@^7.1.0":
   version "7.1.0"
