@@ -7617,15 +7617,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/radio@npm:^9.1.0":
-  version: 9.1.0
-  resolution: "@spectrum-css/radio@npm:9.1.0"
-  peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/64fcbdfce22b0d980c6a810795ffe3ad4f1748e833632d1faad6db8a1c129a34ab7b576c8be19c5e12af02d7eb1944ae46297cb983235987db81e0ab01c4188b
-  languageName: node
-  linkType: hard
+"@spectrum-css/radio@^9.2.3":
+  version "9.2.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-9.2.3.tgz#1e0f60134fd76089f166ebac3d4b41bbc9cb9cc9"
+  integrity sha512-1yteEEZ3KsFECE+2CKkD/C+H7aESouqpEOQsc7bNhl9t89E4wIycGF5T54GOrGuRm1ztSike9p7kKndAtaKC7Q==
 
 "@spectrum-css/search@npm:^7.1.0":
   version: 7.1.0
