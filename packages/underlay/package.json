@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/underlay",
-    "version": "0.47.1",
+    "version": "0.47.2",
     "publishConfig": {
         "access": "public"
     },
@@ -57,7 +57,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.47.1"
+        "@spectrum-web-components/base": "^0.47.2"
     },
     "devDependencies": {
         "@spectrum-css/underlay": "^4.1.0"

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
+
+### Bug Fixes
+
+-   **slider:** update variant attribute correctly ([#4714](https://github.com/adobe/spectrum-web-components/issues/4714)) ([9c22dd6](https://github.com/adobe/spectrum-web-components/commit/9c22dd6b749a3c80dc516db616f8ac68d30136cf))
+
 ## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
 
 ### Bug Fixes
