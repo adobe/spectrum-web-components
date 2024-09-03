@@ -167,9 +167,17 @@ governing permissions and limitations under the License.
   inset-inline-end: 100%;
 }
 
-:host([readonly][checked][disabled]) #input ~ #label, :host([readonly][disabled]) #input ~ #label, :host([readonly]) #label {
-  color: var(--highcontrast-radio-neutral-content-color, var(--mod-radio-neutral-content-color, var(--spectrum-radio-neutral-content-color)));
-  margin-inline-start: auto;
+:host([readonly][checked][disabled]) #input ~ #label,
+:host([readonly][disabled]) #input ~ #label,
+:host([readonly]) #label {
+    color: var(
+        --highcontrast-radio-neutral-content-color,
+        var(
+            --mod-radio-neutral-content-color,
+            var(--spectrum-radio-neutral-content-color)
+        )
+    );
+    margin-inline-start: auto;
 }
 
 :host([emphasized][checked]) #input + #button:before {
@@ -295,8 +303,9 @@ governing permissions and limitations under the License.
   transform: translateX(-50%)translateY(-50%);
 }
 
-:host:dir(rtl) #button:after, :host([dir="rtl"]) #button:after {
-  transform: translateX(50%)translateY(-50%);
+:host:dir(rtl) #button:after,
+:host([dir='rtl']) #button:after {
+    transform: translateX(50%) translateY(-50%);
 }
 
 :host {
