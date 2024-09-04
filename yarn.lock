@@ -2686,9 +2686,9 @@
   integrity sha512-mtup3wVKia3ZwULPHcbs4Mor8Voi+iIXEWD7wCNbIO6lYR62oPCTQyrddi5OMYVXHzeCSoneZwJuS8sBvlEwDw==
 
 "@internationalized/number@^3.1.0":
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/@internationalized/number/-/number-3.5.2.tgz#2edc8e830268dca7283dad6def728f34eb5b7fdc"
-  integrity sha512-4FGHTi0rOEX1giSkt5MH4/te0eHBq3cvAYsfLlpguV6pzJAReXymiYpE5wPCqKqjkUO3PIsyvk+tBiIV1pZtbA==
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/@internationalized/number/-/number-3.5.3.tgz#9fa060c1c4809f23fb3d38dd3f3d1ae4c87e95a8"
+  integrity sha512-rd1wA3ebzlp0Mehj5YTuTI50AQEx80gWFyHcQu+u91/5NgdwBecO8BH6ipPfE+lmQ9d63vpB3H9SHoIUiupllw==
   dependencies:
     "@swc/helpers" "^0.5.0"
 
@@ -5203,10 +5203,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-7.1.0.tgz#2d55745f3dbae32cc9413ee05e806115443c70ea"
   integrity sha512-j7jyZtFlio5w8nEkttG/kyb25QpBlZkF0YIKzfkAtp5sZ13b4A7p6CFHYlEPqo8j1YvsUBH8wb43EY5hooG9yg==
 
-"@spectrum-css/progressbar@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-4.1.0.tgz#3921f961d9edb8683e32812db134f405e4e37172"
-  integrity sha512-eJ+kY/zbm3MSPrqPl82uLg/QsQV04bxV+vzQi8U5931xi3PLZ2zxuKCMIvj2r3KvHQUw62gcRp0oA4t4zAlzKg==
+"@spectrum-css/progressbar@^4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-4.1.5.tgz#e01bfbc5daf59f5ac054c8179da3236a4cc0cf2c"
+  integrity sha512-EM012emG6anGkm+dDBGv3z/32ABALLtXXVGoSoQtXiMAHAmjd1x51Dqh28MZsbX6tX7CccfzW3TdBaz+HC2WNg==
 
 "@spectrum-css/progresscircle@^3.1.0":
   version "3.1.0"
@@ -5218,10 +5218,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/quickaction/-/quickaction-3.1.1.tgz#1095cc68b6e182721aa141d490b79f6ed6ca1d6d"
   integrity sha512-PCp/83ctAWrYlDYjZU+9vRMLte2GBaxiKOBvm1g9UH0XqTvocjlyVRNIvVbE0ywdefVtbKGFr30x+Yk9HTdaRQ==
 
-"@spectrum-css/radio@^9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-9.1.0.tgz#62c16073515aeda494d5c9e0f2c9aac33d9a2e6c"
-  integrity sha512-rCBt1YYp+azFFbUYwmK7G1SztgDKW04F2Kq73vC2qIaiKik8KpYJdmG86xdqRmuXn6cOqN3Qi0NHQR/4f3OoyA==
+"@spectrum-css/radio@^9.2.3":
+  version "9.2.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-9.2.3.tgz#1e0f60134fd76089f166ebac3d4b41bbc9cb9cc9"
+  integrity sha512-1yteEEZ3KsFECE+2CKkD/C+H7aESouqpEOQsc7bNhl9t89E4wIycGF5T54GOrGuRm1ztSike9p7kKndAtaKC7Q==
 
 "@spectrum-css/search@^7.1.0":
   version "7.1.0"
@@ -5233,10 +5233,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/sidenav/-/sidenav-5.1.0.tgz#dee43b8e377c5f349f810540885e296b7c8741c1"
   integrity sha512-gV5KH03P+hj1pIFtWKi73TKiFth5gjEyZ8F+SpZ9hfQK3BRNtrbp8IulOW+d8My0bQlO+SloHxgYQYTHFthkuw==
 
-"@spectrum-css/slider@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-5.1.0.tgz#e49d4062bf5482f5e47df12689e040a048164103"
-  integrity sha512-h+mB/ft0tGGHuxN7oXmB3QyaQANWB4BxQCT7/C9oRt3Nao/oM51E1WsOHaW9H+w7E1hSXRpOBxOI24Xfo4ZHiw==
+"@spectrum-css/slider@^5.2.4":
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-5.2.4.tgz#5906629ff05974901463c31f0b5ea7ef2ee4d577"
+  integrity sha512-5cgJYmHOWXOaCB5OsW6en/mx2CoV/m9FR+Sm9yz9zsY2uBAFf5YWGhG8ahNQeDRLUQMPVOEbSGGwKPSitd/ojw==
 
 "@spectrum-css/splitbutton@^8.1.2":
   version "8.1.2"
@@ -5349,7 +5349,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.47.0"
+  version "0.47.1"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"
@@ -5931,19 +5931,12 @@
   resolved "https://registry.yarnpkg.com/@swc/counter/-/counter-0.1.3.tgz#cc7463bd02949611c6329596fccd2b0ec782b0e9"
   integrity sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==
 
-"@swc/helpers@0.5.5":
+"@swc/helpers@0.5.5", "@swc/helpers@^0.5.0":
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.5.5.tgz#12689df71bfc9b21c4f4ca00ae55f2f16c8b77c0"
   integrity sha512-KGYxvIOXcceOAbEk4bi/dVLEK9z8sZ0uBB3Il5b1rhfClSpcX0yfRO0KmTkqR2cnQDymwLB+25ZyMzICg/cm/A==
   dependencies:
     "@swc/counter" "^0.1.3"
-    tslib "^2.4.0"
-
-"@swc/helpers@^0.5.0":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.5.2.tgz#85ea0c76450b61ad7d10a37050289eded783c27d"
-  integrity sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==
-  dependencies:
     tslib "^2.4.0"
 
 "@szmarczak/http-timer@^5.0.1":
@@ -8470,10 +8463,19 @@ axe-core@^4.2.0, axe-core@^4.3.3:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.9.0.tgz#b18971494551ab39d4ff5f7d4c6411bd20cc7c2a"
   integrity sha512-H5orY+M2Fr56DWmMFpMrq5Ge93qjNdPVqzBv5gWK3aD1OvjBEJlEzxf09z93dGVQeI0LiW+aCMIx1QtShC/zUw==
 
-axios@^1.6.0, axios@^1.6.7:
+axios@^1.6.0:
   version "1.6.8"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.8.tgz#66d294951f5d988a00e87a0ffb955316a619ea66"
   integrity sha512-v/ZHtJDU39mDpyBoFVkETcd/uNdxrWRrg3bKpOKzXFA6Bvqopts6ALSMU3y6ijYxbw2B+wPrIv46egTzJXCLGQ==
+  dependencies:
+    follow-redirects "^1.15.6"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
+
+axios@^1.7.4:
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.7.tgz#2f554296f9892a72ac8d8e4c5b79c14a91d0a47f"
+  integrity sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==
   dependencies:
     follow-redirects "^1.15.6"
     form-data "^4.0.0"
@@ -9371,13 +9373,13 @@ chrome-trace-event@^1.0.2:
   dependencies:
     tslib "^1.9.0"
 
-chromedriver@^126.0.2:
-  version "126.0.2"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-126.0.2.tgz#0c0840cd1ba00b73fa16d4292fa739860ee20ec8"
-  integrity sha512-61R0w7C+uJVCykabdqWsvitne2rg3MTI8xOKJosk+YbKdyLeGHYiCCeU82ZsUY+v9qnN1p48THcthgKubxPRWQ==
+chromedriver@^128.0.1:
+  version "128.0.1"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-128.0.1.tgz#971fb267cc6893a712808cea6c977473ba167145"
+  integrity sha512-UmWqZXXAyuRa37pE+lnU46vJcCM/y0ddF015LHxycEOYfuqsK7k9ZxJuXCQNWbws9e7FAMQj/GJZT92WPgis0g==
   dependencies:
     "@testim/chrome-version" "^1.1.4"
-    axios "^1.6.7"
+    axios "^1.7.4"
     compare-versions "^6.1.0"
     extract-zip "^2.0.1"
     proxy-agent "^6.4.0"
