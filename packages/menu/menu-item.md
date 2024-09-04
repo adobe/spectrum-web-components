@@ -106,6 +106,24 @@ An `<sp-menu-item>` can also accept content addressed to its `submenu` slot. Usi
 </sp-menu>
 ```
 
+Note: `sp-menu-item` can support any arbitrary content in the `submenu` slot, but in that case, it will not manage selection or keyboard navigation. It is recommended to use `sp-menu` in the `submenu` slot to ensure proper keyboard navigation and selection management.
+
+```html
+<sp-menu style="width: 200px;">
+    <sp-menu-item>
+        Item with arbitrary content in submenu
+        <div role="menuitem" slot="submenu" style="padding: 12px">
+            <img
+                src="https://placekitten.com/200/200"
+                alt="Kitten"
+                style="width: 100%; height: auto; border-radius: 4px"
+            />
+            <p>I am an arbitrary content in submenu</p>
+        </div>
+    </sp-menu-item>
+</sp-menu>
+```
+
 ### Value attribute
 
 When displayed as a descendent of an element that manages selection (e.g. `<sp-action-menu>`, `<sp-picker>`, `<sp-split-button>`, etc.), an `<sp-menu-item>` will represent the "selected" value of that ancestor when its `value` attribute or the trimmed `textContent` (represeted by `el.itemText`) matches the `value` of the ancestor element.
