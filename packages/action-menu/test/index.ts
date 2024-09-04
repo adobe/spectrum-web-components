@@ -39,6 +39,7 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 import type { TestablePicker } from '../../picker/test/index.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
 import { sendKeys } from '@web/test-runner-commands';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -686,6 +687,37 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.open).to.be.false;
             await aTimeout(50);
             expect(el.open).to.be.false;
+        });
+        it('should handle scroll event', async () => {
+            const renderMenuItems = (): TemplateResult[] =>
+                Array.from(
+                    { length: 30 },
+                    (_, i) => html`
+                        <sp-menu-item style="width: 100%;">
+                            Menu Item ${i + 1}
+                        </sp-menu-item>
+                    `
+                );
+            const handleActionMenuScroll = spy();
+            const el = await fixture<ActionMenu>(html`
+                <sp-action-menu @scroll=${() => handleActionMenuScroll()}>
+                    <span slot="label">More Actions</span>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    ${renderMenuItems()}
+                </sp-action-menu>
+            `);
+
+            await elementUpdated(el);
+
+            expect(handleActionMenuScroll.called).to.be.false;
+
+            el.dispatchEvent(
+                new Event('scroll', { cancelable: true, composed: true })
+            );
+            expect(handleActionMenuScroll).to.have.been.called;
         });
     });
 };
