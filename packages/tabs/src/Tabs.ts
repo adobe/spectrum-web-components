@@ -235,12 +235,26 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return this.rovingTabindexController.focusInElement || this;
     }
 
+    private limitDelta(min: number, max: number) {
+        return (delta: number): number => Math.min(Math.max(delta, min), max);
+    }
+
     public scrollTabs(
         delta: number,
         behavior: ScrollBehavior = 'smooth'
     ): void {
+        if (delta === 0) return;
+
+        const { scrollLeft, clientWidth, scrollWidth } = this.tabList;
+        const dirLimit = scrollWidth - clientWidth - Math.abs(scrollLeft);
+
+        const limitDelta =
+            this.dir === 'ltr'
+                ? this.limitDelta(-scrollLeft, dirLimit)
+                : this.limitDelta(-dirLimit, Math.abs(scrollLeft));
+
         this.tabList?.scrollBy({
-            left: delta,
+            left: limitDelta(delta),
             top: 0,
             behavior,
         });
