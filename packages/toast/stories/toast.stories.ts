@@ -110,6 +110,13 @@ export const Negative = (args: Properties): TemplateResult =>
 export const Info = (args: Properties): TemplateResult =>
     variantDemo({ ...args, variant: 'info' });
 
+export const WrapLongText = (args: Properties): TemplateResult =>
+    variantDemo({
+        ...args,
+        content:
+            "This is a very long sentence and since the tray supports wrapping of the content, the UI won't break and it would look just fine.",
+    });
+
 const overlayStyles = html`
     <style>
         html,
