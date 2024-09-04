@@ -1074,7 +1074,7 @@ describe('Submenu', () => {
                 <sp-menu-item class="root">
                     Has submenu
                     <div role="menuitem" slot="submenu">
-                        <sp-menu-item>One</sp-menu-item>
+                        <sp-menu-item class="submenu-1">One</sp-menu-item>
                         <sp-menu-item>Two</sp-menu-item>
                         <sp-menu-item>Three</sp-menu-item>
                     </div
