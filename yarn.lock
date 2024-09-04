@@ -5349,7 +5349,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.47.1"
+  version "0.47.2"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"
@@ -9694,7 +9694,7 @@ colorette@^2.0.10, colorette@^2.0.14, colorette@^2.0.20:
 
 colorjs.io@^0.5.2:
   version "0.5.2"
-  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-virtual/colorjs.io/-/colorjs.io-0.5.2.tgz#63b20139b007591ebc3359932bef84628eb3fcef"
+  resolved "https://registry.yarnpkg.com/colorjs.io/-/colorjs.io-0.5.2.tgz#63b20139b007591ebc3359932bef84628eb3fcef"
   integrity sha512-twmVoizEW7ylZSN32OgKdXRmo1qg+wT5/6C3xu5b9QsWzSFAhHLn2xd8ro0diCsKfCj1RdaTP/nrcW+vAoQPIw==
 
 colors-option@^3.0.0:
