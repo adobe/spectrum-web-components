@@ -70,7 +70,15 @@ export function expectOnlySegmentsSet(
     expect(areOnlySegmentsSet).to.be.true;
 }
 
-export function arePlaceholdersShown(
+export function expectPlaceholders(
+    editableSegments: EditableSegments,
+    exceptions: HTMLElement[] = []
+): void {
+    const arePlaceholders = arePlaceholdersShown(editableSegments, exceptions);
+    expect(arePlaceholders).to.be.true;
+}
+
+function arePlaceholdersShown(
     segments: HTMLElement[],
     exceptions: HTMLElement[] = []
 ): boolean {

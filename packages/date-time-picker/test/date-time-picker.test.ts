@@ -22,6 +22,7 @@ import { CalendarDateTime } from '@internationalized/date';
 import {
     type EditableSegments,
     expectOnlySegmentsSet,
+    expectPlaceholders,
     fixtureElement,
     getEditableSegments,
     sendKeyMultipleTimes,
@@ -402,8 +403,8 @@ describe('DateTimePicker', () => {
             });
 
             describe("resetting segment's value to minimum", () => {
-                beforeEach(async () => {
-                    const value = new CalendarDateTime(
+                describe('with a defined date value', () => {
+                    let value = new CalendarDateTime(
                         fixedYear,
                         fixedMonth,
                         fixedDay,
@@ -411,84 +412,217 @@ describe('DateTimePicker', () => {
                         15,
                         15
                     );
-                    element = await fixtureElement({
-                        props: {
-                            value,
-                            precision: 'day', // TODO: looks like it's not working
-                        },
-                    });
-                    await elementUpdated(element);
-                    editableSegments = getEditableSegments(element);
-                });
 
-                it('when the max year is reached', async () => {
-                    const currentValue = element.value!;
-                    const max =
-                        currentValue.calendar.getYearsInEra(currentValue);
-                    element.value = currentValue.set({ year: max });
-                    await elementUpdated(element);
-                    const segment = editableSegments.getByType(
-                        SegmentType.Year
-                    );
-
-                    segment.focus();
-                    await sendKeys({ press: 'ArrowUp' });
-                    await elementUpdated(element);
-
-                    expect(segment.innerText).to.equal('1');
-                });
-
-                it('when the max month is reached', async () => {
-                    const currentValue = element.value!;
-                    const max =
-                        currentValue.calendar.getMonthsInYear(currentValue);
-                    element.value = currentValue.set({ month: max });
-                    await elementUpdated(element);
-                    const segment = editableSegments.getByType(
-                        SegmentType.Month
-                    );
-
-                    segment.focus();
-                    await sendKeys({ press: 'ArrowUp' });
-                    await elementUpdated(element);
-
-                    expect(segment.innerText).to.equal('01');
-                });
-
-                it('when the max day is reached', async () => {
-                    const currentValue = element.value!;
-                    const max =
-                        currentValue.calendar.getDaysInMonth(currentValue);
-                    element.value = currentValue.set({ day: max });
-                    await elementUpdated(element);
-                    const segment = editableSegments.getByType(SegmentType.Day);
-
-                    segment.focus();
-                    await sendKeys({ press: 'ArrowUp' });
-                    await elementUpdated(element);
-
-                    expect(segment.innerText).to.equal('01');
-                });
-
-                [SegmentType.Minute, SegmentType.Second].forEach(
-                    (segmentType) => {
-                        it(`when the max ${segmentType} is reached`, async () => {
-                            // TODO: fix for 'second' because value of given type overrides precision to 'second'.
-                            const currentValue = element.value!;
-                            element.value = currentValue.set({ minute: 59 });
-                            await elementUpdated(element);
-                            const segment = editableSegments.getByType(
-                                segmentType as EditableSegmentType
-                            );
-
-                            segment.focus();
-                            await sendKeys({ press: 'ArrowUp' });
-                            await elementUpdated(element);
-
-                            expect(segment.innerText).to.equal('00');
+                    it('when the max year is reached', async () => {
+                        element = await fixtureElement({
+                            props: {
+                                value,
+                            },
                         });
-                    }
-                );
+                        await elementUpdated(element);
+                        editableSegments = getEditableSegments(element);
+
+                        const max = value.calendar.getYearsInEra(value);
+                        element.value = value.set({ year: max });
+                        await elementUpdated(element);
+                        const segment = editableSegments.getByType(
+                            SegmentType.Year
+                        );
+
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal('1');
+                    });
+
+                    it('when the max month is reached', async () => {
+                        element = await fixtureElement({
+                            props: {
+                                value,
+                            },
+                        });
+                        await elementUpdated(element);
+                        editableSegments = getEditableSegments(element);
+
+                        const max = value.calendar.getMonthsInYear(value);
+                        element.value = value.set({ month: max });
+                        await elementUpdated(element);
+                        const segment = editableSegments.getByType(
+                            SegmentType.Month
+                        );
+
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal('01');
+                    });
+
+                    it('when the max day is reached in a month with 31 days', async () => {
+                        value = new CalendarDateTime(2024, 3, 15, 15, 15, 15);
+                        element = await fixtureElement({
+                            props: {
+                                value,
+                            },
+                        });
+                        await elementUpdated(element);
+                        editableSegments = getEditableSegments(element);
+
+                        element.value = value.set({ day: 31 });
+                        await elementUpdated(element);
+                        const segment = editableSegments.getByType(
+                            SegmentType.Day
+                        );
+
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal('01');
+                    });
+
+                    it('when the max day is reached in February of a common year', async () => {
+                        const commonYear = 2022;
+                        value = new CalendarDateTime(
+                            commonYear,
+                            2,
+                            15,
+                            15,
+                            15,
+                            15
+                        );
+                        element = await fixtureElement({
+                            props: {
+                                value,
+                            },
+                        });
+                        await elementUpdated(element);
+                        editableSegments = getEditableSegments(element);
+
+                        element.value = value.set({ day: 28 });
+                        await elementUpdated(element);
+                        const segment = editableSegments.getByType(
+                            SegmentType.Day
+                        );
+
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal('01');
+                    });
+
+                    it('when the max day is reached in February of a leap year', async () => {
+                        const leapYear = 2024;
+                        value = new CalendarDateTime(
+                            leapYear,
+                            2,
+                            15,
+                            15,
+                            15,
+                            15
+                        );
+                        element = await fixtureElement({
+                            props: {
+                                value,
+                            },
+                        });
+                        await elementUpdated(element);
+                        editableSegments = getEditableSegments(element);
+
+                        element.value = value.set({ day: 29 });
+                        await elementUpdated(element);
+                        const segment = editableSegments.getByType(
+                            SegmentType.Day
+                        );
+
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal('01');
+                    });
+
+                    [SegmentType.Minute, SegmentType.Second].forEach(
+                        (segmentType) => {
+                            it(`when the max ${segmentType} is reached`, async () => {
+                                element = await fixtureElement({
+                                    props: {
+                                        value,
+                                        precision: 'second',
+                                    },
+                                });
+                                await elementUpdated(element);
+                                editableSegments = getEditableSegments(element);
+
+                                const currentValue = element.value!;
+                                element.value = currentValue.set({
+                                    minute: 59,
+                                });
+                                await elementUpdated(element);
+                                const segment = editableSegments.getByType(
+                                    segmentType as EditableSegmentType
+                                );
+
+                                segment.focus();
+                                await sendKeys({ press: 'ArrowUp' });
+                                await elementUpdated(element);
+
+                                expect(segment.innerText).to.equal('00');
+                            });
+                        }
+                    );
+                });
+
+                describe('with no fully defined date value', () => {
+                    it('when the max month is reached', async () => {
+                        const segment = editableSegments.getByType(
+                            SegmentType.Month
+                        );
+
+                        segment.focus();
+                        await sendKeyMultipleTimes('ArrowUp', 12 + 1);
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal(`01`);
+                        expectOnlySegmentsSet(editableSegments, [segment]);
+                    });
+
+                    it('when the max day is reached as a single segment', async () => {
+                        const segment = editableSegments.getByType(
+                            SegmentType.Day
+                        );
+
+                        segment.focus();
+                        await sendKeyMultipleTimes('ArrowUp', 31 + 1);
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal(`01`);
+                        expectOnlySegmentsSet(editableSegments, [segment]);
+                    });
+
+                    it('when the max day is reached in February', async () => {
+                        const daySegment = editableSegments.getByType(
+                            SegmentType.Day
+                        );
+                        const monthSegment = editableSegments.getByType(
+                            SegmentType.Month
+                        );
+                        monthSegment.focus();
+                        await sendKeyMultipleTimes('ArrowUp', 2);
+
+                        daySegment.focus();
+                        await sendKeyMultipleTimes('ArrowUp', 29 + 1);
+                        await elementUpdated(element);
+
+                        expect(daySegment.innerText).to.equal(`01`);
+                        expectOnlySegmentsSet(editableSegments, [
+                            daySegment,
+                            monthSegment,
+                        ]);
+                    });
+                });
             });
         });
 
@@ -787,8 +921,8 @@ describe('DateTimePicker', () => {
             });
 
             describe("resetting segment's value to maximum", () => {
-                beforeEach(async () => {
-                    const value = new CalendarDateTime(
+                describe('with a defined date value', () => {
+                    let value = new CalendarDateTime(
                         fixedYear,
                         fixedMonth,
                         fixedDay,
@@ -796,111 +930,310 @@ describe('DateTimePicker', () => {
                         15,
                         15
                     );
-                    element = await fixtureElement({
-                        props: {
-                            value,
-                            precision: 'second',
-                        },
-                    });
-                    await elementUpdated(element);
-                    editableSegments = getEditableSegments(element);
-                });
 
-                it('when the min year is reached', async () => {
-                    const currentValue = element.value!;
-                    const max =
-                        currentValue.calendar.getYearsInEra(currentValue);
-                    element.value = currentValue.set({ year: 1 });
-                    await elementUpdated(element);
-                    const segment = editableSegments.getByType(
-                        SegmentType.Year
-                    )!;
-
-                    segment.focus();
-                    await sendKeys({ press: 'ArrowDown' });
-                    await elementUpdated(element);
-
-                    expect(segment.innerText).to.equal(`${max}`);
-                });
-
-                it('when the min month is reached', async () => {
-                    const currentValue = element.value!;
-                    const max =
-                        currentValue.calendar.getMonthsInYear(currentValue);
-                    element.value = currentValue.set({ month: 1 });
-                    await elementUpdated(element);
-                    const segment = editableSegments.getByType(
-                        SegmentType.Month
-                    )!;
-
-                    segment.focus();
-                    await sendKeys({ press: 'ArrowDown' });
-                    await elementUpdated(element);
-
-                    expect(segment.innerText).to.equal(`${max}`);
-                });
-
-                it('when the min day is reached', async () => {
-                    const currentValue = element.value!;
-                    const max =
-                        currentValue.calendar.getDaysInMonth(currentValue);
-                    element.value = currentValue.set({ day: 1 });
-                    await elementUpdated(element);
-                    const segment = editableSegments.getByType(
-                        SegmentType.Day
-                    )!;
-
-                    segment.focus();
-                    await sendKeys({ press: 'ArrowDown' });
-                    await elementUpdated(element);
-
-                    expect(segment.innerText).to.equal(`${max}`);
-                });
-
-                [SegmentType.Minute, SegmentType.Second].forEach(
-                    (segmentType) => {
-                        it(`when the min ${segmentType} is reached`, async () => {
-                            const currentValue = element.value!;
-                            element.value = currentValue.set({ minute: 0 });
-                            await elementUpdated(element);
-                            const segment = editableSegments.getByType(
-                                segmentType as EditableSegmentType
-                            );
-
-                            segment.focus();
-                            await sendKeys({ press: 'ArrowDown' });
-                            await elementUpdated(element);
-
-                            expect(segment.innerText).to.equal('59');
+                    it('when the min year is reached', async () => {
+                        element = await fixtureElement({
+                            props: {
+                                value,
+                            },
                         });
-                    }
-                );
+                        await elementUpdated(element);
+                        editableSegments = getEditableSegments(element);
+
+                        const max = value.calendar.getYearsInEra(value);
+                        element.value = value.set({ year: 1 });
+                        await elementUpdated(element);
+                        const segment = editableSegments.getByType(
+                            SegmentType.Year
+                        );
+
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal(`${max}`);
+                    });
+
+                    it('when the min month is reached', async () => {
+                        element = await fixtureElement({
+                            props: {
+                                value,
+                            },
+                        });
+                        await elementUpdated(element);
+                        editableSegments = getEditableSegments(element);
+
+                        const max = value.calendar.getMonthsInYear(value);
+                        element.value = value.set({ month: 1 });
+                        await elementUpdated(element);
+                        const segment = editableSegments.getByType(
+                            SegmentType.Month
+                        );
+
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal(`${max}`);
+                    });
+
+                    it('when the min day is reached in a month with 31 days', async () => {
+                        value = new CalendarDateTime(2024, 3, 15, 15, 15, 15);
+                        element = await fixtureElement({
+                            props: {
+                                value,
+                            },
+                        });
+                        await elementUpdated(element);
+                        editableSegments = getEditableSegments(element);
+
+                        element.value = value.set({ day: 1 });
+                        await elementUpdated(element);
+                        const segment = editableSegments.getByType(
+                            SegmentType.Day
+                        );
+
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal('31');
+                    });
+
+                    it('when the min day is reached in February of a common year', async () => {
+                        const commonYear = 2022;
+                        value = new CalendarDateTime(
+                            commonYear,
+                            2,
+                            15,
+                            15,
+                            15,
+                            15
+                        );
+                        element = await fixtureElement({
+                            props: {
+                                value,
+                            },
+                        });
+                        await elementUpdated(element);
+                        editableSegments = getEditableSegments(element);
+
+                        element.value = value.set({ day: 1 });
+                        await elementUpdated(element);
+                        const segment = editableSegments.getByType(
+                            SegmentType.Day
+                        );
+
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal('28');
+                    });
+
+                    it('when the min day is reached in February of a leap year', async () => {
+                        const leapYear = 2024;
+                        value = new CalendarDateTime(
+                            leapYear,
+                            2,
+                            15,
+                            15,
+                            15,
+                            15
+                        );
+                        element = await fixtureElement({
+                            props: {
+                                value,
+                            },
+                        });
+                        await elementUpdated(element);
+                        editableSegments = getEditableSegments(element);
+
+                        element.value = value.set({ day: 1 });
+                        await elementUpdated(element);
+                        const segment = editableSegments.getByType(
+                            SegmentType.Day
+                        );
+
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal('29');
+                    });
+
+                    [SegmentType.Minute, SegmentType.Second].forEach(
+                        (segmentType) => {
+                            it(`when the min ${segmentType} is reached`, async () => {
+                                element = await fixtureElement({
+                                    props: {
+                                        value,
+                                        precision: 'second',
+                                    },
+                                });
+                                await elementUpdated(element);
+                                editableSegments = getEditableSegments(element);
+
+                                const currentValue = element.value!;
+                                element.value = currentValue.set({
+                                    minute: 0,
+                                });
+                                await elementUpdated(element);
+                                const segment = editableSegments.getByType(
+                                    segmentType as EditableSegmentType
+                                );
+
+                                segment.focus();
+                                await sendKeys({ press: 'ArrowUp' });
+                                await elementUpdated(element);
+
+                                expect(segment.innerText).to.equal('59');
+                            });
+                        }
+                    );
+                });
+
+                describe('with no fully defined date value', () => {
+                    it('when the min month is reached', async () => {
+                        const segment = editableSegments.getByType(
+                            SegmentType.Month
+                        );
+
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+                        await sendKeys({ press: 'ArrowDown' });
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal(`12`);
+                        expectOnlySegmentsSet(editableSegments, [segment]);
+                    });
+
+                    it('when the min day is reached as a single segment', async () => {
+                        const segment = editableSegments.getByType(
+                            SegmentType.Day
+                        );
+
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+                        await sendKeys({ press: 'ArrowDown' });
+                        await elementUpdated(element);
+
+                        expect(segment.innerText).to.equal(`31`);
+                        expectOnlySegmentsSet(editableSegments, [segment]);
+                    });
+
+                    it('when the min day is reached in February', async () => {
+                        const daySegment = editableSegments.getByType(
+                            SegmentType.Day
+                        );
+                        const monthSegment = editableSegments.getByType(
+                            SegmentType.Month
+                        );
+                        monthSegment.focus();
+                        await sendKeyMultipleTimes('ArrowUp', 2);
+
+                        daySegment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+                        await sendKeys({ press: 'ArrowDown' });
+                        await elementUpdated(element);
+
+                        expect(daySegment.innerText).to.equal(`29`);
+                        expectOnlySegmentsSet(editableSegments, [
+                            daySegment,
+                            monthSegment,
+                        ]);
+                    });
+                });
             });
         });
 
         describe('using typed in values', () => {
-            // TODO: should the year be padded as well?
+            Object.values(SegmentType).forEach((segmentType) => {
+                it(`the ${segmentType} segment should ignore initial zeros`, async () => {
+                    const segment = editableSegments.getByType(
+                        segmentType as EditableSegmentType
+                    );
 
-            it("defining the year segment's value", async () => {});
-            it("capping the year segment's value", async () => {});
+                    segment.focus();
+                    await sendKeys({ type: '0' });
+                    await elementUpdated(element);
 
-            it("defining the month segment's value", async () => {});
-            it("capping the month segment's value", async () => {});
+                    expectPlaceholders(editableSegments);
+                });
+            });
 
-            it("defining the day segment's value", async () => {});
-            it("capping the day segment's value", async () => {});
+            it("on the year segment's value", async () => {
+                const segment = editableSegments.getByType(SegmentType.Year);
 
-            it("defining the hour segment's value", async () => {});
-            it("capping the hour segment's value", async () => {});
+                segment.focus();
+                await sendKeys({ type: '2' });
+                await elementUpdated(element);
+                expect(segment.innerText).to.equal('2');
+                await sendKeys({ type: '03' });
+                await elementUpdated(element);
+                expect(segment.innerText).to.equal('203');
+                await sendKeys({ type: '0' });
+                expect(segment.innerText).to.equal('2030');
+                await sendKeys({ type: '5' });
+                expect(segment.innerText).to.equal('305');
 
-            it("defining the minute segment's value", async () => {});
-            it("capping the minute segment's value", async () => {});
+                expectOnlySegmentsSet(editableSegments, [segment]);
+            });
 
-            it("defining the second segment's value", async () => {});
-            it("capping the second segment's value", async () => {});
+            it("on the month segment's value", async () => {
+                const segment = editableSegments.getByType(SegmentType.Month);
 
-            it("defining the AM/PM segment's value using A/P keys", async () => {});
-            it("defining the AM/PM segment's value when the hour is set", async () => {});
+                segment.focus();
+                await sendKeys({ type: '2' });
+                await elementUpdated(element);
+                expect(segment.innerText).to.equal('02');
+                await sendKeys({ type: '4' });
+                expect(segment.innerText).to.equal('04');
+                await sendKeys({ type: '1' });
+                expect(segment.innerText).to.equal('01');
+                await sendKeys({ type: '2' });
+                expect(segment.innerText).to.equal('12');
+                await sendKeys({ type: '9' });
+                expect(segment.innerText).to.equal('09');
+
+                expectOnlySegmentsSet(editableSegments, [segment]);
+            });
+
+            // Maybe this should be tested for arrows as well
+            describe('capping the day to the maximum value of the month', async () => {
+                it('when no month/year is defined', async () => {
+                    const segment = editableSegments.getByType(SegmentType.Day);
+
+                    segment.focus();
+                    await sendKeys({ type: '5' });
+                    await elementUpdated(element);
+                    expect(segment.innerText).to.equal('05');
+                    await sendKeys({ type: '5' });
+                    expect(segment.innerText).to.equal('05');
+                    await sendKeys({ type: '3' });
+                    expect(segment.innerText).to.equal('03');
+                    await sendKeys({ type: '0' });
+                    expect(segment.innerText).to.equal('30');
+
+                    expectOnlySegmentsSet(editableSegments, [segment]);
+                });
+
+                it('when the month is February in a common year', async () => {});
+
+                it('when the month is February in a leap year', async () => {});
+            });
+
+            it("on the hour segment's value", async () => {});
+
+            it("on the minute segment's value", async () => {});
+
+            it("on the second segment's value", async () => {});
+
+            it("on the AM/PM segment's value using A/P keys", async () => {});
+            it("on the AM/PM segment's value when the hour is set", async () => {});
 
             describe('updating the day', () => {
                 it('when the month changes to February with no year selected', async () => {});

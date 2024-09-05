@@ -161,7 +161,7 @@ export class Calendar extends SpectrumElement {
         document.removeEventListener('mousedown', this.resetDateFocusIntent);
     }
 
-    public clear() {
+    public clear(): void {
         this.value = undefined;
     }
 
