@@ -31,19 +31,6 @@ export class LanguageResolutionController implements ReactiveController {
         this.resolveLanguage();
     }
 
-    public hostUpdate(): void {
-        /**
-         * Needed to enable the storybook locale picker in the decorator. This is due to the fact that the
-         * story function is called before the theme's event listener for the language context is set up,
-         * making the initial language resolution to fail because no one catches the event.
-         */
-        if (!this._firstUpdated) {
-            this._firstUpdated = true;
-            this.resolveLanguage();
-        }
-    }
-    private _firstUpdated: boolean = false;
-
     public hostDisconnected(): void {
         this.unsubscribe?.();
     }
