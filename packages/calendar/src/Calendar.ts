@@ -161,6 +161,10 @@ export class Calendar extends SpectrumElement {
         document.removeEventListener('mousedown', this.resetDateFocusIntent);
     }
 
+    public clear() {
+        this.value = undefined;
+    }
+
     constructor() {
         super();
         this.setNumberFormatter();
