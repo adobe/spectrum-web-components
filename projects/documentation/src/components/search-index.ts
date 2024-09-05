@@ -79,8 +79,12 @@ export async function search(value: string): Promise<ResultGroup[]> {
         result.push({ name, results, maxScore });
     }
     result.sort((a, b) => {
-        if (a.maxScore < b.maxScore) return 1;
-        if (a.maxScore > b.maxScore) return -1;
+        if (a.maxScore < b.maxScore) {
+            return 1;
+        }
+        if (a.maxScore > b.maxScore) {
+            return -1;
+        }
         return 0;
     });
     return result;
