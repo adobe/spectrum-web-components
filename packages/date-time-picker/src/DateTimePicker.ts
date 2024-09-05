@@ -283,7 +283,16 @@ export class DateTimePicker extends ManageHelpText(
         this.setSegments();
     }
 
+    public clear(): void {
+        this.value = undefined;
+    }
+
     protected override willUpdate(changedProperties: PropertyValues): void {
+        if (changedProperties.has('value') && this.value === undefined) {
+            this.segments = [];
+            this.setSegments();
+        }
+
         const haveDatesChanged =
             changedProperties.has('value') ||
             changedProperties.has('min') ||
