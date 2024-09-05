@@ -114,7 +114,7 @@ export const WrapLongText = (args: Properties): TemplateResult =>
     variantDemo({
         ...args,
         content:
-            "This is a very long sentence and since the tray supports wrapping of the content, the UI won't break and it would look just fine.",
+            'ThisisaverylongsentenceandsincethetoastsupportswrappingofthecontenttheUIwontbreakanditwouldlookjustfine.',
     });
 
 const overlayStyles = html`
