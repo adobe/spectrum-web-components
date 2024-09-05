@@ -13,6 +13,7 @@ import {
     InteractionController,
     InteractionTypes,
 } from './InteractionController.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 export class MobileController extends InteractionController {
     override type = InteractionTypes.mobile;
@@ -26,6 +27,16 @@ export class MobileController extends InteractionController {
 
     public override handlePointerdown(): void {
         this.preventNextToggle = this.open ? 'yes' : 'no';
+    }
+
+    public override handleButtonFocus(event: FocusEvent): void {
+        super.handleButtonFocus(event);
+
+        // if the focus comes from a closing the menu, we need to make sure to
+        // unset the :focus-visible state to avoid the focus ring on safari mobile
+        if (isWebKit() && !this.open) {
+            this.target.blur();
+        }
     }
 
     override init(): void {
