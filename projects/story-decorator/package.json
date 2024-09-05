@@ -32,6 +32,10 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/locales.js": {
+            "development": "./src/locales.dev.js",
+            "default": "./src/locales.js"
+        },
         "./src/types.js": {
             "development": "./src/types.dev.js",
             "default": "./src/types.js"
