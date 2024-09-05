@@ -28,24 +28,16 @@ export const themeStyles = html`
     </style>
 `;
 
-export const swcThemeDecoratorWithConfig =
-    ({ bundled } = { bundled: true }) =>
-    (story: () => TemplateResult) => {
-        if (!bundled) {
-            requestAnimationFrame(() => {
-                document.documentElement.setAttribute('lang', 'en');
-                const decorator = document.querySelector(
-                    'sp-story-decorator'
-                ) as HTMLElement;
-                render(story(), decorator);
-            });
-        }
-        return html`
-            ${themeStyles}
-            <sp-story-decorator role="main">
-                ${bundled ? story() : html``}
-            </sp-story-decorator>
-        `;
-    };
+export const swcThemeDecorator = (story: () => TemplateResult) => {
+    requestAnimationFrame(() => {
+        const decorator = document.querySelector(
+            'sp-story-decorator'
+        ) as HTMLElement;
+        render(story(), decorator);
+    });
 
-export const swcThemeDecorator = swcThemeDecoratorWithConfig();
+    return html`
+        ${themeStyles}
+        <sp-story-decorator role="main"></sp-story-decorator>
+    `;
+};
