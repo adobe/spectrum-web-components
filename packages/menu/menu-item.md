@@ -106,7 +106,7 @@ An `<sp-menu-item>` can also accept content addressed to its `submenu` slot. Usi
 </sp-menu>
 ```
 
-Note: `sp-menu-item` can support any arbitrary content in the `submenu` slot, but in that case, it will not manage selection or keyboard navigation. It is recommended to use `sp-menu` in the `submenu` slot to ensure proper keyboard navigation and selection management.
+Note: While `sp-menu-item` can accommodate any custom content in the `submenu` slot, it will not handle selection or keyboard navigation for such content. To ensure proper management of selection and keyboard navigation, it is recommended to use `sp-menu` within the `submenu` slot```
 
 ```html
 <sp-menu style="width: 200px;">
