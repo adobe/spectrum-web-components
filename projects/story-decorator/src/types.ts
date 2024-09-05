@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { Color, Scale, SystemVariant } from '@spectrum-web-components/theme';
+import { Locale } from './locales.js';
 
 declare global {
     interface Window {
@@ -20,6 +21,7 @@ declare global {
             defaultDirection: 'ltr' | 'rtl';
             defaultReduceMotion: boolean;
             hcm: boolean;
+            defaultLocale: Locale;
         };
     }
 }
