@@ -55,7 +55,9 @@ export type Color =
     | 'dark-express'
     | 'darkest-express'
     | 'light-spectrum-two'
-    | 'dark-spectrum-two';
+    | 'lightest-spectrum-two'
+    | 'dark-spectrum-two'
+    | 'darkest-spectrum-two';
 export type ThemeVariant = 'spectrum' | 'express' | 'spectrum-two';
 export type SystemVariant = 'spectrum' | 'express' | 'spectrum-two';
 const SystemVariantValues = ['spectrum', 'express', 'spectrum-two'];
@@ -84,7 +86,9 @@ const ColorValues = [
     'dark-express',
     'darkest-express',
     'light-spectrum-two',
+    'lightest-spectrum-two',
     'dark-spectrum-two',
+    'darkest-spectrum-two',
 ];
 type FragmentName =
     | Color
