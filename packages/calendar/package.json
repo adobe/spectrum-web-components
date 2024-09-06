@@ -63,10 +63,10 @@
     "dependencies": {
         "@internationalized/date": "^3.5.1",
         "@internationalized/number": "^3.1.0",
-        "@spectrum-web-components/action-button": "^0.41.2",
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/icons-workflow": "^0.41.2",
-        "@spectrum-web-components/reactive-controllers": "^0.41.2"
+        "@spectrum-web-components/action-button": "^0.47.2",
+        "@spectrum-web-components/base": "^0.47.2",
+        "@spectrum-web-components/icons-workflow": "^0.47.2",
+        "@spectrum-web-components/reactive-controllers": "^0.47.2"
     },
     "devDependencies": {
         "@spectrum-css/calendar": "^4.2.4"
