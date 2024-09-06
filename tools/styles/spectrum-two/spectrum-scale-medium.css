@@ -1,0 +1,274 @@
+:root,
+:host {
+    --spectrum-global-dimension-scale-factor: 1;
+    --spectrum-global-dimension-size-0: 0px;
+    --spectrum-global-dimension-size-10: 1px;
+    --spectrum-global-dimension-size-25: 2px;
+    --spectrum-global-dimension-size-30: 2px;
+    --spectrum-global-dimension-size-40: 3px;
+    --spectrum-global-dimension-size-50: 4px;
+    --spectrum-global-dimension-size-65: 5px;
+    --spectrum-global-dimension-size-75: 6px;
+    --spectrum-global-dimension-size-85: 7px;
+    --spectrum-global-dimension-size-100: 8px;
+    --spectrum-global-dimension-size-115: 9px;
+    --spectrum-global-dimension-size-125: 10px;
+    --spectrum-global-dimension-size-130: 11px;
+    --spectrum-global-dimension-size-150: 12px;
+    --spectrum-global-dimension-size-160: 13px;
+    --spectrum-global-dimension-size-175: 14px;
+    --spectrum-global-dimension-size-185: 15px;
+    --spectrum-global-dimension-size-200: 16px;
+    --spectrum-global-dimension-size-225: 18px;
+    --spectrum-global-dimension-size-250: 20px;
+    --spectrum-global-dimension-size-275: 22px;
+    --spectrum-global-dimension-size-300: 24px;
+    --spectrum-global-dimension-size-325: 26px;
+    --spectrum-global-dimension-size-350: 28px;
+    --spectrum-global-dimension-size-400: 32px;
+    --spectrum-global-dimension-size-450: 36px;
+    --spectrum-global-dimension-size-500: 40px;
+    --spectrum-global-dimension-size-550: 44px;
+    --spectrum-global-dimension-size-600: 48px;
+    --spectrum-global-dimension-size-650: 52px;
+    --spectrum-global-dimension-size-675: 54px;
+    --spectrum-global-dimension-size-700: 56px;
+    --spectrum-global-dimension-size-750: 60px;
+    --spectrum-global-dimension-size-800: 64px;
+    --spectrum-global-dimension-size-900: 72px;
+    --spectrum-global-dimension-size-1000: 80px;
+    --spectrum-global-dimension-size-1125: 90px;
+    --spectrum-global-dimension-size-1200: 96px;
+    --spectrum-global-dimension-size-1250: 100px;
+    --spectrum-global-dimension-size-1600: 128px;
+    --spectrum-global-dimension-size-1700: 136px;
+    --spectrum-global-dimension-size-1800: 144px;
+    --spectrum-global-dimension-size-2000: 160px;
+    --spectrum-global-dimension-size-2400: 192px;
+    --spectrum-global-dimension-size-2500: 200px;
+    --spectrum-global-dimension-size-3000: 240px;
+    --spectrum-global-dimension-size-3400: 272px;
+    --spectrum-global-dimension-size-3600: 288px;
+    --spectrum-global-dimension-size-4600: 368px;
+    --spectrum-global-dimension-size-5000: 400px;
+    --spectrum-global-dimension-size-6000: 480px;
+    --spectrum-global-dimension-font-size-25: 10px;
+    --spectrum-global-dimension-font-size-50: 11px;
+    --spectrum-global-dimension-font-size-75: 12px;
+    --spectrum-global-dimension-font-size-100: 14px;
+    --spectrum-global-dimension-font-size-150: 15px;
+    --spectrum-global-dimension-font-size-200: 16px;
+    --spectrum-global-dimension-font-size-300: 18px;
+    --spectrum-global-dimension-font-size-400: 20px;
+    --spectrum-global-dimension-font-size-500: 22px;
+    --spectrum-global-dimension-font-size-600: 25px;
+    --spectrum-global-dimension-font-size-700: 28px;
+    --spectrum-global-dimension-font-size-800: 32px;
+    --spectrum-global-dimension-font-size-900: 36px;
+    --spectrum-global-dimension-font-size-1000: 40px;
+    --spectrum-global-dimension-font-size-1100: 45px;
+    --spectrum-global-dimension-font-size-1200: 50px;
+    --spectrum-global-dimension-font-size-1300: 60px;
+    --spectrum-alias-item-text-padding-top-l: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-item-text-padding-bottom-s: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-alias-item-workflow-padding-left-m: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-rounded-workflow-padding-left-m: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-alias-item-rounded-workflow-padding-left-xl: 21px;
+    --spectrum-alias-item-mark-padding-top-m: var(
+        --spectrum-global-dimension-static-size-75
+    );
+    --spectrum-alias-item-mark-padding-bottom-m: var(
+        --spectrum-global-dimension-static-size-75
+    );
+    --spectrum-alias-item-mark-padding-left-m: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-control-1-size-l: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-control-1-size-xl: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-item-control-2-size-s: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-item-control-3-height-s: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-item-control-3-width-s: 23px;
+    --spectrum-alias-item-control-3-width-m: var(
+        --spectrum-global-dimension-static-size-325
+    );
+    --spectrum-alias-item-control-3-width-l: 29px;
+    --spectrum-alias-item-control-3-width-xl: 33px;
+    --spectrum-alias-item-mark-size-m: var(
+        --spectrum-global-dimension-size-250
+    );
+    --spectrum-alias-component-focusring-border-radius: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-alias-control-two-size-s: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-control-three-height-s: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-control-three-width-s: 23px;
+    --spectrum-alias-control-three-width-m: var(
+        --spectrum-global-dimension-static-size-325
+    );
+    --spectrum-alias-control-three-width-l: 29px;
+    --spectrum-alias-control-three-width-xl: 33px;
+    --spectrum-alias-focus-ring-border-radius-regular: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-alias-focus-ring-radius-default: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-alias-workflow-icon-size-l: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-alias-ui-icon-chevron-size-75: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-alias-ui-icon-chevron-size-100: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-alias-ui-icon-chevron-size-200: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-alias-ui-icon-chevron-size-300: var(
+        --spectrum-global-dimension-static-size-175
+    );
+    --spectrum-alias-ui-icon-chevron-size-400: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-alias-ui-icon-chevron-size-500: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-alias-ui-icon-checkmark-size-50: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-alias-ui-icon-checkmark-size-75: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-alias-ui-icon-checkmark-size-100: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-alias-ui-icon-checkmark-size-200: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-alias-ui-icon-checkmark-size-300: var(
+        --spectrum-global-dimension-static-size-175
+    );
+    --spectrum-alias-ui-icon-checkmark-size-400: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-alias-ui-icon-checkmark-size-500: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-alias-ui-icon-checkmark-size-600: var(
+        --spectrum-global-dimension-static-size-225
+    );
+    --spectrum-alias-ui-icon-dash-size-50: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-alias-ui-icon-dash-size-75: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-alias-ui-icon-dash-size-100: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-alias-ui-icon-dash-size-200: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-alias-ui-icon-dash-size-300: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-alias-ui-icon-dash-size-400: var(
+        --spectrum-global-dimension-static-size-175
+    );
+    --spectrum-alias-ui-icon-dash-size-500: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-alias-ui-icon-dash-size-600: var(
+        --spectrum-global-dimension-static-size-225
+    );
+    --spectrum-alias-ui-icon-cross-size-75: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-alias-ui-icon-cross-size-100: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-alias-ui-icon-cross-size-200: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-alias-ui-icon-cross-size-300: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-alias-ui-icon-cross-size-400: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-alias-ui-icon-cross-size-500: var(
+        --spectrum-global-dimension-static-size-175
+    );
+    --spectrum-alias-ui-icon-cross-size-600: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-alias-ui-icon-arrow-size-75: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-alias-ui-icon-arrow-size-100: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-alias-ui-icon-arrow-size-200: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-alias-ui-icon-arrow-size-300: var(
+        --spectrum-global-dimension-static-size-175
+    );
+    --spectrum-alias-ui-icon-arrow-size-400: var(
+        --spectrum-global-dimension-static-size-200
+    );
+    --spectrum-alias-ui-icon-arrow-size-500: var(
+        --spectrum-global-dimension-static-size-225
+    );
+    --spectrum-alias-ui-icon-arrow-size-600: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-alias-ui-icon-triplegripper-size-100-width: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-alias-ui-icon-doublegripper-size-100-height: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-alias-ui-icon-singlegripper-size-100-height: var(
+        --spectrum-global-dimension-static-size-25
+    );
+    --spectrum-alias-ui-icon-cornertriangle-size-100: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-alias-ui-icon-cornertriangle-size-300: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-alias-ui-icon-asterisk-size-200: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-alias-ui-icon-asterisk-size-300: var(
+        --spectrum-global-dimension-static-size-125
+    );
+    --spectrum-dialog-confirm-title-text-size: var(
+        --spectrum-alias-heading-s-text-size
+    );
+    --spectrum-dialog-confirm-description-text-size: var(
+        --spectrum-global-dimension-font-size-100
+    );
+}
