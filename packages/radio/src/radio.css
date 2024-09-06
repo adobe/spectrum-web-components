@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./radio-overrides.css');
 @import url('./spectrum-radio.css');
+@import url('./radio-overrides.css');
 
 :host(:focus) {
     outline: none;

@@ -132,11 +132,3 @@
         --system-progress-bar-size-xl-spacing-top-to-text
     );
 }
-
-.spectrum-Meter {
-    --spectrum-progressbar-size-default: var(
-        --system-meter-progressbar-size-default
-    );
-    --spectrum-progressbar-max-size: var(--system-meter-progressbar-max-size);
-    --spectrum-progressbar-min-size: var(--system-meter-progressbar-min-size);
-}

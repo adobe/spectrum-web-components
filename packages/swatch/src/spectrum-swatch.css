@@ -245,8 +245,6 @@ governing permissions and limitations under the License.
 }
 
 .fill {
-    inline-size: 100%;
-    block-size: 100%;
     box-sizing: border-box;
     inline-size: 100%;
     block-size: 100%;
@@ -392,8 +390,6 @@ governing permissions and limitations under the License.
     inline-size: 100%;
     block-size: 100%;
     object-fit: contain;
-    inline-size: 100%;
-    block-size: 100%;
     transition:
         width
             var(

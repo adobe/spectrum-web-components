@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./table-head-overrides.css');
 @import url('./spectrum-table-head.css');
+@import url('./table-head-overrides.css');
 
 :host {
     display: flex;

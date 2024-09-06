@@ -90,14 +90,6 @@ governing permissions and limitations under the License.
             var(--spectrum-dialog-confirm-padding-grid)
         );
     inline-size: 100%;
-    grid-template-areas:
-        'hero hero hero hero hero hero'
-        '. . . . . .'
-        '. heading header header header .'
-        '. divider divider divider divider .'
-        '. content content content content .'
-        '. footer footer buttonGroup buttonGroup .'
-        '. . . . . .';
     display: grid;
 }
 

@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./tags-overrides.css');
 @import url('./spectrum-tags.css');
+@import url('./tags-overrides.css');
 
 :host {
     --mod-clear-button-width: fit-content;

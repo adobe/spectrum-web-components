@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./popover-overrides.css');
 @import url('./spectrum-popover.css');
+@import url('./popover-overrides.css');
 
 :host {
     min-width: min-content;

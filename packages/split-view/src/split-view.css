@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./split-view-overrides.css');
 @import url('./spectrum-split-view.css');
+@import url('./split-view-overrides.css');
 
 :host {
     --spectrum-split-view-first-pane-size: 50%;

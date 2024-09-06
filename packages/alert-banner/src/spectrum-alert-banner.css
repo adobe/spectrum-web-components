@@ -86,7 +86,6 @@ governing permissions and limitations under the License.
 }
 
 .body {
-    inline-size: 100%;
     gap: max(
         calc(
             var(

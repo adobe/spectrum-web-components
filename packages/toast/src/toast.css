@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./toast-overrides.css');
 @import url('./spectrum-toast.css');
+@import url('./toast-overrides.css');
 
 :host {
     --spectrum-overlay-animation-distance: var(--spectrum-spacing-100);

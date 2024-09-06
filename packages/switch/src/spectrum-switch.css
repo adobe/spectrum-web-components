@@ -18,7 +18,6 @@ governing permissions and limitations under the License.
     );
     max-inline-size: 100%;
     min-block-size: var(--mod-switch-height, var(--spectrum-switch-min-height));
-    max-inline-size: 100%;
     vertical-align: top;
     align-items: flex-start;
     display: inline-flex;

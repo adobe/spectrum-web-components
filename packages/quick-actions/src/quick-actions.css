@@ -10,5 +10,5 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./quick-actions-overrides.css');
 @import url('./spectrum-quick-actions.css');
+@import url('./quick-actions-overrides.css');

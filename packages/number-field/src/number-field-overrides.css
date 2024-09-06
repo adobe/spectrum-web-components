@@ -34,6 +34,9 @@
     --spectrum-stepper-buttons-border-color-keyboard-focus: var(
         --system-stepper-buttons-border-color-keyboard-focus
     );
+    --spectrum-stepper-buttons-border-color-quiet-disabled: var(
+        --system-stepper-buttons-border-color-quiet-disabled
+    );
     --spectrum-stepper-button-border-radius-reset: var(
         --system-stepper-button-border-radius-reset
     );
@@ -65,6 +68,9 @@
     --spectrum-stepper-border-color-keyboard-focus-invalid: var(
         --system-stepper-border-color-keyboard-focus-invalid
     );
+    --spectrum-stepper-min-width-multiplier: var(
+        --system-stepper-min-width-multiplier
+    );
     --spectrum-stepper-button-background-color-focus: var(
         --system-stepper-button-background-color-focus
     );
@@ -75,7 +81,6 @@
     --spectrum-stepper-border-radius: var(--system-stepper-border-radius);
     --spectrum-stepper-button-width: var(--system-stepper-button-width);
     --spectrum-stepper-button-padding: var(--system-stepper-button-padding);
-    --spectrum-stepper-width: var(--system-stepper-width);
     --spectrum-stepper-focus-indicator-width: var(
         --system-stepper-focus-indicator-width
     );
@@ -89,13 +94,6 @@
     --spectrum-stepper-animation-duration: var(
         --system-stepper-animation-duration
     );
-    --mod-infield-button-border-color: var(
-        --system-stepper-infield-button-border-color
-    );
-    --mod-infield-button-border-width: var(
-        --system-stepper-infield-button-border-width
-    );
-    --mod-textfield-border-width: var(--system-stepper-textfield-border-width);
 }
 
 :host([size='s']) #textfield {
@@ -113,87 +111,11 @@
     --spectrum-stepper-height: var(--system-stepper-size-xl-height);
 }
 
-:host([quiet]) #textfield {
-    --mod-infield-button-width-stacked: var(
-        --system-stepper-quiet-infield-button-width-stacked
-    );
-    --mod-textfield-focus-indicator-color: var(
-        --system-stepper-quiet-textfield-focus-indicator-color
-    );
-}
-
 :host([disabled]) #textfield {
-    --mod-infield-button-border-color-quiet-disabled: var(
-        --system-stepper-disabled-infield-button-border-color-quiet-disabled
-    );
     --spectrum-stepper-buttons-background-color: var(
         --system-stepper-disabled-buttons-background-color
     );
     --spectrum-stepper-buttons-border-width: var(
         --system-stepper-disabled-buttons-border-width
-    );
-}
-
-:host([invalid]) #textfield {
-    --mod-stepper-border-color: var(--system-stepper-invalid-border-color);
-    --mod-stepper-border-color-hover: var(
-        --system-stepper-invalid-border-color-hover
-    );
-    --mod-stepper-border-color-focus: var(
-        --system-stepper-invalid-border-color-focus
-    );
-    --mod-stepper-border-color-focus-hover: var(
-        --system-stepper-invalid-border-color-focus-hover
-    );
-    --mod-stepper-border-color-keyboard-focus: var(
-        --system-stepper-invalid-border-color-keyboard-focus
-    );
-    --mod-infield-button-border-color: var(
-        --system-stepper-invalid-infield-button-border-color
-    );
-    --mod-textfield-icon-spacing-inline-start-invalid: var(
-        --system-stepper-invalid-textfield-icon-spacing-inline-start-invalid
-    );
-}
-
-:host([invalid][focused]) #textfield {
-    --mod-infield-button-border-color: var(
-        --system-stepper-invalid-focused-infield-button-border-color
-    );
-}
-
-:host([invalid]) #textfield:focus {
-    --mod-infield-button-border-color: var(
-        --system-stepper-invalid-focus-infield-button-border-color
-    );
-}
-
-:host([invalid]:hover) #textfield {
-    --mod-infield-button-border-color: var(
-        --system-stepper-invalid-hover-infield-button-border-color
-    );
-}
-
-:host([invalid][focused]:hover) #textfield {
-    --mod-infield-button-border-color: var(
-        --system-stepper-invalid-focused-hover-infield-button-border-color
-    );
-}
-
-:host([invalid]:hover) #textfield:focus {
-    --mod-infield-button-border-color: var(
-        --system-stepper-invalid-focus-hover-infield-button-border-color
-    );
-}
-
-:host([invalid][keyboard-focused]) #textfield {
-    --mod-infield-button-border-color: var(
-        --system-stepper-invalid-keyboard-focused-infield-button-border-color
-    );
-}
-
-:host([invalid]) #textfield:focus-visible {
-    --mod-infield-button-border-color: var(
-        --system-stepper-invalid-focus-visible-infield-button-border-color
     );
 }

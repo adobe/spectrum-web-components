@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./action-button-overrides.css');
 @import url('./spectrum-action-button.css');
+@import url('./action-button-overrides.css');
 
 ::slotted([slot='icon']) {
     flex-shrink: 0;

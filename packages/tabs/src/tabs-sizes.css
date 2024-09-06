@@ -10,5 +10,5 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./tabs-sizes-overrides.css');
 @import url('./spectrum-tabs-sizes.css');
+@import url('./tabs-sizes-overrides.css');
