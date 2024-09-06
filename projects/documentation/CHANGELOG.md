@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
+
+**Note:** Version bump only for package documentation
+
+## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
+
+### Bug Fixes
+
+-   **breadcrumbs:** adjust ref directives imports ([#4681](https://github.com/adobe/spectrum-web-components/issues/4681)) ([6e7ba13](https://github.com/adobe/spectrum-web-components/commit/6e7ba132cecfb9089cda4598986161104992345d))
+
+# [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
+
+### Features
+
+-   **breadcrumbs:** add Breadcrumbs component ([#4578](https://github.com/adobe/spectrum-web-components/issues/4578)) ([acd4b5e](https://github.com/adobe/spectrum-web-components/commit/acd4b5e4401dad8cf26b50ee5dcda80a28b62999))
+
+# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+
+### Bug Fixes
+
+-   docummentation demo controls should should have their changes reflected ([#4636](https://github.com/adobe/spectrum-web-components/issues/4636)) ([adc8af9](https://github.com/adobe/spectrum-web-components/commit/adc8af98e1a59c399551885506c9d68edb840fd0))
+-   rtl mobile layout view ([#4645](https://github.com/adobe/spectrum-web-components/issues/4645)) ([4b2d688](https://github.com/adobe/spectrum-web-components/commit/4b2d68826b064b6d36970793ae7fa54a7f83917e))
+
+# [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
+
+**Note:** Version bump only for package documentation
+
+# [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
+
+**Note:** Version bump only for package documentation
+
+# [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
+
+**Note:** Version bump only for package documentation
+
+## [0.42.5](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.42.5) (2024-05-24)
+
+**Note:** Version bump only for package documentation
+
+## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
+
+### Bug Fixes
+
+-   **combobox:** add missing React TS typings ([#4419](https://github.com/adobe/spectrum-web-components/issues/4419)) ([fd9b485](https://github.com/adobe/spectrum-web-components/commit/fd9b485ee969318d21b0f79ec0c0f902034eccde))
+-   **styles,theme:** add S2 tokens and theme ([#4241](https://github.com/adobe/spectrum-web-components/issues/4241)) ([a29e4a2](https://github.com/adobe/spectrum-web-components/commit/a29e4a298090e39e009c434e48113fb8a7e90d14)), closes [#4232](https://github.com/adobe/spectrum-web-components/issues/4232) [#4228](https://github.com/adobe/spectrum-web-components/issues/4228)
+-   **theme:** deprecate `theme` property for `system` ([#4230](https://github.com/adobe/spectrum-web-components/issues/4230)) ([ac26168](https://github.com/adobe/spectrum-web-components/commit/ac2616878e90314e5ed307442ac026c9e4ac707a))
+
+## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
+
+### Bug Fixes
+
+-   **theme:** deprecate `theme` property for `system` ([#4230](https://github.com/adobe/spectrum-web-components/issues/4230)) ([ac26168](https://github.com/adobe/spectrum-web-components/commit/ac2616878e90314e5ed307442ac026c9e4ac707a))
+
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package documentation
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+**Note:** Version bump only for package documentation
+
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+### Bug Fixes
+
+-   **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
+-   **theme:** deprecate lightest and darkest color stops ([#4179](https://github.com/adobe/spectrum-web-components/issues/4179)) ([0c01a66](https://github.com/adobe/spectrum-web-components/commit/0c01a66627bbc46b459bda7680c6dcb9ea9c1b66))
+
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
 **Note:** Version bump only for package documentation

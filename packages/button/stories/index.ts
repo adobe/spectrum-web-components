@@ -98,15 +98,14 @@ export const makeOverBackground =
         const color =
             variant === 'black'
                 ? 'rgb(181, 209, 211)'
-                : 'var(--spectrum-global-color-seafoam-600)';
+                : 'var(--spectrum-seafoam-900)';
         return html`
             <div
                 style="
                     --mod-actionbutton-static-content-color: ${color};
                     --mod-button-static-content-color: ${color};
                     background-color: ${color};
-                    color: ${color};
-                    padding: var(--spectrum-global-dimension-size-175) var(--spectrum-global-dimension-size-250);
+                    padding: calc(var(--swc-scale-factor) * 14px) calc(var(--swc-scale-factor) * 20px);
                     display: inline-block;
                 "
             >

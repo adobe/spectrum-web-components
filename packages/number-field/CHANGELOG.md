@@ -3,6 +3,77 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
+
+**Note:** Version bump only for package @spectrum-web-components/number-field
+
+## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
+
+**Note:** Version bump only for package @spectrum-web-components/number-field
+
+# [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
+
+### Bug Fixes
+
+-   **number-field:** update IME change detection ([#4672](https://github.com/adobe/spectrum-web-components/issues/4672)) ([de05aee](https://github.com/adobe/spectrum-web-components/commit/de05aee7c414e6cfcd27a12f129b03886311d3bf))
+
+# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+
+**Note:** Version bump only for package @spectrum-web-components/number-field
+
+# [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
+
+**Note:** Version bump only for package @spectrum-web-components/number-field
+
+# [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
+
+### Bug Fixes
+
+-   **number-field:** multiple separators use-cases in decimal inputs in iOS devices ([#4571](https://github.com/adobe/spectrum-web-components/issues/4571)) ([6319da8](https://github.com/adobe/spectrum-web-components/commit/6319da80a21511735d9e9518125dbc2a24364f88))
+
+# [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
+
+### Bug Fixes
+
+-   **number-field:** updated number field to respect all locales ([#4508](https://github.com/adobe/spectrum-web-components/issues/4508)) ([cc6e928](https://github.com/adobe/spectrum-web-components/commit/cc6e928bc6797280f119994b1908f17bbcb574e3))
+
+## [0.42.5](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.42.5) (2024-05-24)
+
+### Bug Fixes
+
+-   **number-field:** select full value when using Tab to enter a field with a unit ([#4340](https://github.com/adobe/spectrum-web-components/issues/4340)) ([a9d5cef](https://github.com/adobe/spectrum-web-components/commit/a9d5cef4a69af4f3f357bacbfdae9465d3e80fa5))
+
+## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
+
+### Bug Fixes
+
+-   **number-field, slider:** floating point roundoff precision bug ([#4263](https://github.com/adobe/spectrum-web-components/issues/4263)) ([74480ef](https://github.com/adobe/spectrum-web-components/commit/74480efd47305a7d41d0e20682d8dcba1c129f2f))
+-   **number-field:** handles values greater than 1000 ([#4417](https://github.com/adobe/spectrum-web-components/issues/4417)) ([45d69d0](https://github.com/adobe/spectrum-web-components/commit/45d69d0bb927bd18c3d58c757c40c14768b70a82))
+
+## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
+
+### Bug Fixes
+
+-   **number-field, slider:** floating point roundoff precision bug ([#4263](https://github.com/adobe/spectrum-web-components/issues/4263)) ([74480ef](https://github.com/adobe/spectrum-web-components/commit/74480efd47305a7d41d0e20682d8dcba1c129f2f))
+
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @spectrum-web-components/number-field
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+**Note:** Version bump only for package @spectrum-web-components/number-field
+
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+### Bug Fixes
+
+-   **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
+
+### Features
+
+-   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/number-field

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/table",
-    "version": "0.41.2",
+    "version": "0.47.2",
     "publishConfig": {
         "access": "public"
     },
@@ -115,15 +115,15 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^2.0.0",
-        "@lit-labs/virtualizer": "^2.0.6",
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/checkbox": "^0.41.2",
-        "@spectrum-web-components/icon": "^0.41.2",
-        "@spectrum-web-components/icons-ui": "^0.41.2"
+        "@lit-labs/observers": "^2.0.2",
+        "@lit-labs/virtualizer": "^2.0.12",
+        "@spectrum-web-components/base": "^0.47.2",
+        "@spectrum-web-components/checkbox": "^0.47.2",
+        "@spectrum-web-components/icon": "^0.47.2",
+        "@spectrum-web-components/icons-ui": "^0.47.2"
     },
     "devDependencies": {
-        "@spectrum-css/table": "^5.2.4"
+        "@spectrum-css/table": "^6.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

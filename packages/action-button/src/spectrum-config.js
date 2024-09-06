@@ -44,7 +44,31 @@ const config = {
                 converter.classToAttribute('is-disabled', 'disabled'),
                 converter.pseudoToAttribute('disabled', 'disabled'),
                 converter.classToAttribute('is-selected', 'selected'),
-                converter.pseudoToAttribute('active', 'active'),
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'active',
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'is',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'active',
+                                },
+                            ],
+                            [
+                                {
+                                    type: 'attribute',
+                                    name: 'active',
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
                 converter.classToAttribute('is-active', 'active'),
                 converter.classToAttribute('spectrum-ActionButton--emphasized'),
                 ...converter.enumerateAttributes(

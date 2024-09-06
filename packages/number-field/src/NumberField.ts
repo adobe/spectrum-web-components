@@ -63,8 +63,17 @@ export const remapMultiByteCharacters: Record<string, string> = {
     '％': '%',
     '＋': '+',
     ー: '-',
+    一: '1',
+    二: '2',
+    三: '3',
+    四: '4',
+    五: '5',
+    六: '6',
+    七: '7',
+    八: '8',
+    九: '9',
+    零: '0',
 };
-
 const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
     s: (dir) => html`
         <sp-icon-chevron50
@@ -175,20 +184,25 @@ export class NumberField extends TextfieldBase {
     private _trackingValue = '';
     private lastCommitedValue?: number;
 
-    private setValue(value: number = this.value): void {
-        this.value = value;
+    private setValue(newValue: number = this.value): void {
+        // Capture previous value for accurate IME change detection
+        const previousValue = this.lastCommitedValue;
+
+        this.value = newValue;
+
         if (
-            typeof this.lastCommitedValue === 'undefined' ||
-            this.lastCommitedValue === this.value
+            typeof previousValue === 'undefined' ||
+            previousValue === this.value
         ) {
             // Do not announce when the value is unchanged.
             return;
         }
 
+        this.lastCommitedValue = this.value;
+
         this.dispatchEvent(
             new Event('change', { bubbles: true, composed: true })
         );
-        this.lastCommitedValue = this.value;
     }
 
     /**
@@ -210,22 +224,58 @@ export class NumberField extends TextfieldBase {
         );
     }
 
-    private convertValueToNumber(value: string): number {
-        if (isIPhone() && this.inputElement.inputMode === 'decimal') {
+    private decimalsChars = new Set(['.', ',']);
+    private valueBeforeFocus: string = '';
+    private isIntentDecimal: boolean = false;
+
+    private convertValueToNumber(inputValue: string): number {
+        // Normalize full-width characters to their ASCII equivalents
+        let normalizedValue = inputValue
+            .split('')
+            .map((char) => remapMultiByteCharacters[char] || char)
+            .join('');
+
+        const separators = this.valueBeforeFocus
+            .split('')
+            .filter((char) => this.decimalsChars.has(char));
+        const uniqueSeparators = new Set(separators);
+
+        if (
+            isIPhone() &&
+            this.inputElement.inputMode === 'decimal' &&
+            normalizedValue !== this.valueBeforeFocus
+        ) {
             const parts = this.numberFormatter.formatToParts(1000.1);
-            const sourceDecimal = value
-                .split('')
-                .find((char) => char === ',' || char === '.');
+
             const replacementDecimal = parts.find(
                 (part) => part.type === 'decimal'
-            )?.value;
-            if (sourceDecimal && replacementDecimal) {
-                value = value.replace(sourceDecimal, replacementDecimal);
-            }
-        }
-        return this.numberParser.parse(value);
-    }
+            )!.value;
 
+            for (const separator of uniqueSeparators) {
+                const isDecimalSeparator = separator === replacementDecimal;
+                if (!isDecimalSeparator && !this.isIntentDecimal) {
+                    normalizedValue = normalizedValue.replace(
+                        new RegExp(separator, 'g'),
+                        ''
+                    );
+                }
+            }
+
+            let hasReplacedDecimal = false;
+            const valueChars = normalizedValue.split('');
+            for (let index = valueChars.length - 1; index >= 0; index--) {
+                const char = valueChars[index];
+                if (this.decimalsChars.has(char)) {
+                    if (!hasReplacedDecimal) {
+                        valueChars[index] = replacementDecimal;
+                        hasReplacedDecimal = true;
+                    } else valueChars[index] = '';
+                }
+            }
+            normalizedValue = valueChars.join('');
+        }
+        return this.numberParser.parse(normalizedValue);
+    }
     private get _step(): number {
         if (typeof this.step !== 'undefined') {
             return this.step;
@@ -323,7 +373,7 @@ export class NumberField extends TextfieldBase {
 
         this.requestUpdate();
         this._value = this.validateInput(value);
-        this.inputElement.value = value.toString();
+        this.inputElement.value = this.numberFormatter.format(value);
 
         this.inputElement.dispatchEvent(
             new Event('input', { bubbles: true, composed: true })
@@ -379,12 +429,14 @@ export class NumberField extends TextfieldBase {
         this._trackingValue = this.inputValue;
         this.keyboardFocused = !this.readonly && true;
         this.addEventListener('wheel', this.onScroll, { passive: false });
+        this.valueBeforeFocus = this.inputElement.value;
     }
 
     protected override onBlur(_event: FocusEvent): void {
         super.onBlur(_event);
         this.keyboardFocused = !this.readonly && false;
         this.removeEventListener('wheel', this.onScroll);
+        this.isIntentDecimal = false;
     }
 
     private handleFocusin(): void {
@@ -430,7 +482,18 @@ export class NumberField extends TextfieldBase {
         });
     }
 
-    protected override handleInput(event: Event): void {
+    private hasRecentlyReceivedPointerDown = false;
+
+    protected override handleInputElementPointerdown(): void {
+        this.hasRecentlyReceivedPointerDown = true;
+        this.updateComplete.then(() => {
+            requestAnimationFrame(() => {
+                this.hasRecentlyReceivedPointerDown = false;
+            });
+        });
+    }
+
+    protected override handleInput(event: InputEvent): void {
         if (this.isComposing) {
             event.stopPropagation();
             return;
@@ -443,11 +506,15 @@ export class NumberField extends TextfieldBase {
                 ''
             );
         }
+        if (event.data && this.decimalsChars.has(event.data))
+            this.isIntentDecimal = true;
+
         const { value: originalValue, selectionStart } = this.inputElement;
         const value = originalValue
             .split('')
             .map((char) => remapMultiByteCharacters[char] || char)
             .join('');
+
         if (this.numberParser.isValidPartialNumber(value)) {
             // Use starting value as this.value is the `input` value.
             this.lastCommitedValue = this.lastCommitedValue ?? this.value;
@@ -495,7 +562,9 @@ export class NumberField extends TextfieldBase {
         // Step shouldn't validate when 0...
         if (this.step) {
             const min = typeof this.min !== 'undefined' ? this.min : 0;
-            const moduloStep = (value - min) % this.step;
+            const moduloStep = parseFloat(
+                this.valueFormatter.format((value - min) % this.step)
+            );
             const fallsOnStep = moduloStep === 0;
             if (!fallsOnStep) {
                 const overUnder = Math.round(moduloStep / this.step);
@@ -510,6 +579,7 @@ export class NumberField extends TextfieldBase {
                     value -= this.step;
                 }
             }
+            value = parseFloat(this.valueFormatter.format(value));
         }
         value *= signMultiplier;
         return value;
@@ -560,9 +630,27 @@ export class NumberField extends TextfieldBase {
             : this._numberFormatter;
     }
 
+    protected clearValueFormatterCache(): void {
+        this._valueFormatter = undefined;
+    }
+    protected get valueFormatter(): NumberFormatter {
+        if (!this._valueFormatter) {
+            const digitsAfterDecimal = this.step
+                ? this.step != Math.floor(this.step)
+                    ? this.step.toString().split('.')[1].length
+                    : 0
+                : 0;
+            this._valueFormatter = new NumberFormatter('en', {
+                useGrouping: false,
+                maximumFractionDigits: digitsAfterDecimal,
+            });
+        }
+
+        return this._valueFormatter;
+    }
     private _numberFormatter?: NumberFormatter;
     private _numberFormatterFocused?: NumberFormatter;
-
+    private _valueFormatter?: NumberFormatter;
     protected get numberParser(): NumberParser {
         if (!this._numberParser || !this._numberParserFocused) {
             const {
@@ -685,6 +773,9 @@ export class NumberField extends TextfieldBase {
             );
             this.value = value;
         }
+        if (changes.has('step')) {
+            this.clearValueFormatterCache();
+        }
         super.update(changes);
     }
 
@@ -705,6 +796,11 @@ export class NumberField extends TextfieldBase {
     }
 
     protected override updated(changes: PropertyValues<this>): void {
+        if (!this.inputElement || !this.isConnected) {
+            // Prevent race conditions if inputElement is removed from DOM while a queued update is still running.
+            return;
+        }
+
         if (changes.has('min') || changes.has('formatOptions')) {
             let inputMode = 'numeric';
             const hasNegative = typeof this.min !== 'undefined' && this.min < 0;
@@ -731,6 +827,15 @@ export class NumberField extends TextfieldBase {
                 }
             }
             this.inputElement.inputMode = inputMode;
+        }
+        if (
+            changes.has('focused') &&
+            this.focused &&
+            !this.hasRecentlyReceivedPointerDown &&
+            !!this.formatOptions.unit
+        ) {
+            // Normalize keyboard focus entry between unit and non-unit bearing Number Fields
+            this.setSelectionRange(0, this.displayValue.length);
         }
     }
 }

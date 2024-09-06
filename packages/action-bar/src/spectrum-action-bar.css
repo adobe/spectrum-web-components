@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-actionbar-height: var(--spectrum-action-bar-height);
     --spectrum-actionbar-corner-radius: var(--spectrum-corner-radius-100);
@@ -22,17 +21,6 @@ governing permissions and limitations under the License.
     --spectrum-actionbar-item-counter-color: var(
         --spectrum-neutral-content-color-default
     );
-}
-
-:host:lang(ja),
-:host:lang(zh),
-:host:lang(ko) {
-    --spectrum-actionbar-item-counter-line-height-cjk: var(
-        --spectrum-cjk-line-height-100
-    );
-}
-
-:host {
     --spectrum-actionbar-popover-background-color: var(--spectrum-gray-50);
     --spectrum-actionbar-popover-border-color: var(--spectrum-gray-400);
     --spectrum-actionbar-emphasized-background-color: var(
@@ -57,6 +45,14 @@ governing permissions and limitations under the License.
     --spectrum-actionbar-shadow-color: var(--spectrum-drop-shadow-color);
 }
 
+:host:lang(ja),
+:host:lang(ko),
+:host:lang(zh) {
+    --spectrum-actionbar-item-counter-line-height-cjk: var(
+        --spectrum-cjk-line-height-100
+    );
+}
+
 @media (forced-colors: active) {
     :host,
     :host([emphasized]) #popover {
@@ -73,8 +69,8 @@ governing permissions and limitations under the License.
     z-index: 1;
     box-sizing: border-box;
     pointer-events: none;
-    opacity: 0;
     block-size: 0;
+    opacity: 0;
     inset-block-end: 0;
 }
 
@@ -91,6 +87,7 @@ governing permissions and limitations under the License.
 #popover {
     block-size: var(--mod-actionbar-height, var(--spectrum-actionbar-height));
     box-sizing: border-box;
+    inline-size: 100%;
     border-radius: var(
         --mod-actionbar-corner-radius,
         var(--spectrum-actionbar-corner-radius)
@@ -126,7 +123,6 @@ governing permissions and limitations under the License.
     );
     pointer-events: auto;
     flex-direction: row;
-    inline-size: 100%;
     margin: auto;
     padding-block: 0;
     display: flex;
@@ -174,8 +170,8 @@ governing permissions and limitations under the License.
 }
 
 .field-label:lang(ja),
-.field-label:lang(zh),
-.field-label:lang(ko) {
+.field-label:lang(ko),
+.field-label:lang(zh) {
     line-height: var(
         --mod-actionbar-item-counter-line-height-cjk,
         var(--spectrum-actionbar-item-counter-line-height-cjk)

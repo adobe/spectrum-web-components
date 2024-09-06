@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
+
+### Bug Fixes
+
+-   **breadcrumbs:** adjust ref directives imports ([#4681](https://github.com/adobe/spectrum-web-components/issues/4681)) ([6e7ba13](https://github.com/adobe/spectrum-web-components/commit/6e7ba132cecfb9089cda4598986161104992345d))
+
+# [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+# [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+# [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+# [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+## [0.42.5](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.42.5) (2024-05-24)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
+
+### Bug Fixes
+
+-   **base:** move lit imports to base ([#4416](https://github.com/adobe/spectrum-web-components/issues/4416)) ([b7cb07e](https://github.com/adobe/spectrum-web-components/commit/b7cb07e98e17754c83d3e0112aac9728139e043b))
+-   **styles,theme:** add S2 tokens and theme ([#4241](https://github.com/adobe/spectrum-web-components/issues/4241)) ([a29e4a2](https://github.com/adobe/spectrum-web-components/commit/a29e4a298090e39e009c434e48113fb8a7e90d14)), closes [#4232](https://github.com/adobe/spectrum-web-components/issues/4232) [#4228](https://github.com/adobe/spectrum-web-components/issues/4228)
+
+## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
 **Note:** Version bump only for package @spectrum-web-components/base

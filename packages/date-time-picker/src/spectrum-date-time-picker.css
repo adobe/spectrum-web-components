@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-datepicker-border-radius: var(--spectrum-corner-radius-100);
     --spectrum-datepicker-border-radius-quiet: 0;
@@ -313,7 +312,8 @@ sp-picker-button {
                 var(--spectrum-datepicker-focus-ring-gap)
             )
     );
-    transition: box-shadow
+    transition:
+        box-shadow
             var(
                 --mod-datepicker-focus-animation,
                 var(--spectrum-datepicker-focus-animation)
@@ -384,11 +384,11 @@ sp-picker-button {
 }
 
 :host([quiet]) .spectrum-DatePicker--range #textfield {
+    min-inline-size: 0;
     inline-size: var(
         --mod-datepicker-input-width-quiet,
         var(--spectrum-datepicker-input-width-quiet)
     );
-    min-inline-size: 0;
 }
 
 :host([quiet]) .spectrum-DatePicker--range #textfield:first-of-type {
@@ -434,11 +434,11 @@ sp-picker-button {
 
 .spectrum-DatePicker--range #textfield {
     flex: initial;
+    min-inline-size: 0;
     inline-size: var(
         --mod-datepicker-input-width,
         var(--spectrum-datepicker-input-width)
     );
-    min-inline-size: 0;
 }
 
 .spectrum-DatePicker--range #textfield:first-of-type {
@@ -449,8 +449,8 @@ sp-picker-button {
 }
 
 .input {
-    flex: 1;
     inline-size: 100%;
+    flex: 1;
 }
 
 .input.spectrum-DatePicker-startField {
@@ -483,8 +483,8 @@ sp-picker-button {
         var(--spectrum-datepicker-dash-line-height)
     );
     flex: initial;
-    z-index: 1;
     inline-size: 0;
+    z-index: 1;
     padding-block-start: var(
         --mod-datepicker-range-dash-padding-top,
         var(--spectrum-datepicker-range-dash-padding-top)

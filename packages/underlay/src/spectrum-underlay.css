@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
-    transition: transform
+    transition:
+        transform
             var(
                 --mod-overlay-animation-duration,
                 var(--spectrum-animation-duration-100, 0.13s)
@@ -55,6 +55,9 @@ governing permissions and limitations under the License.
     --spectrum-underlay-background-entry-animation-ease: var(
         --spectrum-animation-ease-out
     );
+    --spectrum-underlay-background-exit-animation-duration: var(
+        --spectrum-animation-duration-100
+    );
     --spectrum-underlay-background-entry-animation-duration: var(
         --spectrum-animation-duration-600
     );
@@ -73,7 +76,8 @@ governing permissions and limitations under the License.
         var(--spectrum-underlay-background-color)
     );
     z-index: 1;
-    transition: opacity
+    transition:
+        opacity
             var(
                 --mod-underlay-background-exit-animation-duration,
                 var(--spectrum-underlay-background-exit-animation-duration)

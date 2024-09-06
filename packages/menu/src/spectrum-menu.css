@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-menu-item-min-height: var(--spectrum-component-height-100);
     --spectrum-menu-item-icon-height: var(--spectrum-workflow-icon-size-100);
@@ -335,8 +334,8 @@ governing permissions and limitations under the License.
 }
 
 :host:lang(ja),
-:host:lang(zh),
-:host:lang(ko) {
+:host:lang(ko),
+:host:lang(zh) {
     --spectrum-menu-item-label-line-height: var(
         --mod-menu-item-label-line-height-cjk,
         var(--spectrum-menu-item-label-line-height-cjk)

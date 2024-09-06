@@ -1,6 +1,3 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 STAGED_FILES_TO_LINT=$(git diff --name-only --cached --diff-filter=d -- "*.ts" "*.js")
 VERSION_FILE=$(dirname "$0")/../tools/base/src/version.js
 yarn eslint -f pretty $STAGED_FILES_TO_LINT

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 .spectrum:lang(ar) {
     font-family: var(--spectrum-font-family-ar);
 }
@@ -20,9 +19,9 @@ governing permissions and limitations under the License.
     font-family: var(--spectrum-font-family-he);
 }
 
-.spectrum-Heading:lang(zh),
 .spectrum-Heading:lang(ja),
-.spectrum-Heading:lang(ko) {
+.spectrum-Heading:lang(ko),
+.spectrum-Heading:lang(zh) {
     font-family: var(
         --mod-heading-cjk-font-family,
         var(--spectrum-heading-cjk-font-family)
@@ -49,12 +48,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading:lang(zh) em,
-.spectrum-Heading:lang(zh) .spectrum-Heading-emphasized,
-.spectrum-Heading:lang(ja) em,
 .spectrum-Heading:lang(ja) .spectrum-Heading-emphasized,
+.spectrum-Heading:lang(ja) em,
+.spectrum-Heading:lang(ko) .spectrum-Heading-emphasized,
 .spectrum-Heading:lang(ko) em,
-.spectrum-Heading:lang(ko) .spectrum-Heading-emphasized {
+.spectrum-Heading:lang(zh) .spectrum-Heading-emphasized,
+.spectrum-Heading:lang(zh) em {
     font-style: var(
         --mod-heading-cjk-emphasized-font-style,
         var(--spectrum-heading-cjk-emphasized-font-style)
@@ -65,12 +64,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading:lang(zh) strong,
-.spectrum-Heading:lang(zh) .spectrum-Heading-strong,
-.spectrum-Heading:lang(ja) strong,
 .spectrum-Heading:lang(ja) .spectrum-Heading-strong,
+.spectrum-Heading:lang(ja) strong,
+.spectrum-Heading:lang(ko) .spectrum-Heading-strong,
 .spectrum-Heading:lang(ko) strong,
-.spectrum-Heading:lang(ko) .spectrum-Heading-strong {
+.spectrum-Heading:lang(zh) .spectrum-Heading-strong,
+.spectrum-Heading:lang(zh) strong {
     font-style: var(
         --mod-heading-cjk-strong-font-style,
         var(--spectrum-heading-cjk-strong-font-style)
@@ -81,15 +80,15 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading:lang(zh) .spectrum-Heading-strong.spectrum-Heading-emphasized,
-.spectrum-Heading:lang(zh) strong em,
-.spectrum-Heading:lang(zh) em strong,
 .spectrum-Heading:lang(ja) .spectrum-Heading-strong.spectrum-Heading-emphasized,
-.spectrum-Heading:lang(ja) strong em,
 .spectrum-Heading:lang(ja) em strong,
+.spectrum-Heading:lang(ja) strong em,
 .spectrum-Heading:lang(ko) .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading:lang(ko) em strong,
 .spectrum-Heading:lang(ko) strong em,
-.spectrum-Heading:lang(ko) em strong {
+.spectrum-Heading:lang(zh) .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading:lang(zh) em strong,
+.spectrum-Heading:lang(zh) strong em {
     font-style: var(
         --mod-heading-cjk-strong-emphasized-font-style,
         var(--spectrum-heading-cjk-strong-emphasized-font-style)
@@ -100,9 +99,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading--heavy:lang(zh),
 .spectrum-Heading--heavy:lang(ja),
-.spectrum-Heading--heavy:lang(ko) {
+.spectrum-Heading--heavy:lang(ko),
+.spectrum-Heading--heavy:lang(zh) {
     font-style: var(
         --mod-heading-cjk-heavy-font-style,
         var(--spectrum-heading-cjk-heavy-font-style)
@@ -113,12 +112,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading--heavy:lang(zh) em,
-.spectrum-Heading--heavy:lang(zh) .spectrum-Heading-emphasized,
-.spectrum-Heading--heavy:lang(ja) em,
 .spectrum-Heading--heavy:lang(ja) .spectrum-Heading-emphasized,
+.spectrum-Heading--heavy:lang(ja) em,
+.spectrum-Heading--heavy:lang(ko) .spectrum-Heading-emphasized,
 .spectrum-Heading--heavy:lang(ko) em,
-.spectrum-Heading--heavy:lang(ko) .spectrum-Heading-emphasized {
+.spectrum-Heading--heavy:lang(zh) .spectrum-Heading-emphasized,
+.spectrum-Heading--heavy:lang(zh) em {
     font-style: var(
         --mod-heading-cjk-heavy-emphasized-font-style,
         var(--spectrum-heading-cjk-heavy-emphasized-font-style)
@@ -129,12 +128,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading--heavy:lang(zh) strong,
-.spectrum-Heading--heavy:lang(zh) .spectrum-Heading-strong,
-.spectrum-Heading--heavy:lang(ja) strong,
 .spectrum-Heading--heavy:lang(ja) .spectrum-Heading-strong,
+.spectrum-Heading--heavy:lang(ja) strong,
+.spectrum-Heading--heavy:lang(ko) .spectrum-Heading-strong,
 .spectrum-Heading--heavy:lang(ko) strong,
-.spectrum-Heading--heavy:lang(ko) .spectrum-Heading-strong {
+.spectrum-Heading--heavy:lang(zh) .spectrum-Heading-strong,
+.spectrum-Heading--heavy:lang(zh) strong {
     font-style: var(
         --mod-heading-cjk-heavy-strong-font-style,
         var(--spectrum-heading-cjk-heavy-strong-font-style)
@@ -145,18 +144,18 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading--heavy:lang(zh)
-    .spectrum-Heading-strong.spectrum-Heading-emphasized,
-.spectrum-Heading--heavy:lang(zh) strong em,
-.spectrum-Heading--heavy:lang(zh) em strong,
 .spectrum-Heading--heavy:lang(ja)
     .spectrum-Heading-strong.spectrum-Heading-emphasized,
-.spectrum-Heading--heavy:lang(ja) strong em,
 .spectrum-Heading--heavy:lang(ja) em strong,
+.spectrum-Heading--heavy:lang(ja) strong em,
 .spectrum-Heading--heavy:lang(ko)
     .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--heavy:lang(ko) em strong,
 .spectrum-Heading--heavy:lang(ko) strong em,
-.spectrum-Heading--heavy:lang(ko) em strong {
+.spectrum-Heading--heavy:lang(zh)
+    .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--heavy:lang(zh) em strong,
+.spectrum-Heading--heavy:lang(zh) strong em {
     font-style: var(
         --mod-heading-cjk-heavy-strong-emphasized-font-style,
         var(--spectrum-heading-cjk-heavy-strong-emphasized-font-style)
@@ -167,9 +166,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading--light:lang(zh),
 .spectrum-Heading--light:lang(ja),
-.spectrum-Heading--light:lang(ko) {
+.spectrum-Heading--light:lang(ko),
+.spectrum-Heading--light:lang(zh) {
     font-style: var(
         --mod-heading-cjk-light-font-style,
         var(--spectrum-heading-cjk-light-font-style)
@@ -180,12 +179,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading--light:lang(zh) strong,
-.spectrum-Heading--light:lang(zh) .spectrum-Heading-strong,
-.spectrum-Heading--light:lang(ja) strong,
 .spectrum-Heading--light:lang(ja) .spectrum-Heading-strong,
+.spectrum-Heading--light:lang(ja) strong,
+.spectrum-Heading--light:lang(ko) .spectrum-Heading-strong,
 .spectrum-Heading--light:lang(ko) strong,
-.spectrum-Heading--light:lang(ko) .spectrum-Heading-strong {
+.spectrum-Heading--light:lang(zh) .spectrum-Heading-strong,
+.spectrum-Heading--light:lang(zh) strong {
     font-style: var(
         --mod-heading-cjk-light-strong-font-style,
         var(--spectrum-heading-cjk-light-strong-font-style)
@@ -196,12 +195,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading--light:lang(zh) em,
-.spectrum-Heading--light:lang(zh) .spectrum-Heading-emphasized,
-.spectrum-Heading--light:lang(ja) em,
 .spectrum-Heading--light:lang(ja) .spectrum-Heading-emphasized,
+.spectrum-Heading--light:lang(ja) em,
+.spectrum-Heading--light:lang(ko) .spectrum-Heading-emphasized,
 .spectrum-Heading--light:lang(ko) em,
-.spectrum-Heading--light:lang(ko) .spectrum-Heading-emphasized {
+.spectrum-Heading--light:lang(zh) .spectrum-Heading-emphasized,
+.spectrum-Heading--light:lang(zh) em {
     font-style: var(
         --mod-heading-cjk-light-emphasized-font-style,
         var(--spectrum-heading-cjk-light-emphasized-font-style)
@@ -212,18 +211,18 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Heading--light:lang(zh)
-    .spectrum-Heading-strong.spectrum-Heading-emphasized,
-.spectrum-Heading--light:lang(zh) strong em,
-.spectrum-Heading--light:lang(zh) em strong,
 .spectrum-Heading--light:lang(ja)
     .spectrum-Heading-strong.spectrum-Heading-emphasized,
-.spectrum-Heading--light:lang(ja) strong em,
 .spectrum-Heading--light:lang(ja) em strong,
+.spectrum-Heading--light:lang(ja) strong em,
 .spectrum-Heading--light:lang(ko)
     .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--light:lang(ko) em strong,
 .spectrum-Heading--light:lang(ko) strong em,
-.spectrum-Heading--light:lang(ko) em strong {
+.spectrum-Heading--light:lang(zh)
+    .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--light:lang(zh) em strong,
+.spectrum-Heading--light:lang(zh) strong em {
     font-style: var(
         --mod-heading-cjk-light-strong-emphasized-font-style,
         var(--spectrum-heading-cjk-light-strong-emphasized-font-style)
@@ -234,9 +233,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Body:lang(zh),
 .spectrum-Body:lang(ja),
-.spectrum-Body:lang(ko) {
+.spectrum-Body:lang(ko),
+.spectrum-Body:lang(zh) {
     font-family: var(
         --mod-body-cjk-font-family,
         var(--spectrum-body-cjk-font-family)
@@ -259,12 +258,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Body:lang(zh) strong,
-.spectrum-Body:lang(zh) .spectrum-Body-strong,
-.spectrum-Body:lang(ja) strong,
 .spectrum-Body:lang(ja) .spectrum-Body-strong,
+.spectrum-Body:lang(ja) strong,
+.spectrum-Body:lang(ko) .spectrum-Body-strong,
 .spectrum-Body:lang(ko) strong,
-.spectrum-Body:lang(ko) .spectrum-Body-strong {
+.spectrum-Body:lang(zh) .spectrum-Body-strong,
+.spectrum-Body:lang(zh) strong {
     font-style: var(
         --mod-body-cjk-strong-font-style,
         var(--spectrum-body-cjk-strong-font-style)
@@ -275,12 +274,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Body:lang(zh) em,
-.spectrum-Body:lang(zh) .spectrum-Body-emphasized,
-.spectrum-Body:lang(ja) em,
 .spectrum-Body:lang(ja) .spectrum-Body-emphasized,
+.spectrum-Body:lang(ja) em,
+.spectrum-Body:lang(ko) .spectrum-Body-emphasized,
 .spectrum-Body:lang(ko) em,
-.spectrum-Body:lang(ko) .spectrum-Body-emphasized {
+.spectrum-Body:lang(zh) .spectrum-Body-emphasized,
+.spectrum-Body:lang(zh) em {
     font-style: var(
         --mod-body-cjk-emphasized-font-style,
         var(--spectrum-body-cjk-emphasized-font-style)
@@ -291,15 +290,15 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Body:lang(zh) .spectrum-Body-strong.spectrum-Body-emphasized,
-.spectrum-Body:lang(zh) em strong,
-.spectrum-Body:lang(zh) strong em,
 .spectrum-Body:lang(ja) .spectrum-Body-strong.spectrum-Body-emphasized,
 .spectrum-Body:lang(ja) em strong,
 .spectrum-Body:lang(ja) strong em,
 .spectrum-Body:lang(ko) .spectrum-Body-strong.spectrum-Body-emphasized,
 .spectrum-Body:lang(ko) em strong,
-.spectrum-Body:lang(ko) strong em {
+.spectrum-Body:lang(ko) strong em,
+.spectrum-Body:lang(zh) .spectrum-Body-strong.spectrum-Body-emphasized,
+.spectrum-Body:lang(zh) em strong,
+.spectrum-Body:lang(zh) strong em {
     font-style: var(
         --mod-body-cjk-strong-emphasized-font-style,
         var(--spectrum-body-cjk-strong-emphasized-font-style)
@@ -310,9 +309,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Detail:lang(zh),
 .spectrum-Detail:lang(ja),
-.spectrum-Detail:lang(ko) {
+.spectrum-Detail:lang(ko),
+.spectrum-Detail:lang(zh) {
     font-family: var(
         --mod-detail-cjk-font-family,
         var(--spectrum-detail-cjk-font-family)
@@ -331,12 +330,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Detail:lang(zh) strong,
-.spectrum-Detail:lang(zh) .spectrum-Detail-strong,
-.spectrum-Detail:lang(ja) strong,
 .spectrum-Detail:lang(ja) .spectrum-Detail-strong,
+.spectrum-Detail:lang(ja) strong,
+.spectrum-Detail:lang(ko) .spectrum-Detail-strong,
 .spectrum-Detail:lang(ko) strong,
-.spectrum-Detail:lang(ko) .spectrum-Detail-strong {
+.spectrum-Detail:lang(zh) .spectrum-Detail-strong,
+.spectrum-Detail:lang(zh) strong {
     font-style: var(
         --mod-detail-cjk-strong-font-style,
         var(--spectrum-detail-cjk-strong-font-style)
@@ -347,12 +346,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Detail:lang(zh) em,
-.spectrum-Detail:lang(zh) .spectrum-Detail-emphasized,
-.spectrum-Detail:lang(ja) em,
 .spectrum-Detail:lang(ja) .spectrum-Detail-emphasized,
+.spectrum-Detail:lang(ja) em,
+.spectrum-Detail:lang(ko) .spectrum-Detail-emphasized,
 .spectrum-Detail:lang(ko) em,
-.spectrum-Detail:lang(ko) .spectrum-Detail-emphasized {
+.spectrum-Detail:lang(zh) .spectrum-Detail-emphasized,
+.spectrum-Detail:lang(zh) em {
     font-style: var(
         --mod-detail-cjk-emphasized-font-style,
         var(--spectrum-detail-cjk-emphasized-font-style)
@@ -363,15 +362,15 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Detail:lang(zh) .spectrum-Detail-strong.spectrum-Detail-emphasized,
-.spectrum-Detail:lang(zh) em strong,
-.spectrum-Detail:lang(zh) strong em,
 .spectrum-Detail:lang(ja) .spectrum-Detail-strong.spectrum-Detail-emphasized,
 .spectrum-Detail:lang(ja) em strong,
 .spectrum-Detail:lang(ja) strong em,
 .spectrum-Detail:lang(ko) .spectrum-Detail-strong.spectrum-Detail-emphasized,
 .spectrum-Detail:lang(ko) em strong,
-.spectrum-Detail:lang(ko) strong em {
+.spectrum-Detail:lang(ko) strong em,
+.spectrum-Detail:lang(zh) .spectrum-Detail-strong.spectrum-Detail-emphasized,
+.spectrum-Detail:lang(zh) em strong,
+.spectrum-Detail:lang(zh) strong em {
     font-style: var(
         --mod-detail-cjk-strong-emphasized-font-style,
         var(--spectrum-detail-cjk-strong-emphasized-font-style)
@@ -382,9 +381,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Detail--light:lang(zh),
 .spectrum-Detail--light:lang(ja),
-.spectrum-Detail--light:lang(ko) {
+.spectrum-Detail--light:lang(ko),
+.spectrum-Detail--light:lang(zh) {
     font-style: var(
         --mod-detail-cjk-light-font-style,
         var(--spectrum-detail-cjk-light-font-style)
@@ -395,12 +394,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Detail--light:lang(zh) strong,
-.spectrum-Detail--light:lang(zh) .spectrum-Detail-strong,
-.spectrum-Detail--light:lang(ja) strong,
 .spectrum-Detail--light:lang(ja) .spectrum-Detail-strong,
+.spectrum-Detail--light:lang(ja) strong,
+.spectrum-Detail--light:lang(ko) .spectrum-Detail-strong,
 .spectrum-Detail--light:lang(ko) strong,
-.spectrum-Detail--light:lang(ko) .spectrum-Detail-strong {
+.spectrum-Detail--light:lang(zh) .spectrum-Detail-strong,
+.spectrum-Detail--light:lang(zh) strong {
     font-style: var(
         --mod-detail-cjk-light-strong-font-style,
         var(--spectrum-detail-cjk-light-strong-font-style)
@@ -411,12 +410,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Detail--light:lang(zh) em,
-.spectrum-Detail--light:lang(zh) .spectrum-Detail-emphasized,
-.spectrum-Detail--light:lang(ja) em,
 .spectrum-Detail--light:lang(ja) .spectrum-Detail-emphasized,
+.spectrum-Detail--light:lang(ja) em,
+.spectrum-Detail--light:lang(ko) .spectrum-Detail-emphasized,
 .spectrum-Detail--light:lang(ko) em,
-.spectrum-Detail--light:lang(ko) .spectrum-Detail-emphasized {
+.spectrum-Detail--light:lang(zh) .spectrum-Detail-emphasized,
+.spectrum-Detail--light:lang(zh) em {
     font-style: var(
         --mod-detail-cjk-light-emphasized-font-style,
         var(--spectrum-detail-cjk-light-emphasized-font-style)
@@ -427,11 +426,11 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Detail--light:lang(zh)
-    .spectrum-Detail-strong.spectrum-Detail-emphasized,
 .spectrum-Detail--light:lang(ja)
     .spectrum-Detail-strong.spectrum-Detail-emphasized,
 .spectrum-Detail--light:lang(ko)
+    .spectrum-Detail-strong.spectrum-Detail-emphasized,
+.spectrum-Detail--light:lang(zh)
     .spectrum-Detail-strong.spectrum-Detail-emphasized {
     font-style: var(
         --mod-detail-cjk-light-strong-emphasized-font-style,
@@ -443,9 +442,9 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code:lang(zh),
 .spectrum-Code:lang(ja),
-.spectrum-Code:lang(ko) {
+.spectrum-Code:lang(ko),
+.spectrum-Code:lang(zh) {
     font-family: var(
         --mod-code-cjk-font-family,
         var(--spectrum-code-cjk-font-family)
@@ -468,12 +467,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code:lang(zh) strong,
-.spectrum-Code:lang(zh) .spectrum-Code-strong,
-.spectrum-Code:lang(ja) strong,
 .spectrum-Code:lang(ja) .spectrum-Code-strong,
+.spectrum-Code:lang(ja) strong,
+.spectrum-Code:lang(ko) .spectrum-Code-strong,
 .spectrum-Code:lang(ko) strong,
-.spectrum-Code:lang(ko) .spectrum-Code-strong {
+.spectrum-Code:lang(zh) .spectrum-Code-strong,
+.spectrum-Code:lang(zh) strong {
     font-style: var(
         --mod-code-cjk-strong-font-style,
         var(--spectrum-code-cjk-strong-font-style)
@@ -484,12 +483,12 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code:lang(zh) em,
-.spectrum-Code:lang(zh) .spectrum-Code-emphasized,
-.spectrum-Code:lang(ja) em,
 .spectrum-Code:lang(ja) .spectrum-Code-emphasized,
+.spectrum-Code:lang(ja) em,
+.spectrum-Code:lang(ko) .spectrum-Code-emphasized,
 .spectrum-Code:lang(ko) em,
-.spectrum-Code:lang(ko) .spectrum-Code-emphasized {
+.spectrum-Code:lang(zh) .spectrum-Code-emphasized,
+.spectrum-Code:lang(zh) em {
     font-style: var(
         --mod-code-cjk-emphasized-font-style,
         var(--spectrum-code-cjk-emphasized-font-style)
@@ -500,15 +499,15 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Code:lang(zh) .spectrum-Code-strong.spectrum-Code-emphasized,
-.spectrum-Code:lang(zh) em strong,
-.spectrum-Code:lang(zh) strong em,
 .spectrum-Code:lang(ja) .spectrum-Code-strong.spectrum-Code-emphasized,
 .spectrum-Code:lang(ja) em strong,
 .spectrum-Code:lang(ja) strong em,
 .spectrum-Code:lang(ko) .spectrum-Code-strong.spectrum-Code-emphasized,
 .spectrum-Code:lang(ko) em strong,
-.spectrum-Code:lang(ko) strong em {
+.spectrum-Code:lang(ko) strong em,
+.spectrum-Code:lang(zh) .spectrum-Code-strong.spectrum-Code-emphasized,
+.spectrum-Code:lang(zh) em strong,
+.spectrum-Code:lang(zh) strong em {
     font-style: var(
         --mod-code-cjk-strong-emphasized-font-style,
         var(--spectrum-code-cjk-strong-emphasized-font-style)

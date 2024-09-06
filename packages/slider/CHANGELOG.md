@@ -3,6 +3,77 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
+
+### Bug Fixes
+
+-   **slider:** update variant attribute correctly ([#4714](https://github.com/adobe/spectrum-web-components/issues/4714)) ([9c22dd6](https://github.com/adobe/spectrum-web-components/commit/9c22dd6b749a3c80dc516db616f8ac68d30136cf))
+
+## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
+
+### Bug Fixes
+
+-   **slider:** bump css version to increase slider z-index ([#4682](https://github.com/adobe/spectrum-web-components/issues/4682)) ([04bba95](https://github.com/adobe/spectrum-web-components/commit/04bba95bcc0946bf8f7172830f2127ed41a89d8c))
+
+# [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+# [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+# [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
+
+### Features
+
+-   Silder: adjust fillStart calculation for value=0 and normalization function ([#4573](https://github.com/adobe/spectrum-web-components/issues/4573)) ([369fee7](https://github.com/adobe/spectrum-web-components/commit/369fee7065f42008d9b356a98235ac8180655a96)), closes [#4558](https://github.com/adobe/spectrum-web-components/issues/4558)
+
+# [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+## [0.42.5](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.42.5) (2024-05-24)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
+
+### Bug Fixes
+
+-   **number-field, slider:** floating point roundoff precision bug ([#4263](https://github.com/adobe/spectrum-web-components/issues/4263)) ([74480ef](https://github.com/adobe/spectrum-web-components/commit/74480efd47305a7d41d0e20682d8dcba1c129f2f))
+-   **slider,overlay:** ensure that pointer events in Slider are handled as expected in Overlay ([#4438](https://github.com/adobe/spectrum-web-components/issues/4438)) ([db193e8](https://github.com/adobe/spectrum-web-components/commit/db193e84d1ee300faaed47a5a4026b73a8d9fb30))
+
+## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
+
+### Bug Fixes
+
+-   **number-field, slider:** floating point roundoff precision bug ([#4263](https://github.com/adobe/spectrum-web-components/issues/4263)) ([74480ef](https://github.com/adobe/spectrum-web-components/commit/74480efd47305a7d41d0e20682d8dcba1c129f2f))
+
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+### Bug Fixes
+
+-   **slider:** skip variant="filled" css when fill-start ([#4217](https://github.com/adobe/spectrum-web-components/issues/4217)) ([b6d389d](https://github.com/adobe/spectrum-web-components/commit/b6d389d1be04284b30e395bd2fab2dcd2c65da63))
+
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+### Bug Fixes
+
+-   **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
+
+### Features
+
+-   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
 ### Bug Fixes

@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+# [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
+
+### Features
+
+-   **breadcrumbs:** add Breadcrumbs component ([#4578](https://github.com/adobe/spectrum-web-components/issues/4578)) ([acd4b5e](https://github.com/adobe/spectrum-web-components/commit/acd4b5e4401dad8cf26b50ee5dcda80a28b62999))
+
+# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+
+### Bug Fixes
+
+-   **menu:** should not make a selection on right click ([#4642](https://github.com/adobe/spectrum-web-components/issues/4642)) ([d269629](https://github.com/adobe/spectrum-web-components/commit/d269629a64063515eddee9b178b6240b92b9bc76))
+
+### Features
+
+-   upgrade menu and dialog grid css ([#4638](https://github.com/adobe/spectrum-web-components/issues/4638)) ([ab9d468](https://github.com/adobe/spectrum-web-components/commit/ab9d468a5a1cf5721e169bd8dd8724be78c148a1))
+
+# [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+# [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
+
+### Features
+
+-   **action-bar:** support for action-menus ([#3780](https://github.com/adobe/spectrum-web-components/issues/3780)) ([4aff599](https://github.com/adobe/spectrum-web-components/commit/4aff5995f6a22eefae0dd8e580d743c27ceb2c2d))
+
+# [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
+
+### Bug Fixes
+
+-   **menu:** enable numpad arrow and Enter keys ([#4492](https://github.com/adobe/spectrum-web-components/issues/4492)) ([012c411](https://github.com/adobe/spectrum-web-components/commit/012c4116dac62031e5a329cf4da7fb9cd149bfdf))
+
+## [0.42.5](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.42.5) (2024-05-24)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+## [0.42.4](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.4) (2024-05-14)
+
+### Bug Fixes
+
+-   **action-menu:** allow menu groups to handle their own selections ([#4397](https://github.com/adobe/spectrum-web-components/issues/4397)) ([5a19051](https://github.com/adobe/spectrum-web-components/commit/5a190518814f85cfd2e345ad6a0add1378c05bf4))
+
+## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+## [0.42.2](https://github.com/adobe/spectrum-web-components/compare/v0.42.1...v0.42.2) (2024-04-03)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+## [0.42.1](https://github.com/adobe/spectrum-web-components/compare/v0.42.0...v0.42.1) (2024-04-02)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+
+### Bug Fixes
+
+-   **menu:** release synthetic "click" promise to unblock keyboard interactions ([f8aecf3](https://github.com/adobe/spectrum-web-components/commit/f8aecf33cfa94ee1e1b791dc203fc46ead84eb10))
+
+### Features
+
+-   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
 ### Bug Fixes

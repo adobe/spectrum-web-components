@@ -24,6 +24,68 @@ describe('ProgressCircle', () => {
                 <sp-progress-circle label="Loading"></sp-progress-circle>
             `)
     );
+    describe('dev mode', () => {
+        let consoleWarnStub!: ReturnType<typeof stub>;
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
+        });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+        });
+
+        it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+            const el = await fixture<ProgressCircle>(html`
+                <sp-progress-circle progress="50"></sp-progress-circle>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('accessible'),
+                'confirm accessibility-centric message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-progress-circle',
+                    type: 'accessibility',
+                    level: 'default',
+                },
+            });
+        });
+        it('warns in Dev Mode when overBackground attribute is supplied', async () => {
+            const el = await fixture<ProgressCircle>(html`
+                <sp-progress-circle
+                    progress="50"
+                    ?over-background=${true}
+                ></sp-progress-circle>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes(
+                    'element will stop accepting the "over-background" attribute'
+                ),
+                'confirm attribute deprecation message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-progress-circle',
+                    type: 'api',
+                    level: 'deprecation',
+                },
+            });
+        });
+    });
     it('loads', async () => {
         const el = await fixture<ProgressCircle>(html`
             <sp-progress-circle label="Loading"></sp-progress-circle>
@@ -89,27 +151,37 @@ describe('ProgressCircle', () => {
 
         expect(el.hasAttribute('aria-valuenow')).to.be.false;
     });
-    it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
-        const consoleWarnStub = stub(console, 'warn');
+    it('accepts `aria-label`', async () => {
         const el = await fixture<ProgressCircle>(html`
-            <sp-progress-circle progress="50"></sp-progress-circle>
+            <sp-progress-circle aria-label="Loading"></sp-progress-circle>
         `);
 
         await elementUpdated(el);
 
-        expect(consoleWarnStub.called).to.be.true;
-        const spyCall = consoleWarnStub.getCall(0);
-        expect(
-            spyCall.args.at(0).includes('accessible'),
-            'confirm accessibility-centric message'
-        ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-            data: {
-                localName: 'sp-progress-circle',
-                type: 'accessibility',
-                level: 'default',
-            },
-        });
-        consoleWarnStub.restore();
+        expect(el.hasAttribute('aria-label')).to.be.true;
+        expect(el.getAttribute('aria-label')).to.equal('Loading');
+    });
+    it('sets `aria-label` to equal `label` if `label` is set', async () => {
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle label="Loading"></sp-progress-circle>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.true;
+        expect(el.getAttribute('aria-label')).to.equal('Loading');
+    });
+    it('does not remove `aria-label` if set independently of `label`', async () => {
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle
+                label=""
+                aria-label="Loading"
+            ></sp-progress-circle>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.true;
+        expect(el.getAttribute('aria-label')).to.equal('Loading');
     });
 });

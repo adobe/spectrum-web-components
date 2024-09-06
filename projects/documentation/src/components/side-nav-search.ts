@@ -23,8 +23,9 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import sideNavSearchMenuStyles from './side-nav-search.css';
-import { Search } from '@spectrum-web-components/search';
-import { Popover } from '@spectrum-web-components/popover';
+import type { Search } from '@spectrum-web-components/search';
+import type { Overlay } from '@spectrum-web-components/overlay';
+import type { Popover } from '@spectrum-web-components/popover';
 import type { ResultGroup } from './search-index.js';
 import { Menu } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/overlay/sp-overlay.js';
@@ -34,16 +35,17 @@ const stopPropagation = (event: Event): void => event.stopPropagation();
 
 @customElement('docs-search')
 export class SearchComponent extends LitElement {
-    private closeOverlay?: () => void;
-
-    @query('sp-popover')
-    private popoverEl!: Popover;
+    @query('sp-menu')
+    private menuEl!: Menu;
 
     @property({ type: Boolean })
     private open = false;
 
-    @query('sp-menu')
-    private menuEl!: Menu;
+    @query('sp-overlay')
+    private overlayEl!: Overlay;
+
+    @query('sp-popover')
+    private popoverEl!: Popover;
 
     @query('sp-search')
     private searchField!: Search;
@@ -59,11 +61,22 @@ export class SearchComponent extends LitElement {
         this.searchField.focus();
     }
 
-    private handleSearchInput(event: InputEvent) {
-        if (event.target) {
-            const { value } = event.target as Search;
-            this.updateSearchResults(value);
-        }
+    private handleSearchPointerdown(): void {
+        const abortController = new AbortController();
+        const { signal } = abortController;
+        const handlePointerup = () => {
+            this.overlayEl.manuallyKeepOpen();
+        };
+        const cleanup = () => abortController.abort();
+        this.searchField.addEventListener('pointerup', handlePointerup, {
+            signal,
+        });
+        document.addEventListener('pointerup', cleanup, {
+            signal,
+        });
+        document.addEventListener('pointercancel', cleanup, {
+            signal,
+        });
     }
 
     private handleKeydown(event: KeyboardEvent) {
@@ -109,20 +122,17 @@ export class SearchComponent extends LitElement {
         this.open = false;
     }
 
-    private handleClosed(): void {
-        if (this.closeOverlay) {
-            delete this.closeOverlay;
-        }
-    }
-
     handleSubmit(event: Event): void {
         event.preventDefault();
-        if (this.results.length < 0) return;
+        if (this.results.length < 0) {
+            return;
+        }
         this.menuEl.focus();
     }
 
-    private async updateSearchResults(value: string): Promise<boolean> {
-        if (value.length < 3) {
+    private async updateSearchResults(): Promise<boolean> {
+        const { value } = this.searchField;
+        if (value.length < 3 || !this.searchField.focused) {
             this.closePopover();
             return false;
         }
@@ -181,9 +191,10 @@ export class SearchComponent extends LitElement {
             <div id="search-container">
                 <sp-search
                     id="search"
-                    @focusin=${this.handleSearchInput}
-                    @input=${this.handleSearchInput}
-                    @change=${this.handleSearchInput}
+                    @pointerdown=${this.handleSearchPointerdown}
+                    @focusin=${this.updateSearchResults}
+                    @input=${this.updateSearchResults}
+                    @change=${this.updateSearchResults}
                     @keydown=${this.handleKeydown}
                     @click=${stopPropagation}
                     @submit=${this.handleSubmit}
@@ -196,10 +207,7 @@ export class SearchComponent extends LitElement {
                     trigger="search"
                     type="auto"
                 >
-                    <sp-popover
-                        id="search-results-menu"
-                        @sp-overlay-closed=${this.handleClosed}
-                    >
+                    <sp-popover id="search-results-menu">
                         ${this.renderResults()}
                     </sp-popover>
                 </sp-overlay>

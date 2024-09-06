@@ -18,16 +18,16 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
 import { ActionMenuMarkup } from './';
 import { makeOverBackground } from '../../button/stories/index.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
-import '../../overlay/stories/index.js';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
 import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import { Menu } from '@spectrum-web-components/menu';
-import { ActionMenu } from '../src/ActionMenu';
+import type { ActionMenu } from '@spectrum-web-components/action-menu';
 
 export default {
     component: 'sp-action-menu',
@@ -313,9 +313,8 @@ export const controlled = ({ align = 'start' } = {}): TemplateResult => {
     }
     function logState(): void {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        document.getElementById(
-            'state-json'
-        )!.textContent = `application state: ${JSON.stringify(state)}`;
+        document.getElementById('state-json')!.textContent =
+            `application state: ${JSON.stringify(state)}`;
     }
     return html`
         <sp-action-menu
@@ -403,3 +402,91 @@ export const groups = ({
 `;
 
 groups.decorators = [isOverlayOpen];
+
+export const groupsWithSelects = ({
+    onChange,
+}: {
+    onChange(value: string): void;
+}): TemplateResult => {
+    return html`
+        <sp-action-menu
+            @change=${({ target: { value } }: Event & { target: ActionMenu }) =>
+                onChange(value)}
+            label="Filter or Sort"
+        >
+            <sp-menu-group selects="single">
+                <span slot="header">Sort By</span>
+                <sp-menu-item>Name</sp-menu-item>
+                <sp-menu-item>Created</sp-menu-item>
+                <sp-menu-item>Modified</sp-menu-item>
+            </sp-menu-group>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-group selects="multiple">
+                <sp-menu-item>Reverse Order</sp-menu-item>
+            </sp-menu-group>
+        </sp-action-menu>
+    `;
+};
+
+groupsWithSelects.swc_vrt = {
+    skip: true,
+};
+
+export const directive = (): TemplateResult => {
+    const renderSubmenu = (): TemplateResult => html`
+        <sp-menu-item>Submenu Item 1</sp-menu-item>
+        <sp-menu-item>Submenu Item 2</sp-menu-item>
+        <sp-menu-item>Submenu Item 3</sp-menu-item>
+        <sp-menu-item>Submenu Item 4</sp-menu-item>
+    `;
+    const renderOptions = (): TemplateResult => html`
+        <sp-menu-item>Deselect</sp-menu-item>
+        <sp-menu-item>Select Inverse</sp-menu-item>
+        <sp-menu-item>
+            Feather...
+            <sp-menu
+                slot="submenu"
+                ${slottableRequest(renderSubmenu)}
+            ></sp-menu>
+        </sp-menu-item>
+        <sp-menu-item>Select and Mask...</sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>Save Selection</sp-menu-item>
+        <sp-menu-item disabled>Make Work Path</sp-menu-item>
+    `;
+    return html`
+        <sp-action-menu ${slottableRequest(renderOptions)}>
+            <span slot="label">
+                Select a Country with a very long label, too long in fact
+            </span>
+        </sp-action-menu>
+    `;
+};
+
+directive.swc_vrt = {
+    skip: true,
+};
+
+export const withScrollEvent = (): TemplateResult => {
+    function handleActionMenuScroll(): void {
+        console.log('attached action menu scroll listener');
+    }
+
+    function renderMenuItems(): TemplateResult[] {
+        return Array.from(
+            { length: 30 },
+            (_, i) => html`
+                <sp-menu-item style="width: 100%;">
+                    This is an Action Menu Item ${i + 1}
+                </sp-menu-item>
+            `
+        );
+    }
+
+    return html`
+        <sp-action-menu @scroll=${handleActionMenuScroll} open>
+            <span slot="label">This is an Action Menu</span>
+            ${renderMenuItems()}
+        </sp-action-menu>
+    `;
+};

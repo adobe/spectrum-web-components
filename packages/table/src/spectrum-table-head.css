@@ -11,13 +11,12 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     display: table-header-group;
 }
 
 :host .spectrum-Table-scroller {
-    z-index: 2;
+    z-index: 1;
     position: sticky;
-    top: 0;
+    inset-block-start: 0;
 }

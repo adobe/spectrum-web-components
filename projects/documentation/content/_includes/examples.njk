@@ -13,6 +13,15 @@ layout: component.njk
             {% set hasAPI = true %}
         {% endif %}
     {% endfor %}
+    {% set hasChangelog = false %}
+    {% for component in collections['component-changelog'] %}
+        {% if component.data.componentName === componentName %}
+            {% set hasChangelog = true %}
+        {% endif %}
+    {% endfor %}
     {% if hasAPI === true %}
         <sp-tab value="api">API</sp-tab>
+    {% endif %}
+    {% if hasChangelog === true %}
+        <sp-tab value="changelog">Changelog</sp-tab>
     {% endif %}

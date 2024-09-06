@@ -11,12 +11,11 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 @media (forced-colors: active) {
+    :host([focused]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
     :host(:focus-visible)
         .spectrum-Table-checkbox
-        .spectrum-Checkbox-box:before,
-    :host([focused]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
+        .spectrum-Checkbox-box:before {
         outline: var(--highcontrast-table-row-text-color-hover) 1px solid;
     }
 
@@ -26,21 +25,21 @@ governing permissions and limitations under the License.
         }
     }
 
-    :host([selected]),
+    :host([drop-target]) .spectrum-Table-body,
     :host([drop-target]),
-    :host([drop-target]) .spectrum-Table-body {
+    :host([selected]) {
         --highcontrast-table-cell-focus-indicator-color: var(
             --highcontrast-table-selected-row-text-color
         );
         --highcontrast-table-cell-focus-extra-offset: 1px;
     }
 
-    :host([selected]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
-    :host([drop-target]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
     :host([drop-target])
         .spectrum-Table-body
         .spectrum-Table-checkbox
-        .spectrum-Checkbox-box:before {
+        .spectrum-Checkbox-box:before,
+    :host([drop-target]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
+    :host([selected]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
         outline: var(--highcontrast-table-selected-row-text-color) 1px solid;
     }
 }
@@ -162,8 +161,8 @@ governing permissions and limitations under the License.
     outline: 0;
 }
 
-:host(:focus-visible),
-:host([focused]) {
+:host([focused]),
+:host(:focus-visible) {
     --highcontrast-table-row-text-color: var(
         --highcontrast-table-row-text-color-hover
     );
@@ -207,8 +206,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([selected]:focus-visible),
-:host([selected][focused]) {
+:host([selected][focused]),
+:host([selected]:focus-visible) {
     --highcontrast-table-row-text-color: var(
         --highcontrast-table-selected-row-text-color-focus
     );
@@ -220,8 +219,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([drop-target]),
-:host([drop-target]) .spectrum-Table-body {
+:host([drop-target]) .spectrum-Table-body,
+:host([drop-target]) {
     --highcontrast-table-row-text-color: var(
         --highcontrast-table-selected-row-text-color
     );
@@ -263,7 +262,7 @@ governing permissions and limitations under the License.
 }
 
 :host([drop-target]) ::slotted(*) {
-    border-top-color: var(
+    border-block-start-color: var(
         --highcontrast-table-focus-indicator-color,
         var(
             --mod-table-drop-zone-outline-color,
@@ -473,18 +472,6 @@ governing permissions and limitations under the License.
 }
 
 @media (hover: hover) {
-    :host([selected]:hover) {
-        --highcontrast-table-row-text-color: var(
-            --highcontrast-table-selected-row-text-color-focus
-        );
-        --highcontrast-table-icon-color: var(
-            --highcontrast-table-selected-row-text-color-focus
-        );
-        --spectrum-table-cell-background-color: var(
-            --spectrum-table-selected-cell-background-color-focus
-        );
-    }
-
     :host(:hover) {
         --highcontrast-table-row-text-color: var(
             --highcontrast-table-row-text-color-hover
@@ -498,6 +485,18 @@ governing permissions and limitations under the License.
                 --mod-table-row-background-color-hover,
                 var(--spectrum-table-row-background-color-hover)
             )
+        );
+    }
+
+    :host([selected]:hover) {
+        --highcontrast-table-row-text-color: var(
+            --highcontrast-table-selected-row-text-color-focus
+        );
+        --highcontrast-table-icon-color: var(
+            --highcontrast-table-selected-row-text-color-focus
+        );
+        --spectrum-table-cell-background-color: var(
+            --spectrum-table-selected-cell-background-color-focus
         );
     }
 

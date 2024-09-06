@@ -20,14 +20,16 @@ import {
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import { Combobox } from '@spectrum-web-components/combobox';
-import { fixture } from '../../../test/testing-helpers.js';
+import { detectOS, fixture } from '../../../test/testing-helpers.js';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import {
     a11ySnapshot,
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
-import { comboboxFixture, isWebKit } from './helpers.js';
+import type { AccessibleNamedNode } from './helpers.js';
+import { comboboxFixture } from './helpers.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 import {
     withFieldLabel,
     withHelpText,
@@ -72,15 +74,19 @@ describe('Combobox accessibility', () => {
         const el = test.querySelector('sp-combobox') as unknown as Combobox;
         const name = 'Pick something';
         const webkitName = 'Pick something Banana';
-        type NamedNode = { name: string; role: string; value?: string };
+        const isWebKitMacOS = isWebKit() && detectOS() === 'Mac OS';
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
 
-        let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-            children: NamedNode[];
+        let snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as AccessibleNamedNode & {
+            children: AccessibleNamedNode[];
         };
 
-        let a11yNode = findAccessibilityNode<NamedNode>(
+        const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
                 node.name === name && !node.value && node.role === 'combobox'
@@ -91,21 +97,37 @@ describe('Combobox accessibility', () => {
         el.value = 'Banana';
         await elementUpdated(el);
 
-        snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-            children: NamedNode[];
+        snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as AccessibleNamedNode & {
+            children: AccessibleNamedNode[];
         };
-        // gating it this way is the only way I could get ALL the tests to pass on all browsers
-        if (isWebKit) {
-            a11yNode = findAccessibilityNode<NamedNode>(
+
+        // WebKit doesn't currently associate the `name` via the accessibility tree.
+        // Instead if lists this data in the description 🤷🏻‍♂️
+        // Give it an escape hatch for now.
+        const node = findAccessibilityNode<AccessibleNamedNode>(
+            snapshot,
+            (node) =>
+                (node.name === name ||
+                    (isWebKitMacOS && node.name === webkitName)) &&
+                node.value === 'Banana' &&
+                node.role === 'combobox'
+        );
+
+        expect(
+            node,
+            `pre escape hatch node not available: ${JSON.stringify(
                 snapshot,
-                (node) =>
-                    node.name === webkitName &&
-                    node.value === 'Banana' &&
-                    node.role === 'combobox'
-            );
-            expect(a11yNode, '`name` is null on WebKit').to.not.be.null;
-        } else {
-            a11yNode = findAccessibilityNode<NamedNode>(
+                null,
+                '  '
+            )}`
+        ).to.not.be.null;
+
+        if (isWebKitMacOS) {
+            // Retest WebKit without the escape hatch, expecting it to fail.
+            // This way we get notified when the results are as expected, again.
+            const iOSNode = findAccessibilityNode<AccessibleNamedNode>(
                 snapshot,
                 (node) =>
                     node.name === name &&
@@ -113,9 +135,13 @@ describe('Combobox accessibility', () => {
                     node.role === 'combobox'
             );
             expect(
-                a11yNode,
-                '`name` is the the selected item text plus the label text'
-            ).to.not.be.null;
+                iOSNode,
+                `post escape hatch node available: ${JSON.stringify(
+                    snapshot,
+                    null,
+                    '  '
+                )}`
+            ).to.be.null;
         }
     });
     it('manages its "name" value in the accessibility tree', async () => {
@@ -123,15 +149,19 @@ describe('Combobox accessibility', () => {
 
         const name = 'Combobox';
         const webkitName = 'Combobox Banana';
-        type NamedNode = { name: string; role: string; value?: string };
+        const isWebKitMacOS = isWebKit() && detectOS() === 'Mac OS';
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
 
-        let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-            children: NamedNode[];
+        let snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as AccessibleNamedNode & {
+            children: AccessibleNamedNode[];
         };
 
-        let a11yNode = findAccessibilityNode<NamedNode>(
+        const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
                 node.name === name && !node.value && node.role === 'combobox'
@@ -142,21 +172,37 @@ describe('Combobox accessibility', () => {
         el.value = 'Banana';
         await elementUpdated(el);
 
-        snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-            children: NamedNode[];
+        snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as AccessibleNamedNode & {
+            children: AccessibleNamedNode[];
         };
-        // gating it this way is the only way I could get ALL the tests to pass on all browsers
-        if (isWebKit) {
-            a11yNode = findAccessibilityNode<NamedNode>(
+
+        // WebKit doesn't currently associate the `name` via the accessibility tree.
+        // Instead if lists this data in the description 🤷🏻‍♂️
+        // Give it an escape hatch for now.
+        const node = findAccessibilityNode<AccessibleNamedNode>(
+            snapshot,
+            (node) =>
+                (node.name === name ||
+                    (isWebKitMacOS && node.name === webkitName)) &&
+                node.value === 'Banana' &&
+                node.role === 'combobox'
+        );
+
+        expect(
+            node,
+            `pre escape hatch node not available: ${JSON.stringify(
                 snapshot,
-                (node) =>
-                    node.name === webkitName &&
-                    node.value === 'Banana' &&
-                    node.role === 'combobox'
-            );
-            expect(a11yNode, '`name` is null on WebKit').to.not.be.null;
-        } else {
-            a11yNode = findAccessibilityNode<NamedNode>(
+                null,
+                '  '
+            )}`
+        ).to.not.be.null;
+
+        if (isWebKitMacOS) {
+            // Retest WebKit without the escape hatch, expecting it to fail.
+            // This way we get notified when the results are as expected, again.
+            const iOSNode = findAccessibilityNode<AccessibleNamedNode>(
                 snapshot,
                 (node) =>
                     node.name === name &&
@@ -164,9 +210,13 @@ describe('Combobox accessibility', () => {
                     node.role === 'combobox'
             );
             expect(
-                a11yNode,
-                '`name` is the the selected item text plus the label text'
-            ).to.not.be.null;
+                iOSNode,
+                `post escape hatch node available: ${JSON.stringify(
+                    snapshot,
+                    null,
+                    '  '
+                )}`
+            ).to.be.null;
         }
     });
     it('manages its "description" value with slotted <sp-tooltip>', async () => {
@@ -301,5 +351,28 @@ describe('Combobox accessibility', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
+    });
+    it('renders accessibly with `pending` attribute', async () => {
+        const el = await comboboxFixture();
+        el.value = 'Banana';
+        el.pending = true;
+
+        await elementUpdated(el);
+        await nextFrame();
+
+        const name = 'Pending Combobox';
+
+        const snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as AccessibleNamedNode & {
+            children: AccessibleNamedNode[];
+        };
+
+        const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
+            snapshot,
+            (node) => node.name === name && node.role === 'combobox'
+        );
+
+        expect(a11yNode).to.not.be.null;
     });
 });

@@ -39,3 +39,9 @@ Learn more about the protocol these events are based on below:`,
 }
 
 export const removeSlottableRequest = Symbol('remove-slottable-request');
+
+declare global {
+    interface GlobalEventHandlersEventMap {
+        'slottable-request': SlottableRequestEvent;
+    }
+}

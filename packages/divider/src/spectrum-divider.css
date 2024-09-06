@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
     --spectrum-divider-background-color: var(
@@ -63,9 +62,9 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     :host,
-    :host([size='s']),
+    :host([size='l']),
     :host,
-    :host([size='l']) {
+    :host([size='s']) {
         --spectrum-divider-background-color: CanvasText;
         --spectrum-divider-background-color-small-static-white: CanvasText;
         --spectrum-divider-background-color-medium-static-white: CanvasText;
@@ -78,6 +77,7 @@ governing permissions and limitations under the License.
 
 :host {
     block-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
+    inline-size: 100%;
     border: none;
     border-width: var(
         --mod-divider-thickness,
@@ -91,7 +91,6 @@ governing permissions and limitations under the License.
         --mod-divider-background-color,
         var(--spectrum-divider-background-color)
     );
-    inline-size: 100%;
     overflow: visible;
 }
 
@@ -143,7 +142,6 @@ governing permissions and limitations under the License.
         var(--spectrum-divider-thickness)
     );
     margin-block: var(--mod-divider-vertical-margin);
-    block-size: var(--mod-divider-vertical-height);
+    block-size: var(--mod-divider-vertical-height, 100%);
     align-self: var(--mod-divider-vertical-align);
-    block-size: 100%;
 }

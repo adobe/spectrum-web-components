@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     box-sizing: border-box;
     block-size: calc(
@@ -32,6 +31,7 @@ governing permissions and limitations under the License.
         ease-out;
     cursor: pointer;
     outline: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
     position: relative;
 }
@@ -143,7 +143,7 @@ governing permissions and limitations under the License.
     vertical-align: top;
     font-family: var(--mod-tabs-font-family, var(--spectrum-tabs-font-family));
     font-style: var(--mod-tabs-font-style, var(--spectrum-tabs-font-style));
-    font-size: var(--mod-tabs-font-weight, var(--spectrum-tabs-font-size));
+    font-size: var(--mod-tabs-font-size, var(--spectrum-tabs-font-size));
     font-weight: var(--mod-tabs-font-weight, var(--spectrum-tabs-font-weight));
     line-height: var(--mod-tabs-line-height, var(--spectrum-tabs-line-height));
     margin-block-start: var(
@@ -154,6 +154,7 @@ governing permissions and limitations under the License.
         --mod-tabs-bottom-to-text,
         var(--spectrum-tabs-bottom-to-text)
     );
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-block;
 }

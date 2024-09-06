@@ -10,55 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect, fixture, nextFrame } from '@open-wc/testing';
-import { html, render } from '@spectrum-web-components/base';
 import { singleSelect } from '../stories/menu.stories.js';
-import { usedHeapMB } from '../../../test/testing-helpers.js';
+import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-describe('Menu memory usage', () => {
-    it('releases references on disconnect', async function () {
-        if (!window.gc || !('measureUserAgentSpecificMemory' in performance))
-            this.skip();
-
-        this.timeout(10000);
-
-        const iterations = 50;
-        let active = false;
-
-        const el = await fixture<HTMLElement>(
-            html`
-                <div></div>
-            `
-        );
-
-        async function toggle(
-            forced: boolean | undefined = undefined
-        ): Promise<void> {
-            active = forced != null ? forced : !active;
-            render(active ? singleSelect() : html``, el);
-            await nextFrame();
-            await nextFrame();
-        }
-
-        // "shake things out" to get a good first reading
-        for (let i = 0; i < 5; i++) {
-            await toggle();
-        }
-        await toggle(false);
-        const beforeMB = await usedHeapMB();
-
-        for (let i = 0; i < iterations; i++) {
-            await toggle();
-        }
-        await toggle(false);
-        const afterMB = await usedHeapMB();
-
-        expect(
-            afterMB.total - beforeMB.total,
-            `Total | before: ${beforeMB.total}, after: ${afterMB.total}
-DOM | before: ${beforeMB.dom}, after: ${afterMB.dom}
-JS | before: ${beforeMB.js}, after: ${afterMB.js}
-Shared | before: ${beforeMB.shared}, after: ${afterMB.shared}`
-        ).to.be.lte(0);
-    });
-});
+testForMemoryLeaks(singleSelect());

@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
-    transition: transform
+    transition:
+        transform
             var(
                 --mod-overlay-animation-duration,
                 var(--spectrum-animation-duration-100, 0.13s)

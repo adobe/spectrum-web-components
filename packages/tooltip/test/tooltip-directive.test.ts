@@ -14,103 +14,110 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import {
     elementUpdated,
     expect,
-    fixture,
     html,
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
 import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
+import { sendKeys } from '@web/test-runner-commands';
+import { render, TemplateResult } from '@spectrum-web-components/base';
 
 describe('Tooltip Directive', () => {
-    it('opens an Overlay that was previously not on the DOM', async function () {
-        const el = await fixture<Button>(html`
-            <sp-button
-                ${tooltip(
-                    () =>
-                        html`
-                            Tip me!
-                        `
-                )}
-            >
+    const renderTooltip = (): TemplateResult => html`
+        Tip me!
+    `;
+    function renderButton(
+        ...directiveParams: Parameters<typeof tooltip>
+    ): TemplateResult {
+        return html`
+            <sp-button ${tooltip(...directiveParams)}>
                 I'm a button...
             </sp-button>
-        `);
+        `;
+    }
+    function opensTooltip(): void {
+        it('opens tooltip not previously on DOM', async function () {
+            await elementUpdated(this.el);
 
-        await elementUpdated(el);
+            const input = document.createElement('input');
+            this.el.insertAdjacentElement('beforebegin', input);
 
-        let overlays = document.querySelectorAll('sp-overlay');
-        expect(overlays.length).to.equal(0);
+            this.overlays = document.querySelectorAll('sp-overlay');
+            expect(this.overlays.length).to.equal(0);
 
-        const opened = oneEvent(el, 'sp-opened');
-        el.focus();
-        await opened;
+            const opened = oneEvent(this.el, 'sp-opened');
+            input.focus();
+            await sendKeys({
+                press: 'Tab',
+            });
+            expect(document.activeElement === this.el).to.be.true;
+            expect(this.el.matches(':focus-visible')).to.be.true;
+            await opened;
 
-        overlays = document.querySelectorAll('sp-overlay');
-        expect(overlays.length).to.equal(1);
+            this.overlays = document.querySelectorAll('sp-overlay');
+            expect(this.overlays.length).to.equal(1);
+        });
+    }
+    function closesTooltip(): void {
+        it('closes a tooltip and removes it from the DOM', async function () {
+            // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup
+            const closed = oneEvent(this.overlays[0], 'slottable-request');
+            this.el.blur();
+            await closed;
 
-        // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup
-        const closed = oneEvent(overlays[0], 'slottable-request');
-        el.blur();
-        await closed;
+            // Wait for DOM clean up to complete
+            await nextFrame();
+            await nextFrame();
 
-        // Wait for DOM clean up to complete
-        await nextFrame();
-        await nextFrame();
-
-        overlays = document.querySelectorAll('sp-overlay');
-        expect(overlays.length).to.equal(0);
+            this.overlays = document.querySelectorAll('sp-overlay');
+            expect(this.overlays.length).to.equal(0);
+        });
+    }
+    describe('template only', () => {
+        before(async function () {
+            this.testEl = document.createElement('div');
+            document.body.append(this.testEl);
+            render(renderButton(renderTooltip), this.testEl);
+            this.el = this.testEl.querySelector('sp-button');
+            this.overlays = null;
+        });
+        after(function () {
+            this.testEl.remove();
+        });
+        opensTooltip();
+        closesTooltip();
     });
-
-    it('accepts `options`', async function () {
-        const variant = 'positive';
-        const offset = 10;
-        const el = await fixture<Button>(html`
-            <sp-button
-                ${tooltip(
-                    () =>
-                        html`
-                            Tip me!
-                        `,
-                    {
-                        variant,
-                        overlayOptions: {
-                            offset,
-                        },
-                    }
-                )}
-            >
-                I'm a button...
-            </sp-button>
-        `);
-
-        await elementUpdated(el);
-
-        let overlays = document.querySelectorAll('sp-overlay');
-        expect(overlays.length).to.equal(0);
-
-        const opened = oneEvent(el, 'sp-opened');
-        el.focus();
-        await opened;
-
-        overlays = document.querySelectorAll('sp-overlay');
-        expect(overlays.length).to.equal(1);
-        expect(overlays[0].offset).to.equal(offset);
-        const tooltipEl = overlays[0].querySelector('sp-tooltip') as Tooltip;
-        expect(tooltipEl.variant).to.equal(variant);
-
-        // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup
-        const closed = oneEvent(overlays[0], 'slottable-request');
-        el.blur();
-        await closed;
-
-        // Wait for DOM clean up to complete
-        await nextFrame();
-        await nextFrame();
-
-        overlays = document.querySelectorAll('sp-overlay');
-        expect(overlays.length).to.equal(0);
+    describe('with `options`', () => {
+        before(async function () {
+            this.variant = 'positive';
+            this.offset = 10;
+            this.testEl = document.createElement('div');
+            document.body.append(this.testEl);
+            render(
+                renderButton(renderTooltip, {
+                    variant: this.variant,
+                    overlayOptions: {
+                        offset: this.offset,
+                    },
+                }),
+                this.testEl
+            );
+            this.el = this.testEl.querySelector('sp-button');
+            this.overlays = null;
+        });
+        after(function () {
+            this.testEl.remove();
+        });
+        opensTooltip();
+        it('passes `options` to the overlay', async function () {
+            expect(this.overlays[0].offset).to.equal(this.offset);
+            const tooltipEl = this.overlays[0].querySelector(
+                'sp-tooltip'
+            ) as Tooltip;
+            expect(tooltipEl.variant).to.equal(this.variant);
+        });
+        closesTooltip();
     });
 });

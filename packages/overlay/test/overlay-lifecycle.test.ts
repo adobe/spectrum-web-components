@@ -22,7 +22,11 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+import {
+    a11ySnapshot,
+    findAccessibilityNode,
+    sendKeys,
+} from '@web/test-runner-commands';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 
 describe('Overlay Trigger - accessible hover content management', () => {
@@ -158,10 +162,15 @@ describe('Overlay Trigger - accessible hover content management', () => {
         expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
         expect(el.open).to.be.undefined;
 
+        // For `:focus-visible` heuristic.
+        const input = document.createElement('input');
+        el.insertAdjacentElement('afterbegin', input);
+        input.focus();
+
         const opened = oneEvent(el, 'sp-opened');
-        trigger.dispatchEvent(
-            new FocusEvent('focusin', { bubbles: true, composed: true })
-        );
+        await sendKeys({
+            press: 'Tab',
+        });
         await opened;
 
         expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);

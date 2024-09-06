@@ -16,6 +16,7 @@ import {
     html,
     nothing,
     PropertyValues,
+    render,
     SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -24,6 +25,7 @@ import {
     ifDefined,
     StyleInfo,
     styleMap,
+    when,
 } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
@@ -49,8 +51,14 @@ import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import type { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
+import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
+
+import { DesktopController } from './DesktopController.js';
+import { MobileController } from './MobileController.js';
+import { strategies } from './strategies.js';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
@@ -61,13 +69,17 @@ const chevronClass = {
 
 export const DESCRIPTION_ID = 'option-picker';
 export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
-    protected isMobile = new MatchMediaController(this, IS_MOBILE);
+    public isMobile = new MatchMediaController(this, IS_MOBILE);
+
+    public strategy!: DesktopController | MobileController;
 
     @state()
     appliedLabel?: string;
 
     @query('#button')
     public button!: HTMLButtonElement;
+
+    public dependencyManager = new DependencyManagerController(this);
 
     private deprecatedMenu: Menu | null = null;
 
@@ -82,6 +94,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     @property({ type: Boolean, reflect: true })
     public invalid = false;
+
+    /** Whether the items are currently loading. */
+    @property({ type: Boolean, reflect: true })
+    public pending = false;
+
+    /** Defines a string value that labels the Picker while it is in pending state. */
+    @property({ type: String, attribute: 'pending-label' })
+    public pendingLabel = 'Pending';
 
     @property()
     public label?: string;
@@ -102,10 +122,16 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     @query('sp-menu')
-    protected optionsMenu!: Menu;
+    public optionsMenu!: Menu;
+
+    private _selfManageFocusElement = false;
+
+    public override get selfManageFocusElement(): boolean {
+        return this._selfManageFocusElement;
+    }
 
     @query('sp-overlay')
-    protected overlayElement!: Overlay;
+    public overlayElement!: Overlay;
 
     protected tooltipEl?: Tooltip;
 
@@ -171,55 +197,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.focused = false;
     }
 
-    protected preventNextToggle: 'no' | 'maybe' | 'yes' = 'no';
-    private pointerdownState = false;
-
-    protected handleButtonPointerdown(event: PointerEvent): void {
-        if (event.button !== 0) {
-            return;
-        }
-        this.pointerdownState = this.open;
-        this.preventNextToggle = 'maybe';
-        const cleanup = (): void => {
-            document.removeEventListener('pointerup', cleanup);
-            document.removeEventListener('pointercancel', cleanup);
-            requestAnimationFrame(() => {
-                // Complete cleanup on the animation frame so that `click` can go first.
-                this.preventNextToggle = 'no';
-            });
-        };
-        // Ensure that however the pointer goes up we do `cleanup()`.
-        document.addEventListener('pointerup', cleanup);
-        document.addEventListener('pointercancel', cleanup);
-        this.handleActivate();
-    }
-
-    protected handleButtonFocus(event: FocusEvent): void {
-        // When focus comes from a pointer event, and the related target is the Menu,
-        // we don't want to reopen the Menu.
-        if (
-            this.preventNextToggle === 'maybe' &&
-            event.relatedTarget === this.optionsMenu
-        ) {
-            this.preventNextToggle = 'yes';
-        }
-    }
-
-    protected handleActivate(event?: Event): void {
-        if (this.enterKeydownOn && this.enterKeydownOn !== this.button) {
-            return;
-        }
-        if (this.preventNextToggle === 'yes') {
-            return;
-        }
-        if (event?.type === 'click' && this.open !== this.pointerdownState) {
-            // When activation comes from a `click` event ensure that the `pointerup`
-            // event didn't already toggle the Picker state before doing so.
-            return;
-        }
-        this.toggle();
-    }
-
     public override focus(options?: FocusOptions): void {
         super.focus(options);
 
@@ -235,6 +212,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public handleChange(event: Event): void {
+        if (this.strategy) {
+            this.strategy.preventNextToggle = 'no';
+        }
         const target = event.target as Menu;
         const [selected] = target.selectedItems;
         event.stopPropagation();
@@ -244,7 +224,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             // Non-cancelable "change" events announce a selection with no value
             // change that should close the Picker element.
             this.open = false;
+            if (this.strategy) {
+                this.strategy.open = false;
+            }
         }
+    }
+
+    public handleButtonFocus(event: FocusEvent): void {
+        this.strategy?.handleButtonFocus(event);
     }
 
     protected handleKeydown = (event: KeyboardEvent): void => {
@@ -261,14 +248,17 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         item: MenuItem,
         menuChangeEvent?: Event
     ): Promise<void> {
-        // should always close when "setting" a value.
         this.open = false;
+        // should always close when "setting" a value
+        if (this.strategy) {
+            this.strategy.open = false;
+        }
         const oldSelectedItem = this.selectedItem;
         const oldValue = this.value;
 
         // Set a value.
         this.selectedItem = item;
-        this.value = item.value;
+        this.value = item?.value ?? '';
         await this.updateComplete;
         const applyDefault = this.dispatchEvent(
             new Event('change', {
@@ -289,6 +279,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.selectedItem = oldSelectedItem;
             this.value = oldValue;
             this.open = true;
+            if (this.strategy) {
+                this.strategy.open = true;
+            }
             return;
         } else if (!this.selects) {
             // Unset the value if not carrying a selection
@@ -309,17 +302,28 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public toggle(target?: boolean): void {
-        if (this.readonly) {
+        if (this.readonly || this.pending) {
             return;
         }
         this.open = typeof target !== 'undefined' ? target : !this.open;
+        if (this.strategy) {
+            this.strategy.open = this.open;
+        }
+        if (this.open) {
+            this._selfManageFocusElement = true;
+        } else {
+            this._selfManageFocusElement = false;
+        }
     }
 
     public close(): void {
         if (this.readonly) {
             return;
         }
-        this.open = false;
+        if (this.strategy) {
+            this.open = false;
+            this.strategy.open = false;
+        }
     }
 
     protected get containerStyles(): StyleInfo {
@@ -333,7 +337,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return {};
     }
 
-    @property({ attribute: false })
+    @state()
     protected get selectedItemContent(): MenuItemChildren {
         return this._selectedItemContent || { icon: [], content: [] };
     }
@@ -357,6 +361,8 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             | Tooltip
             | undefined;
     }
+
+    public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};
 
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
         if (this.value && this.selectedItem) {
@@ -409,13 +415,28 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     : html`
                           <span hidden id="applied-label">${appliedLabel}</span>
                       `}
-                ${this.invalid
+                ${this.invalid && !this.pending
                     ? html`
                           <sp-icon-alert
                               class="validation-icon"
                           ></sp-icon-alert>
                       `
                     : nothing}
+                ${when(this.pending, () => {
+                    import(
+                        '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+                    );
+                    // aria-valuetext is a workaround for aria-valuenow being applied in Firefox even in indeterminate mode.
+                    return html`
+                        <sp-progress-circle
+                            id="loader"
+                            size="s"
+                            indeterminate
+                            aria-valuetext=${this.pendingLabel}
+                            class="progress-circle"
+                        ></sp-progress-circle>
+                    `;
+                })}
                 <sp-icon-chevron100
                     class="picker ${chevronClass[
                         this.size as DefaultElementSize
@@ -440,41 +461,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     };
 
     protected renderOverlay(menu: TemplateResult): TemplateResult {
+        if (this.strategy?.overlay === undefined) {
+            return menu;
+        }
         const container = this.renderContainer(menu);
-        this.trackDependency('sp-overlay');
-        import('@spectrum-web-components/overlay/sp-overlay.js');
-        return html`
-            <sp-overlay
-                .triggerElement=${this as HTMLElement}
-                .offset=${0}
-                ?open=${this.open && this.dependenciesLoaded}
-                .placement=${this.isMobile.matches ? undefined : this.placement}
-                .type=${this.isMobile.matches ? 'modal' : 'auto'}
-                .receivesFocus=${'true'}
-                .willPreventClose=${this.preventNextToggle !== 'no' &&
-                this.open &&
-                this.dependenciesLoaded}
-                @beforetoggle=${(
-                    event: Event & {
-                        target: Overlay;
-                        newState: 'open' | 'closed';
-                    }
-                ) => {
-                    if (event.composedPath()[0] !== event.target) {
-                        return;
-                    }
-                    if (event.newState === 'closed') {
-                        this.open = false;
-                    }
-                    if (!this.open) {
-                        this.optionsMenu.updateSelectedItemIndex();
-                        this.optionsMenu.closeDescendentOverlays();
-                    }
-                }}
-            >
-                ${container}
-            </sp-overlay>
-        `;
+        render(container, this.strategy?.overlay as unknown as HTMLElement, {
+            host: this,
+        });
+        return this.strategy?.overlay as unknown as TemplateResult;
     }
 
     protected get renderDescriptionSlot(): TemplateResult {
@@ -502,7 +496,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 aria-describedby="tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-haspopup="true"
-                aria-labelledby="icon label applied-label"
+                aria-labelledby="loader icon label applied-label"
                 id="button"
                 class=${ifDefined(
                     this.labelAlignment
@@ -510,9 +504,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                         : undefined
                 )}
                 @blur=${this.handleButtonBlur}
-                @click=${this.handleActivate}
-                @pointerdown=${this.handleButtonPointerdown}
-                @focus=${this.handleButtonFocus}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
@@ -533,7 +524,16 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.selects = 'single';
         }
         if (changes.has('disabled') && this.disabled) {
-            this.open = false;
+            if (this.strategy) {
+                this.open = false;
+                this.strategy.open = false;
+            }
+        }
+        if (changes.has('pending') && this.pending) {
+            if (this.strategy) {
+                this.open = false;
+                this.strategy.open = false;
+            }
         }
         if (changes.has('value')) {
             // MenuItems update a frame late for <slot> management,
@@ -547,26 +547,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.deprecatedMenu?.setAttribute('selects', 'inherit');
         }
         if (window.__swc.DEBUG) {
-            if (
-                !this.label &&
-                !this.getAttribute('aria-label') &&
-                !this.getAttribute('aria-labelledby') &&
-                !this.appliedLabel
-            ) {
-                window.__swc.warn(
-                    this,
-                    '<sp-picker> needs one of the following to be accessible:',
-                    'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
-                    {
-                        type: 'accessibility',
-                        issues: [
-                            'an <sp-field-label> element with a `for` attribute referencing the `id` of the `<sp-picker>`, or',
-                            'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
-                            'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
-                        ],
-                    }
-                );
-            }
             if (!this.hasUpdated && this.querySelector(':scope > sp-menu')) {
                 const { localName } = this;
                 window.__swc.warn(
@@ -576,6 +556,32 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     { level: 'deprecation' }
                 );
             }
+            this.updateComplete.then(async () => {
+                // Attributes should be user supplied, making them available before first update.
+                // However, `appliesLabel` is applied by external elements that must be update complete as well to be bound appropriately.
+                await new Promise((res) => requestAnimationFrame(res));
+                await new Promise((res) => requestAnimationFrame(res));
+                if (
+                    !this.label &&
+                    !this.getAttribute('aria-label') &&
+                    !this.getAttribute('aria-labelledby') &&
+                    !this.appliedLabel
+                ) {
+                    window.__swc.warn(
+                        this,
+                        '<${this.localName}> needs one of the following to be accessible:',
+                        'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+                        {
+                            type: 'accessibility',
+                            issues: [
+                                `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
+                                'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
+                                'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
+                            ],
+                        }
+                    );
+                }
+            });
         }
         super.update(changes);
     }
@@ -584,9 +590,17 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.button.addEventListener('keydown', this.handleKeydown);
     }
 
+    protected override updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
+        if (changes.has('open')) {
+            this.strategy.open = this.open;
+        }
+    }
+
     protected override firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
         this.bindButtonKeydownListener();
+        this.bindEvents();
     }
 
     protected get dismissHelper(): TemplateResult {
@@ -601,29 +615,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         `;
     }
 
-    @state()
-    private dependenciesLoaded = false;
-    private dependenciesToLoad: Record<string, boolean> = {};
-
-    private trackDependency(dependency: string, flag?: boolean): void {
-        const loaded =
-            !!customElements.get(dependency) ||
-            this.dependenciesToLoad[dependency] ||
-            !!flag;
-        if (!loaded) {
-            customElements.whenDefined(dependency).then(() => {
-                this.trackDependency(dependency, true);
-            });
-        }
-        this.dependenciesToLoad = {
-            ...this.dependenciesToLoad,
-            [dependency]: loaded,
-        };
-        this.dependenciesLoaded = Object.values(this.dependenciesToLoad).every(
-            (loaded) => loaded
-        );
-    }
-
     protected renderContainer(menu: TemplateResult): TemplateResult {
         const accessibleMenu = html`
             ${this.dismissHelper} ${menu} ${this.dismissHelper}
@@ -631,7 +622,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         // @todo: test in mobile
         /* c8 ignore next 11 */
         if (this.isMobile.matches) {
-            this.trackDependency('sp-tray');
+            this.dependencyManager.add('sp-tray');
             import('@spectrum-web-components/tray/sp-tray.js');
             return html`
                 <sp-tray
@@ -643,7 +634,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 </sp-tray>
             `;
         }
-        this.trackDependency('sp-popover');
+        this.dependencyManager.add('sp-popover');
         import('@spectrum-web-components/popover/sp-popover.js');
         return html`
             <sp-popover
@@ -659,6 +650,15 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected hasRenderedOverlay = false;
 
+    private onScroll(): void {
+        this.dispatchEvent(
+            new Event('scroll', {
+                cancelable: true,
+                composed: true,
+            })
+        );
+    }
+
     protected get renderMenu(): TemplateResult {
         const menu = html`
             <sp-menu
@@ -669,6 +669,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
                 }}
+                @scroll=${this.onScroll}
                 role=${this.listRole}
                 .selects=${this.selects}
                 .selected=${this.value ? [this.value] : []}
@@ -684,6 +685,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.open ||
             !!this.deprecatedMenu;
         if (this.hasRenderedOverlay) {
+            if (this.dependencyManager.loaded) {
+                this.dependencyManager.add('sp-overlay');
+            }
             return this.renderOverlay(menu);
         }
         return menu;
@@ -757,9 +761,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.selectionPromise;
-        if (this.overlayElement) {
-            await this.overlayElement.updateComplete;
-        }
+        // if (this.overlayElement) {
+        //     await this.overlayElement.updateComplete;
+        // }
         return complete;
     }
 
@@ -789,6 +793,15 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         );
     };
 
+    public bindEvents(): void {
+        this.strategy?.abort();
+        if (this.isMobile.matches) {
+            this.strategy = new strategies['mobile'](this.button, this);
+        } else {
+            this.strategy = new strategies['desktop'](this.button, this);
+        }
+    }
+
     public override connectedCallback(): void {
         super.connectedCallback();
         this.recentlyConnected = this.hasUpdated;
@@ -796,7 +809,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     public override disconnectedCallback(): void {
         this.close();
-
+        this.strategy?.releaseDescription();
         super.disconnectedCallback();
     }
 }
@@ -828,7 +841,7 @@ export class Picker extends PickerBase {
     protected override handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         this.focused = true;
-        if (!code.startsWith('Arrow') || this.readonly) {
+        if (!code.startsWith('Arrow') || this.readonly || this.pending) {
             return;
         }
         if (code === 'ArrowUp' || code === 'ArrowDown') {

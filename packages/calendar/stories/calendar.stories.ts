@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 import { html, type TemplateResult } from '@spectrum-web-components/base';
 import { spreadProps } from '../../../test/lit-helpers.js';
-import '@spectrum-web-components/calendar/sp-calendar.js';
 import { CalendarValue } from '../src/types.js';
 import { CalendarDate, DateValue } from '@internationalized/date';
+import '@spectrum-web-components/calendar/sp-calendar.js';
 
 type ComponentArgs = {
     value?: CalendarValue;

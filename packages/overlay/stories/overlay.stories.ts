@@ -46,6 +46,7 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
+import '@spectrum-web-components/button-group/sp-button-group.js';
 import '../../../projects/story-decorator/src/types.js';
 
 import './overlay-story-components.js';
@@ -162,11 +163,7 @@ const template = ({
             type=${ifDefined(type)}
         >
             <sp-button variant="primary" slot="trigger">Show Popover</sp-button>
-            <sp-popover
-                slot="click-content"
-                placement="${placement}"
-                tip
-            >
+            <sp-popover slot="click-content" placement="${placement}" tip>
                 <sp-dialog no-divider>
                     <sp-slider
                         value="5"
@@ -181,21 +178,13 @@ const template = ({
                     </div>
                     <overlay-trigger id="inner-trigger" placement="bottom">
                         <sp-button slot="trigger">Press Me</sp-button>
-                        <sp-popover
-                            slot="click-content"
-                            placement="bottom"
-                            tip
-                        >
+                        <sp-popover slot="click-content" placement="bottom" tip>
                             <sp-dialog size="s" no-divider>
                                 Another Popover
                             </sp-dialog>
                         </sp-popover>
 
-                        <sp-tooltip
-                            slot="hover-content"
-                            delayed
-                            tip="bottom"
-                        >
+                        <sp-tooltip slot="hover-content" delayed tip="bottom">
                             Click to open another popover.
                         </sp-tooltip>
                     </overlay-trigger>
@@ -553,11 +542,11 @@ export const customizedClickContent = (
     args: Properties
 ): TemplateResult => html`
     <style>
-        overlay-trigger {
+        sp-popover {
             --styled-div-background-color: var(
-                --spectrum-semantic-cta-background-color-default
+                --spectrum-accent-background-color-default
             );
-            --spectrum-button-m-accent-fill-texticon-background-color: rebeccapurple;
+            --mod-button-background-color-default: rebeccapurple;
         }
     </style>
     ${template({
@@ -643,22 +632,22 @@ export const deepNesting = (): TemplateResult => {
         ${storyStyles}
         <sp-theme
             color=${outter}
-            theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+            system=${window.__swc_hack_knobs__.defaultSystemVariant}
             scale=${window.__swc_hack_knobs__.defaultScale}
             dir=${window.__swc_hack_knobs__.defaultDirection}
         >
             <sp-theme
                 color=${color}
-                theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+                system=${window.__swc_hack_knobs__.defaultSystemVariant}
                 scale=${window.__swc_hack_knobs__.defaultScale}
                 dir=${window.__swc_hack_knobs__.defaultDirection}
             >
                 <recursive-popover
                     tabindex=""
                     style="
-                        background-color: var(--spectrum-global-color-gray-100);
-                        color: var(--spectrum-global-color-gray-800);
-                        padding: var(--spectrum-global-dimension-size-225);
+                        background-color: var(--spectrum-gray-100);
+                        color: var(--spectrum-gray-800);
+                        padding: calc(var(--swc-scale-factor) * 22px);
                     "
                 ></recursive-popover>
             </sp-theme>
@@ -793,8 +782,8 @@ export const detachedElement = (): TemplateResult => {
         div.setAttribute(
             'style',
             `
-            background-color: var(--spectrum-global-color-gray-50);
-            color: var(--spectrum-global-color-gray-800);
+            background-color: var(--spectrum-gray-50);
+            color: var(--spectrum-gray-800);
             border: 1px solid;
             padding: 2em;
         `
@@ -936,7 +925,7 @@ export const longpress = (): TemplateResult => {
                         )}
                     selects="single"
                     vertical
-                    style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                    style="margin: calc(var(--spectrum-actiongroup-button-gap-y,calc(var(--swc-scale-factor) * 10px)) / 2);"
                 >
                     <sp-action-button>
                         <sp-icon-magnify slot="icon"></sp-icon-magnify>
@@ -982,6 +971,51 @@ export const modalLoose = (): TemplateResult => {
             </sp-dialog>
         </overlay-trigger>
         ${extraText}
+    `;
+};
+
+export const modalNoFocus = (): TemplateResult => {
+    const closeEvent = new Event('close', { bubbles: true, composed: true });
+    return html`
+        <overlay-trigger type="modal" receives-focus="false">
+            <sp-button slot="trigger">Open</sp-button>
+            <sp-dialog-wrapper
+                underlay
+                slot="click-content"
+                headline="Wrapped Dialog w/ Hero Image"
+                size="s"
+            >
+                <p>
+                    The
+                    <code>sp-dialog-wrapper</code>
+                    element has been prepared for use in an
+                    <code>overlay-trigger</code>
+                    element by it's combination of modal, underlay, etc. styles
+                    and features.
+                </p>
+                <sp-button-group style="margin-inline-start: auto">
+                    <sp-button
+                        data-test-id="dialog-cancel-btn"
+                        variant="secondary"
+                        treatment="outline"
+                        size="l"
+                        @click=${(event: Event & { target: DialogWrapper }) =>
+                            event.target.dispatchEvent(closeEvent)}
+                    >
+                        ${'Cancel'}
+                    </sp-button>
+                    <sp-button
+                        data-test-id="dialog-override-btn"
+                        variant="negative"
+                        size="l"
+                        @click=${(event: Event & { target: DialogWrapper }) =>
+                            event.target.dispatchEvent(closeEvent)}
+                    >
+                        ${'Override'}
+                    </sp-button>
+                </sp-button-group>
+            </sp-dialog-wrapper>
+        </overlay-trigger>
     `;
 };
 

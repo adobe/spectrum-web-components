@@ -35,6 +35,7 @@ interface Properties {
 }
 
 export const Default = ({
+    open,
     placement,
     text,
     variant,
@@ -42,11 +43,11 @@ export const Default = ({
     return html`
         <sp-button
             ${tooltip(
-                () =>
-                    html`
-                        ${text || 'Tooltip'}
-                    `,
+                () => html`
+                    ${text || 'Tooltip'}
+                `,
                 {
+                    open,
                     overlayOptions: { placement },
                     variant,
                 }

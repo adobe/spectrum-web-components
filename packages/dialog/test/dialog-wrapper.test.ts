@@ -217,6 +217,7 @@ describe('Dialog Wrapper', () => {
         const dismissButton = dialogRoot.querySelector(
             '.close-button'
         ) as HTMLButtonElement;
+        expect(dismissButton.ariaLabel).to.be.equals('Close');
         dismissButton.click();
 
         await elementUpdated(el);

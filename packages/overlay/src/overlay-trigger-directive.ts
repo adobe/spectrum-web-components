@@ -10,22 +10,25 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    ElementPart,
+    type ElementPart,
     nothing,
     render,
-    TemplateResult,
+    type RenderOptions,
+    type TemplateResult,
 } from '@spectrum-web-components/base';
-import { AsyncDirective, directive } from 'lit/async-directive.js';
-import { Overlay, strategies } from './Overlay.js';
-import { OverlayOptions, TriggerInteraction } from './overlay-types.js';
-import { ClickController } from './ClickController.js';
-import { HoverController } from './HoverController.js';
-import { LongpressController } from './LongpressController.js';
-import '../sp-overlay.js';
+import { directive } from '@spectrum-web-components/base/src/async-directive.js';
+import { strategies } from './strategies.js';
+import type { OverlayOptions, TriggerInteraction } from './overlay-types.js';
+import type { ClickController } from './ClickController.js';
+import type { HoverController } from './HoverController.js';
+import type { LongpressController } from './LongpressController.js';
 import {
     removeSlottableRequest,
-    SlottableRequestEvent,
+    type SlottableRequestEvent,
 } from './slottable-request-event.js';
+import { SlottableRequestDirective } from './slottable-request-directive.js';
+import { AbstractOverlay } from './AbstractOverlay.js';
+import { InteractionTypes } from './InteractionController.js';
 
 export type InsertionOptions = {
     el: HTMLElement | (() => HTMLElement);
@@ -33,22 +36,20 @@ export type InsertionOptions = {
 };
 
 export type OverlayTriggerOptions = {
+    open?: boolean;
     triggerInteraction: TriggerInteraction;
     overlayOptions: OverlayOptions;
     insertionOptions?: InsertionOptions;
 };
 
-export class OverlayTriggerDirective extends AsyncDirective {
-    private template!: () => TemplateResult;
-    private target!: HTMLElement;
-    private overlay = new Overlay();
-    private strategy?: ClickController | HoverController | LongpressController;
-    private abortController!: AbortController;
+export class OverlayTriggerDirective extends SlottableRequestDirective {
+    private host?: object;
+    private overlay!: AbstractOverlay;
+    private strategy!: ClickController | HoverController | LongpressController;
 
     protected defaultOptions: OverlayTriggerOptions = {
-        triggerInteraction: 'hover',
+        triggerInteraction: 'click',
         overlayOptions: {
-            placement: 'top-start',
             type: 'auto',
             offset: 0,
         },
@@ -59,7 +60,7 @@ export class OverlayTriggerDirective extends AsyncDirective {
     protected insertionOptions?: InsertionOptions;
 
     /* c8 ignore next 9 */
-    render(
+    override render(
         _template: () => TemplateResult,
         _options?: Partial<OverlayTriggerOptions>
     ): unknown {
@@ -79,12 +80,12 @@ export class OverlayTriggerDirective extends AsyncDirective {
         };
         this.insertionOptions = options?.insertionOptions;
         this.template = template;
+        this.host = part.options?.host;
         let newTarget = false;
         const triggerInteraction = (options?.triggerInteraction ||
             this.defaultOptions.triggerInteraction) as TriggerInteraction;
         const newStrategy =
-            (this.strategy?.type as unknown as TriggerInteraction) !==
-            triggerInteraction;
+            InteractionTypes[this.strategy?.type] !== triggerInteraction;
         if (this.target !== part.element) {
             this.target = part.element as HTMLElement;
             newTarget = true;
@@ -93,34 +94,36 @@ export class OverlayTriggerDirective extends AsyncDirective {
             this.strategy?.abort();
             this.strategy = new strategies[
                 triggerInteraction as TriggerInteraction
-            ](this.overlay, this.target, true);
+            ](this.target, {
+                isPersistent: true,
+                handleOverlayReady: (overlay: AbstractOverlay) => {
+                    this.listenerHost = this.overlay = overlay;
+                    this.init();
+                },
+            });
         }
-        this.init();
-
-        if (window.__swc.DEBUG) {
-            window.__swc.warn(
-                undefined,
-                `⚠️  WARNING ⚠️ : The Overlay Trigger Directive is experimental and there is no guarantees behind its usage in an application!! Its API and presence within the library could be changed at anytime. See "sp-overlay" or "Overlay.open()" for a stable API for overlaying content on your application.`,
-                'https://opensource.adobe.com/spectrum-web-components/components/overlay',
-                {
-                    level: 'high',
-                    type: 'api',
-                }
-            );
-        }
+        this.strategy.open = options?.open ?? false;
     }
 
-    handleSlottableRequest(event: SlottableRequestEvent): void {
+    override handleSlottableRequest(event: SlottableRequestEvent): void {
         /* c8 ignore next 1 */
         if (event.target !== event.currentTarget) return;
 
         const willRemoveSlottable = event.data === removeSlottableRequest;
+        const options = {} as RenderOptions;
+        if (this.host) {
+            options.host = this.host;
+        }
+        render(
+            willRemoveSlottable ? undefined : this.template(),
+            this.overlay,
+            options
+        );
 
-        render(willRemoveSlottable ? undefined : this.template(), this.overlay);
         if (willRemoveSlottable) {
             this.overlay.remove();
         } else {
-            Overlay.applyOptions(this.overlay, {
+            AbstractOverlay.applyOptions(this.overlay, {
                 ...this.options,
                 trigger: this.target,
             });
@@ -131,27 +134,6 @@ export class OverlayTriggerDirective extends AsyncDirective {
             const { where = 'afterend' } = this.insertionOptions || {};
             insertionEl.insertAdjacentElement(where, this.overlay);
         }
-    }
-
-    init(): void {
-        this.abortController?.abort();
-        this.abortController = new AbortController();
-        const { signal } = this.abortController;
-        this.overlay.addEventListener(
-            'slottable-request',
-            (event: Event) =>
-                this.handleSlottableRequest(event as SlottableRequestEvent),
-            { signal }
-        );
-    }
-
-    override disconnected(): void {
-        this.abortController.abort();
-    }
-
-    /* c8 ignore next 3 */
-    override reconnected(): void {
-        this.init();
     }
 }
 

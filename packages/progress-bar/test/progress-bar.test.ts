@@ -21,18 +21,14 @@ import { createLanguageContext } from '../../../tools/reactive-controllers/test/
 describe('ProgressBar', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<ProgressBar>(
-                html`
-                    <sp-progress-bar label="Loading"></sp-progress-bar>
-                `
-            )
+            await fixture<ProgressBar>(html`
+                <sp-progress-bar label="Loading"></sp-progress-bar>
+            `)
     );
     it('loads default progress-bar accessibly', async () => {
-        const el = await fixture<ProgressBar>(
-            html`
-                <sp-progress-bar label="Loading"></sp-progress-bar>
-            `
-        );
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar label="Loading"></sp-progress-bar>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -51,6 +47,41 @@ describe('ProgressBar', () => {
 
         expect(el.getAttribute('label')).to.equal('Label From Slot');
     });
+
+    it('handles label attribute changes', async () => {
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar label="label" indeterminate>
+                content
+            </sp-progress-bar>
+        `);
+
+        await elementUpdated(el);
+        el.setAttribute('label', '');
+        await elementUpdated(el);
+
+        expect(el.getAttribute('label')).to.equal('');
+        el.setAttribute('label', 'label1');
+        await elementUpdated(el);
+        expect(el.getAttribute('label')).to.equal('label1');
+    });
+
+    it('renders label when content is absent', async () => {
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar label="myLabel" indeterminate></sp-progress-bar>
+        `);
+        expect(el.getAttribute('label')).to.equal('myLabel');
+    });
+
+    it('renders nothing when both content and label is absent', async () => {
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar label="myLabel" indeterminate></sp-progress-bar>
+        `);
+        el.removeAttribute('label');
+        el.shadowRoot.textContent = '';
+        expect(el.getAttribute('label')).to.equal(null);
+        expect(el.shadowRoot.textContent?.trim()).to.equal('');
+    });
+
     it('accepts a changing progress', async () => {
         const el = await fixture<ProgressBar>(html`
             <sp-progress-bar label="Changing value"></sp-progress-bar>
@@ -172,5 +203,36 @@ describe('ProgressBar', () => {
             '.percentage'
         ) as HTMLElement;
         expect(percentage.textContent?.search('٪')).to.not.equal(-1);
+    });
+
+    it('accepts `aria-label`', async () => {
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar aria-label="Loading"></sp-progress-bar>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.true;
+        expect(el.getAttribute('aria-label')).to.equal('Loading');
+    });
+    it('sets `aria-label` to equal `label` if `label` is set', async () => {
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar label="Loading"></sp-progress-bar>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.true;
+        expect(el.getAttribute('aria-label')).to.equal('Loading');
+    });
+    it('does not remove `aria-label` if set independently of `label`', async () => {
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar label="" aria-label="Loading"></sp-progress-bar>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.true;
+        expect(el.getAttribute('aria-label')).to.equal('Loading');
     });
 });

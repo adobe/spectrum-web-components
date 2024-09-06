@@ -178,6 +178,7 @@ export const FillStart = (args: StoryArgs = {}): TemplateResult => {
             <sp-slider
                 max="1"
                 fill-start
+                variant="filled"
                 min="0"
                 value=".7"
                 step="0.01"
@@ -201,6 +202,7 @@ export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
                 value=".7"
                 step="0.1"
                 fill-start="0.3"
+                variant="filled"
                 @input=${handleEvent(args)}
                 @change=${handleEvent(args)}
                 .formatOptions=${{ style: 'percent' }}
@@ -222,6 +224,58 @@ export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
                 ...=${spreadProps(args)}
             >
                 Value Less than Fill Start
+            </sp-slider>
+        </div>
+    `;
+};
+
+export const FillStartWithNegativeMinRange = (
+    args: StoryArgs = {}
+): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="150"
+                min="-50"
+                value="25"
+                step="1"
+                fill-start="0"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'number' }}
+                ...=${spreadProps(args)}
+            >
+                Fill start with "0" and within range -50 to 150
+            </sp-slider>
+        </div>
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="100"
+                min="-50"
+                value="-25"
+                step="1"
+                fill-start="0"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'number' }}
+                .normalization=${{
+                    toNormalized: (value: number): number => {
+                        if (value === 0) return 0.5;
+                        return value < 0
+                            ? 0.5 - (value / -50) * 0.5
+                            : 0.5 + (value / 100) * 0.5;
+                    },
+                    fromNormalized: (value: number): number => {
+                        if (value === 0.5) return 0;
+                        return value < 0.5
+                            ? (1 - value / 0.5) * -50
+                            : ((value - 0.5) / 0.5) * 100;
+                    },
+                }}
+                ...=${spreadProps(args)}
+            >
+                Fill start with "0" and normalization function within range -50
+                to 100
             </sp-slider>
         </div>
     `;
@@ -445,6 +499,32 @@ export const editableWithDefaultValue = (
 };
 
 editableWithDefaultValue.swc_vrt = {
+    skip: true,
+};
+
+export const editableWithFractionValue = (
+    args: StoryArgs = {}
+): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                max="255"
+                min="0.1"
+                value="0.5"
+                step="0.01"
+                default-value="18"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                ...=${spreadProps(args)}
+            >
+                Angle
+            </sp-slider>
+        </div>
+    `;
+};
+
+editableWithFractionValue.swc_vrt = {
     skip: true,
 };
 

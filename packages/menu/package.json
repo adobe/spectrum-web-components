@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/menu",
-    "version": "0.41.2",
+    "version": "0.47.2",
     "publishConfig": {
         "access": "public"
     },
@@ -84,18 +84,19 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^2.0.0",
-        "@spectrum-web-components/action-button": "^0.41.2",
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/divider": "^0.41.2",
-        "@spectrum-web-components/icon": "^0.41.2",
-        "@spectrum-web-components/icons-ui": "^0.41.2",
-        "@spectrum-web-components/overlay": "^0.41.2",
-        "@spectrum-web-components/popover": "^0.41.2",
-        "@spectrum-web-components/shared": "^0.41.2"
+        "@lit-labs/observers": "^2.0.2",
+        "@spectrum-web-components/action-button": "^0.47.2",
+        "@spectrum-web-components/base": "^0.47.2",
+        "@spectrum-web-components/divider": "^0.47.2",
+        "@spectrum-web-components/icon": "^0.47.2",
+        "@spectrum-web-components/icons-ui": "^0.47.2",
+        "@spectrum-web-components/overlay": "^0.47.2",
+        "@spectrum-web-components/popover": "^0.47.2",
+        "@spectrum-web-components/reactive-controllers": "^0.47.2",
+        "@spectrum-web-components/shared": "^0.47.2"
     },
     "devDependencies": {
-        "@spectrum-css/menu": "^6.1.4"
+        "@spectrum-css/menu": "^7.1.4"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

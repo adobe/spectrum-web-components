@@ -52,6 +52,7 @@ textarea {
     block-size: auto;
     word-break: break-word;
     opacity: 0;
+    white-space: pre-line;
 }
 
 .icon,
@@ -64,7 +65,8 @@ textarea {
 }
 
 :host([multiline]) textarea {
-    transition: box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+    transition:
+        box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
         border-color var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out;

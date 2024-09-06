@@ -40,7 +40,7 @@ export const invalid = (args: StoryArgs): TemplateResult => Template(args);
 invalid.args = { invalid: true };
 
 export const quiet = (args: StoryArgs): TemplateResult => Template(args);
-quiet.args = { quiet: true };
+quiet.args = { label: true, quiet: true };
 
 export const label = (args: StoryArgs): TemplateResult => Template(args);
 label.args = { label: true };

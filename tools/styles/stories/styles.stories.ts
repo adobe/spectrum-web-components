@@ -28,11 +28,11 @@ export const dividers = (): TemplateResult => html`
             grid-template-columns: 50px 1fr 250px;
             grid-template-rows: 50px 1fr;
             gap: var(--spectrum-global-alias-appframe-border-size);
-            background: var(--spectrum-alias-background-color-tertiary);
+            background: var(--spectrum-background-base-color);
         }
         header,
         aside {
-            background: var(--spectrum-alias-background-color-secondary);
+            background: var(--spectrum-background-layer-1-color);
         }
         header {
             grid-area: header;
@@ -42,7 +42,7 @@ export const dividers = (): TemplateResult => html`
         }
         main {
             grid-area: main;
-            background: var(--spectrum-alias-background-color-primary);
+            background: var(--spectrum-background-layer-2-color);
         }
         main + aside {
             grid-area: properties;

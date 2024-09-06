@@ -74,11 +74,9 @@ describe('Calendar', () => {
 
     testForLitDevWarnings(
         async () =>
-            await fixture<Calendar>(
-                html`
-                    <sp-calendar></sp-calendar>
-                `
-            )
+            await fixture<Calendar>(html`
+                <sp-calendar></sp-calendar>
+            `)
     );
 
     it('loads default calendar accessibly', async () => {

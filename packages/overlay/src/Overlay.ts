@@ -45,10 +45,11 @@ import { OverlayNoPopover } from './OverlayNoPopover.js';
 import { overlayStack } from './OverlayStack.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import { PlacementController } from './PlacementController.js';
-import { ClickController } from './ClickController.js';
-import { HoverController } from './HoverController.js';
-import { LongpressController } from './LongpressController.js';
+import type { ClickController } from './ClickController.js';
+import type { HoverController } from './HoverController.js';
+import type { LongpressController } from './LongpressController.js';
 export { LONGPRESS_INSTRUCTIONS } from './LongpressController.js';
+import { strategies } from './strategies.js';
 import {
     removeSlottableRequest,
     SlottableRequestEvent,
@@ -66,17 +67,12 @@ if (supportsPopover) {
     OverlayFeatures = OverlayNoPopover(OverlayFeatures);
 }
 
-export const strategies = {
-    click: ClickController,
-    longpress: LongpressController,
-    hover: HoverController,
-};
-
 /**
  * @element sp-overlay
  *
  * @fires sp-opened - announces that an overlay has completed any entry animations
  * @fires sp-closed - announce that an overlay has compelted any exit animations
+ * @fires slottable-request - requests to add or remove slottable content
  */
 export class Overlay extends OverlayFeatures {
     static override styles = [styles];
@@ -198,6 +194,12 @@ export class Overlay extends OverlayFeatures {
      */
     @property()
     override placement?: Placement;
+
+    /**
+     * The state in which the last `request-slottable` event was dispatched.
+     * Do not allow overlays from dispatching the same state twice in a row.
+     */
+    private lastRequestSlottableState = false;
 
     /**
      * Whether to pass focus to the overlay once opened, or
@@ -391,7 +393,8 @@ export class Overlay extends OverlayFeatures {
             return ancestors;
         };
         if (
-            (this.triggerElement as HTMLElement)?.focus &&
+            this.receivesFocus !== 'false' &&
+            !!(this.triggerElement as HTMLElement)?.focus &&
             (this.contains((this.getRootNode() as Document).activeElement) ||
                 getAncestors().includes(this) ||
                 // eslint-disable-next-line @spectrum-web-components/document-active-element
@@ -491,8 +494,10 @@ export class Overlay extends OverlayFeatures {
         if (!this.hasNonVirtualTrigger) return;
         if (!this.triggerInteraction) return;
         this.strategy = new strategies[this.triggerInteraction](
-            this,
-            this.triggerElement as HTMLElement
+            this.triggerElement as HTMLElement,
+            {
+                overlay: this,
+            }
         );
     }
 
@@ -533,15 +538,22 @@ export class Overlay extends OverlayFeatures {
     }
 
     protected override requestSlottable(): void {
+        if (this.lastRequestSlottableState === this.open) {
+            return;
+        }
         if (!this.open) {
             document.body.offsetHeight;
         }
+        /**
+         * @ignore
+         */
         this.dispatchEvent(
             new SlottableRequestEvent(
                 'overlay-content',
                 this.open ? {} : removeSlottableRequest
             )
         );
+        this.lastRequestSlottableState = this.open;
     }
 
     override willUpdate(changes: PropertyValues): void {
@@ -551,10 +563,7 @@ export class Overlay extends OverlayFeatures {
                 `${this.tagName.toLowerCase()}-${randomID()}`
             );
         }
-        if (
-            changes.has('open') &&
-            (typeof changes.get('open') !== 'undefined' || this.open)
-        ) {
+        if (changes.has('open') && (this.hasUpdated || this.open)) {
             this.manageOpen(changes.get('open'));
         }
         if (changes.has('trigger')) {
