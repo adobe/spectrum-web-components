@@ -64,8 +64,17 @@ export const remapMultiByteCharacters: Record<string, string> = {
     '％': '%',
     '＋': '+',
     ー: '-',
+    一: '1',
+    二: '2',
+    三: '3',
+    四: '4',
+    五: '5',
+    六: '6',
+    七: '7',
+    八: '8',
+    九: '9',
+    零: '0',
 };
-
 const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
     s: (dir) => html`
         <sp-icon-chevron50
@@ -176,20 +185,25 @@ export class NumberField extends TextfieldBase {
     private _trackingValue = '';
     private lastCommitedValue?: number;
 
-    private setValue(value: number = this.value): void {
-        this.value = value;
+    private setValue(newValue: number = this.value): void {
+        // Capture previous value for accurate IME change detection
+        const previousValue = this.lastCommitedValue;
+
+        this.value = newValue;
+
         if (
-            typeof this.lastCommitedValue === 'undefined' ||
-            this.lastCommitedValue === this.value
+            typeof previousValue === 'undefined' ||
+            previousValue === this.value
         ) {
             // Do not announce when the value is unchanged.
             return;
         }
 
+        this.lastCommitedValue = this.value;
+
         this.dispatchEvent(
             new Event('change', { bubbles: true, composed: true })
         );
-        this.lastCommitedValue = this.value;
     }
 
     /**
@@ -215,7 +229,13 @@ export class NumberField extends TextfieldBase {
     private valueBeforeFocus: string = '';
     private isIntentDecimal: boolean = false;
 
-    private convertValueToNumber(value: string): number {
+    private convertValueToNumber(inputValue: string): number {
+        // Normalize full-width characters to their ASCII equivalents
+        let normalizedValue = inputValue
+            .split('')
+            .map((char) => remapMultiByteCharacters[char] || char)
+            .join('');
+
         const separators = this.valueBeforeFocus
             .split('')
             .filter((char) => this.decimalsChars.has(char));
@@ -224,7 +244,7 @@ export class NumberField extends TextfieldBase {
         if (
             isIPhone() &&
             this.inputElement.inputMode === 'decimal' &&
-            value !== this.valueBeforeFocus
+            normalizedValue !== this.valueBeforeFocus
         ) {
             const parts = this.numberFormatter.formatToParts(1000.1);
 
@@ -235,12 +255,15 @@ export class NumberField extends TextfieldBase {
             for (const separator of uniqueSeparators) {
                 const isDecimalSeparator = separator === replacementDecimal;
                 if (!isDecimalSeparator && !this.isIntentDecimal) {
-                    value = value.replace(new RegExp(separator, 'g'), '');
+                    normalizedValue = normalizedValue.replace(
+                        new RegExp(separator, 'g'),
+                        ''
+                    );
                 }
             }
 
             let hasReplacedDecimal = false;
-            const valueChars = value.split('');
+            const valueChars = normalizedValue.split('');
             for (let index = valueChars.length - 1; index >= 0; index--) {
                 const char = valueChars[index];
                 if (this.decimalsChars.has(char)) {
@@ -250,11 +273,10 @@ export class NumberField extends TextfieldBase {
                     } else valueChars[index] = '';
                 }
             }
-            value = valueChars.join('');
+            normalizedValue = valueChars.join('');
         }
-        return this.numberParser.parse(value);
+        return this.numberParser.parse(normalizedValue);
     }
-
     private get _step(): number {
         if (typeof this.step !== 'undefined') {
             return this.step;
@@ -493,6 +515,7 @@ export class NumberField extends TextfieldBase {
             .split('')
             .map((char) => remapMultiByteCharacters[char] || char)
             .join('');
+
         if (this.numberParser.isValidPartialNumber(value)) {
             // Use starting value as this.value is the `input` value.
             this.lastCommitedValue = this.lastCommitedValue ?? this.value;
@@ -774,6 +797,11 @@ export class NumberField extends TextfieldBase {
     }
 
     protected override updated(changes: PropertyValues<this>): void {
+        if (!this.inputElement || !this.isConnected) {
+            // Prevent race conditions if inputElement is removed from DOM while a queued update is still running.
+            return;
+        }
+
         if (changes.has('min') || changes.has('formatOptions')) {
             let inputMode = 'numeric';
             const hasNegative = typeof this.min !== 'undefined' && this.min < 0;

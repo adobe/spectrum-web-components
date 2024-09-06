@@ -255,9 +255,7 @@ export class FocusGroupController<T extends HTMLElement>
 
     handleFocusin = (event: FocusEvent): void => {
         if (!this.isEventWithinListenerScope(event)) return;
-        if (this.isRelatedTargetOrContainAnElement(event)) {
-            this.hostContainsFocus();
-        }
+
         const path = event.composedPath() as T[];
         let targetIndex = -1;
         path.find((el) => {
@@ -266,6 +264,32 @@ export class FocusGroupController<T extends HTMLElement>
         });
         this.prevIndex = this.currentIndex;
         this.currentIndex = targetIndex > -1 ? targetIndex : this.currentIndex;
+
+        if (this.isRelatedTargetOrContainAnElement(event)) {
+            this.hostContainsFocus();
+        }
+    };
+
+    /**
+     * handleClick - Finds the element that was clicked and sets the tabindex to 0
+     * @returns void
+     */
+    handleClick = (): void => {
+        // Manually set the tabindex to 0 for the current element on receiving focus (from keyboard or mouse)
+        const elements = this.elements;
+        if (!elements.length) return;
+        let focusElement = elements[this.currentIndex];
+        if (this.currentIndex < 0) {
+            return;
+        }
+        if (!focusElement || !this.isFocusableElement(focusElement)) {
+            this.setCurrentIndexCircularly(1);
+            focusElement = elements[this.currentIndex];
+        }
+        if (focusElement && this.isFocusableElement(focusElement)) {
+            elements[this.prevIndex]?.setAttribute('tabindex', '-1');
+            focusElement.setAttribute('tabindex', '0');
+        }
     };
 
     handleFocusout = (event: FocusEvent): void => {
@@ -344,12 +368,14 @@ export class FocusGroupController<T extends HTMLElement>
 
     addEventListeners(): void {
         this.host.addEventListener('focusin', this.handleFocusin);
+        this.host.addEventListener('click', this.handleClick);
     }
 
     removeEventListeners(): void {
         this.host.removeEventListener('focusin', this.handleFocusin);
         this.host.removeEventListener('focusout', this.handleFocusout);
         this.host.removeEventListener('keydown', this.handleKeydown);
+        this.host.removeEventListener('click', this.handleClick);
     }
 
     hostConnected(): void {

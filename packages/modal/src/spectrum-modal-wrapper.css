@@ -42,6 +42,7 @@ governing permissions and limitations under the License.
     only screen and (device-width <= 400px) {
     :host([responsive]) {
         inline-size: 100%;
+        block-size: 100%;
         max-inline-size: 100%;
         block-size: 100%;
         max-block-size: 100%;

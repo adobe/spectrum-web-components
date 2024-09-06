@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+# [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
+
+### Bug Fixes
+
+-   **picker:** updated type for mobile and desktop ([#4666](https://github.com/adobe/spectrum-web-components/issues/4666)) ([d11da1f](https://github.com/adobe/spectrum-web-components/commit/d11da1ffb7faa7804a1383cffba90277cf401e45))
+
+# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+# [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
+
+### Bug Fixes
+
+-   **picker** pointerup in mobile does not automatically make a selection. ([4227](https://github.com/adobe/spectrum-web-components/issues/4227)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
 # [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
 
 ### Features
