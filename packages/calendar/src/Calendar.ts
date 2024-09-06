@@ -38,7 +38,6 @@ import {
     classMap,
     ifDefined,
 } from '@spectrum-web-components/base/src/directives.js';
-import { map } from 'lit/directives/map.js';
 import {
     LanguageResolutionController,
     languageResolverUpdatedSymbol,
@@ -329,7 +328,7 @@ export class Calendar extends SpectrumElement {
         return html`
             <thead role="presentation">
                 <tr role="row">
-                    ${map(this.weekdays, this.renderWeekdayColumn)}
+                    ${this.weekdays.map(this.renderWeekdayColumn)}
                 </tr>
             </thead>
         `;
@@ -348,11 +347,10 @@ export class Calendar extends SpectrumElement {
     protected renderCalendarTableBody(): TemplateResult {
         return html`
             <tbody role="presentation">
-                ${map(
-                    this.currentMonthDates,
+                ${this.currentMonthDates.map(
                     (week) => html`
                         <tr role="row">
-                            ${map(week, (date) =>
+                            ${week.map((date) =>
                                 this.renderCalendarTableCell(date)
                             )}
                         </tr>
