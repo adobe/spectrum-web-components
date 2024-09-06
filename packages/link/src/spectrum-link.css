@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-link-animation-duration: var(--spectrum-animation-duration-100);
     --spectrum-link-text-color-primary-default: var(
@@ -58,7 +57,9 @@ governing permissions and limitations under the License.
 }
 
 a {
+    background-color: initial;
     -webkit-text-decoration-skip: objects;
+    text-decoration-skip: objects;
     transition: color
         var(
             --mod-link-animation-duration,
@@ -73,8 +74,8 @@ a {
             var(--spectrum-link-text-color-primary-default)
         )
     );
-    background-color: #0000;
     outline: none;
+    -webkit-text-decoration: underline;
     text-decoration: underline;
 }
 
@@ -96,6 +97,7 @@ a:focus-visible {
             var(--spectrum-link-text-color-primary-focus)
         )
     );
+    -webkit-text-decoration: underline double;
     text-decoration: underline double;
     text-decoration-color: var(--highcontrast-link-focus-color, inherit);
 }
@@ -131,6 +133,7 @@ a:focus-visible {
 }
 
 :host([quiet]) a {
+    -webkit-text-decoration: none;
     text-decoration: none;
 }
 
@@ -174,6 +177,7 @@ a:focus-visible {
     }
 
     :host([quiet]) a:hover {
+        -webkit-text-decoration: underline;
         text-decoration: underline;
     }
 

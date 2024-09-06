@@ -19,6 +19,16 @@ export const parameters = {
     docs: { hidden: true },
     controls: { expanded: true },
     layout: 'fullscreen',
+    badgesConfig: {
+        deprecated: {
+            styles: {
+                backgroundColor: '#FFF',
+                borderColor: '#ea3829',
+                color: '#ea3829',
+            },
+            title: 'Deprecated',
+        },
+    },
 };
 
 export const decorators = [swcThemeDecorator];

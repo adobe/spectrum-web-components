@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-table-header-top-to-text: var(
         --spectrum-table-column-header-row-top-to-text-medium
@@ -175,8 +174,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([dir='rtl']),
-:host:dir(rtl) {
+:host:dir(rtl),
+:host([dir='rtl']) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
@@ -566,17 +565,6 @@ governing permissions and limitations under the License.
         --highcontrast-table-selected-row-background-color: Highlight;
         --highcontrast-table-selected-row-text-color: HighlightText;
         --highcontrast-table-selected-row-text-color-default: HighlightText;
-    }
-
-    @supports (color: SelectedItem) {
-        :host {
-            --highcontrast-table-selected-row-background-color: SelectedItem;
-            --highcontrast-table-selected-row-text-color: SelectedItemText;
-            --highcontrast-table-selected-row-text-color-default: SelectedItemText;
-        }
-    }
-
-    :host {
         --highcontrast-table-selected-row-background-color-focus: Highlight;
         --highcontrast-table-selected-row-text-color-focus: HighlightText;
         --highcontrast-table-row-background-color-hover: Highlight;
@@ -586,10 +574,21 @@ governing permissions and limitations under the License.
         --highcontrast-table-focus-indicator-color: Highlight;
         --highcontrast-table-transition-duration: 0;
     }
+
+    @supports (color: SelectedItem) {
+        :host {
+            --highcontrast-table-selected-row-background-color: SelectedItem;
+            --highcontrast-table-selected-row-text-color: SelectedItemText;
+            --highcontrast-table-selected-row-text-color-default: SelectedItemText;
+        }
+    }
 }
 
 :host:not(.spectrum-Table-scroller) {
-    border-collapse: separate;
+    border-collapse: initial;
     border-spacing: 0;
+}
+
+:host:not(.spectrum-Table-scroller) {
     display: table;
 }

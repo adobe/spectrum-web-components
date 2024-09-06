@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-calendar-day-width: var(--spectrum-component-height-100);
     --spectrum-calendar-day-height: var(--spectrum-component-height-100);
@@ -81,8 +80,8 @@ governing permissions and limitations under the License.
 }
 
 .header {
-    align-items: center;
     inline-size: 100%;
+    align-items: center;
     display: flex;
 }
 
@@ -137,6 +136,7 @@ governing permissions and limitations under the License.
 }
 
 .dayOfWeek {
+    block-size: 100%;
     inline-size: var(
         --mod-calendar-day-width,
         var(--spectrum-calendar-day-width)
@@ -160,7 +160,6 @@ governing permissions and limitations under the License.
     cursor: default;
     flex-direction: column;
     justify-content: flex-end;
-    block-size: 100%;
     display: flex;
     border-block-end: none !important;
     text-decoration: none !important;
@@ -173,6 +172,7 @@ governing permissions and limitations under the License.
         var(--spectrum-calendar-title-text-letter-spacing)
     );
     border-block-end: none;
+    -webkit-text-decoration: underline dotted;
     text-decoration: underline dotted;
 }
 
@@ -530,7 +530,9 @@ governing permissions and limitations under the License.
 }
 
 @media (hover: hover) {
-    .date:hover.is-selected:not(.is-selection-end):not(.is-selection-start):before {
+    .date:hover.is-selected:not(.is-selection-end):not(
+            .is-selection-start
+        ):before {
         background: var(
             --highcontrast-calendar-day-background-color-selected-hover,
             var(
@@ -669,7 +671,16 @@ governing permissions and limitations under the License.
     );
 }
 
-.tableCell:focus-within .date.is-selected:before,
+.tableCell:focus-within .date.is-selected:before {
+    background: var(
+        --highcontrast-calendar-day-background-color-selected-hover,
+        var(
+            --mod-calendar-day-background-color-selected-hover,
+            var(--spectrum-calendar-day-background-color-selected-hover)
+        )
+    );
+}
+
 .tableCell:focus-within .date.is-range-selection:before {
     background: var(
         --highcontrast-calendar-day-background-color-selected-hover,
@@ -741,7 +752,7 @@ governing permissions and limitations under the License.
     }
 
     .date {
-        color: canvastext;
+        color: CanvasText;
         forced-color-adjust: none;
         --highcontrast-calendar-day-background-color-cap-selected: Highlight;
         --highcontrast-calendar-day-background-color-down: ButtonFace;
@@ -765,7 +776,7 @@ governing permissions and limitations under the License.
     }
 
     .date.is-range-selection.is-today {
-        color: highlighttext;
+        color: HighlightText;
     }
 
     .date.is-range-selection.is-selection-start:after,
@@ -775,7 +786,7 @@ governing permissions and limitations under the License.
 
     .date.is-disabled.is-range-selection,
     .date.is-disabled.is-selected {
-        color: highlighttext;
-        background: highlight;
+        background: Highlight;
+        color: HighlightText;
     }
 }

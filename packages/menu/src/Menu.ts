@@ -100,6 +100,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.selectedItems = [];
         this.selectedItemsMap.clear();
         this.childItems.forEach((item) => {
+            if (this !== item.menuData.selectionRoot) {
+                return;
+            }
             item.selected = this.selected.includes(item.value);
             if (item.selected) {
                 this.selectedItems.push(item);
@@ -339,24 +342,29 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
     }
 
-    private willSynthesizeClick = 0;
+    // if the click and pointerup events are on the same target, we should not
+    // handle the click event.
+    private pointerUpTarget = null as EventTarget | null;
 
     private handleClick(event: Event): void {
-        if (this.willSynthesizeClick) {
-            cancelAnimationFrame(this.willSynthesizeClick);
+        if (this.pointerUpTarget === event.target) {
+            this.pointerUpTarget = null;
             return;
         }
         this.handlePointerBasedSelection(event);
     }
 
     private handlePointerup(event: Event): void {
-        this.willSynthesizeClick = requestAnimationFrame(() => {
-            event.target?.dispatchEvent(new Event('click'));
-        });
+        this.pointerUpTarget = event.target;
         this.handlePointerBasedSelection(event);
     }
 
     private handlePointerBasedSelection(event: Event): void {
+        // Only handle left clicks
+        if (event instanceof MouseEvent && event.button !== 0) {
+            return;
+        }
+
         const path = event.composedPath();
         const target = path.find((el) => {
             /* c8 ignore next 3 */
@@ -568,9 +576,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     protected navigateWithinMenu(event: KeyboardEvent): void {
-        const { code } = event;
+        const { key } = event;
         const lastFocusedItem = this.childItems[this.focusedItemIndex];
-        const direction = code === 'ArrowDown' ? 1 : -1;
+        const direction = key === 'ArrowDown' ? 1 : -1;
         const itemToFocus = this.focusMenuItemByOffset(direction);
         if (itemToFocus === lastFocusedItem) {
             return;
@@ -581,15 +589,15 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     protected navigateBetweenRelatedMenus(event: KeyboardEvent): void {
-        const { code } = event;
+        const { key } = event;
+        event.stopPropagation();
         const shouldOpenSubmenu =
-            (this.isLTR && code === 'ArrowRight') ||
-            (!this.isLTR && code === 'ArrowLeft');
+            (this.isLTR && key === 'ArrowRight') ||
+            (!this.isLTR && key === 'ArrowLeft');
         const shouldCloseSelfAsSubmenu =
-            (this.isLTR && code === 'ArrowLeft') ||
-            (!this.isLTR && code === 'ArrowRight');
+            (this.isLTR && key === 'ArrowLeft') ||
+            (!this.isLTR && key === 'ArrowRight');
         if (shouldOpenSubmenu) {
-            event.stopPropagation();
             const lastFocusedItem = this.childItems[this.focusedItemIndex];
             if (lastFocusedItem?.hasSubmenu) {
                 // Remove focus while opening overlay from keyboard or the visible focus
@@ -597,7 +605,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 lastFocusedItem.openOverlay();
             }
         } else if (shouldCloseSelfAsSubmenu && this.isSubmenu) {
-            event.stopPropagation();
             this.dispatchEvent(new Event('close', { bubbles: true }));
             this.updateSelectedItemIndex();
         }
@@ -611,7 +618,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (lastFocusedItem) {
             lastFocusedItem.focused = true;
         }
-        const { code } = event;
+        const { key } = event;
         if (
             event.shiftKey &&
             event.target !== this &&
@@ -633,11 +640,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             document.addEventListener('keyup', replaceTabindex);
             this.addEventListener('focusout', replaceTabindex);
         }
-        if (code === 'Tab') {
+        if (key === 'Tab') {
             this.prepareToCleanUp();
             return;
         }
-        if (code === 'Space') {
+        if (key === ' ') {
             if (lastFocusedItem?.hasSubmenu) {
                 // Remove focus while opening overlay from keyboard or the visible focus
                 // will slip back to the first item in the menu.
@@ -646,7 +653,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 return;
             }
         }
-        if (code === 'Space' || code === 'Enter') {
+        if (key === ' ' || key === 'Enter') {
             const childItem = this.childItems[this.focusedItemIndex];
             if (
                 childItem &&
@@ -657,7 +664,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             }
             return;
         }
-        if (code === 'ArrowDown' || code === 'ArrowUp') {
+        if (key === 'ArrowDown' || key === 'ArrowUp') {
             const childItem = this.childItems[this.focusedItemIndex];
             if (
                 childItem &&
@@ -827,13 +834,19 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private handleSlotchange({
         target,
     }: Event & { target: HTMLSlotElement }): void {
-        const assignedElement = target.assignedElements({
+        const assignedElements = target.assignedElements({
             flatten: true,
         }) as MenuItem[];
-        if (this.childItems.length !== assignedElement.length) {
-            assignedElement.forEach((item) => {
+        if (this.childItems.length !== assignedElements.length) {
+            assignedElements.forEach((item) => {
                 if (typeof item.triggerUpdate !== 'undefined') {
                     item.triggerUpdate();
+                } else if (
+                    typeof (item as unknown as Menu).childItems !== 'undefined'
+                ) {
+                    (item as unknown as Menu).childItems.forEach((child) => {
+                        child.triggerUpdate();
+                    });
                 }
             });
         }

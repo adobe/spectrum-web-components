@@ -174,6 +174,29 @@ click.args = {
     type: 'auto',
 };
 
+export const withSlider = (): TemplateResult => html`
+    <sp-button id="triggerEl" variant="primary">Button popover</sp-button>
+    <sp-overlay trigger="triggerEl@click" placement="bottom">
+        <sp-popover tip>
+            <sp-dialog no-divider class="options-popover-content">
+                <p>Try clicking the slider after popover opens</p>
+                <p>It shouldn't close the popover</p>
+                <sp-slider
+                    value="5"
+                    step="0.5"
+                    min="0"
+                    max="20"
+                    label="Awesomeness"
+                ></sp-slider>
+                <sp-button>Press me</sp-button>
+            </sp-dialog>
+        </sp-popover>
+    </sp-overlay>
+`;
+withSlider.swc_vrt = {
+    skip: true,
+};
+
 export const hover = (args: Properties): TemplateResult => Template(args);
 hover.args = {
     interaction: 'hover',
@@ -351,7 +374,7 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
                 <sp-action-button id="trigger-3" hold-affordance>
                     <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
                 </sp-action-button>
-                <sp-action-menu placement="left">
+                <sp-action-menu label="More Actions" placement="left">
                     <sp-menu-group id="cms">
                         <span slot="header">cms</span>
                         <sp-menu-item value="updateAllSiteContent">
@@ -562,7 +585,7 @@ export const actionGroupWithFilters = ({
                         Hover
                     </sp-tooltip>
                 </sp-action-button>
-                <sp-action-menu>
+                <sp-action-menu label="More Actions">
                     <sp-menu-group id="cms">
                         <span slot="header">cms</span>
                         <sp-menu-item value="updateAllSiteContent">

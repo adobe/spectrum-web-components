@@ -19,7 +19,6 @@ import type {
     OverlayState,
     OverlayTypes,
     Placement,
-    TriggerInteractions,
     TriggerInteractionsV1,
 } from './overlay-types.js';
 import type { Overlay } from './Overlay.js';
@@ -33,65 +32,6 @@ export const overlayTimer = new OverlayTimer();
 export const noop = (): void => {
     return;
 };
-
-export class BeforetoggleClosedEvent extends Event {
-    currentState = 'open';
-    newState = 'closed';
-    constructor() {
-        super('beforetoggle', {
-            bubbles: false,
-            composed: false,
-        });
-    }
-}
-
-export class BeforetoggleOpenEvent extends Event {
-    currentState = 'closed';
-    newState = 'open';
-    constructor() {
-        super('beforetoggle', {
-            bubbles: false,
-            composed: false,
-        });
-    }
-}
-
-export class OverlayStateEvent extends Event {
-    detail!: {
-        interaction: string;
-        reason?: 'external-click';
-    };
-
-    constructor(
-        type: string,
-        public overlay: HTMLElement,
-        {
-            publish,
-            interaction,
-            reason,
-        }: {
-            publish?: boolean;
-            interaction: TriggerInteractions;
-            reason?: 'external-click';
-        }
-    ) {
-        super(type, {
-            bubbles: publish,
-            composed: publish,
-        });
-        this.detail = {
-            interaction,
-            reason,
-        };
-    }
-}
-
-declare global {
-    interface GlobalEventHandlersEventMap {
-        'sp-open': OverlayStateEvent;
-        'sp-close': OverlayStateEvent;
-    }
-}
 
 /**
  * Apply a "transitionend" listener to an element that may not transition but
@@ -357,13 +297,15 @@ export class AbstractOverlay extends SpectrumElement {
             const options = optionsV1;
             AbstractOverlay.applyOptions(overlay, {
                 ...options,
-                delayed: options.delayed || overlayContent.hasAttribute('delayed'),
+                delayed:
+                    options.delayed || overlayContent.hasAttribute('delayed'),
                 trigger: options.virtualTrigger || trigger,
-                type: interaction === 'modal'
-                    ? 'modal'
-                    : interaction === 'hover'
-                    ? 'hint'
-                    : 'auto'
+                type:
+                    interaction === 'modal'
+                        ? 'modal'
+                        : interaction === 'hover'
+                          ? 'hint'
+                          : 'auto',
             });
             trigger.insertAdjacentElement('afterend', overlay);
             await overlay.updateComplete;
@@ -375,7 +317,7 @@ export class AbstractOverlay extends SpectrumElement {
         overlay.append(overlayContent);
         AbstractOverlay.applyOptions(overlay, {
             ...options,
-            delayed: options.delayed || overlayContent.hasAttribute('delayed')
+            delayed: options.delayed || overlayContent.hasAttribute('delayed'),
         });
         overlay.updateComplete.then(() => {
             // Do we want to "open" this path, or leave that to the consumer?
@@ -384,7 +326,10 @@ export class AbstractOverlay extends SpectrumElement {
         return overlay;
     }
 
-    static applyOptions(overlay: Overlay, options: OverlayOptions): void {
+    static applyOptions(
+        overlay: AbstractOverlay,
+        options: OverlayOptions
+    ): void {
         overlay.delayed = !!options.delayed;
         overlay.receivesFocus = options.receivesFocus ?? 'auto';
         overlay.triggerElement = options.trigger || null;

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-colorhandle-size: var(--spectrum-color-handle-size);
     --spectrum-colorhandle-focused-size: var(
@@ -79,6 +78,15 @@ governing permissions and limitations under the License.
             --mod-colorhandle-outer-border-color,
             var(--spectrum-colorhandle-outer-border-color)
         );
+    transition: all
+        var(
+            --mod-colorhandle-animation-duration,
+            var(--spectrum-colorhandle-animation-duration)
+        )
+        var(
+            --mod-colorhandle-animation-easing,
+            var(--spectrum-colorhandle-animation-easing)
+        );
     border-style: solid;
     border-radius: 100%;
     display: block;
@@ -112,18 +120,6 @@ governing permissions and limitations under the License.
     border-radius: var(--mod-colorhandle-hitarea-border-radius, 100%);
     display: block;
     position: absolute;
-}
-
-:host {
-    transition: all
-        var(
-            --mod-colorhandle-animation-duration,
-            var(--spectrum-colorhandle-animation-duration)
-        )
-        var(
-            --mod-colorhandle-animation-easing,
-            var(--spectrum-colorhandle-animation-easing)
-        );
 }
 
 :host([focused]),
@@ -169,6 +165,8 @@ governing permissions and limitations under the License.
 }
 
 .inner {
+    inline-size: 100%;
+    block-size: 100%;
     box-shadow: inset 0 0 0
         var(
             --mod-colorhandle-inner-border-width,
@@ -180,8 +178,6 @@ governing permissions and limitations under the License.
         );
     background-color: var(--spectrum-picked-color);
     border-radius: 100%;
-    block-size: 100%;
-    inline-size: 100%;
 }
 
 @media (forced-colors: active) {

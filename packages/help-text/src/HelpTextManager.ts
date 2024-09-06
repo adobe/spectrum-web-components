@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
+import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 import type { HelpText } from './HelpText';
 
 export class HelpTextManager {
@@ -26,16 +27,12 @@ export class HelpTextManager {
         return this.mode === 'internal';
     }
 
-    static instanceCount = 0;
-    instanceCount: number;
-
     constructor(
         host: HTMLElement,
         { mode }: { mode: 'internal' | 'external' } = { mode: 'internal' }
     ) {
         this.host = host;
-        this.instanceCount = HelpTextManager.instanceCount++;
-        this.id = `sp-help-text-${this.instanceCount}`;
+        this.id = `sp-help-text-${randomID()}`;
         this.mode = mode;
     }
 
@@ -47,7 +44,7 @@ export class HelpTextManager {
                 <slot
                     name=${negative
                         ? 'negative-help-text'
-                        : `pass-through-help-text-${this.instanceCount}`}
+                        : `pass-through-help-text-${randomID()}`}
                     @slotchange=${this.handleSlotchange}
                 >
                     <slot name="help-text"></slot>

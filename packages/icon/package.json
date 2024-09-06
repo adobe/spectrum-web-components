@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icon",
-    "version": "0.41.2",
+    "version": "0.47.2",
     "publishConfig": {
         "access": "public"
     },
@@ -71,11 +71,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.41.2",
-        "@spectrum-web-components/iconset": "^0.41.2"
+        "@spectrum-web-components/base": "^0.47.2",
+        "@spectrum-web-components/iconset": "^0.47.2"
     },
     "devDependencies": {
-        "@spectrum-css/icon": "^6.0.4"
+        "@spectrum-css/icon": "^7.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

@@ -47,6 +47,8 @@ import '@spectrum-web-components/table/sp-table-head-cell.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/field-group/sp-field-group.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/number-field/sp-number-field.js';
 import '@spectrum-web-components/card/sp-card.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 
@@ -70,8 +72,8 @@ class StyledElement extends HTMLElement {
             <style>
                 :host {
                     display: block;
-                    background-color: var(--spectrum-global-color-gray-50);
-                    color: var(--spectrum-global-color-gray-800);
+                    background-color: var(--spectrum-gray-50);
+                    color: var(--spectrum-gray-800);
                     border: 1px solid;
                     padding: 2em;
                 }

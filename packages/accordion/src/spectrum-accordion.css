@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-accordion-item-height: var(--spectrum-component-height-200);
     --spectrum-accordion-item-width: var(--spectrum-accordion-minimum-width);
@@ -135,14 +134,14 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([dir='rtl']),
-:host:dir(rtl) {
+:host:dir(rtl),
+:host([dir='rtl']) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
 :host:lang(ja),
-:host:lang(zh),
-:host:lang(ko) {
+:host:lang(ko),
+:host:lang(zh) {
     --spectrum-accordion-item-header-line-height: var(
         --spectrum-cjk-line-height-100
     );

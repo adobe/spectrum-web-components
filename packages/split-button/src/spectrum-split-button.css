@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-splitbutton-trigger-border-left: 0;
     --spectrum-splitbutton-trigger-min-width: 0;
@@ -155,7 +154,7 @@ governing permissions and limitations under the License.
 
 #button.spectrum-Pagination-prevButton .spectrum-Icon,
 .trigger.spectrum-Pagination-prevButton .spectrum-Icon {
-    transform: var(--spectrum-logical-rotation) rotate(180deg);
+    transform: var(--spectrum-logical-rotation,) rotate(180deg);
 }
 
 #button.spectrum-Pagination-nextButton .spectrum-Icon,

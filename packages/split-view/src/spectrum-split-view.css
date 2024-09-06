@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-splitview-vertical-width: 100%;
     --spectrum-splitview-vertical-gripper-width: 50%;
@@ -41,11 +40,11 @@ governing permissions and limitations under the License.
 }
 
 ::slotted(*) {
+    block-size: 100%;
     background-color: var(
         --mod-splitview-background-color,
         var(--spectrum-splitview-background-color)
     );
-    block-size: 100%;
 }
 
 #gripper {
@@ -103,7 +102,7 @@ governing permissions and limitations under the License.
                     )
             ) / 2 * -1
     );
-    transform: translate(0, -50%);
+    transform: translateY(-50%);
 }
 
 #gripper:before {
@@ -130,13 +129,13 @@ governing permissions and limitations under the License.
         --mod-splitview-handle-width,
         var(--spectrum-splitview-handle-width)
     );
-    z-index: 1;
     block-size: 100%;
+    z-index: 1;
     position: relative;
 }
 
-#splitter.is-collapsed-start #gripper:before,
-#splitter.is-collapsed-end #gripper:before {
+#splitter.is-collapsed-end #gripper:before,
+#splitter.is-collapsed-start #gripper:before {
     content: '';
     inline-size: var(
         --mod-splitview-handle-width,
@@ -224,8 +223,8 @@ governing permissions and limitations under the License.
     }
 }
 
-:host([resizable]) #splitter:active,
-:host([resizable]) #splitter.is-active {
+:host([resizable]) #splitter.is-active,
+:host([resizable]) #splitter:active {
     background-color: var(
         --highcontrast-splitview-handle-background-color-down,
         var(
@@ -235,8 +234,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([resizable]) #splitter:active #gripper,
-:host([resizable]) #splitter.is-active #gripper {
+:host([resizable]) #splitter.is-active #gripper,
+:host([resizable]) #splitter:active #gripper {
     border-color: var(
         --highcontrast-splitview-handle-background-color-down,
         var(
@@ -246,8 +245,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([resizable]) #splitter:active #gripper:before,
-:host([resizable]) #splitter.is-active #gripper:before {
+:host([resizable]) #splitter.is-active #gripper:before,
+:host([resizable]) #splitter:active #gripper:before {
     background-color: var(
         --highcontrast-splitview-handle-background-color-down,
         var(
@@ -305,11 +304,11 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical]) ::slotted(*) {
+    block-size: auto;
     inline-size: var(
         --mod-splitview-vertical-width,
         var(--spectrum-splitview-vertical-width)
     );
-    block-size: auto;
 }
 
 :host([vertical]) #gripper {
@@ -319,8 +318,7 @@ governing permissions and limitations under the License.
                     --mod-splitview-vertical-gripper-width,
                     var(--spectrum-splitview-vertical-gripper-width)
                 ) * -1
-        ),
-        0
+        )
     );
     inline-size: var(
         --mod-splitview-gripper-height,
@@ -376,16 +374,16 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([vertical]) #splitter.is-collapsed-start #gripper,
-:host([vertical]) #splitter.is-collapsed-end #gripper {
+:host([vertical]) #splitter.is-collapsed-end #gripper,
+:host([vertical]) #splitter.is-collapsed-start #gripper {
     inset-inline-start: var(
         --mod-splitview-vertical-gripper-width,
         var(--spectrum-splitview-vertical-gripper-width)
     );
 }
 
-:host([vertical]) #splitter.is-collapsed-start #gripper:before,
-:host([vertical]) #splitter.is-collapsed-end #gripper:before {
+:host([vertical]) #splitter.is-collapsed-end #gripper:before,
+:host([vertical]) #splitter.is-collapsed-start #gripper:before {
     inline-size: var(
         --mod-splitview-vertical-gripper-outer-width,
         var(--spectrum-splitview-vertical-gripper-outer-width)

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-progressbar-animation-ease-in-out-indeterminate: var(
         --spectrum-animation-ease-in-out
@@ -126,7 +125,7 @@ governing permissions and limitations under the License.
 }
 
 :host([positive]) .spectrum-Meter .fill {
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color-positive,
@@ -136,7 +135,7 @@ governing permissions and limitations under the License.
 }
 
 :host([notice]) .spectrum-Meter .fill {
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color-notice,
@@ -146,7 +145,7 @@ governing permissions and limitations under the License.
 }
 
 :host([negative]) .spectrum-Meter .fill {
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color-negative,
@@ -187,6 +186,10 @@ governing permissions and limitations under the License.
         --mod-progressbar-line-height,
         var(--spectrum-progressbar-line-height)
     );
+    color: var(
+        --mod-progressbar-text-color,
+        var(--spectrum-progressbar-text-color)
+    );
     margin-block-start: var(
         --mod-progressbar-spacing-top-to-text,
         var(--spectrum-progressbar-spacing-top-to-text)
@@ -198,22 +201,14 @@ governing permissions and limitations under the License.
 }
 
 .label:lang(ja),
-.label:lang(zh),
 .label:lang(ko),
+.label:lang(zh),
 .percentage:lang(ja),
-.percentage:lang(zh),
-.percentage:lang(ko) {
+.percentage:lang(ko),
+.percentage:lang(zh) {
     line-height: var(
         --mod-progressbar-line-height-cjk,
         var(--spectrum-progressbar-line-height-cjk)
-    );
-}
-
-.label,
-.percentage {
-    color: var(
-        --mod-progressbar-text-color,
-        var(--spectrum-progressbar-text-color)
     );
 }
 
@@ -230,19 +225,19 @@ governing permissions and limitations under the License.
 }
 
 .track {
+    inline-size: 100%;
     block-size: var(
         --mod-progressbar-thickness,
         var(--spectrum-progressbar-thickness)
     );
     border-radius: var(--spectrum-progressbar-corner-radius);
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-track-color,
         var(
             --mod-progressbar-track-color,
             var(--spectrum-progressbar-track-color)
         )
     );
-    inline-size: 100%;
     overflow: hidden;
 }
 
@@ -251,7 +246,7 @@ governing permissions and limitations under the License.
         --mod-progressbar-thickness,
         var(--spectrum-progressbar-thickness)
     );
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color,
@@ -309,16 +304,13 @@ governing permissions and limitations under the License.
 }
 
 :host([static='white']) .fill {
-    color: var(
-        --mod-progressbar-label-and-value-white,
-        var(--spectrum-progressbar-label-and-value-white)
-    );
-    background-color: var(
+    background: var(
         --mod-progressbar-fill-color-white,
         var(--spectrum-progressbar-fill-color-white)
     );
 }
 
+:host([static='white']) .fill,
 :host([static='white']) .label,
 :host([static='white']) .percentage {
     color: var(
@@ -328,10 +320,10 @@ governing permissions and limitations under the License.
 }
 
 :host([static='white']) .track {
-    background-color: var(--spectrum-progressbar-track-color-white);
+    background: var(--spectrum-progressbar-track-color-white);
 }
 
-:host([dir='ltr'][indeterminate]) .fill {
+:host([indeterminate]) .fill {
     animation: indeterminate-loop-ltr
         var(
             --mod-progressbar-animation-duration-indeterminate,
@@ -340,6 +332,7 @@ governing permissions and limitations under the License.
         infinite;
 }
 
+:host([indeterminate]) .fill:dir(rtl),
 :host([dir='rtl'][indeterminate]) .fill {
     animation: indeterminate-loop-rtl
         var(
@@ -350,7 +343,7 @@ governing permissions and limitations under the License.
 }
 
 @keyframes indeterminate-loop-ltr {
-    from {
+    0% {
         transform: translate(
             calc(
                 var(
@@ -372,7 +365,7 @@ governing permissions and limitations under the License.
 }
 
 @keyframes indeterminate-loop-rtl {
-    from {
+    0% {
         transform: translate(
             var(
                 --mod-progressbar-size-default,
@@ -398,6 +391,6 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
         --highcontrast-progressbar-fill-color: ButtonText;
         --highcontrast-progressbar-track-color: ButtonFace;
-        border: 1px solid buttontext;
+        border: 1px solid ButtonText;
     }
 }

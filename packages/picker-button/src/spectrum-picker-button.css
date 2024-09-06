@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 .root {
     --spectrum-picker-button-height: var(--spectrum-component-height-100);
     --spectrum-picker-button-width: var(--spectrum-component-height-100);
@@ -160,6 +159,7 @@ governing permissions and limitations under the License.
 }
 
 .root {
+    background-color: initial;
     block-size: var(
         --mod-picker-button-width,
         var(--spectrum-picker-button-width)
@@ -169,7 +169,6 @@ governing permissions and limitations under the License.
         --mod-picker-button-padding,
         var(--spectrum-picker-button-padding)
     );
-    background-color: #0000;
     border-style: none;
     justify-content: center;
     align-items: center;
@@ -199,54 +198,54 @@ governing permissions and limitations under the License.
     }
 }
 
-:host([active]) .root .spectrum-PickerButton-fill,
-:host([open]) .root .spectrum-PickerButton-fill {
+:host([open]) .root .spectrum-PickerButton-fill,
+:host(:is(:active, [active])) .root .spectrum-PickerButton-fill {
     background-color: var(
         --mod-picker-button-background-color-down,
         var(--spectrum-picker-button-background-color-down)
     );
 }
 
-:host([active]) .root .spectrum-PickerButton-label,
-:host([open]) .root .spectrum-PickerButton-label {
+:host([open]) .root .spectrum-PickerButton-label,
+:host(:is(:active, [active])) .root .spectrum-PickerButton-label {
     color: var(
         --mod-picker-button-font-color-down,
         var(--spectrum-picker-button-font-color-down)
     );
 }
 
-:host([active]) .root .spectrum-PickerButton-icon,
-:host([open]) .root .spectrum-PickerButton-icon {
+:host([open]) .root .spectrum-PickerButton-icon,
+:host(:is(:active, [active])) .root .spectrum-PickerButton-icon {
     color: var(
         --mod-picker-button-icon-color-down,
         var(--spectrum-picker-button-icon-color-down)
     );
 }
 
-.root:focus .spectrum-PickerButton-fill,
 :host([focused]) .root .spectrum-PickerButton-fill,
-.root:focus-visible .spectrum-PickerButton-fill,
-.root.is-keyboardFocused .spectrum-PickerButton-fill {
+.root.is-keyboardFocused .spectrum-PickerButton-fill,
+.root:focus .spectrum-PickerButton-fill,
+.root:focus-visible .spectrum-PickerButton-fill {
     background-color: var(
         --mod-picker-button-background-color-key-focus,
         var(--spectrum-picker-button-background-color-key-focus)
     );
 }
 
-.root:focus .spectrum-PickerButton-label,
 :host([focused]) .root .spectrum-PickerButton-label,
-.root:focus-visible .spectrum-PickerButton-label,
-.root.is-keyboardFocused .spectrum-PickerButton-label {
+.root.is-keyboardFocused .spectrum-PickerButton-label,
+.root:focus .spectrum-PickerButton-label,
+.root:focus-visible .spectrum-PickerButton-label {
     color: var(
         --mod-picker-button-font-color-key-focus,
         var(--spectrum-picker-button-font-color-key-focus)
     );
 }
 
-.root:focus .spectrum-PickerButton-icon,
 :host([focused]) .root .spectrum-PickerButton-icon,
-.root:focus-visible .spectrum-PickerButton-icon,
-.root.is-keyboardFocused .spectrum-PickerButton-icon {
+.root.is-keyboardFocused .spectrum-PickerButton-icon,
+.root:focus .spectrum-PickerButton-icon,
+.root:focus-visible .spectrum-PickerButton-icon {
     color: var(
         --mod-picker-button-icon-color-key-focus,
         var(--spectrum-picker-button-icon-color-key-focus)
@@ -333,6 +332,8 @@ governing permissions and limitations under the License.
 
 .spectrum-PickerButton-fill {
     box-sizing: border-box;
+    block-size: 100%;
+    inline-size: 100%;
     justify-content: center;
     align-items: center;
     gap: var(--mod-picker-button-gap, var(--spectrum-picker-button-gap));
@@ -385,8 +386,6 @@ governing permissions and limitations under the License.
         --mod-picker-button-border-radius,
         var(--spectrum-picker-button-border-radius)
     );
-    block-size: 100%;
-    inline-size: 100%;
     display: flex;
 }
 

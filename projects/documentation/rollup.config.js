@@ -87,13 +87,11 @@ export default async () => {
                     }
                     const modulepreloads = {};
                     entrypoints.forEach(({ importPath, chunk }) => {
-                        modulepreloads[
-                            importPath
-                        ] = `<link rel="modulepreload" href="${importPath}">`;
+                        modulepreloads[importPath] =
+                            `<link rel="modulepreload" href="${importPath}">`;
                         for (const importPath of Object.values(chunk.imports)) {
-                            modulepreloads[
-                                importPath
-                            ] = `<link rel="modulepreload" href="/${importPath}">`;
+                            modulepreloads[importPath] =
+                                `<link rel="modulepreload" href="/${importPath}">`;
                         }
                         // Leverage when/if `importance` lands.
                         // modulepreloads.push(
@@ -103,17 +101,15 @@ export default async () => {
                         //     )
                         // );
                     });
-                    modulepreloads[
-                        'font1'
-                    ] = `<link rel="preload" href="https://use.typekit.net/af/eaf09c/000000000000000000017703/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3" as="font" type="font/woff2" crossorigin/>`;
-                    modulepreloads[
-                        'font2'
-                    ] = `<link rel="preload" href="https://use.typekit.net/af/cb695f/000000000000000000017701/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3" as="font" type="font/woff2" crossorigin/>`;
+                    modulepreloads['font1'] =
+                        `<link rel="preload" href="/typekit/adobe-clean-normal-400.woff2" as="font" type="font/woff2" crossorigin/>`;
+                    modulepreloads['font2'] =
+                        `<link rel="preload" href="/typekit/adobe-clean-normal-700.woff2" as="font" type="font/woff2" crossorigin/>`;
                     return html.replace(
-                        '<link rel="dns-prefetch" href="https://use.typekit.net">',
-                        `${[...Object.values(modulepreloads)].join(
-                            ''
-                        )}<link rel="dns-prefetch" href="https://use.typekit.net">`
+                        '<link rel="preload" href="/styles.css" as="style">',
+                        `<link rel="preload" href="/styles.css" as="style">${[
+                            ...Object.values(modulepreloads),
+                        ].join('')}`
                     );
                 },
                 processAndReplaceHTML,
@@ -126,7 +122,10 @@ export default async () => {
             extractAssets: false,
         })
     );
-    mpaConfig.output.assetFileNames = '[hash][extname]';
+    mpaConfig.output.assetFileNames = 'swc.[hash].[ext]';
+    mpaConfig.output.chunkFileNames = 'swc.[hash].js';
+    mpaConfig.output.entryFileNames = 'swc.[hash].js';
+    mpaConfig.output.sourcemapFileNames = 'swc.[hash].js.map';
     mpaConfig.output.sourcemap = true;
 
     mpaConfig.moduleContext = {
@@ -193,6 +192,13 @@ export default async () => {
     mpaConfig.plugins.push(
         copy({
             patterns: ['**/*.css'],
+            rootDir: './_site',
+        })
+    );
+
+    mpaConfig.plugins.push(
+        copy({
+            patterns: ['typekit/*.woff2'],
             rootDir: './_site',
         })
     );

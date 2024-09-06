@@ -17,6 +17,8 @@ import { fileURLToPath } from 'url';
 import {
     apiDestinationTemplate,
     apiPartialTemplate,
+    changelogDestinationTemplate,
+    changelogPartialTemplate,
     exampleDestinationTemplate,
     examplePartialTemplate,
 } from './component-template-parts.js';
@@ -58,14 +60,81 @@ const findDeclaration = (customElements, test) => {
 };
 
 const findDeprecationNotice = async function (filePath) {
-    const hasDeprecation = fs.existsSync(filePath);
-    if (hasDeprecation) {
-        const packageJSON = await import(filePath, {
-            assert: { type: 'json' },
-        }).then((packageDefault) => packageDefault.default);
-        return packageJSON.deprecationNotice;
+    for await (const mdPath of globby.stream(filePath)) {
+        const hasDeprecation = fs.existsSync(mdPath);
+        if (hasDeprecation) {
+            const packageJSON = await import(mdPath, {
+                assert: { type: 'json' },
+            }).then((packageDefault) => packageDefault.default);
+            return packageJSON.deprecationNotice;
+        }
     }
 };
+
+export async function processChangelog(mdPath) {
+    const fileName = extractFileNameRegExp.exec(mdPath)[0];
+
+    if (fileName !== 'CHANGELOG.md') {
+        return;
+    }
+    const componentName = extractPackageNameRegExp.exec(mdPath)[1];
+    let changelogContent = fs.readFileSync(mdPath).toString();
+    changelogContent = changelogContent.split('\n').slice(4).join('\n');
+
+    // Replace minor version headings: from double ## to ###
+    changelogContent = changelogContent.replace(
+        /^## \[(\d+\.\d+\.\d+)\]\((.*?)\) \((.*?)\)/gm,
+        '### [$1]($2) ($3)'
+    );
+
+    // Replace major version headings: from single # to ##
+    // Updated to handle optional link
+    changelogContent = changelogContent.replace(
+        /^#\s*(?:\[\s*)?(\d+\.\d+\.\d+)(?:\s*\]\((.*?)\))?\s*\((\d{4}-\d{2}-\d{2})\)/gm,
+        (match, version, link, date) => {
+            // If there's no link, format without it
+            if (!link) {
+                return `## ${version} (${date})`;
+            }
+            // If there is a link, include it in the format
+            return `## [${version}](${link}) (${date})`;
+        }
+    );
+    const isComponent = mdPath.includes('/packages/');
+    const destinationPath = isComponent
+        ? componentDestinationPath
+        : toolDestinationPath;
+
+    let componentHeading = componentName;
+    componentHeading = 'sp-' + componentHeading;
+
+    const changelogDestinationFile = path.resolve(
+        destinationPath,
+        componentName,
+        'changelog.md'
+    );
+
+    const changelogPartialFile = path.resolve(
+        destinationPath,
+        componentName,
+        'changelog-content.md'
+    );
+
+    const componentPath = path.resolve(destinationPath, componentName);
+    fs.mkdirSync(componentPath, { recursive: true });
+    fs.writeFileSync(
+        changelogDestinationFile,
+        changelogDestinationTemplate(componentName, componentHeading)
+    );
+    fs.writeFileSync(
+        changelogPartialFile,
+        changelogPartialTemplate(
+            componentName,
+            componentHeading,
+            changelogContent
+        )
+    );
+}
 
 export async function processREADME(mdPath) {
     const fileName = extractFileNameRegExp.exec(mdPath)[0];
@@ -184,12 +253,7 @@ export async function processREADME(mdPath) {
         )
     );
     const deprecationNotice = await findDeprecationNotice(
-        path.resolve(
-            __dirname,
-            '../../../packages',
-            packageName,
-            'package.json'
-        )
+        `${projectDir}/(packages|tools)/${packageName}/package.json`
     );
     const hasTemplate = fs.existsSync(
         path.resolve(
@@ -211,6 +275,7 @@ export async function processREADME(mdPath) {
     hasDemoControls: ${hasArgs},
     hasDemoTemplate: ${hasTemplate},
     deprecationNotice: ${JSON.stringify(deprecationNotice)},
+    isComponent: ${isComponent},
     ${hasArgs ? 'demoControls: Object.values(argTypes),' : ''}
 };
 `;
@@ -234,7 +299,8 @@ async function main() {
     for await (const mdPath of globby.stream(
         `${projectDir}/(packages|tools)/**/*.md`
     )) {
-        await processREADME(mdPath);
+        processREADME(mdPath);
+        processChangelog(mdPath);
     }
 }
 

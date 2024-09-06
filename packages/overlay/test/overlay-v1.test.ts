@@ -66,58 +66,52 @@ describe('Overlays, v1', () => {
 
     describe('shared fixture', () => {
         beforeEach(async () => {
-            testDiv = await styledFixture<HTMLDivElement>(
-                html`
-                    <div id="top">
-                        <style>
-                            body {
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                            }
+            testDiv = await styledFixture<HTMLDivElement>(html`
+                <div id="top">
+                    <style>
+                        body {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
 
-                            #top {
-                                margin: 100px;
-                            }
+                        #top {
+                            margin: 100px;
+                        }
 
-                            sp-button {
-                                flex: none;
-                            }
+                        sp-button {
+                            flex: none;
+                        }
 
-                            #overlay-content {
-                                display: none;
-                            }
-                        </style>
-                        <sp-button id="first-button" variant="primary">
-                            Show Popover
-                        </sp-button>
-                        <div id="overlay-content">
-                            <sp-popover
-                                id="outer-popover"
-                                direction="bottom"
-                                tip
-                            >
-                                <sp-dialog no-divider>
-                                    <div class="options-popover-content">
-                                        A popover message
-                                    </div>
-                                    <sp-button id="outer-focus-target">
-                                        Test 1
-                                    </sp-button>
-                                    <sp-button>Test 2</sp-button>
-                                    <sp-button>Test 3</sp-button>
-                                </sp-dialog>
-                            </sp-popover>
-                            <sp-tooltip id="hover-1" class="hover-content">
-                                Hover message
-                            </sp-tooltip>
-                            <sp-tooltip id="hover-2" class="hover-content">
-                                Other hover message
-                            </sp-tooltip>
-                        </div>
+                        #overlay-content {
+                            display: none;
+                        }
+                    </style>
+                    <sp-button id="first-button" variant="primary">
+                        Show Popover
+                    </sp-button>
+                    <div id="overlay-content">
+                        <sp-popover id="outer-popover" direction="bottom" tip>
+                            <sp-dialog no-divider>
+                                <div class="options-popover-content">
+                                    A popover message
+                                </div>
+                                <sp-button id="outer-focus-target">
+                                    Test 1
+                                </sp-button>
+                                <sp-button>Test 2</sp-button>
+                                <sp-button>Test 3</sp-button>
+                            </sp-dialog>
+                        </sp-popover>
+                        <sp-tooltip id="hover-1" class="hover-content">
+                            Hover message
+                        </sp-tooltip>
+                        <sp-tooltip id="hover-2" class="hover-content">
+                            Other hover message
+                        </sp-tooltip>
                     </div>
-                `
-            );
+                </div>
+            `);
             await elementUpdated(testDiv);
         });
 
@@ -369,7 +363,8 @@ describe('Overlays, v1', () => {
         });
     });
 
-    it('closes via events', async () => {
+    it('closes via events', async function () {
+        this.retries(0);
         const test = await fixture<HTMLDivElement>(html`
             <div>
                 <sp-popover id="root">
@@ -482,11 +477,9 @@ describe('Overlays, v1', () => {
 
     it('opens detached content', async () => {
         const textContent = 'This is a detached element that has been overlaid';
-        const el = await fixture<HTMLButtonElement>(
-            html`
-                <button>Trigger</button>
-            `
-        );
+        const el = await fixture<HTMLButtonElement>(html`
+            <button>Trigger</button>
+        `);
 
         const content = document.createElement('sp-popover');
         content.textContent = textContent;

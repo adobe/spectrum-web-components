@@ -11,37 +11,11 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-badge-corner-radius: var(--spectrum-corner-radius-100);
     --spectrum-badge-line-height: var(--spectrum-line-height-100);
     --spectrum-badge-line-height-cjk: var(--spectrum-cjk-line-height-100);
     --spectrum-badge-label-icon-color: var(--spectrum-white);
-}
-
-.spectrum-Badge--orange,
-:host([variant='yellow']),
-.spectrum-Badge--chartreuse,
-.spectrum-Badge--celery {
-    --spectrum-badge-label-icon-color: var(--spectrum-black);
-}
-
-.spectrum-Badge--gray,
-.spectrum-Badge--red,
-.spectrum-Badge--green,
-:host([variant='seafoam']),
-.spectrum-Badge--cyan,
-.spectrum-Badge--blue,
-:host([variant='indigo']),
-:host([variant='purple']),
-:host([variant='fuchsia']),
-:host([variant='magenta']) {
-    --spectrum-badge-label-icon-color: var(
-        --spectrum-badge-label-icon-color-primary
-    );
-}
-
-:host {
     --spectrum-badge-background-color-default: var(
         --spectrum-neutral-subdued-background-color-default
     );
@@ -126,6 +100,28 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([variant='celery']),
+:host([variant='chartreuse']),
+:host([variant='orange']),
+:host([variant='yellow']) {
+    --spectrum-badge-label-icon-color: var(--spectrum-black);
+}
+
+:host([variant='blue']),
+:host([variant='cyan']),
+:host([variant='fuchsia']),
+:host([variant='gray']),
+:host([variant='green']),
+:host([variant='indigo']),
+:host([variant='magenta']),
+:host([variant='purple']),
+:host([variant='red']),
+:host([variant='seafoam']) {
+    --spectrum-badge-label-icon-color: var(
+        --spectrum-badge-label-icon-color-primary
+    );
+}
+
 :host([size='s']) {
     --spectrum-badge-height: var(--spectrum-component-height-75);
     --spectrum-badge-font-size: var(--spectrum-font-size-75);
@@ -203,12 +199,13 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     :host {
-        border-color: canvastext;
+        border-color: CanvasText;
     }
 }
 
 :host {
     min-block-size: var(--mod-badge-height, var(--spectrum-badge-height));
+    inline-size: auto;
     vertical-align: middle;
     cursor: default;
     -webkit-font-smoothing: subpixel-antialiased;
@@ -217,20 +214,16 @@ governing permissions and limitations under the License.
         --mod-badge-corner-radius,
         var(--spectrum-badge-corner-radius)
     );
-    background: var(
-        --mod-badge-background-color-default,
-        var(--spectrum-badge-background-color-default)
-    );
     color: var(
         --mod-badge-label-icon-color,
         var(--spectrum-badge-label-icon-color)
     );
     border: 1px solid #0000;
-    inline-size: auto;
     display: inline-flex;
     position: relative;
 }
 
+:host,
 :host([variant='neutral']) {
     background: var(
         --mod-badge-background-color-default,
@@ -266,28 +259,28 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Badge--notice {
+:host([variant='notice']) {
     background: var(
         --mod-badge-background-color-notice,
         var(--spectrum-badge-background-color-notice)
     );
 }
 
-.spectrum-Badge--gray {
+:host([variant='gray']) {
     background: var(
         --mod-badge-background-color-gray,
         var(--spectrum-badge-background-color-gray)
     );
 }
 
-.spectrum-Badge--red {
+:host([variant='red']) {
     background: var(
         --mod-badge-background-color-red,
         var(--spectrum-badge-background-color-red)
     );
 }
 
-.spectrum-Badge--orange {
+:host([variant='orange']) {
     background: var(
         --mod-badge-background-color-orange,
         var(--spectrum-badge-background-color-orange)
@@ -301,21 +294,21 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Badge--chartreuse {
+:host([variant='chartreuse']) {
     background: var(
         --mod-badge-background-color-chartreuse,
         var(--spectrum-badge-background-color-chartreuse)
     );
 }
 
-.spectrum-Badge--celery {
+:host([variant='celery']) {
     background: var(
         --mod-badge-background-color-celery,
         var(--spectrum-badge-background-color-celery)
     );
 }
 
-.spectrum-Badge--green {
+:host([variant='green']) {
     background: var(
         --mod-badge-background-color-green,
         var(--spectrum-badge-background-color-green)
@@ -329,14 +322,14 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Badge--cyan {
+:host([variant='cyan']) {
     background: var(
         --mod-badge-background-color-cyan,
         var(--spectrum-badge-background-color-cyan)
     );
 }
 
-.spectrum-Badge--blue {
+:host([variant='blue']) {
     background: var(
         --mod-badge-background-color-blue,
         var(--spectrum-badge-background-color-blue)
@@ -420,8 +413,8 @@ governing permissions and limitations under the License.
 }
 
 .label:lang(ja),
-.label:lang(zh),
-.label:lang(ko) {
+.label:lang(ko),
+.label:lang(zh) {
     line-height: var(
         --mod-badge-line-height-cjk,
         var(--spectrum-badge-line-height-cjk)

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-icon-inline-size: var(
         --mod-icon-inline-size,
@@ -25,15 +24,12 @@ governing permissions and limitations under the License.
     block-size: var(--spectrum-icon-block-size);
     color: var(--mod-icon-color, inherit);
     fill: currentColor;
+    pointer-events: none;
     display: inline-block;
 }
 
 :host(:not(:root)) {
     overflow: hidden;
-}
-
-:host {
-    pointer-events: none;
 }
 
 @media (forced-colors: active) {

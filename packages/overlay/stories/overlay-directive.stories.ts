@@ -8,9 +8,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    LitElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 import {
     OverlayContentTypes,
+    OverlayOpenCloseDetail,
     Placement,
     TriggerInteractions,
 } from '@spectrum-web-components/overlay';
@@ -46,6 +51,7 @@ import '../../../projects/story-decorator/src/types.js';
 import './overlay-story-components.js';
 import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { state } from '@spectrum-web-components/base/src/decorators.js';
 
 const storyStyles = html`
     <style>
@@ -123,12 +129,25 @@ export default {
                 options: ['light', 'dark'],
             },
         },
+        open: {
+            name: 'open',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the second accordion item is open.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
     },
     args: {
         placement: 'bottom',
         offset: 0,
         colorStop: 'light',
         triggerOn: 'click',
+        open: false,
     },
 };
 
@@ -138,11 +157,13 @@ interface Properties {
     triggerOn?: OverlayContentTypes;
     type?: Extract<TriggerInteractions, 'inline' | 'modal' | 'replace'>;
     insertionOptions?: InsertionOptions;
+    open?: boolean;
 }
 
 const template = ({
     placement,
     offset,
+    open,
     triggerOn,
     insertionOptions,
 }: Properties): TemplateResult => {
@@ -165,10 +186,9 @@ const template = ({
                     </div>
                     <sp-button
                         ${tooltip(
-                            () =>
-                                html`
-                                    Click to open another popover.
-                                `
+                            () => html`
+                                Click to open another popover.
+                            `
                         )}
                         ${trigger(
                             () => html`
@@ -200,6 +220,7 @@ const template = ({
             variant="primary"
             ${tooltip(renderTooltip)}
             ${trigger(renderPopover, {
+                open,
                 triggerInteraction: triggerOn,
                 overlayOptions: {
                     placement,
@@ -213,24 +234,122 @@ const template = ({
     `;
 };
 
-export const Default = (args: Properties): TemplateResult => template(args);
+export const Default = ({ open }: Properties = {}): TemplateResult => {
+    const renderPopover = (): TemplateResult => html`
+        <sp-popover>
+            <sp-dialog no-divider>Popover content goes here</sp-dialog>
+        </sp-popover>
+    `;
+    const options = typeof open !== 'undefined' ? { open } : undefined;
+    return html`
+        <sp-button ${trigger(renderPopover, options)}>Open Popover</sp-button>
+    `;
+};
 
 Default.swc_vrt = {
     skip: true,
 };
 
-export const elsewhere = (args: Properties = {}): TemplateResult => html`
+export const configured = (args: Properties): TemplateResult => template(args);
+
+configured.swc_vrt = {
+    skip: true,
+};
+
+export const insertionOptions = (args: Properties = {}): TemplateResult => html`
     ${template(args)}
     <div id="other-element"></div>
 `;
 
-elsewhere.args = {
+insertionOptions.args = {
     insertionOptions: {
         el: () => document.querySelector('#other-element'),
         where: 'afterbegin',
     },
 } as Properties;
 
-elsewhere.swc_vrt = {
+insertionOptions.swc_vrt = {
+    skip: true,
+};
+
+class ManagedOverlayTrigger extends LitElement {
+    @state()
+    private isRenderOverlay = false;
+
+    @state()
+    private isOpenState = false;
+
+    protected override render(): TemplateResult {
+        return html`
+            <sp-button
+                @click=${() => {
+                    this.isRenderOverlay = !this.isRenderOverlay;
+                }}
+            >
+                Toggle Overlay Render Button
+            </sp-button>
+
+            <sp-button
+                @click=${() => {
+                    this.isRenderOverlay = true;
+                    this.isOpenState = true;
+                }}
+            >
+                Create Overlay Render Button And Open Overlay
+            </sp-button>
+
+            ${this.isRenderOverlay ? this.renderOverlayButton() : html``}
+        `;
+    }
+
+    private renderOverlayButton(): TemplateResult {
+        return html`
+            <sp-button
+                ?selected=${this.isOpenState}
+                ${trigger(
+                    () => html`
+                        <sp-popover
+                            @sp-opened=${(
+                                event: CustomEvent<OverlayOpenCloseDetail>
+                            ) => {
+                                if (event.target !== event.currentTarget) {
+                                    return;
+                                }
+                                console.log('sp-opened');
+                                this.isOpenState = true;
+                            }}
+                            @sp-closed=${(
+                                event: CustomEvent<OverlayOpenCloseDetail>
+                            ) => {
+                                if (event.target !== event.currentTarget) {
+                                    return;
+                                }
+                                console.log('sp-closed');
+                                this.isOpenState = false;
+                            }}
+                        >
+                            <h1>My Test Popover</h1>
+                        </sp-popover>
+                    `,
+                    {
+                        triggerInteraction: 'click',
+                        overlayOptions: { placement: 'bottom-end' },
+                        open: this.isOpenState,
+                    }
+                )}
+            >
+                Toggle Popover
+            </sp-button>
+        `;
+    }
+}
+
+customElements.define('managed-overlay-trigger', ManagedOverlayTrigger);
+
+export const managedOverlayTrigger = (): TemplateResult => html`
+    <managed-overlay-trigger></managed-overlay-trigger>
+`;
+
+managedOverlayTrigger.swc_vrt = {
     skip: true,
 };

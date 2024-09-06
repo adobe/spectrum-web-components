@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host([dir]) {
     --spectrum-statuslight-corner-radius: 50%;
     --spectrum-statuslight-font-weight: 400;
@@ -239,8 +238,8 @@ governing permissions and limitations under the License.
 }
 
 :host(:lang(ja)),
-:host(:lang(zh)),
-:host(:lang(ko)) {
+:host(:lang(ko)),
+:host(:lang(zh)) {
     line-height: var(
         --mod-statuslight-line-height-cjk,
         var(--spectrum-statuslight-line-height-cjk)

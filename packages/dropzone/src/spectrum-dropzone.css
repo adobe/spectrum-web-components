@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-drop-zone-padding: var(--spectrum-spacing-400);
     --spectrum-drop-zone-illustration-to-heading: var(--spectrum-spacing-400);
@@ -124,7 +123,7 @@ governing permissions and limitations under the License.
         var(--spectrum-drop-zone-heading-color)
     );
     --mod-illustrated-message-description-position: relative;
-    --mod-illustrated-message-description-z-index: 10;
+    --mod-illustrated-message-description-z-index: 1;
     --mod-illustrated-message-heading-to-description: 0;
     --mod-illustrated-message-description-font-family: var(
         --mod-drop-zone-body-font-family,
@@ -165,8 +164,8 @@ governing permissions and limitations under the License.
 }
 
 :host:lang(ja),
-:host:lang(zh),
-:host:lang(ko) {
+:host:lang(ko),
+:host:lang(zh) {
     --spectrum-drop-zone-heading-font-size: var(
         --spectrum-drop-zone-cjk-title-size
     );
@@ -228,7 +227,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host .is-filled {
+:host([filled]) {
     --mod-drop-zone-background-color: rgba(
         var(--spectrum-drop-zone-background-color),
         var(
@@ -239,7 +238,7 @@ governing permissions and limitations under the License.
     --mod-illustrated-message-display: none;
 }
 
-:host([dragged]) .is-filled {
+:host([filled][dragged]) {
     --mod-drop-zone-content-display: flex;
 }
 
@@ -257,10 +256,10 @@ governing permissions and limitations under the License.
 
 .spectrum-DropZone-content {
     display: var(--mod-drop-zone-content-display, none);
-    z-index: 10;
+    block-size: 100%;
+    z-index: 1;
     justify-content: center;
     align-items: center;
-    block-size: 100%;
     position: relative;
 }
 
@@ -273,10 +272,6 @@ governing permissions and limitations under the License.
     max-inline-size: var(
         --mod-drop-zone-content-max-width,
         var(--spectrum-drop-zone-content-max-width)
-    );
-    background-color: var(
-        --mod-drop-zone-content-background-color,
-        var(--spectrum-drop-zone-content-background-color)
     );
     font-family: var(
         --mod-drop-zone-content-font-family,
@@ -305,6 +300,7 @@ governing permissions and limitations under the License.
     );
 }
 
+.spectrum-DropZone-button,
 .spectrum-DropZone-button:focus {
     background-color: var(
         --mod-drop-zone-content-background-color,

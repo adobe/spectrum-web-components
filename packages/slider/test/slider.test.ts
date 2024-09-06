@@ -36,58 +36,48 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('Slider', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Slider>(
-                html`
-                    <sp-slider label="Slider"></sp-slider>
-                `
-            )
+            await fixture<Slider>(html`
+                <sp-slider label="Slider"></sp-slider>
+            `)
     );
     it('loads', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider label="Slider"></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider label="Slider"></sp-slider>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads - [variant="tick"]', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider
-                    label="Ticked Slider"
-                    min="-100"
-                    max="100"
-                    value="0"
-                    tick-labels
-                    variant="tick"
-                ></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider
+                label="Ticked Slider"
+                min="-100"
+                max="100"
+                value="0"
+                tick-labels
+                variant="tick"
+            ></sp-slider>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads - [variant="tick"] irregularly', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider label="Slider"></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider label="Slider"></sp-slider>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('receives value from the outside', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider max="20"></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider max="20"></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -134,11 +124,9 @@ describe('Slider', () => {
     });
     it('accepts pointer events', async () => {
         let pointerId = -1;
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -219,11 +207,9 @@ describe('Slider', () => {
     });
     it('will `trackPointerDown` on `#controls`', async () => {
         let pointerId = -1;
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider style="width: 500px" max="70"></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider style="width: 500px" max="70"></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -301,11 +287,9 @@ describe('Slider', () => {
     });
     it('can be disabled', async () => {
         let pointerId = -1;
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider disabled></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider disabled></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -346,11 +330,9 @@ describe('Slider', () => {
         expect(el.value).to.equal(50);
     });
     it('accepts pointermove events', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider></sp-slider>
+        `);
         await elementUpdated(el);
 
         expect(el.value).to.equal(50);
@@ -388,20 +370,18 @@ describe('Slider', () => {
     it('dispatches `input` of the animation frame', async () => {
         const inputSpy = spy();
         const changeSpy = spy();
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider
-                    value="50"
-                    style="width: 100px"
-                    @input=${(event: Event & { target: Slider }) => {
-                        inputSpy(event.target.value);
-                    }}
-                    @change=${(event: Event & { target: Slider }) => {
-                        changeSpy(event.target.value);
-                    }}
-                ></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider
+                value="50"
+                style="width: 100px"
+                @input=${(event: Event & { target: Slider }) => {
+                    inputSpy(event.target.value);
+                }}
+                @change=${(event: Event & { target: Slider }) => {
+                    changeSpy(event.target.value);
+                }}
+            ></sp-slider>
+        `);
         await elementUpdated(el);
 
         expect(inputSpy.callCount, 'start clean').to.equal(0);
@@ -450,11 +430,9 @@ describe('Slider', () => {
     });
 
     it('manages RTL when min != 0', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider min="1" max="11" dir="rtl"></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider min="1" max="11" dir="rtl"></sp-slider>
+        `);
         await elementUpdated(el);
 
         expect(el.value).to.equal(6);
@@ -490,11 +468,9 @@ describe('Slider', () => {
     });
 
     it('goes [disabled] while dragging', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider></sp-slider>
+        `);
         await elementUpdated(el);
 
         expect(el.value).to.equal(50);
@@ -561,11 +537,9 @@ describe('Slider', () => {
     });
     it('accepts pointermove events in separate interactions', async () => {
         let pointerId = -1;
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider style="width: 100px"></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider style="width: 100px"></sp-slider>
+        `);
         await elementUpdated(el);
 
         expect(el.value, 'initial').to.equal(50);
@@ -680,13 +654,11 @@ describe('Slider', () => {
         expect(el.dragging, 'is dragging').to.be.false;
     });
     it('accepts pointermove events - [step=0]', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider step="0" max="20" style="width: 500px; float: left;">
-                    Step = 0
-                </sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider step="0" max="20" style="width: 500px; float: left;">
+                Step = 0
+            </sp-slider>
+        `);
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
@@ -747,11 +719,9 @@ describe('Slider', () => {
         expect(el.value).to.equal(5);
     });
     it('will not pointermove unless `pointerdown`', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -771,11 +741,9 @@ describe('Slider', () => {
         expect(el.value).to.equal(50);
     });
     it('responds to input events on the <input/> element', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -789,11 +757,9 @@ describe('Slider', () => {
         expect(el.value).to.equal(0);
     });
     it('accepts variants', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider variant="tick"></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider variant="tick"></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -822,11 +788,9 @@ describe('Slider', () => {
         expect(el.hasAttribute('variant')).to.be.false;
     });
     it('validates variants', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider variant="other"></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider variant="other"></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -848,17 +812,16 @@ describe('Slider', () => {
         expect(el.getAttribute('variant')).to.equal('tick');
     });
     it('renders fill from the centerPoint of the track when fill-start has no value', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider
-                    max="20"
-                    fill-start
-                    min="0"
-                    value="10"
-                    step="1"
-                ></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider
+                max="20"
+                variant="filled"
+                fill-start
+                min="0"
+                value="10"
+                step="1"
+            ></sp-slider>
+        `);
 
         await elementUpdated(el);
         await nextFrame();
@@ -872,17 +835,34 @@ describe('Slider', () => {
         expect(fillElement.style.width).to.equal('0%');
         expect(el.values).to.deep.equal({ value: 10 });
     });
+    it('renders fill from value when fill-start has value=0', async () => {
+        const el = await fixture<Slider>(html`
+            <sp-slider
+                max="150"
+                variant="filled"
+                fill-start="0"
+                min="-50"
+                value="25"
+                step="1"
+            ></sp-slider>
+        `);
+
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+        const fillElement = el.shadowRoot.querySelector(
+            '.fill'
+        ) as HTMLDivElement;
+
+        expect(fillElement).to.exist;
+        expect(fillElement.style.left).to.equal('25%');
+        expect(fillElement.style.width).to.equal('12.5%');
+        expect(el.values).to.deep.equal({ value: 25 });
+    });
     it('renders fill from fill-start point', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider
-                    max="100"
-                    fill-start="15"
-                    min="0"
-                    value="10"
-                ></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider max="100" fill-start="15" min="0" value="10"></sp-slider>
+        `);
 
         await elementUpdated(el);
         await nextFrame();
@@ -930,12 +910,46 @@ describe('Slider', () => {
 
         expect(el.value).to.equal(24);
     });
+    it('renders fill from fill-start point with given normalization function', async () => {
+        const el = await fixture<Slider>(html`
+            <sp-slider
+                max="100"
+                fill-start="0"
+                min="-50"
+                value="-25"
+                .normalization=${{
+                    toNormalized: (value: number): number => {
+                        if (value === 0) return 0.5;
+                        return value < 0
+                            ? 0.5 - (value / -50) * 0.5
+                            : 0.5 + (value / 100) * 0.5;
+                    },
+                    fromNormalized: (value: number): number => {
+                        if (value === 0.5) return 0;
+                        return value < 0.5
+                            ? (1 - value / 0.5) * -50
+                            : ((value - 0.5) / 0.5) * 100;
+                    },
+                }}
+            ></sp-slider>
+        `);
+
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+        const fillElement = el.shadowRoot.querySelector(
+            '.fill'
+        ) as HTMLDivElement;
+
+        expect(fillElement).to.exist;
+        expect(fillElement.style.left).to.equal('25%');
+        expect(fillElement.style.width).to.equal('25%');
+        expect(el.values).to.deep.equal({ value: -25 });
+    });
     it('has a `focusElement`', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -944,16 +958,14 @@ describe('Slider', () => {
         expect(input.type).to.equal('range');
     });
     it('displays result of getAriaValueText', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider
-                    value="50"
-                    min="0"
-                    max="100"
-                    .getAriaHandleText=${(value: number) => `${value}%`}
-                ></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider
+                value="50"
+                min="0"
+                max="100"
+                .getAriaHandleText=${(value: number) => `${value}%`}
+            ></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -966,16 +978,14 @@ describe('Slider', () => {
         expect(input.getAttribute('aria-valuetext')).to.equal('100%');
     });
     it('displays Intl.formatNumber results', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider
-                    value=".5"
-                    min="0"
-                    max="1"
-                    .formatOptions=${{ style: 'percent' }}
-                ></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider
+                value=".5"
+                min="0"
+                max="1"
+                .formatOptions=${{ style: 'percent' }}
+            ></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -989,18 +999,16 @@ describe('Slider', () => {
     });
     it('obeys language property', async () => {
         const [languageContext, updateLanguage] = createLanguageContext('de');
-        let el = await fixture<Slider>(
-            html`
-                <sp-slider
-                    value="2.44"
-                    min="0"
-                    max="10"
-                    step="0.01"
-                    @sp-language-context=${languageContext}
-                    .formatOptions=${{ maximumFractionDigits: 2 }}
-                ></sp-slider>
-            `
-        );
+        let el = await fixture<Slider>(html`
+            <sp-slider
+                value="2.44"
+                min="0"
+                max="10"
+                step="0.01"
+                @sp-language-context=${languageContext}
+                .formatOptions=${{ maximumFractionDigits: 2 }}
+            ></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -1019,23 +1027,17 @@ describe('Slider', () => {
         ).to.equal('2.44');
 
         updateLanguage('de');
-        el = await fixture<Slider>(
-            html`
-                <sp-slider
-                    min="0"
-                    max="10"
+        el = await fixture<Slider>(html`
+            <sp-slider min="0" max="10" @sp-language-context=${languageContext}>
+                <sp-slider-handle
+                    slot="handle"
+                    step="0.01"
+                    value="2.44"
+                    .formatOptions=${{ maximumFractionDigits: 2 }}
                     @sp-language-context=${languageContext}
-                >
-                    <sp-slider-handle
-                        slot="handle"
-                        step="0.01"
-                        value="2.44"
-                        .formatOptions=${{ maximumFractionDigits: 2 }}
-                        @sp-language-context=${languageContext}
-                    ></sp-slider-handle>
-                </sp-slider>
-            `
-        );
+                ></sp-slider-handle>
+            </sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -1054,11 +1056,9 @@ describe('Slider', () => {
         ).to.equal('2.44');
     });
     it('uses fallback ariaValueText', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider value="50" min="0" max="100"></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider value="50" min="0" max="100"></sp-slider>
+        `);
 
         await elementUpdated(el);
         (
@@ -1073,16 +1073,14 @@ describe('Slider', () => {
         expect(input.getAttribute('aria-valuetext')).to.equal('50');
     });
     it('supports units not included in Intl.NumberFormatOptions', async () => {
-        let el = await fixture<Slider>(
-            html`
-                <sp-slider
-                    value="50"
-                    min="0"
-                    max="100"
-                    format-options='{"style": "unit", "unit": "px"}'
-                ></sp-slider>
-            `
-        );
+        let el = await fixture<Slider>(html`
+            <sp-slider
+                value="50"
+                min="0"
+                max="100"
+                format-options='{"style": "unit", "unit": "px"}'
+            ></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -1091,30 +1089,28 @@ describe('Slider', () => {
 
         expect(input.getAttribute('aria-valuetext')).to.equal('50px');
 
-        el = await fixture<Slider>(
-            html`
-                <sp-slider
+        el = await fixture<Slider>(html`
+            <sp-slider
+                value="5"
+                step="1"
+                min="0"
+                max="255"
+                format-options='{"style": "unit", "unit": "px"}'
+            >
+                <sp-slider-handle
+                    slot="handle"
+                    name="min"
+                    label="Minimum"
                     value="5"
-                    step="1"
-                    min="0"
-                    max="255"
-                    format-options='{"style": "unit", "unit": "px"}'
-                >
-                    <sp-slider-handle
-                        slot="handle"
-                        name="min"
-                        label="Minimum"
-                        value="5"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        slot="handle"
-                        name="max"
-                        label="Maximum"
-                        value="250"
-                    ></sp-slider-handle>
-                </sp-slider>
-            `
-        );
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    name="max"
+                    label="Maximum"
+                    value="250"
+                ></sp-slider-handle>
+            </sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -1125,26 +1121,24 @@ describe('Slider', () => {
             shadowRoot.querySelector('input#input-1[aria-valuetext="250px"]')
         ).to.exist;
 
-        el = await fixture<Slider>(
-            html`
-                <sp-slider value="5" step="1" min="0" max="255">
-                    <sp-slider-handle
-                        slot="handle"
-                        name="min"
-                        label="Minimum"
-                        value="5"
-                        format-options='{"style": "unit", "unit": "px"}'
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        slot="handle"
-                        name="max"
-                        label="Maximum"
-                        value="250"
-                        format-options='{"style": "unit", "unit": "px"}'
-                    ></sp-slider-handle>
-                </sp-slider>
-            `
-        );
+        el = await fixture<Slider>(html`
+            <sp-slider value="5" step="1" min="0" max="255">
+                <sp-slider-handle
+                    slot="handle"
+                    name="min"
+                    label="Minimum"
+                    value="5"
+                    format-options='{"style": "unit", "unit": "px"}'
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    name="max"
+                    label="Maximum"
+                    value="250"
+                    format-options='{"style": "unit", "unit": "px"}'
+                ></sp-slider-handle>
+            </sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -1156,11 +1150,9 @@ describe('Slider', () => {
         ).to.exist;
     });
     it('accepts min/max/value in the same timing', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider></sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -1191,30 +1183,28 @@ describe('Slider', () => {
         expect(el.value).to.equal(-100);
     });
     it('returns values for handles', async () => {
-        let el = await fixture<Slider>(
-            html`
-                <sp-slider>
-                    <sp-slider-handle
-                        slot="handle"
-                        name="a"
-                        min="0"
-                        value="10"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="middle-handle"
-                        slot="handle"
-                        name="b"
-                        value="20"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        slot="handle"
-                        name="c"
-                        value="30"
-                        max="100"
-                    ></sp-slider-handle>
-                </sp-slider>
-            `
-        );
+        let el = await fixture<Slider>(html`
+            <sp-slider>
+                <sp-slider-handle
+                    slot="handle"
+                    name="a"
+                    min="0"
+                    value="10"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="middle-handle"
+                    slot="handle"
+                    name="b"
+                    value="20"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    name="c"
+                    value="30"
+                    max="100"
+                ></sp-slider-handle>
+            </sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -1227,54 +1217,45 @@ describe('Slider', () => {
 
         expect(el.values).to.deep.equal({ a: 10, b: 22, c: 30 });
 
-        el = await fixture<Slider>(
-            html`
-                <sp-slider value="10" min="0" max="100"></sp-slider>
-            `
-        );
+        el = await fixture<Slider>(html`
+            <sp-slider value="10" min="0" max="100"></sp-slider>
+        `);
         expect(el.values).to.deep.equal({ value: 10 });
 
-        el = await fixture<Slider>(
-            html`
-                <sp-slider min="0" max="100">
-                    <sp-slider-handle
-                        slot="handle"
-                        value="10"
-                    ></sp-slider-handle>
-                </sp-slider>
-            `
-        );
+        el = await fixture<Slider>(html`
+            <sp-slider min="0" max="100">
+                <sp-slider-handle slot="handle" value="10"></sp-slider-handle>
+            </sp-slider>
+        `);
         expect(el.values).to.deep.equal({ handle1: 10 });
     });
     it('clamps values for multi-handle slider', async () => {
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider min="0" max="100">
-                    <sp-slider-handle
-                        id="first-handle"
-                        max="next"
-                        slot="handle"
-                        name="a"
-                        value="10"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="middle-handle"
-                        min="previous"
-                        max="next"
-                        slot="handle"
-                        name="b"
-                        value="20"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="last-handle"
-                        min="previous"
-                        slot="handle"
-                        name="c"
-                        value="30"
-                    ></sp-slider-handle>
-                </sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider min="0" max="100">
+                <sp-slider-handle
+                    id="first-handle"
+                    max="next"
+                    slot="handle"
+                    name="a"
+                    value="10"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="middle-handle"
+                    min="previous"
+                    max="next"
+                    slot="handle"
+                    name="b"
+                    value="20"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="last-handle"
+                    min="previous"
+                    slot="handle"
+                    name="c"
+                    value="30"
+                ></sp-slider-handle>
+            </sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -1305,35 +1286,33 @@ describe('Slider', () => {
     it('warns in Dev Mode when `min="previous"` is leveraged on first handle', async () => {
         const consoleWarnStub = stub(console, 'warn');
         window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider min="0" max="100">
-                    <sp-slider-handle
-                        id="first-handle"
-                        min="previous"
-                        max="next"
-                        slot="handle"
-                        name="a"
-                        value="10"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="middle-handle"
-                        min="previous"
-                        max="next"
-                        slot="handle"
-                        name="b"
-                        value="20"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="last-handle"
-                        min="previous"
-                        slot="handle"
-                        name="c"
-                        value="30"
-                    ></sp-slider-handle>
-                </sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider min="0" max="100">
+                <sp-slider-handle
+                    id="first-handle"
+                    min="previous"
+                    max="next"
+                    slot="handle"
+                    name="a"
+                    value="10"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="middle-handle"
+                    min="previous"
+                    max="next"
+                    slot="handle"
+                    name="b"
+                    value="20"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="last-handle"
+                    min="previous"
+                    slot="handle"
+                    name="c"
+                    value="30"
+                ></sp-slider-handle>
+            </sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -1355,35 +1334,33 @@ describe('Slider', () => {
     it('warns in Dev Mode when `max="next"` is leveraged on last handle', async () => {
         const consoleWarnStub = stub(console, 'warn');
         window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider min="0" max="100">
-                    <sp-slider-handle
-                        id="first-handle"
-                        max="next"
-                        slot="handle"
-                        name="a"
-                        value="10"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="middle-handle"
-                        min="previous"
-                        max="next"
-                        slot="handle"
-                        name="b"
-                        value="20"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="last-handle"
-                        min="previous"
-                        max="next"
-                        slot="handle"
-                        name="c"
-                        value="30"
-                    ></sp-slider-handle>
-                </sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider min="0" max="100">
+                <sp-slider-handle
+                    id="first-handle"
+                    max="next"
+                    slot="handle"
+                    name="a"
+                    value="10"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="middle-handle"
+                    min="previous"
+                    max="next"
+                    slot="handle"
+                    name="b"
+                    value="20"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="last-handle"
+                    min="previous"
+                    max="next"
+                    slot="handle"
+                    name="c"
+                    value="30"
+                ></sp-slider-handle>
+            </sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -1408,11 +1385,9 @@ describe('Slider', () => {
                 <sp-slider-handle slot="handle" name="max" label="Maximum" min="previous" value="86610"></sp-slider-handle>
             </sp-slider>
         `;
-        const el = await fixture<HTMLDivElement>(
-            html`
-                <div></div>
-            `
-        );
+        const el = await fixture<HTMLDivElement>(html`
+            <div></div>
+        `);
 
         el.appendChild(template.content.cloneNode(true));
         await waitUntil(() => {
@@ -1428,34 +1403,32 @@ describe('Slider', () => {
         expect(createdHandles).to.have.lengthOf(2);
     });
     it('enforces next/previous max/min', async () => {
-        let el = await fixture<Slider>(
-            html`
-                <sp-slider min="0" max="100">
-                    <sp-slider-handle
-                        id="first-handle"
-                        max="next"
-                        slot="handle"
-                        name="a"
-                        value="10"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="middle-handle"
-                        min="previous"
-                        max="next"
-                        slot="handle"
-                        name="b"
-                        value="20"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="last-handle"
-                        min="previous"
-                        slot="handle"
-                        name="c"
-                        value="30"
-                    ></sp-slider-handle>
-                </sp-slider>
-            `
-        );
+        let el = await fixture<Slider>(html`
+            <sp-slider min="0" max="100">
+                <sp-slider-handle
+                    id="first-handle"
+                    max="next"
+                    slot="handle"
+                    name="a"
+                    value="10"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="middle-handle"
+                    min="previous"
+                    max="next"
+                    slot="handle"
+                    name="b"
+                    value="20"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="last-handle"
+                    min="previous"
+                    slot="handle"
+                    name="c"
+                    value="30"
+                ></sp-slider-handle>
+            </sp-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -1498,36 +1471,34 @@ describe('Slider', () => {
         expect(lastInput.min).to.equal('20');
         expect(lastInput.max).to.equal('100');
 
-        el = await fixture<Slider>(
-            html`
-                <sp-slider>
-                    <sp-slider-handle
-                        id="first-handle"
-                        min="0"
-                        max="next"
-                        slot="handle"
-                        name="a"
-                        value="10"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="middle-handle"
-                        min="previous"
-                        max="next"
-                        slot="handle"
-                        name="b"
-                        value="20"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="last-handle"
-                        min="previous"
-                        max="100"
-                        slot="handle"
-                        name="c"
-                        value="30"
-                    ></sp-slider-handle>
-                </sp-slider>
-            `
-        );
+        el = await fixture<Slider>(html`
+            <sp-slider>
+                <sp-slider-handle
+                    id="first-handle"
+                    min="0"
+                    max="next"
+                    slot="handle"
+                    name="a"
+                    value="10"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="middle-handle"
+                    min="previous"
+                    max="next"
+                    slot="handle"
+                    name="b"
+                    value="20"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="last-handle"
+                    min="previous"
+                    max="100"
+                    slot="handle"
+                    name="c"
+                    value="30"
+                ></sp-slider-handle>
+            </sp-slider>
+        `);
 
         firstInput = el.shadowRoot.querySelector(
             '.handle[name="a"] > input'
@@ -1566,34 +1537,32 @@ describe('Slider', () => {
     it('sends keyboard events to active handle', async () => {
         // let pointerId = -1;
 
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider step="1" min="0" max="100">
-                    <sp-slider-handle
-                        id="first-handle"
-                        max="next"
-                        slot="handle"
-                        name="a"
-                        value="10"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="middle-handle"
-                        min="previous"
-                        max="next"
-                        slot="handle"
-                        name="b"
-                        value="20"
-                    ></sp-slider-handle>
-                    <sp-slider-handle
-                        id="last-handle"
-                        min="previous"
-                        slot="handle"
-                        name="c"
-                        value="30"
-                    ></sp-slider-handle>
-                </sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider step="1" min="0" max="100">
+                <sp-slider-handle
+                    id="first-handle"
+                    max="next"
+                    slot="handle"
+                    name="a"
+                    value="10"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="middle-handle"
+                    min="previous"
+                    max="next"
+                    slot="handle"
+                    name="b"
+                    value="20"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    id="last-handle"
+                    min="previous"
+                    slot="handle"
+                    name="c"
+                    value="30"
+                ></sp-slider-handle>
+            </sp-slider>
+        `);
 
         await elementUpdated(el);
         expect(el.values).to.deep.equal({ a: 10, b: 20, c: 30 });
@@ -1611,21 +1580,19 @@ describe('Slider', () => {
         const inputSpy = spy();
         const changeSpy = spy();
 
-        const el = await fixture<Slider>(
-            html`
-                <sp-slider
-                    style="width: 100px"
-                    value="50"
-                    default-value="50"
-                    @input=${(event: Event & { target: Slider }) => {
-                        inputSpy(event.target.value);
-                    }}
-                    @change=${(event: Event & { target: Slider }) => {
-                        changeSpy(event.target.value);
-                    }}
-                ></sp-slider>
-            `
-        );
+        const el = await fixture<Slider>(html`
+            <sp-slider
+                style="width: 100px"
+                value="50"
+                default-value="50"
+                @input=${(event: Event & { target: Slider }) => {
+                    inputSpy(event.target.value);
+                }}
+                @change=${(event: Event & { target: Slider }) => {
+                    changeSpy(event.target.value);
+                }}
+            ></sp-slider>
+        `);
         await elementUpdated(el);
         expect(el.value, 'initial').to.equal(50);
 
@@ -1696,32 +1663,26 @@ describe('Slider', () => {
         const inputSpy = spy();
         const changeSpy = spy();
 
-        const el = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-button id="trigger">Overlay Trigger</sp-button>
-                    <sp-overlay trigger="trigger@click" placement="bottom">
-                        <sp-popover>
-                            <sp-slider
-                                style="width: 100px"
-                                value="70"
-                                default-value="50"
-                                @input=${(
-                                    event: Event & { target: Slider }
-                                ) => {
-                                    inputSpy(event.target.value);
-                                }}
-                                @change=${(
-                                    event: Event & { target: Slider }
-                                ) => {
-                                    changeSpy(event.target.value);
-                                }}
-                            ></sp-slider>
-                        </sp-popover>
-                    </sp-overlay>
-                </div>
-            `
-        );
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-button id="trigger">Overlay Trigger</sp-button>
+                <sp-overlay trigger="trigger@click" placement="bottom">
+                    <sp-popover>
+                        <sp-slider
+                            style="width: 100px"
+                            value="70"
+                            default-value="50"
+                            @input=${(event: Event & { target: Slider }) => {
+                                inputSpy(event.target.value);
+                            }}
+                            @change=${(event: Event & { target: Slider }) => {
+                                changeSpy(event.target.value);
+                            }}
+                        ></sp-slider>
+                    </sp-popover>
+                </sp-overlay>
+            </div>
+        `);
 
         await elementUpdated(el);
 

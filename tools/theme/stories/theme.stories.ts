@@ -40,15 +40,15 @@ const storyStyles = html`
         #example {
             width: 500px;
             padding: 3em;
-            background-color: var(--spectrum-global-color-gray-100);
-            color: var(--spectrum-global-color-gray-800);
+            background-color: var(--spectrum-gray-100);
+            color: var(--spectrum-gray-800);
         }
 
         #inner {
             margin-top: 2em;
             padding: 2em;
-            background-color: var(--spectrum-global-color-gray-100);
-            color: var(--spectrum-global-color-gray-800);
+            background-color: var(--spectrum-gray-100);
+            color: var(--spectrum-gray-800);
         }
 
         #buttons {
@@ -66,7 +66,7 @@ export const Default = ({
         ${storyStyles}
         <sp-theme
             color="${color}"
-            theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+            system=${window.__swc_hack_knobs__.defaultSystemVariant}
         >
             <div id="example">
                 <div>
@@ -107,7 +107,8 @@ export const displayFlex = (): TemplateResult => html`
     <sp-theme
         id="flex-theme"
         color="dark"
-        theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+        theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+        system=${window.__swc_hack_knobs__.defaultSystemVariant}
     >
         <sp-button>Start</sp-button>
         <sp-button id="middle-button">Middle</sp-button>
@@ -147,7 +148,8 @@ export const nestedTheme = ({
         ${storyStyles}
         <sp-theme
             color="${outer}"
-            theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+            theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+            system=${window.__swc_hack_knobs__.defaultSystemVariant}
         >
             <div id="outer">
                 <div>
@@ -170,7 +172,8 @@ export const nestedTheme = ({
                 <sp-theme
                     color="${inner}"
                     dir="ltr"
-                    theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+                    theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+                    system=${window.__swc_hack_knobs__.defaultSystemVariant}
                 >
                     <div id="inner">
                         <div>
@@ -208,15 +211,15 @@ export const reverseColorNestedTheme = ({
             #outer {
                 width: 500px;
                 padding: 3em;
-                background-color: var(--spectrum-global-color-gray-100);
-                color: var(--spectrum-global-color-gray-800);
+                background-color: var(--spectrum-gray-100);
+                color: var(--spectrum-gray-800);
             }
 
             #inner {
                 margin-top: 2em;
                 padding: 2em;
-                background-color: var(--spectrum-global-color-gray-100);
-                color: var(--spectrum-global-color-gray-800);
+                background-color: var(--spectrum-gray-100);
+                color: var(--spectrum-gray-800);
             }
 
             #buttons {
@@ -225,7 +228,8 @@ export const reverseColorNestedTheme = ({
         </style>
         <sp-theme
             color="${inner}"
-            theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+            theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+            system=${window.__swc_hack_knobs__.defaultSystemVariant}
         >
             <div id="outer">
                 <div>
@@ -248,7 +252,8 @@ export const reverseColorNestedTheme = ({
                 <sp-theme
                     color="${outer}"
                     dir="rtl"
-                    theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+                    theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+                    system=${window.__swc_hack_knobs__.defaultSystemVariant}
                 >
                     <div id="inner">
                         <div>

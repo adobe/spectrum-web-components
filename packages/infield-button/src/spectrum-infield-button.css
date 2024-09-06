@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-infield-button-height: var(--spectrum-component-height-100);
     --spectrum-infield-button-width: var(--spectrum-component-height-100);
@@ -129,32 +128,32 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([block='start']),
-:host([block='end']) {
+:host([block='end']),
+:host([block='start']) {
     --mod-infield-button-width: var(
         --mod-infield-button-width-stacked,
         var(--spectrum-in-field-button-width-stacked-medium)
     );
 }
 
-:host([block='start'][size='s']),
-:host([block='end'][size='s']) {
+:host([block='end'][size='s']),
+:host([block='start'][size='s']) {
     --mod-infield-button-width: var(
         --mod-infield-button-width-stacked,
         var(--spectrum-in-field-button-width-stacked-small)
     );
 }
 
-:host([block='start'][size='l']),
-:host([block='end'][size='l']) {
+:host([block='end'][size='l']),
+:host([block='start'][size='l']) {
     --mod-infield-button-width: var(
         --mod-infield-button-width-stacked,
         var(--spectrum-in-field-button-width-stacked-large)
     );
 }
 
-:host([block='start'][size='xl']),
-:host([block='end'][size='xl']) {
+:host([block='end'][size='xl']),
+:host([block='start'][size='xl']) {
     --mod-infield-button-width: var(
         --mod-infield-button-width-stacked,
         var(--spectrum-in-field-button-width-stacked-extra-large)
@@ -200,7 +199,7 @@ governing permissions and limitations under the License.
 }
 
 @media (forced-colors: active) {
-    :host:active:not(:disabled),
+    :host(:is(:active, [active])):not(:disabled),
     :host(:focus-visible):not(:disabled) {
         --highcontrast-infield-button-border-color: Highlight;
     }
@@ -213,6 +212,7 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    background-color: initial;
     cursor: pointer;
     block-size: var(
         --mod-infield-button-height,
@@ -226,7 +226,6 @@ governing permissions and limitations under the License.
         --mod-infield-button-edge-to-fill,
         var(--spectrum-infield-button-edge-to-fill)
     );
-    background-color: #0000;
     border-style: none;
     justify-content: center;
     align-items: center;
@@ -234,6 +233,8 @@ governing permissions and limitations under the License.
 }
 
 .fill {
+    block-size: 100%;
+    inline-size: 100%;
     background-color: var(
         --mod-infield-button-background-color,
         var(--spectrum-infield-button-background-color)
@@ -270,8 +271,6 @@ governing permissions and limitations under the License.
         --mod-infield-button-border-radius,
         var(--spectrum-infield-button-border-radius)
     );
-    block-size: 100%;
-    inline-size: 100%;
 }
 
 ::slotted(*) {
@@ -323,14 +322,14 @@ governing permissions and limitations under the License.
     }
 }
 
-:host:active .fill {
+:host(:is(:active, [active])) .fill {
     background-color: var(
         --mod-infield-button-background-color-down,
         var(--spectrum-infield-button-background-color-down)
     );
 }
 
-:host:active ::slotted(*) {
+:host(:is(:active, [active])) ::slotted(*) {
     color: var(
         --mod-infield-button-icon-color-down,
         var(--spectrum-infield-button-icon-color-down)
@@ -366,16 +365,16 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-:host([block='start']),
-:host([block='end']) {
+:host([block='end']),
+:host([block='start']) {
     block-size: calc(
         var(--mod-infield-button-height, var(--spectrum-infield-button-height)) /
             2
     );
 }
 
-:host([block='start']) .fill,
-:host([block='end']) .fill {
+:host([block='end']) .fill,
+:host([block='start']) .fill {
     box-sizing: border-box;
     padding-inline-start: calc(
         var(

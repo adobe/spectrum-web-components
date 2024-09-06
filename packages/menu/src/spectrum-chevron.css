@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 .spectrum-Menu-back:focus-visible {
     box-shadow: inset
         calc(
@@ -42,6 +41,7 @@ governing permissions and limitations under the License.
     );
 }
 
+.chevron:dir(rtl),
 :host([dir='rtl']) .chevron {
     transform: rotate(-180deg);
 }

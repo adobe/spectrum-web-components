@@ -282,12 +282,17 @@ describe('Overlay Trigger - Hover', () => {
             `)()
         );
         await elementUpdated(el);
+        const input = document.createElement('input');
+        el.insertAdjacentElement('beforebegin', input);
 
         expect(el.open).to.be.undefined;
 
         const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
         const opened = oneEvent(el, 'sp-opened');
-        trigger.focus();
+        input.focus();
+        await sendKeys({
+            press: 'Tab',
+        });
         await opened;
 
         expect(el.open).to.equal('hover');

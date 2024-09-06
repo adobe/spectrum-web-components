@@ -46,15 +46,16 @@ module.exports = function (plop) {
         execSync(
             `cd ../../ && yarn lerna add @spectrum-web-components/${answers.name} --scope=@spectrum-web-components/bundle --no-bootstrap`
         );
-        if (answers.spectrum)
+        if (answers.spectrum) {
             execSync(
                 `cd ../../ && yarn lerna add @spectrum-css/${answers.spectrum} --scope=@spectrum-web-components/${answers.name} --dev --no-bootstrap`
             );
+        }
     });
 
     plop.setActionType('format files', function (answers) {
         execSync(
-            `cd ../../ && yarn prettier --write packages/${answers.name} && eslint --fix -f pretty packages/${answers.name} && stylelint --fix packages/${answers.name}`
+            `cd ../../ && yarn prettier --write packages/${answers.name} && yarn eslint --fix -f pretty packages/${answers.name} && yarn stylelint --fix packages/${answers.name}`
         );
     });
 
@@ -68,7 +69,9 @@ module.exports = function (plop) {
                 validate: (answer) => {
                     if (answer.length < 1) {
                         return "It's a fact universally acknowledged that naming is hard; but it must have a name. You can always change it later.";
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 },
                 // Convert the input into kebab case if not provided as such and strip swc- prefixing if present
                 filter: (response) => kebabCase(response.replace(/^sp-/, '')),
@@ -125,6 +128,16 @@ module.exports = function (plop) {
                 type: 'add',
                 path: '../../packages/{{name}}/stories/{{name}}.stories.ts',
                 templateFile: 'plop-templates/stories.ts.hbs',
+            },
+            {
+                type: 'add',
+                path: '../../packages/{{name}}/stories/args.ts',
+                templateFile: 'plop-templates/args.ts.hbs',
+            },
+            {
+                type: 'add',
+                path: '../../packages/{{name}}/stories/template.ts',
+                templateFile: 'plop-templates/template.ts.hbs',
             },
             {
                 type: 'add',

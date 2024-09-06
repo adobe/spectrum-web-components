@@ -109,7 +109,7 @@ export class Table extends SizedMixin(SpectrumElement, {
     ) => TemplateResult = /* c8 ignore next */ () => html``;
 
     @property({ reflect: true })
-    public role = 'grid';
+    public override role = 'grid';
 
     /**
      * Whether the Table allows users to select a row or rows, and thus controls whether or not the Table also renders checkboxes.
@@ -471,6 +471,8 @@ export class Table extends SizedMixin(SpectrumElement, {
     protected override updated(): void {
         if (this.items.length) {
             this.renderVirtualizedItems();
+        } else {
+            this.removeAttribute('aria-rowcount');
         }
     }
 
@@ -507,6 +509,11 @@ export class Table extends SizedMixin(SpectrumElement, {
                 }
             );
         }
+
+        // Ensures screenreaders can announce the true size of the table
+        // despite virtualization only rendering a subset of rows.
+        this.setAttribute('aria-rowcount', `${this.items.length}`);
+
         const config: VirtualizeDirectiveConfig<Record<string, unknown>> = {
             items: this.items,
             renderItem: this.renderItem,

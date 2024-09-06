@@ -90,7 +90,7 @@ export function renderButtons(properties: Properties): TemplateResult {
     const disabled = true;
     return html`
         <div
-            style="display: flex; flex-direction: column; gap: var(--spectrum-global-dimension-size-100);"
+            style="display: flex; flex-direction: column; gap: calc(var(--spectrum-spacing-100) * var(--swc-scale-factor));"
         >
             ${renderGroup({
                 ...properties,

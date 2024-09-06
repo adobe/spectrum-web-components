@@ -17,7 +17,10 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
+    ifDefined,
+    styleMap,
+} from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
@@ -58,9 +61,6 @@ export class ColorArea extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
-    @property({ type: String })
-    public label: string | undefined;
-
     @property({ type: String, attribute: 'label-x' })
     public labelX = 'saturation';
 
@@ -79,8 +79,9 @@ export class ColorArea extends SpectrumElement {
             v: this.y,
         }),
         applyColorToState: ({ s, v }) => {
-            this.x = s;
-            this.y = v;
+            this._x = s;
+            this._y = v;
+            this.requestUpdate();
         },
     });
 
@@ -120,14 +121,14 @@ export class ColorArea extends SpectrumElement {
             return;
         }
         const oldValue = this.x;
+        this._x = x;
         if (this.inputX) {
             // Use the native `input[type='range']` control to validate this value after `firstUpdate`
             this.inputX.value = x.toString();
             this._x = this.inputX.valueAsNumber;
-        } else {
-            this._x = x;
         }
         this.requestUpdate('x', oldValue);
+        this.colorController.applyColorFromState();
     }
 
     private _x = 1;
@@ -142,14 +143,14 @@ export class ColorArea extends SpectrumElement {
             return;
         }
         const oldValue = this.y;
+        this._y = y;
         if (this.inputY) {
             // Use the native `input[type='range']` control to validate this value after `firstUpdate`
             this.inputY.value = y.toString();
             this._y = this.inputY.valueAsNumber;
-        } else {
-            this._y = y;
         }
         this.requestUpdate('y', oldValue);
+        this.colorController.applyColorFromState();
     }
 
     private _y = 1;
@@ -188,7 +189,7 @@ export class ColorArea extends SpectrumElement {
         this._valueChanged = false;
     }
 
-    private handleBlur(): void {
+    public handleBlur(): void {
         if (this._pointerDown) {
             return;
         }
@@ -309,7 +310,7 @@ export class ColorArea extends SpectrumElement {
     }
 
     private boundingClientRect!: DOMRect;
-    private _pointerDown = false;
+    public _pointerDown = false;
 
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
@@ -405,22 +406,9 @@ export class ColorArea extends SpectrumElement {
     protected override render(): TemplateResult {
         const { width = 0, height = 0 } = this.boundingClientRect || {};
 
-        if (window.__swc.DEBUG) {
-            if (this.label) {
-                window.__swc.warn(
-                    this,
-                    `The "label" property in <${this.localName}> has been deprecated and will be removed in a future release. Please leverage "labelX" and "labelY" instead.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/color-area/#labels',
-                    { level: 'deprecation' }
-                );
-            }
-        }
-
         const isMobile = isAndroid() || isIOS();
         const defaultAriaLabel = 'Color Picker';
-        const ariaLabel = this.label
-            ? `${this.label} ${defaultAriaLabel}`
-            : defaultAriaLabel;
+        const ariaLabel = defaultAriaLabel;
         const ariaRoleDescription = ifDefined(
             isMobile ? undefined : '2d slider'
         );
@@ -442,15 +430,15 @@ export class ColorArea extends SpectrumElement {
             }
         ).format(this.y);
 
+        const style = {
+            background: `linear-gradient(to top, black 0%, hsla(${this.hue}, 100%, 0.01%, 0) 100%),linear-gradient(to right, white 0%, hsla(${this.hue}, 100%, 0.01%, 0) 100%), hsl(${this.hue}, 100%, 50%);`,
+        };
+
         return html`
             <div
                 @pointerdown=${this.handleAreaPointerdown}
                 class="gradient"
-                style="background:
-                    linear-gradient(to top, black 0%, hsla(${this
-                    .hue}, 100%, 0.01%, 0) 100%),
-                    linear-gradient(to right, white 0%, hsla(${this
-                    .hue}, 100%, 0.01%, 0) 100%), hsl(${this.hue}, 100%, 50%);"
+                style=${styleMap(style)}
             >
                 <slot name="gradient"></slot>
             </div>
@@ -484,7 +472,9 @@ export class ColorArea extends SpectrumElement {
                         type="range"
                         class="slider"
                         name="x"
-                        aria-label=${isMobile ? ariaLabelX : ariaLabel}
+                        aria-label=${isMobile
+                            ? ariaLabelX
+                            : `${ariaLabelX} ${ariaLabel}`}
                         aria-roledescription=${ariaRoleDescription}
                         aria-orientation="horizontal"
                         aria-valuetext=${isMobile
@@ -508,7 +498,9 @@ export class ColorArea extends SpectrumElement {
                         type="range"
                         class="slider"
                         name="y"
-                        aria-label=${isMobile ? ariaLabelY : ariaLabel}
+                        aria-label=${isMobile
+                            ? ariaLabelY
+                            : `${ariaLabelY} ${ariaLabel}`}
                         aria-roledescription=${ariaRoleDescription}
                         aria-orientation="vertical"
                         aria-valuetext=${isMobile

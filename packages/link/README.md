@@ -42,6 +42,15 @@ Standard links are blue and should be used to call attention to the link or for 
 This is a <sp-link href="#">standard link</sp-link>.
 ```
 
+### Disabled links
+
+Disabled links are blue and should not propagate any events and they are not focussable.
+
+<!-- prettier-ignore -->
+```html
+This is a <sp-link disabled href="#">disabled link</sp-link>.
+```
+
 ### Secondary links
 
 The secondary variant is the same color as the paragraph text inline of which it appears. Its subdued appearance is optimal for when the primary variant is too overwhelming, such as in blocks of text with several references linked throughout.

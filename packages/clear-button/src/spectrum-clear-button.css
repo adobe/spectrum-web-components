@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-clear-button-height: var(--spectrum-component-height-100);
     --spectrum-clear-button-width: var(--spectrum-component-height-100);
@@ -169,30 +168,34 @@ governing permissions and limitations under the License.
     }
 }
 
-:host([active]) {
+:host(:is(:active, [active])) {
     color: var(
         --mod-clear-button-icon-color-down,
         var(--spectrum-clear-button-icon-color-down)
     );
 }
 
-:host([active]) .fill {
+:host(:is(:active, [active])) .fill {
     background-color: var(
         --mod-clear-button-background-color-down,
         var(--spectrum-clear-button-background-color-down)
     );
 }
 
+:host([focus-within]) .js-focus-within,
 :host(:focus-visible),
-:host:focus-within {
+:host:focus-within,
+:host([focus-within]) .js-focus-within {
     color: var(
         --mod-clear-button-icon-color-key-focus,
         var(--spectrum-clear-button-icon-color-key-focus)
     );
 }
 
+:host([focus-within]) .js-focus-within .fill,
 :host(:focus-visible) .fill,
-:host:focus-within .fill {
+:host:focus-within .fill,
+:host([focus-within]) .js-focus-within .fill {
     background-color: var(
         --mod-clear-button-background-color-key-focus,
         var(--spectrum-clear-button-background-color-key-focus)
@@ -204,11 +207,11 @@ governing permissions and limitations under the License.
         --mod-clear-button-background-color,
         var(--spectrum-clear-button-background-color)
     );
+    inline-size: 100%;
+    block-size: 100%;
     border-radius: 100%;
     justify-content: center;
     align-items: center;
-    block-size: 100%;
-    inline-size: 100%;
     display: flex;
 }
 
