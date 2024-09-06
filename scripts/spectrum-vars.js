@@ -138,6 +138,7 @@ const processTypography = async (
 // TODO: use resolve package to find node_modules
 // TODO: we need to revisit whether we need these
 const spectrumPaths = [
+    // Spectrum 1
     path.resolve(
         path.join(
             __dirname,
@@ -148,6 +149,18 @@ const spectrumPaths = [
             'dist'
         )
     ),
+    // Spectrum 2 (same source as Spectrum 1)
+    path.resolve(
+        path.join(
+            __dirname,
+            '..',
+            'node_modules',
+            '@spectrum-css',
+            'vars',
+            'dist'
+        )
+    ),
+    // Express
     path.resolve(
         path.join(
             __dirname,
@@ -170,10 +183,19 @@ const foundVars = await findUsedVars();
 
 spectrumPaths.forEach((spectrumPath, i) => {
     const packageDir = ['styles'];
-    const isExpress = i === 1;
-    if (isExpress) packageDir.push('express');
+    const isSpectrum1 = i === 0;
+    const isSpectrum2 = i === 1;
+    const isExpress = i === 2;
+    if (isSpectrum2) {
+        packageDir.push('spectrum-two');
+    }
+    if (isExpress) {
+        packageDir.push('express');
+    }
     themes.forEach((theme) => {
-        if (isExpress && ['lightest', 'darkest'].includes(theme)) return;
+        if (!isSpectrum1 && ['lightest', 'darkest'].includes(theme)) {
+            return;
+        }
         const srcPath = path.join(spectrumPath, `spectrum-${theme}.css`);
         const dstPath = path.resolve(
             path.join(
