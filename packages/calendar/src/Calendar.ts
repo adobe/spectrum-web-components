@@ -502,7 +502,7 @@ export class Calendar extends SpectrumElement {
 
         if (this.value && isSameMonth(newCurrentDate, this.value))
             newCurrentDate = this.value as CalendarDate;
-        if (isSameMonth(newCurrentDate, this.today))
+        else if (isSameMonth(newCurrentDate, this.today))
             newCurrentDate = this.today;
 
         this.currentDate = newCurrentDate;
@@ -515,7 +515,7 @@ export class Calendar extends SpectrumElement {
 
         if (this.value && isSameMonth(newCurrentDate, this.value))
             newCurrentDate = this.value as CalendarDate;
-        if (isSameMonth(newCurrentDate, this.today))
+        else if (isSameMonth(newCurrentDate, this.today))
             newCurrentDate = this.today;
 
         this.currentDate = newCurrentDate;
