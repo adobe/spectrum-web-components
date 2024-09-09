@@ -59,45 +59,30 @@ export function getEditableSegments(element: DateTimePicker): EditableSegments {
     return elements as EditableSegments;
 }
 
-export function expectOnlySegmentsSet(
-    editableSegments: EditableSegments,
-    segmentsSet: HTMLElement[]
-): void {
-    const areOnlySegmentsSet = arePlaceholdersShown(
-        editableSegments,
-        segmentsSet
-    );
-    expect(areOnlySegmentsSet).to.be.true;
-}
-
 export function expectPlaceholders(
     editableSegments: EditableSegments,
     exceptions: HTMLElement[] = []
 ): void {
-    const arePlaceholders = arePlaceholdersShown(editableSegments, exceptions);
-    expect(arePlaceholders).to.be.true;
+    for (const segment of editableSegments.filter(
+        (segment) => !exceptions.includes(segment)
+    ))
+        expectPlaceholder(segment);
 }
 
-function arePlaceholdersShown(
-    segments: HTMLElement[],
-    exceptions: HTMLElement[] = []
-): boolean {
-    let segmentsToHavePlaceholders = segments;
-    if (exceptions)
-        segmentsToHavePlaceholders = segments.filter(
-            (segment) => !exceptions.includes(segment)
-        );
+export function expectPlaceholder(segment: HTMLElement): void {
+    expect(isPlaceholderSegment(segment)).to.be.true;
+}
 
-    for (const segment of segmentsToHavePlaceholders) {
-        const type = segment.dataset.type as EditableSegmentType;
-        const placeholder = SegmentPlaceholders[type];
-        if (
-            segment.innerText !== placeholder ||
-            (type === SegmentType.DayPeriod &&
-                !segment.classList.contains('is-placeholder'))
-        )
-            return false;
-    }
+function isPlaceholderSegment(segment: HTMLElement): boolean {
+    const type = segment.dataset.type as EditableSegmentType;
+    const placeholder = SegmentPlaceholders[type];
+
+    if (segment.innerText !== placeholder) return false;
+    if (
+        type === SegmentType.DayPeriod &&
+        !segment.classList.contains('is-placeholder')
+    )
+        return false;
 
     return true;
 }
