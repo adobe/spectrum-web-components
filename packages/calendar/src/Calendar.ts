@@ -15,6 +15,7 @@ import {
     getLocalTimeZone,
     getWeeksInMonth,
     isSameDay,
+    isSameMonth,
     parseDate,
     startOfMonth,
     startOfWeek,
@@ -495,33 +496,29 @@ export class Calendar extends SpectrumElement {
     }
 
     private handlePreviousMonth(): void {
-        const isSelectedInPreviousMonth =
-            this.value?.month === this.currentDate.month - 1;
-        const isTodayInPreviousMonth =
-            this.today.month === this.currentDate.month - 1;
+        let newCurrentDate = startOfMonth(this.currentDate).subtract({
+            months: 1,
+        });
 
-        if (isSelectedInPreviousMonth)
-            this.currentDate = this.value as CalendarDate;
-        else if (isTodayInPreviousMonth) this.currentDate = this.today;
-        else
-            this.currentDate = startOfMonth(this.currentDate).subtract({
-                months: 1,
-            });
+        if (this.value && isSameMonth(newCurrentDate, this.value))
+            newCurrentDate = this.value as CalendarDate;
+        if (isSameMonth(newCurrentDate, this.today))
+            newCurrentDate = this.today;
+
+        this.currentDate = newCurrentDate;
     }
 
     private handleNextMonth(): void {
-        const isSelectedInNextMonth =
-            this.value?.month === this.currentDate.month + 1;
-        const isTodayInNextMonth =
-            this.today.month === this.currentDate.month + 1;
+        let newCurrentDate = startOfMonth(this.currentDate).add({
+            months: 1,
+        });
 
-        if (isSelectedInNextMonth)
-            this.currentDate = this.value as CalendarDate;
-        else if (isTodayInNextMonth) this.currentDate = this.today;
-        else
-            this.currentDate = startOfMonth(this.currentDate).add({
-                months: 1,
-            });
+        if (this.value && isSameMonth(newCurrentDate, this.value))
+            newCurrentDate = this.value as CalendarDate;
+        if (isSameMonth(newCurrentDate, this.today))
+            newCurrentDate = this.today;
+
+        this.currentDate = newCurrentDate;
     }
 
     private handleKeydown(event: KeyboardEvent): void {
