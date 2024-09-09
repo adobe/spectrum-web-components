@@ -56,11 +56,9 @@ describe('DateTimePicker', () => {
 
     testForLitDevWarnings(
         async () =>
-            await fixture<DateTimePicker>(
-                html`
-                    <sp-date-time-picker></sp-date-time-picker>
-                `
-            )
+            await fixture<DateTimePicker>(html`
+                <sp-date-time-picker></sp-date-time-picker>
+            `)
     );
 
     // TODO: will fix in screen-reader accessibility PR
@@ -73,6 +71,8 @@ describe('DateTimePicker', () => {
         // TODO check for placeholders
     });
 
+    it('should clear the value', async () => {});
+
     describe('Manages the calendar', () => {
         it('opening it using the keyboard', async () => {});
         it('opening it using the pointer', async () => {});
@@ -81,6 +81,7 @@ describe('DateTimePicker', () => {
         it('passing the value and min/max constraints', async () => {});
         it("handling the 'change' event", async () => {
             // TODO: test that DTP's value is updated
+            // and that segments are set
         });
     });
 
@@ -626,7 +627,7 @@ describe('DateTimePicker', () => {
             });
         });
 
-        describe.only('using the down arrow key', () => {
+        describe('using the down arrow key', () => {
             it("defining the year segment's value", async () => {
                 const yearSegment = editableSegments.getByType(
                     SegmentType.Year
@@ -1151,19 +1152,21 @@ describe('DateTimePicker', () => {
         });
 
         describe('using typed in values', () => {
-            Object.values(SegmentType).forEach((segmentType) => {
-                it(`the ${segmentType} segment should ignore initial zeros`, async () => {
-                    const segment = editableSegments.getByType(
-                        segmentType as EditableSegmentType
-                    );
+            [SegmentType.Year, SegmentType.Month, SegmentType.Day].forEach(
+                (segmentType) => {
+                    it(`the ${segmentType} segment should ignore initial zeros`, async () => {
+                        const segment = editableSegments.getByType(
+                            segmentType as EditableSegmentType
+                        );
 
-                    segment.focus();
-                    await sendKeys({ type: '0' });
-                    await elementUpdated(element);
+                        segment.focus();
+                        await sendKeys({ type: '0' });
+                        await elementUpdated(element);
 
-                    expectPlaceholders(editableSegments);
-                });
-            });
+                        expectPlaceholders(editableSegments);
+                    });
+                }
+            );
 
             it("on the year segment's value", async () => {
                 const segment = editableSegments.getByType(SegmentType.Year);
@@ -1198,51 +1201,336 @@ describe('DateTimePicker', () => {
                 expect(segment.innerText).to.equal('12');
                 await sendKeys({ type: '9' });
                 expect(segment.innerText).to.equal('09');
+                await sendKeys({ type: '0' });
+                expect(segment.innerText).to.equal('09');
 
                 expectOnlySegmentsSet(editableSegments, [segment]);
             });
 
-            // Maybe this should be tested for arrows as well
-            describe('capping the day to the maximum value of the month', async () => {
+            describe("on the day segment's value", async () => {
+                let yearSegment: HTMLElement;
+                let monthSegment: HTMLElement;
+                let daySegment: HTMLElement;
+
+                beforeEach(async () => {
+                    yearSegment = editableSegments.getByType(SegmentType.Year);
+                    monthSegment = editableSegments.getByType(
+                        SegmentType.Month
+                    );
+                    daySegment = editableSegments.getByType(SegmentType.Day);
+                });
+
                 it('when no month/year is defined', async () => {
-                    const segment = editableSegments.getByType(SegmentType.Day);
+                    daySegment.focus();
+                    await sendKeys({ type: '5' });
+                    await elementUpdated(element);
+                    expect(daySegment.innerText).to.equal('05');
+                    await sendKeys({ type: '4' });
+                    await elementUpdated(element);
+                    expect(daySegment.innerText).to.equal('04');
+                    await sendKeys({ type: '0' });
+                    await elementUpdated(element);
+                    expect(daySegment.innerText).to.equal('04');
+
+                    expectOnlySegmentsSet(editableSegments, [daySegment]);
+                });
+
+                describe('when the month is February in a common year', async () => {
+                    beforeEach(async () => {
+                        yearSegment.focus();
+                        await sendKeys({ type: '2022' }); // Common year in the Gregorian calendar
+                        await elementUpdated(element);
+                        monthSegment.focus();
+                        await sendKeys({ type: '2' });
+                        await elementUpdated(element);
+                        daySegment.focus();
+                    });
+
+                    it('should not set the day to 31, 30 or 29', async () => {
+                        // Tries to set the day to 31
+                        await sendKeys({ type: '3' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('03');
+                        await sendKeys({ type: '1' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('01');
+
+                        // Tries to set the day to 30
+                        await sendKeys({ type: '3' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('13');
+                        await sendKeys({ type: '0' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('13');
+
+                        // Tries to set the day to 29
+                        await sendKeys({ type: '2' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('02');
+                        await sendKeys({ type: '9' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('09');
+
+                        expectOnlySegmentsSet(editableSegments, [
+                            daySegment,
+                            monthSegment,
+                            yearSegment,
+                        ]);
+                    });
+
+                    it('should set the day to 28', async () => {
+                        await sendKeys({ type: '2' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('02');
+                        await sendKeys({ type: '8' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('28');
+
+                        expectOnlySegmentsSet(editableSegments, [
+                            daySegment,
+                            monthSegment,
+                            yearSegment,
+                        ]);
+                    });
+                });
+
+                describe('when the month is February in a leap year', async () => {
+                    beforeEach(async () => {
+                        yearSegment.focus();
+                        await sendKeys({ type: '2024' }); // Leap year in the Gregorian calendar
+                        await elementUpdated(element);
+                        monthSegment.focus();
+                        await sendKeys({ type: '2' });
+                        await elementUpdated(element);
+                        daySegment.focus();
+                    });
+
+                    it('should not set the day to 31 or 30', async () => {
+                        await sendKeys({ type: '3' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('03');
+                        await sendKeys({ type: '1' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('01');
+
+                        await sendKeys({ type: '3' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('13');
+                        await sendKeys({ type: '0' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('13');
+
+                        expectOnlySegmentsSet(editableSegments, [
+                            daySegment,
+                            monthSegment,
+                            yearSegment,
+                        ]);
+                    });
+
+                    it('should set the day to 29 or 28', async () => {
+                        await sendKeys({ type: '2' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('02');
+                        await sendKeys({ type: '9' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('09');
+
+                        await sendKeys({ type: '2' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('02');
+                        await sendKeys({ type: '8' });
+                        await elementUpdated(element);
+                        expect(daySegment.innerText).to.equal('28');
+
+                        expectOnlySegmentsSet(editableSegments, [
+                            daySegment,
+                            monthSegment,
+                            yearSegment,
+                        ]);
+                    });
+                });
+            });
+
+            describe('in a 12h format', () => {
+                it("on the hour segment's value", async () => {
+                    const segment = editableSegments.getByType(
+                        SegmentType.Hour
+                    );
+
+                    segment.focus();
+                    await sendKeys({ type: '1' });
+                    await elementUpdated(element);
+                    expect(segment.innerText).to.equal('01');
+                    await sendKeys({ type: '2' });
+                    await elementUpdated(element);
+                    expect(segment.innerText).to.equal('12');
+                    await sendKeys({ type: '3' });
+                    await elementUpdated(element);
+                    expect(segment.innerText).to.equal('03');
+                    await sendKeys({ type: '0' });
+                    await elementUpdated(element);
+                    expect(segment.innerText).to.equal('03');
+
+                    expectOnlySegmentsSet(editableSegments, [segment]);
+                });
+
+                it("on the AM/PM segment's value using A/P keys", async () => {
+                    const dayPeriodSegment = editableSegments.getByType(
+                        SegmentType.DayPeriod
+                    );
+
+                    dayPeriodSegment.focus();
+                    await sendKeys({ type: 'A' });
+                    await elementUpdated(element);
+
+                    expect(dayPeriodSegment.innerText).to.equal(`AM`);
+                    expectOnlySegmentsSet(editableSegments, [dayPeriodSegment]);
+                    await sendKeys({ type: 'P' });
+                    await elementUpdated(element);
+
+                    expect(dayPeriodSegment.innerText).to.equal(`PM`);
+                    expectOnlySegmentsSet(editableSegments, [dayPeriodSegment]);
+                });
+            });
+
+            it("in a 24h format on the hour segment's value", async () => {
+                element = await fixtureElement({ locale: 'en-GB' });
+                await elementUpdated(element);
+                editableSegments = getEditableSegments(element);
+                const segment = editableSegments.getByType(SegmentType.Hour);
+
+                segment.focus();
+                await sendKeys({ type: '0' });
+                await elementUpdated(element);
+                expect(segment.innerText).to.equal('00');
+                await sendKeys({ type: '1' });
+                await elementUpdated(element);
+                expect(segment.innerText).to.equal('01');
+                await sendKeys({ type: '2' });
+                await elementUpdated(element);
+                expect(segment.innerText).to.equal('12');
+                await sendKeys({ type: '3' });
+                await elementUpdated(element);
+                expect(segment.innerText).to.equal('23');
+                await sendKeys({ type: '5' });
+                await elementUpdated(element);
+                expect(segment.innerText).to.equal('05');
+                await sendKeys({ type: '0' });
+                await elementUpdated(element);
+                expect(segment.innerText).to.equal('00');
+
+                expectOnlySegmentsSet(editableSegments, [segment]);
+            });
+
+            [SegmentType.Minute, SegmentType.Second].forEach((segmentType) => {
+                it(`on the ${segmentType} segment's value`, async () => {
+                    const segment = editableSegments.getByType(
+                        segmentType as EditableSegmentType
+                    );
 
                     segment.focus();
                     await sendKeys({ type: '5' });
                     await elementUpdated(element);
                     expect(segment.innerText).to.equal('05');
-                    await sendKeys({ type: '5' });
-                    expect(segment.innerText).to.equal('05');
-                    await sendKeys({ type: '3' });
-                    expect(segment.innerText).to.equal('03');
+                    await sendKeys({ type: '8' });
+                    await elementUpdated(element);
+                    expect(segment.innerText).to.equal('58');
                     await sendKeys({ type: '0' });
-                    expect(segment.innerText).to.equal('30');
+                    await elementUpdated(element);
+                    expect(segment.innerText).to.equal('00');
 
                     expectOnlySegmentsSet(editableSegments, [segment]);
                 });
-
-                it('when the month is February in a common year', async () => {});
-
-                it('when the month is February in a leap year', async () => {});
             });
-
-            it("on the hour segment's value", async () => {});
-
-            it("on the minute segment's value", async () => {});
-
-            it("on the second segment's value", async () => {});
-
-            it("on the AM/PM segment's value using A/P keys", async () => {});
-            it("on the AM/PM segment's value when the hour is set", async () => {});
 
             describe('updating the day', () => {
-                it('when the month changes to February with no year selected', async () => {});
-                it('when the month changes to February in a common year', async () => {});
-                it('when the month changes to February in a leap year', async () => {});
-                it('when the year changes to a leap year and the month is February', async () => {});
-            });
+                let yearSegment: HTMLElement;
+                let monthSegment: HTMLElement;
+                let daySegment: HTMLElement;
 
-            // TODO: month from '05' pressing '0' should stay '05'
+                beforeEach(async () => {
+                    yearSegment = editableSegments.getByType(SegmentType.Year);
+                    monthSegment = editableSegments.getByType(
+                        SegmentType.Month
+                    );
+                    daySegment = editableSegments.getByType(SegmentType.Day);
+
+                    daySegment.focus();
+                    await sendKeys({ type: '31' });
+                    await elementUpdated(element);
+                });
+
+                it('when the month changes to February with no year selected', async () => {
+                    monthSegment.focus();
+                    await sendKeys({ type: '2' });
+                    await elementUpdated(element);
+
+                    expect(monthSegment.innerText).to.equal('02');
+                    expect(daySegment.innerText).to.equal('29');
+
+                    expectOnlySegmentsSet(editableSegments, [
+                        daySegment,
+                        monthSegment,
+                    ]);
+                });
+
+                it('when the month changes to February in a common year', async () => {
+                    yearSegment.focus();
+                    await sendKeys({ type: '2022' }); // Common year in the Gregorian calendar
+                    await elementUpdated(element);
+                    monthSegment.focus();
+                    await sendKeys({ type: '2' });
+                    await elementUpdated(element);
+
+                    expect(yearSegment.innerText).to.equal('2022');
+                    expect(monthSegment.innerText).to.equal('02');
+                    expect(daySegment.innerText).to.equal('28');
+
+                    expectOnlySegmentsSet(editableSegments, [
+                        daySegment,
+                        monthSegment,
+                        yearSegment,
+                    ]);
+                });
+
+                it('when the month changes to February in a leap year', async () => {
+                    yearSegment.focus();
+                    await sendKeys({ type: '2024' }); // Leap year in the Gregorian calendar
+                    await elementUpdated(element);
+                    monthSegment.focus();
+                    await sendKeys({ type: '2' });
+                    await elementUpdated(element);
+
+                    expect(yearSegment.innerText).to.equal('2024');
+                    expect(monthSegment.innerText).to.equal('02');
+                    expect(daySegment.innerText).to.equal('29');
+
+                    expectOnlySegmentsSet(editableSegments, [
+                        daySegment,
+                        monthSegment,
+                        yearSegment,
+                    ]);
+                });
+
+                it('when the year changes to a leap year and the month is February', async () => {
+                    monthSegment.focus();
+                    await sendKeys({ type: '2' });
+                    await elementUpdated(element);
+                    yearSegment.focus();
+                    await sendKeys({ type: '2024' }); // Leap year in the Gregorian calendar
+                    await elementUpdated(element);
+
+                    expect(yearSegment.innerText).to.equal('2024');
+                    expect(monthSegment.innerText).to.equal('02');
+                    expect(daySegment.innerText).to.equal('29');
+
+                    expectOnlySegmentsSet(editableSegments, [
+                        daySegment,
+                        monthSegment,
+                        yearSegment,
+                    ]);
+                });
+            });
         });
 
         describe('deleting values', () => {
