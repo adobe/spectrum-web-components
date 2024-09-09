@@ -41,145 +41,84 @@
 
 .spectrum-UIIcon-ArrowDown75 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-down-75-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-down-75-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowDown100 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-down-100-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-down-100-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowDown200 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-down-200-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-down-200-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowDown300 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-down-300-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-down-300-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowDown400 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-down-400-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-down-400-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowDown500 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-down-500-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-down-500-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowDown600 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-down-600-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-down-600-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowLeft75 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-left-75-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-left-75-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowLeft100 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-left-100-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-left-100-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowLeft200 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-left-200-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-left-200-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowLeft300 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-left-300-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-left-300-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowLeft400 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-left-400-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-left-400-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowLeft500 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-left-500-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-left-500-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowLeft600 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-left-600-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-left-600-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowUp75 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-up-75-icon-size);
-    --spectrum-icon-transform: var(--system-ui-icon-arrow-up-75-icon-transform);
 }
 
 .spectrum-UIIcon-ArrowUp100 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-up-100-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-up-100-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowUp200 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-up-200-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-up-200-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowUp300 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-up-300-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-up-300-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowUp400 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-up-400-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-up-400-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowUp500 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-up-500-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-up-500-icon-transform
-    );
 }
 
 .spectrum-UIIcon-ArrowUp600 {
     --spectrum-icon-size: var(--system-ui-icon-arrow-up-600-icon-size);
-    --spectrum-icon-transform: var(
-        --system-ui-icon-arrow-up-600-icon-transform
-    );
 }

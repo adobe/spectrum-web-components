@@ -52,50 +52,53 @@
     --spectrum-closebutton-focus-indicator-color: var(
         --system-close-button-focus-indicator-color
     );
-    --spectrum-closebutton-height: var(--system-close-button-height);
-    --spectrum-closebutton-width: var(--system-close-button-width);
-    --spectrum-closebutton-size: var(--system-close-button-size);
-    --spectrum-closebutton-border-radius: var(
-        --system-close-button-border-radius
-    );
     --spectrum-closebutton-animation-duration: var(
         --system-close-button-animation-duration
     );
 }
 
-:host([size='s']) {
-    --spectrum-closebutton-height: var(--system-closebutton-size-s-height);
-    --spectrum-closebutton-width: var(--system-closebutton-size-s-width);
-    --spectrum-closebutton-size: var(--system-closebutton-size-s-size);
+.spectrum-CloseButton--sizeS {
+    --spectrum-closebutton-height: var(--system-close-button-size-s-height);
+    --spectrum-closebutton-width: var(--system-close-button-size-s-width);
+    --spectrum-closebutton-size: var(--system-close-button-size-s-size);
     --spectrum-closebutton-border-radius: var(
-        --system-closebutton-size-s-border-radius
+        --system-close-button-size-s-border-radius
     );
 }
 
-:host {
-    --spectrum-closebutton-height: var(--system-closebutton-size-m-height);
-    --spectrum-closebutton-width: var(--system-closebutton-size-m-width);
-    --spectrum-closebutton-size: var(--system-closebutton-size-m-size);
+:scope {
+    --spectrum-closebutton-height: var(--system-scope-closebutton-height);
+    --spectrum-closebutton-width: var(--system-scope-closebutton-width);
+    --spectrum-closebutton-size: var(--system-scope-closebutton-size);
     --spectrum-closebutton-border-radius: var(
-        --system-closebutton-size-m-border-radius
+        --system-scope-closebutton-border-radius
     );
 }
 
-:host([size='l']) {
-    --spectrum-closebutton-height: var(--system-closebutton-size-l-height);
-    --spectrum-closebutton-width: var(--system-closebutton-size-l-width);
-    --spectrum-closebutton-size: var(--system-closebutton-size-l-size);
+.spectrum-CloseButton--sizeM {
+    --spectrum-closebutton-height: var(--system-close-button-size-m-height);
+    --spectrum-closebutton-width: var(--system-close-button-size-m-width);
+    --spectrum-closebutton-size: var(--system-close-button-size-m-size);
     --spectrum-closebutton-border-radius: var(
-        --system-closebutton-size-l-border-radius
+        --system-close-button-size-m-border-radius
     );
 }
 
-:host([size='xl']) {
-    --spectrum-closebutton-height: var(--system-closebutton-size-xl-height);
-    --spectrum-closebutton-width: var(--system-closebutton-size-xl-width);
-    --spectrum-closebutton-size: var(--system-closebutton-size-xl-size);
+.spectrum-CloseButton--sizeL {
+    --spectrum-closebutton-height: var(--system-close-button-size-l-height);
+    --spectrum-closebutton-width: var(--system-close-button-size-l-width);
+    --spectrum-closebutton-size: var(--system-close-button-size-l-size);
     --spectrum-closebutton-border-radius: var(
-        --system-closebutton-size-xl-border-radius
+        --system-close-button-size-l-border-radius
+    );
+}
+
+.spectrum-CloseButton--sizeXL {
+    --spectrum-closebutton-height: var(--system-close-button-size-xl-height);
+    --spectrum-closebutton-width: var(--system-close-button-size-xl-width);
+    --spectrum-closebutton-size: var(--system-close-button-size-xl-size);
+    --spectrum-closebutton-border-radius: var(
+        --system-close-button-size-xl-border-radius
     );
 }
 
