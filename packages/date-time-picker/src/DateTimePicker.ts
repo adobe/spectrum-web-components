@@ -264,12 +264,10 @@ export class DateTimePicker extends ManageHelpText(
             this.value = this.value && toZoned(this.value, timeZone);
             this.min = this.min && toZoned(this.min, timeZone);
             this.max = this.max && toZoned(this.max, timeZone);
-            // TODO: check if they comply
         } else if (this.isCalendarDateTime(dateValue)) {
             this.value = this.value && toCalendarDateTime(this.value);
             this.min = this.min && toCalendarDateTime(this.min);
             this.max = this.max && toCalendarDateTime(this.max);
-            // TODO: check if they comply
             this.precision = 'minute';
         } else if (this.value) this.precision = 'day';
 
@@ -287,26 +285,69 @@ export class DateTimePicker extends ManageHelpText(
         this.value = undefined;
     }
 
+    private checkDatesCompliance(
+        changesValue: boolean,
+        changesMin: boolean,
+        changesMax: boolean
+    ): void {
+        if (
+            changesMax &&
+            changesMin &&
+            this.max &&
+            this.min &&
+            this.min.compare(this.max) > 0
+        ) {
+            window.__swc.warn(
+                this,
+                `<${this.localName}> expects the 'min' to be less than 'max'. Please ensure that 'min' property's date is earlier than 'max' property's date.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
+            );
+            this.min = undefined;
+            this.max = undefined;
+        }
+
+        if (changesValue && this.value) {
+            const isNonCompliant =
+                (this.min && this.value.compare(this.min) < 0) ||
+                (this.max && this.value.compare(this.max) > 0);
+
+            if (isNonCompliant) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
+                );
+                this.value = undefined;
+            }
+        }
+    }
+
     protected override willUpdate(changedProperties: PropertyValues): void {
-        if (changedProperties.has('value') && this.value === undefined) {
+        const changesValue = changedProperties.has('value');
+        const changesMin = changedProperties.has('min');
+        const changesMax = changedProperties.has('max');
+        const changesDates = changesValue || changesMin || changesMax;
+        const changesLocale = changedProperties.has(
+            languageResolverUpdatedSymbol
+        );
+        const changesPrecision = changedProperties.has('precision');
+        const shouldResetSegments =
+            changesDates ||
+            changesLocale ||
+            changesPrecision ||
+            (changesValue && this.value === undefined);
+
+        if (changesDates) this.convertToMostSpecificDateValue();
+
+        if (changesDates)
+            this.checkDatesCompliance(changesValue, changesMin, changesMax);
+
+        if (changesLocale) this.setNumberParser();
+        if (changesLocale || changesPrecision) this.setFormatter();
+        if (shouldResetSegments) {
             this.segments = [];
             this.setSegments();
         }
-
-        const haveDatesChanged =
-            changedProperties.has('value') ||
-            changedProperties.has('min') ||
-            changedProperties.has('max');
-        const hasLocaleChanged = changedProperties.has(
-            languageResolverUpdatedSymbol
-        );
-        const hasPrecisionChanged = changedProperties.has('precision');
-
-        if (hasLocaleChanged) this.setNumberParser();
-        if (haveDatesChanged) this.convertToMostSpecificDateValue();
-        if (hasLocaleChanged || hasPrecisionChanged) this.setFormatter();
-        if (haveDatesChanged || hasLocaleChanged || hasPrecisionChanged)
-            this.setSegments();
     }
 
     protected override render(): TemplateResult {

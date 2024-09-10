@@ -455,7 +455,7 @@ describe('Calendar', () => {
             max = new CalendarDate(fixedYear, fixedMonth, fixedDay + dayOffset);
         });
 
-        it('when min > max date', async () => {
+        it('when min > max date by ignoring them', async () => {
             const min = max.set({ day: max.day + 1 });
             element = await fixtureElement({
                 props: { min, max },
@@ -465,7 +465,7 @@ describe('Calendar', () => {
             expect(element.max).to.be.undefined;
         });
 
-        it("when a pre-selected value doesn't comply", async () => {
+        it("when a pre-selected value doesn't comply by ignoring it", async () => {
             const value = max.set({ day: max.day + 1 });
             element = await fixtureElement({
                 props: { min, max, value },

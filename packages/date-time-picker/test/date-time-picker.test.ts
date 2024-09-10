@@ -18,7 +18,11 @@ import {
     SegmentType,
 } from '@spectrum-web-components/date-time-picker';
 import { sendKeys } from '@web/test-runner-commands';
-import { CalendarDateTime } from '@internationalized/date';
+import {
+    CalendarDate,
+    CalendarDateTime,
+    isSameDay,
+} from '@internationalized/date';
 import {
     type EditableSegments,
     expectPlaceholder,
@@ -27,6 +31,7 @@ import {
     getEditableSegments,
     sendKeyMultipleTimes,
 } from './helpers.js';
+import { stub } from 'sinon';
 
 describe('DateTimePicker', () => {
     let element: DateTimePicker;
@@ -1536,7 +1541,7 @@ describe('DateTimePicker', () => {
             });
         });
 
-        describe.only('deleting values', () => {
+        describe('deleting values', () => {
             beforeEach(async () => {
                 const value = new CalendarDateTime(2022, 11, 15, 15, 15, 15);
                 element = await fixtureElement({
@@ -1603,9 +1608,55 @@ describe('DateTimePicker', () => {
     });
 
     describe('Manages min and max constraints', () => {
-        it('when min > max date', async () => {});
-        it("when a preselected value doesn't comply", async () => {});
-        it("by triggering the 'invalid' state when a value that doesn't comply is selected", async () => {});
+        let min: CalendarDateTime;
+        let max: CalendarDateTime;
+        const dayOffset = 5;
+
+        before(async () => {
+            min = new CalendarDateTime(
+                fixedYear,
+                fixedMonth,
+                fixedDay - dayOffset,
+                15,
+                15,
+                15
+            );
+            max = new CalendarDateTime(
+                fixedYear,
+                fixedMonth,
+                fixedDay + dayOffset,
+                15,
+                15,
+                15
+            );
+        });
+
+        it('when min > max date by ignoring them', async () => {
+            const min = max.set({ day: max.day + 1 });
+            element = await fixtureElement({
+                props: { min, max },
+            });
+
+            expect(element.min).to.be.undefined;
+            expect(element.max).to.be.undefined;
+        });
+
+        it("when a preselected value date doesn't comply by ignoring it", async () => {
+            const value = max.set({ day: max.day + 1 });
+            element = await fixtureElement({
+                props: { min, max, value },
+            });
+
+            expect(element.value).to.be.undefined;
+            expect(element.min).to.not.be.undefined;
+            expect(element.max).to.not.be.undefined;
+            expect(isSameDay(element.min!, min)).to.be.true;
+            expect(isSameDay(element.max!, max)).to.be.true;
+        });
+
+        it("by triggering the 'invalid' state when a value that doesn't comply is selected", async () => {
+            // TODO: with the Space/Enter/Blur value commit PR
+        });
     });
 
     describe('Manages multiple types', () => {
@@ -1622,8 +1673,50 @@ describe('DateTimePicker', () => {
     });
 
     describe('Warns in dev mode', () => {
-        it("when the preselected value doesn't comply", async () => {});
-        it('when min > max date', async () => {});
+        let consoleWarnStub: ReturnType<typeof stub>;
+        let max: CalendarDate;
+
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
+            max = new CalendarDate(fixedYear, fixedMonth, fixedDay + 5);
+        });
+
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+
+        after(() => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+        });
+
+        it("when the preselected value doesn't comply", async () => {
+            const value = max.set({ day: max.day + 1 });
+            element = await fixtureElement({
+                props: { max, value },
+            });
+
+            expect(consoleWarnStub.called).to.be.true;
+            const stubCall = consoleWarnStub.getCall(0);
+            expect((stubCall.args[0] as string).includes('value to comply')).to
+                .be.true;
+        });
+
+        it('when min > max date', async () => {
+            const min = max.set({ day: max.day + 1 });
+            element = await fixtureElement({
+                props: { min, max },
+            });
+
+            expect(consoleWarnStub.called).to.be.true;
+            const stubCall = consoleWarnStub.getCall(0);
+            expect(
+                (stubCall.args[0] as string).includes(
+                    "'min' to be less than 'max'"
+                )
+            ).to.be.true;
+        });
     });
 
     describe('Manages the disabled state', () => {

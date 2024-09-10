@@ -172,17 +172,11 @@ export class Calendar extends SpectrumElement {
         this.setCurrentMonthDates();
     }
 
-    override willUpdate(changedProperties: PropertyValues): void {
-        if (changedProperties.has(languageResolverUpdatedSymbol)) {
-            this.setNumberFormatter();
-            this.setWeekdays();
-            this.setCurrentMonthDates();
-        }
-
-        const changesMin = changedProperties.has('min');
-        const changesMax = changedProperties.has('max');
-        const changesValue = changedProperties.has('value');
-
+    private checkDatesCompliance(
+        changesValue: boolean,
+        changesMin: boolean,
+        changesMax: boolean
+    ): void {
         if (changesMin && this.min) this.min = toCalendarDate(this.min);
         if (changesMax && this.max) {
             this.max = toCalendarDate(this.max);
@@ -211,13 +205,29 @@ export class Calendar extends SpectrumElement {
                 this.value = undefined;
             } else this.currentDate = this.value;
         }
+    }
 
-        const previousMonth = changedProperties.get('currentDate')?.month;
-        const hasMonthChanged =
+    override willUpdate(changedProperties: PropertyValues): void {
+        if (changedProperties.has(languageResolverUpdatedSymbol)) {
+            this.setNumberFormatter();
+            this.setWeekdays();
+            this.setCurrentMonthDates();
+        }
+
+        const changesMin = changedProperties.has('min');
+        const changesMax = changedProperties.has('max');
+        const changesValue = changedProperties.has('value');
+        const changesDates = changesMin || changesMax || changesValue;
+
+        if (changesDates)
+            this.checkDatesCompliance(changesValue, changesMin, changesMax);
+
+        const previousMonth = changedProperties.get('currentDate');
+        const changesMonth =
             changedProperties.has('currentDate') &&
-            previousMonth !== this.currentDate.month;
+            (!previousMonth || !isSameMonth(previousMonth, this.currentDate));
 
-        if (hasMonthChanged) this.setCurrentMonthDates();
+        if (changesMonth) this.setCurrentMonthDates();
     }
 
     override updated(changedProperties: PropertyValues): void {
