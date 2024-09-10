@@ -268,8 +268,7 @@ export class DateTimePicker extends ManageHelpText(
             this.value = this.value && toCalendarDateTime(this.value);
             this.min = this.min && toCalendarDateTime(this.min);
             this.max = this.max && toCalendarDateTime(this.max);
-            this.precision = 'minute';
-        } else if (this.value) this.precision = 'day';
+        }
 
         if (this.value) this.currentDate = toZoned(this.value, timeZone);
     }

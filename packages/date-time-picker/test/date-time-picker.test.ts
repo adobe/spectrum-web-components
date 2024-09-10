@@ -22,6 +22,7 @@ import {
     CalendarDate,
     CalendarDateTime,
     isSameDay,
+    ZonedDateTime,
 } from '@internationalized/date';
 import {
     type EditableSegments,
@@ -1660,15 +1661,177 @@ describe('DateTimePicker', () => {
     });
 
     describe('Manages multiple types', () => {
-        it("updating precision to 'day' when no time information is given", async () => {});
-        it('by not overriding the precision if it was provided by the consumer', async () => {});
-        it('keeping the type when all types for given properties match', async () => {});
+        it("updating precision to 'day' when no time information is given", async () => {
+            // TODO: with the precision update PR
+        });
+
+        it('by not overriding the precision if it was provided by the consumer', async () => {
+            // TODO: with the precision update PR
+        });
+
+        describe('keeping the type when all types for given properties match', () => {
+            it('when the type is CalendarDate', async () => {
+                const value = new CalendarDate(fixedYear, fixedMonth, fixedDay);
+                const min = value.set({ day: value.day - 5 });
+                const max = value.set({ day: value.day + 5 });
+
+                element = await fixtureElement({
+                    props: { min, max, value },
+                });
+                await elementUpdated(element);
+
+                expect(element.value).to.be.instanceOf(CalendarDate);
+                expect(element.min).to.be.instanceOf(CalendarDate);
+                expect(element.max).to.be.instanceOf(CalendarDate);
+            });
+
+            it('when the type is CalendarDateTime', async () => {
+                const value = new CalendarDateTime(
+                    fixedYear,
+                    fixedMonth,
+                    fixedDay - 5,
+                    9,
+                    15,
+                    30
+                );
+                const min = value.set({ day: value.day - 5 });
+                const max = value.set({ day: value.day + 5 });
+
+                element = await fixtureElement({
+                    props: { min, max, value },
+                });
+
+                expect(element.value).to.be.instanceOf(CalendarDateTime);
+                expect(element.min).to.be.instanceOf(CalendarDateTime);
+                expect(element.max).to.be.instanceOf(CalendarDateTime);
+            });
+
+            it('when the type is ZonedDateTime', async () => {
+                const value = new ZonedDateTime(
+                    fixedYear,
+                    fixedMonth,
+                    fixedDay,
+                    'America/Los_Angeles',
+                    -28800000,
+                    9,
+                    15,
+                    30
+                );
+                const min = value.set({ day: value.day - 5 });
+                const max = value.set({ day: value.day + 5 });
+
+                element = await fixtureElement({
+                    props: { min, max, value },
+                });
+
+                expect(element.value).to.be.instanceOf(ZonedDateTime);
+                expect(element.min).to.be.instanceOf(ZonedDateTime);
+                expect(element.max).to.be.instanceOf(ZonedDateTime);
+            });
+        });
 
         describe('converting to the most specific type', () => {
-            it('when value and min are provided', async () => {});
-            it('when value and max are provided', async () => {});
-            it('when min and max are provided', async () => {});
-            it('when value, min and max are provided', async () => {});
+            it('when value and min are provided', async () => {
+                const value = new CalendarDate(fixedYear, fixedMonth, fixedDay);
+                const min = new CalendarDateTime(
+                    fixedYear,
+                    fixedMonth,
+                    fixedDay - 5,
+                    9,
+                    15
+                );
+
+                element = await fixtureElement({
+                    props: { min, value },
+                });
+
+                expect(element.value).to.be.instanceOf(CalendarDateTime);
+                expect(isSameDay(element.value!, value)).to.be.true;
+                expect(element.min).to.be.instanceOf(CalendarDateTime);
+                expect(element.max).to.be.undefined;
+            });
+
+            it('when value and max are provided', async () => {
+                const value = new ZonedDateTime(
+                    fixedYear,
+                    fixedMonth,
+                    fixedDay,
+                    'America/Los_Angeles',
+                    -28800000
+                );
+                const max = new CalendarDateTime(
+                    fixedYear,
+                    fixedMonth,
+                    fixedDay + 5,
+                    9,
+                    15
+                );
+
+                element = await fixtureElement({
+                    props: { max, value },
+                });
+
+                expect(element.value).to.be.instanceOf(ZonedDateTime);
+                expect(element.max).to.be.instanceOf(ZonedDateTime);
+                expect(isSameDay(element.max!, max)).to.be.true;
+                expect(element.min).to.be.undefined;
+            });
+
+            it('when min and max are provided', async () => {
+                const min = new ZonedDateTime(
+                    fixedYear,
+                    fixedMonth,
+                    fixedDay,
+                    'America/Los_Angeles',
+                    -28800000
+                );
+                const max = new CalendarDate(
+                    fixedYear,
+                    fixedMonth,
+                    fixedDay + 5
+                );
+
+                element = await fixtureElement({
+                    props: { max, min },
+                });
+
+                expect(element.min).to.be.instanceOf(ZonedDateTime);
+                expect(element.max).to.be.instanceOf(ZonedDateTime);
+                expect(isSameDay(element.max!, max)).to.be.true;
+                expect(element.value).to.be.undefined;
+            });
+
+            it('when value, min and max are provided', async () => {
+                const value = new ZonedDateTime(
+                    fixedYear,
+                    fixedMonth,
+                    fixedDay,
+                    'America/Los_Angeles',
+                    -28800000
+                );
+                const min = new CalendarDate(
+                    fixedYear,
+                    fixedMonth,
+                    fixedDay - 5
+                );
+                const max = new CalendarDateTime(
+                    fixedYear,
+                    fixedMonth,
+                    fixedDay + 5,
+                    9,
+                    15
+                );
+
+                element = await fixtureElement({
+                    props: { min, max, value },
+                });
+
+                expect(element.value).to.be.instanceOf(ZonedDateTime);
+                expect(element.min).to.be.instanceOf(ZonedDateTime);
+                expect(element.max).to.be.instanceOf(ZonedDateTime);
+                expect(isSameDay(element.min!, min)).to.be.true;
+                expect(isSameDay(element.max!, max)).to.be.true;
+            });
         });
     });
 
