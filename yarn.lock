@@ -5308,10 +5308,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-11.0.0-s2-foundations.12.tgz#f9a2b6f1467700922d40906b37c1400b851f15b1"
   integrity sha512-ogZqjig1CuC23OPv5itxqQFuU6htXKVw5z6rPkpi76R4ekJQ/fj4/JxO5PxWgfQilEHpsvTBJ9oXcK4EXWXK/w==
 
-"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.0.0-s2-foundations.18":
-  version "15.0.0-s2-foundations.18"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-15.0.0-s2-foundations.18.tgz#fa19b11414f8f18f506aa8068ae4e0b52f5c43d7"
-  integrity sha512-NMHC14JH+UC+/xohmVAqkc3NhHrXm8C+S6yQ5s7C+RFn2wFEbTIji0eRHGqGhXz2irntrYGSHOWDYRGUjoDKoQ==
+"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.0.0-s2-foundations.19":
+  version "15.0.0-s2-foundations.19"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-15.0.0-s2-foundations.19.tgz#cac7fee32ea26db3c12302effdd1effb1c8c348b"
+  integrity sha512-xIL+RzO9VoTp0KthuQsciTgqmxX6cJtmrUwWFsbbKEQX9ya7+KvhRT6KTCtQ0pv/j0Zb6mSbCJgZGa4s4T4L7Q==
 
 "@spectrum-css/tokens@^@spectrum-css/tokens@14.3.1":
   version "14.3.1"

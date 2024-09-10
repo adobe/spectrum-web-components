@@ -57,7 +57,7 @@
     );
 }
 
-.spectrum-CloseButton--sizeS {
+:host([size='s']) {
     --spectrum-closebutton-height: var(--system-close-button-size-s-height);
     --spectrum-closebutton-width: var(--system-close-button-size-s-width);
     --spectrum-closebutton-size: var(--system-close-button-size-s-size);
@@ -75,7 +75,7 @@
     );
 }
 
-.spectrum-CloseButton--sizeM {
+:host {
     --spectrum-closebutton-height: var(--system-close-button-size-m-height);
     --spectrum-closebutton-width: var(--system-close-button-size-m-width);
     --spectrum-closebutton-size: var(--system-close-button-size-m-size);
@@ -84,7 +84,7 @@
     );
 }
 
-.spectrum-CloseButton--sizeL {
+:host([size='l']) {
     --spectrum-closebutton-height: var(--system-close-button-size-l-height);
     --spectrum-closebutton-width: var(--system-close-button-size-l-width);
     --spectrum-closebutton-size: var(--system-close-button-size-l-size);
@@ -93,7 +93,7 @@
     );
 }
 
-.spectrum-CloseButton--sizeXL {
+:host([size='xl']) {
     --spectrum-closebutton-height: var(--system-close-button-size-xl-height);
     --spectrum-closebutton-width: var(--system-close-button-size-xl-width);
     --spectrum-closebutton-size: var(--system-close-button-size-xl-size);

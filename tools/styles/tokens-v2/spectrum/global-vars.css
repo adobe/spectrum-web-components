@@ -2166,35 +2166,37 @@
     --system-close-button-focus-indicator-color: var(
         --spectrum-focus-indicator-color
     );
-    --system-close-button-height: var(--spectrum-component-height-100);
-    --system-close-button-width: var(--spectrum-closebutton-height);
-    --system-close-button-size: var(--system-close-button-size-400);
-    --system-close-button-border-radius: var(--system-close-button-size-400);
     --system-close-button-animation-duration: var(
         --spectrum-animation-duration-100
     );
-    --system-closebutton-size-s-height: var(--spectrum-component-height-75);
-    --system-closebutton-size-s-width: var(--spectrum-closebutton-height);
-    --system-closebutton-size-s-size: var(--system-close-button-size-300);
-    --system-closebutton-size-s-border-radius: var(
+    --system-close-button-size-s-height: var(--spectrum-component-height-75);
+    --system-close-button-size-s-width: var(--spectrum-component-height-75);
+    --system-close-button-size-s-size: var(--system-close-button-size-300);
+    --system-close-button-size-s-border-radius: var(
         --system-close-button-size-300
     );
-    --system-closebutton-size-m-height: var(--spectrum-component-height-100);
-    --system-closebutton-size-m-width: var(--spectrum-closebutton-height);
-    --system-closebutton-size-m-size: var(--system-close-button-size-400);
-    --system-closebutton-size-m-border-radius: var(
+    --system-scope-closebutton-height: var(--spectrum-component-height-100);
+    --system-close-button-size-m-height: var(--spectrum-component-height-100);
+    --system-scope-closebutton-width: var(--spectrum-component-height-100);
+    --system-close-button-size-m-width: var(--spectrum-component-height-100);
+    --system-scope-closebutton-size: var(--system-close-button-size-400);
+    --system-close-button-size-m-size: var(--system-close-button-size-400);
+    --system-scope-closebutton-border-radius: var(
         --system-close-button-size-400
     );
-    --system-closebutton-size-l-height: var(--spectrum-component-height-200);
-    --system-closebutton-size-l-width: var(--spectrum-closebutton-height);
-    --system-closebutton-size-l-size: var(--system-close-button-size-500);
-    --system-closebutton-size-l-border-radius: var(
+    --system-close-button-size-m-border-radius: var(
+        --system-close-button-size-400
+    );
+    --system-close-button-size-l-height: var(--spectrum-component-height-200);
+    --system-close-button-size-l-width: var(--spectrum-component-height-200);
+    --system-close-button-size-l-size: var(--system-close-button-size-500);
+    --system-close-button-size-l-border-radius: var(
         --system-close-button-size-500
     );
-    --system-closebutton-size-xl-height: var(--spectrum-component-height-300);
-    --system-closebutton-size-xl-width: var(--spectrum-closebutton-height);
-    --system-closebutton-size-xl-size: var(--system-close-button-size-600);
-    --system-closebutton-size-xl-border-radius: var(
+    --system-close-button-size-xl-height: var(--spectrum-component-height-300);
+    --system-close-button-size-xl-width: var(--spectrum-component-height-300);
+    --system-close-button-size-xl-size: var(--system-close-button-size-600);
+    --system-close-button-size-xl-border-radius: var(
         --system-close-button-size-600
     );
     --system-close-button-static-white-static-background-color-default: transparent;
@@ -2354,7 +2356,12 @@
     --system-color-area-border-radius: var(
         --spectrum-color-area-border-rounding
     );
-    --system-color-area-border-color: rgba(0, 0, 0, 0.1);
+    --system-color-area-border-color-rgb: 0, 0, 0;
+    --system-color-area-border-color-opacity: 10;
+    --system-color-area-border-color: rgba(
+        var(--system-color-area-border-color-rgb),
+        var(--system-color-area-border-color-opacity)
+    );
     --system-color-area-disabled-background-color: var(
         --spectrum-disabled-background-color
     );
@@ -4791,6 +4798,7 @@
     );
     --system-slider-value-side-padding-inline: var(--spectrum-spacing-200);
     --system-slider-value-inline-size: 18px;
+    --system-slider-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
     --system-slider-dir-rtl-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
     --system-slider-size-s-font-size: var(--spectrum-font-size-75);
     --system-slider-size-s-handle-size: var(
@@ -5170,7 +5178,12 @@
 :host,
 :root {
     --system-swatch-focus-indicator-border-radius: 8px;
-    --system-swatch-icon-border-color: rgba(0, 0, 0, 0.51);
+    --system-swatch-icon-border-color-rgb: 0, 0, 0;
+    --system-swatch-icon-border-color-opacity: 51;
+    --system-swatch-icon-border-color: rgba(
+        var(--system-swatch-icon-border-color-rgb),
+        var(--system-swatch-icon-border-color-opacity)
+    );
     --system-swatch-size: var(--spectrum-swatch-size-small);
     --system-swatch-border-radius: var(--spectrum-corner-radius-100);
     --system-swatch-border-thickness: var(--spectrum-border-width-100);
