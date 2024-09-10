@@ -132,7 +132,7 @@ export class DateTimePicker extends ManageHelpText(
     /**
      * The granularity used to display the segments of the component's value
      */
-    @property()
+    @property({ type: String, reflect: true })
     precision: Precision = 'minute';
 
     /**
@@ -222,9 +222,7 @@ export class DateTimePicker extends ManageHelpText(
 
     private get includesTime(): boolean {
         const timePrecisions = ['hour', 'minute', 'second'] as Precision[];
-        return Boolean(
-            this.precision && timePrecisions.includes(this.precision)
-        );
+        return timePrecisions.includes(this.precision);
     }
 
     private isZonedDateTime(date: DateValue): date is ZonedDateTime {

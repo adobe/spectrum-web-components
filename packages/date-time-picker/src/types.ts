@@ -38,7 +38,7 @@ export const SegmentPlaceholders: Readonly<
 };
 
 export type SegmentPlaceholder =
-    typeof SegmentPlaceholders[EditableSegmentType];
+    (typeof SegmentPlaceholders)[EditableSegmentType];
 
 export interface Segment {
     type: SegmentType;

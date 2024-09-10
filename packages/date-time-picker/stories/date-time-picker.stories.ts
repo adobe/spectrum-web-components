@@ -54,7 +54,7 @@ const storyMeta = {
     title: 'DateTimePicker',
     component: 'sp-date-time-picker',
     args: {
-        precision: 'minute',
+        precision: undefined,
         disabled: false,
         readonly: false,
         quiet: false,
