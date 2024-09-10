@@ -1600,11 +1600,23 @@ describe('DateTimePicker', () => {
     });
 
     describe('Correctly dispatches the change event', () => {
-        it('when all segments have a value', async () => {});
-        it("when segments' value changes", async () => {});
-        it("when a segment's value is deleted", async () => {
-            // As per React Spectrum it should send one change event when the change that made the
-            // date incomplete is made and none after that until the date is complete again
+        describe('the change event', () => {
+            it('when all segments have a value for the first time', async () => {});
+            it("when segments' value changes and user commits", async () => {});
+            it("when a segment's value is deleted", async () => {
+                // As per React Spectrum it should send one change event when the change that made the
+                // date incomplete is made and none after that until the date is complete again
+            });
+        });
+
+        describe('the input event', () => {
+            it("when a segment's value changes through typing on an existing value", async () => {});
+
+            it("when a segment's value changes through typing on an empty value", async () => {});
+
+            it("when a segment's value changes through incrementing/decrementing on an existing value", async () => {});
+
+            it("when a segment's value changes through incrementing/decrementing on an empty value", async () => {});
         });
     });
 
@@ -1655,7 +1667,7 @@ describe('DateTimePicker', () => {
             expect(isSameDay(element.max!, max)).to.be.true;
         });
 
-        it("by triggering the 'invalid' state when a value that doesn't comply is selected", async () => {
+        it("by triggering the 'invalid' state when a value that doesn't comply is commited", async () => {
             // TODO: with the Space/Enter/Blur value commit PR
         });
     });
