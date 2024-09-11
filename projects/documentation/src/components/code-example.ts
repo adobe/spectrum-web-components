@@ -175,7 +175,9 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
 
     private shouldManageTabOrderForScrolling = (): void => {
         [this.markup, this.demo].map((el) => {
-            if (!el) return;
+            if (!el) {
+                return;
+            }
             const { offsetWidth, scrollWidth } = el;
             if (offsetWidth < scrollWidth) {
                 el.tabIndex = 0;
