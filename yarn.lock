@@ -5425,10 +5425,10 @@
   languageName: node
   linkType: hard
 
-"@spectrum-css/toast@^10.1.0":
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-10.1.0.tgz#07e397d18ec1c7d9c919e8aae464686862b91f47"
-  integrity sha512-TxkSE8ZvmIj80oCuPRbWHxJQna0/PeowjfXBrHBoKT7pJKF9LfWD2K+AIHwNVYJfaGCPJxsRlZUsldL7PmzfJw==
+"@spectrum-css/toast@^10.2.0":
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-10.2.0.tgz#70e7e3103a48e909b85b2412c3ad00b2df1b1ac7"
+  integrity sha512-cXfj8ggl7bEF7SDkpwnbyrS0uzRmraDwA4mbJxNKda32eO5luy/PPrulE4btm2/N/RpJ7f+pS3E2QuAQ67i90g==
 
 "@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@^14.0.0-next.3":
   version: 14.0.0-next.3
@@ -5500,7 +5500,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.47.0"
+  version "0.47.2"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"
