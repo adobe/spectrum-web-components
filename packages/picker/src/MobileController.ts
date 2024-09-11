@@ -27,15 +27,20 @@ export class MobileController extends InteractionController {
 
     public override handlePointerdown(): void {
         this.preventNextToggle = this.open ? 'yes' : 'no';
+        if (isWebKit()) {
+            this.target.classList.add('remove-focus-ring-safari-hack');
+        }
     }
 
-    public override handleButtonFocus(event: FocusEvent): void {
-        super.handleButtonFocus(event);
-
-        // if the focus comes from a closing the menu, we need to make sure to
-        // unset the :focus-visible state to avoid the focus ring on safari mobile
-        if (isWebKit() && !this.open) {
-            this.target.blur();
+    private handleFocusOut(): void {
+        if (this.host.open) {
+            return;
+        }
+        if (
+            isWebKit() &&
+            this.target.classList.contains('remove-focus-ring-safari-hack')
+        ) {
+            this.target.classList.remove('remove-focus-ring-safari-hack');
         }
     }
 
@@ -52,12 +57,8 @@ export class MobileController extends InteractionController {
             () => this.handlePointerdown(),
             { signal }
         );
-        this.target.addEventListener(
-            'focus',
-            (event: FocusEvent) => this.handleButtonFocus(event),
-            {
-                signal,
-            }
-        );
+        this.target.addEventListener('focusout', () => this.handleFocusOut(), {
+            signal,
+        });
     }
 }
