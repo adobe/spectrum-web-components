@@ -110,6 +110,14 @@ export const Negative = (args: Properties): TemplateResult =>
 export const Info = (args: Properties): TemplateResult =>
     variantDemo({ ...args, variant: 'info' });
 
+export const Wrapping = (args: Properties): TemplateResult =>
+    variantDemo({
+        ...args,
+        variant: 'info',
+        content:
+            'A new version of Lightroom Classic is now available. Use the Update button below to start using the new version.',
+    });
+
 const overlayStyles = html`
     <style>
         html,
