@@ -136,6 +136,9 @@
     --spectrum-actionbutton-edge-to-visual-size: var(
         --system-action-button-edge-to-visual-size
     );
+    --spectrum-actionbutton-edge-to-text-size: var(
+        --system-action-button-edge-to-text-size
+    );
 }
 
 :host([quiet]) {
@@ -212,6 +215,9 @@
     --spectrum-actionbutton-edge-to-visual-size: var(
         --system-action-button-size-xs-edge-to-visual-size
     );
+    --spectrum-actionbutton-edge-to-text-size: var(
+        --system-action-button-size-xs-edge-to-text-size
+    );
 }
 
 :host([size='s']) {
@@ -233,6 +239,9 @@
     );
     --spectrum-actionbutton-edge-to-visual-size: var(
         --system-action-button-size-s-edge-to-visual-size
+    );
+    --spectrum-actionbutton-edge-to-text-size: var(
+        --system-action-button-size-s-edge-to-text-size
     );
 }
 
@@ -256,6 +265,9 @@
     --spectrum-actionbutton-edge-to-visual-size: var(
         --system-action-button-size-m-edge-to-visual-size
     );
+    --spectrum-actionbutton-edge-to-text-size: var(
+        --system-action-button-size-m-edge-to-text-size
+    );
 }
 
 :host([size='l']) {
@@ -278,6 +290,9 @@
     --spectrum-actionbutton-edge-to-visual-size: var(
         --system-action-button-size-l-edge-to-visual-size
     );
+    --spectrum-actionbutton-edge-to-text-size: var(
+        --system-action-button-size-l-edge-to-text-size
+    );
 }
 
 :host([size='xl']) {
@@ -299,6 +314,9 @@
     );
     --spectrum-actionbutton-edge-to-visual-size: var(
         --system-action-button-size-xl-edge-to-visual-size
+    );
+    --spectrum-actionbutton-edge-to-text-size: var(
+        --system-action-button-size-xl-edge-to-text-size
     );
 }
 
