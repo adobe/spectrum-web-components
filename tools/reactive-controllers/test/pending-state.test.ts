@@ -16,7 +16,7 @@ import {
     HostWithPendingState,
     PendingStateController,
 } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
-import sinon from 'sinon';
+
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 
@@ -31,14 +31,19 @@ describe('PendingStateController', () => {
         controller = host.pendingStateController;
     });
 
-    afterEach(() => {
-        sinon.restore();
-    });
-
     describe('renderPendingState', () => {
         it('should change aria-label of host when pending and when not pending', async () => {
+            host = await fixture<HostWithPendingState>(html`
+                <sp-picker aria-label="clickable"></sp-picker>
+            `);
+            controller = host.pendingStateController;
             await host.updateComplete;
             let ariaLabel = host.getAttribute('aria-label');
+            expect(ariaLabel).to.equal('clickable');
+            host.setAttribute('pending', 'true');
+
+            await host.updateComplete;
+            ariaLabel = host.getAttribute('aria-label');
             expect(ariaLabel).to.equal('Pending');
 
             host.removeAttribute('pending');
@@ -104,6 +109,7 @@ describe('PendingStateController', () => {
 
                 expect(renderedAttr.value === expectedAttr?.value).to.be.true;
             }
+            expect(host.pending).to.be.true;
         });
 
         it('should toggle the pending state on and off and preserve the component state correctly', async () => {
