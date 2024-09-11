@@ -43,10 +43,13 @@ export type SegmentPlaceholder =
 export interface Segment {
     type: SegmentType;
     formatted: string;
-    placeholder?: SegmentPlaceholder;
+}
+
+export interface EditableSegment extends Segment {
+    placeholder: SegmentPlaceholder;
     value?: number;
-    minValue?: number;
-    maxValue?: number;
+    minValue: number;
+    maxValue: number;
 }
 
 export const DateSegmentTypes = {
@@ -71,7 +74,7 @@ export const TimeSegmentTypes = {
  * Value and limits of a segment. They are all optional, as literal segments have none of these properties
  */
 export type SegmentValueAndLimits = Pick<
-    Segment,
+    EditableSegment,
     'value' | 'minValue' | 'maxValue'
 >;
 
