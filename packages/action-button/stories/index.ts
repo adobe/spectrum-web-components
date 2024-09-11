@@ -26,7 +26,7 @@ export interface Properties {
     toggles?: boolean;
     emphasized?: boolean;
     size?: 's' | 'm' | 'l' | 'xl';
-    variant?: 'white' | 'black';
+    staticProp?: 'white' | 'black';
     holdAffordance?: boolean;
     icon?: TemplateResult;
     label?: string;
@@ -38,7 +38,7 @@ export function renderButton(properties: Properties): TemplateResult {
         <sp-action-button
             ?quiet="${!!properties.quiet}"
             ?emphasized="${!!properties.emphasized}"
-            static="${ifDefined(properties.variant)}"
+            static="${ifDefined(properties.staticProp)}"
             ?disabled=${!!properties.disabled}
             ?selected=${!!properties.selected}
             ?toggles=${!!properties.toggles}
