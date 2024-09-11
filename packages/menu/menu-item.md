@@ -1,8 +1,8 @@
-## Description
+## Overview
 
 For use within an `<sp-menu>` element, an `<sp-menu-item>` represents a single item in a menu.
 
-## Usage
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/menu?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/menu)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/menu?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/menu)
@@ -127,24 +127,6 @@ Content assigned to the `value` slot will be placed at the end of the `<sp-menu-
 </sp-menu>
 ```
 
-Note: While `sp-menu-item` can accommodate any custom content in the `submenu` slot, it will not handle selection or keyboard navigation for such content. To ensure proper management of selection and keyboard navigation, it is recommended to use `sp-menu` within the `submenu` slot```
-
-```html
-<sp-menu style="width: 200px;">
-    <sp-menu-item>
-        Item with arbitrary content in submenu
-        <div role="menuitem" slot="submenu" style="padding: 12px">
-            <img
-                src="https://placekitten.com/200/200"
-                alt="Kitten"
-                style="width: 100%; height: auto; border-radius: 4px"
-            />
-            <p>I am an arbitrary content in submenu</p>
-        </div>
-    </sp-menu-item>
-</sp-menu>
-```
-
 #### Value attribute
 
 When displayed as a descendent of an element that manages selection (e.g. `<sp-action-menu>`, `<sp-picker>`, `<sp-split-button>`, etc.), an `<sp-menu-item>` will represent the "selected" value of that ancestor when its `value` attribute or the trimmed `textContent` (represeted by `el.itemText`) matches the `value` of the ancestor element.
@@ -238,6 +220,24 @@ An `<sp-menu-item>` can also accept content addressed to its `"submenu"` slot. A
             <sp-menu-item>Additional options</sp-menu-item>
             <sp-menu-item>Available on request</sp-menu-item>
         </sp-menu>
+    </sp-menu-item>
+</sp-menu>
+```
+
+Note: While `sp-menu-item` can accommodate any custom content in the `submenu` slot, it will not handle selection or keyboard navigation for such content. To ensure proper management of selection and keyboard navigation, it is recommended to use `sp-menu` within the `submenu` slot```
+
+```html
+<sp-menu style="width: 200px;">
+    <sp-menu-item>
+        Item with arbitrary content in submenu
+        <div role="menuitem" slot="submenu" style="padding: 12px">
+            <img
+                src="https://placekitten.com/200/200"
+                alt="Kitten"
+                style="width: 100%; height: auto; border-radius: 4px"
+            />
+            <p>I am an arbitrary content in submenu</p>
+        </div>
     </sp-menu-item>
 </sp-menu>
 ```
