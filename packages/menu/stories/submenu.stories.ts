@@ -368,3 +368,26 @@ export const contextMenu = (): TemplateResult => {
         </sp-overlay>
     `;
 };
+
+export const customRootSubmenu = (): TemplateResult => {
+    return html`
+        <sp-action-menu label="More Actions">
+            <sp-menu-item>Bronx</sp-menu-item>
+            <sp-menu-item id="submenu-item-1">
+                Brooklyn
+                <div role="menuitem" slot="submenu" style="padding: 12px">
+                    <img
+                        src="https://placekitten.com/200/200"
+                        alt="Kitten"
+                        style="width: 100%; height: auto; border-radius: 4px"
+                    />
+                    <p>I am an arbitrary content in submenu</p>
+                </div>
+            </sp-menu-item>
+        </sp-action-menu>
+    `;
+};
+
+customRootSubmenu.swc_vrt = {
+    skip: true,
+};

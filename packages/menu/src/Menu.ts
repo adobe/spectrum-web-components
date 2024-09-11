@@ -375,7 +375,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }) as MenuItem;
         if (event.defaultPrevented) {
             const index = this.childItems.indexOf(target);
-            if (target?.menuData.focusRoot === this && index > -1) {
+            if (target?.menuData?.focusRoot === this && index > -1) {
                 this.focusedItemIndex = index;
             }
             return;
@@ -391,7 +391,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             );
             return;
         } else if (
-            target?.menuData.selectionRoot === this &&
+            target?.menuData?.selectionRoot === this &&
             this.childItems.length
         ) {
             event.preventDefault();
