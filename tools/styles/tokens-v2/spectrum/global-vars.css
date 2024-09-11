@@ -393,6 +393,9 @@
     --system-action-button-size-xs-edge-to-visual-size: var(
         --spectrum-component-edge-to-visual-50
     );
+    --system-action-button-size-xs-edge-to-text-size: var(
+        --spectrum-component-edge-to-text-50
+    );
     --system-action-button-size-s-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-75) * 2 +
             var(--spectrum-workflow-icon-size-75)
@@ -410,6 +413,9 @@
     );
     --system-action-button-size-s-edge-to-visual-size: var(
         --spectrum-component-edge-to-visual-75
+    );
+    --system-action-button-size-s-edge-to-text-size: var(
+        --spectrum-component-edge-to-text-75
     );
     --system-action-button-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-100) * 2 +
@@ -443,6 +449,12 @@
     --system-action-button-size-m-edge-to-visual-size: var(
         --spectrum-component-edge-to-visual-100
     );
+    --system-action-button-edge-to-text-size: var(
+        --spectrum-component-edge-to-text-100
+    );
+    --system-action-button-size-m-edge-to-text-size: var(
+        --spectrum-component-edge-to-text-100
+    );
     --system-action-button-size-l-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-200) * 2 +
             var(--spectrum-workflow-icon-size-200)
@@ -461,6 +473,9 @@
     --system-action-button-size-l-edge-to-visual-size: var(
         --spectrum-component-edge-to-visual-200
     );
+    --system-action-button-size-l-edge-to-text-size: var(
+        --spectrum-component-edge-to-text-200
+    );
     --system-action-button-size-xl-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-300) * 2 +
             var(--spectrum-workflow-icon-size-300)
@@ -478,6 +493,9 @@
     );
     --system-action-button-size-xl-edge-to-visual-size: var(
         --spectrum-component-edge-to-visual-300
+    );
+    --system-action-button-size-xl-edge-to-text-size: var(
+        --spectrum-component-edge-to-text-300
     );
     --system-action-button-static-black-background-color-default: transparent;
     --system-action-button-static-black-background-color-hover: var(
@@ -663,7 +681,7 @@
 
 :host,
 :root {
-    --system-alert-banner-netural-background: var(
+    --system-alert-banner-neutral-background: var(
         --spectrum-neutral-subdued-background-color-default
     );
     --system-alert-banner-min-height: var(
@@ -1179,10 +1197,10 @@
     --system-button-primary-border-color-hover: transparent;
     --system-button-primary-border-color-down: transparent;
     --system-button-primary-border-color-focus: transparent;
-    --system-button-primary-content-color-default: var(--spectrum-white);
-    --system-button-primary-content-color-hover: var(--spectrum-white);
-    --system-button-primary-content-color-down: var(--spectrum-white);
-    --system-button-primary-content-color-focus: var(--spectrum-white);
+    --system-button-primary-content-color-default: var(--spectrum-gray-25);
+    --system-button-primary-content-color-hover: var(--spectrum-gray-25);
+    --system-button-primary-content-color-down: var(--spectrum-gray-25);
+    --system-button-primary-content-color-focus: var(--spectrum-gray-25);
     --system-button-primary-background-color-disabled: var(
         --spectrum-disabled-background-color
     );
@@ -3115,12 +3133,13 @@
 
 :host,
 :root {
-    --system-icon-size: var(--spectrum-workflow-icon-size-100);
-    --system-icon-size-xxs-size: var(--spectrum-workflow-icon-size-xxs);
-    --system-icon-size-xs-size: var(--spectrum-workflow-icon-size-50);
-    --system-icon-size-s-size: var(--spectrum-workflow-icon-size-75);
-    --system-icon-size-l-size: var(--spectrum-workflow-icon-size-200);
-    --system-icon-size-xl-size: var(--spectrum-workflow-icon-size-300);
+    --system-icon-size-xxs: var(--spectrum-workflow-icon-size-xxs);
+    --system-icon-size-xs: var(--spectrum-workflow-icon-size-50);
+    --system-icon-size-s: var(--spectrum-workflow-icon-size-75);
+    --system-icon-size-m: var(--spectrum-workflow-icon-size-100);
+    --system-icon-size-l: var(--spectrum-workflow-icon-size-200);
+    --system-icon-size-xl: var(--spectrum-workflow-icon-size-300);
+    --system-icon-size-xxl: var(--spectrum-workflow-icon-size-xxl);
     --system-ui-icon-chevron-right-50-icon-size: var(
         --spectrum-chevron-icon-size-50
     );
@@ -3832,7 +3851,7 @@
     --system-modal-fullscreen-margin: 32px;
     --system-modal-max-height: 90vh;
     --system-modal-max-width: 90%;
-    --system-modal-background-color: var(--spectrum-gray-75);
+    --system-modal-background-color: var(--spectrum-background-layer-2-color);
     --system-modal-confirm-border-radius: var(--spectrum-corner-radius-100);
     --system-modal-confirm-exit-animation-duration: var(
         --spectrum-animation-duration-100
