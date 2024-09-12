@@ -134,46 +134,7 @@ const processTypography = async (
     fs.writeFileSync(fontPath, result, 'utf8');
 };
 
-// where is spectrum-css?
-// TODO: use resolve package to find node_modules
-// TODO: we need to revisit whether we need these
-const spectrumPaths = [
-    // Spectrum 1
-    path.resolve(
-        path.join(
-            __dirname,
-            '..',
-            'node_modules',
-            '@spectrum-css',
-            'vars',
-            'dist'
-        )
-    ),
-    // Spectrum 2 (same source as Spectrum 1)
-    path.resolve(
-        path.join(
-            __dirname,
-            '..',
-            'node_modules',
-            '@spectrum-css',
-            'vars',
-            'dist'
-        )
-    ),
-    // Express
-    path.resolve(
-        path.join(
-            __dirname,
-            '..',
-            'node_modules',
-            '@spectrum-css',
-            'expressvars',
-            'dist'
-        )
-    ),
-];
-
-// sources to use from spectrum-css
+const systems = ['spectrum', 'spectrum-two', 'express'];
 const themes = ['lightest', 'light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const cores = ['global'];
@@ -181,22 +142,20 @@ const processes = [];
 
 const foundVars = await findUsedVars();
 
-spectrumPaths.forEach((spectrumPath, i) => {
+systems.forEach((system) => {
+    const varsPackage = system === 'express' ? 'expressvars' : 'vars';
+    const varsPath = path
+        .dirname(import.meta.resolve(`@spectrum-css/${varsPackage}`))
+        .replace(/^file:/, '');
     const packageDir = ['styles'];
-    const isSpectrum1 = i === 0;
-    const isSpectrum2 = i === 1;
-    const isExpress = i === 2;
-    if (isSpectrum2) {
-        packageDir.push('spectrum-two');
-    }
-    if (isExpress) {
-        packageDir.push('express');
+    if (system !== 'spectrum') {
+        packageDir.push(system);
     }
     themes.forEach((theme) => {
-        if (!isSpectrum1 && ['lightest', 'darkest'].includes(theme)) {
+        if (system !== 'spectrum' && ['lightest', 'darkest'].includes(theme)) {
             return;
         }
-        const srcPath = path.join(spectrumPath, `spectrum-${theme}.css`);
+        const srcPath = path.join(varsPath, `spectrum-${theme}.css`);
         const dstPath = path.resolve(
             path.join(
                 __dirname,
@@ -212,7 +171,7 @@ spectrumPaths.forEach((spectrumPath, i) => {
     });
 
     scales.forEach((scale) => {
-        const srcPath = path.join(spectrumPath, `spectrum-${scale}.css`);
+        const srcPath = path.join(varsPath, `spectrum-${scale}.css`);
         const dstPath = path.resolve(
             path.join(
                 __dirname,
@@ -229,7 +188,7 @@ spectrumPaths.forEach((spectrumPath, i) => {
     });
 
     cores.forEach((core) => {
-        const srcPath = path.join(spectrumPath, `spectrum-${core}.css`);
+        const srcPath = path.join(varsPath, `spectrum-${core}.css`);
         const dstPath = path.resolve(
             path.join(
                 __dirname,
