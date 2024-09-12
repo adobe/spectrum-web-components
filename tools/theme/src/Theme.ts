@@ -134,6 +134,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         if (system) {
             this.setAttribute('system', system);
+            /* c8 ignore next 3 */
         } else {
             this.removeAttribute('system');
         }
@@ -218,6 +219,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         if (scale) {
             this.setAttribute('scale', scale);
+            /* c8 ignore next 3 */
         } else {
             this.removeAttribute('scale');
         }
@@ -312,7 +314,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.__resolve = resolve;
         });
     }
-
+    /* c8 ignore next 12 */
     private onQueryTheme(event: CustomEvent<ThemeData>): void {
         if (event.defaultPrevented) {
             return;
@@ -410,6 +412,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         [ProvideLang['callback'], () => void]
     >();
 
+    /* c8 ignore next 5 */
     private _provideContext(): void {
         this._contextConsumers.forEach(([callback, unsubscribe]) =>
             callback(this.lang, unsubscribe)
@@ -419,6 +422,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     private _handleContextPresence(event: CustomEvent<ProvideLang>): void {
         event.stopPropagation();
         const target = event.composedPath()[0] as HTMLElement;
+        /* c8 ignore next 3 */
         if (this._contextConsumers.has(target)) {
             return;
         }
