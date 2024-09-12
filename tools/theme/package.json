@@ -42,10 +42,6 @@
         "./src/theme-dark.css.js": "./src/theme-dark.css.js",
         "./src/theme-darkest-core-tokens.css.js": "./src/theme-darkest-core-tokens.css.js",
         "./src/theme-darkest.css.js": "./src/theme-darkest.css.js",
-        "./src/theme-debug-utils.js": {
-            "development": "./src/theme-debug-utils.dev.js",
-            "default": "./src/theme-debug-utils.js"
-        },
         "./src/theme-interfaces.js": {
             "development": "./src/theme-interfaces.dev.js",
             "default": "./src/theme-interfaces.js"
