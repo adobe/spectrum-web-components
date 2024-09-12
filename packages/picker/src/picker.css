@@ -114,29 +114,3 @@ sp-menu {
 sp-overlay:not(:defined) {
     display: none;
 }
-
-/* cascade pickers's size to its icon */
-
-:host {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
-}
-
-:host([size='xs']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-50);
-}
-
-:host([size='s']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
-}
-
-:host([size='l']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-200);
-}
-
-:host([size='xl']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-300);
-}
-
-:host([size='xxl']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-400);
-}
