@@ -50,7 +50,7 @@ sets the :focus-visible pseudo class on the parent element when the dialog is cl
     );
 }
 
-:host(.remove-focus-ring-safari-hack:focus-visible)::after {
+:host(.remove-focus-ring-safari-hack:focus-visible):after {
     box-shadow: none;
 }
 
