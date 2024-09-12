@@ -111,7 +111,7 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
     }
 
-    :host([selected]):not(:disabled) {
+    :host([selected]:not(:disabled)) {
         --highcontrast-actionbutton-background-color-default: Highlight;
         --highcontrast-actionbutton-background-color-hover: Highlight;
         --highcontrast-actionbutton-background-color-focus: Highlight;
@@ -129,9 +129,9 @@ governing permissions and limitations under the License.
         --highcontrast-actionbutton-content-color-disabled: GrayText;
     }
 
-    :host([selected]):not(:disabled) .hold-affordance,
-    :host([selected]):not(:disabled) ::slotted([slot='icon']),
-    :host([selected]):not(:disabled) #label {
+    :host([selected]:not(:disabled)) .hold-affordance,
+    :host([selected]:not(:disabled)) ::slotted([slot='icon']),
+    :host([selected]:not(:disabled)) #label {
         forced-color-adjust: none;
     }
 }
@@ -290,7 +290,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([selected]):not(:disabled) {
+:host([selected]:not(:disabled)) {
     --spectrum-actionbutton-background-color-default: var(
         --mod-actionbutton-background-color-default-selected,
         var(--spectrum-actionbutton-background-color-default-selected)
@@ -368,7 +368,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([emphasized][selected]):not(:disabled) {
+:host([emphasized][selected]:not(:disabled)) {
     --mod-actionbutton-background-color-default: var(
         --mod-actionbutton-background-color-default-selected-emphasized,
         var(
@@ -405,7 +405,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='black'][selected]):not(:disabled) {
+:host([static='black'][selected]:not(:disabled)) {
     --spectrum-actionbutton-content-color-default: var(
         --mod-actionbutton-static-content-color,
         var(--spectrum-actionbutton-static-black-content-color)
@@ -424,7 +424,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='white'][selected]):not(:disabled) {
+:host([static='white'][selected]:not(:disabled)) {
     --spectrum-actionbutton-content-color-default: var(
         --mod-actionbutton-static-content-color,
         var(--spectrum-actionbutton-static-white-content-color)
