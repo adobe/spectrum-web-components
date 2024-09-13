@@ -24,13 +24,17 @@ governing permissions and limitations under the License.
 
 :host {
     box-sizing: border-box;
+    min-block-size: var(
+        --mod-toast-block-size,
+        var(--spectrum-toast-block-size)
+    );
     max-inline-size: var(
         --mod-toast-max-inline-size,
         var(--spectrum-toast-max-inline-size)
     );
-    min-block-size: var(
-        --mod-toast-block-size,
-        var(--spectrum-toast-block-size)
+    border-radius: var(
+        --mod-toast-corner-radius,
+        var(--spectrum-toast-corner-radius)
     );
     font-size: var(--mod-toast-font-size, var(--spectrum-toast-font-size));
     font-weight: var(
@@ -38,13 +42,6 @@ governing permissions and limitations under the License.
         var(--spectrum-toast-font-weight)
     );
     -webkit-font-smoothing: antialiased;
-    color: var(
-        --highcontrast-toast-background-color-default,
-        var(
-            --mod-toast-background-color-default,
-            var(--spectrum-toast-background-color-default)
-        )
-    );
     background-color: var(
         --highcontrast-toast-background-color-default,
         var(
@@ -52,10 +49,14 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-background-color-default)
         )
     );
-    border-radius: var(
-        --mod-toast-corner-radius,
-        var(--spectrum-toast-corner-radius)
+    color: var(
+        --highcontrast-toast-background-color-default,
+        var(
+            --mod-toast-background-color-default,
+            var(--spectrum-toast-background-color-default)
+        )
     );
+    overflow-wrap: anywhere;
     flex-direction: row;
     align-items: stretch;
     padding-inline-start: var(
@@ -248,7 +249,8 @@ governing permissions and limitations under the License.
     );
 }
 
-.body ::slotted([slot='action']:dir(rtl)) {
+.body ::slotted([slot='action']:dir(rtl)),
+:host([dir='rtl']) .body ::slotted([slot='action']) {
     margin-inline-end: var(
         --mod-toast-spacing-text-and-action-button-to-divider,
         var(--spectrum-toast-spacing-text-and-action-button-to-divider)

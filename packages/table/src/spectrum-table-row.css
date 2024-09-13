@@ -121,8 +121,6 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    cursor: pointer;
-    cursor: var(--mod-table-cursor-row-default, pointer);
     transition: background-color
         var(
             --highcontrast-table-transition-duration,
@@ -132,6 +130,8 @@ governing permissions and limitations under the License.
             )
         )
         ease-in-out;
+    cursor: pointer;
+    cursor: var(--mod-table-cursor-row-default, pointer);
     border-block-start: none;
     position: relative;
 }
@@ -244,17 +244,17 @@ governing permissions and limitations under the License.
         --highcontrast-table-focus-indicator-color,
         transparent
     );
+    outline-width: var(
+        --mod-table-focus-indicator-thickness,
+        var(--spectrum-table-focus-indicator-thickness)
+    );
+    outline-style: solid;
     outline-color: var(
         --highcontrast-table-focus-indicator-color,
         var(
             --mod-table-drop-zone-outline-color,
             var(--spectrum-table-drop-zone-outline-color)
         )
-    );
-    outline-style: solid;
-    outline-width: var(
-        --mod-table-focus-indicator-thickness,
-        var(--spectrum-table-focus-indicator-thickness)
     );
     outline-offset: calc(
         var(
@@ -285,17 +285,17 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Table-row--summary ::slotted(*) {
-    font-family: var(
-        --mod-table-summary-row-font-family,
-        var(--spectrum-table-row-font-family)
+    font-weight: var(
+        --mod-table-summary-row-font-weight,
+        var(--spectrum-table-summary-row-font-weight)
     );
     font-size: var(
         --mod-table-summary-row-font-size,
         var(--spectrum-table-row-font-size)
     );
-    font-weight: var(
-        --mod-table-summary-row-font-weight,
-        var(--spectrum-table-summary-row-font-weight)
+    font-family: var(
+        --mod-table-summary-row-font-family,
+        var(--spectrum-table-row-font-family)
     );
     font-style: var(
         --mod-table-summary-row-font-style,
@@ -327,21 +327,22 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Table-row--sectionHeader ::slotted(*) {
+    font-weight: var(
+        --mod-table-section-header-font-weight,
+        var(--spectrum-table-section-header-font-weight)
+    );
+    text-align: start;
     block-size: var(
         --mod-table-section-header-min-height,
         var(--spectrum-table-section-header-min-height)
-    );
-    font-family: var(
-        --mod-table-section-header-font-family,
-        var(--spectrum-table-row-font-family)
     );
     font-size: var(
         --mod-table-section-header-font-size,
         var(--spectrum-table-row-font-size)
     );
-    font-weight: var(
-        --mod-table-section-header-font-weight,
-        var(--spectrum-table-section-header-font-weight)
+    font-family: var(
+        --mod-table-section-header-font-family,
+        var(--spectrum-table-row-font-family)
     );
     font-style: var(
         --mod-table-section-header-font-style,
@@ -358,7 +359,6 @@ governing permissions and limitations under the License.
             var(--spectrum-table-row-text-color)
         )
     );
-    text-align: start;
     padding-block-start: calc(
         var(
                 --mod-table-section-header-block-start-spacing,
@@ -450,6 +450,10 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Table-row--collapsible .spectrum-Table-disclosureIcon {
+    margin-inline: var(
+        --mod-table-collapsible-disclosure-inline-spacing,
+        var(--spectrum-table-collapsible-disclosure-inline-spacing)
+    );
     margin-block-start: max(
         0px,
         calc(
@@ -464,10 +468,6 @@ governing permissions and limitations under the License.
                         )
                 ) / 2
         )
-    );
-    margin-inline: var(
-        --mod-table-collapsible-disclosure-inline-spacing,
-        var(--spectrum-table-collapsible-disclosure-inline-spacing)
     );
 }
 

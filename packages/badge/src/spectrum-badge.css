@@ -18,19 +18,19 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    cursor: default;
-    inline-size: auto;
     min-block-size: var(--mod-badge-height, var(--spectrum-badge-height));
+    inline-size: auto;
+    vertical-align: middle;
+    cursor: default;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    color: var(
-        --mod-badge-label-icon-color,
-        var(--spectrum-badge-label-icon-color)
-    );
-    vertical-align: middle;
     border-radius: var(
         --mod-badge-corner-radius,
         var(--spectrum-badge-corner-radius)
+    );
+    color: var(
+        --mod-badge-label-icon-color,
+        var(--spectrum-badge-label-icon-color)
     );
     border: 1px solid #0000;
     display: inline-flex;
@@ -240,19 +240,19 @@ governing permissions and limitations under the License.
 }
 
 ::slotted([slot='icon']) {
+    block-size: var(
+        --mod-badge-workflow-icon-size,
+        var(--spectrum-badge-workflow-icon-size)
+    );
+    inline-size: var(
+        --mod-badge-workflow-icon-size,
+        var(--spectrum-badge-workflow-icon-size)
+    );
     flex: 0 0
         var(
             --mod-badge-workflow-icon-size,
             var(--spectrum-badge-workflow-icon-size)
         );
-    inline-size: var(
-        --mod-badge-workflow-icon-size,
-        var(--spectrum-badge-workflow-icon-size)
-    );
-    block-size: var(
-        --mod-badge-workflow-icon-size,
-        var(--spectrum-badge-workflow-icon-size)
-    );
     color: var(
         --mod-badge-label-icon-color,
         var(--spectrum-badge-label-icon-color)

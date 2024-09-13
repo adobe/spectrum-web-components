@@ -29,20 +29,20 @@ governing permissions and limitations under the License.
         --mod-body-sans-serif-font-family,
         var(--spectrum-body-sans-serif-font-family)
     );
-    font-size: var(--mod-body-font-size, var(--spectrum-body-font-size));
-    font-weight: var(
-        --mod-body-sans-serif-font-weight,
-        var(--spectrum-body-sans-serif-font-weight)
-    );
     font-style: var(
         --mod-body-sans-serif-font-style,
         var(--spectrum-body-sans-serif-font-style)
     );
-    line-height: var(--mod-body-line-height, var(--spectrum-body-line-height));
+    font-weight: var(
+        --mod-body-sans-serif-font-weight,
+        var(--spectrum-body-sans-serif-font-weight)
+    );
+    font-size: var(--mod-body-font-size, var(--spectrum-body-font-size));
     color: var(
         --highcontrast-body-font-color,
         var(--mod-body-font-color, var(--spectrum-body-font-color))
     );
+    line-height: var(--mod-body-line-height, var(--spectrum-body-line-height));
     margin-block-start: var(
         --mod-body-margin-start,
         var(--mod-body-margin, var(--spectrum-body-margin-start, 0))
@@ -55,38 +55,38 @@ governing permissions and limitations under the License.
 
 .spectrum-Body .spectrum-Body-strong,
 .spectrum-Body strong {
-    font-weight: var(
-        --mod-body-sans-serif-strong-font-weight,
-        var(--spectrum-body-sans-serif-strong-font-weight)
-    );
     font-style: var(
         --mod-body-sans-serif-strong-font-style,
         var(--spectrum-body-sans-serif-strong-font-style)
+    );
+    font-weight: var(
+        --mod-body-sans-serif-strong-font-weight,
+        var(--spectrum-body-sans-serif-strong-font-weight)
     );
 }
 
 .spectrum-Body .spectrum-Body-emphasized,
 .spectrum-Body em {
-    font-weight: var(
-        --mod-body-sans-serif-emphasized-font-weight,
-        var(--spectrum-body-sans-serif-emphasized-font-weight)
-    );
     font-style: var(
         --mod-body-sans-serif-emphasized-font-style,
         var(--spectrum-body-sans-serif-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-body-sans-serif-emphasized-font-weight,
+        var(--spectrum-body-sans-serif-emphasized-font-weight)
     );
 }
 
 .spectrum-Body .spectrum-Body-strong.spectrum-Body-emphasized,
 .spectrum-Body em strong,
 .spectrum-Body strong em {
-    font-weight: var(
-        --mod-body-sans-serif-strong-emphasized-font-weight,
-        var(--spectrum-body-sans-serif-strong-emphasized-font-weight)
-    );
     font-style: var(
         --mod-body-sans-serif-strong-emphasized-font-style,
         var(--spectrum-body-sans-serif-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-body-sans-serif-strong-emphasized-font-weight,
+        var(--spectrum-body-sans-serif-strong-emphasized-font-weight)
     );
 }
 
@@ -97,13 +97,13 @@ governing permissions and limitations under the License.
         --mod-body-cjk-font-family,
         var(--spectrum-body-cjk-font-family)
     );
-    font-weight: var(
-        --mod-body-cjk-font-weight,
-        var(--spectrum-body-cjk-font-weight)
-    );
     font-style: var(
         --mod-body-cjk-font-style,
         var(--spectrum-body-cjk-font-style)
+    );
+    font-weight: var(
+        --mod-body-cjk-font-weight,
+        var(--spectrum-body-cjk-font-weight)
     );
     line-height: var(
         --mod-body-cjk-line-height,
@@ -121,13 +121,13 @@ governing permissions and limitations under the License.
 .spectrum-Body:lang(ko) strong,
 .spectrum-Body:lang(zh) .spectrum-Body-strong,
 .spectrum-Body:lang(zh) strong {
-    font-weight: var(
-        --mod-body-cjk-strong-font-weight,
-        var(--spectrum-body-cjk-strong-font-weight)
-    );
     font-style: var(
         --mod-body-cjk-strong-font-style,
         var(--spectrum-body-cjk-strong-font-style)
+    );
+    font-weight: var(
+        --mod-body-cjk-strong-font-weight,
+        var(--spectrum-body-cjk-strong-font-weight)
     );
 }
 
@@ -137,13 +137,13 @@ governing permissions and limitations under the License.
 .spectrum-Body:lang(ko) em,
 .spectrum-Body:lang(zh) .spectrum-Body-emphasized,
 .spectrum-Body:lang(zh) em {
-    font-weight: var(
-        --mod-body-cjk-emphasized-font-weight,
-        var(--spectrum-body-cjk-emphasized-font-weight)
-    );
     font-style: var(
         --mod-body-cjk-emphasized-font-style,
         var(--spectrum-body-cjk-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-body-cjk-emphasized-font-weight,
+        var(--spectrum-body-cjk-emphasized-font-weight)
     );
 }
 
@@ -156,13 +156,13 @@ governing permissions and limitations under the License.
 .spectrum-Body:lang(zh) .spectrum-Body-strong.spectrum-Body-emphasized,
 .spectrum-Body:lang(zh) em strong,
 .spectrum-Body:lang(zh) strong em {
-    font-weight: var(
-        --mod-body-cjk-strong-emphasized-font-weight,
-        var(--spectrum-body-cjk-strong-emphasized-font-weight)
-    );
     font-style: var(
         --mod-body-cjk-strong-emphasized-font-style,
         var(--spectrum-body-cjk-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-body-cjk-strong-emphasized-font-weight,
+        var(--spectrum-body-cjk-strong-emphasized-font-weight)
     );
 }
 
@@ -183,60 +183,60 @@ governing permissions and limitations under the License.
 
 .spectrum-Body--serif .spectrum-Body-strong,
 .spectrum-Body--serif strong {
-    font-weight: var(
-        --mod-body-serif-strong-font-weight,
-        var(--spectrum-body-serif-strong-font-weight)
-    );
     font-style: var(
         --mod-body-serif-strong-font-style,
         var(--spectrum-body-serif-strong-font-style)
+    );
+    font-weight: var(
+        --mod-body-serif-strong-font-weight,
+        var(--spectrum-body-serif-strong-font-weight)
     );
 }
 
 .spectrum-Body--serif .spectrum-Body-emphasized,
 .spectrum-Body--serif em {
-    font-weight: var(
-        --mod-body-serif-emphasized-font-weight,
-        var(--spectrum-body-serif-emphasized-font-weight)
-    );
     font-style: var(
         --mod-body-serif-emphasized-font-style,
         var(--spectrum-body-serif-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-body-serif-emphasized-font-weight,
+        var(--spectrum-body-serif-emphasized-font-weight)
     );
 }
 
 .spectrum-Body--serif .spectrum-Body-strong.spectrum-Body-emphasized,
 .spectrum-Body--serif em strong,
 .spectrum-Body--serif strong em {
-    font-weight: var(
-        --mod-body-serif-strong-emphasized-font-weight,
-        var(--spectrum-body-serif-strong-emphasized-font-weight)
-    );
     font-style: var(
         --mod-body-serif-strong-emphasized-font-style,
         var(--spectrum-body-serif-strong-emphasized-font-style)
     );
+    font-weight: var(
+        --mod-body-serif-strong-emphasized-font-weight,
+        var(--spectrum-body-serif-strong-emphasized-font-weight)
+    );
 }
 
 .spectrum-Detail--light .spectrum-Detail-strong.spectrum-Body-emphasized {
-    font-weight: var(
-        --mod-detail-sans-serif-light-strong-emphasized-font-weight,
-        var(--spectrum-detail-sans-serif-light-strong-emphasized-font-weight)
-    );
     font-style: var(
         --mod-detail-sans-serif-light-strong-emphasized-font-style,
         var(--spectrum-detail-sans-serif-light-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-detail-sans-serif-light-strong-emphasized-font-weight,
+        var(--spectrum-detail-sans-serif-light-strong-emphasized-font-weight)
     );
 }
 
 .spectrum-Detail--serif.spectrum-Detail--light
     .spectrum-Detail-strong.spectrum-Body-emphasized {
-    font-weight: var(
-        --mod-detail-serif-light-strong-emphasized-font-weight,
-        var(--spectrum-detail-serif-light-strong-emphasized-font-weight)
-    );
     font-style: var(
         --mod-detail-serif-light-strong-emphasized-font-style,
         var(--spectrum-detail-serif-light-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-detail-serif-light-strong-emphasized-font-weight,
+        var(--spectrum-detail-serif-light-strong-emphasized-font-weight)
     );
 }

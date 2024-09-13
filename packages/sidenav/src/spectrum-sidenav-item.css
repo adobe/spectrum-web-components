@@ -11,6 +11,30 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+@media (forced-colors: active) {
+    #list ::slotted([slot='icon']) {
+        forced-color-adjust: preserve-parent-color;
+    }
+
+    :host {
+        --highcontrast-sidenav-content-disabled-color: GrayText;
+        --highcontrast-sidenav-focus-ring-color: Highlight;
+        --highcontrast-sidenav-content-color-default-selected: SelectedItemText;
+        --highcontrast-sidenav-item-background-default-selected: SelectedItem;
+        --highcontrast-sidenav-background-key-focus-selected: Highlight;
+        --highcontrast-sidenav-background-hover-selected: Highlight;
+        --highcontrast-sidenav-item-background-down-selected: Highlight;
+        --highcontrast-sidenav-item-background-down: Highlight;
+        --highcontrast-sidenav-background-hover: Highlight;
+        --highcontrast-sidenav-content-color-hover: HighlightText;
+        --highcontrast-sidenav-background-key-focus: Highlight;
+        --highcontrast-sidenav-top-level-font-color: ButtonText;
+        --highcontrast-sidenav-content-color-default: ButtonText;
+        --highcontrast-sidenav-content-color-down: HighlightText;
+        forced-color-adjust: none;
+    }
+}
+
 #list {
     flex-direction: column;
     margin: 0;
@@ -25,15 +49,6 @@ governing permissions and limitations under the License.
 }
 
 :host([disabled]) #item-link {
-    pointer-events: none;
-    cursor: default;
-    color: var(
-        --highcontrast-sidenav-content-disabled-color,
-        var(
-            --mod-sidenav-content-disabled-color,
-            var(--spectrum-sidenav-content-disabled-color)
-        )
-    );
     background-color: var(
         --highcontrast-sidenav-background-disabled,
         var(
@@ -41,16 +56,18 @@ governing permissions and limitations under the License.
             var(--spectrum-sidenav-background-disabled)
         )
     );
+    color: var(
+        --highcontrast-sidenav-content-disabled-color,
+        var(
+            --mod-sidenav-content-disabled-color,
+            var(--spectrum-sidenav-content-disabled-color)
+        )
+    );
+    cursor: default;
+    pointer-events: none;
 }
 
 :host([selected]) #item-link {
-    color: var(
-        --highcontrast-sidenav-content-color-default-selected,
-        var(
-            --mod-sidenav-content-color-default-selected,
-            var(--spectrum-sidenav-content-color-default-selected)
-        )
-    );
     background-color: var(
         --highcontrast-sidenav-item-background-default-selected,
         var(
@@ -58,13 +75,16 @@ governing permissions and limitations under the License.
             var(--spectrum-sidenav-item-background-default-selected)
         )
     );
+    color: var(
+        --highcontrast-sidenav-content-color-default-selected,
+        var(
+            --mod-sidenav-content-color-default-selected,
+            var(--spectrum-sidenav-content-color-default-selected)
+        )
+    );
 }
 
 :host([selected]) #item-link:active {
-    color: var(
-        --mod-sidenav-content-color-down-selected,
-        var(--spectrum-sidenav-content-color-down-selected)
-    );
     background-color: var(
         --highcontrast-sidenav-item-background-down-selected,
         var(
@@ -72,14 +92,14 @@ governing permissions and limitations under the License.
             var(--spectrum-sidenav-item-background-down-selected)
         )
     );
+    color: var(
+        --mod-sidenav-content-color-down-selected,
+        var(--spectrum-sidenav-content-color-down-selected)
+    );
 }
 
 :host([selected]) #item-link.is-keyboardFocused,
 :host([selected]) #item-link:focus-visible {
-    color: var(
-        --mod-sidenav-content-color-key-focus-selected,
-        var(--spectrum-sidenav-content-color-key-focus-selected)
-    );
     background-color: var(
         --highcontrast-sidenav-background-key-focus-selected,
         var(
@@ -87,11 +107,42 @@ governing permissions and limitations under the License.
             var(--spectrum-sidenav-background-key-focus-selected)
         )
     );
+    color: var(
+        --mod-sidenav-content-color-key-focus-selected,
+        var(--spectrum-sidenav-content-color-key-focus-selected)
+    );
 }
 
 #item-link {
-    cursor: pointer;
+    padding-inline: var(
+        --mod-sidenav-inline-padding,
+        var(--spectrum-sidenav-inline-padding)
+    );
     box-sizing: border-box;
+    word-break: break-word;
+    hyphens: auto;
+    cursor: pointer;
+    transition:
+        background-color var(--spectrum-animation-duration-100) ease-out,
+        color var(--spectrum-animation-duration-100) ease-out;
+    border-radius: var(
+        --mod-sidenav-border-radius,
+        var(--spectrum-sidenav-border-radius)
+    );
+    background-color: var(
+        --highcontrast-sidenav-background-default,
+        var(
+            --mod-sidenav-background-default,
+            var(--spectrum-sidenav-background-default)
+        )
+    );
+    color: var(
+        --highcontrast-sidenav-content-color-default,
+        var(
+            --mod-sidenav-content-color-default,
+            var(--spectrum-sidenav-content-color-default)
+        )
+    );
     inline-size: var(--mod-sidenav-width, var(--spectrum-sidenav-width));
     min-inline-size: var(
         --mod-sidenav-min-width,
@@ -104,10 +155,6 @@ governing permissions and limitations under the License.
     min-block-size: var(
         --mod-sidenav-min-height,
         var(--spectrum-sidenav-min-height)
-    );
-    padding-inline: var(
-        --mod-sidenav-inline-padding,
-        var(--spectrum-sidenav-inline-padding)
     );
     font-family: var(
         --mod-sidenav-text-font-family,
@@ -129,29 +176,6 @@ governing permissions and limitations under the License.
         --mod-sidenav-text-line-height,
         var(--spectrum-sidenav-text-line-height)
     );
-    hyphens: auto;
-    color: var(
-        --highcontrast-sidenav-content-color-default,
-        var(
-            --mod-sidenav-content-color-default,
-            var(--spectrum-sidenav-content-color-default)
-        )
-    );
-    word-break: break-word;
-    background-color: var(
-        --highcontrast-sidenav-background-default,
-        var(
-            --mod-sidenav-background-default,
-            var(--spectrum-sidenav-background-default)
-        )
-    );
-    border-radius: var(
-        --mod-sidenav-border-radius,
-        var(--spectrum-sidenav-border-radius)
-    );
-    transition:
-        background-color var(--spectrum-animation-duration-100) ease-out,
-        color var(--spectrum-animation-duration-100) ease-out;
     justify-content: start;
     margin-block-end: var(--mod-sidenav-gap, var(--spectrum-sidenav-gap));
     -webkit-text-decoration: none;
@@ -190,10 +214,6 @@ governing permissions and limitations under the License.
 
 @media (hover: hover) {
     :host([selected]) #item-link:hover {
-        color: var(
-            --mod-sidenav-content-color-hover-selected,
-            var(--spectrum-sidenav-content-color-hover-selected)
-        );
         background-color: var(
             --highcontrast-sidenav-background-hover-selected,
             var(
@@ -201,16 +221,13 @@ governing permissions and limitations under the License.
                 var(--spectrum-sidenav-background-hover-selected)
             )
         );
+        color: var(
+            --mod-sidenav-content-color-hover-selected,
+            var(--spectrum-sidenav-content-color-hover-selected)
+        );
     }
 
     #item-link:hover {
-        color: var(
-            --highcontrast-sidenav-content-color-hover,
-            var(
-                --mod-sidenav-content-color-hover,
-                var(--spectrum-sidenav-content-color-hover)
-            )
-        );
         background-color: var(
             --highcontrast-sidenav-background-hover,
             var(
@@ -218,17 +235,17 @@ governing permissions and limitations under the License.
                 var(--spectrum-sidenav-background-hover)
             )
         );
+        color: var(
+            --highcontrast-sidenav-content-color-hover,
+            var(
+                --mod-sidenav-content-color-hover,
+                var(--spectrum-sidenav-content-color-hover)
+            )
+        );
     }
 }
 
 #item-link:active {
-    color: var(
-        --highcontrast-sidenav-content-color-down,
-        var(
-            --mod-sidenav-content-color-down,
-            var(--spectrum-sidenav-content-color-down)
-        )
-    );
     background-color: var(
         --highcontrast-sidenav-item-background-down,
         var(
@@ -236,24 +253,17 @@ governing permissions and limitations under the License.
             var(--spectrum-sidenav-item-background-down)
         )
     );
+    color: var(
+        --highcontrast-sidenav-content-color-down,
+        var(
+            --mod-sidenav-content-color-down,
+            var(--spectrum-sidenav-content-color-down)
+        )
+    );
 }
 
 #item-link.is-keyboardFocused,
 #item-link:focus-visible {
-    color: var(
-        --highcontrast-sidenav-content-color-key-focus,
-        var(
-            --mod-sidenav-content-color-key-focus,
-            var(--spectrum-sidenav-content-color-key-focus)
-        )
-    );
-    background-color: var(
-        --highcontrast-sidenav-background-key-focus,
-        var(
-            --mod-sidenav-background-key-focus,
-            var(--spectrum-sidenav-background-key-focus)
-        )
-    );
     outline: var(
             --highcontrast-sidenav-focus-ring-color,
             var(
@@ -270,16 +280,26 @@ governing permissions and limitations under the License.
         --mod-sidenav-focus-ring-gap,
         var(--spectrum-sidenav-focus-ring-gap)
     );
+    background-color: var(
+        --highcontrast-sidenav-background-key-focus,
+        var(
+            --mod-sidenav-background-key-focus,
+            var(--spectrum-sidenav-background-key-focus)
+        )
+    );
+    color: var(
+        --highcontrast-sidenav-content-color-key-focus,
+        var(
+            --mod-sidenav-content-color-key-focus,
+            var(--spectrum-sidenav-content-color-key-focus)
+        )
+    );
 }
 
 #item-link[data-level] {
     font-family: var(
         --mod-sidenav-top-level-font-family,
         var(--spectrum-sidenav-top-level-font-family)
-    );
-    font-size: var(
-        --mod-sidenav-top-level-font-size,
-        var(--spectrum-sidenav-top-level-font-size)
     );
     font-weight: var(
         --mod-sidenav-top-level-font-weight,
@@ -288,6 +308,10 @@ governing permissions and limitations under the License.
     font-style: var(
         --mod-sidenav-top-level-font-style,
         var(--spectrum-sidenav-top-level-font-style)
+    );
+    font-size: var(
+        --mod-sidenav-top-level-font-size,
+        var(--spectrum-sidenav-top-level-font-size)
     );
     line-height: var(
         --mod-sidenav-top-level-line-height,
@@ -325,28 +349,4 @@ governing permissions and limitations under the License.
         --mod-sidenav-start-to-content-with-icon-third-level,
         var(--spectrum-sidenav-start-to-content-with-icon-third-level)
     );
-}
-
-@media (forced-colors: active) {
-    #list ::slotted([slot='icon']) {
-        forced-color-adjust: preserve-parent-color;
-    }
-
-    :host {
-        --highcontrast-sidenav-content-disabled-color: GrayText;
-        --highcontrast-sidenav-focus-ring-color: Highlight;
-        --highcontrast-sidenav-content-color-default-selected: SelectedItemText;
-        --highcontrast-sidenav-item-background-default-selected: SelectedItem;
-        --highcontrast-sidenav-background-key-focus-selected: Highlight;
-        --highcontrast-sidenav-background-hover-selected: Highlight;
-        --highcontrast-sidenav-item-background-down-selected: Highlight;
-        --highcontrast-sidenav-item-background-down: Highlight;
-        --highcontrast-sidenav-background-hover: Highlight;
-        --highcontrast-sidenav-content-color-hover: HighlightText;
-        --highcontrast-sidenav-background-key-focus: Highlight;
-        --highcontrast-sidenav-top-level-font-color: ButtonText;
-        --highcontrast-sidenav-content-color-default: ButtonText;
-        --highcontrast-sidenav-content-color-down: HighlightText;
-        forced-color-adjust: none;
-    }
 }

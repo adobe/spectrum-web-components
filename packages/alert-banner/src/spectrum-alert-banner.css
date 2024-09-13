@@ -57,8 +57,8 @@ governing permissions and limitations under the License.
         var(--spectrum-alert-banner-font-color)
     );
     background-color: var(
-        --mod-alert-banner-netural-background,
-        var(--spectrum-alert-banner-netural-background)
+        --mod-alert-banner-neutral-background,
+        var(--spectrum-alert-banner-neutral-background)
     );
     border: 0 solid #0000;
     border: var(--highcontrast-alert-banner-border-width, 0) solid
@@ -86,6 +86,7 @@ governing permissions and limitations under the License.
 }
 
 .body {
+    inline-size: 100%;
     gap: max(
         calc(
             var(
@@ -99,7 +100,6 @@ governing permissions and limitations under the License.
         ),
         0px
     );
-    inline-size: 100%;
     flex-wrap: wrap;
     align-items: center;
     margin-inline-start: var(

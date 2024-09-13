@@ -12,30 +12,29 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    -webkit-user-select: none;
-    user-select: none;
-    box-sizing: border-box;
-    max-inline-size: 100%;
-    block-size: var(--mod-tag-height, var(--spectrum-tag-height));
-    color: var(
-        --highcontrast-tag-content-color,
-        var(--mod-tag-content-color, var(--spectrum-tag-content-color))
-    );
-    vertical-align: bottom;
-    background-color: var(
-        --highcontrast-tag-background-color,
-        var(--mod-tag-background-color, var(--spectrum-tag-background-color))
-    );
     border-color: var(
         --highcontrast-tag-border-color,
         var(--mod-tag-border-color, var(--spectrum-tag-border-color))
     );
-    border-style: solid;
-    border-width: var(--mod-tag-border-width, var(--spectrum-tag-border-width));
+    background-color: var(
+        --highcontrast-tag-background-color,
+        var(--mod-tag-background-color, var(--spectrum-tag-background-color))
+    );
+    color: var(
+        --highcontrast-tag-content-color,
+        var(--mod-tag-content-color, var(--spectrum-tag-content-color))
+    );
     border-radius: var(
         --mod-tag-corner-radius,
         var(--spectrum-tag-corner-radius)
     );
+    border-width: var(--mod-tag-border-width, var(--spectrum-tag-border-width));
+    block-size: var(--mod-tag-height, var(--spectrum-tag-height));
+    box-sizing: border-box;
+    vertical-align: bottom;
+    max-inline-size: 100%;
+    -webkit-user-select: none;
+    user-select: none;
     transition:
         border-color
             var(
@@ -61,6 +60,7 @@ governing permissions and limitations under the License.
                 var(--spectrum-tag-animation-duration)
             )
             ease-in-out;
+    border-style: solid;
     outline: none;
     align-items: center;
     padding-inline-start: calc(
@@ -75,8 +75,8 @@ governing permissions and limitations under the License.
 }
 
 ::slotted([slot='icon']) {
-    inline-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
     block-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
+    inline-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
     margin-block-start: calc(
         var(
                 --mod-tag-icon-spacing-block-start,
@@ -151,6 +151,10 @@ governing permissions and limitations under the License.
 }
 
 .clear-button .spectrum-ClearButton-fill {
+    background-color: var(
+        --mod-clearbutton-fill-background-color,
+        var(--spectrum-clearbutton-fill-background-color)
+    );
     inline-size: var(
         --mod-clearbutton-fill-size,
         var(--spectrum-clearbutton-fill-size)
@@ -159,27 +163,23 @@ governing permissions and limitations under the License.
         --mod-clearbutton-fill-size,
         var(--spectrum-clearbutton-fill-size)
     );
-    background-color: var(
-        --mod-clearbutton-fill-background-color,
-        var(--spectrum-clearbutton-fill-background-color)
-    );
 }
 
 .label {
-    cursor: default;
-    box-sizing: border-box;
     block-size: 100%;
-    font-size: var(--mod-tag-font-size, var(--spectrum-tag-font-size));
-    font-weight: var(
-        --mod-tag-label-font-weight,
-        var(--spectrum-tag-label-font-weight)
-    );
+    box-sizing: border-box;
     line-height: var(
         --mod-tag-label-line-height,
         var(--spectrum-tag-label-line-height)
     );
-    text-overflow: ellipsis;
+    font-weight: var(
+        --mod-tag-label-font-weight,
+        var(--spectrum-tag-label-font-weight)
+    );
+    font-size: var(--mod-tag-font-size, var(--spectrum-tag-font-size));
+    cursor: default;
     white-space: nowrap;
+    text-overflow: ellipsis;
     flex: auto;
     margin-inline-end: calc(
         var(
@@ -197,11 +197,11 @@ governing permissions and limitations under the License.
 }
 
 :host(:is(:active, [active])) {
-    color: var(
-        --highcontrast-tag-content-color-active,
+    border-color: var(
+        --highcontrast-tag-border-color-active,
         var(
-            --mod-tag-content-color-active,
-            var(--spectrum-tag-content-color-active)
+            --mod-tag-border-color-active,
+            var(--spectrum-tag-border-color-active)
         )
     );
     background-color: var(
@@ -211,22 +211,22 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-background-color-active)
         )
     );
-    border-color: var(
-        --highcontrast-tag-border-color-active,
+    color: var(
+        --highcontrast-tag-content-color-active,
         var(
-            --mod-tag-border-color-active,
-            var(--spectrum-tag-border-color-active)
+            --mod-tag-content-color-active,
+            var(--spectrum-tag-content-color-active)
         )
     );
 }
 
 :host([focused]),
 :host(:focus-visible) {
-    color: var(
-        --highcontrast-tag-content-color-focus,
+    border-color: var(
+        --highcontrast-tag-border-color-focus,
         var(
-            --mod-tag-content-color-focus,
-            var(--spectrum-tag-content-color-focus)
+            --mod-tag-border-color-focus,
+            var(--spectrum-tag-border-color-focus)
         )
     );
     background-color: var(
@@ -236,33 +236,33 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-background-color-focus)
         )
     );
-    border-color: var(
-        --highcontrast-tag-border-color-focus,
+    color: var(
+        --highcontrast-tag-content-color-focus,
         var(
-            --mod-tag-border-color-focus,
-            var(--spectrum-tag-border-color-focus)
+            --mod-tag-content-color-focus,
+            var(--spectrum-tag-content-color-focus)
         )
     );
 }
 
 :host([focused]):after,
 :host(:focus-visible):after {
-    pointer-events: none;
     content: '';
     border-color: var(
         --highcontrast-tag-focus-ring-color,
         var(--mod-tag-focus-ring-color, var(--spectrum-tag-focus-ring-color))
-    );
-    border-style: solid;
-    border-width: var(
-        --mod-tag-focus-ring-thickness,
-        var(--spectrum-tag-focus-ring-thickness)
     );
     border-radius: calc(
         var(--mod-tag-corner-radius, var(--spectrum-tag-corner-radius)) +
             var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) +
             var(--mod-tag-border-width, var(--spectrum-tag-border-width))
     );
+    border-width: var(
+        --mod-tag-focus-ring-thickness,
+        var(--spectrum-tag-focus-ring-thickness)
+    );
+    pointer-events: none;
+    border-style: solid;
     display: inline-block;
     position: absolute;
     inset-block-start: calc(
@@ -300,11 +300,11 @@ governing permissions and limitations under the License.
 }
 
 :host([selected]) {
-    color: var(
-        --highcontrast-tag-content-color-selected,
+    border-color: var(
+        --highcontrast-tag-border-color-selected,
         var(
-            --mod-tag-content-color-selected,
-            var(--spectrum-tag-content-color-selected)
+            --mod-tag-border-color-selected,
+            var(--spectrum-tag-border-color-selected)
         )
     );
     background-color: var(
@@ -314,23 +314,16 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-background-color-selected)
         )
     );
-    border-color: var(
-        --highcontrast-tag-border-color-selected,
+    color: var(
+        --highcontrast-tag-content-color-selected,
         var(
-            --mod-tag-border-color-selected,
-            var(--spectrum-tag-border-color-selected)
+            --mod-tag-content-color-selected,
+            var(--spectrum-tag-content-color-selected)
         )
     );
 }
 
 :host([selected]:is(:active, [active])) {
-    background-color: var(
-        --highcontrast-tag-background-color-selected-active,
-        var(
-            --mod-tag-background-color-selected-active,
-            var(--spectrum-tag-background-color-selected-active)
-        )
-    );
     border-color: var(
         --highcontrast-tag-border-color-selected-active,
         var(
@@ -338,17 +331,17 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-border-color-selected-active)
         )
     );
+    background-color: var(
+        --highcontrast-tag-background-color-selected-active,
+        var(
+            --mod-tag-background-color-selected-active,
+            var(--spectrum-tag-background-color-selected-active)
+        )
+    );
 }
 
 :host([selected][focused]),
 :host([selected]:focus-visible) {
-    background-color: var(
-        --highcontrast-tag-background-color-selected-focus,
-        var(
-            --mod-tag-background-color-selected-focus,
-            var(--spectrum-tag-background-color-selected-focus)
-        )
-    );
     border-color: var(
         --highcontrast-tag-border-color-selected-focus,
         var(
@@ -356,16 +349,16 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-border-color-selected-focus)
         )
     );
+    background-color: var(
+        --highcontrast-tag-background-color-selected-focus,
+        var(
+            --mod-tag-background-color-selected-focus,
+            var(--spectrum-tag-background-color-selected-focus)
+        )
+    );
 }
 
 :host([invalid]) {
-    color: var(
-        --highcontrast-tag-content-color-invalid,
-        var(
-            --mod-tag-content-color-invalid,
-            var(--spectrum-tag-content-color-invalid)
-        )
-    );
     border-color: var(
         --highcontrast-tag-border-color-invalid,
         var(
@@ -373,16 +366,16 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-border-color-invalid)
         )
     );
+    color: var(
+        --highcontrast-tag-content-color-invalid,
+        var(
+            --mod-tag-content-color-invalid,
+            var(--spectrum-tag-content-color-invalid)
+        )
+    );
 }
 
 :host([invalid]:is(:active, [active])) {
-    color: var(
-        --highcontrast-tag-content-color-invalid-active,
-        var(
-            --mod-tag-content-color-invalid-active,
-            var(--spectrum-tag-content-color-invalid-active)
-        )
-    );
     border-color: var(
         --highcontrast-tag-border-color-invalid-active,
         var(
@@ -390,17 +383,17 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-border-color-invalid-active)
         )
     );
+    color: var(
+        --highcontrast-tag-content-color-invalid-active,
+        var(
+            --mod-tag-content-color-invalid-active,
+            var(--spectrum-tag-content-color-invalid-active)
+        )
+    );
 }
 
 :host([invalid][focused]),
 :host([invalid]:focus-visible) {
-    color: var(
-        --highcontrast-tag-content-color-invalid-focus,
-        var(
-            --mod-tag-content-color-invalid-focus,
-            var(--spectrum-tag-content-color-invalid-focus)
-        )
-    );
     border-color: var(
         --highcontrast-tag-border-color-invalid-focus,
         var(
@@ -408,14 +401,21 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-border-color-invalid-focus)
         )
     );
+    color: var(
+        --highcontrast-tag-content-color-invalid-focus,
+        var(
+            --mod-tag-content-color-invalid-focus,
+            var(--spectrum-tag-content-color-invalid-focus)
+        )
+    );
 }
 
 :host([invalid][selected]) {
-    color: var(
-        --highcontrast-tag-content-color-invalid-selected,
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-selected,
         var(
-            --mod-tag-content-color-invalid-selected,
-            var(--spectrum-tag-content-color-invalid-selected)
+            --mod-tag-border-color-invalid-selected,
+            var(--spectrum-tag-border-color-invalid-selected)
         )
     );
     background-color: var(
@@ -425,23 +425,16 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-background-color-invalid-selected)
         )
     );
-    border-color: var(
-        --highcontrast-tag-border-color-invalid-selected,
+    color: var(
+        --highcontrast-tag-content-color-invalid-selected,
         var(
-            --mod-tag-border-color-invalid-selected,
-            var(--spectrum-tag-border-color-invalid-selected)
+            --mod-tag-content-color-invalid-selected,
+            var(--spectrum-tag-content-color-invalid-selected)
         )
     );
 }
 
 :host([invalid][selected]:is(:active, [active])) {
-    background-color: var(
-        --highcontrast-tag-background-color-invalid-selected-active,
-        var(
-            --mod-tag-background-color-invalid-selected-active,
-            var(--spectrum-tag-background-color-invalid-selected-active)
-        )
-    );
     border-color: var(
         --highcontrast-tag-border-color-invalid-selected-active,
         var(
@@ -449,17 +442,17 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-border-color-invalid-selected-active)
         )
     );
+    background-color: var(
+        --highcontrast-tag-background-color-invalid-selected-active,
+        var(
+            --mod-tag-background-color-invalid-selected-active,
+            var(--spectrum-tag-background-color-invalid-selected-active)
+        )
+    );
 }
 
 :host([invalid][selected][focused]),
 :host([invalid][selected]:focus-visible) {
-    background-color: var(
-        --highcontrast-tag-background-color-invalid-selected-focus,
-        var(
-            --mod-tag-background-color-invalid-selected-focus,
-            var(--spectrum-tag-background-color-invalid-selected-focus)
-        )
-    );
     border-color: var(
         --highcontrast-tag-border-color-invalid-selected-focus,
         var(
@@ -467,14 +460,21 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-border-color-invalid-selected-focus)
         )
     );
+    background-color: var(
+        --highcontrast-tag-background-color-invalid-selected-focus,
+        var(
+            --mod-tag-background-color-invalid-selected-focus,
+            var(--spectrum-tag-background-color-invalid-selected-focus)
+        )
+    );
 }
 
 :host([emphasized]) {
-    color: var(
-        --highcontrast-tag-content-color-emphasized,
+    border-color: var(
+        --highcontrast-tag-border-color-emphasized,
         var(
-            --mod-tag-content-color-emphasized,
-            var(--spectrum-tag-content-color-emphasized)
+            --mod-tag-border-color-emphasized,
+            var(--spectrum-tag-border-color-emphasized)
         )
     );
     background-color: var(
@@ -484,22 +484,22 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-background-color-emphasized)
         )
     );
-    border-color: var(
-        --highcontrast-tag-border-color-emphasized,
+    color: var(
+        --highcontrast-tag-content-color-emphasized,
         var(
-            --mod-tag-border-color-emphasized,
-            var(--spectrum-tag-border-color-emphasized)
+            --mod-tag-content-color-emphasized,
+            var(--spectrum-tag-content-color-emphasized)
         )
     );
 }
 
 @media (hover: hover) {
     :host(:hover) {
-        color: var(
-            --highcontrast-tag-content-color-hover,
+        border-color: var(
+            --highcontrast-tag-border-color-hover,
             var(
-                --mod-tag-content-color-hover,
-                var(--spectrum-tag-content-color-hover)
+                --mod-tag-border-color-hover,
+                var(--spectrum-tag-border-color-hover)
             )
         );
         background-color: var(
@@ -509,21 +509,21 @@ governing permissions and limitations under the License.
                 var(--spectrum-tag-background-color-hover)
             )
         );
-        border-color: var(
-            --highcontrast-tag-border-color-hover,
+        color: var(
+            --highcontrast-tag-content-color-hover,
             var(
-                --mod-tag-border-color-hover,
-                var(--spectrum-tag-border-color-hover)
+                --mod-tag-content-color-hover,
+                var(--spectrum-tag-content-color-hover)
             )
         );
     }
 
     :host([selected]:hover) {
-        color: var(
-            --highcontrast-tag-content-color-selected,
+        border-color: var(
+            --highcontrast-tag-border-color-selected-hover,
             var(
-                --mod-tag-content-color-selected,
-                var(--spectrum-tag-content-color-selected)
+                --mod-tag-border-color-selected-hover,
+                var(--spectrum-tag-border-color-selected-hover)
             )
         );
         background-color: var(
@@ -533,23 +533,16 @@ governing permissions and limitations under the License.
                 var(--spectrum-tag-background-color-selected-hover)
             )
         );
-        border-color: var(
-            --highcontrast-tag-border-color-selected-hover,
+        color: var(
+            --highcontrast-tag-content-color-selected,
             var(
-                --mod-tag-border-color-selected-hover,
-                var(--spectrum-tag-border-color-selected-hover)
+                --mod-tag-content-color-selected,
+                var(--spectrum-tag-content-color-selected)
             )
         );
     }
 
     :host([invalid]:hover) {
-        color: var(
-            --highcontrast-tag-content-color-invalid-hover,
-            var(
-                --mod-tag-content-color-invalid-hover,
-                var(--spectrum-tag-content-color-invalid-hover)
-            )
-        );
         border-color: var(
             --highcontrast-tag-border-color-invalid-hover,
             var(
@@ -557,14 +550,21 @@ governing permissions and limitations under the License.
                 var(--spectrum-tag-border-color-invalid-hover)
             )
         );
+        color: var(
+            --highcontrast-tag-content-color-invalid-hover,
+            var(
+                --mod-tag-content-color-invalid-hover,
+                var(--spectrum-tag-content-color-invalid-hover)
+            )
+        );
     }
 
     :host([invalid][selected]:hover) {
-        color: var(
-            --highcontrast-tag-content-color-invalid-selected,
+        border-color: var(
+            --highcontrast-tag-border-color-invalid-selected-hover,
             var(
-                --mod-tag-content-color-invalid-selected,
-                var(--spectrum-tag-content-color-invalid-selected)
+                --mod-tag-border-color-invalid-selected-hover,
+                var(--spectrum-tag-border-color-invalid-selected-hover)
             )
         );
         background-color: var(
@@ -574,21 +574,21 @@ governing permissions and limitations under the License.
                 var(--spectrum-tag-background-color-invalid-selected-hover)
             )
         );
-        border-color: var(
-            --highcontrast-tag-border-color-invalid-selected-hover,
+        color: var(
+            --highcontrast-tag-content-color-invalid-selected,
             var(
-                --mod-tag-border-color-invalid-selected-hover,
-                var(--spectrum-tag-border-color-invalid-selected-hover)
+                --mod-tag-content-color-invalid-selected,
+                var(--spectrum-tag-content-color-invalid-selected)
             )
         );
     }
 
     :host([emphasized]:hover) {
-        color: var(
-            --highcontrast-tag-content-color-emphasized,
+        border-color: var(
+            --highcontrast-tag-border-color-emphasized-hover,
             var(
-                --mod-tag-content-color-emphasized,
-                var(--spectrum-tag-content-color-emphasized)
+                --mod-tag-border-color-emphasized-hover,
+                var(--spectrum-tag-border-color-emphasized-hover)
             )
         );
         background-color: var(
@@ -598,24 +598,17 @@ governing permissions and limitations under the License.
                 var(--spectrum-tag-background-color-emphasized-hover)
             )
         );
-        border-color: var(
-            --highcontrast-tag-border-color-emphasized-hover,
+        color: var(
+            --highcontrast-tag-content-color-emphasized,
             var(
-                --mod-tag-border-color-emphasized-hover,
-                var(--spectrum-tag-border-color-emphasized-hover)
+                --mod-tag-content-color-emphasized,
+                var(--spectrum-tag-content-color-emphasized)
             )
         );
     }
 }
 
 :host([emphasized]:is(:active, [active])) {
-    background-color: var(
-        --highcontrast-tag-background-color-emphasized-active,
-        var(
-            --mod-tag-background-color-emphasized-active,
-            var(--spectrum-tag-background-color-emphasized-active)
-        )
-    );
     border-color: var(
         --highcontrast-tag-border-color-emphasized-active,
         var(
@@ -623,17 +616,17 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-border-color-emphasized-active)
         )
     );
+    background-color: var(
+        --highcontrast-tag-background-color-emphasized-active,
+        var(
+            --mod-tag-background-color-emphasized-active,
+            var(--spectrum-tag-background-color-emphasized-active)
+        )
+    );
 }
 
 :host([emphasized][focused]),
 :host([emphasized]:focus-visible) {
-    background-color: var(
-        --highcontrast-tag-background-color-emphasized-focus,
-        var(
-            --mod-tag-background-color-emphasized-focus,
-            var(--spectrum-tag-background-color-emphasized-focus)
-        )
-    );
     border-color: var(
         --highcontrast-tag-border-color-emphasized-focus,
         var(
@@ -641,15 +634,21 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-border-color-emphasized-focus)
         )
     );
+    background-color: var(
+        --highcontrast-tag-background-color-emphasized-focus,
+        var(
+            --mod-tag-background-color-emphasized-focus,
+            var(--spectrum-tag-background-color-emphasized-focus)
+        )
+    );
 }
 
 :host([disabled]) {
-    pointer-events: none;
-    color: var(
-        --highcontrast-tag-content-color-disabled,
+    border-color: var(
+        --highcontrast-tag-border-color-disabled,
         var(
-            --mod-tag-content-color-disabled,
-            var(--spectrum-tag-content-color-disabled)
+            --mod-tag-border-color-disabled,
+            var(--spectrum-tag-border-color-disabled)
         )
     );
     background-color: var(
@@ -659,13 +658,14 @@ governing permissions and limitations under the License.
             var(--spectrum-tag-background-color-disabled)
         )
     );
-    border-color: var(
-        --highcontrast-tag-border-color-disabled,
+    color: var(
+        --highcontrast-tag-content-color-disabled,
         var(
-            --mod-tag-border-color-disabled,
-            var(--spectrum-tag-border-color-disabled)
+            --mod-tag-content-color-disabled,
+            var(--spectrum-tag-content-color-disabled)
         )
     );
+    pointer-events: none;
 }
 
 :host([disabled]) ::slotted([slot='avatar']) {

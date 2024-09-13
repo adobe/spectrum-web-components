@@ -12,24 +12,24 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    cursor: pointer;
-    z-index: 1;
     box-sizing: border-box;
     block-size: calc(
         var(--mod-tabs-item-height, var(--spectrum-tabs-item-height)) -
             var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size))
     );
+    z-index: 1;
+    white-space: nowrap;
     color: var(
         --highcontrast-tabs-color,
         var(--mod-tabs-color, var(--spectrum-tabs-color))
     );
-    white-space: nowrap;
     transition: color
         var(
             --mod-tabs-animation-duration,
             var(--spectrum-tabs-animation-duration)
         )
         ease-out;
+    cursor: pointer;
     outline: none;
     -webkit-text-decoration: none;
     text-decoration: none;
@@ -37,8 +37,8 @@ governing permissions and limitations under the License.
 }
 
 ::slotted([slot='icon']) {
-    inline-size: var(--mod-tabs-icon-size, var(--spectrum-tabs-icon-size));
     block-size: var(--mod-tabs-icon-size, var(--spectrum-tabs-icon-size));
+    inline-size: var(--mod-tabs-icon-size, var(--spectrum-tabs-icon-size));
     margin-block-start: var(
         --mod-tabs-top-to-icon,
         var(--spectrum-tabs-top-to-icon)
@@ -53,18 +53,17 @@ governing permissions and limitations under the License.
 }
 
 :host:before {
-    pointer-events: none;
     content: '';
     box-sizing: border-box;
+    block-size: calc(
+        100% - var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text))
+    );
     inline-size: calc(
         100% +
             var(
                 --mod-tabs-focus-indicator-gap,
                 var(--spectrum-tabs-focus-indicator-gap)
             ) * 2
-    );
-    block-size: calc(
-        100% - var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text))
     );
     border: var(
             --mod-tabs-focus-indicator-width,
@@ -75,6 +74,7 @@ governing permissions and limitations under the License.
         --mod-tabs-focus-indicator-border-radius,
         var(--spectrum-tabs-focus-indicator-border-radius)
     );
+    pointer-events: none;
     position: absolute;
     inset-block-start: calc(
         var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2
@@ -140,12 +140,12 @@ governing permissions and limitations under the License.
 
 #item-label {
     cursor: pointer;
+    vertical-align: top;
     font-family: var(--mod-tabs-font-family, var(--spectrum-tabs-font-family));
+    font-style: var(--mod-tabs-font-style, var(--spectrum-tabs-font-style));
     font-size: var(--mod-tabs-font-size, var(--spectrum-tabs-font-size));
     font-weight: var(--mod-tabs-font-weight, var(--spectrum-tabs-font-weight));
-    font-style: var(--mod-tabs-font-style, var(--spectrum-tabs-font-style));
     line-height: var(--mod-tabs-line-height, var(--spectrum-tabs-line-height));
-    vertical-align: top;
     margin-block-start: var(
         --mod-tabs-top-to-text,
         var(--spectrum-tabs-top-to-text)

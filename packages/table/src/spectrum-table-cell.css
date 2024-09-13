@@ -39,6 +39,27 @@ governing permissions and limitations under the License.
 
 :host {
     box-sizing: border-box;
+    font-size: var(
+        --mod-table-row-font-size,
+        var(--spectrum-table-row-font-size)
+    );
+    font-weight: var(
+        --mod-table-row-font-weight,
+        var(--spectrum-table-row-font-weight)
+    );
+    line-height: var(
+        --mod-table-row-line-height,
+        var(--spectrum-table-row-line-height)
+    );
+    vertical-align: var(
+        --mod-table-default-vertical-align,
+        var(--spectrum-table-default-vertical-align)
+    );
+    color: var(
+        --highcontrast-table-row-text-color,
+        var(--mod-table-row-text-color, var(--spectrum-table-row-text-color))
+    );
+    background-color: var(--spectrum-table-cell-background-color);
     block-size: var(
         --mod-table-min-row-height,
         var(--spectrum-table-min-row-height)
@@ -58,27 +79,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-table-outer-border-inline-width)
             )
     );
-    font-size: var(
-        --mod-table-row-font-size,
-        var(--spectrum-table-row-font-size)
-    );
-    font-weight: var(
-        --mod-table-row-font-weight,
-        var(--spectrum-table-row-font-weight)
-    );
-    line-height: var(
-        --mod-table-row-line-height,
-        var(--spectrum-table-row-line-height)
-    );
-    color: var(
-        --highcontrast-table-row-text-color,
-        var(--mod-table-row-text-color, var(--spectrum-table-row-text-color))
-    );
-    vertical-align: var(
-        --mod-table-default-vertical-align,
-        var(--spectrum-table-default-vertical-align)
-    );
-    background-color: var(--spectrum-table-cell-background-color);
 }
 
 :host {
@@ -87,6 +87,11 @@ governing permissions and limitations under the License.
 
 :host([focused]),
 :host(:focus-visible) {
+    outline-width: var(
+        --mod-table-focus-indicator-thickness,
+        var(--spectrum-table-focus-indicator-thickness)
+    );
+    outline-style: solid;
     outline-color: var(
         --highcontrast-table-cell-focus-indicator-color,
         var(
@@ -96,11 +101,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-table-focus-indicator-color)
             )
         )
-    );
-    outline-style: solid;
-    outline-width: var(
-        --mod-table-focus-indicator-thickness,
-        var(--spectrum-table-focus-indicator-thickness)
     );
     outline-offset: calc(
         var(

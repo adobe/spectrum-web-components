@@ -828,10 +828,16 @@
 
     --spectrum-swatch-border-color-rgb: 255, 255, 255;
 
-    --spectrum-swatch-border-color-opacity: 51;
+    --spectrum-swatch-border-color-opacity: 0.51;
 
     --spectrum-swatch-border-color: rgba(
         var(--spectrum-swatch-border-color-rgb),
         var(--spectrum-swatch-border-color-opacity)
+    );
+    --spectrum-swatch-border-color-light-rgb: 255, 255, 255;
+    --spectrum-swatch-border-color-light-opacity: 0.2;
+    --spectrum-swatch-border-color-light: rgba(
+        var(--spectrum-swatch-border-color-light-rgb),
+        var(--spectrum-swatch-border-color-light-opacity)
     );
 }

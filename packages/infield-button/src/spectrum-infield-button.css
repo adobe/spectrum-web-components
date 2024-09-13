@@ -25,20 +25,20 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    background-color: initial;
     cursor: pointer;
-    inline-size: var(
-        --mod-infield-button-width,
-        var(--spectrum-infield-button-width)
-    );
     block-size: var(
         --mod-infield-button-height,
         var(--spectrum-infield-button-height)
+    );
+    inline-size: var(
+        --mod-infield-button-width,
+        var(--spectrum-infield-button-width)
     );
     padding: var(
         --mod-infield-button-edge-to-fill,
         var(--spectrum-infield-button-edge-to-fill)
     );
-    background-color: initial;
     border-style: none;
     justify-content: center;
     align-items: center;
@@ -46,16 +46,17 @@ governing permissions and limitations under the License.
 }
 
 .fill {
-    inline-size: 100%;
     block-size: 100%;
-    padding: var(
-        --mod-infield-button-fill-padding,
-        var(--spectrum-infield-button-fill-padding)
-    );
+    inline-size: 100%;
     background-color: var(
         --mod-infield-button-background-color,
         var(--spectrum-infield-button-background-color)
     );
+    border-width: var(
+        --mod-infield-button-border-width,
+        var(--spectrum-infield-button-border-width)
+    );
+    border-style: solid;
     border-color: var(
         --highcontrast-infield-button-border-color,
         var(
@@ -63,10 +64,9 @@ governing permissions and limitations under the License.
             var(--spectrum-infield-button-border-color)
         )
     );
-    border-style: solid;
-    border-width: var(
-        --mod-infield-button-border-width,
-        var(--spectrum-infield-button-border-width)
+    padding: var(
+        --mod-infield-button-fill-padding,
+        var(--spectrum-infield-button-fill-padding)
     );
     border-start-start-radius: var(
         --mod-infield-button-border-radius,

@@ -25,13 +25,8 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    min-block-size: var(
-        --mod-helptext-min-height,
-        var(--spectrum-helptext-min-height)
-    );
-    font-size: var(
-        --mod-helptext-font-size,
-        var(--spectrum-helptext-font-size)
+    --spectrum-helptext-bottom-to-workflow-icon: var(
+        --spectrum-helptext-top-to-workflow-icon
     );
     color: var(
         --highcontrast-helptext-content-color-default,
@@ -40,15 +35,23 @@ governing permissions and limitations under the License.
             var(--spectrum-helptext-content-color-default)
         )
     );
+    font-size: var(
+        --mod-helptext-font-size,
+        var(--spectrum-helptext-font-size)
+    );
+    min-block-size: var(
+        --mod-helptext-min-height,
+        var(--spectrum-helptext-min-height)
+    );
     display: flex;
 }
 
 .icon {
-    inline-size: var(
+    block-size: var(
         --mod-helptext-icon-size,
         var(--spectrum-helptext-icon-size)
     );
-    block-size: var(
+    inline-size: var(
         --mod-helptext-icon-size,
         var(--spectrum-helptext-icon-size)
     );

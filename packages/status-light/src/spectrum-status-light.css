@@ -11,29 +11,12 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-@media (forced-colors: active) {
-    :host([dir]) {
-        --highcontrast-statuslight-content-color-default: CanvasText;
-        --highcontrast-statuslight-subdued-content-color-default: CanvasText;
-        forced-color-adjust: none;
-    }
-
-    :host:before {
-        forced-color-adjust: none;
-        border: var(
-                --mod-statuslight-border-width,
-                var(--spectrum-statuslight-border-width)
-            )
-            solid ButtonText;
-    }
-}
-
 :host([dir]) {
-    box-sizing: border-box;
     min-block-size: var(
         --mod-statuslight-height,
         var(--spectrum-statuslight-height)
     );
+    box-sizing: border-box;
     font-size: var(
         --mod-statuslight-font-size,
         var(--spectrum-statuslight-font-size)
@@ -96,12 +79,10 @@ governing permissions and limitations under the License.
         --mod-statuslight-dot-size,
         var(--spectrum-statuslight-dot-size)
     );
-    forced-color-adjust: none;
     border-radius: var(
         --mod-statuslight-corner-radius,
         var(--spectrum-statuslight-corner-radius)
     );
-    -ms-high-contrast-adjust: none;
     flex-grow: 0;
     flex-shrink: 0;
     margin-block-start: var(--spectrum-statuslight-spacing-computed-top-to-dot);
@@ -261,4 +242,21 @@ governing permissions and limitations under the License.
         --mod-statuslight-nonsemantic-magenta-color,
         var(--spectrum-statuslight-nonsemantic-magenta-color)
     );
+}
+
+@media (forced-colors: active) {
+    :host([dir]) {
+        --highcontrast-statuslight-content-color-default: CanvasText;
+        --highcontrast-statuslight-subdued-content-color-default: CanvasText;
+        forced-color-adjust: none;
+    }
+
+    :host:before {
+        forced-color-adjust: none;
+        border: var(
+                --mod-statuslight-border-width,
+                var(--spectrum-statuslight-border-width)
+            )
+            solid ButtonText;
+    }
 }

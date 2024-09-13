@@ -71,13 +71,14 @@ governing permissions and limitations under the License.
     );
 }
 
-:host:dir(rtl) {
+:host:dir(rtl),
+:host([dir='rtl']) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
 :host:not(.spectrum-Table-scroller) {
-    border-spacing: 0;
     border-collapse: initial;
+    border-spacing: 0;
 }
 
 :host:not(.spectrum-Table-scroller) {

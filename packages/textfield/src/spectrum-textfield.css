@@ -12,8 +12,9 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #textfield {
-    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
+    --spectrum-textfield-input-line-height: var(--spectrum-textfield-height);
     text-overflow: ellipsis;
+    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
     grid-template-rows: auto auto auto;
     grid-template-columns: auto auto;
     margin: 0;
@@ -23,8 +24,8 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet]) #textfield:after {
-    pointer-events: none;
     content: '';
+    pointer-events: none;
     inline-size: 100%;
     block-size: var(
         --mod-textfield-focus-indicator-width,
@@ -118,11 +119,11 @@ governing permissions and limitations under the License.
 }
 
 :host([invalid]) #textfield .icon {
-    inline-size: var(
+    block-size: var(
         --mod-textfield-icon-size-invalid,
         var(--spectrum-textfield-icon-size-invalid)
     );
-    block-size: var(
+    inline-size: var(
         --mod-textfield-icon-size-invalid,
         var(--spectrum-textfield-icon-size-invalid)
     );
@@ -199,13 +200,13 @@ governing permissions and limitations under the License.
 
 .spectrum-Textfield-characterCount {
     inline-size: auto;
-    font-family: var(
-        --mod-textfield-character-count-font-family,
-        var(--spectrum-textfield-character-count-font-family)
-    );
     font-size: var(
         --mod-textfield-character-count-font-size,
         var(--spectrum-textfield-character-count-font-size)
+    );
+    font-family: var(
+        --mod-textfield-character-count-font-family,
+        var(--spectrum-textfield-character-count-font-family)
     );
     font-weight: var(
         --mod-textfield-character-count-font-weight,
@@ -240,6 +241,7 @@ governing permissions and limitations under the License.
 }
 
 .input {
+    line-height: var(--spectrum-textfield-input-line-height);
     box-sizing: border-box;
     inline-size: 100%;
     min-inline-size: var(
@@ -277,27 +279,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-textfield-border-width)
             )
     );
-    font-family: var(
-        --mod-textfield-font-family,
-        var(--spectrum-textfield-font-family)
-    );
-    font-size: var(
-        --mod-textfield-placeholder-font-size,
-        var(--spectrum-textfield-placeholder-font-size)
-    );
-    font-weight: var(
-        --mod-textfield-font-weight,
-        var(--spectrum-textfield-font-weight)
-    );
-    line-height: var(--spectrum-textfield-input-line-height);
-    color: var(
-        --highcontrast-textfield-text-color-default,
-        var(
-            --mod-textfield-text-color-default,
-            var(--spectrum-textfield-text-color-default)
-        )
-    );
-    text-overflow: ellipsis;
     vertical-align: top;
     background-color: var(
         --mod-textfield-background-color,
@@ -319,13 +300,33 @@ governing permissions and limitations under the License.
         --mod-textfield-corner-radius,
         var(--spectrum-textfield-corner-radius)
     );
-    appearance: none;
     transition: border-color
         var(
             --mod-texfield-animation-duration,
             var(--spectrum-texfield-animation-duration)
         )
         ease-in-out;
+    font-size: var(
+        --mod-textfield-placeholder-font-size,
+        var(--spectrum-textfield-placeholder-font-size)
+    );
+    font-family: var(
+        --mod-textfield-font-family,
+        var(--spectrum-textfield-font-family)
+    );
+    font-weight: var(
+        --mod-textfield-font-weight,
+        var(--spectrum-textfield-font-weight)
+    );
+    color: var(
+        --highcontrast-textfield-text-color-default,
+        var(
+            --mod-textfield-text-color-default,
+            var(--spectrum-textfield-text-color-default)
+        )
+    );
+    text-overflow: ellipsis;
+    appearance: none;
     outline: none;
     grid-area: 2 / 1 / auto / span 2;
     margin: 0;
@@ -346,13 +347,14 @@ governing permissions and limitations under the License.
 }
 
 .input::placeholder {
-    font-family: var(
-        --mod-textfield-font-family,
-        var(--spectrum-textfield-font-family)
-    );
+    opacity: 1;
     font-size: var(
         --mod-textfield-placeholder-font-size,
         var(--spectrum-textfield-placeholder-font-size)
+    );
+    font-family: var(
+        --mod-textfield-font-family,
+        var(--spectrum-textfield-font-family)
     );
     font-weight: var(
         --mod-textfield-font-weight,
@@ -365,7 +367,6 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-text-color-default)
         )
     );
-    opacity: 1;
     transition: color
         var(
             --mod-texfield-animation-duration,
@@ -529,12 +530,12 @@ governing permissions and limitations under the License.
 
 .input:disabled,
 :host([disabled]) #textfield .input {
-    resize: none;
-    opacity: 1;
     background-color: var(
         --mod-textfield-background-color-disabled,
         var(--spectrum-textfield-background-color-disabled)
     );
+    resize: none;
+    opacity: 1;
     border-color: #0000;
 }
 
@@ -552,7 +553,6 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet]) .input {
-    resize: none;
     padding-block-start: var(
         --mod-textfield-spacing-block-start,
         var(--spectrum-textfield-spacing-block-start)
@@ -562,6 +562,7 @@ governing permissions and limitations under the License.
         var(--spectrum-textfield-spacing-inline-quiet)
     );
     background-color: initial;
+    resize: none;
     border-block-start-width: 0;
     border-inline-width: 0;
     border-radius: 0;
@@ -597,6 +598,7 @@ governing permissions and limitations under the License.
 
 .input:read-only,
 :host([readonly]) #textfield .input {
+    background-color: initial;
     color: var(
         --highcontrast-textfield-text-color-readonly,
         var(
@@ -604,7 +606,6 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-text-color-readonly)
         )
     );
-    background-color: initial;
     border-color: #0000;
     outline: none;
 }
@@ -670,8 +671,8 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host([invalid]) .input:hover,
-    :host([invalid]:hover) .input {
+    :host([invalid]) .input:hover:not(.is-disabled),
+    :host([invalid]:hover):not(.is-disabled) .input {
         border-color: var(
             --highcontrast-textfield-border-color-invalid-hover,
             var(
@@ -694,12 +695,12 @@ governing permissions and limitations under the License.
     }
 
     :host([disabled]) #textfield:hover .input {
-        resize: none;
-        opacity: 1;
         background-color: var(
             --mod-textfield-background-color-disabled,
             var(--spectrum-textfield-background-color-disabled)
         );
+        resize: none;
+        opacity: 1;
         border-color: #0000;
     }
 
@@ -740,6 +741,7 @@ governing permissions and limitations under the License.
 
     :host([readonly]) #textfield:hover .input,
     :host([readonly]) #textfield:hover .input::placeholder {
+        background-color: initial;
         color: var(
             --highcontrast-textfield-text-color-readonly,
             var(
@@ -747,7 +749,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-textfield-text-color-readonly)
             )
         );
-        background-color: initial;
     }
 }
 
@@ -795,7 +796,6 @@ governing permissions and limitations under the License.
 }
 
 :host([multiline]) .input {
-    resize: inherit;
     min-inline-size: var(
         --mod-text-area-min-inline-size,
         var(--spectrum-text-area-min-inline-size)
@@ -804,6 +804,7 @@ governing permissions and limitations under the License.
         --mod-text-area-min-block-size,
         var(--spectrum-text-area-min-block-size)
     );
+    resize: inherit;
 }
 
 :host([multiline][grows]) .input {
@@ -815,11 +816,11 @@ governing permissions and limitations under the License.
 }
 
 :host([multiline][quiet]) .input {
-    resize: none;
     min-block-size: var(
         --mod-text-area-min-block-size-quiet,
         var(--spectrum-text-area-min-block-size-quiet)
     );
+    resize: none;
     overflow-y: hidden;
 }
 

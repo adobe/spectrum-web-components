@@ -11,6 +11,11 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.chevron:dir(rtl),
+:host([dir='rtl']) .chevron {
+    transform: rotate(-180deg);
+}
+
 .spectrum-Menu-back:focus-visible {
     box-shadow: inset
         calc(
@@ -45,25 +50,7 @@ governing permissions and limitations under the License.
         );
 }
 
-.chevron {
-    inline-size: var(--spectrum-menu-item-checkmark-width);
-    block-size: var(--spectrum-menu-item-checkmark-height);
-    grid-area: chevronArea;
-    align-self: center;
-    margin-inline-end: var(
-        --mod-menu-item-text-to-control,
-        var(--spectrum-menu-item-text-to-control)
-    );
-}
-
-.chevron:dir(rtl) {
-    transform: rotate(-180deg);
-}
-
 .spectrum-Menu-back {
-    padding-block: 0;
-    padding-block: var(--mod-menu-back-padding-block-start, 0)
-        var(--mod-menu-back-padding-block-end, 0);
     padding-inline: 0
         var(
             --mod-menu-back-padding-inline-end,
@@ -74,6 +61,9 @@ governing permissions and limitations under the License.
             --mod-menu-back-padding-inline-end,
             var(--spectrum-menu-item-label-inline-edge-to-content)
         );
+    padding-block: 0;
+    padding-block: var(--mod-menu-back-padding-block-start, 0)
+        var(--mod-menu-back-padding-block-end, 0);
     flex-flow: wrap;
     align-items: center;
     display: flex;
@@ -97,6 +87,13 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Menu-backHeading {
+    color: var(
+        --highcontrast-menu-item-color-default,
+        var(
+            --mod-menu-back-heading-color,
+            var(--spectrum-menu-section-header-color)
+        )
+    );
     font-size: var(
         --mod-menu-section-header-font-size,
         var(--spectrum-menu-section-header-font-size)
@@ -109,31 +106,5 @@ governing permissions and limitations under the License.
         --mod-menu-section-header-line-height,
         var(--spectrum-menu-section-header-line-height)
     );
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(
-            --mod-menu-back-heading-color,
-            var(--spectrum-menu-section-header-color)
-        )
-    );
     display: block;
-}
-
-.spectrum-Menu-backIcon {
-    margin-block: var(
-        --mod-menu-back-icon-margin-block,
-        var(--spectrum-menu-back-icon-margin)
-    );
-    margin-inline: var(
-        --mod-menu-back-icon-margin-inline,
-        var(--spectrum-menu-back-icon-margin)
-    );
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(--mod-menu-back-icon-color-default)
-    );
-    fill: var(
-        --highcontrast-menu-item-color-default,
-        var(--mod-menu-back-icon-color-default)
-    );
 }

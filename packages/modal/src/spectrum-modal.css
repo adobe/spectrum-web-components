@@ -51,21 +51,20 @@ governing permissions and limitations under the License.
 }
 
 .modal {
-    pointer-events: auto;
-    z-index: 1;
     transform: translateY(
         var(
             --mod-modal-confirm-entry-animation-distance,
             var(--spectrum-modal-confirm-entry-animation-distance)
         )
     );
-    max-inline-size: var(
-        --mod-modal-max-width,
-        var(--spectrum-modal-max-width)
-    );
+    z-index: 1;
     max-block-size: var(
         --mod-modal-max-height,
         var(--spectrum-modal-max-height)
+    );
+    max-inline-size: var(
+        --mod-modal-max-width,
+        var(--spectrum-modal-max-width)
     );
     background: var(
         --mod-modal-background-color,
@@ -75,6 +74,7 @@ governing permissions and limitations under the License.
         --mod-modal-confirm-border-radius,
         var(--spectrum-modal-confirm-border-radius)
     );
+    pointer-events: auto;
     transition:
         opacity
             var(
@@ -141,8 +141,8 @@ governing permissions and limitations under the License.
     only screen and (device-width <= 400px) {
     :host([responsive]) .modal {
         inline-size: 100%;
-        max-inline-size: 100%;
         block-size: 100%;
+        max-inline-size: 100%;
         max-block-size: 100%;
         border-radius: 0;
     }
@@ -171,9 +171,9 @@ governing permissions and limitations under the License.
 }
 
 .fullscreenTakeover {
-    box-sizing: border-box;
     max-inline-size: none;
     max-block-size: none;
+    box-sizing: border-box;
     border: none;
     border-radius: 0;
     position: fixed;

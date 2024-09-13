@@ -216,14 +216,6 @@
     --spectrum-tag-clear-button-spacing-block: var(
         --system-tag-clear-button-spacing-block
     );
-    --spectrum-tag-corner-radius: var(--system-tag-corner-radius);
-    --spectrum-tag-spacing-inline-start: var(--system-tag-spacing-inline-start);
-    --spectrum-tag-label-spacing-inline-end: var(
-        --system-tag-label-spacing-inline-end
-    );
-    --spectrum-tag-clear-button-spacing-inline-end: var(
-        --system-tag-clear-button-spacing-inline-end
-    );
 }
 
 :host([size='s']) {
@@ -269,132 +261,46 @@
     );
 }
 
-:host {
-    --spectrum-tag-height: var(--system-tag-size-m-height);
-    --spectrum-tag-font-size: var(--system-tag-size-m-font-size);
-    --spectrum-tag-icon-size: var(--system-tag-size-m-icon-size);
+:scope {
+    --spectrum-tag-height: var(--system-scope-tag-height);
+    --spectrum-tag-font-size: var(--system-scope-tag-font-size);
+    --spectrum-tag-icon-size: var(--system-scope-tag-icon-size);
     --spectrum-tag-clear-button-spacing-inline-start: var(
-        --system-tag-size-m-clear-button-spacing-inline-start
+        --system-scope-tag-clear-button-spacing-inline-start
     );
     --spectrum-tag-clear-button-spacing-block: var(
-        --system-tag-size-m-clear-button-spacing-block
+        --system-scope-tag-clear-button-spacing-block
     );
     --spectrum-tag-icon-spacing-block-start: var(
-        --system-tag-size-m-icon-spacing-block-start
+        --system-scope-tag-icon-spacing-block-start
     );
     --spectrum-tag-icon-spacing-block-end: var(
-        --system-tag-size-m-icon-spacing-block-end
+        --system-scope-tag-icon-spacing-block-end
     );
     --spectrum-tag-icon-spacing-inline-end: var(
-        --system-tag-size-m-icon-spacing-inline-end
+        --system-scope-tag-icon-spacing-inline-end
     );
     --spectrum-tag-avatar-spacing-block-start: var(
-        --system-tag-size-m-avatar-spacing-block-start
+        --system-scope-tag-avatar-spacing-block-start
     );
     --spectrum-tag-avatar-spacing-block-end: var(
-        --system-tag-size-m-avatar-spacing-block-end
+        --system-scope-tag-avatar-spacing-block-end
     );
     --spectrum-tag-avatar-spacing-inline-end: var(
-        --system-tag-size-m-avatar-spacing-inline-end
+        --system-scope-tag-avatar-spacing-inline-end
     );
     --spectrum-tag-label-spacing-block: var(
-        --system-tag-size-m-label-spacing-block
+        --system-scope-tag-label-spacing-block
     );
-    --spectrum-tag-corner-radius: var(--system-tag-size-m-corner-radius);
+    --spectrum-tag-corner-radius: var(--system-scope-tag-corner-radius);
     --spectrum-tag-spacing-inline-start: var(
-        --system-tag-size-m-spacing-inline-start
+        --system-scope-tag-spacing-inline-start
     );
     --spectrum-tag-label-spacing-inline-end: var(
-        --system-tag-size-m-label-spacing-inline-end
+        --system-scope-tag-label-spacing-inline-end
     );
     --spectrum-tag-clear-button-spacing-inline-end: var(
-        --system-tag-size-m-clear-button-spacing-inline-end
-    );
-}
-
-:host([size='l']) {
-    --spectrum-tag-height: var(--system-tag-size-l-height);
-    --spectrum-tag-font-size: var(--system-tag-size-l-font-size);
-    --spectrum-tag-icon-size: var(--system-tag-size-l-icon-size);
-    --spectrum-tag-clear-button-spacing-inline-start: var(
-        --system-tag-size-l-clear-button-spacing-inline-start
-    );
-    --spectrum-tag-clear-button-spacing-block: var(
-        --system-tag-size-l-clear-button-spacing-block
-    );
-    --spectrum-tag-icon-spacing-block-start: var(
-        --system-tag-size-l-icon-spacing-block-start
-    );
-    --spectrum-tag-icon-spacing-block-end: var(
-        --system-tag-size-l-icon-spacing-block-end
-    );
-    --spectrum-tag-icon-spacing-inline-end: var(
-        --system-tag-size-l-icon-spacing-inline-end
-    );
-    --spectrum-tag-avatar-spacing-block-start: var(
-        --system-tag-size-l-avatar-spacing-block-start
-    );
-    --spectrum-tag-avatar-spacing-block-end: var(
-        --system-tag-size-l-avatar-spacing-block-end
-    );
-    --spectrum-tag-avatar-spacing-inline-end: var(
-        --system-tag-size-l-avatar-spacing-inline-end
-    );
-    --spectrum-tag-label-spacing-block: var(
-        --system-tag-size-l-label-spacing-block
-    );
-    --spectrum-tag-corner-radius: var(--system-tag-size-l-corner-radius);
-    --spectrum-tag-spacing-inline-start: var(
-        --system-tag-size-l-spacing-inline-start
-    );
-    --spectrum-tag-label-spacing-inline-end: var(
-        --system-tag-size-l-label-spacing-inline-end
-    );
-    --spectrum-tag-clear-button-spacing-inline-end: var(
-        --system-tag-size-l-clear-button-spacing-inline-end
-    );
-}
-
-:host([size='s']) {
-    --spectrum-tag-height: var(--system-tag-size-s-height);
-    --spectrum-tag-font-size: var(--system-tag-size-s-font-size);
-    --spectrum-tag-icon-size: var(--system-tag-size-s-icon-size);
-    --spectrum-tag-clear-button-spacing-inline-start: var(
-        --system-tag-size-s-clear-button-spacing-inline-start
-    );
-    --spectrum-tag-clear-button-spacing-block: var(
-        --system-tag-size-s-clear-button-spacing-block
-    );
-    --spectrum-tag-icon-spacing-block-start: var(
-        --system-tag-size-s-icon-spacing-block-start
-    );
-    --spectrum-tag-icon-spacing-block-end: var(
-        --system-tag-size-s-icon-spacing-block-end
-    );
-    --spectrum-tag-icon-spacing-inline-end: var(
-        --system-tag-size-s-icon-spacing-inline-end
-    );
-    --spectrum-tag-avatar-spacing-block-start: var(
-        --system-tag-size-s-avatar-spacing-block-start
-    );
-    --spectrum-tag-avatar-spacing-block-end: var(
-        --system-tag-size-s-avatar-spacing-block-end
-    );
-    --spectrum-tag-avatar-spacing-inline-end: var(
-        --system-tag-size-s-avatar-spacing-inline-end
-    );
-    --spectrum-tag-label-spacing-block: var(
-        --system-tag-size-s-label-spacing-block
-    );
-    --spectrum-tag-corner-radius: var(--system-tag-size-s-corner-radius);
-    --spectrum-tag-spacing-inline-start: var(
-        --system-tag-size-s-spacing-inline-start
-    );
-    --spectrum-tag-label-spacing-inline-end: var(
-        --system-tag-size-s-label-spacing-inline-end
-    );
-    --spectrum-tag-clear-button-spacing-inline-end: var(
-        --system-tag-size-s-clear-button-spacing-inline-end
+        --system-scope-tag-clear-button-spacing-inline-end
     );
 }
 

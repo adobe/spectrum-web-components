@@ -12,10 +12,10 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    z-index: 0;
     inline-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
     block-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
     vertical-align: top;
+    z-index: 0;
     margin: 0;
     padding: 0;
     display: block;
@@ -64,17 +64,17 @@ governing permissions and limitations under the License.
 
 :host([focused]):after {
     content: '';
+    border-style: solid;
+    border-width: var(
+        --mod-thumbnail-focus-indicator-thickness,
+        var(--spectrum-thumbnail-focus-indicator-thickness)
+    );
     border-color: var(
         --highcontrast-thumbnail-focus-indicator-color,
         var(
             --mod-thumbnail-focus-indicator-color,
             var(--spectrum-thumbnail-focus-indicator-color)
         )
-    );
-    border-style: solid;
-    border-width: var(
-        --mod-thumbnail-focus-indicator-thickness,
-        var(--spectrum-thumbnail-focus-indicator-thickness)
     );
     border-radius: var(
         --mod-thumbnail-border-radius,
@@ -140,7 +140,11 @@ governing permissions and limitations under the License.
 }
 
 :host([layer]) {
-    box-sizing: border-box;
+    border-style: solid;
+    border-width: var(
+        --mod-thumbnail-layer-border-width-outer,
+        var(--spectrum-thumbnail-layer-border-width-outer)
+    );
     border-color: var(
         --highcontrast-thumbnail-layer-border-color-outer,
         var(
@@ -148,11 +152,7 @@ governing permissions and limitations under the License.
             var(--spectrum-thumbnail-layer-border-color-outer)
         )
     );
-    border-style: solid;
-    border-width: var(
-        --mod-thumbnail-layer-border-width-outer,
-        var(--spectrum-thumbnail-layer-border-width-outer)
-    );
+    box-sizing: border-box;
     justify-content: center;
     align-items: center;
     display: flex;
@@ -163,6 +163,7 @@ governing permissions and limitations under the License.
 }
 
 :host([layer][selected]) {
+    outline-style: solid;
     outline-color: var(
         --highcontrast-thumbnail-border-color-selected,
         var(
@@ -170,7 +171,6 @@ governing permissions and limitations under the License.
             var(--spectrum-thumbnail-border-color-selected)
         )
     );
-    outline-style: solid;
     outline-width: var(
         --mod-thumbnail-border-width-selected,
         var(--spectrum-thumbnail-border-width-selected)
@@ -206,6 +206,7 @@ governing permissions and limitations under the License.
                 )
             ) * 2
     );
+    outline-style: solid;
     outline-color: var(
         --highcontrast-thumbnail-layer-border-color-inner,
         var(
@@ -213,7 +214,6 @@ governing permissions and limitations under the License.
             var(--spectrum-thumbnail-layer-border-color-inner)
         )
     );
-    outline-style: solid;
     outline-width: calc(
         var(
                 --mod-thumbnail-layer-border-width-inner,
@@ -238,23 +238,23 @@ governing permissions and limitations under the License.
 }
 
 ::slotted(*) {
-    z-index: 1;
     max-inline-size: 100%;
     max-block-size: 100%;
+    z-index: 1;
     position: relative;
 }
 
 :host([cover]) ::slotted(*) {
-    inline-size: 100%;
     block-size: 100%;
+    inline-size: 100%;
     object-fit: cover;
     object-position: center;
 }
 
 .background {
     z-index: 0;
-    inline-size: 100%;
     block-size: 100%;
+    inline-size: 100%;
     border-radius: var(
         --mod-thumbnail-border-radius,
         var(--spectrum-thumbnail-border-radius)

@@ -91,24 +91,14 @@
     --spectrum-card-horizontal-preview-padding: var(
         --system-card-horizontal-preview-padding
     );
+    --spectrum-card-content-margin-top-quiet: var(
+        --system-card-content-margin-top-quiet
+    );
+    --spectrum-card-minimum-width-quiet: var(--system-card-minimum-width-quiet);
 }
 
 :host .spectrum--lightest {
     --spectrum-card-selected-background-color-rgb: var(
         --system-card-lightest-selected-background-color-rgb
     );
-}
-
-:host([variant='quiet']) {
-    --spectrum-card-content-margin-top: var(
-        --system-card-quiet-content-margin-top
-    );
-    --spectrum-card-minimum-width: var(--system-card-quiet-minimum-width);
-}
-
-:host([variant='gallery']) {
-    --spectrum-card-content-margin-top: var(
-        --system-card-gallery-content-margin-top
-    );
-    --spectrum-card-minimum-width: var(--system-card-gallery-minimum-width);
 }
