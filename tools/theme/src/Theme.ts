@@ -93,10 +93,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this._provideContext();
         } else if (attrName === 'theme') {
             this.theme = value as SystemVariant;
-            warnDeprecatedSystem(this, value as SystemVariant);
+            warnBetaSystem(this, value as SystemVariant);
         } else if (attrName === 'system') {
             this.system = value as SystemVariant;
-            warnDeprecatedSystem(this, value as SystemVariant);
+            warnBetaSystem(this, value as SystemVariant);
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
         }
@@ -443,22 +443,14 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 }
 
-function warnDeprecatedSystem(instance: Theme, value: SystemVariant): void {
-    if (window.__swc.DEBUG) {
+function warnBetaSystem(instance: Theme, value: SystemVariant): void {
+    if (window.__swc.DEBUG && value === 'spectrum-two') {
         window.__swc.warn(
             instance,
-            'property theme in <sp-theme> has been deprecated. Please use system instead like this <sp-theme system="spectrum"/>',
-            'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
-            { level: 'deprecation' }
+            'You are currently using the beta version of the Spectrum Two system. Consumption of this system may be subject to unexpected changes before the 1.0 release of SWC.',
+            'https://s2.spectrum.adobe.com/',
+            { level: 'high' }
         );
-        if (value === 'spectrum-two') {
-            window.__swc.warn(
-                instance,
-                'You are currently using the beta version of Spectrum Two theme. Consumption of this system may be subject to unexpected changes before the 1.0 release of SWC.',
-                'https://s2.spectrum.adobe.com/',
-                { level: 'high' }
-            );
-        }
     }
 }
 
@@ -474,8 +466,8 @@ function checkForIssues(
         const issues: string[] = [];
         const checkForAttribute = (
             name: 'system' | 'color' | 'scale',
-            resolvedValue?: string,
-            actualValue?: string
+            resolvedValue: string,
+            actualValue: string | null
         ): void => {
             const systemModifier =
                 system && system !== 'spectrum' ? `-${system}` : '';
@@ -500,15 +492,15 @@ function checkForIssues(
                 );
             }
         };
-        checkForAttribute('system', system, system);
-        checkForAttribute('color', color, color);
-        checkForAttribute('scale', scale, scale);
 
         if (hasThemeAttribute) {
             issues.push(
-                `The "theme" attribute has been deprecated in favor of "system".`
+                `DEPRECATION NOTICE: the "theme" attribute has been deprecated in favor of "system". For more information, see: https://opensource.adobe.com/spectrum-web-components/tools/theme/`
             );
         }
+        checkForAttribute('system', system, instance.getAttribute('system'));
+        checkForAttribute('color', color, instance.getAttribute('color'));
+        checkForAttribute('scale', scale, instance.getAttribute('scale'));
 
         if (issues.length) {
             window.__swc.warn(
@@ -522,7 +514,7 @@ function checkForIssues(
         if (['lightest', 'darkest'].includes(color || '')) {
             window.__swc.warn(
                 instance,
-                `Color lightest and darkest are deprecated and will be removed in a future release`,
+                `Color "lightest" and "darkest" are deprecated and will be removed in a future release.`,
                 'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
                 { level: 'deprecation' }
             );
