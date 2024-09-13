@@ -15,7 +15,7 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import {
     DateTimePicker,
     EditableSegmentType,
-    SegmentType,
+    SegmentTypes,
 } from '@spectrum-web-components/date-time-picker';
 import { sendKeys } from '@web/test-runner-commands';
 import {
@@ -128,7 +128,7 @@ describe('DateTimePicker', () => {
 
         describe('using the up arrow key', () => {
             it("defining the year segment's value", async () => {
-                const segment = editableSegments.getByType(SegmentType.Year);
+                const segment = editableSegments.getByType(SegmentTypes.Year);
 
                 segment.focus();
                 await sendKeys({ press: 'ArrowUp' });
@@ -139,7 +139,7 @@ describe('DateTimePicker', () => {
             });
 
             it("incrementing the year segment's value", async () => {
-                const segment = editableSegments.getByType(SegmentType.Year);
+                const segment = editableSegments.getByType(SegmentTypes.Year);
 
                 segment.focus();
                 await sendKeys({ press: 'ArrowUp' });
@@ -151,7 +151,7 @@ describe('DateTimePicker', () => {
                 expectPlaceholders(editableSegments, [segment]);
             });
 
-            [SegmentType.Month, SegmentType.Day].forEach((segmentType) => {
+            [SegmentTypes.Month, SegmentTypes.Day].forEach((segmentType) => {
                 it(`defining the ${segmentType} segment's value`, async () => {
                     const segment = editableSegments.getByType(
                         segmentType as EditableSegmentType
@@ -181,40 +181,42 @@ describe('DateTimePicker', () => {
                 });
             });
 
-            [SegmentType.Minute, SegmentType.Second].forEach((segmentType) => {
-                it(`defining the ${segmentType} segment's value`, async () => {
-                    const segment = editableSegments.getByType(
-                        segmentType as EditableSegmentType
-                    );
+            [SegmentTypes.Minute, SegmentTypes.Second].forEach(
+                (segmentType) => {
+                    it(`defining the ${segmentType} segment's value`, async () => {
+                        const segment = editableSegments.getByType(
+                            segmentType as EditableSegmentType
+                        );
 
-                    segment.focus();
-                    await sendKeys({ press: 'ArrowUp' });
-                    await elementUpdated(element);
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
 
-                    expect(segment.innerText).to.equal(`00`);
-                    expectPlaceholders(editableSegments, [segment]);
-                });
+                        expect(segment.innerText).to.equal(`00`);
+                        expectPlaceholders(editableSegments, [segment]);
+                    });
 
-                it(`incrementing the ${segmentType} segment's value`, async () => {
-                    const segment = editableSegments.getByType(
-                        segmentType as EditableSegmentType
-                    );
+                    it(`incrementing the ${segmentType} segment's value`, async () => {
+                        const segment = editableSegments.getByType(
+                            segmentType as EditableSegmentType
+                        );
 
-                    segment.focus();
-                    await sendKeys({ press: 'ArrowUp' });
-                    await sendKeys({ press: 'ArrowUp' });
-                    await sendKeys({ press: 'ArrowUp' });
-                    await elementUpdated(element);
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowUp' });
+                        await sendKeys({ press: 'ArrowUp' });
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
 
-                    expect(segment.innerText).to.equal(`02`);
-                    expectPlaceholders(editableSegments, [segment]);
-                });
-            });
+                        expect(segment.innerText).to.equal(`02`);
+                        expectPlaceholders(editableSegments, [segment]);
+                    });
+                }
+            );
 
             describe('on a 12h format', () => {
                 it("defining the hour segment's value", async () => {
                     const hourSegment = editableSegments.getByType(
-                        SegmentType.Hour
+                        SegmentTypes.Hour
                     );
 
                     hourSegment.focus();
@@ -227,7 +229,7 @@ describe('DateTimePicker', () => {
 
                 it("incrementing the hour segment's value", async () => {
                     const hourSegment = editableSegments.getByType(
-                        SegmentType.Hour
+                        SegmentTypes.Hour
                     );
 
                     hourSegment.focus();
@@ -242,7 +244,7 @@ describe('DateTimePicker', () => {
 
                 it('resetting the hour when the max is reached', async () => {
                     const hourSegment = editableSegments.getByType(
-                        SegmentType.Hour
+                        SegmentTypes.Hour
                     );
 
                     hourSegment.focus();
@@ -255,7 +257,7 @@ describe('DateTimePicker', () => {
 
                 it("defining the dayPeriod segment's value", async () => {
                     const dayPeriodSegment = editableSegments.getByType(
-                        SegmentType.DayPeriod
+                        SegmentTypes.DayPeriod
                     );
 
                     dayPeriodSegment.focus();
@@ -268,7 +270,7 @@ describe('DateTimePicker', () => {
 
                 it("toggling the dayPeriod segment's value", async () => {
                     const dayPeriodSegment = editableSegments.getByType(
-                        SegmentType.DayPeriod
+                        SegmentTypes.DayPeriod
                     );
 
                     dayPeriodSegment.focus();
@@ -289,7 +291,7 @@ describe('DateTimePicker', () => {
                     await elementUpdated(element);
 
                     editableSegments = getEditableSegments(element);
-                    hourSegment = editableSegments.getByType(SegmentType.Hour);
+                    hourSegment = editableSegments.getByType(SegmentTypes.Hour);
                 });
 
                 it("defining the hour segment's value ", async () => {
@@ -326,11 +328,11 @@ describe('DateTimePicker', () => {
                 let yearSegment: HTMLElement;
 
                 beforeEach(async () => {
-                    daySegment = editableSegments.getByType(SegmentType.Day);
+                    daySegment = editableSegments.getByType(SegmentTypes.Day);
                     monthSegment = editableSegments.getByType(
-                        SegmentType.Month
+                        SegmentTypes.Month
                     );
-                    yearSegment = editableSegments.getByType(SegmentType.Year);
+                    yearSegment = editableSegments.getByType(SegmentTypes.Year);
 
                     daySegment.focus();
                     await sendKeys({ press: 'ArrowDown' });
@@ -436,7 +438,7 @@ describe('DateTimePicker', () => {
                         element.value = value.set({ year: max });
                         await elementUpdated(element);
                         const segment = editableSegments.getByType(
-                            SegmentType.Year
+                            SegmentTypes.Year
                         );
 
                         segment.focus();
@@ -459,7 +461,7 @@ describe('DateTimePicker', () => {
                         element.value = value.set({ month: max });
                         await elementUpdated(element);
                         const segment = editableSegments.getByType(
-                            SegmentType.Month
+                            SegmentTypes.Month
                         );
 
                         segment.focus();
@@ -482,7 +484,7 @@ describe('DateTimePicker', () => {
                         element.value = value.set({ day: 31 });
                         await elementUpdated(element);
                         const segment = editableSegments.getByType(
-                            SegmentType.Day
+                            SegmentTypes.Day
                         );
 
                         segment.focus();
@@ -513,7 +515,7 @@ describe('DateTimePicker', () => {
                         element.value = value.set({ day: 28 });
                         await elementUpdated(element);
                         const segment = editableSegments.getByType(
-                            SegmentType.Day
+                            SegmentTypes.Day
                         );
 
                         segment.focus();
@@ -544,7 +546,7 @@ describe('DateTimePicker', () => {
                         element.value = value.set({ day: 29 });
                         await elementUpdated(element);
                         const segment = editableSegments.getByType(
-                            SegmentType.Day
+                            SegmentTypes.Day
                         );
 
                         segment.focus();
@@ -554,7 +556,7 @@ describe('DateTimePicker', () => {
                         expect(segment.innerText).to.equal('01');
                     });
 
-                    [SegmentType.Minute, SegmentType.Second].forEach(
+                    [SegmentTypes.Minute, SegmentTypes.Second].forEach(
                         (segmentType) => {
                             it(`when the max ${segmentType} is reached`, async () => {
                                 element = await fixtureElement({
@@ -588,7 +590,7 @@ describe('DateTimePicker', () => {
                 describe('with no fully defined date value', () => {
                     it('when the max month is reached', async () => {
                         const segment = editableSegments.getByType(
-                            SegmentType.Month
+                            SegmentTypes.Month
                         );
 
                         segment.focus();
@@ -601,7 +603,7 @@ describe('DateTimePicker', () => {
 
                     it('when the max day is reached as a single segment', async () => {
                         const segment = editableSegments.getByType(
-                            SegmentType.Day
+                            SegmentTypes.Day
                         );
 
                         segment.focus();
@@ -614,10 +616,10 @@ describe('DateTimePicker', () => {
 
                     it('when the max day is reached in February', async () => {
                         const daySegment = editableSegments.getByType(
-                            SegmentType.Day
+                            SegmentTypes.Day
                         );
                         const monthSegment = editableSegments.getByType(
-                            SegmentType.Month
+                            SegmentTypes.Month
                         );
                         monthSegment.focus();
                         await sendKeyMultipleTimes('ArrowUp', 2);
@@ -639,7 +641,7 @@ describe('DateTimePicker', () => {
         describe('using the down arrow key', () => {
             it("defining the year segment's value", async () => {
                 const yearSegment = editableSegments.getByType(
-                    SegmentType.Year
+                    SegmentTypes.Year
                 );
 
                 yearSegment.focus();
@@ -652,7 +654,7 @@ describe('DateTimePicker', () => {
 
             it("decrementing the year segment's value", async () => {
                 const yearSegment = editableSegments.getByType(
-                    SegmentType.Year
+                    SegmentTypes.Year
                 );
 
                 yearSegment.focus();
@@ -666,7 +668,7 @@ describe('DateTimePicker', () => {
             });
 
             it(`defining the month segment's value`, async () => {
-                const segment = editableSegments.getByType(SegmentType.Month);
+                const segment = editableSegments.getByType(SegmentTypes.Month);
 
                 segment.focus();
                 await sendKeys({ press: 'ArrowDown' });
@@ -677,7 +679,7 @@ describe('DateTimePicker', () => {
             });
 
             it(`decrementing the month segment's value`, async () => {
-                const segment = editableSegments.getByType(SegmentType.Month);
+                const segment = editableSegments.getByType(SegmentTypes.Month);
 
                 segment.focus();
                 await sendKeys({ press: 'ArrowDown' });
@@ -690,7 +692,7 @@ describe('DateTimePicker', () => {
             });
 
             it(`defining the day segment's value`, async () => {
-                const segment = editableSegments.getByType(SegmentType.Day);
+                const segment = editableSegments.getByType(SegmentTypes.Day);
 
                 segment.focus();
                 await sendKeys({ press: 'ArrowDown' });
@@ -701,7 +703,7 @@ describe('DateTimePicker', () => {
             });
 
             it(`decrementing the day segment's value`, async () => {
-                const segment = editableSegments.getByType(SegmentType.Day);
+                const segment = editableSegments.getByType(SegmentTypes.Day);
 
                 segment.focus();
                 await sendKeys({ press: 'ArrowDown' });
@@ -713,44 +715,46 @@ describe('DateTimePicker', () => {
                 expectPlaceholders(editableSegments, [segment]);
             });
 
-            [SegmentType.Minute, SegmentType.Second].forEach((segmentType) => {
-                it(`defining the ${segmentType} segment's value`, async () => {
-                    const segment = editableSegments.getByType(
-                        segmentType as EditableSegmentType
-                    );
+            [SegmentTypes.Minute, SegmentTypes.Second].forEach(
+                (segmentType) => {
+                    it(`defining the ${segmentType} segment's value`, async () => {
+                        const segment = editableSegments.getByType(
+                            segmentType as EditableSegmentType
+                        );
 
-                    segment.focus();
-                    await sendKeys({ press: 'ArrowDown' });
-                    await elementUpdated(element);
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowDown' });
+                        await elementUpdated(element);
 
-                    expect(segment.innerText).to.equal(`59`);
-                    expectPlaceholders(editableSegments, [segment]);
-                });
+                        expect(segment.innerText).to.equal(`59`);
+                        expectPlaceholders(editableSegments, [segment]);
+                    });
 
-                it(`decrementing the ${segmentType} segment's value`, async () => {
-                    const segment = editableSegments.getByType(
-                        segmentType as EditableSegmentType
-                    );
+                    it(`decrementing the ${segmentType} segment's value`, async () => {
+                        const segment = editableSegments.getByType(
+                            segmentType as EditableSegmentType
+                        );
 
-                    segment.focus();
-                    await sendKeys({ press: 'ArrowDown' });
-                    await sendKeys({ press: 'ArrowDown' });
-                    await sendKeys({ press: 'ArrowDown' });
-                    await elementUpdated(element);
+                        segment.focus();
+                        await sendKeys({ press: 'ArrowDown' });
+                        await sendKeys({ press: 'ArrowDown' });
+                        await sendKeys({ press: 'ArrowDown' });
+                        await elementUpdated(element);
 
-                    expect(segment.innerText).to.equal(`57`);
-                    expectPlaceholders(editableSegments, [segment]);
-                });
-            });
+                        expect(segment.innerText).to.equal(`57`);
+                        expectPlaceholders(editableSegments, [segment]);
+                    });
+                }
+            );
 
             describe('on a 12h format', () => {
                 let hourSegment: HTMLElement;
                 let dayPeriodSegment: HTMLElement;
 
                 beforeEach(async () => {
-                    hourSegment = editableSegments.getByType(SegmentType.Hour);
+                    hourSegment = editableSegments.getByType(SegmentTypes.Hour);
                     dayPeriodSegment = editableSegments.getByType(
-                        SegmentType.DayPeriod
+                        SegmentTypes.DayPeriod
                     );
                 });
 
@@ -811,7 +815,7 @@ describe('DateTimePicker', () => {
                     await elementUpdated(element);
 
                     editableSegments = getEditableSegments(element);
-                    hourSegment = editableSegments.getByType(SegmentType.Hour);
+                    hourSegment = editableSegments.getByType(SegmentTypes.Hour);
                 });
 
                 it("defining the hour segment's value", async () => {
@@ -848,11 +852,11 @@ describe('DateTimePicker', () => {
                 let yearSegment: HTMLElement;
 
                 beforeEach(async () => {
-                    daySegment = editableSegments.getByType(SegmentType.Day);
+                    daySegment = editableSegments.getByType(SegmentTypes.Day);
                     monthSegment = editableSegments.getByType(
-                        SegmentType.Month
+                        SegmentTypes.Month
                     );
-                    yearSegment = editableSegments.getByType(SegmentType.Year);
+                    yearSegment = editableSegments.getByType(SegmentTypes.Year);
 
                     daySegment.focus();
                     await sendKeys({ press: 'ArrowDown' });
@@ -954,7 +958,7 @@ describe('DateTimePicker', () => {
                         element.value = value.set({ year: 1 });
                         await elementUpdated(element);
                         const segment = editableSegments.getByType(
-                            SegmentType.Year
+                            SegmentTypes.Year
                         );
 
                         segment.focus();
@@ -977,7 +981,7 @@ describe('DateTimePicker', () => {
                         element.value = value.set({ month: 1 });
                         await elementUpdated(element);
                         const segment = editableSegments.getByType(
-                            SegmentType.Month
+                            SegmentTypes.Month
                         );
 
                         segment.focus();
@@ -1000,7 +1004,7 @@ describe('DateTimePicker', () => {
                         element.value = value.set({ day: 1 });
                         await elementUpdated(element);
                         const segment = editableSegments.getByType(
-                            SegmentType.Day
+                            SegmentTypes.Day
                         );
 
                         segment.focus();
@@ -1031,7 +1035,7 @@ describe('DateTimePicker', () => {
                         element.value = value.set({ day: 1 });
                         await elementUpdated(element);
                         const segment = editableSegments.getByType(
-                            SegmentType.Day
+                            SegmentTypes.Day
                         );
 
                         segment.focus();
@@ -1062,7 +1066,7 @@ describe('DateTimePicker', () => {
                         element.value = value.set({ day: 1 });
                         await elementUpdated(element);
                         const segment = editableSegments.getByType(
-                            SegmentType.Day
+                            SegmentTypes.Day
                         );
 
                         segment.focus();
@@ -1072,7 +1076,7 @@ describe('DateTimePicker', () => {
                         expect(segment.innerText).to.equal('29');
                     });
 
-                    [SegmentType.Minute, SegmentType.Second].forEach(
+                    [SegmentTypes.Minute, SegmentTypes.Second].forEach(
                         (segmentType) => {
                             it(`when the min ${segmentType} is reached`, async () => {
                                 element = await fixtureElement({
@@ -1106,7 +1110,7 @@ describe('DateTimePicker', () => {
                 describe('with no fully defined date value', () => {
                     it('when the min month is reached', async () => {
                         const segment = editableSegments.getByType(
-                            SegmentType.Month
+                            SegmentTypes.Month
                         );
 
                         segment.focus();
@@ -1121,7 +1125,7 @@ describe('DateTimePicker', () => {
 
                     it('when the min day is reached as a single segment', async () => {
                         const segment = editableSegments.getByType(
-                            SegmentType.Day
+                            SegmentTypes.Day
                         );
 
                         segment.focus();
@@ -1136,10 +1140,10 @@ describe('DateTimePicker', () => {
 
                     it('when the min day is reached in February', async () => {
                         const daySegment = editableSegments.getByType(
-                            SegmentType.Day
+                            SegmentTypes.Day
                         );
                         const monthSegment = editableSegments.getByType(
-                            SegmentType.Month
+                            SegmentTypes.Month
                         );
                         monthSegment.focus();
                         await sendKeyMultipleTimes('ArrowUp', 2);
@@ -1161,7 +1165,7 @@ describe('DateTimePicker', () => {
         });
 
         describe('using typed in values', () => {
-            [SegmentType.Year, SegmentType.Month, SegmentType.Day].forEach(
+            [SegmentTypes.Year, SegmentTypes.Month, SegmentTypes.Day].forEach(
                 (segmentType) => {
                     it(`the ${segmentType} segment should ignore initial zeros`, async () => {
                         const segment = editableSegments.getByType(
@@ -1178,7 +1182,7 @@ describe('DateTimePicker', () => {
             );
 
             it("on the year segment's value", async () => {
-                const segment = editableSegments.getByType(SegmentType.Year);
+                const segment = editableSegments.getByType(SegmentTypes.Year);
 
                 segment.focus();
                 await sendKeys({ type: '2' });
@@ -1196,7 +1200,7 @@ describe('DateTimePicker', () => {
             });
 
             it("on the month segment's value", async () => {
-                const segment = editableSegments.getByType(SegmentType.Month);
+                const segment = editableSegments.getByType(SegmentTypes.Month);
 
                 segment.focus();
                 await sendKeys({ type: '2' });
@@ -1222,11 +1226,11 @@ describe('DateTimePicker', () => {
                 let daySegment: HTMLElement;
 
                 beforeEach(async () => {
-                    yearSegment = editableSegments.getByType(SegmentType.Year);
+                    yearSegment = editableSegments.getByType(SegmentTypes.Year);
                     monthSegment = editableSegments.getByType(
-                        SegmentType.Month
+                        SegmentTypes.Month
                     );
-                    daySegment = editableSegments.getByType(SegmentType.Day);
+                    daySegment = editableSegments.getByType(SegmentTypes.Day);
                 });
 
                 it('when no month/year is defined', async () => {
@@ -1363,7 +1367,7 @@ describe('DateTimePicker', () => {
             describe('in a 12h format', () => {
                 it("on the hour segment's value", async () => {
                     const segment = editableSegments.getByType(
-                        SegmentType.Hour
+                        SegmentTypes.Hour
                     );
 
                     segment.focus();
@@ -1385,7 +1389,7 @@ describe('DateTimePicker', () => {
 
                 it("on the dayPeriod segment's value using A/P keys", async () => {
                     const dayPeriodSegment = editableSegments.getByType(
-                        SegmentType.DayPeriod
+                        SegmentTypes.DayPeriod
                     );
 
                     dayPeriodSegment.focus();
@@ -1406,7 +1410,7 @@ describe('DateTimePicker', () => {
                 element = await fixtureElement({ locale: 'en-GB' });
                 await elementUpdated(element);
                 editableSegments = getEditableSegments(element);
-                const segment = editableSegments.getByType(SegmentType.Hour);
+                const segment = editableSegments.getByType(SegmentTypes.Hour);
 
                 segment.focus();
                 await sendKeys({ type: '0' });
@@ -1431,26 +1435,28 @@ describe('DateTimePicker', () => {
                 expectPlaceholders(editableSegments, [segment]);
             });
 
-            [SegmentType.Minute, SegmentType.Second].forEach((segmentType) => {
-                it(`on the ${segmentType} segment's value`, async () => {
-                    const segment = editableSegments.getByType(
-                        segmentType as EditableSegmentType
-                    );
+            [SegmentTypes.Minute, SegmentTypes.Second].forEach(
+                (segmentType) => {
+                    it(`on the ${segmentType} segment's value`, async () => {
+                        const segment = editableSegments.getByType(
+                            segmentType as EditableSegmentType
+                        );
 
-                    segment.focus();
-                    await sendKeys({ type: '5' });
-                    await elementUpdated(element);
-                    expect(segment.innerText).to.equal('05');
-                    await sendKeys({ type: '8' });
-                    await elementUpdated(element);
-                    expect(segment.innerText).to.equal('58');
-                    await sendKeys({ type: '0' });
-                    await elementUpdated(element);
-                    expect(segment.innerText).to.equal('00');
+                        segment.focus();
+                        await sendKeys({ type: '5' });
+                        await elementUpdated(element);
+                        expect(segment.innerText).to.equal('05');
+                        await sendKeys({ type: '8' });
+                        await elementUpdated(element);
+                        expect(segment.innerText).to.equal('58');
+                        await sendKeys({ type: '0' });
+                        await elementUpdated(element);
+                        expect(segment.innerText).to.equal('00');
 
-                    expectPlaceholders(editableSegments, [segment]);
-                });
-            });
+                        expectPlaceholders(editableSegments, [segment]);
+                    });
+                }
+            );
 
             describe('updating the day', () => {
                 let yearSegment: HTMLElement;
@@ -1458,11 +1464,11 @@ describe('DateTimePicker', () => {
                 let daySegment: HTMLElement;
 
                 beforeEach(async () => {
-                    yearSegment = editableSegments.getByType(SegmentType.Year);
+                    yearSegment = editableSegments.getByType(SegmentTypes.Year);
                     monthSegment = editableSegments.getByType(
-                        SegmentType.Month
+                        SegmentTypes.Month
                     );
-                    daySegment = editableSegments.getByType(SegmentType.Day);
+                    daySegment = editableSegments.getByType(SegmentTypes.Day);
 
                     daySegment.focus();
                     await sendKeys({ type: '31' });
@@ -1555,7 +1561,7 @@ describe('DateTimePicker', () => {
             });
 
             it('from the year segment using incremental deletion', async () => {
-                const segment = editableSegments.getByType(SegmentType.Year);
+                const segment = editableSegments.getByType(SegmentTypes.Year);
 
                 segment.focus();
                 await sendKeys({ press: 'Delete' });
@@ -1577,12 +1583,12 @@ describe('DateTimePicker', () => {
             });
 
             [
-                SegmentType.Month,
-                SegmentType.Day,
-                SegmentType.Hour,
-                SegmentType.Minute,
-                SegmentType.Second,
-                SegmentType.DayPeriod,
+                SegmentTypes.Month,
+                SegmentTypes.Day,
+                SegmentTypes.Hour,
+                SegmentTypes.Minute,
+                SegmentTypes.Second,
+                SegmentTypes.DayPeriod,
             ].forEach((segmentType) => {
                 it(`from the ${segmentType} segment using mass deletion`, async () => {
                     const segment = editableSegments.getByType(

@@ -29,10 +29,6 @@
             "development": "./src/DateTimePicker.dev.js",
             "default": "./src/DateTimePicker.js"
         },
-        "./src/SegmentsManager.js": {
-            "development": "./src/SegmentsManager.dev.js",
-            "default": "./src/SegmentsManager.js"
-        },
         "./src/date-time-picker.css.js": "./src/date-time-picker.css.js",
         "./src/helpers.js": {
             "development": "./src/helpers.dev.js",

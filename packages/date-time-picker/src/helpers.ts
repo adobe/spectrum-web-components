@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { AM, PM } from './types';
 import { CalendarDate, CalendarDateTime } from '@internationalized/date';
+import { AM, PM } from './types';
 
 /**
  * An utility to check if the given value is a number (not `undefined`)

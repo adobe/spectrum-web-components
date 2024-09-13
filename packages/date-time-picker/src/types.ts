@@ -12,29 +12,50 @@ import { DateValue } from '@spectrum-web-components/calendar';
 
 export type DateTimePickerValue = DateValue;
 
-export enum SegmentType {
-    Year = 'year',
-    Month = 'month',
-    Day = 'day',
-    Hour = 'hour',
-    Minute = 'minute',
-    Second = 'second',
-    DayPeriod = 'dayPeriod',
-    Literal = 'literal',
-}
+export const SegmentTypes = {
+    Year: 'year',
+    Month: 'month',
+    Day: 'day',
+    Hour: 'hour',
+    Minute: 'minute',
+    Second: 'second',
+    DayPeriod: 'dayPeriod',
+    Literal: 'literal',
+} as const;
+
+export type SegmentType = (typeof SegmentTypes)[keyof typeof SegmentTypes];
 
 export type EditableSegmentType = Exclude<SegmentType, 'literal'>;
+
+export const DateSegmentTypes = {
+    Day: SegmentTypes.Day,
+    Month: SegmentTypes.Month,
+    Year: SegmentTypes.Year,
+} as const;
+
+export type DateSegmentType =
+    (typeof DateSegmentTypes)[keyof typeof DateSegmentTypes];
+
+export const TimeSegmentTypes = {
+    Hour: SegmentTypes.Hour,
+    Minute: SegmentTypes.Minute,
+    Second: SegmentTypes.Second,
+    DayPeriod: SegmentTypes.DayPeriod,
+} as const;
+
+export type TimeSegmentType =
+    (typeof TimeSegmentTypes)[keyof typeof TimeSegmentTypes];
 
 export const SegmentPlaceholders: Readonly<
     Record<EditableSegmentType, string>
 > = {
-    [SegmentType.Year]: '––––',
-    [SegmentType.Month]: '––',
-    [SegmentType.Day]: '––',
-    [SegmentType.Hour]: '––',
-    [SegmentType.Minute]: '––',
-    [SegmentType.Second]: '––',
-    [SegmentType.DayPeriod]: 'AM',
+    [SegmentTypes.Year]: '––––',
+    [SegmentTypes.Month]: '––',
+    [SegmentTypes.Day]: '––',
+    [SegmentTypes.Hour]: '––',
+    [SegmentTypes.Minute]: '––',
+    [SegmentTypes.Second]: '––',
+    [SegmentTypes.DayPeriod]: 'AM',
 };
 
 export type SegmentPlaceholder =
@@ -52,23 +73,12 @@ export interface EditableSegment extends Segment {
     maxValue: number;
 }
 
-export const DateSegmentTypes = {
-    [SegmentType.Day]: SegmentType.Day,
-    [SegmentType.Month]: SegmentType.Month,
-    [SegmentType.Year]: SegmentType.Year,
-} as const;
-
 export const MandatorySegmentTypes = {
     ...DateSegmentTypes,
-    [SegmentType.Literal]: SegmentType.Literal,
+    [SegmentTypes.Literal]: SegmentTypes.Literal,
 } as const;
 
-export const TimeSegmentTypes = {
-    [SegmentType.Hour]: SegmentType.Hour,
-    [SegmentType.Minute]: SegmentType.Minute,
-    [SegmentType.Second]: SegmentType.Second,
-    [SegmentType.DayPeriod]: SegmentType.DayPeriod,
-} as const;
+export type SegmentLimits = Pick<EditableSegment, 'minValue' | 'maxValue'>;
 
 /**
  * Value and limits of a segment. They are all optional, as literal segments have none of these properties
@@ -90,6 +100,7 @@ export interface SegmentDetails
 export type Precision = 'day' | 'hour' | 'minute' | 'second';
 
 export const MAX_DAYS_PER_MONTH = 31;
+export const MAX_DAYS_IN_LEAP_FEBRUARY = 29;
 
 /** AM modifier: `0` hours */
 export const AM = 0;

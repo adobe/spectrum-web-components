@@ -13,7 +13,7 @@ import {
     DateTimePicker,
     EditableSegmentType,
     SegmentPlaceholders,
-    SegmentType,
+    SegmentTypes,
 } from '@spectrum-web-components/date-time-picker';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
@@ -79,7 +79,7 @@ function isPlaceholderSegment(segment: HTMLElement): boolean {
 
     if (segment.innerText !== placeholder) return false;
     if (
-        type === SegmentType.DayPeriod &&
+        type === SegmentTypes.DayPeriod &&
         !segment.classList.contains('is-placeholder')
     )
         return false;
