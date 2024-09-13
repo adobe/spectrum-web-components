@@ -223,13 +223,13 @@ governing permissions and limitations under the License.
 }
 
 .input {
+    appearance: none;
     block-size: var(--mod-search-block-size, var(--spectrum-search-block-size));
     font-style: var(--mod-search-font-style, var(--spectrum-search-font-style));
     line-height: var(
         --mod-search-line-height,
         var(--spectrum-search-line-height)
     );
-    appearance: none;
     padding-block-start: calc(
         var(--mod-search-top-to-text, var(--spectrum-search-top-to-text)) -
             var(--mod-search-border-width, var(--spectrum-search-border-width))

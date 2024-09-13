@@ -28,16 +28,20 @@ governing permissions and limitations under the License.
     cursor: default;
     -webkit-user-select: none;
     user-select: none;
-    box-sizing: border-box;
-    inline-size: var(--mod-colorarea-width, var(--spectrum-colorarea-width));
     min-inline-size: var(
         --mod-colorarea-min-width,
         var(--spectrum-colorarea-min-width)
     );
-    block-size: var(--mod-colorarea-height, var(--spectrum-colorarea-height));
     min-block-size: var(
         --mod-colorarea-min-height,
         var(--spectrum-colorarea-min-height)
+    );
+    inline-size: var(--mod-colorarea-width, var(--spectrum-colorarea-width));
+    block-size: var(--mod-colorarea-height, var(--spectrum-colorarea-height));
+    box-sizing: border-box;
+    border-radius: var(
+        --mod-colorarea-border-radius,
+        var(--spectrum-colorarea-border-radius)
     );
     border: var(
             --mod-colorarea-border-width,
@@ -51,10 +55,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-colorarea-border-color)
             )
         );
-    border-radius: var(
-        --mod-colorarea-border-radius,
-        var(--spectrum-colorarea-border-radius)
-    );
     display: inline-block;
     position: relative;
 }
@@ -93,7 +93,8 @@ governing permissions and limitations under the License.
     inset-block-start: 0;
 }
 
-.handle:dir(rtl) {
+.handle:dir(rtl),
+:host([dir='rtl']) .handle {
     inset-inline-end: 0;
 }
 
@@ -107,11 +108,11 @@ governing permissions and limitations under the License.
 }
 
 .slider {
-    pointer-events: none;
-    z-index: 0;
+    opacity: 0;
     inline-size: 100%;
     block-size: 100%;
-    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
     margin: 0;
     position: absolute;
     inset-block-start: 0;

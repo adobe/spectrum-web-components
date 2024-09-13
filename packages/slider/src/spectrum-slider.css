@@ -12,15 +12,20 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    -webkit-user-select: none;
-    user-select: none;
-    z-index: 1;
+    z-index: 0;
     min-inline-size: var(
         --mod-slider-min-size,
         var(--spectrum-slider-min-size)
     );
+    -webkit-user-select: none;
+    user-select: none;
     display: block;
     position: relative;
+}
+
+:host:dir(rtl),
+:host([dir='rtl']) {
+    --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
 .spectrum-Slider--sideLabel {
@@ -53,9 +58,9 @@ governing permissions and limitations under the License.
 }
 
 #controls {
+    box-sizing: border-box;
     cursor: pointer;
     z-index: auto;
-    box-sizing: border-box;
     inline-size: calc(
         100% -
             var(
@@ -91,13 +96,13 @@ governing permissions and limitations under the License.
 
 .fill,
 .track {
-    pointer-events: none;
-    z-index: 1;
-    box-sizing: border-box;
     block-size: var(
         --mod-slider-track-fill-thickness,
         var(--spectrum-slider-track-fill-thickness)
     );
+    box-sizing: border-box;
+    z-index: 1;
+    pointer-events: none;
     margin-inline-start: var(
         --mod-slider-track-margin-offset,
         var(--spectrum-slider-track-margin-offset)
@@ -176,10 +181,6 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='range']) .track ~ .track {
-    margin-inline: var(
-        --mod-slider-range-track-reset,
-        var(--spectrum-slider-range-track-reset)
-    );
     padding-inline: var(
             --mod-slider-track-middle-handleoffset,
             var(--spectrum-slider-track-middle-handleoffset)
@@ -188,6 +189,10 @@ governing permissions and limitations under the License.
             --mod-slider-track-middle-handleoffset,
             var(--spectrum-slider-track-middle-handleoffset)
         );
+    margin-inline: var(
+        --mod-slider-range-track-reset,
+        var(--spectrum-slider-range-track-reset)
+    );
     inset-inline: auto;
 }
 
@@ -297,9 +302,9 @@ governing permissions and limitations under the License.
 }
 
 #ramp svg {
-    transform: var(--spectrum-logical-rotation);
     inline-size: 100%;
     block-size: 100%;
+    transform: var(--spectrum-logical-rotation,);
 }
 
 .handle {
@@ -319,7 +324,6 @@ governing permissions and limitations under the License.
                 -2
         )
         0;
-    border-style: solid;
     border-width: var(
         --mod-slider-handle-border-width,
         var(--spectrum-slider-handle-border-width)
@@ -334,6 +338,7 @@ governing permissions and limitations under the License.
             var(--spectrum-animation-duration-100)
         )
         ease-in-out;
+    border-style: solid;
     outline: none;
     display: inline-block;
     position: absolute;
@@ -398,7 +403,8 @@ governing permissions and limitations under the License.
     transform: translate(-50%, -50%);
 }
 
-:host:dir(rtl) .handle:before {
+:host:dir(rtl) .handle:before,
+:host([dir='rtl']) .handle:before {
     transform: translate(50%, -50%);
 }
 

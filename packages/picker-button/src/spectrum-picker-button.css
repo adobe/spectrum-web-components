@@ -12,16 +12,16 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .root {
-    box-sizing: border-box;
+    background-color: initial;
     block-size: var(
         --mod-picker-button-width,
         var(--spectrum-picker-button-width)
     );
+    box-sizing: border-box;
     padding: var(
         --mod-picker-button-padding,
         var(--spectrum-picker-button-padding)
     );
-    background-color: initial;
     border-style: none;
     justify-content: center;
     align-items: center;
@@ -107,67 +107,75 @@ governing permissions and limitations under the License.
 
 .root.is-disabled,
 :host([disabled]) .root {
-    --spectrum-picker-button-background-color: var(
+    --mod-picker-button-background-color: var(
         --mod-picker-button-background-color-disabled,
         var(--spectrum-picker-button-background-color-disabled)
     );
-    --spectrum-picker-button-background-color-hover: var(
+    --mod-picker-button-background-color-hover: var(
         --mod-picker-button-background-color-hover-disabled,
         var(--spectrum-picker-button-background-color-hover-disabled)
     );
-    --spectrum-picker-button-background-color-down: var(
+    --mod-picker-button-background-color-down: var(
         --mod-picker-button-background-color-down-disabled,
         var(--spectrum-picker-button-background-color-down-disabled)
     );
-    --spectrum-picker-button-border-color: var(
+    --mod-picker-button-border-color: var(
         --mod-picker-button-border-color-disabled,
         var(--spectrum-picker-button-border-color-disabled)
     );
-    --spectrum-picker-button-font-color: var(
+    --mod-picker-button-font-color: var(
         --mod-picker-button-font-color-disabled,
         var(--spectrum-picker-button-font-color-disabled)
     );
-    --spectrum-picker-button-font-color-hover: var(
+    --mod-picker-button-font-color-hover: var(
         --mod-picker-button-font-color-hover-disabled,
         var(--spectrum-picker-button-font-color-hover-disabled)
     );
-    --spectrum-picker-button-font-color-down: var(
+    --mod-picker-button-font-color-down: var(
         --mod-picker-button-font-color-down-disabled,
         var(--spectrum-picker-button-font-color-down-disabled)
     );
-    --spectrum-picker-button-icon-color: var(
+    --mod-picker-button-icon-color: var(
         --mod-picker-button-icon-color-disabled,
         var(--spectrum-picker-button-icon-color-disabled)
     );
-    --spectrum-picker-button-icon-color-hover: var(
+    --mod-picker-button-icon-color-hover: var(
         --mod-picker-button-icon-color-hover-disabled,
         var(--spectrum-picker-button-icon-color-hover-disabled)
     );
-    --spectrum-picker-button-icon-color-down: var(
+    --mod-picker-button-icon-color-down: var(
         --mod-picker-button-icon-color-down-disabled,
         var(--spectrum-picker-button-icon-color-down-disabled)
     );
 }
 
 :host([quiet]) .root {
-    --spectrum-picker-button-background-color: var(
+    --mod-picker-button-background-color: var(
         --mod-picker-button-background-color-quiet,
         transparent
     );
-    --spectrum-picker-button-background-color-hover: var(
+    --mod-picker-button-background-color-hover: var(
         --mod-picker-button-background-color-hover-quiet,
         transparent
     );
-    --spectrum-picker-button-background-color-down: var(
+    --mod-picker-button-background-color-down: var(
         --mod-picker-button-background-color-down-quiet,
         transparent
     );
-    --spectrum-picker-button-background-color-key-focus: var(
+    --mod-picker-button-background-color-key-focus: var(
         --mod-picker-button-background-color-key-focus-quiet,
         transparent
     );
-    --spectrum-picker-button-border-color: var(
+    --mod-picker-button-border-color: var(
         --mod-picker-button-border-color-quiet,
+        transparent
+    );
+}
+
+:host([quiet]) .root.is-disabled,
+:host([quiet][disabled]) .root {
+    --mod-picker-button-background-color: var(
+        --mod-picker-button-background-color-quiet,
         transparent
     );
 }
@@ -217,27 +225,27 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-PickerButton-label {
-    font-family: var(
-        --mod-picker-button-font-family,
-        var(--spectrum-picker-button-font-family)
-    );
-    font-size: var(
-        --mod-picker-button-font-size,
-        var(--spectrum-picker-button-font-size)
-    );
-    font-weight: var(
-        --mod-picker-button-font-weight,
-        var(--spectrum-picker-button-font-weight)
-    );
-    font-style: var(
-        --mod-picker-button-font-style,
-        var(--spectrum-picker-button-font-style)
-    );
     color: var(
         --mod-picker-button-font-color,
         var(--spectrum-picker-button-font-color)
     );
     white-space: nowrap;
+    font-family: var(
+        --mod-picker-button-font-family,
+        var(--spectrum-picker-button-font-family)
+    );
+    font-style: var(
+        --mod-picker-button-font-style,
+        var(--spectrum-picker-button-font-style)
+    );
+    font-weight: var(
+        --mod-picker-button-font-weight,
+        var(--spectrum-picker-button-font-weight)
+    );
+    font-size: var(
+        --mod-picker-button-font-size,
+        var(--spectrum-picker-button-font-size)
+    );
     flex: auto;
     padding-block-start: var(
         --mod-picker-button-label-padding,
@@ -251,10 +259,24 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-PickerButton-fill {
-    gap: var(--mod-picker-button-gap, var(--spectrum-picker-button-gap));
     box-sizing: border-box;
-    inline-size: 100%;
     block-size: 100%;
+    inline-size: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: var(--mod-picker-button-gap, var(--spectrum-picker-button-gap));
+    background-color: var(
+        --mod-picker-button-background-color,
+        var(--spectrum-picker-button-background-color)
+    );
+    border-color: var(
+        --mod-picker-button-border-color,
+        var(--spectrum-picker-button-border-color)
+    );
+    border-width: var(
+        --mod-picker-button-border-width,
+        var(--spectrum-picker-button-border-width)
+    );
     padding: calc(
         var(
                 --mod-picker-button-fill-padding,
@@ -269,25 +291,13 @@ governing permissions and limitations under the License.
                 var(--spectrum-picker-button-border-width)
             )
     );
-    background-color: var(
-        --mod-picker-button-background-color,
-        var(--spectrum-picker-button-background-color)
-    );
-    border-color: var(
-        --mod-picker-button-border-color,
-        var(--spectrum-picker-button-border-color)
-    );
-    border-style: solid;
-    border-width: var(
-        --mod-picker-button-border-width,
-        var(--spectrum-picker-button-border-width)
-    );
     transition: border-color
         var(
             --mod-picker-button-background-animation-duration,
             var(--spectrum-picker-button-background-animation-duration)
         )
         ease-in-out;
+    border-style: solid;
     border-start-start-radius: var(
         --mod-picker-button-border-radius,
         var(--spectrum-picker-button-border-radius)
@@ -304,8 +314,6 @@ governing permissions and limitations under the License.
         --mod-picker-button-border-radius,
         var(--spectrum-picker-button-border-radius)
     );
-    justify-content: center;
-    align-items: center;
     display: flex;
 }
 

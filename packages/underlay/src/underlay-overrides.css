@@ -21,11 +21,11 @@
     --spectrum-underlay-background-entry-animation-ease: var(
         --system-underlay-background-entry-animation-ease
     );
-    --spectrum-underlay-background-exit-animation-duration: var(
-        --system-underlay-background-exit-animation-duration
-    );
     --spectrum-underlay-background-entry-animation-duration: var(
         --system-underlay-background-entry-animation-duration
+    );
+    --spectrum-underlay-background-exit-animation-duration: var(
+        --system-underlay-background-exit-animation-duration
     );
     --spectrum-underlay-background-exit-animation-delay: var(
         --system-underlay-background-exit-animation-delay

@@ -12,8 +12,8 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-alert-banner-netural-background: var(
-        --system-alert-banner-netural-background
+    --spectrum-alert-banner-neutral-background: var(
+        --system-alert-banner-neutral-background
     );
     --spectrum-alert-banner-min-height: var(--system-alert-banner-min-height);
     --spectrum-alert-banner-max-inline-size: var(

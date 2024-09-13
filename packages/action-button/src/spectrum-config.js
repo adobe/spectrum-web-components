@@ -188,6 +188,33 @@ const config = {
                         },
                     ],
                 },
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'disabled',
+                                },
+                            ],
+                        ],
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'disabled',
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
             ],
         },
     ],

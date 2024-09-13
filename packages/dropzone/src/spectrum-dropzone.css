@@ -101,18 +101,9 @@ governing permissions and limitations under the License.
             )
     );
     text-align: center;
-    background-color: var(
-        --mod-drop-zone-background-color,
-        var(--spectrum-drop-zone-background-color)
-    );
     border-color: var(
         --mod-drop-zone-border-color,
         var(--spectrum-drop-zone-border-color)
-    );
-    border-style: dashed;
-    border-style: var(
-        --mod-drop-zone-border-style,
-        var(--spectrum-drop-zone-border-style, dashed)
     );
     border-width: var(
         --mod-drop-zone-border-width,
@@ -121,6 +112,15 @@ governing permissions and limitations under the License.
     border-radius: var(
         --mod-drop-zone-corner-radius,
         var(--spectrum-drop-zone-corner-radius)
+    );
+    border-style: dashed;
+    border-style: var(
+        --mod-drop-zone-border-style,
+        var(--spectrum-drop-zone-border-style, dashed)
+    );
+    background-color: var(
+        --mod-drop-zone-background-color,
+        var(--spectrum-drop-zone-background-color)
     );
     background-size: cover;
 }
@@ -134,7 +134,7 @@ governing permissions and limitations under the License.
 }
 
 :host([dragged]) {
-    --spectrum-drop-zone-border-style: var(
+    --mod-drop-zone-border-style: var(
         --mod-drop-zone-border-style-dragged,
         solid
     );
@@ -170,11 +170,11 @@ governing permissions and limitations under the License.
 }
 
 :host([filled][dragged]) {
-    --spectrum-drop-zone-content-display: flex;
+    --mod-drop-zone-content-display: flex;
 }
 
 :host(:focus-visible) {
-    --spectrum-drop-zone-border-style: solid;
+    --mod-drop-zone-border-style: solid;
     --spectrum-drop-zone-border-color: var(
         --highcontrast-drop-zone-border-color-hover,
         var(
@@ -186,13 +186,13 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-DropZone-content {
-    z-index: 1;
     display: none;
     display: var(
         --mod-drop-zone-content-display,
         var(--spectrum-drop-zone-content-display, none)
     );
     block-size: 100%;
+    z-index: 1;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -200,13 +200,13 @@ governing permissions and limitations under the License.
 
 .spectrum-DropZone-button {
     box-sizing: border-box;
-    max-inline-size: var(
-        --mod-drop-zone-content-max-width,
-        var(--spectrum-drop-zone-content-max-width)
-    );
     block-size: var(
         --mod-drop-zone-content-height,
         var(--spectrum-drop-zone-content-height)
+    );
+    max-inline-size: var(
+        --mod-drop-zone-content-max-width,
+        var(--spectrum-drop-zone-content-max-width)
     );
     font-family: var(
         --mod-drop-zone-content-font-family,

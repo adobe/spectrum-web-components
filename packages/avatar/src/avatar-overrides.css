@@ -15,7 +15,6 @@
     --spectrum-avatar-color-opacity: var(--system-avatar-color-opacity);
     --spectrum-avatar-inline-size: var(--system-avatar-inline-size);
     --spectrum-avatar-block-size: var(--system-avatar-block-size);
-    --spectrum-avatar-border-radius: var(--system-avatar-border-radius);
     --spectrum-avatar-focus-indicator-thickness: var(
         --system-avatar-focus-indicator-thickness
     );

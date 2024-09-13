@@ -51,11 +51,11 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    z-index: 1;
     background-color: var(
         --mod-underlay-background-color,
         var(--spectrum-underlay-background-color)
     );
+    z-index: 1;
     transition:
         opacity
             var(

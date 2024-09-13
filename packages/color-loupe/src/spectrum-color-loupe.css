@@ -12,17 +12,17 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    pointer-events: none;
-    transform-origin: bottom;
+    inline-size: var(--spectrum-colorloupe-width);
+    block-size: var(--spectrum-colorloupe-height);
     transform: translateY(
         var(
             --mod-colorloupe-animation-distance,
             var(--spectrum-colorloupe-animation-distance)
         )
     );
-    inline-size: var(--spectrum-colorloupe-width);
-    block-size: var(--spectrum-colorloupe-height);
     opacity: 0;
+    transform-origin: bottom;
+    pointer-events: none;
     filter: drop-shadow(
         var(
                 --mod-colorloupe-drop-shadow-x,
@@ -53,7 +53,8 @@ governing permissions and limitations under the License.
     inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2);
 }
 
-:host:dir(rtl) {
+:host:dir(rtl),
+:host([dir='rtl']) {
     inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2 - 1px);
 }
 

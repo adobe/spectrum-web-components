@@ -180,7 +180,8 @@ governing permissions and limitations under the License.
     );
 }
 
-.progress-circle:dir(rtl) {
+.progress-circle:dir(rtl),
+:host([dir='rtl']) .progress-circle {
     inset-inline-start: calc(
         var(
                 --mod-combobox-spacing-inline-icon-to-button,
@@ -302,6 +303,11 @@ governing permissions and limitations under the License.
 }
 
 #input {
+    backface-visibility: hidden;
+    line-height: var(
+        --mod-combobox-line-height,
+        var(--spectrum-combobox-line-height)
+    );
     font-size: var(
         --mod-combobox-font-size,
         var(--spectrum-combobox-font-size)
@@ -310,11 +316,6 @@ governing permissions and limitations under the License.
         --mod-combobox-font-style,
         var(--spectrum-combobox-font-style)
     );
-    line-height: var(
-        --mod-combobox-line-height,
-        var(--spectrum-combobox-line-height)
-    );
-    backface-visibility: hidden;
     padding-block-start: calc(
         var(
                 --mod-combobox-spacing-block-start-edge-to-text,

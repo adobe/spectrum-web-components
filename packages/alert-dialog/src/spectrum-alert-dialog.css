@@ -78,10 +78,6 @@ governing permissions and limitations under the License.
         --mod-alert-dialog-title-font-family,
         var(--spectrum-alert-dialog-title-font-family)
     );
-    font-size: var(
-        --mod-alert-dialog-title-font-size,
-        var(--spectrum-alert-dialog-title-font-size)
-    );
     font-weight: var(
         --mod-alert-dialog-title-font-weight,
         var(--spectrum-alert-dialog-title-font-weight)
@@ -89,6 +85,10 @@ governing permissions and limitations under the License.
     font-style: var(
         --mod-alert-dialog-title-font-style,
         var(--spectrum-alert-dialog-title-font-style)
+    );
+    font-size: var(
+        --mod-alert-dialog-title-font-size,
+        var(--spectrum-alert-dialog-title-font-size)
     );
     line-height: var(
         --mod-alert-dialog-title-line-height,
@@ -110,10 +110,6 @@ governing permissions and limitations under the License.
         --mod-alert-dialog-body-font-family,
         var(--spectrum-alert-dialog-body-font-family)
     );
-    font-size: var(
-        --mod-alert-dialog-body-font-size,
-        var(--spectrum-alert-dialog-body-font-size)
-    );
     font-weight: var(
         --mod-alert-dialog-body-font-weight,
         var(--spectrum-alert-dialog-body-font-weight)
@@ -121,6 +117,10 @@ governing permissions and limitations under the License.
     font-style: var(
         --mod-alert-dialog-body-font-style,
         var(--spectrum-alert-dialog-body-font-style)
+    );
+    font-size: var(
+        --mod-alert-dialog-body-font-size,
+        var(--spectrum-alert-dialog-body-font-size)
     );
     line-height: var(
         --mod-alert-dialog-body-line-height,

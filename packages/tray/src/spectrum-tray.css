@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .tray {
     --mod-modal-max-width: 100%;
-    box-sizing: border-box;
     inline-size: 100%;
     max-inline-size: 100%;
     max-block-size: calc(
@@ -23,10 +22,7 @@ governing permissions and limitations under the License.
                 var(--spectrum-tray-spacing-edge-to-tray-safe-zone)
             )
     );
-    background-color: var(
-        --highcontrast-tray-background-color,
-        var(--mod-tray-background-color, var(--spectrum-tray-background-color))
-    );
+    box-sizing: border-box;
     border-radius: 0;
     border-radius: var(--mod-tray-corner-radius-portrait, 0)
         var(--mod-tray-corner-radius-portrait, 0) 0 0;
@@ -67,6 +63,10 @@ governing permissions and limitations under the License.
                 --mod-tray-exit-animation-delay,
                 var(--spectrum-tray-exit-animation-delay)
             );
+    background-color: var(
+        --highcontrast-tray-background-color,
+        var(--mod-tray-background-color, var(--spectrum-tray-background-color))
+    );
     outline: none;
     margin-block-start: var(
         --mod-tray-spacing-edge-to-tray-safe-zone,

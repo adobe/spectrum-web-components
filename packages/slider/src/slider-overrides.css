@@ -49,22 +49,6 @@
     --spectrum-slider-handle-focus-ring-color-key-focus: var(
         --system-slider-handle-focus-ring-color-key-focus
     );
-    --spectrum-slider-font-size: var(--system-slider-font-size);
-    --spectrum-slider-handle-size: var(--system-slider-handle-size);
-    --spectrum-slider-control-height: var(--system-slider-control-height);
-    --spectrum-slider-handle-border-radius: var(
-        --system-slider-handle-border-radius
-    );
-    --spectrum-slider-handle-border-width-down: var(
-        --system-slider-handle-border-width-down
-    );
-    --spectrum-slider-label-top-to-text: var(--system-slider-label-top-to-text);
-    --spectrum-slider-control-to-field-label: var(
-        --system-slider-control-to-field-label
-    );
-    --spectrum-slider-value-side-padding-inline: var(
-        --system-slider-value-side-padding-inline
-    );
     --spectrum-slider-value-inline-size: var(--system-slider-value-inline-size);
     --spectrum-slider-cjk-line-height: var(--system-slider-cjk-line-height);
     --spectrum-slider-min-size: var(--system-slider-min-size);
@@ -123,10 +107,22 @@
         --system-slider-track-handleoffset
     );
     --spectrum-slider-range-track-reset: var(--system-slider-range-track-reset);
-}
-
-:host:dir(rtl) {
-    --spectrum-logical-rotation: var(--system-slider-dir-rtl-logical-rotation);
+    --spectrum-slider-font-size: var(--system-slider-font-size);
+    --spectrum-slider-handle-size: var(--system-slider-handle-size);
+    --spectrum-slider-control-height: var(--system-slider-control-height);
+    --spectrum-slider-handle-border-radius: var(
+        --system-slider-handle-border-radius
+    );
+    --spectrum-slider-handle-border-width-down: var(
+        --system-slider-handle-border-width-down
+    );
+    --spectrum-slider-label-top-to-text: var(--system-slider-label-top-to-text);
+    --spectrum-slider-control-to-field-label: var(
+        --system-slider-control-to-field-label
+    );
+    --spectrum-slider-value-side-padding-inline: var(
+        --system-slider-value-side-padding-inline
+    );
 }
 
 :host([size='s']) {
@@ -149,6 +145,29 @@
     );
     --spectrum-slider-value-side-padding-inline: var(
         --system-slider-size-s-value-side-padding-inline
+    );
+}
+
+:host {
+    --spectrum-slider-font-size: var(--system-slider-size-m-font-size);
+    --spectrum-slider-handle-size: var(--system-slider-size-m-handle-size);
+    --spectrum-slider-control-height: var(
+        --system-slider-size-m-control-height
+    );
+    --spectrum-slider-handle-border-radius: var(
+        --system-slider-size-m-handle-border-radius
+    );
+    --spectrum-slider-handle-border-width-down: var(
+        --system-slider-size-m-handle-border-width-down
+    );
+    --spectrum-slider-label-top-to-text: var(
+        --system-slider-size-m-label-top-to-text
+    );
+    --spectrum-slider-control-to-field-label: var(
+        --system-slider-size-m-control-to-field-label
+    );
+    --spectrum-slider-value-side-padding-inline: var(
+        --system-slider-size-m-value-side-padding-inline
     );
 }
 

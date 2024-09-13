@@ -40,9 +40,9 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    max-inline-size: 100%;
-    min-block-size: var(--mod-radio-height, var(--spectrum-radio-height));
     vertical-align: top;
+    min-block-size: var(--mod-radio-height, var(--spectrum-radio-height));
+    max-inline-size: 100%;
     align-items: flex-start;
     display: inline-flex;
     position: relative;
@@ -89,14 +89,7 @@ governing permissions and limitations under the License.
 }
 
 :host(:focus-visible) #button:after {
-    inline-size: calc(
-        var(--spectrum-radio-button-control-size) +
-            var(--spectrum-radio-focus-indicator-gap) * 2
-    );
-    block-size: calc(
-        var(--spectrum-radio-button-control-size) +
-            var(--spectrum-radio-focus-indicator-gap) * 2
-    );
+    border-style: solid;
     border-color: var(
         --highcontrast-radio-focus-indicator-color,
         var(
@@ -104,10 +97,17 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-focus-indicator-color)
         )
     );
-    border-style: solid;
     border-width: var(
         --mod-radio-focus-indicator-thickness,
         var(--spectrum-radio-focus-indicator-thickness)
+    );
+    inline-size: calc(
+        var(--spectrum-radio-button-control-size) +
+            var(--spectrum-radio-focus-indicator-gap) * 2
+    );
+    block-size: calc(
+        var(--spectrum-radio-button-control-size) +
+            var(--spectrum-radio-focus-indicator-gap) * 2
     );
 }
 
@@ -251,18 +251,18 @@ governing permissions and limitations under the License.
 }
 
 #input {
-    cursor: pointer;
-    z-index: 1;
-    box-sizing: border-box;
-    inline-size: 100%;
-    block-size: 100%;
     font-family: inherit;
     font-size: 100%;
     line-height: var(
         --mod-radio-line-height,
         var(--spectrum-radio-line-height)
     );
+    box-sizing: border-box;
+    inline-size: 100%;
+    block-size: 100%;
     opacity: 0;
+    z-index: 1;
+    cursor: pointer;
     margin: 0;
     padding: 0;
     position: absolute;
@@ -274,6 +274,10 @@ governing permissions and limitations under the License.
 }
 
 :host([checked]) #input + #button:before {
+    border-width: calc(
+        var(--spectrum-radio-button-control-size) / 2 -
+            var(--spectrum-radio-button-selection-indicator) / 2
+    );
     border-color: var(
         --highcontrast-radio-button-checked-border-color-default,
         var(
@@ -281,20 +285,12 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-button-checked-border-color-default)
         )
     );
-    border-width: calc(
-        var(--spectrum-radio-button-control-size) / 2 -
-            var(--spectrum-radio-button-selection-indicator) / 2
-    );
 }
 
 #input:focus-visible + #button:after {
-    inline-size: calc(
-        var(--spectrum-radio-button-control-size) +
-            var(--spectrum-radio-focus-indicator-gap) * 2
-    );
-    block-size: calc(
-        var(--spectrum-radio-button-control-size) +
-            var(--spectrum-radio-focus-indicator-gap) * 2
+    border-width: var(
+        --mod-radio-focus-indicator-thickness,
+        var(--spectrum-radio-focus-indicator-thickness)
     );
     border-color: var(
         --highcontrast-radio-focus-indicator-color,
@@ -303,19 +299,20 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-focus-indicator-color)
         )
     );
-    border-style: solid;
-    border-width: var(
-        --mod-radio-focus-indicator-thickness,
-        var(--spectrum-radio-focus-indicator-thickness)
+    inline-size: calc(
+        var(--spectrum-radio-button-control-size) +
+            var(--spectrum-radio-focus-indicator-gap) * 2
     );
+    block-size: calc(
+        var(--spectrum-radio-button-control-size) +
+            var(--spectrum-radio-focus-indicator-gap) * 2
+    );
+    border-style: solid;
 }
 
 #label {
+    text-align: start;
     font-size: var(--mod-radio-font-size, var(--spectrum-radio-font-size));
-    line-height: var(
-        --mod-radio-line-height,
-        var(--spectrum-radio-line-height)
-    );
     color: var(
         --highcontrast-radio-neutral-content-color,
         var(
@@ -323,7 +320,10 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-neutral-content-color)
         )
     );
-    text-align: start;
+    line-height: var(
+        --mod-radio-line-height,
+        var(--spectrum-radio-line-height)
+    );
     transition: color
         var(
             --mod-radio-animation-duration,
@@ -368,6 +368,7 @@ governing permissions and limitations under the License.
 
 #button:before {
     z-index: 0;
+    content: '';
     box-sizing: border-box;
     inline-size: var(
         --mod-radio-button-control-size,
@@ -384,17 +385,16 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-button-background-color)
         )
     );
+    border-width: var(
+        --mod-radio-border-width,
+        var(--spectrum-radio-border-width)
+    );
     border-color: var(
         --highcontrast-radio-button-border-color-default,
         var(
             --mod-radio-button-border-color-default,
             var(--spectrum-radio-button-border-color-default)
         )
-    );
-    border-style: solid;
-    border-width: var(
-        --mod-radio-border-width,
-        var(--spectrum-radio-border-width)
     );
     transition:
         border
@@ -409,17 +409,14 @@ governing permissions and limitations under the License.
                 var(--spectrum-radio-animation-duration)
             )
             ease-in-out;
-}
-
-#button:after,
-#button:before {
-    content: '';
+    border-style: solid;
     border-radius: 50%;
     display: block;
     position: absolute;
 }
 
 #button:after {
+    content: '';
     transition:
         opacity
             var(
@@ -433,11 +430,15 @@ governing permissions and limitations under the License.
                 var(--spectrum-radio-animation-duration)
             )
             ease-out;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
     inset-block-start: 50%;
     inset-inline-start: 50%;
     transform: translateX(-50%) translateY(-50%);
 }
 
-:host:dir(rtl) #button:after {
+:host:dir(rtl) #button:after,
+:host([dir='rtl']) #button:after {
     transform: translateX(50%) translateY(-50%);
 }

@@ -101,7 +101,7 @@
         "@spectrum-web-components/shared": "^0.47.2"
     },
     "devDependencies": {
-        "@spectrum-css/menu": "^8.0.0-s2-foundations.12"
+        "@spectrum-css/menu": "^8.0.0-s2-foundations.13"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

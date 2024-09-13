@@ -27,6 +27,15 @@ governing permissions and limitations under the License.
 }
 
 a {
+    background-color: initial;
+    -webkit-text-decoration-skip: objects;
+    text-decoration-skip: objects;
+    transition: color
+        var(
+            --mod-link-animation-duration,
+            var(--spectrum-link-animation-duration)
+        )
+        ease-in-out;
     cursor: pointer;
     color: var(
         --highcontrast-link-text-color-primary-default,
@@ -35,15 +44,6 @@ a {
             var(--spectrum-link-text-color-primary-default)
         )
     );
-    background-color: initial;
-    transition: color
-        var(
-            --mod-link-animation-duration,
-            var(--spectrum-link-animation-duration)
-        )
-        ease-in-out;
-    -webkit-text-decoration-skip: objects;
-    text-decoration-skip: objects;
     outline: none;
     -webkit-text-decoration: underline;
     text-decoration: underline;
@@ -67,11 +67,10 @@ a:focus-visible {
             var(--spectrum-link-text-color-primary-focus)
         )
     );
-    -webkit-text-decoration: underline;
-    text-decoration: underline;
+    -webkit-text-decoration: underline double;
+    text-decoration: underline double;
     text-decoration-color: inherit;
     text-decoration-color: var(--highcontrast-link-focus-color, inherit);
-    text-decoration-style: double;
 }
 
 :host([variant='secondary']) a {

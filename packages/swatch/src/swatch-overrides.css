@@ -15,7 +15,6 @@
     --spectrum-swatch-focus-indicator-border-radius: var(
         --system-swatch-focus-indicator-border-radius
     );
-    --spectrum-swatch-icon-border-color: var(--system-swatch-icon-border-color);
     --spectrum-swatch-size: var(--system-swatch-size);
     --spectrum-swatch-border-radius: var(--system-swatch-border-radius);
     --spectrum-swatch-border-thickness: var(--system-swatch-border-thickness);
@@ -31,6 +30,12 @@
     );
     --spectrum-swatch-focus-indicator-gap: var(
         --system-swatch-focus-indicator-gap
+    );
+    --spectrum-swatch-border-color-default: var(
+        --system-swatch-border-color-default
+    );
+    --spectrum-swatch-border-color-light-default: var(
+        --system-swatch-border-color-light-default
     );
     --spectrum-swatch-border-color-selected: var(
         --system-swatch-border-color-selected
@@ -48,6 +53,16 @@
     --spectrum-swatch-slash-icon-color: var(--system-swatch-slash-icon-color);
     --spectrum-swatch-focus-indicator-color: var(
         --system-swatch-focus-indicator-color
+    );
+    --spectrum-swatch-border-color-opacity: var(
+        --system-swatch-border-color-opacity
+    );
+    --spectrum-swatch-border-color: var(--system-swatch-border-color);
+    --spectrum-swatch-border-color-light-opacity: var(
+        --system-swatch-border-color-light-opacity
+    );
+    --spectrum-swatch-border-color-light: var(
+        --system-swatch-border-color-light
     );
 }
 

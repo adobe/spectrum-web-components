@@ -18,19 +18,31 @@ governing permissions and limitations under the License.
 
 ::slotted(*) {
     block-size: 100%;
-    color: var(
-        --mod-splitview-content-color,
-        var(--spectrum-splitview-content-color)
-    );
     background-color: var(
         --mod-splitview-background-color,
         var(--spectrum-splitview-background-color)
     );
+    color: var(
+        --mod-splitview-content-color,
+        var(--spectrum-splitview-content-color)
+    );
 }
 
 #gripper {
-    touch-action: none;
     content: '';
+    border-radius: var(
+        --mod-splitview-gripper-border-radius,
+        var(--spectrum-splitview-gripper-border-radius)
+    );
+    border-style: solid;
+    border-color: var(
+        --highcontrast-splitview-handle-background-color,
+        var(
+            --mod-splitview-handle-background-color,
+            var(--spectrum-splitview-handle-background-color)
+        )
+    );
+    touch-action: none;
     inline-size: var(
         --mod-splitview-gripper-width,
         var(--spectrum-splitview-gripper-width)
@@ -39,14 +51,6 @@ governing permissions and limitations under the License.
         --mod-splitview-gripper-height,
         var(--spectrum-splitview-gripper-height)
     );
-    border-color: var(
-        --highcontrast-splitview-handle-background-color,
-        var(
-            --mod-splitview-handle-background-color,
-            var(--spectrum-splitview-handle-background-color)
-        )
-    );
-    border-style: solid;
     border-block-width: var(
         --mod-splitview-gripper-border-width-vertical,
         var(--spectrum-splitview-gripper-border-width-vertical)
@@ -54,10 +58,6 @@ governing permissions and limitations under the License.
     border-inline-width: var(
         --mod-splitview-gripper-border-width-horizontal,
         var(--spectrum-splitview-gripper-border-width-horizontal)
-    );
-    border-radius: var(
-        --mod-splitview-gripper-border-radius,
-        var(--spectrum-splitview-gripper-border-radius)
     );
     display: block;
     position: absolute;
@@ -97,14 +97,6 @@ governing permissions and limitations under the License.
 }
 
 #splitter {
-    -webkit-user-select: none;
-    user-select: none;
-    z-index: 1;
-    inline-size: var(
-        --mod-splitview-handle-width,
-        var(--spectrum-splitview-handle-width)
-    );
-    block-size: 100%;
     background-color: var(
         --highcontrast-splitview-handle-background-color,
         var(
@@ -112,6 +104,14 @@ governing permissions and limitations under the License.
             var(--spectrum-splitview-handle-background-color)
         )
     );
+    -webkit-user-select: none;
+    user-select: none;
+    inline-size: var(
+        --mod-splitview-handle-width,
+        var(--spectrum-splitview-handle-width)
+    );
+    block-size: 100%;
+    z-index: 1;
     position: relative;
 }
 
@@ -285,11 +285,11 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical]) ::slotted(*) {
+    block-size: auto;
     inline-size: var(
         --mod-splitview-vertical-width,
         var(--spectrum-splitview-vertical-width)
     );
-    block-size: auto;
 }
 
 :host([vertical]) #gripper {

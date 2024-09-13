@@ -33,9 +33,9 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    box-sizing: border-box;
     inline-size: auto;
     inline-size: var(--mod-menu-inline-size, auto);
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
     list-style-type: none;
@@ -115,6 +115,25 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Menu-sectionHeading {
+    color: var(
+        --highcontrast-menu-item-color-default,
+        var(
+            --mod-menu-section-header-color,
+            var(--spectrum-menu-section-header-color)
+        )
+    );
+    font-size: var(
+        --mod-menu-section-header-font-size,
+        var(--spectrum-menu-section-header-font-size)
+    );
+    font-weight: var(
+        --mod-menu-section-header-font-weight,
+        var(--spectrum-menu-section-header-font-weight)
+    );
+    line-height: var(
+        --mod-menu-section-header-line-height,
+        var(--spectrum-menu-section-header-line-height)
+    );
     min-inline-size: var(
         --mod-menu-section-header-min-width,
         var(--spectrum-menu-section-header-min-width)
@@ -137,33 +156,11 @@ governing permissions and limitations under the License.
         --mod-menu-item-label-inline-edge-to-content,
         var(--spectrum-menu-item-label-inline-edge-to-content)
     );
-    font-size: var(
-        --mod-menu-section-header-font-size,
-        var(--spectrum-menu-section-header-font-size)
-    );
-    font-weight: var(
-        --mod-menu-section-header-font-weight,
-        var(--spectrum-menu-section-header-font-weight)
-    );
-    line-height: var(
-        --mod-menu-section-header-line-height,
-        var(--spectrum-menu-section-header-line-height)
-    );
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(
-            --mod-menu-section-header-color,
-            var(--spectrum-menu-section-header-color)
-        )
-    );
     grid-area: sectionHeadingArea / 1 / sectionHeadingArea / -1;
     display: block;
 }
 
 .spectrum-Menu-back {
-    padding-block: 0;
-    padding-block: var(--mod-menu-back-padding-block-start, 0)
-        var(--mod-menu-back-padding-block-end, 0);
     padding-inline: 0
         var(
             --mod-menu-back-padding-inline-end,
@@ -174,6 +171,9 @@ governing permissions and limitations under the License.
             --mod-menu-back-padding-inline-end,
             var(--spectrum-menu-item-label-inline-edge-to-content)
         );
+    padding-block: 0;
+    padding-block: var(--mod-menu-back-padding-block-start, 0)
+        var(--mod-menu-back-padding-block-end, 0);
     flex-flow: wrap;
     align-items: center;
     display: flex;
@@ -201,6 +201,13 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Menu-backHeading {
+    color: var(
+        --highcontrast-menu-item-color-default,
+        var(
+            --mod-menu-back-heading-color,
+            var(--spectrum-menu-section-header-color)
+        )
+    );
     font-size: var(
         --mod-menu-section-header-font-size,
         var(--spectrum-menu-section-header-font-size)
@@ -212,13 +219,6 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-menu-section-header-line-height,
         var(--spectrum-menu-section-header-line-height)
-    );
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(
-            --mod-menu-back-heading-color,
-            var(--spectrum-menu-section-header-color)
-        )
     );
     display: block;
 }
@@ -232,11 +232,11 @@ governing permissions and limitations under the License.
         --mod-menu-back-icon-margin-inline,
         var(--spectrum-menu-back-icon-margin)
     );
-    color: var(
+    fill: var(
         --highcontrast-menu-item-color-default,
         var(--mod-menu-back-icon-color-default)
     );
-    fill: var(
+    color: var(
         --highcontrast-menu-item-color-default,
         var(--mod-menu-back-icon-color-default)
     );

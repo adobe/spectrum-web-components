@@ -11,6 +11,12 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+@media (forced-colors: active) {
+    #list .spectrum-Icon {
+        forced-color-adjust: preserve-parent-color;
+    }
+}
+
 #list {
     flex-direction: column;
     margin: 0;
@@ -23,6 +29,10 @@ governing permissions and limitations under the License.
     padding-inline: var(
         --mod-sidenav-inline-padding,
         var(--spectrum-sidenav-inline-padding)
+    );
+    color: var(
+        --mod-sidenav-header-color,
+        var(--spectrum-sidenav-header-color)
     );
     font-size: var(
         --mod-sidenav-header-font-size,
@@ -40,10 +50,6 @@ governing permissions and limitations under the License.
         --mod-sidenav-header-line-height,
         var(--spectrum-sidenav-header-line-height)
     );
-    color: var(
-        --mod-sidenav-header-color,
-        var(--spectrum-sidenav-header-color)
-    );
     margin-block-start: calc(
         var(
                 --mod-sidenav-heading-top-margin,
@@ -54,10 +60,4 @@ governing permissions and limitations under the License.
         --mod-sidenav-heading-bottom-margin,
         var(--spectrum-sidenav-heading-bottom-margin)
     );
-}
-
-@media (forced-colors: active) {
-    #list .spectrum-Icon {
-        forced-color-adjust: preserve-parent-color;
-    }
 }

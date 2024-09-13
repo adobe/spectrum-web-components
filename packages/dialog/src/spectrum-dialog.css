@@ -66,6 +66,12 @@ governing permissions and limitations under the License.
 }
 
 .grid {
+    grid-template-columns:
+        var(
+            --mod-dialog-confirm-padding-grid,
+            var(--spectrum-dialog-confirm-padding-grid)
+        )
+        auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     grid-template-areas:
         'hero hero hero hero hero hero'
         '. . . . . .'
@@ -74,12 +80,6 @@ governing permissions and limitations under the License.
         '. content content content content .'
         '. footer footer buttonGroup buttonGroup .'
         '. . . . . .';
-    grid-template-columns:
-        var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        )
-        auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     grid-template-rows:
         auto var(
             --mod-dialog-confirm-padding-grid,
@@ -182,17 +182,7 @@ governing permissions and limitations under the License.
 
 .content {
     box-sizing: border-box;
-    margin: 0
-        var(
-            --mod-dialog-confirm-description-margin,
-            var(--spectrum-dialog-confirm-description-margin)
-        );
-    padding: calc(
-        var(
-                --mod-dialog-confirm-description-padding,
-                var(--spectrum-dialog-confirm-description-padding)
-            ) * 2
-    );
+    -webkit-overflow-scrolling: touch;
     font-size: var(
         --mod-dialog-confirm-description-text-size,
         var(--spectrum-dialog-confirm-description-text-size)
@@ -209,7 +199,17 @@ governing permissions and limitations under the License.
         --mod-dialog-confirm-description-text-color,
         var(--spectrum-dialog-confirm-description-text-color)
     );
-    -webkit-overflow-scrolling: touch;
+    padding: calc(
+        var(
+                --mod-dialog-confirm-description-padding,
+                var(--spectrum-dialog-confirm-description-padding)
+            ) * 2
+    );
+    margin: 0
+        var(
+            --mod-dialog-confirm-description-margin,
+            var(--spectrum-dialog-confirm-description-margin)
+        );
     outline: none;
     grid-area: content;
     overflow-y: auto;
@@ -250,14 +250,6 @@ governing permissions and limitations under the License.
 }
 
 :host([dismissable]) .grid {
-    grid-template-areas:
-        'hero hero hero hero hero hero hero'
-        '. . . . . closeButton closeButton'
-        '. heading header header typeIcon closeButton closeButton'
-        '. divider divider divider divider divider .'
-        '. content content content content content .'
-        '. footer footer buttonGroup buttonGroup buttonGroup .'
-        '. . . . . . .';
     grid-template-columns:
         var(
             --mod-dialog-confirm-padding-grid,
@@ -274,6 +266,14 @@ governing permissions and limitations under the License.
             --mod-dialog-confirm-padding-grid,
             var(--spectrum-dialog-confirm-padding-grid)
         );
+    grid-template-areas:
+        'hero hero hero hero hero hero hero'
+        '. . . . . closeButton closeButton'
+        '. heading header header typeIcon closeButton closeButton'
+        '. divider divider divider divider divider .'
+        '. content content content content content .'
+        '. footer footer buttonGroup buttonGroup buttonGroup .'
+        '. . . . . . .';
     grid-template-rows:
         auto var(
             --mod-dialog-confirm-padding-grid,
@@ -323,18 +323,12 @@ governing permissions and limitations under the License.
 
 :host([mode='fullscreen']),
 :host([mode='fullscreenTakeover']) {
-    max-inline-size: none;
     max-block-size: none;
+    max-inline-size: none;
 }
 
 :host([mode='fullscreen']) .grid,
 :host([mode='fullscreenTakeover']) .grid {
-    grid-template-areas:
-        '. . . . .'
-        '. heading header buttonGroup .'
-        '. divider divider divider .'
-        '. content content content .'
-        '. . . . .';
     grid-template-columns:
         var(
             --mod-dialog-confirm-padding-grid,
@@ -353,6 +347,12 @@ governing permissions and limitations under the License.
             --mod-dialog-confirm-padding-grid,
             var(--spectrum-dialog-confirm-padding-grid)
         );
+    grid-template-areas:
+        '. . . . .'
+        '. heading header buttonGroup .'
+        '. divider divider divider .'
+        '. content content content .'
+        '. . . . .';
     display: grid;
 }
 
@@ -389,6 +389,12 @@ governing permissions and limitations under the License.
 
 @media screen and (width <= 700px) {
     .grid {
+        grid-template-columns:
+            var(
+                --mod-dialog-confirm-padding-grid,
+                var(--spectrum-dialog-confirm-padding-grid)
+            )
+            auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
         grid-template-areas:
             'hero hero hero hero hero hero'
             '. . . . . .'
@@ -398,12 +404,6 @@ governing permissions and limitations under the License.
             '. content content content content .'
             '. footer footer buttonGroup buttonGroup .'
             '. . . . . .';
-        grid-template-columns:
-            var(
-                --mod-dialog-confirm-padding-grid,
-                var(--spectrum-dialog-confirm-padding-grid)
-            )
-            auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     }
 
     .grid,
@@ -420,15 +420,6 @@ governing permissions and limitations under the License.
     }
 
     :host([dismissable]) .grid {
-        grid-template-areas:
-            'hero hero hero hero hero hero hero'
-            '. . . . . closeButton closeButton'
-            '. heading heading heading heading closeButton closeButton'
-            '. header header header header header .'
-            '. divider divider divider divider divider .'
-            '. content content content content content .'
-            '. footer footer buttonGroup buttonGroup buttonGroup .'
-            '. . . . . . .';
         grid-template-columns:
             var(
                 --mod-dialog-confirm-padding-grid,
@@ -445,6 +436,15 @@ governing permissions and limitations under the License.
                 --mod-dialog-confirm-padding-grid,
                 var(--spectrum-dialog-confirm-padding-grid)
             );
+        grid-template-areas:
+            'hero hero hero hero hero hero hero'
+            '. . . . . closeButton closeButton'
+            '. heading heading heading heading closeButton closeButton'
+            '. header header header header header .'
+            '. divider divider divider divider divider .'
+            '. content content content content content .'
+            '. footer footer buttonGroup buttonGroup buttonGroup .'
+            '. . . . . . .';
     }
 
     .header {
@@ -453,14 +453,6 @@ governing permissions and limitations under the License.
 
     :host([mode='fullscreen']) .grid,
     :host([mode='fullscreenTakeover']) .grid {
-        grid-template-areas:
-            '. . .'
-            '. heading .'
-            '. header .'
-            '. divider .'
-            '. content .'
-            '. buttonGroup .'
-            '. . .';
         grid-template-columns:
             var(
                 --mod-dialog-confirm-padding-grid,
@@ -479,6 +471,14 @@ governing permissions and limitations under the License.
                 --mod-dialog-confirm-padding-grid,
                 var(--spectrum-dialog-confirm-padding-grid)
             );
+        grid-template-areas:
+            '. . .'
+            '. heading .'
+            '. header .'
+            '. divider .'
+            '. content .'
+            '. buttonGroup .'
+            '. . .';
         display: grid;
     }
 

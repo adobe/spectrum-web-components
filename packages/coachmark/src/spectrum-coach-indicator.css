@@ -12,68 +12,68 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    inline-size: var(
-        --mod-coach-indicator-inline-size,
-        var(--spectrum-coach-indicator-inline-size)
-    );
+    margin: var(--mod-coach-indicator-gap, var(--spectrum-coach-indicator-gap));
     min-inline-size: var(
         --mod-coach-indicator-min-inline-size,
         var(--spectrum-coach-indicator-min-inline-size)
-    );
-    block-size: var(
-        --mod-coach-indicator-block-size,
-        var(--spectrum-coach-indicator-block-size)
     );
     min-block-size: var(
         --mod-coach-indicator-min-block-size,
         var(--spectrum-coach-indicator-min-block-size)
     );
-    margin: var(--mod-coach-indicator-gap, var(--spectrum-coach-indicator-gap));
+    inline-size: var(
+        --mod-coach-indicator-inline-size,
+        var(--spectrum-coach-indicator-inline-size)
+    );
+    block-size: var(
+        --mod-coach-indicator-block-size,
+        var(--spectrum-coach-indicator-block-size)
+    );
     position: relative;
 }
 
 :host([quiet]) {
-    --spectrum-coach-indicator-min-inline-size: calc(
+    --mod-coach-indicator-min-inline-size: calc(
         var(
                 --mod-coach-indicator-quiet-ring-diameter,
                 var(--spectrum-coach-indicator-quiet-ring-diameter-size)
             ) * 2.75
     );
-    --spectrum-coach-indicator-min-block-size: calc(
+    --mod-coach-indicator-min-block-size: calc(
         var(
                 --mod-coach-indicator-quiet-ring-diameter,
                 var(--spectrum-coach-indicator-quiet-ring-diameter-size)
             ) * 2.75
     );
-    --spectrum-coach-indicator-inline-size: calc(
+    --mod-coach-indicator-inline-size: calc(
         var(
                 --mod-coach-indicator-quiet-ring-diameter,
                 var(--spectrum-coach-indicator-quiet-ring-diameter-size)
             ) * 2.75
     );
-    --spectrum-coach-indicator-block-size: calc(
+    --mod-coach-indicator-block-size: calc(
         var(
                 --mod-coach-indicator-quiet-ring-diameter,
                 var(--spectrum-coach-indicator-quiet-ring-diameter-size)
             ) * 2.75
     );
-    --spectrum-coach-indicator-ring-inline-size: var(
+    --mod-coach-indicator-ring-inline-size: var(
         --mod-coach-indicator-quiet-ring-diameter,
         var(--spectrum-coach-indicator-quiet-ring-diameter-size)
     );
-    --spectrum-coach-indicator-ring-block-size: var(
+    --mod-coach-indicator-ring-block-size: var(
         --mod-coach-indicator-quiet-ring-diameter,
         var(--spectrum-coach-indicator-quiet-ring-diameter-size)
     );
-    --spectrum-coach-indicator-top: calc(
+    --mod-coach-indicator-top: calc(
         var(--mod-coach-indicator-min-inline-size) / 3 -
             var(--spectrum-coach-indicator-ring-border-size)
     );
-    --spectrum-coach-indicator-left: calc(
+    --mod-coach-indicator-left: calc(
         var(--mod-coach-indicator-min-inline-size) / 3 -
             var(--spectrum-coach-indicator-ring-border-size)
     );
-    --spectrum-coach-indicator-inner-animation-delay-multiple: var(
+    --mod-coach-indicator-inner-animation-delay-multiple: var(
         --mod-coach-indicator-quiet-animation-ring-inner-delay-multiple,
         var(
             --spectrum-coach-indicator-quiet-animation-ring-inner-delay-multiple
@@ -82,6 +82,15 @@ governing permissions and limitations under the License.
 }
 
 .ring {
+    border-style: solid;
+    border-width: var(
+        --mod-coach-indicator-ring-border-size,
+        var(--spectrum-coach-indicator-ring-border-size)
+    );
+    border-color: var(
+        --mod-coach-indicator-ring-default-color,
+        var(--spectrum-coach-indicator-ring-default-color)
+    );
     inline-size: var(
         --mod-coach-indicator-ring-inline-size,
         var(--spectrum-coach-indicator-ring-inline-size)
@@ -89,15 +98,6 @@ governing permissions and limitations under the License.
     block-size: var(
         --mod-coach-indicator-ring-block-size,
         var(--spectrum-coach-indicator-ring-block-size)
-    );
-    border-color: var(
-        --mod-coach-indicator-ring-default-color,
-        var(--spectrum-coach-indicator-ring-default-color)
-    );
-    border-style: solid;
-    border-width: var(
-        --mod-coach-indicator-ring-border-size,
-        var(--spectrum-coach-indicator-ring-border-size)
     );
     animation: var(
             --mod-coach-indicator-animation-name,

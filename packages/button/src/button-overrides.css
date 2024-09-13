@@ -19,9 +19,6 @@
     --spectrum-button-border-width: var(--system-button-border-width);
     --spectrum-button-line-height: var(--system-button-line-height);
     --spectrum-button-focus-ring-gap: var(--system-button-focus-ring-gap);
-    --spectrum-button-focus-ring-border-radius: var(
-        --system-button-focus-ring-border-radius
-    );
     --spectrum-button-focus-ring-thickness: var(
         --system-button-focus-ring-thickness
     );

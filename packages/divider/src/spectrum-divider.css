@@ -12,27 +12,14 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 @media (forced-colors: active) {
-    :host,
-    :host([size='l']),
-    :host,
-    :host([size='s']) {
-        --spectrum-divider-background-color: CanvasText;
-        --spectrum-divider-background-color-small-static-white: CanvasText;
-        --spectrum-divider-background-color-medium-static-white: CanvasText;
-        --spectrum-divider-background-color-large-static-white: CanvasText;
-        --spectrum-divider-background-color-small-static-black: CanvasText;
-        --spectrum-divider-background-color-medium-static-black: CanvasText;
-        --spectrum-divider-background-color-large-static-black: CanvasText;
+    :host {
+        background-color: CanvasText !important;
     }
 }
 
 :host {
-    inline-size: 100%;
     block-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
-    background-color: var(
-        --mod-divider-background-color,
-        var(--spectrum-divider-background-color)
-    );
+    inline-size: 100%;
     border: none;
     border-width: var(
         --mod-divider-thickness,
@@ -42,10 +29,15 @@ governing permissions and limitations under the License.
         --mod-divider-thickness,
         var(--spectrum-divider-thickness)
     );
+    background-color: var(
+        --mod-divider-background-color,
+        var(--spectrum-divider-background-color)
+    );
     overflow: visible;
 }
 
 :host([size='s']) {
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-small);
     --spectrum-divider-background-color: var(
         --spectrum-divider-background-color-small
     );
@@ -53,12 +45,14 @@ governing permissions and limitations under the License.
 
 :host,
 :host {
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
     --spectrum-divider-background-color: var(
         --spectrum-divider-background-color-medium
     );
 }
 
 :host([size='l']) {
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-large);
     --spectrum-divider-background-color: var(
         --spectrum-divider-background-color-large
     );
@@ -107,12 +101,12 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical]) {
-    align-self: var(--mod-divider-vertical-align);
     inline-size: var(
         --mod-divider-thickness,
         var(--spectrum-divider-thickness)
     );
+    margin-block: var(--mod-divider-vertical-margin);
     block-size: 100%;
     block-size: var(--mod-divider-vertical-height, 100%);
-    margin-block: var(--mod-divider-vertical-margin);
+    align-self: var(--mod-divider-vertical-align);
 }

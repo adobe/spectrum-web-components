@@ -44,10 +44,6 @@ governing permissions and limitations under the License.
 
 .track {
     box-sizing: border-box;
-    border-color: var(
-        --mod-progress-circle-track-border-color,
-        var(--spectrum-progress-circle-track-border-color)
-    );
     border-style: var(
         --highcontrast-progress-circle-track-border-style,
         var(
@@ -62,6 +58,10 @@ governing permissions and limitations under the License.
     border-radius: var(
         --mod-progress-circle-size,
         var(--spectrum-progress-circle-size)
+    );
+    border-color: var(
+        --mod-progress-circle-track-border-color,
+        var(--spectrum-progress-circle-track-border-color)
     );
 }
 
@@ -83,13 +83,6 @@ governing permissions and limitations under the License.
         --mod-progress-circle-size,
         var(--spectrum-progress-circle-size)
     );
-    border-color: var(
-        --highcontrast-progress-circle-fill-border-color,
-        var(
-            --mod-progress-circle-fill-border-color,
-            var(--spectrum-progress-circle-fill-border-color)
-        )
-    );
     border-style: solid;
     border-width: var(
         --mod-progress-circle-thickness,
@@ -98,6 +91,13 @@ governing permissions and limitations under the License.
     border-radius: var(
         --mod-progress-circle-size,
         var(--spectrum-progress-circle-size)
+    );
+    border-color: var(
+        --highcontrast-progress-circle-fill-border-color,
+        var(
+            --mod-progress-circle-fill-border-color,
+            var(--spectrum-progress-circle-fill-border-color)
+        )
     );
 }
 
@@ -120,9 +120,9 @@ governing permissions and limitations under the License.
 
 .fillMask1,
 .fillMask2 {
-    transform-origin: 100%;
     inline-size: 50%;
     block-size: 100%;
+    transform-origin: 100%;
     position: absolute;
     overflow: hidden;
     transform: rotate(180deg);
@@ -130,9 +130,9 @@ governing permissions and limitations under the License.
 
 .fillSubMask1,
 .fillSubMask2 {
-    transform-origin: 100%;
     inline-size: 100%;
     block-size: 100%;
+    transform-origin: 100%;
     overflow: hidden;
     transform: rotate(-180deg);
 }
