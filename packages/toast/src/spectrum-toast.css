@@ -104,6 +104,7 @@ governing permissions and limitations under the License.
             var(--spectrum-toast-background-color-default)
         )
     );
+    overflow-wrap: anywhere;
     flex-direction: row;
     align-items: stretch;
     padding-inline-start: var(
