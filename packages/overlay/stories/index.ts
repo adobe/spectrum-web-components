@@ -39,6 +39,12 @@ class IsOverlayOpen extends HTMLElement {
     handleOpened = async (event: Event): Promise<void> => {
         console.log('Overlay opened event received');
         const overlay = event.target as Overlay;
+        await nextFrame();
+        await overlay.updateComplete;
+        // Add some delay to allow any further updates
+        await nextFrame();
+        await nextFrame();
+        console.log('Overlay update and multiple frames passed');
         const actions = [nextFrame(), overlay.updateComplete];
 
         await Promise.all(actions);
