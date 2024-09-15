@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*
 Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -29,21 +30,25 @@ class IsOverlayOpen extends HTMLElement {
     }
 
     async setup(): Promise<void> {
+        console.log('Setup started');
         await nextFrame();
-
+        console.log('First frame passed');
         document.addEventListener('sp-opened', this.handleOpened);
     }
 
     handleOpened = async (event: Event): Promise<void> => {
+        console.log('Overlay opened event received');
         const overlay = event.target as Overlay;
         const actions = [nextFrame(), overlay.updateComplete];
 
         await Promise.all(actions);
+        console.log('Overlay update complete');
         // Focus happens _after_ `sp-opened` by at least two frames.
         await nextFrame();
         await nextFrame();
         await nextFrame();
         await nextFrame();
+        console.log('Multiple frames passed after update');
 
         this.ready(true);
     };
