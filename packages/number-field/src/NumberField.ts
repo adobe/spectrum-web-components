@@ -796,6 +796,11 @@ export class NumberField extends TextfieldBase {
     }
 
     protected override updated(changes: PropertyValues<this>): void {
+        if (!this.inputElement || !this.isConnected) {
+            // Prevent race conditions if inputElement is removed from DOM while a queued update is still running.
+            return;
+        }
+
         if (changes.has('min') || changes.has('formatOptions')) {
             let inputMode = 'numeric';
             const hasNegative = typeof this.min !== 'undefined' && this.min < 0;
