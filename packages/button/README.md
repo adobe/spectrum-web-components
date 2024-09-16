@@ -392,6 +392,10 @@ or on an `<sp-icon*>` element child.
 
 Do not use custom colors for buttons. The colors of different button variations have been designed to be consistent and accessible.
 
+#### Don't mix href and non-href buttons in a set of buttons
+
+A screen reader user will not encounter href buttons when navigating by buttons or form controls. While they can both be used in the same page problems could occur if mixing the types in close proximity to each other.
+
 #### Use static black or static white to contrast with backgrounds and images
 
 To ensure maximum contrast with the background, use static black for light backgrounds and images, and use static white for dark backgrounds and images. Avoid placing static components on top of busy images with a lot of variance in contrast.
