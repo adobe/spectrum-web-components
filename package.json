@@ -262,6 +262,7 @@
                 "!**/spectrum-config.js",
                 "!**/spectrum-config.v1.js",
                 "!**/build.js",
+                "!**/build-s2.js",
                 "test/**/*.js",
                 "test/**/*.js.map",
                 "!test/visual/create.js",
@@ -338,16 +339,18 @@
             "clean": "if-file-deleted"
         },
         "icons:workflow": {
-            "command": "yarn workspace @spectrum-web-components/icons-workflow build",
+            "command": "yarn workspace @spectrum-web-components/icons-workflow build && yarn workspace @spectrum-web-components/icons-workflow build:s2",
             "files": [
                 "packages/icons-workflow/bin/build.js",
-                "node_modules/@adobe/spectrum-css-workflow-icons/dist/18/**.svg"
+                "packages/icons-workflow/bin/build-s2.js",
+                "node_modules/@adobe/spectrum-css-workflow-icons/dist/18/**.svg",
+                "node_modules/@adobe/spectrum-css-workflow-icons-s2/dist/assets/svg/**.svg"
             ],
             "output": [
                 "packages/icons-workflow/**/*.ts",
                 "!packages/icons-workflow/**/*.d.ts",
                 "!packages/icons-workflow/stories/**/*.ts",
-                "packages/icons-workflow/stories/icon-manifest.ts",
+                "packages/icons-workflow/stories/icon-s2-manifest.ts",
                 "!packages/icons-workflow/test/**/*.ts",
                 "!packages/icons-workflow/src/index.ts",
                 "!packages/icons-workflow/src/custom-tag.ts"

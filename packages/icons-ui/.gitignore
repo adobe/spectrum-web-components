@@ -3,3 +3,4 @@ src/icons.ts
 src/elements
 icons/
 stories/icon-manifest.ts
+stories/icon-s2-manifest.ts
