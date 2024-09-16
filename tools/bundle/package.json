@@ -119,7 +119,6 @@
         "@spectrum-web-components/shared": "^0.47.2",
         "@spectrum-web-components/sidenav": "^0.47.2",
         "@spectrum-web-components/slider": "^0.47.2",
-        "@spectrum-web-components/split-button": "^0.47.2",
         "@spectrum-web-components/split-view": "^0.47.2",
         "@spectrum-web-components/status-light": "^0.47.2",
         "@spectrum-web-components/styles": "^0.47.2",
