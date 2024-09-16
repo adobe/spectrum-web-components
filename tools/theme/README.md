@@ -330,3 +330,7 @@ previewing or editing content that will be displayed in a light theme with a rig
 ## Language Context
 
 The `<sp-theme>` element provides a language context for its descendents in the DOM. Descendents can resolve this context by dispatching an `sp-language-context` DOM event and supplying a `callback(lang: string) => void` method in the `detail` entry of the Custom Event. These callbacks will be reactively envoked when the `lang` attribute on the `<sp-theme>` element is updated. This way, you can control the resolved language in [`<sp-number-field>`](../components/number-field), [`<sp-slider>`](./components/slider), and other elements in one centralized place.
+
+## System Context (private Beta API - subject to changes)
+
+The `<sp-theme>` element provides a "system" context for its descendents in the DOM. Descendents can resolve this context by dispatching an `sp-system-context` DOM event and supplying a `callback(system: SystemVariant | '') => void` method in the `detail` entry of the Custom Event. These callbacks will be reactively envoked when the `system` attribute on the `<sp-theme>` element is updated. This way, you can control the resolved system in the components that need this.
