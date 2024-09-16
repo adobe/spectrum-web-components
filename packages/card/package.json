@@ -62,7 +62,6 @@
         "@spectrum-web-components/checkbox": "^0.47.2",
         "@spectrum-web-components/divider": "^0.47.2",
         "@spectrum-web-components/icons-workflow": "^0.47.2",
-        "@spectrum-web-components/quick-actions": "^0.47.2",
         "@spectrum-web-components/shared": "^0.47.2",
         "@spectrum-web-components/styles": "^0.47.2"
     },

@@ -70,8 +70,12 @@ slot[name='description'] {
     height: inherit;
 }
 
-sp-quick-actions {
-    z-index: 1;
+sp-popover {
+    align-items: center;
+}
+
+.actions {
+    margin: auto;
 }
 
 /**

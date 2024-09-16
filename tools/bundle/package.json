@@ -112,7 +112,6 @@
         "@spectrum-web-components/popover": "^0.47.2",
         "@spectrum-web-components/progress-bar": "^0.47.2",
         "@spectrum-web-components/progress-circle": "^0.47.2",
-        "@spectrum-web-components/quick-actions": "^0.47.2",
         "@spectrum-web-components/radio": "^0.47.2",
         "@spectrum-web-components/reactive-controllers": "^0.47.2",
         "@spectrum-web-components/search": "^0.47.2",
