@@ -28,6 +28,7 @@ governing permissions and limitations under the License.
         --spectrum-focus-indicator-thickness
     );
     --spectrum-swatch-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
+    --spectrum-swatch-border-color: #00000082;
     --spectrum-swatch-border-color-selected: var(--spectrum-gray-900);
     --spectrum-swatch-inner-border-color-selected: var(--spectrum-gray-50);
     --spectrum-swatch-disabled-icon-border-color: var(
@@ -347,6 +348,21 @@ governing permissions and limitations under the License.
 :host([border='none']) .fill:before {
     box-shadow: none;
     background-color: var(--spectrum-picked-color, transparent);
+}
+
+:host([border='light']) .fill:before {
+    box-shadow: inset 0 0 0
+        var(
+            --mod-swatch-border-thickness,
+            var(--spectrum-swatch-border-thickness)
+        )
+        var(
+            --highcontrast-swatch-border-color-light,
+            var(
+                --mod-swatch-border-color-light,
+                var(--spectrum-swatch-border-color-light)
+            )
+        );
 }
 
 .mixedValueIcon {

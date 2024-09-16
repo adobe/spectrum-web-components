@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 A `sp-contextual-help` shows a user extra information about the state of either an adjacent component or an entire view. It explains a high-level topic about an experience and can point users to more information elsewhere.
 

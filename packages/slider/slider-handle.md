@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 Some advanced slider uses require more than one handle. One example of this is the
 range slider above. `<sp-slider>` supports multiple handles via the `<sp-slider-handle>` sub-component, although it would be very rare to ever require more than two handles.

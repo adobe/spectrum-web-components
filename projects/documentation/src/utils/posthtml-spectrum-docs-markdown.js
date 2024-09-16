@@ -149,76 +149,14 @@ export default () =>
                 },
             },
             {
-                // wrap `<h2>` tags with a `<div.headerContainer>` element
-                // and give it an `<sp-divider size="l">` sibling
-                selector: 'h2',
+                // Update `.header-divder` tags to be `sp-divider`
+                selector: '.header-divider',
                 fn: (node) => {
-                    if (
-                        node.attrs &&
-                        (node.attrs.slot ||
-                            (node.attrs.class &&
-                                /spectrum-Heading/.test(node.attrs.class)))
-                    ) {
-                        return node;
-                    }
                     return {
-                        tag: 'div',
-                        attrs: {
-                            class: 'headerContainer',
-                        },
-                        content: [
-                            {
-                                tag: 'h2',
-                                attrs: {
-                                    ...node.attrs,
-                                    class: 'spectrum-Heading spectrum-Heading--sizeM',
-                                },
-                                content: node.content,
-                            },
-                            {
-                                tag: 'sp-divider',
-                                attrs: { size: 'l' },
-                            },
-                        ],
+                        ...node,
+                        tag: 'sp-divider',
                     };
                 },
-            },
-            {
-                selector: 'h3',
-                fn: (node) => {
-                    if (
-                        node.attrs &&
-                        (node.attrs.slot ||
-                            (node.attrs.class &&
-                                /spectrum-Heading/.test(node.attrs.class)))
-                    ) {
-                        return node;
-                    }
-                    return {
-                        tag: 'div',
-                        attrs: {
-                            class: 'headerContainer',
-                        },
-                        content: [
-                            {
-                                tag: 'h3',
-                                attrs: {
-                                    ...node.attrs,
-                                    class: 'spectrum-Heading spectrum-Heading--sizeS',
-                                },
-                                content: node.content,
-                            },
-                            {
-                                tag: 'sp-divider',
-                                attrs: { size: 'm' },
-                            },
-                        ],
-                    };
-                },
-            },
-            {
-                selector: 'h4',
-                classes: ['spectrum-Header', 'spectrum-Heading--sizeXS'],
             },
         ],
     });

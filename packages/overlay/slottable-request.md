@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 When working with a large amount of content that lives whithin an overlay, a page may encounter performance issues for placing a large amount of content within `<sp-overlay>` or `<overlay-trigger>` elements. To avoid this, an empty `<sp-overlay>` could be used instead. When triggered, the `<sp-overlay>` element will dispatch `slottable-request` just before it begins to open and just after it finished closing. When handling these events the contents of an overlay can be lazily rendered into the `<sp-overlay>` element as it opens and then, as needed, removed from the DOM once the overlay has closed.
 

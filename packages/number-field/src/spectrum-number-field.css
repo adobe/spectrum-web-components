@@ -359,7 +359,7 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host(:hover:not([disabled]):not([invalid])) #textfield {
+    :host(:hover) #textfield:not(.is-disabled, .is-invalid) {
         --mod-infield-button-border-color: var(
             --highcontrast-stepper-border-color-hover,
             var(

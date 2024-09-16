@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 The `<sp-accordion>` element contains a list of items that can be expanded or collapsed to reveal additional content or information associated with each item. There can be zero expanded items, exactly one expanded item, or more than one item expanded at a time, depending on the configuration. This list of items is defined by child [`<sp-accordion-item>`](./components/accordion-item) elements that are targetted to the default slot of their `<sp-accordion>` parent.
 
@@ -75,9 +75,11 @@ import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
 </sp-accordion>
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
@@ -170,7 +172,7 @@ The `density` property, when applied, accepts the values of `compact` or `spacio
 
 ### Compact
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
@@ -259,7 +261,7 @@ The `density` property, when applied, accepts the values of `compact` or `spacio
 
 ### Spacious
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

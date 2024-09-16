@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-quick-actions>` allow users to perform contextual actions when hovering or focusing on a specific component. They're shortcuts meant to make workflows more efficient. Spectrum guidelines suggest a `<sp-quick-action>` element feature only text buttons OR only icon buttons, and never both.
 

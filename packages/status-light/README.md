@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-status-light>` is a great way to convey semantic meaning, such as statuses and categories.
 
@@ -24,9 +24,11 @@ When looking to leverage the `StatusLight` base class as a type and/or for exten
 import { StatusLight } from '@spectrum-web-components/status-light';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

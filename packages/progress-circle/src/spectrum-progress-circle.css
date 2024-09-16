@@ -12,10 +12,10 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .fill-submask-2 {
-    animation: 1s linear infinite b;
+    animation: 1s linear infinite spectrum-fill-mask-2;
 }
 
-@keyframes a {
+@keyframes spectrum-fill-mask-1 {
     0% {
         transform: rotate(90deg);
     }
@@ -257,7 +257,7 @@ governing permissions and limitations under the License.
     }
 }
 
-@keyframes b {
+@keyframes spectrum-fill-mask-2 {
     0% {
         transform: rotate(180deg);
     }
@@ -499,7 +499,7 @@ governing permissions and limitations under the License.
     }
 }
 
-@keyframes c {
+@keyframes spectrum-fills-rotate {
     0% {
         transform: rotate(-90deg);
     }
@@ -675,18 +675,19 @@ governing permissions and limitations under the License.
 :host([indeterminate]) .fills {
     will-change: transform;
     transform-origin: center;
-    animation: 1s cubic-bezier(0.25, 0.78, 0.48, 0.89) infinite c;
+    animation: 1s cubic-bezier(0.25, 0.78, 0.48, 0.89) infinite
+        spectrum-fills-rotate;
     transform: translateZ(0);
 }
 
 :host([indeterminate]) .fillSubMask1 {
     will-change: transform;
-    animation: 1s linear infinite a;
+    animation: 1s linear infinite spectrum-fill-mask-1;
     transform: translateZ(0);
 }
 
 :host([indeterminate]) .fillSubMask2 {
     will-change: transform;
-    animation: 1s linear infinite b;
+    animation: 1s linear infinite spectrum-fill-mask-2;
     transform: translateZ(0);
 }

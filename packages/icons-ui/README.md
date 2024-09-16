@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 Deliver [Spectrum UI Icons](https://spectrum.adobe.com/page/icons/) as either:
 

@@ -219,15 +219,12 @@ governing permissions and limitations under the License.
 }
 
 #button {
-    border-radius: var(
-        --mod-search-border-radius,
-        var(--spectrum-search-border-radius)
-    );
     position: absolute;
     inset-block-start: 0;
     inset-inline-end: 0;
 }
 
+#button,
 #button .spectrum-ClearButton-fill {
     border-radius: var(
         --mod-search-border-radius,

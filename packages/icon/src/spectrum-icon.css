@@ -28,10 +28,6 @@ governing permissions and limitations under the License.
     display: inline-block;
 }
 
-:host(:not(:root)) {
-    overflow: hidden;
-}
-
 @media (forced-colors: active) {
     :host {
         forced-color-adjust: auto;

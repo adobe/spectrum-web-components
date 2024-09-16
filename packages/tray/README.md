@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-tray>` elements are typically used to portray information on mobile device or smaller screens.
 

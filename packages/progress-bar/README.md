@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-progress-bar>` shows the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. It can represent determinate or indeterminate progress.
 
@@ -24,9 +24,11 @@ When looking to leverage the `ProgressBar` base class as a type and/or for exten
 import { ProgressBar } from '@spectrum-web-components/progress-bar';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-swatch-group>` group is a grouping of `<sp-swatch>` elements that are related to each other.
 
@@ -23,9 +23,11 @@ When looking to leverage the `SwatchGroup` base class as a type and/or for exten
 import { SwatchGroup } from '@spectrum-web-components/swatch';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="xs">Extra Small</sp-tab>
 <sp-tab-panel value="xs">
 

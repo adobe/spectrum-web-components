@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-overlay>` element is used to decorate content that you would like to present to your visitors as "overlaid" on the rest of the application. This includes dialogs (modal and not), pickers, tooltips, context menus, et al.
 

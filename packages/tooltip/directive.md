@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 While `<sp-tooltip>` element are general fairly innocumous amounts of DOM, it is possible that your page will quickly leverage so many Tooltips that their presence could begin to negatively effect its performane. To support consumers that leverage `lit-html`, Spectrum Web Components also vends a [directive](https://lit.dev/docs/api/directives/) to further simplify the delivery of `<sp-tooltip>` elements.
 

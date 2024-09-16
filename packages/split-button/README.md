@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `sp-split-button` surfaces an immediately envokable action via it's main button, as well as a list of alternative actions in its toggleable menu overlay. By default, any actions envoked from the overlay will replace the main action button. When leveraging `[type="more"]` the action will be envoked, but the main button will remain the action initally persribed by the implementor.
 
@@ -30,9 +30,11 @@ When looking to leverage the `SplitButton` base class as a type and/or for exten
 import { SplitButton } from '@spectrum-web-components/split-button';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

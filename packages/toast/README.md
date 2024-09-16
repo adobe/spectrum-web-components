@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `sp-toast` elements display brief, temporary notifications. They are noticeable but do not disrupt the user experience and do not require an action to be taken.
 

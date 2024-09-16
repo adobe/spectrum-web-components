@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-top-nav>` delivers site navigation, particularly for when that navigation will change the majority of the page's content and/or the page's URL when selected. All primary elements of an `<sp-top-nav>` should be directly accessible in the tab order.
 

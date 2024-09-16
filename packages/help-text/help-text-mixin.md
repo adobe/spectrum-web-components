@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots. When creating your own components, use the `ManageHelpText` mixin to associate slotted `<sp-help-text>` elements with the elements they describe. This functionality is also surfaced as a base class `HelpTextManagedElement` if you prefer to extend from there, instead.
 
@@ -31,14 +31,14 @@ The `HelpTextManager` class is also available for import as:
 import { HelpTextManager } from '@spectrum-web-components/help-text/HelpTextManager.js';
 ```
 
-## ManageHelpText mixin
+### ManageHelpText mixin
 
 `ManageHelpText` mixes two properties into your class:
 
-- `helpTextId`: the `id` attribute of the associated `<sp-help-text>`
-- `renderHelpText(negative?: boolean)`: a method that returns a `TemplateResult` with the `help-text` and `negative-help-text` slots
+-   `helpTextId`: the `id` attribute of the associated `<sp-help-text>`
+-   `renderHelpText(negative?: boolean)`: a method that returns a `TemplateResult` with the slots `"help-text"` and `"negative-help-text"`
 
-## Internal
+### Internal
 
 To describe an element within your custom element's shadow root, use `mode: 'internal'` (the default) and set `aria-describedby` on the target element:
 
@@ -58,7 +58,7 @@ export class MyElement extends ManageHelpText(SpectrumElement) {
 }
 ```
 
-## External
+### External
 
 To describe the custom element itself, use `mode: 'external'`. This will automatically manage the application of the `aria-describedby` atribute on `MyElement`:
 
@@ -79,9 +79,9 @@ export class MyElement extends ManageHelpText(SpectrumElement, {
 }
 ```
 
-This functionality is powered by the `HelpTextManager` class which is also exported from this package and can be leveraged directly. It accepts the root element on which it will manage help text and an options object that accepts the `mode` by which that help text will be managed at construction time. Leveraged at render time, it surfaces an `id` property and a `render(invalid?: boolean)` method for use in your template.
+This functionality is powered by the `HelpTextManager` class, which is also exported from this package and can be leveraged directly. It accepts the root element, on which it will manage help text, and an options object that accepts the `mode`, by which that help text will be managed at construction time. Leveraged at render time, it surfaces an `id` property and a `render(invalid?: boolean)` method for use in your template.
 
-## Usage with self-managed validity
+#### Usage with self-managed validity
 
 Spectrum Web Components that have an `invalid` attribute, like `<sp-fieldgroup>` and `<sp-textfield>`, automatically render either the `help-text` or `negative-help-text` slot based on validity. Provide both, and the appropriate `<sp-help-text>` element will be surfaced:
 
@@ -172,9 +172,9 @@ Spectrum Web Components that have an `invalid` attribute, like `<sp-fieldgroup>`
 </sp-tab-panel>
 </sp-tabs>
 
-## Usage with validity managed from above
+#### Usage with validity managed from above
 
-When the parent element does not manage its own validity, or you would prefer to leverage the parent application in deciding what content and when to deliver within your `<sp-help-text>` element, place your content in the `help-text` slot to ensure that it is available for receiving stateful content/properties across the lifecycle of the parent element in question.
+When the parent element does not manage its own validity, or you would prefer to leverage the parent application in deciding what content and when to deliver within your `<sp-help-text>` element, place your content in the `"help-text"` slot to ensure that it is available for receiving stateful content/properties across the lifecycle of the parent element in question.
 
 <sp-tabs selected="textfield" auto label="Help text usage in form elements">
 <sp-tab value="field">Field group</sp-tab>

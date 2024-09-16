@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 Side navigation allows users to locate information and features within the UI.
 It can be used for either hierarchical or flat navigation, and gives the ability

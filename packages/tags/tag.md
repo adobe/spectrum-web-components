@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-tag>` elements represent a category to which the content they are a part of belongs. They can represent keywords or people, and are grouped to describe an item or a search request.
 
@@ -24,9 +24,11 @@ When looking to leverage the `Tag` base class as a type and/or for extension pur
 import { Tag } from '@spectrum-web-components/tags';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

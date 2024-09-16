@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-color-wheel>` lets users visually change an individual channel of a color on a circular track.
 

@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-number-field>` elements are used for numeric inputs. Upon interaction via the <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> keys, the scroll wheel, or the stepper UI, when not hidden by the `hide-stepper` attribute, the input value incrementally increases or decreases by the value of the `step` attribute. The <kbd>shift</kbd> key can be used to apply steps at 10 time (or the value of the `step-modifier` attribute times) their normal rate.
 
@@ -24,9 +24,11 @@ When looking to leverage the `NumberField` base class as a type and/or for exten
 import { NumberField } from '@spectrum-web-components/number-field';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

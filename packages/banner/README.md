@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-banner>` is an additional label an existing component may have. Banners cannot be interacted with. Banners in Spectrum have three variations for different uses as well as the ability to place it overlaid in the top-right corner of a container.
 

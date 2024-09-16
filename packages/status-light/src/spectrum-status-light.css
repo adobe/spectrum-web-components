@@ -182,22 +182,6 @@ governing permissions and limitations under the License.
     );
 }
 
-@media (forced-colors: active) {
-    :host([dir]) {
-        forced-color-adjust: none;
-        --highcontrast-statuslight-content-color-default: CanvasText;
-        --highcontrast-statuslight-subdued-content-color-default: CanvasText;
-    }
-
-    :host:before {
-        border: var(
-                --mod-statuslight-border-width,
-                var(--spectrum-statuslight-border-width)
-            )
-            solid ButtonText;
-    }
-}
-
 :host([dir]) {
     min-block-size: var(
         --mod-statuslight-height,
@@ -270,8 +254,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-statuslight-spacing-top-to-label)
             )
     );
-    -ms-high-contrast-adjust: none;
-    forced-color-adjust: none;
     flex-grow: 0;
     flex-shrink: 0;
     margin-block-start: var(--spectrum-statuslight-spacing-computed-top-to-dot);
@@ -431,4 +413,21 @@ governing permissions and limitations under the License.
         --mod-statuslight-nonsemantic-magenta-color,
         var(--spectrum-statuslight-nonsemantic-magenta-color)
     );
+}
+
+@media (forced-colors: active) {
+    :host([dir]) {
+        forced-color-adjust: none;
+        --highcontrast-statuslight-content-color-default: CanvasText;
+        --highcontrast-statuslight-subdued-content-color-default: CanvasText;
+    }
+
+    :host:before {
+        forced-color-adjust: none;
+        border: var(
+                --mod-statuslight-border-width,
+                var(--spectrum-statuslight-border-width)
+            )
+            solid ButtonText;
+    }
 }

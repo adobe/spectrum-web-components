@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-color-field>` elements are textfields that allow users to input custom color values.
 Color formats supported are `HEX, RGB, HSL, HSV, and shorthand HEX`
@@ -24,9 +24,11 @@ When looking to leverage the `ColorField` base class as a type and/or for extens
 import { ColorField } from '@spectrum-web-components/color-field';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

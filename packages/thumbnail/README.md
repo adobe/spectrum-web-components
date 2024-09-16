@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `sp-thumbnail` can be used in a variety of locations as a way to display a preview of an image, layer, or effect. `sp-thumbnail` elements are not keyboard-focusable since they're intended to be used inside of a component that a user sets focus to (such as select lists or tree items).
 
@@ -24,9 +24,11 @@ When looking to leverage the `Thumbnail` base class as a type and/or for extensi
 import { Thumbnail } from '@spectrum-web-components/thumbnail';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="500" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="500" auto label="Size attribute options">
 <sp-tab value="50">50</sp-tab>
 <sp-tab-panel value="50">
 

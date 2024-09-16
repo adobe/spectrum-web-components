@@ -77,6 +77,8 @@ In the case that you'd like to serve and test a static build of the documentatio
 yarn docs:build
 ```
 
+Please see [Documenting the component](http://localhost:8001/guides/adding-component/#documenting-the-component) for more information.
+
 # Updating Spectrum CSS
 
 There are two mechanisms for broadly updating SWC's Spectrum CSS dependencies:

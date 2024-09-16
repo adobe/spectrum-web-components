@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `sp-action-group` delivers a set of action buttons in horizontal or vertical orientation while ensuring the appropriate spacing between those buttons. The `compact` attribute merges these buttons so that they are visually joined to clarify their relationship to each other and their distance from other buttons/groups.
 
@@ -24,9 +24,11 @@ When looking to leverage the `ActionGroup` base class as a type and/or for exten
 import { ActionGroup } from '@spectrum-web-components/action-group';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="xs">Extra Small</sp-tab>
 <sp-tab-panel value="xs">
 

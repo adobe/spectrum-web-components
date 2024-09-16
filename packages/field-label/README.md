@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-field-label>` provides accessible labelling for form elements. Use the `for` attribute to outline the `id` of an element in the same DOM tree to which it should associate itself.
 
@@ -24,9 +24,11 @@ When looking to leverage the `FieldLabel` base class as a type and/or for extens
 import { FieldLabel } from '@spectrum-web-components/field-label';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

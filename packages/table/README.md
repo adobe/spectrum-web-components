@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-table>` is used to create a container for displaying information. It allows users to sort, compare, and take action on large amounts of data.
 
@@ -277,9 +277,11 @@ The optional `density` property changes the spacing around table cell content fr
 </sp-tab-panel>
 </sp-tabs>
 
-## Sizes
+### Options
 
-<sp-tabs selected="s" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="s" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 

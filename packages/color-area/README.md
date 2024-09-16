@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-color-area>` allows users to visually select two properties of a color simultaneously. It's commonly used together with a color slider or color wheel.
 

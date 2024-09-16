@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-combobox>` allows users to filter lists to only the options matching a query. It's composed of a textfield, a picker button, and child menu items.
 
@@ -23,9 +23,11 @@ When looking to leverage the `Combobox` base class as a type and/or for extensio
 import { Combobox } from '@spectrum-web-components/combobox';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
