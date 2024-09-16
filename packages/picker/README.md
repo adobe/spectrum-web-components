@@ -561,7 +561,10 @@ While in pending state, `<sp-picker>` elements will not respond to click events 
 </sp-picker>
 ```
 
-## Force Popover on Mobile Devices
+</sp-tab-panel>
+</sp-tabs>
+
+#### Force Popover on Mobile Devices
 
 On mobile, the menu can be exposed in either a `sp-popover` or `sp-tray`. By default, `sp-picker` will render an `sp-tray`. If you would like to render `sp-popover` on mobile, add the attribute `forcePopover` to the `sp-picker`.
 

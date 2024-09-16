@@ -144,8 +144,18 @@ When the content associated to the element is disabled, use the `disabled` attri
 </sp-combobox>
 ```
 
-## Accessibility
+### Accessibility
 
-It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots, so help text must be used in the `help-text` or `help-text-negative` `slot` of a `<sp-text-field>`, `<sp-field-group>`, `<sp-combobox>` or `<sp-picker>`.
+#### Be descriptive
+
+Good, descriptive help text includes 1-2 short sentences of information such as:
+
+-   An overall description of an input field or controls
+-   Hints for what kind of information needs to be inputted or selected
+-   Specific formatting examples or requirements
+
+#### Ensure help text and field share the same root
+
+It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots. To ensure proper association between elements, help text must be included via the `slot="help-text"` or `slot="help-text-negative"` in an `<sp-text-field>`, `<sp-field-group>`, `<sp-combobox>` or `<sp-picker>`.
 
 To add help text to your own custom element, see [Help Text Mixin](./help-text-mixin/).
