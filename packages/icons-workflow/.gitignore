@@ -8,3 +8,5 @@ icons
 icons-s2
 stories/icon-manifest.ts
 stories/icon-s2-manifest.ts
+
+!bin/build-s2.js
