@@ -13,6 +13,9 @@ import {
     InteractionController,
     InteractionTypes,
 } from './InteractionController.js';
+import { isWebKit } from '@spectrum-web-components/shared';
+
+export const SAFARI_FOCUS_RING_CLASS = 'remove-focus-ring-safari-hack';
 
 export class MobileController extends InteractionController {
     override type = InteractionTypes.mobile;
@@ -26,6 +29,21 @@ export class MobileController extends InteractionController {
 
     public override handlePointerdown(): void {
         this.preventNextToggle = this.open ? 'yes' : 'no';
+        if (isWebKit()) {
+            this.target.classList.add(SAFARI_FOCUS_RING_CLASS);
+        }
+    }
+
+    private handleFocusOut(): void {
+        if (this.host.open) {
+            return;
+        }
+        if (
+            isWebKit() &&
+            this.target.classList.contains(SAFARI_FOCUS_RING_CLASS)
+        ) {
+            this.target.classList.remove(SAFARI_FOCUS_RING_CLASS);
+        }
     }
 
     override init(): void {
@@ -41,12 +59,8 @@ export class MobileController extends InteractionController {
             () => this.handlePointerdown(),
             { signal }
         );
-        this.target.addEventListener(
-            'focus',
-            (event: FocusEvent) => this.handleButtonFocus(event),
-            {
-                signal,
-            }
-        );
+        this.target.addEventListener('focusout', () => this.handleFocusOut(), {
+            signal,
+        });
     }
 }
