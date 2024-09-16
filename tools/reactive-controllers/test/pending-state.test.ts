@@ -34,11 +34,25 @@ describe('PendingStateController', () => {
     describe('renderPendingState', () => {
         it('should change aria-label of host when pending and when not pending', async () => {
             host = await fixture<HostWithPendingState>(html`
-                <sp-picker aria-label="clickable"></sp-picker>
+                <sp-picker></sp-picker>
             `);
             controller = host.pendingStateController;
+
+            host.setAttribute('pending', 'true');
             await host.updateComplete;
+
             let ariaLabel = host.getAttribute('aria-label');
+            expect(ariaLabel).to.equal('Pending');
+
+            host.removeAttribute('pending');
+            await host.updateComplete;
+
+            ariaLabel = host.getAttribute('aria-label');
+            expect(ariaLabel).to.equal(null);
+
+            host.setAttribute('aria-label', 'clickable');
+            await host.updateComplete;
+            ariaLabel = host.getAttribute('aria-label');
             expect(ariaLabel).to.equal('clickable');
             host.setAttribute('pending', 'true');
 
