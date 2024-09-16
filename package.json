@@ -321,17 +321,20 @@
             ]
         },
         "icons:ui": {
-            "command": "yarn workspace @spectrum-web-components/icons-ui build",
+            "command": "yarn workspace @spectrum-web-components/icons-ui build && yarn workspace @spectrum-web-components/icons-ui build:s2",
             "files": [
                 "packages/icons-ui/bin/build.js",
+                "packages/icons-ui/bin/build-s2.js",
                 "packages/icons-ui/packages.json",
-                "node_modules/@spectrum-css/ui-icons/dist/medium/**.svg"
+                "node_modules/@spectrum-css/ui-icons/dist/medium/**.svg",
+                "node_modules/@spectrum-css/ui-icons-s2/dist/medium/**.svg"
             ],
             "output": [
                 "packages/icons-ui/**/*.ts",
                 "!packages/icons-ui/**/*.d.ts",
                 "!packages/icons-ui/stories/**/*.ts",
                 "packages/icons-ui/stories/icon-manifest.ts",
+                "packages/icons-ui/stories/icon-s2-manifest.ts",
                 "!packages/icons-ui/test/**/*.ts",
                 "!packages/icons-ui/src/index.ts",
                 "!packages/icons-ui/src/custom-tag.ts"
