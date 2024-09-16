@@ -76,7 +76,6 @@
         "@spectrum-web-components/button-group": "^0.47.2",
         "@spectrum-web-components/icon": "^0.47.2",
         "@spectrum-web-components/icons-ui": "^0.47.2",
-        "@spectrum-web-components/quick-actions": "^0.47.2",
         "@spectrum-web-components/reactive-controllers": "^0.47.2",
         "@spectrum-web-components/shared": "^0.47.2"
     },
