@@ -10,8 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { ZonedDateTime } from '@internationalized/date';
 import { SegmentTypes } from '../../types';
 import { EditableSegment } from '../EditableSegment';
+import { getAmPmModifier } from '../../helpers';
 
 export class HourSegment extends EditableSegment {
     public minValue: number = 0;
@@ -30,5 +32,14 @@ export class HourSegment extends EditableSegment {
             this.minValue = 1;
             this.maxValue = 12;
         }
+    }
+
+    public override setValueFromDate(
+        currentDate: ZonedDateTime,
+        is12HourClock?: boolean
+    ): void {
+        if (is12HourClock)
+            this.value = currentDate.hour - getAmPmModifier(currentDate.hour);
+        else super.setValueFromDate(currentDate);
     }
 }

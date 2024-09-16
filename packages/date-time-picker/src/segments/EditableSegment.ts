@@ -17,7 +17,6 @@ import {
     SegmentPlaceholders,
     SegmentTypes,
 } from '../types';
-import { getAmPmModifier } from '../helpers';
 
 export abstract class EditableSegment {
     public type: EditableSegmentType;
@@ -34,22 +33,24 @@ export abstract class EditableSegment {
         this.placeholder = SegmentPlaceholders[type];
     }
 
-    public setValue(
-        dateTimePickerValue: ZonedDateTime,
-        is12HourClock?: boolean
-    ): void {
-        if (!is12HourClock) {
-            if (this.type === SegmentTypes.DayPeriod) return;
-            this.value = dateTimePickerValue[this.type];
-            return;
+    public increment(_currentDate?: ZonedDateTime): void {
+        if (this.value === undefined) this.value = this.minValue;
+        else {
+            this.value = this.value + 1;
+            if (this.value > this.maxValue) this.value = this.minValue;
         }
+    }
 
-        if (this.type === SegmentTypes.Hour)
-            this.value =
-                dateTimePickerValue.hour -
-                getAmPmModifier(dateTimePickerValue.hour);
-        else if (this.type === SegmentTypes.DayPeriod)
-            this.value = getAmPmModifier(dateTimePickerValue.hour);
-        else this.value = dateTimePickerValue[this.type];
+    public decrement(_currentDate?: ZonedDateTime): void {
+        if (this.value === undefined) this.value = this.maxValue;
+        else {
+            this.value = this.value - 1;
+            if (this.value < this.minValue) this.value = this.maxValue;
+        }
+    }
+
+    public setValueFromDate(currentDate: ZonedDateTime): void {
+        if (this.type !== SegmentTypes.DayPeriod)
+            this.value = currentDate[this.type];
     }
 }

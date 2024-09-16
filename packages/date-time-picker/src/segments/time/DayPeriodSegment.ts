@@ -10,8 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { AM, PM, SegmentTypes } from '../../types';
+import { ZonedDateTime } from '@internationalized/date';
 import { EditableSegment } from '../EditableSegment';
+import { AM, PM, SegmentTypes } from '../../types';
+import { getAmPmModifier } from '../../helpers';
 
 export class DayPeriodSegment extends EditableSegment {
     public minValue: number = AM;
@@ -20,5 +22,23 @@ export class DayPeriodSegment extends EditableSegment {
 
     constructor(formatted: string) {
         super(SegmentTypes.DayPeriod, formatted);
+    }
+
+    private toggleAmPm(): void {
+        this.value = this.value === AM ? PM : AM;
+    }
+
+    public override increment(): void {
+        if (this.value === undefined) this.value = this.minValue;
+        else this.toggleAmPm();
+    }
+
+    public override decrement(): void {
+        if (this.value === undefined) this.value = this.maxValue;
+        else this.toggleAmPm();
+    }
+
+    public override setValueFromDate(currentDate: ZonedDateTime): void {
+        this.value = getAmPmModifier(currentDate.hour);
     }
 }

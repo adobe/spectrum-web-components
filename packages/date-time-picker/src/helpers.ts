@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import { CalendarDate, CalendarDateTime } from '@internationalized/date';
-import { AM, PM } from './types';
+import { AM, EditableSegmentType, PM, Segment } from './types';
+import { EditableSegment } from './segments/EditableSegment';
 
 /**
  * An utility to check if the given value is a number (not `undefined`)
@@ -91,4 +92,11 @@ export function dateToCalendarDate(date: Date): CalendarDate {
         date.getMonth() + 1,
         date.getDate()
     );
+}
+
+export function getEditableSegmentByType(
+    segments: Segment[],
+    type: EditableSegmentType
+): EditableSegment {
+    return segments.find((segment) => segment.type === type) as EditableSegment;
 }

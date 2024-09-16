@@ -10,10 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { getMinimumDayInMonth, ZonedDateTime } from '@internationalized/date';
+import {
+    CalendarDate,
+    getMinimumDayInMonth,
+    ZonedDateTime,
+} from '@internationalized/date';
 import { isNumber } from '../../helpers.js';
 import {
-    MAX_DAYS_IN_LEAP_FEBRUARY,
+    DEFAULT_LEAP_YEAR,
     MAX_DAYS_PER_MONTH,
     SegmentTypes,
 } from '../../types.js';
@@ -33,11 +37,16 @@ export class DaySegment extends DateSegment {
         month?: number,
         year?: number
     ): void {
-        this.minValue = getMinimumDayInMonth(currentDate);
+        if (!isNumber(month)) {
+            this.minValue = 1;
+            this.maxValue = MAX_DAYS_PER_MONTH;
+            return;
+        }
 
-        if (!isNumber(month)) this.maxValue = MAX_DAYS_PER_MONTH;
-        else if (month === 2 && !isNumber(year))
-            this.maxValue = MAX_DAYS_IN_LEAP_FEBRUARY;
-        else this.maxValue = currentDate.calendar.getDaysInMonth(currentDate);
+        if (!isNumber(year)) year = DEFAULT_LEAP_YEAR;
+
+        const dateToUse = new CalendarDate(year, month, 1);
+        this.maxValue = currentDate.calendar.getDaysInMonth(dateToUse);
+        this.minValue = getMinimumDayInMonth(dateToUse);
     }
 }

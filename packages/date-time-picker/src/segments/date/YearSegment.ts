@@ -27,4 +27,14 @@ export class YearSegment extends DateSegment {
         this.minValue = 1;
         this.maxValue = currentDate.calendar.getYearsInEra(currentDate);
     }
+
+    public override increment(currentDate: ZonedDateTime): void {
+        if (this.value === undefined) this.value = currentDate.year;
+        else super.increment();
+    }
+
+    public override decrement(currentDate: ZonedDateTime): void {
+        if (this.value === undefined) this.value = currentDate.year;
+        else super.decrement();
+    }
 }

@@ -12,13 +12,7 @@ governing permissions and limitations under the License.
 
 // import { ZonedDateTime } from '@internationalized/date';
 import { DateFormatter, ZonedDateTime } from '@internationalized/date';
-import {
-    EditableSegmentType,
-    Segment,
-    SegmentType,
-    SegmentTypes,
-} from '../types';
-import { EditableSegment } from './EditableSegment';
+import { Segment, SegmentType, SegmentTypes } from '../types';
 import { LiteralSegment } from './LiteralSegment';
 import { DaySegment } from './date/DaySegment';
 import { MonthSegment } from './date/MonthSegment';
@@ -27,6 +21,7 @@ import { DayPeriodSegment } from './time/DayPeriodSegment';
 import { HourSegment } from './time/HourSegment';
 import { MinuteSegment } from './time/MinuteSegment';
 import { SecondSegment } from './time/SecondSegment';
+import { getEditableSegmentByType } from '../helpers';
 
 interface DateSegments {
     year: YearSegment;
@@ -61,28 +56,28 @@ export class SegmentsFactory {
         year.setLimits(currentDate);
         month.setLimits(currentDate);
         if (shouldSetSegmentsValues) {
-            year.setValue(currentDate);
-            month.setValue(currentDate);
+            year.setValueFromDate(currentDate);
+            month.setValueFromDate(currentDate);
         }
 
         day.setLimits(currentDate, month.value, year.value);
-        day.setValue(currentDate);
+        if (shouldSetSegmentsValues) day.setValueFromDate(currentDate);
 
-        const hour = this.getEditableSegmentByType(
+        const hour = getEditableSegmentByType(
             segments,
             SegmentTypes.Hour
         ) as HourSegment;
 
         hour.setLimits(this.is12HourFormat);
         if (shouldSetSegmentsValues) {
-            hour.setValue(currentDate, this.is12HourFormat);
+            hour.setValueFromDate(currentDate, this.is12HourFormat);
 
             if (this.is12HourFormat) {
-                const dayPeriod = this.getEditableSegmentByType(
+                const dayPeriod = getEditableSegmentByType(
                     segments,
                     SegmentTypes.DayPeriod
                 ) as DayPeriodSegment;
-                dayPeriod.setValue(currentDate, this.is12HourFormat);
+                dayPeriod.setValueFromDate(currentDate);
             }
         }
 
@@ -122,30 +117,21 @@ export class SegmentsFactory {
     }
 
     private getDateSegments(segments: Segment[]): DateSegments {
-        const year = this.getEditableSegmentByType(
+        const year = getEditableSegmentByType(
             segments,
             SegmentTypes.Year
         ) as YearSegment;
 
-        const month = this.getEditableSegmentByType(
+        const month = getEditableSegmentByType(
             segments,
             SegmentTypes.Month
         ) as MonthSegment;
 
-        const day = this.getEditableSegmentByType(
+        const day = getEditableSegmentByType(
             segments,
             SegmentTypes.Day
         ) as DaySegment;
 
         return { year, month, day };
-    }
-
-    private getEditableSegmentByType(
-        segments: Segment[],
-        type: EditableSegmentType
-    ): EditableSegment {
-        return segments.find(
-            (segment) => segment.type === type
-        ) as EditableSegment;
     }
 }

@@ -113,3 +113,6 @@ export const MAX_HOUR_AM = 11;
 
 export const MIN_HOUR_PM = PM;
 export const MAX_HOUR_PM = 23;
+
+/** A base leap year used to allow for maximum number of days in February */
+export const DEFAULT_LEAP_YEAR = 2000;
