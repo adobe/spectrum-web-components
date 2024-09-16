@@ -69,8 +69,6 @@ import {
     Precision,
     Segment,
     SegmentDetails,
-    SegmentPlaceholders,
-    SegmentType,
     SegmentTypes,
     SegmentValueAndLimits,
 } from './types.js';
@@ -89,9 +87,13 @@ import {
     getDate,
     isHourPM,
     isNumber,
-    toggleAmPm,
 } from './helpers.js';
-// import { SegmentsFactory } from './segments/SegmentsFactory.js';
+import { SegmentsFactory } from './segments/SegmentsFactory.js';
+import { SegmentsFormatter } from './segments/SegmentsFormatter.js';
+import {
+    DecrementModifier,
+    IncrementModifier,
+} from './segments/SegmentsModifier.js';
 
 /**
  * @element sp-date-time-picker
@@ -338,16 +340,17 @@ export class DateTimePicker extends ManageHelpText(
             languageResolverUpdatedSymbol
         );
         const changesPrecision = changedProperties.has('precision');
+
         const shouldResetSegments =
             changesDates ||
             changesLocale ||
             changesPrecision ||
             (changesValue && this.value === undefined);
 
-        if (changesDates) this.convertToMostSpecificDateValue();
-
-        if (changesDates)
+        if (changesDates) {
+            this.convertToMostSpecificDateValue();
             this.checkDatesCompliance(changesValue, changesMin, changesMax);
+        }
 
         if (changesLocale) this.setNumberParser();
         if (changesLocale || changesPrecision) this.setDateFormatter();
@@ -650,23 +653,20 @@ export class DateTimePicker extends ManageHelpText(
         segment: EditableSegment,
         event: KeyboardEvent
     ): void {
-        const min = segment.minValue;
-        const max = segment.maxValue;
+        const incrementModifier = new IncrementModifier(this.segments);
+        const incrementedSegments = incrementModifier.modify(
+            segment.type,
+            this.currentDate
+        );
 
-        if (segment.value === undefined) {
-            segment.value =
-                segment.type === SegmentTypes.Year
-                    ? this.currentDate.year
-                    : min;
-        } else if (segment.type === SegmentTypes.DayPeriod) {
-            segment.value = toggleAmPm(segment.value);
-        } else {
-            segment.value += 1;
-
-            if (segment.value > max) segment.value = min;
-        }
-
-        this.valueChanged(segment, event);
+        const segmentsFormatter = new SegmentsFormatter(this.dateFormatter);
+        const formattedSegments = segmentsFormatter.format(
+            incrementedSegments,
+            this.currentDate
+        );
+        this.segments = formattedSegments;
+        this.updateContent(segment, event);
+        this.updateValue();
     }
 
     /**
@@ -679,27 +679,21 @@ export class DateTimePicker extends ManageHelpText(
         segment: EditableSegment,
         event: KeyboardEvent
     ): void {
-        const min = segment.minValue;
-        const max = segment.maxValue;
+        const decrementModifier = new DecrementModifier(this.segments);
+        const decrementedSegments = decrementModifier.modify(
+            segment.type,
+            this.currentDate
+        );
 
-        if (min === undefined || max === undefined) {
-            return;
-        }
+        const segmentsFormatter = new SegmentsFormatter(this.dateFormatter);
+        const formattedSegments = segmentsFormatter.format(
+            decrementedSegments,
+            this.currentDate
+        );
+        this.segments = formattedSegments;
 
-        if (segment.value === undefined) {
-            segment.value =
-                segment.type === SegmentTypes.Year
-                    ? this.currentDate.year
-                    : max;
-        } else if (segment.type === SegmentTypes.DayPeriod) {
-            segment.value = toggleAmPm(segment.value);
-        } else {
-            segment.value -= 1;
-
-            if (segment.value < min) segment.value = max;
-        }
-
-        this.valueChanged(segment, event);
+        this.updateContent(segment, event);
+        this.updateValue();
     }
 
     /**
@@ -783,6 +777,9 @@ export class DateTimePicker extends ManageHelpText(
         this.formatSegmentValue(segment);
         this.updateContent(segment, event);
         this.updateValue();
+    }
+
+    private dispatchChange(): void {
         this.dispatchEvent(
             new CustomEvent('change', {
                 bubbles: true,
@@ -796,27 +793,28 @@ export class DateTimePicker extends ManageHelpText(
      * each type (date only, time only or date and time together) were defined
      */
     protected updateValue(): void {
-        let value: DateTimePickerValue;
-
         const date = this.getDateFromSegments();
-        if (date && this.precision === SegmentTypes.Day) {
-            value = dateToCalendarDateTime(date);
+        if (!date) return;
+
+        if (this.precision === SegmentTypes.Day) {
+            this.value = dateToCalendarDateTime(date);
+            this.dispatchChange();
             return;
         }
 
+        const dateCalendar = dateToCalendarDateTime(date);
+
         const time = this.getTimeFromSegments();
-        if (time) value = dateToCalendarDateTime(time);
+        if (!time) return;
 
-        if (date) {
-            const dateCalendar = dateToCalendarDateTime(date);
-            value = value!.set({
-                year: dateCalendar.year,
-                month: dateCalendar.month,
-                day: dateCalendar.day,
-            });
-        }
+        const timeCalendarDateTime = dateToCalendarDateTime(time);
 
-        this.value = value!;
+        this.value = dateCalendar.set({
+            hour: timeCalendarDateTime.hour,
+            minute: timeCalendarDateTime.minute,
+            second: timeCalendarDateTime.second,
+        });
+        this.dispatchChange();
     }
 
     /**
@@ -1021,37 +1019,13 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     private setSegments(): void {
-        // const segmentsFactory = new SegmentsFactory(this.dateFormatter);
-        // const segments = segmentsFactory.createSegments(
-        //     this.currentDate,
-        //     this.value !== undefined
-        // );
-        // console.log(`Factory created ${segments.length} segments:`, segments);
+        const segmentsFactory = new SegmentsFactory(this.dateFormatter);
+        const segments = segmentsFactory.createSegments(
+            this.currentDate,
+            this.value !== undefined
+        );
 
-        const dateTime = this.currentDate.toDate();
-
-        this.segments = this.dateFormatter
-            .formatToParts(dateTime)
-            .map((part) => {
-                const type = part.type as SegmentType;
-                const formatted = part.value;
-
-                if (type === SegmentTypes.Literal)
-                    return {
-                        type,
-                        formatted,
-                    };
-
-                const segment: EditableSegment = {
-                    type,
-                    formatted,
-                    placeholder: SegmentPlaceholders[type],
-                    value: this.getSegmentValue(type),
-                    ...this.getSegmentLimits(type),
-                };
-
-                return segment;
-            });
+        this.segments = segments;
     }
 
     private getSegmentValue(type: EditableSegmentType): number | undefined {

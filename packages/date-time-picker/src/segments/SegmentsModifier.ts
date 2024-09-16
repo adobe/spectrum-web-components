@@ -19,13 +19,13 @@ import { type EditableSegment } from './EditableSegment';
 export abstract class SegmentsModifier {
     segments: Segment[];
     constructor(segments: Segment[]) {
-        this.segments = segments;
+        this.segments = Array.from(segments);
     }
 
     public modify(
         segmentType: EditableSegmentType,
         currentDate: ZonedDateTime
-    ): void {
+    ): Segment[] {
         const segment = getEditableSegmentByType(this.segments, segmentType);
         this.modifySegment(segment, currentDate);
 
@@ -47,6 +47,8 @@ export abstract class SegmentsModifier {
             ) as DaySegment;
             day.setLimits(currentDate, month.value, year.value);
         }
+
+        return this.segments;
     }
 
     protected abstract modifySegment(

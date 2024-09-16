@@ -29,14 +29,18 @@ interface DateSegments {
     day: DaySegment;
 }
 
+interface TimeSegments {
+    hour: HourSegment;
+    minute: MinuteSegment;
+    second: SecondSegment;
+    dayPeriod?: DayPeriodSegment;
+}
+
+// TODO: Segment[] may benefit from being a class with an iterator and access to individual segments
 export class SegmentsFactory {
     dateFormatter: DateFormatter;
     constructor(dateFormatter: DateFormatter) {
         this.dateFormatter = dateFormatter;
-    }
-
-    private get is12HourFormat(): boolean {
-        return Boolean(this.dateFormatter.resolvedOptions().hour12);
     }
 
     createSegments(
@@ -63,16 +67,15 @@ export class SegmentsFactory {
         day.setLimits(currentDate, month.value, year.value);
         if (shouldSetSegmentsValues) day.setValueFromDate(currentDate);
 
-        const hour = getEditableSegmentByType(
-            segments,
-            SegmentTypes.Hour
-        ) as HourSegment;
+        const { hour, minute, second, dayPeriod } =
+            this.getTimeSegments(segments);
 
-        hour.setLimits(this.is12HourFormat);
+        if (!hour) return segments;
+        hour.setLimits(Boolean(dayPeriod));
         if (shouldSetSegmentsValues) {
-            hour.setValueFromDate(currentDate, this.is12HourFormat);
+            hour.setValueFromDate(currentDate, Boolean(dayPeriod));
 
-            if (this.is12HourFormat) {
+            if (Boolean(dayPeriod)) {
                 const dayPeriod = getEditableSegmentByType(
                     segments,
                     SegmentTypes.DayPeriod
@@ -80,6 +83,12 @@ export class SegmentsFactory {
                 dayPeriod.setValueFromDate(currentDate);
             }
         }
+
+        if (!minute) return segments;
+        minute.setValueFromDate(currentDate);
+
+        if (!second) return segments;
+        second.setValueFromDate(currentDate);
 
         return segments;
     }
@@ -133,5 +142,29 @@ export class SegmentsFactory {
         ) as DaySegment;
 
         return { year, month, day };
+    }
+
+    private getTimeSegments(segments: Segment[]): TimeSegments {
+        const hour = getEditableSegmentByType(
+            segments,
+            SegmentTypes.Hour
+        ) as HourSegment;
+
+        const minute = getEditableSegmentByType(
+            segments,
+            SegmentTypes.Minute
+        ) as MinuteSegment;
+
+        const second = getEditableSegmentByType(
+            segments,
+            SegmentTypes.Second
+        ) as SecondSegment;
+
+        const dayPeriod = getEditableSegmentByType(
+            segments,
+            SegmentTypes.DayPeriod
+        ) as DayPeriodSegment;
+
+        return { hour, minute, second, ...(dayPeriod ? { dayPeriod } : {}) };
     }
 }

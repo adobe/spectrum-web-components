@@ -25,7 +25,8 @@ export class DayPeriodSegment extends EditableSegment {
     }
 
     private toggleAmPm(): void {
-        this.value = this.value === AM ? PM : AM;
+        if (this.value === AM) this.value = PM;
+        else this.value = AM;
     }
 
     public override increment(): void {

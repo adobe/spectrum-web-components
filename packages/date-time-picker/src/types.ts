@@ -67,6 +67,7 @@ export interface Segment {
 }
 
 export interface EditableSegment extends Segment {
+    type: EditableSegmentType;
     placeholder: SegmentPlaceholder;
     value?: number;
     minValue: number;
