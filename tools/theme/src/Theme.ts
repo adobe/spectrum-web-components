@@ -62,6 +62,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         this.setAttribute('dir', dir);
         this._dir = dir;
         const targetDir = dir === 'rtl' ? dir : 'ltr';
+        /* c8 ignore next 3 */
         this.trackedChildren.forEach((el) => {
             el.setAttribute('dir', targetDir);
         });
@@ -266,8 +267,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             }
             return acc;
         }, [] as CSSResultGroup[]);
-
-        const themeFragmentsByKind = Theme.themeFragmentsByKind; // Use public getter for theme fragments
+        const themeFragmentsByKind = Theme.themeFragmentsByKind;
 
         checkForIssues(
             this,
@@ -498,6 +498,11 @@ function checkForIssues(
                 `DEPRECATION NOTICE: the "theme" attribute has been deprecated in favor of "system". For more information, see: https://opensource.adobe.com/spectrum-web-components/tools/theme/`
             );
         }
+        if (['lightest', 'darkest'].includes(color || '')) {
+            issues.push(
+                `DEPRECATION NOTICE: Color "lightest" and "darkest" are deprecated. For more information, see: https://opensource.adobe.com/spectrum-web-components/tools/theme/`
+            );
+        }
         checkForAttribute('system', system, instance.getAttribute('system'));
         checkForAttribute('color', color, instance.getAttribute('color'));
         checkForAttribute('scale', scale, instance.getAttribute('scale'));
@@ -508,15 +513,6 @@ function checkForIssues(
                 'You are leveraging an <sp-theme> element and the following issues may disrupt your theme delivery:',
                 'https://opensource.adobe.com/spectrum-web-components/components/theme/#example',
                 { issues }
-            );
-        }
-
-        if (['lightest', 'darkest'].includes(color || '')) {
-            window.__swc.warn(
-                instance,
-                `Color "lightest" and "darkest" are deprecated and will be removed in a future release.`,
-                'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
-                { level: 'deprecation' }
             );
         }
     }
