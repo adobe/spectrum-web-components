@@ -40,7 +40,6 @@ const elements = {
     'sp-asset': () => import('@spectrum-web-components/asset/sp-asset.js'),
     'sp-avatar': () => import('@spectrum-web-components/avatar/sp-avatar.js'),
     'sp-badge': () => import('@spectrum-web-components/badge/sp-badge.js'),
-    'sp-banner': () => import('@spectrum-web-components/banner/sp-banner.js'),
     'sp-dialog-wrapper': () =>
         import('@spectrum-web-components/dialog/sp-dialog-wrapper.js'),
     'sp-dialog': () => import('@spectrum-web-components/dialog/sp-dialog.js'),
@@ -163,8 +162,8 @@ const elements = {
 const browser: 'webkit' | 'firefox' | 'chromium' = isWebKit()
     ? 'webkit'
     : isFirefox()
-    ? 'firefox'
-    : 'chromium';
+      ? 'firefox'
+      : 'chromium';
 
 describe('define-element', function () {
     // registrations are globally-unique, so retries will always fail

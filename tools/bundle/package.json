@@ -69,7 +69,6 @@
         "@spectrum-web-components/asset": "^0.47.2",
         "@spectrum-web-components/avatar": "^0.47.2",
         "@spectrum-web-components/badge": "^0.47.2",
-        "@spectrum-web-components/banner": "^0.47.2",
         "@spectrum-web-components/base": "^0.47.2",
         "@spectrum-web-components/breadcrumbs": "^0.47.2",
         "@spectrum-web-components/button": "^0.47.2",
