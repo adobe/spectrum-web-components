@@ -465,10 +465,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         this.shadowRoot.appendChild(node);
         this.shouldAdoptStyles();
         this.addEventListener(
-            'sp-query-theme',
-            this.onQueryTheme as EventListener
-        );
-        this.addEventListener(
             'sp-language-context',
             this._handleContextPresence as EventListener
         );
@@ -482,22 +478,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         return new Promise((resolve) => {
             this.__resolve = resolve;
         });
-    }
-
-    /* c8 ignore next 12 */
-    private onQueryTheme(event: CustomEvent<ThemeData>): void {
-        if (event.defaultPrevented) {
-            return;
-        }
-        event.preventDefault();
-        const { detail: theme } = event;
-        theme.color = this.color || undefined;
-        theme.scale = this.scale || undefined;
-        theme.lang =
-            this.lang || document.documentElement.lang || navigator.language;
-        // `theme` is deprecated in favor of `system` but maintaining `theme` as a deprecated path.
-        theme.theme = this.system || undefined;
-        theme.system = this.system || undefined;
     }
 
     protected connectedCallback(): void {
