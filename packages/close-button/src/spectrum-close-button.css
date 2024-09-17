@@ -102,11 +102,11 @@ governing permissions and limitations under the License.
     }
 
     :host(:focus-visible):after {
+        forced-color-adjust: none;
         margin: var(
             --mod-closebutton-focus-indicator-gap,
             var(--spectrum-closebutton-focus-indicator-gap)
         );
-        forced-color-adjust: none;
         transition:
             opacity
                 var(
@@ -136,37 +136,12 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    flex-direction: row;
-    flex-shrink: var(--mod-closebutton-flex-shrink);
-    align-items: center;
-    align-self: var(--mod-closebutton-align-self);
-    inline-size: var(
-        --mod-closebutton-width,
-        var(--spectrum-closebutton-width)
-    );
-    block-size: var(
-        --mod-closebutton-height,
-        var(--spectrum-closebutton-height)
-    );
-    margin-block: 0;
-    margin-block: var(
-        --mod-closebutton-margin-block,
-        var(
-                --mod-closebutton-margin-block-start,
-                var(--mod-closebutton-margin-top, 0)
-            )
-            var(--mod-closebutton-margin-block-end, 0)
-    );
-    margin-inline: 0;
-    margin-inline: var(
-        --mod-closebutton-margin-inline,
-        var(--mod-closebutton-margin-inline-start, 0)
-            var(--mod-closebutton-margin-inline-end, 0)
-    );
+    block-size: var(--mod-closebutton-height, var(--spectrum-closebutton-size));
+    inline-size: var(--mod-closebutton-width, var(--spectrum-closebutton-size));
     color: inherit;
     border-radius: var(
         --mod-closebutton-border-radius,
-        var(--spectrum-closebutton-border-radius)
+        var(--spectrum-closebutton-size)
     );
     transition: border-color
         var(
@@ -174,9 +149,14 @@ governing permissions and limitations under the License.
             var(--spectrum-closebutton-animation-duration)
         )
         ease-in-out;
+    margin-inline: var(--mod-closebutton-margin-inline);
+    justify-content: center;
+    align-items: center;
+    align-self: var(--mod-closebutton-align-self);
     border-width: 0;
     border-color: #0000;
-    justify-content: center;
+    flex-direction: row;
+    margin-block-start: var(--mod-closebutton-margin-top);
     padding: 0;
     display: inline-flex;
     position: relative;

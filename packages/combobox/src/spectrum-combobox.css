@@ -27,6 +27,12 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    --spectrum-combobox-button-inline-offset: 0px;
+    --spectrum-combobox-min-inline-size: calc(
+        var(--spectrum-combobox-minimum-width-multiplier) *
+            var(--spectrum-combobox-block-size)
+    );
+    --spectrum-combobox-button-width: var(--spectrum-combobox-block-size);
     --mod-textfield-focus-indicator-gap: var(
         --mod-combobox-focus-indicator-gap,
         var(--spectrum-combobox-focus-indicator-gap)
@@ -200,7 +206,7 @@ governing permissions and limitations under the License.
     inset-inline-end: calc(
         var(
                 --mod-combobox-button-inline-offset,
-                var(--spectrum-combobox-button-inline-offset, 0px)
+                var(--spectrum-combobox-button-inline-offset)
             ) * -1
     );
 }
@@ -474,7 +480,7 @@ governing permissions and limitations under the License.
             ) -
             var(
                 --mod-combobox-button-inline-offset,
-                var(--spectrum-combobox-button-inline-offset, 0px)
+                var(--spectrum-combobox-button-inline-offset)
             ) -
             var(
                 --mod-combobox-border-width,
@@ -519,17 +525,21 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet]) {
+    --spectrum-combobox-min-inline-size: calc(
+        var(--spectrum-combobox-minimum-width-multiplier) *
+            var(--mod-combobox-block-size, var(--spectrum-combobox-block-size))
+    );
     --spectrum-combobox-button-inline-offset: calc(
         var(--mod-combobox-block-size, var(--spectrum-combobox-block-size)) / 2 -
             var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size)) /
             2
     );
+    --spectrum-combobox-border-radius: 0;
     --mod-picker-button-background-color-quiet: transparent;
     --mod-picker-button-border-color-quiet: transparent;
     --mod-picker-button-border-color: var(
         --mod-picker-button-border-color-quiet
     );
-    border-radius: 0;
 }
 
 :host([quiet][invalid]) #textfield .icon {
@@ -570,7 +580,7 @@ governing permissions and limitations under the License.
             ) -
             var(
                 --mod-combobox-button-inline-offset,
-                var(--spectrum-combobox-button-inline-offset, 0px)
+                var(--spectrum-combobox-button-inline-offset)
             )
     );
 }
@@ -590,7 +600,7 @@ governing permissions and limitations under the License.
             ) -
             var(
                 --mod-combobox-button-inline-offset,
-                var(--spectrum-combobox-button-inline-offset, 0px)
+                var(--spectrum-combobox-button-inline-offset)
             )
     );
 }

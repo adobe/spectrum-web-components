@@ -24,10 +24,6 @@
     --spectrum-closebutton-background-color-focus: var(
         --system-close-button-background-color-focus
     );
-    --spectrum-closebutton-size-300: var(--system-close-button-size-300);
-    --spectrum-closebutton-size-400: var(--system-close-button-size-400);
-    --spectrum-closebutton-size-500: var(--system-close-button-size-500);
-    --spectrum-closebutton-size-600: var(--system-close-button-size-600);
     --spectrum-closebutton-icon-color-default: var(
         --system-close-button-icon-color-default
     );
@@ -55,51 +51,23 @@
     --spectrum-closebutton-animation-duration: var(
         --system-close-button-animation-duration
     );
+    --spectrum-closebutton-size: var(--system-close-button-size);
 }
 
 :host([size='s']) {
-    --spectrum-closebutton-height: var(--system-close-button-size-s-height);
-    --spectrum-closebutton-width: var(--system-close-button-size-s-width);
     --spectrum-closebutton-size: var(--system-close-button-size-s-size);
-    --spectrum-closebutton-border-radius: var(
-        --system-close-button-size-s-border-radius
-    );
-}
-
-:scope {
-    --spectrum-closebutton-height: var(--system-scope-closebutton-height);
-    --spectrum-closebutton-width: var(--system-scope-closebutton-width);
-    --spectrum-closebutton-size: var(--system-scope-closebutton-size);
-    --spectrum-closebutton-border-radius: var(
-        --system-scope-closebutton-border-radius
-    );
 }
 
 :host {
-    --spectrum-closebutton-height: var(--system-close-button-size-m-height);
-    --spectrum-closebutton-width: var(--system-close-button-size-m-width);
     --spectrum-closebutton-size: var(--system-close-button-size-m-size);
-    --spectrum-closebutton-border-radius: var(
-        --system-close-button-size-m-border-radius
-    );
 }
 
 :host([size='l']) {
-    --spectrum-closebutton-height: var(--system-close-button-size-l-height);
-    --spectrum-closebutton-width: var(--system-close-button-size-l-width);
     --spectrum-closebutton-size: var(--system-close-button-size-l-size);
-    --spectrum-closebutton-border-radius: var(
-        --system-close-button-size-l-border-radius
-    );
 }
 
 :host([size='xl']) {
-    --spectrum-closebutton-height: var(--system-close-button-size-xl-height);
-    --spectrum-closebutton-width: var(--system-close-button-size-xl-width);
     --spectrum-closebutton-size: var(--system-close-button-size-xl-size);
-    --spectrum-closebutton-border-radius: var(
-        --system-close-button-size-xl-border-radius
-    );
 }
 
 :host([static='white']) {

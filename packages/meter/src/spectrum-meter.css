@@ -12,23 +12,68 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    inline-size: var(
-        --mod-progressbar-size-default,
-        var(--spectrum-progressbar-size-default)
+    --spectrum-progressbar-size-default: var(
+        --mod-meter-inline-size,
+        var(--spectrum-meter-inline-size)
     );
-    min-inline-size: var(
-        --mod-progressbar-min-size,
-        var(--spectrum-progressbar-min-size)
+    --spectrum-progressbar-max-size: var(
+        --mod-meter-max-width,
+        var(--spectrum-meter-max-width)
     );
-    max-inline-size: var(
-        --mod-progressbar-max-size,
-        var(--spectrum-progressbar-max-size)
+    --spectrum-progressbar-min-size: var(
+        --mod-meter-min-width,
+        var(--spectrum-meter-min-width)
     );
+}
+
+:host([variant='positive']) .fill {
+    background-color: var(
+        --highcontrast-progressbar-fill-color,
+        var(
+            --mod-progressbar-fill-color-positive,
+            var(--spectrum-progressbar-fill-color-positive)
+        )
+    );
+}
+
+:host([variant='notice']) .fill {
+    background-color: var(
+        --highcontrast-progressbar-fill-color,
+        var(
+            --mod-progressbar-fill-color-notice,
+            var(--spectrum-progressbar-fill-color-notice)
+        )
+    );
+}
+
+:host([variant='negative']) .fill {
+    background-color: var(
+        --highcontrast-progressbar-fill-color,
+        var(
+            --mod-progressbar-fill-color-negative,
+            var(--spectrum-progressbar-fill-color-negative)
+        )
+    );
+}
+
+:host {
     font-size: var(
         --mod-progressbar-font-size,
         var(--spectrum-progressbar-font-size)
     );
     vertical-align: top;
+    inline-size: var(
+        --mod-progressbar-size-default,
+        var(--spectrum-progressbar-size-default)
+    );
+    max-inline-size: var(
+        --mod-progressbar-max-size,
+        var(--spectrum-progressbar-max-size)
+    );
+    min-inline-size: var(
+        --mod-progressbar-min-size,
+        var(--spectrum-progressbar-min-size)
+    );
     flex-flow: wrap;
     justify-content: space-between;
     align-items: center;
@@ -38,6 +83,7 @@ governing permissions and limitations under the License.
 
 .label,
 .percentage {
+    text-align: start;
     line-height: var(
         --mod-progressbar-line-height,
         var(--spectrum-progressbar-line-height)
@@ -46,7 +92,6 @@ governing permissions and limitations under the License.
         --mod-progressbar-text-color,
         var(--spectrum-progressbar-text-color)
     );
-    text-align: start;
     margin-block-start: var(
         --mod-progressbar-spacing-top-to-text,
         var(--spectrum-progressbar-spacing-top-to-text)
@@ -87,6 +132,7 @@ governing permissions and limitations under the License.
         --mod-progressbar-thickness,
         var(--spectrum-progressbar-thickness)
     );
+    border-radius: var(--spectrum-progressbar-corner-radius);
     background: var(
         --highcontrast-progressbar-track-color,
         var(
@@ -94,7 +140,6 @@ governing permissions and limitations under the License.
             var(--spectrum-progressbar-track-color)
         )
     );
-    border-radius: var(--spectrum-progressbar-corner-radius);
     overflow: hidden;
 }
 
@@ -115,7 +160,6 @@ governing permissions and limitations under the License.
 }
 
 :host([indeterminate]) .fill {
-    will-change: transform;
     inline-size: var(
         --mod-progressbar-fill-size-indeterminate,
         var(--spectrum-progressbar-fill-size-indeterminate)
@@ -124,6 +168,7 @@ governing permissions and limitations under the License.
         --mod-progressbar-animation-ease-in-out-indeterminate,
         var(--spectrum-progressbar-animation-ease-in-out-indeterminate)
     );
+    will-change: transform;
     position: relative;
 }
 
@@ -189,7 +234,8 @@ governing permissions and limitations under the License.
         infinite;
 }
 
-:host([indeterminate]) .fill:dir(rtl) {
+:host([indeterminate]) .fill:dir(rtl),
+:host([dir='rtl'][indeterminate]) .fill {
     animation: indeterminate-loop-rtl
         var(
             --mod-progressbar-animation-duration-indeterminate,
@@ -218,51 +264,6 @@ governing permissions and limitations under the License.
             )
         );
     }
-}
-
-:host {
-    --spectrum-progressbar-size-default: var(
-        --mod-meter-inline-size,
-        var(--spectrum-meter-inline-size)
-    );
-    --spectrum-progressbar-max-size: var(
-        --mod-meter-max-width,
-        var(--spectrum-meter-max-width)
-    );
-    --spectrum-progressbar-min-size: var(
-        --mod-meter-min-width,
-        var(--spectrum-meter-min-width)
-    );
-}
-
-:host([variant='positive']) .fill {
-    background-color: var(
-        --highcontrast-progressbar-fill-color,
-        var(
-            --mod-progressbar-fill-color-positive,
-            var(--spectrum-progressbar-fill-color-positive)
-        )
-    );
-}
-
-:host([variant='notice']) .fill {
-    background-color: var(
-        --highcontrast-progressbar-fill-color,
-        var(
-            --mod-progressbar-fill-color-notice,
-            var(--spectrum-progressbar-fill-color-notice)
-        )
-    );
-}
-
-:host([variant='negative']) .fill {
-    background-color: var(
-        --highcontrast-progressbar-fill-color,
-        var(
-            --mod-progressbar-fill-color-negative,
-            var(--spectrum-progressbar-fill-color-negative)
-        )
-    );
 }
 
 @keyframes indeterminate-loop-rtl {

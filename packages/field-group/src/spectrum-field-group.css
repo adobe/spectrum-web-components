@@ -25,7 +25,6 @@ governing permissions and limitations under the License.
 }
 
 .group {
-    gap: var(--spectrum-fieldgroup-margin);
     flex-flow: column wrap;
     display: flex;
 }
@@ -36,7 +35,10 @@ governing permissions and limitations under the License.
 
 :host([horizontal]) .group {
     flex-direction: row;
-    row-gap: 0;
+}
+
+:host([horizontal]) .group slot:not([name])::slotted(:not(:last-child)) {
+    margin-inline-end: var(--spectrum-fieldgroup-margin);
 }
 
 :host([horizontal]) .group .spectrum-HelpText {
