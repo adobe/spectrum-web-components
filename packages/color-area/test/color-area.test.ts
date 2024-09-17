@@ -383,6 +383,36 @@ describe('ColorArea', () => {
         await changeEvent;
         expect(el.x).to.equal(0.67);
         expect(el.y).to.equal(0.75);
+
+        await sendKeys({
+            press: 'Home',
+        });
+        await changeEvent;
+        expect(el.x).to.equal(0.77);
+        expect(el.y).to.equal(0.75);
+
+        await sendKeys({
+            press: 'End',
+        });
+        await changeEvent;
+        expect(el.x).to.equal(0.67);
+        expect(el.y).to.equal(0.75);
+
+        el.dir = 'ltr';
+
+        await sendKeys({
+            press: 'Home',
+        });
+        await changeEvent;
+        expect(el.x).to.equal(0.57);
+        expect(el.y).to.equal(0.75);
+
+        await sendKeys({
+            press: 'End',
+        });
+        await changeEvent;
+        expect(el.x).to.equal(0.67);
+        expect(el.y).to.equal(0.75);
     });
     it('accepts "Arrow*" keypresses with alteration', async () => {
         const el = await fixture<ColorArea>(html`
