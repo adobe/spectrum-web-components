@@ -13,10 +13,6 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import type { Overlay } from '@spectrum-web-components/overlay';
 
-function nextFrame(): Promise<void> {
-    return new Promise((resolve) => requestAnimationFrame(() => resolve()));
-}
-
 class IsOverlayOpen extends HTMLElement {
     ready!: (value: boolean | PromiseLike<boolean>) => void;
 
@@ -29,19 +25,17 @@ class IsOverlayOpen extends HTMLElement {
     }
 
     async setup(): Promise<void> {
-        await nextFrame(); // Ensure we wait for the first frame
+        // Add a listener for the 'sp-opened' event, which opens the overlay
         document.addEventListener('sp-opened', this.handleOpened);
     }
 
     handleOpened = async (event: Event): Promise<void> => {
         const overlay = event.target as Overlay;
 
-        // Ensure that the overlay has updated
+        // Wait for the overlay to fully finish updating
         await overlay.updateComplete;
 
-        // Use a small delay to ensure stability after the update
-        await new Promise((resolve) => setTimeout(resolve, 100)); // 100ms delay
-
+        // Resolve the ready promise
         this.ready(true);
     };
 
