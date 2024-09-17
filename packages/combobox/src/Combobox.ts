@@ -493,6 +493,8 @@ export class Combobox extends Textfield {
                                                   ? 'true'
                                                   : 'false'}
                                               .value=${option.value}
+                                              .selected=${option.value ===
+                                              this.itemValue}
                                           >
                                               ${option.itemText}
                                           </sp-menu-item>
