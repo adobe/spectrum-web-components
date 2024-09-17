@@ -14,7 +14,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import type { Overlay } from '@spectrum-web-components/overlay';
 
 function nextFrame(): Promise<void> {
-    return new Promise((res) => requestAnimationFrame(() => res()));
+    return new Promise((resolve) => requestAnimationFrame(() => resolve()));
 }
 
 class IsOverlayOpen extends HTMLElement {
@@ -22,28 +22,25 @@ class IsOverlayOpen extends HTMLElement {
 
     constructor() {
         super();
-        this.readyPromise = new Promise((res) => {
-            this.ready = res;
+        this.readyPromise = new Promise((resolve) => {
+            this.ready = resolve;
             this.setup();
         });
     }
 
     async setup(): Promise<void> {
-        await nextFrame();
-
+        await nextFrame(); // Ensure we wait for the first frame
         document.addEventListener('sp-opened', this.handleOpened);
     }
 
     handleOpened = async (event: Event): Promise<void> => {
         const overlay = event.target as Overlay;
-        const actions = [nextFrame(), overlay.updateComplete];
 
-        await Promise.all(actions);
-        // Focus happens _after_ `sp-opened` by at least two frames.
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
+        // Ensure that the overlay has updated
+        await overlay.updateComplete;
+
+        // Use a small delay to ensure stability after the update
+        await new Promise((resolve) => setTimeout(resolve, 100)); // 100ms delay
 
         this.ready(true);
     };
