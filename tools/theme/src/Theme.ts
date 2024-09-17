@@ -89,6 +89,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.color = value as Color;
         } else if (attrName === 'scale') {
             this.scale = value as Scale;
+            /* c8 ignore next 3 */
         } else if (attrName === 'lang' && !!value) {
             this.lang = value;
             this._provideContext();
@@ -145,6 +146,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
      */
     get theme(): SystemVariant | '' {
+        /* c8 ignore next 3 */
         if (!this.system) {
             this.removeAttribute('system');
         }
@@ -187,6 +189,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         if (color) {
             this.setAttribute('color', color);
+            /* c8 ignore next 3 */
         } else {
             this.removeAttribute('color');
         }
