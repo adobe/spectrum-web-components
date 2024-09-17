@@ -1,0 +1,3 @@
+function n(o){return typeof window!="undefined"&&window.navigator!=null?o.test(window.navigator.userAgent):!1}function e(o){return typeof window!="undefined"&&window.navigator!=null?o.test(window.navigator.platform):!1}function isMac(){return e(/^Mac/)}function isIPhone(){return e(/^iPhone/)}function isIPad(){return e(/^iPad/)||isMac()&&navigator.maxTouchPoints>1}function isIOS(){return isIPhone()||isIPad()}function isWebKit(){return n(/AppleWebKit/)&&!isChrome()}function isChrome(){return n(/Chrome/)}function isAndroid(){return n(/Android/)}
+
+export { isIOS as a, isIPhone as b, isWebKit as c, isAndroid as i };

@@ -1,2 +1,0 @@
-function n(n){return"undefined"!=typeof window&&null!=window.navigator&&n.test(window.navigator.platform)}function t(){return n(/^iPhone/)}function o(){return n(/^iPad/)||n(/^Mac/)&&navigator.maxTouchPoints>1}function i(){return t()||o()}function r(){return n=/Android/,"undefined"!=typeof window&&null!=window.navigator&&n.test(window.navigator.userAgent);var n}export{r as a,t as b,i};
-//# sourceMappingURL=swc.B_AFfuAC.js.map
