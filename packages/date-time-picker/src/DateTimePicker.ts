@@ -90,7 +90,6 @@ import {
     isNumber,
 } from './helpers.js';
 import { SegmentsFactory } from './segments/SegmentsFactory.js';
-import { SegmentsFormatter } from './segments/SegmentsFormatter.js';
 import {
     DecrementModifier,
     IncrementModifier,
@@ -553,15 +552,15 @@ export class DateTimePicker extends ManageHelpText(
 
         switch (event.code) {
             case 'ArrowUp': {
-                this.incrementValue(segment);
+                this.incrementValue(segmentType);
+                break;
+            }
+            case 'ArrowDown': {
+                this.decrementValue(segmentType);
                 break;
             }
             case 'ArrowRight': {
                 this.focusNextSegment(event);
-                break;
-            }
-            case 'ArrowDown': {
-                this.decrementValue(segment);
                 break;
             }
             case 'ArrowLeft': {
@@ -582,6 +581,22 @@ export class DateTimePicker extends ManageHelpText(
                 this.valueChanged(segment, event);
             }
         }
+    }
+
+    private incrementValue(segmentType: EditableSegmentType): void {
+        const incrementModifier = new IncrementModifier(
+            this.dateFormatter,
+            this.segments
+        );
+        this.segments = incrementModifier.modify(segmentType, this.currentDate);
+    }
+
+    private decrementValue(segmentType: EditableSegmentType): void {
+        const decrementModifier = new DecrementModifier(
+            this.dateFormatter,
+            this.segments
+        );
+        this.segments = decrementModifier.modify(segmentType, this.currentDate);
     }
 
     /**
@@ -646,48 +661,6 @@ export class DateTimePicker extends ManageHelpText(
             : this.getNewValueForOtherSegments(details, typedValue, isDate);
 
         this.valueChanged(segment, event);
-    }
-
-    /**
-     * Increments the segment value respecting the minimum and maximum limits
-     *
-     * @param segment - Segment on which the event was triggered (the segment being changed)
-     * @param event - Triggered event details
-     */
-    protected incrementValue(segment: EditableSegment): void {
-        const incrementModifier = new IncrementModifier(this.segments);
-        const incrementedSegments = incrementModifier.modify(
-            segment.type,
-            this.currentDate
-        );
-
-        const segmentsFormatter = new SegmentsFormatter(this.dateFormatter);
-        const formattedSegments = segmentsFormatter.format(
-            incrementedSegments,
-            this.currentDate
-        );
-        this.segments = formattedSegments;
-    }
-
-    /**
-     * Decrements the segment value respecting the minimum and maximum limits
-     *
-     * @param segment - Segment on which the event was triggered (the segment being changed)
-     * @param event - Triggered event details
-     */
-    protected decrementValue(segment: EditableSegment): void {
-        const decrementModifier = new DecrementModifier(this.segments);
-        const decrementedSegments = decrementModifier.modify(
-            segment.type,
-            this.currentDate
-        );
-
-        const segmentsFormatter = new SegmentsFormatter(this.dateFormatter);
-        const formattedSegments = segmentsFormatter.format(
-            decrementedSegments,
-            this.currentDate
-        );
-        this.segments = formattedSegments;
     }
 
     /**

@@ -10,16 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ZonedDateTime } from '@internationalized/date';
+import { DateFormatter, ZonedDateTime } from '@internationalized/date';
 import { getEditableSegmentByType } from '../helpers';
 import { EditableSegmentType, Segment, SegmentTypes } from '../types';
 import { DaySegment } from './date/DaySegment';
 import { type EditableSegment } from './EditableSegment';
+import { SegmentsFormatter } from './SegmentsFormatter';
 
 export abstract class SegmentsModifier {
     segments: Segment[];
-    constructor(segments: Segment[]) {
+    dateFormatter: DateFormatter;
+    constructor(dateFormatter: DateFormatter, segments: Segment[]) {
         this.segments = Array.from(segments);
+        this.dateFormatter = dateFormatter;
     }
 
     public modify(
@@ -47,6 +50,9 @@ export abstract class SegmentsModifier {
             ) as DaySegment;
             day.setLimits(currentDate, month.value, year.value);
         }
+
+        const segmentsFormatter = new SegmentsFormatter(this.dateFormatter);
+        this.segments = segmentsFormatter.format(this.segments, currentDate);
 
         return this.segments;
     }
