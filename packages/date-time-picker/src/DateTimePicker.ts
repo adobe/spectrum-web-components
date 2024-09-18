@@ -56,7 +56,6 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import styles from './date-time-picker.css.js';
 import {
     AM,
-    DateSegmentTypes,
     DateTimePickerValue,
     EditableSegment,
     EditableSegmentType,
@@ -91,8 +90,11 @@ import {
 } from './helpers.js';
 import { SegmentsFactory } from './segments/SegmentsFactory.js';
 import {
+    ClearModifier,
     DecrementModifier,
     IncrementModifier,
+    InputModifier,
+    type SegmentsModifierParams,
 } from './segments/SegmentsModifier.js';
 import { DayPeriodSegment } from './segments/time/DayPeriodSegment.js';
 
@@ -356,7 +358,10 @@ export class DateTimePicker extends ManageHelpText(
 
         if (changesLocale) this.setNumberParser();
         if (changesLocale || changesPrecision) this.setDateFormatter();
-        if (changesSegments) this.updateValue();
+        if (changesSegments) {
+            // TODO: if not all segments are defined, we should set the value to undefined
+            this.updateValue();
+        }
 
         if (shouldResetSegments) {
             this.segments = [];
@@ -583,20 +588,22 @@ export class DateTimePicker extends ManageHelpText(
         }
     }
 
+    private get modifierParams(): SegmentsModifierParams {
+        return {
+            dateFormatter: this.dateFormatter,
+            segments: this.segments,
+            currentDate: this.currentDate,
+        };
+    }
+
     private incrementValue(segmentType: EditableSegmentType): void {
-        const incrementModifier = new IncrementModifier(
-            this.dateFormatter,
-            this.segments
-        );
-        this.segments = incrementModifier.modify(segmentType, this.currentDate);
+        const incrementModifier = new IncrementModifier(this.modifierParams);
+        this.segments = incrementModifier.modify(segmentType);
     }
 
     private decrementValue(segmentType: EditableSegmentType): void {
-        const decrementModifier = new DecrementModifier(
-            this.dateFormatter,
-            this.segments
-        );
-        this.segments = decrementModifier.modify(segmentType, this.currentDate);
+        const decrementModifier = new DecrementModifier(this.modifierParams);
+        this.segments = decrementModifier.modify(segmentType);
     }
 
     /**
@@ -605,18 +612,16 @@ export class DateTimePicker extends ManageHelpText(
      * @param segment - Segment on which the event was triggered (the segment being changed)
      * @param event - Triggered event details
      */
-    protected handleBeforeInput(event: InputEvent): void {
+    private handleBeforeInput(event: InputEvent): void {
         const segmentType = (event.target as HTMLElement).dataset
             .type as EditableSegmentType;
-        const segment = this.editableSegment(segmentType) as EditableSegment;
 
         switch (event.inputType) {
             case 'deleteContentBackward':
             case 'deleteContentForward':
                 event.preventDefault();
-                this.clearContent(segment, event);
+                this.clearContent(segmentType);
                 break;
-
             case 'insertParagraph': // “Enter” key
             case 'insertLineBreak': // Shift + “Enter” keys
                 event.preventDefault();
@@ -624,91 +629,29 @@ export class DateTimePicker extends ManageHelpText(
         }
     }
 
-    /**
-     * Sets new segment value after the user types something
-     *
-     * @param segment - Segment on which the event was triggered (the segment being changed)
-     * @param event - Triggered event details
-     */
-    protected handleInput(event: InputEvent): void {
-        const segmentType = (event.target as HTMLElement).dataset
-            .type as EditableSegmentType;
-        const segment = this.editableSegment(segmentType) as EditableSegment;
-
-        const details = this.extractDetails(segment);
-        const data: string | null = event.data;
-
-        if (details === undefined || data === null) {
-            return;
-        }
-
-        const typedValue = this.numberParser.parse(data);
-
-        if (
-            !this.numberParser.isValidPartialNumber(data) ||
-            isNaN(typedValue)
-        ) {
-            this.updateContent(segment, event);
-            return;
-        }
-
-        const isDate = segment.type in DateSegmentTypes;
-        const isAmPmHour =
-            this.is12HourClock && segment.type === SegmentTypes.Hour;
-
-        segment.value = isAmPmHour
-            ? this.getNewValueForAmPmHourSegment(details, typedValue)
-            : this.getNewValueForOtherSegments(details, typedValue, isDate);
-
-        this.valueChanged(segment, event);
+    private clearContent(segmentType: EditableSegmentType): void {
+        const clearModifier = new ClearModifier(this.modifierParams);
+        this.segments = clearModifier.modify(segmentType);
     }
 
-    /**
-     * Sets the new segment value after the user clears the content
-     *
-     * @param segment - Segment on which the event was triggered (the segment being changed)
-     * @param event - Triggered event details
-     */
-    protected clearContent(
-        segment: EditableSegment,
-        event: InputEvent | KeyboardEvent
-    ): void {
-        const details = this.extractDetails(segment);
+    private handleInput(event: InputEvent): void {
+        const segmentType = (event.target as HTMLElement).dataset
+            .type as EditableSegmentType;
 
-        if (details?.value === undefined) {
-            return;
-        }
+        if (segmentType === SegmentTypes.DayPeriod) return;
 
-        let newValue: string | undefined;
-        let previousValue = details.value;
+        const inputModifier = new InputModifier({
+            ...this.modifierParams,
+            eventData: event.data,
+            numberParser: this.numberParser,
+        });
 
-        if (this.is12HourClock && segment.type === SegmentTypes.Hour) {
-            const isPM = isHourPM(details.minValue);
+        this.segments = inputModifier.modify(segmentType);
 
-            if (isPM) {
-                previousValue -= PM;
-            }
-
-            newValue =
-                previousValue === MIN_HOUR_AM
-                    ? String(MIN_HOUR_AM + 1)
-                    : String(previousValue).slice(0, -1);
-
-            if (isPM && newValue !== '') {
-                newValue = String(this.numberParser.parse(newValue) + PM);
-            }
-        } else {
-            newValue =
-                segment.type === SegmentTypes.DayPeriod
-                    ? undefined
-                    : String(previousValue).slice(0, -1);
-        }
-
-        segment.value =
-            (newValue !== undefined && this.numberParser.parse(newValue)) ||
-            undefined;
-
-        this.valueChanged(segment, event);
+        this.updateContent(
+            this.editableSegment(segmentType) as EditableSegment,
+            event
+        );
     }
 
     /**

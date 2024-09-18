@@ -15,6 +15,8 @@ import { SegmentTypes } from '../../types';
 import { EditableSegment } from '../EditableSegment';
 import { getAmPmModifier } from '../../helpers';
 
+// TODO: comment that indicates that for the 12h format it is needed to
+// take into account the AM/PM modifier when setting the value from a date
 export class HourSegment extends EditableSegment {
     public minValue: number = 0;
     public maxValue: number = 23;
@@ -32,6 +34,8 @@ export class HourSegment extends EditableSegment {
             this.minValue = 0;
             this.maxValue = 11;
         }
+
+        this.updateValueToLimits();
     }
 
     public override setValueFromDate(
@@ -41,5 +45,24 @@ export class HourSegment extends EditableSegment {
         if (is12HourClock)
             this.value = currentDate.hour - getAmPmModifier(currentDate.hour);
         else super.setValueFromDate(currentDate);
+    }
+
+    /**
+     * Returns the limits used to validate a user typed-in value
+     *
+     * Different limits are needed when the user is typing in the hour segment and the clock is in 12-hour format due to the fact that
+     * the hour value of 0 should be displayed as 12. Therefore, in the 12h format, the user should be able to type in "12" but not "00",
+     * for the 00.00 time, which is represented by the value of 0 of the hour segment.
+     */
+    protected override get typedInLimits(): {
+        minValue: number;
+        maxValue: number;
+    } {
+        const isAmPm = this.maxValue === 11;
+
+        return {
+            minValue: isAmPm ? 1 : 0,
+            maxValue: isAmPm ? 12 : 23,
+        };
     }
 }

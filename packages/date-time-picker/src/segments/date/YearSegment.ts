@@ -26,6 +26,7 @@ export class YearSegment extends DateSegment {
     public setLimits(currentDate: ZonedDateTime): void {
         this.minValue = 1;
         this.maxValue = currentDate.calendar.getYearsInEra(currentDate);
+        this.updateValueToLimits();
     }
 
     public override increment(currentDate: ZonedDateTime): void {
@@ -36,5 +37,11 @@ export class YearSegment extends DateSegment {
     public override decrement(currentDate: ZonedDateTime): void {
         if (this.value === undefined) this.value = currentDate.year;
         else super.decrement();
+    }
+
+    public override clear(): void {
+        if (this.value === undefined) return;
+        const newValue = Math.floor(this.value / 10);
+        this.value = newValue > 0 ? newValue : undefined;
     }
 }

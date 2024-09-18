@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { ZonedDateTime } from '@internationalized/date';
+import { NumberParser } from '@internationalized/number';
 import {
     EditableSegmentType,
     SegmentPlaceholder,
@@ -52,5 +53,57 @@ export abstract class EditableSegment {
     public setValueFromDate(currentDate: ZonedDateTime): void {
         if (this.type !== SegmentTypes.DayPeriod)
             this.value = currentDate[this.type];
+    }
+
+    public clear(): void {
+        this.value = undefined;
+    }
+
+    public handleInput(numberParser: NumberParser, eventData: string): void {
+        const typedValue = numberParser.parse(eventData);
+        if (isNaN(typedValue)) return;
+
+        let newValue: number | undefined = numberParser.parse(
+            `${this.value ?? ''}${typedValue}`
+        );
+
+        if (String(newValue).length > String(this.maxValue).length)
+            newValue = numberParser.parse(String(newValue).slice(1));
+
+        const { minValue, maxValue } = this.typedInLimits;
+
+        if (newValue < minValue) {
+            newValue = !this.isTypedValueCompliant(typedValue)
+                ? this.value
+                : typedValue;
+        } else if (newValue > maxValue) {
+            newValue = !this.isTypedValueCompliant(typedValue)
+                ? this.value
+                : typedValue;
+        }
+
+        this.value = newValue;
+    }
+
+    private isTypedValueCompliant(value: number): boolean {
+        const { minValue, maxValue } = this.typedInLimits;
+        return value >= minValue && value <= maxValue;
+    }
+
+    /**
+     * Returns the limits used to validate a user typed-in value
+     */
+    protected get typedInLimits(): { minValue: number; maxValue: number } {
+        return {
+            minValue: this.minValue,
+            maxValue: this.maxValue,
+        };
+    }
+
+    public updateValueToLimits(): void {
+        if (this.value === undefined) return;
+
+        if (this.value < this.minValue) this.value = this.minValue;
+        if (this.value > this.maxValue) this.value = this.maxValue;
     }
 }

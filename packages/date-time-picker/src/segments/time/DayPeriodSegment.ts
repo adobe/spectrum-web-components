@@ -42,4 +42,8 @@ export class DayPeriodSegment extends EditableSegment {
     public override setValueFromDate(currentDate: ZonedDateTime): void {
         this.value = getAmPmModifier(currentDate.hour);
     }
+
+    public override handleInput(): void {
+        return;
+    }
 }

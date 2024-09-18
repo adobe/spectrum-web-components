@@ -39,6 +39,7 @@ interface TimeSegments {
 // TODO: Segment[] may benefit from being a class with an iterator and access to individual segments
 export class SegmentsFactory {
     dateFormatter: DateFormatter;
+    // TODO: move currentDate to constructor similar to SegmentsModifiers
     constructor(dateFormatter: DateFormatter) {
         this.dateFormatter = dateFormatter;
     }

@@ -48,5 +48,6 @@ export class DaySegment extends DateSegment {
         const dateToUse = new CalendarDate(year, month, 1);
         this.maxValue = currentDate.calendar.getDaysInMonth(dateToUse);
         this.minValue = getMinimumDayInMonth(dateToUse);
+        this.updateValueToLimits();
     }
 }

@@ -26,5 +26,6 @@ export class MonthSegment extends DateSegment {
     public setLimits(currentDate: ZonedDateTime): void {
         this.minValue = getMinimumMonthInYear(currentDate);
         this.maxValue = currentDate.calendar.getMonthsInYear(currentDate);
+        this.updateValueToLimits();
     }
 }
