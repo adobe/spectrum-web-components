@@ -22,14 +22,14 @@ export default {
 
 export const staticWhite = (): TemplateResult => {
     return html`
-        <sp-coach-indicator variant="white"></sp-coach-indicator>
-        <sp-coach-indicator quiet variant="white"></sp-coach-indicator>
+        <sp-coach-indicator static="white"></sp-coach-indicator>
+        <sp-coach-indicator quiet static="white"></sp-coach-indicator>
     `;
 };
 
 export const staticBlack = (): TemplateResult => {
     return html`
-        <sp-coach-indicator variant="black"></sp-coach-indicator>
-        <sp-coach-indicator quiet variant="black"></sp-coach-indicator>
+        <sp-coach-indicator static="black"></sp-coach-indicator>
+        <sp-coach-indicator quiet static="black"></sp-coach-indicator>
     `;
 };
