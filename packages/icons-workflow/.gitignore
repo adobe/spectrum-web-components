@@ -10,3 +10,5 @@ stories/icon-manifest.ts
 stories/icon-s2-manifest.ts
 
 !bin/build-s2.js
+!bin/build-all.js
+!bin/sync.js

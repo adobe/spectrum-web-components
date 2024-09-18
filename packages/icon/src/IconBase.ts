@@ -26,6 +26,8 @@ export class IconBase extends SpectrumElement {
         return [iconStyles];
     }
 
+    public spectrumVersion = 2;
+
     @property()
     public label = '';
 

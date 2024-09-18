@@ -46,9 +46,6 @@ if (!fs.existsSync(`${rootDir}packages/icons-workflow/src`)) {
 if (!fs.existsSync(`${rootDir}packages/icons-workflow/src/icons-s2`)) {
     fs.mkdirSync(`${rootDir}packages/icons-workflow/src/icons-s2`);
 }
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/src/elements-s2`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/src/elements-s2`);
-}
 if (!fs.existsSync(`${rootDir}packages/icons-workflow/icons-s2`)) {
     fs.mkdirSync(`${rootDir}packages/icons-workflow/icons-s2`);
 }
@@ -62,7 +59,7 @@ const manifestPath = path.join(
     'packages',
     'icons-workflow',
     'stories',
-    'icon-s2-manifest.ts'
+    'icon-manifest.ts'
 );
 fs.writeFileSync(manifestPath, disclaimer, 'utf-8');
 let manifestImports = `import {
@@ -76,7 +73,8 @@ icons.forEach((i) => {
     let id = path
         .basename(i, '.svg')
         .replace('S2_Icon_', '')
-        .replace('_20_N', '');
+        .replace('_20_N', '')
+        .replace('_22x20_N', '');
     if (id.search(/^Ad[A-Z]/) !== -1) {
         id = id.replace(/^Ad/, '');
         id += 'Advert';
@@ -173,7 +171,7 @@ icons.forEach((i) => {
         'utf-8'
     );
 
-    const iconElementName = `sp-icon-s2-${Case.kebab(ComponentName)}`;
+    const iconElementName = `sp-icon-${Case.kebab(ComponentName)}`;
     const iconElement = `
     ${disclaimer}
     
@@ -184,24 +182,28 @@ icons.forEach((i) => {
     import {
         IconBase
     } from '@spectrum-web-components/icon';
-
-    import {
-        ${ComponentName}Icon
-    } from '../icons-s2/${id}.js';
     import {
         setCustomTemplateLiteralTag
     } from '../custom-tag.js';
-
+    import {  ${ComponentName}Icon as S2IconModule } from '../icons-s2/${id}.js';
+    import {  ${ComponentName}Icon as S1IconModule } from '../icons/${id}.js';
+    
     /**
      * @element ${iconElementName}
      */
     export class Icon${ComponentName} extends IconBase {
         protected override render(): TemplateResult {
             setCustomTemplateLiteralTag(html);
-            return ${ComponentName}Icon({hidden: !this.label, title: this.label}) as TemplateResult;
+
+            if(this.spectrumVersion == 1){
+                return S1IconModule({ hidden: !this.label, title: this.label }) as TemplateResult;
+            }
+            return S2IconModule({ hidden: !this.label, title: this.label }) as TemplateResult;
+
         }
     }
     `;
+
     prettier
         .format(iconElement, {
             printWidth: 100,
@@ -222,7 +224,7 @@ icons.forEach((i) => {
                     'packages',
                     'icons-workflow',
                     'src',
-                    'elements-s2',
+                    'elements',
                     `Icon${id}.ts`
                 ),
                 iconElementFile,
@@ -233,7 +235,7 @@ icons.forEach((i) => {
     const iconRegistration = `
     ${disclaimer}
 
-    import { Icon${ComponentName} } from '../src/elements-s2/Icon${id}.js';
+    import { Icon${ComponentName} } from '../src/elements/Icon${id}.js';
     import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 
     defineElement('${iconElementName}', Icon${ComponentName});
@@ -264,7 +266,7 @@ icons.forEach((i) => {
                     rootDir,
                     'packages',
                     'icons-workflow',
-                    'icons-s2',
+                    'icons',
                     `${iconElementName}.ts`
                 ),
                 iconRegistrationFile,
@@ -272,7 +274,7 @@ icons.forEach((i) => {
             );
         });
 
-    const importStatement = `\r\nimport '@spectrum-web-components/icons-workflow/icons-s2/${iconElementName}.js';`;
+    const importStatement = `\r\nimport '@spectrum-web-components/icons-workflow/icons/${iconElementName}.js';`;
     const metadata = `{name: '${Case.sentence(
         ComponentName
     )}', tag: '<${iconElementName}>', story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`},\r\n`;

@@ -31,7 +31,7 @@ export default {
     },
     swc_vrt: {
         preload: async (): Promise<void> => {
-            await import('./icon-s2-manifest.js');
+            await import('./icon-manifest.js');
         },
     },
 };
@@ -42,7 +42,7 @@ interface Properties {
 }
 
 export const elements = ({ color, size }: Properties): TemplateResult => {
-    const content = import('./icon-s2-manifest.js').then(
+    const content = import('./icon-manifest.js').then(
         (iconManifest) => html`
             <icons-demo
                 style="color: ${color}"

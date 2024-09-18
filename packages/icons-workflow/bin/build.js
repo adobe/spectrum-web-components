@@ -73,7 +73,11 @@ let manifestListings = `\r\nexport const iconManifest = [\r\n`;
 
 icons.forEach((i) => {
     const svg = fs.readFileSync(i, 'utf-8');
-    let id = path.basename(i, '.svg').replace('S_', '').replace('_22_N', '');
+    let id = path
+    .basename(i, '.svg')
+    .replace('S2_Icon_', '')
+    .replace('_20_N', '')
+    .replace('_22x20_N', '');
     if (id.search(/^Ad[A-Z]/) !== -1) {
         id = id.replace(/^Ad/, '');
         id += 'Advert';
@@ -173,7 +177,7 @@ icons.forEach((i) => {
     const iconElementName = `sp-icon-${Case.kebab(ComponentName)}`;
     const iconElement = `
     ${disclaimer}
-
+    
     import {
         html,
         TemplateResult
@@ -181,51 +185,68 @@ icons.forEach((i) => {
     import {
         IconBase
     } from '@spectrum-web-components/icon';
-
-    import {
-        ${ComponentName}Icon
-    } from '../icons/${id}.js';
     import {
         setCustomTemplateLiteralTag
     } from '../custom-tag.js';
-
+    import {  ${ComponentName}Icon as S2IconModule } from '../icons-s2/${id}.js';
+    import {  ${ComponentName}Icon as S1IconModule } from '../icons/${id}.js';
+    
     /**
      * @element ${iconElementName}
      */
     export class Icon${ComponentName} extends IconBase {
         protected override render(): TemplateResult {
             setCustomTemplateLiteralTag(html);
-            return ${ComponentName}Icon({hidden: !this.label, title: this.label}) as TemplateResult;
+
+            if(this.spectrumVersion == 1){
+                return S1IconModule({ hidden: !this.label, title: this.label }) as TemplateResult;
+            }
+            return S2IconModule({ hidden: !this.label, title: this.label }) as TemplateResult;
+
         }
     }
     `;
-    prettier
-        .format(iconElement, {
-            printWidth: 100,
-            tabWidth: 2,
-            useTabs: false,
-            semi: true,
-            singleQuote: true,
-            trailingComma: 'all',
-            bracketSpacing: true,
-            jsxBracketSameLine: false,
-            arrowParens: 'avoid',
-            parser: 'typescript',
-        })
-        .then((iconElementFile) => {
-            fs.writeFileSync(
-                path.join(
-                    rootDir,
-                    'packages',
-                    'icons-workflow',
-                    'src',
-                    'elements',
-                    `Icon${id}.ts`
-                ),
-                iconElementFile,
-                'utf-8'
-            );
-        });
+
+    if (
+        !fs.existsSync(
+            path.join(
+                rootDir,
+                'packages',
+                'icons-workflow',
+                'src',
+                'elements',
+                `Icon${id}.ts`
+            )
+        )
+    ) {
+        prettier
+            .format(iconElement, {
+                printWidth: 100,
+                tabWidth: 2,
+                useTabs: false,
+                semi: true,
+                singleQuote: true,
+                trailingComma: 'all',
+                bracketSpacing: true,
+                jsxBracketSameLine: false,
+                arrowParens: 'avoid',
+                parser: 'typescript',
+            })
+            .then((iconElementFile) => {
+                fs.writeFileSync(
+                    path.join(
+                        rootDir,
+                        'packages',
+                        'icons-workflow',
+                        'src',
+                        'elements',
+                        `Icon${id}.ts`
+                    ),
+                    iconElementFile,
+                    'utf-8'
+                );
+            });
+    }
 
     const iconRegistration = `
     ${disclaimer}
@@ -241,34 +262,47 @@ icons.forEach((i) => {
         }
     }
     `;
-    prettier
-        .format(iconRegistration, {
-            printWidth: 100,
-            tabWidth: 2,
-            useTabs: false,
-            semi: true,
-            singleQuote: true,
-            trailingComma: 'all',
-            bracketSpacing: true,
-            jsxBracketSameLine: false,
-            arrowParens: 'avoid',
-            parser: 'typescript',
-        })
-        .then((iconRegistrationFile) => {
-            fs.writeFileSync(
-                path.join(
-                    rootDir,
-                    'packages',
-                    'icons-workflow',
-                    'icons',
-                    `${iconElementName}.ts`
-                ),
-                iconRegistrationFile,
-                'utf-8'
-            );
-        });
 
-    const importStatement = `\r\nimport '@spectrum-web-components/icons-workflow/icons/${iconElementName}.js';`;
+    if (
+        !fs.existsSync(
+            path.join(
+                rootDir,
+                'packages',
+                'icons-workflow',
+                'icons',
+                `${iconElementName}.ts`
+            )
+        )
+    ) {
+        prettier
+            .format(iconRegistration, {
+                printWidth: 100,
+                tabWidth: 2,
+                useTabs: false,
+                semi: true,
+                singleQuote: true,
+                trailingComma: 'all',
+                bracketSpacing: true,
+                jsxBracketSameLine: false,
+                arrowParens: 'avoid',
+                parser: 'typescript',
+            })
+            .then((iconRegistrationFile) => {
+                fs.writeFileSync(
+                    path.join(
+                        rootDir,
+                        'packages',
+                        'icons-workflow',
+                        'icons',
+                        `${iconElementName}.ts`
+                    ),
+                    iconRegistrationFile,
+                    'utf-8'
+                );
+            });
+    }
+
+    const importStatement = `\r\nimport '@spectrum-web-components/icons-workflow/icons-s2/${iconElementName}.js';`;
     const metadata = `{name: '${Case.sentence(
         ComponentName
     )}', tag: '<${iconElementName}>', story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`},\r\n`;
