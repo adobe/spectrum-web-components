@@ -110,9 +110,17 @@ export class OverlayTrigger extends SpectrumElement {
         this.targetContent = this.getAssignedElementsFromSlot(event.target);
     }
 
+    private isUpdatingSlotContent = false;
+
     private handleSlotContent(
         event: Event & { target: HTMLSlotElement }
     ): void {
+        if (this.isUpdatingSlotContent) {
+            return;
+        }
+
+        this.isUpdatingSlotContent = true;
+
         switch (event.target.name) {
             case 'click-content':
                 this.clickContent = this.getAssignedElementsFromSlot(
@@ -130,6 +138,8 @@ export class OverlayTrigger extends SpectrumElement {
                 );
                 break;
         }
+
+        this.isUpdatingSlotContent = false;
     }
 
     private handleBeforetoggle(event: BeforetoggleOpenEvent): void {
