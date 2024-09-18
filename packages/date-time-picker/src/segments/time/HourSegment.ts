@@ -29,8 +29,8 @@ export class HourSegment extends EditableSegment {
         this.maxValue = 23;
 
         if (is12HourClock) {
-            this.minValue = 1;
-            this.maxValue = 12;
+            this.minValue = 0;
+            this.maxValue = 11;
         }
     }
 

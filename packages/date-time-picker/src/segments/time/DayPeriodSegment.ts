@@ -16,9 +16,9 @@ import { AM, PM, SegmentTypes } from '../../types';
 import { getAmPmModifier } from '../../helpers';
 
 export class DayPeriodSegment extends EditableSegment {
-    public minValue: number = AM;
-    public maxValue: number = PM;
-    public value?: number;
+    public minValue: typeof AM = AM;
+    public maxValue: typeof PM = PM;
+    public value?: typeof AM | typeof PM;
 
     constructor(formatted: string) {
         super(SegmentTypes.DayPeriod, formatted);

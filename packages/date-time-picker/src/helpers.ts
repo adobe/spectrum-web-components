@@ -59,6 +59,13 @@ export function getAmPmModifier(hour: number): typeof AM | typeof PM {
     return isHourPM(hour) ? PM : AM;
 }
 
+export function convertHourTo24hFormat(
+    hour: number,
+    dayPeriod: typeof AM | typeof PM
+): number {
+    return (hour = (hour % PM) + dayPeriod);
+}
+
 /**
  * Switches the value of the AM/PM segment from `AM` to `PM` or vice versa
  *

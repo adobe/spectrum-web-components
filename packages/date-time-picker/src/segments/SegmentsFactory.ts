@@ -82,13 +82,13 @@ export class SegmentsFactory {
                 ) as DayPeriodSegment;
                 dayPeriod.setValueFromDate(currentDate);
             }
+
+            if (!minute) return segments;
+            minute.setValueFromDate(currentDate);
+
+            if (!second) return segments;
+            second.setValueFromDate(currentDate);
         }
-
-        if (!minute) return segments;
-        minute.setValueFromDate(currentDate);
-
-        if (!second) return segments;
-        second.setValueFromDate(currentDate);
 
         return segments;
     }

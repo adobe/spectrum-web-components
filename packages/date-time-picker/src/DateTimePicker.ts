@@ -82,6 +82,7 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import {
+    convertHourTo24hFormat,
     dateToCalendarDateTime,
     getAmPmModifier,
     getDate,
@@ -94,6 +95,7 @@ import {
     DecrementModifier,
     IncrementModifier,
 } from './segments/SegmentsModifier.js';
+import { DayPeriodSegment } from './segments/time/DayPeriodSegment.js';
 
 /**
  * @element sp-date-time-picker
@@ -340,6 +342,7 @@ export class DateTimePicker extends ManageHelpText(
             languageResolverUpdatedSymbol
         );
         const changesPrecision = changedProperties.has('precision');
+        const changesSegments = changedProperties.has('segments');
 
         const shouldResetSegments =
             changesDates ||
@@ -354,6 +357,8 @@ export class DateTimePicker extends ManageHelpText(
 
         if (changesLocale) this.setNumberParser();
         if (changesLocale || changesPrecision) this.setDateFormatter();
+        if (changesSegments) this.updateValue();
+
         if (shouldResetSegments) {
             this.segments = [];
             this.setSegments();
@@ -548,7 +553,7 @@ export class DateTimePicker extends ManageHelpText(
 
         switch (event.code) {
             case 'ArrowUp': {
-                this.incrementValue(segment, event);
+                this.incrementValue(segment);
                 break;
             }
             case 'ArrowRight': {
@@ -556,7 +561,7 @@ export class DateTimePicker extends ManageHelpText(
                 break;
             }
             case 'ArrowDown': {
-                this.decrementValue(segment, event);
+                this.decrementValue(segment);
                 break;
             }
             case 'ArrowLeft': {
@@ -649,10 +654,7 @@ export class DateTimePicker extends ManageHelpText(
      * @param segment - Segment on which the event was triggered (the segment being changed)
      * @param event - Triggered event details
      */
-    protected incrementValue(
-        segment: EditableSegment,
-        event: KeyboardEvent
-    ): void {
+    protected incrementValue(segment: EditableSegment): void {
         const incrementModifier = new IncrementModifier(this.segments);
         const incrementedSegments = incrementModifier.modify(
             segment.type,
@@ -665,8 +667,6 @@ export class DateTimePicker extends ManageHelpText(
             this.currentDate
         );
         this.segments = formattedSegments;
-        this.updateContent(segment, event);
-        this.updateValue();
     }
 
     /**
@@ -675,10 +675,7 @@ export class DateTimePicker extends ManageHelpText(
      * @param segment - Segment on which the event was triggered (the segment being changed)
      * @param event - Triggered event details
      */
-    protected decrementValue(
-        segment: EditableSegment,
-        event: KeyboardEvent
-    ): void {
+    protected decrementValue(segment: EditableSegment): void {
         const decrementModifier = new DecrementModifier(this.segments);
         const decrementedSegments = decrementModifier.modify(
             segment.type,
@@ -691,9 +688,6 @@ export class DateTimePicker extends ManageHelpText(
             this.currentDate
         );
         this.segments = formattedSegments;
-
-        this.updateContent(segment, event);
-        this.updateValue();
     }
 
     /**
@@ -958,27 +952,25 @@ export class DateTimePicker extends ManageHelpText(
      * instead of using the date defined in the date segments
      */
     private getTimeFromSegments(): Date | undefined {
-        if (!this.isTimeDefined()) {
-            return undefined;
-        }
+        if (!this.isTimeDefined()) return;
 
-        const hour = this.hourSegment?.value;
+        let hour = this.hourSegment?.value;
         const minute = this.minuteSegment?.value;
         const second = this.secondSegment?.value;
 
         const dateTime = this.currentDate.toDate();
 
         if (isNumber(hour)) {
+            const dayPeriod = (this.amPmSegment as DayPeriodSegment).value;
+            if (isNumber(dayPeriod))
+                hour = convertHourTo24hFormat(hour, dayPeriod);
+
             dateTime.setHours(hour);
         }
 
-        if (isNumber(minute)) {
-            dateTime.setMinutes(minute);
-        }
+        if (isNumber(minute)) dateTime.setMinutes(minute);
 
-        if (isNumber(second)) {
-            dateTime.setSeconds(second);
-        }
+        if (isNumber(second)) dateTime.setSeconds(second);
 
         return dateTime;
     }
