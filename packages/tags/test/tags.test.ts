@@ -19,7 +19,6 @@ import { Tag, Tags } from '@spectrum-web-components/tags';
 import {
     arrowDownEvent,
     arrowLeftEvent,
-    arrowRightEvent,
     arrowUpEvent,
     endEvent,
     enterEvent,
@@ -133,7 +132,7 @@ describe('Tags', () => {
         await elementUpdated(el);
 
         el.dispatchEvent(pageUpEvent());
-        el.dispatchEvent(arrowRightEvent());
+        await sendKeys({ press: 'ArrowRight' });
         await elementUpdated(el);
 
         expect(document.activeElement === tag2).to.be.true;
