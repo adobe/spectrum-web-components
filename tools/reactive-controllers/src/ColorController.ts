@@ -40,7 +40,12 @@ type ColorTypes =
       };
 
 export type { Color, ColorTypes };
-
+type ColorValidationResult = {
+    spaceId: string | null;
+    coords: number[];
+    isValid: boolean;
+    alpha: number;
+};
 export const extractHueSaturationValueAndAlphaRegExp =
     /^hsva?\s?\((\d{1,3}\.?\d*?)%?,?\s?(\d{1,3})%?,?\s?(\d{1,3})%?,?\s?(\d\.?\d?)?/;
 
@@ -49,20 +54,105 @@ export class ColorController {
         return this._color;
     }
 
+    public validateColorString(color: string): ColorValidationResult {
+        const result: ColorValidationResult = {
+            spaceId: null,
+            coords: [0, 0, 0],
+            isValid: false,
+            alpha: 1,
+        };
+        const rgbaRegExp =
+            /^rgba\s*\(\s*(\d{1,3})\s*,?\s*(\d{1,3})\s*,?\s*(\d{1,3})\s*,?\s*(\d*\.?\d+)\s*\)$|^rgb\s*\(\s*(\d{1,3})\s*,?\s*(\d{1,3})\s*,?\s*(\d{1,3})\s*\)$|^rgba\s+(\d{1,3})\s*,?\s*(\d{1,3})\s*,?\s*(\d{1,3})\s+(\d*\.?\d+)$|^rgb\s+(\d{1,3})\s*,?\s*(\d{1,3})\s*,?\s*(\d{1,3})$/i;
+        const hslaRegExp =
+            /^hsla\s*\(\s*(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d*\.?\d+)\s*\)$|^hsl\s*\(\s*(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)\s*\)$|^hsla\s+(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)\s+(\d*\.?\d+)$|^hsl\s+(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)$/i;
+        const hsvaRegExp =
+            /^hsva\s*\(\s*(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d*\.?\d+)\s*\)$|^hsv\s*\(\s*(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)\s*\)$|^hsva\s+(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)\s+(\d*\.?\d+)$|^hsv\s+(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)$/i;
+
+        const rgbaMatch = color.match(rgbaRegExp);
+        const hslaMatch = color.match(hslaRegExp);
+        const hsvaMatch = color.match(hsvaRegExp);
+
+        if (rgbaMatch) {
+            const [, r, g, b, a] = rgbaMatch;
+            const alpha = a === undefined ? 1 : Number(a);
+            const processValue = (value: string): number => {
+                if (value.includes('%')) {
+                    return Number(value.replace('%', '')) / 100;
+                } else {
+                    return Number(value) / 255;
+                }
+            };
+            const numericR = processValue(r);
+            const numericG = processValue(g);
+            const numericB = processValue(b);
+
+            result.spaceId = 'srgb';
+            result.coords = [numericR, numericG, numericB];
+            result.alpha = alpha;
+            result.isValid =
+                numericR >= 0 &&
+                numericR <= 100 &&
+                numericG >= 0 &&
+                numericG <= 100 &&
+                numericB >= 0 &&
+                numericB <= 100 &&
+                alpha >= 0 &&
+                alpha <= 1;
+        } else if (hslaMatch) {
+            const [, h, s, l, a] = hslaMatch;
+            const values = [h, s, l, a === undefined ? '1' : a].map((value) =>
+                Number(value.replace(/[^\d.]/g, ''))
+            );
+            const [numericH, numericS, numericL, numericA] = values;
+
+            result.spaceId = 'hsl';
+            result.coords = [numericH, numericS, numericL];
+            result.alpha = numericA;
+            result.isValid =
+                numericH >= 0 &&
+                numericH <= 360 &&
+                numericS >= 0 &&
+                numericS <= 100 &&
+                numericL >= 0 &&
+                numericL <= 100 &&
+                numericA >= 0 &&
+                numericA <= 1;
+        } else if (hsvaMatch) {
+            const [, h, s, v, a] = hsvaMatch;
+            const values = [h, s, v, a === undefined ? '1' : a].map((value) =>
+                Number(value.replace(/[^\d.]/g, ''))
+            );
+            const [numericH, numericS, numericV, numericA] = values;
+
+            result.spaceId = 'hsv';
+            result.coords = [numericH, numericS, numericV];
+            result.alpha = numericA;
+            result.isValid =
+                numericH >= 0 &&
+                numericH <= 360 &&
+                numericS >= 0 &&
+                numericS <= 100 &&
+                numericV >= 0 &&
+                numericV <= 100 &&
+                numericA >= 0 &&
+                numericA <= 1;
+        }
+
+        return result;
+    }
+
     set color(color: ColorTypes) {
         this._colorOrigin = color;
         let newColor!: Color;
         if (typeof color === 'string') {
-            // HSV is not supported natively, manage it outself when encountered.
-            const values = extractHueSaturationValueAndAlphaRegExp.exec(
+            const colorValidationResult = this.validateColorString(
                 color as string
             );
-            if (values !== null) {
-                const [, h, s, v, a] = values;
+            if (colorValidationResult.isValid) {
                 newColor = new Color(
-                    'hsv',
-                    [Number(h), Number(s), Number(v)],
-                    Number(a) || 1
+                    `${colorValidationResult.spaceId}`,
+                    colorValidationResult.coords,
+                    colorValidationResult.alpha
                 );
             } else {
                 try {
@@ -183,11 +273,12 @@ export class ColorController {
                 }
                 default: {
                     const { r, g, b } = (this._color.to('srgb') as Color).srgb;
+                    let a = this._color.alpha;
                     if (this._colorOrigin.startsWith('#')) {
                         const hadAlpha =
                             this._colorOrigin.length === 5 ||
                             this._colorOrigin.length === 9;
-                        const a = this._color.alpha;
+                        a = this._color.alpha;
                         const rHex = Math.round(r * 255).toString(16);
                         const gHex = Math.round(g * 255).toString(16);
                         const bHex = Math.round(b * 255).toString(16);
@@ -200,13 +291,13 @@ export class ColorController {
                         }`;
                     }
                     if (this._colorOrigin.search('%') > -1) {
-                        return `rgb(${Math.round(r * 100)}%, ${Math.round(
+                        return `rgba(${Math.round(r * 100)}%, ${Math.round(
                             g * 100
-                        )}%, ${Math.round(b * 100)}%)`;
+                        )}%, ${Math.round(b * 100)}%,${Math.round(a * 100)}%)`;
                     }
-                    return `rgb(${Math.round(r * 255)}, ${Math.round(
+                    return `rgba(${Math.round(r * 255)}, ${Math.round(
                         g * 255
-                    )}, ${Math.round(b * 255)})`;
+                    )}, ${Math.round(b * 255)}, ${a})`;
                 }
             }
         }
