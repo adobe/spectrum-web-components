@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import {
     CalendarDate,
-    CalendarDateTime,
     DateFormatter,
     getLocalTimeZone,
     now,
@@ -56,7 +55,6 @@ import {
     DateTimePickerValue,
     EditableSegmentType,
     Precision,
-    Segment,
     SegmentTypes,
 } from './types.js';
 
@@ -72,18 +70,20 @@ import {
     convertHourTo24hFormat,
     dateToCalendarDateTime,
     getDate,
+    isCalendarDate,
+    isCalendarDateTime,
     isNumber,
+    isZonedDateTime,
 } from './helpers.js';
 import { DateTimeSegments } from './segments/DateTimeSegments.js';
 import { EditableSegment } from './segments/EditableSegment.js';
+import { LiteralSegment } from './segments/LiteralSegment.js';
 import { SegmentsFactory } from './segments/SegmentsFactory.js';
-import {
-    ClearModifier,
-    DecrementModifier,
-    IncrementModifier,
-    InputModifier,
-    type SegmentsModifierParams,
-} from './segments/SegmentsModifier.js';
+import { ClearModifier } from './segments/modifiers/ClearModifier.js';
+import { DecrementModifier } from './segments/modifiers/DecrementModifier.js';
+import { IncrementModifier } from './segments/modifiers/IncrementModifier.js';
+import { InputModifier } from './segments/modifiers/InputModifier.js';
+import { type SegmentsModifierParams } from './segments/modifiers/SegmentsModifier.js';
 
 /**
  * @element sp-date-time-picker
@@ -177,39 +177,18 @@ export class DateTimePicker extends ManageHelpText(
         return this.firstEditableSegment;
     }
 
-    private get includesTime(): boolean {
-        const timePrecisions = [
-            SegmentTypes.Hour,
-            SegmentTypes.Minute,
-            SegmentTypes.Second,
-        ] as Precision[];
-        return timePrecisions.includes(this.precision);
-    }
-
-    private isZonedDateTime(date: DateValue): date is ZonedDateTime {
-        return date instanceof ZonedDateTime;
-    }
-
-    private isCalendarDateTime(date: DateValue): date is CalendarDateTime {
-        return date instanceof CalendarDateTime;
-    }
-
-    private isCalendarDate(date: DateValue): date is CalendarDate {
-        return date instanceof CalendarDate;
-    }
-
     private get mostSpecificDateValue(): DateValue {
         const dateValuesDefined = [this.value, this.min, this.max].filter(
             (date) => date !== undefined
         ) as DateValue[];
 
-        const zonedDateTimes = dateValuesDefined.filter(this.isZonedDateTime);
+        const zonedDateTimes = dateValuesDefined.filter(isZonedDateTime);
         if (zonedDateTimes.length > 0) return zonedDateTimes[0];
 
-        const dateTimes = dateValuesDefined.filter(this.isCalendarDateTime);
+        const dateTimes = dateValuesDefined.filter(isCalendarDateTime);
         if (dateTimes.length > 0) return dateTimes[0];
 
-        const dates = dateValuesDefined.filter(this.isCalendarDate);
+        const dates = dateValuesDefined.filter(isCalendarDate);
         return dates[0];
     }
 
@@ -218,12 +197,12 @@ export class DateTimePicker extends ManageHelpText(
     private convertToMostSpecificDateValue(): void {
         const dateValue = this.mostSpecificDateValue;
         let timeZone = this.timeZone;
-        if (this.isZonedDateTime(dateValue)) {
+        if (isZonedDateTime(dateValue)) {
             timeZone = dateValue.timeZone;
             this.value = this.value && toZoned(this.value, timeZone);
             this.min = this.min && toZoned(this.min, timeZone);
             this.max = this.max && toZoned(this.max, timeZone);
-        } else if (this.isCalendarDateTime(dateValue)) {
+        } else if (isCalendarDateTime(dateValue)) {
             this.value = this.value && toCalendarDateTime(this.value);
             this.min = this.min && toCalendarDateTime(this.min);
             this.max = this.max && toCalendarDateTime(this.max);
@@ -321,6 +300,15 @@ export class DateTimePicker extends ManageHelpText(
         `;
     }
 
+    protected renderStateIcons(): TemplateResult | typeof nothing {
+        if (this.invalid)
+            return html`
+                <sp-icon-alert id="invalid" class="icon"></sp-icon-alert>
+            `;
+
+        return nothing;
+    }
+
     public renderPicker(): TemplateResult | typeof nothing {
         if (this.readonly) return nothing;
 
@@ -374,13 +362,13 @@ export class DateTimePicker extends ManageHelpText(
         }
     }
 
-    protected renderStateIcons(): TemplateResult | typeof nothing {
-        if (this.invalid)
-            return html`
-                <sp-icon-alert id="invalid" class="icon"></sp-icon-alert>
-            `;
-
-        return nothing;
+    private get includesTime(): boolean {
+        const timePrecisions = [
+            SegmentTypes.Hour,
+            SegmentTypes.Minute,
+            SegmentTypes.Second,
+        ] as Precision[];
+        return timePrecisions.includes(this.precision);
     }
 
     public renderInputContent(): TemplateResult {
@@ -406,7 +394,7 @@ export class DateTimePicker extends ManageHelpText(
         `;
     }
 
-    public renderLiteralSegment(segment: Segment): TemplateResult {
+    public renderLiteralSegment(segment: LiteralSegment): TemplateResult {
         /**
          * We need this flag below to prevent Prettier from moving the content of the tag to the next line, which causes
          * problems on rendering because of spaces added before and after the content (indentation)

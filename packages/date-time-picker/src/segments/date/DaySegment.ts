@@ -21,9 +21,9 @@ import {
     MAX_DAYS_PER_MONTH,
     SegmentTypes,
 } from '../../types.js';
-import { DateSegment } from './DateSegment.js';
+import { EditableSegment } from '../EditableSegment.js';
 
-export class DaySegment extends DateSegment {
+export class DaySegment extends EditableSegment {
     public minValue: number = 1;
     public maxValue: number = 31;
     public value?: number;

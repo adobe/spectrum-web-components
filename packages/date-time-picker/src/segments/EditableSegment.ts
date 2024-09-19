@@ -69,14 +69,14 @@ export abstract class EditableSegment {
         if (String(newValue).length > String(this.maxValue).length)
             newValue = numberParser.parse(String(newValue).slice(1));
 
-        const { minValue, maxValue } = this.typedInLimits;
+        const { minValue, maxValue } = this.inputValidationLimits;
 
         if (newValue < minValue) {
-            newValue = !this.isTypedValueCompliant(typedValue)
+            newValue = !this.isInputValueCompliant(typedValue)
                 ? this.value
                 : typedValue;
         } else if (newValue > maxValue) {
-            newValue = !this.isTypedValueCompliant(typedValue)
+            newValue = !this.isInputValueCompliant(typedValue)
                 ? this.value
                 : typedValue;
         }
@@ -84,15 +84,15 @@ export abstract class EditableSegment {
         this.value = newValue;
     }
 
-    private isTypedValueCompliant(value: number): boolean {
-        const { minValue, maxValue } = this.typedInLimits;
+    private isInputValueCompliant(value: number): boolean {
+        const { minValue, maxValue } = this.inputValidationLimits;
         return value >= minValue && value <= maxValue;
     }
 
-    /**
-     * Returns the limits used to validate a user typed-in value
-     */
-    protected get typedInLimits(): { minValue: number; maxValue: number } {
+    protected get inputValidationLimits(): {
+        minValue: number;
+        maxValue: number;
+    } {
         return {
             minValue: this.minValue,
             maxValue: this.maxValue,

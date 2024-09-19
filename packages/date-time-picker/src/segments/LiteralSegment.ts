@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Segment, SegmentType, SegmentTypes } from '../types';
+import { SegmentType, SegmentTypes } from '../types';
 
-export class LiteralSegment implements Segment {
+export class LiteralSegment {
     public type: SegmentType = SegmentTypes.Literal;
     constructor(public formatted: string) {}
 }

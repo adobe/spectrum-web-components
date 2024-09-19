@@ -10,15 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { EditableSegmentType, Segment, SegmentTypes } from '../types';
+import { EditableSegmentType, SegmentTypes } from '../types';
 import { DaySegment } from './date/DaySegment';
 import { MonthSegment } from './date/MonthSegment';
 import { YearSegment } from './date/YearSegment';
 import { EditableSegment } from './EditableSegment';
+import { LiteralSegment } from './LiteralSegment';
 import { DayPeriodSegment } from './time/DayPeriodSegment';
 import { HourSegment } from './time/HourSegment';
 import { MinuteSegment } from './time/MinuteSegment';
 import { SecondSegment } from './time/SecondSegment';
+
+export type Segment = EditableSegment | LiteralSegment;
 
 export class DateTimeSegments {
     private segments: Segment[];

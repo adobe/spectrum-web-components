@@ -10,22 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ZonedDateTime } from '@internationalized/date';
-import { DateSegmentType } from '../../types';
 import { EditableSegment } from '../EditableSegment';
+import { SegmentsModifier } from './SegmentsModifier';
 
-export abstract class DateSegment extends EditableSegment {
-    constructor(
-        public override type: DateSegmentType,
-        formatted: string
-    ) {
-        super(type, formatted);
+export class DecrementModifier extends SegmentsModifier {
+    protected modifySegment(segment: EditableSegment): void {
+        segment.decrement(this.currentDate);
     }
-
-    public abstract setLimits(currentDate: ZonedDateTime): void;
-    public abstract setLimits(
-        currentDate: ZonedDateTime,
-        month?: number,
-        year?: number
-    ): void;
 }

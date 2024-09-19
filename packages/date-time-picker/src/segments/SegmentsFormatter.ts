@@ -29,18 +29,6 @@ interface DateInfo {
     second: number;
 }
 
-/**
- * If the segment has a `value`, it defines the text used in the UI formatted according to the locale. At this
- * moment we are formatting the value of a specific segment, but it is not possible to generate a valid Date object
- * with just one piece of information (day, month, year, etc.), so we need to define a "base date" to be used
- * together with the value of the segment.
- *
- * For example, if the current segment is the day segment, but the month and year segment have not yet been defined,
- * we need to choose a month and a year to be used in composing the date that will be used in formatting, after all,
- * there is no day without a month and a year.
- *
- * @param segment - Segment to format the value
- */
 export class SegmentsFormatter {
     private dateFormatter: DateFormatter;
     private currentDate: ZonedDateTime;
@@ -51,7 +39,6 @@ export class SegmentsFormatter {
     }
 
     public format(segments: DateTimeSegments): DateTimeSegments {
-        segments = structuredClone(segments);
         if (!segments.year || !segments.month || !segments.day) return segments;
 
         const dateInfo = this.getDateInfoWithDefaults(segments);
@@ -72,6 +59,7 @@ export class SegmentsFormatter {
         if (!date) return;
 
         date.setHours(hour, minute, second);
+        segments = new DateTimeSegments(segments.all);
 
         /**
          * For the year we do not use the value returned by the formatter, to avoid that the typed year is displayed in
@@ -109,17 +97,10 @@ export class SegmentsFormatter {
         const segmentTypesToPad = [
             SegmentTypes.Month,
             SegmentTypes.Day,
+            SegmentTypes.Hour,
             SegmentTypes.Minute,
             SegmentTypes.Second,
         ];
-
-        if (segments.dayPeriod) {
-            const formattedHour = segments.hour.formatted;
-            segments.hour.formatted = formattedHour.padStart(1, '0');
-        } else {
-            const formattedHour = segments.hour.formatted;
-            segments.hour.formatted = formattedHour.padStart(2, '0');
-        }
 
         for (const segmentType of segmentTypesToPad) {
             const segment = segments[segmentType];

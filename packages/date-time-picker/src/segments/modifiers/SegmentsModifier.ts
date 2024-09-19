@@ -11,21 +11,15 @@ governing permissions and limitations under the License.
 */
 
 import { DateFormatter, ZonedDateTime } from '@internationalized/date';
-import { NumberParser } from '@internationalized/number';
-import { EditableSegmentType, SegmentType, SegmentTypes } from '../types';
-import { DateTimeSegments } from './DateTimeSegments';
-import { type EditableSegment } from './EditableSegment';
-import { SegmentsFormatter } from './SegmentsFormatter';
+import { EditableSegmentType, SegmentType, SegmentTypes } from '../../types';
+import { DateTimeSegments } from '../DateTimeSegments';
+import { type EditableSegment } from '../EditableSegment';
+import { SegmentsFormatter } from '../SegmentsFormatter';
 
 export interface SegmentsModifierParams {
     dateFormatter: DateFormatter;
     segments: DateTimeSegments;
     currentDate: ZonedDateTime;
-}
-
-export interface InputSegmentsModifierParams extends SegmentsModifierParams {
-    eventData: string | null;
-    numberParser: NumberParser;
 }
 
 export abstract class SegmentsModifier {
@@ -35,7 +29,7 @@ export abstract class SegmentsModifier {
 
     constructor(params: SegmentsModifierParams) {
         const { dateFormatter, segments, currentDate } = params;
-        this.segments = structuredClone(segments);
+        this.segments = new DateTimeSegments(segments.all);
         this.dateFormatter = dateFormatter;
         this.currentDate = currentDate;
     }
@@ -75,39 +69,4 @@ export abstract class SegmentsModifier {
     }
 
     protected abstract modifySegment(segment: EditableSegment): void;
-}
-
-export class IncrementModifier extends SegmentsModifier {
-    protected modifySegment(segment: EditableSegment): void {
-        segment.increment(this.currentDate);
-    }
-}
-
-export class DecrementModifier extends SegmentsModifier {
-    protected modifySegment(segment: EditableSegment): void {
-        segment.decrement(this.currentDate);
-    }
-}
-
-export class ClearModifier extends SegmentsModifier {
-    protected modifySegment(segment: EditableSegment): void {
-        segment.clear();
-    }
-}
-
-export class InputModifier extends SegmentsModifier {
-    private eventData: string | null;
-    private numberParser: NumberParser;
-
-    constructor(params: InputSegmentsModifierParams) {
-        const { dateFormatter, segments, currentDate } = params;
-        super({ dateFormatter, segments, currentDate });
-        this.eventData = params.eventData;
-        this.numberParser = params.numberParser;
-    }
-
-    protected modifySegment(segment: EditableSegment): void {
-        if (this.eventData === null) return;
-        segment.handleInput(this.eventData, this.numberParser);
-    }
 }

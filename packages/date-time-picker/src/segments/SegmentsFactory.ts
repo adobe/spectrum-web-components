@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 // import { ZonedDateTime } from '@internationalized/date';
 import { DateFormatter, ZonedDateTime } from '@internationalized/date';
-import { Segment, SegmentType, SegmentTypes } from '../types';
-import { DateTimeSegments } from './DateTimeSegments';
+import { SegmentType, SegmentTypes } from '../types';
+import { DateTimeSegments, Segment } from './DateTimeSegments';
 import { LiteralSegment } from './LiteralSegment';
 import { DaySegment } from './date/DaySegment';
 import { MonthSegment } from './date/MonthSegment';
@@ -23,10 +23,8 @@ import { HourSegment } from './time/HourSegment';
 import { MinuteSegment } from './time/MinuteSegment';
 import { SecondSegment } from './time/SecondSegment';
 
-// TODO: Segment[] may benefit from being a class with an iterator and access to individual segments
 export class SegmentsFactory {
     dateFormatter: DateFormatter;
-    // TODO: move currentDate to constructor similar to SegmentsModifiers
     constructor(dateFormatter: DateFormatter) {
         this.dateFormatter = dateFormatter;
     }

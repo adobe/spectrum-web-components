@@ -10,22 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { getMinimumMonthInYear, ZonedDateTime } from '@internationalized/date';
-import { SegmentTypes } from '../../types';
 import { EditableSegment } from '../EditableSegment';
+import { SegmentsModifier } from './SegmentsModifier';
 
-export class MonthSegment extends EditableSegment {
-    public minValue: number = 1;
-    public maxValue: number = 12;
-    public value?: number;
-
-    constructor(formatted: string) {
-        super(SegmentTypes.Month, formatted);
-    }
-
-    public setLimits(currentDate: ZonedDateTime): void {
-        this.minValue = getMinimumMonthInYear(currentDate);
-        this.maxValue = currentDate.calendar.getMonthsInYear(currentDate);
-        this.updateValueToLimits();
+export class ClearModifier extends SegmentsModifier {
+    protected modifySegment(segment: EditableSegment): void {
+        segment.clear();
     }
 }

@@ -10,22 +10,48 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CalendarDate, CalendarDateTime } from '@internationalized/date';
-import { AM, EditableSegmentType, PM, Segment } from './types';
-import { EditableSegment } from './segments/EditableSegment';
+import {
+    CalendarDate,
+    CalendarDateTime,
+    ZonedDateTime,
+} from '@internationalized/date';
+import { DateValue } from '@spectrum-web-components/calendar';
+import { AM, PM } from './types';
 
-/**
- * An utility to check if the given value is a number (not `undefined`)
- *
- * @param value - Number to check
- */
 export function isNumber(value: number | undefined): value is number {
     return typeof value === 'number';
 }
 
+export function isZonedDateTime(date: DateValue): date is ZonedDateTime {
+    return date instanceof ZonedDateTime;
+}
+
+export function isCalendarDateTime(date: DateValue): date is CalendarDateTime {
+    return date instanceof CalendarDateTime;
+}
+
+export function isCalendarDate(date: DateValue): date is CalendarDate {
+    return date instanceof CalendarDate;
+}
+
+export function convertHourTo24hFormat(
+    hour: number,
+    dayPeriod: typeof AM | typeof PM
+): number {
+    return (hour = (hour % PM) + dayPeriod);
+}
+
 /**
- * Returns a `Date` type object using information extracted from a `CalendarDateTime` type object. The month must be
- * decremented by 1 because the `Date` object uses months ranging from 0 (January) to 11 (December)
+ * Returns the corresponding “modifier” (0 for “AM” and 12 for “PM”) for the given hour
+ *
+ * @param hour - The hour to identify the modifier
+ */
+export function getAmPmModifier(hour: number): typeof AM | typeof PM {
+    return hour >= PM ? PM : AM;
+}
+
+/**
+ * Creates a `Date` type object using the date information extracted from a `CalendarDate` type-like object.
  *
  * @param year - Year that will be used to create the new `Date`
  * @param month - Month (1 to 12) that will be used to create the new `Date`
@@ -39,40 +65,6 @@ export function getDate(
     return isNumber(year) && isNumber(month) && isNumber(day)
         ? new Date(year, month - 1, day)
         : undefined;
-}
-
-/**
- * Indicates whether the hour entered is PM or not
- *
- * @param hour - The hour to check
- */
-export function isHourPM(hour: number): boolean {
-    return hour >= PM;
-}
-
-/**
- * Returns the corresponding “modifier” (0 for “AM” and 12 for “PM”) for the given hour
- *
- * @param hour - The hour to identify the modifier
- */
-export function getAmPmModifier(hour: number): typeof AM | typeof PM {
-    return isHourPM(hour) ? PM : AM;
-}
-
-export function convertHourTo24hFormat(
-    hour: number,
-    dayPeriod: typeof AM | typeof PM
-): number {
-    return (hour = (hour % PM) + dayPeriod);
-}
-
-/**
- * Switches the value of the AM/PM segment from `AM` to `PM` or vice versa
- *
- * @param value - Current value
- */
-export function toggleAmPm(value: number): typeof AM | typeof PM {
-    return value === AM ? PM : AM;
 }
 
 /**
@@ -91,19 +83,4 @@ export function dateToCalendarDateTime(date: Date): CalendarDateTime {
         date.getMinutes(),
         date.getSeconds()
     );
-}
-
-export function dateToCalendarDate(date: Date): CalendarDate {
-    return new CalendarDate(
-        date.getFullYear(),
-        date.getMonth() + 1,
-        date.getDate()
-    );
-}
-
-export function getEditableSegmentByType(
-    segments: Segment[],
-    type: EditableSegmentType
-): EditableSegment {
-    return segments.find((segment) => segment.type === type) as EditableSegment;
 }

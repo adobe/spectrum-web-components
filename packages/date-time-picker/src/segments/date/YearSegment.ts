@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 
 import { ZonedDateTime } from '@internationalized/date';
 import { SegmentTypes } from '../../types';
-import { DateSegment } from './DateSegment';
+import { EditableSegment } from '../EditableSegment';
 
-export class YearSegment extends DateSegment {
+export class YearSegment extends EditableSegment {
     public minValue: number = 1;
     public maxValue: number = 9999;
     public value?: number;
