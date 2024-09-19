@@ -23,14 +23,10 @@
         ".": "./src/index.js",
         "./src/*": "./src/*",
         "./icons/*": "./icons/*",
-        "./icons-s2/*": "./icons-s2/*",
         "./package.json": "./package.json"
     },
     "scripts": {
-        "build": "node ./bin/build @adobe/spectrum-css-workflow-icons/dist/18",
-        "build:s2": "node ./bin/build-s2 @adobe/spectrum-css-workflow-icons-s2/dist/assets/svg",
-        "sync": "node ./bin/sync",
-        "build:all": "npm run build && npm run build:s2 && npm run sync"
+        "build": "node ./bin/build.js"
     },
     "files": [
         "**/*.d.ts",
@@ -66,7 +62,6 @@
     "customElements": "custom-elements.json",
     "sideEffects": [
         "./src/index.js",
-        "./icons/*",
-        "./icons-s2/*"
+        "./icons/*"
     ]
 }

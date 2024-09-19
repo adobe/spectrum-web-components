@@ -6,7 +6,6 @@
     },
     "include": [
         "icons/**/*.ts",
-        "icons-s2/**/*.ts",
         "src/**/*.ts",
         "../../global.d.ts"
     ],
