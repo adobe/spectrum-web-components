@@ -70,13 +70,16 @@ export class SegmentsFactory {
 
         const { hour, minute, second, dayPeriod } =
             this.getTimeSegments(segments);
+        if (dayPeriod) dayPeriod.setLocalizedLimits(this.dateFormatter);
 
         if (!hour) return segments;
-        hour.setLimits(Boolean(dayPeriod));
-        if (shouldSetSegmentsValues) {
-            hour.setValueFromDate(currentDate, Boolean(dayPeriod));
 
-            if (Boolean(dayPeriod)) {
+        const is12HourFormat = Boolean(dayPeriod);
+        hour.setLimits(is12HourFormat);
+        if (shouldSetSegmentsValues) {
+            hour.setValueFromDate(currentDate, is12HourFormat);
+
+            if (is12HourFormat) {
                 const dayPeriod = getEditableSegmentByType(
                     segments,
                     SegmentTypes.DayPeriod

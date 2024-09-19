@@ -59,7 +59,7 @@ export abstract class EditableSegment {
         this.value = undefined;
     }
 
-    public handleInput(numberParser: NumberParser, eventData: string): void {
+    public handleInput(eventData: string, numberParser: NumberParser): void {
         const typedValue = numberParser.parse(eventData);
         if (isNaN(typedValue)) return;
 

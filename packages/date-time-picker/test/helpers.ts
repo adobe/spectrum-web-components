@@ -9,17 +9,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import {
     DateTimePicker,
     EditableSegmentType,
     SegmentPlaceholders,
-    SegmentTypes,
 } from '@spectrum-web-components/date-time-picker';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import '@spectrum-web-components/date-time-picker/sp-date-time-picker.js';
+import '@spectrum-web-components/theme/sp-theme.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spreadProps } from '../../../test/lit-helpers.js';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/date-time-picker/sp-date-time-picker.js';
 
 export interface EditableSegments extends Array<HTMLElement> {
     getByType: (type: EditableSegmentType) => HTMLElement;
@@ -78,11 +77,6 @@ function isPlaceholderSegment(segment: HTMLElement): boolean {
     const placeholder = SegmentPlaceholders[type];
 
     if (segment.innerText !== placeholder) return false;
-    if (
-        type === SegmentTypes.DayPeriod &&
-        !segment.classList.contains('is-placeholder')
-    )
-        return false;
 
     return true;
 }

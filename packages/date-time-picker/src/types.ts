@@ -55,7 +55,7 @@ export const SegmentPlaceholders: Readonly<
     [SegmentTypes.Hour]: '––',
     [SegmentTypes.Minute]: '––',
     [SegmentTypes.Second]: '––',
-    [SegmentTypes.DayPeriod]: 'AM',
+    [SegmentTypes.DayPeriod]: '––',
 };
 
 export type SegmentPlaceholder =

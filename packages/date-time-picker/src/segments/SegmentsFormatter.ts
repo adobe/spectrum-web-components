@@ -52,6 +52,7 @@ interface DateInfo {
     second: number;
 }
 
+// TODO: add comment similar to formatSegmentValue method
 export class SegmentsFormatter {
     dateFormatter: DateFormatter;
     constructor(dateFormatter: DateFormatter) {

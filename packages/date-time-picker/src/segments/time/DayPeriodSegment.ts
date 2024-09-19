@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ZonedDateTime } from '@internationalized/date';
+import { DateFormatter, ZonedDateTime } from '@internationalized/date';
 import { EditableSegment } from '../EditableSegment';
 import { AM, PM, SegmentTypes } from '../../types';
 import { getAmPmModifier } from '../../helpers';
@@ -19,6 +19,8 @@ export class DayPeriodSegment extends EditableSegment {
     public minValue: typeof AM = AM;
     public maxValue: typeof PM = PM;
     public value?: typeof AM | typeof PM;
+    private localizedMinValue: string = 'AM';
+    private localizedMaxValue: string = 'PM';
 
     constructor(formatted: string) {
         super(SegmentTypes.DayPeriod, formatted);
@@ -43,7 +45,40 @@ export class DayPeriodSegment extends EditableSegment {
         this.value = getAmPmModifier(currentDate.hour);
     }
 
-    public override handleInput(): void {
+    public override handleInput(eventData: string): void {
+        const charTypedIn = eventData.toLowerCase();
+        const isCharFromAM = this.localizedMinValue
+            .toLowerCase()
+            .includes(charTypedIn);
+        const isCharFromPM = this.localizedMaxValue
+            .toLowerCase()
+            .includes(charTypedIn);
+
+        if (isCharFromAM && isCharFromPM) return;
+
+        if (isCharFromAM) this.value = AM;
+        if (isCharFromPM) this.value = PM;
         return;
+    }
+
+    public setLocalizedLimits(dateFormatter: DateFormatter): void {
+        const amDate = new Date(0, 0, 0, this.minValue, 0);
+        const pmDate = new Date(0, 0, 0, this.maxValue, 0);
+
+        const [am, pm] = [amDate, pmDate].map(
+            this.getDayPeriodFromDate.bind(this, dateFormatter)
+        );
+
+        if (am) this.localizedMinValue = am;
+        if (pm) this.localizedMaxValue = pm;
+    }
+
+    private getDayPeriodFromDate(
+        dateFormatter: DateFormatter,
+        date: Date
+    ): string | undefined {
+        return dateFormatter
+            .formatToParts(date)
+            .find((part) => part.type === this.type)?.value;
     }
 }

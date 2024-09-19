@@ -68,7 +68,7 @@ export abstract class SegmentsModifier {
         return this.segments;
     }
 
-    private updateSegmentsLimits(modifiedSegmentType: SegmentType) {
+    private updateSegmentsLimits(modifiedSegmentType: SegmentType): void {
         const changedYear = modifiedSegmentType === SegmentTypes.Year;
         const changedMonth = modifiedSegmentType === SegmentTypes.Month;
 
@@ -136,6 +136,6 @@ export class InputModifier extends SegmentsModifier {
 
     protected modifySegment(segment: EditableSegment): void {
         if (this.eventData === null) return;
-        segment.handleInput(this.numberParser, this.eventData);
+        segment.handleInput(this.eventData, this.numberParser);
     }
 }

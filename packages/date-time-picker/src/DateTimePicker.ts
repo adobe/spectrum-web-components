@@ -14,7 +14,6 @@ import {
     CalendarDate,
     CalendarDateTime,
     DateFormatter,
-    endOfMonth,
     getLocalTimeZone,
     getMinimumDayInMonth,
     getMinimumMonthInYear,
@@ -55,21 +54,12 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import styles from './date-time-picker.css.js';
 import {
-    AM,
     DateTimePickerValue,
     EditableSegment,
     EditableSegmentType,
-    MAX_DAYS_PER_MONTH,
-    MAX_HOUR_AM,
-    MAX_HOUR_PM,
-    MIN_HOUR_AM,
-    MIN_HOUR_PM,
-    PM,
     Precision,
     Segment,
-    SegmentDetails,
     SegmentTypes,
-    SegmentValueAndLimits,
 } from './types.js';
 
 // TODO: Load dependencies lazily when possible
@@ -83,9 +73,7 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import {
     convertHourTo24hFormat,
     dateToCalendarDateTime,
-    getAmPmModifier,
     getDate,
-    isHourPM,
     isNumber,
 } from './helpers.js';
 import { SegmentsFactory } from './segments/SegmentsFactory.js';
@@ -553,7 +541,6 @@ export class DateTimePicker extends ManageHelpText(
     protected handleKeydown(event: KeyboardEvent): void {
         const segmentType = (event.target as HTMLElement).dataset
             .type as EditableSegmentType;
-        const segment = this.editableSegment(segmentType) as EditableSegment;
 
         switch (event.code) {
             case 'ArrowUp': {
@@ -571,19 +558,6 @@ export class DateTimePicker extends ManageHelpText(
             case 'ArrowLeft': {
                 this.focusPreviousSegment(event);
                 break;
-            }
-        }
-
-        // The “AM/PM” segment value can be changed by pressing the “A” (for “AM”) or “P” (for “PM”) keys
-        if (segment.type === SegmentTypes.DayPeriod) {
-            if (event.code === 'KeyA') {
-                this.setAmPmSegmentValue(AM);
-                this.valueChanged(segment, event);
-            }
-
-            if (event.code === 'KeyP') {
-                this.setAmPmSegmentValue(PM);
-                this.valueChanged(segment, event);
             }
         }
     }
@@ -606,12 +580,6 @@ export class DateTimePicker extends ManageHelpText(
         this.segments = decrementModifier.modify(segmentType);
     }
 
-    /**
-     * When the `input` event is triggered, we can use the `beforeinput` event to execute some things before
-     *
-     * @param segment - Segment on which the event was triggered (the segment being changed)
-     * @param event - Triggered event details
-     */
     private handleBeforeInput(event: InputEvent): void {
         const segmentType = (event.target as HTMLElement).dataset
             .type as EditableSegmentType;
@@ -638,8 +606,6 @@ export class DateTimePicker extends ManageHelpText(
         const segmentType = (event.target as HTMLElement).dataset
             .type as EditableSegmentType;
 
-        if (segmentType === SegmentTypes.DayPeriod) return;
-
         const inputModifier = new InputModifier({
             ...this.modifierParams,
             eventData: event.data,
@@ -652,41 +618,6 @@ export class DateTimePicker extends ManageHelpText(
             this.editableSegment(segmentType) as EditableSegment,
             event
         );
-    }
-
-    /**
-     * After defining the new segment value, it formats the values that will be displayed on the screen and prepares the
-     * object that will be emitted by the component, if it is ready/defined
-     *
-     * @param segment - Segment on which the event was triggered (the segment being changed)
-     * @param event - Triggered event details
-     */
-    protected valueChanged(
-        segment: EditableSegment,
-        event: InputEvent | KeyboardEvent
-    ): void {
-        if (this.is12HourClock) {
-            if (segment.type === SegmentTypes.Hour) {
-                this.updateAmPm();
-            } else if (segment.type === SegmentTypes.DayPeriod) {
-                this.updateHour();
-            }
-        }
-
-        const hasDay = isNumber(this.daySegment?.value);
-        const hasMonth = isNumber(this.monthSegment?.value);
-
-        if (
-            segment.type === SegmentTypes.Month ||
-            (segment.type === SegmentTypes.Day && hasMonth) ||
-            (segment.type === SegmentTypes.Year && hasDay && hasMonth)
-        ) {
-            this.updateDay();
-        }
-
-        this.formatSegmentValue(segment);
-        this.updateContent(segment, event);
-        this.updateValue();
     }
 
     private dispatchChange(): void {
@@ -725,111 +656,6 @@ export class DateTimePicker extends ManageHelpText(
             second: timeCalendarDateTime.second,
         });
         this.dispatchChange();
-    }
-
-    /**
-     * Extracts the segment details, validating that the limits have been defined. The value currently assigned to the
-     * segment remains optional
-     *
-     * @param segment - The segment to extract the details
-     */
-    protected extractDetails(
-        segment: EditableSegment
-    ): SegmentDetails | undefined {
-        const min = segment.minValue;
-        const max = segment.maxValue;
-
-        if (min === undefined || max === undefined) {
-            return undefined;
-        }
-
-        return {
-            value: segment.value,
-            minValue: min,
-            maxValue: max,
-        };
-    }
-
-    /**
-     * For the hour segment whose clock format is 12 hours, we need to perform some checks before defining what will be
-     * the new value associated with the segment. This is necessary because the time the user sees might not match the
-     * value we need to store in the segment
-     *
-     * For example, if “10” is the value displayed in the field, the actual value could be “22” if it's PM, so we need
-     * to identify when we have to change the “actual value”
-     *
-     * @param details - Segment value and limits
-     * @param typedValue - The value typed by the user
-     */
-    protected getNewValueForAmPmHourSegment(
-        details: SegmentDetails,
-        typedValue: number
-    ): number {
-        const isAmPmHour = true;
-
-        let newValue = this.mergePreviousValueWithTypedValue(
-            details,
-            typedValue,
-            isAmPmHour
-        );
-
-        const min = details.minValue;
-        const max = details.maxValue;
-        const isPM = isHourPM(min);
-
-        if (isPM && newValue !== min && newValue > MAX_HOUR_AM) {
-            newValue = this.numberParser.parse(String(newValue).slice(1));
-        } else if (newValue > max) {
-            const useMIN_HOUR_AM = !isPM && newValue === PM;
-
-            newValue = useMIN_HOUR_AM
-                ? MIN_HOUR_AM
-                : this.useTypedValueOrMax(typedValue, max);
-        }
-
-        if (isPM && newValue !== min) {
-            newValue += PM;
-        }
-
-        return newValue;
-    }
-
-    /**
-     * Defines the new value that will be associated with the segment, with the exception of the hour segment for
-     * 12-hour clocks, whose value is defined in another method
-     *
-     * @param details - Segment value and limits
-     * @param typedValue - The value typed by the user
-     * @param isDateSegment - Indicates if it is a date segment
-     */
-    protected getNewValueForOtherSegments(
-        details: SegmentDetails,
-        typedValue: number,
-        isDateSegment: boolean
-    ): number | undefined {
-        let newValue = this.mergePreviousValueWithTypedValue(
-            details,
-            typedValue
-        );
-
-        if (isDateSegment && newValue === 0) {
-            return undefined;
-        }
-
-        const min = details.minValue;
-        const max = details.maxValue;
-
-        if (String(newValue).length > String(max).length) {
-            newValue = this.numberParser.parse(String(newValue).slice(1));
-        }
-
-        if (newValue < min) {
-            newValue = this.useTypedValueOrMin(typedValue, min);
-        } else if (newValue > max) {
-            newValue = this.useTypedValueOrMax(typedValue, max);
-        }
-
-        return newValue;
     }
 
     /**
@@ -936,94 +762,6 @@ export class DateTimePicker extends ManageHelpText(
         this.segments = segments;
     }
 
-    private getSegmentValue(type: EditableSegmentType): number | undefined {
-        let previousValue: number | undefined;
-        let currentValue: number;
-
-        if (type === SegmentTypes.DayPeriod) {
-            previousValue =
-                this.hourSegment?.value &&
-                getAmPmModifier(this.hourSegment.value);
-            currentValue = getAmPmModifier(this.currentDate.hour);
-        } else {
-            previousValue = this.editableSegment(type)?.value;
-            currentValue = this.currentDate[type];
-        }
-
-        if (this.value && isNumber(currentValue)) return currentValue;
-        if (previousValue) return previousValue;
-
-        return;
-    }
-
-    /**
-     * Returns the minimum and maximum values for each segment that will be used, in addition to defining if there is a
-     * current value to be used. If segments are being recreated, we try to recover the value that was previously set
-     * for each segment, if possible
-     *
-     * @param type - Type of segment
-     */
-    private getSegmentLimits(type: EditableSegmentType): SegmentValueAndLimits {
-        let minValue!: number;
-        let maxValue!: number;
-
-        switch (type) {
-            case SegmentTypes.Year:
-                minValue = 1;
-                maxValue = this.currentDate.calendar.getYearsInEra(
-                    this.currentDate
-                );
-                break;
-
-            case SegmentTypes.Month:
-                minValue = getMinimumMonthInYear(this.currentDate);
-                maxValue = this.currentDate.calendar.getMonthsInYear(
-                    this.currentDate
-                );
-                break;
-
-            case SegmentTypes.Day:
-                minValue = getMinimumDayInMonth(this.currentDate);
-                maxValue = this.currentDate.calendar.getDaysInMonth(
-                    this.currentDate
-                );
-
-                if (!this.monthSegment?.value) maxValue = MAX_DAYS_PER_MONTH;
-                else {
-                    const febMaxValue = this.getFebruaryMaxValue();
-                    if (isNumber(febMaxValue)) maxValue = febMaxValue;
-                }
-                break;
-
-            case SegmentTypes.Hour:
-                minValue = 0;
-                maxValue = 23;
-
-                if (this.is12HourClock) {
-                    const isPM = isHourPM(this.currentDate.hour);
-                    minValue = isPM ? MIN_HOUR_PM : MIN_HOUR_AM;
-                    maxValue = isPM ? MAX_HOUR_PM : MAX_HOUR_AM;
-                }
-                break;
-
-            case SegmentTypes.Minute:
-            case SegmentTypes.Second:
-                minValue = 0;
-                maxValue = 59;
-                break;
-
-            case SegmentTypes.DayPeriod:
-                minValue = AM;
-                maxValue = PM;
-                break;
-        }
-
-        return {
-            minValue,
-            maxValue,
-        };
-    }
-
     /**
      * If the segment has a `value`, it defines the text used in the UI formatted according to the locale. At this
      * moment we are formatting the value of a specific segment, but it is not possible to generate a valid Date object
@@ -1123,200 +861,6 @@ export class DateTimePicker extends ManageHelpText(
             .find((part) => part.type === segment.type)!.value;
 
         segment.formatted = formatted?.padStart(padMaxLength, '0');
-    }
-
-    /**
-     * If the defined month is February but we don't yet have the year defined, we use 29 as the max limit, as we have
-     * no way of knowing whether it is a leap year or not until the year segment is filled
-     */
-    private getFebruaryMaxValue(): number | undefined {
-        return this.monthSegment?.value === 2 && !this.yearSegment?.value
-            ? 29
-            : undefined;
-    }
-
-    /**
-     * Changes the value of the AM/PM segment to use the new value
-     *
-     * @param newValue - New value for the segment `dayPeriod`
-     */
-    private setAmPmSegmentValue(newValue: typeof AM | typeof PM): void {
-        if (this.amPmSegment) {
-            this.amPmSegment.value = newValue;
-        }
-    }
-
-    private updateAmPm(): void {
-        if (!this.hourSegment || !this.amPmSegment) {
-            this.resetHourAndAmPm();
-            return;
-        }
-
-        // If there is no hour or if AM/PM is already set, there is nothing to do
-        if (
-            this.hourSegment.value === undefined ||
-            this.amPmSegment.value !== undefined
-        ) {
-            return;
-        }
-
-        this.amPmSegment.value = getAmPmModifier(this.hourSegment.value);
-    }
-
-    /**
-     * When the day period is changed, it automatically adjusts the hour if it has already been informed previously to
-     * match the new period (AM or PM). In addition, the minimum and maximum values of the hour are also changed
-     */
-    private updateHour(): void {
-        if (!this.hourSegment || !this.amPmSegment) {
-            this.resetHourAndAmPm();
-            return;
-        }
-
-        if (this.amPmSegment.value === undefined) {
-            return;
-        }
-
-        const isAM = this.amPmSegment.value === AM;
-        const isPM = this.amPmSegment.value === PM;
-
-        this.hourSegment.minValue = isPM ? MIN_HOUR_PM : MIN_HOUR_AM;
-        this.hourSegment.maxValue = isPM ? MAX_HOUR_PM : MAX_HOUR_AM;
-
-        if (this.hourSegment.value === undefined) {
-            return;
-        }
-
-        if (isAM && isHourPM(this.hourSegment.value)) {
-            this.hourSegment.value -= PM;
-        } else if (isPM && !isHourPM(this.hourSegment.value)) {
-            this.hourSegment.value += PM;
-        }
-    }
-
-    /**
-     * When the “AM/PM” is cleared, we need to reset the min and max values of the AM/PM and hour segments to their
-     * initial values
-     */
-    private resetHourAndAmPm(): void {
-        if (this.amPmSegment) {
-            const amPmLimits = this.getSegmentLimits(SegmentTypes.DayPeriod);
-
-            this.amPmSegment.value = this.getSegmentValue(
-                SegmentTypes.DayPeriod
-            );
-            this.amPmSegment.minValue = amPmLimits.minValue;
-            this.amPmSegment.maxValue = amPmLimits.maxValue;
-
-            if (this.amPmSegment.value === undefined) {
-                this.amPmSegment.formatted =
-                    this.amPmSegment.placeholder || 'AM';
-            }
-        }
-
-        if (this.hourSegment) {
-            const hourLimits = this.getSegmentLimits(SegmentTypes.Hour);
-
-            this.hourSegment.minValue = hourLimits.minValue;
-            this.hourSegment.maxValue = hourLimits.maxValue;
-
-            if (isNumber(this.hourSegment.value)) {
-                this.hourSegment.value += getAmPmModifier(
-                    this.currentDate.hour
-                );
-            } else {
-                this.hourSegment.value = this.getSegmentValue(
-                    SegmentTypes.Hour
-                );
-            }
-        }
-    }
-
-    /**
-     * Updates the value of the day segment to match the last day of the month if it is above the maximum limit and
-     * furthermore also updates the maximum limit of the day segment to use the new found limit
-     */
-    private updateDay(): void {
-        if (
-            this.monthSegment?.value === undefined ||
-            this.daySegment === undefined
-        ) {
-            return;
-        }
-
-        const useThisDate = isNumber(this.yearSegment?.value)
-            ? this.currentDate.set({ year: this.yearSegment?.value })
-            : this.currentDate.copy();
-
-        const lastDayOfMonth = endOfMonth(
-            useThisDate.set({ month: this.monthSegment.value })
-        );
-
-        this.daySegment.maxValue = lastDayOfMonth.day;
-
-        const febMaxValue = this.getFebruaryMaxValue();
-        if (isNumber(febMaxValue)) {
-            this.daySegment.maxValue = febMaxValue;
-        }
-
-        if (
-            isNumber(this.daySegment.value) &&
-            this.daySegment.value > this.daySegment.maxValue
-        ) {
-            this.daySegment.value = this.daySegment.maxValue;
-            this.formatSegmentValue(this.daySegment);
-        }
-    }
-
-    /**
-     * Returns the value to be used if the typed value is less than the minimum allowed
-     *
-     * @param typedValue - The value typed by the user
-     * @param min - The minimum value allowed for that segment
-     */
-    private useTypedValueOrMin(typedValue: number, min: number): number {
-        return typedValue < min ? min : typedValue;
-    }
-
-    /**
-     * Returns the value to be used if the typed value is greater than the maximum allowed
-     *
-     * @param typedValue - The value typed by the user
-     * @param max - The maximum value allowed for that segment
-     */
-    private useTypedValueOrMax(typedValue: number, max: number): number {
-        return typedValue > max ? max : typedValue;
-    }
-
-    /**
-     * When the user types a value into a segment, we need to temporarily store the current segment's value before it
-     * changes to include the value the user has just entered. Also, we need to identify if it is the hour segment and
-     * if the clock format is 12 hours, if so, we have to adjust the previous value to perform some calculations
-     *
-     * @param details - Details of the segment being changed
-     * @param typedValue - The value typed by the user
-     * @param isAmPmHour - Indicates whether it is the hour segment for 12-hour clocks
-     */
-    private mergePreviousValueWithTypedValue(
-        details: SegmentDetails,
-        typedValue: number,
-        isAmPmHour = false
-    ): number {
-        let previousValue = details.value ?? 0;
-
-        if (isAmPmHour && isHourPM(previousValue)) {
-            previousValue -= PM;
-        }
-
-        let newValue = this.numberParser.parse(`${previousValue}${typedValue}`);
-
-        if (String(newValue).length > String(details.maxValue).length) {
-            newValue = isAmPmHour
-                ? typedValue
-                : this.numberParser.parse(String(newValue).slice(1));
-        }
-
-        return newValue;
     }
 
     /**
