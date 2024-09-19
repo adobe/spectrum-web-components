@@ -91,11 +91,11 @@ export class ColorController {
             result.alpha = alpha;
             result.isValid =
                 numericR >= 0 &&
-                numericR <= 100 &&
+                numericR <= 1 &&
                 numericG >= 0 &&
-                numericG <= 100 &&
+                numericG <= 1 &&
                 numericB >= 0 &&
-                numericB <= 100 &&
+                numericB <= 1 &&
                 alpha >= 0 &&
                 alpha <= 1;
         } else if (hslaMatch) {
@@ -149,9 +149,10 @@ export class ColorController {
                 color as string
             );
             if (colorValidationResult.isValid) {
+                const [coord1, coord2, coord3] = colorValidationResult.coords;
                 newColor = new Color(
                     `${colorValidationResult.spaceId}`,
-                    colorValidationResult.coords,
+                    [coord1, coord2, coord3],
                     colorValidationResult.alpha
                 );
             } else {
