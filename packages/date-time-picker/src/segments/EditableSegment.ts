@@ -21,7 +21,6 @@ import {
 
 export abstract class EditableSegment {
     public type: EditableSegmentType;
-    // TODO: formatted might not be needed
     public formatted: string;
     public placeholder: SegmentPlaceholder;
     public abstract minValue: number;

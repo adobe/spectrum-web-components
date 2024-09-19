@@ -12,22 +12,14 @@ governing permissions and limitations under the License.
 
 import { DateFormatter, ZonedDateTime } from '@internationalized/date';
 import { NumberParser } from '@internationalized/number';
-import { getEditableSegmentByType } from '../helpers';
-import {
-    EditableSegmentType,
-    Segment,
-    SegmentType,
-    SegmentTypes,
-} from '../types';
-import { DaySegment } from './date/DaySegment';
+import { EditableSegmentType, SegmentType, SegmentTypes } from '../types';
+import { DateTimeSegments } from './DateTimeSegments';
 import { type EditableSegment } from './EditableSegment';
 import { SegmentsFormatter } from './SegmentsFormatter';
-import { YearSegment } from './date/YearSegment';
-import { MonthSegment } from './date/MonthSegment';
 
 export interface SegmentsModifierParams {
     dateFormatter: DateFormatter;
-    segments: Segment[];
+    segments: DateTimeSegments;
     currentDate: ZonedDateTime;
 }
 
@@ -36,34 +28,31 @@ export interface InputSegmentsModifierParams extends SegmentsModifierParams {
     numberParser: NumberParser;
 }
 
-interface DateSegments {
-    year: YearSegment;
-    month: MonthSegment;
-    day: DaySegment;
-}
-
 export abstract class SegmentsModifier {
-    protected segments: Segment[];
+    protected segments: DateTimeSegments;
     protected dateFormatter: DateFormatter;
     protected currentDate: ZonedDateTime;
+
     constructor(params: SegmentsModifierParams) {
         const { dateFormatter, segments, currentDate } = params;
-        this.segments = Array.from(segments);
+        this.segments = structuredClone(segments);
         this.dateFormatter = dateFormatter;
         this.currentDate = currentDate;
     }
 
-    public modify(segmentType: EditableSegmentType): Segment[] {
-        const segment = getEditableSegmentByType(this.segments, segmentType);
+    public modify(segmentType: EditableSegmentType): DateTimeSegments {
+        const segment = this.segments.getByType(segmentType);
+        if (!segment) return this.segments;
+
         this.modifySegment(segment);
 
         this.updateSegmentsLimits(segmentType);
 
-        const segmentsFormatter = new SegmentsFormatter(this.dateFormatter);
-        this.segments = segmentsFormatter.format(
-            this.segments,
+        const segmentsFormatter = new SegmentsFormatter(
+            this.dateFormatter,
             this.currentDate
         );
+        this.segments = segmentsFormatter.format(this.segments);
 
         return this.segments;
     }
@@ -72,34 +61,17 @@ export abstract class SegmentsModifier {
         const changedYear = modifiedSegmentType === SegmentTypes.Year;
         const changedMonth = modifiedSegmentType === SegmentTypes.Month;
 
-        const { year, month, day } = this.getDateSegments(this.segments);
+        const year = this.segments.year;
+        const month = this.segments.month;
+        const day = this.segments.day;
 
         if (changedYear) {
-            month.setLimits(this.currentDate);
-            day.setLimits(this.currentDate, month.value, year.value);
+            month?.setLimits(this.currentDate);
+            day?.setLimits(this.currentDate, month?.value, year?.value);
         }
 
         if (changedMonth)
-            day.setLimits(this.currentDate, month.value, year.value);
-    }
-
-    private getDateSegments(segments: Segment[]): DateSegments {
-        const year = getEditableSegmentByType(
-            segments,
-            SegmentTypes.Year
-        ) as YearSegment;
-
-        const month = getEditableSegmentByType(
-            segments,
-            SegmentTypes.Month
-        ) as MonthSegment;
-
-        const day = getEditableSegmentByType(
-            segments,
-            SegmentTypes.Day
-        ) as DaySegment;
-
-        return { year, month, day };
+            day?.setLimits(this.currentDate, month?.value, year?.value);
     }
 
     protected abstract modifySegment(segment: EditableSegment): void;

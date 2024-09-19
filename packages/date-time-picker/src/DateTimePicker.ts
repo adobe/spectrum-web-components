@@ -15,9 +15,8 @@ import {
     CalendarDateTime,
     DateFormatter,
     getLocalTimeZone,
-    getMinimumDayInMonth,
-    getMinimumMonthInYear,
     now,
+    Time,
     toCalendarDateTime,
     toZoned,
     ZonedDateTime,
@@ -55,7 +54,6 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import styles from './date-time-picker.css.js';
 import {
     DateTimePickerValue,
-    EditableSegment,
     EditableSegmentType,
     Precision,
     Segment,
@@ -76,6 +74,8 @@ import {
     getDate,
     isNumber,
 } from './helpers.js';
+import { DateTimeSegments } from './segments/DateTimeSegments.js';
+import { EditableSegment } from './segments/EditableSegment.js';
 import { SegmentsFactory } from './segments/SegmentsFactory.js';
 import {
     ClearModifier,
@@ -84,7 +84,6 @@ import {
     InputModifier,
     type SegmentsModifierParams,
 } from './segments/SegmentsModifier.js';
-import { DayPeriodSegment } from './segments/time/DayPeriodSegment.js';
 
 /**
  * @element sp-date-time-picker
@@ -153,17 +152,8 @@ export class DateTimePicker extends ManageHelpText(
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
-    private languageResolver = new LanguageResolutionController(this);
-    private get locale(): string {
-        return this.languageResolver.language;
-    }
-
-    private timeZone = getLocalTimeZone();
-    private dateFormatter!: DateFormatter;
-    private numberParser!: NumberParser;
-
     @state()
-    protected segments: Segment[] = [];
+    protected segments: DateTimeSegments = new DateTimeSegments([]);
 
     @state()
     public isCalendarOpen = false;
@@ -174,49 +164,17 @@ export class DateTimePicker extends ManageHelpText(
     @query('.input')
     private input!: HTMLElement;
 
+    private languageResolver = new LanguageResolutionController(this);
+    private get locale(): string {
+        return this.languageResolver.language;
+    }
+
+    private timeZone = getLocalTimeZone();
+    private dateFormatter!: DateFormatter;
+    private numberParser!: NumberParser;
+
     public override get focusElement(): HTMLElement {
         return this.firstEditableSegment;
-    }
-
-    public get is12HourClock(): boolean {
-        return Boolean(this.dateFormatter.resolvedOptions().hour12);
-    }
-
-    private get daySegment(): EditableSegment | undefined {
-        return this.editableSegment(SegmentTypes.Day);
-    }
-
-    private get monthSegment(): EditableSegment | undefined {
-        return this.editableSegment(SegmentTypes.Month);
-    }
-
-    private get yearSegment(): EditableSegment | undefined {
-        return this.editableSegment(SegmentTypes.Year);
-    }
-
-    private get hourSegment(): EditableSegment | undefined {
-        return this.editableSegment(SegmentTypes.Hour);
-    }
-
-    private get minuteSegment(): EditableSegment | undefined {
-        return this.editableSegment(SegmentTypes.Minute);
-    }
-
-    private get secondSegment(): EditableSegment | undefined {
-        return this.editableSegment(SegmentTypes.Second);
-    }
-
-    private get amPmSegment(): EditableSegment | undefined {
-        return this.editableSegment(SegmentTypes.DayPeriod);
-    }
-
-    // TODO: this might need some caching
-    private editableSegment(
-        type: EditableSegmentType
-    ): EditableSegment | undefined {
-        return this.segments.find(
-            (segment) => segment.type === type
-        ) as EditableSegment;
     }
 
     private get includesTime(): boolean {
@@ -351,10 +309,7 @@ export class DateTimePicker extends ManageHelpText(
             this.updateValue();
         }
 
-        if (shouldResetSegments) {
-            this.segments = [];
-            this.setSegments();
-        }
+        if (shouldResetSegments) this.setSegments();
     }
 
     protected override render(): TemplateResult {
@@ -409,25 +364,14 @@ export class DateTimePicker extends ManageHelpText(
         this.isCalendarOpen = false;
         const calendarValue = (event.target as Calendar).value as CalendarDate;
 
-        if (this.includesTime) this.value = toCalendarDateTime(calendarValue);
-        else this.value = calendarValue;
-
-        const { year, month, day } = this.value;
-
-        if (!this.yearSegment || !this.monthSegment || !this.daySegment) {
-            return;
+        if (!this.includesTime) this.value = calendarValue;
+        else {
+            const hour = this.segments.hour?.value ?? 0;
+            const minute = this.segments.minute?.value ?? 0;
+            const second = this.segments.second?.value ?? 0;
+            const time = new Time(hour, minute, second);
+            this.value = toCalendarDateTime(calendarValue, time);
         }
-
-        this.yearSegment.value = year;
-        this.formatSegmentValue(this.yearSegment);
-
-        this.monthSegment.value = month;
-        this.formatSegmentValue(this.monthSegment);
-
-        this.daySegment.value = day;
-        this.formatSegmentValue(this.daySegment);
-
-        this.requestUpdate();
     }
 
     protected renderStateIcons(): TemplateResult | typeof nothing {
@@ -447,7 +391,7 @@ export class DateTimePicker extends ManageHelpText(
                     @focusin=${() => (this.focused = !this.readonly)}
                     @focusout=${() => (this.focused = false)}
                 >
-                    ${this.segments.map((segment) =>
+                    ${this.segments.all.map((segment) =>
                         when(
                             segment.type === SegmentTypes.Literal,
                             () => this.renderLiteralSegment(segment),
@@ -614,10 +558,32 @@ export class DateTimePicker extends ManageHelpText(
 
         this.segments = inputModifier.modify(segmentType);
 
-        this.updateContent(
-            this.editableSegment(segmentType) as EditableSegment,
-            event
-        );
+        this.updateContent(this.segments.getByType(segmentType)!, event);
+    }
+
+    /**
+     * To define the content of elements with the `contenteditable` attribute with Lit we bind to the `.innerText`
+     * property of the element instead of using string interpolation
+     *
+     * @param segment - Segment on which the event was triggered (the segment being changed)
+     * @param event - Triggered event details
+     */
+    private updateContent(
+        segment: EditableSegment,
+        event: InputEvent | KeyboardEvent
+    ): void {
+        const segmentEl = event.target as HTMLElement;
+
+        if (segmentEl) {
+            const content =
+                segment.value !== undefined
+                    ? segment.formatted
+                    : segment.placeholder;
+
+            segmentEl.innerText = content ?? '';
+
+            this.requestUpdate();
+        }
     }
 
     private dispatchChange(): void {
@@ -663,16 +629,16 @@ export class DateTimePicker extends ManageHelpText(
      */
     private getDateFromSegments(): Date | undefined {
         return getDate(
-            this.yearSegment?.value,
-            this.monthSegment?.value,
-            this.daySegment?.value
+            this.segments.year?.value,
+            this.segments.month?.value,
+            this.segments.day?.value
         );
     }
 
     private isTimeDefined(): boolean {
-        const hour = this.hourSegment?.value;
-        const minute = this.minuteSegment?.value;
-        const second = this.secondSegment?.value;
+        const hour = this.segments.hour?.value;
+        const minute = this.segments.minute?.value;
+        const second = this.segments.second?.value;
 
         const isHourPrecision = this.precision === SegmentTypes.Hour;
         const isMinutePrecision = this.precision === SegmentTypes.Minute;
@@ -696,14 +662,14 @@ export class DateTimePicker extends ManageHelpText(
     private getTimeFromSegments(): Date | undefined {
         if (!this.isTimeDefined()) return;
 
-        let hour = this.hourSegment?.value;
-        const minute = this.minuteSegment?.value;
-        const second = this.secondSegment?.value;
+        let hour = this.segments.hour?.value;
+        const minute = this.segments.minute?.value;
+        const second = this.segments.second?.value;
 
         const dateTime = this.currentDate.toDate();
 
         if (isNumber(hour)) {
-            const dayPeriod = (this.amPmSegment as DayPeriodSegment).value;
+            const dayPeriod = this.segments.dayPeriod!.value;
             if (isNumber(dayPeriod))
                 hour = convertHourTo24hFormat(hour, dayPeriod);
 
@@ -760,132 +726,6 @@ export class DateTimePicker extends ManageHelpText(
         );
 
         this.segments = segments;
-    }
-
-    /**
-     * If the segment has a `value`, it defines the text used in the UI formatted according to the locale. At this
-     * moment we are formatting the value of a specific segment, but it is not possible to generate a valid Date object
-     * with just one piece of information (day, month, year, etc.), so we need to define a "base date" to be used
-     * together with the value of the segment.
-     *
-     * For example, if the current segment is the day segment, but the month and year segment have not yet been defined,
-     * we need to choose a month and a year to be used in composing the date that will be used in formatting, after all,
-     * there is no day without a month and a year.
-     *
-     * @param segment - Segment to format the value
-     */
-    protected formatSegmentValue(segment: EditableSegment): void {
-        if (segment.value === undefined) return;
-
-        let day =
-            this.daySegment?.value ?? getMinimumDayInMonth(this.currentDate);
-
-        let month =
-            this.monthSegment?.value ?? getMinimumMonthInYear(this.currentDate);
-
-        let year = this.yearSegment?.value ?? this.currentDate.year;
-        let hour = this.hourSegment?.value ?? this.currentDate.hour;
-        let minute = this.minuteSegment?.value ?? this.currentDate.minute;
-        let second = this.secondSegment?.value ?? this.currentDate.second;
-
-        let padMaxLength = 2;
-
-        switch (segment.type) {
-            case SegmentTypes.Day: {
-                day = segment.value;
-                break;
-            }
-            case SegmentTypes.Month: {
-                month = segment.value;
-                break;
-            }
-            case SegmentTypes.Year: {
-                year = segment.value;
-                break;
-            }
-            case SegmentTypes.Hour: {
-                hour = segment.value;
-                if (this.is12HourClock) padMaxLength = 1;
-                break;
-            }
-            case SegmentTypes.Minute: {
-                minute = segment.value;
-                break;
-            }
-            case SegmentTypes.Second: {
-                second = segment.value;
-                break;
-            }
-            case SegmentTypes.DayPeriod: {
-                hour = (segment.value ?? 0) + 1;
-                padMaxLength = 0;
-                break;
-            }
-        }
-
-        /**
-         * For the year we do not use the value returned by the formatter, to avoid that the typed year is displayed in
-         * an unexpected way. For example, when typing “2”, the year would be formatted as “1902”, but we keep it as it
-         * is being displayed on the screen. If the user wants to enter the year “1902”, he will enter number by number
-         */
-        if (segment.type === SegmentTypes.Year) {
-            segment.formatted = String(year);
-            return;
-        }
-
-        /**
-         * If the day being formatted is February 29th but the year segment has not yet been filled, we need to use a
-         * leap year to allow the 29th to remain, otherwise, if we use the current year and it is not a leap year, the
-         * day that would be displayed would be March 1st, as February 29th would not exist and JavaScript “moves” the
-         * day to the next day. As this year is only used to format the day and month, we use the year 2000 as the "base
-         * year" for formatting
-         */
-        if (
-            !this.yearSegment?.value &&
-            (segment.type === SegmentTypes.Day ||
-                segment.type === SegmentTypes.Month)
-        ) {
-            year = 2000;
-        }
-
-        const date = getDate(year, month, day);
-
-        if (!date) return;
-
-        date.setHours(hour);
-        date.setMinutes(minute);
-        date.setSeconds(second);
-
-        const formatted = this.dateFormatter
-            .formatToParts(date)
-            .find((part) => part.type === segment.type)!.value;
-
-        segment.formatted = formatted?.padStart(padMaxLength, '0');
-    }
-
-    /**
-     * To define the content of elements with the `contenteditable` attribute with Lit we bind to the `.innerText`
-     * property of the element instead of using string interpolation
-     *
-     * @param segment - Segment on which the event was triggered (the segment being changed)
-     * @param event - Triggered event details
-     */
-    private updateContent(
-        segment: EditableSegment,
-        event: InputEvent | KeyboardEvent
-    ): void {
-        const segmentEl = event.target as HTMLElement;
-
-        if (segmentEl) {
-            const content =
-                segment.value !== undefined
-                    ? segment.formatted
-                    : segment.placeholder;
-
-            segmentEl.innerText = content ?? '';
-
-            this.requestUpdate();
-        }
     }
 
     /**

@@ -16,32 +16,9 @@ import {
     getMinimumMonthInYear,
     ZonedDateTime,
 } from '@internationalized/date';
-import {
-    convertHourTo24hFormat,
-    getDate,
-    getEditableSegmentByType,
-} from '../helpers';
-import { DEFAULT_LEAP_YEAR, Segment, SegmentTypes } from '../types';
-import { type DaySegment } from './date/DaySegment';
-import { type MonthSegment } from './date/MonthSegment';
-import { type YearSegment } from './date/YearSegment';
-import { type DayPeriodSegment } from './time/DayPeriodSegment';
-import { type HourSegment } from './time/HourSegment';
-import { type MinuteSegment } from './time/MinuteSegment';
-import { type SecondSegment } from './time/SecondSegment';
-
-interface DateSegments {
-    year: YearSegment;
-    month: MonthSegment;
-    day: DaySegment;
-}
-
-interface TimeSegments {
-    hour: HourSegment;
-    minute: MinuteSegment;
-    second: SecondSegment;
-    dayPeriod?: DayPeriodSegment;
-}
+import { convertHourTo24hFormat, getDate } from '../helpers';
+import { DEFAULT_LEAP_YEAR, SegmentTypes } from '../types';
+import { DateTimeSegments } from './DateTimeSegments';
 
 interface DateInfo {
     year: number;
@@ -52,33 +29,42 @@ interface DateInfo {
     second: number;
 }
 
-// TODO: add comment similar to formatSegmentValue method
+/**
+ * If the segment has a `value`, it defines the text used in the UI formatted according to the locale. At this
+ * moment we are formatting the value of a specific segment, but it is not possible to generate a valid Date object
+ * with just one piece of information (day, month, year, etc.), so we need to define a "base date" to be used
+ * together with the value of the segment.
+ *
+ * For example, if the current segment is the day segment, but the month and year segment have not yet been defined,
+ * we need to choose a month and a year to be used in composing the date that will be used in formatting, after all,
+ * there is no day without a month and a year.
+ *
+ * @param segment - Segment to format the value
+ */
 export class SegmentsFormatter {
-    dateFormatter: DateFormatter;
-    constructor(dateFormatter: DateFormatter) {
+    private dateFormatter: DateFormatter;
+    private currentDate: ZonedDateTime;
+
+    constructor(dateFormatter: DateFormatter, currentDate: ZonedDateTime) {
         this.dateFormatter = dateFormatter;
+        this.currentDate = currentDate;
     }
 
-    public format(segments: Segment[], currentDate: ZonedDateTime): Segment[] {
-        segments = [...segments];
-        // TODO: these can be changed because individual date/time segments are not needed
-        const dateSegments = this.getDateSegments(segments);
-        const timeSegments = this.getTimeSegments(segments);
-        const segmentsDict = { ...dateSegments, ...timeSegments };
+    public format(segments: DateTimeSegments): DateTimeSegments {
+        segments = structuredClone(segments);
+        if (!segments.year || !segments.month || !segments.day) return segments;
 
-        const dateInfo = this.getDateInfoWithDefaults(
-            segmentsDict,
-            currentDate
-        );
+        const dateInfo = this.getDateInfoWithDefaults(segments);
+        if (!dateInfo) return segments;
 
-        this.setSegmentsFormatted(segmentsDict, dateInfo);
-        this.padSegmentsFormatted(segmentsDict);
+        this.setSegmentsFormatted(segments, dateInfo);
+        this.padSegmentsFormatted(segments);
 
         return segments;
     }
 
     private setSegmentsFormatted(
-        segmentsDict: DateSegments & TimeSegments,
+        segments: DateTimeSegments,
         dateInfo: DateInfo
     ): void {
         const { year, month, day, hour, minute, second } = dateInfo;
@@ -92,7 +78,8 @@ export class SegmentsFormatter {
          * an unexpected way. For example, when typing “2”, the year would be formatted as “1902”, but we keep it as it
          * is being displayed on the screen. If the user wants to enter the year “1902”, he will enter number by number
          */
-        segmentsDict.year.formatted = String(year);
+        if (!segments.year) return;
+        segments.year.formatted = String(year);
 
         const segmentTypesToFormat = [
             SegmentTypes.Month,
@@ -104,7 +91,7 @@ export class SegmentsFormatter {
         ];
         const formattedDateParts = this.dateFormatter.formatToParts(date);
         for (const segmentType of segmentTypesToFormat) {
-            const segment = segmentsDict[segmentType];
+            const segment = segments[segmentType];
             if (!segment) continue;
 
             const formattedPart = formattedDateParts.find(
@@ -116,9 +103,9 @@ export class SegmentsFormatter {
         }
     }
 
-    private padSegmentsFormatted(
-        segmentsDict: DateSegments & TimeSegments
-    ): void {
+    private padSegmentsFormatted(segments: DateTimeSegments): void {
+        if (!segments.hour) return;
+
         const segmentTypesToPad = [
             SegmentTypes.Month,
             SegmentTypes.Day,
@@ -126,28 +113,30 @@ export class SegmentsFormatter {
             SegmentTypes.Second,
         ];
 
-        if (segmentsDict.dayPeriod) {
-            const formattedHour = segmentsDict.hour.formatted;
-            segmentsDict.hour.formatted = formattedHour.padStart(1, '0');
+        if (segments.dayPeriod) {
+            const formattedHour = segments.hour.formatted;
+            segments.hour.formatted = formattedHour.padStart(1, '0');
         } else {
-            const formattedHour = segmentsDict.hour.formatted;
-            segmentsDict.hour.formatted = formattedHour.padStart(2, '0');
+            const formattedHour = segments.hour.formatted;
+            segments.hour.formatted = formattedHour.padStart(2, '0');
         }
 
         for (const segmentType of segmentTypesToPad) {
-            const segment = segmentsDict[segmentType];
+            const segment = segments[segmentType];
             if (!segment) continue;
             segment.formatted = segment.formatted.padStart(2, '0');
         }
     }
 
     private getDateInfoWithDefaults(
-        segments: DateSegments & TimeSegments,
-        currentDate: ZonedDateTime
-    ): DateInfo {
-        const day = segments.day.value ?? getMinimumDayInMonth(currentDate);
+        segments: DateTimeSegments
+    ): DateInfo | undefined {
+        if (!segments.year || !segments.month || !segments.day) return;
+
+        const day =
+            segments.day.value ?? getMinimumDayInMonth(this.currentDate);
         const month =
-            segments.month.value ?? getMinimumMonthInYear(currentDate);
+            segments.month.value ?? getMinimumMonthInYear(this.currentDate);
 
         /**
          * If the day being formatted is February 29th but the year segment has not yet been filled, we need to use a
@@ -157,56 +146,13 @@ export class SegmentsFormatter {
          */
         const year = segments.year.value ?? DEFAULT_LEAP_YEAR;
 
-        let hour = segments.hour?.value ?? currentDate.hour;
-        const minute = segments.minute?.value ?? currentDate.minute;
-        const second = segments.second?.value ?? currentDate.second;
+        let hour = segments.hour?.value ?? this.currentDate.hour;
+        const minute = segments.minute?.value ?? this.currentDate.minute;
+        const second = segments.second?.value ?? this.currentDate.second;
 
         const dayPeriod = segments.dayPeriod?.value;
         if (dayPeriod) hour = convertHourTo24hFormat(hour, dayPeriod);
 
         return { year, month, day, hour, minute, second };
-    }
-
-    private getDateSegments(segments: Segment[]): DateSegments {
-        const year = getEditableSegmentByType(
-            segments,
-            SegmentTypes.Year
-        ) as YearSegment;
-
-        const month = getEditableSegmentByType(
-            segments,
-            SegmentTypes.Month
-        ) as MonthSegment;
-
-        const day = getEditableSegmentByType(
-            segments,
-            SegmentTypes.Day
-        ) as DaySegment;
-
-        return { year, month, day };
-    }
-
-    private getTimeSegments(segments: Segment[]): TimeSegments {
-        const hour = getEditableSegmentByType(
-            segments,
-            SegmentTypes.Hour
-        ) as HourSegment;
-
-        const minute = getEditableSegmentByType(
-            segments,
-            SegmentTypes.Minute
-        ) as MinuteSegment;
-
-        const second = getEditableSegmentByType(
-            segments,
-            SegmentTypes.Second
-        ) as SecondSegment;
-
-        const dayPeriod = getEditableSegmentByType(
-            segments,
-            SegmentTypes.DayPeriod
-        ) as DayPeriodSegment;
-
-        return { hour, minute, second, ...(dayPeriod ? { dayPeriod } : {}) };
     }
 }

@@ -66,42 +66,12 @@ export interface Segment {
     formatted: string;
 }
 
-export interface EditableSegment extends Segment {
-    type: EditableSegmentType;
-    placeholder: SegmentPlaceholder;
-    value?: number;
-    minValue: number;
-    maxValue: number;
-}
-
 export const MandatorySegmentTypes = {
     ...DateSegmentTypes,
     [SegmentTypes.Literal]: SegmentTypes.Literal,
 } as const;
 
-export type SegmentLimits = Pick<EditableSegment, 'minValue' | 'maxValue'>;
-
-/**
- * Value and limits of a segment. They are all optional, as literal segments have none of these properties
- */
-export type SegmentValueAndLimits = Pick<
-    EditableSegment,
-    'value' | 'minValue' | 'maxValue'
->;
-
-/**
- * Value and limits of a segment, however the limits are mandatory, as it is known that they have already been defined
- */
-export interface SegmentDetails
-    extends Omit<SegmentValueAndLimits, 'minValue' | 'maxValue'> {
-    minValue: number;
-    maxValue: number;
-}
-
 export type Precision = 'day' | 'hour' | 'minute' | 'second';
-
-export const MAX_DAYS_PER_MONTH = 31;
-export const MAX_DAYS_IN_LEAP_FEBRUARY = 29;
 
 /** AM modifier: `0` hours */
 export const AM = 0;
@@ -109,11 +79,8 @@ export const AM = 0;
 /** PM modifier: `12` hours */
 export const PM = 12;
 
-export const MIN_HOUR_AM = AM;
-export const MAX_HOUR_AM = 11;
-
-export const MIN_HOUR_PM = PM;
-export const MAX_HOUR_PM = 23;
-
 /** A base leap year used to allow for maximum number of days in February */
 export const DEFAULT_LEAP_YEAR = 2000;
+
+export const MAX_DAYS_PER_MONTH = 31;
+export const MAX_DAYS_IN_LEAP_FEBRUARY = 29;
