@@ -211,7 +211,7 @@ async function buildIcons(icons, tag, iconsNameList) {
         // check if the icon is present in the other version
         let otherVersionIconImport = defaultIconImport;
 
-        if (ComponentName in iconsNameList) {
+        if (iconsNameList.includes(ComponentName)) {
             const alternateTag = tag === 'icons' ? 'icons-s2' : 'icons';
             otherVersionIconImport = `import { ${ComponentName}Icon as AlternateIcon } from '../${alternateTag}/${id}.js';\r\n`;
         }
@@ -338,8 +338,66 @@ const iconsV2 = (
     await fg(`${rootDir}/node_modules/${S2IConsPackageDir}/**.svg`)
 ).sort();
 
-const iconsV1NameList = iconsV1.map((i) => path.basename(i, '.svg'));
-const iconsV2NameList = iconsV2.map((i) => path.basename(i, '.svg'));
+const iconsV1NameList = iconsV1.map((i) => {
+    let id = path
+        .basename(i, '.svg')
+        .replace('S2_Icon_', '')
+        .replace('_20_N', '')
+        .replace('_22x20_N', '');
+
+    if (id.search(/^Ad[A-Z]/) !== -1) {
+        id = id.replace(/^Ad/, '');
+        id += 'Advert';
+    }
+
+    if (id === 'UnLink') {
+        id = 'Unlink';
+    }
+    if (id === 'TextStrikeThrough') {
+        id = 'TextStrikethrough';
+    }
+
+    let ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
+
+    if (ComponentName === 'TextStrikeThrough') {
+        ComponentName = 'TextStrikethrough';
+    }
+    if (ComponentName === 'UnLink') {
+        ComponentName = 'Unlink';
+    }
+
+    return ComponentName;
+});
+const iconsV2NameList = iconsV2.map((i) => {
+    let id = path
+        .basename(i, '.svg')
+        .replace('S2_Icon_', '')
+        .replace('_20_N', '')
+        .replace('_22x20_N', '');
+
+    if (id.search(/^Ad[A-Z]/) !== -1) {
+        id = id.replace(/^Ad/, '');
+        id += 'Advert';
+    }
+
+    if (id === 'UnLink') {
+        id = 'Unlink';
+    }
+    if (id === 'TextStrikeThrough') {
+        id = 'TextStrikethrough';
+    }
+
+    let ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
+
+    if (ComponentName === 'TextStrikeThrough') {
+        ComponentName = 'TextStrikethrough';
+    }
+    if (ComponentName === 'UnLink') {
+        ComponentName = 'Unlink';
+    }
+
+    return ComponentName;
+});
 
 await buildIcons(iconsV1, 'icons', iconsV2NameList);
 await buildIcons(iconsV2, 'icons-s2', iconsV1NameList);
