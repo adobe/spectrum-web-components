@@ -96,6 +96,11 @@ const config = {
                     hoist: true,
                 },
                 {
+                    find: builder.pseudoClass('first-child'),
+                    replace: builder.pseudoClass('first-child'),
+                    hoist: true,
+                },
+                {
                     find: {
                         type: 'pseudo-class',
                         kind: 'not',
