@@ -5540,6 +5540,20 @@
 
 :host,
 :root {
+    --system-opacity-checkerboard-dark: var(
+        --spectrum-opacity-checkerboard-square-dark
+    );
+    --system-opacity-checkerboard-light: var(
+        --spectrum-opacity-checkerboard-square-light
+    );
+    --system-opacity-checkerboard-size: var(
+        --spectrum-opacity-checkerboard-square-size
+    );
+    --system-opacity-checkerboard-position: left top;
+}
+
+:host,
+:root {
     --system-switch-handle-border-color-default: var(--spectrum-gray-600);
     --system-switch-handle-border-color-hover: var(--spectrum-gray-700);
     --system-switch-handle-border-color-down: var(--spectrum-gray-800);

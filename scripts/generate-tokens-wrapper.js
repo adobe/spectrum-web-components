@@ -89,6 +89,7 @@ const tokenPackages = [
     'stepper',
     'swatch',
     'swatchgroup',
+    'opacitycheckerboard',
     'switch',
     'table',
     'tabs',
