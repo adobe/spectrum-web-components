@@ -27,25 +27,6 @@ export type SegmentType = (typeof SegmentTypes)[keyof typeof SegmentTypes];
 
 export type EditableSegmentType = Exclude<SegmentType, 'literal'>;
 
-export const DateSegmentTypes = {
-    Day: SegmentTypes.Day,
-    Month: SegmentTypes.Month,
-    Year: SegmentTypes.Year,
-} as const;
-
-export type DateSegmentType =
-    (typeof DateSegmentTypes)[keyof typeof DateSegmentTypes];
-
-export const TimeSegmentTypes = {
-    Hour: SegmentTypes.Hour,
-    Minute: SegmentTypes.Minute,
-    Second: SegmentTypes.Second,
-    DayPeriod: SegmentTypes.DayPeriod,
-} as const;
-
-export type TimeSegmentType =
-    (typeof TimeSegmentTypes)[keyof typeof TimeSegmentTypes];
-
 export const SegmentPlaceholders: Readonly<
     Record<EditableSegmentType, string>
 > = {
@@ -61,12 +42,14 @@ export const SegmentPlaceholders: Readonly<
 export type SegmentPlaceholder =
     (typeof SegmentPlaceholders)[EditableSegmentType];
 
-export const MandatorySegmentTypes = {
-    ...DateSegmentTypes,
-    [SegmentTypes.Literal]: SegmentTypes.Literal,
+export const Precisions = {
+    Day: 'day',
+    Hour: 'hour',
+    Minute: 'minute',
+    Second: 'second',
 } as const;
 
-export type Precision = 'day' | 'hour' | 'minute' | 'second';
+export type Precision = (typeof Precisions)[keyof typeof Precisions];
 
 /** AM modifier: `0` hours */
 export const AM = 0;

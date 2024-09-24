@@ -16,6 +16,7 @@ import {
     getLocalTimeZone,
     now,
     Time,
+    toCalendarDate,
     toCalendarDateTime,
     toZoned,
     ZonedDateTime,
@@ -55,6 +56,7 @@ import {
     DateTimePickerValue,
     EditableSegmentType,
     Precision,
+    Precisions,
     SegmentTypes,
 } from './types.js';
 
@@ -67,9 +69,6 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import {
-    convertHourTo24hFormat,
-    dateToCalendarDateTime,
-    getDate,
     isCalendarDate,
     isCalendarDateTime,
     isNumber,
@@ -153,7 +152,7 @@ export class DateTimePicker extends ManageHelpText(
     public focused = false;
 
     @state()
-    protected segments: DateTimeSegments = new DateTimeSegments([]);
+    private segments: DateTimeSegments = new DateTimeSegments([]);
 
     @state()
     public isCalendarOpen = false;
@@ -196,19 +195,18 @@ export class DateTimePicker extends ManageHelpText(
 
     private convertToMostSpecificDateValue(): void {
         const dateValue = this.mostSpecificDateValue;
-        let timeZone = this.timeZone;
         if (isZonedDateTime(dateValue)) {
-            timeZone = dateValue.timeZone;
-            this.value = this.value && toZoned(this.value, timeZone);
-            this.min = this.min && toZoned(this.min, timeZone);
-            this.max = this.max && toZoned(this.max, timeZone);
+            this.timeZone = dateValue.timeZone;
+            this.value = this.value && toZoned(this.value, this.timeZone);
+            this.min = this.min && toZoned(this.min, this.timeZone);
+            this.max = this.max && toZoned(this.max, this.timeZone);
         } else if (isCalendarDateTime(dateValue)) {
             this.value = this.value && toCalendarDateTime(this.value);
             this.min = this.min && toCalendarDateTime(this.min);
             this.max = this.max && toCalendarDateTime(this.max);
         }
 
-        if (this.value) this.currentDate = toZoned(this.value, timeZone);
+        if (this.value) this.currentDate = toZoned(this.value, this.timeZone);
     }
 
     constructor() {
@@ -291,7 +289,7 @@ export class DateTimePicker extends ManageHelpText(
         if (shouldResetSegments) this.setSegments();
     }
 
-    protected override render(): TemplateResult {
+    override render(): TemplateResult {
         return html`
             <div id="textfield">
                 ${this.renderStateIcons()} ${this.renderInputContent()}
@@ -300,7 +298,7 @@ export class DateTimePicker extends ManageHelpText(
         `;
     }
 
-    protected renderStateIcons(): TemplateResult | typeof nothing {
+    private renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid)
             return html`
                 <sp-icon-alert id="invalid" class="icon"></sp-icon-alert>
@@ -364,9 +362,9 @@ export class DateTimePicker extends ManageHelpText(
 
     private get includesTime(): boolean {
         const timePrecisions = [
-            SegmentTypes.Hour,
-            SegmentTypes.Minute,
-            SegmentTypes.Second,
+            Precisions.Hour,
+            Precisions.Minute,
+            Precisions.Second,
         ] as Precision[];
         return timePrecisions.includes(this.precision);
     }
@@ -460,7 +458,7 @@ export class DateTimePicker extends ManageHelpText(
         `;
     }
 
-    protected renderSegmentText(segment: EditableSegment): string {
+    private renderSegmentText(segment: EditableSegment): string {
         const usePlaceholder = segment.value === undefined;
 
         return when(
@@ -470,7 +468,7 @@ export class DateTimePicker extends ManageHelpText(
         );
     }
 
-    protected handleKeydown(event: KeyboardEvent): void {
+    private handleKeydown(event: KeyboardEvent): void {
         const segmentType = (event.target as HTMLElement).dataset
             .type as EditableSegmentType;
 
@@ -583,92 +581,18 @@ export class DateTimePicker extends ManageHelpText(
         );
     }
 
-    /**
-     * Sets the new date/time object according to the configuration parameters and if the minimum required values for
-     * each type (date only, time only or date and time together) were defined
-     */
-    protected updateValue(): void {
-        const date = this.getDateFromSegments();
-        if (!date) return;
+    private updateValue(): void {
+        const formattedDate = this.segments.getFormattedDate(this.precision);
+        if (!formattedDate) return;
 
-        if (this.precision === SegmentTypes.Day) {
-            this.value = dateToCalendarDateTime(date);
-            this.dispatchChange();
-            return;
-        }
+        const dateValue = this.mostSpecificDateValue;
+        if (isZonedDateTime(dateValue))
+            this.value = toZoned(formattedDate, this.timeZone);
+        else if (isCalendarDateTime(dateValue) || this.includesTime)
+            this.value = toCalendarDateTime(formattedDate);
+        else this.value = toCalendarDate(formattedDate);
 
-        const dateCalendar = dateToCalendarDateTime(date);
-
-        const time = this.getTimeFromSegments();
-        if (!time) return;
-
-        const timeCalendarDateTime = dateToCalendarDateTime(time);
-
-        this.value = dateCalendar.set({
-            hour: timeCalendarDateTime.hour,
-            minute: timeCalendarDateTime.minute,
-            second: timeCalendarDateTime.second,
-        });
         this.dispatchChange();
-    }
-
-    /**
-     * Returns a `Date` object using the current values of the segments that make up the date, if they are filled
-     */
-    private getDateFromSegments(): Date | undefined {
-        return getDate(
-            this.segments.year?.value,
-            this.segments.month?.value,
-            this.segments.day?.value
-        );
-    }
-
-    private isTimeDefined(): boolean {
-        const hour = this.segments.hour?.value;
-        const minute = this.segments.minute?.value;
-        const second = this.segments.second?.value;
-
-        const isHourPrecision = this.precision === SegmentTypes.Hour;
-        const isMinutePrecision = this.precision === SegmentTypes.Minute;
-        const isSecondPrecision = this.precision === SegmentTypes.Second;
-
-        return (
-            (isHourPrecision && isNumber(hour)) ||
-            (isMinutePrecision && isNumber(hour) && isNumber(minute)) ||
-            (isSecondPrecision &&
-                isNumber(hour) &&
-                isNumber(minute) &&
-                isNumber(second))
-        );
-    }
-
-    /**
-     * Returns a `Date` object using the current values of the segments that make up the time, if they are filled. As it
-     * is not possible to have a `Date` object without an associated date, we use the current date defined internally
-     * instead of using the date defined in the date segments
-     */
-    private getTimeFromSegments(): Date | undefined {
-        if (!this.isTimeDefined()) return;
-
-        let hour = this.segments.hour?.value;
-        const minute = this.segments.minute?.value;
-        const second = this.segments.second?.value;
-
-        const dateTime = this.currentDate.toDate();
-
-        if (isNumber(hour)) {
-            const dayPeriod = this.segments.dayPeriod!.value;
-            if (isNumber(dayPeriod))
-                hour = convertHourTo24hFormat(hour, dayPeriod);
-
-            dateTime.setHours(hour);
-        }
-
-        if (isNumber(minute)) dateTime.setMinutes(minute);
-
-        if (isNumber(second)) dateTime.setSeconds(second);
-
-        return dateTime;
     }
 
     private setDateFormatter(): void {

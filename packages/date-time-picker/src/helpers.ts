@@ -49,38 +49,3 @@ export function convertHourTo24hFormat(
 export function getAmPmModifier(hour: number): typeof AM | typeof PM {
     return hour >= PM ? PM : AM;
 }
-
-/**
- * Creates a `Date` type object using the date information extracted from a `CalendarDate` type-like object.
- *
- * @param year - Year that will be used to create the new `Date`
- * @param month - Month (1 to 12) that will be used to create the new `Date`
- * @param day - Day that will be used to create the new `Date`
- */
-export function getDate(
-    year: number | undefined,
-    month: number | undefined,
-    day: number | undefined
-): Date | undefined {
-    return isNumber(year) && isNumber(month) && isNumber(day)
-        ? new Date(year, month - 1, day)
-        : undefined;
-}
-
-/**
- * Converts an object of type `Date` to `CalendarDateTime`. The month must be incremented by 1 to create a new
- * `CalendarDateTime`, as it uses months ranging from 1 (January) to 12 (December), as opposed to `Date`, whose
- * months range from 0 (January) to 11 ( December)
- *
- * @param date - `Date` object to “convert”
- */
-export function dateToCalendarDateTime(date: Date): CalendarDateTime {
-    return new CalendarDateTime(
-        date.getFullYear(),
-        date.getMonth() + 1,
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds()
-    );
-}

@@ -16,7 +16,7 @@ import {
     getMinimumMonthInYear,
     ZonedDateTime,
 } from '@internationalized/date';
-import { convertHourTo24hFormat, getDate } from '../helpers';
+import { convertHourTo24hFormat } from '../helpers';
 import { DEFAULT_LEAP_YEAR, SegmentTypes } from '../types';
 import { DateTimeSegments } from './DateTimeSegments';
 
@@ -54,12 +54,10 @@ export class SegmentsFormatter {
         segments: DateTimeSegments,
         dateInfo: DateInfo
     ): void {
-        const { year, month, day, hour, minute, second } = dateInfo;
-        const date = getDate(year, month, day);
-        if (!date) return;
-
-        date.setHours(hour, minute, second);
         segments = new DateTimeSegments(segments.all);
+
+        const { year, month, day, hour, minute, second } = dateInfo;
+        const date = new Date(year, month - 1, day, hour, minute, second);
 
         /**
          * For the year we do not use the value returned by the formatter, to avoid that the typed year is displayed in

@@ -10,7 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { EditableSegmentType, SegmentTypes } from '../types';
+import { CalendarDate, CalendarDateTime } from '@internationalized/date';
+import { convertHourTo24hFormat, isNumber } from '../helpers';
+import {
+    EditableSegmentType,
+    Precision,
+    Precisions,
+    SegmentTypes,
+} from '../types';
 import { DaySegment } from './date/DaySegment';
 import { MonthSegment } from './date/MonthSegment';
 import { YearSegment } from './date/YearSegment';
@@ -79,5 +86,46 @@ export class DateTimeSegments {
         return this.segments.find(
             (segment) => segment.type === type
         ) as EditableSegment;
+    }
+
+    /**
+     * Returns a `CalendarDate` object with the year, month and day values of the segments if they are all defined. The time values
+     * are checked and included based on the precision provided, returning a `CalendarDateTime` instead.
+     *
+     * @param precision - The precision to use when creating the date object
+     */
+    public getFormattedDate(
+        precision: Precision = Precisions.Day
+    ): CalendarDate | CalendarDateTime | undefined {
+        const year = this.year?.value;
+        const month = this.month?.value;
+        const day = this.day?.value;
+
+        if (!isNumber(year) || !isNumber(month) || !isNumber(day)) return;
+
+        if (precision === Precisions.Day)
+            return new CalendarDate(year, month, day);
+
+        let hour = this.hour?.value;
+        if (!isNumber(hour)) return;
+
+        if (this.dayPeriod) {
+            const dayPeriod = this.dayPeriod.value;
+            if (!isNumber(dayPeriod)) return;
+            hour = convertHourTo24hFormat(hour, dayPeriod);
+        }
+
+        if (precision === Precisions.Hour)
+            return new CalendarDateTime(year, month, day, hour);
+
+        const minute = this.minute?.value;
+        if (precision === Precisions.Minute) {
+            if (!isNumber(minute)) return;
+            return new CalendarDateTime(year, month, day, hour, minute);
+        }
+
+        const second = this.second?.value;
+        if (!isNumber(second)) return;
+        return new CalendarDateTime(year, month, day, hour, minute, second);
     }
 }
