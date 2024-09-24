@@ -11,6 +11,52 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.checkmark {
+    display: var(
+        --mod-menu-checkmark-display,
+        var(--spectrum-menu-checkmark-display)
+    );
+    block-size: var(
+        --mod-menu-item-checkmark-height,
+        var(--spectrum-menu-item-checkmark-height)
+    );
+    inline-size: var(
+        --mod-menu-item-checkmark-width,
+        var(--spectrum-menu-item-checkmark-width)
+    );
+    fill: var(
+        --highcontrast-menu-checkmark-icon-color-default,
+        var(
+            --mod-menu-checkmark-icon-color-default,
+            var(--spectrum-menu-checkmark-icon-color-default)
+        )
+    );
+    color: var(
+        --highcontrast-menu-checkmark-icon-color-default,
+        var(
+            --mod-menu-checkmark-icon-color-default,
+            var(--spectrum-menu-checkmark-icon-color-default)
+        )
+    );
+    opacity: 1;
+    grid-area: checkmarkArea;
+    align-self: start;
+    margin-block-start: calc(
+        var(
+                --mod-menu-item-top-to-checkmark,
+                var(--spectrum-menu-item-top-to-checkmark)
+            ) -
+            var(
+                --mod-menu-item-top-edge-to-text,
+                var(--spectrum-menu-item-top-edge-to-text)
+            )
+    );
+    margin-inline-end: var(
+        --mod-menu-item-text-to-control,
+        var(--spectrum-menu-item-text-to-control)
+    );
+}
+
 .spectrum-Menu-back:focus-visible {
     box-shadow: inset
         calc(

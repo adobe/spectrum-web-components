@@ -349,12 +349,34 @@ const config = {
                     regex: /spectrum-Menu-item/,
                 },
             ],
+            includeByWholeSelector: [
+                [
+                    /** .spectrum-Menu .spectrum-Menu-checkmark */
+                    builder.class('spectrum-Menu'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Menu-checkmark'),
+                ],
+            ],
             components: [
                 converter.classToClass('spectrum-Menu-checkmark', 'checkmark'),
                 converter.classToClass(
                     'spectrum-Menu-checkmark--withAdjacentIcon',
                     'checkmark--withAdjacentIcon'
                 ),
+                {
+                    collapseSelector: true,
+                    find: [
+                        /** .spectrum-Menu .spectrum-Menu-checkmark */
+                        builder.class('spectrum-Menu'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-Menu-checkmark'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.class('checkmark'),
+                        },
+                    ],
+                },
             ],
         },
         {
