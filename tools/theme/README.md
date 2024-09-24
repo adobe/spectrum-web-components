@@ -100,11 +100,11 @@ When you're ready to look into more advanced usage of the components and themes 
 
 ## Example
 
-An `<sp-theme>` element expects a value for each of its `color` and `scale` attributes to be provided on the element. While not required, you can also use the `theme` attribute to specify whether the theme you're using is Spectrum Classic (the default) or Spectrum Express.
+An `<sp-theme>` element expects a value for each of its `color` and `scale` attributes to be provided on the element. While not required, you can also use the `system` attribute to specify whether the theme you're using is Spectrum Classic (the default), Spectrum 2 (upcoming release) or Spectrum Express.
 
 ```html
 <sp-theme
-    theme="spectrum"
+    system="spectrum"
     color="light"
     scale="medium"
     style="background-color: var(--spectrum-gray-100)"
@@ -126,7 +126,7 @@ Once you've moved beyond the prototype phase of an application, it is likely tha
  * Power a site using
  *
  * <sp-theme
- *      theme="classic"
+ *      system="classic"
  *      color="darkest"
  *      scale="large"
  * >
@@ -144,7 +144,7 @@ import '@spectrum-web-components/theme/sp-theme.js';
  * Power a site using
  *
  * <sp-theme
- *      theme="express"
+ *      system="express"
  *      color="light"
  *      scale="medium"
  * >
@@ -190,7 +190,7 @@ When bundling your application, be sure to consult the documentation of your bun
         margin-top: 2em;
     }
 </style>
-<sp-theme theme="express" color="light" scale="medium">
+<sp-theme system="express" color="light" scale="medium">
     <hzn-app-stuff></hzn-app-stuff>
 </sp-theme>
 
@@ -214,7 +214,7 @@ When bundling your application, be sure to consult the documentation of your bun
         margin-top: 2em;
     }
 </style>
-<sp-theme theme="express" color="dark" scale="large">
+<sp-theme system="express" color="dark" scale="large">
     <hzn-app-stuff></hzn-app-stuff>
 </sp-theme>
 
@@ -330,3 +330,7 @@ previewing or editing content that will be displayed in a light theme with a rig
 ## Language Context
 
 The `<sp-theme>` element provides a language context for its descendents in the DOM. Descendents can resolve this context by dispatching an `sp-language-context` DOM event and supplying a `callback(lang: string) => void` method in the `detail` entry of the Custom Event. These callbacks will be reactively envoked when the `lang` attribute on the `<sp-theme>` element is updated. This way, you can control the resolved language in [`<sp-number-field>`](../components/number-field), [`<sp-slider>`](./components/slider), and other elements in one centralized place.
+
+## System Context (private Beta API - subject to changes)
+
+The `<sp-theme>` element provides a "system" context for its descendents in the DOM. Descendents can resolve this context by dispatching an `sp-system-context` DOM event and supplying a `callback(system: SystemVariant | '') => void` method in the `detail` entry of the Custom Event. These callbacks will be reactively envoked when the `system` attribute on the `<sp-theme>` element is updated. This way, you can control the resolved system in the components that need this.
