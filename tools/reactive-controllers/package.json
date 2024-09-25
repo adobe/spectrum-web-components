@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/reactive-controllers",
-    "version": "0.47.2",
+    "version": "0.48.0",
     "publishConfig": {
         "access": "public"
     },
@@ -48,6 +48,10 @@
         "./src/MatchMedia.js": {
             "development": "./src/MatchMedia.dev.js",
             "default": "./src/MatchMedia.js"
+        },
+        "./src/PendingState.js": {
+            "development": "./src/PendingState.dev.js",
+            "default": "./src/PendingState.js"
         },
         "./src/RovingTabindex.js": {
             "development": "./src/RovingTabindex.dev.js",
