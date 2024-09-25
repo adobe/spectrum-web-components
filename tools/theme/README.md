@@ -337,11 +337,11 @@ The <sp-theme> element provides a "system" context to its descendants in the DOM
 
 #### Consuming the System Context in Components
 
-Components can consume the system context by using the `SystemResolutionController`. This controller encapsulates the logic for resolving the system context, making it easy to integrate into any component without significant refactoring.
+Components can consume the system context by using the `SystemResolutionController`. This controller encapsulates the logic for resolving the system context, allowing it to be integrated into any component in few steps.
 
 #### Steps to Consume the System Context:
 
-1. Import the `SystemResolutionController` and the required types:
+1. Import the `SystemResolutionController` and the necessary types:
 
 ```ts
 import {
@@ -353,7 +353,7 @@ import type { SystemVariant } from '@spectrum-web-components/theme';
 
 2. Instantiate the `SystemResolutionController`:
 
-    In your component class, create an instance of SystemResolutionController, passing this as the host element.
+    In your component class, create an instance of SystemResolutionController, passing `this` as the host element.
 
 ```ts
 export class MyComponent extends LitElement {
@@ -363,7 +363,7 @@ export class MyComponent extends LitElement {
 }
 ```
 
-3. Respond to System Context Changes:
+3. Respond to system context changes:
 
     Override the `update` lifecycle method to detect changes in the system context using the `systemResolverUpdatedSymbol`.
 
@@ -376,7 +376,7 @@ protected update(changes: Map<PropertyKey, unknown>): void {
 }
 ```
 
-4. Implement the Handler for System Changes:
+4. Implement the handler for system changes:
 
     Create a method that will be called whenever the system context changes. Use `this.systemResolver.system` to access the current system variant.
 
@@ -384,11 +384,11 @@ protected update(changes: Map<PropertyKey, unknown>): void {
 private handleSystemChange(): void {
   const currentSystem: SystemVariant = this.systemResolver.system;
   // Implement logic based on the current system variant.
-  // For example, update styles or re-render parts of the component.
+  // For example, update styles, states or re-render parts of the component.
 }
 ```
 
-5. Use the System Context in Your Component Logic and Template:
+5. Use the system context in other parts of your component logic and/or template:
 
     You can now use `this.systemResolver.system` anywhere in your component to adjust behavior or rendering based on the system variant.
 
