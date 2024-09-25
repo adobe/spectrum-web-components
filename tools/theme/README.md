@@ -333,4 +333,72 @@ The `<sp-theme>` element provides a language context for its descendents in the 
 
 ## System Context (private Beta API - subject to changes)
 
-The `<sp-theme>` element provides a "system" context for its descendents in the DOM. Descendents can resolve this context by dispatching an `sp-system-context` DOM event and supplying a `callback(system: SystemVariant | '') => void` method in the `detail` entry of the Custom Event. These callbacks will be reactively envoked when the `system` attribute on the `<sp-theme>` element is updated. This way, you can control the resolved system in the components that need this.
+The <sp-theme> element provides a "system" context to its descendants in the DOM. This context indicates the Spectrum design system variant currently in use (e.g., 'spectrum', 'express', or 'spectrum-two').
+
+#### Consuming the System Context in Components
+
+Components can consume the system context by using the `SystemResolutionController`. This controller encapsulates the logic for resolving the system context, making it easy to integrate into any component without significant refactoring.
+
+#### Steps to Consume the System Context:
+
+1. Import the `SystemResolutionController` and the required types:
+
+```ts
+import {
+    SystemResolutionController,
+    systemResolverUpdatedSymbol,
+} from './SystemResolutionController.js';
+import type { SystemVariant } from '@spectrum-web-components/theme';
+```
+
+2. Instantiate the `SystemResolutionController`:
+
+    In your component class, create an instance of SystemResolutionController, passing this as the host element.
+
+```ts
+export class MyComponent extends LitElement {
+    private systemResolver = new SystemResolutionController(this);
+
+    // Rest of your component code...
+}
+```
+
+3. Respond to System Context Changes:
+
+    Override the `update` lifecycle method to detect changes in the system context using the `systemResolverUpdatedSymbol`.
+
+```ts
+protected update(changes: Map<PropertyKey, unknown>): void {
+  super.update(changes);
+  if (changes.has(systemResolverUpdatedSymbol)) {
+    this.handleSystemChange();
+  }
+}
+```
+
+4. Implement the Handler for System Changes:
+
+    Create a method that will be called whenever the system context changes. Use `this.systemResolver.system` to access the current system variant.
+
+```ts
+private handleSystemChange(): void {
+  const currentSystem: SystemVariant = this.systemResolver.system;
+  // Implement logic based on the current system variant.
+  // For example, update styles or re-render parts of the component.
+}
+```
+
+5. Use the System Context in Your Component Logic and Template:
+
+    You can now use `this.systemResolver.system` anywhere in your component to adjust behavior or rendering based on the system variant.
+
+```ts
+render() {
+  return html`
+    <div>
+      <!-- Use the system context in your rendering logic -->
+      Current system variant: ${this.systemResolver.system}
+    </div>
+  `;
+}
+```
