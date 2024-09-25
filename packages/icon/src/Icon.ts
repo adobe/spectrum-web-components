@@ -21,8 +21,6 @@ import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-re
 
 import { IconBase } from './IconBase.js';
 
-type SystemVariant = 'spectrum' | 'spetrum-two' | 'express' | '';
-
 /**
  * @element sp-icon
  */
@@ -38,21 +36,13 @@ export class Icon extends IconBase {
 
     private updateIconPromise?: Promise<void>;
 
-    private currentSystem: SystemVariant = '';
-    private unsubscribeSystemContext: (() => void) | null = null;
-
     public override connectedCallback(): void {
         super.connectedCallback();
-        this.requestSystemContext();
         window.addEventListener('sp-iconset-added', this.iconsetListener);
     }
 
     public override disconnectedCallback(): void {
         super.disconnectedCallback();
-        if (this.unsubscribeSystemContext) {
-            this.unsubscribeSystemContext();
-            this.unsubscribeSystemContext = null;
-        }
         window.removeEventListener('sp-iconset-added', this.iconsetListener);
     }
 
@@ -79,25 +69,6 @@ export class Icon extends IconBase {
             this.updateIconPromise = this.updateIcon();
         }
     };
-
-    private requestSystemContext(): void {
-        this.dispatchEvent(
-            new CustomEvent('sp-system-context', {
-                detail: {
-                    callback: (
-                        system: SystemVariant,
-                        unsubscribe: () => void
-                    ) => {
-                        this.currentSystem = system;
-                        this.updateIcon();
-                        this.unsubscribeSystemContext = unsubscribe;
-                    },
-                },
-                bubbles: true,
-                composed: true,
-            })
-        );
-    }
 
     private announceIconImageSrcError(): void {
         this.dispatchEvent(
