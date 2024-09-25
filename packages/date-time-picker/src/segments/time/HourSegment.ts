@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { ZonedDateTime } from '@internationalized/date';
 import { SegmentTypes } from '../../types';
 import { EditableSegment } from '../EditableSegment';
-import { getAmPmModifier } from '../../helpers';
+import { getDayPeriodModifier } from '../../helpers';
 
 export class HourSegment extends EditableSegment {
     public minValue: number = 0;
@@ -41,7 +41,8 @@ export class HourSegment extends EditableSegment {
         is12HourClock?: boolean
     ): void {
         if (is12HourClock)
-            this.value = currentDate.hour - getAmPmModifier(currentDate.hour);
+            this.value =
+                currentDate.hour - getDayPeriodModifier(currentDate.hour);
         else super.setValueFromDate(currentDate);
     }
 

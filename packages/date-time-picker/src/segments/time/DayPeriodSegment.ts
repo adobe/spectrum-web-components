@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { DateFormatter, ZonedDateTime } from '@internationalized/date';
 import { EditableSegment } from '../EditableSegment';
 import { AM, PM, SegmentTypes } from '../../types';
-import { getAmPmModifier } from '../../helpers';
+import { getDayPeriodModifier } from '../../helpers';
 
 export class DayPeriodSegment extends EditableSegment {
     public minValue: typeof AM = AM;
@@ -42,7 +42,7 @@ export class DayPeriodSegment extends EditableSegment {
     }
 
     public override setValueFromDate(currentDate: ZonedDateTime): void {
-        this.value = getAmPmModifier(currentDate.hour);
+        this.value = getDayPeriodModifier(currentDate.hour);
     }
 
     public override handleInput(eventData: string): void {

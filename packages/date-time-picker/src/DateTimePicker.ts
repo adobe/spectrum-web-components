@@ -433,9 +433,6 @@ export class DateTimePicker extends ManageHelpText(
          * and because of this, if we try to use string interpolation, it will break the references to the DOM that Lit
          * uses to dynamically update the content, but this problem does not occur when we bind to the `.innerText`
          * property.
-         *
-         * TODO: Include/review ARIA attributes for editable segments
-         * TODO: Move `handle` functions call to a cache so that it doesn't cycle on the binding in each render pass
          */
         return html`
             <div
@@ -540,33 +537,30 @@ export class DateTimePicker extends ManageHelpText(
         });
 
         this.segments = inputModifier.modify(segmentType);
-
-        this.updateContent(this.segments.getByType(segmentType)!, event);
+        this.updateSegmentContent(
+            this.segments.getByType(segmentType)!,
+            event.target as HTMLElement
+        );
     }
 
     /**
-     * To define the content of elements with the `contenteditable` attribute with Lit we bind to the `.innerText`
-     * property of the element instead of using string interpolation
+     * Updates the content of the segments by binding it to the `.innerText` property of the element,
+     * instead of using string interpolation. This allows to not show user typed characters, but
+     * only the formatted content of the segment, needed for the 'contenteditable' elements.
      *
      * @param segment - Segment on which the event was triggered (the segment being changed)
      * @param event - Triggered event details
      */
-    private updateContent(
+    private updateSegmentContent(
         segment: EditableSegment,
-        event: InputEvent | KeyboardEvent
+        segmentElement: HTMLElement
     ): void {
-        const segmentEl = event.target as HTMLElement;
+        const content =
+            segment.value !== undefined
+                ? segment.formatted
+                : segment.placeholder;
 
-        if (segmentEl) {
-            const content =
-                segment.value !== undefined
-                    ? segment.formatted
-                    : segment.placeholder;
-
-            segmentEl.innerText = content ?? '';
-
-            this.requestUpdate();
-        }
+        segmentElement.innerText = content ?? '';
     }
 
     private dispatchChange(): void {

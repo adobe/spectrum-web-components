@@ -41,11 +41,6 @@ export function convertHourTo24hFormat(
     return (hour = (hour % PM) + dayPeriod);
 }
 
-/**
- * Returns the corresponding “modifier” (0 for “AM” and 12 for “PM”) for the given hour
- *
- * @param hour - The hour to identify the modifier
- */
-export function getAmPmModifier(hour: number): typeof AM | typeof PM {
+export function getDayPeriodModifier(hour: number): typeof AM | typeof PM {
     return hour >= PM ? PM : AM;
 }
