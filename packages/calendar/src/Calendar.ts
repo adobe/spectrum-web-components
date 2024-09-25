@@ -172,15 +172,22 @@ export class Calendar extends SpectrumElement {
         this.setCurrentMonthDates();
     }
 
+    private convertToCalendarDates(): void {
+        this.min = this.min && toCalendarDate(this.min);
+        this.max = this.max && toCalendarDate(this.max);
+        this.value = this.value && toCalendarDate(this.value);
+    }
+
     private checkDatesCompliance(
         changesValue: boolean,
         changesMin: boolean,
         changesMax: boolean
     ): void {
-        if (changesMin && this.min) this.min = toCalendarDate(this.min);
-        if (changesMax && this.max) {
-            this.max = toCalendarDate(this.max);
-            if (this.min && this.min.compare(this.max) > 0) {
+        this.convertToCalendarDates();
+
+        if ((changesMin || changesMax) && this.min && this.max) {
+            const isValidInterval = this.min.compare(this.max) < 0;
+            if (!isValidInterval) {
                 window.__swc.warn(
                     this,
                     `<${this.localName}> expects the 'min' to be less than 'max'. Please ensure that 'min' property's date is earlier than 'max' property's date.`,
@@ -190,20 +197,20 @@ export class Calendar extends SpectrumElement {
                 this.max = undefined;
             }
         }
+
         if (changesValue && this.value) {
-            this.value = toCalendarDate(this.value);
-            const isNonCompliant =
+            const isNonCompliantValue =
                 (this.min && this.value.compare(this.min) < 0) ||
                 (this.max && this.value.compare(this.max) > 0);
 
-            if (isNonCompliant) {
+            if (isNonCompliantValue) {
                 window.__swc.warn(
                     this,
                     `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
                     'https://opensource.adobe.com/spectrum-web-components/components/calendar' // TODO: update link
                 );
                 this.value = undefined;
-            } else this.currentDate = this.value;
+            } else this.currentDate = this.value as CalendarDate;
         }
     }
 

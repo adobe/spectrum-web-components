@@ -225,28 +225,27 @@ export class DateTimePicker extends ManageHelpText(
         changesMin: boolean,
         changesMax: boolean
     ): void {
-        if (
-            changesMax &&
-            changesMin &&
-            this.max &&
-            this.min &&
-            this.min.compare(this.max) > 0
-        ) {
-            window.__swc.warn(
-                this,
-                `<${this.localName}> expects the 'min' to be less than 'max'. Please ensure that 'min' property's date is earlier than 'max' property's date.`,
-                'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
-            );
-            this.min = undefined;
-            this.max = undefined;
+        this.convertToMostSpecificDateValue();
+
+        if ((changesMin || changesMax) && this.min && this.max) {
+            const isValidInterval = this.min.compare(this.max) < 0;
+            if (!isValidInterval) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> expects the 'min' to be less than 'max'. Please ensure that 'min' property's date is earlier than 'max' property's date.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
+                );
+                this.min = undefined;
+                this.max = undefined;
+            }
         }
 
         if (changesValue && this.value) {
-            const isNonCompliant =
+            const isNonCompliantValue =
                 (this.min && this.value.compare(this.min) < 0) ||
                 (this.max && this.value.compare(this.max) > 0);
 
-            if (isNonCompliant) {
+            if (isNonCompliantValue) {
                 window.__swc.warn(
                     this,
                     `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
@@ -274,10 +273,8 @@ export class DateTimePicker extends ManageHelpText(
             changesPrecision ||
             (changesValue && this.value === undefined);
 
-        if (changesDates) {
-            this.convertToMostSpecificDateValue();
+        if (changesDates)
             this.checkDatesCompliance(changesValue, changesMin, changesMax);
-        }
 
         if (changesLocale) this.setNumberParser();
         if (changesLocale || changesPrecision) this.setDateFormatter();
