@@ -10,20 +10,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import {
-    DateTimePicker,
-    EditableSegmentType,
-    SegmentTypes,
-} from '@spectrum-web-components/date-time-picker';
-import { sendKeys } from '@web/test-runner-commands';
 import {
     CalendarDate,
     CalendarDateTime,
     isSameDay,
     ZonedDateTime,
 } from '@internationalized/date';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import {
+    DateTimePicker,
+    EditableSegmentType,
+    Precisions,
+    SegmentTypes,
+} from '@spectrum-web-components/date-time-picker';
+import { sendKeys } from '@web/test-runner-commands';
+import { stub } from 'sinon';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import {
     type EditableSegments,
     expectPlaceholder,
@@ -32,7 +34,6 @@ import {
     getEditableSegments,
     sendKeyMultipleTimes,
 } from './helpers.js';
-import { stub } from 'sinon';
 
 describe('DateTimePicker', () => {
     let element: DateTimePicker;
@@ -120,7 +121,9 @@ describe('DateTimePicker', () => {
         let editableSegments: EditableSegments;
 
         beforeEach(async () => {
-            element = await fixtureElement({ props: { precision: 'second' } });
+            element = await fixtureElement({
+                props: { precision: Precisions.Second },
+            });
             await elementUpdated(element);
 
             editableSegments = getEditableSegments(element);
@@ -223,7 +226,7 @@ describe('DateTimePicker', () => {
                     await sendKeys({ press: 'ArrowUp' });
                     await elementUpdated(element);
 
-                    expect(hourSegment.innerText).to.equal(`01`);
+                    expect(hourSegment.innerText).to.equal(`12`); // as 12AM is 00:00
                     expectPlaceholders(editableSegments, [hourSegment]);
                 });
 
@@ -238,7 +241,7 @@ describe('DateTimePicker', () => {
                     await sendKeys({ press: 'ArrowUp' });
                     await elementUpdated(element);
 
-                    expect(hourSegment.innerText).to.equal(`03`);
+                    expect(hourSegment.innerText).to.equal(`02`);
                     expectPlaceholders(editableSegments, [hourSegment]);
                 });
 
@@ -251,7 +254,7 @@ describe('DateTimePicker', () => {
                     await sendKeyMultipleTimes('ArrowUp', 13);
                     await elementUpdated(element);
 
-                    expect(hourSegment.innerText).to.equal(`01`);
+                    expect(hourSegment.innerText).to.equal(`12`);
                     expectPlaceholders(editableSegments, [hourSegment]);
                 });
 
@@ -363,7 +366,7 @@ describe('DateTimePicker', () => {
 
                     expect(yearSegment.innerText).to.equal(`2022`); // Common year in the Gregorian calendar
                     expect(monthSegment.innerText).to.equal(`02`);
-                    expect(daySegment.innerText).to.equal(`29`);
+                    expect(daySegment.innerText).to.equal(`28`);
                     expectPlaceholders(editableSegments, [
                         daySegment,
                         monthSegment,
@@ -384,7 +387,7 @@ describe('DateTimePicker', () => {
 
                     expect(yearSegment.innerText).to.equal(`2024`); // Leap year in the Gregorian calendar
                     expect(monthSegment.innerText).to.equal(`02`);
-                    expect(daySegment.innerText).to.equal(`28`);
+                    expect(daySegment.innerText).to.equal(`29`);
                     expectPlaceholders(editableSegments, [
                         daySegment,
                         monthSegment,
@@ -562,7 +565,7 @@ describe('DateTimePicker', () => {
                                 element = await fixtureElement({
                                     props: {
                                         value,
-                                        precision: 'second',
+                                        precision: Precisions.Second,
                                     },
                                 });
                                 await elementUpdated(element);
@@ -570,7 +573,7 @@ describe('DateTimePicker', () => {
 
                                 const currentValue = element.value!;
                                 element.value = currentValue.set({
-                                    minute: 59,
+                                    [segmentType]: 59,
                                 });
                                 await elementUpdated(element);
                                 const segment = editableSegments.getByType(
@@ -763,18 +766,18 @@ describe('DateTimePicker', () => {
                     await sendKeys({ press: 'ArrowDown' });
                     await elementUpdated(element);
 
-                    expect(hourSegment.innerText).to.equal(`12`);
+                    expect(hourSegment.innerText).to.equal(`11`);
                     expectPlaceholders(editableSegments, [hourSegment]);
                 });
 
-                it("incrementing the hour segment's value", async () => {
+                it("decrementing the hour segment's value", async () => {
                     hourSegment.focus();
                     await sendKeys({ press: 'ArrowDown' });
                     await sendKeys({ press: 'ArrowDown' });
                     await sendKeys({ press: 'ArrowDown' });
                     await elementUpdated(element);
 
-                    expect(hourSegment.innerText).to.equal(`10`);
+                    expect(hourSegment.innerText).to.equal(`09`);
                     expectPlaceholders(editableSegments, [hourSegment]);
                 });
 
@@ -783,7 +786,7 @@ describe('DateTimePicker', () => {
                     await sendKeyMultipleTimes('ArrowDown', 13);
                     await elementUpdated(element);
 
-                    expect(hourSegment.innerText).to.equal(`12`);
+                    expect(hourSegment.innerText).to.equal(`11`);
                     expectPlaceholders(editableSegments, [hourSegment]);
                 });
 
@@ -829,7 +832,7 @@ describe('DateTimePicker', () => {
 
                 it("decrementing the hour segment's value", async () => {
                     hourSegment.focus();
-                    await sendKeyMultipleTimes('ArrowDown', 14);
+                    await sendKeyMultipleTimes('ArrowDown', 15);
                     await elementUpdated(element);
 
                     expect(hourSegment.innerText).to.equal(`09`);
@@ -885,7 +888,7 @@ describe('DateTimePicker', () => {
 
                     expect(yearSegment.innerText).to.equal(`2022`); // Common year in the Gregorian calendar
                     expect(monthSegment.innerText).to.equal(`02`);
-                    expect(daySegment.innerText).to.equal(`29`);
+                    expect(daySegment.innerText).to.equal(`28`);
                     expectPlaceholders(editableSegments, [
                         daySegment,
                         monthSegment,
@@ -895,9 +898,9 @@ describe('DateTimePicker', () => {
 
                 it('when the month changes to February in a leap year', async () => {
                     yearSegment.focus();
-                    await sendKeys({ press: 'ArrowDown' });
-                    await sendKeys({ press: 'ArrowDown' });
-                    await sendKeys({ press: 'ArrowDown' });
+                    await sendKeys({ press: 'ArrowUp' });
+                    await sendKeys({ press: 'ArrowUp' });
+                    await sendKeys({ press: 'ArrowUp' });
                     await elementUpdated(element);
                     monthSegment.focus();
                     await sendKeyMultipleTimes('ArrowDown', 11);
@@ -905,7 +908,7 @@ describe('DateTimePicker', () => {
 
                     expect(yearSegment.innerText).to.equal(`2024`); // Leap year in the Gregorian calendar
                     expect(monthSegment.innerText).to.equal(`02`);
-                    expect(daySegment.innerText).to.equal(`28`);
+                    expect(daySegment.innerText).to.equal(`29`);
                     expectPlaceholders(editableSegments, [
                         daySegment,
                         monthSegment,
@@ -918,9 +921,9 @@ describe('DateTimePicker', () => {
                     await sendKeyMultipleTimes('ArrowDown', 11);
                     await elementUpdated(element);
                     yearSegment.focus();
-                    await sendKeys({ press: 'ArrowDown' });
-                    await sendKeys({ press: 'ArrowDown' });
-                    await sendKeys({ press: 'ArrowDown' });
+                    await sendKeys({ press: 'ArrowUp' });
+                    await sendKeys({ press: 'ArrowUp' });
+                    await sendKeys({ press: 'ArrowUp' });
                     await elementUpdated(element);
 
                     expect(yearSegment.innerText).to.equal(`2024`); // Leap year in the Gregorian calendar
@@ -962,7 +965,7 @@ describe('DateTimePicker', () => {
                         );
 
                         segment.focus();
-                        await sendKeys({ press: 'ArrowUp' });
+                        await sendKeys({ press: 'ArrowDown' });
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal(`${max}`);
@@ -985,7 +988,7 @@ describe('DateTimePicker', () => {
                         );
 
                         segment.focus();
-                        await sendKeys({ press: 'ArrowUp' });
+                        await sendKeys({ press: 'ArrowDown' });
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal(`${max}`);
@@ -1008,7 +1011,7 @@ describe('DateTimePicker', () => {
                         );
 
                         segment.focus();
-                        await sendKeys({ press: 'ArrowUp' });
+                        await sendKeys({ press: 'ArrowDown' });
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal('31');
@@ -1039,7 +1042,7 @@ describe('DateTimePicker', () => {
                         );
 
                         segment.focus();
-                        await sendKeys({ press: 'ArrowUp' });
+                        await sendKeys({ press: 'ArrowDown' });
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal('28');
@@ -1070,7 +1073,7 @@ describe('DateTimePicker', () => {
                         );
 
                         segment.focus();
-                        await sendKeys({ press: 'ArrowUp' });
+                        await sendKeys({ press: 'ArrowDown' });
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal('29');
@@ -1082,7 +1085,7 @@ describe('DateTimePicker', () => {
                                 element = await fixtureElement({
                                     props: {
                                         value,
-                                        precision: 'second',
+                                        precision: Precisions.Second,
                                     },
                                 });
                                 await elementUpdated(element);
@@ -1090,7 +1093,7 @@ describe('DateTimePicker', () => {
 
                                 const currentValue = element.value!;
                                 element.value = currentValue.set({
-                                    minute: 0,
+                                    [segmentType]: 0,
                                 });
                                 await elementUpdated(element);
                                 const segment = editableSegments.getByType(
@@ -1098,7 +1101,7 @@ describe('DateTimePicker', () => {
                                 );
 
                                 segment.focus();
-                                await sendKeys({ press: 'ArrowUp' });
+                                await sendKeys({ press: 'ArrowDown' });
                                 await elementUpdated(element);
 
                                 expect(segment.innerText).to.equal('59');
@@ -1346,7 +1349,7 @@ describe('DateTimePicker', () => {
                         expect(daySegment.innerText).to.equal('02');
                         await sendKeys({ type: '9' });
                         await elementUpdated(element);
-                        expect(daySegment.innerText).to.equal('09');
+                        expect(daySegment.innerText).to.equal('29');
 
                         await sendKeys({ type: '2' });
                         await elementUpdated(element);
@@ -1532,10 +1535,10 @@ describe('DateTimePicker', () => {
                     await sendKeys({ type: '2' });
                     await elementUpdated(element);
                     yearSegment.focus();
-                    await sendKeys({ type: '2024' }); // Leap year in the Gregorian calendar
+                    await sendKeys({ type: '4' }); // Leap year in the Gregorian calendar
                     await elementUpdated(element);
 
-                    expect(yearSegment.innerText).to.equal('2024');
+                    expect(yearSegment.innerText).to.equal('4');
                     expect(monthSegment.innerText).to.equal('02');
                     expect(daySegment.innerText).to.equal('29');
 
@@ -1554,6 +1557,7 @@ describe('DateTimePicker', () => {
                 element = await fixtureElement({
                     props: {
                         value,
+                        precision: Precisions.Second,
                     },
                 });
                 await elementUpdated(element);

@@ -16,7 +16,7 @@ import {
     getMinimumMonthInYear,
     ZonedDateTime,
 } from '@internationalized/date';
-import { convertHourTo24hFormat } from '../helpers';
+import { convertHourTo24hFormat, isNumber } from '../helpers';
 import { DEFAULT_LEAP_YEAR, SegmentTypes } from '../types';
 import { DateTimeSegments } from './DateTimeSegments';
 
@@ -125,12 +125,17 @@ export class SegmentsFormatter {
          */
         const year = segments.year.value ?? DEFAULT_LEAP_YEAR;
 
-        let hour = segments.hour?.value ?? this.currentDate.hour;
+        const dayPeriod = segments.dayPeriod?.value;
+        let hour = segments.hour?.value;
+
+        if (!isNumber(hour)) {
+            if (isNumber(dayPeriod)) hour = dayPeriod;
+            else hour = this.currentDate.hour;
+        } else if (isNumber(dayPeriod)) {
+            hour = convertHourTo24hFormat(hour, dayPeriod);
+        }
         const minute = segments.minute?.value ?? this.currentDate.minute;
         const second = segments.second?.value ?? this.currentDate.second;
-
-        const dayPeriod = segments.dayPeriod?.value;
-        if (dayPeriod) hour = convertHourTo24hFormat(hour, dayPeriod);
 
         return { year, month, day, hour, minute, second };
     }

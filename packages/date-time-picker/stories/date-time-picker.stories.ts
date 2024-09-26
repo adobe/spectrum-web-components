@@ -18,6 +18,7 @@ import {
 import {
     DateTimePickerValue,
     Precision,
+    Precisions,
 } from '@spectrum-web-components/date-time-picker';
 import {
     CalendarDate,
@@ -47,8 +48,6 @@ type ComponentArgs = {
 type StoryArgs = ComponentArgs & {
     onChange?: (dateTime: Date) => void;
 };
-
-const precisionOptions: Precision[] = ['day', 'hour', 'minute', 'second'];
 
 const storyMeta = {
     title: 'DateTimePicker',
@@ -90,7 +89,7 @@ const storyMeta = {
                 "The granularity used to display the segments of the component's value.",
             type: { required: false },
             control: 'select',
-            options: precisionOptions,
+            options: Object.values(Precisions),
         },
         min: {
             description: 'Minimum date allowed',
