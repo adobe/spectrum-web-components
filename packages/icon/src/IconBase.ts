@@ -24,7 +24,7 @@ import {
 
 import iconStyles from './icon.css.js';
 
-type SystemVariant = 'spectrum' | 'spectrum-two' | 'express' | '';
+import type { SystemVariant } from '@spectrum-web-components/theme';
 
 export class IconBase extends SpectrumElement {
     public static override get styles(): CSSResultArray {
