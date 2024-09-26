@@ -11,6 +11,17 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.chevron {
+    block-size: var(--spectrum-menu-item-checkmark-height);
+    inline-size: var(--spectrum-menu-item-checkmark-width);
+    grid-area: chevronArea;
+    align-self: center;
+    margin-inline-end: var(
+        --mod-menu-item-text-to-control,
+        var(--spectrum-menu-item-text-to-control)
+    );
+}
+
 .chevron:dir(rtl),
 :host([dir='rtl']) .chevron {
     transform: rotate(-180deg);
