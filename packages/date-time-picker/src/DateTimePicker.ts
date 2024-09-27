@@ -218,6 +218,8 @@ export class DateTimePicker extends ManageHelpText(
 
     public clear(): void {
         this.value = undefined;
+        this.currentDate = now(this.timeZone);
+        this.setSegments();
     }
 
     private checkDatesCompliance(
@@ -260,30 +262,22 @@ export class DateTimePicker extends ManageHelpText(
         const changesValue = changedProperties.has('value');
         const changesMin = changedProperties.has('min');
         const changesMax = changedProperties.has('max');
-        const changesDates = changesValue || changesMin || changesMax;
         const changesLocale = changedProperties.has(
             languageResolverUpdatedSymbol
         );
         const changesPrecision = changedProperties.has('precision');
         const changesSegments = changedProperties.has('segments');
 
-        const shouldResetSegments =
-            changesDates ||
-            changesLocale ||
-            changesPrecision ||
-            (changesValue && this.value === undefined);
-
-        if (changesDates)
-            this.checkDatesCompliance(changesValue, changesMin, changesMax);
-
         if (changesLocale) this.setNumberParser();
         if (changesLocale || changesPrecision) this.setDateFormatter();
-        if (changesSegments) {
-            // TODO: if not all segments are defined, we should set the value to undefined
-            this.updateValue();
-        }
 
-        if (shouldResetSegments) this.setSegments();
+        if (changesValue || changesMin || changesMax)
+            this.checkDatesCompliance(changesValue, changesMin, changesMax);
+
+        if (changesValue || changesLocale || changesPrecision)
+            this.setSegments();
+
+        if (changesSegments) this.updateValue();
     }
 
     override render(): TemplateResult {
@@ -476,11 +470,15 @@ export class DateTimePicker extends ManageHelpText(
                 break;
             }
             case 'ArrowRight': {
-                this.focusNextSegment(event);
+                const segment = event.target;
+                if (!segment) return;
+                this.focusSegment(segment as HTMLElement, 'next');
                 break;
             }
             case 'ArrowLeft': {
-                this.focusPreviousSegment(event);
+                const segment = event.target;
+                if (!segment) return;
+                this.focusSegment(segment as HTMLElement, 'previous');
                 break;
             }
         }
@@ -574,7 +572,11 @@ export class DateTimePicker extends ManageHelpText(
 
     private updateValue(): void {
         const formattedDate = this.segments.getFormattedDate(this.precision);
-        if (!formattedDate) return;
+        if (!formattedDate) {
+            this.value = undefined;
+            this.currentDate = now(this.timeZone);
+            return;
+        }
 
         const dateValue = this.mostSpecificDateValue;
         if (isZonedDateTime(dateValue))
@@ -632,31 +634,13 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     /**
-     * Focuses on the next editable segment, if any
-     *
-     * @param event - Triggered event details
-     */
-    private focusNextSegment(event: KeyboardEvent): void {
-        this.focusSegment(event.target as HTMLDivElement, 'next');
-    }
-
-    /**
-     * Focuses on the previous editable segment, if any
-     *
-     * @param event - Triggered event details
-     */
-    private focusPreviousSegment(event: KeyboardEvent): void {
-        this.focusSegment(event.target as HTMLDivElement, 'previous');
-    }
-
-    /**
      * Focuses the segment according to the direction, if there is one to focus on
      *
      * @param segment - Segment on which the event was triggered (the segment being changed)
      * @param elementToFocus - Defines which element will be focused: is it the previous one or the next one?
      */
     private focusSegment(
-        segment: HTMLDivElement,
+        segment: HTMLElement,
         elementToFocus: 'previous' | 'next'
     ): void {
         let segmentFound = false;

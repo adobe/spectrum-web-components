@@ -30,6 +30,7 @@ import {
     type EditableSegments,
     expectPlaceholder,
     expectPlaceholders,
+    expectSameDates,
     fixtureElement,
     getEditableSegments,
     sendKeyMultipleTimes,
@@ -37,6 +38,7 @@ import {
 
 describe('DateTimePicker', () => {
     let element: DateTimePicker;
+    let editableSegments: EditableSegments;
     const originalDateNow = Date.now;
     const fixedYear = 2022;
     const fixedMonth = 5;
@@ -55,6 +57,7 @@ describe('DateTimePicker', () => {
     beforeEach(async () => {
         element = await fixtureElement();
         await elementUpdated(element);
+        editableSegments = getEditableSegments(element);
     });
 
     after(() => {
@@ -73,53 +76,235 @@ describe('DateTimePicker', () => {
         await expect(element).to.be.accessible();
     });
 
-    it("shows placeholders when there's no preselected value", async () => {
-        expect(element.value).to.be.undefined;
-        // TODO check for placeholders
+    describe('Manages the value', () => {
+        describe('by defining it only when all segments are defined', () => {
+            Object.values(Precisions).forEach((precision) => {
+                it(`on '${precision}' precision`, async () => {
+                    element = await fixtureElement({
+                        props: { precision },
+                    });
+                    await elementUpdated(element);
+                    editableSegments = getEditableSegments(element);
+
+                    expect(element.value).to.be.undefined;
+
+                    while (editableSegments.length > 0) {
+                        const segment = editableSegments.shift()!;
+                        segment.focus();
+
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+
+                        if (editableSegments.length > 0)
+                            expect(element.value).to.be.undefined;
+                    }
+
+                    expect(element.value).to.not.be.undefined;
+                });
+            });
+        });
+
+        describe('by updating it on a 24h format', () => {
+            const dateValue = new CalendarDateTime(2022, 5, 15, 15, 15, 15);
+
+            beforeEach(async () => {
+                element = await fixtureElement({
+                    locale: 'en-GB',
+                    props: { precision: Precisions.Second, value: dateValue },
+                });
+                editableSegments = getEditableSegments(element);
+            });
+
+            [
+                SegmentTypes.Year,
+                SegmentTypes.Month,
+                SegmentTypes.Day,
+                SegmentTypes.Hour,
+                SegmentTypes.Minute,
+                SegmentTypes.Second,
+            ].forEach((segmentType) => {
+                it(`when the ${segmentType} segment is changed`, async () => {
+                    const segment = editableSegments.getByType(segmentType);
+
+                    segment.focus();
+                    await sendKeys({ press: 'ArrowUp' });
+                    await elementUpdated(element);
+
+                    expectSameDates(
+                        element.value!,
+                        dateValue.set({
+                            [segmentType]: dateValue[segmentType] + 1,
+                        })
+                    );
+                });
+            });
+        });
+
+        describe('by updating it on a 12h format', () => {
+            const dateValue = new CalendarDateTime(2022, 5, 15, 5, 15, 15);
+
+            beforeEach(async () => {
+                element = await fixtureElement({
+                    props: { precision: Precisions.Second, value: dateValue },
+                });
+                editableSegments = getEditableSegments(element);
+            });
+
+            [
+                SegmentTypes.Year,
+                SegmentTypes.Month,
+                SegmentTypes.Day,
+                SegmentTypes.Hour,
+                SegmentTypes.Minute,
+                SegmentTypes.Second,
+            ].forEach((segmentType) => {
+                it(`when the ${segmentType} segment is changed`, async () => {
+                    const segment = editableSegments.getByType(segmentType);
+
+                    segment.focus();
+                    await sendKeys({ press: 'ArrowUp' });
+                    await elementUpdated(element);
+
+                    expectSameDates(
+                        element.value!,
+                        dateValue.set({
+                            [segmentType]: dateValue[segmentType] + 1,
+                        })
+                    );
+                });
+            });
+
+            it('when the dayPeriod segment is changed', async () => {
+                const dayPeriodSegment = editableSegments.getByType(
+                    SegmentTypes.DayPeriod
+                );
+
+                dayPeriodSegment.focus();
+                await sendKeys({ press: 'ArrowUp' });
+                await elementUpdated(element);
+
+                expectSameDates(
+                    element.value!,
+                    dateValue.set({
+                        hour: dateValue.hour! + 12,
+                    })
+                );
+            });
+        });
+
+        describe('by clearing it and the segments ', () => {
+            it('when a full value is defined/ all segments have a value', async () => {
+                element = await fixtureElement({
+                    props: {
+                        value: new CalendarDateTime(2022, 5, 15, 15, 15, 15),
+                    },
+                });
+                await elementUpdated(element);
+
+                element.clear();
+                await elementUpdated(element);
+
+                expect(element.value).to.be.undefined;
+                expectPlaceholders(getEditableSegments(element));
+            });
+
+            it('when not all segments have a value', async () => {
+                const year = editableSegments.getByType(SegmentTypes.Year);
+                const minute = editableSegments.getByType(SegmentTypes.Minute);
+
+                year.focus();
+                await sendKeys({ press: 'ArrowUp' });
+                minute.focus();
+                await sendKeys({ press: 'ArrowUp' });
+
+                expect(element.value).to.be.undefined;
+                expectPlaceholders(editableSegments, [year, minute]);
+
+                element.clear();
+                await elementUpdated(element);
+
+                expect(element.value).to.be.undefined;
+                expectPlaceholders(editableSegments);
+            });
+        });
     });
 
     describe('Manages the calendar', () => {
-        it('opening it using the keyboard', async () => {});
-        it('opening it using the pointer', async () => {});
-        it("closing it using the 'esc' key", async () => {});
-        it('closing it when a date is selected', async () => {});
-        it('passing the value and min/max constraints', async () => {});
-        it("handling the 'change' event", async () => {
-            // TODO: test that DTP's value is updated
-            // and that segments are set
+        it('opening it using the keyboard');
+        it('opening it using the pointer');
+        it("closing it using the 'esc' key");
+        it('closing it when a date is selected');
+        it('passing the value and min/max constraints');
+
+        // TODO: test that DTP's value is updated with the correct type (CalendarDate | CalendarDateTime | ZonedDateTime)
+        // and that segments are set
+        it("handling the 'change' event");
+    });
+
+    // TODO: with the precision update PR
+    describe('Correctly creates segments according to precision', () => {
+        describe("when precision is 'day'", async () => {
+            it('showing placeholders when no preselected value is provided');
+            it('showing the correct preselected value');
+        });
+
+        describe('on a 12h format', () => {
+            describe("when precision is 'hour'", async () => {
+                it(
+                    'showing placeholders when no preselected value is provided'
+                );
+                it('showing the correct preselected value');
+            });
+            describe("when precision is 'minute'", async () => {
+                it(
+                    'showing placeholders when no preselected value is provided'
+                );
+                it('showing the correct preselected value');
+            });
+            describe("when precision is 'second'", async () => {
+                it(
+                    'showing placeholders when no preselected value is provided'
+                );
+                it('showing the correct preselected value');
+            });
+        });
+
+        describe('on a 24h format', () => {
+            describe("when precision is 'hour'", async () => {
+                it(
+                    'showing placeholders when no preselected value is provided'
+                );
+                it('showing the correct preselected value');
+            });
+            describe("when precision is 'minute'", async () => {
+                it(
+                    'showing placeholders when no preselected value is provided'
+                );
+                it('showing the correct preselected value');
+            });
+            describe("when precision is 'second'", async () => {
+                it(
+                    'showing placeholders when no preselected value is provided'
+                );
+                it('showing the correct preselected value');
+            });
         });
     });
-
-    describe('Correctly creates segments according to precision', () => {
-        it("when precision is 'day'", async () => {});
-        it("when precision is 'hour'", async () => {});
-        it("when precision is 'minute'", async () => {});
-        it("when precision is 'second'", async () => {});
-
-        // TODO: and locale (12h vs 24h format)
-    });
-
-    it('shows the correct value in the segments', async () => {});
-
-    it('clears the value', async () => {});
 
     describe("Correctly manages subcomponents' focus", () => {
         describe('focusing segments', () => {
-            it('by pointer', async () => {});
-            it('by keyboard using the right arrow key', async () => {});
-            it('by keyboard using the left arrow key', async () => {});
-            it('by keyboard using the delete/backspace key on a placeholder', async () => {});
-            it('when a date is selected using the calendar', async () => {});
+            it('by pointer');
+            it('by keyboard using the right arrow key');
+            it('by keyboard using the left arrow key');
+            it('by keyboard using the delete/backspace key on a placeholder');
+            it('when a date is selected using the calendar');
         });
 
-        it("focusing the calendar's button", async () => {
-            // TODO: one TAB press should focus the calendar button, not the next segment
-        });
+        // TODO: one TAB press should focus the calendar button, not the next segment
+        it("focusing the calendar's button");
     });
 
     describe('Changes the values of the segments', () => {
-        let editableSegments: EditableSegments;
-
         beforeEach(async () => {
             element = await fixtureElement({
                 props: { precision: Precisions.Second },
@@ -139,6 +324,7 @@ describe('DateTimePicker', () => {
 
                 expect(segment.innerText).to.equal(`${fixedYear}`);
                 expectPlaceholders(editableSegments, [segment]);
+                expect(element.value).to.be.undefined;
             });
 
             it("incrementing the year segment's value", async () => {
@@ -152,6 +338,7 @@ describe('DateTimePicker', () => {
 
                 expect(segment.innerText).to.equal(`${fixedYear + 2}`);
                 expectPlaceholders(editableSegments, [segment]);
+                expect(element.value).to.be.undefined;
             });
 
             [SegmentTypes.Month, SegmentTypes.Day].forEach((segmentType) => {
@@ -166,6 +353,7 @@ describe('DateTimePicker', () => {
 
                     expect(segment.innerText).to.equal(`01`);
                     expectPlaceholders(editableSegments, [segment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it(`incrementing the ${segmentType} segment's value`, async () => {
@@ -181,6 +369,7 @@ describe('DateTimePicker', () => {
 
                     expect(segment.innerText).to.equal(`03`);
                     expectPlaceholders(editableSegments, [segment]);
+                    expect(element.value).to.be.undefined;
                 });
             });
 
@@ -197,6 +386,7 @@ describe('DateTimePicker', () => {
 
                         expect(segment.innerText).to.equal(`00`);
                         expectPlaceholders(editableSegments, [segment]);
+                        expect(element.value).to.be.undefined;
                     });
 
                     it(`incrementing the ${segmentType} segment's value`, async () => {
@@ -212,6 +402,7 @@ describe('DateTimePicker', () => {
 
                         expect(segment.innerText).to.equal(`02`);
                         expectPlaceholders(editableSegments, [segment]);
+                        expect(element.value).to.be.undefined;
                     });
                 }
             );
@@ -228,6 +419,7 @@ describe('DateTimePicker', () => {
 
                     expect(hourSegment.innerText).to.equal(`12`); // as 12AM is 00:00
                     expectPlaceholders(editableSegments, [hourSegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it("incrementing the hour segment's value", async () => {
@@ -243,6 +435,7 @@ describe('DateTimePicker', () => {
 
                     expect(hourSegment.innerText).to.equal(`02`);
                     expectPlaceholders(editableSegments, [hourSegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it('resetting the hour when the max is reached', async () => {
@@ -256,6 +449,7 @@ describe('DateTimePicker', () => {
 
                     expect(hourSegment.innerText).to.equal(`12`);
                     expectPlaceholders(editableSegments, [hourSegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it("defining the dayPeriod segment's value", async () => {
@@ -269,6 +463,7 @@ describe('DateTimePicker', () => {
 
                     expect(dayPeriodSegment.innerText).to.equal(`AM`);
                     expectPlaceholders(editableSegments, [dayPeriodSegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it("toggling the dayPeriod segment's value", async () => {
@@ -283,6 +478,7 @@ describe('DateTimePicker', () => {
 
                     expect(dayPeriodSegment.innerText).to.equal(`PM`);
                     expectPlaceholders(editableSegments, [dayPeriodSegment]);
+                    expect(element.value).to.be.undefined;
                 });
             });
 
@@ -304,6 +500,7 @@ describe('DateTimePicker', () => {
 
                     expect(hourSegment.innerText).to.equal(`00`);
                     expectPlaceholders(editableSegments, [hourSegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it("incrementing the hour segment's value ", async () => {
@@ -313,6 +510,7 @@ describe('DateTimePicker', () => {
 
                     expect(hourSegment.innerText).to.equal(`13`);
                     expectPlaceholders(editableSegments, [hourSegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it('resetting the hour when the max is reached', async () => {
@@ -322,6 +520,7 @@ describe('DateTimePicker', () => {
 
                     expect(hourSegment.innerText).to.equal(`00`);
                     expectPlaceholders(editableSegments, [hourSegment]);
+                    expect(element.value).to.be.undefined;
                 });
             });
 
@@ -331,6 +530,11 @@ describe('DateTimePicker', () => {
                 let yearSegment: HTMLElement;
 
                 beforeEach(async () => {
+                    element = await fixtureElement({
+                        props: { precision: Precisions.Day },
+                    });
+                    editableSegments = getEditableSegments(element);
+
                     daySegment = editableSegments.getByType(SegmentTypes.Day);
                     monthSegment = editableSegments.getByType(
                         SegmentTypes.Month
@@ -353,6 +557,7 @@ describe('DateTimePicker', () => {
                         daySegment,
                         monthSegment,
                     ]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it('when the month changes to February in a common year', async () => {
@@ -372,6 +577,10 @@ describe('DateTimePicker', () => {
                         monthSegment,
                         yearSegment,
                     ]);
+                    expectSameDates(
+                        element.value!,
+                        new CalendarDate(2022, 2, 28)
+                    );
                 });
 
                 it('when the month changes to February in a leap year', async () => {
@@ -393,6 +602,10 @@ describe('DateTimePicker', () => {
                         monthSegment,
                         yearSegment,
                     ]);
+                    expectSameDates(
+                        element.value!,
+                        new CalendarDate(2024, 2, 29)
+                    );
                 });
 
                 it('when the year changes to a leap year and the month is February', async () => {
@@ -414,6 +627,10 @@ describe('DateTimePicker', () => {
                         monthSegment,
                         yearSegment,
                     ]);
+                    expectSameDates(
+                        element.value!,
+                        new CalendarDate(2024, 2, 28)
+                    );
                 });
             });
 
@@ -449,6 +666,7 @@ describe('DateTimePicker', () => {
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal('1');
+                        expectSameDates(element.value!, value.set({ year: 1 }));
                     });
 
                     it('when the max month is reached', async () => {
@@ -472,6 +690,10 @@ describe('DateTimePicker', () => {
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal('01');
+                        expectSameDates(
+                            element.value!,
+                            value.set({ month: 1 })
+                        );
                     });
 
                     it('when the max day is reached in a month with 31 days', async () => {
@@ -495,6 +717,7 @@ describe('DateTimePicker', () => {
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal('01');
+                        expectSameDates(element.value!, value.set({ day: 1 }));
                     });
 
                     it('when the max day is reached in February of a common year', async () => {
@@ -526,6 +749,7 @@ describe('DateTimePicker', () => {
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal('01');
+                        expectSameDates(element.value!, value.set({ day: 1 }));
                     });
 
                     it('when the max day is reached in February of a leap year', async () => {
@@ -557,6 +781,7 @@ describe('DateTimePicker', () => {
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal('01');
+                        expectSameDates(element.value!, value.set({ day: 1 }));
                     });
 
                     [SegmentTypes.Minute, SegmentTypes.Second].forEach(
@@ -585,6 +810,10 @@ describe('DateTimePicker', () => {
                                 await elementUpdated(element);
 
                                 expect(segment.innerText).to.equal('00');
+                                expectSameDates(
+                                    element.value!,
+                                    value.set({ [segmentType]: 1 })
+                                );
                             });
                         }
                     );
@@ -602,6 +831,7 @@ describe('DateTimePicker', () => {
 
                         expect(segment.innerText).to.equal(`01`);
                         expectPlaceholders(editableSegments, [segment]);
+                        expect(element.value).to.be.undefined;
                     });
 
                     it('when the max day is reached as a single segment', async () => {
@@ -615,6 +845,7 @@ describe('DateTimePicker', () => {
 
                         expect(segment.innerText).to.equal(`01`);
                         expectPlaceholders(editableSegments, [segment]);
+                        expect(element.value).to.be.undefined;
                     });
 
                     it('when the max day is reached in February', async () => {
@@ -636,6 +867,7 @@ describe('DateTimePicker', () => {
                             daySegment,
                             monthSegment,
                         ]);
+                        expect(element.value).to.be.undefined;
                     });
                 });
             });
@@ -653,6 +885,7 @@ describe('DateTimePicker', () => {
 
                 expect(yearSegment.innerText).to.equal(`${fixedYear}`);
                 expectPlaceholders(editableSegments, [yearSegment]);
+                expect(element.value).to.be.undefined;
             });
 
             it("decrementing the year segment's value", async () => {
@@ -668,6 +901,7 @@ describe('DateTimePicker', () => {
 
                 expect(yearSegment.innerText).to.equal(`${fixedYear - 2}`);
                 expectPlaceholders(editableSegments, [yearSegment]);
+                expect(element.value).to.be.undefined;
             });
 
             it(`defining the month segment's value`, async () => {
@@ -679,6 +913,7 @@ describe('DateTimePicker', () => {
 
                 expect(segment.innerText).to.equal(`12`);
                 expectPlaceholders(editableSegments, [segment]);
+                expect(element.value).to.be.undefined;
             });
 
             it(`decrementing the month segment's value`, async () => {
@@ -692,6 +927,7 @@ describe('DateTimePicker', () => {
 
                 expect(segment.innerText).to.equal(`10`);
                 expectPlaceholders(editableSegments, [segment]);
+                expect(element.value).to.be.undefined;
             });
 
             it(`defining the day segment's value`, async () => {
@@ -703,6 +939,7 @@ describe('DateTimePicker', () => {
 
                 expect(segment.innerText).to.equal(`31`);
                 expectPlaceholders(editableSegments, [segment]);
+                expect(element.value).to.be.undefined;
             });
 
             it(`decrementing the day segment's value`, async () => {
@@ -716,6 +953,7 @@ describe('DateTimePicker', () => {
 
                 expect(segment.innerText).to.equal(`29`);
                 expectPlaceholders(editableSegments, [segment]);
+                expect(element.value).to.be.undefined;
             });
 
             [SegmentTypes.Minute, SegmentTypes.Second].forEach(
@@ -731,6 +969,7 @@ describe('DateTimePicker', () => {
 
                         expect(segment.innerText).to.equal(`59`);
                         expectPlaceholders(editableSegments, [segment]);
+                        expect(element.value).to.be.undefined;
                     });
 
                     it(`decrementing the ${segmentType} segment's value`, async () => {
@@ -746,6 +985,7 @@ describe('DateTimePicker', () => {
 
                         expect(segment.innerText).to.equal(`57`);
                         expectPlaceholders(editableSegments, [segment]);
+                        expect(element.value).to.be.undefined;
                     });
                 }
             );
@@ -768,6 +1008,7 @@ describe('DateTimePicker', () => {
 
                     expect(hourSegment.innerText).to.equal(`11`);
                     expectPlaceholders(editableSegments, [hourSegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it("decrementing the hour segment's value", async () => {
@@ -779,6 +1020,7 @@ describe('DateTimePicker', () => {
 
                     expect(hourSegment.innerText).to.equal(`09`);
                     expectPlaceholders(editableSegments, [hourSegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it('resetting the hour when the min is reached', async () => {
@@ -788,6 +1030,7 @@ describe('DateTimePicker', () => {
 
                     expect(hourSegment.innerText).to.equal(`11`);
                     expectPlaceholders(editableSegments, [hourSegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it("defining the dayPeriod segment's value", async () => {
@@ -797,6 +1040,7 @@ describe('DateTimePicker', () => {
 
                     expect(dayPeriodSegment.innerText).to.equal(`PM`);
                     expectPlaceholders(editableSegments, [dayPeriodSegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it("toggling the dayPeriod segment's value", async () => {
@@ -807,6 +1051,7 @@ describe('DateTimePicker', () => {
 
                     expect(dayPeriodSegment.innerText).to.equal(`AM`);
                     expectPlaceholders(editableSegments, [dayPeriodSegment]);
+                    expect(element.value).to.be.undefined;
                 });
             });
 
@@ -828,6 +1073,7 @@ describe('DateTimePicker', () => {
 
                     expect(hourSegment.innerText).to.equal(`23`);
                     expectPlaceholders(editableSegments, [hourSegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it("decrementing the hour segment's value", async () => {
@@ -837,6 +1083,7 @@ describe('DateTimePicker', () => {
 
                     expect(hourSegment.innerText).to.equal(`09`);
                     expectPlaceholders(editableSegments, [hourSegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it('resetting the hour when the min is reached', async () => {
@@ -846,6 +1093,7 @@ describe('DateTimePicker', () => {
 
                     expect(hourSegment.innerText).to.equal(`23`);
                     expectPlaceholders(editableSegments, [hourSegment]);
+                    expect(element.value).to.be.undefined;
                 });
             });
 
@@ -855,6 +1103,11 @@ describe('DateTimePicker', () => {
                 let yearSegment: HTMLElement;
 
                 beforeEach(async () => {
+                    element = await fixtureElement({
+                        props: { precision: Precisions.Day },
+                    });
+                    editableSegments = getEditableSegments(element);
+
                     daySegment = editableSegments.getByType(SegmentTypes.Day);
                     monthSegment = editableSegments.getByType(
                         SegmentTypes.Month
@@ -876,6 +1129,7 @@ describe('DateTimePicker', () => {
                         daySegment,
                         monthSegment,
                     ]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it('when the month changes to February in a common year', async () => {
@@ -894,6 +1148,10 @@ describe('DateTimePicker', () => {
                         monthSegment,
                         yearSegment,
                     ]);
+                    expectSameDates(
+                        element.value!,
+                        new CalendarDate(2022, 2, 28)
+                    );
                 });
 
                 it('when the month changes to February in a leap year', async () => {
@@ -914,6 +1172,10 @@ describe('DateTimePicker', () => {
                         monthSegment,
                         yearSegment,
                     ]);
+                    expectSameDates(
+                        element.value!,
+                        new CalendarDate(2024, 2, 29)
+                    );
                 });
 
                 it('when the year changes to a leap year and the month is February', async () => {
@@ -934,6 +1196,10 @@ describe('DateTimePicker', () => {
                         monthSegment,
                         yearSegment,
                     ]);
+                    expectSameDates(
+                        element.value!,
+                        new CalendarDate(2024, 2, 28)
+                    );
                 });
             });
 
@@ -969,6 +1235,10 @@ describe('DateTimePicker', () => {
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal(`${max}`);
+                        expectSameDates(
+                            element.value!,
+                            value.set({ year: max })
+                        );
                     });
 
                     it('when the min month is reached', async () => {
@@ -992,6 +1262,10 @@ describe('DateTimePicker', () => {
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal(`${max}`);
+                        expectSameDates(
+                            element.value!,
+                            value.set({ month: max })
+                        );
                     });
 
                     it('when the min day is reached in a month with 31 days', async () => {
@@ -1015,6 +1289,7 @@ describe('DateTimePicker', () => {
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal('31');
+                        expectSameDates(element.value!, value.set({ day: 31 }));
                     });
 
                     it('when the min day is reached in February of a common year', async () => {
@@ -1046,6 +1321,7 @@ describe('DateTimePicker', () => {
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal('28');
+                        expectSameDates(element.value!, value.set({ day: 28 }));
                     });
 
                     it('when the min day is reached in February of a leap year', async () => {
@@ -1077,6 +1353,7 @@ describe('DateTimePicker', () => {
                         await elementUpdated(element);
 
                         expect(segment.innerText).to.equal('29');
+                        expectSameDates(element.value!, value.set({ day: 29 }));
                     });
 
                     [SegmentTypes.Minute, SegmentTypes.Second].forEach(
@@ -1105,6 +1382,10 @@ describe('DateTimePicker', () => {
                                 await elementUpdated(element);
 
                                 expect(segment.innerText).to.equal('59');
+                                expectSameDates(
+                                    element.value!,
+                                    value.set({ [segmentType]: 59 })
+                                );
                             });
                         }
                     );
@@ -1124,6 +1405,7 @@ describe('DateTimePicker', () => {
 
                         expect(segment.innerText).to.equal(`12`);
                         expectPlaceholders(editableSegments, [segment]);
+                        expect(element.value).to.be.undefined;
                     });
 
                     it('when the min day is reached as a single segment', async () => {
@@ -1139,6 +1421,7 @@ describe('DateTimePicker', () => {
 
                         expect(segment.innerText).to.equal(`31`);
                         expectPlaceholders(editableSegments, [segment]);
+                        expect(element.value).to.be.undefined;
                     });
 
                     it('when the min day is reached in February', async () => {
@@ -1162,6 +1445,7 @@ describe('DateTimePicker', () => {
                             daySegment,
                             monthSegment,
                         ]);
+                        expect(element.value).to.be.undefined;
                     });
                 });
             });
@@ -1180,6 +1464,7 @@ describe('DateTimePicker', () => {
                         await elementUpdated(element);
 
                         expectPlaceholders(editableSegments);
+                        expect(element.value).to.be.undefined;
                     });
                 }
             );
@@ -1200,6 +1485,7 @@ describe('DateTimePicker', () => {
                 expect(segment.innerText).to.equal('305');
 
                 expectPlaceholders(editableSegments, [segment]);
+                expect(element.value).to.be.undefined;
             });
 
             it("on the month segment's value", async () => {
@@ -1221,6 +1507,7 @@ describe('DateTimePicker', () => {
                 expect(segment.innerText).to.equal('09');
 
                 expectPlaceholders(editableSegments, [segment]);
+                expect(element.value).to.be.undefined;
             });
 
             describe("on the day segment's value", async () => {
@@ -1249,6 +1536,7 @@ describe('DateTimePicker', () => {
                     expect(daySegment.innerText).to.equal('04');
 
                     expectPlaceholders(editableSegments, [daySegment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 describe('when the month is February in a common year', async () => {
@@ -1292,6 +1580,7 @@ describe('DateTimePicker', () => {
                             monthSegment,
                             yearSegment,
                         ]);
+                        expect(element.value).to.be.undefined;
                     });
 
                     it('should set the day to 28', async () => {
@@ -1307,6 +1596,7 @@ describe('DateTimePicker', () => {
                             monthSegment,
                             yearSegment,
                         ]);
+                        expect(element.value).to.be.undefined;
                     });
                 });
 
@@ -1341,6 +1631,7 @@ describe('DateTimePicker', () => {
                             monthSegment,
                             yearSegment,
                         ]);
+                        expect(element.value).to.be.undefined;
                     });
 
                     it('should set the day to 29 or 28', async () => {
@@ -1363,6 +1654,7 @@ describe('DateTimePicker', () => {
                             monthSegment,
                             yearSegment,
                         ]);
+                        expect(element.value).to.be.undefined;
                     });
                 });
             });
@@ -1388,6 +1680,7 @@ describe('DateTimePicker', () => {
                     expect(segment.innerText).to.equal('03');
 
                     expectPlaceholders(editableSegments, [segment]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it("on the dayPeriod segment's value using A/P keys", async () => {
@@ -1401,11 +1694,14 @@ describe('DateTimePicker', () => {
 
                     expect(dayPeriodSegment.innerText).to.equal(`AM`);
                     expectPlaceholders(editableSegments, [dayPeriodSegment]);
+                    expect(element.value).to.be.undefined;
+
                     await sendKeys({ type: 'P' });
                     await elementUpdated(element);
 
                     expect(dayPeriodSegment.innerText).to.equal(`PM`);
                     expectPlaceholders(editableSegments, [dayPeriodSegment]);
+                    expect(element.value).to.be.undefined;
                 });
             });
 
@@ -1436,6 +1732,7 @@ describe('DateTimePicker', () => {
                 expect(segment.innerText).to.equal('00');
 
                 expectPlaceholders(editableSegments, [segment]);
+                expect(element.value).to.be.undefined;
             });
 
             [SegmentTypes.Minute, SegmentTypes.Second].forEach(
@@ -1457,6 +1754,7 @@ describe('DateTimePicker', () => {
                         expect(segment.innerText).to.equal('00');
 
                         expectPlaceholders(editableSegments, [segment]);
+                        expect(element.value).to.be.undefined;
                     });
                 }
             );
@@ -1467,6 +1765,11 @@ describe('DateTimePicker', () => {
                 let daySegment: HTMLElement;
 
                 beforeEach(async () => {
+                    element = await fixtureElement({
+                        props: { precision: Precisions.Day },
+                    });
+                    editableSegments = getEditableSegments(element);
+
                     yearSegment = editableSegments.getByType(SegmentTypes.Year);
                     monthSegment = editableSegments.getByType(
                         SegmentTypes.Month
@@ -1490,6 +1793,7 @@ describe('DateTimePicker', () => {
                         daySegment,
                         monthSegment,
                     ]);
+                    expect(element.value).to.be.undefined;
                 });
 
                 it('when the month changes to February in a common year', async () => {
@@ -1509,6 +1813,10 @@ describe('DateTimePicker', () => {
                         monthSegment,
                         yearSegment,
                     ]);
+                    expectSameDates(
+                        element.value!,
+                        new CalendarDate(2022, 2, 28)
+                    );
                 });
 
                 it('when the month changes to February in a leap year', async () => {
@@ -1528,6 +1836,10 @@ describe('DateTimePicker', () => {
                         monthSegment,
                         yearSegment,
                     ]);
+                    expectSameDates(
+                        element.value!,
+                        new CalendarDate(2024, 2, 29)
+                    );
                 });
 
                 it('when the year changes to a leap year and the month is February', async () => {
@@ -1547,13 +1859,27 @@ describe('DateTimePicker', () => {
                         monthSegment,
                         yearSegment,
                     ]);
+                    expectSameDates(element.value!, new CalendarDate(4, 2, 29));
                 });
             });
         });
 
         describe('deleting values', () => {
+            const day = 15;
+            const month = 11;
+            const hour = 15;
+            const minute = 15;
+            const second = 15;
+
             beforeEach(async () => {
-                const value = new CalendarDateTime(2022, 11, 15, 15, 15, 15);
+                const value = new CalendarDateTime(
+                    2022,
+                    month,
+                    day,
+                    hour,
+                    minute,
+                    second
+                );
                 element = await fixtureElement({
                     props: {
                         value,
@@ -1571,19 +1897,32 @@ describe('DateTimePicker', () => {
                 await sendKeys({ press: 'Delete' });
                 await elementUpdated(element);
                 expect(segment.innerText).to.equal(`202`);
+                expectSameDates(
+                    element.value!,
+                    new CalendarDateTime(202, month, day, hour, minute, second)
+                );
 
                 await sendKeys({ press: 'Delete' });
                 await elementUpdated(element);
                 expect(segment.innerText).to.equal(`20`);
+                expectSameDates(
+                    element.value!,
+                    new CalendarDateTime(20, month, day, hour, minute, second)
+                );
 
                 await sendKeys({ press: 'Delete' });
                 await elementUpdated(element);
                 expect(segment.innerText).to.equal(`2`);
+                expectSameDates(
+                    element.value!,
+                    new CalendarDateTime(2, month, day, hour, minute, second)
+                );
 
                 await sendKeys({ press: 'Delete' });
                 await elementUpdated(element);
 
                 expectPlaceholder(segment);
+                expect(element.value).to.be.undefined;
             });
 
             [
@@ -1604,29 +1943,38 @@ describe('DateTimePicker', () => {
                     await elementUpdated(element);
 
                     expectPlaceholder(segment);
+                    expect(element.value).to.be.undefined;
                 });
             });
         });
     });
 
-    describe('Correctly dispatches the change event', () => {
+    describe('Correctly dispatches', () => {
         describe('the change event', () => {
-            it('when all segments have a value for the first time', async () => {});
-            it("when segments' value changes and user commits", async () => {});
-            it("when a segment's value is deleted", async () => {
-                // As per React Spectrum it should send one change event when the change that made the
-                // date incomplete is made and none after that until the date is complete again
-            });
+            it('when all segments have a value for the first time');
+            it("when segments' value changes and user commits");
+
+            // As per React Spectrum it should send one change event when the change that made the
+            // date incomplete is made and none after that until the date is complete again
+            it("when a segment's value is deleted");
         });
 
         describe('the input event', () => {
-            it("when a segment's value changes through typing on an existing value", async () => {});
+            it(
+                "when a segment's value changes through typing on an existing value"
+            );
 
-            it("when a segment's value changes through typing on an empty value", async () => {});
+            it(
+                "when a segment's value changes through typing on an empty value"
+            );
 
-            it("when a segment's value changes through incrementing/decrementing on an existing value", async () => {});
+            it(
+                "when a segment's value changes through incrementing/decrementing on an existing value"
+            );
 
-            it("when a segment's value changes through incrementing/decrementing on an empty value", async () => {});
+            it(
+                "when a segment's value changes through incrementing/decrementing on an empty value"
+            );
         });
     });
 
@@ -1677,19 +2025,24 @@ describe('DateTimePicker', () => {
             expect(isSameDay(element.max!, max)).to.be.true;
         });
 
-        it("by triggering the 'invalid' state when a value that doesn't comply is commited", async () => {
-            // TODO: with the Space/Enter/Blur value commit PR
-        });
+        it(
+            "by invalidating the current value when it doesn't comply with the new interval"
+        );
+
+        // TODO: with the Space/Enter/Blur value commit PR
+        it(
+            "by triggering the 'invalid' state when a value that doesn't comply is commited"
+        );
     });
 
     describe('Manages multiple types', () => {
-        it("updating precision to 'day' when no time information is given", async () => {
-            // TODO: with the precision update PR
-        });
+        // TODO: with the precision update PR
+        it("updating precision to 'day' when no time information is given");
 
-        it('by not overriding the precision if it was provided by the consumer', async () => {
-            // TODO: with the precision update PR
-        });
+        // TODO: with the precision update PR
+        it(
+            'by not overriding the precision if it was provided by the consumer'
+        );
 
         describe('keeping the type when all types for given properties match', () => {
             it('when the type is CalendarDate', async () => {
@@ -1698,7 +2051,7 @@ describe('DateTimePicker', () => {
                 const max = value.set({ day: value.day + 5 });
 
                 element = await fixtureElement({
-                    props: { min, max, value },
+                    props: { min, max, value, precision: Precisions.Day },
                 });
                 await elementUpdated(element);
 
@@ -1905,10 +2258,10 @@ describe('DateTimePicker', () => {
     });
 
     describe('Manages the disabled state', () => {
-        it('by not accepting focus', async () => {});
-        it('by not accepting typed in values', async () => {});
-        it('by not accepting arrow key inputs', async () => {});
-        it('by not opening the calendar', async () => {});
+        it('by not accepting focus');
+        it('by not accepting typed in values');
+        it('by not accepting arrow key inputs');
+        it('by not opening the calendar');
     });
 
     describe("Manages different locales' formats", () => {
