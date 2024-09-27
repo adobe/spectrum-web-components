@@ -119,13 +119,14 @@ export class DateTimeSegments {
             return new CalendarDateTime(year, month, day, hour);
 
         const minute = this.minute?.value;
-        if (precision === Precisions.Minute) {
-            if (!isNumber(minute)) return;
+        if (!isNumber(minute)) return;
+
+        if (precision === Precisions.Minute)
             return new CalendarDateTime(year, month, day, hour, minute);
-        }
 
         const second = this.second?.value;
         if (!isNumber(second)) return;
+
         return new CalendarDateTime(year, month, day, hour, minute, second);
     }
 }

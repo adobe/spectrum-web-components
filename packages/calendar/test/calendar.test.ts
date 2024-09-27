@@ -517,6 +517,8 @@ describe('Calendar', () => {
             expect(element.value).to.be.undefined;
         });
 
+        it("by invalidating the current value when it doesn't comply with the new interval", async () => {});
+
         describe('stopping navigation when they are set', () => {
             beforeEach(async () => {
                 element = await fixtureElement({
