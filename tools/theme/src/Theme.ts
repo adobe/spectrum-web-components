@@ -27,7 +27,7 @@ import {
     SystemVariant,
     ThemeFragmentMap,
     ThemeKindProvider,
-} from './theme-interfaces';
+} from './theme-interfaces.js';
 export type { ProvideLang, ThemeFragmentMap, Color, Scale, SystemVariant };
 /**
  * @element sp-theme
