@@ -16,7 +16,7 @@ import {
 } from '@spectrum-web-components/base';
 
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { TinyColor } from '@ctrl/tinycolor';
+import { ColorController } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
 
 /**
@@ -31,6 +31,12 @@ export class ColorField extends TextfieldBase {
 
     @property({ type: Boolean, attribute: 'view-color' })
     public viewColor = false;
+
+    private colorController: ColorController;
+    constructor() {
+        super();
+        this.colorController = new ColorController(this);
+    }
 
     public override set value(value: string) {
         if (value === this.value) {
@@ -47,27 +53,12 @@ export class ColorField extends TextfieldBase {
 
     protected override _value = '';
 
-    private cachedColor: string | null = null;
-
-    public getColorValue(): string {
-        if (!this.value) {
-            return '';
-        }
-
-        if (!this.cachedColor || this.cachedColor !== this.value) {
-            const tinyColor = new TinyColor(this.value);
-            this.cachedColor = tinyColor.isValid ? tinyColor.toRgbString() : '';
-        }
-
-        return this.cachedColor;
-    }
-
     private renderColorHandle(): TemplateResult {
-        return this.viewColor
+        return this.viewColor && this.valid
             ? html`
                   <sp-color-handle
                       size="m"
-                      color="${this.getColorValue()}"
+                      color="${this.colorController.color}"
                   ></sp-color-handle>
               `
             : html``;
@@ -82,18 +73,12 @@ export class ColorField extends TextfieldBase {
         `;
     }
 
-    private cachedTinyColor: TinyColor | null = null;
-
     public override checkValidity(): boolean {
         let validity = super.checkValidity();
         if (this.value) {
-            if (
-                !this.cachedTinyColor ||
-                this.cachedTinyColor.originalInput !== this.value
-            ) {
-                this.cachedTinyColor = new TinyColor(this.value);
-            }
-            this.valid = validity = this.cachedTinyColor.isValid;
+            this.valid = validity = this.colorController.validateColorString(
+                this.value
+            ).isValid;
             this.invalid = !validity;
         }
         return validity;

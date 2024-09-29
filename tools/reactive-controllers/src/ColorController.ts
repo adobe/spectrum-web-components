@@ -61,19 +61,46 @@ export class ColorController {
             isValid: false,
             alpha: 1,
         };
-        const rgbaRegExp =
-            /^rgba\s*\(\s*(\d{1,3})\s*,?\s*(\d{1,3})\s*,?\s*(\d{1,3})\s*,?\s*(\d*\.?\d+)\s*\)$|^rgb\s*\(\s*(\d{1,3})\s*,?\s*(\d{1,3})\s*,?\s*(\d{1,3})\s*\)$|^rgba\s+(\d{1,3})\s*,?\s*(\d{1,3})\s*,?\s*(\d{1,3})\s+(\d*\.?\d+)$|^rgb\s+(\d{1,3})\s*,?\s*(\d{1,3})\s*,?\s*(\d{1,3})$/i;
-        const hslaRegExp =
-            /^hsla\s*\(\s*(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d*\.?\d+)\s*\)$|^hsl\s*\(\s*(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)\s*\)$|^hsla\s+(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)\s+(\d*\.?\d+)$|^hsl\s+(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)$/i;
-        const hsvaRegExp =
-            /^hsva\s*\(\s*(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d*\.?\d+)\s*\)$|^hsv\s*\(\s*(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)\s*\)$|^hsva\s+(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)\s+(\d*\.?\d+)$|^hsv\s+(\d{1,3})\s*,?\s*(\d{1,3}%?)\s*,?\s*(\d{1,3}%?)$/i;
 
-        const rgbaMatch = color.match(rgbaRegExp);
-        const hslaMatch = color.match(hslaRegExp);
-        const hsvaMatch = color.match(hsvaRegExp);
+        const rgbRegExpArray = [
+            /rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d*\.?\d+)\s*\)/i,
+            /rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)/i,
+            /^rgba\s+(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(0|0?\.\d+|1)\s*$/i,
+            /^rgb\s+(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*$/i,
+            /^rgba\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(\d*\.?\d+)\s*\)$/i,
+            /^rgb\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*\)$/i,
+        ];
+        const hslRegExpArray = [
+            /hsla\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*,\s*(\d*\.?\d+)\s*\)/i,
+            /hsl\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*\)/i,
+            /^hsla\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*$/i,
+            /^hsl\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*$/i,
+            /^hsla\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*\)$/i,
+            /^hsl\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*\)$/i,
+        ];
+        const hsvRegExpArray = [
+            /hsva\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*,\s*(\d*\.?\d+)\s*\)/i,
+            /hsv\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*\)/i,
+            /^hsva\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*$/i,
+            /^hsv\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*$/i,
+            /^hsva\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*\)$/i,
+            /^hsv\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*\)$/i,
+        ];
+
+        const rgbaMatch = rgbRegExpArray
+            .find((regex) => regex.test(color))
+            ?.exec(color);
+        const hslaMatch = hslRegExpArray
+            .find((regex) => regex.test(color))
+            ?.exec(color);
+        const hsvaMatch = hsvRegExpArray
+            .find((regex) => regex.test(color))
+            ?.exec(color);
 
         if (rgbaMatch) {
-            const [, r, g, b, a] = rgbaMatch;
+            const [, r, g, b, a] = rgbaMatch.filter(
+                (element) => typeof element === 'string'
+            );
             const alpha = a === undefined ? 1 : Number(a);
             const processValue = (value: string): number => {
                 if (value.includes('%')) {
