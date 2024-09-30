@@ -10,9 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../../spectrum-two/theme-light-core-tokens.js';
-import '../../spectrum-two/theme-lightest-core-tokens.js';
-import '../../spectrum-two/theme-dark-core-tokens.js';
-import '../../spectrum-two/theme-darkest-core-tokens.js';
-import '../../spectrum-two/scale-medium-core-tokens.js';
-import '../../spectrum-two/scale-large-core-tokens.js';
+@import url('@spectrum-web-components/styles/spectrum-two/scale-medium.css');
+@import url('@spectrum-web-components/styles/tokens-v2/medium-vars.css');
+@import url('@spectrum-web-components/styles/tokens-v2/spectrum/custom-medium-vars.css');
+
+:root,
+:host {
+    --spectrum-global-alias-appframe-border-size: 2px;
+    --swc-scale-factor: 1;
+}

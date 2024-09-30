@@ -210,7 +210,8 @@
             "files": [
                 "packages/**/*.css",
                 "tools/**/*.css",
-                "tasks/build-css.js"
+                "tasks/build-css.js",
+                "tasks/css-tools.js"
             ],
             "output": [
                 "packages/**/*.css.ts",
@@ -243,6 +244,7 @@
                 "!tools/**/*.d.ts",
                 "tasks/esbuild-packages.js",
                 "tasks/ts-tools.js",
+                "tasks/hydrate-export-maps.js",
                 "packages/**/exports.json",
                 "tools/**/exports.json"
             ],
