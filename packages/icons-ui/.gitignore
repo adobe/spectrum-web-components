@@ -5,8 +5,7 @@ src/icons-s2.ts
 src/elements
 src/elements-s2
 icons/
-icons-s2/
 stories/icon-manifest.ts
-stories/icon-s2-manifest.ts
 
-!bin/build-s2.js
+!bin/build.js
+!src/DefaultIcon.ts
