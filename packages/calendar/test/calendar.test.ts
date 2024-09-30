@@ -484,7 +484,36 @@ describe('Calendar', () => {
             expect(element.value).to.be.undefined;
         });
 
-        it("by invalidating the current value when it doesn't comply with the new interval", async () => {});
+        it("by invalidating the current value when it doesn't comply with the new interval", async () => {
+            const value = min.set({ day: min.day + 1 });
+            element = await fixtureElement({
+                props: { min, max, value },
+            });
+
+            expect(element.value).to.not.be.undefined;
+            expect(element.min).to.not.be.undefined;
+            expect(element.max).to.not.be.undefined;
+
+            const newMin = max.set({ day: max.day - 1 });
+            element.min = newMin;
+            await elementUpdated(element);
+
+            expect(element.value).to.be.undefined;
+            expect(element.min).to.not.be.undefined;
+            expectSameDates(element.min!, newMin);
+            expect(element.max).to.not.be.undefined;
+            expectSameDates(element.max!, max);
+
+            const newMax = max.set({ day: max.day + 1 });
+            element.max = newMax;
+            await elementUpdated(element);
+
+            expect(element.value).to.be.undefined;
+            expect(element.min).to.not.be.undefined;
+            expectSameDates(element.min!, newMin);
+            expect(element.max).to.not.be.undefined;
+            expectSameDates(element.max!, newMax);
+        });
 
         describe('stopping navigation when they are set', () => {
             beforeEach(async () => {
