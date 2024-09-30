@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import {
     CalendarDate,
     CalendarDateTime,
-    isSameDay,
     ZonedDateTime,
 } from '@internationalized/date';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
@@ -2021,8 +2020,8 @@ describe('DateTimePicker', () => {
             expect(element.value).to.be.undefined;
             expect(element.min).to.not.be.undefined;
             expect(element.max).to.not.be.undefined;
-            expect(isSameDay(element.min!, min)).to.be.true;
-            expect(isSameDay(element.max!, max)).to.be.true;
+            expectSameDates(element.min!, min);
+            expectSameDates(element.max!, max);
         });
 
         it(
@@ -2056,8 +2055,11 @@ describe('DateTimePicker', () => {
                 await elementUpdated(element);
 
                 expect(element.value).to.be.instanceOf(CalendarDate);
+                expectSameDates(element.value!, value);
                 expect(element.min).to.be.instanceOf(CalendarDate);
+                expectSameDates(element.min!, min);
                 expect(element.max).to.be.instanceOf(CalendarDate);
+                expectSameDates(element.max!, max);
             });
 
             it('when the type is CalendarDateTime', async () => {
@@ -2077,8 +2079,11 @@ describe('DateTimePicker', () => {
                 });
 
                 expect(element.value).to.be.instanceOf(CalendarDateTime);
+                expectSameDates(element.value!, value);
                 expect(element.min).to.be.instanceOf(CalendarDateTime);
+                expectSameDates(element.min!, min);
                 expect(element.max).to.be.instanceOf(CalendarDateTime);
+                expectSameDates(element.max!, max);
             });
 
             it('when the type is ZonedDateTime', async () => {
@@ -2100,8 +2105,11 @@ describe('DateTimePicker', () => {
                 });
 
                 expect(element.value).to.be.instanceOf(ZonedDateTime);
+                expectSameDates(element.value!, value);
                 expect(element.min).to.be.instanceOf(ZonedDateTime);
+                expectSameDates(element.min!, min);
                 expect(element.max).to.be.instanceOf(ZonedDateTime);
+                expectSameDates(element.max!, max);
             });
         });
 
@@ -2121,8 +2129,9 @@ describe('DateTimePicker', () => {
                 });
 
                 expect(element.value).to.be.instanceOf(CalendarDateTime);
-                expect(isSameDay(element.value!, value)).to.be.true;
+                expectSameDates(element.value!, value);
                 expect(element.min).to.be.instanceOf(CalendarDateTime);
+                expectSameDates(element.min!, min);
                 expect(element.max).to.be.undefined;
             });
 
@@ -2147,8 +2156,9 @@ describe('DateTimePicker', () => {
                 });
 
                 expect(element.value).to.be.instanceOf(ZonedDateTime);
+                expectSameDates(element.value!, value);
                 expect(element.max).to.be.instanceOf(ZonedDateTime);
-                expect(isSameDay(element.max!, max)).to.be.true;
+                expectSameDates(element.max!, max);
                 expect(element.min).to.be.undefined;
             });
 
@@ -2171,8 +2181,9 @@ describe('DateTimePicker', () => {
                 });
 
                 expect(element.min).to.be.instanceOf(ZonedDateTime);
+                expectSameDates(element.min!, min);
                 expect(element.max).to.be.instanceOf(ZonedDateTime);
-                expect(isSameDay(element.max!, max)).to.be.true;
+                expectSameDates(element.max!, max);
                 expect(element.value).to.be.undefined;
             });
 
@@ -2203,9 +2214,9 @@ describe('DateTimePicker', () => {
 
                 expect(element.value).to.be.instanceOf(ZonedDateTime);
                 expect(element.min).to.be.instanceOf(ZonedDateTime);
+                expectSameDates(element.min!, min);
                 expect(element.max).to.be.instanceOf(ZonedDateTime);
-                expect(isSameDay(element.min!, min)).to.be.true;
-                expect(isSameDay(element.max!, max)).to.be.true;
+                expectSameDates(element.max!, max);
             });
         });
     });
