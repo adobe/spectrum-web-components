@@ -35,6 +35,7 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
 import '@spectrum-web-components/infield-button/sp-infield-button.js';
 import {
     isAndroid,
+    isIPad,
     isIPhone,
 } from '@spectrum-web-components/shared/src/platform.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
@@ -808,10 +809,9 @@ export class NumberField extends TextfieldBase {
                 this.numberFormatter.resolvedOptions();
             const hasDecimals = maximumFractionDigits > 0;
             /* c8 ignore next 18 */
-            if (isIPhone()) {
-                // iPhone doesn't have a minus sign in either numeric or decimal.
-                // Note this is only for iPhone, not iPad, which always has both
-                // minus and decimal in numeric.
+            if (isIPhone() || isIPad()) {
+                // iPhone and iPad do not have a minus sign in either numeric or decimal,
+                // so we need to use text input mode to force the full keyboard to be displayed.
                 if (hasNegative) {
                     inputMode = 'text';
                 } else if (hasDecimals) {

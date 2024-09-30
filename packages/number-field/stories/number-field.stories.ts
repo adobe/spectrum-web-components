@@ -254,6 +254,7 @@ export const decimals = (args: StoryArgs): TemplateResult => {
 
 decimals.args = {
     value: 19.274,
+    min: -100,
 };
 
 export const germanDecimals = (args: StoryArgs): TemplateResult => {
