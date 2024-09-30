@@ -49,6 +49,37 @@ describe('ColorController', () => {
             .false;
     });
 
+    it('should default alpha to 1 when alpha is undefined in RGBA', () => {
+        const colorString = 'rgb(255, 0, 0)';
+        const result = colorController.validateColorString(colorString);
+
+        expect(result.alpha).to.equal(1);
+        expect(result.isValid).to.be.true;
+        expect(result.coords).to.deep.equal([1, 0, 0]);
+        expect(result.spaceId).to.equal('srgb');
+    });
+
+    it('should handle invalid color strings by trying to create a new Color object with a prefixed #', () => {
+        const invalidColorString = 'invalidColor';
+        const validHexColorString = 'ff0000'; // Equivalent to #ff0000
+
+        // Set the invalid color string
+        colorController.color = invalidColorString;
+
+        // Expect the color to be unchanged (default color)
+        expect(colorController.color.toString()).to.equal(
+            new Color('hsv', [0, 100, 100], 1).toString()
+        );
+
+        // Set the valid hex color string without #
+        colorController.color = validHexColorString;
+
+        // Expect the color to be set correctly
+        expect(colorController.color.toString()).to.equal(
+            new Color(`#${validHexColorString}`).toString()
+        );
+    });
+
     it('should set color correctly with string input', () => {
         const colorString = 'rgba(255, 0, 0, 1)';
         colorController.color = colorString;

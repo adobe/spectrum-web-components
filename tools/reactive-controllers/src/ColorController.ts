@@ -237,7 +237,9 @@ export class ColorController {
                 } catch (error) {
                     try {
                         newColor = new Color(`#${color}`);
-                    } catch (error) {}
+                    } catch (error) {
+                        return;
+                    }
                 }
             }
         } else if (!Array.isArray(color)) {
@@ -278,6 +280,7 @@ export class ColorController {
                 );
             }
         }
+
         if (!newColor) {
             newColor = new Color(color as DefaultColorTypes);
         }
