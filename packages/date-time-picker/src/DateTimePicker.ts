@@ -223,7 +223,6 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     private checkDatesCompliance(
-        changesValue: boolean,
         changesMin: boolean,
         changesMax: boolean
     ): void {
@@ -242,7 +241,7 @@ export class DateTimePicker extends ManageHelpText(
             }
         }
 
-        if (changesValue && this.value) {
+        if (this.value) {
             const isNonCompliantValue =
                 (this.min && this.value.compare(this.min) < 0) ||
                 (this.max && this.value.compare(this.max) > 0);
@@ -272,7 +271,7 @@ export class DateTimePicker extends ManageHelpText(
         if (changesLocale || changesPrecision) this.setDateFormatter();
 
         if (changesValue || changesMin || changesMax)
-            this.checkDatesCompliance(changesValue, changesMin, changesMax);
+            this.checkDatesCompliance(changesMin, changesMax);
 
         if (changesValue || changesLocale || changesPrecision)
             this.setSegments();
