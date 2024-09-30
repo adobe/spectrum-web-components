@@ -58,10 +58,19 @@ export class ColorField extends TextfieldBase {
             ? html`
                   <sp-color-handle
                       size="m"
-                      color="${this.colorController.color}"
+                      color="${this.colorController
+                          .getColor('srgb')
+                          .toString()}"
                   ></sp-color-handle>
               `
             : html``;
+    }
+
+    public getColorValue(): string {
+        if (!this.valid) {
+            return '';
+        }
+        return this.colorController.getColor('srgb').toString();
     }
 
     protected override render(): TemplateResult {
@@ -80,7 +89,13 @@ export class ColorField extends TextfieldBase {
                 this.value
             ).isValid;
             this.invalid = !validity;
+            if (this.valid) {
+                this.colorController.color = this.value;
+            }
+        } else {
+            this.valid = this.invalid = false;
         }
+
         return validity;
     }
 }

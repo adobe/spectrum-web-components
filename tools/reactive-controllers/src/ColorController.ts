@@ -86,6 +86,10 @@ export class ColorController {
             /^hsva\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*\)$/i,
             /^hsv\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*\)$/i,
         ];
+        const hexRegExpArray = [
+            /^#([A-Fa-f0-9]{6})(?:\s*([01](?:\.\d+)?))?$/,
+            /^#([A-Fa-f0-9]{3})(?:\s*([01](?:\.\d+)?))?$/,
+        ];
 
         const rgbaMatch = rgbRegExpArray
             .find((regex) => regex.test(color))
@@ -94,6 +98,9 @@ export class ColorController {
             .find((regex) => regex.test(color))
             ?.exec(color);
         const hsvaMatch = hsvRegExpArray
+            .find((regex) => regex.test(color))
+            ?.exec(color);
+        const hexMatch = hexRegExpArray
             .find((regex) => regex.test(color))
             ?.exec(color);
 
@@ -161,6 +168,48 @@ export class ColorController {
                 numericS <= 100 &&
                 numericV >= 0 &&
                 numericV <= 100 &&
+                numericA >= 0 &&
+                numericA <= 1;
+        } else if (hexMatch) {
+            const [, hex, alpha] = hexMatch;
+
+            // Function to process 2-digit or repeated 1-digit hex
+            const processHex = (hex: string): number => {
+                // For 3-digit hex values, repeat each digit
+                if (hex.length === 1) {
+                    hex = hex + hex;
+                }
+                return parseInt(hex, 16) / 255;
+            };
+
+            // Handle both 3-digit and 6-digit hex
+            let numericR, numericG, numericB;
+            if (hex.length === 3) {
+                // 3-digit hex (e.g., #3a7 -> #33aa77)
+                numericR = processHex(hex.substring(0, 1));
+                numericG = processHex(hex.substring(1, 2));
+                numericB = processHex(hex.substring(2, 3));
+            } else {
+                // 6-digit hex (e.g., #33aa77)
+                numericR = processHex(hex.substring(0, 2));
+                numericG = processHex(hex.substring(2, 4));
+                numericB = processHex(hex.substring(4, 6));
+            }
+
+            // Numeric alpha: if not provided, default to 1
+            const numericA = alpha ? Number(alpha) : 1;
+
+            // Validate the color values
+            result.spaceId = 'srgb';
+            result.coords = [numericR, numericG, numericB];
+            result.alpha = numericA;
+            result.isValid =
+                numericR >= 0 &&
+                numericR <= 1 &&
+                numericG >= 0 &&
+                numericG <= 1 &&
+                numericB >= 0 &&
+                numericB <= 1 &&
                 numericA >= 0 &&
                 numericA <= 1;
         }
