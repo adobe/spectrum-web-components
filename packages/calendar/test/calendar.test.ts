@@ -9,43 +9,29 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { sendKeys, sendMouse } from '@web/test-runner-commands';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { spy, stub } from 'sinon';
 import {
     CalendarDate,
     endOfMonth,
-    isSameDay,
     parseDate,
     today,
 } from '@internationalized/date';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { Button } from '@spectrum-web-components/button';
 import { Calendar, DAYS_PER_WEEK } from '@spectrum-web-components/calendar';
 import '@spectrum-web-components/calendar/sp-calendar.js';
 import '@spectrum-web-components/theme/sp-theme.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
+import { sendKeys, sendMouse } from '@web/test-runner-commands';
+import { spy, stub } from 'sinon';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    expectSameDates,
+    fixtureElement,
+    sendKeyMultipleTimes,
+} from './helpers.js';
 
 const LOCAL_TIME_ZONE = new Intl.DateTimeFormat().resolvedOptions().timeZone;
 const NEXT_BUTTON_SELECTOR = '[data-test-id="next-btn"]';
 const PREV_BUTTON_SELECTOR = '[data-test-id="prev-btn"]';
-
-async function fixtureElement({
-    locale = 'en-US',
-    props = {},
-}: {
-    locale?: string;
-    props?: { [prop: string]: unknown };
-} = {}): Promise<Calendar> {
-    const wrapped = await fixture<HTMLElement>(html`
-        <sp-theme lang=${locale} color="light" scale="medium">
-            <sp-calendar ...=${spreadProps(props)}></sp-calendar>
-        </sp-theme>
-    `);
-    const el = wrapped.querySelector('sp-calendar') as Calendar;
-    await elementUpdated(el);
-    return el;
-}
 
 describe('Calendar', () => {
     let element: Calendar;
@@ -87,12 +73,8 @@ describe('Calendar', () => {
     describe('Displays the correct initial month', () => {
         it('with no pre-selected value provided', async () => {
             const localToday = today(LOCAL_TIME_ZONE);
-            const isLocalTodayDisplayed = isSameDay(
-                element['currentDate'],
-                localToday
-            );
 
-            expect(isLocalTodayDisplayed).to.be.true;
+            expectSameDates(element['currentDate'], localToday);
         });
 
         it('with a valid pre-selected value', async () => {
@@ -102,12 +84,7 @@ describe('Calendar', () => {
             });
             await elementUpdated(element);
 
-            const isSelectedDateDisplayed = isSameDay(
-                element['currentDate'],
-                value
-            );
-
-            expect(isSelectedDateDisplayed).to.be.true;
+            expectSameDates(element['currentDate'], value);
         });
     });
 
@@ -145,8 +122,7 @@ describe('Calendar', () => {
             const focusedDay = element.shadowRoot.activeElement as HTMLElement;
             const focusedCalendarDate = parseDate(focusedDay.dataset.value!);
 
-            expect(isSameDay(focusedCalendarDate, element['currentDate'])).to.be
-                .true;
+            expectSameDates(focusedCalendarDate, element['currentDate']);
             expect(element['currentDate'].year).to.equal(fixedYear);
             expect(element['currentDate'].month).to.equal(fixedMonth + 2);
             expect(element['currentDate'].day).to.equal(1);
@@ -177,7 +153,7 @@ describe('Calendar', () => {
 
             const focusedDay = element.shadowRoot.activeElement as HTMLElement;
             const focusedCalendarDate = parseDate(focusedDay.dataset.value!);
-            expect(isSameDay(focusedCalendarDate, element.value!)).to.be.true;
+            expectSameDates(focusedCalendarDate, element.value!);
         });
 
         it("coming back to today's date", async () => {
@@ -347,15 +323,14 @@ describe('Calendar', () => {
                     ).day;
                     const nextMonthDay = 4;
 
-                    await Promise.all(
-                        Array.from({
-                            length:
-                                currentEndOfMonthDay -
-                                element['currentDate'].day +
-                                nextMonthDay,
-                        }).map(() => sendKeys({ press: 'ArrowRight' }))
+                    await sendKeyMultipleTimes(
+                        'ArrowRight',
+                        currentEndOfMonthDay -
+                            element['currentDate'].day +
+                            nextMonthDay
                     );
                     await elementUpdated(element);
+
                     expect(element['currentDate'].year).to.equal(fixedYear);
                     expect(element['currentDate'].month).to.equal(
                         fixedMonth + 1
@@ -369,15 +344,14 @@ describe('Calendar', () => {
                     ).day;
                     const prevMonthDay = 23;
 
-                    await Promise.all(
-                        Array.from({
-                            length:
-                                element['currentDate'].day +
-                                previousEndOfMonthDay -
-                                prevMonthDay,
-                        }).map(() => sendKeys({ press: 'ArrowLeft' }))
+                    await sendKeyMultipleTimes(
+                        'ArrowLeft',
+                        element['currentDate'].day +
+                            previousEndOfMonthDay -
+                            prevMonthDay
                     );
                     await elementUpdated(element);
+
                     expect(element['currentDate'].year).to.equal(fixedYear);
                     expect(element['currentDate'].month).to.equal(
                         fixedMonth - 1
@@ -399,11 +373,7 @@ describe('Calendar', () => {
                         daysIntoCurrentWeek -
                         DAYS_PER_WEEK;
 
-                    await Promise.all(
-                        Array.from({
-                            length: completedWeeks + 1,
-                        }).map(() => sendKeys({ press: 'ArrowUp' }))
-                    );
+                    await sendKeyMultipleTimes('ArrowUp', completedWeeks + 1);
                     await elementUpdated(element);
 
                     expect(element['currentDate'].year).to.equal(fixedYear);
@@ -428,10 +398,9 @@ describe('Calendar', () => {
                         (uncompletedWeeks + 1) * DAYS_PER_WEEK -
                         currentEndOfMonthDay;
 
-                    await Promise.all(
-                        Array.from({
-                            length: uncompletedWeeks + 1,
-                        }).map(() => sendKeys({ press: 'ArrowDown' }))
+                    await sendKeyMultipleTimes(
+                        'ArrowDown',
+                        uncompletedWeeks + 1
                     );
                     await elementUpdated(element);
 
@@ -474,8 +443,8 @@ describe('Calendar', () => {
             expect(element.value).to.be.undefined;
             expect(element.min).to.not.be.undefined;
             expect(element.max).to.not.be.undefined;
-            expect(isSameDay(element.min!, min)).to.be.true;
-            expect(isSameDay(element.max!, max)).to.be.true;
+            expectSameDates(element.min!, min);
+            expectSameDates(element.max!, max);
         });
 
         it("by not selecting a day that doesn't comply", async () => {
@@ -507,12 +476,10 @@ describe('Calendar', () => {
             });
             await elementUpdated(element);
 
-            const isInitialCurrentDate = isSameDay(
+            expectSameDates(
                 element['currentDate'],
                 new CalendarDate(fixedYear, fixedMonth, fixedDay)
             );
-
-            expect(isInitialCurrentDate).to.be.true;
             expect(changeSpy.callCount).to.equal(0);
             expect(element.value).to.be.undefined;
         });
@@ -531,51 +498,37 @@ describe('Calendar', () => {
             });
 
             it('using the right arrow key', async () => {
-                await Promise.all(
-                    Array.from({ length: dayOffset + 3 }).map(() =>
-                        sendKeys({ press: 'ArrowRight' })
-                    )
-                );
+                await sendKeyMultipleTimes('ArrowRight', dayOffset + 3);
                 await elementUpdated(element);
 
-                const isMaxReached = isSameDay(element['currentDate'], max);
-                expect(isMaxReached).to.be.true;
+                expectSameDates(element['currentDate'], max);
             });
 
             it('using the left arrow key', async () => {
-                await Promise.all(
-                    Array.from({ length: dayOffset + 3 }).map(() =>
-                        sendKeys({ press: 'ArrowLeft' })
-                    )
-                );
+                await sendKeyMultipleTimes('ArrowLeft', dayOffset + 3);
                 await elementUpdated(element);
 
-                const isMinReached = isSameDay(element['currentDate'], min);
-                expect(isMinReached).to.be.true;
+                expectSameDates(element['currentDate'], min);
             });
 
             it('using the up arrow key', async () => {
-                await Promise.all(
-                    Array.from({ length: dayOffset / DAYS_PER_WEEK + 1 }).map(
-                        () => sendKeys({ press: 'ArrowUp' })
-                    )
+                await sendKeyMultipleTimes(
+                    'ArrowUp',
+                    dayOffset / DAYS_PER_WEEK + 1
                 );
                 await elementUpdated(element);
 
-                const isMinReached = isSameDay(element['currentDate'], min);
-                expect(isMinReached).to.be.true;
+                expectSameDates(element['currentDate'], min);
             });
 
             it('using the down arrow key', async () => {
-                await Promise.all(
-                    Array.from({ length: dayOffset / DAYS_PER_WEEK + 1 }).map(
-                        () => sendKeys({ press: 'ArrowDown' })
-                    )
+                await sendKeyMultipleTimes(
+                    'ArrowDown',
+                    dayOffset / DAYS_PER_WEEK + 1
                 );
                 await elementUpdated(element);
 
-                const isMaxReached = isSameDay(element['currentDate'], max);
-                expect(isMaxReached).to.be.true;
+                expectSameDates(element['currentDate'], max);
             });
         });
     });
@@ -605,33 +558,27 @@ describe('Calendar', () => {
                 position: [centerX, centerY],
             });
             await elementUpdated(element);
-            const isDateSelected =
-                element.value &&
-                isSameDay(element.value, availableDateToSelect);
 
-            expect(isDateSelected).to.be.true;
+            expect(element.value).to.not.be.undefined;
+            expectSameDates(element.value!, availableDateToSelect);
         });
 
         it('when an available day is acted upon using Enter', async () => {
             availableDayElement.focus();
             await sendKeys({ press: 'Enter' });
             await elementUpdated(element);
-            const isDateSelected =
-                element.value &&
-                isSameDay(element.value, availableDateToSelect);
 
-            expect(isDateSelected).to.be.true;
+            expect(element.value).to.not.be.undefined;
+            expectSameDates(element.value!, availableDateToSelect);
         });
 
         it('when an available day is acted upon using Space', async () => {
             availableDayElement.focus();
             await sendKeys({ press: 'Space' });
             await elementUpdated(element);
-            const isDateSelected =
-                element.value &&
-                isSameDay(element.value, availableDateToSelect);
 
-            expect(isDateSelected).to.be.true;
+            expect(element.value).to.not.be.undefined;
+            expectSameDates(element.value!, availableDateToSelect);
         });
     });
 
