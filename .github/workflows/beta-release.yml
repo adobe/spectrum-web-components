@@ -68,4 +68,4 @@ jobs:
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
-                  yarn lerna publish from-package --dist-tag beta
+                  yarn lerna publish from-package --dist-tag beta --skip-git
