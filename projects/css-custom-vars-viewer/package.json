@@ -6,6 +6,7 @@
     "author": "najikahalsema",
     "main": "dist/src/index.js",
     "module": "dist/src/index.js",
+    "private": true,
     "type": "module",
     "exports": {
         ".": "./dist/src/index.js",
