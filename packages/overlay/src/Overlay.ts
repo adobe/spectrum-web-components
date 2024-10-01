@@ -503,11 +503,12 @@ export class Overlay extends OverlayFeatures {
 
     protected handleBeforetoggle(event: Event & { newState: string }): void {
         if (event.newState !== 'open') {
-            this.handleBrowserClose();
+            this.handleBrowserClose(event);
         }
     }
 
-    protected handleBrowserClose(): void {
+    protected handleBrowserClose(event: Event): void {
+        event.stopPropagation();
         if (!this.strategy?.activelyOpening) {
             this.open = false;
             return;
