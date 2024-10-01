@@ -19,9 +19,7 @@ jobs:
                   node-version: '20'
 
             - name: Install dependencies
-              run: |
-                  nvm use
-                  yarn install
+              run: yarn install
 
             - name: Configure NPM for Lerna publish
               env:
