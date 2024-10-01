@@ -65,6 +65,8 @@ class OverlayStack {
         // Ensure that this value is cleared even if the work in this method goes undone.
         const composedPath = this.pointerdownPath;
         this.pointerdownPath = undefined;
+        const lastOverlay = this.lastOverlay;
+        this.lastOverlay = undefined;
         if (!this.stack.length) return;
         if (!composedPath?.length) return;
 
@@ -80,13 +82,15 @@ class OverlayStack {
                     // The last Overlay in the stack is not the last Overlay at `pointerdown` time and has a
                     // `triggerInteraction` of "longpress", meaning it was opened by this poitner interaction
                     (i === lastIndex &&
-                        overlay !== this.lastOverlay &&
+                        overlay !== lastOverlay &&
                         overlay.triggerInteraction === 'longpress')
             );
             return (
                 !inStack &&
                 !overlay.shouldPreventClose() &&
-                overlay.type !== 'manual'
+                overlay.type !== 'manual' &&
+                // Don't close if this overlay is modal and not on top of the overlay stack.
+                !(overlay.type === 'modal' && lastOverlay !== overlay)
             );
         }) as Overlay[];
         nonAncestorOverlays.reverse();
@@ -140,8 +144,8 @@ class OverlayStack {
 
     /**
      * When overlays are added manage the open state of exisiting overlays appropriately:
-     * - 'modal': should close other overlays
-     * - 'page': should close other overlays
+     * - 'modal': should close other non-'modal' and non-'manual' overlays
+     * - 'page': should close other non-'modal' and non-'manual' overlays
      * - 'auto': should close other 'auto' overlays and other 'hint' overlays, but not 'manual' overlays
      * - 'manual': shouldn't close other overlays
      * - 'hint': shouldn't close other overlays and give way to all other overlays on a trigger
@@ -172,7 +176,11 @@ class OverlayStack {
                     const path = event.composedPath();
                     this.stack.forEach((overlayEl) => {
                         const inPath = path.find((el) => el === overlayEl);
-                        if (!inPath && overlayEl.type !== 'manual') {
+                        if (
+                            !inPath &&
+                            overlayEl.type !== 'manual' &&
+                            overlayEl.type !== 'modal'
+                        ) {
                             this.closeOverlay(overlayEl);
                         }
                     });
