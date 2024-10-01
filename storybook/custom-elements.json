@@ -7802,6 +7802,24 @@
             },
             {
               "kind": "method",
+              "name": "handleKeyDown",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
               "name": "renderLink",
               "privacy": "protected",
               "return": {

@@ -1,0 +1,13 @@
+import { i as i$1 } from './lit-element-BulMEkr1.js';
+import { S as SpectrumElement, n as n$1, d as defineElement } from './define-element-C_3bgzm7.js';
+import { x } from './lit-html-COgVUehj.js';
+
+const i=i$1`
+    :host{pointer-events:none;visibility:hidden;opacity:0;transition:transform var(--mod-overlay-animation-duration,var(--spectrum-animation-duration-100,.13s))ease-in-out,opacity var(--mod-overlay-animation-duration,var(--spectrum-animation-duration-100,.13s))ease-in-out,visibility 0s linear var(--mod-overlay-animation-duration,var(--spectrum-animation-duration-100,.13s))}:host([opened]){pointer-events:auto;visibility:visible;opacity:1;transition-delay:var(--mod-overlay-animation-duration-opened,var(--spectrum-animation-duration-0,0s))}:host([enter-from=left][opened]){transform:translateX(var(--mod-overlay-animation-distance,var(--spectrum-overlay-animation-distance,6px)))}:host([enter-from=right][opened]){transform:translateX(calc(var(--mod-overlay-animation-distance,var(--spectrum-overlay-animation-distance,6px))*-1))}:host{box-sizing:border-box;padding-block:var(--spectrum-quickactions-padding-y,var(--spectrum-global-dimension-size-50));padding-inline:var(--spectrum-quickactions-padding-x,var(--spectrum-global-dimension-size-50));block-size:var(--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500));border-radius:var(--spectrum-quickactions-border-radius,var(--spectrum-alias-border-radius-regular));background-color:var(--spectrum-quickactions-background-color,var(--spectrum-alias-background-color-quickactions));justify-content:center;align-items:center;display:inline-flex}[name=action]+::slotted([slot=action]){margin-inline-start:var(--spectrum-quickactions-button-gap-x,var(--spectrum-global-dimension-size-100))}#overlay{background-color:var(--spectrum-quickactions-overlay-color,var(--spectrum-alias-background-color-quickactions-overlay))}:host([text-only]) [name=action]+::slotted([slot=action]){margin-inline-start:var(--spectrum-quickactions-text-button-gap-x,var(--spectrum-global-dimension-size-50))}
+`;
+
+var n=Object.defineProperty;var p=(s,t,r,o)=>{for(var e=void 0,l=s.length-1,a;l>=0;l--)(a=s[l])&&(e=(a(t,r,e))||e);return e&&n(t,r,e),e};class QuickActions extends SpectrumElement{constructor(){super(...arguments);this.opened=!1;this.textOnly=!1;}static get styles(){return [i]}update(r){super.update(r);}render(){return x`
+            <slot></slot>
+        `}}p([n$1({type:Boolean,reflect:!0})],QuickActions.prototype,"opened"),p([n$1({type:Boolean,attribute:"text-only",hasChanged(){return !1}})],QuickActions.prototype,"textOnly");
+
+defineElement("sp-quick-actions",QuickActions);
