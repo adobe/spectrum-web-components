@@ -19,7 +19,12 @@ jobs:
                   node-version: '20'
 
             - name: Install dependencies
-              run: yarn install
+              run: yarn install --frozen-lockfile
+
+            - name: Set Git identity
+              run: |
+                  git config --global user.email "rcarvalho@adobe.com"
+                  git config --global user.name "Ruben Carvalho"
 
             - name: Configure NPM for Lerna publish
               env:
