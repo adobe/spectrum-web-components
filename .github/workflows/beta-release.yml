@@ -28,35 +28,47 @@ jobs:
 
             - name: Get Lerna current version
               id: get_lerna_version
-              run: echo "::set-output name=version::$(npx lerna ls --json | jq -r '.[0].version')"
+              run: |
+                  CURRENT_VERSION=$(npx lerna ls --json | jq -r '.[0].version')
+                  echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
+            - name: Calculate next minor version
+              id: calculate_next_minor_version
+              run: |
+                  NEXT_MINOR_VERSION=$(npx semver "${{ steps.get_lerna_version.outputs.version }}" -i minor)
+                  echo "next_minor_version=$NEXT_MINOR_VERSION" >> $GITHUB_OUTPUT
 
             - name: Get latest published beta version
               id: get_latest_published_beta
-              run: echo "::set-output name=latest_beta_version::$(npm view @spectrum-web-components/button@beta version || echo 'none')"
+              run: |
+                  LATEST_BETA_VERSION=$(npm view @spectrum-web-components/button@beta version || echo "none")
+                  echo "latest_beta_version=$LATEST_BETA_VERSION" >> $GITHUB_OUTPUT
 
             - name: Calculate next beta version
               id: calculate_next_beta_version
               run: |
-                  LERNA_VERSION="${{ steps.get_lerna_version.outputs.version }}"
+                  NEXT_MINOR_VERSION="${{ steps.calculate_next_minor_version.outputs.next_minor_version }}"
                   LATEST_BETA_VERSION="${{ steps.get_latest_published_beta.outputs.latest_beta_version }}"
 
                   if [ "$LATEST_BETA_VERSION" == "none" ]; then
-                      echo "::set-output name=beta_version::$LERNA_VERSION-beta.0"
+                      BETA_VERSION="$NEXT_MINOR_VERSION-beta.0"
                   else
                       LATEST_BETA_BASE_VERSION=$(echo "$LATEST_BETA_VERSION" | sed 's/-beta\.[0-9]*//')
 
-                      if [ "$LERNA_VERSION" != "$LATEST_BETA_BASE_VERSION" ]; then
-                          echo "::set-output name=beta_version::$LERNA_VERSION-beta.0"
+                      if [ "$NEXT_MINOR_VERSION" != "$LATEST_BETA_BASE_VERSION" ]; then
+                          BETA_VERSION="$NEXT_MINOR_VERSION-beta.0"
                       else
-                          CURRENT_BETA_NUMBER=$(echo "$LATEST_BETA_VERSION" | sed 's/.*beta\.\([0-9]\+\)/\1/')
+                          CURRENT_BETA_NUMBER=$(echo "$LATEST_BETA_VERSION" | sed 's/.*-beta\.\([0-9]\+\)/\1/')
                           NEXT_BETA_NUMBER=$((CURRENT_BETA_NUMBER + 1))
-                          echo "::set-output name=beta_version::$LERNA_VERSION-beta.$NEXT_BETA_NUMBER"
+                          BETA_VERSION="$NEXT_MINOR_VERSION-beta.$NEXT_BETA_NUMBER"
                       fi
                   fi
 
+                  echo "beta_version=$BETA_VERSION" >> $GITHUB_OUTPUT
+
             - name: Update package versions for beta release
               run: |
-                  npx lerna version ${{ steps.calculate_next_beta_version.outputs.beta_version }} --no-git-tag-version --no-push --yes
+                  npx lerna version "${{ steps.calculate_next_beta_version.outputs.beta_version }}" --no-git-tag-version --no-push --yes
 
             - name: Configure NPM for Lerna publish
               env:
@@ -69,4 +81,4 @@ jobs:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
                   git commit -am "chore: publish beta version ${{ steps.calculate_next_beta_version.outputs.beta_version }}"
-                  yarn lerna publish from-package --dist-tag beta --no-git-tag-version --no-push --yes --loglevel verbose
+                  npx lerna publish from-package --dist-tag beta --no-git-tag-version --no-push --yes
