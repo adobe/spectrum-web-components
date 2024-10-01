@@ -1,6 +1,6 @@
 {
     "name": "@types/swc",
-    "version": "0.48.1-beta.0",
+    "version": "0.48.0",
     "private": true,
     "main": "",
     "types": "./global.d.ts",
