@@ -3,7 +3,7 @@ name: Beta Release
 on:
     push:
         branches:
-            - ruben/beta-releases
+            - main
 
 jobs:
     release:
