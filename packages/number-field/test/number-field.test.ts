@@ -1239,6 +1239,9 @@ describe('NumberField', () => {
             el.min = -10;
             await elementUpdated(el);
             expect(el.focusElement.inputMode).to.equal('numeric');
+            el.min = undefined;
+            await elementUpdated(el);
+            expect(el.focusElement.inputMode).to.equal('numeric');
             el.formatOptions = {
                 minimumFractionDigits: 1,
                 maximumFractionDigits: 2,
@@ -1258,6 +1261,9 @@ describe('NumberField', () => {
             el.min = -10;
             await elementUpdated(el);
             expect(el.focusElement.inputMode).to.equal('text');
+            el.min = undefined;
+            await elementUpdated(el);
+            expect(el.focusElement.inputMode).to.equal('text');
             el.formatOptions = {
                 minimumFractionDigits: 1,
                 maximumFractionDigits: 2,
@@ -1275,6 +1281,9 @@ describe('NumberField', () => {
             await elementUpdated(el);
             expect(el.focusElement.inputMode).to.equal('numeric');
             el.min = -10;
+            await elementUpdated(el);
+            expect(el.focusElement.inputMode).to.equal('numeric');
+            el.min = undefined;
             await elementUpdated(el);
             expect(el.focusElement.inputMode).to.equal('numeric');
             el.formatOptions = {

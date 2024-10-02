@@ -803,7 +803,8 @@ export class NumberField extends TextfieldBase {
         }
 
         if (changes.has('min') || changes.has('formatOptions')) {
-            const hasNegative = typeof this.min !== 'undefined' && this.min < 0;
+            const hasNegative = typeof this.min === 'undefined' || this.min < 0;
+
             const { maximumFractionDigits } =
                 this.numberFormatter.resolvedOptions();
             const hasDecimals =
