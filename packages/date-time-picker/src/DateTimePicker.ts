@@ -16,7 +16,6 @@ import {
     getLocalTimeZone,
     now,
     Time,
-    toCalendarDate,
     toCalendarDateTime,
     toZoned,
     ZonedDateTime,
@@ -125,7 +124,9 @@ export class DateTimePicker extends ManageHelpText(
      * The granularity used to display the segments of the component's value
      */
     @property({ type: String, reflect: true })
-    precision: Precision = SegmentTypes.Minute;
+    precision: Precision = Precisions.Minute;
+
+    // private isUserSetPrecision = false;
 
     /**
      * Whether the `value` held by the form control is invalid.
@@ -176,10 +177,12 @@ export class DateTimePicker extends ManageHelpText(
         return this.firstEditableSegment;
     }
 
-    private get mostSpecificDateValue(): DateValue {
+    private get mostSpecificDateValue(): DateValue | undefined {
         const dateValuesDefined = [this.value, this.min, this.max].filter(
             (date) => date !== undefined
         ) as DateValue[];
+
+        if (dateValuesDefined.length === 0) return;
 
         const zonedDateTimes = dateValuesDefined.filter(isZonedDateTime);
         if (zonedDateTimes.length > 0) return zonedDateTimes[0];
@@ -193,20 +196,33 @@ export class DateTimePicker extends ManageHelpText(
 
     private currentDate: ZonedDateTime = now(this.timeZone);
 
-    private convertToMostSpecificDateValue(): void {
+    private updateCurrentDate(): void {
+        if (this.value) this.currentDate = toZoned(this.value, this.timeZone);
+    }
+
+    private convertDateValuesToMostSpecific(): void {
         const dateValue = this.mostSpecificDateValue;
+        if (!dateValue) return;
+
         if (isZonedDateTime(dateValue)) {
             this.timeZone = dateValue.timeZone;
             this.value = this.value && toZoned(this.value, this.timeZone);
             this.min = this.min && toZoned(this.min, this.timeZone);
             this.max = this.max && toZoned(this.max, this.timeZone);
-        } else if (isCalendarDateTime(dateValue)) {
+
+            this.updateCurrentDate();
+            return;
+        }
+
+        this.timeZone = getLocalTimeZone();
+
+        if (isCalendarDateTime(dateValue)) {
             this.value = this.value && toCalendarDateTime(this.value);
             this.min = this.min && toCalendarDateTime(this.min);
             this.max = this.max && toCalendarDateTime(this.max);
         }
 
-        if (this.value) this.currentDate = toZoned(this.value, this.timeZone);
+        this.updateCurrentDate();
     }
 
     constructor() {
@@ -226,8 +242,6 @@ export class DateTimePicker extends ManageHelpText(
         changesMin: boolean,
         changesMax: boolean
     ): void {
-        this.convertToMostSpecificDateValue();
-
         if ((changesMin || changesMax) && this.min && this.max) {
             const isValidInterval = this.min.compare(this.max) < 0;
             if (!isValidInterval) {
@@ -270,13 +284,15 @@ export class DateTimePicker extends ManageHelpText(
         if (changesLocale) this.setNumberParser();
         if (changesLocale || changesPrecision) this.setDateFormatter();
 
-        if (changesValue || changesMin || changesMax)
+        if (changesValue || changesMin || changesMax) {
+            this.convertDateValuesToMostSpecific();
             this.checkDatesCompliance(changesMin, changesMax);
+        }
 
         if (changesValue || changesLocale || changesPrecision)
             this.setSegments();
 
-        if (changesSegments) this.updateValue();
+        if (changesSegments) this.setValueFromSegments();
     }
 
     override render(): TemplateResult {
@@ -346,7 +362,12 @@ export class DateTimePicker extends ManageHelpText(
             const minute = this.segments.minute?.value ?? 0;
             const second = this.segments.second?.value ?? 0;
             const time = new Time(hour, minute, second);
+
+            const dateValue = this.mostSpecificDateValue;
             this.value = toCalendarDateTime(calendarValue, time);
+
+            if (dateValue && isZonedDateTime(dateValue))
+                this.value = toZoned(this.value, this.timeZone);
         }
     }
 
@@ -569,7 +590,7 @@ export class DateTimePicker extends ManageHelpText(
         );
     }
 
-    private updateValue(): void {
+    private setValueFromSegments(): void {
         const formattedDate = this.segments.getFormattedDate(this.precision);
         if (!formattedDate) {
             this.value = undefined;
@@ -578,11 +599,10 @@ export class DateTimePicker extends ManageHelpText(
         }
 
         const dateValue = this.mostSpecificDateValue;
-        if (isZonedDateTime(dateValue))
+
+        if (dateValue && isZonedDateTime(dateValue))
             this.value = toZoned(formattedDate, this.timeZone);
-        else if (isCalendarDateTime(dateValue) || this.includesTime)
-            this.value = toCalendarDateTime(formattedDate);
-        else this.value = toCalendarDate(formattedDate);
+        else this.value = formattedDate;
 
         this.dispatchChange();
     }

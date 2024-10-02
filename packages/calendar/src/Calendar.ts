@@ -182,8 +182,6 @@ export class Calendar extends SpectrumElement {
         changesMin: boolean,
         changesMax: boolean
     ): void {
-        this.convertToCalendarDates();
-
         if ((changesMin || changesMax) && this.min && this.max) {
             const isValidInterval = this.min.compare(this.max) < 0;
             if (!isValidInterval) {
@@ -225,7 +223,10 @@ export class Calendar extends SpectrumElement {
         const changesValue = changedProperties.has('value');
         const changesDates = changesMin || changesMax || changesValue;
 
-        if (changesDates) this.checkDatesCompliance(changesMin, changesMax);
+        if (changesDates) {
+            this.convertToCalendarDates();
+            this.checkDatesCompliance(changesMin, changesMax);
+        }
 
         const previousMonth = changedProperties.get('currentDate');
         const changesMonth =
