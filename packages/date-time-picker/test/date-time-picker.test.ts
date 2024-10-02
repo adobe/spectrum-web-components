@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CalendarDate,
     CalendarDateTime,
+    getLocalTimeZone,
     ZonedDateTime,
 } from '@internationalized/date';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
@@ -2245,6 +2246,35 @@ describe('DateTimePicker', () => {
                 expect(element.max).to.be.instanceOf(ZonedDateTime);
                 expectSameDates(element.max!, max);
             });
+        });
+
+        it("resetting currentDate's timeZone to local when the type changes back to one with no timeZone", async () => {
+            const value = new ZonedDateTime(
+                fixedYear,
+                fixedMonth,
+                fixedDay,
+                'America/Los_Angeles',
+                -28800000
+            );
+            element = await fixtureElement({
+                props: { value },
+            });
+
+            expect(element.value).to.be.instanceOf(ZonedDateTime);
+            expectSameDates(element.value!, value);
+            expectSameDates(element['currentDate'], value);
+            expect(element['currentDate'].timeZone).to.equal(
+                'America/Los_Angeles'
+            );
+
+            element.value = new CalendarDate(fixedYear, fixedMonth, fixedDay);
+            await elementUpdated(element);
+
+            expect(element.value).to.be.instanceOf(CalendarDate);
+            expectSameDates(element.value!, value);
+            expect(element['currentDate'].timeZone).to.equal(
+                getLocalTimeZone()
+            );
         });
     });
 
