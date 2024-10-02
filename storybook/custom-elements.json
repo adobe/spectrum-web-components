@@ -18487,6 +18487,802 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/color-wheel/src/ColorWheel.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ColorWheel",
+          "slots": [
+            {
+              "description": "a custom gradient visually outlining the available color values",
+              "name": "gradient"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Disable this control. It will not receive focus or events",
+              "attribute": "disabled",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "focused",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "focused",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "handle",
+              "type": {
+                "text": "ColorHandle"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'hue'",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "step",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "1",
+              "attribute": "step"
+            },
+            {
+              "kind": "field",
+              "name": "languageResolver",
+              "privacy": "private",
+              "default": "new LanguageResolutionController(this)"
+            },
+            {
+              "kind": "field",
+              "name": "colorController",
+              "privacy": "private",
+              "default": "new ColorController(this, {\n        /* c8 ignore next 3 */\n        applyColorToState: () => {\n            return;\n        },\n        extractColorFromState: (controller) => ({\n            ...(controller.getColor('hsl') as HSL),\n            h: this.value,\n        }),\n        maintains: 'saturation',\n    })"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "type": {
+                "text": "ColorValue"
+              },
+              "privacy": "public",
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "altered",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_altered",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "input",
+              "type": {
+                "text": "HTMLInputElement"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "focusElement",
+              "type": {
+                "text": "DisableableElement"
+              },
+              "privacy": "private",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleKeydown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleInput",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & { target: HTMLInputElement }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & { target: HTMLInputElement }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "focusOptions",
+                  "default": "{}",
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "forwardFocus",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleFocus",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleBlur",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "boundingClientRect",
+              "type": {
+                "text": "DOMRect"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_pointerDown",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "method",
+              "name": "handlePointerdown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handlePointermove",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handlePointerup",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "calculateHandlePosition",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                },
+                {
+                  "description": ": PointerEvent on slider",
+                  "name": ""
+                }
+              ],
+              "description": "Returns the value under the cursor"
+            },
+            {
+              "kind": "method",
+              "name": "handleGradientPointerdown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "calculateStyleData",
+              "return": {
+                "type": {
+                  "text": "{\n        clipPath: string;\n        clipPathBorders: string;\n        diameter: number;\n        handleLocationStyles: string;\n    }"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "observer",
+              "type": {
+                "text": "WithSWCResizeObserver['ResizeObserver'] | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "[$endPolyfillCoordination]",
+              "type": {
+                "text": "EndPolyfillCoordinationCallback | null"
+              },
+              "privacy": "private",
+              "default": "null",
+              "inheritedFrom": {
+                "name": "FocusVisiblePolyfillMixin",
+                "module": "tools/shared/src/focus-visible.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autofocus",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "description": "When this control is rendered, focus it automatically",
+              "attribute": "autofocus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
+              "attribute": "tabIndex",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onPointerdownManagementOfTabIndex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageFocusElementTabindex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "tabIndex",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "manipulatingTabindex",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selfManageFocusElement",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "blur",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "click",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageAutoFocus",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleDisabledChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "disabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "oldDisabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getUpdateComplete",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "Promise<boolean>"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autofocusReady",
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "VERSION",
+              "static": true,
+              "default": "version",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "tools/base/src/Base.js"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "input",
+              "type": {
+                "text": "Event"
+              },
+              "description": "The value of the Color Wheel has changed."
+            },
+            {
+              "name": "change",
+              "type": {
+                "text": "Event"
+              },
+              "description": "An alteration to the value of the Color Wheel has been committed by the user."
+            },
+            {
+              "name": "keydown",
+              "type": {
+                "text": "KeyboardEvent"
+              },
+              "description": "Trick :focus-visible polyfill into thinking keyboard based focus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "fieldName": "dir"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disable this control. It will not receive focus or events",
+              "fieldName": "disabled",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.ts"
+              }
+            },
+            {
+              "name": "focused",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "focused"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'hue'",
+              "fieldName": "label"
+            },
+            {
+              "name": "step",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "fieldName": "step"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "number"
+              },
+              "fieldName": "value"
+            },
+            {
+              "name": "color",
+              "type": {
+                "text": "ColorValue"
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "autofocus",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When this control is rendered, focus it automatically",
+              "fieldName": "autofocus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.ts"
+              }
+            },
+            {
+              "name": "tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
+              "fieldName": "tabIndex",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "tools/shared/src/focusable.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "Focusable",
+            "package": "@spectrum-web-components/shared/src/focusable.js"
+          },
+          "tagName": "sp-color-wheel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ColorWheel",
+          "declaration": {
+            "name": "ColorWheel",
+            "module": "packages/color-wheel/src/ColorWheel.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/color-slider/src/ColorSlider.js",
       "declarations": [
         {
@@ -19316,802 +20112,6 @@
           "declaration": {
             "name": "ColorSlider",
             "module": "packages/color-slider/src/ColorSlider.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/color-wheel/src/ColorWheel.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ColorWheel",
-          "slots": [
-            {
-              "description": "a custom gradient visually outlining the available color values",
-              "name": "gradient"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Disable this control. It will not receive focus or events",
-              "attribute": "disabled",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "focused",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "focused",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "handle",
-              "type": {
-                "text": "ColorHandle"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'hue'",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "step",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "1",
-              "attribute": "step"
-            },
-            {
-              "kind": "field",
-              "name": "languageResolver",
-              "privacy": "private",
-              "default": "new LanguageResolutionController(this)"
-            },
-            {
-              "kind": "field",
-              "name": "colorController",
-              "privacy": "private",
-              "default": "new ColorController(this, {\n        /* c8 ignore next 3 */\n        applyColorToState: () => {\n            return;\n        },\n        extractColorFromState: (controller) => ({\n            ...(controller.getColor('hsl') as HSL),\n            h: this.value,\n        }),\n        maintains: 'saturation',\n    })"
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "attribute": "value"
-            },
-            {
-              "kind": "field",
-              "name": "color",
-              "type": {
-                "text": "ColorValue"
-              },
-              "privacy": "public",
-              "attribute": "color"
-            },
-            {
-              "kind": "field",
-              "name": "altered",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_altered",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "0"
-            },
-            {
-              "kind": "field",
-              "name": "input",
-              "type": {
-                "text": "HTMLInputElement"
-              },
-              "privacy": "public"
-            },
-            {
-              "kind": "field",
-              "name": "focusElement",
-              "type": {
-                "text": "DisableableElement"
-              },
-              "privacy": "private",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleKeydown",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "KeyboardEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleInput",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event & { target: HTMLInputElement }"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event & { target: HTMLInputElement }"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "focus",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "focusOptions",
-                  "default": "{}",
-                  "type": {
-                    "text": "FocusOptions"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "forwardFocus",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleFocus",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleBlur",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "boundingClientRect",
-              "type": {
-                "text": "DOMRect"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_pointerDown",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "method",
-              "name": "handlePointerdown",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handlePointermove",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handlePointerup",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "calculateHandlePosition",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": ""
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                },
-                {
-                  "description": ": PointerEvent on slider",
-                  "name": ""
-                }
-              ],
-              "description": "Returns the value under the cursor"
-            },
-            {
-              "kind": "method",
-              "name": "handleGradientPointerdown",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "calculateStyleData",
-              "return": {
-                "type": {
-                  "text": "{\n        clipPath: string;\n        clipPathBorders: string;\n        diameter: number;\n        handleLocationStyles: string;\n    }"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "observer",
-              "type": {
-                "text": "WithSWCResizeObserver['ResizeObserver'] | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "[$endPolyfillCoordination]",
-              "type": {
-                "text": "EndPolyfillCoordinationCallback | null"
-              },
-              "privacy": "private",
-              "default": "null",
-              "inheritedFrom": {
-                "name": "FocusVisiblePolyfillMixin",
-                "module": "tools/shared/src/focus-visible.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "autofocus",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "description": "When this control is rendered, focus it automatically",
-              "attribute": "autofocus",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "tabIndex",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
-              "attribute": "tabIndex",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_tabIndex",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "0",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "onPointerdownManagementOfTabIndex",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageFocusElementTabindex",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "tabIndex",
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "manipulatingTabindex",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "selfManageFocusElement",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "blur",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "click",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageAutoFocus",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleDisabledChanged",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "disabled",
-                  "type": {
-                    "text": "boolean"
-                  }
-                },
-                {
-                  "name": "oldDisabled",
-                  "type": {
-                    "text": "boolean"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getUpdateComplete",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "Promise<boolean>"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "autofocusReady",
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.js"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "VERSION",
-              "static": true,
-              "default": "version",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "tools/base/src/Base.js"
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "input",
-              "type": {
-                "text": "Event"
-              },
-              "description": "The value of the Color Wheel has changed."
-            },
-            {
-              "name": "change",
-              "type": {
-                "text": "Event"
-              },
-              "description": "An alteration to the value of the Color Wheel has been committed by the user."
-            },
-            {
-              "name": "keydown",
-              "type": {
-                "text": "KeyboardEvent"
-              },
-              "description": "Trick :focus-visible polyfill into thinking keyboard based focus",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "fieldName": "dir"
-            },
-            {
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Disable this control. It will not receive focus or events",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.ts"
-              }
-            },
-            {
-              "name": "focused",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "focused"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'hue'",
-              "fieldName": "label"
-            },
-            {
-              "name": "step",
-              "type": {
-                "text": "number"
-              },
-              "default": "1",
-              "fieldName": "step"
-            },
-            {
-              "name": "value",
-              "type": {
-                "text": "number"
-              },
-              "fieldName": "value"
-            },
-            {
-              "name": "color",
-              "type": {
-                "text": "ColorValue"
-              },
-              "fieldName": "color"
-            },
-            {
-              "name": "autofocus",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "When this control is rendered, focus it automatically",
-              "fieldName": "autofocus",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.ts"
-              }
-            },
-            {
-              "name": "tabIndex",
-              "type": {
-                "text": "number"
-              },
-              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
-              "fieldName": "tabIndex",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "tools/shared/src/focusable.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "Focusable",
-            "package": "@spectrum-web-components/shared/src/focusable.js"
-          },
-          "tagName": "sp-color-wheel",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ColorWheel",
-          "declaration": {
-            "name": "ColorWheel",
-            "module": "packages/color-wheel/src/ColorWheel.js"
           }
         }
       ]
