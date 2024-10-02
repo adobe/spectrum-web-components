@@ -16,23 +16,33 @@ import {
     getLocalTimeZone,
     ZonedDateTime,
 } from '@internationalized/date';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    oneEvent,
+} from '@open-wc/testing';
+import { Calendar } from '@spectrum-web-components/calendar';
 import {
     DateTimePicker,
     EditableSegmentType,
     Precisions,
     SegmentTypes,
 } from '@spectrum-web-components/date-time-picker';
-import { sendKeys } from '@web/test-runner-commands';
+import { PickerButton } from '@spectrum-web-components/picker-button';
+import { sendKeys, sendMouse } from '@web/test-runner-commands';
 import { stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import {
+    dispatchCalendarChange,
     type EditableSegments,
     expectPlaceholder,
     expectPlaceholders,
     expectSameDates,
     fixtureElement,
     getEditableSegments,
+    openCalendar,
     sendKeyMultipleTimes,
 } from './helpers.js';
 
@@ -230,15 +240,194 @@ describe('DateTimePicker', () => {
     });
 
     describe('Manages the calendar', () => {
-        it('opening it using the keyboard');
-        it('opening it using the pointer');
-        it("closing it using the 'esc' key");
-        it('closing it when a date is selected');
-        it('passing the value and min/max constraints');
+        it('by displaying the component with the calendar closed by default', () => {
+            expect(element['isCalendarOpen']).to.be.false;
+        });
 
-        // TODO: test that DTP's value is updated with the correct type (CalendarDate | CalendarDateTime | ZonedDateTime)
-        // and that segments are set
-        it("handling the 'change' event");
+        it('opening and closing it using the keyboard', async () => {
+            const calendarButton = element.shadowRoot!.querySelector(
+                'sp-picker-button'
+            ) as PickerButton;
+
+            const opened = oneEvent(element, 'sp-opened');
+            calendarButton.focus();
+            await sendKeys({ press: 'Enter' });
+            await opened;
+
+            expect(element['isCalendarOpen']).to.be.true;
+
+            const closed = oneEvent(element, 'sp-closed');
+            await sendKeys({ press: 'Escape' });
+            await closed;
+
+            expect(element['isCalendarOpen']).to.be.false;
+        });
+
+        it('opening and closing it using the pointer', async () => {
+            const calendarButton = element.shadowRoot!.querySelector(
+                'sp-picker-button'
+            ) as PickerButton;
+
+            const rect = calendarButton.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const opened = oneEvent(element, 'sp-opened');
+            await sendMouse({
+                type: 'click',
+                position: [centerX, centerY],
+            });
+            await opened;
+
+            expect(element['isCalendarOpen']).to.be.true;
+
+            const closed = oneEvent(element, 'sp-closed');
+            await sendMouse({
+                type: 'click',
+                position: [0, 0], // click outside the calendar
+            });
+            await closed;
+
+            expect(element['isCalendarOpen']).to.be.false;
+        });
+
+        it('passing the value and min/max constraints', async () => {
+            const min = new CalendarDateTime(2022, 5, 1, 15, 30, 20);
+            const max = new CalendarDate(2022, 5, 31);
+            const value = new CalendarDate(2022, 5, 15);
+
+            element = await fixtureElement({
+                props: {
+                    min,
+                    max,
+                    value,
+                },
+            });
+            await elementUpdated(element);
+
+            const calendarEl = element.shadowRoot!.querySelector(
+                'sp-calendar'
+            ) as Calendar;
+
+            expectSameDates(calendarEl.min!, element.min!);
+            expectSameDates(calendarEl.max!, element.max!);
+            expectSameDates(calendarEl.value!, element.value!);
+        });
+
+        describe("handling the 'change' event", () => {
+            it('by closing the calendar', async () => {
+                await openCalendar(element);
+                expect(element['isCalendarOpen']).to.be.true;
+
+                const closed = oneEvent(element, 'sp-closed');
+                dispatchCalendarChange(element, new CalendarDate(2022, 5, 15));
+                await closed;
+
+                expect(element['isCalendarOpen']).to.be.false;
+            });
+
+            it('by updating the value with the CalendarDate type', async () => {
+                element = await fixtureElement({
+                    props: { precision: Precisions.Day },
+                });
+                await elementUpdated(element);
+                editableSegments = getEditableSegments(element);
+                await openCalendar(element);
+
+                const calendarValue = new CalendarDate(2022, 5, 15);
+                dispatchCalendarChange(element, calendarValue);
+                await elementUpdated(element);
+
+                expectSameDates(element.value!, calendarValue);
+                expect(element.value!).to.be.instanceOf(CalendarDate);
+
+                const year = editableSegments.getByType(SegmentTypes.Year);
+                const month = editableSegments.getByType(SegmentTypes.Month);
+                const day = editableSegments.getByType(SegmentTypes.Day);
+
+                expect(year.innerText).to.equal('2022');
+                expect(month.innerText).to.equal('05');
+                expect(day.innerText).to.equal('15');
+            });
+
+            it('by updating the value with the CalendarDateTime type including user-selected time values', async () => {
+                element = await fixtureElement({
+                    locale: 'en-GB',
+                    props: { precision: Precisions.Second },
+                });
+                await elementUpdated(element);
+                editableSegments = getEditableSegments(element);
+                const year = editableSegments.getByType(SegmentTypes.Year);
+                const month = editableSegments.getByType(SegmentTypes.Month);
+                const day = editableSegments.getByType(SegmentTypes.Day);
+                const hour = editableSegments.getByType(SegmentTypes.Hour);
+                const minute = editableSegments.getByType(SegmentTypes.Minute);
+                const second = editableSegments.getByType(SegmentTypes.Second);
+
+                hour.focus();
+                await sendKeys({ type: '14' });
+                await elementUpdated(element);
+
+                await openCalendar(element);
+                const calendarValue = new CalendarDate(2022, 5, 15);
+                dispatchCalendarChange(element, calendarValue);
+                await elementUpdated(element);
+
+                expectSameDates(element.value!, calendarValue);
+                expect(element.value!).to.be.instanceOf(CalendarDateTime);
+                expect(year.innerText).to.equal('2022');
+                expect(month.innerText).to.equal('05');
+                expect(day.innerText).to.equal('15');
+                expect(hour.innerText).to.equal('14');
+                expect(minute.innerText).to.equal('00');
+                expect(second.innerText).to.equal('00');
+            });
+
+            it('by updating the value with the ZonedDateTime type including user-selected time values', async () => {
+                const timeZone = 'America/Los_Angeles';
+                element = await fixtureElement({
+                    locale: 'en-GB',
+                    props: {
+                        precision: Precisions.Second,
+                        min: new ZonedDateTime(
+                            2022,
+                            5,
+                            15,
+                            timeZone,
+                            -28800000
+                        ),
+                    },
+                });
+                await elementUpdated(element);
+                editableSegments = getEditableSegments(element);
+                const year = editableSegments.getByType(SegmentTypes.Year);
+                const month = editableSegments.getByType(SegmentTypes.Month);
+                const day = editableSegments.getByType(SegmentTypes.Day);
+                const hour = editableSegments.getByType(SegmentTypes.Hour);
+                const minute = editableSegments.getByType(SegmentTypes.Minute);
+                const second = editableSegments.getByType(SegmentTypes.Second);
+                minute.focus();
+                await sendKeys({ type: '36' });
+                await elementUpdated(element);
+
+                await openCalendar(element);
+                const calendarValue = new CalendarDate(2022, 5, 20);
+                dispatchCalendarChange(element, calendarValue);
+                await elementUpdated(element);
+
+                expectSameDates(element.value!, calendarValue);
+                expect(element.value!).to.be.instanceOf(ZonedDateTime);
+                expect(year.innerText).to.equal('2022');
+                expect(month.innerText).to.equal('05');
+                expect(day.innerText).to.equal('20');
+                expect(hour.innerText).to.equal('00');
+                expect(minute.innerText).to.equal('36');
+                expect(second.innerText).to.equal('00');
+                expect((element.value! as ZonedDateTime).timeZone).to.equal(
+                    timeZone
+                );
+            });
+        });
     });
 
     // TODO: with the precision update PR
