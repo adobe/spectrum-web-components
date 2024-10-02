@@ -156,7 +156,7 @@ export class DateTimePicker extends ManageHelpText(
     private segments: DateTimeSegments = new DateTimeSegments([]);
 
     @state()
-    public isCalendarOpen = false;
+    private isCalendarOpen = false;
 
     @query('.editable-segment')
     firstEditableSegment!: HTMLDivElement;
@@ -170,6 +170,7 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     private timeZone = getLocalTimeZone();
+    private cachedLocalTime: ZonedDateTime = now(this.timeZone);
     private dateFormatter!: DateFormatter;
     private numberParser!: NumberParser;
 
@@ -194,10 +195,9 @@ export class DateTimePicker extends ManageHelpText(
         return dates[0];
     }
 
-    private currentDate: ZonedDateTime = now(this.timeZone);
-
-    private updateCurrentDate(): void {
-        if (this.value) this.currentDate = toZoned(this.value, this.timeZone);
+    private get currentDate(): ZonedDateTime {
+        if (this.value) return toZoned(this.value, this.timeZone);
+        return this.cachedLocalTime;
     }
 
     private convertDateValuesToMostSpecific(): void {
@@ -209,8 +209,6 @@ export class DateTimePicker extends ManageHelpText(
             this.value = this.value && toZoned(this.value, this.timeZone);
             this.min = this.min && toZoned(this.min, this.timeZone);
             this.max = this.max && toZoned(this.max, this.timeZone);
-
-            this.updateCurrentDate();
             return;
         }
 
@@ -221,8 +219,6 @@ export class DateTimePicker extends ManageHelpText(
             this.min = this.min && toCalendarDateTime(this.min);
             this.max = this.max && toCalendarDateTime(this.max);
         }
-
-        this.updateCurrentDate();
     }
 
     constructor() {
@@ -234,7 +230,6 @@ export class DateTimePicker extends ManageHelpText(
 
     public clear(): void {
         this.value = undefined;
-        this.currentDate = now(this.timeZone);
         this.setSegments();
     }
 
@@ -269,6 +264,9 @@ export class DateTimePicker extends ManageHelpText(
                 this.value = undefined;
             }
         }
+
+        if (!this.min && !this.max && !this.value)
+            this.timeZone = getLocalTimeZone();
     }
 
     protected override willUpdate(changedProperties: PropertyValues): void {
@@ -594,7 +592,6 @@ export class DateTimePicker extends ManageHelpText(
         const formattedDate = this.segments.getFormattedDate(this.precision);
         if (!formattedDate) {
             this.value = undefined;
-            this.currentDate = now(this.timeZone);
             return;
         }
 

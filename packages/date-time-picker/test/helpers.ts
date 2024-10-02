@@ -10,8 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { isSameDay } from '@internationalized/date';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { DateValue } from '@spectrum-web-components/calendar';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    oneEvent,
+} from '@open-wc/testing';
+import { Calendar, DateValue } from '@spectrum-web-components/calendar';
 import {
     DateTimePicker,
     EditableSegmentType,
@@ -94,4 +100,29 @@ export function sendKeyMultipleTimes(
 
 export function expectSameDates(a: DateValue, b: DateValue): void {
     expect(isSameDay(a, b)).to.be.true;
+}
+
+export function dispatchCalendarChange(
+    element: DateTimePicker,
+    date: DateValue
+): void {
+    const calendarEl = element.shadowRoot!.querySelector(
+        'sp-calendar'
+    ) as Calendar;
+
+    calendarEl.value = date;
+    calendarEl.dispatchEvent(
+        new CustomEvent('change', { bubbles: true, composed: true })
+    );
+}
+
+export async function openCalendar(element: DateTimePicker): Promise<void> {
+    const calendarButton = element.shadowRoot!.querySelector(
+        'sp-picker-button'
+    ) as HTMLElement;
+
+    const opened = oneEvent(element, 'sp-opened');
+    calendarButton.focus();
+    await sendKeys({ press: 'Enter' });
+    await opened;
 }
