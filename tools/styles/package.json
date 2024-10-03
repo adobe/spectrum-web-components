@@ -122,11 +122,11 @@
         "@spectrum-web-components/base": "^0.47.2"
     },
     "devDependencies": {
-        "@spectrum-css/commons": "^11.0.0-s2-foundations.12",
+        "@spectrum-css/commons": "^11.0.0-s2-foundations.14",
         "@spectrum-css/expressvars": "^3.0.9",
         "@spectrum-css/tokens": "^@spectrum-css/tokens@14.3.1",
-        "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.0.0-s2-foundations.21",
-        "@spectrum-css/typography": "^7.0.0-s2-foundations.14",
+        "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.0.0-s2-foundations.22",
+        "@spectrum-css/typography": "^7.0.0-s2-foundations.16",
         "@spectrum-css/vars": "^9.0.8"
     },
     "customElements": "custom-elements.json",

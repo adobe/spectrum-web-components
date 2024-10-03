@@ -377,10 +377,14 @@
         --spectrum-alert-banner-bottom-to-text
     );
     --spectrum-color-area-border-width: var(--spectrum-border-width-100);
-    --spectrum-color-area-border-rounding: var(--spectrum-corner-radius-100);
+    --spectrum-color-area-border-rounding: var(
+        --spectrum-corner-radius-medium-size-small
+    );
     --spectrum-color-wheel-color-area-margin: 12px;
     --spectrum-color-slider-border-width: 1px;
-    --spectrum-color-slider-border-rounding: 4px;
+    --spectrum-color-slider-border-rounding: var(
+        --spectrum-corner-radius-medium-size-small
+    );
     --spectrum-floating-action-button-drop-shadow-blur: 12px;
     --spectrum-floating-action-button-drop-shadow-y: 4px;
     --spectrum-illustrated-message-maximum-width: 380px;
@@ -506,7 +510,50 @@
     --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large: var(
         --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large
     );
-    --spectrum-corner-radius-75: 2px;
+    --spectrum-corner-radius-0: 0px;
+    --spectrum-corner-radius-75: 3px;
+    --spectrum-corner-radius-100: 4px;
+    --spectrum-corner-radius-200: 5px;
+    --spectrum-corner-radius-300: 6px;
+    --spectrum-corner-radius-400: 7px;
+    --spectrum-corner-radius-500: 8px;
+    --spectrum-corner-radius-600: 9px;
+    --spectrum-corner-radius-700: 10px;
+    --spectrum-corner-radius-800: 16px;
+    --spectrum-corner-radius-1000: 0.5;
+    --spectrum-corner-radius-none: var(--spectrum-corner-radius-0);
+    --spectrum-corner-radius-small-default: var(--spectrum-corner-radius-100);
+    --spectrum-corner-radius-medium-default: var(--spectrum-corner-radius-500);
+    --spectrum-corner-radius-large-default: var(--spectrum-corner-radius-700);
+    --spectrum-corner-radius-extra-large-default: var(
+        --spectrum-corner-radius-800
+    );
+    --spectrum-corner-radius-full: var(--spectrum-corner-radius-1000);
+    --spectrum-corner-radius-small-size-small: var(--spectrum-corner-radius-75);
+    --spectrum-corner-radius-small-size-medium: var(
+        --spectrum-corner-radius-100
+    );
+    --spectrum-corner-radius-small-size-large: var(
+        --spectrum-corner-radius-200
+    );
+    --spectrum-corner-radius-small-size-extra-large: var(
+        --spectrum-corner-radius-300
+    );
+    --spectrum-corner-radius-medium-size-extra-small: var(
+        --spectrum-corner-radius-300
+    );
+    --spectrum-corner-radius-medium-size-small: var(
+        --spectrum-corner-radius-400
+    );
+    --spectrum-corner-radius-medium-size-medium: var(
+        --spectrum-corner-radius-500
+    );
+    --spectrum-corner-radius-medium-size-large: var(
+        --spectrum-corner-radius-600
+    );
+    --spectrum-corner-radius-medium-size-extra-large: var(
+        --spectrum-corner-radius-700
+    );
     --spectrum-drop-shadow-x: 0px;
     --spectrum-android-elevation: 2dp;
     --spectrum-spacing-50: 2px;

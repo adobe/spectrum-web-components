@@ -399,8 +399,6 @@
     --spectrum-side-navigation-bottom-to-text: 8px;
     --spectrum-tray-top-to-content-area: 4px;
     --spectrum-accordion-top-to-text-spacious-small: 9px;
-    --spectrum-corner-radius-100: 4px;
-    --spectrum-corner-radius-200: 8px;
     --spectrum-drop-shadow-y: 1px;
     --spectrum-drop-shadow-blur: 4px;
     --spectrum-text-to-visual-50: 6px;
@@ -592,10 +590,6 @@
     --spectrum-coachmark-buttongroup-mobile-display: none;
     --spectrum-coachmark-menu-display: inline-flex;
     --spectrum-coachmark-menu-mobile-display: none;
-    --spectrum-well-padding: var(--spectrum-spacing-300);
-    --spectrum-well-margin-top: var(--spectrum-spacing-75);
-    --spectrum-well-min-width: 240px;
-    --spectrum-well-border-radius: var(--spectrum-spacing-75);
     --spectrum-workflow-icon-size-xxl: 32px;
     --spectrum-workflow-icon-size-xxs: 12px;
 
@@ -648,4 +642,6 @@
 
     --spectrum-ui-icon-medium-display: block;
     --spectrum-ui-icon-large-display: none;
+
+    --spectrum-contextual-help-content-spacing: var(--spectrum-spacing-100);
 }

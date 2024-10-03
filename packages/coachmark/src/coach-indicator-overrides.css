@@ -33,6 +33,12 @@
     --spectrum-coach-indicator-ring-block-size: var(
         --system-coach-indicator-ring-block-size
     );
+    --spectrum-coach-indicator-ring-dark-color: var(
+        --system-coach-indicator-ring-dark-color
+    );
+    --spectrum-coach-indicator-ring-light-color: var(
+        --system-coach-indicator-ring-light-color
+    );
     --spectrum-coach-indicator-top: var(--system-coach-indicator-top);
     --spectrum-coach-indicator-left: var(--system-coach-indicator-left);
     --spectrum-coach-animation-indicator-ring-duration: var(

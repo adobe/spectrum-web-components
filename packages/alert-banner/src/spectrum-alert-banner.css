@@ -58,7 +58,10 @@ governing permissions and limitations under the License.
     );
     background-color: var(
         --mod-alert-banner-neutral-background,
-        var(--spectrum-alert-banner-neutral-background)
+        var(
+            --mod-alert-banner-neutral-background,
+            var(--spectrum-alert-banner-neutral-background)
+        )
     );
     border: 0 solid #0000;
     border: var(--highcontrast-alert-banner-border-width, 0) solid

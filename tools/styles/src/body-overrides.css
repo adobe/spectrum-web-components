@@ -22,30 +22,30 @@
     --spectrum-body-font-size: var(--system-body-font-size);
 }
 
-.spectrum-Body--sizeXS {
+.spectrum-Body.spectrum-Body--sizeXS {
     --spectrum-body-font-size: var(--system-body-size-xs-font-size);
 }
 
-.spectrum-Body--sizeS {
+.spectrum-Body.spectrum-Body--sizeS {
     --spectrum-body-font-size: var(--system-body-size-s-font-size);
 }
 
-.spectrum-Body--sizeM {
+.spectrum-Body.spectrum-Body--sizeM {
     --spectrum-body-font-size: var(--system-body-size-m-font-size);
 }
 
-.spectrum-Body--sizeL {
+.spectrum-Body.spectrum-Body--sizeL {
     --spectrum-body-font-size: var(--system-body-size-l-font-size);
 }
 
-.spectrum-Body--sizeXL {
+.spectrum-Body.spectrum-Body--sizeXL {
     --spectrum-body-font-size: var(--system-body-size-xl-font-size);
 }
 
-.spectrum-Body--sizeXXL {
+.spectrum-Body.spectrum-Body--sizeXXL {
     --spectrum-body-font-size: var(--system-body-size-xxl-font-size);
 }
 
-.spectrum-Body--sizeXXXL {
+.spectrum-Body.spectrum-Body--sizeXXXL {
     --spectrum-body-font-size: var(--system-body-size-xxxl-font-size);
 }

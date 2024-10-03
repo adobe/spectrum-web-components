@@ -726,21 +726,6 @@
     --spectrum-icon-color-green-primary-default: var(--spectrum-green-900);
     --spectrum-icon-color-red-primary-default: var(--spectrum-red-900);
     --spectrum-icon-color-yellow-primary-default: var(--spectrum-yellow-400);
-    --spectrum-menu-item-background-color-default-rgb: 0, 0, 0;
-    --spectrum-menu-item-background-color-default-opacity: 0;
-    --spectrum-menu-item-background-color-default: rgba(
-        var(--spectrum-menu-item-background-color-default-rgb),
-        var(--spectrum-menu-item-background-color-default-opacity)
-    );
-    --spectrum-menu-item-background-color-hover: var(
-        --spectrum-transparent-black-200
-    );
-    --spectrum-menu-item-background-color-down: var(
-        --spectrum-transparent-black-200
-    );
-    --spectrum-menu-item-background-color-key-focus: var(
-        --spectrum-transparent-black-200
-    );
     --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-800-rgb);
     --spectrum-dropindicator-color: var(--spectrum-blue-800);
 
@@ -776,10 +761,6 @@
     --spectrum-badge-label-icon-color-primary: var(--spectrum-white);
 
     --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-800);
-    --spectrum-coach-indicator-ring-dark-color: var(--spectrum-gray-900);
-    --spectrum-coach-indicator-ring-light-color: var(--spectrum-gray-25);
-
-    --spectrum-well-border-color: var(--spectrum-black-rgb);
 
     --spectrum-steplist-current-marker-color-key-focus: var(
         --spectrum-blue-800
@@ -826,18 +807,5 @@
     );
     --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-800);
 
-    --spectrum-swatch-border-color-rgb: 0, 0, 0;
-
-    --spectrum-swatch-border-color-opacity: 0.51;
-
-    --spectrum-swatch-border-color: rgba(
-        var(--spectrum-swatch-border-color-rgb),
-        var(--spectrum-swatch-border-color-opacity)
-    );
-    --spectrum-swatch-border-color-light-rgb: 0, 0, 0;
-    --spectrum-swatch-border-color-light-opacity: 0.2;
-    --spectrum-swatch-border-color-light: rgba(
-        var(--spectrum-swatch-border-color-light-rgb),
-        var(--spectrum-swatch-border-color-light-opacity)
-    );
+    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-900-rgb);
 }
