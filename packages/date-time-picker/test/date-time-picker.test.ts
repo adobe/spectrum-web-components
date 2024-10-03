@@ -86,7 +86,7 @@ describe('DateTimePicker', () => {
         await expect(element).to.be.accessible();
     });
 
-    describe('Manages the value', () => {
+    describe.only('Manages the value', () => {
         describe('by defining it only when all segments are defined', () => {
             Object.values(Precisions).forEach((precision) => {
                 it(`on '${precision}' precision`, async () => {
@@ -112,6 +112,117 @@ describe('DateTimePicker', () => {
                     expect(element.value).to.not.be.undefined;
                 });
             });
+        });
+
+        it('by being a CalendarDate when precision is Day', async () => {
+            element = await fixtureElement({
+                props: {
+                    precision: Precisions.Day,
+                },
+            });
+            await elementUpdated(element);
+            editableSegments = getEditableSegments(element);
+
+            const year = editableSegments.getByType(SegmentTypes.Year);
+            const month = editableSegments.getByType(SegmentTypes.Month);
+            const day = editableSegments.getByType(SegmentTypes.Day);
+
+            year.focus();
+            await sendKeys({ type: '2022' });
+            month.focus();
+            await sendKeys({ type: '5' });
+            day.focus();
+            await sendKeys({ type: '4' });
+            await elementUpdated(element);
+
+            expectSameDates(element.value!, new CalendarDate(2022, 5, 4));
+            expect(element.value).to.be.instanceOf(CalendarDate);
+
+            month.focus();
+            await sendKeys({ type: '6' });
+            await elementUpdated(element);
+
+            expectSameDates(element.value!, new CalendarDate(2022, 6, 4));
+            expect(element.value).to.be.instanceOf(CalendarDate);
+        });
+
+        [Precisions.Hour, Precisions.Minute, Precisions.Second].forEach(
+            (precision) => {
+                it(`by being a CalendarDateTime when precision is ${precision}`, async () => {
+                    element = await fixtureElement({
+                        props: {
+                            precision,
+                        },
+                    });
+                    await elementUpdated(element);
+                    editableSegments = getEditableSegments(element);
+                    const month = editableSegments.getByType(
+                        SegmentTypes.Month
+                    );
+
+                    while (editableSegments.length > 0) {
+                        const segment = editableSegments.shift()!;
+                        segment.focus();
+
+                        await sendKeys({ press: 'ArrowUp' });
+                        await elementUpdated(element);
+                    }
+
+                    expectSameDates(
+                        element.value!,
+                        new CalendarDateTime(fixedYear, 1, 1, 0, 0, 0)
+                    );
+                    expect(element.value).to.be.instanceOf(CalendarDateTime);
+
+                    month.focus();
+                    await sendKeys({ type: '5' });
+                    await elementUpdated(element);
+                    expectSameDates(
+                        element.value!,
+                        new CalendarDateTime(fixedYear, 5, 1, 0, 0, 0)
+                    );
+                    expect(element.value).to.be.instanceOf(CalendarDateTime);
+                });
+            }
+        );
+
+        it('by being a ZonedDateTime when it is the most specific date value', async () => {
+            const timeZone = 'America/Los_Angeles';
+            const offset = -28800000;
+            element = await fixtureElement({
+                locale: 'en-GB',
+                props: {
+                    precision: Precisions.Minute,
+                    min: new ZonedDateTime(2000, 1, 10, timeZone, offset),
+                    max: new CalendarDateTime(3000, 12, 20, 15, 15, 15),
+                },
+            });
+            await elementUpdated(element);
+            editableSegments = getEditableSegments(element);
+            const month = editableSegments.getByType(SegmentTypes.Month);
+
+            while (editableSegments.length > 0) {
+                const segment = editableSegments.shift()!;
+                segment.focus();
+
+                await sendKeys({ press: 'ArrowUp' });
+                await elementUpdated(element);
+            }
+
+            expectSameDates(
+                element.value!,
+                new ZonedDateTime(fixedYear, 1, 1, timeZone, offset)
+            );
+            expect(element.value).to.be.instanceOf(ZonedDateTime);
+
+            month.focus();
+            await sendKeys({ type: '5' });
+            await elementUpdated(element);
+            expectSameDates(
+                element.value!,
+                new ZonedDateTime(fixedYear, 5, 1, timeZone, offset)
+            );
+            expect(element.value).to.be.instanceOf(ZonedDateTime);
         });
 
         describe('by updating it on a 24h format', () => {
