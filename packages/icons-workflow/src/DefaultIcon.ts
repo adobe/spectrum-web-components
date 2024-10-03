@@ -34,27 +34,27 @@ export const DefaultIcon = ({
             aria-hidden=${hidden ? 'true' : 'false'}
             aria-label=${hidden ? undefined : title}
         >
-            <rect width="32" height="32" rx="8" fill="#292929" />
+            <rect width="64" height="64" rx="16" fill="#292929" />
             <mask
                 id="mask0_76606_3852"
                 style="mask-type:alpha"
                 maskUnits="userSpaceOnUse"
-                x="6"
-                y="6"
-                width="20"
-                height="20"
+                x="12"
+                y="12"
+                width="40"
+                height="40"
             >
                 <path
-                    d="M16 24.75C11.1753 24.75 7.25 20.8252 7.25 16C7.25 11.1748 11.1753 7.25 16 7.25C20.8247 7.25 24.75 11.1748 24.75 16C24.75 20.8252 20.8247 24.75 16 24.75ZM16 8.75C12.0024 8.75 8.75 12.002 8.75 16C8.75 19.998 12.0024 23.25 16 23.25C19.9976 23.25 23.25 19.998 23.25 16C23.25 12.002 19.9976 8.75 16 8.75Z"
+                    d="M32 49.5C22.3506 49.5 14.5 41.6504 14.5 32C14.5 22.3496 22.3506 14.5 32 14.5C41.6494 14.5 49.5 22.3496 49.5 32C49.5 41.6504 41.6494 49.5 32 49.5ZM32 17.5C24.0048 17.5 17.5 24.004 17.5 32C17.5 39.996 24.0048 46.5 32 46.5C39.9952 46.5 46.5 39.996 46.5 32C46.5 24.004 39.9952 17.5 32 17.5Z"
                     fill="#292929"
                 />
             </mask>
             <g mask="url(#mask0_76606_3852)">
-                <rect x="6" y="6" width="20" height="20" fill="white" />
+                <rect x="12" y="12" width="40" height="40" fill="white" />
             </g>
             <defs>
                 <clipPath id="clip0_76606_3852">
-                    <rect width="32" height="32" rx="8" fill="white" />
+                    <rect width="64" height="64" rx="16" fill="white" />
                 </clipPath>
             </defs>
         </svg>
