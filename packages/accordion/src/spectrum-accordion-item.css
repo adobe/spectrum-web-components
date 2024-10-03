@@ -34,7 +34,7 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host:first-child {
+:host(:first-child) {
     border-block-start: 1px solid #0000;
     border-color: var(
         --mod-accordion-divider-color,

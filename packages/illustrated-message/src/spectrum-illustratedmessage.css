@@ -19,13 +19,13 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    pointer-events: auto;
-    pointer-events: var(--mod-illustrated-message-pointer-events, auto);
+    block-size: 100%;
     display: flex;
     display: var(--mod-illustrated-message-display, flex);
-    max-inline-size: var(--mod-illustrated-message-content-maximum-width);
-    block-size: 100%;
     text-align: center;
+    pointer-events: auto;
+    pointer-events: var(--mod-illustrated-message-pointer-events, auto);
+    max-inline-size: var(--mod-illustrated-message-content-maximum-width);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -60,17 +60,9 @@ governing permissions and limitations under the License.
 }
 
 #heading {
-    max-inline-size: var(
-        --mod-illustrated-message-heading-max-inline-size,
-        var(--spectrum-illustrated-message-heading-max-inline-size)
-    );
     font-family: var(
         --mod-illustrated-message-title-font-family,
         var(--spectrum-illustrated-message-title-font-family)
-    );
-    font-size: var(
-        --mod-illustrated-message-title-font-size,
-        var(--spectrum-illustrated-message-title-font-size)
     );
     font-weight: var(
         --mod-illustrated-message-title-font-weight,
@@ -80,6 +72,10 @@ governing permissions and limitations under the License.
         --mod-illustrated-message-title-font-style,
         var(--spectrum-illustrated-message-title-font-style)
     );
+    font-size: var(
+        --mod-illustrated-message-title-font-size,
+        var(--spectrum-illustrated-message-title-font-size)
+    );
     line-height: var(
         --mod-illustrated-message-title-line-height,
         var(--spectrum-illustrated-message-title-line-height)
@@ -88,29 +84,25 @@ governing permissions and limitations under the License.
         --mod-illustrated-message-title-color,
         var(--spectrum-illustrated-message-title-color)
     );
+    max-inline-size: var(
+        --mod-illustrated-message-heading-max-inline-size,
+        var(--spectrum-illustrated-message-heading-max-inline-size)
+    );
     margin-block-start: 0;
     margin-block-end: var(--mod-illustrated-message-heading-to-body, 0);
 }
 
 #description {
+    position: var(--mod-illustrated-message-description-position);
+    z-index: var(--mod-illustrated-message-description-z-index);
     pointer-events: auto;
     pointer-events: var(
         --mod-illustrated-message-description-pointer-events,
         auto
     );
-    position: var(--mod-illustrated-message-description-position);
-    z-index: var(--mod-illustrated-message-description-z-index);
-    max-inline-size: var(
-        --mod-illustrated-message-description-max-inline-size,
-        var(--spectrum-illustrated-message-description-max-inline-size)
-    );
     font-family: var(
         --mod-illustrated-message-description-font-family,
         var(--spectrum-illustrated-message-description-font-family)
-    );
-    font-size: var(
-        --mod-illustrated-message-description-font-size,
-        var(--spectrum-illustrated-message-description-font-size)
     );
     font-weight: var(
         --mod-illustrated-message-description-font-weight,
@@ -120,6 +112,10 @@ governing permissions and limitations under the License.
         --mod-illustrated-message-description-font-style,
         var(--spectrum-illustrated-message-description-font-style)
     );
+    font-size: var(
+        --mod-illustrated-message-description-font-size,
+        var(--spectrum-illustrated-message-description-font-size)
+    );
     line-height: var(
         --mod-illustrated-message-description-line-height,
         var(--spectrum-illustrated-message-description-line-height)
@@ -127,6 +123,10 @@ governing permissions and limitations under the License.
     color: var(
         --mod-illustrated-message-description-color,
         var(--spectrum-illustrated-message-description-color)
+    );
+    max-inline-size: var(
+        --mod-illustrated-message-description-max-inline-size,
+        var(--spectrum-illustrated-message-description-max-inline-size)
     );
     margin-block-start: var(
         --mod-illustrated-message-heading-to-description,

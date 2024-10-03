@@ -402,8 +402,8 @@
     --spectrum-actionbutton-background-color-focus-selected: var(
         --system-action-button-static-black-background-color-focus-selected
     );
-    --spectrum-actionbutton-background-color-selected-disabled: var(
-        --system-action-button-static-black-background-color-selected-disabled
+    --spectrum-actionbutton-background-color-disabled-selected: var(
+        --system-action-button-static-black-background-color-disabled-selected
     );
     --spectrum-actionbutton-border-color-default: var(
         --system-action-button-static-black-border-color-default
@@ -420,8 +420,8 @@
     --spectrum-actionbutton-border-color-disabled: var(
         --system-action-button-static-black-border-color-disabled
     );
-    --spectrum-actionbutton-border-color-selected-disabled: var(
-        --system-action-button-static-black-border-color-selected-disabled
+    --spectrum-actionbutton-border-color-disabled-selected: var(
+        --system-action-button-static-black-border-color-disabled-selected
     );
     --spectrum-actionbutton-content-color-default: var(
         --system-action-button-static-black-content-color-default
@@ -519,8 +519,8 @@
     --spectrum-actionbutton-border-color-disabled: var(
         --system-action-button-static-white-border-color-disabled
     );
-    --spectrum-actionbutton-border-color-selected-disabled: var(
-        --system-action-button-static-white-border-color-selected-disabled
+    --spectrum-actionbutton-border-color-disabled-selected: var(
+        --system-action-button-static-white-border-color-disabled-selected
     );
     --spectrum-actionbutton-content-color-default: var(
         --system-action-button-static-white-content-color-default

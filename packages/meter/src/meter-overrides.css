@@ -65,12 +65,6 @@
     --spectrum-progressbar-fill-color-white: var(
         --system-progress-bar-fill-color-white
     );
-    --spectrum-meter-min-width: var(--system-progress-bar-meter-min-width);
-    --spectrum-meter-max-width: var(--system-progress-bar-meter-max-width);
-    --spectrum-meter-inline-size: var(--system-progress-bar-meter-inline-size);
-    --spectrum-meter-thickness-s: var(--system-progress-bar-meter-thickness-s);
-    --spectrum-meter-thickness-l: var(--system-progress-bar-meter-thickness-l);
-    --spectrum-meter-top-to-text: var(--system-progress-bar-meter-top-to-text);
 }
 
 :host([size='s']) {
@@ -131,4 +125,11 @@
     --spectrum-progressbar-spacing-top-to-text: var(
         --system-progress-bar-size-xl-spacing-top-to-text
     );
+}
+
+:host {
+    --spectrum-meter-min-width: var(--system-meter-min-width);
+    --spectrum-meter-max-width: var(--system-meter-max-width);
+    --spectrum-meter-inline-size: var(--system-meter-inline-size);
+    --spectrum-meter-top-to-text: var(--system-meter-top-to-text);
 }

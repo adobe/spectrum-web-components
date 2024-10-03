@@ -44,6 +44,7 @@ const tokenPackages = [
     'banner',
     'button',
     'buttongroup',
+    'breadcrumb',
     'checkbox',
     'card',
     'clearbutton',
@@ -88,6 +89,7 @@ const tokenPackages = [
     'stepper',
     'swatch',
     'swatchgroup',
+    'opacitycheckerboard',
     'switch',
     'table',
     'tabs',
@@ -248,7 +250,9 @@ export async function generateTokensWrapper(spectrumVersion) {
     for (const tokensPath of await fg([`${tokensRoot(tokensDir)}`])) {
         processTokens(tokensPath, tokensDir);
     }
-    if (isSpectrumOne) return;
+    if (isSpectrumOne) {
+        return;
+    }
     return Promise.all(
         packagePaths.map((_, index) => {
             return processPackages(tokensDir, index);
