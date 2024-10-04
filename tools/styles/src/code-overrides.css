@@ -18,22 +18,22 @@
     --spectrum-code-font-size: var(--system-code-font-size);
 }
 
-.spectrum-Code.spectrum-Code--sizeXS {
+.spectrum-Code--sizeXS {
     --spectrum-code-font-size: var(--system-code-size-xs-font-size);
 }
 
-.spectrum-Code.spectrum-Code--sizeS {
+.spectrum-Code--sizeS {
     --spectrum-code-font-size: var(--system-code-size-s-font-size);
 }
 
-.spectrum-Code.spectrum-Code--sizeM {
+.spectrum-Code--sizeM {
     --spectrum-code-font-size: var(--system-code-size-m-font-size);
 }
 
-.spectrum-Code.spectrum-Code--sizeL {
+.spectrum-Code--sizeL {
     --spectrum-code-font-size: var(--system-code-size-l-font-size);
 }
 
-.spectrum-Code.spectrum-Code--sizeXL {
+.spectrum-Code--sizeXL {
     --spectrum-code-font-size: var(--system-code-size-xl-font-size);
 }

@@ -132,4 +132,12 @@
     --spectrum-meter-max-width: var(--system-meter-max-width);
     --spectrum-meter-inline-size: var(--system-meter-inline-size);
     --spectrum-meter-top-to-text: var(--system-meter-top-to-text);
+    --spectrum-progressbar-thickness: var(--system-meter-progressbar-thickness);
+    --spectrum-progressbar-size-default: var(
+        --system-meter-progressbar-size-default
+    );
+    --spectrum-progressbar-font-size: var(--system-meter-progressbar-font-size);
+    --spectrum-progressbar-spacing-top-to-text: var(
+        --system-meter-progressbar-spacing-top-to-text
+    );
 }
