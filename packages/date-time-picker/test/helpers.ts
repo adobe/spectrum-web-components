@@ -98,14 +98,18 @@ export function sendKeyMultipleTimes(
     );
 }
 
-export function expectSameDates(a: DateValue, b: DateValue): void {
-    expect(isSameDay(a, b)).to.be.true;
+export function expectSameDates(
+    a: DateValue,
+    b: DateValue,
+    message?: string
+): void {
+    expect(isSameDay(a, b), message).to.be.true;
 }
 
-export function dispatchCalendarChange(
+export async function dispatchCalendarChange(
     element: DateTimePicker,
     date: DateValue
-): void {
+): Promise<void> {
     const calendarEl = element.shadowRoot!.querySelector(
         'sp-calendar'
     ) as Calendar;
@@ -114,6 +118,7 @@ export function dispatchCalendarChange(
     calendarEl.dispatchEvent(
         new CustomEvent('change', { bubbles: true, composed: true })
     );
+    await elementUpdated(element);
 }
 
 export async function openCalendar(element: DateTimePicker): Promise<void> {
