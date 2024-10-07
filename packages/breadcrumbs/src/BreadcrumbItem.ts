@@ -83,6 +83,12 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
         }
     }
 
+    protected handleKeyDown(event: KeyboardEvent): void {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            this.handleClick(event);
+        }
+    }
+
     protected renderLink(): TemplateResult {
         return html`
             <a
@@ -92,6 +98,7 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
                 aria-current=${ifDefined(
                     this.isLastOfType ? 'page' : undefined
                 )}
+                @keydown=${this.handleKeyDown}
                 @click=${this.handleClick}
             >
                 <slot></slot>

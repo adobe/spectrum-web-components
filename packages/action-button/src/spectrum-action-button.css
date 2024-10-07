@@ -216,51 +216,6 @@ governing permissions and limitations under the License.
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
-:host([selected]) {
-    --mod-actionbutton-border-color-default: var(
-        --spectrum-actionbutton-border-color-default-selected
-    );
-    --mod-actionbutton-border-color-hover: var(
-        --spectrum-actionbutton-border-color-hover-selected
-    );
-    --mod-actionbutton-border-color-down: var(
-        --spectrum-actionbutton-border-color-down-selected
-    );
-    --mod-actionbutton-border-color-focus: var(
-        --spectrum-actionbutton-border-color-focus-selected
-    );
-    --mod-actionbutton-border-color-disabled: var(
-        --spectrum-actionbutton-border-color-disabled-selected
-    );
-    --mod-actionbutton-background-color-default: var(
-        --spectrum-actionbutton-background-color-default-selected
-    );
-    --mod-actionbutton-background-color-hover: var(
-        --spectrum-actionbutton-background-color-hover-selected
-    );
-    --mod-actionbutton-background-color-down: var(
-        --spectrum-actionbutton-background-color-down-selected
-    );
-    --mod-actionbutton-background-color-focus: var(
-        --spectrum-actionbutton-background-color-focus-selected
-    );
-    --mod-actionbutton-background-color-disabled: var(
-        --spectrum-actionbutton-background-color-disabled-selected
-    );
-    --mod-actionbutton-content-color-default: var(
-        --spectrum-actionbutton-content-color-default-selected
-    );
-    --mod-actionbutton-content-color-hover: var(
-        --spectrum-actionbutton-content-color-hover-selected
-    );
-    --mod-actionbutton-content-color-down: var(
-        --spectrum-actionbutton-content-color-down-selected
-    );
-    --mod-actionbutton-content-color-focus: var(
-        --spectrum-actionbutton-content-color-focus-selected
-    );
-}
-
 @media (hover: hover) {
     :host(:hover) {
         background-color: var(

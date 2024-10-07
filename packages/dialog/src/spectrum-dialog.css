@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     box-sizing: border-box;
-    inline-size: -moz-fit-content;
     inline-size: fit-content;
     min-inline-size: var(
         --mod-dialog-min-inline-size,

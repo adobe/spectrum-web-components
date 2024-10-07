@@ -28,12 +28,33 @@ governing permissions and limitations under the License.
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
+:host:not(.spectrum-Slider--sideLabel)
+    #label-container
+    + #track:has(.spectrum-Slider-ramp) {
+    margin-block-start: calc(
+        var(
+                --mod-slider-ramp-track-height,
+                var(--spectrum-slider-ramp-track-block-size)
+            ) / 2
+    );
+}
+
 .spectrum-Slider--sideLabel {
     align-items: center;
     display: flex;
 }
 
-.spectrum-Slider--sideLabel #label-container,
+.spectrum-Slider--sideLabel #label-container {
+    margin-block-start: 0;
+}
+
+.spectrum-Slider--sideLabel #label-container #label {
+    margin-inline-end: var(
+        --mod-slider-value-side-padding-inline,
+        var(--spectrum-slider-value-side-padding-inline)
+    );
+}
+
 .spectrum-Slider--sideLabel #label-container + #track {
     margin-block-start: 0;
 }
@@ -79,6 +100,11 @@ governing permissions and limitations under the License.
     );
     display: inline-block;
     position: relative;
+}
+
+#controls:not(:has(.spectrum-Slider-ticks)) {
+    align-items: center;
+    display: flex;
 }
 
 #label-container + #track {
@@ -282,13 +308,7 @@ governing permissions and limitations under the License.
 #ramp {
     block-size: var(
         --mod-slider-ramp-track-height,
-        var(--spectrum-slider-ramp-track-height)
-    );
-    margin-block-start: calc(
-        var(
-                --mod-slider-ramp-track-height,
-                var(--spectrum-slider-ramp-track-height)
-            ) / 2
+        var(--spectrum-slider-ramp-track-block-size)
     );
     position: absolute;
     inset-inline-start: var(

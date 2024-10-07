@@ -95,10 +95,7 @@
         --system-card-content-margin-top-quiet
     );
     --spectrum-card-minimum-width-quiet: var(--system-card-minimum-width-quiet);
-}
-
-:host .spectrum--lightest {
     --spectrum-card-selected-background-color-rgb: var(
-        --system-card-lightest-selected-background-color-rgb
+        --system-card-selected-background-color-rgb
     );
 }

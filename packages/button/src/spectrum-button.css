@@ -151,6 +151,8 @@ governing permissions and limitations under the License.
         --mod-button-padding-label-to-icon,
         var(--spectrum-button-padding-label-to-icon)
     );
+    max-inline-size: none;
+    max-inline-size: var(--mod-button-max-inline-size, none);
     min-inline-size: var(
         --mod-button-min-width,
         var(--spectrum-button-min-width)
@@ -528,6 +530,12 @@ governing permissions and limitations under the License.
         ease-in-out;
 }
 
+.spectrum-Button--noWrap #label {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 :host([static='white']) {
     --spectrum-button-focus-indicator-color: var(
         --mod-static-black-focus-indicator-color,
@@ -563,6 +571,19 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     :host {
+        --highcontrast-button-content-color-default: ButtonText;
+        --highcontrast-button-content-color-hover: ButtonText;
+        --highcontrast-button-content-color-focus: ButtonText;
+        --highcontrast-button-content-color-down: ButtonText;
+        --highcontrast-button-border-color-default: ButtonBorder;
+        --highcontrast-button-border-color-hover: ButtonBorder;
+        --highcontrast-button-border-color-focus: ButtonBorder;
+        --highcontrast-button-border-color-down: ButtonBorder;
+        --highcontrast-button-background-color-default: ButtonFace;
+        --highcontrast-button-background-color-hover: ButtonFace;
+        --highcontrast-button-background-color-down: ButtonFace;
+        --highcontrast-button-background-color-focus: ButtonFace;
+        --highcontrast-button-background-color-disabled: ButtonFace;
         --highcontrast-button-content-color-disabled: GrayText;
         --highcontrast-button-border-color-disabled: GrayText;
         --mod-progress-circle-track-border-color: ButtonText;
@@ -570,6 +591,11 @@ governing permissions and limitations under the License.
         --mod-progress-circle-thickness: var(
             --spectrum-progress-circle-thickness-medium
         );
+        --mod-button-animation-duration: 0s;
+    }
+
+    #label {
+        forced-color-adjust: none;
     }
 
     :host(:focus-visible):after {
@@ -585,16 +611,16 @@ governing permissions and limitations under the License.
     :host([variant='accent'][treatment='fill']) {
         --highcontrast-button-background-color-default: ButtonText;
         --highcontrast-button-content-color-default: ButtonFace;
+        --highcontrast-button-content-color-hover: HighlightText;
+        --highcontrast-button-content-color-down: HighlightText;
+        --highcontrast-button-content-color-focus: HighlightText;
         --highcontrast-button-background-color-disabled: ButtonFace;
         --highcontrast-button-background-color-hover: Highlight;
         --highcontrast-button-background-color-down: Highlight;
         --highcontrast-button-background-color-focus: Highlight;
-        --highcontrast-button-content-color-hover: ButtonFace;
-        --highcontrast-button-content-color-down: ButtonFace;
-        --highcontrast-button-content-color-focus: ButtonFace;
-    }
-
-    :host([variant='accent'][treatment='fill']) #label {
-        forced-color-adjust: none;
+        --highcontrast-button-border-color-default: ButtonText;
+        --highcontrast-button-border-color-hover: Highlight;
+        --highcontrast-button-border-color-focus: Highlight;
+        --highcontrast-button-border-color-down: Highlight;
     }
 }

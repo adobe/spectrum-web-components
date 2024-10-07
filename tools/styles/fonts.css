@@ -1253,15 +1253,6 @@
     );
 }
 
-:root,
-:host {
-    --spectrum-font-family-ar: var(--system-font-family-ar);
-    --spectrum-font-family-he: var(--system-font-family-he);
-    --spectrum-font-family: var(--system-font-family);
-    --spectrum-font-style: var(--system-font-style);
-    --spectrum-font-size: var(--system-font-size);
-}
-
 .spectrum-Heading {
     --spectrum-heading-sans-serif-font-family: var(
         --system-heading-sans-serif-font-family

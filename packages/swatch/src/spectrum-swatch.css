@@ -269,10 +269,7 @@ governing permissions and limitations under the License.
         )
         var(
             --highcontrast-swatch-border-color,
-            var(
-                --mod-swatch-border-color,
-                var(--spectrum-swatch-border-color-default)
-            )
+            var(--mod-swatch-border-color, var(--spectrum-swatch-border-color))
         );
     border-radius: var(
         --mod-swatch-border-radius,
@@ -302,7 +299,7 @@ governing permissions and limitations under the License.
             --highcontrast-swatch-border-color-light,
             var(
                 --mod-swatch-border-color-light,
-                var(--spectrum-swatch-border-color-light-default)
+                var(--spectrum-swatch-border-color-light)
             )
         );
 }
