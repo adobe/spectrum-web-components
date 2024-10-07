@@ -60,8 +60,14 @@ export class ProgressBar extends SizedMixin(
     @property({ type: Number })
     public progress = 0;
 
+    /**
+     * @deprecated Use `staticColor` instead.
+     */
     @property({ type: String, reflect: true })
     public static: 'white' | undefined;
+
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white';
 
     @query('slot')
     private slotEl!: HTMLSlotElement;
@@ -122,6 +128,19 @@ export class ProgressBar extends SizedMixin(
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+        if (
+            changes.has('static') &&
+            (this.static !== undefined || changes.get('static') !== undefined)
+        ) {
+            this.staticColor = this.static;
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `The "static" attribute of <${this.localName}> has been deprecated. Use "static-color" with the same values instead. "static" will be removed in a future release.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/action-button/api/'
+                );
+            }
+        }
         if (changes.has('indeterminate')) {
             if (this.indeterminate) {
                 this.removeAttribute('aria-valuemin');
