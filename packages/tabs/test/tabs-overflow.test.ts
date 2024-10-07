@@ -9,13 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/scale-medium.js';
-import '@spectrum-web-components/theme/theme-light.js';
-import '@spectrum-web-components/tabs/sp-tab.js';
-import '@spectrum-web-components/tabs/sp-tabs.js';
-import '@spectrum-web-components/tabs/sp-tab-panel.js';
-import '@spectrum-web-components/tabs/sp-tabs-overflow.js';
+import { ActionButton } from '@spectrum-web-components/action-button';
 import {
     calculateScrollTargetForLeftSide,
     calculateScrollTargetForRightSide,
@@ -23,7 +17,13 @@ import {
     Tabs,
     TabsOverflow,
 } from '@spectrum-web-components/tabs';
-import { ActionButton } from '@spectrum-web-components/action-button';
+import '@spectrum-web-components/tabs/sp-tab-panel.js';
+import '@spectrum-web-components/tabs/sp-tab.js';
+import '@spectrum-web-components/tabs/sp-tabs-overflow.js';
+import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/theme/scale-medium.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/theme-light.js';
 
 import { elementUpdated, expect, fixture, waitUntil } from '@open-wc/testing';
 import {
@@ -32,8 +32,8 @@ import {
     html,
     nothing,
 } from '@spectrum-web-components/base';
+import { sendKeys, setViewport } from '@web/test-runner-commands';
 import { repeat } from 'lit/directives/repeat.js';
-import { sendKeys, setUserAgent, setViewport } from '@web/test-runner-commands';
 
 const RIGHT_BUTTON_SELECTOR = '.right-scroll';
 const LEFT_BUTTON_SELECTOR = '.left-scroll';
@@ -179,11 +179,11 @@ describe('TabsOverflow', () => {
         expect(finalLeft).to.be.lessThanOrEqual(initialLeft);
     });
 
-    xit('should scroll up to the last item and back in LTR', async () => {
-        // setUserAgent is not currently supported by Playwright
-        await setUserAgent(
-            'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
-        );
+    it('should scroll up to the last item and back in LTR', async () => {
+        // TODO: run on iPhone as per https://github.com/adobe/spectrum-web-components/pull/4722
+        // await setUserAgent(
+        // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
+        // );
 
         const el = await renderTabsOverflow({
             count: 8,
@@ -213,11 +213,11 @@ describe('TabsOverflow', () => {
         expect(tabsOverflow['overflowState'].canScrollRight).to.be.true;
     });
 
-    xit('should scroll up to the last item and back in RTL', async () => {
-        // setUserAgent is not currently supported by Playwright
-        await setUserAgent(
-            'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
-        );
+    it('should scroll up to the last item and back in RTL', async () => {
+        // TODO: run on iPhone as per https://github.com/adobe/spectrum-web-components/pull/4722
+        // await setUserAgent(
+        // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
+        // );
 
         const el = await renderTabsOverflow({
             count: 8,
