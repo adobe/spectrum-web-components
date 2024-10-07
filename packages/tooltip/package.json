@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/tooltip",
-    "version": "0.47.2",
+    "version": "0.48.1",
     "publishConfig": {
         "access": "public"
     },
@@ -62,10 +62,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.47.2",
-        "@spectrum-web-components/overlay": "^0.47.2",
-        "@spectrum-web-components/reactive-controllers": "^0.47.2",
-        "@spectrum-web-components/shared": "^0.47.2"
+        "@spectrum-web-components/base": "^0.48.1",
+        "@spectrum-web-components/overlay": "^0.48.1",
+        "@spectrum-web-components/reactive-controllers": "^0.48.1",
+        "@spectrum-web-components/shared": "^0.48.1"
     },
     "devDependencies": {
         "@spectrum-css/tooltip": "^7.0.0-s2-foundations.15"
