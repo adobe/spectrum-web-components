@@ -23,8 +23,8 @@ jobs:
 
             - name: Set Git identity
               run: |
-                  git config --global user.email "rcarvalho@adobe.com"
-                  git config --global user.name "Ruben Carvalho"
+                  git config --global user.email "support+actions@github.com"
+                  git config --global user.name "github-actions-bot"
 
             - name: Get Lerna current version
               id: get_lerna_version
