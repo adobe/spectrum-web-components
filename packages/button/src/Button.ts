@@ -20,7 +20,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from './ButtonBase.js';
 import buttonStyles from './button.css.js';
-import { when } from '@spectrum-web-components/base/src/directives.js';
+import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 
 export type DeprecatedButtonVariants = 'cta' | 'overBackground';
 export type ButtonStatics = 'white' | 'black';
@@ -61,7 +61,16 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     @property({ type: Boolean, reflect: true, attribute: true })
     public pending = false;
 
-    private cachedAriaLabel: string | null = null;
+    public pendingStateController: PendingStateController<this>;
+
+    /**
+     * Initializes the `PendingStateController` for the Button component.
+     * The `PendingStateController` manages the pending state of the Button.
+     */
+    constructor() {
+        super();
+        this.pendingStateController = new PendingStateController(this);
+    }
 
     public override click(): void {
         if (this.pending) {
@@ -147,6 +156,15 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         this.treatment = quiet ? 'outline' : 'fill';
     }
 
+    /**
+     * Disables text wrapping within the button component's label.
+     * Please note that this option is not a part of the design specification
+     * and should be used carefully, with consideration of this overflow behavior
+     * and the readability of the button's content.
+     */
+    @property({ type: Boolean, attribute: 'no-wrap', reflect: true })
+    public noWrap = false;
+
     public get quiet(): boolean {
         return this.treatment === 'outline';
     }
@@ -158,61 +176,23 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         if (!this.hasAttribute('variant')) {
             this.setAttribute('variant', this.variant);
         }
+        if (this.pending) {
+            this.pendingStateController.hostUpdated();
+        }
+    }
+
+    protected override update(changes: PropertyValues): void {
+        super.update(changes);
     }
 
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
-
-        if (changed.has('pending')) {
-            if (
-                this.pending &&
-                this.pendingLabel !== this.getAttribute('aria-label')
-            ) {
-                if (!this.disabled) {
-                    this.cachedAriaLabel =
-                        this.getAttribute('aria-label') || '';
-                    this.setAttribute('aria-label', this.pendingLabel);
-                }
-            } else if (!this.pending && this.cachedAriaLabel) {
-                this.setAttribute('aria-label', this.cachedAriaLabel);
-            } else if (!this.pending && this.cachedAriaLabel === '') {
-                this.removeAttribute('aria-label');
-            }
-        }
-
-        if (changed.has('disabled')) {
-            if (
-                !this.disabled &&
-                this.pendingLabel !== this.getAttribute('aria-label')
-            ) {
-                if (this.pending) {
-                    this.cachedAriaLabel =
-                        this.getAttribute('aria-label') || '';
-                    this.setAttribute('aria-label', this.pendingLabel);
-                }
-            } else if (this.disabled && this.cachedAriaLabel) {
-                this.setAttribute('aria-label', this.cachedAriaLabel);
-            } else if (this.disabled && this.cachedAriaLabel == '') {
-                this.removeAttribute('aria-label');
-            }
-        }
     }
 
     protected override renderButton(): TemplateResult {
         return html`
             ${this.buttonContent}
-            ${when(this.pending, () => {
-                import(
-                    '@spectrum-web-components/progress-circle/sp-progress-circle.js'
-                );
-                return html`
-                    <sp-progress-circle
-                        indeterminate
-                        static="white"
-                        aria-hidden="true"
-                    ></sp-progress-circle>
-                `;
-            })}
+            ${this.pendingStateController.renderPendingState()}
         `;
     }
 }

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+# [0.48.0](https://github.com/adobe/spectrum-web-components/compare/v0.47.2...v0.48.0) (2024-09-17)
+
+### Bug Fixes
+
+-   **action-menu:** dispatch scroll event ([#4715](https://github.com/adobe/spectrum-web-components/issues/4715)) ([c76f3f5](https://github.com/adobe/spectrum-web-components/commit/c76f3f54f5a08df82ea4247252f2e0114836a778))
+-   **picker:** added a custom class to make `:focus-visible` styles consistent across all browsers ([#4724](https://github.com/adobe/spectrum-web-components/issues/4724)) ([d667d08](https://github.com/adobe/spectrum-web-components/commit/d667d0853b8122008ce8fe50c6c479a42dc96a9f))
+
+## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
 ## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

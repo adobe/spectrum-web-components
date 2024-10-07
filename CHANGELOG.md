@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
+
+### Bug Fixes
+
+-   add file extension to Theme imports and respective eslint rule ([#4771](https://github.com/adobe/spectrum-web-components/issues/4771)) ([a2b6bea](https://github.com/adobe/spectrum-web-components/commit/a2b6bea7142930d8143d9ca887e2c56ffa71a669))
+-   **breadcrumbs:** trigger change event on breadcrumbs via keyboard ([#4769](https://github.com/adobe/spectrum-web-components/issues/4769)) ([e14d082](https://github.com/adobe/spectrum-web-components/commit/e14d0827cd5a190e63b14418b8dd89fe2cab49ac))
+
+# [0.48.0](https://github.com/adobe/spectrum-web-components/compare/v0.47.2...v0.48.0) (2024-09-17)
+
+### Bug Fixes
+
+-   **action-menu:** dispatch scroll event ([#4715](https://github.com/adobe/spectrum-web-components/issues/4715)) ([c76f3f5](https://github.com/adobe/spectrum-web-components/commit/c76f3f54f5a08df82ea4247252f2e0114836a778))
+-   add null check in updated method of sp-number-field ([#4709](https://github.com/adobe/spectrum-web-components/issues/4709)) ([7b1eeab](https://github.com/adobe/spectrum-web-components/commit/7b1eeab613fffe833ea0f57a23d2cc11bef71ea7))
+-   **combobox:** update selected item state in menu ([#4730](https://github.com/adobe/spectrum-web-components/issues/4730)) ([c4cfd2a](https://github.com/adobe/spectrum-web-components/commit/c4cfd2a5a2b1d48727488023d1361e3a5b7c32db))
+-   **menu:** allow menu-item to support arbitrary element as the submenu root ([#4720](https://github.com/adobe/spectrum-web-components/issues/4720)) ([4c6a0dc](https://github.com/adobe/spectrum-web-components/commit/4c6a0dcf7c67560c664c1f7c0f93d0ef3f0005ab))
+-   **picker:** added a custom class to make `:focus-visible` styles consistent across all browsers ([#4724](https://github.com/adobe/spectrum-web-components/issues/4724)) ([d667d08](https://github.com/adobe/spectrum-web-components/commit/d667d0853b8122008ce8fe50c6c479a42dc96a9f))
+-   **toast:** added ability to wrap toast content with long words ([#4738](https://github.com/adobe/spectrum-web-components/issues/4738)) ([302d6fe](https://github.com/adobe/spectrum-web-components/commit/302d6fe927baff3a08dd567718eba8ee34473ac4))
+
+### Features
+
+-   locale picker in the storybook's decorator ([#4687](https://github.com/adobe/spectrum-web-components/issues/4687)) ([9e0cd08](https://github.com/adobe/spectrum-web-components/commit/9e0cd08d68cad858bbdc53e8b01b7eeabfde59fb))
+-   **reactive-controller:** new pending state controller ([#4605](https://github.com/adobe/spectrum-web-components/issues/4605)) ([68baf94](https://github.com/adobe/spectrum-web-components/commit/68baf94f257b9c7525253819a2ed3c8fa1b6c408))
+
+## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
+
+### Bug Fixes
+
+-   **slider:** update variant attribute correctly ([#4714](https://github.com/adobe/spectrum-web-components/issues/4714)) ([9c22dd6](https://github.com/adobe/spectrum-web-components/commit/9c22dd6b749a3c80dc516db616f8ac68d30136cf))
+
 ## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
 
 ### Bug Fixes

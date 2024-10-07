@@ -38,7 +38,10 @@ import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import type { TestablePicker } from '../../picker/test/index.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
-import { sendKeys } from '@web/test-runner-commands';
+import { sendKeys, setViewport } from '@web/test-runner-commands';
+import { TemplateResult } from '@spectrum-web-components/base';
+import { isWebKit } from '@spectrum-web-components/shared';
+import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/MobileController.js';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -279,6 +282,104 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(document.activeElement).to.equal(el);
             expect(el.shadowRoot.activeElement).to.equal(el.focusElement);
+        });
+        it('manages focus-ring styles', async () => {
+            if (!isWebKit()) {
+                return;
+            }
+
+            const el = await actionMenuFixture();
+
+            /**
+             * This is a hack to set the `isMobile` property to true so that we can test the MobileController
+             */
+            el.isMobile.matches = true;
+            el.bindEvents();
+
+            await setViewport({ width: 360, height: 640 });
+            // Allow viewport update to propagate.
+            await nextFrame();
+
+            let opened = oneEvent(el, 'sp-opened');
+
+            const boundingRect = el.button.getBoundingClientRect();
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            boundingRect.x + boundingRect.width / 2,
+                            boundingRect.y + boundingRect.height / 2,
+                        ],
+                    },
+                ],
+            });
+
+            await opened;
+
+            const tray = el.shadowRoot.querySelector('sp-tray');
+            expect(tray).to.not.be.null;
+
+            // Make a selection
+            let closed = oneEvent(el, 'sp-closed');
+
+            const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+            firstItem.click();
+
+            await elementUpdated(el);
+            await closed;
+
+            // expect the tray to be closed
+            expect(el.open).to.be.false;
+
+            const button = el.shadowRoot.querySelector(
+                '#button'
+            ) as HTMLButtonElement;
+            expect(button).to.not.be.null;
+
+            // we should have SAFARI_FOCUS_RING_CLASS in the classList
+            expect(button.classList.contains(SAFARI_FOCUS_RING_CLASS)).to.be
+                .true;
+
+            // picker should still have focus
+            expect(document.activeElement === el).to.be.true;
+
+            // click outside (0,0)
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [0, 0],
+                    },
+                ],
+            });
+
+            // picker should not have focus
+            expect(document.activeElement === el).to.be.false;
+
+            // Let's use keyboard to open the tray now
+            opened = oneEvent(el, 'sp-opened');
+            await sendKeys({
+                press: 'Tab',
+            });
+            await sendKeys({
+                press: 'Enter',
+            });
+            await elementUpdated(el);
+            await opened;
+
+            // Make a selection again
+            closed = oneEvent(el, 'sp-closed');
+            firstItem.click();
+            await elementUpdated(el);
+            await closed;
+
+            // expect the tray to be closed
+            expect(el.open).to.be.false;
+
+            // we should not have SAFARI_FOCUS_RING_CLASS in the classList
+            expect(button.classList.contains(SAFARI_FOCUS_RING_CLASS)).to.be
+                .false;
         });
         it('opens unmeasured', async () => {
             const el = await actionMenuFixture();
@@ -686,6 +787,37 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.open).to.be.false;
             await aTimeout(50);
             expect(el.open).to.be.false;
+        });
+        it('should handle scroll event', async () => {
+            const renderMenuItems = (): TemplateResult[] =>
+                Array.from(
+                    { length: 30 },
+                    (_, i) => html`
+                        <sp-menu-item style="width: 100%;">
+                            Menu Item ${i + 1}
+                        </sp-menu-item>
+                    `
+                );
+            const handleActionMenuScroll = spy();
+            const el = await fixture<ActionMenu>(html`
+                <sp-action-menu @scroll=${() => handleActionMenuScroll()}>
+                    <span slot="label">More Actions</span>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    ${renderMenuItems()}
+                </sp-action-menu>
+            `);
+
+            await elementUpdated(el);
+
+            expect(handleActionMenuScroll.called).to.be.false;
+
+            el.dispatchEvent(
+                new Event('scroll', { cancelable: true, composed: true })
+            );
+            expect(handleActionMenuScroll).to.have.been.called;
         });
     });
 };
