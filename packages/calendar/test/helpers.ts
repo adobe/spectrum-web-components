@@ -43,6 +43,10 @@ export function sendKeyMultipleTimes(
     );
 }
 
-export function expectSameDates(a: DateValue, b: DateValue): void {
-    expect(isSameDay(a, b)).to.be.true;
+export function expectSameDates(
+    a: DateValue,
+    b: DateValue,
+    message?: string
+): void {
+    expect(isSameDay(a, b), message).to.be.true;
 }
