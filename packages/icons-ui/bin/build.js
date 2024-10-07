@@ -60,6 +60,11 @@ fs.writeFileSync(
     disclaimer,
     'utf-8'
 );
+fs.writeFileSync(
+    path.join(rootDir, 'packages', 'icons-ui', 'src', 'icons-s2.ts'),
+    disclaimer,
+    'utf-8'
+);
 const manifestPath = path.join(
     rootDir,
     'packages',
