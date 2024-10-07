@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/textfield",
-    "version": "0.47.2",
+    "version": "0.48.1",
     "publishConfig": {
         "access": "public"
     },
@@ -58,12 +58,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.47.2",
-        "@spectrum-web-components/help-text": "^0.47.2",
-        "@spectrum-web-components/icon": "^0.47.2",
-        "@spectrum-web-components/icons-ui": "^0.47.2",
-        "@spectrum-web-components/icons-workflow": "^0.47.2",
-        "@spectrum-web-components/shared": "^0.47.2"
+        "@spectrum-web-components/base": "^0.48.1",
+        "@spectrum-web-components/help-text": "^0.48.1",
+        "@spectrum-web-components/icon": "^0.48.1",
+        "@spectrum-web-components/icons-ui": "^0.48.1",
+        "@spectrum-web-components/icons-workflow": "^0.48.1",
+        "@spectrum-web-components/shared": "^0.48.1"
     },
     "devDependencies": {
         "@spectrum-css/textfield": "^8.0.0-s2-foundations.14"

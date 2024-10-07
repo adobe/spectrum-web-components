@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/meter",
-    "version": "0.47.2",
+    "version": "0.48.1",
     "publishConfig": {
         "access": "public"
     },
@@ -58,10 +58,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.47.2",
-        "@spectrum-web-components/field-label": "^0.47.2",
-        "@spectrum-web-components/reactive-controllers": "^0.47.2",
-        "@spectrum-web-components/shared": "^0.47.2"
+        "@spectrum-web-components/base": "^0.48.1",
+        "@spectrum-web-components/field-label": "^0.48.1",
+        "@spectrum-web-components/reactive-controllers": "^0.48.1",
+        "@spectrum-web-components/shared": "^0.48.1"
     },
     "devDependencies": {
         "@spectrum-css/progressbar": "^5.0.0-s2-foundations.15"
