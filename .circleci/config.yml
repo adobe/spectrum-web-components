@@ -347,7 +347,7 @@ workflows:
                   filters:
                       branches:
                           # Beta docs are only published from main
-                          only: ruben/beta-releases
+                          only: main
             - visual:
                   name: << matrix.theme >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
