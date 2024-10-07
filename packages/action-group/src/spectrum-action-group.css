@@ -12,34 +12,21 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-actiongroup-button-spacing-reset: 0;
-    --spectrum-actiongroup-border-radius-reset: 0;
-    --spectrum-actiongroup-border-radius: var(--spectrum-corner-radius-100);
-}
-
-:host([size='s']),
-:host([size='xs']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --spectrum-spacing-75
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
-}
-
-:host([size='l']),
-:host,
-:host([size='xl']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-}
-
-:host {
     gap: var(
         --mod-actiongroup-horizontal-spacing-regular,
         var(--spectrum-actiongroup-horizontal-spacing-regular)
+    );
+    margin-block: 0;
+    margin-block: var(
+        --mod-actiongroup-margin-block,
+        var(--mod-actiongroup-margin-block-start, 0)
+            var(--mod-actiongroup-margin-block-end, 0)
+    );
+    margin-inline: 0;
+    margin-inline: var(
+        --mod-actiongroup-margin-inline,
+        var(--mod-actiongroup-margin-inline-start, 0)
+            var(--mod-actiongroup-margin-inline-end, 0)
     );
     flex-wrap: wrap;
     display: flex;
@@ -78,11 +65,11 @@ governing permissions and limitations under the License.
 }
 
 :host([compact]:not([quiet])) ::slotted(*) {
+    z-index: 0;
     border-radius: var(
         --mod-actiongroup-border-radius-reset,
         var(--spectrum-actiongroup-border-radius-reset)
     );
-    z-index: 0;
     position: relative;
 }
 
@@ -260,16 +247,4 @@ governing permissions and limitations under the License.
 
 :host([justified]) ::slotted(*) {
     flex: 1;
-}
-
-:host {
-    --spectrum-actiongroup-gap-size-compact: var(
-        --system-spectrum-actiongroup-gap-size-compact
-    );
-    --spectrum-actiongroup-horizontal-spacing-compact: var(
-        --system-spectrum-actiongroup-horizontal-spacing-compact
-    );
-    --spectrum-actiongroup-vertical-spacing-compact: var(
-        --system-spectrum-actiongroup-vertical-spacing-compact
-    );
 }

@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 @import url('./spectrum-tray-wrapper.css');
 @import url('./spectrum-tray.css');
+@import url('./tray-overrides.css');
 
 :host {
     align-items: flex-end;

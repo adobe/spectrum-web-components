@@ -12,104 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-progressbar-animation-ease-in-out-indeterminate: var(
-        --spectrum-animation-ease-in-out
-    );
-    --spectrum-progressbar-animation-duration-indeterminate: var(
-        --spectrum-animation-duration-2000
-    );
-    --spectrum-progressbar-corner-radius: var(--spectrum-corner-radius-100);
-    --spectrum-progressbar-fill-size-indeterminate: 70%;
-    --spectrum-progressbar-size-2400: 192px;
-    --spectrum-progressbar-size-2500: 200px;
-    --spectrum-progressbar-size-2800: 224px;
-    --spectrum-progressbar-font-size: var(--spectrum-font-size-75);
-    --spectrum-progressbar-line-height-cjk: var(--spectrum-cjk-line-height-100);
-    --spectrum-progressbar-min-size: var(--spectrum-progress-bar-minimum-width);
-    --spectrum-progressbar-max-size: var(--spectrum-progress-bar-maximum-width);
-    --spectrum-progressbar-thickness: var(
-        --spectrum-progress-bar-thickness-medium
-    );
-    --spectrum-progressbar-line-height: var(--spectrum-line-height-100);
-    --spectrum-progressbar-spacing-label-to-progressbar: var(
-        --spectrum-spacing-75
-    );
-    --spectrum-progressbar-spacing-top-to-text: var(
-        --spectrum-component-top-to-text-100
-    );
-    --spectrum-progressbar-spacing-label-to-text: var(--spectrum-spacing-200);
-    --spectrum-progressbar-text-color: var(
-        --spectrum-neutral-content-color-default
-    );
-    --spectrum-progressbar-track-color: var(--spectrum-gray-300);
-    --spectrum-progressbar-fill-color: var(--spectrum-accent-color-900);
-    --spectrum-progressbar-fill-color-positive: var(
-        --spectrum-positive-visual-color
-    );
-    --spectrum-progressbar-fill-color-notice: var(
-        --spectrum-notice-visual-color
-    );
-    --spectrum-progressbar-fill-color-negative: var(
-        --spectrum-negative-visual-color
-    );
-    --spectrum-progressbar-label-and-value-white: var(--spectrum-white);
-    --spectrum-progressbar-track-color-white: var(
-        --spectrum-transparent-white-300
-    );
-    --spectrum-progressbar-fill-color-white: var(--spectrum-white);
-    --spectrum-meter-min-width: var(--spectrum-meter-minimum-width);
-    --spectrum-meter-max-width: var(--spectrum-meter-maximum-width);
-    --spectrum-meter-inline-size: var(--spectrum-meter-default-width);
-    --spectrum-meter-thickness-s: var(--spectrum-meter-thickness-small);
-    --spectrum-meter-thickness-l: var(--spectrum-meter-thickness-large);
-    --spectrum-meter-top-to-text: var(--spectrum-component-top-to-text);
-}
-
-:host([size='s']) {
-    --spectrum-progressbar-size-default: var(--spectrum-progressbar-size-2400);
-    --spectrum-progressbar-font-size: var(--spectrum-font-size-75);
-    --spectrum-progressbar-thickness: var(
-        --spectrum-progress-bar-thickness-small
-    );
-    --spectrum-progressbar-spacing-top-to-text: var(
-        --spectrum-component-top-to-text-75
-    );
-}
-
-:host {
-    --spectrum-progressbar-size-default: var(--spectrum-progressbar-size-2400);
-    --spectrum-progressbar-font-size: var(--spectrum-font-size-75);
-    --spectrum-progressbar-thickness: var(
-        --spectrum-progress-bar-thickness-large
-    );
-    --spectrum-progressbar-spacing-top-to-text: var(
-        --spectrum-component-top-to-text-75
-    );
-}
-
-:host([size='l']) {
-    --spectrum-progressbar-size-default: var(--spectrum-progressbar-size-2500);
-    --spectrum-progressbar-font-size: var(--spectrum-font-size-100);
-    --spectrum-progressbar-thickness: var(
-        --spectrum-progress-bar-thickness-large
-    );
-    --spectrum-progressbar-spacing-top-to-text: var(
-        --spectrum-component-top-to-text-200
-    );
-}
-
-:host([size='xl']) {
-    --spectrum-progressbar-size-default: var(--spectrum-progressbar-size-2800);
-    --spectrum-progressbar-font-size: var(--spectrum-font-size-200);
-    --spectrum-progressbar-thickness: var(
-        --spectrum-progress-bar-thickness-extra-large
-    );
-    --spectrum-progressbar-spacing-top-to-text: var(
-        --spectrum-component-top-to-text-300
-    );
-}
-
-:host {
     --spectrum-progressbar-size-default: var(
         --mod-meter-inline-size,
         var(--spectrum-meter-inline-size)
@@ -125,7 +27,7 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='positive']) .fill {
-    background: var(
+    background-color: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color-positive,
@@ -135,7 +37,7 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='notice']) .fill {
-    background: var(
+    background-color: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color-notice,
@@ -145,7 +47,7 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='negative']) .fill {
-    background: var(
+    background-color: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color-negative,
@@ -388,9 +290,9 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     .track {
-        forced-color-adjust: none;
         --highcontrast-progressbar-fill-color: ButtonText;
         --highcontrast-progressbar-track-color: ButtonFace;
+        forced-color-adjust: none;
         border: 1px solid ButtonText;
     }
 }
