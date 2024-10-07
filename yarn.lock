@@ -123,7 +123,12 @@
     lodash.assignwith "^4.2.0"
     typical "^7.1.1"
 
-"@adobe/spectrum-css-workflow-icons@^1.5.4":
+"@adobe/spectrum-css-workflow-icons-s2@npm:@adobe/spectrum-css-workflow-icons@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-4.0.0.tgz#4c3cdb940ed4929324d5e508f4a1dcd9b3a4c108"
+  integrity sha512-qvxW+gEz7jdCbP9ETlplCet/Dh4Qx7F85wREsh64CSZ4dVhaPgHdezjGsBQfSYLidypJkXTeCBWU8/p0jicC/w==
+
+"@adobe/spectrum-css-workflow-icons@1.5.4":
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-1.5.4.tgz#0e09ff519c36139176c3ba3ce617a995c9032f67"
   integrity sha512-sZ19YOLGw5xTZzCEkVXPjf53lXVzo063KmDTJjpSjy/XLVsF+RaX0b436SfSM4hsIUZ7n27+UsbOvzFaFjcYXw==
@@ -5153,6 +5158,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/helptext/-/helptext-6.0.0-s2-foundations.15.tgz#c90d5f5e3fd27d53e1bb7f4a48516e939dad6630"
   integrity sha512-TskWjui0Kx6XRWZFr+GZ59lZCktdPSGCGL5cgOHNXLUpTB49aGM7wNreJzKw+OytGLkJoQ59G0Ms2SZRhhNnGQ==
 
+"@spectrum-css/icon@^8.0.0-s2-foundations.16":
+  version "8.0.0-s2-foundations.16"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-8.0.0-s2-foundations.16.tgz#94b04fa1d30c378d21bb12a137095472b2596451"
+  integrity sha512-Cy2kAgP9vO2+Jw93zToIZrlJITp+HiOmvVkUchpX8Og7M2zEV8FixlDaqFaZ4A8uN3aFuYb0tcHa6u6rxyDQlA==
+
 "@spectrum-css/icon@^8.0.0-s2-foundations.17":
   version "8.0.0-s2-foundations.17"
   resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-8.0.0-s2-foundations.17.tgz#f03087beb736cdfe0ba05e28e79cff6dc4a8db89"
@@ -5333,10 +5343,15 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-7.0.0-s2-foundations.17.tgz#661a488a3f886a0582c7198c97e496ce4ebf279b"
   integrity sha512-gEEgUytlVdxdU0yv0RKuDrmjD8lP/Lh9ZMDSrYCNFEfRuAdVzc2LLFV/192neBGATCvfs5asvTHSl/lriCsmjg==
 
-"@spectrum-css/ui-icons@^2.0.0-s2-foundations.10":
+"@spectrum-css/ui-icons-s2@npm:@spectrum-css/ui-icons@^2.0.0-s2-foundations.10":
   version "2.0.0-s2-foundations.10"
   resolved "https://registry.yarnpkg.com/@spectrum-css/ui-icons/-/ui-icons-2.0.0-s2-foundations.10.tgz#0484d599aca3cbe63d5e71b415947d18f8296333"
   integrity sha512-8uOHTqrVrzCel3mn8K1epNpbeNrM9+0FfyQG0/sGznf9YkHfiyNU16tNfCFOx/CmzrvyuJbFDNbgEdZnNRzQLQ==
+
+"@spectrum-css/ui-icons@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/ui-icons/-/ui-icons-1.1.2.tgz#596e10c662de2b3a2142277998be5e11faf6aff4"
+  integrity sha512-rD0EOdabyUJ6pjfvh9eiGlvhk2huhaah+AG8Utzqh/+YgMCn+NQEUz2zxRo9Jva8GXxORLGLDtISafHguOtiOA==
 
 "@spectrum-css/underlay@^5.0.0-s2-foundations.15":
   version "5.0.0-s2-foundations.15"

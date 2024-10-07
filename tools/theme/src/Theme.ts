@@ -24,6 +24,7 @@ import {
     SettableFragmentTypes,
     ShadowRootWithAdoptedStyleSheets,
     SYSTEM_VARIANT_VALUES,
+    SystemContextCallback,
     SystemVariant,
     ThemeFragmentMap,
     ThemeKindProvider,
@@ -88,15 +89,16 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.color = value as Color;
         } else if (attrName === 'scale') {
             this.scale = value as Scale;
-            /* c8 ignore next 3 */
         } else if (attrName === 'lang' && !!value) {
             this.lang = value;
             this._provideContext();
         } else if (attrName === 'theme') {
             this.theme = value as SystemVariant;
+            this._provideSystemContext();
             warnBetaSystem(this, value as SystemVariant);
         } else if (attrName === 'system') {
             this.system = value as SystemVariant;
+            this._provideSystemContext();
             warnBetaSystem(this, value as SystemVariant);
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
@@ -188,7 +190,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         if (color) {
             this.setAttribute('color', color);
-            /* c8 ignore next 3 */
         } else {
             this.removeAttribute('color');
         }
@@ -301,7 +302,46 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             'sp-language-context',
             this._handleContextPresence as EventListener
         );
+        this.addEventListener(
+            'sp-system-context',
+            this._handleSystemContext as EventListener
+        );
+
         this.updateComplete = this.__createDeferredPromise();
+    }
+
+    private _systemContextConsumers = new Map<
+        HTMLElement,
+        [SystemContextCallback, () => void]
+    >();
+
+    private _handleSystemContext(
+        event: CustomEvent<{ callback: SystemContextCallback }>
+    ): void {
+        event.stopPropagation();
+
+        const target = event.composedPath()[0] as HTMLElement;
+
+        // Avoid duplicate registrations
+        if (this._systemContextConsumers.has(target)) {
+            return;
+        }
+
+        // Create an unsubscribe function
+        const unsubscribe: () => void = () =>
+            this._systemContextConsumers.delete(target);
+
+        // Store the callback and unsubscribe function
+        this._systemContextConsumers.set(target, [
+            event.detail.callback,
+            unsubscribe,
+        ]);
+
+        // Provide the context data
+        const [callback] = this._systemContextConsumers.get(target) || [];
+        if (callback) {
+            callback(this.system, unsubscribe);
+        }
     }
 
     public updateComplete!: Promise<boolean>;
@@ -399,6 +439,12 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     private _provideContext(): void {
         this._contextConsumers.forEach(([callback, unsubscribe]) =>
             callback(this.lang, unsubscribe)
+        );
+    }
+
+    private _provideSystemContext(): void {
+        this._systemContextConsumers.forEach(([callback, unsubscribe]) =>
+            callback(this.system, unsubscribe)
         );
     }
 
