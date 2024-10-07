@@ -27,6 +27,20 @@ describe('ColorField', () => {
         await expect(el).to.be.accessible();
     });
 
+    it('returns empty string from getColorValue when valid is false', async () => {
+        const el = await fixture<ColorField>(Template({}));
+
+        // Set an invalid color value
+        el.value = 'invalid-color';
+        await elementUpdated(el);
+
+        // Ensure the element is invalid
+        expect(el.checkValidity()).to.be.false;
+
+        // Check that getColorValue returns an empty string
+        expect(el.getColorValue()).to.equal('');
+    });
+
     it('validates rgba color values', async () => {
         const el = await fixture<ColorField>(Template({}));
 

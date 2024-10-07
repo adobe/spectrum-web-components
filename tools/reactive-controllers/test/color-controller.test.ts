@@ -49,6 +49,14 @@ describe('ColorController', () => {
             .false;
     });
 
+    it('should process RGB values in percentage correctly', () => {
+        const colorString = 'rgb(50%, 25%, 75%)';
+        const result = colorController.validateColorString(colorString);
+        expect(result.isValid).to.be.true;
+        expect(result.coords).to.deep.equal([0.5, 0.25, 0.75]);
+        expect(result.spaceId).to.equal('srgb');
+    });
+
     it('should default alpha to 1 when alpha is undefined in RGBA', () => {
         const colorString = 'rgb(255, 0, 0)';
         const result = colorController.validateColorString(colorString);
@@ -122,6 +130,22 @@ describe('ColorController', () => {
         );
     });
 
+    it('should process hex color values correctly when alpha is defined', () => {
+        const colorString = '#ff573380'; // Equivalent to rgba(255, 87, 51, 0.5)
+        colorController.color = colorString;
+        expect(colorController.color.toString()).to.equal(
+            new Color(colorString).toString()
+        );
+    });
+
+    it('should process hex color values correctly when alpha is not defined', () => {
+        const colorString = '#ff5733'; // Equivalent to rgba(255, 87, 51, 1)
+        colorController.color = colorString;
+        expect(colorController.color.toString()).to.equal(
+            new Color(colorString).toString()
+        );
+    });
+
     it('should save and restore previous color correctly', () => {
         const colorString = 'rgba(255, 0, 0, 1)';
         colorController.color = colorString;
@@ -131,5 +155,109 @@ describe('ColorController', () => {
         expect(colorController.color.toString()).to.equal(
             new Color(colorString).toString()
         );
+    });
+    it('should return correct color value for hsv spaceId', () => {
+        colorController.color = 'hsv(120, 100%, 50%)';
+        const result = colorController.colorValue;
+        expect(result).to.equal('hsv(120, 100%, 50%)');
+    });
+
+    it('should return correct color value for hsva spaceId', () => {
+        colorController.color = 'hsva(120, 100%, 50%, 0.5)';
+        const result = colorController.colorValue;
+        expect(result).to.equal('hsva(120, 100%, 50%, 0.5)');
+    });
+
+    it('should return correct color value for hsl spaceId', () => {
+        colorController.color = 'hsl(120, 100%, 50%)';
+        const result = colorController.colorValue;
+        expect(result).to.equal('hsl(120, 100%, 50%)');
+    });
+
+    it('should return correct color value for hsla spaceId', () => {
+        colorController.color = 'hsla(120, 100%, 50%, 0.5)';
+        const result = colorController.colorValue;
+        expect(result).to.equal('hsla(120, 100%, 50%, 0.5)');
+    });
+
+    it('should return correct color value for hex string spaceId', () => {
+        colorController.color = '#ff5733';
+        const result = colorController.colorValue;
+        expect(result).to.equal('#ff5733');
+    });
+
+    it('should return correct color value for hex string spaceId with alpha', () => {
+        colorController.color = '#ff573380'; // Equivalent to rgba(255, 87, 51, 0.5)
+        const result = colorController.colorValue;
+        expect(result).to.equal('#ff573380');
+    });
+
+    it('should return correct color value for default spaceId with hex origin', () => {
+        colorController.color = '#ff5733';
+        const result = colorController.colorValue;
+        expect(result).to.equal('#ff5733');
+    });
+
+    it('should return correct color value for default spaceId with hex origin and alpha', () => {
+        colorController.color = '#ff573380'; // Equivalent to rgba(255, 87, 51, 0.5)
+        const result = colorController.colorValue;
+        expect(result).to.equal('#ff573380');
+    });
+
+    it('should return correct color value for default spaceId with percentage origin', () => {
+        colorController.color = 'rgb(50%, 25%, 75%)';
+        const result = colorController.colorValue;
+        expect(result).to.equal('rgba(50%, 25%, 75%,100%)');
+    });
+
+    it('should return correct color value for default spaceId with rgba origin', () => {
+        colorController.color = 'rgba(255, 87, 51, 0.5)';
+        const result = colorController.colorValue;
+        expect(result).to.equal('rgba(255, 87, 51, 0.5)');
+    });
+
+    it('should return correct color values for hsv spaceId', () => {
+        colorController.color = new Color('hsv', [120, 100, 50]);
+        const result = colorController.colorValue;
+        expect(result).to.deep.equal({
+            h: 120,
+            s: 1,
+            v: 0.5,
+            a: 1,
+        });
+    });
+
+    it('should return correct color values for hsl spaceId', () => {
+        colorController.color = new Color('hsl', [120, 100, 50]);
+        const result = colorController.colorValue;
+        expect(result).to.deep.equal({
+            h: 120,
+            s: 1,
+            l: 0.5,
+            a: 1,
+        });
+    });
+
+    it('should return correct color values for srgb spaceId', () => {
+        colorController.color = new Color('srgb', [0.5, 0.25, 0.75]);
+        const result = colorController.colorValue;
+        expect(result).to.deep.equal({
+            r: 128,
+            g: 64,
+            b: 191,
+            a: 1,
+        });
+    });
+
+    it('should return correct color values for srgb spaceId with percentage origin', () => {
+        colorController.color = new Color('srgb', [0.5, 0.25, 0.75]);
+        colorController._colorOrigin = { r: '50%', g: '25%', b: '75%' };
+        const result = colorController.colorValue;
+        expect(result).to.deep.equal({
+            r: '128%',
+            g: '64%',
+            b: '191%',
+            a: 1,
+        });
     });
 });

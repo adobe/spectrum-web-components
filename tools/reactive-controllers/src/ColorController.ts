@@ -69,6 +69,8 @@ export class ColorController {
             /^rgb\s+(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*$/i,
             /^rgba\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(\d*\.?\d+)\s*\)$/i,
             /^rgb\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*\)$/i,
+            /rgb\(\s*(100|[0-9]{1,2}%)\s*,\s*(100|[0-9]{1,2}%)\s*,\s*(100|[0-9]{1,2}%)\s*\)/i,
+            /rgba\(\s*(100|[0-9]{1,2})%\s*,\s*(100|[0-9]{1,2})%\s*,\s*(100|[0-9]{1,2})%\s*,\s*(\d*\.?\d+)\s*\)/i,
         ];
         const hslRegExpArray = [
             /hsla\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*,\s*(\d*\.?\d+)\s*\)/i,
@@ -242,7 +244,10 @@ export class ColorController {
                     }
                 }
             }
+        } else if (color instanceof Color) {
+            newColor = color;
         } else if (!Array.isArray(color)) {
+            //console.log('color', color);
             const { h, s, l, v, r, g, b, a } = color as {
                 h: string;
                 s: string;
