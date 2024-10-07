@@ -803,7 +803,8 @@ export class NumberField extends TextfieldBase {
         }
 
         if (changes.has('min') || changes.has('formatOptions')) {
-            const hasNegative = typeof this.min === 'undefined' || this.min < 0;
+            const hasOnlyPositives =
+                typeof this.min !== 'undefined' && this.min >= 0;
 
             const { maximumFractionDigits } =
                 this.numberFormatter.resolvedOptions();
@@ -813,10 +814,10 @@ export class NumberField extends TextfieldBase {
             let inputMode = 'numeric';
             /* c8 ignore next 5 */
             // iPhone doesn't have a minus sign in either numeric or decimal.
-            if (isIPhone() && hasNegative) inputMode = 'text';
+            if (isIPhone() && !hasOnlyPositives) inputMode = 'text';
             else if (isIOS() && hasDecimals) inputMode = 'decimal';
             // Android numeric has both a decimal point and minus key. Decimal does not have a minus key.
-            else if (isAndroid() && hasDecimals && !hasNegative)
+            else if (isAndroid() && hasDecimals && hasOnlyPositives)
                 inputMode = 'decimal';
 
             this.inputElement.inputMode = inputMode;
