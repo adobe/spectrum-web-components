@@ -70,6 +70,10 @@ const config = {
                 converter.classToHost(),
                 converter.classToAttribute('spectrum-Button--quiet'),
                 converter.classToAttribute('spectrum-Button--emphasized'),
+                converter.classToAttribute(
+                    'spectrum-Button--noWrap',
+                    'no-wrap'
+                ),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-pending', 'pending'),
