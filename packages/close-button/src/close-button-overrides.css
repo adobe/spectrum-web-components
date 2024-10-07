@@ -54,22 +54,6 @@
     --spectrum-closebutton-size: var(--system-close-button-size);
 }
 
-:host([size='s']) {
-    --spectrum-closebutton-size: var(--system-close-button-size-s-size);
-}
-
-:host {
-    --spectrum-closebutton-size: var(--system-close-button-size-m-size);
-}
-
-:host([size='l']) {
-    --spectrum-closebutton-size: var(--system-close-button-size-l-size);
-}
-
-:host([size='xl']) {
-    --spectrum-closebutton-size: var(--system-close-button-size-xl-size);
-}
-
 :host([static='white']) {
     --spectrum-closebutton-static-background-color-default: var(
         --system-close-button-static-white-static-background-color-default
@@ -116,4 +100,20 @@
     --spectrum-closebutton-focus-indicator-color: var(
         --system-close-button-static-black-focus-indicator-color
     );
+}
+
+:host([size='s']) {
+    --spectrum-closebutton-size: var(--system-close-button-size-s-size);
+}
+
+:host {
+    --spectrum-closebutton-size: var(--system-close-button-size-m-size);
+}
+
+:host([size='l']) {
+    --spectrum-closebutton-size: var(--system-close-button-size-l-size);
+}
+
+:host([size='xl']) {
+    --spectrum-closebutton-size: var(--system-close-button-size-xl-size);
 }

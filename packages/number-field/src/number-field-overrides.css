@@ -13,10 +13,6 @@
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-stepper-border-width: var(--system-stepper-border-width);
-    --spectrum-stepper-border-width-disabled: var(
-        --system-stepper-border-width-disabled
-    );
-    --spectrum-stepper-border-radius: var(--system-stepper-border-radius);
     --spectrum-stepper-border-color: var(--system-stepper-border-color);
     --spectrum-stepper-border-color-hover: var(
         --system-stepper-border-color-hover
@@ -29,6 +25,47 @@
     );
     --spectrum-stepper-border-color-keyboard-focus: var(
         --system-stepper-border-color-keyboard-focus
+    );
+    --spectrum-stepper-border-radius: var(--system-stepper-border-radius);
+    --spectrum-stepper-min-width-multiplier: var(
+        --system-stepper-min-width-multiplier
+    );
+    --spectrum-stepper-animation-duration: var(
+        --system-stepper-animation-duration
+    );
+    --spectrum-stepper-buttons-border-style: var(
+        --system-stepper-buttons-border-style
+    );
+    --spectrum-stepper-buttons-border-width: var(
+        --system-stepper-buttons-border-width
+    );
+    --spectrum-stepper-buttons-border-color: var(
+        --system-stepper-buttons-border-color
+    );
+    --spectrum-stepper-buttons-background-color: var(
+        --system-stepper-buttons-background-color
+    );
+    --spectrum-stepper-buttons-border-color-hover: var(
+        --system-stepper-buttons-border-color-hover
+    );
+    --spectrum-stepper-buttons-border-color-focus: var(
+        --system-stepper-buttons-border-color-focus
+    );
+    --spectrum-stepper-buttons-border-color-keyboard-focus: var(
+        --system-stepper-buttons-border-color-keyboard-focus
+    );
+    --spectrum-stepper-button-padding: var(--system-stepper-button-padding);
+    --spectrum-stepper-button-border-radius-reset: var(
+        --system-stepper-button-border-radius-reset
+    );
+    --spectrum-stepper-button-border-width: var(
+        --system-stepper-button-border-width
+    );
+    --spectrum-stepper-button-background-color-focus: var(
+        --system-stepper-button-background-color-focus
+    );
+    --spectrum-stepper-button-background-color-keyboard-focus: var(
+        --system-stepper-button-background-color-keyboard-focus
     );
     --spectrum-stepper-border-color-invalid: var(
         --system-stepper-border-color-invalid
@@ -45,9 +82,6 @@
     --spectrum-stepper-border-color-keyboard-focus-invalid: var(
         --system-stepper-border-color-keyboard-focus-invalid
     );
-    --spectrum-stepper-min-width-multiplier: var(
-        --system-stepper-min-width-multiplier
-    );
     --spectrum-stepper-focus-indicator-width: var(
         --system-stepper-focus-indicator-width
     );
@@ -57,27 +91,20 @@
     --spectrum-stepper-focus-indicator-color: var(
         --system-stepper-focus-indicator-color
     );
-    --spectrum-stepper-animation-duration: var(
-        --system-stepper-animation-duration
+    --spectrum-stepper-button-border-color-quiet: var(
+        --system-stepper-button-border-color-quiet
     );
-    --spectrum-stepper-border-radius-quiet: var(
-        --system-stepper-border-radius-quiet
+    --spectrum-stepper-button-border-color-disabled: var(
+        --system-stepper-button-border-color-disabled
     );
-    --spectrum-stepper-background-color-quiet: var(
-        --system-stepper-background-color-quiet
+    --spectrum-stepper-button-border-width-disabled: var(
+        --system-stepper-button-border-width-disabled
     );
-    --spectrum-stepper-border-color-quiet-disabled: var(
-        --system-stepper-border-color-quiet-disabled
+    --spectrum-stepper-buttons-background-color-disabled: var(
+        --system-stepper-buttons-background-color-disabled
     );
     --spectrum-stepper-button-width: var(--system-stepper-button-width);
     --spectrum-stepper-height: var(--system-stepper-height);
-    --spectrum-stepper-border-color-disabled: var(
-        --system-stepper-border-color-disabled
-    );
-    --spectrum-stepper-background-color: var(--system-stepper-background-color);
-    --spectrum-stepper-background-color-disabled: var(
-        --system-stepper-background-color-disabled
-    );
 }
 
 :host([size='s']) #textfield {

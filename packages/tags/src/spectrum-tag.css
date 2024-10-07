@@ -77,6 +77,7 @@ governing permissions and limitations under the License.
 ::slotted([slot='icon']) {
     block-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
     inline-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
+    flex-shrink: 0;
     margin-block-start: calc(
         var(
                 --mod-tag-icon-spacing-block-start,

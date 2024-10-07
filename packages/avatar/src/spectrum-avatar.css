@@ -114,7 +114,7 @@ governing permissions and limitations under the License.
 }
 
 .link {
-    outline: solid #0000;
+    outline: 0;
 }
 
 .image {

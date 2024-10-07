@@ -194,7 +194,7 @@
     );
 }
 
-:host([size='s']) #textfield {
+:host([size='s']) {
     --spectrum-textfield-height: var(--system-textfield-size-s-height);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --system-textfield-size-s-label-spacing-block-quiet
@@ -249,7 +249,7 @@
     );
 }
 
-:host #textfield {
+:host {
     --spectrum-textfield-height: var(--system-textfield-size-m-height);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --system-textfield-size-m-label-spacing-block-quiet
@@ -304,7 +304,7 @@
     );
 }
 
-:host([size='l']) #textfield {
+:host([size='l']) {
     --spectrum-textfield-height: var(--system-textfield-size-l-height);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --system-textfield-size-l-label-spacing-block-quiet
@@ -359,7 +359,7 @@
     );
 }
 
-:host([size='xl']) #textfield {
+:host([size='xl']) {
     --spectrum-textfield-height: var(--system-textfield-size-xl-height);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --system-textfield-size-xl-label-spacing-block-quiet
