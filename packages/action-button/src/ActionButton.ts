@@ -277,7 +277,8 @@ export class ActionButton extends SizedMixin(ButtonBase, {
                 window.__swc.warn(
                     this,
                     `The "variant" attribute/property of <${this.localName}> has been deprecated. Use "static-color" with the same values instead. "variant" will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/action-button/api/'
+                    'https://opensource.adobe.com/spectrum-web-components/components/action-button/api/',
+                    { level: 'deprecation' }
                 );
             }
         }
@@ -290,7 +291,8 @@ export class ActionButton extends SizedMixin(ButtonBase, {
                 window.__swc.warn(
                     this,
                     `The "static" attribute/property of <${this.localName}> has been deprecated. Use "static-color" with the same values instead. "static" will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/action-button/api/'
+                    'https://opensource.adobe.com/spectrum-web-components/components/action-button/api/',
+                    { level: 'deprecation' }
                 );
             }
         }

@@ -137,7 +137,8 @@ export class ProgressBar extends SizedMixin(
                 window.__swc.warn(
                     this,
                     `The "static" attribute of <${this.localName}> has been deprecated. Use "static-color" with the same values instead. "static" will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/action-button/api/'
+                    'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/api/',
+                    { level: 'deprecation' }
                 );
             }
         }

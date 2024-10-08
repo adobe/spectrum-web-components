@@ -213,7 +213,8 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                     window.__swc.warn(
                         this,
                         `The "static" attribute/property on <${this.localName}> has been deprecated. Use "static-color" instead. "static" will be removed in a future release.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/button'
+                        'https://opensource.adobe.com/spectrum-web-components/components/button/api',
+                        { level: 'deprecation' }
                     );
                 }
             }

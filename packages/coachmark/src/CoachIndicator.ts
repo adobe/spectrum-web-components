@@ -75,7 +75,7 @@ export class CoachIndicator extends SpectrumElement {
                 window.__swc.warn(
                     this,
                     `The "static" attribute/property of <${this.localName}> have been deprecated. Use "static-color" with any of the same values instead. "static" will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/badge/#fixed',
+                    'https://opensource.adobe.com/spectrum-web-components/components/coach-indicator',
                     { level: 'deprecation' }
                 );
             }

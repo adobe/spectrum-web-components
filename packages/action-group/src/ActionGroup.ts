@@ -365,7 +365,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             changes.has('quiet') ||
             changes.has('emphasized') ||
             changes.has('size') ||
-            changes.has('static')
+            changes.has('static') ||
+            changes.has('staticColor')
         ) {
             this.manageChildren(changes);
         }
@@ -395,7 +396,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     window.__swc.warn(
                         this,
                         `The "static" attribute/property of <${this.localName}> has been deprecated. Use "static-color" with the same values instead. "static" will be removed in a future release.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/action-button/api/'
+                        'https://opensource.adobe.com/spectrum-web-components/components/action-group/api/',
+                        { level: 'deprecation' }
                     );
                 }
                 this.staticColor = this.static;
