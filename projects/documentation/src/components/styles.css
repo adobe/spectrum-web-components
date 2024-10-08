@@ -148,6 +148,17 @@ body {
     }
 }
 
+.visually-hidden,
+[value='examples'] > .headerContainer:first-child {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
 #logo {
     outline: none;
     margin-bottom: -11px;
@@ -608,8 +619,17 @@ sp-divider[size='s']:not(:defined) {
     margin-bottom: 28px;
 }
 
-.headerContainer sp-divider {
-    margin-bottom: 33px;
+.header-heading {
+    display: inline !important;
+}
+
+.header-anchor {
+    padding: 0 0.25rem;
+}
+
+.header-anchor:link,
+.header-anchor:visited {
+    text-decoration: none !important;
 }
 
 article {
@@ -696,8 +716,8 @@ sp-table.events .description {
     margin-bottom: calc(var(--swc-scale-factor) * 12px);
 }
 
-[id] > .header-anchor {
-    opacity: 0;
+.headerContainer:has([id]) > .header-anchor {
+    text-decoration: underline;
     transition: all 125ms ease-in-out;
 }
 
@@ -711,9 +731,9 @@ tr[id] {
 }
 
 /*! purgecss start ignore */
-[id]:hover > .header-anchor,
-[id] > .header-anchor.focus-visible {
-    opacity: 1;
+.headerContainer:has([id]):hover > .header-anchor,
+.headerContainer:has([id]) > .header-anchor.focus-visible {
+    text-decoration: none;
 }
 
 sp-link img {
@@ -880,6 +900,10 @@ sp-tab-panel:not(.section):focus code-example:after {
         var(--spectrum-blue-600);
 }
 
+sp-tab-panel.section {
+    padding-top: 2rem;
+}
+
 .for-github {
     display: none;
 }
@@ -984,11 +1008,11 @@ sp-link {
     flex-wrap: wrap;
     gap: 16px;
     border-radius: 6px;
-    margin: 2rem 0 0 0;
+    margin: 2rem 0 2rem 0;
     container-type: inline-size;
 }
 
-.usage-links :is(h2, h3) {
+.usage-links :is([slot='heading']) {
     all: unset;
 }
 
