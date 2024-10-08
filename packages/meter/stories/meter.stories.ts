@@ -66,7 +66,7 @@ export const positive = (): TemplateResult => {
     `;
 };
 
-export const staticColorWhite = (): TemplateResult => {
+export const staticWhite = (): TemplateResult => {
     return makeOverBackground('white')(
         (): TemplateResult => html`
             <sp-meter static-color="white" progress="50">
