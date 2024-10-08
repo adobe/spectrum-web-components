@@ -751,7 +751,7 @@ describe('Button', () => {
             await elementUpdated(el);
             expect(el.hasAttribute('variant')).to.not.equal('overBackground');
             expect(el.treatment).to.equal('outline');
-            expect(el.static).to.equal('white');
+            expect(el.staticColor).to.equal('white');
         });
         it('forces [variant="accent"]', async () => {
             const el = await fixture<Button>(html`
