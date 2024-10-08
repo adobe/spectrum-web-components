@@ -1539,6 +1539,7 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
         expect(el.staticColor).to.equal('white');
         expect(el.static).to.equal('white');
+        expect(el.getAttribute('static-color')).to.equal('white');
     });
 });
 
@@ -1570,7 +1571,7 @@ describe('dev mode', () => {
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
         expect(
-            (spyCall.args.at(0) as string).includes('The "static" attribute'),
+            (spyCall.args.at(0) as string).includes('deprecated'),
             'confirm attribute deprecation message'
         ).to.be.true;
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({

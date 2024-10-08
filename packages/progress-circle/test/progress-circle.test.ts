@@ -227,5 +227,6 @@ describe('ProgressCircle', () => {
 
         expect(el.staticColor).to.equal('white');
         expect(el.static).to.equal('white');
+        expect(el.getAttribute('static-color')).to.equal('white');
     });
 });

@@ -61,7 +61,28 @@ describe('dev mode', () => {
         consoleWarnStub.restore();
     });
 
-    it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+    it('warns in Dev Mode when deprecated `static` attribute is used', async () => {
+        const el = await fixture<CoachIndicator>(html`
+            <sp-coach-indicator static="white"></sp-coach-indicator>
+        `);
+        await elementUpdated(el);
+        expect(consoleWarnStub.called).to.be.true;
+
+        const spyCall = consoleWarnStub.getCall(0);
+        expect(
+            (spyCall.args.at(0) as string).includes('deprecated'),
+            'confirm deprecated static warning'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-coach-indicator',
+                type: 'api',
+                level: 'deprecation',
+            },
+        });
+    });
+
+    it('warns in Dev Mode when deprecated `variant` attribute is used', async () => {
         const el = await fixture<CoachIndicator>(html`
             <sp-coach-indicator variant="white"></sp-coach-indicator>
         `);
@@ -70,7 +91,7 @@ describe('dev mode', () => {
 
         const spyCall = consoleWarnStub.getCall(0);
         expect(
-            (spyCall.args.at(0) as string).includes('deprecated'),
+            (spyCall.args.at(0) as string).includes('The "variant" attribute'),
             'confirm deprecated static warning'
         ).to.be.true;
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
