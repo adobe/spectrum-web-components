@@ -21,13 +21,12 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { stub } from 'sinon';
 import {
     a11ySnapshot,
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
 type TestableButtonType = {
     hasLabel: boolean;
