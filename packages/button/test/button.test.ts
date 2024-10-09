@@ -791,9 +791,23 @@ describe('Button', () => {
             `);
 
             await elementUpdated(el);
-            expect(el.hasAttribute('variant')).to.not.equal('overBackground');
+            expect(el.getAttribute('variant')).to.not.equal('overBackground');
             expect(el.treatment).to.equal('outline');
             expect(el.staticColor).to.equal('white');
+        });
+        ['white', 'black'].forEach((variant) => {
+            it(`manages [variant="${variant}"]`, async () => {
+                const el = await fixture<Button>(html`
+                    <sp-button variant="${variant as 'white' | 'black'}">
+                        Button
+                    </sp-button>
+                `);
+
+                await elementUpdated(el);
+                expect(el.hasAttribute('variant')).to.not.equal(variant);
+                expect(el.staticColor).to.equal(variant);
+                expect(el.getAttribute('static-color')).to.equal(variant);
+            });
         });
         it('forces [variant="accent"]', async () => {
             const el = await fixture<Button>(html`
