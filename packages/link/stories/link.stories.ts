@@ -60,7 +60,7 @@ export const staticWhite = (): TemplateResult => {
         >
             <p style="color: rgb(240, 240, 240);">
                 This
-                <sp-link static="white" href="#">link</sp-link>
+                <sp-link static-color="white" href="#">link</sp-link>
                 has a background.
             </p>
         </div>
@@ -74,7 +74,7 @@ export const staticBlack = (): TemplateResult => {
         >
             <p style="color: rgb(15, 15, 15);">
                 This
-                <sp-link static="black" href="#">link</sp-link>
+                <sp-link static-color="black" href="#">link</sp-link>
                 has a background.
             </p>
         </div>
@@ -88,7 +88,7 @@ export const staticWhiteQuiet = (): TemplateResult => {
         >
             <p style="color: rgb(240, 240, 240);">
                 This
-                <sp-link static="white" quiet href="#">link</sp-link>
+                <sp-link static-color="white" quiet href="#">link</sp-link>
                 has a background.
             </p>
         </div>
@@ -102,7 +102,7 @@ export const staticBlackQuiet = (): TemplateResult => {
         >
             <p style="color: rgb(15, 15, 15);">
                 This
-                <sp-link static="black" quiet href="#">link</sp-link>
+                <sp-link static-color="black" quiet href="#">link</sp-link>
                 has a background.
             </p>
         </div>

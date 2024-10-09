@@ -63,7 +63,7 @@ const config = {
                         ['spectrum-ProgressBar--staticBlack', 'black'],
                         ['spectrum-ProgressBar--staticWhite', 'white'],
                     ],
-                    'static'
+                    'static-color'
                 ),
             ],
             excludeByComponents: [

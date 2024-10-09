@@ -41,7 +41,7 @@ const config = {
                         ['spectrum-Divider--staticWhite', 'white'],
                         ['spectrum-Divider--staticBlack', 'black'],
                     ],
-                    'static'
+                    'static-color'
                 ),
             ],
         },

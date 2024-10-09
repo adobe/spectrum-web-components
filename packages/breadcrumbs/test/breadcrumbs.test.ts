@@ -28,6 +28,7 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js';
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
+import { sendKeys } from '@web/test-runner-commands';
 
 describe('Breadcrumbs', () => {
     testForLitDevWarnings(
@@ -165,5 +166,32 @@ describe('Breadcrumbs', () => {
         await elementUpdated(el);
         expect(changeSpy).to.have.been.calledOnce;
         expect(changeSpy).to.have.been.calledWith('0');
+    });
+
+    it('should emit a change event on Enter keypress', async () => {
+        const changeSpy = spy();
+
+        const el = await fixture<Breadcrumbs>(html`
+            <sp-breadcrumbs
+                @change=${(
+                    event: Event & { detail: BreadcrumbSelectDetail }
+                ) => {
+                    changeSpy(event.detail.value);
+                }}
+            >
+                ${getBreadcrumbs(4)}
+            </sp-breadcrumbs>
+        `);
+
+        await elementUpdated(el);
+
+        // Simulate a click from the visible breadcrumb.
+        const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
+
+        breadcrumbs[1].focus();
+        await sendKeys({ press: 'Enter' });
+
+        expect(changeSpy).to.have.been.calledOnce;
+        expect(changeSpy).to.have.been.calledWith('1');
     });
 });

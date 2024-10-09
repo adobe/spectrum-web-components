@@ -21,13 +21,12 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { stub } from 'sinon';
 import {
     a11ySnapshot,
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
 type TestableButtonType = {
     hasLabel: boolean;
@@ -71,11 +70,54 @@ describe('Button', () => {
                 data: {
                     localName: 'sp-button',
                     type: 'api',
-                    level: 'default',
+                    level: 'deprecation',
+                },
+            });
+        });
+        it('warns in devMode when white/black static is provided', async () => {
+            const el = await fixture<Button>(html`
+                <sp-button tabindex="0" static="black">Button</sp-button>
+            `);
+
+            await elementUpdated(el);
+            expect(consoleWarnStub.called).to.be.true;
+
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('deprecated'),
+                'confirm deprecated static warning'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-button',
+                    type: 'api',
+                    level: 'deprecation',
+                },
+            });
+        });
+        it('warns in devMode when white/black static is provided', async () => {
+            const el = await fixture<Button>(html`
+                <sp-button tabindex="0" static="white">Button</sp-button>
+            `);
+
+            await elementUpdated(el);
+            expect(consoleWarnStub.called).to.be.true;
+
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('deprecated'),
+                'confirm deprecated static warning'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-button',
+                    type: 'api',
+                    level: 'deprecation',
                 },
             });
         });
     });
+
     it('loads default', async () => {
         const el = await fixture<Button>(html`
             <sp-button tabindex="0">Button</sp-button>
@@ -749,9 +791,23 @@ describe('Button', () => {
             `);
 
             await elementUpdated(el);
-            expect(el.hasAttribute('variant')).to.not.equal('overBackground');
+            expect(el.getAttribute('variant')).to.not.equal('overBackground');
             expect(el.treatment).to.equal('outline');
-            expect(el.static).to.equal('white');
+            expect(el.staticColor).to.equal('white');
+        });
+        ['white', 'black'].forEach((variant) => {
+            it(`manages [variant="${variant}"]`, async () => {
+                const el = await fixture<Button>(html`
+                    <sp-button variant="${variant as 'white' | 'black'}">
+                        Button
+                    </sp-button>
+                `);
+
+                await elementUpdated(el);
+                expect(el.hasAttribute('variant')).to.not.equal(variant);
+                expect(el.staticColor).to.equal(variant);
+                expect(el.getAttribute('static-color')).to.equal(variant);
+            });
         });
         it('forces [variant="accent"]', async () => {
             const el = await fixture<Button>(html`

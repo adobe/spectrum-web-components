@@ -112,8 +112,14 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     @property({ type: String })
     public selects: undefined | 'single' | 'multiple';
 
+    /**
+     * @deprecated Use `staticColor` instead.
+     */
     @property({ reflect: true })
     public static?: 'white' | 'black';
+
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white' | 'black';
 
     @property({ type: Boolean, reflect: true })
     public vertical = false;
@@ -359,7 +365,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             changes.has('quiet') ||
             changes.has('emphasized') ||
             changes.has('size') ||
-            changes.has('static')
+            changes.has('static') ||
+            changes.has('staticColor')
         ) {
             this.manageChildren(changes);
         }
@@ -385,7 +392,19 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 button.emphasized = this.emphasized;
             }
             if (this.static || changes?.get('static')) {
-                button.static = this.static;
+                if (window.__swc.DEBUG) {
+                    window.__swc.warn(
+                        this,
+                        `The "static" attribute/property of <${this.localName}> has been deprecated. Use "static-color" with the same values instead. "static" will be removed in a future release.`,
+                        'https://opensource.adobe.com/spectrum-web-components/components/action-group/api/',
+                        { level: 'deprecation' }
+                    );
+                }
+                this.staticColor = this.static;
+                button.staticColor = this.staticColor;
+            }
+            if (this.staticColor || changes?.get('staticColor')) {
+                button.staticColor = this.staticColor;
             }
             if (this.selects || !this.hasManaged) {
                 button.selected = this.selected.includes(button.value);

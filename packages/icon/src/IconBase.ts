@@ -17,7 +17,15 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    SystemResolutionController,
+    systemResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
+
+import {
+    property,
+    state,
+} from '@spectrum-web-components/base/src/decorators.js';
 
 import iconStyles from './icon.css.js';
 
@@ -32,6 +40,11 @@ export class IconBase extends SpectrumElement {
     @property({ reflect: true })
     public size?: 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
 
+    private systemResolver = new SystemResolutionController(this);
+
+    @state()
+    public spectrumVersion = 1;
+
     protected override update(changes: PropertyValues): void {
         if (changes.has('label')) {
             if (this.label) {
@@ -40,6 +53,12 @@ export class IconBase extends SpectrumElement {
                 this.setAttribute('aria-hidden', 'true');
             }
         }
+
+        if (changes.has(systemResolverUpdatedSymbol)) {
+            this.spectrumVersion =
+                this.systemResolver.system === 'spectrum-two' ? 2 : 1;
+        }
+
         super.update(changes);
     }
 

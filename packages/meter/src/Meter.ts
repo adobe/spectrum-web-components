@@ -32,7 +32,7 @@ import styles from './meter.css.js';
 
 export const meterVariants = ['positive', 'notice', 'negative'];
 
-export type MeterVariants = typeof meterVariants[number];
+export type MeterVariants = (typeof meterVariants)[number];
 
 /**
  * @element sp-meter
@@ -89,8 +89,14 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
     // called sideLabel
     public sideLabel = false;
 
+    /**
+     * @deprecated Use `staticColor` instead.
+     */
     @property({ type: String, reflect: true })
     public static: 'white' | undefined;
+
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white';
 
     protected override render(): TemplateResult {
         return html`
@@ -135,6 +141,20 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
                 this.setAttribute('aria-label', this.label);
             } else {
                 this.removeAttribute('aria-label');
+            }
+        }
+        if (
+            changes.has('static') &&
+            (this.static !== undefined || changes.get('static') !== undefined)
+        ) {
+            this.staticColor = this.static;
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `The "static" attribute/property of <${this.localName}> has been deprecated. Use "static-color" with the same values instead. "static" will be removed in a future release.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/meter/api/',
+                    { level: 'deprecation' }
+                );
             }
         }
     }

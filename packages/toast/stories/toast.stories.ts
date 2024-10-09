@@ -37,7 +37,7 @@ const toast = ({
         ${content}
         <sp-button
             slot="action"
-            static="white"
+            static-color="white"
             variant="secondary"
             treatment="outline"
         >

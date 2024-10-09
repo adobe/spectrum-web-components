@@ -177,12 +177,12 @@ attribute defaults to `accent` but also accepts the following value: `accent`, `
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button static="black">Label only</sp-button>
-    <sp-button static="black">
+    <sp-button static-color="black">Label only</sp-button>
+    <sp-button static-color="black">
         <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
     </sp-button>
-    <sp-button static="black" label="Icon only" icon-only>
+    <sp-button static-color="black" label="Icon only" icon-only>
         <sp-icon-help slot="icon"></sp-icon-help>
     </sp-button>
 </sp-button-group>
@@ -194,12 +194,12 @@ attribute defaults to `accent` but also accepts the following value: `accent`, `
 
 ```html demo
 <sp-button-group style="min-width: max-content">
-    <sp-button static="white">Label only</sp-button>
-    <sp-button static="white">
+    <sp-button static-color="white">Label only</sp-button>
+    <sp-button static-color="white">
         <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
     </sp-button>
-    <sp-button static="white" label="Icon only" icon-only>
+    <sp-button static-color="white" label="Icon only" icon-only>
         <sp-icon-help slot="icon"></sp-icon-help>
     </sp-button>
 </sp-button-group>
@@ -250,12 +250,17 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 <sp-button-group
     style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
 >
-    <sp-button treatment="outline" static="black">Label only</sp-button>
-    <sp-button treatment="outline" static="black">
+    <sp-button treatment="outline" static-color="black">Label only</sp-button>
+    <sp-button treatment="outline" static-color="black">
         <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
     </sp-button>
-    <sp-button treatment="outline" static="black" label="Icon only" icon-only>
+    <sp-button
+        treatment="outline"
+        static-color="black"
+        label="Icon only"
+        icon-only
+    >
         <sp-icon-help slot="icon"></sp-icon-help>
     </sp-button>
 </sp-button-group>
@@ -269,12 +274,17 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 <sp-button-group
     style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
 >
-    <sp-button treatment="outline" static="white">Label only</sp-button>
-    <sp-button treatment="outline" static="white">
+    <sp-button treatment="outline" static-color="white">Label only</sp-button>
+    <sp-button treatment="outline" static-color="white">
         <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
     </sp-button>
-    <sp-button treatment="outline" static="white" label="Icon only" icon-only>
+    <sp-button
+        treatment="outline"
+        static-color="white"
+        label="Icon only"
+        icon-only
+    >
         <sp-icon-help slot="icon"></sp-icon-help>
     </sp-button>
 </sp-button-group>

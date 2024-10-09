@@ -137,6 +137,7 @@ export class ContextualHelp extends SpectrumElement {
     }
 
     protected override render(): TemplateResult {
+        /* c8 ignore next 3 */
         const actualPlacement = this.isMobile.matches
             ? undefined
             : this.placement;

@@ -175,6 +175,7 @@ export class Truncated extends SpectrumElement {
             .trim();
         navigator.clipboard.writeText(textToCopy);
         this.hasCopied = true;
+        /* c8 ignore next 3 */
         setTimeout(() => {
             this.hasCopied = false;
         }, 6000);

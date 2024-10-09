@@ -29,8 +29,8 @@ export class CoachIndicator extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
-    @property({ reflect: true })
-    public static?: 'white' | 'black';
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white' | 'black';
 
     protected override render(): TemplateResult {
         return html`

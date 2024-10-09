@@ -264,14 +264,14 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='white']) .ring {
+:host([static-color='white']) .ring {
     border-color: var(
         --mod-coach-indicator-ring-light-color,
         var(--spectrum-coach-indicator-ring-light-color)
     );
 }
 
-:host([static='black']) .ring {
+:host([static-color='black']) .ring {
     border-color: var(
         --mod-coach-indicator-ring-dark-color,
         var(--spectrum-coach-indicator-ring-dark-color)

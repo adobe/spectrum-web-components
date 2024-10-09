@@ -14,7 +14,7 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import { Theme } from '@spectrum-web-components/theme';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { stub } from 'sinon';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Theme', () => {
     testForLitDevWarnings(

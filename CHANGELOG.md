@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
+
+### Bug Fixes
+
+-   add file extension to Theme imports and respective eslint rule ([#4771](https://github.com/adobe/spectrum-web-components/issues/4771)) ([a2b6bea](https://github.com/adobe/spectrum-web-components/commit/a2b6bea7142930d8143d9ca887e2c56ffa71a669))
+-   **breadcrumbs:** trigger change event on breadcrumbs via keyboard ([#4769](https://github.com/adobe/spectrum-web-components/issues/4769)) ([e14d082](https://github.com/adobe/spectrum-web-components/commit/e14d0827cd5a190e63b14418b8dd89fe2cab49ac))
+
 # [0.48.0](https://github.com/adobe/spectrum-web-components/compare/v0.47.2...v0.48.0) (2024-09-17)
 
 ### Bug Fixes

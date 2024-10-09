@@ -9,8 +9,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import {
+    renderButton,
     renderButtonSet,
     renderIconSizeOverridden,
     renderLink,
@@ -53,6 +54,20 @@ export const minWidthButton = (props: Properties): TemplateResult =>
     renderMinWidthButton(props);
 
 minWidthButton.storyName = 'min-width';
+
+export const noWrapButton = (props: Properties): TemplateResult =>
+    renderButton({ noWrap, content, ...props });
+
+const noWrap = true;
+const content = html`
+    Really long content that should not wrap, if it does wrap then we have a
+    problem. Do we have a problem? I hope we don't have a problem. Is this long
+    enough to show we do not have a problem? Awesome, we do not have a problem.
+    Really long content that should not wrap, if it does wrap then we have a
+    problem. Do we have a problem? I hope we don't have a problem. Is this long
+    enough to show we do not have a problem? Awesome, we do not have a problem.
+`;
+noWrapButton.storyName = 'no-wrap';
 
 export const link = (props: Properties): TemplateResult => renderLink(props);
 

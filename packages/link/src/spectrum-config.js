@@ -126,42 +126,50 @@ const config = {
                     'variant',
                     'secondary'
                 ),
-                includeAnchor('spectrum-Link--staticWhite', 'static', 'white'),
+                includeAnchor(
+                    'spectrum-Link--staticWhite',
+                    'static-color',
+                    'white'
+                ),
                 includeAnchorWithPseudoClass(
                     'hover',
                     'spectrum-Link--staticWhite',
-                    'static',
+                    'static-color',
                     'white'
                 ),
                 includeAnchorWithPseudoClass(
                     'active',
                     'spectrum-Link--staticWhite',
-                    'static',
+                    'static-color',
                     'white'
                 ),
                 includeAnchorWithPseudoClass(
                     'focus',
                     'spectrum-Link--staticWhite',
-                    'static',
+                    'static-color',
                     'white'
                 ),
-                includeAnchor('spectrum-Link--staticBlack', 'static', 'black'),
+                includeAnchor(
+                    'spectrum-Link--staticBlack',
+                    'static-color',
+                    'black'
+                ),
                 includeAnchorWithPseudoClass(
                     'hover',
                     'spectrum-Link--staticBlack',
-                    'static',
+                    'static-color',
                     'black'
                 ),
                 includeAnchorWithPseudoClass(
                     'active',
                     'spectrum-Link--staticBlack',
-                    'static',
+                    'static-color',
                     'black'
                 ),
                 includeAnchorWithPseudoClass(
                     'focus',
                     'spectrum-Link--staticBlack',
-                    'static',
+                    'static-color',
                     'black'
                 ),
                 {

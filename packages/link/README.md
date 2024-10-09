@@ -74,7 +74,7 @@ When a link needs to be placed on top of a colored background or a visual it may
 >
     <p style="color: rgb(240, 240, 240);">
         This
-        <sp-link static="white" href="#">link</sp-link>
+        <sp-link static-color="white" href="#">link</sp-link>
         is over a background.
     </p>
 </div>
@@ -90,7 +90,7 @@ When a link needs to be placed on top of a colored background or a visual it may
 >
     <p style="color: rgb(15, 15, 15);">
         This
-        <sp-link static="black" href="#">link</sp-link>
+        <sp-link static-color="black" href="#">link</sp-link>
         is over a background.
     </p>
 </div>
@@ -112,7 +112,7 @@ All links can have a quiet style, which means they don’t have an underline. Th
 >
     <p style="color: rgb(240, 240, 240);">
         This is a
-        <sp-link static="white" quiet href="#">quiet link</sp-link>
+        <sp-link static-color="white" quiet href="#">quiet link</sp-link>
         over a background.
     </p>
 </div>

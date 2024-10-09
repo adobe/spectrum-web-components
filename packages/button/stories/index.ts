@@ -122,6 +122,7 @@ export function renderButton(properties: Properties): TemplateResult {
             ?icon-only=${properties.iconOnly}
             ?pending=${!!properties.pending}
             ?quiet="${!!properties.quiet}"
+            ?no-wrap="${!!properties.noWrap}"
             size=${properties.size}
             target=${ifDefined(properties.target)}
             treatment=${ifDefined(properties.treatment)}
