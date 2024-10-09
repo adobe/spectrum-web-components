@@ -48,6 +48,10 @@ input::-webkit-search-cancel-button {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-400);
 }
 
+.icon {
+    --spectrum-icon-size: inherit;
+}
+
 /**
  * While overriding the need for `size="m"` in SWC, these values correct the
  * cascade when attempting to delivery the Clear Button within the Search UI.
