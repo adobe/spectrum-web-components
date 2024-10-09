@@ -186,10 +186,8 @@ describe('TabsOverflow', () => {
         // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
         // );
 
-        // There's an issue in the way Firefox handles element scrolling
-        // and the waitUntil seems to timeout on CI. Therefore the test
-        // is skipped for Firefox.
-        if (!isFirefox()) return;
+        // Skipping on Firefox due to timeouts on CI
+        if (isFirefox()) return;
 
         const el = await renderTabsOverflow({
             count: 8,
@@ -225,10 +223,8 @@ describe('TabsOverflow', () => {
         // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
         // );
 
-        // There's an issue in the way Firefox handles element scrolling
-        // and the waitUntil seems to timeout on CI. Therefore the test
-        // is skipped for Firefox.
-        if (!isFirefox()) return;
+        // Skipping on Firefox due to timeouts on CI
+        if (isFirefox()) return;
 
         const el = await renderTabsOverflow({
             count: 8,
