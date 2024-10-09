@@ -24,6 +24,7 @@ import {
     SettableFragmentTypes,
     ShadowRootWithAdoptedStyleSheets,
     SYSTEM_VARIANT_VALUES,
+    SystemContextCallback,
     SystemVariant,
     ThemeFragmentMap,
     ThemeKindProvider,
@@ -94,9 +95,11 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this._provideContext();
         } else if (attrName === 'theme') {
             this.theme = value as SystemVariant;
+            this._provideSystemContext();
             warnBetaSystem(this, value as SystemVariant);
         } else if (attrName === 'system') {
             this.system = value as SystemVariant;
+            this._provideSystemContext();
             warnBetaSystem(this, value as SystemVariant);
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
@@ -301,7 +304,61 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             'sp-language-context',
             this._handleContextPresence as EventListener
         );
+        this.addEventListener(
+            'sp-system-context',
+            this._handleSystemContext as EventListener
+        );
+
         this.updateComplete = this.__createDeferredPromise();
+    }
+
+    /**
+     * Stores system context consumers and their associated callbacks.
+     *
+     * This Map associates each consumer component (HTMLElement) with a tuple containing:
+     * - The `SystemContextCallback` function to be invoked with the system context.
+     * - An `unsubscribe` function to remove the consumer from the Map when it's no longer needed.
+     */
+    private _systemContextConsumers = new Map<
+        HTMLElement,
+        [SystemContextCallback, () => void]
+    >();
+
+    /**
+     * Handles the 'sp-system-context' event dispatched by descendant components requesting the system context.
+     *
+     * This method registers the requesting component's callback and provides the current system context to it.
+     * It also manages the unsubscribe mechanism to clean up when the component is disconnected.
+     *
+     * @param event - The custom event containing the callback function to provide the system context.
+     */
+    private _handleSystemContext(
+        event: CustomEvent<{ callback: SystemContextCallback }>
+    ): void {
+        event.stopPropagation();
+
+        const target = event.composedPath()[0] as HTMLElement;
+
+        // Avoid duplicate registrations
+        if (this._systemContextConsumers.has(target)) {
+            return;
+        }
+
+        // Create an unsubscribe function
+        const unsubscribe: () => void = () =>
+            this._systemContextConsumers.delete(target);
+
+        // Store the callback and unsubscribe function
+        this._systemContextConsumers.set(target, [
+            event.detail.callback,
+            unsubscribe,
+        ]);
+
+        // Provide the context data
+        const [callback] = this._systemContextConsumers.get(target) || [];
+        if (callback) {
+            callback(this.system, unsubscribe);
+        }
     }
 
     public updateComplete!: Promise<boolean>;
@@ -399,6 +456,19 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     private _provideContext(): void {
         this._contextConsumers.forEach(([callback, unsubscribe]) =>
             callback(this.lang, unsubscribe)
+        );
+    }
+
+    /**
+     * Provides the current system context to all registered consumers.
+     *
+     * This method iterates over all registered system context consumers and invokes their callbacks,
+     * passing the current system variant and the unsubscribe function. This ensures that any component
+     * consuming the system context receives the updated system variant when the `system` (or `theme`) attribute changes.
+     */
+    private _provideSystemContext(): void {
+        this._systemContextConsumers.forEach(([callback, unsubscribe]) =>
+            callback(this.system, unsubscribe)
         );
     }
 

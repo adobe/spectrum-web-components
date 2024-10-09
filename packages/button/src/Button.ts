@@ -156,6 +156,15 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         this.treatment = quiet ? 'outline' : 'fill';
     }
 
+    /**
+     * Disables text wrapping within the button component's label.
+     * Please note that this option is not a part of the design specification
+     * and should be used carefully, with consideration of this overflow behavior
+     * and the readability of the button's content.
+     */
+    @property({ type: Boolean, attribute: 'no-wrap', reflect: true })
+    public noWrap = false;
+
     public get quiet(): boolean {
         return this.treatment === 'outline';
     }
