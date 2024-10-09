@@ -70,7 +70,28 @@ describe('Button', () => {
                 data: {
                     localName: 'sp-button',
                     type: 'api',
-                    level: 'default',
+                    level: 'deprecation',
+                },
+            });
+        });
+        it('warns in devMode when white/black static is provided', async () => {
+            const el = await fixture<Button>(html`
+                <sp-button tabindex="0" static="black">Button</sp-button>
+            `);
+
+            await elementUpdated(el);
+            expect(consoleWarnStub.called).to.be.true;
+
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('deprecated'),
+                'confirm deprecated static warning'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-button',
+                    type: 'api',
+                    level: 'deprecation',
                 },
             });
         });

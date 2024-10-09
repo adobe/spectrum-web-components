@@ -313,7 +313,7 @@ describe('ActionButton', () => {
                 data: {
                     localName: 'sp-action-button',
                     type: 'api',
-                    level: 'default',
+                    level: 'deprecation',
                 },
             });
         });
@@ -335,7 +335,7 @@ describe('ActionButton', () => {
                 data: {
                     localName: 'sp-action-button',
                     type: 'api',
-                    level: 'default',
+                    level: 'deprecation',
                 },
             });
         });
