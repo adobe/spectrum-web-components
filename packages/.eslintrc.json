@@ -14,7 +14,12 @@
     ],
     "rules": {
         "no-debugger": 2,
-        "no-console": ["error", { "allow": ["warn", "error"] }],
+        "no-console": [
+            "error",
+            {
+                "allow": ["warn", "error"]
+            }
+        ],
         "@spectrum-web-components/prevent-argument-names": [
             "error",
             ["e", "ev", "evt", "err"]
@@ -23,8 +28,8 @@
         "notice/notice": [
             "error",
             {
-                "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
-                "templateFile": "config/license.js"
+                "templateFile": "config/license.js",
+                "onNonMatchingHeader": "replace"
             }
         ],
         "@typescript-eslint/explicit-function-return-type": [
