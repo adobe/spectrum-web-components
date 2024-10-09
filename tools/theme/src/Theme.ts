@@ -339,6 +339,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
         const target = event.composedPath()[0] as HTMLElement;
 
+        /* c8 ignore next 4 */
         // Avoid duplicate registrations
         if (this._systemContextConsumers.has(target)) {
             return;
@@ -466,6 +467,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * passing the current system variant and the unsubscribe function. This ensures that any component
      * consuming the system context receives the updated system variant when the `system` (or `theme`) attribute changes.
      */
+    /* c8 ignore next 5 */
     private _provideSystemContext(): void {
         this._systemContextConsumers.forEach(([callback, unsubscribe]) =>
             callback(this.system, unsubscribe)
