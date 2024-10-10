@@ -764,7 +764,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='black'][quiet]) {
+:host([static-color='black'][quiet]) {
     --spectrum-actionbutton-border-color-default: var(
         --system-spectrum-actionbutton-staticblack-quiet-border-color-default
     );
@@ -782,7 +782,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='white'][quiet]) {
+:host([static-color='white'][quiet]) {
     --spectrum-actionbutton-border-color-default: var(
         --system-spectrum-actionbutton-staticwhite-quiet-border-color-default
     );
@@ -800,7 +800,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='black']) {
+:host([static-color='black']) {
     --spectrum-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-staticblack-background-color-default
     );
@@ -851,7 +851,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='black'][selected]) {
+:host([static-color='black'][selected]) {
     --mod-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-staticblack-selected-mod-actionbutton-background-color-default
     );
@@ -896,7 +896,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='white']) {
+:host([static-color='white']) {
     --spectrum-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-staticwhite-background-color-default
     );
@@ -947,7 +947,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='white'][selected]) {
+:host([static-color='white'][selected]) {
     --mod-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-staticwhite-selected-mod-actionbutton-background-color-default
     );
