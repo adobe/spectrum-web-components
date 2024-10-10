@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import {
     CalendarDate,
     endOfMonth,
@@ -74,11 +74,9 @@ describe('Calendar', () => {
 
     testForLitDevWarnings(
         async () =>
-            await fixture<Calendar>(
-                html`
-                    <sp-calendar></sp-calendar>
-                `
-            )
+            await fixture<Calendar>(html`
+                <sp-calendar></sp-calendar>
+            `)
     );
 
     it('loads default calendar accessibly', async () => {
@@ -98,37 +96,18 @@ describe('Calendar', () => {
         });
 
         it('with a valid pre-selected value', async () => {
-            const selectedDate = '2024-08-21';
+            const value = new CalendarDate(2024, 7, 21);
             const element = await fixtureElement({
-                props: { selectedDate: new Date(selectedDate) },
+                props: { value },
             });
             await elementUpdated(element);
 
-            const selectedCalendarDate = parseDate(selectedDate);
             const isSelectedDateDisplayed = isSameDay(
                 element['currentDate'],
-                selectedCalendarDate
+                value
             );
 
             expect(isSelectedDateDisplayed).to.be.true;
-        });
-
-        it('with an invalid pre-selected value', async () => {
-            const selectedDate = 'invalid';
-            const localToday = today(LOCAL_TIME_ZONE);
-            const element = await fixtureElement({
-                props: { selectedDate: new Date(selectedDate) },
-            });
-            await elementUpdated(element);
-
-            const isLocalTodayDisplayed = isSameDay(
-                element['currentDate'],
-                localToday
-            );
-
-            expect(element.selectedDate.toString()).to.equal('Invalid Date');
-            expect(element['_selectedDate']).to.be.undefined;
-            expect(isLocalTodayDisplayed).to.be.true;
         });
     });
 
@@ -198,8 +177,7 @@ describe('Calendar', () => {
 
             const focusedDay = element.shadowRoot.activeElement as HTMLElement;
             const focusedCalendarDate = parseDate(focusedDay.dataset.value!);
-            expect(isSameDay(focusedCalendarDate, element['_selectedDate']!)).to
-                .be.true;
+            expect(isSameDay(focusedCalendarDate, element.value!)).to.be.true;
         });
 
         it("coming back to today's date", async () => {
@@ -468,30 +446,36 @@ describe('Calendar', () => {
     });
 
     describe('Manages min and max constraints', () => {
-        let min: Date;
-        let max: Date;
+        let min: CalendarDate;
+        let max: CalendarDate;
         const dayOffset = 5;
 
         before(async () => {
-            // Month is 0-indexed in Date but 1-indexed in CalendarDate
-            min = new Date(fixedYear, fixedMonth - 1, fixedDay - dayOffset);
-            max = new Date(fixedYear, fixedMonth - 1, fixedDay + dayOffset);
+            min = new CalendarDate(fixedYear, fixedMonth, fixedDay - dayOffset);
+            max = new CalendarDate(fixedYear, fixedMonth, fixedDay + dayOffset);
         });
 
-        it('with invalid min date', async () => {
-            // TODO: with the new value API PR
+        it('when min > max date by ignoring them', async () => {
+            const min = max.set({ day: max.day + 1 });
+            element = await fixtureElement({
+                props: { min, max },
+            });
+
+            expect(element.min).to.be.undefined;
+            expect(element.max).to.be.undefined;
         });
 
-        it('with invalid max date', async () => {
-            // TODO: with the new value API PR
-        });
+        it("when a pre-selected value doesn't comply by ignoring it", async () => {
+            const value = max.set({ day: max.day + 1 });
+            element = await fixtureElement({
+                props: { min, max, value },
+            });
 
-        it('with min > max date', async () => {
-            // TODO: with the new value API PR
-        });
-
-        it("when a pre-selected value doesn't comply", async () => {
-            // TODO: with the new value API PR
+            expect(element.value).to.be.undefined;
+            expect(element.min).to.not.be.undefined;
+            expect(element.max).to.not.be.undefined;
+            expect(isSameDay(element.min!, min)).to.be.true;
+            expect(isSameDay(element.max!, max)).to.be.true;
         });
 
         it("by not selecting a day that doesn't comply", async () => {
@@ -501,9 +485,9 @@ describe('Calendar', () => {
             });
             element.addEventListener('change', changeSpy);
             const unavailableDateToSelect = new CalendarDate(
-                fixedYear,
-                fixedMonth,
-                fixedDay + dayOffset + 3
+                max.year,
+                max.month,
+                max.day + 3
             );
             const unavailableDayElement = element.shadowRoot.querySelector(
                 `[data-value='${unavailableDateToSelect.toString()}']`
@@ -530,7 +514,7 @@ describe('Calendar', () => {
 
             expect(isInitialCurrentDate).to.be.true;
             expect(changeSpy.callCount).to.equal(0);
-            expect(element.selectedDate.toString()).to.equal('Invalid Date');
+            expect(element.value).to.be.undefined;
         });
 
         describe('stopping navigation when they are set', () => {
@@ -552,9 +536,8 @@ describe('Calendar', () => {
                 );
                 await elementUpdated(element);
 
-                expect(element['currentDate'].year).to.equal(fixedYear);
-                expect(element['currentDate'].month).to.equal(fixedMonth);
-                expect(element['currentDate'].day).to.equal(max.getDate());
+                const isMaxReached = isSameDay(element['currentDate'], max);
+                expect(isMaxReached).to.be.true;
             });
 
             it('using the left arrow key', async () => {
@@ -565,9 +548,8 @@ describe('Calendar', () => {
                 );
                 await elementUpdated(element);
 
-                expect(element['currentDate'].year).to.equal(fixedYear);
-                expect(element['currentDate'].month).to.equal(fixedMonth);
-                expect(element['currentDate'].day).to.equal(min.getDate());
+                const isMinReached = isSameDay(element['currentDate'], min);
+                expect(isMinReached).to.be.true;
             });
 
             it('using the up arrow key', async () => {
@@ -578,9 +560,8 @@ describe('Calendar', () => {
                 );
                 await elementUpdated(element);
 
-                expect(element['currentDate'].year).to.equal(fixedYear);
-                expect(element['currentDate'].month).to.equal(fixedMonth);
-                expect(element['currentDate'].day).to.equal(min.getDate());
+                const isMinReached = isSameDay(element['currentDate'], min);
+                expect(isMinReached).to.be.true;
             });
 
             it('using the down arrow key', async () => {
@@ -591,20 +572,77 @@ describe('Calendar', () => {
                 );
                 await elementUpdated(element);
 
-                expect(element['currentDate'].year).to.equal(fixedYear);
-                expect(element['currentDate'].month).to.equal(fixedMonth);
-                expect(element['currentDate'].day).to.equal(max.getDate());
+                const isMaxReached = isSameDay(element['currentDate'], max);
+                expect(isMaxReached).to.be.true;
             });
         });
     });
 
     describe('Correctly changes the selected date', () => {
-        let changeSpy: sinon.SinonSpy;
         let availableDateToSelect: CalendarDate;
         let availableDayElement: HTMLElement;
 
         beforeEach(() => {
+            availableDateToSelect = new CalendarDate(
+                fixedYear,
+                fixedMonth,
+                fixedDay + 1
+            );
+            availableDayElement = element.shadowRoot.querySelector(
+                `[data-value='${availableDateToSelect.toString()}']`
+            ) as HTMLElement;
+        });
+
+        it('when an available day is clicked', async () => {
+            const rect = availableDayElement.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            await sendMouse({
+                type: 'click',
+                position: [centerX, centerY],
+            });
+            await elementUpdated(element);
+            const isDateSelected =
+                element.value &&
+                isSameDay(element.value, availableDateToSelect);
+
+            expect(isDateSelected).to.be.true;
+        });
+
+        it('when an available day is acted upon using Enter', async () => {
+            availableDayElement.focus();
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+            const isDateSelected =
+                element.value &&
+                isSameDay(element.value, availableDateToSelect);
+
+            expect(isDateSelected).to.be.true;
+        });
+
+        it('when an available day is acted upon using Space', async () => {
+            availableDayElement.focus();
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
+            const isDateSelected =
+                element.value &&
+                isSameDay(element.value, availableDateToSelect);
+
+            expect(isDateSelected).to.be.true;
+        });
+    });
+
+    describe('Correctly dispatches the change event', () => {
+        let changeSpy: sinon.SinonSpy;
+        let availableDateToSelect: CalendarDate;
+        let availableDayElement: HTMLElement;
+
+        before(async () => {
             changeSpy = spy();
+        });
+
+        beforeEach(() => {
             element.addEventListener('change', changeSpy);
             availableDateToSelect = new CalendarDate(
                 fixedYear,
@@ -620,7 +658,7 @@ describe('Calendar', () => {
             changeSpy.resetHistory();
         });
 
-        it('when an available day is clicked', async () => {
+        it('when an available day is selected by clicking', async () => {
             const rect = availableDayElement.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
@@ -632,15 +670,6 @@ describe('Calendar', () => {
             await elementUpdated(element);
 
             expect(changeSpy.callCount).to.equal(1);
-            expect(element.selectedDate.getFullYear()).to.equal(
-                availableDateToSelect.year
-            );
-            expect(element.selectedDate.getMonth() + 1).to.equal(
-                availableDateToSelect.month
-            );
-            expect(element.selectedDate.getDate()).to.equal(
-                availableDateToSelect.day
-            );
 
             changeSpy.resetHistory();
             await sendMouse({
@@ -651,21 +680,12 @@ describe('Calendar', () => {
             expect(changeSpy.callCount).to.equal(0);
         });
 
-        it('when an available day is acted upon using Enter', async () => {
+        it('when an available day is selected using Enter', async () => {
             availableDayElement.focus();
             await sendKeys({ press: 'Enter' });
             await elementUpdated(element);
 
             expect(changeSpy.callCount).to.equal(1);
-            expect(element.selectedDate.getFullYear()).to.equal(
-                availableDateToSelect.year
-            );
-            expect(element.selectedDate.getMonth() + 1).to.equal(
-                availableDateToSelect.month
-            );
-            expect(element.selectedDate.getDate()).to.equal(
-                availableDateToSelect.day
-            );
 
             changeSpy.resetHistory();
             await sendKeys({ press: 'Enter' });
@@ -673,27 +693,71 @@ describe('Calendar', () => {
             expect(changeSpy.callCount).to.equal(0);
         });
 
-        it('when an available day is acted upon using Space', async () => {
+        it('when an available day is selected using Space', async () => {
             availableDayElement.focus();
             await sendKeys({ press: 'Space' });
             await elementUpdated(element);
 
             expect(changeSpy.callCount).to.equal(1);
-            expect(element.selectedDate.getFullYear()).to.equal(
-                availableDateToSelect.year
-            );
-            expect(element.selectedDate.getMonth() + 1).to.equal(
-                availableDateToSelect.month
-            );
-            expect(element.selectedDate.getDate()).to.equal(
-                availableDateToSelect.day
-            );
 
             changeSpy.resetHistory();
             await sendKeys({ press: 'Space' });
             await elementUpdated(element);
             expect(changeSpy.callCount).to.equal(0);
         });
+    });
+
+    describe('Warns in dev mode', () => {
+        let consoleWarnStub: ReturnType<typeof stub>;
+        let max: CalendarDate;
+
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
+            max = new CalendarDate(fixedYear, fixedMonth, fixedDay + 5);
+        });
+
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+
+        after(() => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+        });
+
+        it("when the pre-selected value doesn't comply", async () => {
+            const value = max.set({ day: max.day + 1 });
+            element = await fixtureElement({
+                props: { max, value },
+            });
+
+            expect(consoleWarnStub.called).to.be.true;
+            const stubCall = consoleWarnStub.getCall(0);
+            expect((stubCall.args[0] as string).includes('value to comply')).to
+                .be.true;
+        });
+
+        it('when min > max', async () => {
+            const min = max.set({ day: max.day + 1 });
+            element = await fixtureElement({
+                props: { min, max },
+            });
+
+            expect(consoleWarnStub.called).to.be.true;
+            const stubCall = consoleWarnStub.getCall(0);
+            expect(
+                (stubCall.args[0] as string).includes(
+                    "'min' to be less than 'max'"
+                )
+            ).to.be.true;
+        });
+    });
+
+    describe('Manages the disabled state', () => {
+        it('by disabling the next and previous month buttons', async () => {});
+        it("by not accepting focus on the calendar's days", async () => {});
+        it("by not selecting a day when it's clicked", async () => {});
     });
 
     it('should render localized dates', async () => {

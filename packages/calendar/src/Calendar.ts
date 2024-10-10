@@ -15,9 +15,11 @@ import {
     getLocalTimeZone,
     getWeeksInMonth,
     isSameDay,
+    isSameMonth,
     parseDate,
     startOfMonth,
     startOfWeek,
+    toCalendarDate,
     today,
 } from '@internationalized/date';
 import { NumberFormatter } from '@internationalized/number';
@@ -42,7 +44,12 @@ import {
     languageResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
-import { CalendarWeekday, DateCellProperties } from './types.js';
+import {
+    CalendarValue,
+    CalendarWeekday,
+    DateCellProperties,
+    DateValue,
+} from './types.js';
 
 import styles from './calendar.css.js';
 
@@ -69,46 +76,31 @@ export class Calendar extends SpectrumElement {
      * If not, the calendar opens at the current month.
      */
     @property({ attribute: false })
-    public set selectedDate(date: Date) {
-        if (!this.isValidDate(date)) return;
-
-        this._selectedDate = this.toCalendarDate(date);
-        this.currentDate = this._selectedDate;
-
-        this.requestUpdate('selectedDate', this._selectedDate);
-    }
-
-    public get selectedDate(): Date {
-        if (!this._selectedDate) return new Date('Invalid Date');
-        return this._selectedDate?.toDate(this.timeZone);
-    }
-    private _selectedDate?: CalendarDate;
-
-    /**
-     * The date that indicates the current position in the calendar.
-     */
-    @state()
-    private currentDate: CalendarDate = this.today;
+    value?: CalendarValue;
 
     /**
      * The minimum allowed date a user can select
      */
     @property({ attribute: false })
-    min?: Date;
-    private minDate?: CalendarDate;
+    min?: DateValue;
 
     /**
      * The maximum allowed date a user can select
      */
     @property({ attribute: false })
-    max?: Date;
-    private maxDate?: CalendarDate;
+    max?: DateValue;
 
     /**
      * Indicates when the calendar should be disabled entirely
      */
     @property({ type: Boolean, reflect: true })
     public disabled = false;
+
+    /**
+     * The date that indicates the current position in the calendar.
+     */
+    @state()
+    private currentDate: CalendarDate = this.today;
 
     /**
      * Adds a padding around the calendar
@@ -133,10 +125,10 @@ export class Calendar extends SpectrumElement {
     }
 
     @state()
-    private weeksInCurrentMonth: number[] = [];
+    private weekdays: CalendarWeekday[] = [];
 
     @state()
-    private weekdays: CalendarWeekday[] = [];
+    private currentMonthDates: CalendarDate[][] = [];
 
     @state()
     protected set isDateFocusIntent(value: boolean) {
@@ -169,16 +161,80 @@ export class Calendar extends SpectrumElement {
         document.removeEventListener('mousedown', this.resetDateFocusIntent);
     }
 
+    public clear(): void {
+        this.value = undefined;
+    }
+
+    constructor() {
+        super();
+        this.setNumberFormatter();
+        this.setWeekdays();
+        this.setCurrentMonthDates();
+    }
+
+    private convertToCalendarDates(): void {
+        this.min = this.min && toCalendarDate(this.min);
+        this.max = this.max && toCalendarDate(this.max);
+        this.value = this.value && toCalendarDate(this.value);
+    }
+
+    private checkDatesCompliance(
+        changesValue: boolean,
+        changesMin: boolean,
+        changesMax: boolean
+    ): void {
+        this.convertToCalendarDates();
+
+        if ((changesMin || changesMax) && this.min && this.max) {
+            const isValidInterval = this.min.compare(this.max) < 0;
+            if (!isValidInterval) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> expects the 'min' to be less than 'max'. Please ensure that 'min' property's date is earlier than 'max' property's date.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/calendar' // TODO: update link
+                );
+                this.min = undefined;
+                this.max = undefined;
+            }
+        }
+
+        if (changesValue && this.value) {
+            const isNonCompliantValue =
+                (this.min && this.value.compare(this.min) < 0) ||
+                (this.max && this.value.compare(this.max) > 0);
+
+            if (isNonCompliantValue) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/calendar' // TODO: update link
+                );
+                this.value = undefined;
+            } else this.currentDate = this.value as CalendarDate;
+        }
+    }
+
     override willUpdate(changedProperties: PropertyValues): void {
-        if (changedProperties.has('min')) this.setMinCalendarDate();
-
-        if (changedProperties.has('max')) this.setMaxCalendarDate();
-
         if (changedProperties.has(languageResolverUpdatedSymbol)) {
             this.setNumberFormatter();
             this.setWeekdays();
-            this.setWeeksInCurrentMonth();
+            this.setCurrentMonthDates();
         }
+
+        const changesMin = changedProperties.has('min');
+        const changesMax = changedProperties.has('max');
+        const changesValue = changedProperties.has('value');
+        const changesDates = changesMin || changesMax || changesValue;
+
+        if (changesDates)
+            this.checkDatesCompliance(changesValue, changesMin, changesMax);
+
+        const previousMonth = changedProperties.get('currentDate');
+        const changesMonth =
+            changedProperties.has('currentDate') &&
+            (!previousMonth || !isSameMonth(previousMonth, this.currentDate));
+
+        if (changesMonth) this.setCurrentMonthDates();
     }
 
     override updated(changedProperties: PropertyValues): void {
@@ -290,9 +346,7 @@ export class Calendar extends SpectrumElement {
         return html`
             <thead role="presentation">
                 <tr role="row">
-                    ${this.weekdays.map((weekday) =>
-                        this.renderWeekdayColumn(weekday)
-                    )}
+                    ${this.weekdays.map(this.renderWeekdayColumn)}
                 </tr>
             </thead>
         `;
@@ -311,20 +365,16 @@ export class Calendar extends SpectrumElement {
     protected renderCalendarTableBody(): TemplateResult {
         return html`
             <tbody role="presentation">
-                ${this.weeksInCurrentMonth.map((weekIndex) =>
-                    this.renderCalendarTableRow(weekIndex)
+                ${this.currentMonthDates.map(
+                    (week) => html`
+                        <tr role="row">
+                            ${week.map((date) =>
+                                this.renderCalendarTableCell(date)
+                            )}
+                        </tr>
+                    `
                 )}
             </tbody>
-        `;
-    }
-
-    protected renderCalendarTableRow(weekIndex: number): TemplateResult {
-        return html`
-            <tr role="row">
-                ${this.getDatesInWeek(weekIndex).map((calendarDate) =>
-                    this.renderCalendarTableCell(calendarDate)
-                )}
-            </tr>
         `;
     }
 
@@ -352,7 +402,7 @@ export class Calendar extends SpectrumElement {
         props.isTabbable = isSameDay(calendarDate, this.currentDate);
 
         props.isSelected = Boolean(
-            this._selectedDate && isSameDay(this._selectedDate, calendarDate)
+            this.value && isSameDay(this.value, calendarDate)
         );
 
         return props;
@@ -425,8 +475,7 @@ export class Calendar extends SpectrumElement {
         const dateString = dateCell.dataset.value!;
         const calendarDateEngaged = parseDate(dateString);
         const isAlreadySelected =
-            this._selectedDate &&
-            isSameDay(this._selectedDate, calendarDateEngaged);
+            this.value && isSameDay(this.value, calendarDateEngaged);
 
         if (
             isAlreadySelected ||
@@ -437,8 +486,7 @@ export class Calendar extends SpectrumElement {
             return;
         }
 
-        this.currentDate = calendarDateEngaged;
-        this.selectedDate = calendarDateEngaged.toDate(this.timeZone);
+        this.value = calendarDateEngaged;
 
         this.dispatchEvent(
             new CustomEvent('change', {
@@ -465,41 +513,33 @@ export class Calendar extends SpectrumElement {
     }
 
     private handlePreviousMonth(): void {
-        const isSelectedInPreviousMonth =
-            this._selectedDate?.month === this.currentDate.month - 1;
-        const isTodayInPreviousMonth =
-            this.today.month === this.currentDate.month - 1;
+        let newCurrentDate = startOfMonth(this.currentDate).subtract({
+            months: 1,
+        });
 
-        if (isSelectedInPreviousMonth) this.currentDate = this._selectedDate!;
-        else if (isTodayInPreviousMonth) this.currentDate = this.today;
-        else
-            this.currentDate = startOfMonth(this.currentDate).subtract({
-                months: 1,
-            });
+        if (this.value && isSameMonth(newCurrentDate, this.value))
+            newCurrentDate = this.value as CalendarDate;
+        else if (isSameMonth(newCurrentDate, this.today))
+            newCurrentDate = this.today;
 
-        this.setWeeksInCurrentMonth();
+        this.currentDate = newCurrentDate;
     }
 
     private handleNextMonth(): void {
-        const isSelectedInNextMonth =
-            this._selectedDate?.month === this.currentDate.month + 1;
-        const isTodayInNextMonth =
-            this.today.month === this.currentDate.month + 1;
+        let newCurrentDate = startOfMonth(this.currentDate).add({
+            months: 1,
+        });
 
-        if (isSelectedInNextMonth) this.currentDate = this._selectedDate!;
-        else if (isTodayInNextMonth) this.currentDate = this.today;
-        else
-            this.currentDate = startOfMonth(this.currentDate).add({
-                months: 1,
-            });
+        if (this.value && isSameMonth(newCurrentDate, this.value))
+            newCurrentDate = this.value as CalendarDate;
+        else if (isSameMonth(newCurrentDate, this.today))
+            newCurrentDate = this.today;
 
-        this.setWeeksInCurrentMonth();
+        this.currentDate = newCurrentDate;
     }
 
     private handleKeydown(event: KeyboardEvent): void {
         this.setDateFocusIntent();
-
-        const initialMonth = this.currentDate.month;
 
         switch (event.code) {
             case 'ArrowLeft': {
@@ -524,9 +564,6 @@ export class Calendar extends SpectrumElement {
                 break;
             }
         }
-
-        if (this.currentDate.month !== initialMonth)
-            this.setWeeksInCurrentMonth();
     }
 
     private focusPreviousDay(): void {
@@ -571,15 +608,6 @@ export class Calendar extends SpectrumElement {
     }
 
     /**
-     * Defines the array with the indexes (starting at zero) of the weeks of the current month
-     */
-    private setWeeksInCurrentMonth(): void {
-        const numberOfWeeks = getWeeksInMonth(this.currentDate, this.locale);
-
-        this.weeksInCurrentMonth = [...new Array(numberOfWeeks).keys()];
-    }
-
-    /**
      * Defines the array with data for the days of the week, starting on the first day of the week according to the
      * defined location (Sunday, Monday, etc.)
      */
@@ -597,46 +625,33 @@ export class Calendar extends SpectrumElement {
     }
 
     /**
-     * Sets the minimum allowed date a user can select by converting a `Date` object to `CalendarDate`, which is the
-     * type of object used internally by the class
+     * Defines the 2D-array with the dates of the current month
      */
-    private setMinCalendarDate(): void {
-        if (!this.min) return;
-
-        if (!this.isValidDate(this.min)) {
-            this.min = undefined;
-            return;
-        }
-
-        this.minDate = this.toCalendarDate(this.min);
+    private setCurrentMonthDates(): void {
+        const numberOfWeeks = getWeeksInMonth(this.currentDate, this.locale);
+        const newCurrentMonthDates = new Array(numberOfWeeks);
+        for (const weekIndex of new Array(numberOfWeeks).keys())
+            newCurrentMonthDates[weekIndex] = this.getDatesInWeek(
+                this.currentDate,
+                weekIndex
+            );
+        this.currentMonthDates = newCurrentMonthDates;
     }
 
     /**
-     * Sets the maximum allowed date a user can select by converting a `Date` object to `CalendarDate`, which is the
-     * type of object used internally by the class
-     */
-    private setMaxCalendarDate(): void {
-        if (!this.max) return;
-
-        if (!this.isValidDate(this.max)) {
-            this.max = undefined;
-            return;
-        }
-
-        this.maxDate = this.toCalendarDate(this.max);
-    }
-
-    /**
-     * Returns an array with all days of the week corresponding to the given index, starting with the first day of the
-     * week according to the locale
+     * Returns an array with all days of the week in a specific month, corresponding to the given index,
+     * starting with the first day of the week according to the locale
      *
      * @param weekIndex - The index of the week
      */
-    private getDatesInWeek(weekIndex: number): CalendarDate[] {
+    private getDatesInWeek(
+        monthDate: CalendarDate,
+        weekIndex: number
+    ): CalendarDate[] {
         const dates: CalendarDate[] = [];
 
         let date = startOfWeek(
-            startOfMonth(this.currentDate).add({
+            startOfMonth(monthDate).add({
                 weeks: weekIndex,
             }),
             this.locale
@@ -644,49 +659,22 @@ export class Calendar extends SpectrumElement {
 
         while (dates.length < DAYS_PER_WEEK) {
             dates.push(date);
-
             const nextDate = date.add({ days: 1 });
 
             // If the next day is the same, we have hit the end of the calendar system
-            if (isSameDay(date, nextDate)) {
-                break;
-            }
-
+            if (isSameDay(date, nextDate)) break;
             date = nextDate;
         }
 
         return dates;
     }
 
-    /**
-     * Converts a `Date` object to a `CalendarDate`
-     *
-     * @param date - `Date` object to be converted
-     */
-    private toCalendarDate(date: Date): CalendarDate {
-        return new CalendarDate(
-            date.getFullYear(),
-            date.getMonth() + 1, // The month to create a new `CalendarDate` cannot be a zero-based index, unlike `Date`
-            date.getDate()
-        );
-    }
-
-    /**
-     * Checks if the date is valid by parsing the time. Invalid dates return `NaN` for times of invalid dates
-     *
-     * @param date - `Date` object to validate
-     */
-    private isValidDate(date: Date): boolean {
-        date = new Date(date);
-        return !isNaN(date.getTime());
-    }
-
     private isMinLimitReached(calendarDate: CalendarDate): boolean {
-        return Boolean(this.minDate && calendarDate.compare(this.minDate) < 0);
+        return Boolean(this.min && calendarDate.compare(this.min) < 0);
     }
 
     private isMaxLimitReached(calendarDate: CalendarDate): boolean {
-        return Boolean(this.maxDate && calendarDate.compare(this.maxDate) > 0);
+        return Boolean(this.max && calendarDate.compare(this.max) > 0);
     }
 
     /**

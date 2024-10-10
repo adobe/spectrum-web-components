@@ -4,7 +4,6 @@
         "composite": true,
         "rootDir": "./"
     },
-    "include": ["*.ts", "src/*.ts"],
-    "exclude": ["test/*.ts", "stories/*.ts"],
-    "references": [{ "path": "../../tools/input-segments" }]
+    "include": ["*.ts", "src/*.ts", "src/**/*.ts"],
+    "exclude": ["test/*.ts", "stories/*.ts"]
 }

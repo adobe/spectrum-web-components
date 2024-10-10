@@ -11,19 +11,21 @@ governing permissions and limitations under the License.
 */
 import {
     css,
-    CSSResult,
     html,
-    nothing,
-    render,
     TemplateResult,
     unsafeCSS,
 } from '@spectrum-web-components/base';
 import {
-    ifDefined,
-    when,
-} from '@spectrum-web-components/base/src/directives.js';
-import { TimeGranularity } from '@spectrum-web-components/input-segments/src/types.js';
-import { defaultLocale } from '@spectrum-web-components/story-decorator/src/StoryDecorator.js';
+    DateTimePickerValue,
+    Precision,
+    Precisions,
+} from '@spectrum-web-components/date-time-picker';
+import {
+    CalendarDate,
+    CalendarDateTime,
+    ZonedDateTime,
+} from '@internationalized/date';
+import { DateValue } from '@spectrum-web-components/calendar';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
 
@@ -31,308 +33,267 @@ import '@spectrum-web-components/date-time-picker/sp-date-time-picker.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
-export default {
-    title: 'Date∕Time Picker',
-    component: 'sp-date-time-picker',
-    parameters: {
-        actions: {
-            handles: ['onChange'],
-        },
-    },
-    argTypes: {
-        valid: {
-            control: 'boolean',
-            table: {
-                defaultValue: {
-                    summary: false,
-                },
-            },
-        },
-        invalid: {
-            control: 'boolean',
-            table: {
-                defaultValue: {
-                    summary: false,
-                },
-            },
-        },
-    },
-    args: {
-        valid: false,
-        invalid: false,
-    },
-};
-
-const timeGranularities: TimeGranularity[] = ['hour', 'minute', 'second'];
-
 type ComponentArgs = {
-    selectedDateTime?: Date;
-    timeGranularity?: TimeGranularity;
+    invalid?: boolean;
+    readonly?: boolean;
     quiet?: boolean;
     disabled?: boolean;
-    readonly?: boolean;
     autofocus?: boolean;
-    valid?: boolean;
-    invalid?: boolean;
+    precision?: Precision;
+    min?: DateValue;
+    max?: DateValue;
+    value?: DateTimePickerValue;
 };
 
 type StoryArgs = ComponentArgs & {
     onChange?: (dateTime: Date) => void;
 };
 
-interface SpreadStoryArgs {
-    [prop: string]: unknown;
-}
-
-const renderDateTimePicker = (
-    title: string,
-    args: StoryArgs = {},
-    content: TemplateResult | typeof nothing = nothing,
-    id: string | undefined = undefined,
-    styles: CSSResult | typeof nothing = nothing
-): TemplateResult => {
-    const story = html`
-        ${when(
-            styles,
-            () => html`
-                <style>
-                    ${styles}
-                </style>
-            `
-        )}
-
-        <h1>${title}</h1>
-        <hr />
-        <sp-date-time-picker
-            id=${ifDefined(id)}
-            ...=${spreadProps(args as SpreadStoryArgs)}
-            @change=${args.onChange}
-        >
-            ${content}
-        </sp-date-time-picker>
-    `;
-
-    const randomId = String(Math.floor(Math.random() * 99999));
-
-    requestAnimationFrame(() => {
-        const container = document.querySelector(
-            `.story-container-${randomId}`
-        );
-
-        if (container) {
-            render(story, container as HTMLElement);
-        }
-    });
-
-    return html`
-        <div class="story-container-${randomId}"></div>
-    `;
+const storyMeta = {
+    title: 'DateTimePicker',
+    component: 'sp-date-time-picker',
+    args: {
+        precision: undefined,
+        disabled: false,
+        readonly: false,
+        quiet: false,
+        invalid: false,
+        autoFocus: false,
+        min: undefined,
+        max: undefined,
+        value: undefined,
+    },
+    argTypes: {
+        disabled: {
+            description: "Component's disabled state",
+            type: { required: false },
+            control: 'boolean',
+        },
+        readonly: {
+            description: "Component's readonly state",
+            type: { required: false },
+            control: 'boolean',
+        },
+        quiet: {
+            description: "Component's quiet state",
+            type: { required: false },
+            control: 'boolean',
+        },
+        invalid: {
+            description: "Component's invalid state",
+            type: { required: false },
+            control: 'boolean',
+        },
+        precision: {
+            description:
+                "The granularity used to display the segments of the component's value.",
+            type: { required: false },
+            control: 'select',
+            options: Object.values(Precisions),
+        },
+        min: {
+            description: 'Minimum date allowed',
+            type: { required: false },
+            control: 'date',
+        },
+        max: {
+            description: 'Maximum date allowed',
+            type: { required: false },
+            control: 'date',
+        },
+        value: {
+            description: 'The selected date of the component',
+            type: { required: false },
+            control: 'date',
+        },
+    },
+    parameters: {
+        actions: {
+            handles: ['onChange'],
+        },
+    },
 };
 
-export const Default = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker('Default', args);
-};
-
-export const selectedDateTime = (args: StoryArgs = {}): TemplateResult[] => {
-    const formatter = Intl.DateTimeFormat(defaultLocale, {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-    });
-
-    return [
-        new Date(1995, 1, 28, 9, 31, 7),
-        new Date(2021, 10, 2, 16, 1, 54),
-    ].map((dateTime) => {
-        const formatted = formatter.format(dateTime);
-        const title = `Selected Date/Time: ${formatted}`;
-
-        args = {
-            ...args,
-            selectedDateTime: dateTime,
-        };
-
-        return renderDateTimePicker(title, args);
-    });
-};
-
-export const timeGranularity = (args: StoryArgs = {}): TemplateResult => {
-    args = {
-        ...args,
-        timeGranularity: args.timeGranularity,
-        selectedDateTime: new Date(2021, 10, 2, 16, 1, 54),
-    };
-
-    return renderDateTimePicker(
-        `Time Granularity: ${args.timeGranularity}`,
-        args
+const timestampToValue = (timestamp: number): DateValue => {
+    const date = new Date();
+    date.setTime(timestamp);
+    return new CalendarDateTime(
+        date.getFullYear(),
+        date.getMonth() + 1, // Date months are 0-indexed while CalendarDate months are 1-indexed
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds()
     );
 };
 
-timeGranularity.argTypes = {
-    timeGranularity: {
-        options: timeGranularities,
-        control: {
-            type: 'select',
-        },
-        table: {
-            defaultValue: {
-                summary: 'minute',
-            },
-        },
-    },
+const Template = (args: StoryArgs = {}): TemplateResult => {
+    args.value = args.value
+        ? timestampToValue(args.value as unknown as number)
+        : undefined;
+    args.min = args.min
+        ? timestampToValue(args.min as unknown as number)
+        : undefined;
+    args.max = args.max
+        ? timestampToValue(args.max as unknown as number)
+        : undefined;
+
+    return html`
+        <sp-date-time-picker
+            ...=${spreadProps(args)}
+            @change=${args.onChange}
+        ></sp-date-time-picker>
+    `;
 };
 
-timeGranularity.args = {
-    timeGranularity: 'second',
-};
+export const Default = (args: StoryArgs): TemplateResult => Template(args);
 
-export const disabled = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker(`Disabled? ${args.disabled}`, args);
-};
-
-disabled.argTypes = {
-    disabled: {
-        control: 'boolean',
-        table: {
-            defaultValue: {
-                summary: false,
-            },
-        },
-    },
-};
-
+export const disabled = (args: StoryArgs): TemplateResult => Template(args);
 disabled.args = {
     disabled: true,
 };
 
-export const quiet = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker(`Quiet? ${args.quiet}`, args);
-};
-
-quiet.argTypes = {
-    quiet: {
-        control: 'boolean',
-        table: {
-            defaultValue: {
-                summary: false,
-            },
-        },
-    },
-};
-
-quiet.args = {
-    quiet: true,
-};
-
-export const readonly = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker(`Read only? ${args.readonly}`, args);
-};
-
-readonly.argTypes = {
-    readonly: {
-        control: 'boolean',
-        table: {
-            defaultValue: {
-                summary: false,
-            },
-        },
-    },
-};
-
+export const readonly = (args: StoryArgs): TemplateResult => Template(args);
 readonly.args = {
     readonly: true,
 };
 
-export const autoFocus = (args: StoryArgs = {}): TemplateResult => {
-    args = {
-        ...args,
-        autofocus: true,
-    };
-
-    return renderDateTimePicker('Auto focus', args);
+export const quiet = (args: StoryArgs): TemplateResult => Template(args);
+quiet.args = {
+    quiet: true,
 };
 
-export const valid = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker(`Is valid? ${args.valid}`, args);
-};
-
-valid.argTypes = {
-    invalid: {
-        table: {
-            disable: true,
-        },
-    },
-};
-
-valid.args = {
-    valid: true,
-};
-
-export const invalid = (args: StoryArgs = {}): TemplateResult => {
-    return renderDateTimePicker(`Is invalid? ${args.invalid}`, args);
-};
-
-invalid.argTypes = {
-    valid: {
-        table: {
-            disable: true,
-        },
-    },
-};
-
+export const invalid = (args: StoryArgs): TemplateResult => Template(args);
 invalid.args = {
     invalid: true,
 };
 
-export const helpText = (args: StoryArgs = {}): TemplateResult => {
-    const content = html`
-        <sp-help-text slot="help-text">My default help text</sp-help-text>
-    `;
-
-    return renderDateTimePicker(`With help text`, args, content);
+export const autofocus = (args: StoryArgs): TemplateResult => Template(args);
+autofocus.args = {
+    autofocus: true,
 };
 
-export const negativeHelpText = (args: StoryArgs = {}): TemplateResult => {
-    const content = html`
-        <sp-help-text slot="help-text">
-            Default help text (displayed only when not invalid)
-        </sp-help-text>
-        <sp-help-text slot="negative-help-text">
-            This field is required!
-        </sp-help-text>
-    `;
-
-    return renderDateTimePicker('With negative help text', args, content);
-};
-
-negativeHelpText.argTypes = {
-    invalid: {
-        control: 'boolean',
+const dateControlsDisabledArgTypes = {
+    min: {
         table: {
-            defaultValue: {
-                summary: false,
-            },
+            disable: true,
+        },
+    },
+    max: {
+        table: {
+            disable: true,
+        },
+    },
+    value: {
+        table: {
+            disable: true,
         },
     },
 };
 
-negativeHelpText.args = {
-    invalid: true,
-};
-
-export const customIcon = (args: StoryArgs = {}): TemplateResult => {
-    const content = html`
-        <sp-icon-alert slot="calendar-icon"></sp-icon-alert>
+export const preselectedValue = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-date-time-picker
+            ...=${spreadProps(args)}
+            .value=${new CalendarDateTime(2020, 2, 16, 8, 20)}
+        ></sp-date-time-picker>
     `;
+};
+preselectedValue.argTypes = dateControlsDisabledArgTypes;
 
-    return renderDateTimePicker('Custom icon', args, content);
+export const minDate = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-date-time-picker
+            ...=${spreadProps(args)}
+            .value=${new CalendarDate(2022, 4, 16)}
+            .min=${new CalendarDate(2022, 4, 12)}
+        ></sp-date-time-picker>
+    `;
+};
+minDate.argTypes = dateControlsDisabledArgTypes;
+
+export const maxDate = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-date-time-picker
+            ...=${spreadProps(args)}
+            .value=${new CalendarDate(2022, 4, 16)}
+            .max=${new CalendarDateTime(2022, 4, 19, 20, 30)}
+        ></sp-date-time-picker>
+    `;
+};
+maxDate.argTypes = dateControlsDisabledArgTypes;
+
+export const minAndMaxDates = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-date-time-picker
+            ...=${spreadProps(args)}
+            .value=${new CalendarDate(2022, 4, 16)}
+            .min=${new ZonedDateTime(
+                // Date
+                2022,
+                4,
+                12,
+                // Time zone and UTC offset
+                'America/Los_Angeles',
+                -28800000,
+                // Time
+                9,
+                15
+            )}
+            .max=${new CalendarDateTime(2022, 4, 19, 20, 30)}
+        ></sp-date-time-picker>
+    `;
+};
+minAndMaxDates.argTypes = dateControlsDisabledArgTypes;
+
+export const secondPrecision = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-date-time-picker
+            ...=${spreadProps(args)}
+            .value=${new CalendarDate(2022, 4, 16)}
+            precision="second"
+        ></sp-date-time-picker>
+    `;
 };
 
-export const customWidth = (args: StoryArgs = {}): TemplateResult[] => {
+export const helpText = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-date-time-picker ...=${spreadProps(args)} precision="day">
+            <sp-help-text slot="help-text">
+                Please select your birthday
+            </sp-help-text>
+        </sp-date-time-picker>
+    `;
+};
+
+export const negativeHelpText = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-date-time-picker
+            ...=${spreadProps(args)}
+            .value=${new CalendarDate(2020, 2, 14)}
+            .min=${new CalendarDate(2020, 0, 1)}
+            .max=${new CalendarDate(2025, 0, 1)}
+        >
+            <sp-help-text slot="help-text">
+                Select a date for your event
+            </sp-help-text>
+            <sp-help-text slot="negative-help-text">
+                Please select a date between 2020 and 2025
+            </sp-help-text>
+        </sp-date-time-picker>
+    `;
+};
+minAndMaxDates.argTypes = dateControlsDisabledArgTypes;
+
+export const customIcon = (): TemplateResult => {
+    return html`
+        <sp-date-time-picker>
+            <sp-icon-alert slot="calendar-icon"></sp-icon-alert>
+        </sp-date-time-picker>
+    `;
+};
+
+export const customWidth = (args: StoryArgs): TemplateResult[] => {
     return ['100%', '50%', '350px', 'auto'].map((width, index) => {
         const id = `date-time-picker--${index}`;
         const styles = css`
@@ -341,12 +302,52 @@ export const customWidth = (args: StoryArgs = {}): TemplateResult[] => {
             }
         `;
 
-        return renderDateTimePicker(
-            `Custom width: ${width}`,
-            args,
-            undefined,
-            id,
-            styles
-        );
+        return html`
+            <style>
+                ${styles}
+            </style>
+            <p>Width: ${width}</p>
+            <div>
+                <sp-date-time-picker
+                    id=${id}
+                    ...=${spreadProps(args)}
+                ></sp-date-time-picker>
+            </div>
+        `;
     });
 };
+
+const ignoredArgTypes = {
+    focused: {
+        table: {
+            disable: true,
+        },
+    },
+    autoFocus: {
+        table: {
+            disable: true,
+        },
+    },
+    autofocus: {
+        table: {
+            disable: true,
+        },
+    },
+    tabIndex: {
+        table: {
+            disable: true,
+        },
+    },
+    focusElement: {
+        table: {
+            disable: true,
+        },
+    },
+};
+
+storyMeta.argTypes = {
+    ...storyMeta.argTypes,
+    ...ignoredArgTypes,
+};
+
+export default storyMeta;
