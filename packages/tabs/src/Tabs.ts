@@ -252,6 +252,8 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         delta: number,
         behavior: ScrollBehavior = 'smooth'
     ): void {
+        if (delta === 0) return;
+
         const { scrollLeft, clientWidth, scrollWidth } = this.tabList;
         const dirLimit = scrollWidth - clientWidth - Math.abs(scrollLeft);
 
