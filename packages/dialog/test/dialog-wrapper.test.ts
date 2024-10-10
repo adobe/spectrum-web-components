@@ -368,3 +368,56 @@ describe('Dialog Wrapper', () => {
         expect(contentElement.hasAttribute('tabindex')).to.be.true;
     });
 });
+
+describe('dev mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+        window.__swc.verbose = true;
+        consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+        consoleWarnStub.resetHistory();
+    });
+    after(() => {
+        window.__swc.verbose = false;
+        consoleWarnStub.restore();
+    });
+
+    it('warns that `error` is deprecated', async () => {
+        const el = await styledFixture<DialogWrapper>(
+            wrapperDismissableUnderlayError()
+        );
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        const dialogWrapperSpyCall = consoleWarnStub.getCall(1);
+        const dialogSpyCall = consoleWarnStub.getCall(2);
+        expect(
+            (dialogWrapperSpyCall.args.at(0) as string).includes('"error"'),
+            'confirm error-centric message in dialog wrapper'
+        ).to.be.true;
+        expect(
+            dialogWrapperSpyCall.args.at(-1),
+            'confirm `data` shape'
+        ).to.deep.equal({
+            data: {
+                localName: 'sp-dialog-wrapper',
+                type: 'api',
+                level: 'deprecation',
+            },
+        });
+        expect(
+            (dialogSpyCall.args.at(0) as string).includes('"error"'),
+            'confirm error-centric message in extended dialog class'
+        ).to.be.true;
+        expect(dialogSpyCall.args.at(-1), 'confirm `data` shape').to.deep.equal(
+            {
+                data: {
+                    localName: 'sp-dialog',
+                    type: 'api',
+                    level: 'deprecation',
+                },
+            }
+        );
+    });
+});
