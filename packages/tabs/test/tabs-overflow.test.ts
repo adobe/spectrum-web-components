@@ -9,13 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/scale-medium.js';
-import '@spectrum-web-components/theme/theme-light.js';
-import '@spectrum-web-components/tabs/sp-tab.js';
-import '@spectrum-web-components/tabs/sp-tabs.js';
-import '@spectrum-web-components/tabs/sp-tab-panel.js';
-import '@spectrum-web-components/tabs/sp-tabs-overflow.js';
+import { ActionButton } from '@spectrum-web-components/action-button';
+import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
 import {
     calculateScrollTargetForLeftSide,
     calculateScrollTargetForRightSide,
@@ -23,16 +18,26 @@ import {
     Tabs,
     TabsOverflow,
 } from '@spectrum-web-components/tabs';
-import { ActionButton } from '@spectrum-web-components/action-button';
+import '@spectrum-web-components/tabs/sp-tab-panel.js';
+import '@spectrum-web-components/tabs/sp-tab.js';
+import '@spectrum-web-components/tabs/sp-tabs-overflow.js';
+import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/theme/scale-medium.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/theme-light.js';
 
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, waitUntil } from '@open-wc/testing';
 import {
     ElementSize,
     ElementSizes,
     html,
     nothing,
 } from '@spectrum-web-components/base';
+import { sendKeys, setViewport } from '@web/test-runner-commands';
 import { repeat } from 'lit/directives/repeat.js';
+
+const RIGHT_BUTTON_SELECTOR = '.right-scroll';
+const LEFT_BUTTON_SELECTOR = '.left-scroll';
 
 type OverflowProperties = {
     count: number;
@@ -41,6 +46,7 @@ type OverflowProperties = {
     selected?: number;
     labelPrev?: string;
     labelNext?: string;
+    dir?: 'ltr' | 'rtl';
 };
 
 const renderTabsOverflow = async ({
@@ -48,39 +54,44 @@ const renderTabsOverflow = async ({
     size,
     includeTabPanel,
     selected = 1,
+    dir = 'ltr',
 }: OverflowProperties): Promise<HTMLDivElement> => {
-    const tabsContainer = await fixture<HTMLDivElement>(html`
-        <div class="container" style="width: 200px; height: 150px;">
-            <sp-tabs-overflow>
-                <sp-tabs size=${size} selected=${selected}>
-                    ${repeat(
-                        new Array(count),
-                        (item) => item,
-                        (_item, index) => html`
-                            <sp-tab
-                                label=${`Tab Item ${index + 1}`}
-                                value=${index + 1}
-                            ></sp-tab>
-                        `
-                    )}
-                    ${includeTabPanel
-                        ? html`
-                              ${repeat(
-                                  new Array(count),
-                                  (item) => item,
-                                  (_item, index) => html`
-                                      <sp-tab-panel value=${index + 1}>
-                                          Content for Tab Item ${index + 1}
-                                      </sp-tab-panel>
-                                  `
-                              )}
-                          `
-                        : nothing}
-                </sp-tabs>
-            </sp-tabs-overflow>
-        </div>
+    const theme = await fixture<HTMLDivElement>(html`
+        <sp-theme dir=${dir} system="spectrum" scale="medium" color="light">
+            <div class="container" style="width: 200px; height: 150px;">
+                <sp-tabs-overflow>
+                    <sp-tabs size=${size} selected=${selected}>
+                        ${repeat(
+                            new Array(count),
+                            (item) => item,
+                            (_item, index) => html`
+                                <sp-tab
+                                    label=${`Tab Item ${index + 1}`}
+                                    value=${index + 1}
+                                ></sp-tab>
+                            `
+                        )}
+                        ${includeTabPanel
+                            ? html`
+                                  ${repeat(
+                                      new Array(count),
+                                      (item) => item,
+                                      (_item, index) => html`
+                                          <sp-tab-panel value=${index + 1}>
+                                              Content for Tab Item ${index + 1}
+                                          </sp-tab-panel>
+                                      `
+                                  )}
+                              `
+                            : nothing}
+                    </sp-tabs>
+                </sp-tabs-overflow>
+            </div>
+        </sp-theme>
     `);
-    await elementUpdated(tabsContainer);
+    await elementUpdated(theme);
+    const tabsContainer = theme.querySelector('.container') as HTMLDivElement;
+
     return tabsContainer;
 };
 
@@ -167,6 +178,80 @@ describe('TabsOverflow', () => {
         await elementUpdated(el);
         const finalLeft = tabsEl.getBoundingClientRect().left;
         expect(finalLeft).to.be.lessThanOrEqual(initialLeft);
+    });
+
+    it('should scroll up to the last item and back in LTR', async () => {
+        // TODO: run on iPhone as per https://github.com/adobe/spectrum-web-components/pull/4722
+        // await setUserAgent(
+        // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
+        // );
+
+        // Skipping on Firefox due to timeouts on CI
+        if (isFirefox()) return;
+
+        const el = await renderTabsOverflow({
+            count: 8,
+            size: ElementSizes.L,
+            includeTabPanel: true,
+            dir: 'ltr',
+        });
+        await elementUpdated(el);
+        await setViewport({ width: 360, height: 640 });
+        await nextFrame();
+
+        const tabsOverflow = el.querySelector(
+            'sp-tabs-overflow'
+        ) as TabsOverflow;
+
+        expect(tabsOverflow['overflowState'].canScrollLeft).to.be.false;
+        expect(tabsOverflow['overflowState'].canScrollRight).to.be.true;
+
+        await scrollToEnd(el, RIGHT_BUTTON_SELECTOR, 'ltr');
+
+        expect(tabsOverflow['overflowState'].canScrollLeft).to.be.true;
+        expect(tabsOverflow['overflowState'].canScrollRight).to.be.false;
+
+        await scrollToEnd(el, LEFT_BUTTON_SELECTOR, 'ltr');
+
+        expect(tabsOverflow['overflowState'].canScrollLeft).to.be.false;
+        expect(tabsOverflow['overflowState'].canScrollRight).to.be.true;
+    });
+
+    it('should scroll up to the last item and back in RTL', async () => {
+        // TODO: run on iPhone as per https://github.com/adobe/spectrum-web-components/pull/4722
+        // await setUserAgent(
+        // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
+        // );
+
+        // Skipping on Firefox due to timeouts on CI
+        if (isFirefox()) return;
+
+        const el = await renderTabsOverflow({
+            count: 8,
+            size: ElementSizes.L,
+            includeTabPanel: true,
+            dir: 'rtl',
+        });
+        await elementUpdated(el);
+        await setViewport({ width: 360, height: 640 });
+        await nextFrame();
+
+        const tabsOverflow = el.querySelector(
+            'sp-tabs-overflow'
+        ) as TabsOverflow;
+
+        expect(tabsOverflow['overflowState'].canScrollLeft).to.be.true;
+        expect(tabsOverflow['overflowState'].canScrollRight).to.be.false;
+
+        await scrollToEnd(el, LEFT_BUTTON_SELECTOR, 'rtl');
+
+        expect(tabsOverflow['overflowState'].canScrollLeft).to.be.false;
+        expect(tabsOverflow['overflowState'].canScrollRight).to.be.true;
+
+        await scrollToEnd(el, RIGHT_BUTTON_SELECTOR, 'rtl');
+
+        expect(tabsOverflow['overflowState'].canScrollLeft).to.be.true;
+        expect(tabsOverflow['overflowState'].canScrollRight).to.be.false;
     });
 
     it('should fail properly if slot is not sp-tabs', async () => {
@@ -362,3 +447,83 @@ describe('calculateScrollTargetForLeftSide', () => {
         ).to.equal(0);
     });
 });
+
+async function repeatScroll(
+    options: {
+        times: number;
+        elementToUpdate: TabsOverflow;
+        elementToScroll: HTMLElement;
+        distanceToReachInIteration: (iteration: number) => number;
+    },
+    iteration = 1
+): Promise<void> {
+    const {
+        times,
+        elementToUpdate,
+        elementToScroll,
+        distanceToReachInIteration,
+    } = options;
+    if (iteration > times) return;
+
+    const distanceToReach = distanceToReachInIteration(iteration);
+
+    await sendKeys({ press: 'Enter' });
+    await elementUpdated(elementToUpdate);
+    await waitUntil(
+        () =>
+            Math.ceil(Math.abs(elementToScroll.scrollLeft)) -
+                Math.abs(distanceToReach) ===
+            0,
+        `scroll to ${distanceToReach}`
+    );
+    return await repeatScroll(options, iteration + 1);
+}
+
+async function scrollToEnd(
+    tabsContainer: HTMLDivElement,
+    buttonSelector: string,
+    direction: 'ltr' | 'rtl' = 'ltr'
+): Promise<void> {
+    const tabs = tabsContainer.querySelector('sp-tabs') as Tabs;
+    const tabsList = tabs.shadowRoot!.querySelector('#list') as HTMLElement;
+    const tabsOverflow = tabsContainer.querySelector(
+        'sp-tabs-overflow'
+    ) as TabsOverflow;
+    const button = tabsOverflow.shadowRoot.querySelector(
+        buttonSelector
+    ) as ActionButton;
+
+    const { scrollWidth, clientWidth } = tabsList;
+    const distPerScroll = clientWidth * tabsOverflow['scrollFactor'];
+    const totalScrollDist = scrollWidth - clientWidth;
+    const scrollsToEnd = Math.ceil(totalScrollDist / distPerScroll);
+    let distanceToReachInIteration: (iteration: number) => number;
+
+    if (direction === 'ltr') {
+        distanceToReachInIteration =
+            buttonSelector === LEFT_BUTTON_SELECTOR
+                ? (iteration: number) =>
+                      Math.max(totalScrollDist - iteration * distPerScroll, 0)
+                : (iteration: number) =>
+                      Math.min(iteration * distPerScroll, totalScrollDist);
+    } else {
+        distanceToReachInIteration =
+            buttonSelector === LEFT_BUTTON_SELECTOR
+                ? (iteration: number) =>
+                      Math.max(-1 * iteration * distPerScroll, -totalScrollDist)
+                : (iteration: number) =>
+                      -Math.max(totalScrollDist - iteration * distPerScroll, 0);
+    }
+
+    button.focus();
+    return await repeatScroll({
+        times: scrollsToEnd,
+        elementToUpdate: tabsOverflow,
+        elementToScroll: tabsList,
+        distanceToReachInIteration,
+    });
+}
+
+function nextFrame(): Promise<void> {
+    return new Promise((res) => requestAnimationFrame(() => res()));
+}
