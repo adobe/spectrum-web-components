@@ -48,7 +48,7 @@ governing permissions and limitations under the License.
     grid-template-areas:
         'hero hero hero hero hero hero'
         '. . . . . .'
-        '. heading header header typeIcon .'
+        '. heading heading heading heading .'
         '. divider divider divider divider .'
         '. content content content content .'
         '. footer footer buttonGroup buttonGroup .'
