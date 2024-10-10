@@ -508,7 +508,6 @@ export class NumberField extends TextfieldBase {
                 }
             }
 
-            // console.log('composing after', this.inputElement.value)
             event.stopPropagation();
             return;
         }
