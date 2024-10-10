@@ -496,6 +496,19 @@ export class NumberField extends TextfieldBase {
 
     protected override handleInput(event: InputEvent): void {
         if (this.isComposing) {
+            // If user actually types a new character.
+            if (event.data) {
+                // Don't allow non-numeric characters even in composing mode.
+                const partialValue = this.convertValueToNumber(event.data);
+
+                if (Number.isNaN(partialValue)) {
+                    this.inputElement.value = this.indeterminate
+                        ? indeterminatePlaceholder
+                        : this._trackingValue;
+                }
+            }
+
+            // console.log('composing after', this.inputElement.value)
             event.stopPropagation();
             return;
         }
