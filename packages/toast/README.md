@@ -39,7 +39,7 @@ import { Toast } from '@spectrum-web-components/toast';
     This is important information that you should read, soon.
     <sp-button
         slot="action"
-        static="white"
+        static-color="white"
         variant="secondary"
         treatment="outline"
     >
@@ -55,7 +55,7 @@ import { Toast } from '@spectrum-web-components/toast';
     This is important information that you should read, soon.
     <sp-button
         slot="action"
-        static="white"
+        static-color="white"
         variant="secondary"
         treatment="outline"
     >
