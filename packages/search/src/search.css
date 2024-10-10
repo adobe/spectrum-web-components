@@ -32,6 +32,7 @@ input::-webkit-search-cancel-button {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
 }
 
+:host,
 :host([size='m']) {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
 }
