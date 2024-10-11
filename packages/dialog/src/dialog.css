@@ -59,7 +59,7 @@ governing permissions and limitations under the License.
 }
 
 /* Needed while `error` attribute still exists as deprecated */
-:host(:not([error])) .grid {
+:host(:not([error], [dismissable], [mode])) .grid {
     grid-template-areas:
         'hero hero hero hero hero hero'
         '. . . . . .'
