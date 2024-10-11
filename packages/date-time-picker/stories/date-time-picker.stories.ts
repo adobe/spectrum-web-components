@@ -10,22 +10,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
+    CalendarDate,
+    CalendarDateTime,
+    toZoned,
+} from '@internationalized/date';
+import {
     css,
     html,
     TemplateResult,
     unsafeCSS,
 } from '@spectrum-web-components/base';
+import { DateValue } from '@spectrum-web-components/calendar';
 import {
     DateTimePickerValue,
     Precision,
     Precisions,
 } from '@spectrum-web-components/date-time-picker';
-import {
-    CalendarDate,
-    CalendarDateTime,
-    ZonedDateTime,
-} from '@internationalized/date';
-import { DateValue } from '@spectrum-web-components/calendar';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
 
@@ -228,17 +228,9 @@ export const minAndMaxDates = (args: StoryArgs): TemplateResult => {
         <sp-date-time-picker
             ...=${spreadProps(args)}
             .value=${new CalendarDate(2022, 4, 16)}
-            .min=${new ZonedDateTime(
-                // Date
-                2022,
-                4,
-                12,
-                // Time zone and UTC offset
-                'America/Los_Angeles',
-                -28800000,
-                // Time
-                9,
-                15
+            .min=${toZoned(
+                new CalendarDateTime(2022, 4, 12, 9, 15),
+                'Europe/Bucharest'
             )}
             .max=${new CalendarDateTime(2022, 4, 19, 20, 30)}
         ></sp-date-time-picker>
