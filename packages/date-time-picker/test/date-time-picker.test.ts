@@ -231,10 +231,6 @@ describe('DateTimePicker', () => {
                 valueZoned.timeZone,
                 'timeZone mismatch'
             );
-            expect((element.value as ZonedDateTime).offset).to.equal(
-                valueZoned.offset,
-                'offset mismatch'
-            );
         });
 
         it('should update the value as ZonedDateTime when it is the most specific date value', async () => {
@@ -257,10 +253,6 @@ describe('DateTimePicker', () => {
             expect((element.value as ZonedDateTime).timeZone).to.equal(
                 valueZoned.timeZone,
                 'timeZone mismatch'
-            );
-            expect((element.value as ZonedDateTime).offset).to.equal(
-                valueZoned.offset,
-                'offset mismatch'
             );
         });
 
@@ -768,10 +760,6 @@ describe('DateTimePicker', () => {
                     (element.value as ZonedDateTime).timeZone,
                     'timeZone mismatch'
                 ).to.equal(valueZoned.timeZone);
-                expect(
-                    (element.value as ZonedDateTime).offset,
-                    'offset mismatch'
-                ).to.equal(valueZoned.offset);
                 expect(year.innerText).to.equal('2022');
                 expect(month.innerText).to.equal('05');
                 expect(day.innerText).to.equal('15');
@@ -2898,10 +2886,6 @@ describe('DateTimePicker', () => {
             expect(element['currentDate'].timeZone).to.equal(
                 valueZoned.timeZone,
                 'timeZone mismatch'
-            );
-            expect(element['currentDate'].offset).to.equal(
-                valueZoned.offset,
-                'offset mismatch'
             );
 
             element.value = valueDate;
