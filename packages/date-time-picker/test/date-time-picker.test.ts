@@ -605,8 +605,8 @@ describe('DateTimePicker', () => {
             ) as PickerButton;
 
             const rect = calendarButton.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
+            const centerX = Math.round(rect.left + rect.width / 2);
+            const centerY = Math.round(rect.top + rect.height / 2);
 
             const opened = oneEvent(element, 'sp-opened');
             await sendMouse({

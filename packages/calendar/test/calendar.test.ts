@@ -439,8 +439,8 @@ describe('Calendar', () => {
             await elementUpdated(element);
 
             const rect = unavailableDayElement.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
+            const centerX = Math.round(rect.left + rect.width / 2);
+            const centerY = Math.round(rect.top + rect.height / 2);
 
             await sendMouse({
                 type: 'click',
@@ -593,8 +593,8 @@ describe('Calendar', () => {
 
         it('should update value when an available day is clicked', async () => {
             const rect = availableDayElement.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
+            const centerX = Math.round(rect.left + rect.width / 2);
+            const centerY = Math.round(rect.top + rect.height / 2);
 
             await sendMouse({
                 type: 'click',
@@ -649,8 +649,8 @@ describe('Calendar', () => {
 
         it("should dispatch 'change' when an available day is selected by clicking", async () => {
             const rect = availableDayElement.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
+            const centerX = Math.round(rect.left + rect.width / 2);
+            const centerY = Math.round(rect.top + rect.height / 2);
 
             await sendMouse({
                 type: 'click',
