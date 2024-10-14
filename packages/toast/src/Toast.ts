@@ -216,7 +216,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 <sp-close-button
                     @click=${this.shouldClose}
                     label="Close"
-                    static="white"
+                    static-color="white"
                 ></sp-close-button>
             </div>
         `;

@@ -284,7 +284,7 @@ describe('Toast', () => {
         expect(el.open).to.be.true;
         expect(closeSpy.callCount).to.equal(1);
     });
-    it('sp close button renders with static="white"', async () => {
+    it('sp close button renders with static-color="white"', async () => {
         const el = await fixture<Toast>(html`
             <sp-toast open>Help text.</sp-toast>
         `);
@@ -295,6 +295,6 @@ describe('Toast', () => {
 
         expect(closeButton).to.exist;
 
-        expect(closeButton.getAttribute('static')).to.equal('white');
+        expect(closeButton.getAttribute('static-color')).to.equal('white');
     });
 });

@@ -313,9 +313,45 @@ describe('ActionButton', () => {
                 data: {
                     localName: 'sp-action-button',
                     type: 'api',
-                    level: 'default',
+                    level: 'deprecation',
                 },
             });
+        });
+
+        it('warns that `variant` is deprecated', async () => {
+            const el = await fixture<ActionButton>(html`
+                <sp-action-button static="white">Button</sp-action-button>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('"static"'),
+                'confirm static-centric message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-action-button',
+                    type: 'api',
+                    level: 'deprecation',
+                },
+            });
+        });
+
+        it('prefers `staticColor` over `static`', async () => {
+            const el = await fixture<ActionButton>(html`
+                <sp-action-button static="white">Button</sp-action-button>
+            `);
+
+            await elementUpdated(el);
+            expect(el.staticColor).to.equal('white');
+            el.setAttribute('static', 'white');
+            await elementUpdated(el);
+            expect(el.staticColor).to.equal('white');
+            expect(el.static).to.equal('white');
+            expect(el.getAttribute('static-color')).to.equal('white');
         });
     });
 });

@@ -59,6 +59,32 @@ describe('ProgressCircle', () => {
                 },
             });
         });
+        it('warns in Dev Mode when static attribute is supplied', async () => {
+            const el = await fixture<ProgressCircle>(html`
+                <sp-progress-circle
+                    progress="50"
+                    static="white"
+                ></sp-progress-circle>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes(
+                    'element will stop accepting the "static" attribute'
+                ),
+                'confirm attribute deprecation message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-progress-circle',
+                    type: 'api',
+                    level: 'deprecation',
+                },
+            });
+        });
         it('warns in Dev Mode when overBackground attribute is supplied', async () => {
             const el = await fixture<ProgressCircle>(html`
                 <sp-progress-circle
@@ -183,5 +209,24 @@ describe('ProgressCircle', () => {
 
         expect(el.hasAttribute('aria-label')).to.be.true;
         expect(el.getAttribute('aria-label')).to.equal('Loading');
+    });
+    it('prefers `staticColor` over `static`', async () => {
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle
+                progress="50"
+                static="white"
+            ></sp-progress-circle>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.staticColor).to.equal('white');
+
+        el.setAttribute('static', 'white');
+        await elementUpdated(el);
+
+        expect(el.staticColor).to.equal('white');
+        expect(el.static).to.equal('white');
+        expect(el.getAttribute('static-color')).to.equal('white');
     });
 });

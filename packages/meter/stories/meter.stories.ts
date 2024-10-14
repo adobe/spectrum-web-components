@@ -69,7 +69,9 @@ export const positive = (): TemplateResult => {
 export const staticWhite = (): TemplateResult => {
     return makeOverBackground('white')(
         (): TemplateResult => html`
-            <sp-meter static="white" progress="50">Storage Space</sp-meter>
+            <sp-meter static-color="white" progress="50">
+                Storage Space
+            </sp-meter>
         `
     );
 };

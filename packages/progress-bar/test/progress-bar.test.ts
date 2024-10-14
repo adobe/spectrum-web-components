@@ -147,28 +147,63 @@ describe('ProgressBar', () => {
 
         expect(el.hasAttribute('aria-valuenow')).to.be.false;
     });
-    it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
-        const consoleWarnStub = stub(console, 'warn');
-        const el = await fixture<ProgressBar>(html`
-            <sp-progress-bar progress="50"></sp-progress-bar>
-        `);
 
-        await elementUpdated(el);
-
-        expect(consoleWarnStub.called).to.be.true;
-        const spyCall = consoleWarnStub.getCall(0);
-        expect(
-            spyCall.args.at(0).includes('accessible'),
-            'confirm accessibility-centric message'
-        ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-            data: {
-                localName: 'sp-progress-bar',
-                type: 'accessibility',
-                level: 'default',
-            },
+    describe('dev mode', () => {
+        let consoleWarnStub!: ReturnType<typeof stub>;
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
         });
-        consoleWarnStub.restore();
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+        });
+
+        it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+            const el = await fixture<ProgressBar>(html`
+                <sp-progress-bar progress="50"></sp-progress-bar>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('accessible'),
+                'confirm accessibility-centric message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-progress-bar',
+                    type: 'accessibility',
+                    level: 'default',
+                },
+            });
+        });
+
+        it('warns in devMode when white/black static is provided', async () => {
+            const el = await fixture<ProgressBar>(html`
+                <sp-progress-bar progress="50" static="white"></sp-progress-bar>
+            `);
+            await elementUpdated(el);
+            expect(consoleWarnStub.called).to.be.true;
+
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('deprecated'),
+                'confirm deprecated static warning'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-progress-bar',
+                    type: 'api',
+                    level: 'deprecation',
+                },
+            });
+        });
     });
 
     it('resolves a language (en-US)', async () => {

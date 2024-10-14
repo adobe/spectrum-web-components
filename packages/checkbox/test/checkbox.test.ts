@@ -383,4 +383,17 @@ describe('Checkbox', () => {
             partialCheckmarkLocalname
         );
     });
+
+    it('updates tabindex when no longer disabled', async function () {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox disabled>disabled checkbox</sp-checkbox>
+        `);
+        el.click();
+        await elementUpdated(el);
+        expect(el.checked).to.be.false;
+        expect(el.tabIndex).to.equal(-1);
+        el.removeAttribute('disabled');
+        await elementUpdated(el);
+        expect(el.tabIndex).to.equal(0);
+    });
 });
