@@ -76,20 +76,20 @@ export const staticWhite = ({
         >
             <sp-progress-circle
                 progress="53"
-                static="white"
+                static-color="white"
                 size="s"
                 ?indeterminate=${indeterminate}
                 label="Loading progress demo"
             ></sp-progress-circle>
             <sp-progress-circle
                 progress="53"
-                static="white"
+                static-color="white"
                 ?indeterminate=${indeterminate}
                 label="Loading progress demo"
             ></sp-progress-circle>
             <sp-progress-circle
                 progress="53"
-                static="white"
+                static-color="white"
                 size="l"
                 ?indeterminate=${indeterminate}
                 label="Loading progress demo"
@@ -113,7 +113,7 @@ export const inButton = ({
     <sp-button variant="black" style="color: white">
         <sp-progress-circle
             progress="53"
-            static="white"
+            static-color="white"
             size="s"
             ?indeterminate=${indeterminate}
             slot="icon"
