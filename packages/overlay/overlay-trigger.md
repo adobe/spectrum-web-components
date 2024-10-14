@@ -104,6 +104,32 @@ This example only delivers content via the "click" interaction and leverages bot
 </overlay-trigger>
 ```
 
+### Click content type="auto"
+
+This example only delivers content via the "click" interaction and leverages both `placement` and `type` attributes to customize the visual relationship of the content to the page and its position in the tab order.
+
+```html
+<overlay-trigger placement="top" type="auto">
+    <sp-button slot="trigger">Overlay Trigger</sp-button>
+    <sp-popover slot="click-content" open>
+        <sp-dialog size="s">
+            <h2 slot="heading">Click content</h2>
+            An &lt;overlay-trigger&gt; can be used to manage either or both of
+            the "click" and "hover" content slots that are made available. Here,
+            content is only addressed to
+            <code>slot="click-content"</code>
+            ...
+            <sp-button
+                slot="button"
+                onclick="javascript: this.dispatchEvent(new Event('close', {bubbles: true, composed: true}));"
+            >
+                I understand
+            </sp-button>
+        </sp-dialog>
+    </sp-popover>
+</overlay-trigger>
+```
+
 ### "Hover" content only
 
 The delivery of hover content can be customized via the `placement` attribute. However, this content can not be interacted with, so the `type` attribute will not customize its delivery in any way.
