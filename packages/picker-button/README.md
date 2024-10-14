@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-picker-button>` is used as a sub-component of patterns like the `<sp-combobox>` (release pending) to pair a button interface with a text input. With its many custom states and alterations, it isn't likely to be leveraged directly outside of more complex UIs.
 
@@ -23,7 +23,35 @@ When looking to leverage the `PickerButton` base class as a type and/or for exte
 import { PickerButton } from '@spectrum-web-components/picker-button';
 ```
 
-## Sizes
+### Anatomy
+
+#### Text and icon
+
+With the use of the `label` slot, you can deliver an `<sp-picker-button>` with both an icon and a text label:
+
+```html
+<sp-picker-button><span slot="label">All</span></sp-picker-button>
+```
+
+#### Icon only
+
+Without content addressed to the `label` slot, the `<sp-picker-button>` with both an icon and a text label:
+
+```html
+<sp-picker-button></sp-picker-button>
+```
+
+#### Custom icon
+
+You can customize the icon in an `<sp-picker-button>` by addressing a new icon to the `icon` slot:
+
+```html
+<sp-picker-button><sp-icon-add slot="icon"></sp-icon-add></sp-picker-button>
+```
+
+### Options
+
+#### Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
 <sp-tab value="s">Small</sp-tab>
@@ -68,33 +96,7 @@ import { PickerButton } from '@spectrum-web-components/picker-button';
 </sp-tab-panel>
 </sp-tabs>
 
-## Text and icon
-
-With the use of the `label` slot, you can deliver an `<sp-picker-button>` with both an icon and a text label:
-
-```html
-<sp-picker-button><span slot="label">All</span></sp-picker-button>
-```
-
-## Icon only
-
-Without content addressed to the `label` slot, the `<sp-picker-button>` with both an icon and a text label:
-
-```html
-<sp-picker-button></sp-picker-button>
-```
-
-### Custom icon
-
-You can customize the icon in an `<sp-picker-button>` by addressing a new icon to the `icon` slot:
-
-```html
-<sp-picker-button><sp-icon-add slot="icon"></sp-icon-add></sp-picker-button>
-```
-
-## Modifying attributes
-
-### Rounded
+#### Rounded
 
 When delivered as part of the `express` theme, an `<sp-picker-button>` with the `rounded` attribute will be given deeply rounded corners:
 
@@ -104,7 +106,7 @@ When delivered as part of the `express` theme, an `<sp-picker-button>` with the 
 <sp-picker-button rounded><span slot="label">All</span></sp-picker-button>
 ```
 
-### Quiet
+#### Quiet
 
 When delivered with the `quiet` attribute, the `<sp-picker-button>` will take a less pronounced visual delivery:
 
@@ -114,7 +116,7 @@ When delivered with the `quiet` attribute, the `<sp-picker-button>` will take a 
 <sp-picker-button quiet><span slot="label">All</span></sp-picker-button>
 ```
 
-### Position
+###$ Position
 
 By default the `<sp-picker-button>` will be given a `position` attribute with the value `right`, which is best leveraged at the right edge of an associated `<sp-textfield>` element. If your UI desires that the `<sp-picker-button>` be placed to the left of the related input, use the `position` attribute and set it to `left`:
 
@@ -126,7 +128,9 @@ By default the `<sp-picker-button>` will be given a `position` attribute with th
 </sp-picker-button>
 ```
 
-### Open
+### States
+
+#### Open
 
 When paired with an expanded UI, e.g. an `<sp-combobox>` with its autocomplete options visible, an `<sp-picker-button>` should be given the `open` attribute to visual match the delivered state in the larger UI:
 
@@ -136,7 +140,7 @@ When paired with an expanded UI, e.g. an `<sp-combobox>` with its autocomplete o
 <sp-picker-button open><span slot="label">All</span></sp-picker-button>
 ```
 
-### Disabled
+#### Disabled
 
 Leveraging the `disabled` attribute will dim the `<sp-picker-button>` and alter its presentation in the accessibility tree:
 
@@ -146,7 +150,7 @@ Leveraging the `disabled` attribute will dim the `<sp-picker-button>` and alter 
 <sp-picker-button disabled><span slot="label">All</span></sp-picker-button>
 ```
 
-### Invalid
+#### Invalid
 
 When delivered as part of the `spectrum` theme, an `<sp-picker-button>` with the `invalid` attribute will be given a red border:
 
