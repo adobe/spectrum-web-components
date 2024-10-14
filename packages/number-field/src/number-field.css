@@ -32,6 +32,7 @@ governing permissions and limitations under the License.
             ) * 2
     );
     --mod-infield-button-border-width: var(--unset-value-resets-inheritance);
+    --spectrum-stepper-width: var(--swc-number-field-width);
 }
 
 :host([size='s']) {
