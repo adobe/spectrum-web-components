@@ -30,10 +30,13 @@ governing permissions and limitations under the License.
         --mod-textfield-border-width,
         var(--spectrum-textfield-border-width)
     );
+    --text-to-icon: var(
+        --mod-textfield-icon-spacing-inline-start-invalid,
+        var(--spectrum-textfield-icon-spacing-inline-start-invalid)
+    );
     --spectrum-datepicker-input-width: var(--spectrum-textfield-width);
     --mod-datepicker-min-width: calc(
-        var(--spectrum-datepicker-input-width) + var(--spectrum-spacing-300) +
-            var(--spectrum-spacing-75)
+        var(--spectrum-datepicker-initial-width) * 2 + var(--text-to-icon)
     );
 
     flex-wrap: wrap;
@@ -50,7 +53,8 @@ governing permissions and limitations under the License.
     inline-size: 100%;
     padding-inline-end: calc(
         var(--status-icon-size) + var(--picker-button-size) +
-            (var(--input-spacing) - var(--input-border-width))
+            (var(--input-spacing) - var(--input-border-width)) +
+            var(--text-to-icon)
     );
 }
 
