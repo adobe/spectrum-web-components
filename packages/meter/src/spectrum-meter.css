@@ -303,23 +303,23 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='white']) .fill {
+:host([static-color='white']) .fill {
     background: var(
         --mod-progressbar-fill-color-white,
         var(--spectrum-progressbar-fill-color-white)
     );
 }
 
-:host([static='white']) .fill,
-:host([static='white']) .label,
-:host([static='white']) .percentage {
+:host([static-color='white']) .fill,
+:host([static-color='white']) .label,
+:host([static-color='white']) .percentage {
     color: var(
         --mod-progressbar-label-and-value-white,
         var(--spectrum-progressbar-label-and-value-white)
     );
 }
 
-:host([static='white']) .track {
+:host([static-color='white']) .track {
     background: var(--spectrum-progressbar-track-color-white);
 }
 

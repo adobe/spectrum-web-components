@@ -135,7 +135,7 @@ const config = {
                         ['spectrum-Button--staticWhite', 'white'],
                         ['spectrum-Button--staticBlack', 'black'],
                     ],
-                    'static'
+                    'static-color'
                 ),
                 converter.classToId('spectrum-Button-label'),
                 converter.classToSlotted('spectrum-Icon', 'icon'),

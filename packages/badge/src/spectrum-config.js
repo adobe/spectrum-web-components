@@ -80,7 +80,7 @@ const config = {
                 ),
                 ...converter.enumerateAttributes(
                     [['spectrum-Badge--black-text', 'black']],
-                    'static'
+                    'static-color'
                 ),
                 converter.classToClass('spectrum-Badge-label'),
                 converter.classToSlotted('spectrum-Badge-icon', 'icon'),
