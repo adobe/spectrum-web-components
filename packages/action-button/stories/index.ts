@@ -26,7 +26,7 @@ export interface Properties {
     toggles?: boolean;
     emphasized?: boolean;
     size?: 's' | 'm' | 'l' | 'xl';
-    staticProp?: 'white' | 'black';
+    staticColor?: 'white' | 'black';
     holdAffordance?: boolean;
     icon?: TemplateResult;
     label?: string;
