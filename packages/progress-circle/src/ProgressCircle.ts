@@ -49,12 +49,6 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
     @property({ type: Boolean, reflect: true, attribute: 'over-background' })
     public overBackground = false;
 
-    /**
-     * @deprecated Use `staticColor` instead.
-     */
-    @property({ reflect: true })
-    public static?: 'white';
-
     @property({ reflect: true, attribute: 'static-color' })
     public staticColor?: 'white';
 
@@ -82,21 +76,6 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
                     window.__swc.warn(
                         this,
                         `<${this.localName}> element will stop accepting the "over-background" attribute, and its related "overBackground" property in a future release. Use the "static-color" attribute with a value of "white" instead.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#static',
-                        { level: 'deprecation' }
-                    );
-                }
-            }
-        }
-        if (changes.has('static')) {
-            // Apply "staticColor" from "static", preferring "staticColor",
-            // until the deprecation period is over.
-            this.staticColor = this.static;
-            if (window.__swc.DEBUG) {
-                if (this.static) {
-                    window.__swc.warn(
-                        this,
-                        `<${this.localName}> element will stop accepting the "static" attribute. Use the "static-color" attribute with a value of "white" instead.`,
                         'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#static',
                         { level: 'deprecation' }
                     );

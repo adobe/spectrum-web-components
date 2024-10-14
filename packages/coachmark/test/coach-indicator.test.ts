@@ -30,14 +30,6 @@ describe('CoachIndicator', () => {
         await elementUpdated(el);
         await expect(el).to.be.accessible();
     });
-    it('loads coach-indicator white static-color when static is set', async () => {
-        const el = await fixture<CoachIndicator>(html`
-            <sp-coach-indicator static="white"></sp-coach-indicator>
-        `);
-        await elementUpdated(el);
-        expect(el.staticColor == 'white').to.be.true;
-        expect(el.getAttribute('static-color')).to.equal('white');
-    });
     it('loads coach-indicator white static-color variant', async () => {
         const el = await fixture<CoachIndicator>(html`
             <sp-coach-indicator variant="white"></sp-coach-indicator>
@@ -59,27 +51,6 @@ describe('dev mode', () => {
     after(() => {
         window.__swc.verbose = false;
         consoleWarnStub.restore();
-    });
-
-    it('warns in Dev Mode when deprecated `static` attribute is used', async () => {
-        const el = await fixture<CoachIndicator>(html`
-            <sp-coach-indicator static="white"></sp-coach-indicator>
-        `);
-        await elementUpdated(el);
-        expect(consoleWarnStub.called).to.be.true;
-
-        const spyCall = consoleWarnStub.getCall(0);
-        expect(
-            (spyCall.args.at(0) as string).includes('deprecated'),
-            'confirm deprecated static warning'
-        ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-            data: {
-                localName: 'sp-coach-indicator',
-                type: 'api',
-                level: 'deprecation',
-            },
-        });
     });
 
     it('warns in Dev Mode when deprecated `variant` attribute is used', async () => {

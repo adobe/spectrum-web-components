@@ -1522,25 +1522,6 @@ describe('ActionGroup', () => {
         expect(actionButtons[1].selected).to.be.true;
         expect(actionButtons[2].selected).to.be.false;
     });
-    it('prefers `staticColor` over `static`', async () => {
-        const el = await fixture<ActionGroup>(html`
-            <sp-action-group
-                label="Selects Single Group"
-                selects="single"
-                static="white"
-                dir="ltr"
-            >
-                <sp-action-button>First</sp-action-button>
-            </sp-action-group>
-        `);
-        await elementUpdated(el);
-        expect(el.staticColor).to.equal('white');
-        el.setAttribute('static', 'white');
-        await elementUpdated(el);
-        expect(el.staticColor).to.equal('white');
-        expect(el.static).to.equal('white');
-        expect(el.getAttribute('static-color')).to.equal('white');
-    });
 });
 
 describe('dev mode', () => {
