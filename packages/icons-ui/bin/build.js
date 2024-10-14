@@ -172,9 +172,9 @@ async function buildIcons(icons, tag, iconsNameList) {
                 'aria-hidden="..."',
                 "aria-hidden=${hidden ? 'true' : 'false'}"
             )
-            .replace('width="..."', 'width=${width}')
-            .replace('height="..."', 'height=${height}')
-            .replace('aria-label="..."', 'aria-label=${title}')}\`;
+            .replace('width="..."', 'width="${width}"')
+            .replace('height="..."', 'height="${height}"')
+            .replace('aria-label="..."', 'aria-label="${title}"')}\`;
         }
     `;
 
