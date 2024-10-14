@@ -54,7 +54,8 @@ import { render } from 'lit-html';
 import { Popover } from '@spectrum-web-components/popover';
 import { Button } from '@spectrum-web-components/button';
 import { PopoverContent } from './overlay-story-components.js';
-
+import '@spectrum-web-components/accordion/sp-accordion.js';
+import '@spectrum-web-components/accordion/sp-accordion-item.js';
 const storyStyles = html`
     <style>
         html,
@@ -1531,3 +1532,65 @@ virtualElementDeclaratively.args = {
 virtualElementDeclaratively.swc_vrt = {
     skip: true,
 };
+
+export const autoTrigger = (): TemplateResult => html`
+    <sp-accordion open>
+        <sp-accordion-item open label="Spectrum design">
+            <p>
+                The visual rules of Adobe's Spectrum design system are developed
+                by the Spectrum design team to work across a number of digital
+                contexts. Spectrum design is delivered across web, desktop
+                native, iOS, Android, etc.
+            </p>
+            <overlay-trigger type="modal" placement="top-start">
+                <sp-button slot="trigger">Overlay trigger for modal</sp-button>
+                <sp-popover dialog slot="click-content">
+                    <p>My slider in overlay element:</p>
+                </sp-popover>
+            </overlay-trigger>
+        </sp-accordion-item>
+        <sp-accordion-item label="Spectrum DNA">
+            <p>
+                These visual rules are then deconstructed into individual
+                colors, measurements and values that are required to describe
+                them across each of these contexts. This dictionary of design
+                tokens in known as Spectrum DNA.
+            </p>
+            <sp-button id="trigger">Overlay trigger for non-modal</sp-button>
+            <sp-overlay trigger="trigger@click" type="auto" placement="right">
+                <sp-popover dialog>
+                    <p>My slider in overlay element:</p>
+                </sp-popover>
+            </sp-overlay>
+        </sp-accordion-item>
+        <sp-accordion-item label="Spectrum CSS">
+            <p>
+                The visual rules of Adobe's Spectrum design system are developed
+                by the Spectrum design team to work across a number of digital
+                contexts. Spectrum design is delivered across web, desktop
+                native, iOS, Android, etc.
+            </p>
+            <overlay-trigger type="auto" placement="top-start">
+                <sp-button slot="trigger">
+                    Overlay trigger for type=auto
+                </sp-button>
+                <sp-popover dialog slot="click-content">
+                    <p>My slider in overlay element:</p>
+                </sp-popover>
+            </overlay-trigger>
+        </sp-accordion-item>
+        <sp-accordion-item label="Spectrum Web Components">
+            <p>
+                Where Spectrum CSS ensures design fidelity on the web, Spectrum
+                Web Component consumes those rules and beathes functional life
+                into those visual patterns for use in your web applications.
+                Across a diverse and growing number of Spectrum design patterns
+                the custom elements that are ditributed by SWC make deploying a
+                Spectrum design powered application on the web about as
+                complicated as leveraging an
+                <code>${'<input />'}</code>
+                element.
+            </p>
+        </sp-accordion-item>
+    </sp-accordion>
+`;
