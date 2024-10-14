@@ -4,3 +4,8 @@ tools/**/*.d.ts
 tools/*/node_modules/**/*
 config/*
 tools/base/src/version.js
+# ignore icons
+packages/icons-ui/src/icons.ts
+packages/icons-ui/stories/icon-manifest.ts
+packages/icons-workflow/src/icons.ts
+packages/icons-workflow/stories/icon-manifest.ts
