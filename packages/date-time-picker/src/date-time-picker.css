@@ -26,13 +26,17 @@ governing permissions and limitations under the License.
         --mod-textfield-spacing-inline,
         var(--spectrum-textfield-spacing-inline)
     );
-    --input-border: var(
+    --input-border-width: var(
         --mod-textfield-border-width,
         var(--spectrum-textfield-border-width)
     );
+    --spectrum-datepicker-input-width: var(--spectrum-textfield-width);
+    --mod-datepicker-min-width: calc(
+        var(--spectrum-datepicker-input-width) + var(--spectrum-spacing-300) +
+            var(--spectrum-spacing-75)
+    );
 
     flex-wrap: wrap;
-    min-inline-size: min-content;
 }
 
 :host #textfield {
@@ -43,10 +47,10 @@ governing permissions and limitations under the License.
 :host([quiet]) .input,
 :host([valid]) .input,
 :host([invalid]) .input {
-    inline-size: var(--spectrum-datepicker-input-width);
+    inline-size: 100%;
     padding-inline-end: calc(
         var(--status-icon-size) + var(--picker-button-size) +
-            (var(--input-spacing) - var(--input-border))
+            (var(--input-spacing) - var(--input-border-width))
     );
 }
 

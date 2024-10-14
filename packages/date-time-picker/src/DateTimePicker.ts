@@ -72,7 +72,6 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import {
     isCalendarDate,
     isCalendarDateTime,
-    isNumber,
     isZonedDateTime,
 } from './helpers.js';
 import { DateTimeSegments } from './segments/DateTimeSegments.js';
@@ -495,9 +494,7 @@ export class DateTimePicker extends ManageHelpText(
         };
 
         const segmentStyles: StyleInfo = {
-            'min-width': isNumber(segment.maxValue)
-                ? `${String(segment.maxValue).length}ch`
-                : undefined,
+            'min-width': `${String(segment.maxValue).length}ch`,
         };
 
         /**
