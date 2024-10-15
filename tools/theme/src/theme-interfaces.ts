@@ -52,6 +52,11 @@ export type SystemVariant = (typeof SYSTEM_VARIANT_VALUES)[number];
 export type Scale = (typeof SCALE_VALUES)[number];
 export type Color = (typeof COLOR_VALUES)[number];
 
+export type SystemContextCallback = (
+    system: SystemVariant | '',
+    unsubscribe: () => void
+) => void;
+
 export type FragmentName = Color | Scale | SystemVariant | 'core' | 'app';
 
 export type ThemeKindProvider = {
