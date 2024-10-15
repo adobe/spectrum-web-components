@@ -50,32 +50,30 @@ describe('Checkbox', () => {
     let testFixture: HTMLDivElement;
 
     beforeEach(async () => {
-        testFixture = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <div id="test-checkbox">
-                        <sp-checkbox id="checkbox0" tabindex="5">
-                            Component
-                        </sp-checkbox>
-                        <sp-checkbox id="checkbox1" tabindex="2" checked>
-                            Check 1
-                        </sp-checkbox>
-                        <sp-checkbox id="checkbox2" tabindex="3" disabled>
-                            Check 2
-                        </sp-checkbox>
-                        <sp-checkbox id="checkbox3" tabindex="1" autofocus>
-                            Check 3
-                        </sp-checkbox>
-                        <sp-checkbox id="checkbox4" tabindex="0">
-                            Check 4
-                        </sp-checkbox>
-                        <sp-checkbox id="checkbox5" tabindex="-1">
-                            Check 5
-                        </sp-checkbox>
-                    </div>
+        testFixture = await fixture<HTMLDivElement>(html`
+            <div>
+                <div id="test-checkbox">
+                    <sp-checkbox id="checkbox0" tabindex="5">
+                        Component
+                    </sp-checkbox>
+                    <sp-checkbox id="checkbox1" tabindex="2" checked>
+                        Check 1
+                    </sp-checkbox>
+                    <sp-checkbox id="checkbox2" tabindex="3" disabled>
+                        Check 2
+                    </sp-checkbox>
+                    <sp-checkbox id="checkbox3" tabindex="1" autofocus>
+                        Check 3
+                    </sp-checkbox>
+                    <sp-checkbox id="checkbox4" tabindex="0">
+                        Check 4
+                    </sp-checkbox>
+                    <sp-checkbox id="checkbox5" tabindex="-1">
+                        Check 5
+                    </sp-checkbox>
                 </div>
-            `
-        );
+            </div>
+        `);
     });
 
     it('loads', async () => {
@@ -87,19 +85,15 @@ describe('Checkbox', () => {
     });
     testForLitDevWarnings(
         async () =>
-            await fixture<Checkbox>(
-                html`
-                    <sp-checkbox>Not Checked</sp-checkbox>
-                `
-            )
+            await fixture<Checkbox>(html`
+                <sp-checkbox>Not Checked</sp-checkbox>
+            `)
     );
 
     it('loads default checkbox accessibly', async () => {
-        const el = await fixture<Checkbox>(
-            html`
-                <sp-checkbox>Not Checked</sp-checkbox>
-            `
-        );
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox>Not Checked</sp-checkbox>
+        `);
 
         await elementUpdated(el);
 
@@ -135,11 +129,9 @@ describe('Checkbox', () => {
     });
 
     it('loads `checked` checkbox accessibly', async () => {
-        const el = await fixture<Checkbox>(
-            html`
-                <sp-checkbox checked>Checked</sp-checkbox>
-            `
-        );
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox checked>Checked</sp-checkbox>
+        `);
 
         await elementUpdated(el);
 
@@ -175,11 +167,9 @@ describe('Checkbox', () => {
     });
 
     it('is `invalid` checkbox accessibly', async () => {
-        const el = await fixture<Checkbox>(
-            html`
-                <sp-checkbox invalid>Invalid Not Checked</sp-checkbox>
-            `
-        );
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox invalid>Invalid Not Checked</sp-checkbox>
+        `);
 
         await elementUpdated(el);
 
@@ -209,11 +199,9 @@ describe('Checkbox', () => {
     });
 
     it('`click()`ing host clicks `focusElement`', async () => {
-        const el = await fixture<Checkbox>(
-            html`
-                <sp-checkbox checked autofocus>Checked</sp-checkbox>
-            `
-        );
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox checked autofocus>Checked</sp-checkbox>
+        `);
 
         await elementUpdated(el);
 
@@ -394,5 +382,18 @@ describe('Checkbox', () => {
         expect(getPartialCheckmarkLocalName()).to.not.equal(
             partialCheckmarkLocalname
         );
+    });
+
+    it('updates tabindex when no longer disabled', async function () {
+        const el = await fixture<Checkbox>(html`
+            <sp-checkbox disabled>disabled checkbox</sp-checkbox>
+        `);
+        el.click();
+        await elementUpdated(el);
+        expect(el.checked).to.be.false;
+        expect(el.tabIndex).to.equal(-1);
+        el.removeAttribute('disabled');
+        await elementUpdated(el);
+        expect(el.tabIndex).to.equal(0);
     });
 });
