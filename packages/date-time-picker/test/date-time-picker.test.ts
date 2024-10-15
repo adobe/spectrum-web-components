@@ -34,7 +34,7 @@ import {
 } from '@spectrum-web-components/date-time-picker';
 import { PickerButton } from '@spectrum-web-components/picker-button';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
-import { stub } from 'sinon';
+import { spy, stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import {
     dispatchCalendarChange,
@@ -2435,31 +2435,339 @@ describe('DateTimePicker', () => {
     });
 
     describe('Dispatched events', () => {
-        it(
-            "should dispatch 'change' when all segments have a value for the first time"
-        );
-        it("should dispatch 'change' when the value changes are committed");
-        it("should not dispatch 'change' if the committed value is the same");
+        let changeSpy: sinon.SinonSpy;
+        let inputSpy: sinon.SinonSpy;
 
-        // As per React Spectrum it should send one change event when the change that made the
-        // date incomplete is made and none after that until the date is complete again
-        it("should dispatch 'change' when a segment is deleted");
+        before(() => {
+            changeSpy = spy();
+            inputSpy = spy();
+        });
 
-        it(
-            "should dispatch 'input' when a segment changes through typing on an existing value"
+        beforeEach(() => {
+            element.addEventListener('change', changeSpy);
+            element.addEventListener('input', inputSpy);
+        });
+
+        afterEach(() => {
+            changeSpy.resetHistory();
+            inputSpy.resetHistory();
+        });
+
+        it("should dispatch 'change' when all segments have a value for the first time", async () => {
+            element = await fixtureElement({
+                props: { precision: Precisions.Second },
+            });
+            editableSegments = getEditableSegments(element);
+
+            expect(element.value).to.be.undefined;
+
+            while (editableSegments.length > 0) {
+                const segment = editableSegments.shift()!;
+                segment.focus();
+
+                await sendKeys({ press: 'ArrowUp' });
+                await elementUpdated(element);
+            }
+
+            expect(changeSpy.callCount).to.equal(1);
+        });
+
+        it("should dispatch 'change' when the value changes are committed using Space", async () => {
+            element = await fixtureElement({ props: { value: valueDateTime } });
+            editableSegments = getEditableSegments(element);
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+
+            monthSegment.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            daySegment.focus();
+            await sendKeys({ type: '21' });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
+            expect(changeSpy.callCount).to.equal(1);
+        });
+
+        it("should dispatch 'change' when the value changes are committed using Enter", async () => {
+            element = await fixtureElement({ props: { value: valueDateTime } });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+
+            yearSegment.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            daySegment.focus();
+            await sendKeys({ type: '21' });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+            expect(changeSpy.callCount).to.equal(1);
+        });
+
+        it("should dispatch 'change' when the value changes are committed on blur", async () => {
+            element = await fixtureElement({ props: { value: valueDateTime } });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const month = editableSegments.getByType(SegmentTypes.Month);
+
+            yearSegment.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            month.focus();
+            await sendKeys({ type: '11' });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+
+            await sendMouse({
+                type: 'click',
+                position: [0, 0],
+            });
+
+            expect(changeSpy.callCount).to.equal(1);
+        });
+
+        it("should not dispatch 'change' if the committed value is the same", async () => {
+            element = await fixtureElement({ props: { value: valueDateTime } });
+
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+
+            await sendMouse({
+                type: 'click',
+                position: [0, 0],
+            });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+        });
+
+        it("should dispatch 'change' when a segment is deleted", async () => {
+            element = await fixtureElement({ props: { value: valueDate } });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+
+            yearSegment.focus();
+            await sendKeyMultipleTimes('Delete', yearSegment.innerText.length);
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(1);
+            changeSpy.resetHistory();
+
+            monthSegment.focus();
+            await sendKeys({ press: 'Delete' });
+            await elementUpdated(element);
+
+            daySegment.focus();
+            await sendKeys({ press: 'Delete' });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+        });
+
+        [
+            SegmentTypes.Year,
+            SegmentTypes.Month,
+            SegmentTypes.Day,
+            SegmentTypes.Hour,
+            SegmentTypes.Minute,
+            SegmentTypes.Second,
+        ].forEach((segmentType) =>
+            it(`should dispatch 'input' when the ${segmentType} segment changes through typing on an existing value`, async () => {
+                element = await fixtureElement({
+                    props: {
+                        precision: Precisions.Second,
+                        value: valueDateTime,
+                    },
+                });
+                editableSegments = getEditableSegments(element);
+                const segment = editableSegments.getByType(segmentType);
+
+                segment.focus();
+                await sendKeys({ type: '2021' });
+                await elementUpdated(element);
+
+                expect(inputSpy.callCount).to.equal(4);
+
+                inputSpy.resetHistory();
+                await sendKeys({ type: '2' });
+                await elementUpdated(element);
+
+                expect(inputSpy.callCount).to.equal(1);
+            })
         );
 
-        // test for multiple inputs not only the first one
-        it(
-            "should dispatch 'input' when a segment changes through typing on an empty value"
+        it(`should dispatch 'input' when the dayPeriod segment changes through typing on an existing value`, async () => {
+            element = await fixtureElement({
+                props: { value: valueDateTime },
+            });
+            editableSegments = getEditableSegments(element);
+            const dayPeriodSegment = editableSegments.getByType(
+                SegmentTypes.DayPeriod
+            );
+
+            dayPeriodSegment.focus();
+            await sendKeys({ type: 'A' });
+            await elementUpdated(element);
+
+            expect(inputSpy.callCount).to.equal(1);
+
+            inputSpy.resetHistory();
+            await sendKeys({ type: 'P' });
+            await elementUpdated(element);
+
+            expect(inputSpy.callCount).to.equal(1);
+        });
+
+        [
+            SegmentTypes.Year,
+            SegmentTypes.Month,
+            SegmentTypes.Day,
+            SegmentTypes.Hour,
+            SegmentTypes.Minute,
+            SegmentTypes.Second,
+        ].forEach((segmentType) =>
+            it(`should dispatch 'input' when the ${segmentType} segment changes through typing on an empty value`, async () => {
+                element = await fixtureElement({
+                    props: { precision: Precisions.Second },
+                });
+                editableSegments = getEditableSegments(element);
+                const segment = editableSegments.getByType(segmentType);
+
+                segment.focus();
+                await sendKeys({ type: '2021' });
+                await elementUpdated(element);
+
+                expect(inputSpy.callCount).to.equal(4);
+
+                inputSpy.resetHistory();
+                await sendKeys({ type: '2' });
+                await elementUpdated(element);
+
+                expect(inputSpy.callCount).to.equal(1);
+            })
         );
 
-        it(
-            "should dispatch 'input' when a segment changes through incrementing/should decrement on an existing value"
-        );
-        it(
-            "should dispatch 'input' when a segment changes through incrementing/decrementing on an empty value"
-        );
+        it(`should dispatch 'input' when the dayPeriod segment changes through typing on an empty value`, async () => {
+            element = await fixtureElement({
+                props: { precision: Precisions.Second },
+            });
+            editableSegments = getEditableSegments(element);
+            const dayPeriodSegment = editableSegments.getByType(
+                SegmentTypes.DayPeriod
+            );
+
+            dayPeriodSegment.focus();
+            await sendKeys({ type: 'A' });
+            await elementUpdated(element);
+
+            expect(inputSpy.callCount).to.equal(1);
+
+            inputSpy.resetHistory();
+            await sendKeys({ type: 'P' });
+            await elementUpdated(element);
+
+            expect(inputSpy.callCount).to.equal(1);
+        });
+
+        it("should dispatch 'input' when a segment changes through incrementing/decrementing on an existing value", async () => {
+            element = await fixtureElement({
+                props: {
+                    precision: Precisions.Second,
+                    valueDate: valueDateTime,
+                },
+            });
+            editableSegments = getEditableSegments(element);
+
+            expect(element.value).to.be.undefined;
+
+            let editableSegmentsCopy = [...editableSegments];
+            while (editableSegmentsCopy.length > 0) {
+                const segment = editableSegmentsCopy.shift()!;
+                segment.focus();
+
+                await sendKeys({ press: 'ArrowUp' });
+                await elementUpdated(element);
+                expect(inputSpy.callCount).to.equal(1);
+                inputSpy.resetHistory();
+            }
+
+            editableSegmentsCopy = [...editableSegments];
+            while (editableSegmentsCopy.length > 0) {
+                const segment = editableSegmentsCopy.shift()!;
+                segment.focus();
+
+                await sendKeys({ press: 'ArrowDown' });
+                await elementUpdated(element);
+                expect(inputSpy.callCount).to.equal(1);
+                inputSpy.resetHistory();
+            }
+        });
+
+        it("should dispatch 'input' when a segment changes through incrementing/decrementing on an empty value", async () => {
+            element = await fixtureElement({
+                props: {
+                    precision: Precisions.Second,
+                },
+            });
+            editableSegments = getEditableSegments(element);
+
+            expect(element.value).to.be.undefined;
+
+            let editableSegmentsCopy = [...editableSegments];
+            while (editableSegmentsCopy.length > 0) {
+                const segment = editableSegmentsCopy.shift()!;
+                segment.focus();
+
+                await sendKeys({ press: 'ArrowUp' });
+                await elementUpdated(element);
+                expect(inputSpy.callCount).to.equal(1);
+                inputSpy.resetHistory();
+            }
+
+            editableSegmentsCopy = [...editableSegments];
+            while (editableSegmentsCopy.length > 0) {
+                const segment = editableSegmentsCopy.shift()!;
+                segment.focus();
+
+                await sendKeys({ press: 'ArrowDown' });
+                await elementUpdated(element);
+                expect(inputSpy.callCount).to.equal(1);
+                inputSpy.resetHistory();
+            }
+        });
+
+        it('should not dispatch input nor change when the value is changed programmatically', async () => {
+            element = await fixtureElement({
+                props: { value: valueDateTime },
+            });
+
+            element.value = valueDateTime.set({ year: valueDateTime.year + 1 });
+            await elementUpdated(element);
+
+            expect(inputSpy.callCount).to.equal(0);
+            expect(changeSpy.callCount).to.equal(0);
+        });
     });
 
     describe('Min-max constraints', () => {
@@ -2558,11 +2866,267 @@ describe('DateTimePicker', () => {
             expectSameDates(element.min!, newMin, 'min mismatch');
             expectSameDates(element.max!, newMax, 'max mismatch');
         });
+    });
 
-        // TODO: with the Space/Enter/Blur value commit PR
-        it(
-            "should trigger the 'invalid' state when a value that doesn't comply is commited"
-        );
+    describe('Invalid', () => {
+        const dayOffset = 5;
+        let min: CalendarDateTime;
+        let max: CalendarDateTime;
+
+        before(() => {
+            min = new CalendarDateTime(
+                fixedYear,
+                fixedMonth,
+                fixedDay - dayOffset,
+                15,
+                15,
+                15
+            );
+            max = new CalendarDateTime(
+                fixedYear,
+                fixedMonth,
+                fixedDay + dayOffset,
+                15,
+                15,
+                15
+            );
+        });
+
+        it("should trigger the 'invalid' state when a date not completed is commited using Enter", async () => {
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ type: '202' });
+            await elementUpdated(element);
+
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            expect(element.invalid).to.be.true;
+            expectPlaceholders(editableSegments, [yearSegment]);
+        });
+
+        it("should stop the 'invalid' state when a fully defined date is commited using Enter", async () => {
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ type: '202' });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            while (editableSegments.length > 0) {
+                const segment = editableSegments.shift()!;
+                segment.focus();
+                await sendKeys({ press: 'ArrowUp' });
+                await elementUpdated(element);
+            }
+
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            expect(element.invalid).to.be.false;
+        });
+
+        it("should trigger the 'invalid' state when a date not completed is commited using Space", async () => {
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ type: '202' });
+            await elementUpdated(element);
+
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
+
+            expect(element.invalid).to.be.true;
+            expectPlaceholders(editableSegments, [yearSegment]);
+        });
+
+        it("should stop the 'invalid' state when a fully defined date is commited using Space", async () => {
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ type: '202' });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
+
+            while (editableSegments.length > 0) {
+                const segment = editableSegments.shift()!;
+                segment.focus();
+                await sendKeys({ press: 'ArrowUp' });
+                await elementUpdated(element);
+            }
+
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
+
+            expect(element.invalid).to.be.false;
+        });
+
+        it("should trigger the 'invalid' state when a date not completed is commited on blur", async () => {
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ type: '202' });
+            await elementUpdated(element);
+
+            await sendMouse({
+                type: 'click',
+                position: [0, 0],
+            });
+
+            expect(element.invalid).to.be.true;
+            expectPlaceholders(editableSegments, [yearSegment]);
+        });
+
+        it("should stop the 'invalid' state when a fully defined date is commited on blur", async () => {
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ type: '202' });
+            await elementUpdated(element);
+            await sendMouse({
+                type: 'click',
+                position: [0, 0],
+            });
+            await elementUpdated(element);
+
+            while (editableSegments.length > 0) {
+                const segment = editableSegments.shift()!;
+                segment.focus();
+                await sendKeys({ press: 'ArrowUp' });
+                await elementUpdated(element);
+            }
+
+            await sendMouse({
+                type: 'click',
+                position: [0, 0],
+            });
+            await elementUpdated(element);
+
+            expect(element.invalid).to.be.false;
+        });
+
+        it("should trigger the 'invalid' state when a value that doesn't comply is commited using Enter", async () => {
+            element = await fixtureElement({
+                props: { min, max, value: min },
+            });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ type: (min.year - 1).toString() });
+            await elementUpdated(element);
+            expect(element.invalid).to.be.false;
+
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            expect(element.invalid).to.be.true;
+            expectPlaceholders(editableSegments, [yearSegment]);
+        });
+
+        it("should stop the 'invalid' state when a value that does comply is commited using Enter", async () => {
+            element = await fixtureElement({
+                props: { min, max, value: min },
+            });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ type: (min.year - 1).toString() });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            await sendKeys({ press: 'ArrowUp' });
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            expect(element.invalid).to.be.false;
+        });
+
+        it("should trigger the 'invalid' state when a value that doesn't comply is commited using Space", async () => {
+            element = await fixtureElement({
+                props: { min, max, value: min },
+            });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ type: (min.year - 1).toString() });
+            await elementUpdated(element);
+            expect(element.invalid).to.be.false;
+
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
+
+            expect(element.invalid).to.be.true;
+            expectPlaceholders(editableSegments, [yearSegment]);
+        });
+
+        it("should stop the 'invalid' state when a value that does comply is commited using Space", async () => {
+            element = await fixtureElement({
+                props: { min, max, value: min },
+            });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ type: (min.year - 1).toString() });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
+
+            await sendKeys({ press: 'ArrowUp' });
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
+
+            expect(element.invalid).to.be.false;
+        });
+
+        it("should trigger the 'invalid' state when a value that doesn't comply is commited on blur", async () => {
+            element = await fixtureElement({
+                props: { min, max, value: min },
+            });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ type: (min.year - 1).toString() });
+            await elementUpdated(element);
+            expect(element.invalid).to.be.false;
+
+            await sendMouse({
+                type: 'click',
+                position: [0, 0],
+            });
+
+            expect(element.invalid).to.be.true;
+            expectPlaceholders(editableSegments, [yearSegment]);
+        });
+
+        it("should stop the 'invalid' state when a value that does comply is commited on blur", async () => {
+            element = await fixtureElement({
+                props: { min, max, value: min },
+            });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ type: (min.year - 1).toString() });
+            await elementUpdated(element);
+
+            await sendMouse({
+                type: 'click',
+                position: [0, 0],
+            });
+            await elementUpdated(element);
+
+            await sendKeys({ press: 'ArrowUp' });
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            await sendMouse({
+                type: 'click',
+                position: [0, 0],
+            });
+            await elementUpdated(element);
+
+            expect(element.invalid).to.be.false;
+        });
     });
 
     describe('Multiple types for min, max and value properties', () => {
