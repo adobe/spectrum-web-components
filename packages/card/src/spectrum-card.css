@@ -126,10 +126,6 @@ governing permissions and limitations under the License.
 }
 
 :host([drop-target]) {
-    --mod-card-background-color: var(
-        --spectrum-card-background-color-quiet,
-        var(--spectrum-background-base-color)
-    );
     border-color: var(
         --highcontrast-card-border-color-selected,
         var(
@@ -147,7 +143,7 @@ governing permissions and limitations under the License.
         );
     background-color: var(
         --mod-card-background-color,
-        var(--spectrum-card-background-color)
+        var(--spectrum-card-background-color-quiet)
     );
 }
 

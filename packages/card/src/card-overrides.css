@@ -95,7 +95,7 @@
         --system-card-content-margin-top-quiet
     );
     --spectrum-card-minimum-width-quiet: var(--system-card-minimum-width-quiet);
-    --spectrum-card-selected-background-color-rgb: var(
-        --system-card-selected-background-color-rgb
+    --spectrum-card-background-color-quiet: var(
+        --system-card-background-color-quiet
     );
 }

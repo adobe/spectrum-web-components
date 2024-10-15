@@ -80,6 +80,31 @@ governing permissions and limitations under the License.
     );
 }
 
+.spectrum-Menu-backIcon {
+    margin-block: var(
+        --mod-menu-back-icon-margin-block,
+        var(--spectrum-menu-back-icon-margin)
+    );
+    margin-inline: var(
+        --mod-menu-back-icon-margin-inline,
+        var(--spectrum-menu-back-icon-margin)
+    );
+    fill: var(
+        --highcontrast-menu-item-color-default,
+        var(
+            --mod-menu-back-icon-color-default,
+            var(--spectrum-menu-section-header-color)
+        )
+    );
+    color: var(
+        --highcontrast-menu-item-color-default,
+        var(
+            --mod-menu-back-icon-color-default,
+            var(--spectrum-menu-section-header-color)
+        )
+    );
+}
+
 .spectrum-Menu-back:focus-visible {
     box-shadow: inset
         calc(
@@ -221,29 +246,4 @@ governing permissions and limitations under the License.
         var(--spectrum-menu-section-header-line-height)
     );
     display: block;
-}
-
-.spectrum-Menu-backIcon {
-    margin-block: var(
-        --mod-menu-back-icon-margin-block,
-        var(--spectrum-menu-back-icon-margin)
-    );
-    margin-inline: var(
-        --mod-menu-back-icon-margin-inline,
-        var(--spectrum-menu-back-icon-margin)
-    );
-    fill: var(
-        --highcontrast-menu-item-color-default,
-        var(
-            --mod-menu-back-icon-color-default,
-            var(--spectrum-menu-section-header-color)
-        )
-    );
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(
-            --mod-menu-back-icon-color-default,
-            var(--spectrum-menu-section-header-color)
-        )
-    );
 }
