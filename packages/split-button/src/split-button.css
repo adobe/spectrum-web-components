@@ -78,4 +78,6 @@ sp-overlay:not(:defined) {
 
 .icon {
     align-self: center;
+
+    --spectrum-icon-size: inherit;
 }
