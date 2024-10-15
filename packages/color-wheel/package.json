@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-wheel",
-    "version": "0.47.2",
+    "version": "0.48.1",
     "publishConfig": {
         "access": "public"
     },
@@ -62,10 +62,10 @@
     ],
     "dependencies": {
         "@ctrl/tinycolor": "^4.0.3",
-        "@spectrum-web-components/base": "^0.47.2",
-        "@spectrum-web-components/color-handle": "^0.47.2",
-        "@spectrum-web-components/reactive-controllers": "^0.47.2",
-        "@spectrum-web-components/shared": "^0.47.2"
+        "@spectrum-web-components/base": "^0.48.1",
+        "@spectrum-web-components/color-handle": "^0.48.1",
+        "@spectrum-web-components/reactive-controllers": "^0.48.1",
+        "@spectrum-web-components/shared": "^0.48.1"
     },
     "devDependencies": {
         "@spectrum-css/colorwheel": "^4.1.0"
