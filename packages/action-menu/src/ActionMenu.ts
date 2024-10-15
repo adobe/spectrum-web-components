@@ -50,8 +50,14 @@ export class ActionMenu extends ObserveSlotPresence(
     @property({ type: String })
     public override selects: undefined | 'single' = undefined;
 
+    /**
+     * @deprecated Use `staticColor` instead.
+     */
     @property({ type: String, reflect: true })
     public static: 'white' | 'black' | undefined = undefined;
+
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white' | 'black';
 
     protected override listRole: 'listbox' | 'menu' = 'menu';
     protected override itemRole = 'menuitem';
@@ -104,7 +110,7 @@ export class ActionMenu extends ObserveSlotPresence(
                 aria-describedby=${DESCRIPTION_ID}
                 ?quiet=${this.quiet}
                 ?selected=${this.open}
-                static=${ifDefined(this.static)}
+                static-color=${ifDefined(this.staticColor)}
                 aria-haspopup="true"
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                 aria-expanded=${this.open ? 'true' : 'false'}

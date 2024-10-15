@@ -43,8 +43,8 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
     @property({ type: String })
     public label = '';
 
-    @property({ reflect: true })
-    public static?: 'white';
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white';
 
     @property({ type: Number })
     public progress = 0;
