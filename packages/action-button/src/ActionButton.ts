@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -46,7 +46,7 @@ export type LongpressEvent = {
  * @slot icon - The icon to use for Action Button
  * @fires change - Announces a change in the `selected` property of an action button
  * @fires longpress - Synthesizes a "longpress" interaction that signifies a
- * `pointerdown` event that is >=300ms or a keyboard event wher code is `Space` or code is `ArrowDown`
+ * `pointerdown` event that is >=300ms or a keyboard event where code is `Space` or code is `ArrowDown`
  * while `altKey===true`.
  */
 export class ActionButton extends SizedMixin(ButtonBase, {
@@ -84,9 +84,21 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     @property({ type: Boolean, reflect: true })
     public toggles = false;
 
+    /**
+     * The static color variant to use for the action button.
+     */
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white' | 'black';
+
+    /**
+     * @deprecated Use `staticColor` instead.
+     */
     @property({ reflect: true })
     public static?: 'white' | 'black';
 
+    /**
+     * @deprecated Use `staticColor` instead.
+     */
     @property({ reflect: true })
     public variant?: 'white' | 'black';
 
@@ -258,14 +270,29 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         }
         if (
             changes.has('variant') &&
-            (this.variant || typeof changes.get('variant'))
+            (this.variant !== undefined || changes.get('variant') !== undefined)
         ) {
-            this.static = this.variant;
+            this.staticColor = this.variant;
             if (window.__swc.DEBUG) {
                 window.__swc.warn(
                     this,
-                    `The "variant" attribute/property of <${this.localName}> have been deprecated. Use "static" with any of the same values instead. "variant" will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/badge/#fixed'
+                    `The "variant" attribute/property of <${this.localName}> has been deprecated. Use "static-color" with the same values instead. "variant" will be removed in a future release.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/action-button/api/',
+                    { level: 'deprecation' }
+                );
+            }
+        }
+        if (
+            changes.has('static') &&
+            (this.static !== undefined || changes.get('static') !== undefined)
+        ) {
+            this.staticColor = this.static;
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `The "static" attribute/property of <${this.localName}> has been deprecated. Use "static-color" with the same values instead. "static" will be removed in a future release.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/action-button/api/',
+                    { level: 'deprecation' }
                 );
             }
         }
