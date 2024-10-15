@@ -116,7 +116,7 @@ When delivered with the `quiet` attribute, the `<sp-picker-button>` will take a 
 <sp-picker-button quiet><span slot="label">All</span></sp-picker-button>
 ```
 
-###$ Position
+#### Position
 
 By default the `<sp-picker-button>` will be given a `position` attribute with the value `right`, which is best leveraged at the right edge of an associated `<sp-textfield>` element. If your UI desires that the `<sp-picker-button>` be placed to the left of the related input, use the `position` attribute and set it to `left`:
 
@@ -159,3 +159,49 @@ When delivered as part of the `spectrum` theme, an `<sp-picker-button>` with the
 <br />
 <sp-picker-button invalid><span slot="label">All</span></sp-picker-button>
 ```
+
+### Accessibility
+
+For an example implementation of `<sp-picker-button>` view [`Combobox.ts`](https://github.com/adobe/spectrum-web-components/blob/main/packages/combobox/src/Combobox.ts). For comprehensive information on menu button accessibility, see WAI ARIA Authoring Practice Guide's [Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/).
+
+#### Include a label
+
+To ensure menu items can be read by assistive technology, do _one_ of the following:
+
+-   Place visible text in the component's `label` slot.
+-   Use `aria-label` attribute.
+-   Set the `aria-labelledby` attribute to the ID reference of the menu element.
+
+#### Set aria properties correctly
+
+To indicate to assistive technology what the button does, do _all_ of the following:
+
+-   Set the `aria-controls` property to the ID reference of the menu element.
+-   Set the `aria-haspopup` property to `"menu"` or `"true"`.
+-   Set the `aria-expanded` property to `"menu"` or `"true"` or `"false"` depending on whether the menu is displayed.
+
+```html
+<sp-picker-button
+    aria-label="toggle menu"
+    aria-controls="colors-menu"
+    aria-expanded="false"
+    aria-haspopup="menu"
+></sp-picker-button>
+<sp-menu id="colors-menu" hidden>
+    <sp-menu-item>Red</sp-menu-item>
+    <sp-menu-item>Blue</sp-menu-item>
+</sp-menu>
+<style>
+    [hidden] {
+        display: none;
+    }
+<style>
+```
+
+### Add keyboard interaction
+
+Ensure that picker button can be operated by keyboard users:
+
+-   Required: Open the menu and focus on first menu item when <kbd>Enter</kbd> or <kbd>Space</kbd> is pressed.
+-   _Optional_: Open the menu and focus on first menu item when <kbd>Down Arrow</kbd> is pressed.
+-   _Optional_: Open the menu and focus on last menu item when <kbd>Up Arrow</kbd> is pressed.
