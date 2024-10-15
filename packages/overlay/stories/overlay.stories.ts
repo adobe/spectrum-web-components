@@ -1545,7 +1545,13 @@ export const autoTrigger = (): TemplateResult => html`
             <overlay-trigger type="modal" placement="top-start">
                 <sp-button slot="trigger">Overlay trigger for modal</sp-button>
                 <sp-popover dialog slot="click-content">
-                    <p>My slider in overlay element:</p>
+                    <p>
+                        My slider in overlay element:
+                        <sp-slider
+                            label="Slider Label - Editable"
+                            editable
+                        ></sp-slider>
+                    </p>
                 </sp-popover>
             </overlay-trigger>
         </sp-accordion-item>
@@ -1559,7 +1565,13 @@ export const autoTrigger = (): TemplateResult => html`
             <sp-button id="trigger">Overlay trigger for non-modal</sp-button>
             <sp-overlay trigger="trigger@click" type="auto" placement="right">
                 <sp-popover dialog>
-                    <p>My slider in overlay element:</p>
+                    <p>
+                        My slider in overlay element:
+                        <sp-slider
+                            label="Slider Label - Editable"
+                            editable
+                        ></sp-slider>
+                    </p>
                 </sp-popover>
             </sp-overlay>
         </sp-accordion-item>
@@ -1575,7 +1587,13 @@ export const autoTrigger = (): TemplateResult => html`
                     Overlay trigger for type=auto
                 </sp-button>
                 <sp-popover dialog slot="click-content">
-                    <p>My slider in overlay element:</p>
+                    <p>
+                        My slider in overlay element:
+                        <sp-slider
+                            label="Slider Label - Editable"
+                            editable
+                        ></sp-slider>
+                    </p>
                 </sp-popover>
             </overlay-trigger>
         </sp-accordion-item>
