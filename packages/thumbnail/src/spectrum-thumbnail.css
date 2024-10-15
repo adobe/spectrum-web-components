@@ -14,7 +14,6 @@ governing permissions and limitations under the License.
 :host {
     inline-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
     block-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
-    vertical-align: top;
     z-index: 0;
     margin: 0;
     padding: 0;
