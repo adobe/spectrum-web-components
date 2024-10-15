@@ -112,7 +112,7 @@
     --spectrum-stepper-height: var(--system-stepper-size-s-height);
 }
 
-#textfield.spectrum-Stepper--sizeM {
+:host([size='m']) #textfield {
     --spectrum-stepper-button-width: var(--system-stepper-size-m-button-width);
     --spectrum-stepper-height: var(--system-stepper-size-m-height);
 }
