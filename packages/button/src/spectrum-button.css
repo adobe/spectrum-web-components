@@ -530,20 +530,20 @@ governing permissions and limitations under the License.
         ease-in-out;
 }
 
-.spectrum-Button--noWrap #label {
+:host([no-wrap]) #label {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
 }
 
-:host([static='white']) {
+:host([static-color='white']) {
     --spectrum-button-focus-indicator-color: var(
         --mod-static-black-focus-indicator-color,
         var(--spectrum-static-black-focus-indicator-color)
     );
 }
 
-:host([static='white'][selected]) {
+:host([static-color='white'][selected]) {
     --spectrum-button-content-color-default: var(
         --mod-button-static-content-color,
         var(--spectrum-button-static-white-content-color-default)
@@ -562,7 +562,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='black']) {
+:host([static-color='black']) {
     --spectrum-button-focus-indicator-color: var(
         --mod-static-black-focus-indicator-color,
         var(--spectrum-static-black-focus-indicator-color)

@@ -117,11 +117,12 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
         }
     }
 
+    private scrollFactor = 0.5;
     private _handleScrollClick(event: MouseEvent): void {
         const currentTarget = event.currentTarget as HTMLElement;
         const [tabsElement] = this.scrollContent;
 
-        const dist = tabsElement.clientWidth * 0.5;
+        const dist = tabsElement.clientWidth * this.scrollFactor;
         const left = currentTarget.classList.contains('left-scroll')
             ? -dist
             : dist;

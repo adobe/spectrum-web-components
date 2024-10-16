@@ -550,7 +550,7 @@
     );
 }
 
-:host([static='black'][quiet]) {
+:host([static-color='black'][quiet]) {
     --spectrum-button-border-color-default: var(
         --system-button-static-black-quiet-border-color-default
     );
@@ -568,7 +568,7 @@
     );
 }
 
-:host([static='white'][quiet]) {
+:host([static-color='white'][quiet]) {
     --spectrum-button-border-color-default: var(
         --system-button-static-white-quiet-border-color-default
     );
@@ -586,7 +586,7 @@
     );
 }
 
-:host([static='white']) {
+:host([static-color='white']) {
     --spectrum-button-background-color-default: var(
         --system-button-static-white-background-color-default
     );
@@ -637,7 +637,7 @@
     );
 }
 
-:host([static='white'][treatment='outline']) {
+:host([static-color='white'][treatment='outline']) {
     --spectrum-button-background-color-default: var(
         --system-button-static-white-outline-background-color-default
     );
@@ -688,7 +688,7 @@
     );
 }
 
-:host([static='white'][selected]) {
+:host([static-color='white'][selected]) {
     --spectrum-button-background-color-default: var(
         --system-button-static-white-selected-background-color-default
     );
@@ -721,7 +721,7 @@
     );
 }
 
-:host([static='white'][variant='secondary']) {
+:host([static-color='white'][variant='secondary']) {
     --spectrum-button-background-color-default: var(
         --system-button-static-white-secondary-background-color-default
     );
@@ -772,7 +772,7 @@
     );
 }
 
-:host([static='white'][variant='secondary'][treatment='outline']) {
+:host([static-color='white'][variant='secondary'][treatment='outline']) {
     --spectrum-button-background-color-default: var(
         --system-button-static-white-secondary-outline-background-color-default
     );
@@ -823,7 +823,7 @@
     );
 }
 
-:host([static='black']) {
+:host([static-color='black']) {
     --spectrum-button-background-color-default: var(
         --system-button-static-black-background-color-default
     );
@@ -874,7 +874,7 @@
     );
 }
 
-:host([static='black'][treatment='outline']) {
+:host([static-color='black'][treatment='outline']) {
     --spectrum-button-background-color-default: var(
         --system-button-static-black-outline-background-color-default
     );
@@ -925,7 +925,7 @@
     );
 }
 
-:host([static='black'][variant='secondary']) {
+:host([static-color='black'][variant='secondary']) {
     --spectrum-button-background-color-default: var(
         --system-button-static-black-secondary-background-color-default
     );
@@ -976,7 +976,7 @@
     );
 }
 
-:host([static='black'][variant='secondary'][treatment='outline']) {
+:host([static-color='black'][variant='secondary'][treatment='outline']) {
     --spectrum-button-background-color-default: var(
         --system-button-static-black-secondary-outline-background-color-default
     );

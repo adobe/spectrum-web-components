@@ -54,7 +54,7 @@
     --spectrum-closebutton-size: var(--system-close-button-size);
 }
 
-:host([static='white']) {
+:host([static-color='white']) {
     --spectrum-closebutton-static-background-color-default: var(
         --system-close-button-static-white-static-background-color-default
     );
@@ -78,7 +78,7 @@
     );
 }
 
-:host([static='black']) {
+:host([static-color='black']) {
     --spectrum-closebutton-static-background-color-default: var(
         --system-close-button-static-black-static-background-color-default
     );

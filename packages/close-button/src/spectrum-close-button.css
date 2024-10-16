@@ -122,13 +122,13 @@ governing permissions and limitations under the License.
                 ease-out;
     }
 
-    :host([static='black']) {
+    :host([static-color='black']) {
         --highcontrast-closebutton-static-background-color-default: ButtonFace;
         --highcontrast-closebutton-icon-color-default: Highlight;
         --highcontrast-closebutton-icon-color-disabled: GrayText;
     }
 
-    :host([static='white']) {
+    :host([static-color='white']) {
         --highcontrast-closebutton-static-background-color-default: ButtonFace;
         --highcontrast-closebutton-icon-color-default: Highlight;
         --highcontrast-closebutton-icon-color-disabled: Highlight;
@@ -290,8 +290,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='black']:not([disabled])),
-:host([static='white']:not([disabled])) {
+:host([static-color='black']:not([disabled])),
+:host([static-color='white']:not([disabled])) {
     background-color: var(
         --highcontrast-closebutton-static-background-color-default,
         var(
@@ -319,8 +319,8 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host([static='black']:not([disabled]):hover),
-    :host([static='white']:not([disabled]):hover) {
+    :host([static-color='black']:not([disabled]):hover),
+    :host([static-color='white']:not([disabled]):hover) {
         background-color: var(
             --highcontrast-closebutton-static-background-color-hover,
             var(
@@ -330,8 +330,8 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host([static='black']:not([disabled]):hover) .icon,
-    :host([static='white']:not([disabled]):hover) .icon {
+    :host([static-color='black']:not([disabled]):hover) .icon,
+    :host([static-color='white']:not([disabled]):hover) .icon {
         color: var(
             --highcontrast-closebutton-icon-color-default,
             var(
@@ -342,8 +342,8 @@ governing permissions and limitations under the License.
     }
 }
 
-:host([static='black']:not([disabled]):is(:active, [active])),
-:host([static='white']:not([disabled]):is(:active, [active])) {
+:host([static-color='black']:not([disabled]):is(:active, [active])),
+:host([static-color='white']:not([disabled]):is(:active, [active])) {
     background-color: var(
         --highcontrast-closebutton-static-background-color-down,
         var(
@@ -353,8 +353,8 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='black']:not([disabled]):is(:active, [active])) .icon,
-:host([static='white']:not([disabled]):is(:active, [active])) .icon {
+:host([static-color='black']:not([disabled]):is(:active, [active])) .icon,
+:host([static-color='white']:not([disabled]):is(:active, [active])) .icon {
     color: var(
         --highcontrast-closebutton-icon-color-default,
         var(
@@ -364,10 +364,10 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='black'][focused]:not([disabled])),
-:host([static='black']:not([disabled]):focus-visible),
-:host([static='white'][focused]:not([disabled])),
-:host([static='white']:not([disabled]):focus-visible) {
+:host([static-color='black'][focused]:not([disabled])),
+:host([static-color='black']:not([disabled]):focus-visible),
+:host([static-color='white'][focused]:not([disabled])),
+:host([static-color='white']:not([disabled]):focus-visible) {
     background-color: var(
         --highcontrast-closebutton-static-background-color-focus,
         var(
@@ -377,14 +377,14 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='black'][focused]:not([disabled])) .icon,
-:host([static='black'][focused]:not([disabled])) .icon,
-:host([static='black']:not([disabled]):focus) .icon,
-:host([static='black']:not([disabled]):focus-visible) .icon,
-:host([static='white'][focused]:not([disabled])) .icon,
-:host([static='white'][focused]:not([disabled])) .icon,
-:host([static='white']:not([disabled]):focus) .icon,
-:host([static='white']:not([disabled]):focus-visible) .icon {
+:host([static-color='black'][focused]:not([disabled])) .icon,
+:host([static-color='black'][focused]:not([disabled])) .icon,
+:host([static-color='black']:not([disabled]):focus) .icon,
+:host([static-color='black']:not([disabled]):focus-visible) .icon,
+:host([static-color='white'][focused]:not([disabled])) .icon,
+:host([static-color='white'][focused]:not([disabled])) .icon,
+:host([static-color='white']:not([disabled]):focus) .icon,
+:host([static-color='white']:not([disabled]):focus-visible) .icon {
     color: var(
         --highcontrast-closebutton-icon-color-default,
         var(
@@ -394,16 +394,16 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='black']:not([disabled])) .icon,
-:host([static='white']:not([disabled])) .icon {
+:host([static-color='black']:not([disabled])) .icon,
+:host([static-color='white']:not([disabled])) .icon {
     color: var(
         --mod-closebutton-icon-color-default,
         var(--spectrum-closebutton-icon-color-default)
     );
 }
 
-:host([static='black'][disabled]) .icon,
-:host([static='white'][disabled]) .icon {
+:host([static-color='black'][disabled]) .icon,
+:host([static-color='white'][disabled]) .icon {
     color: var(
         --highcontrast-closebutton-icon-disabled,
         var(

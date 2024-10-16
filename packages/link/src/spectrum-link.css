@@ -108,18 +108,18 @@ a:focus-visible {
     text-decoration: none;
 }
 
-:host([static='white']) a,
-:host([static='white']) a:active,
-:host([static='white']) a:focus {
+:host([static-color='white']) a,
+:host([static-color='white']) a:active,
+:host([static-color='white']) a:focus {
     color: var(
         --highcontrast-link-text-color-white,
         var(--mod-link-text-color-white, var(--spectrum-link-text-color-white))
     );
 }
 
-:host([static='black']) a,
-:host([static='black']) a:active,
-:host([static='black']) a:focus {
+:host([static-color='black']) a,
+:host([static-color='black']) a:active,
+:host([static-color='black']) a:focus {
     color: var(
         --highcontrast-link-text-color-black,
         var(--mod-link-text-color-black, var(--spectrum-link-text-color-black))
@@ -152,7 +152,7 @@ a:focus-visible {
         text-decoration: underline;
     }
 
-    :host([static='white']) a:hover {
+    :host([static-color='white']) a:hover {
         color: var(
             --highcontrast-link-text-color-white,
             var(
@@ -162,7 +162,7 @@ a:focus-visible {
         );
     }
 
-    :host([static='black']) a:hover {
+    :host([static-color='black']) a:hover {
         color: var(
             --highcontrast-link-text-color-black,
             var(

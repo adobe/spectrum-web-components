@@ -201,7 +201,7 @@
     );
 }
 
-:host([static='black'][quiet]) {
+:host([static-color='black'][quiet]) {
     --spectrum-actionbutton-border-color-default: var(
         --system-action-button-static-black-quiet-border-color-default
     );
@@ -219,7 +219,7 @@
     );
 }
 
-:host([static='white'][quiet]) {
+:host([static-color='white'][quiet]) {
     --spectrum-actionbutton-border-color-default: var(
         --system-action-button-static-white-quiet-border-color-default
     );
@@ -237,7 +237,7 @@
     );
 }
 
-:host([static='black']) {
+:host([static-color='black']) {
     --spectrum-actionbutton-background-color-default: var(
         --system-action-button-static-black-background-color-default
     );
@@ -288,7 +288,7 @@
     );
 }
 
-:host([static='black'][selected]) {
+:host([static-color='black'][selected]) {
     --spectrum-actionbutton-background-color-default: var(
         --system-action-button-static-black-selected-background-color-default
     );
@@ -312,7 +312,7 @@
     );
 }
 
-:host([static='black'][selected][emphasized]) {
+:host([static-color='black'][selected][emphasized]) {
     --spectrum-actionbutton-background-color-default: var(
         --system-action-button-static-black-selected-emphasized-background-color-default
     );
@@ -339,7 +339,7 @@
     );
 }
 
-:host([static='white']) {
+:host([static-color='white']) {
     --spectrum-actionbutton-background-color-default: var(
         --system-action-button-static-white-background-color-default
     );
@@ -390,7 +390,7 @@
     );
 }
 
-:host([static='white'][selected]) {
+:host([static-color='white'][selected]) {
     --spectrum-actionbutton-background-color-default: var(
         --system-action-button-static-white-selected-background-color-default
     );
@@ -414,7 +414,7 @@
     );
 }
 
-:host([static='white'][selected][emphasized]) {
+:host([static-color='white'][selected][emphasized]) {
     --spectrum-actionbutton-background-color-default: var(
         --system-action-button-static-white-selected-emphasized-background-color-default
     );
