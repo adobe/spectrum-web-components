@@ -46,17 +46,14 @@ export const BADGE_VARIANTS = [
     'cyan',
     'blue',
 ] as const;
-export type BadgeVariant = typeof BADGE_VARIANTS[number];
-export const FIXED_VALUES_DEPRECATED = ['top', 'bottom', 'left', 'right'];
+export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
 export const FIXED_VALUES = [
     'inline-start',
     'inline-end',
     'block-start',
     'block-end',
 ] as const;
-export type FixedValues =
-    | typeof FIXED_VALUES[number]
-    | typeof FIXED_VALUES_DEPRECATED[number];
+export type FixedValues = (typeof FIXED_VALUES)[number];
 
 /**
  * @element sp-badge
@@ -82,18 +79,6 @@ export class Badge extends SizedMixin(
     public set fixed(fixed: FixedValues | undefined) {
         if (fixed === this.fixed) return;
         const oldValue = this.fixed;
-        if (window.__swc.DEBUG) {
-            if (fixed && FIXED_VALUES_DEPRECATED.includes(fixed)) {
-                window.__swc.warn(
-                    this,
-                    `The following values for "fixed" in <${this.localName}> have been deprecated. They will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/badge/#fixed',
-                    {
-                        issues: [...FIXED_VALUES_DEPRECATED],
-                    }
-                );
-            }
-        }
         this._fixed = fixed;
         if (fixed) {
             this.setAttribute('fixed', fixed);
