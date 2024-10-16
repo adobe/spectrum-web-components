@@ -162,7 +162,7 @@ When delivered as part of the `spectrum` theme, an `<sp-picker-button>` with the
 
 ### Accessibility
 
-For an example implementation of `<sp-picker-button>` view [`Combobox.ts`](https://github.com/adobe/spectrum-web-components/blob/main/packages/combobox/src/Combobox.ts). For comprehensive information on menu button accessibility, see WAI ARIA Authoring Practice Guide's [Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/).
+For comprehensive information on menu button accessibility, see WAI ARIA Authoring Practice Guide's [Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/).
 
 #### Include a label
 
@@ -179,6 +179,8 @@ To indicate to assistive technology what the button does, do _all_ of the follow
 -   Set the `aria-controls` property to the ID reference of the menu element.
 -   Set the `aria-haspopup` property to `"menu"` or `"true"`.
 -   Set the `aria-expanded` property to `"menu"` or `"true"` or `"false"` depending on whether the menu is displayed.
+
+The example above is for demonstration purposes. For an example implementation of `<sp-picker-button>` view [`Combobox.ts`](https://github.com/adobe/spectrum-web-components/blob/main/packages/combobox/src/Combobox.ts).
 
 ```html
 <sp-picker-button
