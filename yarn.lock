@@ -5208,11 +5208,6 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/progresscircle/-/progresscircle-3.1.0.tgz#d4de439c3ae3f240030d3a682f6d1f6b8ff84f9e"
   integrity sha512-1zGnhlYD3suY1E1b2B0LLHFNC31gZMl7NsoGRzztj6dwUVF9bbmrMH7PlHkAqN1aTiaQaFGunEtFSW/XbEc+XA==
 
-"@spectrum-css/quickaction@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/quickaction/-/quickaction-3.1.1.tgz#1095cc68b6e182721aa141d490b79f6ed6ca1d6d"
-  integrity sha512-PCp/83ctAWrYlDYjZU+9vRMLte2GBaxiKOBvm1g9UH0XqTvocjlyVRNIvVbE0ywdefVtbKGFr30x+Yk9HTdaRQ==
-
 "@spectrum-css/radio@^9.2.3":
   version "9.2.3"
   resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-9.2.3.tgz#1e0f60134fd76089f166ebac3d4b41bbc9cb9cc9"

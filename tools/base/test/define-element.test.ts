@@ -103,8 +103,6 @@ const elements = {
         import(
             '@spectrum-web-components/progress-circle/sp-progress-circle.js'
         ),
-    'sp-quick-actions': () =>
-        import('@spectrum-web-components/quick-actions/sp-quick-actions.js'),
     'sp-radio-group': () =>
         import('@spectrum-web-components/radio/sp-radio-group.js'),
     'sp-radio': () => import('@spectrum-web-components/radio/sp-radio.js'),

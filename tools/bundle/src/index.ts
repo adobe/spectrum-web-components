@@ -50,7 +50,6 @@ export * from '@spectrum-web-components/picker-button';
 export * from '@spectrum-web-components/popover';
 export * from '@spectrum-web-components/progress-bar';
 export * from '@spectrum-web-components/progress-circle';
-export * from '@spectrum-web-components/quick-actions';
 export * from '@spectrum-web-components/radio';
 export * from '@spectrum-web-components/search';
 export * from '@spectrum-web-components/sidenav';
