@@ -282,4 +282,17 @@ describe('ActionButton', () => {
         expect(button).to.have.attribute('aria-haspopup', 'true');
         expect(button).to.have.attribute('aria-expanded', 'true');
     });
+    it('manages a `static-color` attribute', async () => {
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button static-color="black">Button</sp-action-button>
+        `);
+
+        await elementUpdated(el);
+        expect(el.staticColor).to.equal('black');
+        expect(el.getAttribute('static-color')).to.equal('black');
+        el.removeAttribute('static-color');
+        await elementUpdated(el);
+        expect(el.staticColor).to.be.null;
+        expect(el.hasAttribute('static-color')).to.be.false;
+    });
 });
