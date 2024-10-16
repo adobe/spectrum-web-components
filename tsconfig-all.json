@@ -44,9 +44,6 @@
             "path": "packages/avatar"
         },
         {
-            "path": "packages/banner"
-        },
-        {
             "path": "packages/badge"
         },
         {
