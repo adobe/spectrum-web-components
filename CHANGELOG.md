@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
+
+### Bug Fixes
+
+-   **number-field:** show decimal on iPad minimized keyboard ([#4784](https://github.com/adobe/spectrum-web-components/issues/4784)) ([deb7a1c](https://github.com/adobe/spectrum-web-components/commit/deb7a1cce452f120a9c2c96d73b0d03132c02565))
+-   **tabs:** scroll exceeding tabs limit ([#4722](https://github.com/adobe/spectrum-web-components/issues/4722)) ([fc9a448](https://github.com/adobe/spectrum-web-components/commit/fc9a4489c13e2471226e0f79a1197a61ef8242a7))
+
+### Features
+
+-   add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
+-   **button:** add noWrap property ([#4779](https://github.com/adobe/spectrum-web-components/issues/4779)) ([6760ec2](https://github.com/adobe/spectrum-web-components/commit/6760ec283ad190f45f9639e636953e90ea562385))
+
 ## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
 
 ### Bug Fixes
