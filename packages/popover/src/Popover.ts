@@ -14,7 +14,6 @@ import {
     CSSResultArray,
     html,
     nothing,
-    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -34,13 +33,6 @@ export class Popover extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [popoverStyles];
     }
-
-    /**
-     * Whether the popover should manage the application
-     * of padding to its content or not.
-     */
-    @property({ type: Boolean, reflect: true })
-    public dialog = false;
 
     /**
      * Whether the popover is visible or not.
@@ -72,23 +64,6 @@ export class Popover extends SpectrumElement {
                 </svg>
             </div>
         `;
-    }
-
-    protected override update(changes: PropertyValues): void {
-        if (window.__swc.DEBUG) {
-            if (changes.has('dialog') && this.dialog) {
-                window.__swc.warn(
-                    this,
-                    `<${this.localName}> no longer supports the "dialog" attribute. Please slot an <sp-dialog> element into the <${this.localName}> instead.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/popover/#dialog-popovers',
-                    {
-                        type: 'api',
-                        level: 'deprecation',
-                    }
-                );
-            }
-        }
-        super.update(changes);
     }
 
     protected override render(): TemplateResult {
