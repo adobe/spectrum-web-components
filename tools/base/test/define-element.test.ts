@@ -117,8 +117,6 @@ const elements = {
     'sp-slider': () => import('@spectrum-web-components/slider/sp-slider.js'),
     'sp-slider-handle': () =>
         import('@spectrum-web-components/slider/sp-slider-handle.js'),
-    'sp-split-button': () =>
-        import('@spectrum-web-components/split-button/sp-split-button.js'),
     'sp-split-view': () =>
         import('@spectrum-web-components/split-view/sp-split-view.js'),
     'sp-status-light': () =>
@@ -163,8 +161,8 @@ const elements = {
 const browser: 'webkit' | 'firefox' | 'chromium' = isWebKit()
     ? 'webkit'
     : isFirefox()
-    ? 'firefox'
-    : 'chromium';
+      ? 'firefox'
+      : 'chromium';
 
 describe('define-element', function () {
     // registrations are globally-unique, so retries will always fail
