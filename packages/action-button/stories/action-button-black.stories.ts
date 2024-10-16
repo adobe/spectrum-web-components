@@ -20,34 +20,34 @@ export default {
     decorators: [makeOverBackground('black')],
 };
 
-const staticProp = 'black';
+const staticColor = 'black';
 
 export const XS = (args: Properties): TemplateResult => renderButtons(args);
 XS.args = {
     size: 'xs',
-    staticProp,
+    staticColor,
 };
 
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
     size: 's',
-    staticProp,
+    staticColor,
 };
 
 export const m = (args: Properties): TemplateResult => renderButtons(args);
 m.args = {
     size: 'm',
-    staticProp,
+    staticColor,
 } as Properties;
 
 export const l = (args: Properties): TemplateResult => renderButtons(args);
 l.args = {
     size: 'l',
-    staticProp,
+    staticColor,
 };
 
 export const XL = (args: Properties): TemplateResult => renderButtons(args);
 XL.args = {
     size: 'xl',
-    staticProp,
+    staticColor,
 };
