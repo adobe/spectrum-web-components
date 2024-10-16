@@ -89,7 +89,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.color = value as Color;
         } else if (attrName === 'scale') {
             this.scale = value as Scale;
-            /* c8 ignore next 3 */
         } else if (attrName === 'lang' && !!value) {
             this.lang = value;
             this._provideContext();
@@ -191,7 +190,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         if (color) {
             this.setAttribute('color', color);
-            /* c8 ignore next 3 */
         } else {
             this.removeAttribute('color');
         }
@@ -312,26 +310,11 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         this.updateComplete = this.__createDeferredPromise();
     }
 
-    /**
-     * Stores system context consumers and their associated callbacks.
-     *
-     * This Map associates each consumer component (HTMLElement) with a tuple containing:
-     * - The `SystemContextCallback` function to be invoked with the system context.
-     * - An `unsubscribe` function to remove the consumer from the Map when it's no longer needed.
-     */
     private _systemContextConsumers = new Map<
         HTMLElement,
         [SystemContextCallback, () => void]
     >();
 
-    /**
-     * Handles the 'sp-system-context' event dispatched by descendant components requesting the system context.
-     *
-     * This method registers the requesting component's callback and provides the current system context to it.
-     * It also manages the unsubscribe mechanism to clean up when the component is disconnected.
-     *
-     * @param event - The custom event containing the callback function to provide the system context.
-     */
     private _handleSystemContext(
         event: CustomEvent<{ callback: SystemContextCallback }>
     ): void {
@@ -339,7 +322,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
         const target = event.composedPath()[0] as HTMLElement;
 
-        /* c8 ignore next 4 */
         // Avoid duplicate registrations
         if (this._systemContextConsumers.has(target)) {
             return;
@@ -460,14 +442,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         );
     }
 
-    /**
-     * Provides the current system context to all registered consumers.
-     *
-     * This method iterates over all registered system context consumers and invokes their callbacks,
-     * passing the current system variant and the unsubscribe function. This ensures that any component
-     * consuming the system context receives the updated system variant when the `system` (or `theme`) attribute changes.
-     */
-    /* c8 ignore next 5 */
     private _provideSystemContext(): void {
         this._systemContextConsumers.forEach(([callback, unsubscribe]) =>
             callback(this.system, unsubscribe)

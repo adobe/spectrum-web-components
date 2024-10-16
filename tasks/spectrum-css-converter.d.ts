@@ -93,6 +93,10 @@ type Conversion = {
      * Exclude Selectors that do not feature the Selector Components included herein
      */
     requireComponentPresence?: SelectorComponentWithRegex[];
+    /**
+     * Create a system-overrides.css file that acts as a bridge between different themes
+     */
+    systemOverrides?: boolean;
 };
 
 export type SpectrumCSSConverter = {

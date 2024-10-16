@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-meter.css');
+@import url('./meter-overrides.css');
 
 .fill {
     transform-origin: left;

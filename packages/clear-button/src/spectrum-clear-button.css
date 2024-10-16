@@ -12,115 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-clear-button-height: var(--spectrum-component-height-100);
-    --spectrum-clear-button-width: var(--spectrum-component-height-100);
-    --spectrum-clear-button-padding: var(
-        --spectrum-in-field-button-edge-to-fill
-    );
-    --spectrum-clear-button-icon-color: var(
-        --spectrum-neutral-content-color-default
-    );
-    --spectrum-clear-button-icon-color-hover: var(
-        --spectrum-neutral-content-color-hover
-    );
-    --spectrum-clear-button-icon-color-down: var(
-        --spectrum-neutral-content-color-down
-    );
-    --spectrum-clear-button-icon-color-key-focus: var(
-        --spectrum-neutral-content-color-key-focus
-    );
-}
-
-:host([size='s']) {
-    --spectrum-clear-button-height: var(--spectrum-component-height-75);
-    --spectrum-clear-button-width: var(--spectrum-component-height-75);
-}
-
-:host([size='l']) {
-    --spectrum-clear-button-height: var(--spectrum-component-height-200);
-    --spectrum-clear-button-width: var(--spectrum-component-height-200);
-}
-
-:host([size='xl']) {
-    --spectrum-clear-button-height: var(--spectrum-component-height-300);
-    --spectrum-clear-button-width: var(--spectrum-component-height-300);
-}
-
-:host .spectrum-ClearButton--quiet {
-    --mod-clear-button-background-color: var(
-        --spectrum-clear-button-background-color-quiet,
-        transparent
-    );
-    --mod-clear-button-background-color-hover: var(
-        --spectrum-clear-button-background-color-hover-quiet,
-        transparent
-    );
-    --mod-clear-button-background-color-down: var(
-        --spectrum-clear-button-background-color-down-quiet,
-        transparent
-    );
-    --mod-clear-button-background-color-key-focus: var(
-        --spectrum-clear-button-background-color-key-focus-quiet,
-        transparent
-    );
-}
-
-:host([variant='overBackground']) {
-    --mod-clear-button-icon-color: var(
-        --spectrum-clear-button-icon-color-over-background,
-        var(--spectrum-white)
-    );
-    --mod-clear-button-icon-color-hover: var(
-        --spectrum-clear-button-icon-color-hover-over-background,
-        var(--spectrum-white)
-    );
-    --mod-clear-button-icon-color-down: var(
-        --spectrum-clear-button-icon-color-down-over-background,
-        var(--spectrum-white)
-    );
-    --mod-clear-button-icon-color-key-focus: var(
-        --spectrum-clear-button-icon-color-key-focus-over-background,
-        var(--spectrum-white)
-    );
-    --mod-clear-button-background-color: var(
-        --spectrum-clear-button-background-color-over-background,
-        transparent
-    );
-    --mod-clear-button-background-color-hover: var(
-        --spectrum-clear-button-background-color-hover-over-background,
-        var(--spectrum-transparent-white-300)
-    );
-    --mod-clear-button-background-color-down: var(
-        --spectrum-clear-button-background-color-hover-over-background,
-        var(--spectrum-transparent-white-400)
-    );
-    --mod-clear-button-background-color-key-focus: var(
-        --spectrum-clear-button-background-color-hover-over-background,
-        var(--spectrum-transparent-white-300)
-    );
-}
-
-:host([disabled]),
-:host([disabled]) {
-    --mod-clear-button-icon-color: var(
-        --mod-clear-button-icon-color-disabled,
-        var(--spectrum-disabled-content-color)
-    );
-    --mod-clear-button-icon-color-hover: var(
-        --spectrum-clear-button-icon-color-hover-disabled,
-        var(--spectrum-disabled-content-color)
-    );
-    --mod-clear-button-icon-color-down: var(
-        --spectrum-clear-button-icon-color-down-disabled,
-        var(--spectrum-disabled-content-color)
-    );
-    --mod-clear-button-background-color: var(
-        --mod-clear-button-background-color-disabled,
-        transparent
-    );
-}
-
-:host {
     block-size: var(
         --mod-clear-button-height,
         var(--spectrum-clear-button-height)
@@ -130,6 +21,7 @@ governing permissions and limitations under the License.
         var(--spectrum-clear-button-width)
     );
     cursor: pointer;
+    background-color: initial;
     background-color: var(--mod-clear-button-background-color, transparent);
     padding: var(
         --mod-clear-button-padding,
@@ -202,6 +94,18 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([disabled]),
+:host([disabled]) {
+    --spectrum-clear-button-icon-color: var(
+        --mod-clear-button-icon-color-disabled,
+        var(--spectrum-disabled-content-color)
+    );
+    --spectrum-clear-button-background-color: var(
+        --mod-clear-button-background-color-disabled,
+        transparent
+    );
+}
+
 .fill {
     background-color: var(
         --mod-clear-button-background-color,
@@ -223,19 +127,4 @@ governing permissions and limitations under the License.
     :host:not(:disabled) {
         --highcontrast-clear-button-icon-color-hover: Highlight;
     }
-}
-
-:host {
-    --spectrum-clear-button-background-color: var(
-        --system-spectrum-clearbutton-spectrum-clear-button-background-color
-    );
-    --spectrum-clear-button-background-color-hover: var(
-        --system-spectrum-clearbutton-spectrum-clear-button-background-color-hover
-    );
-    --spectrum-clear-button-background-color-down: var(
-        --system-spectrum-clearbutton-spectrum-clear-button-background-color-down
-    );
-    --spectrum-clear-button-background-color-key-focus: var(
-        --system-spectrum-clearbutton-spectrum-clear-button-background-color-key-focus
-    );
 }

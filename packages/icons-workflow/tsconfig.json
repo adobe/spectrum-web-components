@@ -4,7 +4,11 @@
         "composite": true,
         "rootDir": "./"
     },
-    "include": ["icons/**/*.ts", "src/**/*.ts", "../../global.d.ts"],
+    "include": [
+        "icons/**/*.ts",
+        "src/**/*.ts",
+        "../../global.d.ts"
+    ],
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [{ "path": "../../tools/base" }, { "path": "../icon" }]
 }

@@ -127,6 +127,9 @@
     );
     --spectrum-alias-control-three-width-l: 29px;
     --spectrum-alias-control-three-width-xl: 33px;
+    --spectrum-alias-search-padding-left-m: var(
+        --spectrum-global-dimension-size-125
+    );
     --spectrum-alias-focus-ring-border-radius-regular: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -265,6 +268,19 @@
     --spectrum-alias-ui-icon-asterisk-size-300: var(
         --spectrum-global-dimension-static-size-125
     );
+    --spectrum-alias-avatar-size-100: var(--spectrum-global-dimension-size-250);
+    --spectrum-alias-avatar-size-400: var(--spectrum-global-dimension-size-350);
+    --spectrum-alias-avatar-size-600: var(--spectrum-global-dimension-size-450);
+    --spectrum-alias-tag-icon-size-l: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-alias-tag-focusring-border-radius: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-m-primary-outline-texticon-padding-left: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-colorwheel-min-width: var(--spectrum-global-dimension-size-2400);
     --spectrum-dialog-confirm-title-text-size: var(
         --spectrum-alias-heading-s-text-size
     );

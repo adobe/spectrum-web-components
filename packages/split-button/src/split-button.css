@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-split-button.css');
+@import url('./split-button-overrides.css');
 
 :host > sp-menu {
     display: none;
@@ -77,4 +78,6 @@ sp-overlay:not(:defined) {
 
 .icon {
     align-self: center;
+
+    --spectrum-icon-size: inherit;
 }

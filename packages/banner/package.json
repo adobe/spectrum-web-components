@@ -29,6 +29,7 @@
             "development": "./src/Banner.dev.js",
             "default": "./src/Banner.js"
         },
+        "./src/banner-overrides.css.js": "./src/banner-overrides.css.js",
         "./src/banner.css.js": "./src/banner.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
