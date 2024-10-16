@@ -33,6 +33,8 @@ export class DesktopController extends InteractionController {
                 this.target.removeEventListener('click', cleanup);
                 requestAnimationFrame(() => {
                     // Complete cleanup on the second animation frame so that `click` can go first.
+                    // eslint-disable-next-line no-console
+                    console.log('About to set this.preventNextToggle to no');
                     this.preventNextToggle = 'no';
                 });
             });
@@ -46,14 +48,20 @@ export class DesktopController extends InteractionController {
 
     public override handleActivate(event?: Event): void {
         if (this.enterKeydownOn && this.enterKeydownOn !== this.target) {
+            // eslint-disable-next-line no-console
+            console.log('Error 1');
             return;
         }
         if (this.preventNextToggle === 'yes') {
+            // eslint-disable-next-line no-console
+            console.log('PRevented next toggle');
             return;
         }
         if (event?.type === 'click' && this.open !== this.pointerdownState) {
             // When activation comes from a `click` event ensure that the `pointerup`
             // event didn't already toggle the Picker state before doing so.
+            // eslint-disable-next-line no-console
+            console.log('Pointer up bad');
             return;
         }
         this.host.toggle();

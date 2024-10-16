@@ -314,9 +314,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     public toggle(target?: boolean): void {
         if (this.readonly || this.pending) {
+            // eslint-disable-next-line no-console
+            console.log('Its pending');
             return;
         }
         this.open = typeof target !== 'undefined' ? target : !this.open;
+        // eslint-disable-next-line no-console
+        console.log('Checking what this.strategy is', this.strategy);
         if (this.strategy) {
             this.strategy.open = this.open;
         }
