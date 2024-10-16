@@ -219,7 +219,7 @@ describe('Button', () => {
             expect(el).to.not.be.undefined;
             expect(el.textContent).to.include('With Target');
         });
-        it('accepts shit+tab interactions', async () => {
+        it('accepts shift+tab interactions', async () => {
             let focusedCount = 0;
             const el = await fixture<Button>(html`
                 <sp-button href="test_url" target="_blank">
