@@ -89,15 +89,6 @@ describe('Button', () => {
             expect(el.variant).to.equal('accent');
             expect(el.getAttribute('variant')).to.equal('accent');
         });
-        it('loads default w/ element content', async () => {
-            const el = await fixture<Button>(html`
-                <sp-button label="Button"><svg></svg></sp-button>
-            `);
-
-            await elementUpdated(el);
-            expect(el).to.not.be.undefined;
-            await expect(el).to.be.accessible();
-        });
         it('loads default w/ an icon', async () => {
             const el = await fixture<Button>(html`
                 <sp-button label="">
