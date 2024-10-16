@@ -36,7 +36,7 @@ describe('Button', () => {
     testForLitDevWarnings(
         async () =>
             await fixture<Button>(html`
-                <sp-button tabindex="0">Button</sp-button>
+                <sp-button>Button</sp-button>
             `)
     );
     describe('dev mode', () => {
@@ -55,7 +55,7 @@ describe('Button', () => {
 
         it('warns in devMode when white/black variant is provided', async () => {
             const el = await fixture<Button>(html`
-                <sp-button tabindex="0" variant="white">Button</sp-button>
+                <sp-button variant="white">Button</sp-button>
             `);
 
             await elementUpdated(el);
@@ -77,7 +77,7 @@ describe('Button', () => {
 
         it('loads default', async () => {
             const el = await fixture<Button>(html`
-                <sp-button tabindex="0">Button</sp-button>
+                <sp-button>Button</sp-button>
             `);
 
             await elementUpdated(el);
