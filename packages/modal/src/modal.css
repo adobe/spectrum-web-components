@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-modal.css');
+@import url('./modal-overrides.css');
 
 :host {
     --spectrum-dialog-confirm-exit-animation-duration: var(--swc-test-duration);

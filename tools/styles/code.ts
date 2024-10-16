@@ -12,6 +12,14 @@ governing permissions and limitations under the License.
 
 import baseStyles from './src/spectrum-base.css.js';
 import langStyles from './src/spectrum-lang.css.js';
+import langOverrides from './src/lang-overrides.css.js';
 import codeStyles from './src/spectrum-code.css.js';
+import codeOverrides from './src/code-overrides.css.js';
 
-export default [baseStyles, langStyles, codeStyles];
+export default [
+    baseStyles,
+    langStyles,
+    langOverrides,
+    codeStyles,
+    codeOverrides,
+];

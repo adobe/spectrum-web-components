@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-action-bar.css');
+@import url('./action-bar-overrides.css');
 
 :host {
     display: block;
