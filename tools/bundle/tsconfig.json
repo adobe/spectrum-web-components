@@ -35,9 +35,6 @@
             "path": "../../packages/badge"
         },
         {
-            "path": "../../packages/banner"
-        },
-        {
             "path": "../../packages/breadcrumbs"
         },
         {
@@ -153,9 +150,6 @@
         },
         {
             "path": "../../packages/slider"
-        },
-        {
-            "path": "../../packages/split-button"
         },
         {
             "path": "../../packages/split-view"

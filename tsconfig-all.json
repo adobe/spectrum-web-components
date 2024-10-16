@@ -44,9 +44,6 @@
             "path": "packages/avatar"
         },
         {
-            "path": "packages/banner"
-        },
-        {
             "path": "packages/badge"
         },
         {
@@ -177,9 +174,6 @@
         },
         {
             "path": "packages/slider"
-        },
-        {
-            "path": "packages/split-button"
         },
         {
             "path": "packages/split-view"

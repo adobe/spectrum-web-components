@@ -35,9 +35,6 @@
             "path": "react/avatar"
         },
         {
-            "path": "react/banner"
-        },
-        {
             "path": "react/badge"
         },
         {
@@ -162,9 +159,6 @@
         },
         {
             "path": "react/slider"
-        },
-        {
-            "path": "react/split-button"
         },
         {
             "path": "react/split-view"
