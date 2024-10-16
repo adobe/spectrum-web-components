@@ -153,12 +153,6 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     private _variant: ButtonVariants = 'accent';
 
     /**
-     * @deprecated Use `staticColor` instead.
-     */
-    @property({ type: String, reflect: true })
-    public static?: 'black' | 'white';
-
-    /**
      * The static color variant to use for this button.
      */
     @property({ reflect: true, attribute: 'static-color' })
@@ -201,24 +195,6 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         }
         if (this.pending) {
             this.pendingStateController.hostUpdated();
-        }
-    }
-
-    protected override updated(changed: PropertyValues): void {
-        super.updated(changed);
-
-        if (changed.has('static')) {
-            if (this.static) {
-                this.staticColor = this.static;
-                if (window.__swc.DEBUG) {
-                    window.__swc.warn(
-                        this,
-                        `The "static" attribute/property on <${this.localName}> has been deprecated. Use "static-color" instead. "static" will be removed in a future release.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/button/api',
-                        { level: 'deprecation' }
-                    );
-                }
-            }
         }
     }
 
