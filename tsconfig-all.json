@@ -179,9 +179,6 @@
             "path": "packages/slider"
         },
         {
-            "path": "packages/split-button"
-        },
-        {
             "path": "packages/split-view"
         },
         {
