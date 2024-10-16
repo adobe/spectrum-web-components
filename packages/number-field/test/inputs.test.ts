@@ -478,6 +478,9 @@ describe('NumberField - inputs', () => {
 
             expect(el.focusElement.value).to.equal('100');
             el.dispatchEvent(new CompositionEvent('compositionend'));
+
+            await nextFrame();
+            expect(el.focusElement.value).to.equal('100');
         });
     });
 });
