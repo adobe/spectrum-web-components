@@ -547,6 +547,9 @@ export class NumberField extends TextfieldBase {
             this.inputElement.value = this.indeterminate
                 ? indeterminatePlaceholder
                 : this._trackingValue;
+
+            // Don't emit input event when the character is invalid.
+            event.stopPropagation();
         }
         const currentLength = value.length;
         const previousLength = this._trackingValue.length;
