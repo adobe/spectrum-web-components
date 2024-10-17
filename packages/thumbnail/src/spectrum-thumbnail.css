@@ -12,8 +12,93 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-500);
+    --spectrum-thumbnail-border-radius: var(--spectrum-corner-radius-75);
+    --spectrum-thumbnail-border-width: var(--spectrum-border-width-100);
+    --spectrum-thumbnail-border-color-rgba: rgba(
+        var(--spectrum-gray-800-rgb),
+        var(--spectrum-thumbnail-border-opacity)
+    );
+    --spectrum-thumbnail-layer-border-width-inner: var(
+        --spectrum-border-width-400
+    );
+    --spectrum-thumbnail-layer-border-color-inner: var(--spectrum-white);
+    --spectrum-thumbnail-layer-border-width-outer: var(
+        --spectrum-border-width-100
+    );
+    --spectrum-thumbnail-layer-border-color-outer: var(--spectrum-gray-500);
+    --spectrum-thumbnail-border-width-selected: var(
+        --spectrum-border-width-200
+    );
+    --spectrum-thumbnail-border-color-selected: var(
+        --spectrum-accent-color-800
+    );
+    --spectrum-thumbnail-focus-indicator-thickness: var(
+        --spectrum-focus-indicator-thickness
+    );
+    --spectrum-thumbnail-focus-indicator-gap: var(
+        --spectrum-focus-indicator-gap
+    );
+    --spectrum-thumbnail-focus-indicator-color: var(
+        --spectrum-focus-indicator-color
+    );
+    --spectrum-thumbnail-color-opacity-disabled: var(
+        --spectrum-thumbnail-opacity-disabled
+    );
+}
+
+:host([size='50']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-50);
+}
+
+:host([size='75']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-75);
+}
+
+:host([size='100']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-100);
+}
+
+:host([size='200']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-200);
+}
+
+:host([size='300']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-300);
+}
+
+:host([size='400']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-400);
+}
+
+:host([size='500']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-500);
+}
+
+:host([size='600']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-600);
+}
+
+:host([size='700']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-700);
+}
+
+:host([size='800']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-800);
+}
+
+:host([size='900']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-900);
+}
+
+:host([size='1000']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-1000);
+}
+
+:host {
     inline-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
     block-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
+    vertical-align: top;
     z-index: 0;
     margin: 0;
     padding: 0;
@@ -237,8 +322,8 @@ governing permissions and limitations under the License.
 }
 
 ::slotted(*) {
-    max-inline-size: 100%;
     max-block-size: 100%;
+    max-inline-size: 100%;
     z-index: 1;
     position: relative;
 }
