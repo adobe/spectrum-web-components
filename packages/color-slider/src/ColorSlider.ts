@@ -31,9 +31,8 @@ import type { ColorHandle } from '@spectrum-web-components/color-handle';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import {
     ColorController,
-    ColorValue,
-    HSL,
-} from '@spectrum-web-components/reactive-controllers/src/Color.js';
+    ColorTypes,
+} from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
 import opacityCheckerBoardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
@@ -70,17 +69,7 @@ export class ColorSlider extends Focusable {
 
     private languageResolver = new LanguageResolutionController(this);
 
-    private colorController = new ColorController(this, {
-        /* c8 ignore next 3 */
-        applyColorToState: () => {
-            this.sliderHandlePosition = 100 * (this.colorController.hue / 360);
-        },
-        extractColorFromState: (controller) => ({
-            ...(controller.getColor('hsl') as HSL),
-            h: this.value,
-        }),
-        maintains: 'saturation',
-    });
+    public colorController = new ColorController(this, { manageAs: 'hsv' });
 
     @property({ type: Number })
     public get value(): number {
@@ -91,15 +80,16 @@ export class ColorSlider extends Focusable {
         this.colorController.hue = hue;
     }
 
-    @property({ type: Number, reflect: true })
-    public sliderHandlePosition = 0;
-
-    @property({ type: String })
-    public get color(): ColorValue {
-        return this.colorController.color;
+    get sliderHandlePosition(): number {
+        return (this.colorController.hue / 360) * 100;
     }
 
-    public set color(color: ColorValue) {
+    @property({ type: String })
+    public get color(): ColorTypes {
+        return this.colorController.colorValue;
+    }
+
+    public set color(color: ColorTypes) {
         this.colorController.color = color;
     }
 
@@ -151,12 +141,11 @@ export class ColorSlider extends Focusable {
 
         const range = 360;
         const mult = 100 / range;
-        this.sliderHandlePosition = Math.min(
+        const nextSliderHandlePosition = Math.min(
             100,
             Math.max(0, this.sliderHandlePosition + delta * mult)
         );
-        this.value = Math.min(100, Math.max(0, this.value + delta));
-        this.colorController.applyColorFromState();
+        this.value = 360 * (nextSliderHandlePosition / 100);
 
         if (delta != 0) {
             this.dispatchEvent(
@@ -178,8 +167,6 @@ export class ColorSlider extends Focusable {
         const { valueAsNumber } = event.target;
 
         this.value = valueAsNumber;
-        this.sliderHandlePosition = 100 * (this.value / 360);
-        this.colorController.applyColorFromState();
     }
 
     private handleChange(event: Event & { target: HTMLInputElement }): void {
@@ -232,10 +219,8 @@ export class ColorSlider extends Focusable {
     }
 
     private handlePointermove(event: PointerEvent): void {
-        this.sliderHandlePosition = this.calculateHandlePosition(event);
-        this.value = 360 * (this.sliderHandlePosition / 100);
-
-        this.colorController.applyColorFromState();
+        const nextsliderHandlePosition = this.calculateHandlePosition(event);
+        this.value = 360 * (nextsliderHandlePosition / 100);
 
         this.dispatchEvent(
             new Event('input', {
