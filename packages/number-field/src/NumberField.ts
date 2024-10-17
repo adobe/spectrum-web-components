@@ -505,6 +505,8 @@ export class NumberField extends TextfieldBase {
                     this.inputElement.value = this.indeterminate
                         ? indeterminatePlaceholder
                         : this._trackingValue;
+
+                    this.isComposing = false;
                 }
             }
 
