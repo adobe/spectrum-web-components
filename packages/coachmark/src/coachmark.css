@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-coachmark.css');
+@import url('./coachmark-overrides.css');
 
 :host {
     /** custom to coachmark should be removed once keys component is developed by CSS **/
@@ -62,4 +63,8 @@ governing permissions and limitations under the License.
 .static-item {
     flex: 0;
     align-self: flex-start;
+}
+
+#cover-photo {
+    display: contents;
 }

@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-toast.css');
+@import url('./toast-overrides.css');
 
 :host {
     --spectrum-overlay-animation-distance: var(--spectrum-spacing-100);
@@ -20,7 +21,8 @@ governing permissions and limitations under the License.
 
     opacity: 0;
     pointer-events: none;
-    transition: transform var(--spectrum-overlay-animation-duration) ease-in-out,
+    transition:
+        transform var(--spectrum-overlay-animation-duration) ease-in-out,
         opacity var(--spectrum-overlay-animation-duration) ease-in-out,
         visibility 0s linear var(--spectrum-overlay-animation-duration);
     visibility: hidden;

@@ -101,6 +101,33 @@ const config = {
                     hoist: true,
                 },
                 {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'first-of-type',
+                                },
+                            ],
+                        ],
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'first-of-type',
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
+                {
                     find: [
                         builder.class('spectrum-Accordion-itemHeader'),
                         builder.pseudoClass('hover'),

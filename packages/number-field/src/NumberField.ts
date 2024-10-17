@@ -40,6 +40,7 @@ import {
     isIPhone,
 } from '@spectrum-web-components/shared/src/platform.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
+import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 import styles from './number-field.css.js';
 
 export const FRAMES_PER_CHANGE = 5;
@@ -105,7 +106,7 @@ const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
  */
 export class NumberField extends TextfieldBase {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, styles, chevronStyles];
+        return [...super.styles, styles, chevronStyles, chevronIconOverrides];
     }
 
     @query('.buttons')

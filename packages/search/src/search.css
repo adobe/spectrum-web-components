@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-search.css');
+@import url('./search-overrides.css');
 
 :host {
     --mod-textfield-spacing-inline: var(
@@ -31,6 +32,7 @@ input::-webkit-search-cancel-button {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
 }
 
+:host,
 :host([size='m']) {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
 }
@@ -45,6 +47,10 @@ input::-webkit-search-cancel-button {
 
 :host([size='xxl']) {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-400);
+}
+
+.icon {
+    --spectrum-icon-size: inherit;
 }
 
 /**

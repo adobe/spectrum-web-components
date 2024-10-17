@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-tooltip.css');
+@import url('./tooltip-overrides.css');
 
 :host {
     display: contents;

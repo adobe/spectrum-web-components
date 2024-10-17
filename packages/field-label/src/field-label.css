@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-field-label.css');
+@import url('./field-label-overrides.css');
 
 label {
     display: inline-block;

@@ -65,6 +65,14 @@ export type SystemContextCallback = (
 
 export type FragmentName = Color | Scale | SystemVariant | 'core' | 'app';
 
+export interface ThemeData {
+    color?: Color;
+    scale?: Scale;
+    lang?: string;
+    theme?: SystemVariant;
+    system?: SystemVariant;
+}
+
 export type ThemeKindProvider = {
     [P in SettableFragmentTypes]: SystemVariant | Color | Scale | '';
 };

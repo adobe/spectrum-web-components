@@ -16,6 +16,10 @@ governing permissions and limitations under the License.
     visibility: hidden;
     opacity: 0;
     transition:
+        transform 0.13s ease-in-out,
+        opacity 0.13s ease-in-out,
+        visibility 0s linear 0.13s;
+    transition:
         transform
             var(
                 --mod-overlay-animation-duration,
@@ -39,42 +43,11 @@ governing permissions and limitations under the License.
     pointer-events: auto;
     visibility: visible;
     opacity: 1;
+    transition-delay: 0s;
     transition-delay: var(
         --mod-overlay-animation-duration-opened,
         var(--spectrum-animation-duration-0, 0s)
     );
-}
-
-:host {
-    --flow-direction: 1;
-    --spectrum-popover-animation-distance: var(--spectrum-spacing-100);
-    --spectrum-popover-background-color: var(
-        --spectrum-background-layer-2-color
-    );
-    --spectrum-popover-border-color: var(--spectrum-gray-400);
-    --spectrum-popover-content-area-spacing-vertical: var(
-        --spectrum-popover-top-to-content-area
-    );
-    --spectrum-popover-shadow-horizontal: var(--spectrum-drop-shadow-x);
-    --spectrum-popover-shadow-vertical: var(--spectrum-drop-shadow-y);
-    --spectrum-popover-shadow-blur: var(--spectrum-drop-shadow-blur);
-    --spectrum-popover-shadow-color: var(--spectrum-drop-shadow-color);
-    --spectrum-popover-corner-radius: var(--spectrum-corner-radius-100);
-    --spectrum-popover-pointer-width: var(--spectrum-popover-tip-width);
-    --spectrum-popover-pointer-height: var(--spectrum-popover-tip-height);
-    --spectrum-popover-pointer-edge-offset: calc(
-        var(--spectrum-corner-radius-100) + var(--spectrum-popover-tip-width) /
-            2
-    );
-    --spectrum-popover-pointer-edge-spacing: calc(
-        var(--spectrum-popover-pointer-edge-offset) -
-            var(--spectrum-popover-tip-width) / 2
-    );
-}
-
-:host:dir(rtl),
-:host([dir='rtl']) {
-    --flow-direction: -1;
 }
 
 @media (forced-colors: active) {
@@ -218,7 +191,7 @@ governing permissions and limitations under the License.
 :host([tip]) .spectrum-Popover--right-bottom,
 :host([tip]) .spectrum-Popover--right-top,
 :host([placement*='right'][tip]) {
-    margin-inline-start: calc(
+    margin-left: calc(
         var(--mod-popover-pointer-width, var(--spectrum-popover-pointer-width)) -
             var(
                 --mod-popover-border-width,
@@ -241,7 +214,7 @@ governing permissions and limitations under the License.
 :host([tip]) .spectrum-Popover--left-bottom,
 :host([tip]) .spectrum-Popover--left-top,
 :host([placement*='left'][tip]) {
-    margin-inline-end: calc(
+    margin-right: calc(
         var(--mod-popover-pointer-width, var(--spectrum-popover-pointer-width)) -
             var(
                 --mod-popover-border-width,
@@ -459,137 +432,25 @@ governing permissions and limitations under the License.
     inset-block: 0;
 }
 
-:host([tip][placement*='left']) .spectrum-Popover--end-bottom #tip,
-:host([tip]) .spectrum-Popover--end-bottom.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--end-bottom.spectrum-Popover--left-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--end-top #tip,
-:host([tip]) .spectrum-Popover--end-top.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--end-top.spectrum-Popover--left-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--end #tip,
-:host([tip]) .spectrum-Popover--end.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--end.spectrum-Popover--left-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--left-bottom.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--left-bottom.spectrum-Popover--left-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--left-top #tip,
-:host([tip]) .spectrum-Popover--left-top.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--left-top.spectrum-Popover--left-top #tip,
-:host([tip][placement*='left'][placement*='left']) #tip,
-:host([tip][placement*='left']) .spectrum-Popover--left-bottom #tip,
-:host([tip][placement*='left']) .spectrum-Popover--left-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--right-bottom.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--right-bottom.spectrum-Popover--left-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--right-top #tip,
-:host([tip]) .spectrum-Popover--right-top.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--right-top.spectrum-Popover--left-top #tip,
-:host([tip][placement*='right'][placement*='left']) #tip,
-:host([tip][placement*='right']) .spectrum-Popover--left-bottom #tip,
-:host([tip][placement*='right']) .spectrum-Popover--left-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--start-bottom #tip,
-:host([tip]) .spectrum-Popover--start-bottom.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--start-bottom.spectrum-Popover--left-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--start-top #tip,
-:host([tip]) .spectrum-Popover--start-top.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--start-top.spectrum-Popover--left-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--start #tip,
-:host([tip]) .spectrum-Popover--start.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--start.spectrum-Popover--left-top #tip {
-    inset-inline: 100% auto;
+:host([tip][placement*='left']) #tip,
+:host([tip]) .spectrum-Popover--left-bottom #tip,
+:host([tip]) .spectrum-Popover--left-top #tip {
+    left: 100%;
+    right: auto;
 }
 
-:host([tip][placement*='right']) .spectrum-Popover--end-bottom #tip,
-:host([tip]) .spectrum-Popover--end-bottom.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--end-bottom.spectrum-Popover--right-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--end-top #tip,
-:host([tip]) .spectrum-Popover--end-top.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--end-top.spectrum-Popover--right-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--end #tip,
-:host([tip]) .spectrum-Popover--end.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--end.spectrum-Popover--right-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--left-bottom.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--left-bottom.spectrum-Popover--right-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--left-top #tip,
-:host([tip]) .spectrum-Popover--left-top.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--left-top.spectrum-Popover--right-top #tip,
-:host([tip][placement*='left'][placement*='right']) #tip,
-:host([tip][placement*='left']) .spectrum-Popover--right-bottom #tip,
-:host([tip][placement*='left']) .spectrum-Popover--right-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--right-bottom #tip,
-:host([tip])
-    .spectrum-Popover--right-bottom.spectrum-Popover--right-bottom
-    #tip,
-:host([tip]) .spectrum-Popover--right-bottom.spectrum-Popover--right-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--right-top #tip,
-:host([tip]) .spectrum-Popover--right-top.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--right-top.spectrum-Popover--right-top #tip,
-:host([tip][placement*='right'][placement*='right']) #tip,
-:host([tip][placement*='right']) .spectrum-Popover--right-bottom #tip,
-:host([tip][placement*='right']) .spectrum-Popover--right-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--start-bottom #tip,
-:host([tip])
-    .spectrum-Popover--start-bottom.spectrum-Popover--right-bottom
-    #tip,
-:host([tip]) .spectrum-Popover--start-bottom.spectrum-Popover--right-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--start-top #tip,
-:host([tip]) .spectrum-Popover--start-top.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--start-top.spectrum-Popover--right-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--start #tip,
-:host([tip]) .spectrum-Popover--start.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--start.spectrum-Popover--right-top #tip {
-    inset-inline: auto 100%;
+:host([tip][placement*='right']) #tip,
+:host([tip]) .spectrum-Popover--right-bottom #tip,
+:host([tip]) .spectrum-Popover--right-top #tip {
+    left: auto;
+    right: 100%;
     transform: scaleX(-1);
 }
 
-:host([tip]) .spectrum-Popover--end-bottom.spectrum-Popover--end-top #tip,
-:host([tip]) .spectrum-Popover--end-bottom.spectrum-Popover--left-top #tip,
-:host([tip]) .spectrum-Popover--end-bottom.spectrum-Popover--right-top #tip,
-:host([tip]) .spectrum-Popover--end-bottom.spectrum-Popover--start-top #tip,
-:host([tip]) .spectrum-Popover--end-top.spectrum-Popover--end-top #tip,
-:host([tip]) .spectrum-Popover--end-top.spectrum-Popover--left-top #tip,
-:host([tip]) .spectrum-Popover--end-top.spectrum-Popover--right-top #tip,
-:host([tip]) .spectrum-Popover--end-top.spectrum-Popover--start-top #tip,
-:host([tip]) .spectrum-Popover--end.spectrum-Popover--end-top #tip,
-:host([tip]) .spectrum-Popover--end.spectrum-Popover--left-top #tip,
-:host([tip]) .spectrum-Popover--end.spectrum-Popover--right-top #tip,
-:host([tip]) .spectrum-Popover--end.spectrum-Popover--start-top #tip,
-:host([tip]) .spectrum-Popover--left-bottom.spectrum-Popover--end-top #tip,
-:host([tip]) .spectrum-Popover--left-bottom.spectrum-Popover--left-top #tip,
-:host([tip]) .spectrum-Popover--left-bottom.spectrum-Popover--right-top #tip,
-:host([tip]) .spectrum-Popover--left-bottom.spectrum-Popover--start-top #tip,
-:host([tip]) .spectrum-Popover--left-top.spectrum-Popover--end-top #tip,
-:host([tip]) .spectrum-Popover--left-top.spectrum-Popover--left-top #tip,
-:host([tip]) .spectrum-Popover--left-top.spectrum-Popover--right-top #tip,
-:host([tip]) .spectrum-Popover--left-top.spectrum-Popover--start-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--end-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--left-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--right-top #tip,
-:host([tip][placement*='left']) .spectrum-Popover--start-top #tip,
-:host([tip]) .spectrum-Popover--right-bottom.spectrum-Popover--end-top #tip,
-:host([tip]) .spectrum-Popover--right-bottom.spectrum-Popover--left-top #tip,
-:host([tip]) .spectrum-Popover--right-bottom.spectrum-Popover--right-top #tip,
-:host([tip]) .spectrum-Popover--right-bottom.spectrum-Popover--start-top #tip,
-:host([tip]) .spectrum-Popover--right-top.spectrum-Popover--end-top #tip,
-:host([tip]) .spectrum-Popover--right-top.spectrum-Popover--left-top #tip,
-:host([tip]) .spectrum-Popover--right-top.spectrum-Popover--right-top #tip,
-:host([tip]) .spectrum-Popover--right-top.spectrum-Popover--start-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--end-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--left-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--right-top #tip,
-:host([tip][placement*='right']) .spectrum-Popover--start-top #tip,
-:host([tip]) .spectrum-Popover--start-bottom.spectrum-Popover--end-top #tip,
-:host([tip]) .spectrum-Popover--start-bottom.spectrum-Popover--left-top #tip,
-:host([tip]) .spectrum-Popover--start-bottom.spectrum-Popover--right-top #tip,
-:host([tip]) .spectrum-Popover--start-bottom.spectrum-Popover--start-top #tip,
-:host([tip]) .spectrum-Popover--start-top.spectrum-Popover--end-top #tip,
-:host([tip]) .spectrum-Popover--start-top.spectrum-Popover--left-top #tip,
-:host([tip]) .spectrum-Popover--start-top.spectrum-Popover--right-top #tip,
-:host([tip]) .spectrum-Popover--start-top.spectrum-Popover--start-top #tip,
-:host([tip]) .spectrum-Popover--start.spectrum-Popover--end-top #tip,
-:host([tip]) .spectrum-Popover--start.spectrum-Popover--left-top #tip,
-:host([tip]) .spectrum-Popover--start.spectrum-Popover--right-top #tip,
-:host([tip]) .spectrum-Popover--start.spectrum-Popover--start-top #tip {
+:host([tip]) .spectrum-Popover--end-top #tip,
+:host([tip]) .spectrum-Popover--left-top #tip,
+:host([tip]) .spectrum-Popover--right-top #tip,
+:host([tip]) .spectrum-Popover--start-top #tip {
     inset-block: var(
             --mod-popover-pointer-edge-spacing,
             var(--spectrum-popover-pointer-edge-spacing)
@@ -597,62 +458,10 @@ governing permissions and limitations under the License.
         auto;
 }
 
-:host([tip]) .spectrum-Popover--end-bottom.spectrum-Popover--end-bottom #tip,
-:host([tip]) .spectrum-Popover--end-bottom.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--end-bottom.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--end-bottom.spectrum-Popover--start-bottom #tip,
-:host([tip]) .spectrum-Popover--end-top.spectrum-Popover--end-bottom #tip,
-:host([tip]) .spectrum-Popover--end-top.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--end-top.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--end-top.spectrum-Popover--start-bottom #tip,
-:host([tip]) .spectrum-Popover--end.spectrum-Popover--end-bottom #tip,
-:host([tip]) .spectrum-Popover--end.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--end.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--end.spectrum-Popover--start-bottom #tip,
-:host([tip]) .spectrum-Popover--left-bottom.spectrum-Popover--end-bottom #tip,
-:host([tip]) .spectrum-Popover--left-bottom.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--left-bottom.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--left-bottom.spectrum-Popover--start-bottom #tip,
-:host([tip]) .spectrum-Popover--left-top.spectrum-Popover--end-bottom #tip,
-:host([tip]) .spectrum-Popover--left-top.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--left-top.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--left-top.spectrum-Popover--start-bottom #tip,
-:host([tip][placement*='left']) .spectrum-Popover--end-bottom #tip,
-:host([tip][placement*='left']) .spectrum-Popover--left-bottom #tip,
-:host([tip][placement*='left']) .spectrum-Popover--right-bottom #tip,
-:host([tip][placement*='left']) .spectrum-Popover--start-bottom #tip,
-:host([tip]) .spectrum-Popover--right-bottom.spectrum-Popover--end-bottom #tip,
-:host([tip]) .spectrum-Popover--right-bottom.spectrum-Popover--left-bottom #tip,
-:host([tip])
-    .spectrum-Popover--right-bottom.spectrum-Popover--right-bottom
-    #tip,
-:host([tip])
-    .spectrum-Popover--right-bottom.spectrum-Popover--start-bottom
-    #tip,
-:host([tip]) .spectrum-Popover--right-top.spectrum-Popover--end-bottom #tip,
-:host([tip]) .spectrum-Popover--right-top.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--right-top.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--right-top.spectrum-Popover--start-bottom #tip,
-:host([tip][placement*='right']) .spectrum-Popover--end-bottom #tip,
-:host([tip][placement*='right']) .spectrum-Popover--left-bottom #tip,
-:host([tip][placement*='right']) .spectrum-Popover--right-bottom #tip,
-:host([tip][placement*='right']) .spectrum-Popover--start-bottom #tip,
-:host([tip]) .spectrum-Popover--start-bottom.spectrum-Popover--end-bottom #tip,
-:host([tip]) .spectrum-Popover--start-bottom.spectrum-Popover--left-bottom #tip,
-:host([tip])
-    .spectrum-Popover--start-bottom.spectrum-Popover--right-bottom
-    #tip,
-:host([tip])
-    .spectrum-Popover--start-bottom.spectrum-Popover--start-bottom
-    #tip,
-:host([tip]) .spectrum-Popover--start-top.spectrum-Popover--end-bottom #tip,
-:host([tip]) .spectrum-Popover--start-top.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--start-top.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--start-top.spectrum-Popover--start-bottom #tip,
-:host([tip]) .spectrum-Popover--start.spectrum-Popover--end-bottom #tip,
-:host([tip]) .spectrum-Popover--start.spectrum-Popover--left-bottom #tip,
-:host([tip]) .spectrum-Popover--start.spectrum-Popover--right-bottom #tip,
-:host([tip]) .spectrum-Popover--start.spectrum-Popover--start-bottom #tip {
+:host([tip]) .spectrum-Popover--end-bottom #tip,
+:host([tip]) .spectrum-Popover--left-bottom #tip,
+:host([tip]) .spectrum-Popover--right-bottom #tip,
+:host([tip]) .spectrum-Popover--start-bottom #tip {
     inset-block: auto
         var(
             --mod-popover-pointer-edge-spacing,
@@ -689,10 +498,4 @@ governing permissions and limitations under the License.
 :host([dir='rtl'][tip]) .spectrum-Popover--end-bottom #tip,
 :host([dir='rtl'][tip]) .spectrum-Popover--end-top #tip {
     transform: scaleX(1);
-}
-
-:host {
-    --spectrum-popover-border-width: var(
-        --system-spectrum-popover-border-width
-    );
 }

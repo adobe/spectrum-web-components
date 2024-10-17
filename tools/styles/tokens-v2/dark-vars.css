@@ -1,12 +1,6 @@
 :host,
 :root {
     --spectrum-overlay-opacity: 0.6;
-    --spectrum-drop-shadow-color-rgb: 0, 0, 0;
-    --spectrum-drop-shadow-color-opacity: 0.8;
-    --spectrum-drop-shadow-color: rgba(
-        var(--spectrum-drop-shadow-color-rgb),
-        var(--spectrum-drop-shadow-color-opacity)
-    );
     --spectrum-background-layer-2-color: var(--spectrum-gray-75);
     --spectrum-neutral-subdued-background-color-default: var(
         --spectrum-gray-500
@@ -112,6 +106,18 @@
     --spectrum-silver-background-color-default: var(--spectrum-silver-700);
     --spectrum-turquoise-background-color-default: var(
         --spectrum-turquoise-700
+    );
+    --spectrum-drop-shadow-color-100-rgb: 0, 0, 0;
+    --spectrum-drop-shadow-color-100-opacity: 0.36;
+    --spectrum-drop-shadow-color-100: rgba(
+        var(--spectrum-drop-shadow-color-100-rgb),
+        var(--spectrum-drop-shadow-color-100-opacity)
+    );
+    --spectrum-drop-shadow-color-200-rgb: 0, 0, 0;
+    --spectrum-drop-shadow-color-200-opacity: 0.48;
+    --spectrum-drop-shadow-color-200: rgba(
+        var(--spectrum-drop-shadow-color-200-rgb),
+        var(--spectrum-drop-shadow-color-200-opacity)
     );
     --spectrum-opacity-checkerboard-square-dark: var(--spectrum-gray-800);
     --spectrum-gray-25-rgb: 17, 17, 17;
@@ -720,4 +726,86 @@
     --spectrum-icon-color-green-primary-default: var(--spectrum-green-800);
     --spectrum-icon-color-red-primary-default: var(--spectrum-red-700);
     --spectrum-icon-color-yellow-primary-default: var(--spectrum-yellow-1000);
+    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-900-rgb);
+    --spectrum-dropindicator-color: var(--spectrum-blue-700);
+
+    --spectrum-calendar-day-background-color-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.15
+    );
+    --spectrum-calendar-day-background-color-hover: rgba(
+        var(--spectrum-white-rgb),
+        0.07
+    );
+    --spectrum-calendar-day-today-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
+    );
+    --spectrum-calendar-day-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
+    );
+    --spectrum-calendar-day-background-color-down: var(
+        --spectrum-transparent-white-200
+    );
+    --spectrum-calendar-day-background-color-cap-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
+    );
+    --spectrum-calendar-day-background-color-key-focus: rgba(
+        var(--spectrum-white-rgb),
+        0.07
+    );
+    --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-700);
+
+    --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
+
+    --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-700);
+
+    --spectrum-steplist-current-marker-color-key-focus: var(
+        --spectrum-blue-700
+    );
+
+    --spectrum-treeview-item-background-color-quiet-selected: rgba(
+        var(--spectrum-gray-900-rgb),
+        0.07
+    );
+    --spectrum-treeview-item-background-color-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.15
+    );
+
+    --spectrum-logic-button-and-background-color: var(--spectrum-blue-800);
+    --spectrum-logic-button-and-border-color: var(--spectrum-blue-800);
+    --spectrum-logic-button-and-background-color-hover: var(
+        --spectrum-blue-1000
+    );
+    --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1000);
+
+    --spectrum-logic-button-or-background-color: var(--spectrum-magenta-700);
+    --spectrum-logic-button-or-border-color: var(--spectrum-magenta-700);
+    --spectrum-logic-button-or-background-color-hover: var(
+        --spectrum-magenta-900
+    );
+    --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-900);
+
+    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-800);
+    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-800);
+    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-900);
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
+        --spectrum-blue-800
+    );
+    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-700);
+
+    --spectrum-assetlist-item-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
+    );
+    --spectrum-assetlist-item-background-color-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.15
+    );
+    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
+
+    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-500-rgb);
 }

@@ -258,6 +258,7 @@ const config = {
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Stepper--sizeS', 's'],
+                        ['spectrum-Stepper--sizeM', 'm'],
                         ['spectrum-Stepper--sizeL', 'l'],
                         ['spectrum-Stepper--sizeXL', 'xl'],
                     ],
