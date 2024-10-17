@@ -44,15 +44,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     static VERSION = version;
 
     static get observedAttributes(): string[] {
-        return [
-            'color',
-            'scale',
-            'lang',
-            'dir',
-            'system',
-            /* deprecated attributes, but still observing */
-            'theme',
-        ];
+        return ['color', 'scale', 'lang', 'dir', 'system'];
     }
 
     _dir: 'ltr' | 'rtl' | '' = '';
@@ -92,10 +84,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         } else if (attrName === 'lang' && !!value) {
             this.lang = value;
             this._provideContext();
-        } else if (attrName === 'theme') {
-            this.theme = value as SystemVariant;
-            this._provideSystemContext();
-            warnBetaSystem(this, value as SystemVariant);
         } else if (attrName === 'system') {
             this.system = value as SystemVariant;
             this._provideSystemContext();
@@ -141,25 +129,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         } else {
             this.removeAttribute('system');
         }
-    }
-
-    /*
-     * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
-     */
-    get theme(): SystemVariant | '' {
-        /* c8 ignore next 3 */
-        if (!this.system) {
-            this.removeAttribute('system');
-        }
-        return this.system;
-    }
-
-    /*
-     * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
-     */
-    set theme(newValue: SystemVariant | '') {
-        this.system = newValue;
-        this.requestUpdate();
     }
 
     private _color: Color | '' = '';
@@ -239,14 +208,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             kind?: FragmentType
         ): CSSResultGroup | undefined => {
             const currentStyles =
-                kind &&
-                kind !== 'theme' &&
-                kind !== 'system' &&
-                this.theme !== 'spectrum' &&
-                this.system !== 'spectrum'
+                kind && kind !== 'system' && this.system !== 'spectrum'
                     ? fragments.get(`${name}-${this.system}`)
                     : fragments.get(name);
-            // theme="spectrum" is available by default and doesn't need to be applied.
+            // system="spectrum" is available by default and doesn't need to be applied.
             const isAppliedFragment =
                 name === 'spectrum' || !kind || this.hasAttribute(kind);
             if (currentStyles && isAppliedFragment) {
@@ -277,7 +242,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.system,
             this.color,
             this.scale,
-            this.hasAttribute('theme'),
             themeFragmentsByKind
         );
 
@@ -488,7 +452,6 @@ function checkForIssues(
     system: SystemVariant | '',
     color: Color | '',
     scale: Scale | '',
-    hasThemeAttribute: boolean,
     themeFragmentsByKind: ThemeFragmentMap
 ): void {
     if (window.__swc.DEBUG) {
@@ -522,11 +485,6 @@ function checkForIssues(
             }
         };
 
-        if (hasThemeAttribute) {
-            issues.push(
-                `DEPRECATION NOTICE: the "theme" attribute has been deprecated in favor of "system". For more information, see: https://opensource.adobe.com/spectrum-web-components/tools/theme/`
-            );
-        }
         if (['lightest', 'darkest'].includes(color || '')) {
             issues.push(
                 `DEPRECATION NOTICE: Color "lightest" and "darkest" are deprecated. For more information, see: https://opensource.adobe.com/spectrum-web-components/tools/theme/`
