@@ -255,7 +255,6 @@ export class ColorController {
         } else if (color instanceof Color) {
             newColor = color;
         } else if (!Array.isArray(color)) {
-            //console.log('color', color);
             const { h, s, l, v, r, g, b, a } = color as {
                 h: string;
                 s: string;
@@ -320,7 +319,6 @@ export class ColorController {
             } else {
                 spaceId = 'hex';
             }
-
             switch (spaceId) {
                 case 'hsv': {
                     const hadAlpha = this._colorOrigin[3] === 'a';
