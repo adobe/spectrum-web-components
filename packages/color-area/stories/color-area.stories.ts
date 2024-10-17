@@ -44,6 +44,7 @@ type StoryArgs = {
 export const Default = ({ onChange, onInput }: StoryArgs): TemplateResult => {
     return html`
         <sp-color-area
+            color="#ff0000"
             @input=${({ target }: Event & { target: ColorArea }) => {
                 const next = target.nextElementSibling as HTMLElement;
                 next.textContent = target.color as string;

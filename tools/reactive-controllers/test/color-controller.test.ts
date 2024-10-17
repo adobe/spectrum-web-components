@@ -207,7 +207,7 @@ describe('ColorController', () => {
     it('should return correct color value for default spaceId with percentage origin', () => {
         colorController.color = 'rgb(50%, 25%, 75%)';
         const result = colorController.colorValue;
-        expect(result).to.equal('rgba(50%, 25%, 75%,100%)');
+        expect(result).to.equal('rgb(50%, 25%, 75%)');
     });
 
     it('should return correct color value for default spaceId with rgba origin', () => {
