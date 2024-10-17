@@ -171,9 +171,13 @@ const foundVars = await findUsedVars();
 spectrumPaths.forEach((spectrumPath, i) => {
     const packageDir = ['styles'];
     const isExpress = i === 1;
-    if (isExpress) packageDir.push('express');
+    if (isExpress) {
+        packageDir.push('express');
+    }
     themes.forEach((theme) => {
-        if (isExpress && ['lightest', 'darkest'].includes(theme)) return;
+        if (isExpress && ['lightest', 'darkest'].includes(theme)) {
+            return;
+        }
         const srcPath = path.join(spectrumPath, `spectrum-${theme}.css`);
         const dstPath = path.resolve(
             path.join(

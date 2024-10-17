@@ -126,7 +126,7 @@ Once you've moved beyond the prototype phase of an application, it is likely tha
  * Power a site using
  *
  * <sp-theme
- *      system="classic"
+ *      system="spectrum"
  *      color="darkest"
  *      scale="large"
  * >

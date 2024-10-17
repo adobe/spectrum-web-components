@@ -36,7 +36,7 @@ const validSizes = [
     '900',
     '1000',
 ];
-export type ThumbnailSize = typeof validSizes[number];
+export type ThumbnailSize = (typeof validSizes)[number];
 
 const defaultSize = validSizes[6];
 
@@ -66,30 +66,6 @@ export class Thumbnail extends SpectrumElement {
     }
 
     public set size(value: ThumbnailSize) {
-        const deprecatedSizes = ['xxs', 'xs', 's', 'm', 'l'];
-        type DeprecatedThumbnailSize = typeof deprecatedSizes[number];
-        const managedSizes: Record<DeprecatedThumbnailSize, ThumbnailSize> = {
-            xxs: '100',
-            xs: '300',
-            s: '500',
-            m: '700',
-            l: '900',
-        };
-        const usesDeprecatedSize = deprecatedSizes.includes(value);
-        if (usesDeprecatedSize) {
-            if (window.__swc.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `The "size" attribute/property for <${this.localName}> no longer supports the value "${value}". Use one of the following values, instead:`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/thumbnail/#sizes',
-                    {
-                        level: 'deprecation',
-                        issues: validSizes as unknown as string[],
-                    }
-                );
-            }
-            value = managedSizes[value];
-        }
         const size = (
             validSizes.includes(value) ? value : defaultSize
         ) as ThumbnailSize;
