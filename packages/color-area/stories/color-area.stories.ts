@@ -25,10 +25,10 @@ export default {
         onChange: { action: 'change' },
         color: {
             name: 'color',
-            type: { name: 'ColorValue', required: 'true' },
+            type: { name: 'ColorTypes', required: 'true' },
             description: 'The color displayed by the ColorArea.',
             table: {
-                type: { summary: 'ColorValue' },
+                type: { summary: 'ColorTypes' },
                 defaultValue: { summary: '' },
             },
             control: 'text',
@@ -55,6 +55,16 @@ export const Default = ({ onChange, onInput }: StoryArgs): TemplateResult => {
             }}
         ></sp-color-area>
         <div style="color: #ff0000" aria-live="off">#ff0000</div>
+    `;
+};
+
+export const appliedValues = (): TemplateResult => {
+    return html`
+        <sp-color-area
+            .color=${{ space: 'hsv', coords: [250, 90, 80] }}
+        ></sp-color-area>
+        <sp-color-area color="hsv(250, 90%, 80%)"></sp-color-area>
+        <sp-color-area hue="250" x="0.1" y="0.1"></sp-color-area>
     `;
 };
 

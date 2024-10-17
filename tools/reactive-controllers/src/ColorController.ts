@@ -219,6 +219,14 @@ export class ColorController {
         return result;
     }
 
+    _color: Color = new Color('hsv', [0, 100, 100], 1);
+
+    _colorOrigin!: ColorTypes;
+
+    private manageAs?: string;
+
+    private _previousColor!: Color;
+
     set color(color: ColorTypes) {
         this._colorOrigin = color;
         let newColor!: Color;
@@ -298,26 +306,21 @@ export class ColorController {
         this.host.requestUpdate();
     }
 
-    _color = new Color('hsv', [0, 100, 100], 1);
-
-    _colorOrigin!: ColorTypes;
-
     get colorValue(): ColorTypes {
         if (typeof this._colorOrigin === 'string') {
             let spaceId = '';
-            if (
-                extractHueSaturationValueAndAlphaRegExp.exec(
-                    this._colorOrigin
-                ) !== null
-            ) {
+            if (this._colorOrigin.startsWith('#')) {
+                spaceId = 'hex string';
+            } else if (this._colorOrigin.startsWith('rgb')) {
+                spaceId = 'rgb';
+            } else if (this._colorOrigin.startsWith('hsl')) {
+                spaceId = 'hsl';
+            } else if (this._colorOrigin.startsWith('hsv')) {
                 spaceId = 'hsv';
             } else {
-                try {
-                    ({ spaceId } = Color.parse(this._colorOrigin));
-                } catch (error) {
-                    spaceId = 'hex string';
-                }
+                spaceId = 'hex';
             }
+
             switch (spaceId) {
                 case 'hsv': {
                     const hadAlpha = this._colorOrigin[3] === 'a';
@@ -342,6 +345,23 @@ export class ColorController {
                 case 'hex string': {
                     const { r, g, b } = (this._color.to('srgb') as Color).srgb;
                     const hadAlpha =
+                        this._colorOrigin.length === 5 ||
+                        this._colorOrigin.length === 9;
+                    const a = this._color.alpha;
+                    const rHex = Math.round(r * 255).toString(16);
+                    const gHex = Math.round(g * 255).toString(16);
+                    const bHex = Math.round(b * 255).toString(16);
+                    const aHex = Math.round(a * 255).toString(16);
+                    return `#${rHex.padStart(2, '0')}${gHex.padStart(
+                        2,
+                        '0'
+                    )}${bHex.padStart(2, '0')}${
+                        hadAlpha ? aHex.padStart(2, '0') : ''
+                    }`;
+                }
+                case 'hex': {
+                    const { r, g, b } = (this._color.to('srgb') as Color).srgb;
+                    const hadAlpha =
                         this._colorOrigin.length === 4 ||
                         this._colorOrigin.length === 8;
                     const a = this._color.alpha;
@@ -356,33 +376,19 @@ export class ColorController {
                         hadAlpha ? aHex.padStart(2, '0') : ''
                     }`;
                 }
+                //rgb
                 default: {
                     const { r, g, b } = (this._color.to('srgb') as Color).srgb;
-                    let a = this._color.alpha;
-                    if (this._colorOrigin.startsWith('#')) {
-                        const hadAlpha =
-                            this._colorOrigin.length === 5 ||
-                            this._colorOrigin.length === 9;
-                        a = this._color.alpha;
-                        const rHex = Math.round(r * 255).toString(16);
-                        const gHex = Math.round(g * 255).toString(16);
-                        const bHex = Math.round(b * 255).toString(16);
-                        const aHex = Math.round(a * 255).toString(16);
-                        return `#${rHex.padStart(2, '0')}${gHex.padStart(
-                            2,
-                            '0'
-                        )}${bHex.padStart(2, '0')}${
-                            hadAlpha ? aHex.padStart(2, '0') : ''
-                        }`;
-                    }
+                    const hadAlpha = this._colorOrigin[3] === 'a';
+                    const a = this._color.alpha;
                     if (this._colorOrigin.search('%') > -1) {
-                        return `rgba(${Math.round(r * 100)}%, ${Math.round(
+                        return `rgb${hadAlpha ? `a` : ''}(${Math.round(r * 100)}%, ${Math.round(
                             g * 100
-                        )}%, ${Math.round(b * 100)}%,${Math.round(a * 100)}%)`;
+                        )}%, ${Math.round(b * 100)}%${hadAlpha ? `,${Math.round(a * 100)}%` : ''})`;
                     }
-                    return `rgba(${Math.round(r * 255)}, ${Math.round(
+                    return `rgb${hadAlpha ? `a` : ''}(${Math.round(r * 255)}, ${Math.round(
                         g * 255
-                    )}, ${Math.round(b * 255)}, ${a})`;
+                    )}, ${Math.round(b * 255)}${hadAlpha ? `, ${a}%` : ''})`;
                 }
             }
         }
@@ -480,10 +486,6 @@ export class ColorController {
         this._color.set('h', hue);
         this.host.requestUpdate();
     }
-
-    private manageAs?: string;
-
-    private _previousColor!: Color;
 
     constructor(
         host: ReactiveElement,
