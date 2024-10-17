@@ -115,6 +115,7 @@ export class Search extends Textfield {
                 @keydown=${this.handleKeydown}
             >
                 <sp-icon-search
+                    size=${this.size}
                     class="icon magnifier icon-workflow icon-search"
                 ></sp-icon-search>
                 ${super.renderField()}
