@@ -715,7 +715,7 @@ describe('ColorSlider', () => {
         { name: 'Hex8', color: '#cc33ccff' },
         { name: 'Hex8 String', color: '#cc33ccff' },
         // name
-        { name: 'string', color: 'red', test: '#ff0000' },
+        { name: 'string', color: 'red', test: 'ff0000' },
         // hsl
         { name: 'HSL String', color: 'hsl(300, 60%, 50%)' },
         { name: 'HSL', color: { h: 300, s: 0.6000000000000001, l: 0.5, a: 1 } },
@@ -750,7 +750,7 @@ describe('ColorSlider', () => {
     it(`resolves Hex3 format to Hex6 format`, async () => {
         const el = await fixture<ColorSlider>(Default());
         el.color = '0f0';
-        expect(el.color).to.equal('#00ff00');
+        expect(el.color).to.equal('00ff00');
 
         el.color = '#1e0';
         expect(el.color).to.equal('#11ee00');

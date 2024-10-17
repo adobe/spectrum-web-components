@@ -388,7 +388,7 @@ export class ColorController {
                     }
                     return `rgb${hadAlpha ? `a` : ''}(${Math.round(r * 255)}, ${Math.round(
                         g * 255
-                    )}, ${Math.round(b * 255)}${hadAlpha ? `, ${a}%` : ''})`;
+                    )}, ${Math.round(b * 255)}${hadAlpha ? `, ${a}` : ''})`;
                 }
             }
         }
