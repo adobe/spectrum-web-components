@@ -199,4 +199,33 @@ describe('Setting attributes', () => {
             ).to.equal(3);
         }
     });
+
+    it('loads and handles system attribute', async () => {
+        const el = await fixture<Theme>(html`
+            <sp-theme system="spectrum"></sp-theme>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el).to.not.be.undefined;
+        expect(el.hasAttribute('system')).to.be.true;
+        expect(el.getAttribute('system')).to.equal('spectrum');
+
+        el.setAttribute('system', 'invalid');
+        await elementUpdated(el);
+        expect(el.getAttribute('system')).to.equal('spectrum'); // Should fallback to 'spectrum'
+
+        el.setAttribute('system', 'express');
+        await elementUpdated(el);
+        expect(el.getAttribute('system')).to.equal('express');
+
+        // Removing attribute should persist the last valid value
+        el.removeAttribute('system');
+        await elementUpdated(el);
+        expect(el.getAttribute('system')).to.equal('express');
+
+        el.system = 'spectrum';
+        await elementUpdated(el);
+        expect(el.getAttribute('system')).to.equal('spectrum');
+    });
 });
