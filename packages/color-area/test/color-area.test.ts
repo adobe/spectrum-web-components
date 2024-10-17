@@ -145,10 +145,15 @@ describe('ColorArea', () => {
         await sendKeys({
             press: 'ArrowDown',
         });
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await elementUpdated(el);
         expect(el.value).to.not.equal(value);
         await sendKeys({
             press: 'Shift+Tab',
         });
+
         expect(document.activeElement, 'before input again').to.equal(input1);
     });
     it('provides separate aria-labels for X and Y inputs', async () => {
@@ -722,9 +727,9 @@ describe('ColorArea', () => {
         await elementUpdated(el);
         expect(inputSpy.callCount).to.equal(2);
         expect(changeSpy.callCount).to.equal(2);
-        // expect(parseFloat(el.inputX.value).toFixed(2)).to.equal(
-        //     (Xvalue + 0.2).toFixed(2)
-        // );
+        expect(parseFloat(el.inputX.value).toFixed(2)).to.equal(
+            (Xvalue + 0.2).toFixed(2)
+        );
 
         el.inputX.focus();
         inputSpy.resetHistory();
@@ -735,9 +740,9 @@ describe('ColorArea', () => {
         await elementUpdated(el);
         expect(inputSpy.callCount).to.equal(2);
         expect(changeSpy.callCount).to.equal(2);
-        // expect(parseFloat(el.inputX.value).toFixed(2)).to.equal(
-        //     Xvalue.toFixed(2)
-        // );
+        expect(parseFloat(el.inputX.value).toFixed(2)).to.equal(
+            Xvalue.toFixed(2)
+        );
 
         el.inputY.focus();
         inputSpy.resetHistory();
@@ -749,9 +754,9 @@ describe('ColorArea', () => {
 
         expect(inputSpy.callCount).to.equal(2);
         expect(changeSpy.callCount).to.equal(2);
-        // expect(parseFloat(el.inputY.value).toFixed(2)).to.equal(
-        //     (Yvalue + 0.2).toFixed(2)
-        // );
+        expect(parseFloat(el.inputY.value).toFixed(2)).to.equal(
+            (Yvalue + 0.2).toFixed(2)
+        );
 
         el.inputY.focus();
         inputSpy.resetHistory();
