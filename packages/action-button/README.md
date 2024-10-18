@@ -590,7 +590,7 @@ Do not use custom colors for buttons. The colors of different button variations 
 
 #### Use static black or static white to contrast with backgrounds and images
 
-To ensure maximum contrast with the background, use static black for light backgrounds and images, and use static white for dark backgrounds and images. Avoid placing static components on top of busy images with a lot of variance in contrast.
+To ensure maximum contrast with the background, use static black for light backgrounds and images, and static white for dark backgrounds and images. Avoid placing static components on top of busy images with a lot of variance in contrast.
 
 <sp-tabs selected="black" auto label="Static variants for contrast">
 <sp-tab value="black">Static black on light background</sp-tab>
