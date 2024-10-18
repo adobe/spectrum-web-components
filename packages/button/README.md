@@ -395,7 +395,7 @@ popover or dialog opens.
 
 #### Include a label
 
-A button is required to have either a visible text label or `label` attribute on an `<sp-button>`
+A button is required to have either a visible text label or a `label` attribute on either the `<sp-button>` itself
 or on an `<sp-icon*>` element child.
 
 #### Don't override color
