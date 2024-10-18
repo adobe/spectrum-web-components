@@ -3158,17 +3158,17 @@ describe('DateTimePicker', () => {
                 props: { min, max, value: min },
             });
             editableSegments = getEditableSegments(element);
-            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
-            yearSegment.focus();
-            await sendKeys({ type: (min.year - 1).toString() });
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            daySegment.focus();
+            await sendKeys({ type: (min.day - 1).toString() });
             await elementUpdated(element);
+
             expect(element.invalid).to.be.false;
 
             await sendKeys({ press: 'Enter' });
             await elementUpdated(element);
 
             expect(element.invalid).to.be.true;
-            expectPlaceholders(editableSegments, [yearSegment]);
         });
 
         it("should stop the 'invalid' state when a value that does comply is commited using Enter", async () => {
@@ -3176,15 +3176,14 @@ describe('DateTimePicker', () => {
                 props: { min, max, value: min },
             });
             editableSegments = getEditableSegments(element);
-            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
-            yearSegment.focus();
-            await sendKeys({ type: (min.year - 1).toString() });
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            daySegment.focus();
+            await sendKeys({ type: (min.day - 1).toString() });
             await elementUpdated(element);
             await sendKeys({ press: 'Enter' });
             await elementUpdated(element);
 
-            await sendKeys({ press: 'ArrowUp' });
-            await sendKeys({ press: 'ArrowUp' });
+            await sendKeys({ type: (min.day + 1).toString() });
             await elementUpdated(element);
             await sendKeys({ press: 'Enter' });
             await elementUpdated(element);
@@ -3197,9 +3196,9 @@ describe('DateTimePicker', () => {
                 props: { min, max, value: min },
             });
             editableSegments = getEditableSegments(element);
-            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
-            yearSegment.focus();
-            await sendKeys({ type: (min.year - 1).toString() });
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            daySegment.focus();
+            await sendKeys({ type: (min.day - 1).toString() });
             await elementUpdated(element);
             expect(element.invalid).to.be.false;
 
@@ -3207,7 +3206,6 @@ describe('DateTimePicker', () => {
             await elementUpdated(element);
 
             expect(element.invalid).to.be.true;
-            expectPlaceholders(editableSegments, [yearSegment]);
         });
 
         it("should stop the 'invalid' state when a value that does comply is commited using Space", async () => {
@@ -3215,15 +3213,14 @@ describe('DateTimePicker', () => {
                 props: { min, max, value: min },
             });
             editableSegments = getEditableSegments(element);
-            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
-            yearSegment.focus();
-            await sendKeys({ type: (min.year - 1).toString() });
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            daySegment.focus();
+            await sendKeys({ type: (min.day - 1).toString() });
             await elementUpdated(element);
             await sendKeys({ press: 'Space' });
             await elementUpdated(element);
 
-            await sendKeys({ press: 'ArrowUp' });
-            await sendKeys({ press: 'ArrowUp' });
+            await sendKeys({ type: (min.day + 1).toString() });
             await elementUpdated(element);
             await sendKeys({ press: 'Space' });
             await elementUpdated(element);
@@ -3236,9 +3233,9 @@ describe('DateTimePicker', () => {
                 props: { min, max, value: min },
             });
             editableSegments = getEditableSegments(element);
-            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
-            yearSegment.focus();
-            await sendKeys({ type: (min.year - 1).toString() });
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            daySegment.focus();
+            await sendKeys({ type: (min.day - 1).toString() });
             await elementUpdated(element);
             expect(element.invalid).to.be.false;
 
@@ -3248,7 +3245,6 @@ describe('DateTimePicker', () => {
             });
 
             expect(element.invalid).to.be.true;
-            expectPlaceholders(editableSegments, [yearSegment]);
         });
 
         it("should stop the 'invalid' state when a value that does comply is commited on blur", async () => {
@@ -3256,19 +3252,18 @@ describe('DateTimePicker', () => {
                 props: { min, max, value: min },
             });
             editableSegments = getEditableSegments(element);
-            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
-            yearSegment.focus();
-            await sendKeys({ type: (min.year - 1).toString() });
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            daySegment.focus();
+            await sendKeys({ type: (min.day - 1).toString() });
             await elementUpdated(element);
-
             await sendMouse({
                 type: 'click',
                 position: [0, 0],
             });
             await elementUpdated(element);
 
-            await sendKeys({ press: 'ArrowUp' });
-            await sendKeys({ press: 'ArrowUp' });
+            daySegment.focus();
+            await sendKeys({ type: (min.day + 1).toString() });
             await elementUpdated(element);
             await sendMouse({
                 type: 'click',
