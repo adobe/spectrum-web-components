@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-tray>` elements are typically used to portray information on mobile device or smaller screens.
 
@@ -23,7 +23,9 @@ When looking to leverage the `Tray` base class as a type and/or for extension pu
 import { Tray } from '@spectrum-web-components/tray';
 ```
 
-## Dialog
+## Examples
+
+### Dialog
 
 ```html
 <overlay-trigger type="modal">
@@ -37,7 +39,7 @@ import { Tray } from '@spectrum-web-components/tray';
 </overlay-trigger>
 ```
 
-## Menu
+### Menu
 
 ```html
 <overlay-trigger type="modal">
@@ -56,6 +58,6 @@ import { Tray } from '@spectrum-web-components/tray';
 </overlay-trigger>
 ```
 
-## Accessibility
+### Accessibility
 
 `<sp-tray>` presents a page blocking experience and should be opened with the `Overlay` API using the `modal` interaction to ensure that the content appropriately manages the presence of other content in the tab order of the page and the availability of that content for a screen reader.
