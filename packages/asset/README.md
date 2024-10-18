@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 Use an `<sp-asset>` element to visually represent a file, folder or image in your application. File and folder representations will center themselves horizontally and vertically in the space provided to the element. Images will be contained to the element, growing to the element's full height while centering itself within the width provided.
 
@@ -24,7 +24,9 @@ When looking to leverage the `Asset` base class as a type and/or for extension p
 import { Asset } from '@spectrum-web-components/asset';
 ```
 
-## Example
+### Anatomy
+
+An asset has a single default `slot`.
 
 ```html
 <sp-asset style="height: 128px">
@@ -32,7 +34,9 @@ import { Asset } from '@spectrum-web-components/asset';
 </sp-asset>
 ```
 
-### File
+### Options
+
+#### File
 
 ```html
 <div class="flex">
@@ -41,7 +45,28 @@ import { Asset } from '@spectrum-web-components/asset';
 </div>
 ```
 
-### Folder
+#### Folder
+
+```html
+<div class="flex">
+    <sp-asset variant="folder"></sp-asset>
+    <sp-asset variant="folder" label="Named Folder Asset"></sp-asset>
+</div>
+```
+
+### Accessibility
+
+#### Use alt text for slotted images
+
+```html
+<sp-asset style="height: 128px">
+    <img src="https://picsum.photos/500/500" alt="Demo Image" />
+</sp-asset>
+```
+
+#### Use the `label` property to provide a descriptive label for variants
+
+You can use the `label` property to provide a descriptive label. If a `label` is not provided, assets with `variant="file"` will be labelled "File" assets with and `variant="folder"` will be labelled with "Folder".
 
 ```html
 <div class="flex">
