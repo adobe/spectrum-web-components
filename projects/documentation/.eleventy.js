@@ -84,22 +84,35 @@ export default function (eleventyConfig) {
                     attrs: [['class', `headerContainer`]],
                 }
             );
+            const headingClasses = `spectrum-Heading spectrum-Heading--size`;
+            const headingClass =
+                tag === 'h2'
+                    ? `${headingClasses}L`
+                    : tag === 'h3'
+                      ? `${headingClasses}M`
+                      : tag === 'h4'
+                        ? `${headingClasses}S`
+                        : tag === 'h5'
+                          ? 'spectrum-Detail spectrum-Detail--sizeL'
+                          : tag === 'h6'
+                            ? 'spectrum-Detail spectrum-Detail--sizeM'
+                            : '';
             const size =
                 tag === 'h2'
-                    ? 'XL'
+                    ? 'L'
                     : tag === 'h3'
-                      ? 'L'
-                      : tag === 'h4'
                         ? 'M'
+                        : tag === 'h4'
+                        ? 'S'
                         : tag === 'h5'
-                          ? 'S'
-                          : tag === 'h6'
                             ? 'XS'
+                            : tag === 'h6'
+                            ? 'XXS'
                             : '';
             const classes =
                 size === ''
                     ? ''
-                    : `spectrum-Heading spectrum-Heading--size${size}`;
+                    : headingClass;
 
             heading.attrs = [
                 ...heading.attrs,
