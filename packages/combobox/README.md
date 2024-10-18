@@ -119,6 +119,17 @@ mutate() {
 </sp-tab-panel>
 </sp-tabs>
 
+### Quiet
+
+```html
+<sp-field-label for="color">Color</sp-field-label>
+<sp-combobox id="color" quiet>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
 #### Autocomplete
 
 The text in an `<sp-combobox>` is editable, and the string the user has typed in will become the `value` of the combobox unless the user selects a different value in the popup menu.
@@ -156,7 +167,9 @@ The popup menu items are filtered to only those completing the currently-input v
 
 ## States
 
-### Disabled
+<sp-tabs selected="disabled" auto label="Combobox states">
+<sp-tab value="disabled">Disabled</sp-tab>
+<sp-tab-panel value="disabled">
 
 ```html
 <sp-field-label for="color-disabled">Color</sp-field-label>
@@ -167,7 +180,9 @@ The popup menu items are filtered to only those completing the currently-input v
 </sp-combobox>
 ```
 
-### Invalid
+</sp-tab-panel>
+<sp-tab value="invalid">Invalid</sp-tab>
+<sp-tab-panel value="invalid">
 
 ```html
 <sp-field-label for="color-invalid">Color</sp-field-label>
@@ -181,18 +196,9 @@ The popup menu items are filtered to only those completing the currently-input v
 </sp-combobox>
 ```
 
-### Quiet
-
-```html
-<sp-field-label for="color">Color</sp-field-label>
-<sp-combobox id="color" quiet>
-    <sp-menu-item value="red">Red</sp-menu-item>
-    <sp-menu-item value="green">Green</sp-menu-item>
-    <sp-menu-item value="blue">Blue</sp-menu-item>
-</sp-combobox>
-```
-
-### Pending
+</sp-tab-panel>
+<sp-tab value="pending">Pending</sp-tab>
+<sp-tab-panel value="pending">
 
 ```html
 <sp-field-label for="color">Color</sp-field-label>
@@ -202,6 +208,9 @@ The popup menu items are filtered to only those completing the currently-input v
     <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Accessibility
 
