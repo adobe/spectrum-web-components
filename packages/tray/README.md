@@ -23,9 +23,13 @@ When looking to leverage the `Tray` base class as a type and/or for extension pu
 import { Tray } from '@spectrum-web-components/tray';
 ```
 
-## Examples
+### Anatomy
 
-### Dialog
+A tray has a single default `slot`.
+
+<sp-tabs selected="dialog" auto label="Using tray's slot">
+<sp-tab value="dialog">Dialog</sp-tab>
+<sp-tab-panel value="dialog">
 
 ```html
 <overlay-trigger type="modal">
@@ -39,7 +43,9 @@ import { Tray } from '@spectrum-web-components/tray';
 </overlay-trigger>
 ```
 
-### Menu
+</sp-tab-panel>
+<sp-tab value="menu">Menu</sp-tab>
+<sp-tab-panel value="menu">
 
 ```html
 <overlay-trigger type="modal">
@@ -57,6 +63,9 @@ import { Tray } from '@spectrum-web-components/tray';
     </sp-tray>
 </overlay-trigger>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Accessibility
 
