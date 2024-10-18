@@ -107,22 +107,19 @@ export default function (eleventyConfig) {
                         : tag === 'h5'
                             ? 'XS'
                             : tag === 'h6'
-                            ? 'XXS'
+                            ? ''
                             : '';
             const classes =
-                size === ''
-                    ? ''
-                    : headingClass;
-
+                headingClass === ''
+                        ? ''
+                        : headingClass;
+            const comment = `\n<!-- ${tag} / ${headingClass} / ${heading.attrs.join(' ')} -->\n`
             heading.attrs = [
                 ...heading.attrs,
                 ['class', `header-heading ${classes}`],
             ];
 
-            const divider =
-                size == ''
-                    ? ''
-                    : `<sp-divider size="${size.toLowerCase().replace(/x/, '')}"></sp-divider>`;
+            const divider = size == '' ? '' : `<sp-divider size="${size.toLowerCase().replace(/x/, '')}"></sp-divider>`;
 
             // Create the tokens for the full accessible anchor link
             // <a class="deeplink" href="#your-own-platform-is-the-nearest-you-can-get-help-to-setup">
