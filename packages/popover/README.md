@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-popover>` is used to display transient content (menus, options, additional actions etc.) and appears when clicking/tapping on a source (tools, buttons, etc.) It stands out via its visual style (stroke and drop shadow) and floats on top of the rest of the interface. This component does not implement the actual overlay behavior and interactions. This is handled by the [`Overlay`](../overlay) system.
 
@@ -24,7 +24,7 @@ When looking to leverage the `Popover` base class as a type and/or for extension
 import { Popover } from '@spectrum-web-components/popover';
 ```
 
-## Example
+## Anatomy
 
 ```html
 <div
@@ -39,9 +39,9 @@ import { Popover } from '@spectrum-web-components/popover';
 </div>
 ```
 
-## Variants
+### Options
 
-### Default with no tip
+#### Default with no tip
 
 Default popover with no tip and no placement. Popovers will fill up the space of their containing element by default. The default popover has no padding.
 
@@ -64,7 +64,7 @@ Default popover with no tip and no placement. Popovers will fill up the space of
 </div>
 ```
 
-### Dialog popovers
+#### Dialog popovers
 
 To apply a managed amount of padding within your `<sp-popover>`, you may choose to wrap your slotted content in an `<sp-dialog>` element, as seen below:
 
@@ -87,7 +87,7 @@ To apply a managed amount of padding within your `<sp-popover>`, you may choose 
 </div>
 ```
 
-### Popover with tip
+#### Popover with tip
 
 The `placement` attribute can be used to customize how the `<sp-popover>` points to its related content. `placement="top"` will point down to the related content from the top, etc.
 
@@ -185,3 +185,7 @@ The `placement` attribute can be used to customize how the `<sp-popover>` points
 
 </sp-tab-panel>
 </sp-tabs>
+
+### Accessibility
+
+For components used with a popover, see the accessibility guidelines of the particular component.
