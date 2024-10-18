@@ -62,7 +62,7 @@ export default function (eleventyConfig) {
     const markdown = markdownIt(options).use(markdownItAnchors, {
         permalink: true,
         permalinkSymbol: '#',
-        level: [2, 3, 4],
+        level: [2, 3, 4, 5, 6],
         renderPermalink: (slug, opts, state, idx) => {
             // based on fifth version in
             // https://amberwilson.co.uk/blog/are-your-anchor-links-accessible/
@@ -74,7 +74,7 @@ export default function (eleventyConfig) {
             const headingWrapperTokenOpen = Object.assign(
                 new state.Token('div_open', 'div', 1),
                 {
-                    attrs: [['class', `headerContainer`]],
+                    attrs: [['class', `headerContainer spectrum-Typography`]],
                 }
             );
             // Create the closing </div> for the wrapper
@@ -84,27 +84,42 @@ export default function (eleventyConfig) {
                     attrs: [['class', `headerContainer`]],
                 }
             );
+            const headingClasses = `spectrum-Heading spectrum-Heading--size`;
+            const headingClass =
+                tag === 'h2'
+                    ? `${headingClasses}L`
+                    : tag === 'h3'
+                      ? `${headingClasses}M`
+                      : tag === 'h4'
+                        ? `${headingClasses}S`
+                        : tag === 'h5'
+                          ? 'spectrum-Detail spectrum-Detail--sizeL'
+                          : tag === 'h6'
+                            ? 'spectrum-Detail spectrum-Detail--sizeM'
+                            : '';
             const size =
                 tag === 'h2'
-                    ? 'XL'
+                    ? 'L'
                     : tag === 'h3'
-                      ? 'L'
+                      ? 'M'
                       : tag === 'h4'
-                        ? 'M'
+                        ? 'S'
                         : tag === 'h5'
-                          ? 'S'
+                          ? 'XS'
                           : tag === 'h6'
-                            ? 'XS'
+                            ? ''
                             : '';
-            const classes =
-                size === ''
-                    ? ''
-                    : `spectrum-Heading spectrum-Heading--size${size}`;
-
+            const classes = headingClass === '' ? '' : headingClass;
+            const comment = `\n<!-- ${tag} / ${headingClass} / ${heading.attrs.join(' ')} -->\n`;
             heading.attrs = [
                 ...heading.attrs,
                 ['class', `header-heading ${classes}`],
             ];
+
+            const divider =
+                size == ''
+                    ? ''
+                    : `<sp-divider size="${size.toLowerCase().replace(/x/, '')}"></sp-divider>`;
 
             // Create the tokens for the full accessible anchor link
             // <a class="deeplink" href="#your-own-platform-is-the-nearest-you-can-get-help-to-setup">
@@ -116,6 +131,9 @@ export default function (eleventyConfig) {
             //   </span>
             // </a >
             const anchorTokens = [
+                Object.assign(new state.Token('html_block', '', 0), {
+                    content: comment,
+                }),
                 Object.assign(new state.Token('link_open', 'a', 1), {
                     attrs: [
                         ['class', `header-anchor ${classes}`],
@@ -138,13 +156,9 @@ export default function (eleventyConfig) {
                 }),
                 Object.assign(new state.Token('span_close', 'span', -1), {}),
                 Object.assign(new state.Token('link_close', 'a', -1), {}),
-                Object.assign(new state.Token('span_open', 'span', 1), {
-                    attrs: [
-                        ['class', 'header-divider'],
-                        ['size', size.toLowerCase().replace(/x/, '')],
-                    ],
+                Object.assign(new state.Token('html_block', '', 0), {
+                    content: divider,
                 }),
-                Object.assign(new state.Token('span_close', 'span', -1), {}),
             ];
 
             // idx is the index of the heading's first token
