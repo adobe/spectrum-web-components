@@ -162,7 +162,27 @@ When delivered as part of the `spectrum` theme, an `<sp-picker-button>` with the
 
 ### Accessibility
 
-For comprehensive information on menu button accessibility, see WAI ARIA Authoring Practice Guide's [Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/).
+The example below is for demonstration purposes. For an example implementation of `<sp-picker-button>` view [`Combobox.ts`](https://github.com/adobe/spectrum-web-components/blob/main/packages/combobox/src/Combobox.ts). For comprehensive information on menu button accessibility, see WAI ARIA Authoring Practice Guide's [Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/).
+
+```html
+<sp-field-label for="color">Color</sp-field-label>
+<sp-textfield id="color"></sp-textfield>
+<overlay-trigger type="modal">
+    <sp-picker-button
+        aria-controls="colors-menu"
+        aria-expanded="false"
+        aria-haspopup="menu"
+        aria-describedby="color"
+        slot="trigger"
+    ></sp-picker-button>
+    <sp-tray slot="click-content">
+        <sp-menu id="colors-menu">
+            <sp-menu-item>Red</sp-menu-item>
+            <sp-menu-item>Blue</sp-menu-item>
+        </sp-menu>
+    </sp-tray>
+</overlay-trigger>
+```
 
 #### Include a label
 
@@ -179,26 +199,6 @@ To indicate to assistive technology what the button does, do _all_ of the follow
 -   Set the `aria-controls` property to the ID reference of the menu element.
 -   Set the `aria-haspopup` property to `"menu"` or `"true"`.
 -   Set the `aria-expanded` property to `"menu"` or `"true"` or `"false"` depending on whether the menu is displayed.
-
-The example above is for demonstration purposes. For an example implementation of `<sp-picker-button>` view [`Combobox.ts`](https://github.com/adobe/spectrum-web-components/blob/main/packages/combobox/src/Combobox.ts).
-
-```html
-<sp-picker-button
-    aria-label="toggle menu"
-    aria-controls="colors-menu"
-    aria-expanded="false"
-    aria-haspopup="menu"
-></sp-picker-button>
-<sp-menu id="colors-menu" hidden>
-    <sp-menu-item>Red</sp-menu-item>
-    <sp-menu-item>Blue</sp-menu-item>
-</sp-menu>
-<style>
-    [hidden] {
-        display: none;
-    }
-<style>
-```
 
 ### Add keyboard interaction
 
