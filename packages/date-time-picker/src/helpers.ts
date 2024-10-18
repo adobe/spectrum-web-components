@@ -44,3 +44,12 @@ export function convertHourTo24hFormat(
 export function getDayPeriodModifier(hour: number): typeof AM | typeof PM {
     return hour >= PM ? PM : AM;
 }
+
+export function equalSegmentValues(
+    a: (number | undefined)[],
+    b: (number | undefined)[]
+): boolean {
+    return (
+        a.length === b.length && a.every((value, index) => value === b[index])
+    );
+}

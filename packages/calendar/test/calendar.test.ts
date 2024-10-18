@@ -627,10 +627,6 @@ describe('Calendar', () => {
         let availableDateToSelect: CalendarDate;
         let availableDayElement: HTMLElement;
 
-        before(() => {
-            changeSpy = spy();
-        });
-
         beforeEach(() => {
             element.addEventListener('change', changeSpy);
             availableDateToSelect = new CalendarDate(
@@ -641,10 +637,7 @@ describe('Calendar', () => {
             availableDayElement = element.shadowRoot.querySelector(
                 `[data-value='${availableDateToSelect.toString()}']`
             ) as HTMLElement;
-        });
-
-        afterEach(() => {
-            changeSpy.resetHistory();
+            changeSpy = spy();
         });
 
         it("should dispatch 'change' when an available day is selected by clicking", async () => {

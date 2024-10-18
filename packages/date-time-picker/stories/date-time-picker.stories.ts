@@ -46,7 +46,8 @@ type ComponentArgs = {
 };
 
 type StoryArgs = ComponentArgs & {
-    onChange?: (dateTime: Date) => void;
+    onChange?: () => void;
+    onInput?: () => void;
 };
 
 const storyMeta = {
@@ -109,7 +110,7 @@ const storyMeta = {
     },
     parameters: {
         actions: {
-            handles: ['onChange'],
+            handles: ['onChange', 'onInput'],
         },
     },
 };
@@ -142,6 +143,7 @@ const Template = (args: StoryArgs = {}): TemplateResult => {
         <sp-date-time-picker
             ...=${spreadProps(args)}
             @change=${args.onChange}
+            @input=${args.onInput}
         ></sp-date-time-picker>
     `;
 };
@@ -262,12 +264,11 @@ export const negativeHelpText = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-date-time-picker
             ...=${spreadProps(args)}
-            .value=${new CalendarDate(2020, 2, 14)}
             .min=${new CalendarDate(2020, 0, 1)}
             .max=${new CalendarDate(2025, 0, 1)}
         >
             <sp-help-text slot="help-text">
-                Select a date for your event
+                Change state to invalid to see the negative help text
             </sp-help-text>
             <sp-help-text slot="negative-help-text">
                 Please select a date between 2020 and 2025
@@ -275,7 +276,7 @@ export const negativeHelpText = (args: StoryArgs): TemplateResult => {
         </sp-date-time-picker>
     `;
 };
-minAndMaxDates.argTypes = dateControlsDisabledArgTypes;
+negativeHelpText.argTypes = dateControlsDisabledArgTypes;
 
 export const customIcon = (): TemplateResult => {
     return html`
