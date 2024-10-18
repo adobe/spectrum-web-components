@@ -25,12 +25,10 @@ import { Combobox } from '@spectrum-web-components/combobox';
 
 ### Anatomy
 
-## Providing options
-
 Combobox options are presented as a popup menu.
 Menu items can be provided via markup as `<sp-menu-item>` children, or by assigning an array to the `options` property of an `<sp-combobox>`.
 
-### Options property
+#### Menu items via the `options` property
 
 Instead of providing `<sp-menu-item>` children, you can assign an array of `ComboboxOptions` to the `options` property, and `<sp-combobox>` will create matching menu items:
 
@@ -46,7 +44,7 @@ Instead of providing `<sp-menu-item>` children, you can assign an array of `Comb
 </script>
 ```
 
-### Dynamic options
+#### Menu items via dynamic options
 
 When you replace the `options` Array, or add/remove `<sp-menu-item>` children, the `<sp-combobox>` will detect that change and update its popup menu contents.
 For example, using [Lit](https://lit.dev/):
