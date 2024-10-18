@@ -34,7 +34,7 @@ import { Button, ClearButton, CloseButton } from '@spectrum-web-components/butto
 #### Content
 
 `<sp-button>` elements can be provided a visible label,
-a label with an icon, or just an icon.
+a label and an icon, or just an icon.
 
 An icon is provided by placing an icon element to the `icon` slot.
 
