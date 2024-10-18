@@ -364,7 +364,7 @@ Note: `pending` state of the `<sp-button>` element is applied after 1s delay to 
 #### Handling events
 
 Events handlers for clicks and other user actions can be registered on a
-`<sp-button>` as on a standard HTML `<button>` element.
+`<sp-button>` as one would on a standard HTML `<button>` element.
 
 ```html
 <sp-button onclick="spAlert(this, '<sp-button> clicked!')">Click me</sp-button>
