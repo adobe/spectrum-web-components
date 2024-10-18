@@ -8,9 +8,7 @@
         "selector-pseudo-element-colon-notation": ["single", {}],
         "custom-property-pattern": "^_?([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
         "no-duplicate-selectors": null,
-        "selector-class-pattern": null,
-        "no-descending-specificity": null,
-        "declaration-block-no-redundant-longhand-properties": null
+        "no-descending-specificity": null
     },
     "overrides": [
         {
