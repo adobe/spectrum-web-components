@@ -51,9 +51,9 @@ An `<sp-progress-circle>` is used to visually show the progression of a system o
 </div>
 ```
 
-### Static
+### Static color
 
-If you display your `<sp-progress-cicle>` element over the top of other content, e.g. an image or an alternate background color, it may become appropariate to update the colors with which the circle and loading progress indicator are delivered. To do this, leverage the `static` attribute with the value of `white` to ensure the content of your page is being delivered accessibly.
+If you display your `<sp-progress-cicle>` element over the top of other content, e.g. an image or an alternate background color, it may become appropariate to update the colors with which the circle and loading progress indicator are delivered. To do this, leverage the `static-color` attribute with the value of `white` to ensure the content of your page is being delivered accessibly.
 
 ```html
 <div

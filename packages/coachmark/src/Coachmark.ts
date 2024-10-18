@@ -30,7 +30,6 @@ import type { CoachmarkItem } from './CoachmarkItem.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
-import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 
 /**
  * @element sp-coachmark

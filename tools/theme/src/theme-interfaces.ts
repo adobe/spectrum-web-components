@@ -15,14 +15,8 @@ export type ShadowRootWithAdoptedStyleSheets = HTMLElement['shadowRoot'] & {
     adoptedStyleSheets?: CSSStyleSheet[];
 };
 
-export type FragmentType =
-    | 'color'
-    | 'scale'
-    | 'system'
-    | 'theme'
-    | 'core'
-    | 'app';
-export type SettableFragmentTypes = 'color' | 'scale' | 'system' | 'theme';
+export type FragmentType = 'color' | 'scale' | 'system' | 'core' | 'app';
+export type SettableFragmentTypes = 'color' | 'scale' | 'system';
 export type FragmentMap = Map<string, { name: string; styles: CSSResultGroup }>;
 export type ThemeFragmentMap = Map<FragmentType, FragmentMap>;
 
