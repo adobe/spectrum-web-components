@@ -67,7 +67,7 @@ An image icon can be supplied via the `src` attribute. Remember that you cannot 
 
 #### Element icon
 
-Icons can also be supplied as HTML elements to be applied via the default `<slot>`.
+Icons can also be supplied via HTML elements and are applied via the default `<slot>`.
 
 ```html
 <sp-icon>
