@@ -34,9 +34,9 @@ Names of the icons on this page are provided by the [`<sp-icons-medium>` icon se
 
 ### Options
 
-Icons are available in various sizes in Spectrum, ranging from `s` to `xxl`. By default, an `sp-icon` without a `size` attribute will appear as if it were `size="m"`. We can specify the size via `size` attribute.
-
 #### Sizes
+
+Icons are available in various sizes in Spectrum ranging from `s` to `xxl`. By default an `sp-icon` without a `size` attribute will appear as if it were `size="m"`. We can specify the size via `size` attribute.
 
 ```html
 <sp-icon size="s" name="ui:Arrow100"></sp-icon>
@@ -65,7 +65,7 @@ An image icon can be supplied via the `src` attribute. Remember that you cannot 
 ></sp-icon>
 ```
 
-#### Element icon
+#### HTML/SVG Element icon
 
 Icons can also be supplied via HTML elements and are applied via the default `<slot>`.
 
