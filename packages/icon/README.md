@@ -56,7 +56,7 @@ Icons apply their color as `currentColor` so change the `color` property of the 
 
 #### Image icon
 
-An image icon can be supplied via the `src` attribute. Remember that you cannot style the contents of an image via CSS, so use graphics that are appropriately prepared for including in your applications design requirements.
+An image icon can be supplied via the `src` attribute. Remember that you cannot style the contents of an image via CSS, so use graphics that are appropriate for your application's design requirements.
 
 ```html
 <sp-icon
