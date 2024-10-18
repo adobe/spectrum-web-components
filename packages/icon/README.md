@@ -91,7 +91,7 @@ Icons can also be supplied via HTML elements and are applied via the default `<s
 
 If no meaning is lost by visually hiding an icon, it is considered decorative. Decorative icons should not have a label and should be hidden from assistive technology. `aria-hidden` is set to true by default for icons.
 
-If an icon adds meaning, an label is required. Using the `label` attribute adds the label text as the `aria-label` of the icon, and removes the `aria-hidden` attribute.
+If an icon does add meaning, a label is required. Use the `label` attribute to set the label's text as the `aria-label` of the icon and remove the `aria-hidden` attribute.
 
 ```html
 <sp-icon name="ui:Arrow100" label="Arrow pointing to the right"></sp-icon>
