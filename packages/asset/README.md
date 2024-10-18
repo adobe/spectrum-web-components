@@ -26,7 +26,7 @@ import { Asset } from '@spectrum-web-components/asset';
 
 ### Anatomy
 
-An asset has a single default `slot`.
+An asset has a single default `slot`. Use this slot for an image asset.
 
 ```html
 <sp-asset style="height: 128px">
@@ -36,21 +36,14 @@ An asset has a single default `slot`.
 
 ### Options
 
-#### File
+#### Variant
+
+Use `variant="file"`for a representation of a file or `variant="folder"` a representation of a folder.
 
 ```html
 <div class="flex">
     <sp-asset variant="file"></sp-asset>
-    <sp-asset variant="file" label="Named File Asset"></sp-asset>
-</div>
-```
-
-#### Folder
-
-```html
-<div class="flex">
     <sp-asset variant="folder"></sp-asset>
-    <sp-asset variant="folder" label="Named Folder Asset"></sp-asset>
 </div>
 ```
 
@@ -70,7 +63,7 @@ You can use the `label` property to provide a descriptive label. If a `label` is
 
 ```html
 <div class="flex">
-    <sp-asset variant="folder"></sp-asset>
+    <sp-asset variant="file" label="Named File Asset"></sp-asset>
     <sp-asset variant="folder" label="Named Folder Asset"></sp-asset>
 </div>
 ```
