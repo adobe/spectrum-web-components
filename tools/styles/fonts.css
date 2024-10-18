@@ -1,50 +1,18 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
-:host,
-:root {
-    --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro',
-        -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro',
-        -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-font-family: var(--spectrum-sans-font-family-stack);
-    --spectrum-font-style: var(--spectrum-default-font-style);
-    --spectrum-font-size: var(--spectrum-font-size-100);
-
+.spectrum-Typography {
     font-family: var(--spectrum-font-family);
-    font-size: var(--spectrum-font-size);
     font-style: var(--spectrum-font-style);
+    font-size: var(--spectrum-font-size);
 }
 
-.spectrum:lang(ar) {
+.spectrum-Typography:lang(ar) {
     font-family: var(--spectrum-font-family-ar);
 }
 
-.spectrum:lang(he) {
+.spectrum-Typography:lang(he) {
     font-family: var(--spectrum-font-family-he);
 }
 
-.spectrum-Heading {
-    --spectrum-heading-sans-serif-font-family: var(
-        --spectrum-sans-font-family-stack
-    );
-    --spectrum-heading-serif-font-family: var(
-        --spectrum-serif-font-family-stack
-    );
-    --spectrum-heading-cjk-font-family: var(--spectrum-cjk-font-family-stack);
-    --spectrum-heading-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
-    --spectrum-heading-font-color: var(--spectrum-heading-color);
+.spectrum-Typography .spectrum-Heading {
     --spectrum-heading-margin-start: calc(
         var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
             var(--spectrum-heading-margin-top-multiplier)
@@ -54,62 +22,30 @@ governing permissions and limitations under the License.
             var(--spectrum-heading-margin-bottom-multiplier)
     );
 }
-@media (forced-colors: active) {
-    .spectrum-Heading {
-        --highcontrast-heading-font-color: text;
-    }
+
+.spectrum-Typography .spectrum-Body {
+    --spectrum-body-margin-end: calc(
+        var(--mod-body-font-size, var(--spectrum-body-font-size)) *
+            var(--spectrum-body-margin-multiplier)
+    );
 }
 
-.spectrum-Heading--sizeXXS {
-    --spectrum-heading-font-size: var(--spectrum-heading-size-xxs);
-    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxs);
-}
-
-.spectrum-Heading--sizeXS {
-    --spectrum-heading-font-size: var(--spectrum-heading-size-xs);
-    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xs);
-}
-
-.spectrum-Heading--sizeS {
-    --spectrum-heading-font-size: var(--spectrum-heading-size-s);
-    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-s);
-}
-
-.spectrum-Heading--sizeM {
-    --spectrum-heading-font-size: var(--spectrum-heading-size-m);
-    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-m);
-}
-
-.spectrum-Heading--sizeL {
-    --spectrum-heading-font-size: var(--spectrum-heading-size-l);
-    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-l);
-}
-
-.spectrum-Heading--sizeXL {
-    --spectrum-heading-font-size: var(--spectrum-heading-size-xl);
-    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xl);
-}
-
-.spectrum-Heading--sizeXXL {
-    --spectrum-heading-font-size: var(--spectrum-heading-size-xxl);
-    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxl);
-}
-
-.spectrum-Heading--sizeXXXL {
-    --spectrum-heading-font-size: var(--spectrum-heading-size-xxxl);
-    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxxl);
+.spectrum-Typography .spectrum-Detail {
+    --spectrum-detail-margin-start: calc(
+        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
+            var(--spectrum-detail-margin-top-multiplier)
+    );
+    --spectrum-detail-margin-end: calc(
+        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
+            var(--spectrum-detail-margin-bottom-multiplier)
+    );
 }
 
 .spectrum-Heading {
-    color: var(
-        --highcontrast-heading-font-color,
-        var(--mod-heading-font-color, var(--spectrum-heading-font-color))
-    );
     font-family: var(
         --mod-heading-sans-serif-font-family,
         var(--spectrum-heading-sans-serif-font-family)
     );
-    font-size: var(--mod-heading-font-size, var(--spectrum-heading-font-size));
     font-style: var(
         --mod-heading-sans-serif-font-style,
         var(--spectrum-heading-sans-serif-font-style)
@@ -118,9 +54,22 @@ governing permissions and limitations under the License.
         --mod-heading-sans-serif-font-weight,
         var(--spectrum-heading-sans-serif-font-weight)
     );
+    font-size: var(--mod-heading-font-size, var(--spectrum-heading-font-size));
+    color: var(
+        --highcontrast-heading-font-color,
+        var(--mod-heading-font-color, var(--spectrum-heading-font-color))
+    );
     line-height: var(
         --mod-heading-line-height,
         var(--spectrum-heading-line-height)
+    );
+    margin-block-start: var(
+        --mod-heading-margin-start,
+        var(--spectrum-heading-margin-start, 0)
+    );
+    margin-block-end: var(
+        --mod-heading-margin-end,
+        var(--spectrum-heading-margin-end, 0)
     );
 }
 
@@ -168,10 +117,6 @@ governing permissions and limitations under the License.
         --mod-heading-cjk-font-family,
         var(--spectrum-heading-cjk-font-family)
     );
-    font-size: var(
-        --mod-heading-cjk-font-size,
-        var(--spectrum-heading-cjk-font-size)
-    );
     font-style: var(
         --mod-heading-cjk-font-style,
         var(--spectrum-heading-cjk-font-style)
@@ -180,13 +125,17 @@ governing permissions and limitations under the License.
         --mod-heading-cjk-font-weight,
         var(--spectrum-heading-cjk-font-weight)
     );
-    letter-spacing: var(
-        --mod-heading-cjk-letter-spacing,
-        var(--spectrum-heading-cjk-letter-spacing)
+    font-size: var(
+        --mod-heading-cjk-font-size,
+        var(--spectrum-heading-cjk-font-size)
     );
     line-height: var(
         --mod-heading-cjk-line-height,
         var(--spectrum-heading-cjk-line-height)
+    );
+    letter-spacing: var(
+        --mod-heading-cjk-letter-spacing,
+        var(--spectrum-heading-cjk-letter-spacing)
     );
 }
 
@@ -621,74 +570,11 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Heading {
-    margin-block-end: var(
-        --mod-heading-margin-end,
-        var(--spectrum-heading-margin-end)
-    );
-    margin-block-start: var(
-        --mod-heading-margin-start,
-        var(--spectrum-heading-margin-start)
-    );
-}
-
 .spectrum-Body {
-    --spectrum-body-sans-serif-font-family: var(
-        --spectrum-sans-font-family-stack
-    );
-    --spectrum-body-serif-font-family: var(--spectrum-serif-font-family-stack);
-    --spectrum-body-cjk-font-family: var(--spectrum-cjk-font-family-stack);
-    --spectrum-body-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
-    --spectrum-body-margin: calc(
-        var(--mod-body-font-size, var(--spectrum-body-font-size)) *
-            var(--spectrum-body-margin-multiplier)
-    );
-    --spectrum-body-font-color: var(--spectrum-body-color);
-}
-@media (forced-colors: active) {
-    .spectrum-body {
-        --highcontrast-body-font-color: text;
-    }
-}
-
-.spectrum-Body--sizeXS {
-    --spectrum-body-font-size: var(--spectrum-body-size-xs);
-}
-
-.spectrum-Body--sizeS {
-    --spectrum-body-font-size: var(--spectrum-body-size-s);
-}
-
-.spectrum-Body--sizeM {
-    --spectrum-body-font-size: var(--spectrum-body-size-m);
-}
-
-.spectrum-Body--sizeL {
-    --spectrum-body-font-size: var(--spectrum-body-size-l);
-}
-
-.spectrum-Body--sizeXL {
-    --spectrum-body-font-size: var(--spectrum-body-size-xl);
-}
-
-.spectrum-Body--sizeXXL {
-    --spectrum-body-font-size: var(--spectrum-body-size-xxl);
-}
-
-.spectrum-Body--sizeXXXL {
-    --spectrum-body-font-size: var(--spectrum-body-size-xxxl);
-}
-
-.spectrum-Body {
-    color: var(
-        --highcontrast-body-font-color,
-        var(--mod-body-font-color, var(--spectrum-body-font-color))
-    );
     font-family: var(
         --mod-body-sans-serif-font-family,
         var(--spectrum-body-sans-serif-font-family)
     );
-    font-size: var(--mod-body-font-size, var(--spectrum-body-font-size));
     font-style: var(
         --mod-body-sans-serif-font-style,
         var(--spectrum-body-sans-serif-font-style)
@@ -697,7 +583,20 @@ governing permissions and limitations under the License.
         --mod-body-sans-serif-font-weight,
         var(--spectrum-body-sans-serif-font-weight)
     );
+    font-size: var(--mod-body-font-size, var(--spectrum-body-font-size));
+    color: var(
+        --highcontrast-body-font-color,
+        var(--mod-body-font-color, var(--spectrum-body-font-color))
+    );
     line-height: var(--mod-body-line-height, var(--spectrum-body-line-height));
+    margin-block-start: var(
+        --mod-body-margin-start,
+        var(--mod-body-margin, var(--spectrum-body-margin-start, 0))
+    );
+    margin-block-end: var(
+        --mod-body-margin-end,
+        var(--mod-body-margin, var(--spectrum-body-margin-end, 0))
+    );
 }
 
 .spectrum-Body .spectrum-Body-strong,
@@ -752,13 +651,13 @@ governing permissions and limitations under the License.
         --mod-body-cjk-font-weight,
         var(--spectrum-body-cjk-font-weight)
     );
-    letter-spacing: var(
-        --mod-body-cjk-letter-spacing,
-        var(--spectrum-body-cjk-letter-spacing)
-    );
     line-height: var(
         --mod-body-cjk-line-height,
         var(--spectrum-body-cjk-line-height)
+    );
+    letter-spacing: var(
+        --mod-body-cjk-letter-spacing,
+        var(--spectrum-body-cjk-letter-spacing)
     );
 }
 
@@ -818,13 +717,13 @@ governing permissions and limitations under the License.
         --mod-body-serif-font-family,
         var(--spectrum-body-serif-font-family)
     );
-    font-style: var(
-        --mod-body-serif-font-style,
-        var(--spectrum-body-serif-font-style)
-    );
     font-weight: var(
         --mod-body-serif-font-weight,
         var(--spectrum-body-serif-font-weight)
+    );
+    font-style: var(
+        --mod-body-serif-font-style,
+        var(--spectrum-body-serif-font-style)
     );
 }
 
@@ -865,60 +764,11 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Body {
-    margin-block-end: var(--mod-body-margin, var(--spectrum-body-margin));
-}
-
 .spectrum-Detail {
-    --spectrum-detail-sans-serif-font-family: var(
-        --spectrum-sans-font-family-stack
-    );
-    --spectrum-detail-serif-font-family: var(
-        --spectrum-serif-font-family-stack
-    );
-    --spectrum-detail-cjk-font-family: var(--spectrum-cjk-font-family-stack);
-    --spectrum-detail-margin-start: calc(
-        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
-            var(--spectrum-detail-margin-top-multiplier)
-    );
-    --spectrum-detail-margin-end: calc(
-        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
-            var(--spectrum-detail-margin-bottom-multiplier)
-    );
-    --spectrum-detail-font-color: var(--spectrum-detail-color);
-}
-@media (forced-colors: active) {
-    .spectrum-Detail {
-        --highcontrast-detail-font-color: text;
-    }
-}
-
-.spectrum-Detail--sizeS {
-    --spectrum-detail-font-size: var(--spectrum-detail-size-s);
-}
-
-.spectrum-Detail--sizeM {
-    --spectrum-detail-font-size: var(--spectrum-detail-size-m);
-}
-
-.spectrum-Detail--sizeL {
-    --spectrum-detail-font-size: var(--spectrum-detail-size-l);
-}
-
-.spectrum-Detail--sizeXL {
-    --spectrum-detail-font-size: var(--spectrum-detail-size-xl);
-}
-
-.spectrum-Detail {
-    color: var(
-        --highcontrast-detail-font-color,
-        var(--mod-detail-font-color, var(--spectrum-detail-font-color))
-    );
     font-family: var(
         --mod-detail-sans-serif-font-family,
         var(--spectrum-detail-sans-serif-font-family)
     );
-    font-size: var(--mod-detail-font-size, var(--spectrum-detail-font-size));
     font-style: var(
         --mod-detail-sans-serif-font-style,
         var(--spectrum-detail-sans-serif-font-style)
@@ -927,15 +777,28 @@ governing permissions and limitations under the License.
         --mod-detail-sans-serif-font-weight,
         var(--spectrum-detail-sans-serif-font-weight)
     );
-    letter-spacing: var(
-        --mod-detail-letter-spacing,
-        var(--spectrum-detail-letter-spacing)
+    font-size: var(--mod-detail-font-size, var(--spectrum-detail-font-size));
+    color: var(
+        --highcontrast-detail-font-color,
+        var(--mod-detail-font-color, var(--spectrum-detail-font-color))
     );
     line-height: var(
         --mod-detail-line-height,
         var(--spectrum-detail-line-height)
     );
+    letter-spacing: var(
+        --mod-detail-letter-spacing,
+        var(--spectrum-detail-letter-spacing)
+    );
     text-transform: uppercase;
+    margin-block-start: var(
+        --mod-detail-margin-start,
+        var(--spectrum-detail-margin-start, 0)
+    );
+    margin-block-end: var(
+        --mod-detail-margin-end,
+        var(--spectrum-detail-margin-end, 0)
+    );
 }
 
 .spectrum-Detail .spectrum-Detail-strong,
@@ -1257,58 +1120,24 @@ governing permissions and limitations under the License.
     );
 }
 
-.spectrum-Typography .spectrum-Detail {
-    margin-block-end: var(
-        --mod-detail-margin-end,
-        var(--spectrum-detail-margin-end)
-    );
-    margin-block-start: var(
-        --mod-detail-margin-start,
-        var(--spectrum-detail-margin-start)
-    );
-}
-
 .spectrum-Code {
-    --spectrum-code-font-family: var(--spectrum-code-font-family-stack);
-    --spectrum-code-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
-    --spectrum-code-font-color: var(--spectrum-code-color);
-}
-@media (forced-colors: active) {
-    .spectrum-Code {
-        --highcontrast-code-font-color: text;
-    }
-}
-
-.spectrum-Code--sizeXS {
-    --spectrum-code-font-size: var(--spectrum-code-size-xs);
-}
-
-.spectrum-Code--sizeS {
-    --spectrum-code-font-size: var(--spectrum-code-size-s);
-}
-
-.spectrum-Code--sizeM {
-    --spectrum-code-font-size: var(--spectrum-code-size-m);
-}
-
-.spectrum-Code--sizeL {
-    --spectrum-code-font-size: var(--spectrum-code-size-l);
-}
-
-.spectrum-Code--sizeXL {
-    --spectrum-code-font-size: var(--spectrum-code-size-xl);
-}
-
-.spectrum-Code {
+    font-family: var(--mod-code-font-family, var(--spectrum-code-font-family));
+    font-style: var(--mod-code-font-style, var(--spectrum-code-font-style));
+    font-weight: var(--mod-code-font-weight, var(--spectrum-code-font-weight));
+    font-size: var(--mod-code-font-size, var(--spectrum-code-font-size));
+    line-height: var(--mod-code-line-height, var(--spectrum-code-line-height));
     color: var(
         --highcontrast-code-font-color,
         var(--mod-code-font-color, var(--spectrum-code-font-color))
     );
-    font-family: var(--mod-code-font-family, var(--spectrum-code-font-family));
-    font-size: var(--mod-code-font-size, var(--spectrum-code-font-size));
-    font-style: var(--mod-code-font-style, var(--spectrum-code-font-style));
-    font-weight: var(--mod-code-font-weight, var(--spectrum-code-font-weight));
-    line-height: var(--mod-code-line-height, var(--spectrum-code-line-height));
+    margin-block-start: var(
+        --mod-code-margin-start,
+        var(--spectrum-code-margin-end, 0)
+    );
+    margin-block-end: var(
+        --mod-code-margin-end,
+        var(--spectrum-code-margin-end, 0)
+    );
 }
 
 .spectrum-Code .spectrum-Code-strong,
@@ -1363,13 +1192,13 @@ governing permissions and limitations under the License.
         --mod-code-cjk-font-weight,
         var(--spectrum-code-cjk-font-weight)
     );
-    letter-spacing: var(
-        --mod-code-cjk-letter-spacing,
-        var(--spectrum-code-cjk-letter-spacing)
-    );
     line-height: var(
         --mod-code-cjk-line-height,
         var(--spectrum-code-cjk-line-height)
+    );
+    letter-spacing: var(
+        --mod-code-cjk-letter-spacing,
+        var(--spectrum-code-cjk-letter-spacing)
     );
 }
 
@@ -1422,4 +1251,168 @@ governing permissions and limitations under the License.
         --mod-code-cjk-strong-emphasized-font-weight,
         var(--spectrum-code-cjk-strong-emphasized-font-weight)
     );
+}
+
+.spectrum-Heading {
+    --spectrum-heading-sans-serif-font-family: var(
+        --system-heading-sans-serif-font-family
+    );
+    --spectrum-heading-serif-font-family: var(
+        --system-heading-serif-font-family
+    );
+    --spectrum-heading-cjk-font-family: var(--system-heading-cjk-font-family);
+    --spectrum-heading-cjk-letter-spacing: var(
+        --system-heading-cjk-letter-spacing
+    );
+    --spectrum-heading-font-color: var(--system-heading-font-color);
+    --spectrum-heading-font-size: var(--system-heading-font-size);
+    --spectrum-heading-cjk-font-size: var(--system-heading-cjk-font-size);
+}
+
+.spectrum-Heading--sizeXXS {
+    --spectrum-heading-font-size: var(--system-heading-size-xxs-font-size);
+    --spectrum-heading-cjk-font-size: var(
+        --system-heading-size-xxs-cjk-font-size
+    );
+}
+
+.spectrum-Heading--sizeXS {
+    --spectrum-heading-font-size: var(--system-heading-size-xs-font-size);
+    --spectrum-heading-cjk-font-size: var(
+        --system-heading-size-xs-cjk-font-size
+    );
+}
+
+.spectrum-Heading--sizeS {
+    --spectrum-heading-font-size: var(--system-heading-size-s-font-size);
+    --spectrum-heading-cjk-font-size: var(
+        --system-heading-size-s-cjk-font-size
+    );
+}
+
+.spectrum-Heading--sizeM {
+    --spectrum-heading-font-size: var(--system-heading-size-m-font-size);
+    --spectrum-heading-cjk-font-size: var(
+        --system-heading-size-m-cjk-font-size
+    );
+}
+
+.spectrum-Heading--sizeL {
+    --spectrum-heading-font-size: var(--system-heading-size-l-font-size);
+    --spectrum-heading-cjk-font-size: var(
+        --system-heading-size-l-cjk-font-size
+    );
+}
+
+.spectrum-Heading--sizeXL {
+    --spectrum-heading-font-size: var(--system-heading-size-xl-font-size);
+    --spectrum-heading-cjk-font-size: var(
+        --system-heading-size-xl-cjk-font-size
+    );
+}
+
+.spectrum-Heading--sizeXXL {
+    --spectrum-heading-font-size: var(--system-heading-size-xxl-font-size);
+    --spectrum-heading-cjk-font-size: var(
+        --system-heading-size-xxl-cjk-font-size
+    );
+}
+
+.spectrum-Heading--sizeXXXL {
+    --spectrum-heading-font-size: var(--system-heading-size-xxxl-font-size);
+    --spectrum-heading-cjk-font-size: var(
+        --system-heading-size-xxxl-cjk-font-size
+    );
+}
+
+.spectrum-Body {
+    --spectrum-body-sans-serif-font-family: var(
+        --system-body-sans-serif-font-family
+    );
+    --spectrum-body-serif-font-family: var(--system-body-serif-font-family);
+    --spectrum-body-cjk-font-family: var(--system-body-cjk-font-family);
+    --spectrum-body-cjk-letter-spacing: var(--system-body-cjk-letter-spacing);
+    --spectrum-body-font-color: var(--system-body-font-color);
+    --spectrum-body-font-size: var(--system-body-font-size);
+}
+
+.spectrum-Body--sizeXS {
+    --spectrum-body-font-size: var(--system-body-size-xs-font-size);
+}
+
+.spectrum-Body--sizeS {
+    --spectrum-body-font-size: var(--system-body-size-s-font-size);
+}
+
+.spectrum-Body--sizeM {
+    --spectrum-body-font-size: var(--system-body-size-m-font-size);
+}
+
+.spectrum-Body--sizeL {
+    --spectrum-body-font-size: var(--system-body-size-l-font-size);
+}
+
+.spectrum-Body--sizeXL {
+    --spectrum-body-font-size: var(--system-body-size-xl-font-size);
+}
+
+.spectrum-Body--sizeXXL {
+    --spectrum-body-font-size: var(--system-body-size-xxl-font-size);
+}
+
+.spectrum-Body--sizeXXXL {
+    --spectrum-body-font-size: var(--system-body-size-xxxl-font-size);
+}
+
+.spectrum-Detail {
+    --spectrum-detail-sans-serif-font-family: var(
+        --system-detail-sans-serif-font-family
+    );
+    --spectrum-detail-serif-font-family: var(--system-detail-serif-font-family);
+    --spectrum-detail-cjk-font-family: var(--system-detail-cjk-font-family);
+    --spectrum-detail-font-color: var(--system-detail-font-color);
+    --spectrum-detail-font-size: var(--system-detail-font-size);
+}
+
+.spectrum-Detail--sizeS {
+    --spectrum-detail-font-size: var(--system-detail-size-s-font-size);
+}
+
+.spectrum-Detail--sizeM {
+    --spectrum-detail-font-size: var(--system-detail-size-m-font-size);
+}
+
+.spectrum-Detail--sizeL {
+    --spectrum-detail-font-size: var(--system-detail-size-l-font-size);
+}
+
+.spectrum-Detail--sizeXL {
+    --spectrum-detail-font-size: var(--system-detail-size-xl-font-size);
+}
+
+.spectrum-Code {
+    --spectrum-code-font-family: var(--system-code-font-family);
+    --spectrum-code-cjk-letter-spacing: var(--system-code-cjk-letter-spacing);
+    --spectrum-code-font-color: var(--system-code-font-color);
+    --spectrum-code-font-size: var(--system-code-font-size);
+}
+
+.spectrum-Code--sizeXS {
+    --spectrum-code-font-size: var(--system-code-size-xs-font-size);
+}
+
+.spectrum-Code--sizeS {
+    --spectrum-code-font-size: var(--system-code-size-s-font-size);
+}
+
+.spectrum-Code--sizeM {
+    --spectrum-code-font-size: var(--system-code-size-m-font-size);
+}
+
+.spectrum-Code--sizeL {
+    --spectrum-code-font-size: var(--system-code-size-l-font-size);
+}
+
+.spectrum-Code--sizeXL {
+    --spectrum-code-font-size: var(--system-code-size-xl-font-size);
 }

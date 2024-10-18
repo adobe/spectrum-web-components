@@ -24,6 +24,7 @@ import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe
 
 import styles from './picker-button.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
@@ -39,7 +40,7 @@ export class PickerButton extends SizedMixin(
     ObserveSlotPresence(ButtonBase, '[slot="label"]')
 ) {
     public static override get styles(): CSSResultArray {
-        return [styles, chevronStyles];
+        return [styles, chevronStyles, chevronIconOverrides];
     }
 
     @property({ type: Boolean, reflect: true })

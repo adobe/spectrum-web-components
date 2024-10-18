@@ -12,48 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-dialog-fullscreen-header-text-size: 28px;
-    --spectrum-dialog-min-inline-size: 288px;
-    --spectrum-dialog-confirm-small-width: 400px;
-    --spectrum-dialog-confirm-medium-width: 480px;
-    --spectrum-dialog-confirm-large-width: 640px;
-    --spectrum-dialog-confirm-divider-block-spacing-start: var(
-        --spectrum-spacing-300
-    );
-    --spectrum-dialog-confirm-divider-block-spacing-end: var(
-        --spectrum-spacing-200
-    );
-    --spectrum-dialog-confirm-description-text-color: var(--spectrum-gray-800);
-    --spectrum-dialog-confirm-title-text-color: var(--spectrum-gray-900);
-    --spectrum-dialog-confirm-description-text-line-height: var(
-        --spectrum-line-height-100
-    );
-    --spectrum-dialog-confirm-title-text-line-height: var(
-        --spectrum-line-height-100
-    );
-    --spectrum-dialog-heading-font-weight: var(
-        --spectrum-heading-sans-serif-font-weight
-    );
-    --spectrum-dialog-confirm-description-padding: var(--spectrum-spacing-50);
-    --spectrum-dialog-confirm-description-margin: calc(
-        var(--spectrum-spacing-50) * -1
-    );
-    --spectrum-dialog-confirm-footer-padding-top: var(--spectrum-spacing-600);
-    --spectrum-dialog-confirm-gap-size: var(
-        --spectrum-component-pill-edge-to-text-100
-    );
-    --spectrum-dialog-confirm-buttongroup-padding-top: var(
-        --spectrum-spacing-600
-    );
-    --spectrum-dialog-confirm-close-button-size: var(
-        --spectrum-component-height-100
-    );
-    --spectrum-dialog-confirm-close-button-padding: calc(
-        26px - var(--spectrum-component-bottom-to-text-300)
-    );
-    --spectrum-dialog-confirm-divider-height: var(--spectrum-spacing-50);
     box-sizing: border-box;
-    inline-size: -moz-fit-content;
     inline-size: fit-content;
     min-inline-size: var(
         --mod-dialog-min-inline-size,
@@ -112,6 +71,14 @@ governing permissions and limitations under the License.
             var(--spectrum-dialog-confirm-padding-grid)
         )
         auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
+    grid-template-areas:
+        'hero hero hero hero hero hero'
+        '. . . . . .'
+        '. heading header header header .'
+        '. divider divider divider divider .'
+        '. content content content content .'
+        '. footer footer buttonGroup buttonGroup .'
+        '. . . . . .';
     grid-template-rows:
         auto var(
             --mod-dialog-confirm-padding-grid,
@@ -122,14 +89,6 @@ governing permissions and limitations under the License.
             var(--spectrum-dialog-confirm-padding-grid)
         );
     inline-size: 100%;
-    grid-template-areas:
-        'hero hero hero hero hero hero'
-        '. . . . . .'
-        '. heading header header header .'
-        '. divider divider divider divider .'
-        '. content content content content .'
-        '. footer footer buttonGroup buttonGroup .'
-        '. . . . . .';
     display: grid;
 }
 
@@ -306,6 +265,14 @@ governing permissions and limitations under the License.
             --mod-dialog-confirm-padding-grid,
             var(--spectrum-dialog-confirm-padding-grid)
         );
+    grid-template-areas:
+        'hero hero hero hero hero hero hero'
+        '. . . . . closeButton closeButton'
+        '. heading header header typeIcon closeButton closeButton'
+        '. divider divider divider divider divider .'
+        '. content content content content content .'
+        '. footer footer buttonGroup buttonGroup buttonGroup .'
+        '. . . . . . .';
     grid-template-rows:
         auto var(
             --mod-dialog-confirm-padding-grid,
@@ -315,14 +282,6 @@ governing permissions and limitations under the License.
             --mod-dialog-confirm-padding-grid,
             var(--spectrum-dialog-confirm-padding-grid)
         );
-    grid-template-areas:
-        'hero hero hero hero hero hero hero'
-        '. . . . . closeButton closeButton'
-        '. heading header header typeIcon closeButton closeButton'
-        '. divider divider divider divider divider .'
-        '. content content content content content .'
-        '. footer footer buttonGroup buttonGroup buttonGroup .'
-        '. . . . . . .';
 }
 
 :host([dismissable]) .grid .button-group {

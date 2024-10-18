@@ -11,7 +11,33 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.chevron {
+    block-size: var(--spectrum-menu-item-checkmark-height);
+    inline-size: var(--spectrum-menu-item-checkmark-width);
+    grid-area: chevronArea;
+    align-self: center;
+    margin-inline-end: var(
+        --mod-menu-item-text-to-control,
+        var(--spectrum-menu-item-text-to-control)
+    );
+}
+
 .spectrum-Menu-back:focus-visible {
+    box-shadow: inset
+        calc(
+            var(
+                    --mod-menu-item-focus-indicator-width,
+                    var(--spectrum-menu-item-focus-indicator-width)
+                ) * 1
+        )
+        0 0 0
+        var(
+            --highcontrast-menu-item-focus-indicator-color,
+            var(
+                --mod-menu-item-focus-indicator-color,
+                var(--spectrum-menu-item-focus-indicator-color)
+            )
+        );
     box-shadow: inset
         calc(
             var(
@@ -30,28 +56,18 @@ governing permissions and limitations under the License.
         );
 }
 
-.chevron {
-    block-size: var(--spectrum-menu-item-checkmark-height);
-    inline-size: var(--spectrum-menu-item-checkmark-width);
-    grid-area: chevronArea;
-    align-self: center;
-    margin-inline-end: var(
-        --mod-menu-item-text-to-control,
-        var(--spectrum-menu-item-text-to-control)
-    );
-}
-
-.chevron:dir(rtl),
-:host([dir='rtl']) .chevron {
-    transform: rotate(-180deg);
-}
-
 .spectrum-Menu-back {
+    padding-inline: 0
+        var(
+            --mod-menu-back-padding-inline-end,
+            var(--spectrum-menu-item-label-inline-edge-to-content)
+        );
     padding-inline: var(--mod-menu-back-padding-inline-start, 0)
         var(
             --mod-menu-back-padding-inline-end,
             var(--spectrum-menu-item-label-inline-edge-to-content)
         );
+    padding-block: 0;
     padding-block: var(--mod-menu-back-padding-block-start, 0)
         var(--mod-menu-back-padding-block-end, 0);
     flex-flow: wrap;
@@ -97,23 +113,4 @@ governing permissions and limitations under the License.
         var(--spectrum-menu-section-header-line-height)
     );
     display: block;
-}
-
-.spectrum-Menu-backIcon {
-    margin-block: var(
-        --mod-menu-back-icon-margin-block,
-        var(--spectrum-menu-back-icon-margin)
-    );
-    margin-inline: var(
-        --mod-menu-back-icon-margin-inline,
-        var(--spectrum-menu-back-icon-margin)
-    );
-    fill: var(
-        --highcontrast-menu-item-color-default,
-        var(--mod-menu-back-icon-color-default)
-    );
-    color: var(
-        --highcontrast-menu-item-color-default,
-        var(--mod-menu-back-icon-color-default)
-    );
 }

@@ -34,6 +34,7 @@ import {
 
 import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
@@ -824,7 +825,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
  */
 export class Picker extends PickerBase {
     public static override get styles(): CSSResultArray {
-        return [pickerStyles, chevronStyles];
+        return [pickerStyles, chevronStyles, chevronIconOverrides];
     }
 
     protected override get containerStyles(): StyleInfo {
