@@ -46,7 +46,7 @@ Icons are available in various sizes in Spectrum ranging from `s` to `xxl`. By d
 <sp-icon size="xxl" name="ui:Arrow100"></sp-icon>
 ```
 
-#### Color icon
+#### Icon colors
 
 Icons apply their color as `currentColor` so change the `color` property of the element for customization.
 
