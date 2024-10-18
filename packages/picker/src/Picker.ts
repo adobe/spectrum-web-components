@@ -25,7 +25,6 @@ import {
     ifDefined,
     StyleInfo,
     styleMap,
-    when,
 } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
@@ -52,6 +51,7 @@ import {
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
+import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
@@ -152,6 +152,17 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property({ attribute: false })
     public get selectedItem(): MenuItem | undefined {
         return this._selectedItem;
+    }
+
+    public pendingStateController: PendingStateController<this>;
+
+    /**
+     * Initializes the `PendingStateController` for the Picker component.
+     * The `PendingStateController` manages the pending state of the Picker.
+     */
+    constructor() {
+        super();
+        this.pendingStateController = new PendingStateController(this);
     }
 
     public set selectedItem(selectedItem: MenuItem | undefined) {
@@ -422,21 +433,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                           ></sp-icon-alert>
                       `
                     : nothing}
-                ${when(this.pending, () => {
-                    import(
-                        '@spectrum-web-components/progress-circle/sp-progress-circle.js'
-                    );
-                    // aria-valuetext is a workaround for aria-valuenow being applied in Firefox even in indeterminate mode.
-                    return html`
-                        <sp-progress-circle
-                            id="loader"
-                            size="s"
-                            indeterminate
-                            aria-valuetext=${this.pendingLabel}
-                            class="progress-circle"
-                        ></sp-progress-circle>
-                    `;
-                })}
+                ${this.pendingStateController.renderPendingState()}
                 <sp-icon-chevron100
                     class="picker ${chevronClass[
                         this.size as DefaultElementSize
@@ -650,6 +647,15 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected hasRenderedOverlay = false;
 
+    private onScroll(): void {
+        this.dispatchEvent(
+            new Event('scroll', {
+                cancelable: true,
+                composed: true,
+            })
+        );
+    }
+
     protected get renderMenu(): TemplateResult {
         const menu = html`
             <sp-menu
@@ -660,6 +666,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
                 }}
+                @scroll=${this.onScroll}
                 role=${this.listRole}
                 .selects=${this.selects}
                 .selected=${this.value ? [this.value] : []}

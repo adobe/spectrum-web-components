@@ -125,7 +125,7 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='positive']) .fill {
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color-positive,
@@ -135,7 +135,7 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='notice']) .fill {
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color-notice,
@@ -145,7 +145,7 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='negative']) .fill {
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color-negative,
@@ -231,7 +231,7 @@ governing permissions and limitations under the License.
         var(--spectrum-progressbar-thickness)
     );
     border-radius: var(--spectrum-progressbar-corner-radius);
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-track-color,
         var(
             --mod-progressbar-track-color,
@@ -246,7 +246,7 @@ governing permissions and limitations under the License.
         --mod-progressbar-thickness,
         var(--spectrum-progressbar-thickness)
     );
-    background-color: var(
+    background: var(
         --highcontrast-progressbar-fill-color,
         var(
             --mod-progressbar-fill-color,
@@ -303,28 +303,28 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static='white']) .fill {
-    background-color: var(
+:host([static-color='white']) .fill {
+    background: var(
         --mod-progressbar-fill-color-white,
         var(--spectrum-progressbar-fill-color-white)
     );
 }
 
-:host([static='white']) .fill,
-:host([static='white']) .label,
-:host([static='white']) .percentage {
+:host([static-color='white']) .fill,
+:host([static-color='white']) .label,
+:host([static-color='white']) .percentage {
     color: var(
         --mod-progressbar-label-and-value-white,
         var(--spectrum-progressbar-label-and-value-white)
     );
 }
 
-:host([static='white']) .track {
-    background-color: var(--spectrum-progressbar-track-color-white);
+:host([static-color='white']) .track {
+    background: var(--spectrum-progressbar-track-color-white);
 }
 
 :host([indeterminate]) .fill {
-    animation: a
+    animation: indeterminate-loop-ltr
         var(
             --mod-progressbar-animation-duration-indeterminate,
             var(--spectrum-progressbar-animation-duration-indeterminate)
@@ -334,7 +334,7 @@ governing permissions and limitations under the License.
 
 :host([indeterminate]) .fill:dir(rtl),
 :host([dir='rtl'][indeterminate]) .fill {
-    animation: b
+    animation: indeterminate-loop-rtl
         var(
             --mod-progressbar-animation-duration-indeterminate,
             var(--spectrum-progressbar-animation-duration-indeterminate)
@@ -342,7 +342,7 @@ governing permissions and limitations under the License.
         infinite;
 }
 
-@keyframes a {
+@keyframes indeterminate-loop-ltr {
     0% {
         transform: translate(
             calc(
@@ -364,7 +364,7 @@ governing permissions and limitations under the License.
     }
 }
 
-@keyframes b {
+@keyframes indeterminate-loop-rtl {
     0% {
         transform: translate(
             var(

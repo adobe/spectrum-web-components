@@ -14,23 +14,19 @@ import '@spectrum-web-components/link/sp-link.js';
 import { Link } from '@spectrum-web-components/link';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
 describe('Link', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Link>(
-                html`
-                    <sp-link href="test_url">Default Link</sp-link>
-                `
-            )
+            await fixture<Link>(html`
+                <sp-link href="test_url">Default Link</sp-link>
+            `)
     );
     it('loads', async () => {
-        const el = await fixture<Link>(
-            html`
-                <sp-link href="test_url">Default Link</sp-link>
-            `
-        );
+        const el = await fixture<Link>(html`
+            <sp-link href="test_url">Default Link</sp-link>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -40,13 +36,11 @@ describe('Link', () => {
     });
 
     it('loads[download]', async () => {
-        const el = await fixture<Link>(
-            html`
-                <sp-link href="test_url" download="somefile.txt">
-                    Default Link
-                </sp-link>
-            `
-        );
+        const el = await fixture<Link>(html`
+            <sp-link href="test_url" download="somefile.txt">
+                Default Link
+            </sp-link>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -56,11 +50,9 @@ describe('Link', () => {
     });
 
     it('loads[rel]', async () => {
-        const el = await fixture<Link>(
-            html`
-                <sp-link href="test_url" rel="external">Default Link</sp-link>
-            `
-        );
+        const el = await fixture<Link>(html`
+            <sp-link href="test_url" rel="external">Default Link</sp-link>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -71,13 +63,11 @@ describe('Link', () => {
 
     it('no click triggers for disabled link', async () => {
         const clickSpy = spy();
-        const el = await fixture<Link>(
-            html`
-                <sp-link href="#" disabled @click=${() => clickSpy()}>
-                    Disabled Link
-                </sp-link>
-            `
-        );
+        const el = await fixture<Link>(html`
+            <sp-link href="#" disabled @click=${() => clickSpy()}>
+                Disabled Link
+            </sp-link>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -85,5 +75,54 @@ describe('Link', () => {
         await expect(el).to.be.accessible();
         el.click();
         expect(clickSpy.callCount).to.equal(0);
+    });
+
+    it('prefers `staticColor` over `static`', async () => {
+        const el = await fixture<Link>(html`
+            <sp-link static="white" href="test_url">Default Link</sp-link>
+        `);
+        await elementUpdated(el);
+        expect(el.staticColor).to.equal('white');
+        el.setAttribute('static', 'white');
+        await elementUpdated(el);
+        expect(el.staticColor).to.equal('white');
+        expect(el.static).to.equal('white');
+        expect(el.getAttribute('static-color')).to.equal('white');
+    });
+});
+
+describe('dev mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+        window.__swc.verbose = true;
+        consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+        consoleWarnStub.resetHistory();
+    });
+    after(() => {
+        window.__swc.verbose = false;
+        consoleWarnStub.restore();
+    });
+
+    it('warns in Dev Mode when deprecated `static` attribute is used', async () => {
+        const el = await fixture<Link>(html`
+            <sp-link static="white" href="test_url">Default Link</sp-link>
+        `);
+        await elementUpdated(el);
+        expect(consoleWarnStub.called).to.be.true;
+
+        const spyCall = consoleWarnStub.getCall(0);
+        expect(
+            (spyCall.args.at(0) as string).includes('deprecated'),
+            'confirm deprecated static warning'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-link',
+                type: 'api',
+                level: 'deprecation',
+            },
+        });
     });
 });

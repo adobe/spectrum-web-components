@@ -60,7 +60,7 @@ const config = {
                         ['spectrum-CloseButton--staticWhite', 'white'],
                         ['spectrum-CloseButton--staticBlack', 'black'],
                     ],
-                    'static'
+                    'static-color'
                 ),
                 // Default to `size='m'` without needing the attribute
                 converter.classToHost('spectrum-Closebutton--sizeM'),

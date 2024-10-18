@@ -19,7 +19,6 @@ import { Tag, Tags } from '@spectrum-web-components/tags';
 import {
     arrowDownEvent,
     arrowLeftEvent,
-    arrowRightEvent,
     arrowUpEvent,
     endEvent,
     enterEvent,
@@ -34,26 +33,22 @@ import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.
 describe('Tags', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Tags>(
-                html`
-                    <sp-tags>
-                        <sp-tag>Tag 1</sp-tag>
-                        <sp-tag invalid>Tag 2</sp-tag>
-                        <sp-tag disabled>Tag 3</sp-tag>
-                    </sp-tags>
-                `
-            )
-    );
-    it('loads default tags accessibly', async () => {
-        const el = await fixture<Tags>(
-            html`
+            await fixture<Tags>(html`
                 <sp-tags>
                     <sp-tag>Tag 1</sp-tag>
                     <sp-tag invalid>Tag 2</sp-tag>
                     <sp-tag disabled>Tag 3</sp-tag>
                 </sp-tags>
-            `
-        );
+            `)
+    );
+    it('loads default tags accessibly', async () => {
+        const el = await fixture<Tags>(html`
+            <sp-tags>
+                <sp-tag>Tag 1</sp-tag>
+                <sp-tag invalid>Tag 2</sp-tag>
+                <sp-tag disabled>Tag 3</sp-tag>
+            </sp-tags>
+        `);
 
         await elementUpdated(el);
 
@@ -62,11 +57,9 @@ describe('Tags', () => {
         expect(el.hasAttribute('aria-label')).to.be.true;
     });
     it('does not accept focus when empty', async () => {
-        const el = await fixture<Tags>(
-            html`
-                <sp-tags></sp-tags>
-            `
-        );
+        const el = await fixture<Tags>(html`
+            <sp-tags></sp-tags>
+        `);
 
         await elementUpdated(el);
 
@@ -78,15 +71,13 @@ describe('Tags', () => {
         expect(document.activeElement === el).to.be.false;
     });
     it('does not accept focus when no tag has `deletable`', async () => {
-        const el = await fixture<Tags>(
-            html`
-                <sp-tags>
-                    <sp-tag>Tag 1</sp-tag>
-                    <sp-tag invalid>Tag 2</sp-tag>
-                    <sp-tag disabled>Tag 3</sp-tag>
-                </sp-tags>
-            `
-        );
+        const el = await fixture<Tags>(html`
+            <sp-tags>
+                <sp-tag>Tag 1</sp-tag>
+                <sp-tag invalid>Tag 2</sp-tag>
+                <sp-tag disabled>Tag 3</sp-tag>
+            </sp-tags>
+        `);
         await elementUpdated(el);
 
         const tag1 = el.querySelector('sp-tag:nth-child(1)') as Tag;
@@ -104,15 +95,13 @@ describe('Tags', () => {
         expect(document.activeElement === tag3).to.be.false;
     });
     it('loads default tags with `role` and `aria-label` from the outside', async () => {
-        const el = await fixture<Tags>(
-            html`
-                <sp-tags>
-                    <sp-tag>Tag 1</sp-tag>
-                    <sp-tag invalid>Tag 2</sp-tag>
-                    <sp-tag disabled>Tag 3</sp-tag>
-                </sp-tags>
-            `
-        );
+        const el = await fixture<Tags>(html`
+            <sp-tags>
+                <sp-tag>Tag 1</sp-tag>
+                <sp-tag invalid>Tag 2</sp-tag>
+                <sp-tag disabled>Tag 3</sp-tag>
+            </sp-tags>
+        `);
 
         await elementUpdated(el);
 
@@ -121,17 +110,15 @@ describe('Tags', () => {
         expect(el.hasAttribute('aria-label')).to.be.true;
     });
     it('accepts keyboard events while focused', async () => {
-        const el = await fixture<Tags>(
-            html`
-                <sp-tags>
-                    <sp-tag deletable>Tag 1</sp-tag>
-                    <sp-tag deletable>Tag 2</sp-tag>
-                    <sp-tag deletable>Tag 3</sp-tag>
-                    <sp-tag deletable>Tag 4</sp-tag>
-                    <sp-tag deletable>Tag 5</sp-tag>
-                </sp-tags>
-            `
-        );
+        const el = await fixture<Tags>(html`
+            <sp-tags>
+                <sp-tag deletable>Tag 1</sp-tag>
+                <sp-tag deletable>Tag 2</sp-tag>
+                <sp-tag deletable>Tag 3</sp-tag>
+                <sp-tag deletable>Tag 4</sp-tag>
+                <sp-tag deletable>Tag 5</sp-tag>
+            </sp-tags>
+        `);
 
         await elementUpdated(el);
 
@@ -145,7 +132,7 @@ describe('Tags', () => {
         await elementUpdated(el);
 
         el.dispatchEvent(pageUpEvent());
-        el.dispatchEvent(arrowRightEvent());
+        await sendKeys({ press: 'ArrowRight' });
         await elementUpdated(el);
 
         expect(document.activeElement === tag2).to.be.true;
@@ -179,17 +166,15 @@ describe('Tags', () => {
     });
 
     it('handles focus when Tag is deleted', async () => {
-        const el = await fixture<Tags>(
-            html`
-                <sp-tags>
-                    <sp-tag deletable id="t1">Tag 1</sp-tag>
-                    <sp-tag deletable id="t2">Tag 2</sp-tag>
-                    <sp-tag deletable id="t3">Tag 3</sp-tag>
-                    <sp-tag deletable id="t4">Tag 4</sp-tag>
-                    <sp-tag deletable id="t5">Tag 5</sp-tag>
-                </sp-tags>
-            `
-        );
+        const el = await fixture<Tags>(html`
+            <sp-tags>
+                <sp-tag deletable id="t1">Tag 1</sp-tag>
+                <sp-tag deletable id="t2">Tag 2</sp-tag>
+                <sp-tag deletable id="t3">Tag 3</sp-tag>
+                <sp-tag deletable id="t4">Tag 4</sp-tag>
+                <sp-tag deletable id="t5">Tag 5</sp-tag>
+            </sp-tags>
+        `);
 
         await elementUpdated(el);
 
@@ -246,17 +231,15 @@ describe('Tags', () => {
     });
 
     it('will not focus [disabled] children', async () => {
-        const el = await fixture<Tags>(
-            html`
-                <sp-tags>
-                    <sp-tag disabled deletable>Tag 1</sp-tag>
-                    <sp-tag deletable>Tag 2</sp-tag>
-                    <sp-tag deletable>Tag 3</sp-tag>
-                    <sp-tag deletable>Tag 4</sp-tag>
-                    <sp-tag disabled deletable>Tag 5</sp-tag>
-                </sp-tags>
-            `
-        );
+        const el = await fixture<Tags>(html`
+            <sp-tags>
+                <sp-tag disabled deletable>Tag 1</sp-tag>
+                <sp-tag deletable>Tag 2</sp-tag>
+                <sp-tag deletable>Tag 3</sp-tag>
+                <sp-tag deletable>Tag 4</sp-tag>
+                <sp-tag disabled deletable>Tag 5</sp-tag>
+            </sp-tags>
+        `);
 
         await elementUpdated(el);
 
@@ -288,17 +271,15 @@ describe('Tags', () => {
         expect(document.activeElement === tag2).to.be.true;
     });
     it('will only tab index [deletable] children', async () => {
-        const el = await fixture<Tags>(
-            html`
-                <sp-tags>
-                    <sp-tag deletable>Tag 1</sp-tag>
-                    <sp-tag>Tag 2</sp-tag>
-                    <sp-tag>Tag 3</sp-tag>
-                    <sp-tag>Tag 4</sp-tag>
-                    <sp-tag deletable>Tag 5</sp-tag>
-                </sp-tags>
-            `
-        );
+        const el = await fixture<Tags>(html`
+            <sp-tags>
+                <sp-tag deletable>Tag 1</sp-tag>
+                <sp-tag>Tag 2</sp-tag>
+                <sp-tag>Tag 3</sp-tag>
+                <sp-tag>Tag 4</sp-tag>
+                <sp-tag deletable>Tag 5</sp-tag>
+            </sp-tags>
+        `);
 
         await elementUpdated(el);
 
@@ -330,21 +311,19 @@ describe('Tags', () => {
         expect(document.activeElement === tag1).to.be.true;
     });
     it('utilises floating tab index for [deletable] children', async () => {
-        const el = await fixture<Tags>(
-            html`
-                <div>
-                    <a href="#">Heyo</a>
-                    <sp-tags>
-                        <sp-tag deletable>Tag 1</sp-tag>
-                        <sp-tag deletable>Tag 2</sp-tag>
-                    </sp-tags>
-                    <sp-tags>
-                        <sp-tag deletable>Tag A</sp-tag>
-                        <sp-tag deletable>Tag B</sp-tag>
-                    </sp-tags>
-                </div>
-            `
-        );
+        const el = await fixture<Tags>(html`
+            <div>
+                <a href="#">Heyo</a>
+                <sp-tags>
+                    <sp-tag deletable>Tag 1</sp-tag>
+                    <sp-tag deletable>Tag 2</sp-tag>
+                </sp-tags>
+                <sp-tags>
+                    <sp-tag deletable>Tag A</sp-tag>
+                    <sp-tag deletable>Tag B</sp-tag>
+                </sp-tags>
+            </div>
+        `);
         const anchor = el.querySelector('a') as HTMLElement;
 
         anchor.focus();
@@ -371,23 +350,21 @@ describe('Tags', () => {
         expect(document.activeElement === tagB).to.be.true;
     });
     it('loads accepts "PageUp" and "PageDown" keys', async () => {
-        const el = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-tags>
-                        <sp-tag deletable>Tag 1</sp-tag>
-                    </sp-tags>
-                    <sp-tags>
-                        <sp-tag deletable>Tag 2</sp-tag>
-                    </sp-tags>
-                    <sp-tags></sp-tags>
-                    <sp-tags>
-                        <sp-tag disabled deletable>Tag 3</sp-tag>
-                        <sp-tag deletable>Tag 4</sp-tag>
-                    </sp-tags>
-                </div>
-            `
-        );
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-tags>
+                    <sp-tag deletable>Tag 1</sp-tag>
+                </sp-tags>
+                <sp-tags>
+                    <sp-tag deletable>Tag 2</sp-tag>
+                </sp-tags>
+                <sp-tags></sp-tags>
+                <sp-tags>
+                    <sp-tag disabled deletable>Tag 3</sp-tag>
+                    <sp-tag deletable>Tag 4</sp-tag>
+                </sp-tags>
+            </div>
+        `);
 
         const tags1 = el.querySelector('sp-tags:nth-child(1)') as Tags;
         const tags2 = el.querySelector('sp-tags:nth-child(2)') as Tags;

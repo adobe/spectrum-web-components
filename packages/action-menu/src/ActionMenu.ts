@@ -31,10 +31,10 @@ import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slot
  * @element sp-action-menu
  *
  * @slot - menu items to be listed in the Action Menu
- * @slot icon - The icon to use for Action Menu
- * @slot label - The label to use on for the Action Menu
+ * @slot icon - The icon to use for the Action Menu
+ * @slot label - The label to use for the Action Menu
  * @slot label-only - The label to use for the Action Menu (no icon space reserved)
- * @slot tooltip - Tooltip to to be applied to the the Action Button
+ * @slot tooltip - Tooltip to be applied to the Action Button
  * @attr selects - By default `sp-action-menu` does not manage a selection. If
  *   you'd like for a selection to be held by the `sp-menu` that it presents in
  *   its overlay, use `selects="single" to activate this functionality.
@@ -50,8 +50,14 @@ export class ActionMenu extends ObserveSlotPresence(
     @property({ type: String })
     public override selects: undefined | 'single' = undefined;
 
+    /**
+     * @deprecated Use `staticColor` instead.
+     */
     @property({ type: String, reflect: true })
     public static: 'white' | 'black' | undefined = undefined;
+
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white' | 'black';
 
     protected override listRole: 'listbox' | 'menu' = 'menu';
     protected override itemRole = 'menuitem';
@@ -104,7 +110,7 @@ export class ActionMenu extends ObserveSlotPresence(
                 aria-describedby=${DESCRIPTION_ID}
                 ?quiet=${this.quiet}
                 ?selected=${this.open}
-                static=${ifDefined(this.static)}
+                static-color=${ifDefined(this.staticColor)}
                 aria-haspopup="true"
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                 aria-expanded=${this.open ? 'true' : 'false'}

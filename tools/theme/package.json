@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/theme",
-    "version": "0.46.0",
+    "version": "0.49.0",
     "publishConfig": {
         "access": "public"
     },
@@ -42,6 +42,10 @@
         "./src/theme-dark.css.js": "./src/theme-dark.css.js",
         "./src/theme-darkest-core-tokens.css.js": "./src/theme-darkest-core-tokens.css.js",
         "./src/theme-darkest.css.js": "./src/theme-darkest.css.js",
+        "./src/theme-interfaces.js": {
+            "development": "./src/theme-interfaces.dev.js",
+            "default": "./src/theme-interfaces.js"
+        },
         "./src/theme-light-core-tokens.css.js": "./src/theme-light-core-tokens.css.js",
         "./src/theme-light.css.js": "./src/theme-light.css.js",
         "./src/theme-lightest-core-tokens.css.js": "./src/theme-lightest-core-tokens.css.js",
@@ -233,12 +237,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.46.0",
-        "@spectrum-web-components/styles": "^0.46.0"
+        "@spectrum-web-components/base": "^0.49.0",
+        "@spectrum-web-components/styles": "^0.49.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
-    "deprecationNotice": "Color Lightest and Darkest are deprecated and will be removed in a future release",
+    "deprecationNotice": "Color 'lightest' and 'darkest' are deprecated. The 'theme' attribute has been deprecated in favor of 'system'. These deprecations will be removed in a future release.",
     "sideEffects": [
         "./sp-*.js",
         "./**/*.dev.js",
