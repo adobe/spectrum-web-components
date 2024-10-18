@@ -3,7 +3,7 @@ version: 2.1
 executors:
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.44.0
+            - image: mcr.microsoft.com/playwright:v1.48.1-noble
         resource_class: large
         environment:
             NODE_ENV: development
