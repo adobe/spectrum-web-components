@@ -129,7 +129,7 @@ When associated with content that does not supply an icon outlining the presence
 
 #### Disabled
 
-When associated to content the is disabled, use the `disabled` attribute to match the delivery of the `<sp-help-text>` element to that content.
+When the content associated to the element is disabled, use the `disabled` attribute to match the delivery of the `<sp-help-text>` element to that content.
 
 ```html demo
 <sp-field-label for="color" disabled>Color</sp-field-label>

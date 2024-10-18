@@ -1,7 +1,7 @@
 ## Overview
 
 An `<sp-button>` represents an action a user can take. sp-buttons can be clicked
-or tapped to perform an action or to navigate to another page. sp-buttons in
+or tapped to perform an action or to navigate to another page. Buttons in
 Spectrum have several variations for different uses and multiple levels of
 loudness for various attention-getting needs.
 
@@ -34,11 +34,11 @@ import { Button, ClearButton, CloseButton } from '@spectrum-web-components/butto
 #### Content
 
 `<sp-button>` elements can be provided a visible label,
-a label with an icon, or just an icon.
+a label and an icon, or just an icon.
 
-An icon is provided by placing an icon element to the `icon` slot.
+An icon is provided by placing an icon element in the `icon` slot.
 
-If the button is an icon only, a non-visible label
+If the button is `icon-only`, a non-visible label
 can be provided via the `label` attribute on an `<sp-button>`
 or on an `<sp-icon*>` element child to appropriately
 fulfill the accessibility contract of the button.
@@ -138,7 +138,7 @@ fulfill the accessibility contract of the button.
 #### Variants
 
 There are many button variants to choose from in Spectrum. The `variant`
-attribute defaults to `accent` but also accepts the following value: `accent`, `primary`, `secondary`, `negative`, `white`, and `black`. They display as follows:
+attribute defaults to `accent`, but also accepts the following value: `accent`, `primary`, `secondary`, `negative`, `white`, and `black`. They display as follows:
 
 <sp-tabs selected="accent" auto label="Variant Attribute Options">
 <sp-tab value="accent">Accent</sp-tab>
@@ -348,9 +348,9 @@ While disabled, `<sp-button>` elements will not respond to click events and will
 ### Pending
 
 While in pending state, `<sp-button>` elements will not respond to click events and will appear faded with an indeterminate `<sp-progress-circle>`.
-`<sp-button>` elements label and icon will be hidden while in pending state.
+The `<sp-button>` element's label and icon will be hidden while in pending state.
 
-Note: `pending` state of the `<sp-button>` element is applied after 1s delay to avoid flashing the pending state for quick actions. You can override the delay by adding custom css var `--pending-delay` to your css.
+Note: The pending state of the `<sp-button>` element is applied after a 1s delay to avoid flashing the pending state for quick actions. You can override the delay by adding custom css var `--pending-delay` to your css.
 
 ```html
 <sp-button-group>
@@ -364,7 +364,7 @@ Note: `pending` state of the `<sp-button>` element is applied after 1s delay to 
 #### Handling events
 
 Events handlers for clicks and other user actions can be registered on a
-`<sp-button>` as on a standard HTML `<button>` element.
+`<sp-button>` as one would on a standard HTML `<button>` element.
 
 ```html
 <sp-button onclick="spAlert(this, '<sp-button> clicked!')">Click me</sp-button>
@@ -383,7 +383,7 @@ In addition to handling events like a native `<button>` HTML element, one can al
 
 #### Autofocus
 
-The `autofocus` attribute sets focus to the `<sp-button>` when the component
+The `autofocus` attribute sets focus on the `<sp-button>` when the component
 mounts. This is useful for setting focus to a specific sp-button when a
 popover or dialog opens.
 
@@ -395,7 +395,7 @@ popover or dialog opens.
 
 #### Include a label
 
-A button is required to have either a visible text label or `label` attribute on an `<sp-button>`
+A button is required to have either a visible text label or a `label` attribute on either the `<sp-button>` itself
 or on an `<sp-icon*>` element child.
 
 #### Don't override color
@@ -408,7 +408,7 @@ A screen reader user will not encounter href buttons when navigating by buttons 
 
 #### Use static black or static white to contrast with backgrounds and images
 
-To ensure maximum contrast with the background, use static black for light backgrounds and images, and use static white for dark backgrounds and images. Avoid placing static components on top of busy images with a lot of variance in contrast.
+To ensure maximum contrast with the background, use static black for light backgrounds and images, and static white for dark backgrounds and images. Avoid placing static components on top of busy images with a lot of variance in contrast.
 
 <sp-tabs selected="black" auto label="Static variants for contrast">
 <sp-tab value="black">Static black on light background</sp-tab>
