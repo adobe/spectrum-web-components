@@ -161,7 +161,7 @@ VNode {nodeName: "svg", children: Array[1], attributes: Object, key: undefined, 
 ***/
 ```
 
-In this way the icons exported by `@spectrum-web-components/icons-ui` can be leveraged in projects powered by the the likes of hyperHTML, lighterhtml, lit-html, Preact, React, Vanilla JS, Vue.js, and more!
+In this way, the icons exported by `@spectrum-web-components/icons-ui` can be leveraged in projects powered by the likes of hyperHTML, lighterhtml, lit-html, Preact, React, Vanilla JS, Vue.js, and more!
 
 ### Accessibility guidelines
 
