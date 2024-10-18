@@ -38,7 +38,7 @@ a label and an icon, or just an icon.
 
 An icon is provided by placing an icon element to the `icon` slot.
 
-If the button is an icon only, a non-visible label
+If the button is `icon-only`, a non-visible label
 can be provided via the `label` attribute on an `<sp-button>`
 or on an `<sp-icon*>` element child to appropriately
 fulfill the accessibility contract of the button.
