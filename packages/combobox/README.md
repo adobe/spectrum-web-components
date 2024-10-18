@@ -131,8 +131,8 @@ The suggested popup menu items will remain the same regardless of the currently-
 Whenever the currently-typed input exactly matches the `value` of a popup menu item, that item is automatically selected.
 
 ```html
-<sp-field-label for="color" autocomplete="none">Color</sp-field-label>
-<sp-combobox id="color" disabled>
+<sp-field-label for="color-none" autocomplete="none">Color</sp-field-label>
+<sp-combobox id="color-none" disabled>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -146,8 +146,8 @@ Whenever the currently-typed input exactly matches the `value` of a popup menu i
 The popup menu items are filtered to only those completing the currently-input value.
 
 ```html
-<sp-field-label for="color" autocomplete="list">Color</sp-field-label>
-<sp-combobox id="color" disabled>
+<sp-field-label for="color-list" autocomplete="list">Color</sp-field-label>
+<sp-combobox id="color-list" disabled>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -159,8 +159,8 @@ The popup menu items are filtered to only those completing the currently-input v
 ### Disabled
 
 ```html
-<sp-field-label for="color">Color</sp-field-label>
-<sp-combobox id="color" disabled>
+<sp-field-label for="color-disabled">Color</sp-field-label>
+<sp-combobox id="color-disabled" disabled>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -170,8 +170,8 @@ The popup menu items are filtered to only those completing the currently-input v
 ### Invalid
 
 ```html
-<sp-field-label for="color">Color</sp-field-label>
-<sp-combobox id="color" invalid>
+<sp-field-label for="color-invalid">Color</sp-field-label>
+<sp-combobox id="color-invalid" invalid>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -219,6 +219,60 @@ For exceptional cases, provide an accessible label via the `label` attribute.
     <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 ```
+
+#### Provide help text and tooltips in the correct location
+
+It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots. To ensure proper association between elements, help text must be included via the `slot="help-text"` or `slot="help-text-negative"` and tooltips must be included via the `slot="tooltip"`.
+
+See [help text](../help-text) and [tooltip](../tooltip) for more information.
+
+<sp-tabs selected="help-text" auto label="Slotted help text and tooltips">
+<sp-tab value="help-text">Help text</sp-tab>
+<sp-tab-panel value="help-text">
+
+```html
+<sp-field-label for="color1">Color</sp-field-label>
+<sp-combobox id="color1">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+    <sp-help-text slot="help-text">Enter the name of a color.</sp-help-text>
+</sp-combobox>
+```
+
+</sp-tab-panel>
+<sp-tab value="negative-help-text">Negative help text</sp-tab>
+<sp-tab-panel value="negative-help-text">
+
+```html
+<sp-field-label for="color2">Color</sp-field-label>
+<sp-combobox id="color2" required>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+    <sp-help-text slot="help-text">Enter the name of a color.</sp-help-text>
+    <sp-help-text slot="negative-help-text">A color is required.</sp-help-text>
+</sp-combobox>
+```
+
+</sp-tab-panel>
+<sp-tab value="tooltip">Tooltip</sp-tab>
+<sp-tab-panel value="tooltip">
+
+```html
+<sp-field-label for="color3">Color</sp-field-label>
+<sp-combobox id="color3">
+    <sp-tooltip slot="tooltip">
+        Color options, such as red, green, or blue.
+    </sp-tooltip>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 #### Do not override keyboard navigation
 
