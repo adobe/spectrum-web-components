@@ -383,7 +383,7 @@ In addition to handling events like a native `<button>` HTML element, one can al
 
 #### Autofocus
 
-The `autofocus` attribute sets focus to the `<sp-button>` when the component
+The `autofocus` attribute sets focus on the `<sp-button>` when the component
 mounts. This is useful for setting focus to a specific sp-button when a
 popover or dialog opens.
 
