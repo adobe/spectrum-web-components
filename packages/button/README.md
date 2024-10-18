@@ -138,7 +138,7 @@ fulfill the accessibility contract of the button.
 #### Variants
 
 There are many button variants to choose from in Spectrum. The `variant`
-attribute defaults to `accent` but also accepts the following value: `accent`, `primary`, `secondary`, `negative`, `white`, and `black`. They display as follows:
+attribute defaults to `accent`, but also accepts the following value: `accent`, `primary`, `secondary`, `negative`, `white`, and `black`. They display as follows:
 
 <sp-tabs selected="accent" auto label="Variant Attribute Options">
 <sp-tab value="accent">Accent</sp-tab>
