@@ -18,6 +18,12 @@ import { load } from 'cheerio';
 import prettier from 'prettier';
 import Case from 'case';
 import { fileURLToPath } from 'url';
+import iconMapping from './iconMapping.json' assert { type: 'json' };
+
+const getIconMapping = (componentName) => {
+    // Find the icon mapping based on the component name for S1
+    return iconMapping.icons.find((icon) => icon.s1 === componentName) || {};
+};
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -215,9 +221,13 @@ async function buildIcons(icons, tag, iconsNameList) {
 
         // check if the icon is present in the other version
         let otherVersionIconImport = defaultIconImport;
+        // Fetch the mapped S2 icon if available
+        const mappedIcon = getIconMapping(ComponentName);
+        const alternateTag = tag === 'icons' ? 'icons-s2' : 'icons';
 
-        if (iconsNameList.includes(ComponentName)) {
-            const alternateTag = tag === 'icons' ? 'icons-s2' : 'icons';
+        if (mappedIcon.s2) {
+            otherVersionIconImport = `import { ${mappedIcon.s2}Icon as AlternateIcon } from '../${alternateTag}/${mappedIcon.s2}.js';\r\n`;
+        } else if (iconsNameList.includes(ComponentName)) {
             otherVersionIconImport = `import { ${ComponentName}Icon as AlternateIcon } from '../${alternateTag}/${id}.js';\r\n`;
         }
 
