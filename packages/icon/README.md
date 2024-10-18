@@ -89,7 +89,7 @@ Icons can also be supplied via HTML elements and are applied via the default `<s
 
 ### Accessibility
 
-If no meaning is lost by visually hiding an icon, it is considered a decorative icon. Decorative icons should not have a label and should be hidden from assistive technology. `aria-hidden` is set to true by default for Icons.
+If no meaning is lost by visually hiding an icon, it is considered decorative. Decorative icons should not have a label and should be hidden from assistive technology. `aria-hidden` is set to true by default for icons.
 
 If an icon adds meaning, an label is required. Using the `label` attribute adds the label text as the `aria-label` of the icon, and removes the `aria-hidden` attribute.
 
