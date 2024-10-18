@@ -3273,6 +3273,29 @@ describe('DateTimePicker', () => {
 
             expect(element.invalid).to.be.false;
         });
+
+        it('should not be invalid when all segments are placeholders', async () => {
+            expect(element.invalid).to.be.false;
+
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            monthSegment.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            expect(element.invalid).to.be.true;
+
+            await sendKeys({ press: 'Delete' });
+            await elementUpdated(element);
+            await sendMouse({
+                type: 'click',
+                position: [0, 0],
+            });
+            await elementUpdated(element);
+
+            expect(element.invalid).to.be.false;
+        });
     });
 
     describe('Multiple types for min, max and value properties', () => {

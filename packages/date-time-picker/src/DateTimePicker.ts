@@ -671,7 +671,12 @@ export class DateTimePicker extends ManageHelpText(
             this.value === undefined &&
             this.previousCommitedValue === undefined
         ) {
-            this.invalid = true;
+            const allSegmentsEmpty = this.segments.editableValues.every(
+                (value) => value === undefined
+            );
+            if (allSegmentsEmpty) this.invalid = false;
+            else this.invalid = true;
+
             return;
         }
 
