@@ -21,42 +21,20 @@ export const DefaultIcon = ({
 } = {}): string | TemplateResult => {
     return html`
         <svg
-            fill="#000000"
-            height=${height}
-            width=${width}
-            version="1.1"
-            id="Layer_1"
             xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 64 64"
-            enable-background="new 0 0 64 64"
-            xml:space="preserve"
+            viewBox="0 0 20 20"
+            role="img"
+            fill="currentColor"
+            width=${width}
+            height=${height}
             aria-hidden=${hidden ? 'true' : 'false'}
             aria-label=${hidden ? undefined : title}
         >
-            <rect width="64" height="64" rx="16" fill="#292929" />
-            <mask
-                id="mask0_76606_3852"
-                style="mask-type:alpha"
-                maskUnits="userSpaceOnUse"
-                x="12"
-                y="12"
-                width="40"
-                height="40"
-            >
-                <path
-                    d="M32 49.5C22.3506 49.5 14.5 41.6504 14.5 32C14.5 22.3496 22.3506 14.5 32 14.5C41.6494 14.5 49.5 22.3496 49.5 32C49.5 41.6504 41.6494 49.5 32 49.5ZM32 17.5C24.0048 17.5 17.5 24.004 17.5 32C17.5 39.996 24.0048 46.5 32 46.5C39.9952 46.5 46.5 39.996 46.5 32C46.5 24.004 39.9952 17.5 32 17.5Z"
-                    fill="#292929"
-                />
-            </mask>
-            <g mask="url(#mask0_76606_3852)">
-                <rect x="12" y="12" width="40" height="40" fill="white" />
-            </g>
-            <defs>
-                <clipPath id="clip0_76606_3852">
-                    <rect width="64" height="64" rx="16" fill="white" />
-                </clipPath>
-            </defs>
+            <path
+                d="m10,18.75c-4.82471,0-8.75-3.9248-8.75-8.75S5.17529,1.25,10,1.25s8.75,3.9248,8.75,8.75-3.92529,8.75-8.75,8.75Zm0-16c-3.99756,0-7.25,3.25195-7.25,7.25s3.25244,7.25,7.25,7.25,7.25-3.25195,7.25-7.25-3.25244-7.25-7.25-7.25Z"
+                fill="currentColor"
+                stroke-width="0"
+            ></path>
         </svg>
     `;
 };

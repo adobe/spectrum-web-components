@@ -19,6 +19,22 @@ import prettier from 'prettier';
 import Case from 'case';
 import { fileURLToPath } from 'url';
 
+// S1 and S2 mappings hardcoded for S1
+// TODO: Get this data dynamically from a file shared by the icons team till we keep S1 and S2 icons in the code
+const systemsIconMapping = {
+    Alert: 'AlertTriangle',
+    AlertTriangle: 'Alert',
+
+    Help: 'HelpCircle',
+    HelpCircle: 'Help',
+
+    Info: 'InfoCircle',
+    InfoCircle: 'Info',
+
+    Magnify: 'Search',
+    Search: 'Magnify',
+};
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const rootDir = path.join(__dirname, '../../../');
@@ -216,8 +232,12 @@ async function buildIcons(icons, tag, iconsNameList) {
         // check if the icon is present in the other version
         let otherVersionIconImport = defaultIconImport;
 
-        if (iconsNameList.includes(ComponentName)) {
-            const alternateTag = tag === 'icons' ? 'icons-s2' : 'icons';
+        const alternateTag = tag === 'icons' ? 'icons-s2' : 'icons';
+        // if there is a mapping icon found from the above iconset update otherVersionIconImport
+        if (systemsIconMapping[ComponentName]) {
+            otherVersionIconImport = `import { ${systemsIconMapping[ComponentName]}Icon as AlternateIcon } from '../${alternateTag}/${systemsIconMapping[ComponentName]}.js';\r\n`;
+        } else if (iconsNameList.includes(ComponentName)) {
+            // if there is a no mapping icon found reset to DefaultIcon
             otherVersionIconImport = `import { ${ComponentName}Icon as AlternateIcon } from '../${alternateTag}/${id}.js';\r\n`;
         }
 
