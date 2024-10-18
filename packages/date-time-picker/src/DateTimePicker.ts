@@ -286,23 +286,26 @@ export class DateTimePicker extends ManageHelpText(
             }
         }
 
-        if (this.value) {
-            const isNonCompliantValue =
-                (this.min && this.value.compare(this.min) < 0) ||
-                (this.max && this.value.compare(this.max) > 0);
-
-            if (isNonCompliantValue) {
-                window.__swc.warn(
-                    this,
-                    `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
-                );
-                this.value = undefined;
-            }
+        if (this.isNonCompliantValue()) {
+            window.__swc.warn(
+                this,
+                `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
+            );
+            this.value = undefined;
         }
 
         if (!this.min && !this.max && !this.value)
             this.timeZone = getLocalTimeZone();
+    }
+
+    private isNonCompliantValue(): boolean {
+        if (this.value === undefined) return false;
+
+        return Boolean(
+            (this.min && this.value.compare(this.min) < 0) ||
+                (this.max && this.value.compare(this.max) > 0)
+        );
     }
 
     protected override willUpdate(changedProperties: PropertyValues): void {
@@ -667,8 +670,14 @@ export class DateTimePicker extends ManageHelpText(
         if (
             this.value === undefined &&
             this.previousCommitedValue === undefined
-        )
+        ) {
+            this.invalid = true;
             return;
+        }
+
+        if (this.value === undefined || this.isNonCompliantValue())
+            this.invalid = true;
+        else this.invalid = false;
 
         this.previousCommitedValue = this.value;
         this.dispatchChange();
