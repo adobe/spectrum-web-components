@@ -101,16 +101,19 @@ export default function (eleventyConfig) {
                 tag === 'h2'
                     ? 'L'
                     : tag === 'h3'
-                      ? 'M'
-                      : tag === 'h4'
+                        ? 'M'
+                        : tag === 'h4'
                         ? 'S'
                         : tag === 'h5'
-                          ? 'XS'
-                          : tag === 'h6'
-                            ? ''
+                            ? 'XS'
+                            : tag === 'h6'
+                            ? 'XXS'
                             : '';
-            const classes = headingClass === '' ? '' : headingClass;
-            const comment = `\n<!-- ${tag} / ${headingClass} / ${heading.attrs.join(' ')} -->\n`;
+            const classes =
+                size === ''
+                    ? ''
+                    : headingClass;
+
             heading.attrs = [
                 ...heading.attrs,
                 ['class', `header-heading ${classes}`],
