@@ -1,7 +1,7 @@
 ## Overview
 
 An `<sp-button>` represents an action a user can take. sp-buttons can be clicked
-or tapped to perform an action or to navigate to another page. sp-buttons in
+or tapped to perform an action or to navigate to another page. Buttons in
 Spectrum have several variations for different uses and multiple levels of
 loudness for various attention-getting needs.
 
