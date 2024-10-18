@@ -2438,25 +2438,16 @@ describe('DateTimePicker', () => {
         let changeSpy: sinon.SinonSpy;
         let inputSpy: sinon.SinonSpy;
 
-        before(() => {
+        beforeEach(() => {
             changeSpy = spy();
             inputSpy = spy();
-        });
-
-        beforeEach(() => {
-            element.addEventListener('change', changeSpy);
-            element.addEventListener('input', inputSpy);
-        });
-
-        afterEach(() => {
-            changeSpy.resetHistory();
-            inputSpy.resetHistory();
         });
 
         it("should dispatch 'change' when all segments have a value for the first time", async () => {
             element = await fixtureElement({
                 props: { precision: Precisions.Second },
             });
+            element.addEventListener('change', changeSpy);
             editableSegments = getEditableSegments(element);
 
             expect(element.value).to.be.undefined;
@@ -2474,6 +2465,7 @@ describe('DateTimePicker', () => {
 
         it("should dispatch 'change' when the value changes are committed using Space", async () => {
             element = await fixtureElement({ props: { value: valueDateTime } });
+            element.addEventListener('change', changeSpy);
             editableSegments = getEditableSegments(element);
             const monthSegment = editableSegments.getByType(SegmentTypes.Month);
             const daySegment = editableSegments.getByType(SegmentTypes.Day);
@@ -2495,6 +2487,7 @@ describe('DateTimePicker', () => {
 
         it("should dispatch 'change' when the value changes are committed using Enter", async () => {
             element = await fixtureElement({ props: { value: valueDateTime } });
+            element.addEventListener('change', changeSpy);
             editableSegments = getEditableSegments(element);
             const yearSegment = editableSegments.getByType(SegmentTypes.Year);
             const daySegment = editableSegments.getByType(SegmentTypes.Day);
@@ -2516,6 +2509,7 @@ describe('DateTimePicker', () => {
 
         it("should dispatch 'change' when the value changes are committed on blur", async () => {
             element = await fixtureElement({ props: { value: valueDateTime } });
+            element.addEventListener('change', changeSpy);
             editableSegments = getEditableSegments(element);
             const yearSegment = editableSegments.getByType(SegmentTypes.Year);
             const month = editableSegments.getByType(SegmentTypes.Month);
@@ -2538,30 +2532,9 @@ describe('DateTimePicker', () => {
             expect(changeSpy.callCount).to.equal(1);
         });
 
-        it("should not dispatch 'change' if the committed value is the same", async () => {
-            element = await fixtureElement({ props: { value: valueDateTime } });
-
-            await sendKeys({ press: 'Enter' });
-            await elementUpdated(element);
-
-            expect(changeSpy.callCount).to.equal(0);
-
-            await sendKeys({ press: 'Space' });
-            await elementUpdated(element);
-
-            expect(changeSpy.callCount).to.equal(0);
-
-            await sendMouse({
-                type: 'click',
-                position: [0, 0],
-            });
-            await elementUpdated(element);
-
-            expect(changeSpy.callCount).to.equal(0);
-        });
-
-        it("should dispatch 'change' when a segment is deleted", async () => {
+        it("should dispatch 'change' when the value changes to undefined due to a segment deletion", async () => {
             element = await fixtureElement({ props: { value: valueDate } });
+            element.addEventListener('change', changeSpy);
             editableSegments = getEditableSegments(element);
             const yearSegment = editableSegments.getByType(SegmentTypes.Year);
             const monthSegment = editableSegments.getByType(SegmentTypes.Month);
@@ -2585,58 +2558,131 @@ describe('DateTimePicker', () => {
             expect(changeSpy.callCount).to.equal(0);
         });
 
-        [
-            SegmentTypes.Year,
-            SegmentTypes.Month,
-            SegmentTypes.Day,
-            SegmentTypes.Hour,
-            SegmentTypes.Minute,
-            SegmentTypes.Second,
-        ].forEach((segmentType) =>
-            it(`should dispatch 'input' when the ${segmentType} segment changes through typing on an existing value`, async () => {
-                element = await fixtureElement({
-                    props: {
-                        precision: Precisions.Second,
-                        value: valueDateTime,
-                    },
-                });
-                editableSegments = getEditableSegments(element);
-                const segment = editableSegments.getByType(segmentType);
-
-                segment.focus();
-                await sendKeys({ type: '2021' });
-                await elementUpdated(element);
-
-                expect(inputSpy.callCount).to.equal(4);
-
-                inputSpy.resetHistory();
-                await sendKeys({ type: '2' });
-                await elementUpdated(element);
-
-                expect(inputSpy.callCount).to.equal(1);
-            })
-        );
-
-        it(`should dispatch 'input' when the dayPeriod segment changes through typing on an existing value`, async () => {
+        it('should dispatch change when the value is changed using the calendar', async () => {
             element = await fixtureElement({
                 props: { value: valueDateTime },
             });
+            element.addEventListener('change', changeSpy);
             editableSegments = getEditableSegments(element);
+            await openCalendar(element);
+
+            const calendarValue = valueDateTime.set({
+                day: valueDateTime.day + 1,
+            });
+            await dispatchCalendarChange(element, calendarValue);
+
+            expect(changeSpy.callCount).to.equal(1);
+        });
+
+        it("should not dispatch 'change' if the committed value is the same", async () => {
+            element = await fixtureElement({ props: { value: valueDateTime } });
+            element.addEventListener('change', changeSpy);
+
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+
+            await sendMouse({
+                type: 'click',
+                position: [0, 0],
+            });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+        });
+
+        it("should not dispatch 'change' if not all segments have a value defined", async () => {
+            element.addEventListener('change', changeSpy);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+
+            yearSegment.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            daySegment.focus();
+            await sendKeys({ type: '1' });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+
+            await sendMouse({
+                type: 'click',
+                position: [0, 0],
+            });
+            await elementUpdated(element);
+
+            expect(changeSpy.callCount).to.equal(0);
+        });
+
+        it(`should dispatch 'input' when the segments change through typing on an existing value`, async () => {
+            element = await fixtureElement({
+                props: {
+                    precision: Precisions.Second,
+                    value: new CalendarDateTime(1010, 10, 15, 13, 10, 10),
+                },
+            });
+            element.addEventListener('input', inputSpy);
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            const hourSegment = editableSegments.getByType(SegmentTypes.Hour);
+            const secondSegment = editableSegments.getByType(
+                SegmentTypes.Second
+            );
             const dayPeriodSegment = editableSegments.getByType(
                 SegmentTypes.DayPeriod
             );
 
-            dayPeriodSegment.focus();
-            await sendKeys({ type: 'A' });
+            yearSegment.focus();
+            await sendKeys({ type: '2021' });
+            await elementUpdated(element);
+            expect(inputSpy.callCount).to.equal(4);
+
+            inputSpy.resetHistory();
+            monthSegment.focus();
+            await sendKeys({ type: '2' });
             await elementUpdated(element);
 
             expect(inputSpy.callCount).to.equal(1);
 
             inputSpy.resetHistory();
+            hourSegment.focus();
+            await sendKeys({ type: '10' });
+            await elementUpdated(element);
+            expect(inputSpy.callCount).to.equal(2);
+
+            inputSpy.resetHistory();
+            secondSegment.focus();
+            await sendKeys({ type: '323' });
+            await elementUpdated(element);
+            expect(inputSpy.callCount).to.equal(3);
+
+            inputSpy.resetHistory();
+            dayPeriodSegment.focus();
+            await sendKeys({ type: 'A' });
+            await elementUpdated(element);
             await sendKeys({ type: 'P' });
             await elementUpdated(element);
 
-            expect(inputSpy.callCount).to.equal(1);
+            expect(inputSpy.callCount).to.equal(2);
         });
 
         [
@@ -2651,17 +2697,18 @@ describe('DateTimePicker', () => {
                 element = await fixtureElement({
                     props: { precision: Precisions.Second },
                 });
+                element.addEventListener('input', inputSpy);
                 editableSegments = getEditableSegments(element);
                 const segment = editableSegments.getByType(segmentType);
 
                 segment.focus();
-                await sendKeys({ type: '2021' });
+                await sendKeys({ type: '1012' });
                 await elementUpdated(element);
 
                 expect(inputSpy.callCount).to.equal(4);
 
                 inputSpy.resetHistory();
-                await sendKeys({ type: '2' });
+                await sendKeys({ type: '3' });
                 await elementUpdated(element);
 
                 expect(inputSpy.callCount).to.equal(1);
@@ -2672,6 +2719,7 @@ describe('DateTimePicker', () => {
             element = await fixtureElement({
                 props: { precision: Precisions.Second },
             });
+            element.addEventListener('input', inputSpy);
             editableSegments = getEditableSegments(element);
             const dayPeriodSegment = editableSegments.getByType(
                 SegmentTypes.DayPeriod
@@ -2697,6 +2745,7 @@ describe('DateTimePicker', () => {
                     valueDate: valueDateTime,
                 },
             });
+            element.addEventListener('input', inputSpy);
             editableSegments = getEditableSegments(element);
 
             expect(element.value).to.be.undefined;
@@ -2730,6 +2779,7 @@ describe('DateTimePicker', () => {
                     precision: Precisions.Second,
                 },
             });
+            element.addEventListener('input', inputSpy);
             editableSegments = getEditableSegments(element);
 
             expect(element.value).to.be.undefined;
@@ -2757,10 +2807,111 @@ describe('DateTimePicker', () => {
             }
         });
 
+        it("should dispatch 'input' when the year segment is being deleted", async () => {
+            element = await fixtureElement({
+                props: { value: valueDateTime },
+            });
+            element.addEventListener('input', inputSpy);
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const digits = Math.floor(Math.log10(valueDateTime.year)) + 1;
+
+            yearSegment.focus();
+            await sendKeyMultipleTimes('Delete', digits);
+            await elementUpdated(element);
+
+            expect(inputSpy.callCount).to.equal(digits);
+
+            inputSpy.resetHistory();
+            await sendKeys({ press: 'Delete' });
+            await sendKeys({ press: 'Delete' });
+            await elementUpdated(element);
+
+            expect(inputSpy.callCount).to.equal(0);
+        });
+
+        [
+            SegmentTypes.Month,
+            SegmentTypes.Day,
+            SegmentTypes.Hour,
+            SegmentTypes.Minute,
+            SegmentTypes.Second,
+            SegmentTypes.DayPeriod,
+        ].forEach((segmentType) =>
+            it(`should dispatch 'input' when the ${segmentType} segment is deleted`, async () => {
+                element = await fixtureElement({
+                    props: {
+                        value: valueDateTime,
+                        precision: Precisions.Second,
+                    },
+                });
+                element.addEventListener('input', inputSpy);
+                editableSegments = getEditableSegments(element);
+                const segment = editableSegments.getByType(segmentType);
+
+                segment.focus();
+                await sendKeys({ press: 'Delete' });
+                await elementUpdated(element);
+
+                expect(inputSpy.callCount).to.equal(1);
+
+                inputSpy.resetHistory();
+                await sendKeys({ press: 'Delete' });
+                await sendKeys({ press: 'Delete' });
+                await elementUpdated(element);
+
+                expect(inputSpy.callCount).to.equal(0);
+            })
+        );
+
+        it("should not dispatch 'input' when the value doesn't change on type in", async () => {
+            element = await fixtureElement({
+                props: {
+                    precision: Precisions.Second,
+                    value: new CalendarDateTime(2222, 5, 4, 4, 10),
+                },
+            });
+            element.addEventListener('input', inputSpy);
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            const hourSegment = editableSegments.getByType(SegmentTypes.Hour);
+            const secondSegment = editableSegments.getByType(
+                SegmentTypes.Second
+            );
+            const dayPeriodSegment = editableSegments.getByType(
+                SegmentTypes.DayPeriod
+            );
+
+            yearSegment.focus();
+            await sendKeys({ type: '222' });
+            await elementUpdated(element);
+
+            monthSegment.focus();
+            await sendKeys({ type: '5' });
+            await elementUpdated(element);
+
+            hourSegment.focus();
+            await sendKeys({ type: '4' });
+            await elementUpdated(element);
+
+            secondSegment.focus();
+            await sendKeys({ type: '0' });
+            await elementUpdated(element);
+
+            dayPeriodSegment.focus();
+            await sendKeys({ type: 'A' });
+            await elementUpdated(element);
+
+            expect(inputSpy.callCount).to.equal(0);
+        });
+
         it('should not dispatch input nor change when the value is changed programmatically', async () => {
             element = await fixtureElement({
                 props: { value: valueDateTime },
             });
+            element.addEventListener('change', changeSpy);
+            element.addEventListener('input', inputSpy);
 
             element.value = valueDateTime.set({ year: valueDateTime.year + 1 });
             await elementUpdated(element);
