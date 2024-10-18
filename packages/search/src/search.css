@@ -24,35 +24,6 @@ input::-webkit-search-cancel-button {
     display: none;
 }
 
-:host([size='xs']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-50);
-}
-
-:host([size='s']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
-}
-
-:host,
-:host([size='m']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
-}
-
-:host([size='l']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-200);
-}
-
-:host([size='xl']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-300);
-}
-
-:host([size='xxl']) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-400);
-}
-
-.icon {
-    --spectrum-icon-size: inherit;
-}
-
 /**
  * While overriding the need for `size="m"` in SWC, these values correct the
  * cascade when attempting to delivery the Clear Button within the Search UI.
