@@ -350,7 +350,7 @@ While disabled, `<sp-button>` elements will not respond to click events and will
 While in pending state, `<sp-button>` elements will not respond to click events and will appear faded with an indeterminate `<sp-progress-circle>`.
 `<sp-button>` elements label and icon will be hidden while in pending state.
 
-Note: `pending` state of the `<sp-button>` element is applied after 1s delay to avoid flashing the pending state for quick actions. You can override the delay by adding custom css var `--pending-delay` to your css.
+Note: The pending state of the `<sp-button>` element is applied after a 1s delay to avoid flashing the pending state for quick actions. You can override the delay by adding custom css var `--pending-delay` to your css.
 
 ```html
 <sp-button-group>
