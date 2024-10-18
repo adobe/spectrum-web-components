@@ -44,7 +44,7 @@ const config = {
                 ),
                 ...converter.enumerateAttributes(
                     [['spectrum-ProgressCircle--staticWhite', 'white']],
-                    'static'
+                    'static-color'
                 ),
                 converter.classToClass('spectrum-ProgressCircle-track'),
                 converter.classToClass('spectrum-ProgressCircle-fills'),
