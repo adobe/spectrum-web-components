@@ -1068,4 +1068,65 @@ describe('Submenu', () => {
         expect(rootItem1.open, 'finally closed 1').to.be.false;
         expect(rootItem2.open, 'finally closed 2').to.be.false;
     });
+    it('allows using non-menu-item elements as the root of a submenu', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item class="root">
+                    Has submenu
+                    <div role="menuitem" slot="submenu">
+                        <sp-menu-item class="submenu-1">One</sp-menu-item>
+                        <sp-menu-item>Two</sp-menu-item>
+                        <sp-menu-item>Three</sp-menu-item>
+                    </div
+                ></div>
+                </sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+        const rootItem = el.querySelector('.root') as MenuItem;
+        const rootItemBoundingRect = rootItem.getBoundingClientRect();
+
+        // Open the first submenu
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        rootItemBoundingRect.left +
+                            rootItemBoundingRect.width / 2,
+                        rootItemBoundingRect.top +
+                            rootItemBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+
+        expect(rootItem.open).to.be.true;
+
+        const firstSubMenuItemRect = el
+            .querySelector('.submenu-1')
+            ?.getBoundingClientRect();
+
+        if (!firstSubMenuItemRect) {
+            throw new Error('Submenu item not found');
+        }
+
+        // click to select
+        await sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        firstSubMenuItemRect.left +
+                            firstSubMenuItemRect.width / 2,
+                        firstSubMenuItemRect.top +
+                            firstSubMenuItemRect.height / 2,
+                    ],
+                },
+            ],
+        });
+
+        // This test will fail if the click event throws an error
+        // because the submenu root is not a menu-item
+    });
 });
