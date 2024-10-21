@@ -315,6 +315,76 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([selected]) {
+    --mod-actionbutton-background-color-default: var(
+        --mod-actionbutton-background-color-default-selected
+    );
+    --mod-actionbutton-background-color-hover: var(
+        --mod-actionbutton-background-color-hover-selected
+    );
+    --mod-actionbutton-background-color-down: var(
+        --mod-actionbutton-background-color-down-selected
+    );
+    --mod-actionbutton-background-color-focus: var(
+        --mod-actionbutton-background-color-focus-selected
+    );
+    --mod-actionbutton-content-color-default: var(
+        --mod-actionbutton-content-color-default-selected
+    );
+    --mod-actionbutton-content-color-hover: var(
+        --mod-actionbutton-content-color-hover-selected
+    );
+    --mod-actionbutton-content-color-down: var(
+        --mod-actionbutton-content-color-down-selected
+    );
+    --mod-actionbutton-content-color-focus: var(
+        --mod-actionbutton-content-color-focus-selected
+    );
+}
+
+:host([selected][emphasized]) {
+    --mod-actionbutton-background-color-default: var(
+        --mod-actionbutton-background-color-default-selected-emphasized
+    );
+    --mod-actionbutton-background-color-hover: var(
+        --mod-actionbutton-background-color-hover-selected-emphasized
+    );
+    --mod-actionbutton-background-color-down: var(
+        --mod-actionbutton-background-color-down-selected-emphasized
+    );
+    --mod-actionbutton-background-color-focus: var(
+        --mod-actionbutton-background-color-focus-selected-emphasized
+    );
+    --mod-actionbutton-content-color-default: var(
+        --mod-actionbutton-content-color-default-selected-emphasized
+    );
+    --mod-actionbutton-content-color-hover: var(
+        --mod-actionbutton-content-color-hover-selected-emphasized
+    );
+    --mod-actionbutton-content-color-down: var(
+        --mod-actionbutton-content-color-down-selected-emphasized
+    );
+    --mod-actionbutton-content-color-focus: var(
+        --mod-actionbutton-content-color-focus-selected-emphasized
+    );
+}
+
+:host([selected][static-color='black']),
+:host([selected][static-color='white']) {
+    --mod-actionbutton-content-color-default: var(
+        --mod-actionbutton-static-content-color
+    );
+    --mod-actionbutton-content-color-hover: var(
+        --mod-actionbutton-static-content-color
+    );
+    --mod-actionbutton-content-color-down: var(
+        --mod-actionbutton-static-content-color
+    );
+    --mod-actionbutton-content-color-focus: var(
+        --mod-actionbutton-static-content-color
+    );
+}
+
 ::slotted([slot='icon']) {
     inline-size: var(
         --mod-actionbutton-icon-size,
