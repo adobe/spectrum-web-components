@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import {
     CalendarDate,
+    CalendarDateTime,
     DateFormatter,
     getLocalTimeZone,
     now,
@@ -71,7 +72,6 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import {
     isCalendarDate,
     isCalendarDateTime,
-    isNumber,
     isZonedDateTime,
 } from './helpers.js';
 import { DateTimeSegments } from './segments/DateTimeSegments.js';
@@ -125,7 +125,19 @@ export class DateTimePicker extends ManageHelpText(
      * The granularity used to display the segments of the component's value
      */
     @property({ type: String, reflect: true })
-    precision: Precision = SegmentTypes.Minute;
+    public get precision(): Precision {
+        return this._precision;
+    }
+
+    public set precision(value: Precision) {
+        this.isUserSetPrecision = true;
+        const oldValue = this._precision;
+        if (value === oldValue) return;
+        this._precision = value;
+        this.requestUpdate('precision', oldValue);
+    }
+    private _precision: Precision = Precisions.Minute;
+    private isUserSetPrecision = false;
 
     /**
      * Whether the `value` held by the form control is invalid.
@@ -155,7 +167,7 @@ export class DateTimePicker extends ManageHelpText(
     private segments: DateTimeSegments = new DateTimeSegments([]);
 
     @state()
-    public isCalendarOpen = false;
+    private isCalendarOpen = false;
 
     @query('.editable-segment')
     firstEditableSegment!: HTMLDivElement;
@@ -169,6 +181,7 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     private timeZone = getLocalTimeZone();
+    private cachedLocalTime: ZonedDateTime = now(this.timeZone);
     private dateFormatter!: DateFormatter;
     private numberParser!: NumberParser;
 
@@ -176,10 +189,16 @@ export class DateTimePicker extends ManageHelpText(
         return this.firstEditableSegment;
     }
 
-    private get mostSpecificDateValue(): DateValue {
+    /**
+     * Returns the component's most precise date property (min, max or value) or undefined if none is defined.
+     * The order of precedence is: ZonedDateTime, CalendarDateTime, CalendarDate.
+     */
+    private get mostSpecificDateValue(): DateValue | undefined {
         const dateValuesDefined = [this.value, this.min, this.max].filter(
             (date) => date !== undefined
         ) as DateValue[];
+
+        if (dateValuesDefined.length === 0) return;
 
         const zonedDateTimes = dateValuesDefined.filter(isZonedDateTime);
         if (zonedDateTimes.length > 0) return zonedDateTimes[0];
@@ -191,43 +210,64 @@ export class DateTimePicker extends ManageHelpText(
         return dates[0];
     }
 
-    private currentDate: ZonedDateTime = now(this.timeZone);
+    private get currentDate(): ZonedDateTime {
+        if (this.value) return toZoned(this.value, this.timeZone);
+        return this.cachedLocalTime;
+    }
 
-    private convertToMostSpecificDateValue(): void {
-        const dateValue = this.mostSpecificDateValue;
+    /**
+     * Converts the DateTimePicker's date properties (min, max and value) to match the provided date's type.
+     *
+     * @param dateValue - The date value to be used as a reference for the conversion
+     */
+    private convertDatePropsToMatch(
+        dateValue: CalendarDate | CalendarDateTime | ZonedDateTime
+    ): void {
         if (isZonedDateTime(dateValue)) {
             this.timeZone = dateValue.timeZone;
             this.value = this.value && toZoned(this.value, this.timeZone);
             this.min = this.min && toZoned(this.min, this.timeZone);
             this.max = this.max && toZoned(this.max, this.timeZone);
-        } else if (isCalendarDateTime(dateValue)) {
+            return;
+        }
+
+        this.timeZone = getLocalTimeZone();
+
+        if (isCalendarDateTime(dateValue)) {
             this.value = this.value && toCalendarDateTime(this.value);
             this.min = this.min && toCalendarDateTime(this.min);
             this.max = this.max && toCalendarDateTime(this.max);
+            return;
         }
 
-        if (this.value) this.currentDate = toZoned(this.value, this.timeZone);
+        this.value = this.value && toCalendarDate(this.value);
+        this.min = this.min && toCalendarDate(this.min);
+        this.max = this.max && toCalendarDate(this.max);
     }
 
     constructor() {
         super();
         this.setNumberParser();
         this.setDateFormatter();
+    }
+
+    /**
+     * Resets the component's value and segments
+     */
+    public clear(): void {
+        this.value = undefined;
         this.setSegments();
     }
 
-    public clear(): void {
-        this.value = undefined;
-    }
-
-    private checkDatesCompliance(
-        changesValue: boolean,
-        changesMin: boolean,
-        changesMax: boolean
-    ): void {
-        this.convertToMostSpecificDateValue();
-
-        if ((changesMin || changesMax) && this.min && this.max) {
+    /**
+     * Validates the component's date properties (min, max and value) compliance with one another.
+     * If the [min, max] constraint interval is invalid, both properties are reset.
+     * If the value is not within the [min, max] (valid) interval, it is reset.
+     *
+     * @param checkInterval - Whether to check the [min, max] interval
+     */
+    private checkDatePropsCompliance(checkInterval: boolean): void {
+        if (checkInterval && this.min && this.max) {
             const isValidInterval = this.min.compare(this.max) < 0;
             if (!isValidInterval) {
                 window.__swc.warn(
@@ -240,7 +280,7 @@ export class DateTimePicker extends ManageHelpText(
             }
         }
 
-        if (changesValue && this.value) {
+        if (this.value) {
             const isNonCompliantValue =
                 (this.min && this.value.compare(this.min) < 0) ||
                 (this.max && this.value.compare(this.max) > 0);
@@ -254,36 +294,68 @@ export class DateTimePicker extends ManageHelpText(
                 this.value = undefined;
             }
         }
+
+        if (!this.min && !this.max && !this.value)
+            this.timeZone = getLocalTimeZone();
     }
 
     protected override willUpdate(changedProperties: PropertyValues): void {
         const changesValue = changedProperties.has('value');
         const changesMin = changedProperties.has('min');
         const changesMax = changedProperties.has('max');
-        const changesDates = changesValue || changesMin || changesMax;
         const changesLocale = changedProperties.has(
             languageResolverUpdatedSymbol
         );
         const changesPrecision = changedProperties.has('precision');
         const changesSegments = changedProperties.has('segments');
 
-        const shouldResetSegments =
-            changesDates ||
-            changesLocale ||
-            changesPrecision ||
-            (changesValue && this.value === undefined);
-
-        if (changesDates)
-            this.checkDatesCompliance(changesValue, changesMin, changesMax);
-
         if (changesLocale) this.setNumberParser();
         if (changesLocale || changesPrecision) this.setDateFormatter();
-        if (changesSegments) {
-            // TODO: if not all segments are defined, we should set the value to undefined
-            this.updateValue();
+
+        if (changesValue || changesMin || changesMax) {
+            const mostSpecificDateValue = this.mostSpecificDateValue;
+            if (mostSpecificDateValue) {
+                this.convertDatePropsToMatch(mostSpecificDateValue);
+                this.checkDatePropsCompliance(changesMin || changesMax);
+                this.updateDateProps();
+                this.updateDefaultPrecision();
+            }
         }
 
-        if (shouldResetSegments) this.setSegments();
+        if (changesValue || changesLocale || changesPrecision)
+            this.setSegments();
+
+        if (changesSegments) this.setValueFromSegments();
+    }
+
+    /**
+     * Update the component's date properties' types to include the provided precision.
+     */
+    private updateDateProps(): void {
+        const mostSpecificDateValue = this.mostSpecificDateValue;
+        if (!mostSpecificDateValue || !this.isUserSetPrecision) return;
+
+        const shouldConvertToDateTime =
+            this.includesTime && isCalendarDate(mostSpecificDateValue);
+
+        if (shouldConvertToDateTime)
+            this.convertDatePropsToMatch(
+                toCalendarDateTime(mostSpecificDateValue)
+            );
+    }
+
+    /**
+     * Changes the component's default precision according to the most specific date property (min, max or value).
+     */
+    private updateDefaultPrecision(): void {
+        if (this.isUserSetPrecision) return;
+
+        const mostSpecificDateValue = this.mostSpecificDateValue;
+        if (!mostSpecificDateValue) return;
+
+        if (isCalendarDate(mostSpecificDateValue))
+            this._precision = Precisions.Day;
+        else this._precision = Precisions.Minute;
     }
 
     override render(): TemplateResult {
@@ -353,10 +425,18 @@ export class DateTimePicker extends ManageHelpText(
             const minute = this.segments.minute?.value ?? 0;
             const second = this.segments.second?.value ?? 0;
             const time = new Time(hour, minute, second);
+
+            const mostSpecificDateValue = this.mostSpecificDateValue;
             this.value = toCalendarDateTime(calendarValue, time);
+
+            if (mostSpecificDateValue && isZonedDateTime(mostSpecificDateValue))
+                this.value = toZoned(this.value, this.timeZone);
         }
     }
 
+    /**
+     * Returns whether the component's precision includes time segments (hour, minute, second)
+     */
     private get includesTime(): boolean {
         const timePrecisions = [
             Precisions.Hour,
@@ -413,9 +493,7 @@ export class DateTimePicker extends ManageHelpText(
         };
 
         const segmentStyles: StyleInfo = {
-            'min-width': isNumber(segment.maxValue)
-                ? `${String(segment.maxValue).length}ch`
-                : undefined,
+            'min-width': `${String(segment.maxValue).length}ch`,
         };
 
         /**
@@ -476,11 +554,15 @@ export class DateTimePicker extends ManageHelpText(
                 break;
             }
             case 'ArrowRight': {
-                this.focusNextSegment(event);
+                const segment = event.target;
+                if (!segment) return;
+                this.focusSegment(segment as HTMLElement, 'next');
                 break;
             }
             case 'ArrowLeft': {
-                this.focusPreviousSegment(event);
+                const segment = event.target;
+                if (!segment) return;
+                this.focusSegment(segment as HTMLElement, 'previous');
                 break;
             }
         }
@@ -572,16 +654,22 @@ export class DateTimePicker extends ManageHelpText(
         );
     }
 
-    private updateValue(): void {
+    private setValueFromSegments(): void {
         const formattedDate = this.segments.getFormattedDate(this.precision);
-        if (!formattedDate) return;
+        if (!formattedDate) {
+            this.value = undefined;
+            return;
+        }
 
-        const dateValue = this.mostSpecificDateValue;
-        if (isZonedDateTime(dateValue))
-            this.value = toZoned(formattedDate, this.timeZone);
-        else if (isCalendarDateTime(dateValue) || this.includesTime)
-            this.value = toCalendarDateTime(formattedDate);
-        else this.value = toCalendarDate(formattedDate);
+        const mostSpecificDateValue = this.mostSpecificDateValue;
+        if (!mostSpecificDateValue) this.value = formattedDate;
+        else {
+            if (isZonedDateTime(mostSpecificDateValue))
+                this.value = toZoned(formattedDate, this.timeZone);
+            else if (isCalendarDateTime(mostSpecificDateValue))
+                this.value = toCalendarDateTime(formattedDate);
+            else this.value = toCalendarDate(formattedDate);
+        }
 
         this.dispatchChange();
     }
@@ -632,31 +720,13 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     /**
-     * Focuses on the next editable segment, if any
-     *
-     * @param event - Triggered event details
-     */
-    private focusNextSegment(event: KeyboardEvent): void {
-        this.focusSegment(event.target as HTMLDivElement, 'next');
-    }
-
-    /**
-     * Focuses on the previous editable segment, if any
-     *
-     * @param event - Triggered event details
-     */
-    private focusPreviousSegment(event: KeyboardEvent): void {
-        this.focusSegment(event.target as HTMLDivElement, 'previous');
-    }
-
-    /**
      * Focuses the segment according to the direction, if there is one to focus on
      *
      * @param segment - Segment on which the event was triggered (the segment being changed)
      * @param elementToFocus - Defines which element will be focused: is it the previous one or the next one?
      */
     private focusSegment(
-        segment: HTMLDivElement,
+        segment: HTMLElement,
         elementToFocus: 'previous' | 'next'
     ): void {
         let segmentFound = false;

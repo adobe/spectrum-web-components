@@ -9,7 +9,15 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { isSameDay } from '@internationalized/date';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    oneEvent,
+} from '@open-wc/testing';
+import { Calendar, DateValue } from '@spectrum-web-components/calendar';
 import {
     DateTimePicker,
     EditableSegmentType,
@@ -88,4 +96,38 @@ export function sendKeyMultipleTimes(
     return Promise.all(
         Array.from({ length: times }).map(() => sendKeys({ press: key }))
     );
+}
+
+export function expectSameDates(
+    a: DateValue,
+    b: DateValue,
+    message?: string
+): void {
+    expect(isSameDay(a, b), message).to.be.true;
+}
+
+export async function dispatchCalendarChange(
+    element: DateTimePicker,
+    date: DateValue
+): Promise<void> {
+    const calendarEl = element.shadowRoot!.querySelector(
+        'sp-calendar'
+    ) as Calendar;
+
+    calendarEl.value = date;
+    calendarEl.dispatchEvent(
+        new CustomEvent('change', { bubbles: true, composed: true })
+    );
+    await elementUpdated(element);
+}
+
+export async function openCalendar(element: DateTimePicker): Promise<void> {
+    const calendarButton = element.shadowRoot!.querySelector(
+        'sp-picker-button'
+    ) as HTMLElement;
+
+    const opened = oneEvent(element, 'sp-opened');
+    calendarButton.focus();
+    await sendKeys({ press: 'Enter' });
+    await opened;
 }

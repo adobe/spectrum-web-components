@@ -33,7 +33,15 @@ export class SegmentsFactory {
         currentDate: ZonedDateTime,
         shouldSetSegmentsValues: boolean = false
     ): DateTimeSegments {
-        const date = currentDate.toDate();
+        const date = new Date(
+            currentDate.year,
+            currentDate.month - 1, // 0-indexed in Date but 1-indexed in ZonedDateTime
+            currentDate.day,
+            currentDate.hour,
+            currentDate.minute,
+            currentDate.second
+        );
+
         const createdSegments = this.dateFormatter
             .formatToParts(date)
             .map((part) => {
