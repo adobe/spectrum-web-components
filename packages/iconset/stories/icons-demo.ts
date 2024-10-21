@@ -239,23 +239,15 @@ export class IconsDemo extends SpectrumElement {
                   (icon) => icon.name.toLowerCase().search(this.search) !== -1
               )
             : this.icons;
-        if (this.spectrumVersion === 2) {
-            // don't show icons from s1IconsList
-            matchingIcons = matchingIcons.filter((icon) => {
-                let iconName = icon.name;
-                iconName = iconName.replace(/\s/g, '');
-                iconName = iconName.toLowerCase();
-                return iconsList['s2'].includes(iconName);
-            });
-        } else {
-            // only show icons from s1IconsList
-            matchingIcons = matchingIcons.filter((icon) => {
-                let iconName = icon.name;
-                iconName = iconName.replace(/\s/g, '');
-                iconName = iconName.toLowerCase();
-                return iconsList['s1'].includes(iconName);
-            });
-        }
+
+        const iconVersion = this.spectrumVersion === 2 ? 's2' : 's1';
+        // Filter out icons that are not in the current version
+        matchingIcons = matchingIcons.filter((icon) => {
+            let iconName = icon.name;
+            iconName = iconName.replace(/\s/g, '');
+            iconName = iconName.toLowerCase();
+            return iconsList[iconVersion].includes(iconName);
+        });
 
         return html`
             <div class="search" part="search">
