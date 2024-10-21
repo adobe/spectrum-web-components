@@ -35,7 +35,7 @@ export class SegmentsFactory {
     ): DateTimeSegments {
         const date = new Date(
             currentDate.year,
-            currentDate.month - 1,
+            currentDate.month - 1, // 0-indexed in Date but 1-indexed in ZonedDateTime
             currentDate.day,
             currentDate.hour,
             currentDate.minute,

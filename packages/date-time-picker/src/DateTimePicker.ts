@@ -467,7 +467,6 @@ export class DateTimePicker extends ManageHelpText(
                 </span>
             </div>
         `;
-        // asdadsaa
     }
 
     public renderLiteralSegment(segment: LiteralSegment): TemplateResult {
