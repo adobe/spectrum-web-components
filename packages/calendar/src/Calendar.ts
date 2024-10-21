@@ -161,6 +161,9 @@ export class Calendar extends SpectrumElement {
         document.removeEventListener('mousedown', this.resetDateFocusIntent);
     }
 
+    /**
+     * Resets the component's value
+     */
     public clear(): void {
         this.value = undefined;
     }
@@ -178,14 +181,15 @@ export class Calendar extends SpectrumElement {
         this.value = this.value && toCalendarDate(this.value);
     }
 
-    private checkDatesCompliance(
-        changesValue: boolean,
-        changesMin: boolean,
-        changesMax: boolean
-    ): void {
-        this.convertToCalendarDates();
-
-        if ((changesMin || changesMax) && this.min && this.max) {
+    /**
+     * Validates the component's date properties (min, max and value) compliance with one another.
+     * If the [min, max] constraint interval is invalid, both properties are reset.
+     * If the value is not within the [min, max] (valid) interval, it is reset.
+     *
+     * @param checkInterval - Whether to check the [min, max] interval
+     */
+    private checkDatePropsCompliance(checkInterval: boolean): void {
+        if (checkInterval && this.min && this.max) {
             const isValidInterval = this.min.compare(this.max) < 0;
             if (!isValidInterval) {
                 window.__swc.warn(
@@ -198,7 +202,7 @@ export class Calendar extends SpectrumElement {
             }
         }
 
-        if (changesValue && this.value) {
+        if (this.value) {
             const isNonCompliantValue =
                 (this.min && this.value.compare(this.min) < 0) ||
                 (this.max && this.value.compare(this.max) > 0);
@@ -226,8 +230,10 @@ export class Calendar extends SpectrumElement {
         const changesValue = changedProperties.has('value');
         const changesDates = changesMin || changesMax || changesValue;
 
-        if (changesDates)
-            this.checkDatesCompliance(changesValue, changesMin, changesMax);
+        if (changesDates) {
+            this.convertToCalendarDates();
+            this.checkDatePropsCompliance(changesMin || changesMax);
+        }
 
         const previousMonth = changedProperties.get('currentDate');
         const changesMonth =

@@ -9,43 +9,29 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { sendKeys, sendMouse } from '@web/test-runner-commands';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { spy, stub } from 'sinon';
 import {
     CalendarDate,
     endOfMonth,
-    isSameDay,
+    getLocalTimeZone,
     parseDate,
     today,
 } from '@internationalized/date';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { Button } from '@spectrum-web-components/button';
 import { Calendar, DAYS_PER_WEEK } from '@spectrum-web-components/calendar';
 import '@spectrum-web-components/calendar/sp-calendar.js';
 import '@spectrum-web-components/theme/sp-theme.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
+import { sendKeys, sendMouse } from '@web/test-runner-commands';
+import { spy, stub } from 'sinon';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    expectSameDates,
+    fixtureElement,
+    sendKeyMultipleTimes,
+} from './helpers.js';
 
-const LOCAL_TIME_ZONE = new Intl.DateTimeFormat().resolvedOptions().timeZone;
 const NEXT_BUTTON_SELECTOR = '[data-test-id="next-btn"]';
 const PREV_BUTTON_SELECTOR = '[data-test-id="prev-btn"]';
-
-async function fixtureElement({
-    locale = 'en-US',
-    props = {},
-}: {
-    locale?: string;
-    props?: { [prop: string]: unknown };
-} = {}): Promise<Calendar> {
-    const wrapped = await fixture<HTMLElement>(html`
-        <sp-theme lang=${locale} color="light" scale="medium">
-            <sp-calendar ...=${spreadProps(props)}></sp-calendar>
-        </sp-theme>
-    `);
-    const el = wrapped.querySelector('sp-calendar') as Calendar;
-    await elementUpdated(el);
-    return el;
-}
 
 describe('Calendar', () => {
     let element: Calendar;
@@ -54,7 +40,7 @@ describe('Calendar', () => {
     const fixedMonth = 5;
     const fixedDay = 15;
 
-    before(async () => {
+    before(() => {
         const fixedTime = new Date(
             fixedYear,
             fixedMonth - 1, // 0-indexed in Date but 1-indexed in CalendarDate
@@ -65,7 +51,6 @@ describe('Calendar', () => {
 
     beforeEach(async () => {
         element = await fixtureElement();
-        await elementUpdated(element);
     });
 
     after(() => {
@@ -80,43 +65,34 @@ describe('Calendar', () => {
     );
 
     it('loads default calendar accessibly', async () => {
-        const el = await fixtureElement();
-        await expect(el).to.be.accessible();
+        element = await fixtureElement();
+        await expect(element).to.be.accessible();
     });
 
-    describe('Displays the correct initial month', () => {
-        it('with no pre-selected value provided', async () => {
-            const localToday = today(LOCAL_TIME_ZONE);
-            const isLocalTodayDisplayed = isSameDay(
-                element['currentDate'],
-                localToday
-            );
+    describe('Initial month', () => {
+        it("should display today's month when no pre-selected value is provided", async () => {
+            element = await fixtureElement();
+            const localToday = today(getLocalTimeZone());
 
-            expect(isLocalTodayDisplayed).to.be.true;
+            expectSameDates(element['currentDate'], localToday);
         });
 
-        it('with a valid pre-selected value', async () => {
+        it("should display the provided value's month when it is provided", async () => {
             const value = new CalendarDate(2024, 7, 21);
-            const element = await fixtureElement({
+            element = await fixtureElement({
                 props: { value },
             });
-            await elementUpdated(element);
 
-            const isSelectedDateDisplayed = isSameDay(
-                element['currentDate'],
-                value
-            );
-
-            expect(isSelectedDateDisplayed).to.be.true;
+            expectSameDates(element['currentDate'], value);
         });
     });
 
-    describe('Correctly manages the focusable day when changing months', () => {
+    describe('Focus', () => {
         let focusableDay: HTMLElement;
         let nextButton: Button;
         let prevButton: Button;
 
-        beforeEach(async () => {
+        beforeEach(() => {
             focusableDay = element.shadowRoot.querySelector(
                 "td.tableCell[tabindex='0']"
             ) as HTMLElement;
@@ -126,7 +102,7 @@ describe('Calendar', () => {
                 element.shadowRoot.querySelector(PREV_BUTTON_SELECTOR)!;
         });
 
-        it('after selecting a date', async () => {
+        it("should focus the first day when the displayed month doesn't have the selected/today's date", async () => {
             focusableDay.focus();
             await sendKeys({ press: 'ArrowRight' });
             await elementUpdated(element);
@@ -145,14 +121,13 @@ describe('Calendar', () => {
             const focusedDay = element.shadowRoot.activeElement as HTMLElement;
             const focusedCalendarDate = parseDate(focusedDay.dataset.value!);
 
-            expect(isSameDay(focusedCalendarDate, element['currentDate'])).to.be
-                .true;
+            expectSameDates(focusedCalendarDate, element['currentDate']);
             expect(element['currentDate'].year).to.equal(fixedYear);
             expect(element['currentDate'].month).to.equal(fixedMonth + 2);
             expect(element['currentDate'].day).to.equal(1);
         });
 
-        it('coming back to a selected date', async () => {
+        it('should focus the selected date when the displayed month includes it', async () => {
             focusableDay.focus();
             await sendKeys({ press: 'ArrowRight' });
             await elementUpdated(element);
@@ -177,10 +152,10 @@ describe('Calendar', () => {
 
             const focusedDay = element.shadowRoot.activeElement as HTMLElement;
             const focusedCalendarDate = parseDate(focusedDay.dataset.value!);
-            expect(isSameDay(focusedCalendarDate, element.value!)).to.be.true;
+            expectSameDates(focusedCalendarDate, element.value!);
         });
 
-        it("coming back to today's date", async () => {
+        it("should focus today's date when the displayed month includes it and it doesn't include the selected date", async () => {
             nextButton.focus();
             await sendKeys({ press: 'Enter' });
             await elementUpdated(element);
@@ -202,12 +177,13 @@ describe('Calendar', () => {
         });
     });
 
-    describe('Navigates', () => {
+    describe('Navigation', () => {
         let nextButton: Button;
         let prevButton: Button;
+        let focusableDay: HTMLElement;
 
         const resetElementPosition = (): void => {
-            element['currentDate'] = today(LOCAL_TIME_ZONE);
+            element['currentDate'] = today(getLocalTimeZone());
         };
 
         beforeEach(() => {
@@ -216,269 +192,234 @@ describe('Calendar', () => {
 
             nextButton =
                 element.shadowRoot.querySelector(NEXT_BUTTON_SELECTOR)!;
+
+            focusableDay = element.shadowRoot.querySelector(
+                "td.tableCell[tabindex='0']"
+            )!;
         });
 
         afterEach(async () => {
             resetElementPosition();
         });
 
-        describe('via header buttons', () => {
-            it('using pointer on the next month button', async () => {
-                nextButton.click();
-                await elementUpdated(element);
+        it("should navigate to the next month by clicking on the 'next month' button", async () => {
+            nextButton.click();
+            await elementUpdated(element);
 
-                expect(element['currentDate'].year).to.equal(fixedYear);
-                expect(element['currentDate'].month).to.equal(fixedMonth + 1);
-                expect(element['currentDate'].day).to.equal(1);
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth + 1);
+            expect(element['currentDate'].day).to.equal(1);
 
-                nextButton.click();
-                await elementUpdated(element);
+            nextButton.click();
+            await elementUpdated(element);
 
-                expect(element['currentDate'].year).to.equal(fixedYear);
-                expect(element['currentDate'].month).to.equal(fixedMonth + 2);
-                expect(element['currentDate'].day).to.equal(1);
-            });
-
-            it('using pointer on the previous month button', async () => {
-                prevButton.click();
-                await elementUpdated(element);
-
-                expect(element['currentDate'].year).to.equal(fixedYear);
-                expect(element['currentDate'].month).to.equal(fixedMonth - 1);
-                expect(element['currentDate'].day).to.equal(1);
-
-                prevButton.click();
-                await elementUpdated(element);
-
-                expect(element['currentDate'].year).to.equal(fixedYear);
-                expect(element['currentDate'].month).to.equal(fixedMonth - 2);
-                expect(element['currentDate'].day).to.equal(1);
-            });
-
-            it('using keyboard action on the next month button', async () => {
-                nextButton.focus();
-                await sendKeys({ press: 'Space' });
-                await elementUpdated(element);
-
-                expect(element['currentDate'].year).to.equal(fixedYear);
-                expect(element['currentDate'].month).to.equal(fixedMonth + 1);
-                expect(element['currentDate'].day).to.equal(1);
-
-                await sendKeys({ press: 'Enter' });
-                await elementUpdated(element);
-
-                expect(element['currentDate'].year).to.equal(fixedYear);
-                expect(element['currentDate'].month).to.equal(fixedMonth + 2);
-                expect(element['currentDate'].day).to.equal(1);
-            });
-
-            it('using keyboard action on the previous month button', async () => {
-                prevButton.focus();
-                await sendKeys({ press: 'Space' });
-                await elementUpdated(element);
-
-                expect(element['currentDate'].year).to.equal(fixedYear);
-                expect(element['currentDate'].month).to.equal(fixedMonth - 1);
-                expect(element['currentDate'].day).to.equal(1);
-
-                await sendKeys({ press: 'Enter' });
-                await elementUpdated(element);
-
-                expect(element['currentDate'].year).to.equal(fixedYear);
-                expect(element['currentDate'].month).to.equal(fixedMonth - 2);
-                expect(element['currentDate'].day).to.equal(1);
-            });
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth + 2);
+            expect(element['currentDate'].day).to.equal(1);
         });
 
-        describe('via days buttons', () => {
-            beforeEach(() => {
-                const focusableDay = element.shadowRoot.querySelector(
-                    "td.tableCell[tabindex='0']"
-                ) as HTMLElement;
-                focusableDay.focus();
-            });
+        it("should navigate to the previous month by clicking on the 'previous month' button", async () => {
+            prevButton.click();
+            await elementUpdated(element);
 
-            describe('in the current month', () => {
-                it('using the right arrow key', async () => {
-                    await sendKeys({ press: 'ArrowRight' });
-                    await elementUpdated(element);
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth - 1);
+            expect(element['currentDate'].day).to.equal(1);
 
-                    expect(element['currentDate'].year).to.equal(fixedYear);
-                    expect(element['currentDate'].month).to.equal(fixedMonth);
-                    expect(element['currentDate'].day).to.equal(fixedDay + 1);
-                });
+            prevButton.click();
+            await elementUpdated(element);
 
-                it('using the left arrow key', async () => {
-                    await sendKeys({ press: 'ArrowLeft' });
-                    await elementUpdated(element);
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth - 2);
+            expect(element['currentDate'].day).to.equal(1);
+        });
 
-                    expect(element['currentDate'].year).to.equal(fixedYear);
-                    expect(element['currentDate'].month).to.equal(fixedMonth);
-                    expect(element['currentDate'].day).to.equal(fixedDay - 1);
-                });
+        it("should navigate to the next month by keyboard action on the 'next month' button", async () => {
+            nextButton.focus();
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
 
-                it('using the up arrow key', async () => {
-                    await sendKeys({ press: 'ArrowUp' });
-                    await elementUpdated(element);
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth + 1);
+            expect(element['currentDate'].day).to.equal(1);
 
-                    expect(element['currentDate'].year).to.equal(fixedYear);
-                    expect(element['currentDate'].month).to.equal(fixedMonth);
-                    expect(element['currentDate'].day).to.equal(
-                        fixedDay - DAYS_PER_WEEK
-                    );
-                });
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
 
-                it('using the down arrow key', async () => {
-                    await sendKeys({ press: 'ArrowDown' });
-                    await elementUpdated(element);
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth + 2);
+            expect(element['currentDate'].day).to.equal(1);
+        });
 
-                    expect(element['currentDate'].year).to.equal(fixedYear);
-                    expect(element['currentDate'].month).to.equal(fixedMonth);
-                    expect(element['currentDate'].day).to.equal(
-                        fixedDay + DAYS_PER_WEEK
-                    );
-                });
-            });
+        it("should navigate to the previous month by keyboard action on the 'previous month' button", async () => {
+            prevButton.focus();
+            await sendKeys({ press: 'Space' });
+            await elementUpdated(element);
 
-            describe('through different months', () => {
-                it('using the right arrow key', async () => {
-                    const currentEndOfMonthDay = endOfMonth(
-                        element['currentDate']
-                    ).day;
-                    const nextMonthDay = 4;
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth - 1);
+            expect(element['currentDate'].day).to.equal(1);
 
-                    await Promise.all(
-                        Array.from({
-                            length:
-                                currentEndOfMonthDay -
-                                element['currentDate'].day +
-                                nextMonthDay,
-                        }).map(() => sendKeys({ press: 'ArrowRight' }))
-                    );
-                    await elementUpdated(element);
-                    expect(element['currentDate'].year).to.equal(fixedYear);
-                    expect(element['currentDate'].month).to.equal(
-                        fixedMonth + 1
-                    );
-                    expect(element['currentDate'].day).to.equal(nextMonthDay);
-                });
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(element);
 
-                it('using the left arrow key', async () => {
-                    const previousEndOfMonthDay = endOfMonth(
-                        element['currentDate'].set({ month: fixedMonth - 1 })
-                    ).day;
-                    const prevMonthDay = 23;
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth - 2);
+            expect(element['currentDate'].day).to.equal(1);
+        });
 
-                    await Promise.all(
-                        Array.from({
-                            length:
-                                element['currentDate'].day +
-                                previousEndOfMonthDay -
-                                prevMonthDay,
-                        }).map(() => sendKeys({ press: 'ArrowLeft' }))
-                    );
-                    await elementUpdated(element);
-                    expect(element['currentDate'].year).to.equal(fixedYear);
-                    expect(element['currentDate'].month).to.equal(
-                        fixedMonth - 1
-                    );
-                    expect(element['currentDate'].day).to.equal(prevMonthDay);
-                });
+        it('should navigate in the current month - ArrowRight', async () => {
+            focusableDay.focus();
+            await sendKeys({ press: 'ArrowRight' });
+            await elementUpdated(element);
 
-                it('using the up arrow key', async () => {
-                    const previousEndOfMonthDay = endOfMonth(
-                        element['currentDate'].set({ month: fixedMonth - 1 })
-                    ).day;
-                    const initialDay = element['currentDate'].day;
-                    const completedWeeks = Math.floor(
-                        initialDay / DAYS_PER_WEEK
-                    );
-                    const daysIntoCurrentWeek = initialDay % DAYS_PER_WEEK;
-                    const previousMonthDay =
-                        previousEndOfMonthDay +
-                        daysIntoCurrentWeek -
-                        DAYS_PER_WEEK;
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth);
+            expect(element['currentDate'].day).to.equal(fixedDay + 1);
+        });
 
-                    await Promise.all(
-                        Array.from({
-                            length: completedWeeks + 1,
-                        }).map(() => sendKeys({ press: 'ArrowUp' }))
-                    );
-                    await elementUpdated(element);
+        it('should navigate in the current month - ArrowLeft', async () => {
+            focusableDay.focus();
+            await sendKeys({ press: 'ArrowLeft' });
+            await elementUpdated(element);
 
-                    expect(element['currentDate'].year).to.equal(fixedYear);
-                    expect(element['currentDate'].month).to.equal(
-                        fixedMonth - 1
-                    );
-                    expect(element['currentDate'].day).to.equal(
-                        previousMonthDay
-                    );
-                });
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth);
+            expect(element['currentDate'].day).to.equal(fixedDay - 1);
+        });
 
-                it('using the down arrow key', async () => {
-                    const currentEndOfMonthDay = endOfMonth(
-                        element['currentDate']
-                    ).day;
-                    const initialDay = element['currentDate'].day;
-                    const uncompletedWeeks = Math.floor(
-                        (currentEndOfMonthDay - initialDay) / DAYS_PER_WEEK
-                    );
-                    const nextMonthDay =
-                        initialDay +
-                        (uncompletedWeeks + 1) * DAYS_PER_WEEK -
-                        currentEndOfMonthDay;
+        it('should navigate in the current month - ArrowUp', async () => {
+            focusableDay.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
 
-                    await Promise.all(
-                        Array.from({
-                            length: uncompletedWeeks + 1,
-                        }).map(() => sendKeys({ press: 'ArrowDown' }))
-                    );
-                    await elementUpdated(element);
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth);
+            expect(element['currentDate'].day).to.equal(
+                fixedDay - DAYS_PER_WEEK
+            );
+        });
 
-                    expect(element['currentDate'].year).to.equal(fixedYear);
-                    expect(element['currentDate'].month).to.equal(
-                        fixedMonth + 1
-                    );
-                    expect(element['currentDate'].day).to.equal(nextMonthDay);
-                });
-            });
+        it('should navigate in the current month - ArrowDown', async () => {
+            focusableDay.focus();
+            await sendKeys({ press: 'ArrowDown' });
+            await elementUpdated(element);
+
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth);
+            expect(element['currentDate'].day).to.equal(
+                fixedDay + DAYS_PER_WEEK
+            );
+        });
+
+        it('should navigate to the next month - ArrowRight', async () => {
+            focusableDay.focus();
+            const currentEndOfMonthDay = endOfMonth(element['currentDate']).day;
+            const nextMonthDay = 4;
+
+            await sendKeyMultipleTimes(
+                'ArrowRight',
+                currentEndOfMonthDay - element['currentDate'].day + nextMonthDay
+            );
+            await elementUpdated(element);
+
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth + 1);
+            expect(element['currentDate'].day).to.equal(nextMonthDay);
+        });
+
+        it('should navigate to the next month - ArrowDown', async () => {
+            focusableDay.focus();
+            const currentEndOfMonthDay = endOfMonth(element['currentDate']).day;
+            const initialDay = element['currentDate'].day;
+            const uncompletedWeeks = Math.floor(
+                (currentEndOfMonthDay - initialDay) / DAYS_PER_WEEK
+            );
+            const nextMonthDay =
+                initialDay +
+                (uncompletedWeeks + 1) * DAYS_PER_WEEK -
+                currentEndOfMonthDay;
+
+            await sendKeyMultipleTimes('ArrowDown', uncompletedWeeks + 1);
+            await elementUpdated(element);
+
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth + 1);
+            expect(element['currentDate'].day).to.equal(nextMonthDay);
+        });
+
+        it('should navigate to the previous month - ArrowLeft', async () => {
+            focusableDay.focus();
+            const previousEndOfMonthDay = endOfMonth(
+                element['currentDate'].set({ month: fixedMonth - 1 })
+            ).day;
+            const prevMonthDay = 23;
+
+            await sendKeyMultipleTimes(
+                'ArrowLeft',
+                element['currentDate'].day +
+                    previousEndOfMonthDay -
+                    prevMonthDay
+            );
+            await elementUpdated(element);
+
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth - 1);
+            expect(element['currentDate'].day).to.equal(prevMonthDay);
+        });
+
+        it('should navigate to the previous month - ArrowUp', async () => {
+            focusableDay.focus();
+            const previousEndOfMonthDay = endOfMonth(
+                element['currentDate'].set({ month: fixedMonth - 1 })
+            ).day;
+            const initialDay = element['currentDate'].day;
+            const completedWeeks = Math.floor(initialDay / DAYS_PER_WEEK);
+            const daysIntoCurrentWeek = initialDay % DAYS_PER_WEEK;
+            const previousMonthDay =
+                previousEndOfMonthDay + daysIntoCurrentWeek - DAYS_PER_WEEK;
+
+            await sendKeyMultipleTimes('ArrowUp', completedWeeks + 1);
+            await elementUpdated(element);
+
+            expect(element['currentDate'].year).to.equal(fixedYear);
+            expect(element['currentDate'].month).to.equal(fixedMonth - 1);
+            expect(element['currentDate'].day).to.equal(previousMonthDay);
         });
     });
 
-    describe('Manages min and max constraints', () => {
+    describe('Min-max constraints', () => {
         let min: CalendarDate;
         let max: CalendarDate;
         const dayOffset = 5;
 
-        before(async () => {
+        before(() => {
             min = new CalendarDate(fixedYear, fixedMonth, fixedDay - dayOffset);
             max = new CalendarDate(fixedYear, fixedMonth, fixedDay + dayOffset);
         });
 
-        it('when min > max date by ignoring them', async () => {
+        it('should ignore the provided min and max properties when the interval is invalid', async () => {
             const min = max.set({ day: max.day + 1 });
             element = await fixtureElement({
                 props: { min, max },
             });
 
-            expect(element.min).to.be.undefined;
-            expect(element.max).to.be.undefined;
+            expect(element.min, 'min not undefined').to.be.undefined;
+            expect(element.max, 'max not undefined').to.be.undefined;
         });
 
-        it("when a pre-selected value doesn't comply by ignoring it", async () => {
+        it("should ignore the provided value property when it doesn't comply with the min-max interval", async () => {
             const value = max.set({ day: max.day + 1 });
             element = await fixtureElement({
                 props: { min, max, value },
             });
 
             expect(element.value).to.be.undefined;
-            expect(element.min).to.not.be.undefined;
-            expect(element.max).to.not.be.undefined;
-            expect(isSameDay(element.min!, min)).to.be.true;
-            expect(isSameDay(element.max!, max)).to.be.true;
+            expectSameDates(element.min!, min, 'min value mismatch');
+            expectSameDates(element.max!, max, 'max value mismatch');
         });
 
-        it("by not selecting a day that doesn't comply", async () => {
+        it("should not select a day that doesn't comply with the min-max interval", async () => {
             const changeSpy = spy();
             element = await fixtureElement({
                 props: { min, max },
@@ -498,8 +439,8 @@ describe('Calendar', () => {
             await elementUpdated(element);
 
             const rect = unavailableDayElement.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
+            const centerX = Math.round(rect.left + rect.width / 2);
+            const centerY = Math.round(rect.top + rect.height / 2);
 
             await sendMouse({
                 type: 'click',
@@ -507,78 +448,135 @@ describe('Calendar', () => {
             });
             await elementUpdated(element);
 
-            const isInitialCurrentDate = isSameDay(
+            expectSameDates(
                 element['currentDate'],
                 new CalendarDate(fixedYear, fixedMonth, fixedDay)
             );
-
-            expect(isInitialCurrentDate).to.be.true;
             expect(changeSpy.callCount).to.equal(0);
             expect(element.value).to.be.undefined;
         });
 
-        describe('stopping navigation when they are set', () => {
-            beforeEach(async () => {
-                element = await fixtureElement({
-                    props: { min, max },
-                });
-                const focusableDay = element.shadowRoot.querySelector(
-                    "td.tableCell[tabindex='0']"
-                ) as HTMLElement;
-                focusableDay.focus();
+        it("should invalidate the current value when it doesn't comply with min changes", async () => {
+            element = await fixtureElement({
+                props: { min, max, value: min },
             });
 
-            it('using the right arrow key', async () => {
-                await Promise.all(
-                    Array.from({ length: dayOffset + 3 }).map(() =>
-                        sendKeys({ press: 'ArrowRight' })
-                    )
-                );
-                await elementUpdated(element);
+            expect(element.value).to.not.be.undefined;
+            expect(element.min).to.not.be.undefined;
+            expect(element.max).to.not.be.undefined;
 
-                const isMaxReached = isSameDay(element['currentDate'], max);
-                expect(isMaxReached).to.be.true;
+            const newMin = min.set({ day: min.day + 1 });
+            element.min = newMin;
+            await elementUpdated(element);
+
+            expect(element.value).to.be.undefined;
+            expectSameDates(element.min!, newMin, 'min value mismatch');
+            expectSameDates(element.max!, max, 'max value mismatch');
+        });
+
+        it("should invalidate the current value when it doesn't comply with max changes", async () => {
+            element = await fixtureElement({
+                props: { min, max, value: max },
             });
 
-            it('using the left arrow key', async () => {
-                await Promise.all(
-                    Array.from({ length: dayOffset + 3 }).map(() =>
-                        sendKeys({ press: 'ArrowLeft' })
-                    )
-                );
-                await elementUpdated(element);
+            expect(element.value).to.not.be.undefined;
+            expect(element.min).to.not.be.undefined;
+            expect(element.max).to.not.be.undefined;
 
-                const isMinReached = isSameDay(element['currentDate'], min);
-                expect(isMinReached).to.be.true;
+            const newMax = max.set({ day: max.day - 1 });
+            element.max = newMax;
+            await elementUpdated(element);
+
+            expect(element.value).to.be.undefined;
+            expectSameDates(element.min!, min, 'min value mismatch');
+            expectSameDates(element.max!, newMax, 'max value mismatch');
+        });
+
+        it("should invalidate the current value when it doesn't comply with min and max changes", async () => {
+            element = await fixtureElement({
+                props: { min, max, value: min.set({ day: min.day + 1 }) },
             });
 
-            it('using the up arrow key', async () => {
-                await Promise.all(
-                    Array.from({ length: dayOffset / DAYS_PER_WEEK + 1 }).map(
-                        () => sendKeys({ press: 'ArrowUp' })
-                    )
-                );
-                await elementUpdated(element);
+            expect(element.value).to.not.be.undefined;
+            expect(element.min).to.not.be.undefined;
+            expect(element.max).to.not.be.undefined;
 
-                const isMinReached = isSameDay(element['currentDate'], min);
-                expect(isMinReached).to.be.true;
+            const newMin = min.set({ day: min.day + 2 });
+            const newMax = max.set({ day: max.day - 2 });
+
+            element.min = newMin;
+            element.max = newMax;
+            await elementUpdated(element);
+
+            expect(element.value).to.be.undefined;
+            expectSameDates(element.min!, newMin, 'min value mismatch');
+            expectSameDates(element.max!, newMax, 'max value mismatch');
+        });
+
+        it("should not allow navigation to days that don't comply with the min-max interval - ArrowRight", async () => {
+            element = await fixtureElement({
+                props: { min, max },
             });
+            const focusableDay = element.shadowRoot.querySelector(
+                "td.tableCell[tabindex='0']"
+            ) as HTMLElement;
+            focusableDay.focus();
+            await sendKeyMultipleTimes('ArrowRight', dayOffset + 3);
+            await elementUpdated(element);
 
-            it('using the down arrow key', async () => {
-                await Promise.all(
-                    Array.from({ length: dayOffset / DAYS_PER_WEEK + 1 }).map(
-                        () => sendKeys({ press: 'ArrowDown' })
-                    )
-                );
-                await elementUpdated(element);
+            expectSameDates(element['currentDate'], max);
+        });
 
-                const isMaxReached = isSameDay(element['currentDate'], max);
-                expect(isMaxReached).to.be.true;
+        it("should not allow navigation to days that don't comply with the min-max interval - ArrowLeft", async () => {
+            element = await fixtureElement({
+                props: { min, max },
             });
+            const focusableDay = element.shadowRoot.querySelector(
+                "td.tableCell[tabindex='0']"
+            ) as HTMLElement;
+            focusableDay.focus();
+            await sendKeyMultipleTimes('ArrowLeft', dayOffset + 3);
+            await elementUpdated(element);
+
+            expectSameDates(element['currentDate'], min);
+        });
+
+        it("should not allow navigation to days that don't comply with the min-max interval - ArrowUp", async () => {
+            element = await fixtureElement({
+                props: { min, max },
+            });
+            const focusableDay = element.shadowRoot.querySelector(
+                "td.tableCell[tabindex='0']"
+            ) as HTMLElement;
+            focusableDay.focus();
+            await sendKeyMultipleTimes(
+                'ArrowUp',
+                dayOffset / DAYS_PER_WEEK + 1
+            );
+            await elementUpdated(element);
+
+            expectSameDates(element['currentDate'], min);
+        });
+
+        it("should not allow navigation to days that don't comply with the min-max interval - ArrowDown", async () => {
+            element = await fixtureElement({
+                props: { min, max },
+            });
+            const focusableDay = element.shadowRoot.querySelector(
+                "td.tableCell[tabindex='0']"
+            ) as HTMLElement;
+            focusableDay.focus();
+            await sendKeyMultipleTimes(
+                'ArrowDown',
+                dayOffset / DAYS_PER_WEEK + 1
+            );
+            await elementUpdated(element);
+
+            expectSameDates(element['currentDate'], max);
         });
     });
 
-    describe('Correctly changes the selected date', () => {
+    describe('Value', () => {
         let availableDateToSelect: CalendarDate;
         let availableDayElement: HTMLElement;
 
@@ -593,52 +591,43 @@ describe('Calendar', () => {
             ) as HTMLElement;
         });
 
-        it('when an available day is clicked', async () => {
+        it('should update value when an available day is clicked', async () => {
             const rect = availableDayElement.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
+            const centerX = Math.round(rect.left + rect.width / 2);
+            const centerY = Math.round(rect.top + rect.height / 2);
 
             await sendMouse({
                 type: 'click',
                 position: [centerX, centerY],
             });
             await elementUpdated(element);
-            const isDateSelected =
-                element.value &&
-                isSameDay(element.value, availableDateToSelect);
 
-            expect(isDateSelected).to.be.true;
+            expectSameDates(element.value!, availableDateToSelect);
         });
 
-        it('when an available day is acted upon using Enter', async () => {
+        it('should update value when an available day is acted upon using Enter', async () => {
             availableDayElement.focus();
             await sendKeys({ press: 'Enter' });
             await elementUpdated(element);
-            const isDateSelected =
-                element.value &&
-                isSameDay(element.value, availableDateToSelect);
 
-            expect(isDateSelected).to.be.true;
+            expectSameDates(element.value!, availableDateToSelect);
         });
 
-        it('when an available day is acted upon using Space', async () => {
+        it('should update value when an available day is acted upon using Space', async () => {
             availableDayElement.focus();
             await sendKeys({ press: 'Space' });
             await elementUpdated(element);
-            const isDateSelected =
-                element.value &&
-                isSameDay(element.value, availableDateToSelect);
 
-            expect(isDateSelected).to.be.true;
+            expectSameDates(element.value!, availableDateToSelect);
         });
     });
 
-    describe('Correctly dispatches the change event', () => {
+    describe('Dispatched change', () => {
         let changeSpy: sinon.SinonSpy;
         let availableDateToSelect: CalendarDate;
         let availableDayElement: HTMLElement;
 
-        before(async () => {
+        before(() => {
             changeSpy = spy();
         });
 
@@ -658,10 +647,10 @@ describe('Calendar', () => {
             changeSpy.resetHistory();
         });
 
-        it('when an available day is selected by clicking', async () => {
+        it("should dispatch 'change' when an available day is selected by clicking", async () => {
             const rect = availableDayElement.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
+            const centerX = Math.round(rect.left + rect.width / 2);
+            const centerY = Math.round(rect.top + rect.height / 2);
 
             await sendMouse({
                 type: 'click',
@@ -680,7 +669,7 @@ describe('Calendar', () => {
             expect(changeSpy.callCount).to.equal(0);
         });
 
-        it('when an available day is selected using Enter', async () => {
+        it("should dispatch 'change' when an available day is selected using Enter", async () => {
             availableDayElement.focus();
             await sendKeys({ press: 'Enter' });
             await elementUpdated(element);
@@ -693,7 +682,7 @@ describe('Calendar', () => {
             expect(changeSpy.callCount).to.equal(0);
         });
 
-        it('when an available day is selected using Space', async () => {
+        it("should dispatch 'change' when an available day is selected using Space", async () => {
             availableDayElement.focus();
             await sendKeys({ press: 'Space' });
             await elementUpdated(element);
@@ -707,7 +696,7 @@ describe('Calendar', () => {
         });
     });
 
-    describe('Warns in dev mode', () => {
+    describe('Dev mode', () => {
         let consoleWarnStub: ReturnType<typeof stub>;
         let max: CalendarDate;
 
@@ -726,7 +715,7 @@ describe('Calendar', () => {
             consoleWarnStub.restore();
         });
 
-        it("when the pre-selected value doesn't comply", async () => {
+        it("should warn when the preselected value doesn't comply with the min-max interval", async () => {
             const value = max.set({ day: max.day + 1 });
             element = await fixtureElement({
                 props: { max, value },
@@ -738,7 +727,7 @@ describe('Calendar', () => {
                 .be.true;
         });
 
-        it('when min > max', async () => {
+        it('should warn when the min-max interval is invalid', async () => {
             const min = max.set({ day: max.day + 1 });
             element = await fixtureElement({
                 props: { min, max },
@@ -754,13 +743,11 @@ describe('Calendar', () => {
         });
     });
 
-    describe('Manages the disabled state', () => {
-        it('by disabling the next and previous month buttons', async () => {});
-        it("by not accepting focus on the calendar's days", async () => {});
-        it("by not selecting a day when it's clicked", async () => {});
+    describe('Disabled', () => {
+        it('should disable the next and previous month buttons');
+        it("should not focus the calendar's days");
+        it("should not select a day when it's clicked");
     });
 
-    it('should render localized dates', async () => {
-        // TODO
-    });
+    describe('Localized', () => {});
 });
