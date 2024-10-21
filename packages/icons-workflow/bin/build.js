@@ -19,21 +19,7 @@ import prettier from 'prettier';
 import Case from 'case';
 import { fileURLToPath } from 'url';
 
-// S1 and S2 mappings hardcoded for S1
-// TODO: Get this data dynamically from a file shared by the icons team till we keep S1 and S2 icons in the code
-const systemsIconMapping = {
-    Alert: 'AlertTriangle',
-    AlertTriangle: 'Alert',
-
-    Help: 'HelpCircle',
-    HelpCircle: 'Help',
-
-    Info: 'InfoCircle',
-    InfoCircle: 'Info',
-
-    Magnify: 'Search',
-    Search: 'Magnify',
-};
+import systemsIconMapping from './icons-mapping.json' assert { type: 'json' };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -97,6 +83,40 @@ let manifestImports = `import {
 let manifestListings = `\r\nexport const iconManifest = [\r\n`;
 
 const defaultIconImport = `import { DefaultIcon as AlternateIcon } from '../DefaultIcon.js';\r\n`;
+
+// A function that process the raw svg name and returns the component name
+export const getComponentName = (i) => {
+    let id = path
+        .basename(i, '.svg')
+        .replace('S2_Icon_', '')
+        .replace('S_', '')
+        .replace('_20_N', '')
+        .replace('_22x20_N', '')
+        .replace('_18_N@2x', '');
+
+    if (id.search(/^Ad[A-Z]/) !== -1) {
+        id = id.replace(/^Ad/, '');
+        id += 'Advert';
+    }
+
+    if (id === 'UnLink') {
+        id = 'Unlink';
+    }
+    if (id === 'TextStrikeThrough') {
+        id = 'TextStrikethrough';
+    }
+
+    let ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
+
+    if (ComponentName === 'TextStrikeThrough') {
+        ComponentName = 'TextStrikethrough';
+    }
+    if (ComponentName === 'UnLink') {
+        ComponentName = 'Unlink';
+    }
+
+    return ComponentName;
+};
 
 async function buildIcons(icons, tag, iconsNameList) {
     icons.forEach((i) => {
@@ -364,64 +384,10 @@ const iconsV2 = (
 ).sort();
 
 const iconsV1NameList = iconsV1.map((i) => {
-    let id = path
-        .basename(i, '.svg')
-        .replace('S2_Icon_', '')
-        .replace('_20_N', '')
-        .replace('_22x20_N', '');
-
-    if (id.search(/^Ad[A-Z]/) !== -1) {
-        id = id.replace(/^Ad/, '');
-        id += 'Advert';
-    }
-
-    if (id === 'UnLink') {
-        id = 'Unlink';
-    }
-    if (id === 'TextStrikeThrough') {
-        id = 'TextStrikethrough';
-    }
-
-    let ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
-
-    if (ComponentName === 'TextStrikeThrough') {
-        ComponentName = 'TextStrikethrough';
-    }
-    if (ComponentName === 'UnLink') {
-        ComponentName = 'Unlink';
-    }
-
-    return ComponentName;
+    return getComponentName(i);
 });
 const iconsV2NameList = iconsV2.map((i) => {
-    let id = path
-        .basename(i, '.svg')
-        .replace('S2_Icon_', '')
-        .replace('_20_N', '')
-        .replace('_22x20_N', '');
-
-    if (id.search(/^Ad[A-Z]/) !== -1) {
-        id = id.replace(/^Ad/, '');
-        id += 'Advert';
-    }
-
-    if (id === 'UnLink') {
-        id = 'Unlink';
-    }
-    if (id === 'TextStrikeThrough') {
-        id = 'TextStrikethrough';
-    }
-
-    let ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
-
-    if (ComponentName === 'TextStrikeThrough') {
-        ComponentName = 'TextStrikethrough';
-    }
-    if (ComponentName === 'UnLink') {
-        ComponentName = 'Unlink';
-    }
-
-    return ComponentName;
+    return getComponentName(i);
 });
 
 await buildIcons(iconsV1, 'icons', iconsV2NameList);
