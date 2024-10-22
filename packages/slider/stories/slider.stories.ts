@@ -80,6 +80,10 @@ export interface StoryArgs {
     labelVisibility?: string;
     onInput?: (val: string) => void;
     onChange?: (val: string) => void;
+    min?: number;
+    max?: number;
+    value?: number;
+    step?: number;
     [prop: string]: unknown;
 }
 
@@ -480,7 +484,7 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/tray/sp-tray.js';
 
-export const editable2 = (args): TemplateResult => {
+export const editable2 = (args: StoryArgs): TemplateResult => {
     const updateSliderConfig = (
         min: number,
         max: number,
