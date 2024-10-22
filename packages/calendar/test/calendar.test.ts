@@ -624,20 +624,20 @@ describe('Calendar', () => {
 
     describe('Dispatched change', () => {
         let changeSpy: sinon.SinonSpy;
-        let availableDateToSelect: CalendarDate;
         let availableDayElement: HTMLElement;
+        const availableDateToSelect = new CalendarDate(
+            fixedYear,
+            fixedMonth,
+            fixedDay + 1
+        );
 
         beforeEach(() => {
+            changeSpy = spy();
             element.addEventListener('change', changeSpy);
-            availableDateToSelect = new CalendarDate(
-                fixedYear,
-                fixedMonth,
-                fixedDay + 1
-            );
+
             availableDayElement = element.shadowRoot.querySelector(
                 `[data-value='${availableDateToSelect.toString()}']`
             ) as HTMLElement;
-            changeSpy = spy();
         });
 
         it("should dispatch 'change' when an available day is selected by clicking", async () => {
