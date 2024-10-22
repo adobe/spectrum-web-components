@@ -158,15 +158,12 @@ const vrtHTML =
 
 export let vrtGroups = [];
 const systemVariants = ['spectrum', 'express', 'spectrum-two'];
-const colors = ['lightest', 'light', 'dark', 'darkest'];
+const colors = ['light', 'dark'];
 const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
 systemVariants.forEach((systemVariant) => {
     colors.forEach((color) => {
-        if (
-            systemVariant === 'spectrum-two' &&
-            (color === 'lightest' || color === 'darkest')
-        ) {
+        if (systemVariant === 'spectrum-two') {
             return;
         }
         scales.forEach((scale) => {

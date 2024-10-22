@@ -83,7 +83,7 @@ describe('Themes - lazy', () => {
     });
     it('loads w/ no themes', async () => {
         const el = await fixture<Theme>(html`
-            <sp-theme color="lightest" scale="large"></sp-theme>
+            <sp-theme color="light" scale="large"></sp-theme>
         `);
 
         await elementUpdated(el);
@@ -98,7 +98,7 @@ describe('Themes - lazy', () => {
     });
     it('loads w/ not enough themes', async () => {
         const el = await fixture<Theme>(html`
-            <sp-theme color="lightest" scale="large"></sp-theme>
+            <sp-theme color="light" scale="large"></sp-theme>
         `);
 
         await elementUpdated(el);
@@ -118,7 +118,7 @@ describe('Themes - lazy', () => {
     });
     it('loads w/ lazy themes', async () => {
         const el = await fixture<Theme>(html`
-            <sp-theme color="lightest" scale="large"></sp-theme>
+            <sp-theme color="light" scale="large"></sp-theme>
         `);
 
         await elementUpdated(el);
