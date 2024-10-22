@@ -52,7 +52,7 @@ describe('DateTimePicker', () => {
     let element: DateTimePicker;
     let editableSegments: EditableSegments;
     const originalDateNow = Date.now;
-    const fixedYear = 2022;
+    const fixedYear = 20;
     const fixedMonth = 5;
     const fixedDay = 15;
     let valueDateTime: CalendarDateTime;
@@ -60,13 +60,15 @@ describe('DateTimePicker', () => {
     let valueDate: CalendarDate;
 
     before(() => {
-        const fixedTime = new Date(
+        const fixedDate = new Date(
             fixedYear,
             fixedMonth - 1, // 0-indexed in Date but 1-indexed in CalendarDate
             fixedDay,
             15
-        ).getTime();
-        Date.now = () => fixedTime;
+        );
+        // Force the year to be fixedYear when it has 2-digits (instead of a year in the 1900s)
+        fixedDate.setFullYear(fixedYear);
+        Date.now = () => fixedDate.getTime();
         valueDate = new CalendarDate(fixedYear, fixedMonth, fixedDay);
         valueDateTime = new CalendarDateTime(
             fixedYear,
@@ -1126,6 +1128,14 @@ describe('DateTimePicker', () => {
             let daySegment: HTMLElement;
             let monthSegment: HTMLElement;
             let yearSegment: HTMLElement;
+            let initialDateNow: () => number;
+
+            before(() => {
+                initialDateNow = Date.now;
+                const today = new Date();
+                today.setFullYear(2022);
+                Date.now = () => today.getTime();
+            });
 
             beforeEach(async () => {
                 element = await fixtureElement({
@@ -1139,6 +1149,10 @@ describe('DateTimePicker', () => {
 
                 daySegment.focus();
                 await sendKeys({ press: 'ArrowDown' });
+            });
+
+            after(() => {
+                Date.now = initialDateNow;
             });
 
             it('when the month changes to February on ArrowUp key, with no year selected', async () => {
@@ -1641,6 +1655,14 @@ describe('DateTimePicker', () => {
             let daySegment: HTMLElement;
             let monthSegment: HTMLElement;
             let yearSegment: HTMLElement;
+            let initialDateNow: () => number;
+
+            before(() => {
+                initialDateNow = Date.now;
+                const today = new Date();
+                today.setFullYear(2022);
+                Date.now = () => today.getTime();
+            });
 
             beforeEach(async () => {
                 element = await fixtureElement({
@@ -1653,6 +1675,10 @@ describe('DateTimePicker', () => {
 
                 daySegment.focus();
                 await sendKeys({ press: 'ArrowDown' });
+            });
+
+            after(() => {
+                Date.now = initialDateNow;
             });
 
             it('when the month changes to February on ArrowDown key, with no year selected', async () => {
@@ -3746,7 +3772,7 @@ describe('DateTimePicker', () => {
             45,
             23
         );
-        const paddedYear = String(fixedYear).padStart(4, '0');
+        const paddedYear = String(fixedYear);
         const paddedMonth = String(fixedMonth).padStart(2, '0');
         const paddedDay = String(fixedDay).padStart(2, '0');
         const paddedHour = '03';
@@ -3966,7 +3992,7 @@ describe('DateTimePicker', () => {
             45,
             23
         );
-        const paddedYear = String(fixedYear).padStart(4, '0');
+        const paddedYear = String(fixedYear);
         const paddedMonth = String(fixedMonth).padStart(2, '0');
         const paddedDay = String(fixedDay).padStart(2, '0');
         const paddedHour = '15';
