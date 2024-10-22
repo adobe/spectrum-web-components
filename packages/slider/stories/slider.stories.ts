@@ -400,7 +400,7 @@ export const px = (args: StoryArgs = {}): TemplateResult => {
 class NumberFieldDefined extends HTMLElement {
     constructor() {
         super();
-        numberFieldLoaderPromise = new Promise((res) => {
+        this.numberFieldLoaderPromise = new Promise((res) => {
             customElements.whenDefined('sp-number-field').then(() => {
                 res(true);
             });
@@ -410,7 +410,7 @@ class NumberFieldDefined extends HTMLElement {
     private numberFieldLoaderPromise: Promise<boolean> = Promise.resolve(false);
 
     get updateComplete(): Promise<boolean> {
-        return numberFieldLoaderPromise;
+        return this.numberFieldLoaderPromise;
     }
 }
 
@@ -474,41 +474,33 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/tray/sp-tray.js';
 
-const sliderConfig = { min: 0.25, max: 4, value: 0.75, step: 0.01 };
+let sliderConfig = { min: 0.25, max: 4, value: 0.75, step: 0.01 };
 
-// const updateSlider = (x: number): void => {
-//      //console.log('updateSlider', x);
-//     switch (x) {
-//         case 1:
-//             sliderConfig = { min: 0.25, max: 4, value: 0.75, step: 0.01 };
-//             //sliderType = 1;
-//             break;
-//         case 2:
-//             sliderConfig = { min: 2, max: 100, value: 2, step: 1 };
-//             //sliderType = 2;
-//             break;
-//         case 3:
-//             sliderConfig = { min: 2, max: 25, value: 3, step: 1 };
-//             //sliderType = 3;
-//             break;
-//         default:
-//             sliderConfig = { min: 7, max: 100, value: 50, step: 1 };
-//             break;
-//     }
-//      //console.log('sliderConfig', sliderConfig);
-//     editable2();
-// };
-
-// const renderEditable2 = () => {
-//      //console.log('renderEditable2');
-//     const container = document.getElementById('editable2-container');
-//     if (container) {
-//         render(editable2(), container);
-//     }
-// };
+const updateSlider = (x: number): void => {
+    //console.log('updateSlider', x);
+    switch (x) {
+        case 1:
+            sliderConfig = { min: 0.25, max: 4, value: 0.75, step: 0.01 };
+            //sliderType = 1;
+            break;
+        case 2:
+            sliderConfig = { min: 2, max: 100, value: 2, step: 1 };
+            //sliderType = 2;
+            break;
+        case 3:
+            sliderConfig = { min: 2, max: 25, value: 3, step: 1 };
+            //sliderType = 3;
+            break;
+        default:
+            sliderConfig = { min: 7, max: 100, value: 50, step: 1 };
+            break;
+    }
+    //console.log('sliderConfig', sliderConfig);
+    editable2();
+};
 
 export const editable2 = (): TemplateResult => {
-    //console.log('editable2s',sliderConfig.value)
+    console.log('editable2s', sliderConfig.value);
     return html`
         <overlay-trigger type="modal">
             <sp-button slot="trigger" variant="secondary">
@@ -604,14 +596,6 @@ export const editable2 = (): TemplateResult => {
         </overlay-trigger>
     `;
 };
-
-// Initial render
-// document.addEventListener('DOMContentLoaded', () => {
-//     const container = document.createElement('div');
-//     container.id = 'editable2-container';
-//     document.body.appendChild(container);
-//     renderEditable2();
-// });
 
 editable.decorators = [editableDecorator];
 
