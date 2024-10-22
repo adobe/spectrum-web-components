@@ -64,11 +64,7 @@ export class SegmentsFormatter {
         const { year, month, day, hour, minute, second } = dateInfo;
         const date = new Date(year, month - 1, day, hour, minute, second);
 
-        /**
-         * For the year we do not use the value returned by the formatter, to avoid that the typed year is displayed in
-         * an unexpected way. For example, when typing “2”, the year would be formatted as “1902”, but we keep it as it
-         * is being displayed on the screen. If the user wants to enter the year “1902”, he will enter number by number
-         */
+        // The year is not formatted to avoid unexpected display (e.g., "2" becoming "1902").
         if (!segments.year) return;
         segments.year.formatted = String(year);
 
@@ -122,12 +118,7 @@ export class SegmentsFormatter {
         const month =
             segments.month.value ?? getMinimumMonthInYear(this.currentDate);
 
-        /**
-         * If the day being formatted is February 29th but the year segment has not yet been filled, we need to use a
-         * leap year to allow the 29th to remain, otherwise, if we use the current year and it is not a leap year, the
-         * day that would be displayed would be March 1st, as February 29th would not exist and JavaScript “moves” the
-         * day to the next day.
-         */
+        // Allow 29th of February to be displayed if the year is not set
         const year = segments.year.value ?? DEFAULT_LEAP_YEAR;
 
         const dayPeriod = segments.dayPeriod?.value;

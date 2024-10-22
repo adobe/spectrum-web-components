@@ -51,8 +51,9 @@ export class SegmentsFactory {
             .formatToParts(date)
             .map((part) => {
                 const type = part.type as SegmentType;
-                const formatted = part.value;
-
+                let formatted = part.value;
+                // The year is not formatted to avoid unexpected display (e.g. "2" becoming "1902").
+                if (type === 'year') formatted = currentDate.year.toString();
                 return this.createSegment(type, formatted);
             });
 
