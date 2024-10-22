@@ -349,7 +349,7 @@ workflows:
                           # Beta docs are only published from main
                           only: main
             - visual:
-                  name: << matrix.theme >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
+                  name: VRT
                   matrix:
                       parameters:
                           theme: [spectrum, express]
