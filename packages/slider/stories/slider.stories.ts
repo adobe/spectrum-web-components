@@ -21,6 +21,7 @@ import {
     variants,
 } from '@spectrum-web-components/slider';
 import { spreadProps } from '../../../test/lit-helpers.js';
+import { useArgs } from '@storybook/manager-api';
 
 export default {
     component: 'sp-slider',
@@ -67,6 +68,10 @@ export default {
         variant: undefined,
         tickStep: 0.1,
         labelVisibility: undefined,
+        min: undefined,
+        max: undefined,
+        value: undefined,
+        step: undefined,
     },
 };
 
@@ -469,135 +474,76 @@ export const editable = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
+editable.decorators = [editableDecorator];
+
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/tray/sp-tray.js';
 
-let sliderConfig = { min: 0.25, max: 4, value: 0.75, step: 0.01 };
-
-const updateSlider = (x: number): void => {
-    //console.log('updateSlider', x);
-    switch (x) {
-        case 1:
-            sliderConfig = { min: 0.25, max: 4, value: 0.75, step: 0.01 };
-            //sliderType = 1;
-            break;
-        case 2:
-            sliderConfig = { min: 2, max: 100, value: 2, step: 1 };
-            //sliderType = 2;
-            break;
-        case 3:
-            sliderConfig = { min: 2, max: 25, value: 3, step: 1 };
-            //sliderType = 3;
-            break;
-        default:
-            sliderConfig = { min: 7, max: 100, value: 50, step: 1 };
-            break;
-    }
-    //console.log('sliderConfig', sliderConfig);
-    editable2();
-};
-
 export const editable2 = (): TemplateResult => {
-    console.log('editable2s', sliderConfig.value);
+    const [args, updateArgs] = useArgs();
+
+    const updateSliderConfig = (
+        min: number,
+        max: number,
+        value: number,
+        step: number
+    ) => {
+        updateArgs({ min, max, value, step });
+    };
     return html`
         <overlay-trigger type="modal">
             <sp-button slot="trigger" variant="secondary">
                 Toggle menu
             </sp-button>
-            <sp-tray
-                slot="click-content"
-                is-small-app-frame=""
-                hide-footer=""
-                dir="ltr"
-                sub-property=""
-                tray-refinements=""
-            >
-                <div id="flex">
-                    <div class="content">
-                        <div class="parameter-list">
-                            <div class="sliderField">
-                                <sp-slider
-                                    style="width:180%"
-                                    label="Slider Label"
-                                    min=${sliderConfig.min}
-                                    max=${sliderConfig.max}
-                                    value=${sliderConfig.value}
-                                    step=${sliderConfig.step}
-                                    variant="filled"
-                                    hide-stepper=""
-                                    editable=""
-                                    dir="ltr"
-                                    focusable=""
-                                ></sp-slider>
-                            </div>
-                        </div>
+            <sp-tray slot="click-content">
+                <div style="padding: 8px; width: 100%">
+                    <sp-slider
+                        label="Slider Label"
+                        min=${args.min}
+                        max=${args.max}
+                        value=${args.value}
+                        step=${args.step}
+                        variant="filled"
+                        hide-stepper
+                        editable
+                    ></sp-slider>
+                    <div
+                        style="display: grid; gap: 8px; padding: 8px; width: 50%; margin: auto;"
+                    >
+                        <sp-button
+                            size="s"
+                            @click=${() =>
+                                updateSliderConfig(0.25, 4, 0.75, 0.01)}
+                        >
+                            Duration
+                        </sp-button>
+                        <sp-button
+                            size="s"
+                            @click=${() => updateSliderConfig(2, 100, 2, 1)}
+                        >
+                            Personality
+                        </sp-button>
+                        <sp-button
+                            size="s"
+                            @click=${() => updateSliderConfig(2, 25, 3, 1)}
+                        >
+                            Intensity
+                        </sp-button>
                     </div>
-                    <ul class="actionList" compact="">
-                        <li class="actionListItem">
-                            <sp-button
-                                size="s"
-                                ?hidden="false"
-                                iconplacement="block-start"
-                                compact=""
-                                aria-expanded="true"
-                                dir="ltr"
-                                selected=""
-                                role="button"
-                                orientation="horizontal"
-                                value="duration"
-                                focusable=""
-                                tabindex="0"
-                                @click=${() => updateSlider(1)}
-                            >
-                                Duration
-                            </sp-button>
-                        </li>
-                        <li class="actionListItem">
-                            <sp-button
-                                size="s"
-                                ?hidden="false"
-                                iconplacement="block-start"
-                                compact=""
-                                aria-expanded="false"
-                                dir="ltr"
-                                role="button"
-                                orientation="horizontal"
-                                value="personality"
-                                focusable=""
-                                tabindex="0"
-                                @click=${() => updateSlider(2)}
-                            >
-                                Personality
-                            </sp-button>
-                        </li>
-                        <li class="actionListItem">
-                            <sp-button
-                                size="s"
-                                ?hidden="false"
-                                iconplacement="block-start"
-                                compact=""
-                                aria-expanded="false"
-                                dir="ltr"
-                                role="button"
-                                orientation="horizontal"
-                                value="intensity"
-                                focusable=""
-                                tabindex="0"
-                                @click=${() => updateSlider(3)}
-                            >
-                                Intensity
-                            </sp-button>
-                        </li>
-                    </ul>
                 </div>
             </sp-tray>
         </overlay-trigger>
     `;
 };
 
-editable.decorators = [editableDecorator];
+editable2.args = {
+    min: 0.25,
+    max: 4,
+    value: 0.75,
+    step: 0.01,
+};
 
 export const editableWithDefaultValue = (
     args: StoryArgs = {}
