@@ -21,7 +21,6 @@ import {
     variants,
 } from '@spectrum-web-components/slider';
 import { spreadProps } from '../../../test/lit-helpers.js';
-import { useArgs } from '@storybook/manager-api';
 
 export default {
     component: 'sp-slider',
@@ -481,17 +480,22 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/tray/sp-tray.js';
 
-export const editable2 = (): TemplateResult => {
-    const [args, updateArgs] = useArgs();
-
+export const editable2 = (args): TemplateResult => {
     const updateSliderConfig = (
         min: number,
         max: number,
         value: number,
         step: number
-    ) => {
-        updateArgs({ min, max, value, step });
+    ): void => {
+        const slider = document.querySelector('sp-slider');
+        if (slider) {
+            slider.value = value;
+            slider.min = min;
+            slider.max = max;
+            slider.step = step;
+        }
     };
+
     return html`
         <overlay-trigger type="modal">
             <sp-button slot="trigger" variant="secondary">
