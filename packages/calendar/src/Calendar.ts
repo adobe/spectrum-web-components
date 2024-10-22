@@ -214,7 +214,7 @@ export class Calendar extends SpectrumElement {
                     'https://opensource.adobe.com/spectrum-web-components/components/calendar' // TODO: update link
                 );
                 this.value = undefined;
-            } else this.currentDate = this.value as CalendarDate;
+            }
         }
     }
 
@@ -233,6 +233,7 @@ export class Calendar extends SpectrumElement {
         if (changesDates) {
             this.convertToCalendarDates();
             this.checkDatePropsCompliance(changesMin || changesMax);
+            this.currentDate = (this.value as CalendarDate) || this.today;
         }
 
         const previousMonth = changedProperties.get('currentDate');

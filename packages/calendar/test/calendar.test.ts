@@ -77,6 +77,20 @@ describe('Calendar', () => {
             expectSameDates(element['currentDate'], localToday);
         });
 
+        it("should display today's month when the selected value is deleted", async () => {
+            const value = new CalendarDate(2, 7, 21);
+            element = await fixtureElement({
+                props: { value },
+            });
+
+            expectSameDates(element['currentDate'], value);
+
+            element.value = undefined;
+            await elementUpdated(element);
+
+            expectSameDates(element['currentDate'], today(getLocalTimeZone()));
+        });
+
         it("should display the provided value's month when it is provided", async () => {
             const value = new CalendarDate(2024, 7, 21);
             element = await fixtureElement({
