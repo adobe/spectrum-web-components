@@ -400,7 +400,7 @@ export const px = (args: StoryArgs = {}): TemplateResult => {
 class NumberFieldDefined extends HTMLElement {
     constructor() {
         super();
-        this.numberFieldLoaderPromise = new Promise((res) => {
+        numberFieldLoaderPromise = new Promise((res) => {
             customElements.whenDefined('sp-number-field').then(() => {
                 res(true);
             });
@@ -410,7 +410,7 @@ class NumberFieldDefined extends HTMLElement {
     private numberFieldLoaderPromise: Promise<boolean> = Promise.resolve(false);
 
     get updateComplete(): Promise<boolean> {
-        return this.numberFieldLoaderPromise;
+        return numberFieldLoaderPromise;
     }
 }
 
@@ -468,6 +468,150 @@ export const editable = (args: StoryArgs = {}): TemplateResult => {
         </div>
     `;
 };
+
+import '@spectrum-web-components/slider/sp-slider.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/tray/sp-tray.js';
+
+const sliderConfig = { min: 0.25, max: 4, value: 0.75, step: 0.01 };
+
+// const updateSlider = (x: number): void => {
+//      //console.log('updateSlider', x);
+//     switch (x) {
+//         case 1:
+//             sliderConfig = { min: 0.25, max: 4, value: 0.75, step: 0.01 };
+//             //sliderType = 1;
+//             break;
+//         case 2:
+//             sliderConfig = { min: 2, max: 100, value: 2, step: 1 };
+//             //sliderType = 2;
+//             break;
+//         case 3:
+//             sliderConfig = { min: 2, max: 25, value: 3, step: 1 };
+//             //sliderType = 3;
+//             break;
+//         default:
+//             sliderConfig = { min: 7, max: 100, value: 50, step: 1 };
+//             break;
+//     }
+//      //console.log('sliderConfig', sliderConfig);
+//     editable2();
+// };
+
+// const renderEditable2 = () => {
+//      //console.log('renderEditable2');
+//     const container = document.getElementById('editable2-container');
+//     if (container) {
+//         render(editable2(), container);
+//     }
+// };
+
+export const editable2 = (): TemplateResult => {
+    //console.log('editable2s',sliderConfig.value)
+    return html`
+        <overlay-trigger type="modal">
+            <sp-button slot="trigger" variant="secondary">
+                Toggle menu
+            </sp-button>
+            <sp-tray
+                slot="click-content"
+                is-small-app-frame=""
+                hide-footer=""
+                dir="ltr"
+                sub-property=""
+                tray-refinements=""
+            >
+                <div id="flex">
+                    <div class="content">
+                        <div class="parameter-list">
+                            <div class="sliderField">
+                                <sp-slider
+                                    style="width:180%"
+                                    label="Slider Label"
+                                    min=${sliderConfig.min}
+                                    max=${sliderConfig.max}
+                                    value=${sliderConfig.value}
+                                    step=${sliderConfig.step}
+                                    variant="filled"
+                                    hide-stepper=""
+                                    editable=""
+                                    dir="ltr"
+                                    focusable=""
+                                ></sp-slider>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="actionList" compact="">
+                        <li class="actionListItem">
+                            <sp-button
+                                size="s"
+                                ?hidden="false"
+                                iconplacement="block-start"
+                                compact=""
+                                aria-expanded="true"
+                                dir="ltr"
+                                selected=""
+                                role="button"
+                                orientation="horizontal"
+                                value="duration"
+                                focusable=""
+                                tabindex="0"
+                                @click=${() => updateSlider(1)}
+                            >
+                                Duration
+                            </sp-button>
+                        </li>
+                        <li class="actionListItem">
+                            <sp-button
+                                size="s"
+                                ?hidden="false"
+                                iconplacement="block-start"
+                                compact=""
+                                aria-expanded="false"
+                                dir="ltr"
+                                role="button"
+                                orientation="horizontal"
+                                value="personality"
+                                focusable=""
+                                tabindex="0"
+                                @click=${() => updateSlider(2)}
+                            >
+                                Personality
+                            </sp-button>
+                        </li>
+                        <li class="actionListItem">
+                            <sp-button
+                                size="s"
+                                ?hidden="false"
+                                iconplacement="block-start"
+                                compact=""
+                                aria-expanded="false"
+                                dir="ltr"
+                                role="button"
+                                orientation="horizontal"
+                                value="intensity"
+                                focusable=""
+                                tabindex="0"
+                                @click=${() => updateSlider(3)}
+                            >
+                                Intensity
+                            </sp-button>
+                        </li>
+                    </ul>
+                </div>
+            </sp-tray>
+        </overlay-trigger>
+    `;
+};
+
+// Initial render
+// document.addEventListener('DOMContentLoaded', () => {
+//     const container = document.createElement('div');
+//     container.id = 'editable2-container';
+//     document.body.appendChild(container);
+//     renderEditable2();
+// });
 
 editable.decorators = [editableDecorator];
 
