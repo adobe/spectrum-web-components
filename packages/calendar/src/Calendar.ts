@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import {
     CalendarDate,
     DateFormatter,
+    endOfMonth,
     getLocalTimeZone,
     getWeeksInMonth,
     isSameDay,
@@ -175,10 +176,50 @@ export class Calendar extends SpectrumElement {
         this.setCurrentMonthDates();
     }
 
+    override willUpdate(changedProperties: PropertyValues): void {
+        if (changedProperties.has(languageResolverUpdatedSymbol)) {
+            this.setNumberFormatter();
+            this.setWeekdays();
+            this.setCurrentMonthDates();
+        }
+
+        const changesMin = changedProperties.has('min');
+        const changesMax = changedProperties.has('max');
+        const changesValue = changedProperties.has('value');
+        const changesDates = changesMin || changesMax || changesValue;
+
+        if (changesDates) {
+            this.convertToCalendarDates();
+            this.checkDatePropsCompliance(changesMin || changesMax);
+            this.currentDate = (this.value as CalendarDate) || this.today;
+        }
+
+        const previousDate = changedProperties.get('currentDate');
+        const changesMonth =
+            changedProperties.has('currentDate') &&
+            (!previousDate || !isSameMonth(previousDate, this.currentDate));
+
+        if (changesMonth) this.setCurrentMonthDates();
+    }
+
+    override updated(changedProperties: PropertyValues): void {
+        /**
+         * Keeps the focus on the correct day when navigating through the calendar.
+         * Particularly useful when the month changes and the focus is lost.
+         */
+        if (changedProperties.has('currentDate') && this.isDateFocusIntent) {
+            const elementToFocus = this.shadowRoot?.querySelector(
+                'td[tabindex="0"]'
+            ) as HTMLElement;
+            elementToFocus.focus();
+        }
+    }
+
     private convertToCalendarDates(): void {
-        this.min = this.min && toCalendarDate(this.min);
-        this.max = this.max && toCalendarDate(this.max);
-        this.value = this.value && toCalendarDate(this.value);
+        const era = 'AD'; // Force the era to be AD until we support other eras
+        this.min = this.min && toCalendarDate(this.min).set({ era });
+        this.max = this.max && toCalendarDate(this.max).set({ era });
+        this.value = this.value && toCalendarDate(this.value).set({ era });
     }
 
     /**
@@ -215,45 +256,6 @@ export class Calendar extends SpectrumElement {
                 );
                 this.value = undefined;
             }
-        }
-    }
-
-    override willUpdate(changedProperties: PropertyValues): void {
-        if (changedProperties.has(languageResolverUpdatedSymbol)) {
-            this.setNumberFormatter();
-            this.setWeekdays();
-            this.setCurrentMonthDates();
-        }
-
-        const changesMin = changedProperties.has('min');
-        const changesMax = changedProperties.has('max');
-        const changesValue = changedProperties.has('value');
-        const changesDates = changesMin || changesMax || changesValue;
-
-        if (changesDates) {
-            this.convertToCalendarDates();
-            this.checkDatePropsCompliance(changesMin || changesMax);
-            this.currentDate = (this.value as CalendarDate) || this.today;
-        }
-
-        const previousMonth = changedProperties.get('currentDate');
-        const changesMonth =
-            changedProperties.has('currentDate') &&
-            (!previousMonth || !isSameMonth(previousMonth, this.currentDate));
-
-        if (changesMonth) this.setCurrentMonthDates();
-    }
-
-    override updated(changedProperties: PropertyValues): void {
-        /**
-         * Keeps the focus on the correct day when navigating through the calendar.
-         * Particularly useful when the month changes and the focus is lost.
-         */
-        if (changedProperties.has('currentDate') && this.isDateFocusIntent) {
-            const elementToFocus = this.shadowRoot?.querySelector(
-                'td[tabindex="0"]'
-            ) as HTMLElement;
-            elementToFocus.focus();
         }
     }
 
@@ -295,7 +297,7 @@ export class Calendar extends SpectrumElement {
                     title="Previous"
                     class="prevMonth"
                     data-test-id="prev-btn"
-                    ?disabled=${this.disabled}
+                    ?disabled=${this.isPreviousMonthDisabled}
                     @click=${this.handlePreviousMonth}
                 >
                     <div slot="icon">
@@ -316,7 +318,7 @@ export class Calendar extends SpectrumElement {
                     title="Next"
                     class="nextMonth"
                     data-test-id="next-btn"
-                    ?disabled=${this.disabled}
+                    ?disabled=${this.isNextMonthDisabled}
                     @click=${this.handleNextMonth}
                 >
                     <div slot="icon">
@@ -327,6 +329,56 @@ export class Calendar extends SpectrumElement {
                 </sp-action-button>
             </div>
         `;
+    }
+
+    private get isPreviousMonthDisabled(): boolean {
+        if (this.disabled) return true;
+
+        const currentMonthStart = startOfMonth(this.currentDate);
+        const previousMonthStart = currentMonthStart.subtract({ months: 1 });
+
+        return (
+            currentMonthStart.era !== previousMonthStart.era ||
+            isSameDay(currentMonthStart, previousMonthStart)
+        );
+    }
+
+    private get isNextMonthDisabled(): boolean {
+        if (this.disabled) return true;
+
+        const currentMonthEnd = endOfMonth(this.currentDate);
+        const nextMonthEnd = currentMonthEnd.add({ months: 1 });
+
+        return (
+            currentMonthEnd.era !== nextMonthEnd.era ||
+            isSameDay(currentMonthEnd, nextMonthEnd)
+        );
+    }
+
+    private handlePreviousMonth(): void {
+        let newCurrentDate = startOfMonth(this.currentDate).subtract({
+            months: 1,
+        });
+
+        if (this.value && isSameMonth(newCurrentDate, this.value))
+            newCurrentDate = this.value as CalendarDate;
+        else if (isSameMonth(newCurrentDate, this.today))
+            newCurrentDate = this.today;
+
+        this.currentDate = newCurrentDate;
+    }
+
+    private handleNextMonth(): void {
+        let newCurrentDate = startOfMonth(this.currentDate).add({
+            months: 1,
+        });
+
+        if (this.value && isSameMonth(newCurrentDate, this.value))
+            newCurrentDate = this.value as CalendarDate;
+        else if (isSameMonth(newCurrentDate, this.today))
+            newCurrentDate = this.today;
+
+        this.currentDate = newCurrentDate;
     }
 
     protected renderCalendarGrid(): TemplateResult {
@@ -461,6 +513,34 @@ export class Calendar extends SpectrumElement {
         `;
     }
 
+    private handleKeydown(event: KeyboardEvent): void {
+        this.setDateFocusIntent();
+
+        switch (event.code) {
+            case 'ArrowLeft': {
+                this.focusPreviousDay();
+                break;
+            }
+            case 'ArrowDown': {
+                this.focusNextWeek();
+                break;
+            }
+            case 'ArrowRight': {
+                this.focusNextDay();
+                break;
+            }
+            case 'ArrowUp': {
+                this.focusPreviousWeek();
+                break;
+            }
+            case 'Space':
+            case 'Enter': {
+                this.handleDaySelect(event);
+                break;
+            }
+        }
+    }
+
     private handleDaySelect(event: MouseEvent | KeyboardEvent): void {
         if (this.disabled) {
             event.preventDefault();
@@ -519,80 +599,29 @@ export class Calendar extends SpectrumElement {
         return clickCenterDistance <= radius;
     }
 
-    private handlePreviousMonth(): void {
-        let newCurrentDate = startOfMonth(this.currentDate).subtract({
-            months: 1,
-        });
-
-        if (this.value && isSameMonth(newCurrentDate, this.value))
-            newCurrentDate = this.value as CalendarDate;
-        else if (isSameMonth(newCurrentDate, this.today))
-            newCurrentDate = this.today;
-
-        this.currentDate = newCurrentDate;
-    }
-
-    private handleNextMonth(): void {
-        let newCurrentDate = startOfMonth(this.currentDate).add({
-            months: 1,
-        });
-
-        if (this.value && isSameMonth(newCurrentDate, this.value))
-            newCurrentDate = this.value as CalendarDate;
-        else if (isSameMonth(newCurrentDate, this.today))
-            newCurrentDate = this.today;
-
-        this.currentDate = newCurrentDate;
-    }
-
-    private handleKeydown(event: KeyboardEvent): void {
-        this.setDateFocusIntent();
-
-        switch (event.code) {
-            case 'ArrowLeft': {
-                this.focusPreviousDay();
-                break;
-            }
-            case 'ArrowDown': {
-                this.focusNextWeek();
-                break;
-            }
-            case 'ArrowRight': {
-                this.focusNextDay();
-                break;
-            }
-            case 'ArrowUp': {
-                this.focusPreviousWeek();
-                break;
-            }
-            case 'Space':
-            case 'Enter': {
-                this.handleDaySelect(event);
-                break;
-            }
-        }
-    }
-
     private focusPreviousDay(): void {
         const previousDay = this.currentDate.subtract({ days: 1 });
-        if (!this.isMinLimitReached(previousDay))
+
+        if (this.canNavigateBackToDate(previousDay))
             this.currentDate = previousDay;
     }
 
     private focusNextDay(): void {
         const nextDay = this.currentDate.add({ days: 1 });
-        if (!this.isMaxLimitReached(nextDay)) this.currentDate = nextDay;
+
+        if (this.canNavigateForwardToDate(nextDay)) this.currentDate = nextDay;
     }
 
     private focusPreviousWeek(): void {
         const previousWeek = this.currentDate.subtract({ weeks: 1 });
-        if (!this.isMinLimitReached(previousWeek)) {
+
+        if (this.canNavigateBackToDate(previousWeek)) {
             this.currentDate = previousWeek;
             return;
         }
 
         let dayToFocus = previousWeek.add({ days: 1 });
-        while (this.isMinLimitReached(dayToFocus)) {
+        while (!this.canNavigateBackToDate(dayToFocus)) {
             dayToFocus = dayToFocus.add({ days: 1 });
         }
         this.currentDate = dayToFocus;
@@ -601,17 +630,33 @@ export class Calendar extends SpectrumElement {
     private focusNextWeek(): void {
         const nextWeek = this.currentDate.add({ weeks: 1 });
 
-        if (!this.isMaxLimitReached(nextWeek)) {
+        if (this.canNavigateForwardToDate(nextWeek)) {
             this.currentDate = nextWeek;
-
             return;
         }
 
         let dayToFocus = nextWeek.subtract({ days: 1 });
-        while (this.isMaxLimitReached(dayToFocus)) {
+        while (!this.canNavigateForwardToDate(dayToFocus)) {
             dayToFocus = dayToFocus.subtract({ days: 1 });
         }
         this.currentDate = dayToFocus;
+    }
+
+    private canNavigateBackToDate(previousDate: CalendarDate): boolean {
+        if (this.isMinLimitReached(previousDate)) return false;
+
+        return (
+            isSameMonth(this.currentDate, previousDate) ||
+            !this.isPreviousMonthDisabled
+        );
+    }
+
+    private canNavigateForwardToDate(nextDate: CalendarDate): boolean {
+        if (this.isMaxLimitReached(nextDate)) return false;
+
+        return (
+            isSameMonth(this.currentDate, nextDate) || !this.isNextMonthDisabled
+        );
     }
 
     /**

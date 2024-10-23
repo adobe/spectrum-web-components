@@ -757,7 +757,7 @@ describe('Calendar', () => {
         it("should not select a day when it's clicked");
     });
 
-    describe.only('Gregorian AD era limits', () => {
+    describe('Gregorian AD era limits', () => {
         let nextButton: ActionButton;
         let prevButton: ActionButton;
 
