@@ -466,7 +466,6 @@ export class DateTimePicker extends ManageHelpText(
                     @focusout=${() => (this.focused = false)}
                     @keydown=${this.handleKeydown}
                     @input=${this.handleInput}
-                    @beforeinput=${this.handleBeforeInput}
                 >
                     ${this.segments.all.map((segment) =>
                         when(
@@ -581,6 +580,12 @@ export class DateTimePicker extends ManageHelpText(
                 this.commitValue();
                 break;
             }
+            case 'Backspace':
+            case 'Delete': {
+                event.preventDefault();
+                this.clearSegmentContent(segmentType);
+                break;
+            }
         }
     }
 
@@ -670,23 +675,6 @@ export class DateTimePicker extends ManageHelpText(
 
         this.previousCommitedValue = this.value;
         this.dispatchChange();
-    }
-
-    private handleBeforeInput(event: InputEvent): void {
-        const segmentType = (event.target as HTMLElement).dataset
-            .type as EditableSegmentType;
-
-        switch (event.inputType) {
-            case 'deleteContentBackward':
-            case 'deleteContentForward':
-                event.preventDefault();
-                this.clearSegmentContent(segmentType);
-                break;
-            case 'insertParagraph': // “Enter” key
-            case 'insertLineBreak': // Shift + “Enter” keys
-                event.preventDefault();
-                break;
-        }
     }
 
     private clearSegmentContent(segmentType: EditableSegmentType): void {

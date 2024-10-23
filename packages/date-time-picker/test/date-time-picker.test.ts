@@ -2422,7 +2422,7 @@ describe('DateTimePicker', () => {
                 new CalendarDateTime(20, month, day, hour, minute, second)
             );
 
-            await sendKeys({ press: 'Delete' });
+            await sendKeys({ press: 'Backspace' });
             await elementUpdated(element);
             expect(segment.innerText).to.equal(`2`);
             expectSameDates(
@@ -2430,7 +2430,7 @@ describe('DateTimePicker', () => {
                 new CalendarDateTime(2, month, day, hour, minute, second)
             );
 
-            await sendKeys({ press: 'Delete' });
+            await sendKeys({ press: 'Backspace' });
             await elementUpdated(element);
 
             expectPlaceholder(segment);
