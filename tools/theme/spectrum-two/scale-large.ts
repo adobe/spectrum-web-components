@@ -10,9 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../../spectrum-two/theme-light-core-tokens.js';
-import '../../spectrum-two/theme-lightest-core-tokens.js';
-import '../../spectrum-two/theme-dark-core-tokens.js';
-import '../../spectrum-two/theme-darkest-core-tokens.js';
-import '../../spectrum-two/scale-medium-core-tokens.js';
-import '../../spectrum-two/scale-large-core-tokens.js';
+import largeStyles from '../src/spectrum-two/scale-large.css.js';
+import { Theme } from '../src/Theme.js';
+import '../src/spectrum-two/core.js';
+
+Theme.registerThemeFragment('large-spectrum-two', 'scale', largeStyles);
