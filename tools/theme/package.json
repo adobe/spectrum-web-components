@@ -158,6 +158,12 @@
             "development": "./src/spectrum-two/core.dev.js",
             "default": "./src/spectrum-two/core.js"
         },
+        "./src/spectrum-two/scale-large-core-tokens.css.js": "./src/spectrum-two/scale-large-core-tokens.css.js",
+        "./src/spectrum-two/scale-medium-core-tokens.css.js": "./src/spectrum-two/scale-medium-core-tokens.css.js",
+        "./src/spectrum-two/theme-core-tokens.css.js": "./src/spectrum-two/theme-core-tokens.css.js",
+        "./src/spectrum-two/theme-dark-core-tokens.css.js": "./src/spectrum-two/theme-dark-core-tokens.css.js",
+        "./src/spectrum-two/theme-light-core-tokens.css.js": "./src/spectrum-two/theme-light-core-tokens.css.js",
+        "./src/spectrum-two/theme.css.js": "./src/spectrum-two/theme.css.js",
         "./src/spectrum-two/themes-core-tokens.js": {
             "development": "./src/spectrum-two/themes-core-tokens.dev.js",
             "default": "./src/spectrum-two/themes-core-tokens.js"
