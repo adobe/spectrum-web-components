@@ -20,40 +20,40 @@ export default {
     decorators: [makeOverBackground()],
 };
 
-const variant = 'white';
+const staticColor = 'white';
 const quiet = true;
 
 export const XS = (args: Properties): TemplateResult => renderButtons(args);
 XS.args = {
     size: 'xs',
     quiet,
-    variant,
+    staticColor,
 };
 
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
     size: 's',
     quiet,
-    variant,
+    staticColor,
 };
 
 export const m = (args: Properties): TemplateResult => renderButtons(args);
 m.args = {
     size: 'm',
     quiet,
-    variant,
+    staticColor,
 };
 
 export const l = (args: Properties): TemplateResult => renderButtons(args);
 l.args = {
     size: 'l',
     quiet,
-    variant,
+    staticColor,
 };
 
 export const XL = (args: Properties): TemplateResult => renderButtons(args);
 XL.args = {
     size: 'xl',
     quiet,
-    variant,
+    staticColor,
 };

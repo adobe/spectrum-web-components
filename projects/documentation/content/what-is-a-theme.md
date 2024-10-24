@@ -10,7 +10,7 @@ slug: what-is-a-theme
 Theme is an overloaded term that can lead to confusion and a general thought of "What is a theme anyway?". Is it just color appearance changes for light and dark mode? Is it scale changes? Our answer historically has kind of been, "yes—all that". We've built `sp-theme` to represent these different contexts as a collective type called a "theme".
 
 ```html
-<sp-theme theme="spectrum" color="dark" scale="medium">
+<sp-theme system="spectrum" color="dark" scale="medium">
     <sp-button>Don't Click</sp-button>
 </sp-theme>
 ```

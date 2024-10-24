@@ -200,52 +200,32 @@ describe('Setting attributes', () => {
         }
     });
 
-    it('prefers system over theme', async () => {
+    it('loads and handles system attribute', async () => {
         const el = await fixture<Theme>(html`
-            <sp-theme system="express"></sp-theme>
+            <sp-theme system="spectrum"></sp-theme>
         `);
 
         await elementUpdated(el);
 
-        expect(el.system).to.equal('express');
+        expect(el).to.not.be.undefined;
+        expect(el.hasAttribute('system')).to.be.true;
+        expect(el.getAttribute('system')).to.equal('spectrum');
 
-        el.setAttribute('theme', 'classic');
+        el.setAttribute('system', 'invalid');
         await elementUpdated(el);
+        expect(el.getAttribute('system')).to.equal('spectrum'); // Should fallback to 'spectrum'
 
-        expect(el.system).to.equal('express');
-        expect(el.theme).to.equal('express');
-    });
-});
-
-describe('Themes', () => {
-    it('updates system value even if only theme is added to sp-theme', async () => {
-        const el = await fixture<Theme>(html`
-            <sp-theme theme="express"></sp-theme>
-        `);
-
+        el.setAttribute('system', 'express');
         await elementUpdated(el);
+        expect(el.getAttribute('system')).to.equal('express');
 
-        expect(el.theme).to.equal('express');
-
-        el.setAttribute('theme', 'spectrum');
+        // Removing attribute should persist the last valid value
+        el.removeAttribute('system');
         await elementUpdated(el);
+        expect(el.getAttribute('system')).to.equal('express');
 
-        expect(el.theme).to.equal('spectrum');
-        expect(el.system).to.equal('spectrum');
-    });
-    it('updates system and theme value iif both are added to sp-theme', async () => {
-        const el = await fixture<Theme>(html`
-            <sp-theme system="spectrum" theme="spectrum"></sp-theme>
-        `);
-
+        el.system = 'spectrum';
         await elementUpdated(el);
-
-        expect(el.theme).to.equal('spectrum');
-        expect(el.system).to.equal('spectrum');
-
-        el.setAttribute('theme', 'express');
-        await elementUpdated(el);
-        expect(el.theme).to.equal('express');
-        expect(el.system).to.equal('express');
+        expect(el.getAttribute('system')).to.equal('spectrum');
     });
 });

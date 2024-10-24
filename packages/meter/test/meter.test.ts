@@ -16,7 +16,6 @@ import '@spectrum-web-components/meter/sp-meter.js';
 import { Meter, meterVariants } from '@spectrum-web-components/meter';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
-import { stub } from 'sinon';
 
 describe('Meter', () => {
     testForLitDevWarnings(
@@ -154,54 +153,5 @@ describe('Meter', () => {
 
         await elementUpdated(el);
         expect(el.variant).to.equal(meterVariants[0]);
-    });
-
-    it('prefers `staticColor` over `static`', async () => {
-        const el = await fixture<Meter>(html`
-            <sp-meter static="white" label="Loading"></sp-meter>
-        `);
-        await elementUpdated(el);
-        expect(el.staticColor).to.equal('white');
-        el.setAttribute('static', 'white');
-        await elementUpdated(el);
-        expect(el.staticColor).to.equal('white');
-        expect(el.static).to.equal('white');
-        expect(el.getAttribute('static-color')).to.equal('white');
-    });
-});
-
-describe('dev mode', () => {
-    let consoleWarnStub!: ReturnType<typeof stub>;
-    before(() => {
-        window.__swc.verbose = true;
-        consoleWarnStub = stub(console, 'warn');
-    });
-    afterEach(() => {
-        consoleWarnStub.resetHistory();
-    });
-    after(() => {
-        window.__swc.verbose = false;
-        consoleWarnStub.restore();
-    });
-
-    it('warns in Dev Mode when deprecated `static` attribute is used', async () => {
-        const el = await fixture<Meter>(html`
-            <sp-meter static="white" label="Loading"></sp-meter>
-        `);
-        await elementUpdated(el);
-        expect(consoleWarnStub.called).to.be.true;
-
-        const spyCall = consoleWarnStub.getCall(0);
-        expect(
-            (spyCall.args.at(0) as string).includes('deprecated'),
-            'confirm deprecated static warning'
-        ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-            data: {
-                localName: 'sp-meter',
-                type: 'api',
-                level: 'deprecation',
-            },
-        });
     });
 });

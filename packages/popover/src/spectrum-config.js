@@ -27,10 +27,6 @@ const config = {
                 converter.classToHost(),
                 converter.classToAttribute('is-open', 'open'),
                 converter.classToAttribute('spectrum-Popover--withTip', 'tip'),
-                converter.classToAttribute(
-                    'spectrum-Popover--dialog',
-                    'dialog'
-                ),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Popover--top', 'top'],
