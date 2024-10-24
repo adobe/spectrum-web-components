@@ -235,17 +235,15 @@ export class IconsDemo extends SpectrumElement {
     }
     private renderSearch(): TemplateResult {
         let matchingIcons = this.search
-            ? this.icons.filter(
-                  (icon) => icon.name.toLowerCase().search(this.search) !== -1
+            ? this.icons.filter((icon) =>
+                  icon.name.toLowerCase().includes(this.search.toLowerCase())
               )
             : this.icons;
 
         const iconVersion = this.spectrumVersion === 2 ? 's2' : 's1';
         // Filter out icons that are not in the current version
         matchingIcons = matchingIcons.filter((icon) => {
-            let iconName = icon.name;
-            iconName = iconName.replace(/\s/g, '');
-            iconName = iconName.toLowerCase();
+            const iconName = icon.name.replace(/\s/g, '').toLowerCase();
             return iconsList[iconVersion].includes(iconName);
         });
 

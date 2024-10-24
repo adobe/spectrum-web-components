@@ -43,21 +43,22 @@ const S2IConsPackageDir =
     '@adobe/spectrum-css-workflow-icons-s2/dist/assets/svg';
 const keepColors = '';
 
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/src`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/src`);
-}
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/src/icons`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/src/icons`);
-}
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/src/icons-s2`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/src/icons-s2`);
-}
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/src/elements`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/src/elements`);
-}
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/icons`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/icons`);
-}
+const ensureDirectoryExists = (dirPath) => {
+    if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath);
+    }
+};
+
+const directories = [
+    `${rootDir}packages/icons-workflow/src`,
+    `${rootDir}packages/icons-workflow/src/icons`,
+    `${rootDir}packages/icons-workflow/src/icons-s2`,
+    `${rootDir}packages/icons-workflow/src/elements`,
+    `${rootDir}packages/icons-workflow/icons`,
+];
+
+directories.forEach(ensureDirectoryExists);
+
 fs.writeFileSync(
     path.join(rootDir, 'packages', 'icons-workflow', 'src', 'icons.ts'),
     disclaimer,
@@ -88,34 +89,17 @@ const defaultIconImport = `import { DefaultIcon as AlternateIcon } from '../Defa
 export const getComponentName = (i) => {
     let id = path
         .basename(i, '.svg')
-        .replace('S2_Icon_', '')
-        .replace('S_', '')
-        .replace('_20_N', '')
-        .replace('_22x20_N', '')
-        .replace('_18_N@2x', '');
-
-    if (id.search(/^Ad[A-Z]/) !== -1) {
-        id = id.replace(/^Ad/, '');
-        id += 'Advert';
+        .replace(/^(S2_Icon_|S_)/, '')
+        .replace(/(_20_N|_22x20_N|_18_N@2x)$/, '');
+    if (i.startsWith('Ad')) {
+        id = i.replace(/^Ad/, '') + 'Advert';
     }
-
-    if (id === 'UnLink') {
-        id = 'Unlink';
-    }
-    if (id === 'TextStrikeThrough') {
-        id = 'TextStrikethrough';
-    }
-
-    let ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
-
-    if (ComponentName === 'TextStrikeThrough') {
-        ComponentName = 'TextStrikethrough';
-    }
-    if (ComponentName === 'UnLink') {
-        ComponentName = 'Unlink';
-    }
-
-    return ComponentName;
+    const replacements = {
+        UnLink: 'Unlink',
+        TextStrikeThrough: 'TextStrikethrough',
+        github: 'GitHub',
+    };
+    return Case.pascal(replacements[id] || id);
 };
 
 async function buildIcons(icons, tag, iconsNameList) {
