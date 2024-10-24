@@ -89,7 +89,7 @@ export class SliderHandle extends Focusable {
      * By default, the value of a Slider Handle will be halfway between its
      * `min` and `max` values, or the `min` value when `max` is less than `min`.
      */
-    @property({ type: Number, reflect: true })
+    @property({ type: Number })
     public value!: number;
 
     /**

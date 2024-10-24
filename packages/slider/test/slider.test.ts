@@ -376,7 +376,7 @@ describe('Slider', () => {
 
     it.only('changes value when clicking on the track', async () => {
         const el = await fixture<Slider>(html`
-            <sp-slider></sp-slider>
+            <sp-slider style="width: 100px"></sp-slider>
         `);
         await elementUpdated(el);
 
@@ -384,22 +384,70 @@ describe('Slider', () => {
 
         const track = el.shadowRoot.querySelector('#track') as HTMLDivElement;
         const trackBoundingRect = track.getBoundingClientRect();
+
+        let pointerId = -1;
+        el.track.setPointerCapture = (id: number) => (pointerId = id);
+        el.track.releasePointerCapture = (id: number) => (pointerId = id);
+
+        // Click on the track moves it to value 60
         track.dispatchEvent(
             new PointerEvent('pointerdown', {
-                clientX:
-                    trackBoundingRect.x + trackBoundingRect.width / 2 + 100,
+                clientX: trackBoundingRect.x + trackBoundingRect.width / 2 + 10,
                 clientY: trackBoundingRect.y + trackBoundingRect.height / 2,
+                pointerId: 1,
+                cancelable: true,
+                bubbles: true,
+                composed: true,
+                button: 0,
+            })
+        );
+        await elementUpdated(el);
+        track.dispatchEvent(
+            new PointerEvent('pointerup', {
+                pointerId: 1,
                 cancelable: true,
                 bubbles: true,
                 composed: true,
             })
         );
-
-        expect(el.value).to.equal(60);
-
         await elementUpdated(el);
 
-        expect(el.value).to.equal(0);
+        expect(el.value).to.equal(60);
+        expect(pointerId, '1').to.equal(1);
+
+        // Click and drag on the track moves it from value 60 -> 75
+        track.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                clientX: trackBoundingRect.x + trackBoundingRect.width / 2 + 10,
+                clientY: trackBoundingRect.y + trackBoundingRect.height / 2,
+                pointerId: 2,
+                cancelable: true,
+                bubbles: true,
+                composed: true,
+                button: 0,
+            })
+        );
+        track.dispatchEvent(
+            new PointerEvent('pointermove', {
+                clientX: trackBoundingRect.x + trackBoundingRect.width / 2 + 25,
+                clientY: trackBoundingRect.y + trackBoundingRect.height / 2,
+                pointerId: 2,
+                cancelable: true,
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await elementUpdated(el);
+        track.dispatchEvent(
+            new PointerEvent('pointerup', {
+                pointerId: 2,
+                cancelable: true,
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await elementUpdated(el);
+        expect(el.value).to.equal(75);
     });
 
     it('dispatches `input` of the animation frame', async () => {
