@@ -374,7 +374,7 @@ describe('Slider', () => {
         expect(el.value).to.equal(0);
     });
 
-    it.only('changes value when clicking on the track', async () => {
+    it('changes value when clicking on the track', async () => {
         const el = await fixture<Slider>(html`
             <sp-slider style="width: 100px"></sp-slider>
         `);
