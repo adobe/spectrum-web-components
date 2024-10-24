@@ -3110,7 +3110,7 @@
   dependencies:
     npmlog "^6.0.2"
 
-"@lit-labs/observers@^2.0.0", "@lit-labs/observers@^2.0.2":
+"@lit-labs/observers@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@lit-labs/observers/-/observers-2.0.2.tgz#3f655a86e3dccc3a174f4f0149e8b318beb72025"
   integrity sha512-eZb5+W9Cb0e/Y5m1DNxBSGTvGB2TAVTGMnTxL/IzFhPQEcZIAHewW1eVBhN8W07A5tirRaAmmF6fGL1V20p3gQ==
