@@ -84,4 +84,9 @@ governing permissions and limitations under the License.
         --mod-infield-border-color-quiet,
         transparent
     );
+    --mod-infield-button-edge-to-fill: 0;
+    --mod-infield-button-border-width: var(
+        --mod-infield-button-border-width-quiet,
+        0
+    );
 }
