@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 // import { ZonedDateTime } from '@internationalized/date';
 import { DateFormatter, ZonedDateTime } from '@internationalized/date';
+import { NumberFormatter } from '@internationalized/number';
 import { SegmentType, SegmentTypes } from '../types';
 import { DateTimeSegments, Segment } from './DateTimeSegments';
 import { LiteralSegment } from './LiteralSegment';
@@ -24,9 +25,15 @@ import { MinuteSegment } from './time/MinuteSegment';
 import { SecondSegment } from './time/SecondSegment';
 
 export class SegmentsFactory {
-    dateFormatter: DateFormatter;
+    private dateFormatter: DateFormatter;
+    private numberFormatter: NumberFormatter;
+
     constructor(dateFormatter: DateFormatter) {
         this.dateFormatter = dateFormatter;
+        this.numberFormatter = new NumberFormatter(
+            this.dateFormatter.resolvedOptions().locale,
+            { useGrouping: false }
+        );
     }
 
     /**
@@ -52,8 +59,9 @@ export class SegmentsFactory {
             .map((part) => {
                 const type = part.type as SegmentType;
                 let formatted = part.value;
-                // The year is not formatted to avoid unexpected display (e.g. "2" becoming "1902").
-                if (type === 'year') formatted = currentDate.year.toString();
+                // Avoid unexpected display (e.g., "2" becoming "1902").
+                if (type === 'year')
+                    formatted = this.numberFormatter.format(currentDate.year);
                 return this.createSegment(type, formatted);
             });
 

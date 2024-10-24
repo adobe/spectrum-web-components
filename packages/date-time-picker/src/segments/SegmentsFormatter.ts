@@ -16,6 +16,7 @@ import {
     getMinimumMonthInYear,
     ZonedDateTime,
 } from '@internationalized/date';
+import { NumberFormatter } from '@internationalized/number';
 import { convertHourTo24hFormat, isNumber } from '../helpers';
 import { DEFAULT_LEAP_YEAR, SegmentTypes } from '../types';
 import { DateTimeSegments } from './DateTimeSegments';
@@ -31,11 +32,16 @@ interface DateInfo {
 
 export class SegmentsFormatter {
     private dateFormatter: DateFormatter;
+    private numberFormatter: NumberFormatter;
     private currentDate: ZonedDateTime;
 
     constructor(dateFormatter: DateFormatter, currentDate: ZonedDateTime) {
         this.dateFormatter = dateFormatter;
         this.currentDate = currentDate;
+        this.numberFormatter = new NumberFormatter(
+            this.dateFormatter.resolvedOptions().locale,
+            { useGrouping: false }
+        );
     }
 
     /**
@@ -64,9 +70,9 @@ export class SegmentsFormatter {
         const { year, month, day, hour, minute, second } = dateInfo;
         const date = new Date(year, month - 1, day, hour, minute, second);
 
-        // The year is not formatted to avoid unexpected display (e.g., "2" becoming "1902").
         if (!segments.year) return;
-        segments.year.formatted = String(year);
+        // Avoid unexpected display (e.g., "2" becoming "1902").
+        segments.year.formatted = this.numberFormatter.format(year);
 
         const segmentTypesToFormat = [
             SegmentTypes.Month,
@@ -104,7 +110,10 @@ export class SegmentsFormatter {
         for (const segmentType of segmentTypesToPad) {
             const segment = segments[segmentType];
             if (!segment) continue;
-            segment.formatted = segment.formatted.padStart(2, '0');
+            segment.formatted = segment.formatted.padStart(
+                2,
+                this.numberFormatter.format(0)
+            );
         }
     }
 
