@@ -17,6 +17,7 @@ import {
     toZoned,
     ZonedDateTime,
 } from '@internationalized/date';
+import { NumberFormatter } from '@internationalized/number';
 import {
     elementUpdated,
     expect,
@@ -3762,6 +3763,7 @@ describe('DateTimePicker', () => {
 
     describe('Segments creation on a 12h format', () => {
         const locale = 'en-US';
+        const fixedYear = 20;
         const value: DateTimePickerValue = new ZonedDateTime(
             fixedYear,
             fixedMonth,
@@ -3982,6 +3984,7 @@ describe('DateTimePicker', () => {
 
     describe('Segments creation on a 24h format', () => {
         const locale = 'en-GB';
+        const fixedYear = 20;
         const value: DateTimePickerValue = new ZonedDateTime(
             fixedYear,
             fixedMonth,
@@ -4230,5 +4233,122 @@ describe('DateTimePicker', () => {
         it('should not open the calendar');
     });
 
-    describe('Non-english formats', () => {});
+    describe('Localization', () => {
+        it('should format the editable segments according to the locale when a value is provided', async () => {
+            const locale = 'bn-IN';
+            element = await fixtureElement({
+                locale,
+                props: { value: valueDate },
+            });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            const numberFormatter = new NumberFormatter(locale);
+
+            expect(yearSegment.innerText).to.equal(
+                numberFormatter.format(valueDate.year)
+            );
+            expect(monthSegment.innerText).to.equal(
+                numberFormatter.format(valueDate.month)
+            );
+            expect(daySegment.innerText).to.equal(
+                numberFormatter.format(valueDate.day)
+            );
+        });
+
+        it('should format the segments when incrementing/decrementing on an empty value', async () => {
+            const locale = 'bn-IN';
+            element = await fixtureElement({ locale });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            const numberFormatter = new NumberFormatter(locale);
+
+            yearSegment.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            expect(yearSegment.innerText).to.equal(
+                numberFormatter.format(fixedYear)
+            );
+
+            monthSegment.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            expect(monthSegment.innerText).to.equal(
+                numberFormatter.format(fixedMonth)
+            );
+
+            daySegment.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            expect(daySegment.innerText).to.equal(
+                numberFormatter.format(fixedDay)
+            );
+        });
+
+        it('should format the segments when incrementing/decrementing on a defined value', async () => {
+            const locale = 'bn-IN';
+            element = await fixtureElement({
+                locale,
+                props: { value: valueDate },
+            });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            const numberFormatter = new NumberFormatter(locale);
+
+            yearSegment.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            expect(yearSegment.innerText).to.equal(
+                numberFormatter.format(valueDate.year + 1)
+            );
+
+            monthSegment.focus();
+            await sendKeys({ press: 'ArrowDown' });
+            await elementUpdated(element);
+            expect(monthSegment.innerText).to.equal(
+                numberFormatter.format(valueDate.month - 1)
+            );
+
+            daySegment.focus();
+            await sendKeys({ press: 'ArrowDown' });
+            await elementUpdated(element);
+            expect(daySegment.innerText).to.equal(
+                numberFormatter.format(valueDate.day - 1)
+            );
+        });
+
+        it('should format the segments when typing', async () => {
+            const locale = 'bn-IN';
+            element = await fixtureElement({ locale });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+
+            yearSegment.focus();
+            await sendKeys({ type: '১২৩৪' });
+            await elementUpdated(element);
+            expect(yearSegment.innerText).to.equal('১২৩৪');
+
+            monthSegment.focus();
+            await sendKeys({ type: '০২' });
+            await elementUpdated(element);
+            expect(monthSegment.innerText).to.equal('০২');
+
+            daySegment.focus();
+            await sendKeys({ type: '২৭' });
+            await elementUpdated(element);
+            expect(daySegment.innerText).to.equal('২৭');
+
+            daySegment.focus();
+            await sendKeys({ type: '১৯' });
+            await elementUpdated(element);
+            expect(daySegment.innerText).to.equal('১৯');
+        });
+    });
 });
