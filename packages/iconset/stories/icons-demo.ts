@@ -14,12 +14,14 @@ import {
     css,
     CSSResultGroup,
     html,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
     customElement,
     property,
+    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Search } from '@spectrum-web-components/search';
@@ -28,6 +30,15 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import bodyStyles from '@spectrum-web-components/styles/body.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
+
+import iconsList from './iconsList.json' assert { type: 'json' };
+
+import {
+    SystemResolutionController,
+    systemResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
+
+import type { SystemVariant } from '@spectrum-web-components/theme';
 
 @customElement('delayed-ready')
 export class DelayedReady extends SpectrumElement {
@@ -84,20 +95,61 @@ export class IconsDemo extends SpectrumElement {
         tag: string;
     }[] = [];
 
+    private unsubscribeSystemContext: (() => void) | null = null;
+
+    @state()
+    public spectrumVersion = 1;
+
     private iconset: string[] = [];
     public constructor() {
         super();
         this.iconset = [];
         this.handleIconSetAdded = this.handleIconSetAdded.bind(this);
     }
-    public override connectedCallback(): void {
+
+    public override async connectedCallback(): Promise<void> {
         super.connectedCallback();
+        this.requestSystemContext();
         window.addEventListener('sp-iconset-added', this.handleIconSetAdded);
     }
     public override disconnectedCallback(): void {
         window.removeEventListener('sp-iconset-added', this.handleIconSetAdded);
         super.disconnectedCallback();
+        if (this.unsubscribeSystemContext) {
+            this.unsubscribeSystemContext();
+            this.unsubscribeSystemContext = null;
+        }
     }
+
+    private requestSystemContext(): void {
+        this.dispatchEvent(
+            new CustomEvent('sp-system-context', {
+                detail: {
+                    callback: (
+                        system: SystemVariant,
+                        unsubscribe: () => void
+                    ) => {
+                        this.spectrumVersion =
+                            system === 'spectrum-two' ? 2 : 1;
+                        this.unsubscribeSystemContext = unsubscribe;
+                    },
+                },
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+    private systemResolver = new SystemResolutionController(this);
+
+    protected override update(changes: PropertyValues): void {
+        if (changes.has(systemResolverUpdatedSymbol)) {
+            this.spectrumVersion =
+                this.systemResolver.system === 'spectrum-two' ? 2 : 1;
+        }
+
+        super.update(changes);
+    }
+
     public handleIconSetAdded(event: CustomEvent<IconsetAddedDetail>): void {
         const { iconset } = event.detail;
         this.iconset = iconset.getIconList();
@@ -182,11 +234,19 @@ export class IconsDemo extends SpectrumElement {
         this.updateSearch(event);
     }
     private renderSearch(): TemplateResult {
-        const matchingIcons = this.search
-            ? this.icons.filter(
-                  (icon) => icon.name.toLowerCase().search(this.search) !== -1
+        let matchingIcons = this.search
+            ? this.icons.filter((icon) =>
+                  icon.name.toLowerCase().includes(this.search.toLowerCase())
               )
             : this.icons;
+
+        const iconVersion = this.spectrumVersion === 2 ? 's2' : 's1';
+        // Filter out icons that are not in the current version
+        matchingIcons = matchingIcons.filter((icon) => {
+            const iconName = icon.name.replace(/\s/g, '').toLowerCase();
+            return iconsList[iconVersion].includes(iconName);
+        });
+
         return html`
             <div class="search" part="search">
                 <sp-field-label for="search">Spectrum icons:</sp-field-label>

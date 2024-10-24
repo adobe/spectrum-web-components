@@ -29,10 +29,17 @@ import {
 
 import iconStyles from './icon.css.js';
 
+import type { SystemVariant } from '@spectrum-web-components/theme';
+
 export class IconBase extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [iconStyles];
     }
+
+    private unsubscribeSystemContext: (() => void) | null = null;
+
+    @state()
+    public spectrumVersion = 1;
 
     @property()
     public label = '';
@@ -40,10 +47,38 @@ export class IconBase extends SpectrumElement {
     @property({ reflect: true })
     public size?: 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
 
-    private systemResolver = new SystemResolutionController(this);
+    public override connectedCallback(): void {
+        super.connectedCallback();
+        this.requestSystemContext();
+    }
 
-    @state()
-    public spectrumVersion = 1;
+    public override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        if (this.unsubscribeSystemContext) {
+            this.unsubscribeSystemContext();
+            this.unsubscribeSystemContext = null;
+        }
+    }
+
+    private requestSystemContext(): void {
+        this.dispatchEvent(
+            new CustomEvent('sp-system-context', {
+                detail: {
+                    callback: (
+                        system: SystemVariant,
+                        unsubscribe: () => void
+                    ) => {
+                        this.spectrumVersion =
+                            system === 'spectrum-two' ? 2 : 1;
+                        this.unsubscribeSystemContext = unsubscribe;
+                    },
+                },
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+    private systemResolver = new SystemResolutionController(this);
 
     protected override update(changes: PropertyValues): void {
         if (changes.has('label')) {

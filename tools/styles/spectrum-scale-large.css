@@ -129,6 +129,9 @@
     );
     --spectrum-alias-control-three-width-l: 41px;
     --spectrum-alias-control-three-width-xl: 46px;
+    --spectrum-alias-search-padding-left-m: var(
+        --spectrum-global-dimension-static-size-150
+    );
     --spectrum-alias-focus-ring-border-radius-regular: var(
         --spectrum-global-dimension-static-size-115
     );
@@ -266,6 +269,19 @@
     );
     --spectrum-alias-ui-icon-asterisk-size-300: var(
         --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-alias-avatar-size-100: 26px;
+    --spectrum-alias-avatar-size-400: 36px;
+    --spectrum-alias-avatar-size-600: 46px;
+    --spectrum-alias-tag-icon-size-l: var(
+        --spectrum-global-dimension-static-size-300
+    );
+    --spectrum-alias-tag-focusring-border-radius: var(
+        --spectrum-global-dimension-static-size-75
+    );
+    --spectrum-button-m-primary-outline-texticon-padding-left: 17px;
+    --spectrum-colorwheel-min-width: var(
+        --spectrum-global-dimension-static-size-2600
     );
     --spectrum-dialog-confirm-title-text-size: var(
         --spectrum-alias-heading-xs-text-size

@@ -6,7 +6,7 @@ To this end, Spectrum Web Components only targets _modern_, evergreen browsers t
 
 # Requirements
 
--   NodeJS >= 18.17.0
+-   NodeJS >= 20.0.0
 -   Typescript
 -   Supported desktop browsers:
     -   Last 2 versions of Chrome

@@ -36,13 +36,11 @@
     --spectrum-cjk-font-family-stack: adobe-clean-han-japanese,
         var(--spectrum-cjk-font-family), sans-serif;
     --spectrum-cjk-font: var(--spectrum-code-font-family-stack);
-
-    /* static white / black background color for docs containers */
     --spectrum-docs-static-white-background-color-rgb: 15, 121, 125;
     --spectrum-docs-static-white-background-color: rgba(
         var(--spectrum-docs-static-white-background-color-rgb)
     );
-    --spectrum-docs-static-black-background-color-rgb: 206, 247, 243;
+    --spectrum-docs-static-black-background-color-rgb: 181, 209, 211;
     --spectrum-docs-static-black-background-color: rgba(
         var(--spectrum-docs-static-black-background-color-rgb)
     );

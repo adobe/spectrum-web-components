@@ -11,27 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-colorwheel-width: var(--spectrum-color-wheel-width);
-    --spectrum-colorwheel-min-width: var(--spectrum-color-wheel-minimum-width);
-    --spectrum-colorwheel-height: var(--spectrum-color-wheel-width);
-    --spectrum-colorwheel-border-color: var(--spectrum-transparent-black-200);
-    --spectrum-colorwheel-border-width: var(--spectrum-border-width-100);
-    --spectrum-colorwheel-fill-color-disabled: var(
-        --spectrum-disabled-background-color
-    );
-    --spectrum-colorwheel-track-width: var(
-        --spectrum-color-control-track-width
-    );
-    --spectrum-colorwheel-colorarea-margin: var(
-        --spectrum-color-wheel-color-area-margin
-    );
-    --spectrum-colorwheel-colorhandle-position: calc(
-        var(--spectrum-colorwheel-width) / 2 -
-            var(--spectrum-colorwheel-track-width) / 2
-    );
-}
-
 @media (forced-colors: active) {
     :host {
         --highcontrast-colorwheel-border-color-disabled: GrayText;
@@ -41,6 +20,14 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    --_track-width: var(
+        --mod-colorwheel-track-width,
+        var(--spectrum-colorwheel-track-width)
+    );
+    --_border-width: var(
+        --mod-colorwheel-border-width,
+        var(--spectrum-colorwheel-border-width)
+    );
     min-inline-size: var(
         --mod-colorwheel-min-width,
         var(--spectrum-colorwheel-min-width)
@@ -50,14 +37,6 @@ governing permissions and limitations under the License.
     -webkit-user-select: none;
     user-select: none;
     cursor: default;
-    --track-width: var(
-        --mod-colorwheel-track-width,
-        var(--spectrum-colorwheel-track-width)
-    );
-    --border-width: var(
-        --mod-colorwheel-border-width,
-        var(--spectrum-colorwheel-border-width)
-    );
     display: block;
     position: relative;
 }
