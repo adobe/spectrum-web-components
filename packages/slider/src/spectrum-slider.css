@@ -12,6 +12,25 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-slider-handle-margin-left: calc(
+        var(--spectrum-slider-handle-size) / -2
+    );
+    --spectrum-slider-input-left: calc(
+        var(--spectrum-slider-handle-margin-left) / 4
+    );
+    --spectrum-slider-controls-margin: calc(
+        var(--spectrum-slider-handle-size) / 2
+    );
+    --spectrum-slider-track-margin-offset: calc(
+        var(--spectrum-slider-controls-margin) * -1
+    );
+    --spectrum-slider-track-middle-handleoffset: calc(
+        var(--spectrum-slider-track-handleoffset) +
+            var(--spectrum-slider-handle-size) / 2
+    );
+    --spectrum-slider-input-top-size: calc(
+        var(--spectrum-slider-handle-size) / -2 / 4
+    );
     z-index: 0;
     min-inline-size: var(
         --mod-slider-min-size,
@@ -120,6 +139,39 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([variant='tick']) .handle {
+    background-color: var(
+        --highcontrast-slider-tick-handle-background-color,
+        var(
+            --mod-slider-tick-handle-background-color,
+            var(--spectrum-slider-tick-handle-background-color)
+        )
+    );
+}
+
+:host([variant='tick']) #controls {
+    margin-block-start: calc(
+        var(--spectrum-text-to-visual-75) -
+            var(
+                --mod-slider-tick-mark-height,
+                var(--spectrum-slider-tick-mark-height)
+            ) / 2 -
+            var(
+                --mod-slider-track-thickness,
+                var(--spectrum-slider-track-thickness)
+            ) / 2
+    );
+}
+
+:host([variant='tick']) .tickLabel {
+    margin-block-start: calc(
+        var(
+                --mod-slider-tick-mark-height,
+                var(--spectrum-slider-tick-mark-height)
+            ) + var(--spectrum-text-to-visual-75)
+    );
+}
+
 .fill,
 .track {
     block-size: var(
@@ -184,6 +236,13 @@ governing permissions and limitations under the License.
     );
 }
 
+.track:before {
+    background: var(
+        --highcontrast-slider-track-color-static,
+        var(--mod-slider-track-color, var(--spectrum-slider-track-color))
+    );
+}
+
 .track ~ .track {
     margin-inline-start: var(
         --mod-slider-range-track-reset,
@@ -220,31 +279,6 @@ governing permissions and limitations under the License.
         var(--spectrum-slider-range-track-reset)
     );
     inset-inline: auto;
-}
-
-.fill {
-    margin-inline-start: 0;
-    padding-block: 0;
-    padding-inline-start: calc(
-        var(
-                --mod-slider-controls-margin,
-                var(--spectrum-slider-controls-margin)
-            ) +
-            var(--spectrum-slider-handle-gap, var(--spectrum-slider-handle-gap))
-    );
-    padding-inline-end: 0;
-}
-
-.offset {
-    padding-block: 0;
-    padding-inline-start: 0;
-    padding-inline-end: calc(
-        var(
-                --mod-slider-controls-margin,
-                var(--spectrum-slider-controls-margin)
-            ) +
-            var(--spectrum-slider-handle-gap, var(--spectrum-slider-handle-gap))
-    );
 }
 
 :host([variant='range']) #value {
@@ -305,6 +339,51 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([variant='range']) .track:not(:first-of-type, :last-of-type):before {
+    background: var(
+        --highcontrast-slider-filled-track-fill-color,
+        var(
+            --mod-slider-track-fill-color,
+            var(--spectrum-slider-track-fill-color)
+        )
+    );
+}
+
+.fill {
+    margin-inline-start: 0;
+    padding-block: 0;
+    padding-inline-start: calc(
+        var(
+                --mod-slider-controls-margin,
+                var(--spectrum-slider-controls-margin)
+            ) +
+            var(--spectrum-slider-handle-gap, var(--spectrum-slider-handle-gap))
+    );
+    padding-inline-end: 0;
+}
+
+.fill:before {
+    background: var(
+        --highcontrast-slider-filled-track-fill-color,
+        var(
+            --mod-slider-track-fill-color,
+            var(--spectrum-slider-track-fill-color)
+        )
+    );
+}
+
+.offset {
+    padding-block: 0;
+    padding-inline-start: 0;
+    padding-inline-end: calc(
+        var(
+                --mod-slider-controls-margin,
+                var(--spectrum-slider-controls-margin)
+            ) +
+            var(--spectrum-slider-handle-gap, var(--spectrum-slider-handle-gap))
+    );
+}
+
 #ramp {
     block-size: var(
         --mod-slider-ramp-track-height,
@@ -325,6 +404,16 @@ governing permissions and limitations under the License.
     inline-size: 100%;
     block-size: 100%;
     transform: var(--spectrum-logical-rotation,);
+}
+
+#ramp path {
+    fill: var(
+        --highcontrast-slider-ramp-track-color,
+        var(
+            --mod-slider-ramp-track-color,
+            var(--spectrum-slider-ramp-track-color)
+        )
+    );
 }
 
 .handle {
@@ -358,7 +447,21 @@ governing permissions and limitations under the License.
             var(--spectrum-animation-duration-100)
         )
         ease-in-out;
+    background: var(
+        --highcontrast-slider-handle-background-color,
+        var(
+            --mod-slider-handle-background-color,
+            var(--spectrum-slider-handle-background-color)
+        )
+    );
     border-style: solid;
+    border-color: var(
+        --highcontrast-slider-handle-border-color,
+        var(
+            --mod-slider-handle-border-color,
+            var(--spectrum-slider-handle-border-color)
+        )
+    );
     outline: none;
     display: inline-block;
     position: absolute;
@@ -376,6 +479,13 @@ governing permissions and limitations under the License.
     border-width: var(
         --mod-slider-handle-border-width-down,
         var(--spectrum-slider-handle-border-width-down)
+    );
+    border-color: var(
+        --highcontrast-slider-handle-border-color-down,
+        var(
+            --mod-slider-handle-border-color-down,
+            var(--spectrum-slider-handle-border-color-down)
+        )
     );
 }
 
@@ -428,6 +538,16 @@ governing permissions and limitations under the License.
     transform: translate(50%, -50%);
 }
 
+.handle.handle-highlight {
+    border-color: var(
+        --highcontrast-slider-handle-border-color-key-focus,
+        var(
+            --mod-slider-handle-border-color-key-focus,
+            var(--spectrum-slider-handle-border-color-key-focus)
+        )
+    );
+}
+
 .handle.handle-highlight:before {
     inline-size: calc(
         var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) +
@@ -438,6 +558,31 @@ governing permissions and limitations under the License.
         var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) +
             var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) *
             2
+    );
+    box-shadow: 0 0 0 var(--spectrum-focus-indicator-thickness)
+        var(
+            --highcontrast-slider-handle-focus-ring-color-key-focus,
+            var(
+                --mod-slider-handle-focus-ring-color-key-focus,
+                var(--spectrum-slider-handle-focus-ring-color-key-focus)
+            )
+        );
+}
+
+.handle.dragging {
+    background: var(
+        --highcontrast-slider-handle-background-color,
+        var(
+            --mod-slider-handle-background-color,
+            var(--spectrum-slider-handle-background-color)
+        )
+    );
+    border-color: var(
+        --highcontrast-slider-handle-border-color-down,
+        var(
+            --mod-slider-handle-border-color-down,
+            var(--spectrum-slider-handle-border-color-down)
+        )
     );
 }
 
@@ -454,6 +599,7 @@ governing permissions and limitations under the License.
     );
     appearance: none;
     opacity: 0.000001;
+    background: none;
     border: 0;
     margin: 0;
     padding: 0;
@@ -477,6 +623,13 @@ governing permissions and limitations under the License.
     inline-size: auto;
     font-size: var(--mod-slider-font-size, var(--spectrum-slider-font-size));
     line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
+    color: var(
+        --highcontrast-slider-label-text-color,
+        var(
+            --mod-slider-label-text-color,
+            var(--spectrum-slider-label-text-color)
+        )
+    );
     align-items: center;
     margin-block-start: var(
         --mod-slider-label-top-to-text,
@@ -511,39 +664,6 @@ governing permissions and limitations under the License.
         var(--spectrum-slider-label-margin-start)
     );
     padding-inline-end: 0;
-}
-
-:host([variant='tick']) .handle {
-    background-color: var(
-        --highcontrast-slider-tick-handle-background-color,
-        var(
-            --mod-slider-tick-handle-background-color,
-            var(--spectrum-slider-tick-handle-background-color)
-        )
-    );
-}
-
-:host([variant='tick']) #controls {
-    margin-block-start: calc(
-        var(--spectrum-text-to-visual-75) -
-            var(
-                --mod-slider-tick-mark-height,
-                var(--spectrum-slider-tick-mark-height)
-            ) / 2 -
-            var(
-                --mod-slider-track-thickness,
-                var(--spectrum-slider-track-thickness)
-            ) / 2
-    );
-}
-
-:host([variant='tick']) .tickLabel {
-    margin-block-start: calc(
-        var(
-                --mod-slider-tick-mark-height,
-                var(--spectrum-slider-tick-mark-height)
-            ) + var(--spectrum-text-to-visual-75)
-    );
 }
 
 .ticks {
@@ -592,6 +712,13 @@ governing permissions and limitations under the License.
     border-radius: var(
         --mod-slider-tick-mark-border-radius,
         var(--spectrum-slider-tick-mark-border-radius)
+    );
+    background-color: var(
+        --highcontrast-slider-tick-mark-color,
+        var(
+            --mod-slider-tick-mark-color,
+            var(--spectrum-slider-tick-mark-color)
+        )
     );
     display: block;
     position: absolute;
@@ -669,13 +796,6 @@ governing permissions and limitations under the License.
     overflow: hidden;
 }
 
-.track:before {
-    background: var(
-        --highcontrast-slider-track-color-static,
-        var(--mod-slider-track-color, var(--spectrum-slider-track-color))
-    );
-}
-
 .track:not(:has(~ .spectrum-Slider-fill)):before {
     background: var(
         --highcontrast-slider-track-color,
@@ -683,82 +803,12 @@ governing permissions and limitations under the License.
     );
 }
 
-#label-container {
-    color: var(
-        --highcontrast-slider-label-text-color,
-        var(
-            --mod-slider-label-text-color,
-            var(--spectrum-slider-label-text-color)
-        )
-    );
-}
-
-:host([variant='filled']) .track:first-child:before,
-.fill:before {
+:host([variant='filled']) .track:first-child:before {
     background: var(
         --highcontrast-slider-filled-track-fill-color,
         var(
             --mod-slider-track-fill-color,
             var(--spectrum-slider-track-fill-color)
-        )
-    );
-}
-
-#ramp path {
-    fill: var(
-        --highcontrast-slider-ramp-track-color,
-        var(
-            --mod-slider-ramp-track-color,
-            var(--spectrum-slider-ramp-track-color)
-        )
-    );
-}
-
-.handle {
-    background: var(
-        --highcontrast-slider-handle-background-color,
-        var(
-            --mod-slider-handle-background-color,
-            var(--spectrum-slider-handle-background-color)
-        )
-    );
-    border-color: var(
-        --highcontrast-slider-handle-border-color,
-        var(
-            --mod-slider-handle-border-color,
-            var(--spectrum-slider-handle-border-color)
-        )
-    );
-}
-
-.handle.handle-highlight {
-    border-color: var(
-        --highcontrast-slider-handle-border-color-key-focus,
-        var(
-            --mod-slider-handle-border-color-key-focus,
-            var(--spectrum-slider-handle-border-color-key-focus)
-        )
-    );
-}
-
-.handle.handle-highlight:before {
-    box-shadow: 0 0 0 var(--spectrum-focus-indicator-thickness)
-        var(
-            --highcontrast-slider-handle-focus-ring-color-key-focus,
-            var(
-                --mod-slider-handle-focus-ring-color-key-focus,
-                var(--spectrum-slider-handle-focus-ring-color-key-focus)
-            )
-        );
-}
-
-.handle.dragging,
-.handle:active {
-    border-color: var(
-        --highcontrast-slider-handle-border-color-down,
-        var(
-            --mod-slider-handle-border-color-down,
-            var(--spectrum-slider-handle-border-color-down)
         )
     );
 }
@@ -779,47 +829,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-slider-ramp-handle-border-color-active)
             )
         );
-}
-
-.input {
-    background: none;
-}
-
-.tick:after {
-    background-color: var(
-        --highcontrast-slider-tick-mark-color,
-        var(
-            --mod-slider-tick-mark-color,
-            var(--spectrum-slider-tick-mark-color)
-        )
-    );
-}
-
-.handle.dragging {
-    background: var(
-        --highcontrast-slider-handle-background-color,
-        var(
-            --mod-slider-handle-background-color,
-            var(--spectrum-slider-handle-background-color)
-        )
-    );
-    border-color: var(
-        --highcontrast-slider-handle-border-color-down,
-        var(
-            --mod-slider-handle-border-color-down,
-            var(--spectrum-slider-handle-border-color-down)
-        )
-    );
-}
-
-:host([variant='range']) .track:not(:first-of-type, :last-of-type):before {
-    background: var(
-        --highcontrast-slider-filled-track-fill-color,
-        var(
-            --mod-slider-track-fill-color,
-            var(--spectrum-slider-track-fill-color)
-        )
-    );
 }
 
 :host([disabled]),
