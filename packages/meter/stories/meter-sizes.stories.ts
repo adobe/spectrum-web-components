@@ -25,20 +25,8 @@ export const s = (): TemplateResult => {
     `;
 };
 
-export const m = (): TemplateResult => {
-    return html`
-        <sp-meter size="m" progress="50">Storage Space</sp-meter>
-    `;
-};
-
 export const l = (): TemplateResult => {
     return html`
         <sp-meter size="l" progress="50">Storage Space</sp-meter>
-    `;
-};
-
-export const XL = (): TemplateResult => {
-    return html`
-        <sp-meter size="xl" progress="50">Storage Space</sp-meter>
     `;
 };
