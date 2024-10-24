@@ -1,6 +1,6 @@
-## Description
+## Overview
 
-The `<sp-icons-medium>` and `<sp-icons-large>` elements that are included in this package supply your application with the Spectrum CSS Icons at both the medium and large sizes for use via the `<sp-icon>` element also provided by the Spectrum Web Components library. Include at least one of these elements in a project that makes use of icons in these sets, but feel free to include these sets in the scope of any element that leverages them as they will be deduplicated as appropriate to ensure all of your components are able to deliver the icons included therein.
+The `<sp-icons-medium>` and `<sp-icons-large>` elements included in this package supply your application with the Spectrum CSS medium and large icons for use in the `<sp-icon>` element. Include at least one of these elements in a project that makes use of icons in these sets. You can also include these sets in the scope of any element that leverages them, as they will be deduplicated to ensure all of your components can deliver the icons included therein.
 
 ### Usage
 
@@ -23,3 +23,7 @@ When looking to leverage the `IconsMedium` or `IconsLarge` base classes as a typ
 ```
 import { IconsMedium, IconsLarge } from '@spectrum-web-components/icons';
 ```
+
+### Accessibility guidelines
+
+Review the guidelines for the [icon](../icon#accessibility-guidelines).
