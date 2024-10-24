@@ -78,3 +78,10 @@ governing permissions and limitations under the License.
         );
     border-radius: var(--spectrum-textfield-corner-radius);
 }
+
+:host([quiet]) #textfield .button {
+    --mod-infield-button-border-color: var(
+        --mod-infield-border-color-quiet,
+        transparent
+    );
+}
