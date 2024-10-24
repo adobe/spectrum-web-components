@@ -334,7 +334,7 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 In addition to the variant, `<sp-button>` elements support two different visual states, disabled and pending, which can be applied by adding the attribute `disabled` or `pending` respectively. All `<sp-button>` variants support these states.
 
-### Disabled
+#### Disabled
 
 While disabled, `<sp-button>` elements will not respond to click events and will appear faded.
 
@@ -345,7 +345,7 @@ While disabled, `<sp-button>` elements will not respond to click events and will
 </sp-button-group>
 ```
 
-### Pending
+#### Pending
 
 While in pending state, `<sp-button>` elements will not respond to click events and will appear faded with an indeterminate `<sp-progress-circle>`.
 The `<sp-button>` element's label and icon will be hidden while in pending state.
