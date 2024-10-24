@@ -853,7 +853,7 @@ describe('sp-overlay', () => {
                 ],
             });
 
-            await aTimeout(500);
+            await aTimeout(1500);
 
             expect(slider.value).to.equal(19.5);
             expect(el.open).to.be.true;

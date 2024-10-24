@@ -89,15 +89,15 @@ export class SliderHandle extends Focusable {
      * By default, the value of a Slider Handle will be halfway between its
      * `min` and `max` values, or the `min` value when `max` is less than `min`.
      */
-    @property({ type: Number })
-    value!: number;
+    @property({ type: Number, reflect: true })
+    public value!: number;
 
     /**
      * Set the default value of the handle. Setting this property will cause the
      * handle to reset to the default value on double click or pressing the `escape` key.
      */
     @property({ type: Number, attribute: 'default-value' })
-    defaultValue!: number;
+    public defaultValue!: number;
 
     @property({ type: Boolean, reflect: true })
     public dragging = false;
