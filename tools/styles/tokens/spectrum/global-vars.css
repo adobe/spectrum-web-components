@@ -599,6 +599,15 @@
     --system-action-button-static-black-selected-content-color-default: var(
         --spectrum-white
     );
+    --system-action-button-static-black-selected-content-color-hover: var(
+        --spectrum-white
+    );
+    --system-action-button-static-black-selected-content-color-down: var(
+        --spectrum-white
+    );
+    --system-action-button-static-black-selected-content-color-focus: var(
+        --spectrum-white
+    );
     --system-action-button-static-black-selected-emphasized-background-color-default: var(
         --spectrum-transparent-black-900
     );
@@ -684,6 +693,15 @@
     );
     --system-action-button-static-white-selected-border-color-disabled: transparent;
     --system-action-button-static-white-selected-content-color-default: var(
+        --spectrum-black
+    );
+    --system-action-button-static-white-selected-content-color-hover: var(
+        --spectrum-black
+    );
+    --system-action-button-static-white-selected-content-color-down: var(
+        --spectrum-black
+    );
+    --system-action-button-static-white-selected-content-color-focus: var(
         --spectrum-black
     );
     --system-action-button-static-white-selected-emphasized-background-color-default: var(
@@ -2464,16 +2482,13 @@
     );
     --system-clear-button-over-background-background-color: transparent;
     --system-clear-button-over-background-background-color-hover: var(
-        --spectrum-clear-button-background-color-hover-over-background,
-        var(--spectrum-transparent-white-300)
+        --spectrum-transparent-white-300
     );
     --system-clear-button-over-background-background-color-down: var(
-        --spectrum-clear-button-background-color-hover-over-background,
-        var(--spectrum-transparent-white-400)
+        --spectrum-transparent-white-400
     );
     --system-clear-button-over-background-background-color-key-focus: var(
-        --spectrum-clear-button-background-color-hover-over-background,
-        var(--spectrum-transparent-white-300)
+        --spectrum-transparent-white-300
     );
     --system-clear-button-disabled-icon-color: var(
         --spectrum-disabled-content-color
@@ -5475,8 +5490,8 @@
     --system-stepper-animation-duration: var(--spectrum-animation-duration-100);
     --system-stepper-buttons-border-style: none;
     --system-stepper-buttons-border-width: 0;
-    --system-stepper-buttons-border-color: var(--spectrum-gray-500);
     --system-stepper-buttons-background-color: var(--spectrum-gray-50);
+    --system-stepper-buttons-border-color: var(--spectrum-gray-500);
     --system-stepper-buttons-border-color-hover: var(--spectrum-gray-600);
     --system-stepper-buttons-border-color-focus: var(--spectrum-gray-800);
     --system-stepper-buttons-border-color-keyboard-focus: var(
