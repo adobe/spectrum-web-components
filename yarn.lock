@@ -4677,7 +4677,7 @@
     fast-glob "^3.2.12"
     magic-string "^0.30.3"
 
-"@rollup/plugin-json@^6.0.1":
+"@rollup/plugin-json@^6.0.1", "@rollup/plugin-json@^6.1.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-json/-/plugin-json-6.1.0.tgz#fbe784e29682e9bb6dee28ea75a1a83702e7b805"
   integrity sha512-EGI2te5ENk1coGeADSIwZ7G2Q8CJS2sF120T7jLw4xFw9n7wIOXHo+kIYRAoVpJAN+kmqZSoO3Fp4JtoNF4ReA==
@@ -5248,10 +5248,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/sidenav/-/sidenav-6.0.0-s2-foundations.15.tgz#1dadb2d7a4bdc511ddf5b28cdbc52cb4bedc3951"
   integrity sha512-BtvWA6j2uDCHNsI8TjH2QHGZIYrWsBTKWlY0E6YKI4iWlwJjsQZ6LmLphIkyveofGhOALbTdLIYlYqA5zs2WXw==
 
-"@spectrum-css/slider@^6.0.0-s2-foundations.16":
-  version "6.0.0-s2-foundations.16"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-6.0.0-s2-foundations.16.tgz#59c5e86d0113b7fd8ffcd1dbc4fd69232caa18b7"
-  integrity sha512-kcn+ndbipd5ENU0cD5X0/seXqi85Gt/Mfu6hjcozQL6z6kXou7PzV3d6oBT+wrUC4SfdgSfrSQMixQzMzRGT5A==
+"@spectrum-css/slider@^6.0.0-s2-foundations.17":
+  version "6.0.0-s2-foundations.17"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-6.0.0-s2-foundations.17.tgz#230b0f5fb478b0ef44ab348bedb4d6e85719522c"
+  integrity sha512-Vt1wA4lgLjsi4nqln//2iArI+v1I0USpMBxmX2hQmjsOgM1a3sHikcwyagPLUQjGa73udx0XIgdLJwvrrtmH6w==
 
 "@spectrum-css/splitbutton@^8.1.2":
   version "8.1.2"
@@ -9393,10 +9393,10 @@ chrome-trace-event@^1.0.2:
   dependencies:
     tslib "^1.9.0"
 
-chromedriver@^128.0.1:
-  version "128.0.1"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-128.0.1.tgz#971fb267cc6893a712808cea6c977473ba167145"
-  integrity sha512-UmWqZXXAyuRa37pE+lnU46vJcCM/y0ddF015LHxycEOYfuqsK7k9ZxJuXCQNWbws9e7FAMQj/GJZT92WPgis0g==
+chromedriver@^130.0.1:
+  version "130.0.1"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-130.0.1.tgz#24fd5b2c9c9df4ebfc5d28c94eca8658915fbe15"
+  integrity sha512-JH+OxDZ7gVv02r9oXwj4mQ8JCtj62g0fCD1LMUUYdB/4mPxn/E2ys+1IzXItoE7vXM9fGVc9R1akvXLqwwuSww==
   dependencies:
     "@testim/chrome-version" "^1.1.4"
     axios "^1.7.4"

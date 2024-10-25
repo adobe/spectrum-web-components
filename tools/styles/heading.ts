@@ -16,7 +16,7 @@ import langOverrides from './src/lang-overrides.css.js';
 import headingBaseStyles from './src/spectrum-heading.css.js';
 import headingOverrides from './src/heading-overrides.css.js';
 
-import { css } from 'lit-element';
+import { css } from 'lit';
 
 const langStyles = css`
     ${langBaseStyles}

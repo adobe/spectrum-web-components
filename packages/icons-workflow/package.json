@@ -26,7 +26,8 @@
         "./package.json": "./package.json"
     },
     "scripts": {
-        "build": "node ./bin/build.js"
+        "build": "node ./bin/build.js",
+        "build-icons-mapping": "node ./bin/build-icons-mapping.js"
     },
     "files": [
         "**/*.d.ts",
