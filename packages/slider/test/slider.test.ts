@@ -338,11 +338,18 @@ describe('Slider', () => {
         expect(el.value).to.equal(50);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+
+        const handleBoundingRect = handle.getBoundingClientRect();
+
         await sendMouse({
             steps: [
                 {
                     type: 'move',
-                    position: [9, 30],
+                    position: [
+                        handleBoundingRect.x + handleBoundingRect.width / 2,
+
+                        handleBoundingRect.y + handleBoundingRect.height / 2,
+                    ],
                 },
                 {
                     type: 'down',
@@ -367,6 +374,82 @@ describe('Slider', () => {
         expect(el.value).to.equal(0);
     });
 
+    it('changes value when clicking on the track', async () => {
+        const el = await fixture<Slider>(html`
+            <sp-slider style="width: 100px"></sp-slider>
+        `);
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(50);
+
+        const track = el.shadowRoot.querySelector('#track') as HTMLDivElement;
+        const trackBoundingRect = track.getBoundingClientRect();
+
+        let pointerId = -1;
+        el.track.setPointerCapture = (id: number) => (pointerId = id);
+        el.track.releasePointerCapture = (id: number) => (pointerId = id);
+
+        // Click on the track moves it to value 60
+        track.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                clientX: trackBoundingRect.x + trackBoundingRect.width / 2 + 10,
+                clientY: trackBoundingRect.y + trackBoundingRect.height / 2,
+                pointerId: 1,
+                cancelable: true,
+                bubbles: true,
+                composed: true,
+                button: 0,
+            })
+        );
+        await elementUpdated(el);
+        track.dispatchEvent(
+            new PointerEvent('pointerup', {
+                pointerId: 1,
+                cancelable: true,
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(60);
+        expect(pointerId, '1').to.equal(1);
+
+        // Click and drag on the track moves it from value 60 -> 75
+        track.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                clientX: trackBoundingRect.x + trackBoundingRect.width / 2 + 10,
+                clientY: trackBoundingRect.y + trackBoundingRect.height / 2,
+                pointerId: 2,
+                cancelable: true,
+                bubbles: true,
+                composed: true,
+                button: 0,
+            })
+        );
+        track.dispatchEvent(
+            new PointerEvent('pointermove', {
+                clientX: trackBoundingRect.x + trackBoundingRect.width / 2 + 25,
+                clientY: trackBoundingRect.y + trackBoundingRect.height / 2,
+                pointerId: 2,
+                cancelable: true,
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await elementUpdated(el);
+        track.dispatchEvent(
+            new PointerEvent('pointerup', {
+                pointerId: 2,
+                cancelable: true,
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await elementUpdated(el);
+        expect(el.value).to.equal(75);
+    });
+
     it('dispatches `input` of the animation frame', async () => {
         const inputSpy = spy();
         const changeSpy = spy();
@@ -383,6 +466,10 @@ describe('Slider', () => {
             ></sp-slider>
         `);
         await elementUpdated(el);
+
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+
+        const handleBoundingRect = handle.getBoundingClientRect();
 
         expect(inputSpy.callCount, 'start clean').to.equal(0);
         expect(changeSpy.callCount, 'start clean').to.equal(0);
@@ -404,11 +491,15 @@ describe('Slider', () => {
             position: [9 + i, 30],
         }));
         const toLeft: Steps = toRight.slice(0, -1).reverse();
+
         await sendMouse({
             steps: [
                 {
                     type: 'move',
-                    position: [9, 30],
+                    position: [
+                        handleBoundingRect.x + handleBoundingRect.width / 2,
+                        handleBoundingRect.y + handleBoundingRect.height / 2,
+                    ],
                 },
                 {
                     type: 'down',
@@ -438,11 +529,15 @@ describe('Slider', () => {
         expect(el.value).to.equal(6);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+        const handleBoundingRect = handle.getBoundingClientRect();
         await sendMouse({
             steps: [
                 {
                     type: 'move',
-                    position: [9, 30],
+                    position: [
+                        handleBoundingRect.x + handleBoundingRect.width / 2,
+                        handleBoundingRect.y + handleBoundingRect.height / 2,
+                    ],
                 },
                 {
                     type: 'down',
@@ -513,7 +608,7 @@ describe('Slider', () => {
         });
         await inputEvent;
 
-        expect(el.value).to.equal(13);
+        expect(el.value).to.equal(63);
 
         el.disabled = true;
         await elementUpdated(el);
@@ -533,7 +628,7 @@ describe('Slider', () => {
             ],
         });
 
-        expect(el.value).to.equal(13);
+        expect(el.value).to.equal(63);
     });
     it('accepts pointermove events in separate interactions', async () => {
         let pointerId = -1;
