@@ -14,6 +14,10 @@ governing permissions and limitations under the License.
 @import url('./spectrum-chevron.css');
 @import url('./spectrum-menu-item.css');
 
+:host {
+    text-align: initial;
+}
+
 :host([hidden]) {
     display: none;
 }
