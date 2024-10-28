@@ -63,6 +63,8 @@ textarea {
 
 :host([multiline]) #textfield {
     display: inline-grid;
+
+    --spectrum-textfield-input-line-height: normal;
 }
 
 :host([multiline]) textarea {

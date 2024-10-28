@@ -19,6 +19,8 @@ import prettier from 'prettier';
 import Case from 'case';
 import { fileURLToPath } from 'url';
 
+import systemsIconMapping from './icons-mapping.json' assert { type: 'json' };
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const rootDir = path.join(__dirname, '../../../');
@@ -41,21 +43,22 @@ const S2IConsPackageDir =
     '@adobe/spectrum-css-workflow-icons-s2/dist/assets/svg';
 const keepColors = '';
 
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/src`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/src`);
-}
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/src/icons`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/src/icons`);
-}
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/src/icons-s2`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/src/icons-s2`);
-}
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/src/elements`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/src/elements`);
-}
-if (!fs.existsSync(`${rootDir}packages/icons-workflow/icons`)) {
-    fs.mkdirSync(`${rootDir}packages/icons-workflow/icons`);
-}
+const ensureDirectoryExists = (dirPath) => {
+    if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath);
+    }
+};
+
+const directories = [
+    `${rootDir}packages/icons-workflow/src`,
+    `${rootDir}packages/icons-workflow/src/icons`,
+    `${rootDir}packages/icons-workflow/src/icons-s2`,
+    `${rootDir}packages/icons-workflow/src/elements`,
+    `${rootDir}packages/icons-workflow/icons`,
+];
+
+directories.forEach(ensureDirectoryExists);
+
 fs.writeFileSync(
     path.join(rootDir, 'packages', 'icons-workflow', 'src', 'icons.ts'),
     disclaimer,
@@ -81,6 +84,23 @@ let manifestImports = `import {
 let manifestListings = `\r\nexport const iconManifest = [\r\n`;
 
 const defaultIconImport = `import { DefaultIcon as AlternateIcon } from '../DefaultIcon.js';\r\n`;
+
+// A function that process the raw svg name and returns the component name
+export const getComponentName = (i) => {
+    let id = path
+        .basename(i, '.svg')
+        .replace(/^(S2_Icon_|S_)/, '')
+        .replace(/(_20_N|_22x20_N|_18_N@2x)$/, '');
+    if (i.startsWith('Ad')) {
+        id = i.replace(/^Ad/, '') + 'Advert';
+    }
+    const replacements = {
+        UnLink: 'Unlink',
+        TextStrikeThrough: 'TextStrikethrough',
+        github: 'GitHub',
+    };
+    return Case.pascal(replacements[id] || id);
+};
 
 async function buildIcons(icons, tag, iconsNameList) {
     icons.forEach((i) => {
@@ -216,8 +236,12 @@ async function buildIcons(icons, tag, iconsNameList) {
         // check if the icon is present in the other version
         let otherVersionIconImport = defaultIconImport;
 
-        if (iconsNameList.includes(ComponentName)) {
-            const alternateTag = tag === 'icons' ? 'icons-s2' : 'icons';
+        const alternateTag = tag === 'icons' ? 'icons-s2' : 'icons';
+        // if there is a mapping icon found from the above iconset update otherVersionIconImport
+        if (systemsIconMapping[ComponentName]) {
+            otherVersionIconImport = `import { ${systemsIconMapping[ComponentName]}Icon as AlternateIcon } from '../${alternateTag}/${systemsIconMapping[ComponentName]}.js';\r\n`;
+        } else if (iconsNameList.includes(ComponentName)) {
+            // if there is a no mapping icon found reset to DefaultIcon
             otherVersionIconImport = `import { ${ComponentName}Icon as AlternateIcon } from '../${alternateTag}/${id}.js';\r\n`;
         }
 
@@ -344,64 +368,10 @@ const iconsV2 = (
 ).sort();
 
 const iconsV1NameList = iconsV1.map((i) => {
-    let id = path
-        .basename(i, '.svg')
-        .replace('S2_Icon_', '')
-        .replace('_20_N', '')
-        .replace('_22x20_N', '');
-
-    if (id.search(/^Ad[A-Z]/) !== -1) {
-        id = id.replace(/^Ad/, '');
-        id += 'Advert';
-    }
-
-    if (id === 'UnLink') {
-        id = 'Unlink';
-    }
-    if (id === 'TextStrikeThrough') {
-        id = 'TextStrikethrough';
-    }
-
-    let ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
-
-    if (ComponentName === 'TextStrikeThrough') {
-        ComponentName = 'TextStrikethrough';
-    }
-    if (ComponentName === 'UnLink') {
-        ComponentName = 'Unlink';
-    }
-
-    return ComponentName;
+    return getComponentName(i);
 });
 const iconsV2NameList = iconsV2.map((i) => {
-    let id = path
-        .basename(i, '.svg')
-        .replace('S2_Icon_', '')
-        .replace('_20_N', '')
-        .replace('_22x20_N', '');
-
-    if (id.search(/^Ad[A-Z]/) !== -1) {
-        id = id.replace(/^Ad/, '');
-        id += 'Advert';
-    }
-
-    if (id === 'UnLink') {
-        id = 'Unlink';
-    }
-    if (id === 'TextStrikeThrough') {
-        id = 'TextStrikethrough';
-    }
-
-    let ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
-
-    if (ComponentName === 'TextStrikeThrough') {
-        ComponentName = 'TextStrikethrough';
-    }
-    if (ComponentName === 'UnLink') {
-        ComponentName = 'Unlink';
-    }
-
-    return ComponentName;
+    return getComponentName(i);
 });
 
 await buildIcons(iconsV1, 'icons', iconsV2NameList);

@@ -483,6 +483,15 @@
     --system-action-button-static-black-selected-content-color-default: var(
         --spectrum-white
     );
+    --system-action-button-static-black-selected-content-color-hover: var(
+        --spectrum-white
+    );
+    --system-action-button-static-black-selected-content-color-down: var(
+        --spectrum-white
+    );
+    --system-action-button-static-black-selected-content-color-focus: var(
+        --spectrum-white
+    );
     --system-action-button-static-black-selected-emphasized-background-color-default: var(
         --spectrum-transparent-black-900
     );
@@ -568,6 +577,15 @@
     );
     --system-action-button-static-white-selected-border-color-disabled: transparent;
     --system-action-button-static-white-selected-content-color-default: var(
+        --spectrum-black
+    );
+    --system-action-button-static-white-selected-content-color-hover: var(
+        --spectrum-black
+    );
+    --system-action-button-static-white-selected-content-color-down: var(
+        --spectrum-black
+    );
+    --system-action-button-static-white-selected-content-color-focus: var(
         --spectrum-black
     );
     --system-action-button-static-white-selected-emphasized-background-color-default: var(
@@ -2192,7 +2210,7 @@
     );
     --system-checkbox-line-height: var(--spectrum-line-height-100);
     --system-checkbox-line-height-cjk: var(--spectrum-cjk-line-height-100);
-    --system-checkbox-control-corner-radius: var(--spectrum-corner-radius-75);
+    --system-checkbox-control-corner-radius: 2px;
     --system-checkbox-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
     --system-checkbox-focus-indicator-thickness: var(
         --spectrum-focus-indicator-thickness
@@ -5037,7 +5055,7 @@
     );
     --system-slider-cjk-line-height: var(--spectrum-cjk-line-height-100);
     --system-slider-min-size: var(--spectrum-spacing-900);
-    --system-slider-track-corner-radius: var(--spectrum-corner-radius-75);
+    --system-slider-track-corner-radius: 2px;
     --system-slider-label-margin-start: var(--spectrum-spacing-300);
     --system-slider-handle-border-width: var(--spectrum-border-width-200);
     --system-slider-track-fill-thickness: var(
@@ -5183,7 +5201,7 @@
         --spectrum-focus-indicator-color
     );
     --system-split-view-handle-width: var(--spectrum-border-width-200);
-    --system-split-view-gripper-border-radius: var(--spectrum-corner-radius-75);
+    --system-split-view-gripper-border-radius: 2px;
     --system-split-view-gripper-width: var(--spectrum-border-width-400);
     --system-split-view-gripper-height: 16px;
     --system-split-view-gripper-border-width-horizontal: 3px;
@@ -5367,8 +5385,8 @@
     --system-stepper-animation-duration: var(--spectrum-animation-duration-100);
     --system-stepper-buttons-border-style: none;
     --system-stepper-buttons-border-width: 0;
-    --system-stepper-buttons-border-color: var(--spectrum-gray-500);
     --system-stepper-buttons-background-color: var(--spectrum-gray-25);
+    --system-stepper-buttons-border-color: var(--spectrum-gray-500);
     --system-stepper-buttons-border-color-hover: var(--spectrum-gray-600);
     --system-stepper-buttons-border-color-focus: var(--spectrum-gray-800);
     --system-stepper-buttons-border-color-keyboard-focus: var(
@@ -6965,7 +6983,7 @@
 :host,
 :root {
     --system-thumbnail-size: var(--spectrum-thumbnail-size-500);
-    --system-thumbnail-border-radius: var(--spectrum-corner-radius-75);
+    --system-thumbnail-border-radius: 2px;
     --system-thumbnail-border-width: var(--spectrum-border-width-100);
     --system-thumbnail-border-color-rgba: rgba(
         var(--spectrum-gray-800-rgb),
