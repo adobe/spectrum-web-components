@@ -2386,8 +2386,6 @@
     --system-clear-button-background-color-hover: var(--spectrum-gray-300);
     --system-clear-button-background-color-down: var(--spectrum-gray-400);
     --system-clear-button-background-color-key-focus: var(--spectrum-gray-300);
-    --system-clear-button-height: var(--spectrum-component-height-100);
-    --system-clear-button-width: var(--spectrum-component-height-100);
     --system-clear-button-padding: var(--spectrum-in-field-button-edge-to-fill);
     --system-clear-button-icon-color: var(
         --spectrum-neutral-content-color-default
@@ -2401,6 +2399,10 @@
     --system-clear-button-icon-color-key-focus: var(
         --spectrum-neutral-content-color-key-focus
     );
+    --system-clear-button-height: var(--spectrum-component-height-100);
+    --system-clear-button-size-m-height: var(--spectrum-component-height-100);
+    --system-clear-button-width: var(--spectrum-component-height-100);
+    --system-clear-button-size-m-width: var(--spectrum-component-height-100);
     --system-clear-button-size-s-height: var(--spectrum-component-height-75);
     --system-clear-button-size-s-width: var(--spectrum-component-height-75);
     --system-clear-button-size-l-height: var(--spectrum-component-height-200);
@@ -3672,9 +3674,6 @@
     --system-infield-button-stacked-fill-padding-inner: var(
         --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-medium
     );
-    --system-infield-button-animation-duration: var(
-        --spectrum-animation-duration-100
-    );
     --system-infield-button-icon-color: var(
         --spectrum-neutral-content-color-default
     );
@@ -4161,23 +4160,23 @@
 :root {
     --system-meter-min-width: var(--spectrum-meter-minimum-width);
     --system-meter-max-width: var(--spectrum-meter-maximum-width);
-    --system-meter-inline-size: var(--spectrum-progressbar-size-2500);
-    --system-meter-top-to-text: var(--spectrum-component-top-to-text-200);
     --system-meter-fill-color-positive: var(--spectrum-positive-visual-color);
     --system-meter-fill-color-notice: var(--spectrum-notice-visual-color);
     --system-meter-fill-color-negative: var(--spectrum-negative-visual-color);
+    --system-meter-thickness: var(--spectrum-meter-thickness-large);
+    --system-meter-size-l-thickness: var(--spectrum-meter-thickness-large);
+    --system-meter-inline-size: var(--spectrum-progressbar-size-2500);
+    --system-meter-size-l-inline-size: var(--spectrum-progressbar-size-2500);
+    --system-meter-font-size: var(--spectrum-font-size-100);
+    --system-meter-size-l-font-size: var(--spectrum-font-size-100);
+    --system-meter-top-to-text: var(--spectrum-component-top-to-text-200);
+    --system-meter-size-l-top-to-text: var(
+        --spectrum-component-top-to-text-200
+    );
     --system-meter-size-s-thickness: var(--spectrum-meter-thickness-small);
     --system-meter-size-s-inline-size: var(--spectrum-progressbar-size-2400);
     --system-meter-size-s-font-size: var(--spectrum-font-size-75);
     --system-meter-size-s-top-to-text: var(--spectrum-component-top-to-text-75);
-    --system-meter-thickness: var(--spectrum-meter-thickness-large);
-    --system-meter-size-l-thickness: var(--spectrum-meter-thickness-large);
-    --system-meter-size-l-inline-size: var(--spectrum-progressbar-size-2500);
-    --system-meter-font-size: var(--spectrum-font-size-100);
-    --system-meter-size-l-font-size: var(--spectrum-font-size-100);
-    --system-meter-size-l-top-to-text: var(
-        --spectrum-component-top-to-text-200
-    );
 }
 
 :host,
@@ -5517,7 +5516,7 @@
     --system-swatch-border-color-opacity: 0.51;
     --system-swatch-border-color-light-opacity: 0.2;
     --system-swatch-border-color: rgba(
-        var(--spectrum-black-rgb),
+        var(--spectrum-gray-900-rgb),
         var(--system-swatch-border-color-opacity)
     );
     --system-swatch-icon-border-color: rgba(
