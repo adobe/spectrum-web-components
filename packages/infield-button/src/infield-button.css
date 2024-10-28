@@ -17,3 +17,7 @@ governing permissions and limitations under the License.
     box-sizing: border-box;
     user-select: none;
 }
+
+::slotted(*) {
+    --spectrum-icon-size: inherit;
+}
