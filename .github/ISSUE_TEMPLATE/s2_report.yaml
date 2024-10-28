@@ -1,5 +1,5 @@
 name: Spectrum 2 Bug Report
-description: Report an issue with the Spectrum 2 theme in SWC 1.0
+description: Report an issue with the Spectrum 2 system
 title: '[S2 Bug]: '
 labels: [bug, triage, needs jira ticket, Spectrum 2]
 # assignees:
