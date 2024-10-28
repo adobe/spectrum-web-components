@@ -70,6 +70,7 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import {
+    equalSegmentValues,
     isCalendarDate,
     isCalendarDateTime,
     isZonedDateTime,
@@ -87,7 +88,8 @@ import { type SegmentsModifierParams } from './segments/modifiers/SegmentsModifi
 /**
  * @element sp-date-time-picker
  *
- * @event change - Announces when a new date/time is defined by emitting a `Date` object
+ * @event change - Announces when a new date/time is committed by the user
+ * @event input - Announces when the user's input changes the component's segments
  *
  * @slot calendar-icon - The icon used in the calendar button
  * @slot help-text - Default or non-negative help text to associate to your form element
@@ -189,6 +191,71 @@ export class DateTimePicker extends ManageHelpText(
         return this.firstEditableSegment;
     }
 
+    private get currentDate(): ZonedDateTime {
+        if (this.value) return toZoned(this.value, this.timeZone);
+        return this.cachedLocalTime;
+    }
+
+    /**
+     * Returns whether the component's precision includes time segments (hour, minute, second)
+     */
+    private get includesTime(): boolean {
+        const timePrecisions = [
+            Precisions.Hour,
+            Precisions.Minute,
+            Precisions.Second,
+        ] as Precision[];
+        return timePrecisions.includes(this.precision);
+    }
+
+    /**
+     * Resets the component's value and segments
+     */
+    public clear(): void {
+        this.value = undefined;
+        this.setSegments();
+    }
+
+    constructor() {
+        super();
+        this.setNumberParser();
+        this.setDateFormatter();
+        this.addEventListener(
+            'focusin',
+            () => (this.previousCommitedValue = this.value)
+        );
+        this.addEventListener('focusout', () => this.commitValue());
+    }
+
+    protected override willUpdate(changedProperties: PropertyValues): void {
+        const changesValue = changedProperties.has('value');
+        const changesMin = changedProperties.has('min');
+        const changesMax = changedProperties.has('max');
+        const changesLocale = changedProperties.has(
+            languageResolverUpdatedSymbol
+        );
+        const changesPrecision = changedProperties.has('precision');
+        const changesSegments = changedProperties.has('segments');
+
+        if (changesLocale) this.setNumberParser();
+        if (changesLocale || changesPrecision) this.setDateFormatter();
+
+        if (changesValue || changesMin || changesMax) {
+            const mostSpecificDateValue = this.mostSpecificDateValue;
+            if (mostSpecificDateValue) {
+                this.convertDatePropsToMatch(mostSpecificDateValue);
+                this.checkDatePropsCompliance(changesMin || changesMax);
+                this.updateDateProps();
+                this.updateDefaultPrecision();
+            }
+        }
+
+        if (changesValue || changesLocale || changesPrecision)
+            this.setSegments();
+
+        if (changesSegments) this.setValueFromSegments();
+    }
+
     /**
      * Returns the component's most precise date property (min, max or value) or undefined if none is defined.
      * The order of precedence is: ZonedDateTime, CalendarDateTime, CalendarDate.
@@ -208,11 +275,6 @@ export class DateTimePicker extends ManageHelpText(
 
         const dates = dateValuesDefined.filter(isCalendarDate);
         return dates[0];
-    }
-
-    private get currentDate(): ZonedDateTime {
-        if (this.value) return toZoned(this.value, this.timeZone);
-        return this.cachedLocalTime;
     }
 
     /**
@@ -245,20 +307,6 @@ export class DateTimePicker extends ManageHelpText(
         this.max = this.max && toCalendarDate(this.max);
     }
 
-    constructor() {
-        super();
-        this.setNumberParser();
-        this.setDateFormatter();
-    }
-
-    /**
-     * Resets the component's value and segments
-     */
-    public clear(): void {
-        this.value = undefined;
-        this.setSegments();
-    }
-
     /**
      * Validates the component's date properties (min, max and value) compliance with one another.
      * If the [min, max] constraint interval is invalid, both properties are reset.
@@ -280,52 +328,26 @@ export class DateTimePicker extends ManageHelpText(
             }
         }
 
-        if (this.value) {
-            const isNonCompliantValue =
-                (this.min && this.value.compare(this.min) < 0) ||
-                (this.max && this.value.compare(this.max) > 0);
-
-            if (isNonCompliantValue) {
-                window.__swc.warn(
-                    this,
-                    `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
-                );
-                this.value = undefined;
-            }
+        if (this.isNonCompliantValue()) {
+            window.__swc.warn(
+                this,
+                `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
+            );
+            this.value = undefined;
         }
 
         if (!this.min && !this.max && !this.value)
             this.timeZone = getLocalTimeZone();
     }
 
-    protected override willUpdate(changedProperties: PropertyValues): void {
-        const changesValue = changedProperties.has('value');
-        const changesMin = changedProperties.has('min');
-        const changesMax = changedProperties.has('max');
-        const changesLocale = changedProperties.has(
-            languageResolverUpdatedSymbol
+    private isNonCompliantValue(): boolean {
+        if (this.value === undefined) return false;
+
+        return Boolean(
+            (this.min && this.value.compare(this.min) < 0) ||
+                (this.max && this.value.compare(this.max) > 0)
         );
-        const changesPrecision = changedProperties.has('precision');
-        const changesSegments = changedProperties.has('segments');
-
-        if (changesLocale) this.setNumberParser();
-        if (changesLocale || changesPrecision) this.setDateFormatter();
-
-        if (changesValue || changesMin || changesMax) {
-            const mostSpecificDateValue = this.mostSpecificDateValue;
-            if (mostSpecificDateValue) {
-                this.convertDatePropsToMatch(mostSpecificDateValue);
-                this.checkDatePropsCompliance(changesMin || changesMax);
-                this.updateDateProps();
-                this.updateDefaultPrecision();
-            }
-        }
-
-        if (changesValue || changesLocale || changesPrecision)
-            this.setSegments();
-
-        if (changesSegments) this.setValueFromSegments();
     }
 
     /**
@@ -432,18 +454,7 @@ export class DateTimePicker extends ManageHelpText(
             if (mostSpecificDateValue && isZonedDateTime(mostSpecificDateValue))
                 this.value = toZoned(this.value, this.timeZone);
         }
-    }
-
-    /**
-     * Returns whether the component's precision includes time segments (hour, minute, second)
-     */
-    private get includesTime(): boolean {
-        const timePrecisions = [
-            Precisions.Hour,
-            Precisions.Minute,
-            Precisions.Second,
-        ] as Precision[];
-        return timePrecisions.includes(this.precision);
+        this.commitValue();
     }
 
     public renderInputContent(): TemplateResult {
@@ -453,6 +464,9 @@ export class DateTimePicker extends ManageHelpText(
                     class="input-content"
                     @focusin=${() => (this.focused = !this.readonly)}
                     @focusout=${() => (this.focused = false)}
+                    @keydown=${this.handleKeydown}
+                    @input=${this.handleInput}
+                    @beforeinput=${this.handleBeforeInput}
                 >
                     ${this.segments.all.map((segment) =>
                         when(
@@ -522,9 +536,6 @@ export class DateTimePicker extends ManageHelpText(
                 class=${classMap(segmentClasses)}
                 style=${styleMap(segmentStyles)}
                 data-type=${segment.type}
-                @keydown=${this.handleKeydown}
-                @beforeinput=${this.handleBeforeInput}
-                @input=${this.handleInput}
                 .innerText=${this.renderSegmentText(segment)}
             ></div>
         `;
@@ -565,6 +576,11 @@ export class DateTimePicker extends ManageHelpText(
                 this.focusSegment(segment as HTMLElement, 'previous');
                 break;
             }
+            case 'Enter':
+            case 'Space': {
+                this.commitValue();
+                break;
+            }
         }
     }
 
@@ -579,11 +595,81 @@ export class DateTimePicker extends ManageHelpText(
     private incrementValue(segmentType: EditableSegmentType): void {
         const incrementModifier = new IncrementModifier(this.modifierParams);
         this.segments = incrementModifier.modify(segmentType);
+        this.dispatchInput();
     }
 
     private decrementValue(segmentType: EditableSegmentType): void {
         const decrementModifier = new DecrementModifier(this.modifierParams);
         this.segments = decrementModifier.modify(segmentType);
+        this.dispatchInput();
+    }
+
+    /**
+     * Focuses the segment according to the direction, if there is one to focus on
+     *
+     * @param segment - Segment on which the event was triggered (the segment being changed)
+     * @param elementToFocus - Defines which element will be focused: is it the previous one or the next one?
+     */
+    private focusSegment(
+        segment: HTMLElement,
+        elementToFocus: 'previous' | 'next'
+    ): void {
+        let segmentFound = false;
+        let currentSegment = segment;
+
+        while (!segmentFound) {
+            const siblingSegment = (
+                elementToFocus === 'previous'
+                    ? currentSegment.previousElementSibling
+                    : currentSegment.nextElementSibling
+            ) as HTMLDivElement;
+
+            // No more segments to focus on
+            if (!siblingSegment) {
+                break;
+            }
+
+            if (siblingSegment.getAttribute('contenteditable')) {
+                siblingSegment.focus();
+                segmentFound = true;
+            }
+
+            currentSegment = siblingSegment;
+        }
+    }
+
+    private previousCommitedValue: DateTimePickerValue | undefined;
+    /**
+     * Mark the user intent to commit the selected value. If the current value
+     * is different from the previous commited value, dispatch a change event.
+     */
+    private commitValue(): void {
+        if (
+            this.value &&
+            this.previousCommitedValue &&
+            this.value.compare(this.previousCommitedValue) === 0
+        )
+            return;
+
+        if (
+            this.value === undefined &&
+            this.previousCommitedValue === undefined
+        ) {
+            const allSegmentsEmpty = this.segments.editableValues.every(
+                (value) => value === undefined
+            );
+            if (allSegmentsEmpty) this.invalid = false;
+            else this.invalid = true;
+
+            return;
+        }
+
+        if (this.value === undefined || this.isNonCompliantValue())
+            this.invalid = true;
+        else this.invalid = false;
+
+        this.previousCommitedValue = this.value;
+        this.dispatchChange();
     }
 
     private handleBeforeInput(event: InputEvent): void {
@@ -594,7 +680,7 @@ export class DateTimePicker extends ManageHelpText(
             case 'deleteContentBackward':
             case 'deleteContentForward':
                 event.preventDefault();
-                this.clearContent(segmentType);
+                this.clearSegmentContent(segmentType);
                 break;
             case 'insertParagraph': // “Enter” key
             case 'insertLineBreak': // Shift + “Enter” keys
@@ -603,14 +689,22 @@ export class DateTimePicker extends ManageHelpText(
         }
     }
 
-    private clearContent(segmentType: EditableSegmentType): void {
+    private clearSegmentContent(segmentType: EditableSegmentType): void {
+        const valuesBefore = this.segments.editableValues;
+
         const clearModifier = new ClearModifier(this.modifierParams);
         this.segments = clearModifier.modify(segmentType);
+
+        const valuesAfter = this.segments.editableValues;
+        if (!equalSegmentValues(valuesBefore, valuesAfter))
+            this.dispatchInput();
     }
 
     private handleInput(event: InputEvent): void {
+        event.stopPropagation();
         const segmentType = (event.target as HTMLElement).dataset
             .type as EditableSegmentType;
+        const valuesBefore = this.segments.editableValues;
 
         const inputModifier = new InputModifier({
             ...this.modifierParams,
@@ -623,6 +717,10 @@ export class DateTimePicker extends ManageHelpText(
             this.segments.getByType(segmentType)!,
             event.target as HTMLElement
         );
+
+        const valuesAfter = this.segments.editableValues;
+        if (!equalSegmentValues(valuesBefore, valuesAfter))
+            this.dispatchInput();
     }
 
     /**
@@ -654,12 +752,23 @@ export class DateTimePicker extends ManageHelpText(
         );
     }
 
+    private dispatchInput(): void {
+        this.dispatchEvent(
+            new CustomEvent('input', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
     private setValueFromSegments(): void {
         const formattedDate = this.segments.getFormattedDate(this.precision);
         if (!formattedDate) {
+            if (this.value) this.dispatchChange();
             this.value = undefined;
             return;
         }
+        if (this.value === undefined) this.dispatchChange();
 
         const mostSpecificDateValue = this.mostSpecificDateValue;
         if (!mostSpecificDateValue) this.value = formattedDate;
@@ -670,8 +779,6 @@ export class DateTimePicker extends ManageHelpText(
                 this.value = toCalendarDateTime(formattedDate);
             else this.value = toCalendarDate(formattedDate);
         }
-
-        this.dispatchChange();
     }
 
     private setDateFormatter(): void {
@@ -717,39 +824,5 @@ export class DateTimePicker extends ManageHelpText(
         );
 
         this.segments = segments;
-    }
-
-    /**
-     * Focuses the segment according to the direction, if there is one to focus on
-     *
-     * @param segment - Segment on which the event was triggered (the segment being changed)
-     * @param elementToFocus - Defines which element will be focused: is it the previous one or the next one?
-     */
-    private focusSegment(
-        segment: HTMLElement,
-        elementToFocus: 'previous' | 'next'
-    ): void {
-        let segmentFound = false;
-        let currentSegment = segment;
-
-        while (!segmentFound) {
-            const siblingSegment = (
-                elementToFocus === 'previous'
-                    ? currentSegment.previousElementSibling
-                    : currentSegment.nextElementSibling
-            ) as HTMLDivElement;
-
-            // No more segments to focus on
-            if (!siblingSegment) {
-                break;
-            }
-
-            if (siblingSegment.getAttribute('contenteditable')) {
-                siblingSegment.focus();
-                segmentFound = true;
-            }
-
-            currentSegment = siblingSegment;
-        }
     }
 }

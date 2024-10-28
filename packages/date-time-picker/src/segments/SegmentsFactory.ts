@@ -29,9 +29,14 @@ export class SegmentsFactory {
         this.dateFormatter = dateFormatter;
     }
 
+    /**
+     * Creates the `DateTimeSegments` needed for the DateTimePicker
+     * @param currentDate - The date to create the segments from. This is used to set the limits and values of the segments.
+     * @param setValues - If true, the segments will have their values set from the currentDate. If false, the segments will have no values.
+     */
     createSegments(
         currentDate: ZonedDateTime,
-        shouldSetSegmentsValues: boolean = false
+        setValues: boolean = false
     ): DateTimeSegments {
         const date = new Date(
             currentDate.year,
@@ -59,13 +64,13 @@ export class SegmentsFactory {
 
         year.setLimits(currentDate);
         month.setLimits(currentDate);
-        if (shouldSetSegmentsValues) {
+        if (setValues) {
             year.setValueFromDate(currentDate);
             month.setValueFromDate(currentDate);
         }
 
         day.setLimits(currentDate, month.value, year.value);
-        if (shouldSetSegmentsValues) day.setValueFromDate(currentDate);
+        if (setValues) day.setValueFromDate(currentDate);
 
         const hour = segments.hour;
         const minute = segments.minute;
@@ -78,7 +83,7 @@ export class SegmentsFactory {
 
         const is12HourFormat = Boolean(dayPeriod);
         hour.setLimits(is12HourFormat);
-        if (shouldSetSegmentsValues) {
+        if (setValues) {
             hour.setValueFromDate(currentDate, is12HourFormat);
 
             if (is12HourFormat) {

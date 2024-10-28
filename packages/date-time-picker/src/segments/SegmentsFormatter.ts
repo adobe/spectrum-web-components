@@ -38,6 +38,11 @@ export class SegmentsFormatter {
         this.currentDate = currentDate;
     }
 
+    /**
+     * Formats all the `DateTimeSegments` to have the formatted property based on the value property, according to the date formatter.
+     * @param segments - `DateTimeSegments` to format
+     * @returns Formatted DateTimeSegments
+     */
     public format(segments: DateTimeSegments): DateTimeSegments {
         if (!segments.year || !segments.month || !segments.day) return segments;
 

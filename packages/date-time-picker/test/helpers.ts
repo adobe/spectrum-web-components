@@ -40,7 +40,12 @@ export async function fixtureElement({
     props?: { [prop: string]: unknown };
 } = {}): Promise<DateTimePicker> {
     const wrapped = await fixture<HTMLElement>(html`
-        <sp-theme lang=${locale} color="light" scale="medium">
+        <sp-theme
+            system=${'spectrum'}
+            lang=${locale}
+            color="light"
+            scale="medium"
+        >
             <sp-date-time-picker
                 ...=${spreadProps(props)}
             ></sp-date-time-picker>

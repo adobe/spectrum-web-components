@@ -25,7 +25,12 @@ export async function fixtureElement({
     props?: { [prop: string]: unknown };
 } = {}): Promise<Calendar> {
     const wrapped = await fixture<HTMLElement>(html`
-        <sp-theme lang=${locale} color="light" scale="medium">
+        <sp-theme
+            system=${'spectrum'}
+            lang=${locale}
+            color="light"
+            scale="medium"
+        >
             <sp-calendar ...=${spreadProps(props)}></sp-calendar>
         </sp-theme>
     `);
