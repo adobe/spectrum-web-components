@@ -61,7 +61,7 @@
     );
 }
 
-:host {
+.spectrum-ProgressBar--sizeM {
     --spectrum-progressbar-size-default: var(
         --system-progress-bar-size-m-size-default
     );
@@ -76,7 +76,7 @@
     );
 }
 
-:host([size='s']) {
+.spectrum-ProgressBar--sizeS {
     --spectrum-progressbar-size-default: var(
         --system-progress-bar-size-s-size-default
     );
@@ -91,7 +91,7 @@
     );
 }
 
-:host([size='l']) {
+.spectrum-ProgressBar--sizeL {
     --spectrum-progressbar-size-default: var(
         --system-progress-bar-size-l-size-default
     );
@@ -106,7 +106,7 @@
     );
 }
 
-:host([size='xl']) {
+.spectrum-ProgressBar--sizeXL {
     --spectrum-progressbar-size-default: var(
         --system-progress-bar-size-xl-size-default
     );
