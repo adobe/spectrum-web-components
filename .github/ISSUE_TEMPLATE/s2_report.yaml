@@ -16,14 +16,14 @@ body:
           options:
               - label: I agree to follow this project's code of conduct.
                 required: true
-    - type: checkboxes
-      id: reviewed-issues
-      attributes:
-          label: Reviewed open issues
-          description: Before submitting this issue, please confirm that you have looked through the [existing Spectrum 2 issues](https://github.com/adobe/spectrum-web-components/labels/Spectrum%202) and confirmed that this is not a duplicate ticket.
-          options:
-              - label: I have confirmed that this is a new issue.
-                required: true
+    - type: dropdown
+  id: reviewed-issues
+  attributes:
+      label: Have you reviewed existing [existing Spectrum 2 issues](https://github.com/adobe/spectrum-web-components/labels/Spectrum%202)?
+      description: Please confirm if you've reviewed existing issues to avoid duplicates.
+      options:
+          - Yes, I’ve reviewed existing issues.
+          - Oops, I’ll check now.
     - type: input
       id: components
       attributes:
