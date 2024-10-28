@@ -234,5 +234,5 @@ governing permissions and limitations under the License.
 }
 
 :host([justified]) ::slotted(*) {
-    flex: 1;
+    flex-grow: 1;
 }

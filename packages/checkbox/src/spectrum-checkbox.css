@@ -181,6 +181,36 @@ governing permissions and limitations under the License.
     );
 }
 
+#checkmark,
+#partialCheckmark {
+    color: var(
+        --highcontrast-checkbox-background-color-default,
+        var(
+            --mod-checkbox-checkmark-color,
+            var(--spectrum-checkbox-checkmark-color)
+        )
+    );
+    opacity: 0;
+    transition:
+        opacity
+            var(
+                --mod-checkbox-animation-duration,
+                var(--spectrum-checkbox-animation-duration)
+            )
+            ease-in-out,
+        transform
+            var(
+                --mod-checkbox-animation-duration,
+                var(--spectrum-checkbox-animation-duration)
+            )
+            ease-in-out;
+    transform: scale(0);
+}
+
+#partialCheckmark {
+    display: none;
+}
+
 :host([emphasized]) #input:checked + #box:before,
 :host([emphasized][indeterminate]) #box:before,
 :host([emphasized][indeterminate]) #input:checked + #box:before {
@@ -306,7 +336,7 @@ governing permissions and limitations under the License.
     :host([emphasized][indeterminate]:hover) #input:checked + #box:before,
     :host([emphasized]:hover) #input:checked + #box:before {
         border-color: var(
-            --highcontrast-checkbox-color-hover,
+            --highcontrast-checkbox-highlight-color-hover,
             var(
                 --mod-checkbox-emphasized-color-hover,
                 var(--spectrum-checkbox-emphasized-color-hover)
@@ -324,18 +354,6 @@ governing permissions and limitations under the License.
             var(
                 --mod-checkbox-invalid-color-hover,
                 var(--spectrum-checkbox-invalid-color-hover)
-            )
-        );
-    }
-
-    :host([emphasized][indeterminate]:hover) #box:before,
-    :host([emphasized][indeterminate]:hover) #input:checked + #box:before,
-    :host([emphasized]:hover) #input:checked + #box:before {
-        border-color: var(
-            --highcontrast-checkbox-highlight-color-hover,
-            var(
-                --mod-checkbox-emphasized-color-hover,
-                var(--spectrum-checkbox-emphasized-color-hover)
             )
         );
     }
@@ -513,6 +531,36 @@ governing permissions and limitations under the License.
     );
 }
 
+#input:checked:disabled + #box:before,
+#input:disabled + #box:before {
+    border-color: var(
+        --highcontrast-checkbox-disabled-color-default,
+        var(
+            --mod-checkbox-control-color-disabled,
+            var(--spectrum-checkbox-control-color-disabled)
+        )
+    );
+    background-color: var(
+        --highcontrast-checkbox-background-color-default,
+        var(
+            --mod-checkbox-checkmark-color,
+            var(--spectrum-checkbox-checkmark-color)
+        )
+    );
+}
+
+#input:checked:disabled ~ #label,
+#input:disabled ~ #label {
+    forced-color-adjust: none;
+    color: var(
+        --highcontrast-checkbox-disabled-color-default,
+        var(
+            --mod-checkbox-content-color-disabled,
+            var(--spectrum-checkbox-content-color-disabled)
+        )
+    );
+}
+
 #box {
     --spectrum-checkbox-spacing: calc(
         var(--mod-checkbox-height, var(--spectrum-checkbox-height)) -
@@ -620,66 +668,6 @@ governing permissions and limitations under the License.
     inset-block: 0;
     inset-inline: 0;
     transform: translate(0);
-}
-
-#checkmark,
-#partialCheckmark {
-    color: var(
-        --highcontrast-checkbox-background-color-default,
-        var(
-            --mod-checkbox-checkmark-color,
-            var(--spectrum-checkbox-checkmark-color)
-        )
-    );
-    opacity: 0;
-    transition:
-        opacity
-            var(
-                --mod-checkbox-animation-duration,
-                var(--spectrum-checkbox-animation-duration)
-            )
-            ease-in-out,
-        transform
-            var(
-                --mod-checkbox-animation-duration,
-                var(--spectrum-checkbox-animation-duration)
-            )
-            ease-in-out;
-    transform: scale(0);
-}
-
-#partialCheckmark {
-    display: none;
-}
-
-#input:checked:disabled + #box:before,
-#input:disabled + #box:before {
-    border-color: var(
-        --highcontrast-checkbox-disabled-color-default,
-        var(
-            --mod-checkbox-control-color-disabled,
-            var(--spectrum-checkbox-control-color-disabled)
-        )
-    );
-    background-color: var(
-        --highcontrast-checkbox-background-color-default,
-        var(
-            --mod-checkbox-checkmark-color,
-            var(--spectrum-checkbox-checkmark-color)
-        )
-    );
-}
-
-#input:checked:disabled ~ #label,
-#input:disabled ~ #label {
-    forced-color-adjust: none;
-    color: var(
-        --highcontrast-checkbox-disabled-color-default,
-        var(
-            --mod-checkbox-content-color-disabled,
-            var(--spectrum-checkbox-content-color-disabled)
-        )
-    );
 }
 
 @media (forced-colors: active) {

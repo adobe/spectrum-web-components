@@ -11,6 +11,51 @@
     */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([size='s']) {
+    --spectrum-actiongroup-horizontal-spacing-regular: var(
+        --system-action-group-size-s-horizontal-spacing-regular
+    );
+    --spectrum-actiongroup-vertical-spacing-regular: var(
+        --system-action-group-size-s-vertical-spacing-regular
+    );
+}
+
+:host([size='xs']) {
+    --spectrum-actiongroup-horizontal-spacing-regular: var(
+        --system-action-group-size-xs-horizontal-spacing-regular
+    );
+    --spectrum-actiongroup-vertical-spacing-regular: var(
+        --system-action-group-size-xs-vertical-spacing-regular
+    );
+}
+
+:host([size='xl']) {
+    --spectrum-actiongroup-horizontal-spacing-regular: var(
+        --system-action-group-size-xl-horizontal-spacing-regular
+    );
+    --spectrum-actiongroup-vertical-spacing-regular: var(
+        --system-action-group-size-xl-vertical-spacing-regular
+    );
+}
+
+:host([size='l']) {
+    --spectrum-actiongroup-horizontal-spacing-regular: var(
+        --system-action-group-size-l-horizontal-spacing-regular
+    );
+    --spectrum-actiongroup-vertical-spacing-regular: var(
+        --system-action-group-size-l-vertical-spacing-regular
+    );
+}
+
+:host {
+    --spectrum-actiongroup-horizontal-spacing-regular: var(
+        --system-action-group-size-m-horizontal-spacing-regular
+    );
+    --spectrum-actiongroup-vertical-spacing-regular: var(
+        --system-action-group-size-m-vertical-spacing-regular
+    );
+}
+
 :host {
     --spectrum-actiongroup-gap-size-compact: var(
         --system-action-group-gap-size-compact
@@ -35,50 +80,5 @@
     );
     --spectrum-actiongroup-vertical-spacing-regular: var(
         --system-action-group-vertical-spacing-regular
-    );
-}
-
-:host([size='xs']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-xs-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-xs-vertical-spacing-regular
-    );
-}
-
-:host([size='s']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-s-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-s-vertical-spacing-regular
-    );
-}
-
-:host {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-m-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-m-vertical-spacing-regular
-    );
-}
-
-:host([size='l']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-l-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-l-vertical-spacing-regular
-    );
-}
-
-:host([size='xl']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-xl-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-xl-vertical-spacing-regular
     );
 }
