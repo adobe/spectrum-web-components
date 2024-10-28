@@ -11,6 +11,46 @@
     */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([size='l']) {
+    --spectrum-swatch-size: var(--system-swatch-size-l-size);
+    --spectrum-swatch-disabled-icon-size: var(
+        --system-swatch-size-l-disabled-icon-size
+    );
+    --spectrum-swatch-slash-thickness: var(
+        --system-swatch-size-l-slash-thickness
+    );
+}
+
+:host([size='s']) {
+    --spectrum-swatch-size: var(--system-swatch-size-s-size);
+    --spectrum-swatch-disabled-icon-size: var(
+        --system-swatch-size-s-disabled-icon-size
+    );
+    --spectrum-swatch-slash-thickness: var(
+        --system-swatch-size-s-slash-thickness
+    );
+}
+
+:host([size='xs']) {
+    --spectrum-swatch-size: var(--system-swatch-size-xs-size);
+    --spectrum-swatch-disabled-icon-size: var(
+        --system-swatch-size-xs-disabled-icon-size
+    );
+    --spectrum-swatch-slash-thickness: var(
+        --system-swatch-size-xs-slash-thickness
+    );
+}
+
+:host {
+    --spectrum-swatch-size: var(--system-swatch-size-m-size);
+    --spectrum-swatch-disabled-icon-size: var(
+        --system-swatch-size-m-disabled-icon-size
+    );
+    --spectrum-swatch-slash-thickness: var(
+        --system-swatch-size-m-slash-thickness
+    );
+}
+
 :host {
     --spectrum-swatch-border-radius: var(--system-swatch-border-radius);
     --spectrum-swatch-focus-indicator-border-radius: var(
@@ -56,44 +96,4 @@
         --system-swatch-disabled-icon-size
     );
     --spectrum-swatch-slash-thickness: var(--system-swatch-slash-thickness);
-}
-
-:host([size='xs']) {
-    --spectrum-swatch-size: var(--system-swatch-size-xs-size);
-    --spectrum-swatch-disabled-icon-size: var(
-        --system-swatch-size-xs-disabled-icon-size
-    );
-    --spectrum-swatch-slash-thickness: var(
-        --system-swatch-size-xs-slash-thickness
-    );
-}
-
-:host([size='s']) {
-    --spectrum-swatch-size: var(--system-swatch-size-s-size);
-    --spectrum-swatch-disabled-icon-size: var(
-        --system-swatch-size-s-disabled-icon-size
-    );
-    --spectrum-swatch-slash-thickness: var(
-        --system-swatch-size-s-slash-thickness
-    );
-}
-
-:host {
-    --spectrum-swatch-size: var(--system-swatch-size-m-size);
-    --spectrum-swatch-disabled-icon-size: var(
-        --system-swatch-size-m-disabled-icon-size
-    );
-    --spectrum-swatch-slash-thickness: var(
-        --system-swatch-size-m-slash-thickness
-    );
-}
-
-:host([size='l']) {
-    --spectrum-swatch-size: var(--system-swatch-size-l-size);
-    --spectrum-swatch-disabled-icon-size: var(
-        --system-swatch-size-l-disabled-icon-size
-    );
-    --spectrum-swatch-slash-thickness: var(
-        --system-swatch-size-l-slash-thickness
-    );
 }

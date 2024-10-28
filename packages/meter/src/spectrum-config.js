@@ -26,10 +26,9 @@ const config = {
         {
             inPackage: '@spectrum-css/progressbar',
             outPackage: 'meter',
-            fileName: 'meter',
+            fileName: 'progress-bar',
             components: [
                 converter.classToHost(),
-                converter.classToHost('spectrum-Meter'),
                 converter.classToClass('spectrum-ProgressBar-track'),
                 converter.classToClass('spectrum-ProgressBar-fill'),
                 converter.classToClass('spectrum-ProgressBar-label'),
@@ -41,22 +40,32 @@ const config = {
                 converter.classToAttribute(
                     'spectrum-ProgressBar--indeterminate'
                 ),
-                // Default to `size='m'` without needing the attribute
-                converter.classToHost('spectrum-ProgressBar--sizeM'),
-                ...converter.enumerateAttributes(
-                    [
-                        ['spectrum-ProgressBar--sizeS', 's'],
-                        ['spectrum-ProgressBar--sizeL', 'l'],
-                        ['spectrum-ProgressBar--sizeXL', 'xl'],
-                    ],
-                    'size'
-                ),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-ProgressBar--staticBlack', 'black'],
                         ['spectrum-ProgressBar--staticWhite', 'white'],
                     ],
                     'static-color'
+                ),
+            ],
+            excludeByComponents: [
+                builder.class('spectrum-Meter--sizeS'),
+                builder.class('spectrum-Meter--sizeL'),
+            ],
+        },
+        {
+            inPackage: '@spectrum-css/meter',
+            outPackage: 'meter',
+            fileName: 'meter',
+            components: [
+                converter.classToHost(),
+                converter.classToHost('spectrum-Meter'),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Meter--sizeS', 's'],
+                        ['spectrum-Meter--sizeL', 'l'],
+                    ],
+                    'size'
                 ),
                 ...converter.enumerateAttributes(
                     [
@@ -67,9 +76,29 @@ const config = {
                     'variant'
                 ),
             ],
-            excludeByComponents: [
-                builder.class('spectrum-Meter--sizeS'),
-                builder.class('spectrum-Meter--sizeL'),
+        },
+        {
+            inPackage: '@spectrum-css/meter',
+            outPackage: 'meter',
+            fileName: 'meter',
+            components: [
+                converter.classToHost(),
+                converter.classToHost('spectrum-Meter'),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Meter--sizeS', 's'],
+                        ['spectrum-Meter--sizeL', 'l'],
+                    ],
+                    'size'
+                ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['is-positive', 'positive'],
+                        ['is-notice', 'notice'],
+                        ['is-negative', 'negative'],
+                    ],
+                    'variant'
+                ),
             ],
         },
     ],

@@ -3110,7 +3110,7 @@
   dependencies:
     npmlog "^6.0.2"
 
-"@lit-labs/observers@^2.0.0", "@lit-labs/observers@^2.0.2":
+"@lit-labs/observers@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@lit-labs/observers/-/observers-2.0.2.tgz#3f655a86e3dccc3a174f4f0149e8b318beb72025"
   integrity sha512-eZb5+W9Cb0e/Y5m1DNxBSGTvGB2TAVTGMnTxL/IzFhPQEcZIAHewW1eVBhN8W07A5tirRaAmmF6fGL1V20p3gQ==
@@ -5188,6 +5188,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/menu/-/menu-8.0.0-s2-foundations.16.tgz#82ad4d5ce4025cf218f3b2d715f300048cb57426"
   integrity sha512-yvsRQ2LcVMkmelFOtSZKUQgB/+r/rOutaQlHaRzVrWJFNRsNtS/f6l8AiXwv9cs3P8raAEjKoqLuat2Ok5gwdw==
 
+"@spectrum-css/meter@^0.0.0-s2-foundations.2":
+  version "0.0.0-s2-foundations.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/meter/-/meter-0.0.0-s2-foundations.2.tgz#b4f82e497a42b2473a76bbeeede708012cccae39"
+  integrity sha512-h4v/sxFX3y/MEwVEMXPpIovXGTKqpFirLRPK1sBVHtw8QgnPweQPgRsmX5kiKDhbupZfma7LRDhy4vTPDMBAvg==
+
 "@spectrum-css/modal@^6.0.0-s2-foundations.16":
   version "6.0.0-s2-foundations.16"
   resolved "https://registry.yarnpkg.com/@spectrum-css/modal/-/modal-6.0.0-s2-foundations.16.tgz#66e57697e9205dc98cfb8cc501a88cfe17cc61c0"
@@ -5212,11 +5217,6 @@
   version "8.0.0-s2-foundations.16"
   resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-8.0.0-s2-foundations.16.tgz#9bc3437b704c989713ef19f44522799762dd9828"
   integrity sha512-yxTIi7EEZdAcxiJu2XQjacYMmaP9afUM07S3neARzuKZBuSphGgT0RjNcPPZ2jcMqICtteJIxsc1QQaFDEzSuA==
-
-"@spectrum-css/progressbar@^5.0.0-s2-foundations.17":
-  version "5.0.0-s2-foundations.17"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-5.0.0-s2-foundations.17.tgz#7627ca4b24b3b391025ab93a04372eb2b3ad2587"
-  integrity sha512-eKbwkkRs7uKAKKlV7tOi5NtlkYP6gpDdf2k28MDSoujLSaI/UxDqc3b2xxXgk9b+Ch6+PsseqAvkd4dYVbrT+Q==
 
 "@spectrum-css/progressbar@^5.0.0-s2-foundations.19":
   version "5.0.0-s2-foundations.19"
@@ -5273,10 +5273,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/stepper/-/stepper-7.0.0-s2-foundations.18.tgz#d1492449d778739dce14074569a280957fb264d3"
   integrity sha512-D4PUgy81VpLRdd5IDB4hXWmekdfLF29aaGI2Kvt5ny9gSK/qeNGd90srG+SBUBwSfLKvE8Cc6kov7KVwFDnCdw==
 
-"@spectrum-css/swatch@^7.0.0-s2-foundations.16":
-  version "7.0.0-s2-foundations.16"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/swatch/-/swatch-7.0.0-s2-foundations.16.tgz#49d4e370912220775ea7ffb4172d832b821764f9"
-  integrity sha512-iwM0BiR2k1sqVa3N3MB1W8FvK3wVhulzQG1G5prKVC/C8qGl9YlymAFUDdHBFTX16+OB1ObSCDidI8mxAVPDkg==
+"@spectrum-css/swatch@^7.0.0-s2-foundations.17":
+  version "7.0.0-s2-foundations.17"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/swatch/-/swatch-7.0.0-s2-foundations.17.tgz#ac9ce4d0c98d89bdc7b901c7aaf0c8b4bd15d5bc"
+  integrity sha512-5/EodsO+jVozkeJV99zaXNjaX/3Bk6Xl5qUi2INEiMTHkJg+vPNejdWyEaFxqOhD0vE37nwYIhGYHcElA60OBg==
 
 "@spectrum-css/swatchgroup@^4.0.0-s2-foundations.15":
   version "4.0.0-s2-foundations.15"
