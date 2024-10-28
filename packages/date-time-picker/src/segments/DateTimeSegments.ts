@@ -40,6 +40,14 @@ export class DateTimeSegments {
         return this.segments;
     }
 
+    public get editableValues(): (number | undefined)[] {
+        return (
+            this.all.filter(
+                (segment) => segment instanceof EditableSegment
+            ) as EditableSegment[]
+        ).map((segment) => segment.value);
+    }
+
     public get year(): YearSegment | undefined {
         const yearSegment = this.getByType(SegmentTypes.Year);
         if (yearSegment) return yearSegment as YearSegment;
