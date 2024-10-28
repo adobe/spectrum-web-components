@@ -16,7 +16,7 @@ import langOverrides from './src/lang-overrides.css.js';
 import bodyBaseStyles from './src/spectrum-body.css.js';
 import bodyOverrides from './src/body-overrides.css.js';
 
-import { css } from 'lit-element';
+import { css } from 'lit';
 
 // bodyStyles is a combination of bodyBaseStyles and bodyOverrides
 const bodyStyles = css`

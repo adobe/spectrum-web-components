@@ -64,17 +64,6 @@
     --spectrum-slider-handle-border-width: var(
         --system-slider-handle-border-width
     );
-    --spectrum-slider-handle-margin-left: var(
-        --system-slider-handle-margin-left
-    );
-    --spectrum-slider-controls-margin: var(--system-slider-controls-margin);
-    --spectrum-slider-track-margin-offset: var(
-        --system-slider-track-margin-offset
-    );
-    --spectrum-slider-track-middle-handleoffset: var(
-        --system-slider-track-middle-handleoffset
-    );
-    --spectrum-slider-input-top-size: var(--system-slider-input-top-size);
     --spectrum-slider-track-fill-thickness: var(
         --system-slider-track-fill-thickness
     );
@@ -105,7 +94,6 @@
     --spectrum-slider-ramp-handle-border-color-active: var(
         --system-slider-ramp-handle-border-color-active
     );
-    --spectrum-slider-input-left: var(--system-slider-input-left);
     --spectrum-slider-track-handleoffset: var(
         --system-slider-track-handleoffset
     );
@@ -125,29 +113,6 @@
     );
     --spectrum-slider-value-side-padding-inline: var(
         --system-slider-value-side-padding-inline
-    );
-}
-
-:host([size='s']) {
-    --spectrum-slider-font-size: var(--system-slider-size-s-font-size);
-    --spectrum-slider-handle-size: var(--system-slider-size-s-handle-size);
-    --spectrum-slider-control-height: var(
-        --system-slider-size-s-control-height
-    );
-    --spectrum-slider-handle-border-radius: var(
-        --system-slider-size-s-handle-border-radius
-    );
-    --spectrum-slider-handle-border-width-down: var(
-        --system-slider-size-s-handle-border-width-down
-    );
-    --spectrum-slider-label-top-to-text: var(
-        --system-slider-size-s-label-top-to-text
-    );
-    --spectrum-slider-control-to-field-label: var(
-        --system-slider-size-s-control-to-field-label
-    );
-    --spectrum-slider-value-side-padding-inline: var(
-        --system-slider-size-s-value-side-padding-inline
     );
 }
 
@@ -171,6 +136,29 @@
     );
     --spectrum-slider-value-side-padding-inline: var(
         --system-slider-size-m-value-side-padding-inline
+    );
+}
+
+:host([size='s']) {
+    --spectrum-slider-font-size: var(--system-slider-size-s-font-size);
+    --spectrum-slider-handle-size: var(--system-slider-size-s-handle-size);
+    --spectrum-slider-control-height: var(
+        --system-slider-size-s-control-height
+    );
+    --spectrum-slider-handle-border-radius: var(
+        --system-slider-size-s-handle-border-radius
+    );
+    --spectrum-slider-handle-border-width-down: var(
+        --system-slider-size-s-handle-border-width-down
+    );
+    --spectrum-slider-label-top-to-text: var(
+        --system-slider-size-s-label-top-to-text
+    );
+    --spectrum-slider-control-to-field-label: var(
+        --system-slider-size-s-control-to-field-label
+    );
+    --spectrum-slider-value-side-padding-inline: var(
+        --system-slider-size-s-value-side-padding-inline
     );
 }
 

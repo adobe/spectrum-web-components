@@ -45,7 +45,9 @@ export const COLOR_VALUES = [
     'dark-express',
     'darkest-express',
     'light-spectrum-two',
+    'lightest-spectrum-two',
     'dark-spectrum-two',
+    'darkest-spectrum-two',
 ] as const;
 
 export type SystemVariant = (typeof SYSTEM_VARIANT_VALUES)[number];

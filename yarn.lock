@@ -3110,7 +3110,7 @@
   dependencies:
     npmlog "^6.0.2"
 
-"@lit-labs/observers@^2.0.0", "@lit-labs/observers@^2.0.2":
+"@lit-labs/observers@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@lit-labs/observers/-/observers-2.0.2.tgz#3f655a86e3dccc3a174f4f0149e8b318beb72025"
   integrity sha512-eZb5+W9Cb0e/Y5m1DNxBSGTvGB2TAVTGMnTxL/IzFhPQEcZIAHewW1eVBhN8W07A5tirRaAmmF6fGL1V20p3gQ==
@@ -4677,7 +4677,7 @@
     fast-glob "^3.2.12"
     magic-string "^0.30.3"
 
-"@rollup/plugin-json@^6.0.1":
+"@rollup/plugin-json@^6.0.1", "@rollup/plugin-json@^6.1.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-json/-/plugin-json-6.1.0.tgz#fbe784e29682e9bb6dee28ea75a1a83702e7b805"
   integrity sha512-EGI2te5ENk1coGeADSIwZ7G2Q8CJS2sF120T7jLw4xFw9n7wIOXHo+kIYRAoVpJAN+kmqZSoO3Fp4JtoNF4ReA==
@@ -4993,10 +4993,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-9.0.0-s2-foundations.16.tgz#ee47b51174de82902f213bbcb184b15bf60e7d7e"
   integrity sha512-zPZHtQ0ydhrgif5hnK6RnuD/DCr68MWs6ek4b/GaRnYATUNVtP0+jGM9FiyDxBha1u1PEZxAKmT7uOKyETuZ8w==
 
-"@spectrum-css/actionbutton@^7.0.0-s2-foundations.21":
-  version "7.0.0-s2-foundations.21"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-7.0.0-s2-foundations.21.tgz#dc34168e5f46f5dfdc55f54693d8f4bc900f46d0"
-  integrity sha512-378y8NUoXiEbMMG+pnIDSBpiAedvDyTLjQPzKN2dJ79wlJUnTdMSiG37IW2fa4W8h+DIGRXDYg3wqBoEDFBOfg==
+"@spectrum-css/actionbutton@^7.0.0-s2-foundations.22":
+  version "7.0.0-s2-foundations.22"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-7.0.0-s2-foundations.22.tgz#30ad63f7f323215f1ba9899a3d74abb1467e35fb"
+  integrity sha512-voPc0KdIB8aF3LmBiBg8yiR5NbffWbChtIS9V4hCicoD/pc202dFVaWOQGYp4DsDNLV2XzxA+brtPCYvNxfh4w==
 
 "@spectrum-css/actiongroup@^6.0.0-s2-foundations.15":
   version "6.0.0-s2-foundations.15"
@@ -5188,6 +5188,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/menu/-/menu-8.0.0-s2-foundations.16.tgz#82ad4d5ce4025cf218f3b2d715f300048cb57426"
   integrity sha512-yvsRQ2LcVMkmelFOtSZKUQgB/+r/rOutaQlHaRzVrWJFNRsNtS/f6l8AiXwv9cs3P8raAEjKoqLuat2Ok5gwdw==
 
+"@spectrum-css/meter@^0.0.0-s2-foundations.2":
+  version "0.0.0-s2-foundations.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/meter/-/meter-0.0.0-s2-foundations.2.tgz#b4f82e497a42b2473a76bbeeede708012cccae39"
+  integrity sha512-h4v/sxFX3y/MEwVEMXPpIovXGTKqpFirLRPK1sBVHtw8QgnPweQPgRsmX5kiKDhbupZfma7LRDhy4vTPDMBAvg==
+
 "@spectrum-css/modal@^6.0.0-s2-foundations.16":
   version "6.0.0-s2-foundations.16"
   resolved "https://registry.yarnpkg.com/@spectrum-css/modal/-/modal-6.0.0-s2-foundations.16.tgz#66e57697e9205dc98cfb8cc501a88cfe17cc61c0"
@@ -5212,11 +5217,6 @@
   version "8.0.0-s2-foundations.16"
   resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-8.0.0-s2-foundations.16.tgz#9bc3437b704c989713ef19f44522799762dd9828"
   integrity sha512-yxTIi7EEZdAcxiJu2XQjacYMmaP9afUM07S3neARzuKZBuSphGgT0RjNcPPZ2jcMqICtteJIxsc1QQaFDEzSuA==
-
-"@spectrum-css/progressbar@^5.0.0-s2-foundations.17":
-  version "5.0.0-s2-foundations.17"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-5.0.0-s2-foundations.17.tgz#7627ca4b24b3b391025ab93a04372eb2b3ad2587"
-  integrity sha512-eKbwkkRs7uKAKKlV7tOi5NtlkYP6gpDdf2k28MDSoujLSaI/UxDqc3b2xxXgk9b+Ch6+PsseqAvkd4dYVbrT+Q==
 
 "@spectrum-css/progressbar@^5.0.0-s2-foundations.19":
   version "5.0.0-s2-foundations.19"
@@ -5243,10 +5243,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/sidenav/-/sidenav-6.0.0-s2-foundations.15.tgz#1dadb2d7a4bdc511ddf5b28cdbc52cb4bedc3951"
   integrity sha512-BtvWA6j2uDCHNsI8TjH2QHGZIYrWsBTKWlY0E6YKI4iWlwJjsQZ6LmLphIkyveofGhOALbTdLIYlYqA5zs2WXw==
 
-"@spectrum-css/slider@^6.0.0-s2-foundations.16":
-  version "6.0.0-s2-foundations.16"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-6.0.0-s2-foundations.16.tgz#59c5e86d0113b7fd8ffcd1dbc4fd69232caa18b7"
-  integrity sha512-kcn+ndbipd5ENU0cD5X0/seXqi85Gt/Mfu6hjcozQL6z6kXou7PzV3d6oBT+wrUC4SfdgSfrSQMixQzMzRGT5A==
+"@spectrum-css/slider@^6.0.0-s2-foundations.17":
+  version "6.0.0-s2-foundations.17"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-6.0.0-s2-foundations.17.tgz#230b0f5fb478b0ef44ab348bedb4d6e85719522c"
+  integrity sha512-Vt1wA4lgLjsi4nqln//2iArI+v1I0USpMBxmX2hQmjsOgM1a3sHikcwyagPLUQjGa73udx0XIgdLJwvrrtmH6w==
 
 "@spectrum-css/splitbutton@^8.1.2":
   version "8.1.2"
@@ -5268,10 +5268,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/stepper/-/stepper-7.0.0-s2-foundations.18.tgz#d1492449d778739dce14074569a280957fb264d3"
   integrity sha512-D4PUgy81VpLRdd5IDB4hXWmekdfLF29aaGI2Kvt5ny9gSK/qeNGd90srG+SBUBwSfLKvE8Cc6kov7KVwFDnCdw==
 
-"@spectrum-css/swatch@^7.0.0-s2-foundations.16":
-  version "7.0.0-s2-foundations.16"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/swatch/-/swatch-7.0.0-s2-foundations.16.tgz#49d4e370912220775ea7ffb4172d832b821764f9"
-  integrity sha512-iwM0BiR2k1sqVa3N3MB1W8FvK3wVhulzQG1G5prKVC/C8qGl9YlymAFUDdHBFTX16+OB1ObSCDidI8mxAVPDkg==
+"@spectrum-css/swatch@^7.0.0-s2-foundations.17":
+  version "7.0.0-s2-foundations.17"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/swatch/-/swatch-7.0.0-s2-foundations.17.tgz#ac9ce4d0c98d89bdc7b901c7aaf0c8b4bd15d5bc"
+  integrity sha512-5/EodsO+jVozkeJV99zaXNjaX/3Bk6Xl5qUi2INEiMTHkJg+vPNejdWyEaFxqOhD0vE37nwYIhGYHcElA60OBg==
 
 "@spectrum-css/swatchgroup@^4.0.0-s2-foundations.15":
   version "4.0.0-s2-foundations.15"
@@ -5308,20 +5308,20 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-8.0.0-s2-foundations.16.tgz#3391af0b7cf89b4b7e658621f7fa42d8fa4e3985"
   integrity sha512-ydz8joF4rNmbpJFhnNL2UrhmWKEo9vP3LAKQaTV7HPZGeLZVLsuIt7+ackynJIJDUsBcthxMTIKi1g1eSmXsWA==
 
-"@spectrum-css/thumbnail@^7.0.0-s2-foundations.16":
-  version "7.0.0-s2-foundations.16"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/thumbnail/-/thumbnail-7.0.0-s2-foundations.16.tgz#f7944260146f31fa60ccd5f11a749326426a2b67"
-  integrity sha512-NIHQhLeSSRS23wCPgKeKyBKeyG4kwP8E+uGu9t1CLUJ0Q/LBxnsonnVeTpoNOHqLCUXkMpS3MKDil7CZF7P+Wg==
+"@spectrum-css/thumbnail@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/thumbnail/-/thumbnail-6.2.0.tgz#0fe5755de787b08070713ccb80975d340adcb916"
+  integrity sha512-7nZ284oMt1AuOFbxg90KCd9BbN/Jsu/gWpoLsdS6KTI4GLmlZq5dVfB3X/zuR9LWOXTK68PLYZ9wKQQzZ1N7nA==
 
 "@spectrum-css/toast@^11.0.0-s2-foundations.15":
   version "11.0.0-s2-foundations.15"
   resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-11.0.0-s2-foundations.15.tgz#2ef09e24a68a1f8f30eb208f07eac009e9673a3a"
   integrity sha512-xID5vAl6bwVkBqZJ3OTsI0dE5RtSz9DY4Dnsz9IPqoF3S+Ur4vTPetcLPsqLa8qtceLo+y/aoxGIsOxuq1yw5g==
 
-"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.0.0-s2-foundations.24":
-  version "15.0.0-s2-foundations.24"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-15.0.0-s2-foundations.24.tgz#a8c5037d016c68f19ab3e8488ac22b2120546f7f"
-  integrity sha512-WCSt7s8ahWQG4GX7El4WI6M9lkHK48U0ws0rU8sID83XReRFyLYi0ALlM+nJhivERzYgwBXyYioP/evyWSVJjg==
+"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.0.0-s2-foundations.27":
+  version "15.0.0-s2-foundations.27"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-15.0.0-s2-foundations.27.tgz#f2c3a9fac5417a4c69aa004eaab8599a816f1d42"
+  integrity sha512-FxL/DUTRXu337mMfcOykfucxzfoKvkraU55iRE8jsbpdpivvfM1ks7r6bapDq9nD9d22mGbDHqCF6Dq9Junshg==
 
 "@spectrum-css/tokens@^@spectrum-css/tokens@14.3.1":
   version "14.3.1"
@@ -5364,7 +5364,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "0.48.1"
+  version "0.49.0"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.19"
@@ -9388,10 +9388,10 @@ chrome-trace-event@^1.0.2:
   dependencies:
     tslib "^1.9.0"
 
-chromedriver@^128.0.1:
-  version "128.0.1"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-128.0.1.tgz#971fb267cc6893a712808cea6c977473ba167145"
-  integrity sha512-UmWqZXXAyuRa37pE+lnU46vJcCM/y0ddF015LHxycEOYfuqsK7k9ZxJuXCQNWbws9e7FAMQj/GJZT92WPgis0g==
+chromedriver@^130.0.1:
+  version "130.0.1"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-130.0.1.tgz#24fd5b2c9c9df4ebfc5d28c94eca8658915fbe15"
+  integrity sha512-JH+OxDZ7gVv02r9oXwj4mQ8JCtj62g0fCD1LMUUYdB/4mPxn/E2ys+1IzXItoE7vXM9fGVc9R1akvXLqwwuSww==
   dependencies:
     "@testim/chrome-version" "^1.1.4"
     axios "^1.7.4"
@@ -23815,16 +23815,7 @@ string-similarity@^4.0.4:
   resolved "https://registry.yarnpkg.com/string-similarity/-/string-similarity-4.0.4.tgz#42d01ab0b34660ea8a018da8f56a3309bb8b2a5b"
   integrity sha512-/q/8Q4Bl4ZKAPjj8WerIBJWALKkaPRfrvhfF8k/B23i4nzrlRj2/go1m90In7nG/3XDSbOo0+pu6RvCTM9RGMQ==
 
-"string-width-cjs@npm:string-width@^4.2.0":
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
-  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
-  dependencies:
-    emoji-regex "^8.0.0"
-    is-fullwidth-code-point "^3.0.0"
-    strip-ansi "^6.0.1"
-
-"string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
+"string-width-cjs@npm:string-width@^4.2.0", "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -23953,7 +23944,7 @@ stringify-object@^3.3.0:
     is-obj "^1.0.1"
     is-regexp "^1.0.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -23985,13 +23976,6 @@ strip-ansi@^5.1.0:
   integrity sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA==
   dependencies:
     ansi-regex "^4.1.0"
-
-strip-ansi@^6.0.0, strip-ansi@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
-  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
-  dependencies:
-    ansi-regex "^5.0.1"
 
 strip-ansi@^7.0.0, strip-ansi@^7.0.1, strip-ansi@^7.1.0:
   version "7.1.0"
@@ -26595,7 +26579,7 @@ workbox-window@7.0.0:
     "@types/trusted-types" "^2.0.2"
     workbox-core "7.0.0"
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -26608,15 +26592,6 @@ wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
-  dependencies:
-    ansi-styles "^4.0.0"
-    string-width "^4.1.0"
-    strip-ansi "^6.0.0"
-
-wrap-ansi@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
-  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"

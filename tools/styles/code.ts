@@ -16,7 +16,7 @@ import langOverrides from './src/lang-overrides.css.js';
 import codeBaseStyles from './src/spectrum-code.css.js';
 import codeOverrides from './src/code-overrides.css.js';
 
-import { css } from 'lit-element';
+import { css } from 'lit';
 
 const langStyles = css`
     ${langBaseStyles}

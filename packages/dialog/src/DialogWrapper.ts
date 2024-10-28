@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     nothing,
+    PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -41,6 +42,9 @@ export class DialogWrapper extends DialogBase {
         return [...super.styles];
     }
 
+    /**
+     * @deprecated Use the Alert Dialog component with `variant="error"` instead.
+     */
     @property({ type: Boolean, reflect: true })
     public error = false;
 
@@ -103,6 +107,23 @@ export class DialogWrapper extends DialogBase {
                 bubbles: true,
             })
         );
+    }
+
+    protected override updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
+        if (
+            changes.has('error') &&
+            (this.error !== undefined || changes.get('error') !== undefined)
+        ) {
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `The "error" attribute of <${this.localName}> has been deprecated. Use the Alert Dialog component with the "variant='error'" instead. "error" will be removed in a future release.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/alert-dialog/#error',
+                    { level: 'deprecation' }
+                );
+            }
+        }
     }
 
     protected override renderDialog(): TemplateResult {
