@@ -5218,11 +5218,6 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-8.0.0-s2-foundations.16.tgz#9bc3437b704c989713ef19f44522799762dd9828"
   integrity sha512-yxTIi7EEZdAcxiJu2XQjacYMmaP9afUM07S3neARzuKZBuSphGgT0RjNcPPZ2jcMqICtteJIxsc1QQaFDEzSuA==
 
-"@spectrum-css/progressbar@^5.0.0-s2-foundations.17":
-  version "5.0.0-s2-foundations.17"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-5.0.0-s2-foundations.17.tgz#7627ca4b24b3b391025ab93a04372eb2b3ad2587"
-  integrity sha512-eKbwkkRs7uKAKKlV7tOi5NtlkYP6gpDdf2k28MDSoujLSaI/UxDqc3b2xxXgk9b+Ch6+PsseqAvkd4dYVbrT+Q==
-
 "@spectrum-css/progressbar@^5.0.0-s2-foundations.19":
   version "5.0.0-s2-foundations.19"
   resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-5.0.0-s2-foundations.19.tgz#3f11c877b0e4589936b4e6820855c76033dd8409"
