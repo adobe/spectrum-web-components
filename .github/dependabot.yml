@@ -29,9 +29,6 @@ updates:
                   - '@11ty/*'
                   - 'eleventy'
                   - 'eleventy-plugin-*'
-          spectrumcss-ecosystem:
-              patterns:
-                  - '@spectrum-css/*'
           web-and-open-wc-ecosystem:
               patterns:
                   - '@open-wc/*'
