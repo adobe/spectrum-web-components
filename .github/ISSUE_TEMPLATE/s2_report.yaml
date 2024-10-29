@@ -1,5 +1,5 @@
-name: "Spectrum 2 Bug Report"
-description: "Report an issue with the Spectrum 2 system"
+name: Spectrum 2 Bug Report
+description: Report an issue with the Spectrum 2 system
 title: '[S2 Bug]: '
 labels: [bug, triage, needs jira ticket, Spectrum 2]
 # assignees:
@@ -17,13 +17,13 @@ body:
               - label: I agree to follow this project's code of conduct.
                 required: true
     - type: dropdown
-  id: reviewed-issues
-  attributes:
-      label: Have you reviewed existing [existing Spectrum 2 issues](https://github.com/adobe/spectrum-web-components/labels/Spectrum%202)?
-      description: Please confirm if you've reviewed existing issues to avoid duplicates.
-      options:
-          - Yes, I’ve reviewed existing issues.
-          - Oops, I’ll check now.
+      id: reviewed-issues
+      attributes:
+          label: Have you reviewed existing [existing Spectrum 2 issues](https://github.com/adobe/spectrum-web-components/labels/Spectrum%202)?
+          description: Please confirm if you've reviewed existing issues to avoid duplicates.
+          options:
+              - Yes, I’ve reviewed existing issues.
+              - Oops, I’ll check now.
     - type: input
       id: components
       attributes:
@@ -72,7 +72,6 @@ body:
               3. Scroll to '....'
               4. Check console
               5. See error
-    
     - type: dropdown
       id: severity
       attributes:
