@@ -16,41 +16,51 @@ body:
           options:
               - label: I agree to follow this project's code of conduct.
                 required: true
-    - type: dropdown
+    - type: checkboxes
       id: reviewed-issues
       attributes:
-          label: Have you reviewed existing [existing Spectrum 2 issues](https://github.com/adobe/spectrum-web-components/labels/Spectrum%202)?
-          description: Please confirm if you've reviewed existing issues to avoid duplicates.
+          label: Have you reviewed existing issues?
+          description: Confirm if you've reviewed existing [Spectrum 2 issues](https://github.com/adobe/spectrum-web-components/labels/Spectrum%202) to avoid duplicates.
           options:
-              - Yes, I’ve reviewed existing issues.
-              - Oops, I’ll check now.
+              - label: Yes, I’ve reviewed existing issues.
+                required: true
+    - type: dropdown
+      id: severity
+      attributes:
+          label: Severity
+          description: Please select the severity level of this issue. For descriptions of each level, refer to our [issue severity documentation](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md#issue-severity-classification)
+          options:
+              - SEV 5
+              - SEV 4
+              - SEV 3
+              - SEV 2
+              - SEV 1
+          default: 0
+      validations:
+          required: true
     - type: input
       id: components
       attributes:
           label: Impacted component(s)
-          description: Please list the component(s) impacted by this issue.
+          description: List the component(s) impacted by this issue.
+      validations:
+          required: true
+    - type: textarea
+      id: observed-behavior
+      attributes:
+          label: Observed behavior
+          description: Describe the behavior you are experiencing.
       validations:
           required: true
     - type: textarea
       id: expected-behavior
       attributes:
           label: Expected behavior
-          description: A brief description of what you expected to happen.
-    - type: textarea
-      id: actual-behavior
-      attributes:
-          label: Actual behavior
-      validations:
-          required: true
-    - type: textarea
-      id: screenshot
-      attributes:
-          label: Screenshots
-          description: You can attach images by clicking this area to highlight it and then dragging files in.
+          description: Provide a brief description of what you expected to happen.
     - type: dropdown
       id: browsers
       attributes:
-          label: What browsers are you seeing the problem in?
+          label: What browser(s) does the issue appear in?
           multiple: true
           options:
               - Firefox
@@ -58,40 +68,36 @@ body:
               - Safari
               - Microsoft Edge
     - type: textarea
+      id: screenshot
+      attributes:
+          label: Do you have screenshots?
+          description: Attach images by clicking this area to highlight it and then drag files in.
+
+    - type: textarea
       id: code
       attributes:
-          label: Sample code or abstract reproduction which illustrates the problem
-          description: Please use [webcomponents.dev](https://studio.webcomponents.dev/workspace/adobe) to abstract the issue in an isolated environment. In most cases, a video or code block is not sufficient enough for us to diagnose the problem.
+          label: Have you reproduced this issue in isolation to illustrate the problem?
+          description: Provide an code sample from [webcomponents.dev](https://studio.webcomponents.dev/workspace/adobe). In most cases, a video or code block is not sufficient enough for us to diagnose the problem.
     - type: textarea
       id: reproduce
       attributes:
-          label: How can we reproduce this issue?
+          label: What are the steps to manually reproduce this issue?
+          description: Provide detailed steps for reproducing the issue.
           value: |
               1. Go to '...'
               2. Click on '....'
               3. Scroll to '....'
               4. Check console
               5. See error
-    - type: dropdown
-      id: severity
-      attributes:
-          label: Severity
-          description: Please select the severity level of this issue. For descriptions of each level, refer to our [documentation](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md#issue-severity-classification)
-          options:
-              - SEV 1
-              - SEV 2
-              - SEV 3
-              - SEV 4
-              - SEV 5
     - type: textarea
       id: logs
       attributes:
-          label: Logs taken while reproducing problem
-          description: You can attach log files by clicking this area to highlight it and then dragging files in.
+          label: Did you capture any logs while reproducing problem?
+          description: Attach log files by clicking this area to highlight it and then drag files in.
     - type: checkboxes
       id: jira-number
       attributes:
-          label: Jira ticket
-          description: If you would like to track this issue in Jira, check this box and we will comment the Jira ticket ID once the issue has been triaged.
+          label: Would you like to track this issue in Jira?
+          description: We will share the Jira ticket ID in a comment on the issue once it has been triaged.
           options:
               - label: Yes, please tell me the ticket number!
