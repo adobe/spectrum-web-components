@@ -148,17 +148,17 @@ governing permissions and limitations under the License.
 }
 
 :host([focused]) .actions,
-:host([focused]) .quick-actions,
+:host([focused]) .checkbox-toggle,
 :host([selected]) .actions,
-:host([selected]) .quick-actions,
+:host([selected]) .checkbox-toggle,
 :host(:focus) .actions,
-:host(:focus) .quick-actions {
+:host(:focus) .checkbox-toggle {
     visibility: visible;
     opacity: 1;
     pointer-events: all;
 }
 
-.quick-actions {
+.checkbox-toggle {
     visibility: hidden;
     box-shadow: var(
             --mod-card-actions-drop-shadow-x,
@@ -693,7 +693,7 @@ governing permissions and limitations under the License.
     }
 
     :host(:hover) .actions,
-    :host(:hover) .quick-actions {
+    :host(:hover) .checkbox-toggle {
         visibility: visible;
         opacity: 1;
         pointer-events: all;

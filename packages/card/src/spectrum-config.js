@@ -33,7 +33,7 @@ const config = {
                 converter.classToClass('spectrum-Card-content'),
                 converter.classToClass(
                     'spectrum-Card-quickActions',
-                    'quick-actions'
+                    'checkbox-toggle'
                 ),
                 converter.classToClass('spectrum-Card-actions'),
                 converter.classToClass(

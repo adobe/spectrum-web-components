@@ -50,12 +50,6 @@ export class ActionMenu extends ObserveSlotPresence(
     @property({ type: String })
     public override selects: undefined | 'single' = undefined;
 
-    /**
-     * @deprecated Use `staticColor` instead.
-     */
-    @property({ type: String, reflect: true })
-    public static: 'white' | 'black' | undefined = undefined;
-
     @property({ reflect: true, attribute: 'static-color' })
     public staticColor?: 'white' | 'black';
 

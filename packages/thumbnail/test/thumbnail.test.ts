@@ -90,31 +90,5 @@ describe('Thumbnail', () => {
             window.__swc.verbose = false;
             consoleWarnStub.restore();
         });
-
-        it('warns in devMode when white/black variant is provided', async () => {
-            const el = await fixture<Thumbnail>(html`
-                <sp-thumbnail background="blue" size="xxs">
-                    <img src=${thumbnail} alt="Woman crouching" />
-                </sp-thumbnail>
-            `);
-
-            await elementUpdated(el);
-            expect(consoleWarnStub.called).to.be.true;
-
-            const spyCall = consoleWarnStub.getCall(0);
-            expect(
-                (spyCall.args.at(0) as string).includes(
-                    'no longer supports the value'
-                ),
-                'confirm deprecated size warning'
-            ).to.be.true;
-            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-                data: {
-                    localName: 'sp-thumbnail',
-                    type: 'api',
-                    level: 'deprecation',
-                },
-            });
-        });
     });
 });
