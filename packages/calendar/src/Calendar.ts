@@ -191,7 +191,16 @@ export class Calendar extends SpectrumElement {
         if (changesDates) {
             this.convertToCalendarDates();
             this.checkDatePropsCompliance(changesMin || changesMax);
-            this.currentDate = (this.value as CalendarDate) || this.today;
+            if (this.value) this.currentDate = this.value as CalendarDate;
+            else {
+                const isTodayNonCompliant = this.isNonCompliantDate(this.today);
+
+                if (isTodayNonCompliant) {
+                    if (this.min) this.currentDate = this.min as CalendarDate;
+                    else if (this.max)
+                        this.currentDate = this.max as CalendarDate;
+                } else this.currentDate = this.today;
+            }
         }
 
         const previousDate = changedProperties.get('currentDate');
@@ -244,21 +253,25 @@ export class Calendar extends SpectrumElement {
             }
         }
 
-        if (this.value) {
-            const isNonCompliantValue =
-                (this.min && this.value.compare(this.min) < 0) ||
-                (this.max && this.value.compare(this.max) > 0);
-
-            if (isNonCompliantValue) {
-                if (window.__swc.DEBUG)
-                    window.__swc.warn(
-                        this,
-                        `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/calendar' // TODO: update link
-                    );
-                this.value = undefined;
-            }
+        if (this.value && this.isNonCompliantDate(this.value)) {
+            if (window.__swc.DEBUG)
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/calendar' // TODO: update link
+                );
+            this.value = undefined;
         }
+    }
+
+    /**
+     * Whether the date is non-compliant with the min and max constraints
+     */
+    private isNonCompliantDate(date: DateValue): boolean {
+        return Boolean(
+            (this.min && date.compare(this.min) < 0) ||
+                (this.max && date.compare(this.max) > 0)
+        );
     }
 
     protected override render(): TemplateResult {
