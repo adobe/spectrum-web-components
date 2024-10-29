@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -25,13 +25,11 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Menu item', () => {
     it('renders', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-item selected>Selected</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item selected>Selected</sp-menu-item>
+            </sp-menu>
+        `);
         await waitUntil(
             () => el.childItems.length == 1,
             'expected menu group to manage 1 child'
@@ -41,16 +39,14 @@ describe('Menu item', () => {
         await expect(el).to.be.accessible();
     });
     it('can be disabled', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu selects="single">
-                    <sp-menu-item selected label="This is not disabled">
-                        Selected
-                    </sp-menu-item>
-                    <sp-menu-item disabled>Disabled</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item selected label="This is not disabled">
+                    Selected
+                </sp-menu-item>
+                <sp-menu-item disabled>Disabled</sp-menu-item>
+            </sp-menu>
+        `);
         await elementUpdated(el);
         expect(el.value).to.equal('Selected');
 
@@ -91,25 +87,23 @@ describe('Menu item', () => {
     });
     it('proxies `click()`', async () => {
         const clickTargetSpy = spy();
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu
-                    @click=${(event: Event) => {
-                        clickTargetSpy(
-                            event.composedPath()[0] as HTMLAnchorElement
-                        );
-                        event.stopPropagation();
-                        event.preventDefault();
-                    }}
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                @click=${(event: Event) => {
+                    clickTargetSpy(
+                        event.composedPath()[0] as HTMLAnchorElement
+                    );
+                    event.stopPropagation();
+                    event.preventDefault();
+                }}
+            >
+                <sp-menu-item
+                    href="https://opensource.adobe.com/spectrum-web-components"
                 >
-                    <sp-menu-item
-                        href="https://opensource.adobe.com/spectrum-web-components"
-                    >
-                        Selected Text
-                    </sp-menu-item>
-                </sp-menu>
-            `
-        );
+                    Selected Text
+                </sp-menu-item>
+            </sp-menu>
+        `);
 
         await elementUpdated(el);
 
@@ -128,31 +122,23 @@ describe('Menu item', () => {
         expect(clickTargetSpy.calledWith(anchorElement)).to.be.true;
     });
     it('value attribute', async () => {
-        const el = await fixture<MenuItem>(
-            html`
-                <sp-menu-item value="selected" selected>
-                    Selected Text
-                </sp-menu-item>
-            `
-        );
+        const el = await fixture<MenuItem>(html`
+            <sp-menu-item value="selected" selected>Selected Text</sp-menu-item>
+        `);
         expect(el.itemText).to.equal('Selected Text');
         expect(el.value).to.equal('selected');
     });
     it('no value attribute', async () => {
-        const el = await fixture<MenuItem>(
-            html`
-                <sp-menu-item selected>Selected Text</sp-menu-item>
-            `
-        );
+        const el = await fixture<MenuItem>(html`
+            <sp-menu-item selected>Selected Text</sp-menu-item>
+        `);
         expect(el.itemText).to.equal('Selected Text');
         expect(el.value).to.equal('Selected Text');
     });
     it('value property', async () => {
-        const el = await fixture<MenuItem>(
-            html`
-                <sp-menu-item selected>Selected Text</sp-menu-item>
-            `
-        );
+        const el = await fixture<MenuItem>(html`
+            <sp-menu-item selected>Selected Text</sp-menu-item>
+        `);
         expect(el.itemText).to.equal('Selected Text');
         expect(el.value).to.equal('Selected Text');
         expect(el.hasAttribute('value')).to.be.false;
@@ -170,27 +156,21 @@ describe('Menu item', () => {
         expect(el.hasAttribute('value')).to.be.false;
     });
     it('assigns content to the description slot', async () => {
-        const el = await fixture<MenuItem>(
-            html`
-                <sp-menu-item selected>
-                    Menu Item Text
-                    <span slot="description">
-                        Description for the Menu-Item
-                    </span>
-                </sp-menu-item>
-            `
-        );
+        const el = await fixture<MenuItem>(html`
+            <sp-menu-item selected>
+                Menu Item Text
+                <span slot="description">Description for the Menu-Item</span>
+            </sp-menu-item>
+        `);
         const descriptionElement = el.querySelector('span') as HTMLElement;
         expect(descriptionElement.assignedSlot).to.not.be.null;
     });
     it('acualizes a submenu', async () => {
-        const test = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-item selected>Selected</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const test = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item selected>Selected</sp-menu-item>
+            </sp-menu>
+        `);
 
         const el = test.querySelector('sp-menu-item') as MenuItem;
 

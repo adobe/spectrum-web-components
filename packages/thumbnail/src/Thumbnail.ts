@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -36,7 +36,7 @@ const validSizes = [
     '900',
     '1000',
 ];
-export type ThumbnailSize = typeof validSizes[number];
+export type ThumbnailSize = (typeof validSizes)[number];
 
 const defaultSize = validSizes[6];
 
@@ -67,7 +67,7 @@ export class Thumbnail extends SpectrumElement {
 
     public set size(value: ThumbnailSize) {
         const deprecatedSizes = ['xxs', 'xs', 's', 'm', 'l'];
-        type DeprecatedThumbnailSize = typeof deprecatedSizes[number];
+        type DeprecatedThumbnailSize = (typeof deprecatedSizes)[number];
         const managedSizes: Record<DeprecatedThumbnailSize, ThumbnailSize> = {
             xxs: '100',
             xs: '300',
