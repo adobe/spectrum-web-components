@@ -25,19 +25,13 @@ body:
               - label: Yes, I’ve reviewed existing issues.
                 required: true
     - type: dropdown
-      id: severity
+      id: reviewed-issues
       attributes:
-          label: Severity
-          description: Please select the severity level of this issue. For descriptions of each level, refer to our [issue severity documentation](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md#issue-severity-classification)
+          label: Have you reviewed existing [existing Spectrum 2 issues](https://github.com/adobe/spectrum-web-components/labels/Spectrum%202)?
+          description: Please confirm if you've reviewed existing issues to avoid duplicates.
           options:
-              - SEV 5
-              - SEV 4
-              - SEV 3
-              - SEV 2
-              - SEV 1
-          default: 0
-      validations:
-          required: true
+              - Yes, I’ve reviewed existing issues.
+              - Oops, I’ll check now.
     - type: input
       id: components
       attributes:
@@ -93,7 +87,6 @@ body:
               3. Scroll to '....'
               4. Check console
               5. See error
-    
     - type: dropdown
       id: severity
       attributes:
