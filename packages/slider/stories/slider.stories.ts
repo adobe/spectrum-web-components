@@ -480,7 +480,7 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/tray/sp-tray.js';
 
-export const editable2 = (args): TemplateResult => {
+export const editable2 = (args: StoryArgs = {}): TemplateResult => {
     const updateSliderConfig = (
         min: number,
         max: number,
