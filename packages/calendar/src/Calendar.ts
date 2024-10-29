@@ -233,11 +233,12 @@ export class Calendar extends SpectrumElement {
         if (checkInterval && this.min && this.max) {
             const isValidInterval = this.min.compare(this.max) < 0;
             if (!isValidInterval) {
-                window.__swc.warn(
-                    this,
-                    `<${this.localName}> expects the 'min' to be less than 'max'. Please ensure that 'min' property's date is earlier than 'max' property's date.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/calendar' // TODO: update link
-                );
+                if (window.__swc.DEBUG)
+                    window.__swc.warn(
+                        this,
+                        `<${this.localName}> expects the 'min' to be less than 'max'. Please ensure that 'min' property's date is earlier than 'max' property's date.`,
+                        'https://opensource.adobe.com/spectrum-web-components/components/calendar' // TODO: update link
+                    );
                 this.min = undefined;
                 this.max = undefined;
             }
@@ -249,11 +250,12 @@ export class Calendar extends SpectrumElement {
                 (this.max && this.value.compare(this.max) > 0);
 
             if (isNonCompliantValue) {
-                window.__swc.warn(
-                    this,
-                    `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/calendar' // TODO: update link
-                );
+                if (window.__swc.DEBUG)
+                    window.__swc.warn(
+                        this,
+                        `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
+                        'https://opensource.adobe.com/spectrum-web-components/components/calendar' // TODO: update link
+                    );
                 this.value = undefined;
             }
         }
