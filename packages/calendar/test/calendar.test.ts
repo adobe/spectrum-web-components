@@ -71,13 +71,6 @@ describe('Calendar', () => {
     });
 
     describe('Initial month', () => {
-        it("should display today's month when no pre-selected value is provided", async () => {
-            element = await fixtureElement();
-            const localToday = today(getLocalTimeZone());
-
-            expectSameDates(element['currentDate'], localToday);
-        });
-
         it("should display today's month when the selected value is deleted", async () => {
             const value = new CalendarDate(2, 7, 21);
             element = await fixtureElement({
@@ -99,6 +92,58 @@ describe('Calendar', () => {
             });
 
             expectSameDates(element['currentDate'], value);
+        });
+
+        describe('when no pre-selected value is provided', () => {
+            it("should display today's month", async () => {
+                element = await fixtureElement();
+                const localToday = today(getLocalTimeZone());
+
+                expectSameDates(element['currentDate'], localToday);
+            });
+
+            it("should display the min value's month when today's value is less than min", async () => {
+                const todayDate = today(getLocalTimeZone());
+                const min = todayDate.set({ day: todayDate.day + 2 });
+
+                element = await fixtureElement({
+                    props: { min },
+                });
+
+                expectSameDates(element['currentDate'], min);
+            });
+
+            it("should display the min value's month when today's value doesn't comply with the min-max interval", async () => {
+                const todayDate = today(getLocalTimeZone());
+                let max = todayDate.set({ day: todayDate.day - 2 });
+                let min = max.set({ day: max.day - 2 });
+
+                element = await fixtureElement({
+                    props: { min, max },
+                });
+
+                expectSameDates(element['currentDate'], min);
+
+                min = todayDate.set({ day: todayDate.day + 2 });
+                max = min.set({ day: min.day + 2 });
+
+                element = await fixtureElement({
+                    props: { min, max },
+                });
+
+                expectSameDates(element['currentDate'], min);
+            });
+
+            it("should display the max value's month when today's value is greater than max", async () => {
+                const todayDate = today(getLocalTimeZone());
+                const max = todayDate.set({ day: todayDate.day - 2 });
+
+                element = await fixtureElement({
+                    props: { max },
+                });
+
+                expectSameDates(element['currentDate'], max);
+            });
         });
     });
 
