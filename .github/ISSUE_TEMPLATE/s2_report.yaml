@@ -72,7 +72,6 @@ body:
               3. Scroll to '....'
               4. Check console
               5. See error
-
     - type: dropdown
       id: severity
       attributes:
