@@ -433,6 +433,7 @@ governing permissions and limitations under the License.
 
 #label {
     pointer-events: none;
+    line-height: var(--spectrum-actionbutton-height);
     font-size: var(
         --mod-actionbutton-font-size,
         var(--spectrum-actionbutton-font-size)

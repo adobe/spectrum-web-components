@@ -4993,10 +4993,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-9.0.0-s2-foundations.16.tgz#ee47b51174de82902f213bbcb184b15bf60e7d7e"
   integrity sha512-zPZHtQ0ydhrgif5hnK6RnuD/DCr68MWs6ek4b/GaRnYATUNVtP0+jGM9FiyDxBha1u1PEZxAKmT7uOKyETuZ8w==
 
-"@spectrum-css/actionbutton@^7.0.0-s2-foundations.22":
-  version "7.0.0-s2-foundations.22"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-7.0.0-s2-foundations.22.tgz#30ad63f7f323215f1ba9899a3d74abb1467e35fb"
-  integrity sha512-voPc0KdIB8aF3LmBiBg8yiR5NbffWbChtIS9V4hCicoD/pc202dFVaWOQGYp4DsDNLV2XzxA+brtPCYvNxfh4w==
+"@spectrum-css/actionbutton@^7.0.0-s2-foundations.23":
+  version "7.0.0-s2-foundations.23"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-7.0.0-s2-foundations.23.tgz#33ee28eacb7f944f10586e1621768f5efa1134bb"
+  integrity sha512-lNbByRuleDuOtnq/it7JuqrIk+/pNRNURxhiXrnMNKNzIGAK8snzUOuaZHx0wCOwevNzCEAfoYuZPUMyE4XODw==
 
 "@spectrum-css/actiongroup@^6.0.0-s2-foundations.15":
   version "6.0.0-s2-foundations.15"
