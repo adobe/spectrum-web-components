@@ -31,11 +31,11 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
     class OverlayWithDialog extends constructor {
         protected override async manageDialogOpen(): Promise<void> {
             const targetOpenState = this.open;
+            await nextFrame();
             await this.managePosition();
             if (this.open !== targetOpenState) {
                 return;
             }
-            await nextFrame();
             const focusEl = await this.dialogMakeTransition(targetOpenState);
             if (this.open !== targetOpenState) {
                 return;
