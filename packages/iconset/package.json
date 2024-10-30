@@ -68,6 +68,7 @@
     "sideEffects": [
         "./src/index.js",
         "./stories/icons-demo.js",
+        "./stories/iconsList.json",
         "./**/*.dev.js"
     ]
 }

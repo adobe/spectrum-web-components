@@ -37,6 +37,7 @@
             "development": "./src/tooltip-directive.dev.js",
             "default": "./src/tooltip-directive.js"
         },
+        "./src/tooltip-overrides.css.js": "./src/tooltip-overrides.css.js",
         "./src/tooltip.css.js": "./src/tooltip.css.js",
         "./sp-tooltip.js": {
             "development": "./sp-tooltip.dev.js",
@@ -67,7 +68,7 @@
         "@spectrum-web-components/shared": "^0.49.0"
     },
     "devDependencies": {
-        "@spectrum-css/tooltip": "^6.1.1"
+        "@spectrum-css/tooltip": "^7.0.0-s2-foundations.15"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

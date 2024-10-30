@@ -9,16 +9,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { minify } from 'html-minifier-terser';
 import { copy } from '@web/rollup-plugin-copy';
-import alias from '@rollup/plugin-alias';
-import commonjs from '@rollup/plugin-commonjs';
 import { createBasicConfig } from '@open-wc/building-rollup';
 import { injectManifest } from 'rollup-plugin-workbox';
-import path from 'path';
-import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
-import Terser from 'terser';
+import { minify } from 'html-minifier-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
+import alias from '@rollup/plugin-alias';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+import path from 'path';
+import Terser from 'terser';
 
 const stringReplaceHtml = (source) => {
     return source
@@ -138,6 +139,7 @@ export default async () => {
     mpaConfig.preserveEntrySignatures = false;
 
     mpaConfig.plugins.push(
+        json(),
         commonjs({
             exclude: [
                 '../../node_modules/focus-visible/**',

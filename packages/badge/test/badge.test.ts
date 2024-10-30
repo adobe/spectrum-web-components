@@ -21,23 +21,19 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('Badge', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Badge>(
-                html`
-                    <sp-badge>
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Icon and label
-                    </sp-badge>
-                `
-            )
+            await fixture<Badge>(html`
+                <sp-badge>
+                    <sp-icon-checkmark-circle
+                        slot="icon"
+                    ></sp-icon-checkmark-circle>
+                    Icon and label
+                </sp-badge>
+            `)
     );
     it('manages `fixed` attribute', async () => {
-        const el = await fixture<Badge>(
-            html`
-                <sp-badge>Label only</sp-badge>
-            `
-        );
+        const el = await fixture<Badge>(html`
+            <sp-badge>Label only</sp-badge>
+        `);
 
         expect(el.fixed).to.be.undefined;
 
@@ -76,16 +72,14 @@ describe('Badge', () => {
         });
 
         it('loads default badge accessibly', async () => {
-            const el = await fixture<Badge>(
-                html`
-                    <sp-badge>
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Icon and label
-                    </sp-badge>
-                `
-            );
+            const el = await fixture<Badge>(html`
+                <sp-badge>
+                    <sp-icon-checkmark-circle
+                        slot="icon"
+                    ></sp-icon-checkmark-circle>
+                    Icon and label
+                </sp-badge>
+            `);
 
             await elementUpdated(el);
 
@@ -93,16 +87,14 @@ describe('Badge', () => {
             expect(consoleWarnStub.called).to.be.false;
         });
         it('warns in Dev Mode when sent an incorrect `variant`', async () => {
-            const el = await fixture<Badge>(
-                html`
-                    <sp-badge variant="other">
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Icon and label
-                    </sp-badge>
-                `
-            );
+            const el = await fixture<Badge>(html`
+                <sp-badge variant="other">
+                    <sp-icon-checkmark-circle
+                        slot="icon"
+                    ></sp-icon-checkmark-circle>
+                    Icon and label
+                </sp-badge>
+            `);
 
             await elementUpdated(el);
 
@@ -111,34 +103,6 @@ describe('Badge', () => {
             expect(
                 (spyCall.args.at(0) as string).includes('"variant"'),
                 'confirm variant-centric message'
-            ).to.be.true;
-            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-                data: {
-                    localName: 'sp-badge',
-                    type: 'api',
-                    level: 'default',
-                },
-            });
-        });
-        it('warns in Dev Mode when sent a deprecated value for `fixed`', async () => {
-            const el = await fixture<Badge>(
-                html`
-                    <sp-badge fixed="top">
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Icon and label
-                    </sp-badge>
-                `
-            );
-
-            await elementUpdated(el);
-
-            expect(consoleWarnStub.called).to.be.true;
-            const spyCall = consoleWarnStub.getCall(0);
-            expect(
-                (spyCall.args.at(0) as string).includes('"fixed"'),
-                'confirm fixed-centric message'
             ).to.be.true;
             expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
                 data: {

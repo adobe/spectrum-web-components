@@ -24,7 +24,7 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
-import { spy, stub } from 'sinon';
+import { spy } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { m as BlackActionButton } from '../stories/action-button-black.stories.js';
 
@@ -282,76 +282,17 @@ describe('ActionButton', () => {
         expect(button).to.have.attribute('aria-haspopup', 'true');
         expect(button).to.have.attribute('aria-expanded', 'true');
     });
-    describe('dev mode', () => {
-        let consoleWarnStub!: ReturnType<typeof stub>;
-        before(() => {
-            window.__swc.verbose = true;
-            consoleWarnStub = stub(console, 'warn');
-        });
-        afterEach(() => {
-            consoleWarnStub.resetHistory();
-        });
-        after(() => {
-            window.__swc.verbose = false;
-            consoleWarnStub.restore();
-        });
+    it('manages a `static-color` attribute', async () => {
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button static-color="black">Button</sp-action-button>
+        `);
 
-        it('warns that `variant` is deprecated', async () => {
-            const el = await fixture<ActionButton>(html`
-                <sp-action-button variant="white">Button</sp-action-button>
-            `);
-
-            await elementUpdated(el);
-
-            expect(consoleWarnStub.called).to.be.true;
-            const spyCall = consoleWarnStub.getCall(0);
-            expect(
-                (spyCall.args.at(0) as string).includes('"variant"'),
-                'confirm variant-centric message'
-            ).to.be.true;
-            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-                data: {
-                    localName: 'sp-action-button',
-                    type: 'api',
-                    level: 'deprecation',
-                },
-            });
-        });
-
-        it('warns that `variant` is deprecated', async () => {
-            const el = await fixture<ActionButton>(html`
-                <sp-action-button static="white">Button</sp-action-button>
-            `);
-
-            await elementUpdated(el);
-
-            expect(consoleWarnStub.called).to.be.true;
-            const spyCall = consoleWarnStub.getCall(0);
-            expect(
-                (spyCall.args.at(0) as string).includes('"static"'),
-                'confirm static-centric message'
-            ).to.be.true;
-            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-                data: {
-                    localName: 'sp-action-button',
-                    type: 'api',
-                    level: 'deprecation',
-                },
-            });
-        });
-
-        it('prefers `staticColor` over `static`', async () => {
-            const el = await fixture<ActionButton>(html`
-                <sp-action-button static="white">Button</sp-action-button>
-            `);
-
-            await elementUpdated(el);
-            expect(el.staticColor).to.equal('white');
-            el.setAttribute('static', 'white');
-            await elementUpdated(el);
-            expect(el.staticColor).to.equal('white');
-            expect(el.static).to.equal('white');
-            expect(el.getAttribute('static-color')).to.equal('white');
-        });
+        await elementUpdated(el);
+        expect(el.staticColor).to.equal('black');
+        expect(el.getAttribute('static-color')).to.equal('black');
+        el.removeAttribute('static-color');
+        await elementUpdated(el);
+        expect(el.staticColor).to.be.null;
+        expect(el.hasAttribute('static-color')).to.be.false;
     });
 });

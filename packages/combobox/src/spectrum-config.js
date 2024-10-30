@@ -51,6 +51,36 @@ const config = {
                 ),
                 converter.classToAttribute('is-disabled', 'disabled'),
                 {
+                    find: [
+                        builder.class('spectrum-Combobox-button'),
+                        {
+                            type: 'pseudo-class',
+                            kind: 'not',
+                            selectors: [
+                                [builder.pseudoClass('disabled')],
+                                [builder.class('is-invalid')],
+                                [builder.class('spectrum-PickerButton--quiet')],
+                            ],
+                        },
+                    ],
+                    replace: [
+                        {
+                            replace: builder.class('button'),
+                        },
+                        {
+                            replace: {
+                                kind: 'not',
+                                type: 'pseudo-class',
+                                selectors: [
+                                    [builder.pseudoClass('disabled')],
+                                    [builder.class('is-invalid')],
+                                    [builder.attribute('quiet')],
+                                ],
+                            },
+                        },
+                    ],
+                },
+                {
                     find: {
                         type: 'pseudo-class',
                         kind: 'not',

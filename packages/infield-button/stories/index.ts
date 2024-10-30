@@ -16,10 +16,12 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-add.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 
 document.adoptedStyleSheets = [
     ...document.adoptedStyleSheets,
     chevronStyles.styleSheet as CSSStyleSheet,
+    chevronIconOverrides.styleSheet as CSSStyleSheet,
 ];
 
 export type StoryArgs = {
@@ -128,15 +130,11 @@ export const Template = ({
     `;
 };
 
-export const chevronUp = (): TemplateResult =>
-    html`
-        <sp-icon-chevron75
-            class="spectrum-UIIcon-ChevronUp75"
-        ></sp-icon-chevron75>
-    `;
-export const chevronDown = (): TemplateResult =>
-    html`
-        <sp-icon-chevron75
-            class="spectrum-UIIcon-ChevronDown75"
-        ></sp-icon-chevron75>
-    `;
+export const chevronUp = (): TemplateResult => html`
+    <sp-icon-chevron75 class="spectrum-UIIcon-ChevronUp75"></sp-icon-chevron75>
+`;
+export const chevronDown = (): TemplateResult => html`
+    <sp-icon-chevron75
+        class="spectrum-UIIcon-ChevronDown75"
+    ></sp-icon-chevron75>
+`;

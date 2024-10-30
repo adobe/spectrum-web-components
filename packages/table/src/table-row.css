@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-table-row.css');
+@import url('./table-row-overrides.css');
 
 :host,
 :host([role='row']) {

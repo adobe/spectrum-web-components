@@ -44,22 +44,3 @@ toggles.args = {
         <sp-icon-edit hidden slot="icon"></sp-icon-edit>
     `,
 };
-
-export const iconSizeOverridden = (args: Properties): TemplateResult => {
-    return html`
-        ${renderButton(args)}
-        <h1>For testing purposes only</h1>
-        <p>
-            This is a test to ensure that sizing the icon will still work when
-            it's in the scope of a parent element. You shouldn't normally do
-            this as it deviates from the Spectrum design specification.
-        </p>
-    `;
-};
-iconSizeOverridden.args = {
-    label: '',
-    size: 'xl',
-    icon: html`
-        <sp-icon-edit slot="icon" size="s"></sp-icon-edit>
-    `,
-};

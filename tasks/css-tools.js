@@ -44,6 +44,7 @@ export const processCSS = async (cssPath) => {
     let { code, map } = await bundleAsync({
         filename: cssPath,
         minify: true,
+        errorRecovery: true,
         resolver: {
             read(filePath) {
                 const file = fs.readFileSync(filePath, 'utf8');

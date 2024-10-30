@@ -24,6 +24,7 @@ const config = {
             inPackage: '@spectrum-css/alertbanner',
             outPackage: 'alert-banner',
             fileName: 'alert-banner',
+            systemOverrides: true,
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('is-open', 'open'),

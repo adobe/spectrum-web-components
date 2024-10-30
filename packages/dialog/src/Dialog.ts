@@ -176,10 +176,7 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (
-            changes.has('error') &&
-            (this.error !== undefined || changes.get('error') !== undefined)
-        ) {
+        if (changes.has('error') && this.error) {
             if (window.__swc.DEBUG) {
                 window.__swc.warn(
                     this,
