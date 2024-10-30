@@ -35,6 +35,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             if (this.open !== targetOpenState) {
                 return;
             }
+            await nextFrame();
             const focusEl = await this.dialogMakeTransition(targetOpenState);
             if (this.open !== targetOpenState) {
                 return;
