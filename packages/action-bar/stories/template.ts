@@ -37,9 +37,7 @@ export const Template = ({
                           <sp-icon-edit slot="icon"></sp-icon-edit>
                       </sp-action-button>
                       <sp-action-button slot="buttons" label="Share">
-                          <sp-icon-share
-                              slot="icon"
-                          ></sp-icon-share>
+                          <sp-icon-share slot="icon"></sp-icon-share>
                       </sp-action-button>
                   `
                 : html``}

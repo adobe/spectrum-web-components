@@ -96,7 +96,7 @@ You can customize the icon in an `<sp-picker-button>` by addressing a new icon t
 
 ### Rounded
 
-When delivered as part of the `express` theme, an `<sp-picker-button>` with the `rounded` attribute will be given deeply rounded corners:
+When delivered as part of the `express` system, an `<sp-picker-button>` with the `rounded` attribute will be given deeply rounded corners:
 
 ```html
 <sp-picker-button rounded></sp-picker-button>
@@ -148,7 +148,7 @@ Leveraging the `disabled` attribute will dim the `<sp-picker-button>` and alter 
 
 ### Invalid
 
-When delivered as part of the `spectrum` theme, an `<sp-picker-button>` with the `invalid` attribute will be given a red border:
+When delivered as part of the `spectrum` system, an `<sp-picker-button>` with the `invalid` attribute will be given a red border:
 
 ```html
 <sp-picker-button invalid></sp-picker-button>

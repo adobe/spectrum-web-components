@@ -29,7 +29,7 @@ jobs:
             - name: Get latest published 1.0.0-rc version
               id: get_latest_published_rc
               run: |
-                  LATEST_RC_VERSION=$(npm view @spectrum-web-components/button@1.0.0-rc version || echo "none")
+                  LATEST_RC_VERSION=$(npm view @spectrum-web-components/button@rc version || echo "none")
                   echo "latest_rc_version=$LATEST_RC_VERSION" >> $GITHUB_OUTPUT
 
             - name: Calculate next rc version

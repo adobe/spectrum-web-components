@@ -5033,11 +5033,6 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/badge/-/badge-5.0.0-s2-foundations.15.tgz#7cdd95382583a5637396b1af8d4ef9c04e807b77"
   integrity sha512-WNI7vQuJ3cQtl0JDALVN1ohkgc+/na/nD3YDPck9FjMIKvKRbkgc6Ear8YP1B6Xp6PY9AOuxdUjA6yK/d5gvrw==
 
-"@spectrum-css/banner@3.0.0-beta.2":
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/banner/-/banner-3.0.0-beta.2.tgz#df448a3dcb8ac63448bd628843a2895cec305780"
-  integrity sha512-NqrT03ItWzj+L0dtqjedhop6wKOspBmaowzp9IOY/2kL561kRqYTLKR9vTteZ3cEDVD3ajKA8y+bKIW0eN+X7A==
-
 "@spectrum-css/breadcrumb@^10.0.0-s2-foundations.15":
   version "10.0.0-s2-foundations.15"
   resolved "https://registry.yarnpkg.com/@spectrum-css/breadcrumb/-/breadcrumb-10.0.0-s2-foundations.15.tgz#e2ab8a5248e5f7be2b1cdd45d1843170f7ed1e8d"
@@ -5228,11 +5223,6 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/progresscircle/-/progresscircle-4.0.0-s2-foundations.15.tgz#2da932696854a7b1aac1497e036d2f0e811c922c"
   integrity sha512-FQ4cPSVgyKjhQlsThq5UKo1VARpHCcDoabCI1SnMdl8Hnef5VtaIui2Yxmmht5S8wrhXlFRd23f3auQlyVaIrg==
 
-"@spectrum-css/quickaction@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/quickaction/-/quickaction-3.1.1.tgz#1095cc68b6e182721aa141d490b79f6ed6ca1d6d"
-  integrity sha512-PCp/83ctAWrYlDYjZU+9vRMLte2GBaxiKOBvm1g9UH0XqTvocjlyVRNIvVbE0ywdefVtbKGFr30x+Yk9HTdaRQ==
-
 "@spectrum-css/radio@^10.0.0-s2-foundations.15":
   version "10.0.0-s2-foundations.15"
   resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-10.0.0-s2-foundations.15.tgz#a5e7efec0e2e734f63058c2cb1cd9be6e6e93fcc"
@@ -5252,11 +5242,6 @@
   version "6.0.0-s2-foundations.17"
   resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-6.0.0-s2-foundations.17.tgz#230b0f5fb478b0ef44ab348bedb4d6e85719522c"
   integrity sha512-Vt1wA4lgLjsi4nqln//2iArI+v1I0USpMBxmX2hQmjsOgM1a3sHikcwyagPLUQjGa73udx0XIgdLJwvrrtmH6w==
-
-"@spectrum-css/splitbutton@^8.1.2":
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-8.1.2.tgz#149d9e98094cd035f6f348f8cf50d72ce8f17f19"
-  integrity sha512-hUsqhEhgm8PfKvwKPSACPU+Jqt0NaovD53gOp9QRa4jU9G3q8RpE5uJbs+pGZ9vyI6ocsm5lbs0zYtA082axzQ==
 
 "@spectrum-css/splitview@^6.0.0-s2-foundations.15":
   version "6.0.0-s2-foundations.15"
