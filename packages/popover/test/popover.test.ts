@@ -34,7 +34,7 @@ describe('popover', () => {
 
     it('loads', async () => {
         expect(popover).to.not.equal(undefined);
-        expect(popover.textContent).to.include('Popover Title');
+        expect(popover.textContent?.trim()).to.include('Popover title');
 
         await expect(popover).to.be.accessible();
     });
