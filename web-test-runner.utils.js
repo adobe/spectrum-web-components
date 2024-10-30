@@ -163,9 +163,6 @@ const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
 systemVariants.forEach((systemVariant) => {
     colors.forEach((color) => {
-        if (systemVariant === 'spectrum-two') {
-            return;
-        }
         scales.forEach((scale) => {
             directions.forEach((dir) => {
                 const reduceMotion = true;
