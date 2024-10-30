@@ -12,8 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .group {
-    --spectrum-fieldgroup-margin: var(--spectrum-spacing-300);
-    --spectrum-fieldgroup-readonly-delimiter: ',';
     flex-flow: column wrap;
     display: flex;
 }

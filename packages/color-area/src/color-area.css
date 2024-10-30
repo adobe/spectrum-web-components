@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-color-area.css');
+@import url('./color-area-overrides.css');
 
 :host {
     touch-action: none;

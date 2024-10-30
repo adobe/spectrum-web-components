@@ -123,7 +123,7 @@ export const packages = fs
     .concat(tools);
 
 const vrtHTML =
-    ({ themeVariant, color, scale, dir, reduceMotion, hcm }) =>
+    ({ systemVariant, color, scale, dir, reduceMotion, hcm }) =>
     (testFramework) =>
         `<!doctype html>
     <html dir=${dir}>
@@ -144,7 +144,7 @@ const vrtHTML =
         <body>
         <script>
             window.__swc_hack_knobs__ = {
-                defaultSystemVariant:  "${themeVariant || ''}",
+                defaultSystemVariant:  "${systemVariant || ''}",
                 defaultColor: "${color || ''}",
                 defaultScale: "${scale || ''}",
                 defaultDirection: "${dir || ''}",
@@ -157,30 +157,24 @@ const vrtHTML =
     </html>`;
 
 export let vrtGroups = [];
-const themeVariants = ['spectrum', 'express', 'spectrum-two'];
-const colors = ['lightest', 'light', 'dark', 'darkest'];
+const systemVariants = ['spectrum', 'express', 'spectrum-two'];
+const colors = ['light', 'dark'];
 const scales = ['medium', 'large'];
 const directions = ['ltr', 'rtl'];
-themeVariants.forEach((themeVariant) => {
+systemVariants.forEach((systemVariant) => {
     colors.forEach((color) => {
-        if (
-            themeVariant === 'spectrum-two' &&
-            (color === 'lightest' || color === 'darkest')
-        ) {
-            return;
-        }
         scales.forEach((scale) => {
             directions.forEach((dir) => {
                 const reduceMotion = true;
                 const testHTML = vrtHTML({
-                    themeVariant,
+                    systemVariant,
                     color,
                     scale,
                     dir,
                     reduceMotion,
                 });
                 vrtGroups.push({
-                    name: `vrt-${themeVariant}-${color}-${scale}-${dir}`,
+                    name: `vrt-${systemVariant}-${color}-${scale}-${dir}`,
                     files: '(packages|tools)/*/test/*.test-vrt.js',
                     testRunnerHtml: testHTML,
                     browsers: [chromium],
@@ -207,7 +201,7 @@ vrtGroups = [
                 name: `vrt-${pkg}-single`,
                 files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
                 testRunnerHtml: vrtHTML({
-                    themeVariant: 'spectrum',
+                    systemVariant: 'spectrum',
                     color: 'light',
                     scale: 'medium',
                     dir: 'ltr',
@@ -222,7 +216,7 @@ vrtGroups = [
         name: `vrt-hcm`,
         files: '(packages|tools)/*/test/*.test-vrt.js',
         testRunnerHtml: vrtHTML({
-            themeVariant: 'spectrum',
+            systemVariant: 'spectrum',
             color: 'dark',
             scale: 'medium',
             dir: 'ltr',

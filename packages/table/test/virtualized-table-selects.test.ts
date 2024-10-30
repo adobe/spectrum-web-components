@@ -48,15 +48,11 @@ ignoreResizeObserverLoopError(before, after);
 
 describe('Virtualized Table Selects', () => {
     it('selects and deselects all checkboxes in Virtualized Table when clicking the TableHeadCheckboxCell', async () => {
-        const test = await fixture<Table>(
-            html`
-                <div>
-                    ${virtualizedMultiple(
-                        virtualizedMultiple.args as Properties
-                    )}
-                </div>
-            `
-        );
+        const test = await fixture<Table>(html`
+            <div>
+                ${virtualizedMultiple(virtualizedMultiple.args as Properties)}
+            </div>
+        `);
         const el = test.querySelector('sp-table') as Table;
 
         await oneEvent(el, 'rangeChanged');
@@ -102,26 +98,24 @@ describe('Virtualized Table Selects', () => {
     });
 
     it('can prevent selection', async () => {
-        const el = await fixture<Table>(
-            html`
-                <sp-table
-                    size="m"
-                    style="height: 200px"
-                    selects="single"
-                    @change=${(event: Event) => {
-                        event.preventDefault();
-                    }}
-                    .items=${makeItems(50)}
-                    .renderItem=${renderItem}
-                >
-                    <sp-table-head>
-                        <sp-table-head-cell>Column Title</sp-table-head-cell>
-                        <sp-table-head-cell>Column Title</sp-table-head-cell>
-                        <sp-table-head-cell>Column Title</sp-table-head-cell>
-                    </sp-table-head>
-                </sp-table>
-            `
-        );
+        const el = await fixture<Table>(html`
+            <sp-table
+                size="m"
+                style="height: 200px"
+                selects="single"
+                @change=${(event: Event) => {
+                    event.preventDefault();
+                }}
+                .items=${makeItems(50)}
+                .renderItem=${renderItem}
+            >
+                <sp-table-head>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                </sp-table-head>
+            </sp-table>
+        `);
 
         await oneEvent(el, 'rangeChanged');
         await elementUpdated(el);
@@ -140,13 +134,11 @@ describe('Virtualized Table Selects', () => {
     });
 
     it('surfaces [selects="single"] selection on Virtualized Table', async () => {
-        const test = await fixture<Table>(
-            html`
-                <sp-theme theme="spectrum" scale="medium" color="light">
-                    ${virtualizedSingle(virtualizedSingle.args as Properties)}
-                </sp-theme>
-            `
-        );
+        const test = await fixture<Table>(html`
+            <sp-theme system="spectrum" scale="medium" color="light">
+                ${virtualizedSingle(virtualizedSingle.args as Properties)}
+            </sp-theme>
+        `);
         const el = test.querySelector('sp-table') as Table;
         const body = el.querySelector('sp-table-body') as TableBody;
 
@@ -172,13 +164,11 @@ describe('Virtualized Table Selects', () => {
     });
 
     it('selects via `click` while [selects="single"]', async () => {
-        const test = await fixture<Table>(
-            html`
-                <sp-theme theme="spectrum" scale="medium" color="light">
-                    ${virtualizedSingle(virtualizedSingle.args as Properties)}
-                </sp-theme>
-            `
-        );
+        const test = await fixture<Table>(html`
+            <sp-theme system="spectrum" scale="medium" color="light">
+                ${virtualizedSingle(virtualizedSingle.args as Properties)}
+            </sp-theme>
+        `);
         const el = test.querySelector('sp-table') as Table;
         el.selected = [];
 
@@ -213,15 +203,11 @@ describe('Virtualized Table Selects', () => {
     });
 
     it('surfaces [selects="multiple"] selection on Virtualized Table', async () => {
-        const test = await fixture<Table>(
-            html`
-                <sp-theme theme="spectrum" scale="medium" color="light">
-                    ${virtualizedMultiple(
-                        virtualizedMultiple.args as Properties
-                    )}
-                </sp-theme>
-            `
-        );
+        const test = await fixture<Table>(html`
+            <sp-theme system="spectrum" scale="medium" color="light">
+                ${virtualizedMultiple(virtualizedMultiple.args as Properties)}
+            </sp-theme>
+        `);
         const el = test.querySelector('sp-table') as Table;
         const body = el.querySelector('sp-table-body') as TableBody;
 
@@ -243,15 +229,11 @@ describe('Virtualized Table Selects', () => {
     });
 
     it('selects via `click` while [selects="multiple"] selection', async () => {
-        const test = await styledFixture<Table>(
-            html`
-                <div>
-                    ${virtualizedMultiple(
-                        virtualizedMultiple.args as Properties
-                    )}
-                </div>
-            `
-        );
+        const test = await styledFixture<Table>(html`
+            <div>
+                ${virtualizedMultiple(virtualizedMultiple.args as Properties)}
+            </div>
+        `);
         const el = test.querySelector('sp-table') as Table;
         el.selected = [];
 
@@ -281,15 +263,11 @@ describe('Virtualized Table Selects', () => {
     });
 
     it('allows .selected values to be changed by the application when [selects="multiple"]', async () => {
-        const test = await styledFixture<Table>(
-            html`
-                <div>
-                    ${virtualizedMultiple(
-                        virtualizedMultiple.args as Properties
-                    )}
-                </div>
-            `
-        );
+        const test = await styledFixture<Table>(html`
+            <div>
+                ${virtualizedMultiple(virtualizedMultiple.args as Properties)}
+            </div>
+        `);
         const el = test.querySelector('sp-table') as Table;
         el.selected = ['1'];
         await tableLayoutComplete(el);
@@ -411,15 +389,11 @@ describe('Virtualized Table Selects', () => {
     });
 
     it('ensures that virtualized elements with values in .selected are visually selected when brought into view using scrollTop', async () => {
-        const test = await fixture<Table>(
-            html`
-                <sp-theme theme="spectrum" scale="medium" color="light">
-                    ${virtualizedMultiple(
-                        virtualizedMultiple.args as Properties
-                    )}
-                </sp-theme>
-            `
-        );
+        const test = await fixture<Table>(html`
+            <sp-theme system="spectrum" scale="medium" color="light">
+                ${virtualizedMultiple(virtualizedMultiple.args as Properties)}
+            </sp-theme>
+        `);
         const el = test.querySelector('sp-table') as Table;
         const body = el.querySelector('sp-table-body') as TableBody;
 
@@ -451,15 +425,11 @@ describe('Virtualized Table Selects', () => {
     });
 
     it('ensures that virtualized elements with values in .selected are visually selected when brought into view using scrollToIndex', async () => {
-        const test = await fixture<Table>(
-            html`
-                <div>
-                    ${virtualizedMultiple(
-                        virtualizedMultiple.args as Properties
-                    )}
-                </div>
-            `
-        );
+        const test = await fixture<Table>(html`
+            <div>
+                ${virtualizedMultiple(virtualizedMultiple.args as Properties)}
+            </div>
+        `);
         const el = test.querySelector('sp-table') as Table;
 
         await tableLayoutComplete(el);
@@ -489,15 +459,11 @@ describe('Virtualized Table Selects', () => {
     });
 
     it('does not set `allSelected` to true by default on Virtualised `<sp-table>`', async () => {
-        const test = await fixture<Table>(
-            html`
-                <div>
-                    ${virtualizedMultiple(
-                        virtualizedMultiple.args as Properties
-                    )}
-                </div>
-            `
-        );
+        const test = await fixture<Table>(html`
+            <div>
+                ${virtualizedMultiple(virtualizedMultiple.args as Properties)}
+            </div>
+        `);
         const el = test.querySelector('sp-table') as Table;
 
         await oneEvent(el, 'rangeChanged');
@@ -515,13 +481,11 @@ describe('Virtualized Table Selects', () => {
 });
 
 it('renders custom content at a particular row and does not select it', async () => {
-    const test = await fixture<Table>(
-        html`
-            <div>
-                ${virtualizedCustomRow(virtualizedCustomRow.args as Properties)}
-            </div>
-        `
-    );
+    const test = await fixture<Table>(html`
+        <div>
+            ${virtualizedCustomRow(virtualizedCustomRow.args as Properties)}
+        </div>
+    `);
     const el = test.querySelector('sp-table') as Table;
 
     await oneEvent(el, 'rangeChanged');

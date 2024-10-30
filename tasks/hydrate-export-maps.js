@@ -19,7 +19,7 @@ const excludes = [
     './src/spectrum-config.js',
     './src/spectrum-config.v1.js',
     // partial only asset the is used to build other exports
-    /spectrum-(?![i][c][o][n][-]).+\.css/,
+    /spectrum-(?!(([i][c][o][n][-])|([t][w][o]))).+\.css/,
     /\.css$/,
     /\.ts$/,
     /\.map/,
