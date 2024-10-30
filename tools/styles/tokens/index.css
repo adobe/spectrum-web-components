@@ -1,581 +1,70 @@
 :host,
 :root {
-    --spectrum-overlay-opacity: 0.5;
-    --spectrum-drop-shadow-color-rgb: 0, 0, 0;
-    --spectrum-drop-shadow-color-opacity: 0.5;
-    --spectrum-drop-shadow-color: rgba(
-        var(--spectrum-drop-shadow-color-rgb),
-        var(--spectrum-drop-shadow-color-opacity)
-    );
-    --spectrum-background-base-color: var(--spectrum-gray-50);
-    --spectrum-background-layer-1-color: var(--spectrum-gray-75);
-    --spectrum-background-layer-2-color: var(--spectrum-gray-100);
-    --spectrum-neutral-background-color-default: var(--spectrum-gray-400);
-    --spectrum-neutral-background-color-hover: var(--spectrum-gray-300);
-    --spectrum-neutral-background-color-down: var(--spectrum-gray-200);
-    --spectrum-neutral-background-color-key-focus: var(--spectrum-gray-300);
-    --spectrum-neutral-subdued-background-color-default: var(
-        --spectrum-gray-400
-    );
-    --spectrum-neutral-subdued-background-color-hover: var(--spectrum-gray-300);
-    --spectrum-neutral-subdued-background-color-down: var(--spectrum-gray-200);
-    --spectrum-neutral-subdued-background-color-key-focus: var(
-        --spectrum-gray-300
-    );
-    --spectrum-accent-background-color-default: var(
-        --spectrum-accent-color-500
-    );
-    --spectrum-accent-background-color-hover: var(--spectrum-accent-color-400);
-    --spectrum-accent-background-color-down: var(--spectrum-accent-color-300);
-    --spectrum-accent-background-color-key-focus: var(
-        --spectrum-accent-color-400
-    );
-    --spectrum-informative-background-color-default: var(
-        --spectrum-informative-color-500
-    );
-    --spectrum-informative-background-color-hover: var(
-        --spectrum-informative-color-400
-    );
-    --spectrum-informative-background-color-down: var(
-        --spectrum-informative-color-300
-    );
-    --spectrum-informative-background-color-key-focus: var(
-        --spectrum-informative-color-400
-    );
-    --spectrum-negative-background-color-default: var(
-        --spectrum-negative-color-500
-    );
-    --spectrum-negative-background-color-hover: var(
-        --spectrum-negative-color-400
-    );
-    --spectrum-negative-background-color-down: var(
-        --spectrum-negative-color-300
-    );
-    --spectrum-negative-background-color-key-focus: var(
-        --spectrum-negative-color-400
-    );
-    --spectrum-positive-background-color-default: var(
-        --spectrum-positive-color-500
-    );
-    --spectrum-positive-background-color-hover: var(
-        --spectrum-positive-color-400
-    );
-    --spectrum-positive-background-color-down: var(
-        --spectrum-positive-color-300
-    );
-    --spectrum-positive-background-color-key-focus: var(
-        --spectrum-positive-color-400
-    );
-    --spectrum-notice-background-color-default: var(
-        --spectrum-notice-color-800
-    );
-    --spectrum-gray-background-color-default: var(--spectrum-gray-700);
-    --spectrum-red-background-color-default: var(--spectrum-red-700);
-    --spectrum-orange-background-color-default: var(--spectrum-orange-800);
-    --spectrum-yellow-background-color-default: var(--spectrum-yellow-1000);
-    --spectrum-chartreuse-background-color-default: var(
-        --spectrum-chartreuse-900
-    );
-    --spectrum-celery-background-color-default: var(--spectrum-celery-800);
-    --spectrum-green-background-color-default: var(--spectrum-green-700);
-    --spectrum-seafoam-background-color-default: var(--spectrum-seafoam-700);
-    --spectrum-cyan-background-color-default: var(--spectrum-cyan-700);
-    --spectrum-blue-background-color-default: var(--spectrum-blue-700);
-    --spectrum-indigo-background-color-default: var(--spectrum-indigo-700);
-    --spectrum-purple-background-color-default: var(--spectrum-purple-700);
-    --spectrum-fuchsia-background-color-default: var(--spectrum-fuchsia-700);
-    --spectrum-magenta-background-color-default: var(--spectrum-magenta-700);
-    --spectrum-neutral-visual-color: var(--spectrum-gray-600);
-    --spectrum-accent-visual-color: var(--spectrum-accent-color-900);
-    --spectrum-informative-visual-color: var(--spectrum-informative-color-900);
-    --spectrum-negative-visual-color: var(--spectrum-negative-color-700);
-    --spectrum-notice-visual-color: var(--spectrum-notice-color-900);
-    --spectrum-positive-visual-color: var(--spectrum-positive-color-800);
-    --spectrum-gray-visual-color: var(--spectrum-gray-600);
-    --spectrum-red-visual-color: var(--spectrum-red-700);
-    --spectrum-orange-visual-color: var(--spectrum-orange-900);
-    --spectrum-yellow-visual-color: var(--spectrum-yellow-1100);
-    --spectrum-chartreuse-visual-color: var(--spectrum-chartreuse-900);
-    --spectrum-celery-visual-color: var(--spectrum-celery-800);
-    --spectrum-green-visual-color: var(--spectrum-green-800);
-    --spectrum-seafoam-visual-color: var(--spectrum-seafoam-800);
-    --spectrum-cyan-visual-color: var(--spectrum-cyan-900);
-    --spectrum-blue-visual-color: var(--spectrum-blue-900);
-    --spectrum-indigo-visual-color: var(--spectrum-indigo-900);
-    --spectrum-purple-visual-color: var(--spectrum-purple-900);
-    --spectrum-fuchsia-visual-color: var(--spectrum-fuchsia-900);
-    --spectrum-magenta-visual-color: var(--spectrum-magenta-900);
-    --spectrum-opacity-checkerboard-square-dark: var(--spectrum-gray-800);
-    --spectrum-gray-50-rgb: 29, 29, 29;
-    --spectrum-gray-50: rgba(var(--spectrum-gray-50-rgb));
-    --spectrum-gray-75-rgb: 38, 38, 38;
-    --spectrum-gray-75: rgba(var(--spectrum-gray-75-rgb));
-    --spectrum-gray-100-rgb: 50, 50, 50;
-    --spectrum-gray-100: rgba(var(--spectrum-gray-100-rgb));
-    --spectrum-gray-200-rgb: 63, 63, 63;
-    --spectrum-gray-200: rgba(var(--spectrum-gray-200-rgb));
-    --spectrum-gray-300-rgb: 84, 84, 84;
-    --spectrum-gray-300: rgba(var(--spectrum-gray-300-rgb));
-    --spectrum-gray-400-rgb: 112, 112, 112;
-    --spectrum-gray-400: rgba(var(--spectrum-gray-400-rgb));
-    --spectrum-gray-500-rgb: 144, 144, 144;
-    --spectrum-gray-500: rgba(var(--spectrum-gray-500-rgb));
-    --spectrum-gray-600-rgb: 178, 178, 178;
-    --spectrum-gray-600: rgba(var(--spectrum-gray-600-rgb));
-    --spectrum-gray-700-rgb: 209, 209, 209;
-    --spectrum-gray-700: rgba(var(--spectrum-gray-700-rgb));
-    --spectrum-gray-800-rgb: 235, 235, 235;
-    --spectrum-gray-800: rgba(var(--spectrum-gray-800-rgb));
-    --spectrum-gray-900-rgb: 255, 255, 255;
-    --spectrum-gray-900: rgba(var(--spectrum-gray-900-rgb));
-    --spectrum-blue-100-rgb: 0, 56, 119;
-    --spectrum-blue-100: rgba(var(--spectrum-blue-100-rgb));
-    --spectrum-blue-200-rgb: 0, 65, 138;
-    --spectrum-blue-200: rgba(var(--spectrum-blue-200-rgb));
-    --spectrum-blue-300-rgb: 0, 77, 163;
-    --spectrum-blue-300: rgba(var(--spectrum-blue-300-rgb));
-    --spectrum-blue-400-rgb: 0, 89, 194;
-    --spectrum-blue-400: rgba(var(--spectrum-blue-400-rgb));
-    --spectrum-blue-500-rgb: 3, 103, 224;
-    --spectrum-blue-500: rgba(var(--spectrum-blue-500-rgb));
-    --spectrum-blue-600-rgb: 19, 121, 243;
-    --spectrum-blue-600: rgba(var(--spectrum-blue-600-rgb));
-    --spectrum-blue-700-rgb: 52, 143, 244;
-    --spectrum-blue-700: rgba(var(--spectrum-blue-700-rgb));
-    --spectrum-blue-800-rgb: 84, 163, 246;
-    --spectrum-blue-800: rgba(var(--spectrum-blue-800-rgb));
-    --spectrum-blue-900-rgb: 114, 183, 249;
-    --spectrum-blue-900: rgba(var(--spectrum-blue-900-rgb));
-    --spectrum-blue-1000-rgb: 143, 202, 252;
-    --spectrum-blue-1000: rgba(var(--spectrum-blue-1000-rgb));
-    --spectrum-blue-1100-rgb: 174, 219, 254;
-    --spectrum-blue-1100: rgba(var(--spectrum-blue-1100-rgb));
-    --spectrum-blue-1200-rgb: 204, 233, 255;
-    --spectrum-blue-1200: rgba(var(--spectrum-blue-1200-rgb));
-    --spectrum-blue-1300-rgb: 232, 246, 255;
-    --spectrum-blue-1300: rgba(var(--spectrum-blue-1300-rgb));
-    --spectrum-blue-1400-rgb: 255, 255, 255;
-    --spectrum-blue-1400: rgba(var(--spectrum-blue-1400-rgb));
-    --spectrum-red-100-rgb: 123, 0, 0;
-    --spectrum-red-100: rgba(var(--spectrum-red-100-rgb));
-    --spectrum-red-200-rgb: 141, 0, 0;
-    --spectrum-red-200: rgba(var(--spectrum-red-200-rgb));
-    --spectrum-red-300-rgb: 165, 0, 0;
-    --spectrum-red-300: rgba(var(--spectrum-red-300-rgb));
-    --spectrum-red-400-rgb: 190, 4, 3;
-    --spectrum-red-400: rgba(var(--spectrum-red-400-rgb));
-    --spectrum-red-500-rgb: 215, 25, 19;
-    --spectrum-red-500: rgba(var(--spectrum-red-500-rgb));
-    --spectrum-red-600-rgb: 234, 56, 41;
-    --spectrum-red-600: rgba(var(--spectrum-red-600-rgb));
-    --spectrum-red-700-rgb: 246, 88, 67;
-    --spectrum-red-700: rgba(var(--spectrum-red-700-rgb));
-    --spectrum-red-800-rgb: 255, 117, 94;
-    --spectrum-red-800: rgba(var(--spectrum-red-800-rgb));
-    --spectrum-red-900-rgb: 255, 149, 129;
-    --spectrum-red-900: rgba(var(--spectrum-red-900-rgb));
-    --spectrum-red-1000-rgb: 255, 176, 161;
-    --spectrum-red-1000: rgba(var(--spectrum-red-1000-rgb));
-    --spectrum-red-1100-rgb: 255, 201, 189;
-    --spectrum-red-1100: rgba(var(--spectrum-red-1100-rgb));
-    --spectrum-red-1200-rgb: 255, 222, 216;
-    --spectrum-red-1200: rgba(var(--spectrum-red-1200-rgb));
-    --spectrum-red-1300-rgb: 255, 241, 238;
-    --spectrum-red-1300: rgba(var(--spectrum-red-1300-rgb));
-    --spectrum-red-1400-rgb: 255, 255, 255;
-    --spectrum-red-1400: rgba(var(--spectrum-red-1400-rgb));
-    --spectrum-orange-100-rgb: 102, 37, 0;
-    --spectrum-orange-100: rgba(var(--spectrum-orange-100-rgb));
-    --spectrum-orange-200-rgb: 117, 45, 0;
-    --spectrum-orange-200: rgba(var(--spectrum-orange-200-rgb));
-    --spectrum-orange-300-rgb: 137, 55, 0;
-    --spectrum-orange-300: rgba(var(--spectrum-orange-300-rgb));
-    --spectrum-orange-400-rgb: 158, 66, 0;
-    --spectrum-orange-400: rgba(var(--spectrum-orange-400-rgb));
-    --spectrum-orange-500-rgb: 180, 78, 0;
-    --spectrum-orange-500: rgba(var(--spectrum-orange-500-rgb));
-    --spectrum-orange-600-rgb: 202, 93, 0;
-    --spectrum-orange-600: rgba(var(--spectrum-orange-600-rgb));
-    --spectrum-orange-700-rgb: 225, 109, 0;
-    --spectrum-orange-700: rgba(var(--spectrum-orange-700-rgb));
-    --spectrum-orange-800-rgb: 244, 129, 12;
-    --spectrum-orange-800: rgba(var(--spectrum-orange-800-rgb));
-    --spectrum-orange-900-rgb: 254, 154, 46;
-    --spectrum-orange-900: rgba(var(--spectrum-orange-900-rgb));
-    --spectrum-orange-1000-rgb: 255, 181, 88;
-    --spectrum-orange-1000: rgba(var(--spectrum-orange-1000-rgb));
-    --spectrum-orange-1100-rgb: 253, 206, 136;
-    --spectrum-orange-1100: rgba(var(--spectrum-orange-1100-rgb));
-    --spectrum-orange-1200-rgb: 255, 225, 179;
-    --spectrum-orange-1200: rgba(var(--spectrum-orange-1200-rgb));
-    --spectrum-orange-1300-rgb: 255, 242, 221;
-    --spectrum-orange-1300: rgba(var(--spectrum-orange-1300-rgb));
-    --spectrum-orange-1400-rgb: 255, 253, 249;
-    --spectrum-orange-1400: rgba(var(--spectrum-orange-1400-rgb));
-    --spectrum-yellow-100-rgb: 76, 54, 0;
-    --spectrum-yellow-100: rgba(var(--spectrum-yellow-100-rgb));
-    --spectrum-yellow-200-rgb: 88, 64, 0;
-    --spectrum-yellow-200: rgba(var(--spectrum-yellow-200-rgb));
-    --spectrum-yellow-300-rgb: 103, 76, 0;
-    --spectrum-yellow-300: rgba(var(--spectrum-yellow-300-rgb));
-    --spectrum-yellow-400-rgb: 119, 89, 0;
-    --spectrum-yellow-400: rgba(var(--spectrum-yellow-400-rgb));
-    --spectrum-yellow-500-rgb: 136, 104, 0;
-    --spectrum-yellow-500: rgba(var(--spectrum-yellow-500-rgb));
-    --spectrum-yellow-600-rgb: 155, 120, 0;
-    --spectrum-yellow-600: rgba(var(--spectrum-yellow-600-rgb));
-    --spectrum-yellow-700-rgb: 174, 137, 0;
-    --spectrum-yellow-700: rgba(var(--spectrum-yellow-700-rgb));
-    --spectrum-yellow-800-rgb: 192, 156, 0;
-    --spectrum-yellow-800: rgba(var(--spectrum-yellow-800-rgb));
-    --spectrum-yellow-900-rgb: 211, 174, 0;
-    --spectrum-yellow-900: rgba(var(--spectrum-yellow-900-rgb));
-    --spectrum-yellow-1000-rgb: 228, 194, 0;
-    --spectrum-yellow-1000: rgba(var(--spectrum-yellow-1000-rgb));
-    --spectrum-yellow-1100-rgb: 244, 213, 0;
-    --spectrum-yellow-1100: rgba(var(--spectrum-yellow-1100-rgb));
-    --spectrum-yellow-1200-rgb: 249, 232, 92;
-    --spectrum-yellow-1200: rgba(var(--spectrum-yellow-1200-rgb));
-    --spectrum-yellow-1300-rgb: 252, 246, 187;
-    --spectrum-yellow-1300: rgba(var(--spectrum-yellow-1300-rgb));
-    --spectrum-yellow-1400-rgb: 255, 255, 255;
-    --spectrum-yellow-1400: rgba(var(--spectrum-yellow-1400-rgb));
-    --spectrum-chartreuse-100-rgb: 48, 64, 0;
-    --spectrum-chartreuse-100: rgba(var(--spectrum-chartreuse-100-rgb));
-    --spectrum-chartreuse-200-rgb: 55, 74, 0;
-    --spectrum-chartreuse-200: rgba(var(--spectrum-chartreuse-200-rgb));
-    --spectrum-chartreuse-300-rgb: 65, 87, 0;
-    --spectrum-chartreuse-300: rgba(var(--spectrum-chartreuse-300-rgb));
-    --spectrum-chartreuse-400-rgb: 76, 102, 0;
-    --spectrum-chartreuse-400: rgba(var(--spectrum-chartreuse-400-rgb));
-    --spectrum-chartreuse-500-rgb: 89, 118, 0;
-    --spectrum-chartreuse-500: rgba(var(--spectrum-chartreuse-500-rgb));
-    --spectrum-chartreuse-600-rgb: 102, 136, 0;
-    --spectrum-chartreuse-600: rgba(var(--spectrum-chartreuse-600-rgb));
-    --spectrum-chartreuse-700-rgb: 117, 154, 0;
-    --spectrum-chartreuse-700: rgba(var(--spectrum-chartreuse-700-rgb));
-    --spectrum-chartreuse-800-rgb: 132, 173, 1;
-    --spectrum-chartreuse-800: rgba(var(--spectrum-chartreuse-800-rgb));
-    --spectrum-chartreuse-900-rgb: 148, 192, 8;
-    --spectrum-chartreuse-900: rgba(var(--spectrum-chartreuse-900-rgb));
-    --spectrum-chartreuse-1000-rgb: 166, 211, 18;
-    --spectrum-chartreuse-1000: rgba(var(--spectrum-chartreuse-1000-rgb));
-    --spectrum-chartreuse-1100-rgb: 184, 229, 37;
-    --spectrum-chartreuse-1100: rgba(var(--spectrum-chartreuse-1100-rgb));
-    --spectrum-chartreuse-1200-rgb: 205, 245, 71;
-    --spectrum-chartreuse-1200: rgba(var(--spectrum-chartreuse-1200-rgb));
-    --spectrum-chartreuse-1300-rgb: 231, 254, 154;
-    --spectrum-chartreuse-1300: rgba(var(--spectrum-chartreuse-1300-rgb));
-    --spectrum-chartreuse-1400-rgb: 255, 255, 255;
-    --spectrum-chartreuse-1400: rgba(var(--spectrum-chartreuse-1400-rgb));
-    --spectrum-celery-100-rgb: 0, 69, 10;
-    --spectrum-celery-100: rgba(var(--spectrum-celery-100-rgb));
-    --spectrum-celery-200-rgb: 0, 80, 12;
-    --spectrum-celery-200: rgba(var(--spectrum-celery-200-rgb));
-    --spectrum-celery-300-rgb: 0, 94, 14;
-    --spectrum-celery-300: rgba(var(--spectrum-celery-300-rgb));
-    --spectrum-celery-400-rgb: 0, 109, 15;
-    --spectrum-celery-400: rgba(var(--spectrum-celery-400-rgb));
-    --spectrum-celery-500-rgb: 0, 127, 15;
-    --spectrum-celery-500: rgba(var(--spectrum-celery-500-rgb));
-    --spectrum-celery-600-rgb: 0, 145, 18;
-    --spectrum-celery-600: rgba(var(--spectrum-celery-600-rgb));
-    --spectrum-celery-700-rgb: 4, 165, 30;
-    --spectrum-celery-700: rgba(var(--spectrum-celery-700-rgb));
-    --spectrum-celery-800-rgb: 34, 184, 51;
-    --spectrum-celery-800: rgba(var(--spectrum-celery-800-rgb));
-    --spectrum-celery-900-rgb: 68, 202, 73;
-    --spectrum-celery-900: rgba(var(--spectrum-celery-900-rgb));
-    --spectrum-celery-1000-rgb: 105, 220, 99;
-    --spectrum-celery-1000: rgba(var(--spectrum-celery-1000-rgb));
-    --spectrum-celery-1100-rgb: 142, 235, 127;
-    --spectrum-celery-1100: rgba(var(--spectrum-celery-1100-rgb));
-    --spectrum-celery-1200-rgb: 180, 247, 162;
-    --spectrum-celery-1200: rgba(var(--spectrum-celery-1200-rgb));
-    --spectrum-celery-1300-rgb: 221, 253, 211;
-    --spectrum-celery-1300: rgba(var(--spectrum-celery-1300-rgb));
-    --spectrum-celery-1400-rgb: 255, 255, 255;
-    --spectrum-celery-1400: rgba(var(--spectrum-celery-1400-rgb));
-    --spectrum-green-100-rgb: 4, 67, 41;
-    --spectrum-green-100: rgba(var(--spectrum-green-100-rgb));
-    --spectrum-green-200-rgb: 0, 78, 47;
-    --spectrum-green-200: rgba(var(--spectrum-green-200-rgb));
-    --spectrum-green-300-rgb: 0, 92, 56;
-    --spectrum-green-300: rgba(var(--spectrum-green-300-rgb));
-    --spectrum-green-400-rgb: 0, 108, 67;
-    --spectrum-green-400: rgba(var(--spectrum-green-400-rgb));
-    --spectrum-green-500-rgb: 0, 125, 78;
-    --spectrum-green-500: rgba(var(--spectrum-green-500-rgb));
-    --spectrum-green-600-rgb: 0, 143, 93;
-    --spectrum-green-600: rgba(var(--spectrum-green-600-rgb));
-    --spectrum-green-700-rgb: 18, 162, 108;
-    --spectrum-green-700: rgba(var(--spectrum-green-700-rgb));
-    --spectrum-green-800-rgb: 43, 180, 125;
-    --spectrum-green-800: rgba(var(--spectrum-green-800-rgb));
-    --spectrum-green-900-rgb: 67, 199, 143;
-    --spectrum-green-900: rgba(var(--spectrum-green-900-rgb));
-    --spectrum-green-1000-rgb: 94, 217, 162;
-    --spectrum-green-1000: rgba(var(--spectrum-green-1000-rgb));
-    --spectrum-green-1100-rgb: 129, 233, 184;
-    --spectrum-green-1100: rgba(var(--spectrum-green-1100-rgb));
-    --spectrum-green-1200-rgb: 177, 244, 209;
-    --spectrum-green-1200: rgba(var(--spectrum-green-1200-rgb));
-    --spectrum-green-1300-rgb: 223, 250, 234;
-    --spectrum-green-1300: rgba(var(--spectrum-green-1300-rgb));
-    --spectrum-green-1400-rgb: 254, 255, 252;
-    --spectrum-green-1400: rgba(var(--spectrum-green-1400-rgb));
-    --spectrum-seafoam-100-rgb: 18, 65, 63;
-    --spectrum-seafoam-100: rgba(var(--spectrum-seafoam-100-rgb));
-    --spectrum-seafoam-200-rgb: 14, 76, 73;
-    --spectrum-seafoam-200: rgba(var(--spectrum-seafoam-200-rgb));
-    --spectrum-seafoam-300-rgb: 4, 90, 87;
-    --spectrum-seafoam-300: rgba(var(--spectrum-seafoam-300-rgb));
-    --spectrum-seafoam-400-rgb: 0, 105, 101;
-    --spectrum-seafoam-400: rgba(var(--spectrum-seafoam-400-rgb));
-    --spectrum-seafoam-500-rgb: 0, 122, 117;
-    --spectrum-seafoam-500: rgba(var(--spectrum-seafoam-500-rgb));
-    --spectrum-seafoam-600-rgb: 0, 140, 135;
-    --spectrum-seafoam-600: rgba(var(--spectrum-seafoam-600-rgb));
-    --spectrum-seafoam-700-rgb: 0, 158, 152;
-    --spectrum-seafoam-700: rgba(var(--spectrum-seafoam-700-rgb));
-    --spectrum-seafoam-800-rgb: 3, 178, 171;
-    --spectrum-seafoam-800: rgba(var(--spectrum-seafoam-800-rgb));
-    --spectrum-seafoam-900-rgb: 54, 197, 189;
-    --spectrum-seafoam-900: rgba(var(--spectrum-seafoam-900-rgb));
-    --spectrum-seafoam-1000-rgb: 93, 214, 207;
-    --spectrum-seafoam-1000: rgba(var(--spectrum-seafoam-1000-rgb));
-    --spectrum-seafoam-1100-rgb: 132, 230, 223;
-    --spectrum-seafoam-1100: rgba(var(--spectrum-seafoam-1100-rgb));
-    --spectrum-seafoam-1200-rgb: 176, 242, 236;
-    --spectrum-seafoam-1200: rgba(var(--spectrum-seafoam-1200-rgb));
-    --spectrum-seafoam-1300-rgb: 223, 249, 246;
-    --spectrum-seafoam-1300: rgba(var(--spectrum-seafoam-1300-rgb));
-    --spectrum-seafoam-1400-rgb: 254, 255, 254;
-    --spectrum-seafoam-1400: rgba(var(--spectrum-seafoam-1400-rgb));
-    --spectrum-cyan-100-rgb: 0, 61, 98;
-    --spectrum-cyan-100: rgba(var(--spectrum-cyan-100-rgb));
-    --spectrum-cyan-200-rgb: 0, 71, 111;
-    --spectrum-cyan-200: rgba(var(--spectrum-cyan-200-rgb));
-    --spectrum-cyan-300-rgb: 0, 85, 127;
-    --spectrum-cyan-300: rgba(var(--spectrum-cyan-300-rgb));
-    --spectrum-cyan-400-rgb: 0, 100, 145;
-    --spectrum-cyan-400: rgba(var(--spectrum-cyan-400-rgb));
-    --spectrum-cyan-500-rgb: 0, 116, 162;
-    --spectrum-cyan-500: rgba(var(--spectrum-cyan-500-rgb));
-    --spectrum-cyan-600-rgb: 0, 134, 180;
-    --spectrum-cyan-600: rgba(var(--spectrum-cyan-600-rgb));
-    --spectrum-cyan-700-rgb: 0, 153, 198;
-    --spectrum-cyan-700: rgba(var(--spectrum-cyan-700-rgb));
-    --spectrum-cyan-800-rgb: 14, 173, 215;
-    --spectrum-cyan-800: rgba(var(--spectrum-cyan-800-rgb));
-    --spectrum-cyan-900-rgb: 44, 193, 230;
-    --spectrum-cyan-900: rgba(var(--spectrum-cyan-900-rgb));
-    --spectrum-cyan-1000-rgb: 84, 211, 241;
-    --spectrum-cyan-1000: rgba(var(--spectrum-cyan-1000-rgb));
-    --spectrum-cyan-1100-rgb: 127, 228, 249;
-    --spectrum-cyan-1100: rgba(var(--spectrum-cyan-1100-rgb));
-    --spectrum-cyan-1200-rgb: 167, 241, 255;
-    --spectrum-cyan-1200: rgba(var(--spectrum-cyan-1200-rgb));
-    --spectrum-cyan-1300-rgb: 215, 250, 255;
-    --spectrum-cyan-1300: rgba(var(--spectrum-cyan-1300-rgb));
-    --spectrum-cyan-1400-rgb: 255, 255, 255;
-    --spectrum-cyan-1400: rgba(var(--spectrum-cyan-1400-rgb));
-    --spectrum-indigo-100-rgb: 40, 44, 140;
-    --spectrum-indigo-100: rgba(var(--spectrum-indigo-100-rgb));
-    --spectrum-indigo-200-rgb: 47, 52, 163;
-    --spectrum-indigo-200: rgba(var(--spectrum-indigo-200-rgb));
-    --spectrum-indigo-300-rgb: 57, 63, 187;
-    --spectrum-indigo-300: rgba(var(--spectrum-indigo-300-rgb));
-    --spectrum-indigo-400-rgb: 70, 75, 211;
-    --spectrum-indigo-400: rgba(var(--spectrum-indigo-400-rgb));
-    --spectrum-indigo-500-rgb: 85, 91, 231;
-    --spectrum-indigo-500: rgba(var(--spectrum-indigo-500-rgb));
-    --spectrum-indigo-600-rgb: 104, 109, 244;
-    --spectrum-indigo-600: rgba(var(--spectrum-indigo-600-rgb));
-    --spectrum-indigo-700-rgb: 124, 129, 251;
-    --spectrum-indigo-700: rgba(var(--spectrum-indigo-700-rgb));
-    --spectrum-indigo-800-rgb: 145, 149, 255;
-    --spectrum-indigo-800: rgba(var(--spectrum-indigo-800-rgb));
-    --spectrum-indigo-900-rgb: 167, 170, 255;
-    --spectrum-indigo-900: rgba(var(--spectrum-indigo-900-rgb));
-    --spectrum-indigo-1000-rgb: 188, 190, 255;
-    --spectrum-indigo-1000: rgba(var(--spectrum-indigo-1000-rgb));
-    --spectrum-indigo-1100-rgb: 208, 210, 255;
-    --spectrum-indigo-1100: rgba(var(--spectrum-indigo-1100-rgb));
-    --spectrum-indigo-1200-rgb: 226, 228, 255;
-    --spectrum-indigo-1200: rgba(var(--spectrum-indigo-1200-rgb));
-    --spectrum-indigo-1300-rgb: 243, 243, 254;
-    --spectrum-indigo-1300: rgba(var(--spectrum-indigo-1300-rgb));
-    --spectrum-indigo-1400-rgb: 255, 255, 255;
-    --spectrum-indigo-1400: rgba(var(--spectrum-indigo-1400-rgb));
-    --spectrum-purple-100-rgb: 76, 13, 157;
-    --spectrum-purple-100: rgba(var(--spectrum-purple-100-rgb));
-    --spectrum-purple-200-rgb: 89, 17, 177;
-    --spectrum-purple-200: rgba(var(--spectrum-purple-200-rgb));
-    --spectrum-purple-300-rgb: 105, 28, 200;
-    --spectrum-purple-300: rgba(var(--spectrum-purple-300-rgb));
-    --spectrum-purple-400-rgb: 122, 45, 218;
-    --spectrum-purple-400: rgba(var(--spectrum-purple-400-rgb));
-    --spectrum-purple-500-rgb: 140, 65, 233;
-    --spectrum-purple-500: rgba(var(--spectrum-purple-500-rgb));
-    --spectrum-purple-600-rgb: 157, 87, 243;
-    --spectrum-purple-600: rgba(var(--spectrum-purple-600-rgb));
-    --spectrum-purple-700-rgb: 172, 111, 249;
-    --spectrum-purple-700: rgba(var(--spectrum-purple-700-rgb));
-    --spectrum-purple-800-rgb: 187, 135, 251;
-    --spectrum-purple-800: rgba(var(--spectrum-purple-800-rgb));
-    --spectrum-purple-900-rgb: 202, 159, 252;
-    --spectrum-purple-900: rgba(var(--spectrum-purple-900-rgb));
-    --spectrum-purple-1000-rgb: 215, 182, 254;
-    --spectrum-purple-1000: rgba(var(--spectrum-purple-1000-rgb));
-    --spectrum-purple-1100-rgb: 228, 204, 254;
-    --spectrum-purple-1100: rgba(var(--spectrum-purple-1100-rgb));
-    --spectrum-purple-1200-rgb: 239, 223, 255;
-    --spectrum-purple-1200: rgba(var(--spectrum-purple-1200-rgb));
-    --spectrum-purple-1300-rgb: 249, 240, 255;
-    --spectrum-purple-1300: rgba(var(--spectrum-purple-1300-rgb));
-    --spectrum-purple-1400-rgb: 255, 253, 255;
-    --spectrum-purple-1400: rgba(var(--spectrum-purple-1400-rgb));
-    --spectrum-fuchsia-100-rgb: 107, 3, 106;
-    --spectrum-fuchsia-100: rgba(var(--spectrum-fuchsia-100-rgb));
-    --spectrum-fuchsia-200-rgb: 123, 0, 123;
-    --spectrum-fuchsia-200: rgba(var(--spectrum-fuchsia-200-rgb));
-    --spectrum-fuchsia-300-rgb: 144, 0, 145;
-    --spectrum-fuchsia-300: rgba(var(--spectrum-fuchsia-300-rgb));
-    --spectrum-fuchsia-400-rgb: 165, 13, 166;
-    --spectrum-fuchsia-400: rgba(var(--spectrum-fuchsia-400-rgb));
-    --spectrum-fuchsia-500-rgb: 185, 37, 185;
-    --spectrum-fuchsia-500: rgba(var(--spectrum-fuchsia-500-rgb));
-    --spectrum-fuchsia-600-rgb: 205, 57, 206;
-    --spectrum-fuchsia-600: rgba(var(--spectrum-fuchsia-600-rgb));
-    --spectrum-fuchsia-700-rgb: 223, 81, 224;
-    --spectrum-fuchsia-700: rgba(var(--spectrum-fuchsia-700-rgb));
-    --spectrum-fuchsia-800-rgb: 235, 110, 236;
-    --spectrum-fuchsia-800: rgba(var(--spectrum-fuchsia-800-rgb));
-    --spectrum-fuchsia-900-rgb: 244, 140, 242;
-    --spectrum-fuchsia-900: rgba(var(--spectrum-fuchsia-900-rgb));
-    --spectrum-fuchsia-1000-rgb: 250, 168, 245;
-    --spectrum-fuchsia-1000: rgba(var(--spectrum-fuchsia-1000-rgb));
-    --spectrum-fuchsia-1100-rgb: 254, 194, 248;
-    --spectrum-fuchsia-1100: rgba(var(--spectrum-fuchsia-1100-rgb));
-    --spectrum-fuchsia-1200-rgb: 255, 219, 250;
-    --spectrum-fuchsia-1200: rgba(var(--spectrum-fuchsia-1200-rgb));
-    --spectrum-fuchsia-1300-rgb: 255, 239, 252;
-    --spectrum-fuchsia-1300: rgba(var(--spectrum-fuchsia-1300-rgb));
-    --spectrum-fuchsia-1400-rgb: 255, 253, 255;
-    --spectrum-fuchsia-1400: rgba(var(--spectrum-fuchsia-1400-rgb));
-    --spectrum-magenta-100-rgb: 118, 0, 58;
-    --spectrum-magenta-100: rgba(var(--spectrum-magenta-100-rgb));
-    --spectrum-magenta-200-rgb: 137, 0, 66;
-    --spectrum-magenta-200: rgba(var(--spectrum-magenta-200-rgb));
-    --spectrum-magenta-300-rgb: 160, 0, 77;
-    --spectrum-magenta-300: rgba(var(--spectrum-magenta-300-rgb));
-    --spectrum-magenta-400-rgb: 182, 18, 90;
-    --spectrum-magenta-400: rgba(var(--spectrum-magenta-400-rgb));
-    --spectrum-magenta-500-rgb: 203, 38, 109;
-    --spectrum-magenta-500: rgba(var(--spectrum-magenta-500-rgb));
-    --spectrum-magenta-600-rgb: 222, 61, 130;
-    --spectrum-magenta-600: rgba(var(--spectrum-magenta-600-rgb));
-    --spectrum-magenta-700-rgb: 237, 87, 149;
-    --spectrum-magenta-700: rgba(var(--spectrum-magenta-700-rgb));
-    --spectrum-magenta-800-rgb: 249, 114, 167;
-    --spectrum-magenta-800: rgba(var(--spectrum-magenta-800-rgb));
-    --spectrum-magenta-900-rgb: 255, 143, 185;
-    --spectrum-magenta-900: rgba(var(--spectrum-magenta-900-rgb));
-    --spectrum-magenta-1000-rgb: 255, 172, 202;
-    --spectrum-magenta-1000: rgba(var(--spectrum-magenta-1000-rgb));
-    --spectrum-magenta-1100-rgb: 255, 198, 218;
-    --spectrum-magenta-1100: rgba(var(--spectrum-magenta-1100-rgb));
-    --spectrum-magenta-1200-rgb: 255, 221, 233;
-    --spectrum-magenta-1200: rgba(var(--spectrum-magenta-1200-rgb));
-    --spectrum-magenta-1300-rgb: 255, 240, 245;
-    --spectrum-magenta-1300: rgba(var(--spectrum-magenta-1300-rgb));
-    --spectrum-magenta-1400-rgb: 255, 252, 253;
-    --spectrum-magenta-1400: rgba(var(--spectrum-magenta-1400-rgb));
-    --spectrum-icon-color-blue-primary-default: var(--spectrum-blue-800);
-    --spectrum-icon-color-green-primary-default: var(--spectrum-green-800);
-    --spectrum-icon-color-red-primary-default: var(--spectrum-red-700);
-    --spectrum-icon-color-yellow-primary-default: var(--spectrum-yellow-1000);
-}
-:host,
-:root {
     --spectrum-overlay-opacity: 0.6;
-    --spectrum-drop-shadow-color-rgb: 0, 0, 0;
-    --spectrum-drop-shadow-color-opacity: 0.8;
-    --spectrum-drop-shadow-color: rgba(
-        var(--spectrum-drop-shadow-color-rgb),
-        var(--spectrum-drop-shadow-color-opacity)
-    );
-    --spectrum-background-base-color: var(--spectrum-gray-50);
-    --spectrum-background-layer-1-color: var(--spectrum-gray-75);
-    --spectrum-background-layer-2-color: var(--spectrum-gray-100);
-    --spectrum-neutral-background-color-default: var(--spectrum-gray-400);
-    --spectrum-neutral-background-color-hover: var(--spectrum-gray-300);
-    --spectrum-neutral-background-color-down: var(--spectrum-gray-200);
-    --spectrum-neutral-background-color-key-focus: var(--spectrum-gray-300);
+    --spectrum-background-layer-2-color: var(--spectrum-gray-75);
     --spectrum-neutral-subdued-background-color-default: var(
+        --spectrum-gray-500
+    );
+    --spectrum-neutral-subdued-background-color-hover: var(--spectrum-gray-400);
+    --spectrum-neutral-subdued-background-color-down: var(--spectrum-gray-400);
+    --spectrum-neutral-subdued-background-color-key-focus: var(
         --spectrum-gray-400
     );
-    --spectrum-neutral-subdued-background-color-hover: var(--spectrum-gray-300);
-    --spectrum-neutral-subdued-background-color-down: var(--spectrum-gray-200);
-    --spectrum-neutral-subdued-background-color-key-focus: var(
-        --spectrum-gray-300
-    );
     --spectrum-accent-background-color-default: var(
+        --spectrum-accent-color-700
+    );
+    --spectrum-accent-background-color-hover: var(--spectrum-accent-color-600);
+    --spectrum-accent-background-color-down: var(--spectrum-accent-color-600);
+    --spectrum-accent-background-color-key-focus: var(
         --spectrum-accent-color-600
     );
-    --spectrum-accent-background-color-hover: var(--spectrum-accent-color-500);
-    --spectrum-accent-background-color-down: var(--spectrum-accent-color-400);
-    --spectrum-accent-background-color-key-focus: var(
-        --spectrum-accent-color-500
-    );
     --spectrum-informative-background-color-default: var(
-        --spectrum-informative-color-600
+        --spectrum-informative-color-700
     );
     --spectrum-informative-background-color-hover: var(
-        --spectrum-informative-color-500
+        --spectrum-informative-color-600
     );
     --spectrum-informative-background-color-down: var(
-        --spectrum-informative-color-400
+        --spectrum-informative-color-600
     );
     --spectrum-informative-background-color-key-focus: var(
-        --spectrum-informative-color-500
+        --spectrum-informative-color-600
     );
     --spectrum-negative-background-color-default: var(
-        --spectrum-negative-color-600
+        --spectrum-negative-color-700
     );
     --spectrum-negative-background-color-hover: var(
-        --spectrum-negative-color-500
+        --spectrum-negative-color-600
     );
     --spectrum-negative-background-color-down: var(
-        --spectrum-negative-color-400
+        --spectrum-negative-color-600
     );
     --spectrum-negative-background-color-key-focus: var(
-        --spectrum-negative-color-500
+        --spectrum-negative-color-600
     );
     --spectrum-positive-background-color-default: var(
-        --spectrum-positive-color-600
+        --spectrum-positive-color-700
     );
     --spectrum-positive-background-color-hover: var(
-        --spectrum-positive-color-500
+        --spectrum-positive-color-600
     );
     --spectrum-positive-background-color-down: var(
-        --spectrum-positive-color-400
+        --spectrum-positive-color-600
     );
     --spectrum-positive-background-color-key-focus: var(
-        --spectrum-positive-color-500
+        --spectrum-positive-color-600
     );
     --spectrum-notice-background-color-default: var(
-        --spectrum-notice-color-800
+        --spectrum-notice-color-900
     );
-    --spectrum-gray-background-color-default: var(--spectrum-gray-700);
+    --spectrum-gray-background-color-default: var(--spectrum-gray-500);
     --spectrum-red-background-color-default: var(--spectrum-red-700);
-    --spectrum-orange-background-color-default: var(--spectrum-orange-800);
-    --spectrum-yellow-background-color-default: var(--spectrum-yellow-1000);
+    --spectrum-orange-background-color-default: var(--spectrum-orange-900);
+    --spectrum-yellow-background-color-default: var(--spectrum-yellow-1100);
     --spectrum-chartreuse-background-color-default: var(
-        --spectrum-chartreuse-900
+        --spectrum-chartreuse-1000
     );
-    --spectrum-celery-background-color-default: var(--spectrum-celery-800);
+    --spectrum-celery-background-color-default: var(--spectrum-celery-900);
     --spectrum-green-background-color-default: var(--spectrum-green-700);
     --spectrum-seafoam-background-color-default: var(--spectrum-seafoam-700);
     --spectrum-cyan-background-color-default: var(--spectrum-cyan-700);
@@ -604,417 +93,462 @@
     --spectrum-purple-visual-color: var(--spectrum-purple-900);
     --spectrum-fuchsia-visual-color: var(--spectrum-fuchsia-900);
     --spectrum-magenta-visual-color: var(--spectrum-magenta-900);
+    --spectrum-background-elevated-color: var(--spectrum-gray-75);
+    --spectrum-background-pasteboard-color: var(--spectrum-gray-25);
+    --spectrum-brown-visual-color: var(--spectrum-brown-900);
+    --spectrum-cinnamon-visual-color: var(--spectrum-cinnamon-900);
+    --spectrum-pink-visual-color: var(--spectrum-pink-900);
+    --spectrum-silver-visual-color: var(--spectrum-silver-900);
+    --spectrum-turquoise-visual-color: var(--spectrum-turquoise-900);
+    --spectrum-brown-background-color-default: var(--spectrum-brown-700);
+    --spectrum-cinnamon-background-color-default: var(--spectrum-cinnamon-700);
+    --spectrum-pink-background-color-default: var(--spectrum-pink-700);
+    --spectrum-silver-background-color-default: var(--spectrum-silver-700);
+    --spectrum-turquoise-background-color-default: var(
+        --spectrum-turquoise-700
+    );
+    --spectrum-drop-shadow-color-100: rgba(0, 0, 0, 0.36);
+    --spectrum-drop-shadow-color-200: rgba(0, 0, 0, 0.48);
     --spectrum-opacity-checkerboard-square-dark: var(--spectrum-gray-800);
-    --spectrum-gray-50-rgb: 0, 0, 0;
-    --spectrum-gray-50: rgba(var(--spectrum-gray-50-rgb));
-    --spectrum-gray-75-rgb: 14, 14, 14;
-    --spectrum-gray-75: rgba(var(--spectrum-gray-75-rgb));
-    --spectrum-gray-100-rgb: 29, 29, 29;
-    --spectrum-gray-100: rgba(var(--spectrum-gray-100-rgb));
-    --spectrum-gray-200-rgb: 48, 48, 48;
-    --spectrum-gray-200: rgba(var(--spectrum-gray-200-rgb));
-    --spectrum-gray-300-rgb: 75, 75, 75;
-    --spectrum-gray-300: rgba(var(--spectrum-gray-300-rgb));
-    --spectrum-gray-400-rgb: 106, 106, 106;
-    --spectrum-gray-400: rgba(var(--spectrum-gray-400-rgb));
-    --spectrum-gray-500-rgb: 141, 141, 141;
-    --spectrum-gray-500: rgba(var(--spectrum-gray-500-rgb));
-    --spectrum-gray-600-rgb: 176, 176, 176;
-    --spectrum-gray-600: rgba(var(--spectrum-gray-600-rgb));
-    --spectrum-gray-700-rgb: 208, 208, 208;
-    --spectrum-gray-700: rgba(var(--spectrum-gray-700-rgb));
-    --spectrum-gray-800-rgb: 235, 235, 235;
-    --spectrum-gray-800: rgba(var(--spectrum-gray-800-rgb));
-    --spectrum-gray-900-rgb: 255, 255, 255;
-    --spectrum-gray-900: rgba(var(--spectrum-gray-900-rgb));
-    --spectrum-blue-100-rgb: 0, 38, 81;
-    --spectrum-blue-100: rgba(var(--spectrum-blue-100-rgb));
-    --spectrum-blue-200-rgb: 0, 50, 106;
-    --spectrum-blue-200: rgba(var(--spectrum-blue-200-rgb));
-    --spectrum-blue-300-rgb: 0, 64, 135;
-    --spectrum-blue-300: rgba(var(--spectrum-blue-300-rgb));
-    --spectrum-blue-400-rgb: 0, 78, 166;
-    --spectrum-blue-400: rgba(var(--spectrum-blue-400-rgb));
-    --spectrum-blue-500-rgb: 0, 92, 200;
-    --spectrum-blue-500: rgba(var(--spectrum-blue-500-rgb));
-    --spectrum-blue-600-rgb: 6, 108, 231;
-    --spectrum-blue-600: rgba(var(--spectrum-blue-600-rgb));
-    --spectrum-blue-700-rgb: 29, 128, 245;
-    --spectrum-blue-700: rgba(var(--spectrum-blue-700-rgb));
-    --spectrum-blue-800-rgb: 64, 150, 243;
-    --spectrum-blue-800: rgba(var(--spectrum-blue-800-rgb));
-    --spectrum-blue-900-rgb: 94, 170, 247;
-    --spectrum-blue-900: rgba(var(--spectrum-blue-900-rgb));
-    --spectrum-blue-1000-rgb: 124, 189, 250;
-    --spectrum-blue-1000: rgba(var(--spectrum-blue-1000-rgb));
-    --spectrum-blue-1100-rgb: 152, 206, 253;
-    --spectrum-blue-1100: rgba(var(--spectrum-blue-1100-rgb));
-    --spectrum-blue-1200-rgb: 179, 222, 254;
-    --spectrum-blue-1200: rgba(var(--spectrum-blue-1200-rgb));
-    --spectrum-blue-1300-rgb: 206, 234, 255;
-    --spectrum-blue-1300: rgba(var(--spectrum-blue-1300-rgb));
-    --spectrum-blue-1400-rgb: 227, 243, 255;
-    --spectrum-blue-1400: rgba(var(--spectrum-blue-1400-rgb));
-    --spectrum-red-100-rgb: 87, 0, 0;
-    --spectrum-red-100: rgba(var(--spectrum-red-100-rgb));
-    --spectrum-red-200-rgb: 110, 0, 0;
-    --spectrum-red-200: rgba(var(--spectrum-red-200-rgb));
-    --spectrum-red-300-rgb: 138, 0, 0;
-    --spectrum-red-300: rgba(var(--spectrum-red-300-rgb));
-    --spectrum-red-400-rgb: 167, 0, 0;
-    --spectrum-red-400: rgba(var(--spectrum-red-400-rgb));
-    --spectrum-red-500-rgb: 196, 7, 6;
-    --spectrum-red-500: rgba(var(--spectrum-red-500-rgb));
-    --spectrum-red-600-rgb: 221, 33, 24;
-    --spectrum-red-600: rgba(var(--spectrum-red-600-rgb));
-    --spectrum-red-700-rgb: 238, 67, 49;
-    --spectrum-red-700: rgba(var(--spectrum-red-700-rgb));
-    --spectrum-red-800-rgb: 249, 99, 76;
-    --spectrum-red-800: rgba(var(--spectrum-red-800-rgb));
-    --spectrum-red-900-rgb: 255, 129, 107;
-    --spectrum-red-900: rgba(var(--spectrum-red-900-rgb));
-    --spectrum-red-1000-rgb: 255, 158, 140;
-    --spectrum-red-1000: rgba(var(--spectrum-red-1000-rgb));
-    --spectrum-red-1100-rgb: 255, 183, 169;
-    --spectrum-red-1100: rgba(var(--spectrum-red-1100-rgb));
-    --spectrum-red-1200-rgb: 255, 205, 195;
-    --spectrum-red-1200: rgba(var(--spectrum-red-1200-rgb));
-    --spectrum-red-1300-rgb: 255, 223, 217;
-    --spectrum-red-1300: rgba(var(--spectrum-red-1300-rgb));
-    --spectrum-red-1400-rgb: 255, 237, 234;
-    --spectrum-red-1400: rgba(var(--spectrum-red-1400-rgb));
-    --spectrum-orange-100-rgb: 72, 24, 1;
-    --spectrum-orange-100: rgba(var(--spectrum-orange-100-rgb));
-    --spectrum-orange-200-rgb: 92, 32, 0;
-    --spectrum-orange-200: rgba(var(--spectrum-orange-200-rgb));
-    --spectrum-orange-300-rgb: 115, 43, 0;
-    --spectrum-orange-300: rgba(var(--spectrum-orange-300-rgb));
-    --spectrum-orange-400-rgb: 138, 55, 0;
-    --spectrum-orange-400: rgba(var(--spectrum-orange-400-rgb));
-    --spectrum-orange-500-rgb: 162, 68, 0;
-    --spectrum-orange-500: rgba(var(--spectrum-orange-500-rgb));
-    --spectrum-orange-600-rgb: 186, 82, 0;
-    --spectrum-orange-600: rgba(var(--spectrum-orange-600-rgb));
-    --spectrum-orange-700-rgb: 210, 98, 0;
-    --spectrum-orange-700: rgba(var(--spectrum-orange-700-rgb));
-    --spectrum-orange-800-rgb: 232, 116, 0;
-    --spectrum-orange-800: rgba(var(--spectrum-orange-800-rgb));
-    --spectrum-orange-900-rgb: 249, 137, 23;
-    --spectrum-orange-900: rgba(var(--spectrum-orange-900-rgb));
-    --spectrum-orange-1000-rgb: 255, 162, 59;
-    --spectrum-orange-1000: rgba(var(--spectrum-orange-1000-rgb));
-    --spectrum-orange-1100-rgb: 255, 188, 102;
-    --spectrum-orange-1100: rgba(var(--spectrum-orange-1100-rgb));
-    --spectrum-orange-1200-rgb: 253, 210, 145;
-    --spectrum-orange-1200: rgba(var(--spectrum-orange-1200-rgb));
-    --spectrum-orange-1300-rgb: 255, 226, 181;
-    --spectrum-orange-1300: rgba(var(--spectrum-orange-1300-rgb));
-    --spectrum-orange-1400-rgb: 255, 239, 213;
-    --spectrum-orange-1400: rgba(var(--spectrum-orange-1400-rgb));
-    --spectrum-yellow-100-rgb: 53, 36, 0;
-    --spectrum-yellow-100: rgba(var(--spectrum-yellow-100-rgb));
-    --spectrum-yellow-200-rgb: 68, 47, 0;
-    --spectrum-yellow-200: rgba(var(--spectrum-yellow-200-rgb));
-    --spectrum-yellow-300-rgb: 86, 62, 0;
-    --spectrum-yellow-300: rgba(var(--spectrum-yellow-300-rgb));
-    --spectrum-yellow-400-rgb: 103, 77, 0;
-    --spectrum-yellow-400: rgba(var(--spectrum-yellow-400-rgb));
-    --spectrum-yellow-500-rgb: 122, 92, 0;
-    --spectrum-yellow-500: rgba(var(--spectrum-yellow-500-rgb));
-    --spectrum-yellow-600-rgb: 141, 108, 0;
-    --spectrum-yellow-600: rgba(var(--spectrum-yellow-600-rgb));
-    --spectrum-yellow-700-rgb: 161, 126, 0;
-    --spectrum-yellow-700: rgba(var(--spectrum-yellow-700-rgb));
-    --spectrum-yellow-800-rgb: 180, 144, 0;
-    --spectrum-yellow-800: rgba(var(--spectrum-yellow-800-rgb));
-    --spectrum-yellow-900-rgb: 199, 162, 0;
-    --spectrum-yellow-900: rgba(var(--spectrum-yellow-900-rgb));
-    --spectrum-yellow-1000-rgb: 216, 181, 0;
-    --spectrum-yellow-1000: rgba(var(--spectrum-yellow-1000-rgb));
-    --spectrum-yellow-1100-rgb: 233, 199, 0;
-    --spectrum-yellow-1100: rgba(var(--spectrum-yellow-1100-rgb));
-    --spectrum-yellow-1200-rgb: 247, 216, 4;
-    --spectrum-yellow-1200: rgba(var(--spectrum-yellow-1200-rgb));
-    --spectrum-yellow-1300-rgb: 249, 233, 97;
-    --spectrum-yellow-1300: rgba(var(--spectrum-yellow-1300-rgb));
-    --spectrum-yellow-1400-rgb: 252, 243, 170;
-    --spectrum-yellow-1400: rgba(var(--spectrum-yellow-1400-rgb));
-    --spectrum-chartreuse-100-rgb: 32, 43, 0;
-    --spectrum-chartreuse-100: rgba(var(--spectrum-chartreuse-100-rgb));
-    --spectrum-chartreuse-200-rgb: 42, 56, 0;
-    --spectrum-chartreuse-200: rgba(var(--spectrum-chartreuse-200-rgb));
-    --spectrum-chartreuse-300-rgb: 54, 72, 0;
-    --spectrum-chartreuse-300: rgba(var(--spectrum-chartreuse-300-rgb));
-    --spectrum-chartreuse-400-rgb: 66, 88, 0;
-    --spectrum-chartreuse-400: rgba(var(--spectrum-chartreuse-400-rgb));
-    --spectrum-chartreuse-500-rgb: 79, 105, 0;
-    --spectrum-chartreuse-500: rgba(var(--spectrum-chartreuse-500-rgb));
-    --spectrum-chartreuse-600-rgb: 93, 123, 0;
-    --spectrum-chartreuse-600: rgba(var(--spectrum-chartreuse-600-rgb));
-    --spectrum-chartreuse-700-rgb: 107, 142, 0;
-    --spectrum-chartreuse-700: rgba(var(--spectrum-chartreuse-700-rgb));
-    --spectrum-chartreuse-800-rgb: 122, 161, 0;
-    --spectrum-chartreuse-800: rgba(var(--spectrum-chartreuse-800-rgb));
-    --spectrum-chartreuse-900-rgb: 138, 180, 3;
-    --spectrum-chartreuse-900: rgba(var(--spectrum-chartreuse-900-rgb));
-    --spectrum-chartreuse-1000-rgb: 154, 198, 11;
-    --spectrum-chartreuse-1000: rgba(var(--spectrum-chartreuse-1000-rgb));
-    --spectrum-chartreuse-1100-rgb: 170, 216, 22;
-    --spectrum-chartreuse-1100: rgba(var(--spectrum-chartreuse-1100-rgb));
-    --spectrum-chartreuse-1200-rgb: 187, 232, 41;
-    --spectrum-chartreuse-1200: rgba(var(--spectrum-chartreuse-1200-rgb));
-    --spectrum-chartreuse-1300-rgb: 205, 246, 72;
-    --spectrum-chartreuse-1300: rgba(var(--spectrum-chartreuse-1300-rgb));
-    --spectrum-chartreuse-1400-rgb: 225, 253, 132;
-    --spectrum-chartreuse-1400: rgba(var(--spectrum-chartreuse-1400-rgb));
-    --spectrum-celery-100-rgb: 0, 47, 7;
-    --spectrum-celery-100: rgba(var(--spectrum-celery-100-rgb));
-    --spectrum-celery-200-rgb: 0, 61, 9;
-    --spectrum-celery-200: rgba(var(--spectrum-celery-200-rgb));
-    --spectrum-celery-300-rgb: 0, 77, 12;
-    --spectrum-celery-300: rgba(var(--spectrum-celery-300-rgb));
-    --spectrum-celery-400-rgb: 0, 95, 15;
-    --spectrum-celery-400: rgba(var(--spectrum-celery-400-rgb));
-    --spectrum-celery-500-rgb: 0, 113, 15;
-    --spectrum-celery-500: rgba(var(--spectrum-celery-500-rgb));
-    --spectrum-celery-600-rgb: 0, 132, 15;
-    --spectrum-celery-600: rgba(var(--spectrum-celery-600-rgb));
-    --spectrum-celery-700-rgb: 0, 151, 20;
-    --spectrum-celery-700: rgba(var(--spectrum-celery-700-rgb));
-    --spectrum-celery-800-rgb: 13, 171, 37;
-    --spectrum-celery-800: rgba(var(--spectrum-celery-800-rgb));
-    --spectrum-celery-900-rgb: 45, 191, 58;
-    --spectrum-celery-900: rgba(var(--spectrum-celery-900-rgb));
-    --spectrum-celery-1000-rgb: 80, 208, 82;
-    --spectrum-celery-1000: rgba(var(--spectrum-celery-1000-rgb));
-    --spectrum-celery-1100-rgb: 115, 224, 107;
-    --spectrum-celery-1100: rgba(var(--spectrum-celery-1100-rgb));
-    --spectrum-celery-1200-rgb: 147, 237, 131;
-    --spectrum-celery-1200: rgba(var(--spectrum-celery-1200-rgb));
-    --spectrum-celery-1300-rgb: 180, 247, 162;
-    --spectrum-celery-1300: rgba(var(--spectrum-celery-1300-rgb));
-    --spectrum-celery-1400-rgb: 213, 252, 202;
-    --spectrum-celery-1400: rgba(var(--spectrum-celery-1400-rgb));
-    --spectrum-green-100-rgb: 10, 44, 28;
-    --spectrum-green-100: rgba(var(--spectrum-green-100-rgb));
-    --spectrum-green-200-rgb: 7, 59, 36;
-    --spectrum-green-200: rgba(var(--spectrum-green-200-rgb));
-    --spectrum-green-300-rgb: 0, 76, 46;
-    --spectrum-green-300: rgba(var(--spectrum-green-300-rgb));
-    --spectrum-green-400-rgb: 0, 93, 57;
-    --spectrum-green-400: rgba(var(--spectrum-green-400-rgb));
-    --spectrum-green-500-rgb: 0, 111, 69;
-    --spectrum-green-500: rgba(var(--spectrum-green-500-rgb));
-    --spectrum-green-600-rgb: 0, 130, 82;
-    --spectrum-green-600: rgba(var(--spectrum-green-600-rgb));
-    --spectrum-green-700-rgb: 0, 149, 98;
-    --spectrum-green-700: rgba(var(--spectrum-green-700-rgb));
-    --spectrum-green-800-rgb: 28, 168, 114;
-    --spectrum-green-800: rgba(var(--spectrum-green-800-rgb));
-    --spectrum-green-900-rgb: 52, 187, 132;
-    --spectrum-green-900: rgba(var(--spectrum-green-900-rgb));
-    --spectrum-green-1000-rgb: 75, 205, 149;
-    --spectrum-green-1000: rgba(var(--spectrum-green-1000-rgb));
-    --spectrum-green-1100-rgb: 103, 222, 168;
-    --spectrum-green-1100: rgba(var(--spectrum-green-1100-rgb));
-    --spectrum-green-1200-rgb: 137, 236, 188;
-    --spectrum-green-1200: rgba(var(--spectrum-green-1200-rgb));
-    --spectrum-green-1300-rgb: 177, 244, 209;
-    --spectrum-green-1300: rgba(var(--spectrum-green-1300-rgb));
-    --spectrum-green-1400-rgb: 214, 249, 228;
-    --spectrum-green-1400: rgba(var(--spectrum-green-1400-rgb));
-    --spectrum-seafoam-100-rgb: 18, 43, 42;
-    --spectrum-seafoam-100: rgba(var(--spectrum-seafoam-100-rgb));
-    --spectrum-seafoam-200-rgb: 19, 57, 55;
-    --spectrum-seafoam-200: rgba(var(--spectrum-seafoam-200-rgb));
-    --spectrum-seafoam-300-rgb: 16, 73, 70;
-    --spectrum-seafoam-300: rgba(var(--spectrum-seafoam-300-rgb));
-    --spectrum-seafoam-400-rgb: 3, 91, 88;
-    --spectrum-seafoam-400: rgba(var(--spectrum-seafoam-400-rgb));
-    --spectrum-seafoam-500-rgb: 0, 108, 104;
-    --spectrum-seafoam-500: rgba(var(--spectrum-seafoam-500-rgb));
-    --spectrum-seafoam-600-rgb: 0, 127, 121;
-    --spectrum-seafoam-600: rgba(var(--spectrum-seafoam-600-rgb));
-    --spectrum-seafoam-700-rgb: 0, 146, 140;
-    --spectrum-seafoam-700: rgba(var(--spectrum-seafoam-700-rgb));
-    --spectrum-seafoam-800-rgb: 0, 165, 159;
-    --spectrum-seafoam-800: rgba(var(--spectrum-seafoam-800-rgb));
-    --spectrum-seafoam-900-rgb: 26, 185, 178;
-    --spectrum-seafoam-900: rgba(var(--spectrum-seafoam-900-rgb));
-    --spectrum-seafoam-1000-rgb: 66, 202, 195;
-    --spectrum-seafoam-1000: rgba(var(--spectrum-seafoam-1000-rgb));
-    --spectrum-seafoam-1100-rgb: 102, 218, 211;
-    --spectrum-seafoam-1100: rgba(var(--spectrum-seafoam-1100-rgb));
-    --spectrum-seafoam-1200-rgb: 139, 232, 225;
-    --spectrum-seafoam-1200: rgba(var(--spectrum-seafoam-1200-rgb));
-    --spectrum-seafoam-1300-rgb: 179, 242, 237;
-    --spectrum-seafoam-1300: rgba(var(--spectrum-seafoam-1300-rgb));
-    --spectrum-seafoam-1400-rgb: 215, 248, 244;
-    --spectrum-seafoam-1400: rgba(var(--spectrum-seafoam-1400-rgb));
-    --spectrum-cyan-100-rgb: 0, 41, 68;
-    --spectrum-cyan-100: rgba(var(--spectrum-cyan-100-rgb));
-    --spectrum-cyan-200-rgb: 0, 54, 88;
-    --spectrum-cyan-200: rgba(var(--spectrum-cyan-200-rgb));
-    --spectrum-cyan-300-rgb: 0, 69, 108;
-    --spectrum-cyan-300: rgba(var(--spectrum-cyan-300-rgb));
-    --spectrum-cyan-400-rgb: 0, 86, 128;
-    --spectrum-cyan-400: rgba(var(--spectrum-cyan-400-rgb));
-    --spectrum-cyan-500-rgb: 0, 103, 147;
-    --spectrum-cyan-500: rgba(var(--spectrum-cyan-500-rgb));
-    --spectrum-cyan-600-rgb: 0, 121, 167;
-    --spectrum-cyan-600: rgba(var(--spectrum-cyan-600-rgb));
-    --spectrum-cyan-700-rgb: 0, 140, 186;
-    --spectrum-cyan-700: rgba(var(--spectrum-cyan-700-rgb));
-    --spectrum-cyan-800-rgb: 4, 160, 205;
-    --spectrum-cyan-800: rgba(var(--spectrum-cyan-800-rgb));
-    --spectrum-cyan-900-rgb: 23, 180, 221;
-    --spectrum-cyan-900: rgba(var(--spectrum-cyan-900-rgb));
-    --spectrum-cyan-1000-rgb: 57, 199, 234;
-    --spectrum-cyan-1000: rgba(var(--spectrum-cyan-1000-rgb));
-    --spectrum-cyan-1100-rgb: 96, 216, 243;
-    --spectrum-cyan-1100: rgba(var(--spectrum-cyan-1100-rgb));
-    --spectrum-cyan-1200-rgb: 134, 230, 250;
-    --spectrum-cyan-1200: rgba(var(--spectrum-cyan-1200-rgb));
-    --spectrum-cyan-1300-rgb: 170, 242, 255;
-    --spectrum-cyan-1300: rgba(var(--spectrum-cyan-1300-rgb));
-    --spectrum-cyan-1400-rgb: 206, 249, 255;
-    --spectrum-cyan-1400: rgba(var(--spectrum-cyan-1400-rgb));
-    --spectrum-indigo-100-rgb: 26, 29, 97;
-    --spectrum-indigo-100: rgba(var(--spectrum-indigo-100-rgb));
-    --spectrum-indigo-200-rgb: 35, 39, 125;
-    --spectrum-indigo-200: rgba(var(--spectrum-indigo-200-rgb));
-    --spectrum-indigo-300-rgb: 46, 50, 158;
-    --spectrum-indigo-300: rgba(var(--spectrum-indigo-300-rgb));
-    --spectrum-indigo-400-rgb: 58, 63, 189;
-    --spectrum-indigo-400: rgba(var(--spectrum-indigo-400-rgb));
-    --spectrum-indigo-500-rgb: 73, 78, 216;
-    --spectrum-indigo-500: rgba(var(--spectrum-indigo-500-rgb));
-    --spectrum-indigo-600-rgb: 90, 96, 235;
-    --spectrum-indigo-600: rgba(var(--spectrum-indigo-600-rgb));
-    --spectrum-indigo-700-rgb: 110, 115, 246;
-    --spectrum-indigo-700: rgba(var(--spectrum-indigo-700-rgb));
-    --spectrum-indigo-800-rgb: 132, 136, 253;
-    --spectrum-indigo-800: rgba(var(--spectrum-indigo-800-rgb));
-    --spectrum-indigo-900-rgb: 153, 157, 255;
-    --spectrum-indigo-900: rgba(var(--spectrum-indigo-900-rgb));
-    --spectrum-indigo-1000-rgb: 174, 177, 255;
-    --spectrum-indigo-1000: rgba(var(--spectrum-indigo-1000-rgb));
-    --spectrum-indigo-1100-rgb: 194, 196, 255;
-    --spectrum-indigo-1100: rgba(var(--spectrum-indigo-1100-rgb));
-    --spectrum-indigo-1200-rgb: 212, 213, 255;
-    --spectrum-indigo-1200: rgba(var(--spectrum-indigo-1200-rgb));
-    --spectrum-indigo-1300-rgb: 227, 228, 255;
-    --spectrum-indigo-1300: rgba(var(--spectrum-indigo-1300-rgb));
-    --spectrum-indigo-1400-rgb: 240, 240, 255;
-    --spectrum-indigo-1400: rgba(var(--spectrum-indigo-1400-rgb));
-    --spectrum-purple-100-rgb: 50, 16, 104;
-    --spectrum-purple-100: rgba(var(--spectrum-purple-100-rgb));
-    --spectrum-purple-200-rgb: 67, 13, 140;
-    --spectrum-purple-200: rgba(var(--spectrum-purple-200-rgb));
-    --spectrum-purple-300-rgb: 86, 16, 173;
-    --spectrum-purple-300: rgba(var(--spectrum-purple-300-rgb));
-    --spectrum-purple-400-rgb: 106, 29, 200;
-    --spectrum-purple-400: rgba(var(--spectrum-purple-400-rgb));
-    --spectrum-purple-500-rgb: 126, 49, 222;
-    --spectrum-purple-500: rgba(var(--spectrum-purple-500-rgb));
-    --spectrum-purple-600-rgb: 145, 70, 236;
-    --spectrum-purple-600: rgba(var(--spectrum-purple-600-rgb));
-    --spectrum-purple-700-rgb: 162, 94, 246;
-    --spectrum-purple-700: rgba(var(--spectrum-purple-700-rgb));
-    --spectrum-purple-800-rgb: 178, 119, 250;
-    --spectrum-purple-800: rgba(var(--spectrum-purple-800-rgb));
-    --spectrum-purple-900-rgb: 192, 143, 252;
-    --spectrum-purple-900: rgba(var(--spectrum-purple-900-rgb));
-    --spectrum-purple-1000-rgb: 206, 166, 253;
-    --spectrum-purple-1000: rgba(var(--spectrum-purple-1000-rgb));
-    --spectrum-purple-1100-rgb: 219, 188, 254;
-    --spectrum-purple-1100: rgba(var(--spectrum-purple-1100-rgb));
-    --spectrum-purple-1200-rgb: 230, 207, 255;
-    --spectrum-purple-1200: rgba(var(--spectrum-purple-1200-rgb));
-    --spectrum-purple-1300-rgb: 240, 224, 255;
-    --spectrum-purple-1300: rgba(var(--spectrum-purple-1300-rgb));
-    --spectrum-purple-1400-rgb: 248, 237, 255;
-    --spectrum-purple-1400: rgba(var(--spectrum-purple-1400-rgb));
-    --spectrum-fuchsia-100-rgb: 70, 14, 68;
-    --spectrum-fuchsia-100: rgba(var(--spectrum-fuchsia-100-rgb));
-    --spectrum-fuchsia-200-rgb: 93, 9, 92;
-    --spectrum-fuchsia-200: rgba(var(--spectrum-fuchsia-200-rgb));
-    --spectrum-fuchsia-300-rgb: 120, 0, 120;
-    --spectrum-fuchsia-300: rgba(var(--spectrum-fuchsia-300-rgb));
-    --spectrum-fuchsia-400-rgb: 146, 0, 147;
-    --spectrum-fuchsia-400: rgba(var(--spectrum-fuchsia-400-rgb));
-    --spectrum-fuchsia-500-rgb: 169, 19, 170;
-    --spectrum-fuchsia-500: rgba(var(--spectrum-fuchsia-500-rgb));
-    --spectrum-fuchsia-600-rgb: 191, 43, 191;
-    --spectrum-fuchsia-600: rgba(var(--spectrum-fuchsia-600-rgb));
-    --spectrum-fuchsia-700-rgb: 211, 65, 213;
-    --spectrum-fuchsia-700: rgba(var(--spectrum-fuchsia-700-rgb));
-    --spectrum-fuchsia-800-rgb: 228, 91, 229;
-    --spectrum-fuchsia-800: rgba(var(--spectrum-fuchsia-800-rgb));
-    --spectrum-fuchsia-900-rgb: 239, 120, 238;
-    --spectrum-fuchsia-900: rgba(var(--spectrum-fuchsia-900-rgb));
-    --spectrum-fuchsia-1000-rgb: 246, 149, 243;
-    --spectrum-fuchsia-1000: rgba(var(--spectrum-fuchsia-1000-rgb));
-    --spectrum-fuchsia-1100-rgb: 251, 175, 246;
-    --spectrum-fuchsia-1100: rgba(var(--spectrum-fuchsia-1100-rgb));
-    --spectrum-fuchsia-1200-rgb: 254, 199, 248;
-    --spectrum-fuchsia-1200: rgba(var(--spectrum-fuchsia-1200-rgb));
-    --spectrum-fuchsia-1300-rgb: 255, 220, 250;
-    --spectrum-fuchsia-1300: rgba(var(--spectrum-fuchsia-1300-rgb));
-    --spectrum-fuchsia-1400-rgb: 255, 235, 252;
-    --spectrum-fuchsia-1400: rgba(var(--spectrum-fuchsia-1400-rgb));
-    --spectrum-magenta-100-rgb: 83, 3, 41;
-    --spectrum-magenta-100: rgba(var(--spectrum-magenta-100-rgb));
-    --spectrum-magenta-200-rgb: 106, 0, 52;
-    --spectrum-magenta-200: rgba(var(--spectrum-magenta-200-rgb));
-    --spectrum-magenta-300-rgb: 133, 0, 65;
-    --spectrum-magenta-300: rgba(var(--spectrum-magenta-300-rgb));
-    --spectrum-magenta-400-rgb: 161, 0, 78;
-    --spectrum-magenta-400: rgba(var(--spectrum-magenta-400-rgb));
-    --spectrum-magenta-500-rgb: 186, 22, 93;
-    --spectrum-magenta-500: rgba(var(--spectrum-magenta-500-rgb));
-    --spectrum-magenta-600-rgb: 209, 43, 114;
-    --spectrum-magenta-600: rgba(var(--spectrum-magenta-600-rgb));
-    --spectrum-magenta-700-rgb: 227, 69, 137;
-    --spectrum-magenta-700: rgba(var(--spectrum-magenta-700-rgb));
-    --spectrum-magenta-800-rgb: 241, 97, 156;
-    --spectrum-magenta-800: rgba(var(--spectrum-magenta-800-rgb));
-    --spectrum-magenta-900-rgb: 252, 124, 173;
-    --spectrum-magenta-900: rgba(var(--spectrum-magenta-900-rgb));
-    --spectrum-magenta-1000-rgb: 255, 152, 191;
-    --spectrum-magenta-1000: rgba(var(--spectrum-magenta-1000-rgb));
-    --spectrum-magenta-1100-rgb: 255, 179, 207;
-    --spectrum-magenta-1100: rgba(var(--spectrum-magenta-1100-rgb));
-    --spectrum-magenta-1200-rgb: 255, 202, 221;
-    --spectrum-magenta-1200: rgba(var(--spectrum-magenta-1200-rgb));
-    --spectrum-magenta-1300-rgb: 255, 221, 233;
-    --spectrum-magenta-1300: rgba(var(--spectrum-magenta-1300-rgb));
-    --spectrum-magenta-1400-rgb: 255, 236, 243;
-    --spectrum-magenta-1400: rgba(var(--spectrum-magenta-1400-rgb));
+    --spectrum-gray-25: rgb(17, 17, 17);
+    --spectrum-gray-50: rgb(27, 27, 27);
+    --spectrum-gray-75: rgb(34, 34, 34);
+    --spectrum-gray-100: rgb(44, 44, 44);
+    --spectrum-gray-200: rgb(50, 50, 50);
+    --spectrum-gray-300: rgb(57, 57, 57);
+    --spectrum-gray-400: rgb(68, 68, 68);
+    --spectrum-gray-500: rgb(109, 109, 109);
+    --spectrum-gray-600: rgb(138, 138, 138);
+    --spectrum-gray-700: rgb(175, 175, 175);
+    --spectrum-gray-800: rgb(219, 219, 219);
+    --spectrum-gray-900: rgb(242, 242, 242);
+    --spectrum-gray-1000: rgb(255, 255, 255);
+    --spectrum-blue-100: rgb(14, 23, 63);
+    --spectrum-blue-200: rgb(15, 28, 82);
+    --spectrum-blue-300: rgb(12, 33, 117);
+    --spectrum-blue-400: rgb(18, 45, 154);
+    --spectrum-blue-500: rgb(26, 58, 195);
+    --spectrum-blue-600: rgb(37, 73, 229);
+    --spectrum-blue-700: rgb(52, 91, 248);
+    --spectrum-blue-800: rgb(69, 110, 254);
+    --spectrum-blue-900: rgb(86, 129, 255);
+    --spectrum-blue-1000: rgb(105, 149, 254);
+    --spectrum-blue-1100: rgb(124, 169, 252);
+    --spectrum-blue-1200: rgb(152, 192, 252);
+    --spectrum-blue-1300: rgb(181, 213, 253);
+    --spectrum-blue-1400: rgb(213, 231, 254);
+    --spectrum-blue-1500: rgb(238, 245, 255);
+    --spectrum-blue-1600: rgb(255, 255, 255);
+    --spectrum-red-100: rgb(54, 10, 3);
+    --spectrum-red-200: rgb(68, 13, 5);
+    --spectrum-red-300: rgb(87, 17, 7);
+    --spectrum-red-400: rgb(115, 24, 11);
+    --spectrum-red-500: rgb(147, 31, 17);
+    --spectrum-red-600: rgb(177, 38, 23);
+    --spectrum-red-700: rgb(205, 46, 29);
+    --spectrum-red-800: rgb(230, 54, 35);
+    --spectrum-red-900: rgb(252, 67, 46);
+    --spectrum-red-1000: rgb(255, 103, 86);
+    --spectrum-red-1100: rgb(255, 134, 120);
+    --spectrum-red-1200: rgb(255, 167, 157);
+    --spectrum-red-1300: rgb(255, 196, 189);
+    --spectrum-red-1400: rgb(255, 222, 219);
+    --spectrum-red-1500: rgb(255, 242, 240);
+    --spectrum-red-1600: rgb(255, 255, 255);
+    --spectrum-orange-100: rgb(49, 16, 0);
+    --spectrum-orange-200: rgb(61, 21, 0);
+    --spectrum-orange-300: rgb(80, 27, 0);
+    --spectrum-orange-400: rgb(106, 36, 0);
+    --spectrum-orange-500: rgb(135, 47, 0);
+    --spectrum-orange-600: rgb(162, 59, 0);
+    --spectrum-orange-700: rgb(185, 73, 0);
+    --spectrum-orange-800: rgb(205, 86, 0);
+    --spectrum-orange-900: rgb(224, 100, 0);
+    --spectrum-orange-1000: rgb(243, 117, 0);
+    --spectrum-orange-1100: rgb(255, 137, 0);
+    --spectrum-orange-1200: rgb(255, 173, 45);
+    --spectrum-orange-1300: rgb(255, 201, 116);
+    --spectrum-orange-1400: rgb(255, 225, 178);
+    --spectrum-orange-1500: rgb(255, 243, 225);
+    --spectrum-orange-1600: rgb(255, 255, 255);
+    --spectrum-yellow-100: rgb(37, 23, 0);
+    --spectrum-yellow-200: rgb(47, 29, 0);
+    --spectrum-yellow-300: rgb(61, 39, 0);
+    --spectrum-yellow-400: rgb(83, 52, 0);
+    --spectrum-yellow-500: rgb(107, 67, 0);
+    --spectrum-yellow-600: rgb(130, 82, 0);
+    --spectrum-yellow-700: rgb(151, 97, 0);
+    --spectrum-yellow-800: rgb(169, 110, 0);
+    --spectrum-yellow-900: rgb(186, 124, 0);
+    --spectrum-yellow-1000: rgb(203, 141, 0);
+    --spectrum-yellow-1100: rgb(218, 159, 0);
+    --spectrum-yellow-1200: rgb(235, 183, 0);
+    --spectrum-yellow-1300: rgb(249, 206, 0);
+    --spectrum-yellow-1400: rgb(255, 230, 86);
+    --spectrum-yellow-1500: rgb(255, 246, 195);
+    --spectrum-yellow-1600: rgb(255, 255, 255);
+    --spectrum-chartreuse-100: rgb(23, 28, 0);
+    --spectrum-chartreuse-200: rgb(30, 36, 0);
+    --spectrum-chartreuse-300: rgb(39, 47, 0);
+    --spectrum-chartreuse-400: rgb(53, 63, 0);
+    --spectrum-chartreuse-500: rgb(68, 82, 0);
+    --spectrum-chartreuse-600: rgb(83, 100, 0);
+    --spectrum-chartreuse-700: rgb(97, 116, 0);
+    --spectrum-chartreuse-800: rgb(109, 131, 0);
+    --spectrum-chartreuse-900: rgb(122, 147, 0);
+    --spectrum-chartreuse-1000: rgb(136, 164, 0);
+    --spectrum-chartreuse-1100: rgb(151, 181, 0);
+    --spectrum-chartreuse-1200: rgb(169, 203, 0);
+    --spectrum-chartreuse-1300: rgb(187, 225, 0);
+    --spectrum-chartreuse-1400: rgb(219, 240, 117);
+    --spectrum-chartreuse-1500: rgb(242, 249, 206);
+    --spectrum-chartreuse-1600: rgb(255, 255, 255);
+    --spectrum-celery-100: rgb(11, 31, 0);
+    --spectrum-celery-200: rgb(15, 38, 0);
+    --spectrum-celery-300: rgb(21, 51, 1);
+    --spectrum-celery-400: rgb(31, 67, 4);
+    --spectrum-celery-500: rgb(41, 86, 8);
+    --spectrum-celery-600: rgb(50, 105, 11);
+    --spectrum-celery-700: rgb(60, 122, 15);
+    --spectrum-celery-800: rgb(69, 138, 19);
+    --spectrum-celery-900: rgb(78, 154, 23);
+    --spectrum-celery-1000: rgb(88, 172, 28);
+    --spectrum-celery-1100: rgb(100, 190, 35);
+    --spectrum-celery-1200: rgb(116, 213, 46);
+    --spectrum-celery-1300: rgb(136, 234, 65);
+    --spectrum-celery-1400: rgb(170, 251, 112);
+    --spectrum-celery-1500: rgb(222, 255, 198);
+    --spectrum-celery-1600: rgb(255, 255, 255);
+    --spectrum-green-100: rgb(0, 30, 23);
+    --spectrum-green-200: rgb(0, 38, 29);
+    --spectrum-green-300: rgb(0, 51, 38);
+    --spectrum-green-400: rgb(0, 68, 48);
+    --spectrum-green-500: rgb(2, 87, 58);
+    --spectrum-green-600: rgb(3, 106, 67);
+    --spectrum-green-700: rgb(4, 124, 75);
+    --spectrum-green-800: rgb(6, 140, 82);
+    --spectrum-green-900: rgb(9, 157, 89);
+    --spectrum-green-1000: rgb(14, 175, 98);
+    --spectrum-green-1100: rgb(24, 193, 110);
+    --spectrum-green-1200: rgb(57, 215, 134);
+    --spectrum-green-1300: rgb(126, 231, 172);
+    --spectrum-green-1400: rgb(189, 241, 208);
+    --spectrum-green-1500: rgb(229, 250, 236);
+    --spectrum-green-1600: rgb(255, 255, 255);
+    --spectrum-seafoam-100: rgb(0, 30, 27);
+    --spectrum-seafoam-200: rgb(0, 39, 35);
+    --spectrum-seafoam-300: rgb(0, 50, 44);
+    --spectrum-seafoam-400: rgb(0, 67, 59);
+    --spectrum-seafoam-500: rgb(2, 86, 75);
+    --spectrum-seafoam-600: rgb(4, 105, 89);
+    --spectrum-seafoam-700: rgb(6, 122, 103);
+    --spectrum-seafoam-800: rgb(8, 138, 116);
+    --spectrum-seafoam-900: rgb(10, 154, 128);
+    --spectrum-seafoam-1000: rgb(12, 173, 142);
+    --spectrum-seafoam-1100: rgb(14, 190, 156);
+    --spectrum-seafoam-1200: rgb(29, 214, 176);
+    --spectrum-seafoam-1300: rgb(122, 229, 203);
+    --spectrum-seafoam-1400: rgb(186, 241, 222);
+    --spectrum-seafoam-1500: rgb(229, 249, 243);
+    --spectrum-seafoam-1600: rgb(255, 255, 255);
+    --spectrum-cyan-100: rgb(0, 29, 39);
+    --spectrum-cyan-200: rgb(0, 36, 49);
+    --spectrum-cyan-300: rgb(0, 48, 65);
+    --spectrum-cyan-400: rgb(0, 64, 88);
+    --spectrum-cyan-500: rgb(0, 82, 113);
+    --spectrum-cyan-600: rgb(3, 99, 140);
+    --spectrum-cyan-700: rgb(8, 115, 168);
+    --spectrum-cyan-800: rgb(15, 128, 194);
+    --spectrum-cyan-900: rgb(24, 142, 220);
+    --spectrum-cyan-1000: rgb(38, 159, 244);
+    --spectrum-cyan-1100: rgb(63, 177, 255);
+    --spectrum-cyan-1200: rgb(107, 199, 255);
+    --spectrum-cyan-1300: rgb(152, 219, 255);
+    --spectrum-cyan-1400: rgb(195, 236, 252);
+    --spectrum-cyan-1500: rgb(230, 248, 253);
+    --spectrum-cyan-1600: rgb(255, 255, 255);
+    --spectrum-indigo-100: rgb(30, 0, 93);
+    --spectrum-indigo-200: rgb(35, 0, 110);
+    --spectrum-indigo-300: rgb(47, 0, 140);
+    --spectrum-indigo-400: rgb(62, 12, 174);
+    --spectrum-indigo-500: rgb(79, 30, 209);
+    --spectrum-indigo-600: rgb(95, 52, 235);
+    --spectrum-indigo-700: rgb(109, 75, 248);
+    --spectrum-indigo-800: rgb(119, 97, 252);
+    --spectrum-indigo-900: rgb(128, 119, 254);
+    --spectrum-indigo-1000: rgb(139, 141, 254);
+    --spectrum-indigo-1100: rgb(153, 161, 255);
+    --spectrum-indigo-1200: rgb(176, 186, 255);
+    --spectrum-indigo-1300: rgb(199, 208, 255);
+    --spectrum-indigo-1400: rgb(223, 228, 255);
+    --spectrum-indigo-1500: rgb(243, 244, 255);
+    --spectrum-indigo-1600: rgb(255, 255, 255);
+    --spectrum-purple-100: rgb(41, 0, 79);
+    --spectrum-purple-200: rgb(50, 0, 96);
+    --spectrum-purple-300: rgb(64, 0, 122);
+    --spectrum-purple-400: rgb(83, 0, 159);
+    --spectrum-purple-500: rgb(107, 6, 195);
+    --spectrum-purple-600: rgb(130, 34, 215);
+    --spectrum-purple-700: rgb(148, 62, 224);
+    --spectrum-purple-800: rgb(161, 84, 229);
+    --spectrum-purple-900: rgb(173, 105, 233);
+    --spectrum-purple-1000: rgb(186, 127, 237);
+    --spectrum-purple-1100: rgb(197, 149, 240);
+    --spectrum-purple-1200: rgb(212, 176, 244);
+    --spectrum-purple-1300: rgb(225, 201, 247);
+    --spectrum-purple-1400: rgb(238, 224, 250);
+    --spectrum-purple-1500: rgb(248, 243, 253);
+    --spectrum-purple-1600: rgb(255, 255, 255);
+    --spectrum-fuchsia-100: rgb(50, 0, 61);
+    --spectrum-fuchsia-200: rgb(61, 0, 74);
+    --spectrum-fuchsia-300: rgb(79, 0, 95);
+    --spectrum-fuchsia-400: rgb(102, 9, 120);
+    --spectrum-fuchsia-500: rgb(127, 23, 146);
+    --spectrum-fuchsia-600: rgb(151, 38, 170);
+    --spectrum-fuchsia-700: rgb(173, 51, 192);
+    --spectrum-fuchsia-800: rgb(192, 64, 212);
+    --spectrum-fuchsia-900: rgb(213, 73, 235);
+    --spectrum-fuchsia-1000: rgb(232, 91, 253);
+    --spectrum-fuchsia-1100: rgb(240, 122, 255);
+    --spectrum-fuchsia-1200: rgb(245, 159, 255);
+    --spectrum-fuchsia-1300: rgb(248, 191, 255);
+    --spectrum-fuchsia-1400: rgb(251, 219, 255);
+    --spectrum-fuchsia-1500: rgb(253, 241, 255);
+    --spectrum-fuchsia-1600: rgb(255, 255, 255);
+    --spectrum-magenta-100: rgb(59, 0, 22);
+    --spectrum-magenta-200: rgb(74, 0, 27);
+    --spectrum-magenta-300: rgb(93, 0, 34);
+    --spectrum-magenta-400: rgb(123, 0, 45);
+    --spectrum-magenta-500: rgb(152, 7, 60);
+    --spectrum-magenta-600: rgb(181, 19, 76);
+    --spectrum-magenta-700: rgb(207, 31, 92);
+    --spectrum-magenta-800: rgb(231, 41, 105);
+    --spectrum-magenta-900: rgb(255, 51, 119);
+    --spectrum-magenta-1000: rgb(255, 96, 149);
+    --spectrum-magenta-1100: rgb(255, 128, 171);
+    --spectrum-magenta-1200: rgb(255, 163, 194);
+    --spectrum-magenta-1300: rgb(255, 193, 214);
+    --spectrum-magenta-1400: rgb(255, 220, 232);
+    --spectrum-magenta-1500: rgb(255, 241, 246);
+    --spectrum-magenta-1600: rgb(255, 255, 255);
+    --spectrum-pink-100: rgb(58, 0, 37);
+    --spectrum-pink-200: rgb(71, 0, 44);
+    --spectrum-pink-300: rgb(90, 0, 57);
+    --spectrum-pink-400: rgb(115, 7, 75);
+    --spectrum-pink-500: rgb(143, 18, 97);
+    --spectrum-pink-600: rgb(171, 29, 119);
+    --spectrum-pink-700: rgb(196, 39, 138);
+    --spectrum-pink-800: rgb(220, 47, 156);
+    --spectrum-pink-900: rgb(236, 67, 175);
+    --spectrum-pink-1000: rgb(251, 90, 196);
+    --spectrum-pink-1100: rgb(255, 122, 210);
+    --spectrum-pink-1200: rgb(255, 159, 223);
+    --spectrum-pink-1300: rgb(255, 191, 234);
+    --spectrum-pink-1400: rgb(255, 219, 243);
+    --spectrum-pink-1500: rgb(255, 241, 250);
+    --spectrum-pink-1600: rgb(255, 255, 255);
+    --spectrum-turquoise-100: rgb(0, 30, 33);
+    --spectrum-turquoise-200: rgb(0, 37, 41);
+    --spectrum-turquoise-300: rgb(0, 49, 54);
+    --spectrum-turquoise-400: rgb(0, 66, 72);
+    --spectrum-turquoise-500: rgb(3, 84, 92);
+    --spectrum-turquoise-600: rgb(5, 103, 112);
+    --spectrum-turquoise-700: rgb(7, 120, 131);
+    --spectrum-turquoise-800: rgb(9, 135, 147);
+    --spectrum-turquoise-900: rgb(11, 151, 164);
+    --spectrum-turquoise-1000: rgb(13, 168, 182);
+    --spectrum-turquoise-1100: rgb(16, 186, 202);
+    --spectrum-turquoise-1200: rgb(64, 208, 220);
+    --spectrum-turquoise-1300: rgb(128, 225, 231);
+    --spectrum-turquoise-1400: rgb(183, 240, 240);
+    --spectrum-turquoise-1500: rgb(228, 249, 249);
+    --spectrum-turquoise-1600: rgb(255, 255, 255);
+    --spectrum-brown-100: rgb(35, 24, 8);
+    --spectrum-brown-200: rgb(44, 31, 11);
+    --spectrum-brown-300: rgb(58, 40, 14);
+    --spectrum-brown-400: rgb(78, 55, 19);
+    --spectrum-brown-500: rgb(98, 71, 30);
+    --spectrum-brown-600: rgb(115, 88, 47);
+    --spectrum-brown-700: rgb(132, 104, 61);
+    --spectrum-brown-800: rgb(148, 118, 73);
+    --spectrum-brown-900: rgb(163, 132, 84);
+    --spectrum-brown-1000: rgb(181, 147, 98);
+    --spectrum-brown-1100: rgb(199, 163, 112);
+    --spectrum-brown-1200: rgb(222, 185, 130);
+    --spectrum-brown-1300: rgb(232, 207, 169);
+    --spectrum-brown-1400: rgb(242, 227, 206);
+    --spectrum-brown-1500: rgb(250, 244, 236);
+    --spectrum-brown-1600: rgb(255, 255, 255);
+    --spectrum-silver-100: rgb(26, 26, 26);
+    --spectrum-silver-200: rgb(33, 33, 33);
+    --spectrum-silver-300: rgb(44, 44, 44);
+    --spectrum-silver-400: rgb(59, 59, 59);
+    --spectrum-silver-500: rgb(76, 76, 76);
+    --spectrum-silver-600: rgb(92, 92, 92);
+    --spectrum-silver-700: rgb(108, 108, 108);
+    --spectrum-silver-800: rgb(123, 123, 123);
+    --spectrum-silver-900: rgb(137, 137, 137);
+    --spectrum-silver-1000: rgb(152, 152, 152);
+    --spectrum-silver-1100: rgb(169, 169, 169);
+    --spectrum-silver-1200: rgb(190, 190, 190);
+    --spectrum-silver-1300: rgb(211, 211, 211);
+    --spectrum-silver-1400: rgb(229, 229, 229);
+    --spectrum-silver-1500: rgb(244, 244, 244);
+    --spectrum-silver-1600: rgb(255, 255, 255);
+    --spectrum-cinnamon-100: rgb(48, 17, 4);
+    --spectrum-cinnamon-200: rgb(59, 21, 5);
+    --spectrum-cinnamon-300: rgb(79, 28, 7);
+    --spectrum-cinnamon-400: rgb(100, 41, 15);
+    --spectrum-cinnamon-500: rgb(122, 57, 28);
+    --spectrum-cinnamon-600: rgb(143, 74, 40);
+    --spectrum-cinnamon-700: rgb(163, 88, 52);
+    --spectrum-cinnamon-800: rgb(179, 103, 64);
+    --spectrum-cinnamon-900: rgb(192, 119, 80);
+    --spectrum-cinnamon-1000: rgb(206, 136, 99);
+    --spectrum-cinnamon-1100: rgb(220, 154, 118);
+    --spectrum-cinnamon-1200: rgb(232, 179, 149);
+    --spectrum-cinnamon-1300: rgb(239, 203, 183);
+    --spectrum-cinnamon-1400: rgb(246, 225, 214);
+    --spectrum-cinnamon-1500: rgb(252, 244, 239);
+    --spectrum-cinnamon-1600: rgb(255, 255, 255);
     --spectrum-icon-color-blue-primary-default: var(--spectrum-blue-800);
     --spectrum-icon-color-green-primary-default: var(--spectrum-green-800);
     --spectrum-icon-color-red-primary-default: var(--spectrum-red-700);
     --spectrum-icon-color-yellow-primary-default: var(--spectrum-yellow-1000);
+    --spectrum-menu-item-background-color-default: rgba(255, 255, 255, 0);
+    --spectrum-menu-item-background-color-hover: var(
+        --spectrum-transparent-white-200
+    );
+    --spectrum-menu-item-background-color-down: var(
+        --spectrum-transparent-white-200
+    );
+    --spectrum-menu-item-background-color-key-focus: var(
+        --spectrum-transparent-white-200
+    );
+    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-900-rgb);
+    --spectrum-dropindicator-color: var(--spectrum-blue-700);
+
+    --spectrum-calendar-day-background-color-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.15
+    );
+    --spectrum-calendar-day-background-color-hover: rgba(
+        var(--spectrum-white-rgb),
+        0.07
+    );
+    --spectrum-calendar-day-today-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
+    );
+    --spectrum-calendar-day-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
+    );
+    --spectrum-calendar-day-background-color-down: var(
+        --spectrum-transparent-white-200
+    );
+    --spectrum-calendar-day-background-color-cap-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
+    );
+    --spectrum-calendar-day-background-color-key-focus: rgba(
+        var(--spectrum-white-rgb),
+        0.07
+    );
+    --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-700);
+
+    --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
+
+    --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-700);
+    --spectrum-coach-indicator-ring-dark-color: var(--spectrum-gray-900);
+    --spectrum-coach-indicator-ring-light-color: var(--spectrum-gray-25);
+
+    --spectrum-well-border-color: rgba(var(--spectrum-white-rgb), 0.05);
+
+    --spectrum-steplist-current-marker-color-key-focus: var(
+        --spectrum-blue-700
+    );
+
+    --spectrum-treeview-item-background-color-quiet-selected: rgba(
+        var(--spectrum-gray-900-rgb),
+        0.07
+    );
+    --spectrum-treeview-item-background-color-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.15
+    );
+
+    --spectrum-logic-button-and-background-color: var(--spectrum-blue-800);
+    --spectrum-logic-button-and-border-color: var(--spectrum-blue-800);
+    --spectrum-logic-button-and-background-color-hover: var(
+        --spectrum-blue-1000
+    );
+    --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1000);
+
+    --spectrum-logic-button-or-background-color: var(--spectrum-magenta-700);
+    --spectrum-logic-button-or-border-color: var(--spectrum-magenta-700);
+    --spectrum-logic-button-or-background-color-hover: var(
+        --spectrum-magenta-900
+    );
+    --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-900);
+
+    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-800);
+    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-800);
+    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-900);
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
+        --spectrum-blue-800
+    );
+    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-700);
+
+    --spectrum-assetlist-item-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
+    );
+    --spectrum-assetlist-item-background-color-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.15
+    );
+    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
+
+    --spectrum-swatch-border-color: rgba(255, 255, 255, 0.51);
 }
+
 :host,
 :root {
     --spectrum-focus-indicator-color: var(--spectrum-blue-800);
     --spectrum-static-white-focus-indicator-color: var(--spectrum-white);
     --spectrum-static-black-focus-indicator-color: var(--spectrum-black);
     --spectrum-overlay-color: var(--spectrum-black);
+    --spectrum-drop-shadow-color: var(--spectrum-drop-shadow-color-100);
     --spectrum-opacity-disabled: 0.3;
+    --spectrum-background-base-color: var(--spectrum-gray-25);
+    --spectrum-background-layer-1-color: var(--spectrum-gray-50);
+    --spectrum-neutral-background-color-default: var(--spectrum-gray-800);
+    --spectrum-neutral-background-color-hover: var(--spectrum-gray-900);
+    --spectrum-neutral-background-color-down: var(--spectrum-gray-900);
+    --spectrum-neutral-background-color-key-focus: var(--spectrum-gray-900);
+    --spectrum-neutral-background-color-selected-default: var(
+        --spectrum-gray-800
+    );
+    --spectrum-neutral-background-color-selected-hover: var(
+        --spectrum-gray-900
+    );
+    --spectrum-neutral-background-color-selected-down: var(--spectrum-gray-900);
+    --spectrum-neutral-background-color-selected-key-focus: var(
+        --spectrum-gray-900
+    );
     --spectrum-neutral-subdued-content-color-selected: var(
         --spectrum-neutral-subdued-content-color-down
     );
     --spectrum-accent-content-color-selected: var(
         --spectrum-accent-content-color-down
     );
-    --spectrum-disabled-background-color: var(--spectrum-gray-200);
+    --spectrum-disabled-background-color: var(--spectrum-gray-100);
     --spectrum-disabled-static-white-background-color: var(
-        --spectrum-transparent-white-200
+        --spectrum-transparent-white-100
     );
     --spectrum-disabled-static-black-background-color: var(
-        --spectrum-transparent-black-200
+        --spectrum-transparent-black-100
     );
     --spectrum-background-opacity-default: 0;
     --spectrum-background-opacity-hover: 0.1;
@@ -1032,13 +566,13 @@
     --spectrum-neutral-content-color-key-focus: var(--spectrum-gray-900);
     --spectrum-neutral-subdued-content-color-default: var(--spectrum-gray-700);
     --spectrum-neutral-subdued-content-color-hover: var(--spectrum-gray-800);
-    --spectrum-neutral-subdued-content-color-down: var(--spectrum-gray-900);
+    --spectrum-neutral-subdued-content-color-down: var(--spectrum-gray-800);
     --spectrum-neutral-subdued-content-color-key-focus: var(
         --spectrum-gray-800
     );
     --spectrum-accent-content-color-default: var(--spectrum-accent-color-900);
     --spectrum-accent-content-color-hover: var(--spectrum-accent-color-1000);
-    --spectrum-accent-content-color-down: var(--spectrum-accent-color-1100);
+    --spectrum-accent-content-color-down: var(--spectrum-accent-color-1000);
     --spectrum-accent-content-color-key-focus: var(
         --spectrum-accent-color-1000
     );
@@ -1048,16 +582,16 @@
     --spectrum-negative-content-color-hover: var(
         --spectrum-negative-color-1000
     );
-    --spectrum-negative-content-color-down: var(--spectrum-negative-color-1100);
+    --spectrum-negative-content-color-down: var(--spectrum-negative-color-1000);
     --spectrum-negative-content-color-key-focus: var(
         --spectrum-negative-color-1000
     );
     --spectrum-disabled-content-color: var(--spectrum-gray-400);
     --spectrum-disabled-static-white-content-color: var(
-        --spectrum-transparent-white-500
+        --spectrum-transparent-white-400
     );
     --spectrum-disabled-static-black-content-color: var(
-        --spectrum-transparent-black-500
+        --spectrum-transparent-black-400
     );
     --spectrum-disabled-border-color: var(--spectrum-gray-300);
     --spectrum-disabled-static-white-border-color: var(
@@ -1077,6 +611,16 @@
     --spectrum-negative-border-color-focus: var(--spectrum-negative-color-1000);
     --spectrum-negative-border-color-key-focus: var(
         --spectrum-negative-color-1000
+    );
+    --spectrum-title-color: var(--spectrum-gray-900);
+    --spectrum-drop-shadow-emphasized-default-color: var(
+        --spectrum-drop-shadow-color-100
+    );
+    --spectrum-drop-shadow-emphasized-hover-color: var(
+        --spectrum-drop-shadow-color-200
+    );
+    --spectrum-drop-shadow-elevated-color: var(
+        --spectrum-drop-shadow-color-200
     );
     --spectrum-swatch-border-color: var(--spectrum-gray-900);
     --spectrum-swatch-border-opacity: 0.51;
@@ -1130,114 +674,34 @@
     --spectrum-table-row-down-opacity: 0.1;
     --spectrum-table-selected-row-background-opacity-hover: 0.15;
     --spectrum-table-selected-row-background-opacity-non-emphasized-hover: 0.15;
-    --spectrum-white-rgb: 255, 255, 255;
-    --spectrum-white: rgba(var(--spectrum-white-rgb));
-    --spectrum-transparent-white-100-rgb: 255, 255, 255;
-    --spectrum-transparent-white-100-opacity: 0;
-    --spectrum-transparent-white-100: rgba(
-        var(--spectrum-transparent-white-100-rgb),
-        var(--spectrum-transparent-white-100-opacity)
-    );
-    --spectrum-transparent-white-200-rgb: 255, 255, 255;
-    --spectrum-transparent-white-200-opacity: 0.1;
-    --spectrum-transparent-white-200: rgba(
-        var(--spectrum-transparent-white-200-rgb),
-        var(--spectrum-transparent-white-200-opacity)
-    );
-    --spectrum-transparent-white-300-rgb: 255, 255, 255;
-    --spectrum-transparent-white-300-opacity: 0.25;
-    --spectrum-transparent-white-300: rgba(
-        var(--spectrum-transparent-white-300-rgb),
-        var(--spectrum-transparent-white-300-opacity)
-    );
-    --spectrum-transparent-white-400-rgb: 255, 255, 255;
-    --spectrum-transparent-white-400-opacity: 0.4;
-    --spectrum-transparent-white-400: rgba(
-        var(--spectrum-transparent-white-400-rgb),
-        var(--spectrum-transparent-white-400-opacity)
-    );
-    --spectrum-transparent-white-500-rgb: 255, 255, 255;
-    --spectrum-transparent-white-500-opacity: 0.55;
-    --spectrum-transparent-white-500: rgba(
-        var(--spectrum-transparent-white-500-rgb),
-        var(--spectrum-transparent-white-500-opacity)
-    );
-    --spectrum-transparent-white-600-rgb: 255, 255, 255;
-    --spectrum-transparent-white-600-opacity: 0.7;
-    --spectrum-transparent-white-600: rgba(
-        var(--spectrum-transparent-white-600-rgb),
-        var(--spectrum-transparent-white-600-opacity)
-    );
-    --spectrum-transparent-white-700-rgb: 255, 255, 255;
-    --spectrum-transparent-white-700-opacity: 0.8;
-    --spectrum-transparent-white-700: rgba(
-        var(--spectrum-transparent-white-700-rgb),
-        var(--spectrum-transparent-white-700-opacity)
-    );
-    --spectrum-transparent-white-800-rgb: 255, 255, 255;
-    --spectrum-transparent-white-800-opacity: 0.9;
-    --spectrum-transparent-white-800: rgba(
-        var(--spectrum-transparent-white-800-rgb),
-        var(--spectrum-transparent-white-800-opacity)
-    );
-    --spectrum-transparent-white-900-rgb: 255, 255, 255;
-    --spectrum-transparent-white-900: rgba(
-        var(--spectrum-transparent-white-900-rgb)
-    );
-    --spectrum-black-rgb: 0, 0, 0;
-    --spectrum-black: rgba(var(--spectrum-black-rgb));
-    --spectrum-transparent-black-100-rgb: 0, 0, 0;
-    --spectrum-transparent-black-100-opacity: 0;
-    --spectrum-transparent-black-100: rgba(
-        var(--spectrum-transparent-black-100-rgb),
-        var(--spectrum-transparent-black-100-opacity)
-    );
-    --spectrum-transparent-black-200-rgb: 0, 0, 0;
-    --spectrum-transparent-black-200-opacity: 0.1;
-    --spectrum-transparent-black-200: rgba(
-        var(--spectrum-transparent-black-200-rgb),
-        var(--spectrum-transparent-black-200-opacity)
-    );
-    --spectrum-transparent-black-300-rgb: 0, 0, 0;
-    --spectrum-transparent-black-300-opacity: 0.25;
-    --spectrum-transparent-black-300: rgba(
-        var(--spectrum-transparent-black-300-rgb),
-        var(--spectrum-transparent-black-300-opacity)
-    );
-    --spectrum-transparent-black-400-rgb: 0, 0, 0;
-    --spectrum-transparent-black-400-opacity: 0.4;
-    --spectrum-transparent-black-400: rgba(
-        var(--spectrum-transparent-black-400-rgb),
-        var(--spectrum-transparent-black-400-opacity)
-    );
-    --spectrum-transparent-black-500-rgb: 0, 0, 0;
-    --spectrum-transparent-black-500-opacity: 0.55;
-    --spectrum-transparent-black-500: rgba(
-        var(--spectrum-transparent-black-500-rgb),
-        var(--spectrum-transparent-black-500-opacity)
-    );
-    --spectrum-transparent-black-600-rgb: 0, 0, 0;
-    --spectrum-transparent-black-600-opacity: 0.7;
-    --spectrum-transparent-black-600: rgba(
-        var(--spectrum-transparent-black-600-rgb),
-        var(--spectrum-transparent-black-600-opacity)
-    );
-    --spectrum-transparent-black-700-rgb: 0, 0, 0;
-    --spectrum-transparent-black-700-opacity: 0.8;
-    --spectrum-transparent-black-700: rgba(
-        var(--spectrum-transparent-black-700-rgb),
-        var(--spectrum-transparent-black-700-opacity)
-    );
-    --spectrum-transparent-black-800-rgb: 0, 0, 0;
-    --spectrum-transparent-black-800-opacity: 0.9;
-    --spectrum-transparent-black-800: rgba(
-        var(--spectrum-transparent-black-800-rgb),
-        var(--spectrum-transparent-black-800-opacity)
-    );
-    --spectrum-transparent-black-900-rgb: 0, 0, 0;
-    --spectrum-transparent-black-900: rgba(
-        var(--spectrum-transparent-black-900-rgb)
-    );
+    --spectrum-white: rgb(255, 255, 255);
+    --spectrum-transparent-white-25: rgba(255, 255, 255, 0);
+    --spectrum-transparent-white-50: rgba(255, 255, 255, 0.04);
+    --spectrum-transparent-white-75: rgba(255, 255, 255, 0.07);
+    --spectrum-transparent-white-100: rgba(255, 255, 255, 0.11);
+    --spectrum-transparent-white-200: rgba(255, 255, 255, 0.14);
+    --spectrum-transparent-white-300: rgba(255, 255, 255, 0.17);
+    --spectrum-transparent-white-400: rgba(255, 255, 255, 0.21);
+    --spectrum-transparent-white-500: rgba(255, 255, 255, 0.39);
+    --spectrum-transparent-white-600: rgba(255, 255, 255, 0.51);
+    --spectrum-transparent-white-700: rgba(255, 255, 255, 0.66);
+    --spectrum-transparent-white-800: rgba(255, 255, 255, 0.85);
+    --spectrum-transparent-white-900: rgba(255, 255, 255, 0.94);
+    --spectrum-transparent-white-1000: rgb(255, 255, 255);
+    --spectrum-black: rgb(0, 0, 0);
+    --spectrum-transparent-black-25: rgba(0, 0, 0, 0);
+    --spectrum-transparent-black-50: rgba(0, 0, 0, 0.03);
+    --spectrum-transparent-black-75: rgba(0, 0, 0, 0.05);
+    --spectrum-transparent-black-100: rgba(0, 0, 0, 0.09);
+    --spectrum-transparent-black-200: rgba(0, 0, 0, 0.12);
+    --spectrum-transparent-black-300: rgba(0, 0, 0, 0.15);
+    --spectrum-transparent-black-400: rgba(0, 0, 0, 0.22);
+    --spectrum-transparent-black-500: rgba(0, 0, 0, 0.44);
+    --spectrum-transparent-black-600: rgba(0, 0, 0, 0.56);
+    --spectrum-transparent-black-700: rgba(0, 0, 0, 0.69);
+    --spectrum-transparent-black-800: rgba(0, 0, 0, 0.84);
+    --spectrum-transparent-black-900: rgba(0, 0, 0, 0.93);
+    --spectrum-transparent-black-1000: rgb(0, 0, 0);
     --spectrum-icon-color-inverse: var(--spectrum-gray-50);
     --spectrum-icon-color-primary-default: var(
         --spectrum-neutral-content-color-default
@@ -1269,7 +733,10 @@
     --spectrum-popover-tip-height: 8px;
     --spectrum-menu-item-label-to-description: 1px;
     --spectrum-menu-item-section-divider-height: 8px;
+    --spectrum-slider-track-thickness: 2px;
+    --spectrum-slider-handle-gap: 4px;
     --spectrum-picker-minimum-width-multiplier: 2;
+    --spectrum-picker-border-width: var(--spectrum-border-width-100);
     --spectrum-picker-end-edge-to-disclousure-icon-quiet: var(
         --spectrum-picker-end-edge-to-disclosure-icon-quiet
     );
@@ -1403,11 +870,31 @@
     --spectrum-in-field-button-width-stacked-medium: 28px;
     --spectrum-in-field-button-width-stacked-large: 36px;
     --spectrum-in-field-button-width-stacked-extra-large: 44px;
+    --spectrum-in-field-button-fill-stacked-inner-border-rounding: 0px;
+    --spectrum-in-field-button-edge-to-fill: 0px;
+    --spectrum-in-field-button-stacked-inner-edge-to-fill: 0px;
     --spectrum-in-field-button-edge-to-disclosure-icon-stacked-small: 7px;
     --spectrum-in-field-button-edge-to-disclosure-icon-stacked-medium: 9px;
     --spectrum-in-field-button-edge-to-disclosure-icon-stacked-large: 13px;
     --spectrum-in-field-button-edge-to-disclosure-icon-stacked-extra-large: 16px;
     --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-small: 3px;
+    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium: 3px;
+    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large: 4px;
+    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large: 5px;
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-small: var(
+        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-small
+    );
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-medium: var(
+        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium
+    );
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-large: var(
+        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large
+    );
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large: var(
+        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large
+    );
+    --spectrum-corner-radius-75: 2px;
+    --spectrum-drop-shadow-x: 0px;
     --spectrum-android-elevation: 2dp;
     --spectrum-spacing-50: 2px;
     --spectrum-spacing-75: 4px;
@@ -1423,6 +910,7 @@
     --spectrum-spacing-1000: 96px;
     --spectrum-focus-indicator-thickness: 2px;
     --spectrum-focus-indicator-gap: 2px;
+    --spectrum-border-width-100: 1px;
     --spectrum-border-width-200: 2px;
     --spectrum-border-width-400: 4px;
     --spectrum-field-edge-to-text-quiet: 0px;
@@ -1432,6 +920,22 @@
     --spectrum-field-edge-to-validation-icon-quiet: 0px;
     --spectrum-text-underline-thickness: 1px;
     --spectrum-text-underline-gap: 1px;
+    --spectrum-accent-color-100: var(--spectrum-blue-100);
+    --spectrum-accent-color-200: var(--spectrum-blue-200);
+    --spectrum-accent-color-300: var(--spectrum-blue-300);
+    --spectrum-accent-color-400: var(--spectrum-blue-400);
+    --spectrum-accent-color-500: var(--spectrum-blue-500);
+    --spectrum-accent-color-600: var(--spectrum-blue-600);
+    --spectrum-accent-color-700: var(--spectrum-blue-700);
+    --spectrum-accent-color-800: var(--spectrum-blue-800);
+    --spectrum-accent-color-900: var(--spectrum-blue-900);
+    --spectrum-accent-color-1000: var(--spectrum-blue-1000);
+    --spectrum-accent-color-1100: var(--spectrum-blue-1100);
+    --spectrum-accent-color-1200: var(--spectrum-blue-1200);
+    --spectrum-accent-color-1300: var(--spectrum-blue-1300);
+    --spectrum-accent-color-1400: var(--spectrum-blue-1400);
+    --spectrum-accent-color-1500: var(--spectrum-blue-1500);
+    --spectrum-accent-color-1600: var(--spectrum-blue-1600);
     --spectrum-informative-color-100: var(--spectrum-blue-100);
     --spectrum-informative-color-200: var(--spectrum-blue-200);
     --spectrum-informative-color-300: var(--spectrum-blue-300);
@@ -1446,6 +950,8 @@
     --spectrum-informative-color-1200: var(--spectrum-blue-1200);
     --spectrum-informative-color-1300: var(--spectrum-blue-1300);
     --spectrum-informative-color-1400: var(--spectrum-blue-1400);
+    --spectrum-informative-color-1500: var(--spectrum-blue-1500);
+    --spectrum-informative-color-1600: var(--spectrum-blue-1600);
     --spectrum-negative-color-100: var(--spectrum-red-100);
     --spectrum-negative-color-200: var(--spectrum-red-200);
     --spectrum-negative-color-300: var(--spectrum-red-300);
@@ -1460,6 +966,8 @@
     --spectrum-negative-color-1200: var(--spectrum-red-1200);
     --spectrum-negative-color-1300: var(--spectrum-red-1300);
     --spectrum-negative-color-1400: var(--spectrum-red-1400);
+    --spectrum-negative-color-1500: var(--spectrum-red-1500);
+    --spectrum-negative-color-1600: var(--spectrum-red-1600);
     --spectrum-notice-color-100: var(--spectrum-orange-100);
     --spectrum-notice-color-200: var(--spectrum-orange-200);
     --spectrum-notice-color-300: var(--spectrum-orange-300);
@@ -1474,6 +982,8 @@
     --spectrum-notice-color-1200: var(--spectrum-orange-1200);
     --spectrum-notice-color-1300: var(--spectrum-orange-1300);
     --spectrum-notice-color-1400: var(--spectrum-orange-1400);
+    --spectrum-notice-color-1500: var(--spectrum-orange-1500);
+    --spectrum-notice-color-1600: var(--spectrum-orange-1600);
     --spectrum-positive-color-100: var(--spectrum-green-100);
     --spectrum-positive-color-200: var(--spectrum-green-200);
     --spectrum-positive-color-300: var(--spectrum-green-300);
@@ -1488,6 +998,20 @@
     --spectrum-positive-color-1200: var(--spectrum-green-1200);
     --spectrum-positive-color-1300: var(--spectrum-green-1300);
     --spectrum-positive-color-1400: var(--spectrum-green-1400);
+    --spectrum-positive-color-1500: var(--spectrum-green-1500);
+    --spectrum-positive-color-1600: var(--spectrum-green-1600);
+    --spectrum-negative-subdued-background-color-default: var(
+        --spectrum-negative-color-200
+    );
+    --spectrum-negative-subdued-background-color-hover: var(
+        --spectrum-negative-color-300
+    );
+    --spectrum-negative-subdued-background-color-down: var(
+        --spectrum-negative-color-300
+    );
+    --spectrum-negative-subdued-background-color-key-focus: var(
+        --spectrum-negative-color-300
+    );
     --spectrum-default-font-family: var(--spectrum-sans-serif-font-family);
     --spectrum-sans-serif-font-family: Adobe Clean;
     --spectrum-serif-font-family: Adobe Clean Serif;
@@ -1524,10 +1048,13 @@
     );
     --spectrum-heading-cjk-light-font-weight: var(--spectrum-light-font-weight);
     --spectrum-heading-cjk-light-font-style: var(--spectrum-default-font-style);
+    --spectrum-heading-sans-serif-font-weight: var(--spectrum-bold-font-weight);
     --spectrum-heading-sans-serif-font-style: var(
         --spectrum-default-font-style
     );
+    --spectrum-heading-serif-font-weight: var(--spectrum-bold-font-weight);
     --spectrum-heading-serif-font-style: var(--spectrum-default-font-style);
+    --spectrum-heading-cjk-font-weight: var(--spectrum-extra-bold-font-weight);
     --spectrum-heading-cjk-font-style: var(--spectrum-default-font-style);
     --spectrum-heading-sans-serif-heavy-font-weight: var(
         --spectrum-black-font-weight
@@ -1615,8 +1142,14 @@
     --spectrum-heading-cjk-light-emphasized-font-style: var(
         --spectrum-default-font-style
     );
+    --spectrum-heading-sans-serif-emphasized-font-weight: var(
+        --spectrum-bold-font-weight
+    );
     --spectrum-heading-sans-serif-emphasized-font-style: var(
         --spectrum-italic-font-style
+    );
+    --spectrum-heading-serif-emphasized-font-weight: var(
+        --spectrum-bold-font-weight
     );
     --spectrum-heading-serif-emphasized-font-style: var(
         --spectrum-italic-font-style
@@ -1717,7 +1250,7 @@
     --spectrum-heading-cjk-size-xxs: var(--spectrum-font-size-100);
     --spectrum-heading-line-height: var(--spectrum-line-height-100);
     --spectrum-heading-cjk-line-height: var(--spectrum-cjk-line-height-100);
-    --spectrum-heading-margin-top-multiplier: 0.888889;
+    --spectrum-heading-margin-top-multiplier: 0.88888889;
     --spectrum-heading-margin-bottom-multiplier: 0.25;
     --spectrum-heading-color: var(--spectrum-gray-900);
     --spectrum-body-sans-serif-font-family: var(
@@ -1923,7 +1456,7 @@
     --spectrum-detail-size-s: var(--spectrum-font-size-50);
     --spectrum-detail-line-height: var(--spectrum-line-height-100);
     --spectrum-detail-cjk-line-height: var(--spectrum-cjk-line-height-100);
-    --spectrum-detail-margin-top-multiplier: 0.888889;
+    --spectrum-detail-margin-top-multiplier: 0.88888889;
     --spectrum-detail-margin-bottom-multiplier: 0.25;
     --spectrum-detail-letter-spacing: 0.06em;
     --spectrum-detail-sans-serif-text-transform: uppercase;
@@ -1967,7 +1500,47 @@
     --spectrum-code-line-height: var(--spectrum-line-height-200);
     --spectrum-code-cjk-line-height: var(--spectrum-cjk-line-height-200);
     --spectrum-code-color: var(--spectrum-gray-800);
+    --system: spectrum;
+
+    --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
+    --spectrum-animation-duration-0: 0ms;
+    --spectrum-animation-duration-100: 130ms;
+    --spectrum-animation-duration-200: 160ms;
+    --spectrum-animation-duration-300: 190ms;
+    --spectrum-animation-duration-400: 220ms;
+    --spectrum-animation-duration-500: 250ms;
+    --spectrum-animation-duration-600: 300ms;
+    --spectrum-animation-duration-700: 350ms;
+    --spectrum-animation-duration-800: 400ms;
+    --spectrum-animation-duration-900: 450ms;
+    --spectrum-animation-duration-1000: 500ms;
+    --spectrum-animation-duration-2000: 1000ms;
+    --spectrum-animation-duration-4000: 2000ms;
+    --spectrum-animation-duration-6000: 3000ms;
+    --spectrum-animation-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1);
+    --spectrum-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
+    --spectrum-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
+    --spectrum-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
+
+    --spectrum-sans-font-family-stack: adobe-clean,
+        var(--spectrum-sans-serif-font-family), 'Source Sans Pro', -apple-system,
+        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
+        'Lucida Grande', sans-serif;
+    --spectrum-sans-serif-font: var(--spectrum-sans-font-family-stack);
+
+    --spectrum-serif-font-family-stack: adobe-clean-serif,
+        var(--spectrum-serif-font-family), 'Source Serif Pro', Georgia, serif;
+    --spectrum-serif-font: var(--spectrum-serif-font-family-stack);
+
+    --spectrum-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
+
+    --spectrum-cjk-font-family-stack: adobe-clean-han-japanese,
+        var(--spectrum-cjk-font-family), sans-serif;
+    --spectrum-cjk-font: var(--spectrum-code-font-family-stack);
+    --spectrum-docs-static-white-background-color: rgb(15, 121, 125);
+    --spectrum-docs-static-black-background-color: rgb(181, 209, 211);
 }
+
 :host,
 :root {
     --spectrum-workflow-icon-size-50: 18px;
@@ -2020,6 +1593,34 @@
     --spectrum-dash-icon-size-400: 18px;
     --spectrum-dash-icon-size-500: 20px;
     --spectrum-dash-icon-size-600: 22px;
+    --spectrum-checkbox-control-size-small: 16px;
+    --spectrum-checkbox-control-size-medium: 18px;
+    --spectrum-checkbox-control-size-large: 20px;
+    --spectrum-checkbox-control-size-extra-large: 22px;
+    --spectrum-checkbox-top-to-control-small: 7px;
+    --spectrum-checkbox-top-to-control-medium: 11px;
+    --spectrum-checkbox-top-to-control-large: 15px;
+    --spectrum-checkbox-top-to-control-extra-large: 19px;
+    --spectrum-switch-control-width-small: 32px;
+    --spectrum-switch-control-width-medium: 36px;
+    --spectrum-switch-control-width-large: 41px;
+    --spectrum-switch-control-width-extra-large: 46px;
+    --spectrum-switch-control-height-small: 16px;
+    --spectrum-switch-control-height-medium: 18px;
+    --spectrum-switch-control-height-large: 20px;
+    --spectrum-switch-control-height-extra-large: 22px;
+    --spectrum-switch-top-to-control-small: 7px;
+    --spectrum-switch-top-to-control-medium: 11px;
+    --spectrum-switch-top-to-control-large: 15px;
+    --spectrum-switch-top-to-control-extra-large: 19px;
+    --spectrum-radio-button-control-size-small: 16px;
+    --spectrum-radio-button-control-size-medium: 18px;
+    --spectrum-radio-button-control-size-large: 20px;
+    --spectrum-radio-button-control-size-extra-large: 22px;
+    --spectrum-radio-button-top-to-control-small: 7px;
+    --spectrum-radio-button-top-to-control-medium: 11px;
+    --spectrum-radio-button-top-to-control-large: 15px;
+    --spectrum-radio-button-top-to-control-extra-large: 19px;
     --spectrum-field-label-text-to-asterisk-small: 5px;
     --spectrum-field-label-text-to-asterisk-medium: 5px;
     --spectrum-field-label-text-to-asterisk-large: 6px;
@@ -2095,6 +1696,22 @@
     --spectrum-menu-item-top-to-selected-icon-medium: 13px;
     --spectrum-menu-item-top-to-selected-icon-large: 17px;
     --spectrum-menu-item-top-to-selected-icon-extra-large: 22px;
+    --spectrum-slider-control-height-small: 18px;
+    --spectrum-slider-control-height-medium: 20px;
+    --spectrum-slider-control-height-large: 22px;
+    --spectrum-slider-control-height-extra-large: 26px;
+    --spectrum-slider-handle-size-small: 18px;
+    --spectrum-slider-handle-size-medium: 20px;
+    --spectrum-slider-handle-size-large: 22px;
+    --spectrum-slider-handle-size-extra-large: 26px;
+    --spectrum-slider-handle-border-width-down-small: 7px;
+    --spectrum-slider-handle-border-width-down-medium: 8px;
+    --spectrum-slider-handle-border-width-down-large: 9px;
+    --spectrum-slider-handle-border-width-down-extra-large: 11px;
+    --spectrum-slider-bottom-to-handle-small: 6px;
+    --spectrum-slider-bottom-to-handle-medium: 10px;
+    --spectrum-slider-bottom-to-handle-large: 14px;
+    --spectrum-slider-bottom-to-handle-extra-large: 17px;
     --spectrum-slider-control-to-field-label-small: 6px;
     --spectrum-slider-control-to-field-label-medium: 10px;
     --spectrum-slider-control-to-field-label-large: 14px;
@@ -2325,6 +1942,10 @@
     --spectrum-side-navigation-bottom-to-text: 10px;
     --spectrum-tray-top-to-content-area: 5px;
     --spectrum-accordion-top-to-text-spacious-small: 12px;
+    --spectrum-corner-radius-100: 5px;
+    --spectrum-corner-radius-200: 10px;
+    --spectrum-drop-shadow-y: 2px;
+    --spectrum-drop-shadow-blur: 6px;
     --spectrum-text-to-visual-50: 8px;
     --spectrum-text-to-visual-75: 9px;
     --spectrum-text-to-visual-100: 10px;
@@ -2461,36 +2082,133 @@
     --spectrum-font-size-1100: 55px;
     --spectrum-font-size-1200: 62px;
     --spectrum-font-size-1300: 70px;
+    --spectrum-slider-tick-mark-height: 13px;
+    --spectrum-slider-ramp-track-height: 20px;
+
+    --spectrum-colorwheel-path: 'M 119 119 m -119 0 a 119 119 0 1 0 238 0 a 119 119 0 1 0 -238 0.2 M 119 119 m -91 0 a 91 91 0 1 0 182 0 a 91 91 0 1 0 -182 0';
+    --spectrum-colorwheel-path-borders: 'M 120 120 m -120 0 a 120 120 0 1 0 240 0 a 120 120 0 1 0 -240 0.2 M 120 120 m -90 0 a 90 90 0 1 0 180 0 a 90 90 0 1 0 -180 0';
+    --spectrum-colorwheel-colorarea-container-size: 182px;
+
+    --spectrum-colorloupe-checkerboard-fill: url(#checkerboard-secondary);
+
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-small: 34px;
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-medium: 42px;
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-large: 47px;
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-extra-large: 54px;
+
+    --spectrum-menu-item-checkmark-height-small: 12px;
+    --spectrum-menu-item-checkmark-height-medium: 14px;
+    --spectrum-menu-item-checkmark-height-large: 16px;
+    --spectrum-menu-item-checkmark-height-extra-large: 16px;
+
+    --spectrum-menu-item-checkmark-width-small: 12px;
+    --spectrum-menu-item-checkmark-width-medium: 14px;
+    --spectrum-menu-item-checkmark-width-large: 16px;
+    --spectrum-menu-item-checkmark-width-extra-large: 16px;
+
+    --spectrum-rating-icon-spacing: var(--spectrum-spacing-100);
+
+    --spectrum-button-top-to-text-small: 6px;
+    --spectrum-button-bottom-to-text-small: 5px;
+    --spectrum-button-top-to-text-medium: 9px;
+    --spectrum-button-bottom-to-text-medium: 10px;
+    --spectrum-button-top-to-text-large: 12px;
+    --spectrum-button-bottom-to-text-large: 13px;
+    --spectrum-button-top-to-text-extra-large: 16px;
+    --spectrum-button-bottom-to-text-extra-large: 17px;
+
+    --spectrum-alert-banner-close-button-spacing: var(--spectrum-spacing-200);
+    --spectrum-alert-banner-edge-to-divider: var(--spectrum-spacing-200);
+    --spectrum-alert-banner-edge-to-button: var(--spectrum-spacing-200);
+    --spectrum-alert-banner-text-to-button-vertical: var(
+        --spectrum-spacing-200
+    );
+
+    --spectrum-alert-dialog-padding: var(--spectrum-spacing-400);
+    --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-600);
+
+    --spectrum-coach-indicator-gap: 8px;
+    --spectrum-coach-indicator-ring-diameter: 20px;
+    --spectrum-coach-indicator-quiet-ring-diameter: 10px;
+
+    --spectrum-coachmark-buttongroup-display: none;
+    --spectrum-coachmark-buttongroup-mobile-display: flex;
+    --spectrum-coachmark-menu-display: none;
+    --spectrum-coachmark-menu-mobile-display: inline-flex;
+
+    --spectrum-well-padding: 20px;
+    --spectrum-well-margin-top: 5px;
+    --spectrum-well-min-width: 300px;
+    --spectrum-well-border-radius: 5px;
+    --spectrum-workflow-icon-size-xxl: 40px;
+    --spectrum-workflow-icon-size-xxs: 15px;
+
+    --spectrum-treeview-item-indentation-medium: 20px;
+    --spectrum-treeview-item-indentation-small: 15px;
+    --spectrum-treeview-item-indentation-large: 25px;
+    --spectrum-treeview-item-indentation-extra-large: 30px;
+    --spectrum-treeview-indicator-inset-block-start: 6px;
+    --spectrum-treeview-item-min-block-size-thumbnail-offset-medium: 2px;
+
+    --spectrum-dialog-confirm-entry-animation-distance: 25px;
+    --spectrum-dialog-confirm-hero-height: 160px;
+    --spectrum-dialog-confirm-border-radius: 5px;
+    --spectrum-dialog-confirm-title-text-size: 19px;
+    --spectrum-dialog-confirm-description-text-size: 15px;
+    --spectrum-dialog-confirm-padding-grid: 24px;
+
+    --spectrum-datepicker-initial-width: 160px;
+    --spectrum-datepicker-generic-padding: 15px;
+    --spectrum-datepicker-dash-line-height: 30px;
+    --spectrum-datepicker-width-quiet-first: 90px;
+    --spectrum-datepicker-width-quiet-second: 20px;
+    --spectrum-datepicker-datetime-width-first: 45px;
+    --spectrum-datepicker-invalid-icon-to-button: 10px;
+    --spectrum-datepicker-invalid-icon-to-button-quiet: 9px;
+    --spectrum-datepicker-input-datetime-width: 30px;
+
+    --spectrum-pagination-textfield-width: 60px;
+    --spectrum-pagination-item-inline-spacing: 6px;
+
+    --spectrum-dial-border-radius: 20px;
+    --spectrum-dial-handle-position: 10px;
+    --spectrum-dial-handle-block-margin: 20px;
+    --spectrum-dial-handle-inline-margin: 20px;
+    --spectrum-dial-controls-margin: 10px;
+    --spectrum-dial-label-gap-y: 6px;
+    --spectrum-dial-label-container-top-to-text: 5px;
+
+    --spectrum-assetcard-focus-ring-border-radius: 9px;
+    --spectrum-assetcard-selectionindicator-margin: 15px;
+    --spectrum-assetcard-title-font-size: var(--spectrum-heading-size-xxs);
+    --spectrum-assetcard-header-content-font-size: var(
+        --spectrum-heading-size-xxs
+    );
+    --spectrum-assetcard-content-font-size: var(--spectrum-body-size-xs);
+
+    --spectrum-tooltip-animation-distance: 5px;
+
+    --spectrum-ui-icon-medium-display: none;
+    --spectrum-ui-icon-large-display: block;
 }
+
 :host,
 :root {
     --spectrum-overlay-opacity: 0.4;
-    --spectrum-drop-shadow-color-rgb: 0, 0, 0;
-    --spectrum-drop-shadow-color-opacity: 0.15;
-    --spectrum-drop-shadow-color: rgba(
-        var(--spectrum-drop-shadow-color-rgb),
-        var(--spectrum-drop-shadow-color-opacity)
-    );
-    --spectrum-background-base-color: var(--spectrum-gray-200);
-    --spectrum-background-layer-1-color: var(--spectrum-gray-100);
-    --spectrum-background-layer-2-color: var(--spectrum-gray-50);
-    --spectrum-neutral-background-color-default: var(--spectrum-gray-800);
-    --spectrum-neutral-background-color-hover: var(--spectrum-gray-900);
-    --spectrum-neutral-background-color-down: var(--spectrum-gray-900);
-    --spectrum-neutral-background-color-key-focus: var(--spectrum-gray-900);
+    --spectrum-background-layer-2-color: var(--spectrum-gray-25);
     --spectrum-neutral-subdued-background-color-default: var(
-        --spectrum-gray-600
+        --spectrum-gray-700
     );
-    --spectrum-neutral-subdued-background-color-hover: var(--spectrum-gray-700);
+    --spectrum-neutral-subdued-background-color-hover: var(--spectrum-gray-800);
     --spectrum-neutral-subdued-background-color-down: var(--spectrum-gray-800);
     --spectrum-neutral-subdued-background-color-key-focus: var(
-        --spectrum-gray-700
+        --spectrum-gray-800
     );
     --spectrum-accent-background-color-default: var(
         --spectrum-accent-color-900
     );
     --spectrum-accent-background-color-hover: var(--spectrum-accent-color-1000);
-    --spectrum-accent-background-color-down: var(--spectrum-accent-color-1100);
+    --spectrum-accent-background-color-down: var(--spectrum-accent-color-1000);
     --spectrum-accent-background-color-key-focus: var(
         --spectrum-accent-color-1000
     );
@@ -2501,7 +2219,7 @@
         --spectrum-informative-color-1000
     );
     --spectrum-informative-background-color-down: var(
-        --spectrum-informative-color-1100
+        --spectrum-informative-color-1000
     );
     --spectrum-informative-background-color-key-focus: var(
         --spectrum-informative-color-1000
@@ -2513,7 +2231,7 @@
         --spectrum-negative-color-1000
     );
     --spectrum-negative-background-color-down: var(
-        --spectrum-negative-color-1100
+        --spectrum-negative-color-1000
     );
     --spectrum-negative-background-color-key-focus: var(
         --spectrum-negative-color-1000
@@ -2525,7 +2243,7 @@
         --spectrum-positive-color-1000
     );
     --spectrum-positive-background-color-down: var(
-        --spectrum-positive-color-1100
+        --spectrum-positive-color-1000
     );
     --spectrum-positive-background-color-key-focus: var(
         --spectrum-positive-color-1000
@@ -2569,398 +2287,426 @@
     --spectrum-purple-visual-color: var(--spectrum-purple-800);
     --spectrum-fuchsia-visual-color: var(--spectrum-fuchsia-800);
     --spectrum-magenta-visual-color: var(--spectrum-magenta-800);
+    --spectrum-background-elevated-color: var(--spectrum-gray-25);
+    --spectrum-background-pasteboard-color: var(--spectrum-gray-100);
+    --spectrum-brown-visual-color: var(--spectrum-brown-800);
+    --spectrum-cinnamon-visual-color: var(--spectrum-cinnamon-800);
+    --spectrum-pink-visual-color: var(--spectrum-pink-800);
+    --spectrum-silver-visual-color: var(--spectrum-silver-800);
+    --spectrum-turquoise-visual-color: var(--spectrum-turquoise-800);
+    --spectrum-brown-background-color-default: var(--spectrum-brown-900);
+    --spectrum-cinnamon-background-color-default: var(--spectrum-cinnamon-900);
+    --spectrum-pink-background-color-default: var(--spectrum-pink-900);
+    --spectrum-silver-background-color-default: var(--spectrum-silver-900);
+    --spectrum-turquoise-background-color-default: var(
+        --spectrum-turquoise-900
+    );
+    --spectrum-drop-shadow-color-100: rgba(0, 0, 0, 0.12);
+    --spectrum-drop-shadow-color-200: rgba(0, 0, 0, 0.16);
     --spectrum-opacity-checkerboard-square-dark: var(--spectrum-gray-200);
-    --spectrum-gray-50-rgb: 255, 255, 255;
-    --spectrum-gray-50: rgba(var(--spectrum-gray-50-rgb));
-    --spectrum-gray-75-rgb: 253, 253, 253;
-    --spectrum-gray-75: rgba(var(--spectrum-gray-75-rgb));
-    --spectrum-gray-100-rgb: 248, 248, 248;
-    --spectrum-gray-100: rgba(var(--spectrum-gray-100-rgb));
-    --spectrum-gray-200-rgb: 230, 230, 230;
-    --spectrum-gray-200: rgba(var(--spectrum-gray-200-rgb));
-    --spectrum-gray-300-rgb: 213, 213, 213;
-    --spectrum-gray-300: rgba(var(--spectrum-gray-300-rgb));
-    --spectrum-gray-400-rgb: 177, 177, 177;
-    --spectrum-gray-400: rgba(var(--spectrum-gray-400-rgb));
-    --spectrum-gray-500-rgb: 144, 144, 144;
-    --spectrum-gray-500: rgba(var(--spectrum-gray-500-rgb));
-    --spectrum-gray-600-rgb: 109, 109, 109;
-    --spectrum-gray-600: rgba(var(--spectrum-gray-600-rgb));
-    --spectrum-gray-700-rgb: 70, 70, 70;
-    --spectrum-gray-700: rgba(var(--spectrum-gray-700-rgb));
-    --spectrum-gray-800-rgb: 34, 34, 34;
-    --spectrum-gray-800: rgba(var(--spectrum-gray-800-rgb));
-    --spectrum-gray-900-rgb: 0, 0, 0;
-    --spectrum-gray-900: rgba(var(--spectrum-gray-900-rgb));
-    --spectrum-blue-100-rgb: 224, 242, 255;
-    --spectrum-blue-100: rgba(var(--spectrum-blue-100-rgb));
-    --spectrum-blue-200-rgb: 202, 232, 255;
-    --spectrum-blue-200: rgba(var(--spectrum-blue-200-rgb));
-    --spectrum-blue-300-rgb: 181, 222, 255;
-    --spectrum-blue-300: rgba(var(--spectrum-blue-300-rgb));
-    --spectrum-blue-400-rgb: 150, 206, 253;
-    --spectrum-blue-400: rgba(var(--spectrum-blue-400-rgb));
-    --spectrum-blue-500-rgb: 120, 187, 250;
-    --spectrum-blue-500: rgba(var(--spectrum-blue-500-rgb));
-    --spectrum-blue-600-rgb: 89, 167, 246;
-    --spectrum-blue-600: rgba(var(--spectrum-blue-600-rgb));
-    --spectrum-blue-700-rgb: 56, 146, 243;
-    --spectrum-blue-700: rgba(var(--spectrum-blue-700-rgb));
-    --spectrum-blue-800-rgb: 20, 122, 243;
-    --spectrum-blue-800: rgba(var(--spectrum-blue-800-rgb));
-    --spectrum-blue-900-rgb: 2, 101, 220;
-    --spectrum-blue-900: rgba(var(--spectrum-blue-900-rgb));
-    --spectrum-blue-1000-rgb: 0, 84, 182;
-    --spectrum-blue-1000: rgba(var(--spectrum-blue-1000-rgb));
-    --spectrum-blue-1100-rgb: 0, 68, 145;
-    --spectrum-blue-1100: rgba(var(--spectrum-blue-1100-rgb));
-    --spectrum-blue-1200-rgb: 0, 53, 113;
-    --spectrum-blue-1200: rgba(var(--spectrum-blue-1200-rgb));
-    --spectrum-blue-1300-rgb: 0, 39, 84;
-    --spectrum-blue-1300: rgba(var(--spectrum-blue-1300-rgb));
-    --spectrum-blue-1400-rgb: 0, 28, 60;
-    --spectrum-blue-1400: rgba(var(--spectrum-blue-1400-rgb));
-    --spectrum-red-100-rgb: 255, 235, 231;
-    --spectrum-red-100: rgba(var(--spectrum-red-100-rgb));
-    --spectrum-red-200-rgb: 255, 221, 214;
-    --spectrum-red-200: rgba(var(--spectrum-red-200-rgb));
-    --spectrum-red-300-rgb: 255, 205, 195;
-    --spectrum-red-300: rgba(var(--spectrum-red-300-rgb));
-    --spectrum-red-400-rgb: 255, 183, 169;
-    --spectrum-red-400: rgba(var(--spectrum-red-400-rgb));
-    --spectrum-red-500-rgb: 255, 155, 136;
-    --spectrum-red-500: rgba(var(--spectrum-red-500-rgb));
-    --spectrum-red-600-rgb: 255, 124, 101;
-    --spectrum-red-600: rgba(var(--spectrum-red-600-rgb));
-    --spectrum-red-700-rgb: 247, 92, 70;
-    --spectrum-red-700: rgba(var(--spectrum-red-700-rgb));
-    --spectrum-red-800-rgb: 234, 56, 41;
-    --spectrum-red-800: rgba(var(--spectrum-red-800-rgb));
-    --spectrum-red-900-rgb: 211, 21, 16;
-    --spectrum-red-900: rgba(var(--spectrum-red-900-rgb));
-    --spectrum-red-1000-rgb: 180, 0, 0;
-    --spectrum-red-1000: rgba(var(--spectrum-red-1000-rgb));
-    --spectrum-red-1100-rgb: 147, 0, 0;
-    --spectrum-red-1100: rgba(var(--spectrum-red-1100-rgb));
-    --spectrum-red-1200-rgb: 116, 0, 0;
-    --spectrum-red-1200: rgba(var(--spectrum-red-1200-rgb));
-    --spectrum-red-1300-rgb: 89, 0, 0;
-    --spectrum-red-1300: rgba(var(--spectrum-red-1300-rgb));
-    --spectrum-red-1400-rgb: 67, 0, 0;
-    --spectrum-red-1400: rgba(var(--spectrum-red-1400-rgb));
-    --spectrum-orange-100-rgb: 255, 236, 204;
-    --spectrum-orange-100: rgba(var(--spectrum-orange-100-rgb));
-    --spectrum-orange-200-rgb: 255, 223, 173;
-    --spectrum-orange-200: rgba(var(--spectrum-orange-200-rgb));
-    --spectrum-orange-300-rgb: 253, 210, 145;
-    --spectrum-orange-300: rgba(var(--spectrum-orange-300-rgb));
-    --spectrum-orange-400-rgb: 255, 187, 99;
-    --spectrum-orange-400: rgba(var(--spectrum-orange-400-rgb));
-    --spectrum-orange-500-rgb: 255, 160, 55;
-    --spectrum-orange-500: rgba(var(--spectrum-orange-500-rgb));
-    --spectrum-orange-600-rgb: 246, 133, 17;
-    --spectrum-orange-600: rgba(var(--spectrum-orange-600-rgb));
-    --spectrum-orange-700-rgb: 228, 111, 0;
-    --spectrum-orange-700: rgba(var(--spectrum-orange-700-rgb));
-    --spectrum-orange-800-rgb: 203, 93, 0;
-    --spectrum-orange-800: rgba(var(--spectrum-orange-800-rgb));
-    --spectrum-orange-900-rgb: 177, 76, 0;
-    --spectrum-orange-900: rgba(var(--spectrum-orange-900-rgb));
-    --spectrum-orange-1000-rgb: 149, 61, 0;
-    --spectrum-orange-1000: rgba(var(--spectrum-orange-1000-rgb));
-    --spectrum-orange-1100-rgb: 122, 47, 0;
-    --spectrum-orange-1100: rgba(var(--spectrum-orange-1100-rgb));
-    --spectrum-orange-1200-rgb: 97, 35, 0;
-    --spectrum-orange-1200: rgba(var(--spectrum-orange-1200-rgb));
-    --spectrum-orange-1300-rgb: 73, 25, 1;
-    --spectrum-orange-1300: rgba(var(--spectrum-orange-1300-rgb));
-    --spectrum-orange-1400-rgb: 53, 18, 1;
-    --spectrum-orange-1400: rgba(var(--spectrum-orange-1400-rgb));
-    --spectrum-yellow-100-rgb: 251, 241, 152;
-    --spectrum-yellow-100: rgba(var(--spectrum-yellow-100-rgb));
-    --spectrum-yellow-200-rgb: 248, 231, 80;
-    --spectrum-yellow-200: rgba(var(--spectrum-yellow-200-rgb));
-    --spectrum-yellow-300-rgb: 248, 217, 4;
-    --spectrum-yellow-300: rgba(var(--spectrum-yellow-300-rgb));
-    --spectrum-yellow-400-rgb: 232, 198, 0;
-    --spectrum-yellow-400: rgba(var(--spectrum-yellow-400-rgb));
-    --spectrum-yellow-500-rgb: 215, 179, 0;
-    --spectrum-yellow-500: rgba(var(--spectrum-yellow-500-rgb));
-    --spectrum-yellow-600-rgb: 196, 159, 0;
-    --spectrum-yellow-600: rgba(var(--spectrum-yellow-600-rgb));
-    --spectrum-yellow-700-rgb: 176, 140, 0;
-    --spectrum-yellow-700: rgba(var(--spectrum-yellow-700-rgb));
-    --spectrum-yellow-800-rgb: 155, 120, 0;
-    --spectrum-yellow-800: rgba(var(--spectrum-yellow-800-rgb));
-    --spectrum-yellow-900-rgb: 133, 102, 0;
-    --spectrum-yellow-900: rgba(var(--spectrum-yellow-900-rgb));
-    --spectrum-yellow-1000-rgb: 112, 83, 0;
-    --spectrum-yellow-1000: rgba(var(--spectrum-yellow-1000-rgb));
-    --spectrum-yellow-1100-rgb: 91, 67, 0;
-    --spectrum-yellow-1100: rgba(var(--spectrum-yellow-1100-rgb));
-    --spectrum-yellow-1200-rgb: 72, 51, 0;
-    --spectrum-yellow-1200: rgba(var(--spectrum-yellow-1200-rgb));
-    --spectrum-yellow-1300-rgb: 54, 37, 0;
-    --spectrum-yellow-1300: rgba(var(--spectrum-yellow-1300-rgb));
-    --spectrum-yellow-1400-rgb: 40, 26, 0;
-    --spectrum-yellow-1400: rgba(var(--spectrum-yellow-1400-rgb));
-    --spectrum-chartreuse-100-rgb: 219, 252, 110;
-    --spectrum-chartreuse-100: rgba(var(--spectrum-chartreuse-100-rgb));
-    --spectrum-chartreuse-200-rgb: 203, 244, 67;
-    --spectrum-chartreuse-200: rgba(var(--spectrum-chartreuse-200-rgb));
-    --spectrum-chartreuse-300-rgb: 188, 233, 42;
-    --spectrum-chartreuse-300: rgba(var(--spectrum-chartreuse-300-rgb));
-    --spectrum-chartreuse-400-rgb: 170, 216, 22;
-    --spectrum-chartreuse-400: rgba(var(--spectrum-chartreuse-400-rgb));
-    --spectrum-chartreuse-500-rgb: 152, 197, 10;
-    --spectrum-chartreuse-500: rgba(var(--spectrum-chartreuse-500-rgb));
-    --spectrum-chartreuse-600-rgb: 135, 177, 3;
-    --spectrum-chartreuse-600: rgba(var(--spectrum-chartreuse-600-rgb));
-    --spectrum-chartreuse-700-rgb: 118, 156, 0;
-    --spectrum-chartreuse-700: rgba(var(--spectrum-chartreuse-700-rgb));
-    --spectrum-chartreuse-800-rgb: 103, 136, 0;
-    --spectrum-chartreuse-800: rgba(var(--spectrum-chartreuse-800-rgb));
-    --spectrum-chartreuse-900-rgb: 87, 116, 0;
-    --spectrum-chartreuse-900: rgba(var(--spectrum-chartreuse-900-rgb));
-    --spectrum-chartreuse-1000-rgb: 72, 96, 0;
-    --spectrum-chartreuse-1000: rgba(var(--spectrum-chartreuse-1000-rgb));
-    --spectrum-chartreuse-1100-rgb: 58, 77, 0;
-    --spectrum-chartreuse-1100: rgba(var(--spectrum-chartreuse-1100-rgb));
-    --spectrum-chartreuse-1200-rgb: 44, 59, 0;
-    --spectrum-chartreuse-1200: rgba(var(--spectrum-chartreuse-1200-rgb));
-    --spectrum-chartreuse-1300-rgb: 33, 44, 0;
-    --spectrum-chartreuse-1300: rgba(var(--spectrum-chartreuse-1300-rgb));
-    --spectrum-chartreuse-1400-rgb: 24, 31, 0;
-    --spectrum-chartreuse-1400: rgba(var(--spectrum-chartreuse-1400-rgb));
-    --spectrum-celery-100-rgb: 205, 252, 191;
-    --spectrum-celery-100: rgba(var(--spectrum-celery-100-rgb));
-    --spectrum-celery-200-rgb: 174, 246, 157;
-    --spectrum-celery-200: rgba(var(--spectrum-celery-200-rgb));
-    --spectrum-celery-300-rgb: 150, 238, 133;
-    --spectrum-celery-300: rgba(var(--spectrum-celery-300-rgb));
-    --spectrum-celery-400-rgb: 114, 224, 106;
-    --spectrum-celery-400: rgba(var(--spectrum-celery-400-rgb));
-    --spectrum-celery-500-rgb: 78, 207, 80;
-    --spectrum-celery-500: rgba(var(--spectrum-celery-500-rgb));
-    --spectrum-celery-600-rgb: 39, 187, 54;
-    --spectrum-celery-600: rgba(var(--spectrum-celery-600-rgb));
-    --spectrum-celery-700-rgb: 7, 167, 33;
-    --spectrum-celery-700: rgba(var(--spectrum-celery-700-rgb));
-    --spectrum-celery-800-rgb: 0, 145, 18;
-    --spectrum-celery-800: rgba(var(--spectrum-celery-800-rgb));
-    --spectrum-celery-900-rgb: 0, 124, 15;
-    --spectrum-celery-900: rgba(var(--spectrum-celery-900-rgb));
-    --spectrum-celery-1000-rgb: 0, 103, 15;
-    --spectrum-celery-1000: rgba(var(--spectrum-celery-1000-rgb));
-    --spectrum-celery-1100-rgb: 0, 83, 13;
-    --spectrum-celery-1100: rgba(var(--spectrum-celery-1100-rgb));
-    --spectrum-celery-1200-rgb: 0, 64, 10;
-    --spectrum-celery-1200: rgba(var(--spectrum-celery-1200-rgb));
-    --spectrum-celery-1300-rgb: 0, 48, 7;
-    --spectrum-celery-1300: rgba(var(--spectrum-celery-1300-rgb));
-    --spectrum-celery-1400-rgb: 0, 34, 5;
-    --spectrum-celery-1400: rgba(var(--spectrum-celery-1400-rgb));
-    --spectrum-green-100-rgb: 206, 248, 224;
-    --spectrum-green-100: rgba(var(--spectrum-green-100-rgb));
-    --spectrum-green-200-rgb: 173, 244, 206;
-    --spectrum-green-200: rgba(var(--spectrum-green-200-rgb));
-    --spectrum-green-300-rgb: 137, 236, 188;
-    --spectrum-green-300: rgba(var(--spectrum-green-300-rgb));
-    --spectrum-green-400-rgb: 103, 222, 168;
-    --spectrum-green-400: rgba(var(--spectrum-green-400-rgb));
-    --spectrum-green-500-rgb: 73, 204, 147;
-    --spectrum-green-500: rgba(var(--spectrum-green-500-rgb));
-    --spectrum-green-600-rgb: 47, 184, 128;
-    --spectrum-green-600: rgba(var(--spectrum-green-600-rgb));
-    --spectrum-green-700-rgb: 21, 164, 110;
-    --spectrum-green-700: rgba(var(--spectrum-green-700-rgb));
-    --spectrum-green-800-rgb: 0, 143, 93;
-    --spectrum-green-800: rgba(var(--spectrum-green-800-rgb));
-    --spectrum-green-900-rgb: 0, 122, 77;
-    --spectrum-green-900: rgba(var(--spectrum-green-900-rgb));
-    --spectrum-green-1000-rgb: 0, 101, 62;
-    --spectrum-green-1000: rgba(var(--spectrum-green-1000-rgb));
-    --spectrum-green-1100-rgb: 0, 81, 50;
-    --spectrum-green-1100: rgba(var(--spectrum-green-1100-rgb));
-    --spectrum-green-1200-rgb: 5, 63, 39;
-    --spectrum-green-1200: rgba(var(--spectrum-green-1200-rgb));
-    --spectrum-green-1300-rgb: 10, 46, 29;
-    --spectrum-green-1300: rgba(var(--spectrum-green-1300-rgb));
-    --spectrum-green-1400-rgb: 10, 32, 21;
-    --spectrum-green-1400: rgba(var(--spectrum-green-1400-rgb));
-    --spectrum-seafoam-100-rgb: 206, 247, 243;
-    --spectrum-seafoam-100: rgba(var(--spectrum-seafoam-100-rgb));
-    --spectrum-seafoam-200-rgb: 170, 241, 234;
-    --spectrum-seafoam-200: rgba(var(--spectrum-seafoam-200-rgb));
-    --spectrum-seafoam-300-rgb: 140, 233, 226;
-    --spectrum-seafoam-300: rgba(var(--spectrum-seafoam-300-rgb));
-    --spectrum-seafoam-400-rgb: 101, 218, 210;
-    --spectrum-seafoam-400: rgba(var(--spectrum-seafoam-400-rgb));
-    --spectrum-seafoam-500-rgb: 63, 201, 193;
-    --spectrum-seafoam-500: rgba(var(--spectrum-seafoam-500-rgb));
-    --spectrum-seafoam-600-rgb: 15, 181, 174;
-    --spectrum-seafoam-600: rgba(var(--spectrum-seafoam-600-rgb));
-    --spectrum-seafoam-700-rgb: 0, 161, 154;
-    --spectrum-seafoam-700: rgba(var(--spectrum-seafoam-700-rgb));
-    --spectrum-seafoam-800-rgb: 0, 140, 135;
-    --spectrum-seafoam-800: rgba(var(--spectrum-seafoam-800-rgb));
-    --spectrum-seafoam-900-rgb: 0, 119, 114;
-    --spectrum-seafoam-900: rgba(var(--spectrum-seafoam-900-rgb));
-    --spectrum-seafoam-1000-rgb: 0, 99, 95;
-    --spectrum-seafoam-1000: rgba(var(--spectrum-seafoam-1000-rgb));
-    --spectrum-seafoam-1100-rgb: 12, 79, 76;
-    --spectrum-seafoam-1100: rgba(var(--spectrum-seafoam-1100-rgb));
-    --spectrum-seafoam-1200-rgb: 18, 60, 58;
-    --spectrum-seafoam-1200: rgba(var(--spectrum-seafoam-1200-rgb));
-    --spectrum-seafoam-1300-rgb: 18, 44, 43;
-    --spectrum-seafoam-1300: rgba(var(--spectrum-seafoam-1300-rgb));
-    --spectrum-seafoam-1400-rgb: 15, 31, 30;
-    --spectrum-seafoam-1400: rgba(var(--spectrum-seafoam-1400-rgb));
-    --spectrum-cyan-100-rgb: 197, 248, 255;
-    --spectrum-cyan-100: rgba(var(--spectrum-cyan-100-rgb));
-    --spectrum-cyan-200-rgb: 164, 240, 255;
-    --spectrum-cyan-200: rgba(var(--spectrum-cyan-200-rgb));
-    --spectrum-cyan-300-rgb: 136, 231, 250;
-    --spectrum-cyan-300: rgba(var(--spectrum-cyan-300-rgb));
-    --spectrum-cyan-400-rgb: 96, 216, 243;
-    --spectrum-cyan-400: rgba(var(--spectrum-cyan-400-rgb));
-    --spectrum-cyan-500-rgb: 51, 197, 232;
-    --spectrum-cyan-500: rgba(var(--spectrum-cyan-500-rgb));
-    --spectrum-cyan-600-rgb: 18, 176, 218;
-    --spectrum-cyan-600: rgba(var(--spectrum-cyan-600-rgb));
-    --spectrum-cyan-700-rgb: 1, 156, 200;
-    --spectrum-cyan-700: rgba(var(--spectrum-cyan-700-rgb));
-    --spectrum-cyan-800-rgb: 0, 134, 180;
-    --spectrum-cyan-800: rgba(var(--spectrum-cyan-800-rgb));
-    --spectrum-cyan-900-rgb: 0, 113, 159;
-    --spectrum-cyan-900: rgba(var(--spectrum-cyan-900-rgb));
-    --spectrum-cyan-1000-rgb: 0, 93, 137;
-    --spectrum-cyan-1000: rgba(var(--spectrum-cyan-1000-rgb));
-    --spectrum-cyan-1100-rgb: 0, 74, 115;
-    --spectrum-cyan-1100: rgba(var(--spectrum-cyan-1100-rgb));
-    --spectrum-cyan-1200-rgb: 0, 57, 93;
-    --spectrum-cyan-1200: rgba(var(--spectrum-cyan-1200-rgb));
-    --spectrum-cyan-1300-rgb: 0, 42, 70;
-    --spectrum-cyan-1300: rgba(var(--spectrum-cyan-1300-rgb));
-    --spectrum-cyan-1400-rgb: 0, 30, 51;
-    --spectrum-cyan-1400: rgba(var(--spectrum-cyan-1400-rgb));
-    --spectrum-indigo-100-rgb: 237, 238, 255;
-    --spectrum-indigo-100: rgba(var(--spectrum-indigo-100-rgb));
-    --spectrum-indigo-200-rgb: 224, 226, 255;
-    --spectrum-indigo-200: rgba(var(--spectrum-indigo-200-rgb));
-    --spectrum-indigo-300-rgb: 211, 213, 255;
-    --spectrum-indigo-300: rgba(var(--spectrum-indigo-300-rgb));
-    --spectrum-indigo-400-rgb: 193, 196, 255;
-    --spectrum-indigo-400: rgba(var(--spectrum-indigo-400-rgb));
-    --spectrum-indigo-500-rgb: 172, 175, 255;
-    --spectrum-indigo-500: rgba(var(--spectrum-indigo-500-rgb));
-    --spectrum-indigo-600-rgb: 149, 153, 255;
-    --spectrum-indigo-600: rgba(var(--spectrum-indigo-600-rgb));
-    --spectrum-indigo-700-rgb: 126, 132, 252;
-    --spectrum-indigo-700: rgba(var(--spectrum-indigo-700-rgb));
-    --spectrum-indigo-800-rgb: 104, 109, 244;
-    --spectrum-indigo-800: rgba(var(--spectrum-indigo-800-rgb));
-    --spectrum-indigo-900-rgb: 82, 88, 228;
-    --spectrum-indigo-900: rgba(var(--spectrum-indigo-900-rgb));
-    --spectrum-indigo-1000-rgb: 64, 70, 202;
-    --spectrum-indigo-1000: rgba(var(--spectrum-indigo-1000-rgb));
-    --spectrum-indigo-1100-rgb: 50, 54, 168;
-    --spectrum-indigo-1100: rgba(var(--spectrum-indigo-1100-rgb));
-    --spectrum-indigo-1200-rgb: 38, 41, 134;
-    --spectrum-indigo-1200: rgba(var(--spectrum-indigo-1200-rgb));
-    --spectrum-indigo-1300-rgb: 27, 30, 100;
-    --spectrum-indigo-1300: rgba(var(--spectrum-indigo-1300-rgb));
-    --spectrum-indigo-1400-rgb: 20, 22, 72;
-    --spectrum-indigo-1400: rgba(var(--spectrum-indigo-1400-rgb));
-    --spectrum-purple-100-rgb: 246, 235, 255;
-    --spectrum-purple-100: rgba(var(--spectrum-purple-100-rgb));
-    --spectrum-purple-200-rgb: 238, 221, 255;
-    --spectrum-purple-200: rgba(var(--spectrum-purple-200-rgb));
-    --spectrum-purple-300-rgb: 230, 208, 255;
-    --spectrum-purple-300: rgba(var(--spectrum-purple-300-rgb));
-    --spectrum-purple-400-rgb: 219, 187, 254;
-    --spectrum-purple-400: rgba(var(--spectrum-purple-400-rgb));
-    --spectrum-purple-500-rgb: 204, 164, 253;
-    --spectrum-purple-500: rgba(var(--spectrum-purple-500-rgb));
-    --spectrum-purple-600-rgb: 189, 139, 252;
-    --spectrum-purple-600: rgba(var(--spectrum-purple-600-rgb));
-    --spectrum-purple-700-rgb: 174, 114, 249;
-    --spectrum-purple-700: rgba(var(--spectrum-purple-700-rgb));
-    --spectrum-purple-800-rgb: 157, 87, 244;
-    --spectrum-purple-800: rgba(var(--spectrum-purple-800-rgb));
-    --spectrum-purple-900-rgb: 137, 61, 231;
-    --spectrum-purple-900: rgba(var(--spectrum-purple-900-rgb));
-    --spectrum-purple-1000-rgb: 115, 38, 211;
-    --spectrum-purple-1000: rgba(var(--spectrum-purple-1000-rgb));
-    --spectrum-purple-1100-rgb: 93, 19, 183;
-    --spectrum-purple-1100: rgba(var(--spectrum-purple-1100-rgb));
-    --spectrum-purple-1200-rgb: 71, 12, 148;
-    --spectrum-purple-1200: rgba(var(--spectrum-purple-1200-rgb));
-    --spectrum-purple-1300-rgb: 51, 16, 106;
-    --spectrum-purple-1300: rgba(var(--spectrum-purple-1300-rgb));
-    --spectrum-purple-1400-rgb: 35, 15, 73;
-    --spectrum-purple-1400: rgba(var(--spectrum-purple-1400-rgb));
-    --spectrum-fuchsia-100-rgb: 255, 233, 252;
-    --spectrum-fuchsia-100: rgba(var(--spectrum-fuchsia-100-rgb));
-    --spectrum-fuchsia-200-rgb: 255, 218, 250;
-    --spectrum-fuchsia-200: rgba(var(--spectrum-fuchsia-200-rgb));
-    --spectrum-fuchsia-300-rgb: 254, 199, 248;
-    --spectrum-fuchsia-300: rgba(var(--spectrum-fuchsia-300-rgb));
-    --spectrum-fuchsia-400-rgb: 251, 174, 246;
-    --spectrum-fuchsia-400: rgba(var(--spectrum-fuchsia-400-rgb));
-    --spectrum-fuchsia-500-rgb: 245, 146, 243;
-    --spectrum-fuchsia-500: rgba(var(--spectrum-fuchsia-500-rgb));
-    --spectrum-fuchsia-600-rgb: 237, 116, 237;
-    --spectrum-fuchsia-600: rgba(var(--spectrum-fuchsia-600-rgb));
-    --spectrum-fuchsia-700-rgb: 224, 85, 226;
-    --spectrum-fuchsia-700: rgba(var(--spectrum-fuchsia-700-rgb));
-    --spectrum-fuchsia-800-rgb: 205, 58, 206;
-    --spectrum-fuchsia-800: rgba(var(--spectrum-fuchsia-800-rgb));
-    --spectrum-fuchsia-900-rgb: 182, 34, 183;
-    --spectrum-fuchsia-900: rgba(var(--spectrum-fuchsia-900-rgb));
-    --spectrum-fuchsia-1000-rgb: 157, 3, 158;
-    --spectrum-fuchsia-1000: rgba(var(--spectrum-fuchsia-1000-rgb));
-    --spectrum-fuchsia-1100-rgb: 128, 0, 129;
-    --spectrum-fuchsia-1100: rgba(var(--spectrum-fuchsia-1100-rgb));
-    --spectrum-fuchsia-1200-rgb: 100, 6, 100;
-    --spectrum-fuchsia-1200: rgba(var(--spectrum-fuchsia-1200-rgb));
-    --spectrum-fuchsia-1300-rgb: 71, 14, 70;
-    --spectrum-fuchsia-1300: rgba(var(--spectrum-fuchsia-1300-rgb));
-    --spectrum-fuchsia-1400-rgb: 50, 13, 49;
-    --spectrum-fuchsia-1400: rgba(var(--spectrum-fuchsia-1400-rgb));
-    --spectrum-magenta-100-rgb: 255, 234, 241;
-    --spectrum-magenta-100: rgba(var(--spectrum-magenta-100-rgb));
-    --spectrum-magenta-200-rgb: 255, 220, 232;
-    --spectrum-magenta-200: rgba(var(--spectrum-magenta-200-rgb));
-    --spectrum-magenta-300-rgb: 255, 202, 221;
-    --spectrum-magenta-300: rgba(var(--spectrum-magenta-300-rgb));
-    --spectrum-magenta-400-rgb: 255, 178, 206;
-    --spectrum-magenta-400: rgba(var(--spectrum-magenta-400-rgb));
-    --spectrum-magenta-500-rgb: 255, 149, 189;
-    --spectrum-magenta-500: rgba(var(--spectrum-magenta-500-rgb));
-    --spectrum-magenta-600-rgb: 250, 119, 170;
-    --spectrum-magenta-600: rgba(var(--spectrum-magenta-600-rgb));
-    --spectrum-magenta-700-rgb: 239, 90, 152;
-    --spectrum-magenta-700: rgba(var(--spectrum-magenta-700-rgb));
-    --spectrum-magenta-800-rgb: 222, 61, 130;
-    --spectrum-magenta-800: rgba(var(--spectrum-magenta-800-rgb));
-    --spectrum-magenta-900-rgb: 200, 34, 105;
-    --spectrum-magenta-900: rgba(var(--spectrum-magenta-900-rgb));
-    --spectrum-magenta-1000-rgb: 173, 9, 85;
-    --spectrum-magenta-1000: rgba(var(--spectrum-magenta-1000-rgb));
-    --spectrum-magenta-1100-rgb: 142, 0, 69;
-    --spectrum-magenta-1100: rgba(var(--spectrum-magenta-1100-rgb));
-    --spectrum-magenta-1200-rgb: 112, 0, 55;
-    --spectrum-magenta-1200: rgba(var(--spectrum-magenta-1200-rgb));
-    --spectrum-magenta-1300-rgb: 84, 3, 42;
-    --spectrum-magenta-1300: rgba(var(--spectrum-magenta-1300-rgb));
-    --spectrum-magenta-1400-rgb: 60, 6, 29;
-    --spectrum-magenta-1400: rgba(var(--spectrum-magenta-1400-rgb));
+    --spectrum-gray-25: rgb(255, 255, 255);
+    --spectrum-gray-50: rgb(248, 248, 248);
+    --spectrum-gray-75: rgb(243, 243, 243);
+    --spectrum-gray-100: rgb(233, 233, 233);
+    --spectrum-gray-200: rgb(225, 225, 225);
+    --spectrum-gray-300: rgb(218, 218, 218);
+    --spectrum-gray-400: rgb(198, 198, 198);
+    --spectrum-gray-500: rgb(143, 143, 143);
+    --spectrum-gray-600: rgb(113, 113, 113);
+    --spectrum-gray-700: rgb(80, 80, 80);
+    --spectrum-gray-800: rgb(41, 41, 41);
+    --spectrum-gray-900: rgb(19, 19, 19);
+    --spectrum-gray-1000: rgb(0, 0, 0);
+    --spectrum-blue-100: rgb(245, 249, 255);
+    --spectrum-blue-200: rgb(229, 240, 254);
+    --spectrum-blue-300: rgb(203, 226, 254);
+    --spectrum-blue-400: rgb(172, 207, 253);
+    --spectrum-blue-500: rgb(142, 185, 252);
+    --spectrum-blue-600: rgb(114, 158, 253);
+    --spectrum-blue-700: rgb(93, 137, 255);
+    --spectrum-blue-800: rgb(75, 117, 255);
+    --spectrum-blue-900: rgb(59, 99, 251);
+    --spectrum-blue-1000: rgb(39, 77, 234);
+    --spectrum-blue-1100: rgb(29, 62, 207);
+    --spectrum-blue-1200: rgb(21, 50, 173);
+    --spectrum-blue-1300: rgb(16, 40, 140);
+    --spectrum-blue-1400: rgb(12, 31, 105);
+    --spectrum-blue-1500: rgb(14, 24, 67);
+    --spectrum-blue-1600: rgb(7, 11, 30);
+    --spectrum-red-100: rgb(255, 246, 245);
+    --spectrum-red-200: rgb(255, 235, 232);
+    --spectrum-red-300: rgb(255, 214, 209);
+    --spectrum-red-400: rgb(255, 188, 180);
+    --spectrum-red-500: rgb(255, 157, 145);
+    --spectrum-red-600: rgb(255, 118, 101);
+    --spectrum-red-700: rgb(255, 81, 61);
+    --spectrum-red-800: rgb(240, 56, 35);
+    --spectrum-red-900: rgb(215, 50, 32);
+    --spectrum-red-1000: rgb(183, 40, 24);
+    --spectrum-red-1100: rgb(156, 33, 19);
+    --spectrum-red-1200: rgb(129, 27, 14);
+    --spectrum-red-1300: rgb(104, 21, 10);
+    --spectrum-red-1400: rgb(80, 16, 6);
+    --spectrum-red-1500: rgb(59, 11, 4);
+    --spectrum-red-1600: rgb(29, 5, 2);
+    --spectrum-orange-100: rgb(255, 246, 231);
+    --spectrum-orange-200: rgb(255, 236, 207);
+    --spectrum-orange-300: rgb(255, 218, 158);
+    --spectrum-orange-400: rgb(255, 193, 94);
+    --spectrum-orange-500: rgb(255, 162, 19);
+    --spectrum-orange-600: rgb(252, 125, 0);
+    --spectrum-orange-700: rgb(232, 106, 0);
+    --spectrum-orange-800: rgb(212, 91, 0);
+    --spectrum-orange-900: rgb(194, 78, 0);
+    --spectrum-orange-1000: rgb(167, 62, 0);
+    --spectrum-orange-1100: rgb(144, 51, 0);
+    --spectrum-orange-1200: rgb(118, 41, 0);
+    --spectrum-orange-1300: rgb(95, 32, 0);
+    --spectrum-orange-1400: rgb(73, 24, 0);
+    --spectrum-orange-1500: rgb(52, 18, 0);
+    --spectrum-orange-1600: rgb(25, 8, 0);
+    --spectrum-yellow-100: rgb(255, 248, 204);
+    --spectrum-yellow-200: rgb(255, 241, 151);
+    --spectrum-yellow-300: rgb(255, 222, 44);
+    --spectrum-yellow-400: rgb(245, 199, 0);
+    --spectrum-yellow-500: rgb(230, 175, 0);
+    --spectrum-yellow-600: rgb(210, 149, 0);
+    --spectrum-yellow-700: rgb(193, 131, 0);
+    --spectrum-yellow-800: rgb(175, 116, 0);
+    --spectrum-yellow-900: rgb(158, 102, 0);
+    --spectrum-yellow-1000: rgb(134, 85, 0);
+    --spectrum-yellow-1100: rgb(114, 72, 0);
+    --spectrum-yellow-1200: rgb(93, 59, 0);
+    --spectrum-yellow-1300: rgb(75, 47, 0);
+    --spectrum-yellow-1400: rgb(56, 35, 0);
+    --spectrum-yellow-1500: rgb(40, 25, 0);
+    --spectrum-yellow-1600: rgb(18, 11, 0);
+    --spectrum-chartreuse-100: rgb(246, 251, 222);
+    --spectrum-chartreuse-200: rgb(234, 246, 173);
+    --spectrum-chartreuse-300: rgb(208, 236, 70);
+    --spectrum-chartreuse-400: rgb(182, 219, 0);
+    --spectrum-chartreuse-500: rgb(163, 196, 0);
+    --spectrum-chartreuse-600: rgb(143, 172, 0);
+    --spectrum-chartreuse-700: rgb(128, 153, 0);
+    --spectrum-chartreuse-800: rgb(114, 137, 0);
+    --spectrum-chartreuse-900: rgb(102, 122, 0);
+    --spectrum-chartreuse-1000: rgb(86, 103, 0);
+    --spectrum-chartreuse-1100: rgb(73, 87, 0);
+    --spectrum-chartreuse-1200: rgb(60, 71, 0);
+    --spectrum-chartreuse-1300: rgb(47, 57, 0);
+    --spectrum-chartreuse-1400: rgb(35, 43, 0);
+    --spectrum-chartreuse-1500: rgb(25, 30, 0);
+    --spectrum-chartreuse-1600: rgb(11, 14, 0);
+    --spectrum-celery-100: rgb(235, 255, 220);
+    --spectrum-celery-200: rgb(197, 255, 156);
+    --spectrum-celery-300: rgb(157, 247, 92);
+    --spectrum-celery-400: rgb(129, 228, 58);
+    --spectrum-celery-500: rgb(110, 206, 42);
+    --spectrum-celery-600: rgb(93, 180, 31);
+    --spectrum-celery-700: rgb(82, 161, 25);
+    --spectrum-celery-800: rgb(72, 144, 20);
+    --spectrum-celery-900: rgb(64, 129, 17);
+    --spectrum-celery-1000: rgb(52, 109, 12);
+    --spectrum-celery-1100: rgb(44, 92, 9);
+    --spectrum-celery-1200: rgb(35, 75, 6);
+    --spectrum-celery-1300: rgb(27, 60, 3);
+    --spectrum-celery-1400: rgb(19, 46, 0);
+    --spectrum-celery-1500: rgb(12, 33, 0);
+    --spectrum-celery-1600: rgb(4, 15, 0);
+    --spectrum-green-100: rgb(237, 252, 241);
+    --spectrum-green-200: rgb(215, 247, 225);
+    --spectrum-green-300: rgb(173, 238, 197);
+    --spectrum-green-400: rgb(107, 227, 162);
+    --spectrum-green-500: rgb(43, 209, 125);
+    --spectrum-green-600: rgb(18, 184, 103);
+    --spectrum-green-700: rgb(11, 164, 93);
+    --spectrum-green-800: rgb(7, 147, 85);
+    --spectrum-green-900: rgb(5, 131, 78);
+    --spectrum-green-1000: rgb(3, 110, 69);
+    --spectrum-green-1100: rgb(2, 93, 60);
+    --spectrum-green-1200: rgb(1, 76, 52);
+    --spectrum-green-1300: rgb(0, 61, 44);
+    --spectrum-green-1400: rgb(0, 46, 34);
+    --spectrum-green-1500: rgb(0, 33, 25);
+    --spectrum-green-1600: rgb(0, 15, 12);
+    --spectrum-seafoam-100: rgb(235, 251, 246);
+    --spectrum-seafoam-200: rgb(211, 246, 234);
+    --spectrum-seafoam-300: rgb(169, 237, 216);
+    --spectrum-seafoam-400: rgb(92, 225, 194);
+    --spectrum-seafoam-500: rgb(16, 207, 169);
+    --spectrum-seafoam-600: rgb(13, 181, 149);
+    --spectrum-seafoam-700: rgb(11, 162, 134);
+    --spectrum-seafoam-800: rgb(9, 144, 120);
+    --spectrum-seafoam-900: rgb(7, 129, 109);
+    --spectrum-seafoam-1000: rgb(5, 108, 92);
+    --spectrum-seafoam-1100: rgb(3, 92, 80);
+    --spectrum-seafoam-1200: rgb(1, 75, 67);
+    --spectrum-seafoam-1300: rgb(0, 60, 54);
+    --spectrum-seafoam-1400: rgb(0, 46, 40);
+    --spectrum-seafoam-1500: rgb(0, 33, 29);
+    --spectrum-seafoam-1600: rgb(0, 15, 14);
+    --spectrum-cyan-100: rgb(238, 250, 254);
+    --spectrum-cyan-200: rgb(217, 244, 253);
+    --spectrum-cyan-300: rgb(183, 231, 252);
+    --spectrum-cyan-400: rgb(138, 213, 255);
+    --spectrum-cyan-500: rgb(92, 192, 255);
+    --spectrum-cyan-600: rgb(48, 167, 254);
+    --spectrum-cyan-700: rgb(29, 149, 231);
+    --spectrum-cyan-800: rgb(18, 134, 205);
+    --spectrum-cyan-900: rgb(11, 120, 179);
+    --spectrum-cyan-1000: rgb(4, 102, 145);
+    --spectrum-cyan-1100: rgb(0, 87, 121);
+    --spectrum-cyan-1200: rgb(0, 71, 98);
+    --spectrum-cyan-1300: rgb(0, 57, 78);
+    --spectrum-cyan-1400: rgb(0, 43, 59);
+    --spectrum-cyan-1500: rgb(0, 31, 43);
+    --spectrum-cyan-1600: rgb(0, 14, 20);
+    --spectrum-indigo-100: rgb(247, 248, 255);
+    --spectrum-indigo-200: rgb(235, 238, 255);
+    --spectrum-indigo-300: rgb(216, 222, 255);
+    --spectrum-indigo-400: rgb(192, 201, 255);
+    --spectrum-indigo-500: rgb(167, 178, 255);
+    --spectrum-indigo-600: rgb(145, 151, 254);
+    --spectrum-indigo-700: rgb(132, 128, 254);
+    --spectrum-indigo-800: rgb(122, 106, 253);
+    --spectrum-indigo-900: rgb(113, 85, 250);
+    --spectrum-indigo-1000: rgb(99, 56, 238);
+    --spectrum-indigo-1100: rgb(84, 36, 219);
+    --spectrum-indigo-1200: rgb(69, 19, 191);
+    --spectrum-indigo-1300: rgb(55, 6, 160);
+    --spectrum-indigo-1400: rgb(42, 0, 129);
+    --spectrum-indigo-1500: rgb(31, 0, 98);
+    --spectrum-indigo-1600: rgb(17, 0, 54);
+    --spectrum-purple-100: rgb(251, 247, 254);
+    --spectrum-purple-200: rgb(244, 235, 252);
+    --spectrum-purple-300: rgb(235, 218, 249);
+    --spectrum-purple-400: rgb(221, 193, 246);
+    --spectrum-purple-500: rgb(208, 167, 243);
+    --spectrum-purple-600: rgb(191, 138, 238);
+    --spectrum-purple-700: rgb(178, 114, 235);
+    --spectrum-purple-800: rgb(166, 92, 231);
+    --spectrum-purple-900: rgb(154, 71, 226);
+    --spectrum-purple-1000: rgb(134, 40, 217);
+    --spectrum-purple-1100: rgb(115, 13, 204);
+    --spectrum-purple-1200: rgb(93, 0, 177);
+    --spectrum-purple-1300: rgb(75, 0, 144);
+    --spectrum-purple-1400: rgb(59, 0, 111);
+    --spectrum-purple-1500: rgb(44, 0, 84);
+    --spectrum-purple-1600: rgb(23, 0, 45);
+    --spectrum-fuchsia-100: rgb(254, 246, 255);
+    --spectrum-fuchsia-200: rgb(253, 233, 255);
+    --spectrum-fuchsia-300: rgb(250, 211, 255);
+    --spectrum-fuchsia-400: rgb(247, 181, 255);
+    --spectrum-fuchsia-500: rgb(243, 147, 255);
+    --spectrum-fuchsia-600: rgb(236, 105, 255);
+    --spectrum-fuchsia-700: rgb(223, 77, 245);
+    --spectrum-fuchsia-800: rgb(200, 68, 220);
+    --spectrum-fuchsia-900: rgb(181, 57, 200);
+    --spectrum-fuchsia-1000: rgb(156, 40, 175);
+    --spectrum-fuchsia-1100: rgb(135, 27, 154);
+    --spectrum-fuchsia-1200: rgb(113, 15, 131);
+    --spectrum-fuchsia-1300: rgb(92, 4, 109);
+    --spectrum-fuchsia-1400: rgb(72, 0, 88);
+    --spectrum-fuchsia-1500: rgb(54, 0, 66);
+    --spectrum-fuchsia-1600: rgb(29, 0, 35);
+    --spectrum-magenta-100: rgb(255, 245, 248);
+    --spectrum-magenta-200: rgb(255, 232, 240);
+    --spectrum-magenta-300: rgb(255, 213, 227);
+    --spectrum-magenta-400: rgb(255, 185, 208);
+    --spectrum-magenta-500: rgb(255, 152, 187);
+    --spectrum-magenta-600: rgb(255, 112, 159);
+    --spectrum-magenta-700: rgb(255, 72, 133);
+    --spectrum-magenta-800: rgb(240, 45, 110);
+    --spectrum-magenta-900: rgb(217, 35, 97);
+    --spectrum-magenta-1000: rgb(186, 22, 80);
+    --spectrum-magenta-1100: rgb(163, 5, 62);
+    --spectrum-magenta-1200: rgb(136, 0, 51);
+    --spectrum-magenta-1300: rgb(111, 0, 40);
+    --spectrum-magenta-1400: rgb(86, 0, 30);
+    --spectrum-magenta-1500: rgb(64, 0, 22);
+    --spectrum-magenta-1600: rgb(35, 0, 12);
+    --spectrum-pink-100: rgb(255, 246, 252);
+    --spectrum-pink-200: rgb(255, 232, 247);
+    --spectrum-pink-300: rgb(255, 211, 240);
+    --spectrum-pink-400: rgb(255, 181, 230);
+    --spectrum-pink-500: rgb(255, 148, 219);
+    --spectrum-pink-600: rgb(255, 103, 204);
+    --spectrum-pink-700: rgb(242, 76, 184);
+    --spectrum-pink-800: rgb(228, 52, 163);
+    --spectrum-pink-900: rgb(206, 42, 146);
+    --spectrum-pink-1000: rgb(176, 31, 123);
+    --spectrum-pink-1100: rgb(152, 22, 104);
+    --spectrum-pink-1200: rgb(128, 12, 85);
+    --spectrum-pink-1300: rgb(105, 3, 68);
+    --spectrum-pink-1400: rgb(83, 0, 53);
+    --spectrum-pink-1500: rgb(62, 0, 39);
+    --spectrum-pink-1600: rgb(33, 0, 21);
+    --spectrum-turquoise-100: rgb(238, 251, 251);
+    --spectrum-turquoise-200: rgb(209, 245, 245);
+    --spectrum-turquoise-300: rgb(169, 236, 237);
+    --spectrum-turquoise-400: rgb(111, 221, 228);
+    --spectrum-turquoise-500: rgb(39, 202, 216);
+    --spectrum-turquoise-600: rgb(15, 177, 192);
+    --spectrum-turquoise-700: rgb(12, 158, 171);
+    --spectrum-turquoise-800: rgb(10, 141, 153);
+    --spectrum-turquoise-900: rgb(8, 126, 137);
+    --spectrum-turquoise-1000: rgb(5, 107, 116);
+    --spectrum-turquoise-1100: rgb(3, 90, 98);
+    --spectrum-turquoise-1200: rgb(1, 74, 81);
+    --spectrum-turquoise-1300: rgb(0, 59, 65);
+    --spectrum-turquoise-1400: rgb(0, 44, 49);
+    --spectrum-turquoise-1500: rgb(0, 32, 35);
+    --spectrum-turquoise-1600: rgb(0, 15, 17);
+    --spectrum-brown-100: rgb(252, 247, 242);
+    --spectrum-brown-200: rgb(247, 238, 225);
+    --spectrum-brown-300: rgb(239, 221, 195);
+    --spectrum-brown-400: rgb(229, 200, 157);
+    --spectrum-brown-500: rgb(214, 177, 123);
+    --spectrum-brown-600: rgb(190, 155, 104);
+    --spectrum-brown-700: rgb(171, 138, 90);
+    --spectrum-brown-800: rgb(154, 123, 77);
+    --spectrum-brown-900: rgb(139, 109, 66);
+    --spectrum-brown-1000: rgb(119, 91, 50);
+    --spectrum-brown-1100: rgb(103, 76, 35);
+    --spectrum-brown-1200: rgb(88, 61, 21);
+    --spectrum-brown-1300: rgb(70, 49, 17);
+    --spectrum-brown-1400: rgb(52, 37, 13);
+    --spectrum-brown-1500: rgb(38, 26, 9);
+    --spectrum-brown-1600: rgb(16, 12, 4);
+    --spectrum-silver-100: rgb(247, 247, 247);
+    --spectrum-silver-200: rgb(239, 239, 239);
+    --spectrum-silver-300: rgb(223, 223, 223);
+    --spectrum-silver-400: rgb(204, 204, 204);
+    --spectrum-silver-500: rgb(183, 183, 183);
+    --spectrum-silver-600: rgb(160, 160, 160);
+    --spectrum-silver-700: rgb(143, 143, 143);
+    --spectrum-silver-800: rgb(128, 128, 128);
+    --spectrum-silver-900: rgb(114, 114, 114);
+    --spectrum-silver-1000: rgb(96, 96, 96);
+    --spectrum-silver-1100: rgb(81, 81, 81);
+    --spectrum-silver-1200: rgb(66, 66, 66);
+    --spectrum-silver-1300: rgb(52, 52, 52);
+    --spectrum-silver-1400: rgb(39, 39, 39);
+    --spectrum-silver-1500: rgb(28, 28, 28);
+    --spectrum-silver-1600: rgb(12, 12, 12);
+    --spectrum-cinnamon-100: rgb(253, 247, 243);
+    --spectrum-cinnamon-200: rgb(249, 236, 229);
+    --spectrum-cinnamon-300: rgb(244, 218, 203);
+    --spectrum-cinnamon-400: rgb(237, 196, 172);
+    --spectrum-cinnamon-500: rgb(229, 170, 136);
+    --spectrum-cinnamon-600: rgb(212, 145, 108);
+    --spectrum-cinnamon-700: rgb(198, 126, 88);
+    --spectrum-cinnamon-800: rgb(184, 109, 70);
+    --spectrum-cinnamon-900: rgb(170, 94, 56);
+    --spectrum-cinnamon-1000: rgb(147, 77, 43);
+    --spectrum-cinnamon-1100: rgb(128, 62, 32);
+    --spectrum-cinnamon-1200: rgb(110, 48, 21);
+    --spectrum-cinnamon-1300: rgb(92, 35, 11);
+    --spectrum-cinnamon-1400: rgb(72, 25, 6);
+    --spectrum-cinnamon-1500: rgb(52, 18, 4);
+    --spectrum-cinnamon-1600: rgb(24, 8, 2);
     --spectrum-icon-color-blue-primary-default: var(--spectrum-blue-900);
     --spectrum-icon-color-green-primary-default: var(--spectrum-green-900);
     --spectrum-icon-color-red-primary-default: var(--spectrum-red-900);
     --spectrum-icon-color-yellow-primary-default: var(--spectrum-yellow-400);
+    --spectrum-menu-item-background-color-default: rgba(0, 0, 0, 0);
+    --spectrum-menu-item-background-color-hover: var(
+        --spectrum-transparent-black-200
+    );
+    --spectrum-menu-item-background-color-down: var(
+        --spectrum-transparent-black-200
+    );
+    --spectrum-menu-item-background-color-key-focus: var(
+        --spectrum-transparent-black-200
+    );
+    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-800-rgb);
+    --spectrum-dropindicator-color: var(--spectrum-blue-800);
+
+    --spectrum-calendar-day-background-color-selected: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.1
+    );
+    --spectrum-calendar-day-background-color-hover: rgba(
+        var(--spectrum-black-rgb),
+        0.06
+    );
+    --spectrum-calendar-day-today-background-color-selected-hover: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.2
+    );
+    --spectrum-calendar-day-background-color-selected-hover: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.2
+    );
+    --spectrum-calendar-day-background-color-down: var(
+        --spectrum-transparent-black-200
+    );
+    --spectrum-calendar-day-background-color-cap-selected: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.2
+    );
+    --spectrum-calendar-day-background-color-key-focus: rgba(
+        var(--spectrum-black-rgb),
+        0.06
+    );
+    --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-800);
+
+    --spectrum-badge-label-icon-color-primary: var(--spectrum-white);
+
+    --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-800);
+    --spectrum-coach-indicator-ring-dark-color: var(--spectrum-gray-900);
+    --spectrum-coach-indicator-ring-light-color: var(--spectrum-gray-25);
+
+    --spectrum-well-border-color: var(--spectrum-black-rgb);
+
+    --spectrum-steplist-current-marker-color-key-focus: var(
+        --spectrum-blue-800
+    );
+
+    --spectrum-treeview-item-background-color-quiet-selected: rgba(
+        var(--spectrum-gray-900-rgb),
+        0.06
+    );
+    --spectrum-treeview-item-background-color-selected: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.1
+    );
+
+    --spectrum-logic-button-and-background-color: var(--spectrum-blue-900);
+    --spectrum-logic-button-and-border-color: var(--spectrum-blue-900);
+    --spectrum-logic-button-and-background-color-hover: var(
+        --spectrum-blue-1100
+    );
+    --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1100);
+
+    --spectrum-logic-button-or-background-color: var(--spectrum-magenta-900);
+    --spectrum-logic-button-or-border-color: var(--spectrum-magenta-900);
+    --spectrum-logic-button-or-background-color-hover: var(
+        --spectrum-magenta-1100
+    );
+    --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-1100);
+
+    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-900);
+    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-900);
+    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-1000);
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
+        --spectrum-blue-900
+    );
+    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-800);
+
+    --spectrum-assetlist-item-background-color-selected-hover: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.2
+    );
+    --spectrum-assetlist-item-background-color-selected: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.1
+    );
+    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-800);
+
+    --spectrum-swatch-border-color: rgba(0, 0, 0, 0.51);
 }
+
 :host,
 :root {
     --spectrum-workflow-icon-size-50: 14px;
@@ -3013,6 +2759,34 @@
     --spectrum-dash-icon-size-400: 14px;
     --spectrum-dash-icon-size-500: 16px;
     --spectrum-dash-icon-size-600: 18px;
+    --spectrum-checkbox-control-size-small: 12px;
+    --spectrum-checkbox-control-size-medium: 14px;
+    --spectrum-checkbox-control-size-large: 16px;
+    --spectrum-checkbox-control-size-extra-large: 18px;
+    --spectrum-checkbox-top-to-control-small: 6px;
+    --spectrum-checkbox-top-to-control-medium: 9px;
+    --spectrum-checkbox-top-to-control-large: 12px;
+    --spectrum-checkbox-top-to-control-extra-large: 15px;
+    --spectrum-switch-control-width-small: 23px;
+    --spectrum-switch-control-width-medium: 26px;
+    --spectrum-switch-control-width-large: 29px;
+    --spectrum-switch-control-width-extra-large: 33px;
+    --spectrum-switch-control-height-small: 12px;
+    --spectrum-switch-control-height-medium: 14px;
+    --spectrum-switch-control-height-large: 16px;
+    --spectrum-switch-control-height-extra-large: 18px;
+    --spectrum-switch-top-to-control-small: 6px;
+    --spectrum-switch-top-to-control-medium: 9px;
+    --spectrum-switch-top-to-control-large: 12px;
+    --spectrum-switch-top-to-control-extra-large: 15px;
+    --spectrum-radio-button-control-size-small: 12px;
+    --spectrum-radio-button-control-size-medium: 14px;
+    --spectrum-radio-button-control-size-large: 16px;
+    --spectrum-radio-button-control-size-extra-large: 18px;
+    --spectrum-radio-button-top-to-control-small: 6px;
+    --spectrum-radio-button-top-to-control-medium: 9px;
+    --spectrum-radio-button-top-to-control-large: 12px;
+    --spectrum-radio-button-top-to-control-extra-large: 15px;
     --spectrum-field-label-text-to-asterisk-small: 4px;
     --spectrum-field-label-text-to-asterisk-medium: 4px;
     --spectrum-field-label-text-to-asterisk-large: 5px;
@@ -3088,6 +2862,22 @@
     --spectrum-menu-item-top-to-selected-icon-medium: 11px;
     --spectrum-menu-item-top-to-selected-icon-large: 14px;
     --spectrum-menu-item-top-to-selected-icon-extra-large: 17px;
+    --spectrum-slider-control-height-small: 14px;
+    --spectrum-slider-control-height-medium: 16px;
+    --spectrum-slider-control-height-large: 18px;
+    --spectrum-slider-control-height-extra-large: 20px;
+    --spectrum-slider-handle-size-small: 14px;
+    --spectrum-slider-handle-size-medium: 16px;
+    --spectrum-slider-handle-size-large: 18px;
+    --spectrum-slider-handle-size-extra-large: 20px;
+    --spectrum-slider-handle-border-width-down-small: 5px;
+    --spectrum-slider-handle-border-width-down-medium: 6px;
+    --spectrum-slider-handle-border-width-down-large: 7px;
+    --spectrum-slider-handle-border-width-down-extra-large: 8px;
+    --spectrum-slider-bottom-to-handle-small: 5px;
+    --spectrum-slider-bottom-to-handle-medium: 8px;
+    --spectrum-slider-bottom-to-handle-large: 11px;
+    --spectrum-slider-bottom-to-handle-extra-large: 14px;
     --spectrum-slider-control-to-field-label-small: 5px;
     --spectrum-slider-control-to-field-label-medium: 8px;
     --spectrum-slider-control-to-field-label-large: 11px;
@@ -3318,6 +3108,10 @@
     --spectrum-side-navigation-bottom-to-text: 8px;
     --spectrum-tray-top-to-content-area: 4px;
     --spectrum-accordion-top-to-text-spacious-small: 9px;
+    --spectrum-corner-radius-100: 4px;
+    --spectrum-corner-radius-200: 8px;
+    --spectrum-drop-shadow-y: 1px;
+    --spectrum-drop-shadow-blur: 4px;
     --spectrum-text-to-visual-50: 6px;
     --spectrum-text-to-visual-75: 7px;
     --spectrum-text-to-visual-100: 8px;
@@ -3454,630 +3248,15 @@
     --spectrum-font-size-1100: 45px;
     --spectrum-font-size-1200: 50px;
     --spectrum-font-size-1300: 60px;
-}
-:host,
-:root {
-    --spectrum-menu-item-background-color-default-rgb: 255, 255, 255;
-    --spectrum-menu-item-background-color-default-opacity: 0;
-    --spectrum-menu-item-background-color-default: rgba(
-        var(--spectrum-menu-item-background-color-default-rgb),
-        var(--spectrum-menu-item-background-color-default-opacity)
-    );
-    --spectrum-menu-item-background-color-hover: var(
-        --spectrum-transparent-white-200
-    );
-    --spectrum-menu-item-background-color-down: var(
-        --spectrum-transparent-white-200
-    );
-    --spectrum-menu-item-background-color-key-focus: var(
-        --spectrum-transparent-white-200
-    );
-    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-900-rgb);
-    --spectrum-dropindicator-color: var(--spectrum-blue-700);
-    --spectrum-calendar-day-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.15
-    );
-    --spectrum-calendar-day-background-color-hover: rgba(
-        var(--spectrum-white-rgb),
-        0.07
-    );
-    --spectrum-calendar-day-today-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.25
-    );
-    --spectrum-calendar-day-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.25
-    );
-    --spectrum-calendar-day-background-color-down: var(
-        --spectrum-transparent-white-200
-    );
-    --spectrum-calendar-day-background-color-cap-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.25
-    );
-    --spectrum-calendar-day-background-color-key-focus: rgba(
-        var(--spectrum-white-rgb),
-        0.07
-    );
-    --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-700);
-    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-500-rgb);
-    --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
-    --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-700);
-    --spectrum-coach-indicator-ring-dark-color: var(--spectrum-gray-900);
-    --spectrum-coach-indicator-ring-light-color: var(--spectrum-gray-50);
-    --spectrum-well-border-color: rgba(var(--spectrum-white-rgb), 0.05);
-    --spectrum-steplist-current-marker-color-key-focus: var(
-        --spectrum-blue-700
-    );
-    --spectrum-treeview-item-background-color-quiet-selected: rgba(
-        var(--spectrum-gray-900-rgb),
-        0.07
-    );
-    --spectrum-treeview-item-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.15
-    );
-    --spectrum-logic-button-and-background-color: var(--spectrum-blue-800);
-    --spectrum-logic-button-and-border-color: var(--spectrum-blue-800);
-    --spectrum-logic-button-and-background-color-hover: var(
-        --spectrum-blue-1000
-    );
-    --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1000);
-    --spectrum-logic-button-or-background-color: var(--spectrum-magenta-700);
-    --spectrum-logic-button-or-border-color: var(--spectrum-magenta-700);
-    --spectrum-logic-button-or-background-color-hover: var(
-        --spectrum-magenta-900
-    );
-    --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-900);
-    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-800);
-    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-800);
-    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-900);
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-blue-800
-    );
-    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-700);
-    --spectrum-assetlist-item-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.25
-    );
-    --spectrum-assetlist-item-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.15
-    );
-    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
-    --spectrum-swatch-border-color-rgb: 255, 255, 255;
-    --spectrum-swatch-border-color-opacity: 0.51;
-    --spectrum-swatch-border-color: rgba(
-        var(--spectrum-swatch-border-color-rgb),
-        var(--spectrum-swatch-border-color-opacity)
-    );
-    --spectrum-swatch-border-color-light-rgb: 255, 255, 255;
-    --spectrum-swatch-border-color-light-opacity: 0.2;
-    --spectrum-swatch-border-color-light: rgba(
-        var(--spectrum-swatch-border-color-light-rgb),
-        var(--spectrum-swatch-border-color-light-opacity)
-    );
-}
-:host,
-:root {
-    --spectrum-menu-item-background-color-default-rgb: 255, 255, 255;
-    --spectrum-menu-item-background-color-default-opacity: 0;
-    --spectrum-menu-item-background-color-default: rgba(
-        var(--spectrum-menu-item-background-color-default-rgb),
-        var(--spectrum-menu-item-background-color-default-opacity)
-    );
-    --spectrum-menu-item-background-color-hover: var(
-        --spectrum-transparent-white-200
-    );
-    --spectrum-menu-item-background-color-down: var(
-        --spectrum-transparent-white-200
-    );
-    --spectrum-menu-item-background-color-key-focus: var(
-        --spectrum-transparent-white-200
-    );
-    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-900-rgb);
-    --spectrum-dropindicator-color: var(--spectrum-blue-700);
-    --spectrum-calendar-day-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.2
-    );
-    --spectrum-calendar-day-background-color-hover: rgba(
-        var(--spectrum-white-rgb),
-        0.08
-    );
-    --spectrum-calendar-day-today-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.3
-    );
-    --spectrum-calendar-day-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.3
-    );
-    --spectrum-calendar-day-background-color-down: rgba(
-        var(--spectrum-white-rgb),
-        0.15
-    );
-    --spectrum-calendar-day-background-color-cap-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.3
-    );
-    --spectrum-calendar-day-background-color-key-focus: rgba(
-        var(--spectrum-white-rgb),
-        0.08
-    );
-    --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-700);
-    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-600-rgb);
-    --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
-    --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-700);
-    --spectrum-coach-indicator-ring-dark-color: var(--spectrum-gray-900);
-    --spectrum-coach-indicator-ring-light-color: var(--spectrum-gray-50);
-    --spectrum-well-border-color: rgba(var(--spectrum-white-rgb), 0.05);
-    --spectrum-steplist-current-marker-color-key-focus: var(
-        --spectrum-blue-700
-    );
-    --spectrum-treeview-item-background-color-quiet-selected: rgba(
-        var(--spectrum-gray-900-rgb),
-        0.08
-    );
-    --spectrum-treeview-item-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.2
-    );
-    --spectrum-logic-button-and-background-color: var(--spectrum-blue-800);
-    --spectrum-logic-button-and-border-color: var(--spectrum-blue-800);
-    --spectrum-logic-button-and-background-color-hover: var(
-        --spectrum-blue-1000
-    );
-    --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1000);
-    --spectrum-logic-button-or-background-color: var(--spectrum-magenta-700);
-    --spectrum-logic-button-or-border-color: var(--spectrum-magenta-700);
-    --spectrum-logic-button-or-background-color-hover: var(
-        --spectrum-magenta-900
-    );
-    --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-900);
-    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-800);
-    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-800);
-    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-900);
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-blue-800
-    );
-    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-700);
-    --spectrum-assetlist-item-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.3
-    );
-    --spectrum-assetlist-item-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.2
-    );
-    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
-    --spectrum-swatch-border-color-rgb: 255, 255, 255;
-    --spectrum-swatch-border-color-opacity: 0.51;
-    --spectrum-swatch-border-color: rgba(
-        var(--spectrum-swatch-border-color-rgb),
-        var(--spectrum-swatch-border-color-opacity)
-    );
-    --spectrum-swatch-border-color-light-rgb: 255, 255, 255;
-    --spectrum-swatch-border-color-light-opacity: 0.2;
-    --spectrum-swatch-border-color-light: rgba(
-        var(--spectrum-swatch-border-color-light-rgb),
-        var(--spectrum-swatch-border-color-light-opacity)
-    );
-}
-:host,
-:root {
-    --spectrum-neutral-background-color-selected-default: var(
-        --spectrum-gray-700
-    );
-    --spectrum-neutral-background-color-selected-hover: var(
-        --spectrum-gray-800
-    );
-    --spectrum-neutral-background-color-selected-down: var(--spectrum-gray-900);
-    --spectrum-neutral-background-color-selected-key-focus: var(
-        --spectrum-gray-800
-    );
-    --spectrum-slider-track-thickness: 2px;
-    --spectrum-slider-handle-gap: 4px;
-    --spectrum-picker-border-width: var(--spectrum-border-width-100);
-    --spectrum-in-field-button-fill-stacked-inner-border-rounding: 0px;
-    --spectrum-in-field-button-edge-to-fill: 0px;
-    --spectrum-in-field-button-stacked-inner-edge-to-fill: 0px;
-    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium: 3px;
-    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large: 4px;
-    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large: 5px;
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-small: var(
-        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-small
-    );
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-medium: var(
-        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium
-    );
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-large: var(
-        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large
-    );
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large: var(
-        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large
-    );
-    --spectrum-corner-radius-75: 2px;
-    --spectrum-drop-shadow-x: 0px;
-    --spectrum-border-width-100: 1px;
-    --spectrum-accent-color-100: var(--spectrum-blue-100);
-    --spectrum-accent-color-200: var(--spectrum-blue-200);
-    --spectrum-accent-color-300: var(--spectrum-blue-300);
-    --spectrum-accent-color-400: var(--spectrum-blue-400);
-    --spectrum-accent-color-500: var(--spectrum-blue-500);
-    --spectrum-accent-color-600: var(--spectrum-blue-600);
-    --spectrum-accent-color-700: var(--spectrum-blue-700);
-    --spectrum-accent-color-800: var(--spectrum-blue-800);
-    --spectrum-accent-color-900: var(--spectrum-blue-900);
-    --spectrum-accent-color-1000: var(--spectrum-blue-1000);
-    --spectrum-accent-color-1100: var(--spectrum-blue-1100);
-    --spectrum-accent-color-1200: var(--spectrum-blue-1200);
-    --spectrum-accent-color-1300: var(--spectrum-blue-1300);
-    --spectrum-accent-color-1400: var(--spectrum-blue-1400);
-    --spectrum-heading-sans-serif-font-weight: var(--spectrum-bold-font-weight);
-    --spectrum-heading-serif-font-weight: var(--spectrum-bold-font-weight);
-    --spectrum-heading-cjk-font-weight: var(--spectrum-extra-bold-font-weight);
-    --spectrum-heading-sans-serif-emphasized-font-weight: var(
-        --spectrum-bold-font-weight
-    );
-    --spectrum-heading-serif-emphasized-font-weight: var(
-        --spectrum-bold-font-weight
-    );
-    --system: spectrum;
-    --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
-    --spectrum-animation-duration-0: 0s;
-    --spectrum-animation-duration-100: 0.13s;
-    --spectrum-animation-duration-200: 0.16s;
-    --spectrum-animation-duration-300: 0.19s;
-    --spectrum-animation-duration-400: 0.22s;
-    --spectrum-animation-duration-500: 0.25s;
-    --spectrum-animation-duration-600: 0.3s;
-    --spectrum-animation-duration-700: 0.35s;
-    --spectrum-animation-duration-800: 0.4s;
-    --spectrum-animation-duration-900: 0.45s;
-    --spectrum-animation-duration-1000: 0.5s;
-    --spectrum-animation-duration-2000: 1s;
-    --spectrum-animation-duration-4000: 2s;
-    --spectrum-animation-duration-6000: 3s;
-    --spectrum-animation-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1);
-    --spectrum-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
-    --spectrum-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
-    --spectrum-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
-    --spectrum-sans-font-family-stack: adobe-clean,
-        var(--spectrum-sans-serif-font-family), 'Source Sans Pro', -apple-system,
-        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
-        'Lucida Grande', sans-serif;
-    --spectrum-sans-serif-font: var(--spectrum-sans-font-family-stack);
-    --spectrum-serif-font-family-stack: adobe-clean-serif,
-        var(--spectrum-serif-font-family), 'Source Serif Pro', Georgia, serif;
-    --spectrum-serif-font: var(--spectrum-serif-font-family-stack);
-    --spectrum-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
-    --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro',
-        -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro',
-        -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-font-family: var(--spectrum-sans-font-family-stack);
-    --spectrum-font-style: var(--spectrum-default-font-style);
-    --spectrum-font-size: var(--spectrum-font-size-100);
-    --spectrum-cjk-font-family-stack: adobe-clean-han-japanese,
-        var(--spectrum-cjk-font-family), sans-serif;
-    --spectrum-cjk-font: var(--spectrum-code-font-family-stack);
-    --spectrum-docs-static-white-background-color-rgb: 15, 121, 125;
-    --spectrum-docs-static-white-background-color: rgba(
-        var(--spectrum-docs-static-white-background-color-rgb)
-    );
-    --spectrum-docs-static-black-background-color-rgb: 181, 209, 211;
-    --spectrum-docs-static-black-background-color: rgba(
-        var(--spectrum-docs-static-black-background-color-rgb)
-    );
-    --spectrum-coach-indicator-ring-static-white-color: var(--spectrum-white);
-}
-:host,
-:root {
-    --spectrum-checkbox-control-size-small: 16px;
-    --spectrum-checkbox-control-size-medium: 18px;
-    --spectrum-checkbox-control-size-large: 20px;
-    --spectrum-checkbox-control-size-extra-large: 22px;
-    --spectrum-checkbox-top-to-control-small: 7px;
-    --spectrum-checkbox-top-to-control-medium: 11px;
-    --spectrum-checkbox-top-to-control-large: 15px;
-    --spectrum-checkbox-top-to-control-extra-large: 19px;
-    --spectrum-switch-control-width-small: 32px;
-    --spectrum-switch-control-width-medium: 36px;
-    --spectrum-switch-control-width-large: 41px;
-    --spectrum-switch-control-width-extra-large: 46px;
-    --spectrum-switch-control-height-small: 16px;
-    --spectrum-switch-control-height-medium: 18px;
-    --spectrum-switch-control-height-large: 20px;
-    --spectrum-switch-control-height-extra-large: 22px;
-    --spectrum-switch-top-to-control-small: 7px;
-    --spectrum-switch-top-to-control-medium: 11px;
-    --spectrum-switch-top-to-control-large: 15px;
-    --spectrum-switch-top-to-control-extra-large: 19px;
-    --spectrum-radio-button-control-size-small: 16px;
-    --spectrum-radio-button-control-size-medium: 18px;
-    --spectrum-radio-button-control-size-large: 20px;
-    --spectrum-radio-button-control-size-extra-large: 22px;
-    --spectrum-radio-button-top-to-control-small: 7px;
-    --spectrum-radio-button-top-to-control-medium: 11px;
-    --spectrum-radio-button-top-to-control-large: 15px;
-    --spectrum-radio-button-top-to-control-extra-large: 19px;
-    --spectrum-slider-control-height-small: 18px;
-    --spectrum-slider-control-height-medium: 20px;
-    --spectrum-slider-control-height-large: 22px;
-    --spectrum-slider-control-height-extra-large: 26px;
-    --spectrum-slider-handle-size-small: 18px;
-    --spectrum-slider-handle-size-medium: 20px;
-    --spectrum-slider-handle-size-large: 22px;
-    --spectrum-slider-handle-size-extra-large: 26px;
-    --spectrum-slider-handle-border-width-down-small: 7px;
-    --spectrum-slider-handle-border-width-down-medium: 8px;
-    --spectrum-slider-handle-border-width-down-large: 9px;
-    --spectrum-slider-handle-border-width-down-extra-large: 11px;
-    --spectrum-slider-bottom-to-handle-small: 6px;
-    --spectrum-slider-bottom-to-handle-medium: 10px;
-    --spectrum-slider-bottom-to-handle-large: 14px;
-    --spectrum-slider-bottom-to-handle-extra-large: 17px;
-    --spectrum-corner-radius-100: 5px;
-    --spectrum-corner-radius-200: 10px;
-    --spectrum-drop-shadow-y: 2px;
-    --spectrum-drop-shadow-blur: 6px;
-    --spectrum-slider-tick-mark-height: 13px;
-    --spectrum-slider-ramp-track-height: 20px;
-    --spectrum-colorwheel-path: 'M 119 119 m -119 0 a 119 119 0 1 0 238 0 a 119 119 0 1 0 -238 0.2 M 119 119 m -91 0 a 91 91 0 1 0 182 0 a 91 91 0 1 0 -182 0';
-    --spectrum-colorwheel-path-borders: 'M 120 120 m -120 0 a 120 120 0 1 0 240 0 a 120 120 0 1 0 -240 0.2 M 120 120 m -90 0 a 90 90 0 1 0 180 0 a 90 90 0 1 0 -180 0';
-    --spectrum-colorwheel-colorarea-container-size: 182px;
-    --spectrum-colorloupe-checkerboard-fill: url(#checkerboard-secondary);
-    --spectrum-contextual-help-content-spacing: var(--spectrum-spacing-200);
-    --spectrum-menu-item-selectable-edge-to-text-not-selected-small: 34px;
-    --spectrum-menu-item-selectable-edge-to-text-not-selected-medium: 42px;
-    --spectrum-menu-item-selectable-edge-to-text-not-selected-large: 47px;
-    --spectrum-menu-item-selectable-edge-to-text-not-selected-extra-large: 54px;
-    --spectrum-menu-item-checkmark-height-small: 12px;
-    --spectrum-menu-item-checkmark-height-medium: 14px;
-    --spectrum-menu-item-checkmark-height-large: 16px;
-    --spectrum-menu-item-checkmark-height-extra-large: 16px;
-    --spectrum-menu-item-checkmark-width-small: 12px;
-    --spectrum-menu-item-checkmark-width-medium: 14px;
-    --spectrum-menu-item-checkmark-width-large: 16px;
-    --spectrum-menu-item-checkmark-width-extra-large: 16px;
-    --spectrum-rating-icon-spacing: var(--spectrum-spacing-100);
-    --spectrum-button-top-to-text-small: 6px;
-    --spectrum-button-bottom-to-text-small: 5px;
-    --spectrum-button-top-to-text-medium: 9px;
-    --spectrum-button-bottom-to-text-medium: 10px;
-    --spectrum-button-top-to-text-large: 12px;
-    --spectrum-button-bottom-to-text-large: 13px;
-    --spectrum-button-top-to-text-extra-large: 16px;
-    --spectrum-button-bottom-to-text-extra-large: 17px;
-    --spectrum-alert-banner-close-button-spacing: var(--spectrum-spacing-200);
-    --spectrum-alert-banner-edge-to-divider: var(--spectrum-spacing-200);
-    --spectrum-alert-banner-edge-to-button: var(--spectrum-spacing-200);
-    --spectrum-alert-banner-text-to-button-vertical: var(
-        --spectrum-spacing-200
-    );
-    --spectrum-alert-dialog-padding: var(--spectrum-spacing-400);
-    --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-600);
-    --spectrum-coach-indicator-gap: 8px;
-    --spectrum-coach-indicator-ring-diameter: 20px;
-    --spectrum-coach-indicator-quiet-ring-diameter: 10px;
-    --spectrum-coachmark-buttongroup-display: none;
-    --spectrum-coachmark-buttongroup-mobile-display: flex;
-    --spectrum-coachmark-menu-display: none;
-    --spectrum-coachmark-menu-mobile-display: inline-flex;
-    --spectrum-well-padding: 20px;
-    --spectrum-well-margin-top: 5px;
-    --spectrum-well-min-width: 300px;
-    --spectrum-well-border-radius: 5px;
-    --spectrum-workflow-icon-size-xxl: 40px;
-    --spectrum-workflow-icon-size-xxs: 15px;
-    --spectrum-treeview-item-indentation-medium: 20px;
-    --spectrum-treeview-item-indentation-small: 15px;
-    --spectrum-treeview-item-indentation-large: 25px;
-    --spectrum-treeview-item-indentation-extra-large: 30px;
-    --spectrum-treeview-indicator-inset-block-start: 6px;
-    --spectrum-treeview-item-min-block-size-thumbnail-offset-medium: 2px;
-    --spectrum-dialog-confirm-entry-animation-distance: 25px;
-    --spectrum-dialog-confirm-hero-height: 160px;
-    --spectrum-dialog-confirm-border-radius: 5px;
-    --spectrum-dialog-confirm-title-text-size: 19px;
-    --spectrum-dialog-confirm-description-text-size: 15px;
-    --spectrum-dialog-confirm-padding-grid: 24px;
-    --spectrum-datepicker-initial-width: 160px;
-    --spectrum-datepicker-generic-padding: 15px;
-    --spectrum-datepicker-dash-line-height: 30px;
-    --spectrum-datepicker-width-quiet-first: 90px;
-    --spectrum-datepicker-width-quiet-second: 20px;
-    --spectrum-datepicker-datetime-width-first: 45px;
-    --spectrum-datepicker-invalid-icon-to-button: 10px;
-    --spectrum-datepicker-invalid-icon-to-button-quiet: 9px;
-    --spectrum-datepicker-input-datetime-width: 30px;
-    --spectrum-pagination-textfield-width: 60px;
-    --spectrum-pagination-item-inline-spacing: 6px;
-    --spectrum-dial-border-radius: 20px;
-    --spectrum-dial-handle-position: 10px;
-    --spectrum-dial-handle-block-margin: 20px;
-    --spectrum-dial-handle-inline-margin: 20px;
-    --spectrum-dial-controls-margin: 10px;
-    --spectrum-dial-label-gap-y: 6px;
-    --spectrum-dial-label-container-top-to-text: 5px;
-    --spectrum-assetcard-focus-ring-border-radius: 9px;
-    --spectrum-assetcard-selectionindicator-margin: 15px;
-    --spectrum-assetcard-title-font-size: var(--spectrum-heading-size-xxs);
-    --spectrum-assetcard-header-content-font-size: var(
-        --spectrum-heading-size-xxs
-    );
-    --spectrum-assetcard-content-font-size: var(--spectrum-body-size-xs);
-    --spectrum-tooltip-animation-distance: 5px;
-    --spectrum-ui-icon-medium-display: none;
-    --spectrum-ui-icon-large-display: block;
-}
-:host,
-:root {
-    --spectrum-menu-item-background-color-default-rgb: 0, 0, 0;
-    --spectrum-menu-item-background-color-default-opacity: 0;
-    --spectrum-menu-item-background-color-default: rgba(
-        var(--spectrum-menu-item-background-color-default-rgb),
-        var(--spectrum-menu-item-background-color-default-opacity)
-    );
-    --spectrum-menu-item-background-color-hover: var(
-        --spectrum-transparent-black-200
-    );
-    --spectrum-menu-item-background-color-down: var(
-        --spectrum-transparent-black-200
-    );
-    --spectrum-menu-item-background-color-key-focus: var(
-        --spectrum-transparent-black-200
-    );
-    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-800-rgb);
-    --spectrum-dropindicator-color: var(--spectrum-blue-800);
-    --spectrum-calendar-day-background-color-selected: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.1
-    );
-    --spectrum-calendar-day-background-color-hover: rgba(
-        var(--spectrum-black-rgb),
-        0.06
-    );
-    --spectrum-calendar-day-today-background-color-selected-hover: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.2
-    );
-    --spectrum-calendar-day-background-color-selected-hover: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.2
-    );
-    --spectrum-calendar-day-background-color-down: var(
-        --spectrum-transparent-black-200
-    );
-    --spectrum-calendar-day-background-color-cap-selected: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.2
-    );
-    --spectrum-calendar-day-background-color-key-focus: rgba(
-        var(--spectrum-black-rgb),
-        0.06
-    );
-    --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-800);
-    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-900-rgb);
-    --spectrum-badge-label-icon-color-primary: var(--spectrum-white);
-    --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-800);
-    --spectrum-coach-indicator-ring-dark-color: var(--spectrum-gray-900);
-    --spectrum-coach-indicator-ring-light-color: var(--spectrum-gray-50);
-    --spectrum-well-border-color: var(--spectrum-black);
-    --spectrum-steplist-current-marker-color-key-focus: var(
-        --spectrum-blue-800
-    );
-    --spectrum-treeview-item-background-color-quiet-selected: rgba(
-        var(--spectrum-gray-900-rgb),
-        0.06
-    );
-    --spectrum-treeview-item-background-color-selected: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.1
-    );
-    --spectrum-logic-button-and-background-color: var(--spectrum-blue-900);
-    --spectrum-logic-button-and-border-color: var(--spectrum-blue-900);
-    --spectrum-logic-button-and-background-color-hover: var(
-        --spectrum-blue-1100
-    );
-    --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1100);
-    --spectrum-logic-button-or-background-color: var(--spectrum-magenta-900);
-    --spectrum-logic-button-or-border-color: var(--spectrum-magenta-900);
-    --spectrum-logic-button-or-background-color-hover: var(
-        --spectrum-magenta-1100
-    );
-    --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-1100);
-    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-900);
-    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-900);
-    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-1000);
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-blue-900
-    );
-    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-800);
-    --spectrum-assetlist-item-background-color-selected-hover: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.2
-    );
-    --spectrum-assetlist-item-background-color-selected: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.1
-    );
-    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-800);
-    --spectrum-swatch-border-color-rgb: 0, 0, 0;
-    --spectrum-swatch-border-color-opacity: 0.51;
-    --spectrum-swatch-border-color: rgba(
-        var(--spectrum-swatch-border-color-rgb),
-        var(--spectrum-swatch-border-color-opacity)
-    );
-    --spectrum-swatch-border-color-light-rgb: 0, 0, 0;
-    --spectrum-swatch-border-color-light-opacity: 0.2;
-    --spectrum-swatch-border-color-light: rgba(
-        var(--spectrum-swatch-border-color-light-rgb),
-        var(--spectrum-swatch-border-color-light-opacity)
-    );
-}
-:host,
-:root {
-    --spectrum-checkbox-control-size-small: 12px;
-    --spectrum-checkbox-control-size-medium: 14px;
-    --spectrum-checkbox-control-size-large: 16px;
-    --spectrum-checkbox-control-size-extra-large: 18px;
-    --spectrum-checkbox-top-to-control-small: 6px;
-    --spectrum-checkbox-top-to-control-medium: 9px;
-    --spectrum-checkbox-top-to-control-large: 12px;
-    --spectrum-checkbox-top-to-control-extra-large: 15px;
-    --spectrum-switch-control-width-small: 23px;
-    --spectrum-switch-control-width-medium: 26px;
-    --spectrum-switch-control-width-large: 29px;
-    --spectrum-switch-control-width-extra-large: 33px;
-    --spectrum-switch-control-height-small: 12px;
-    --spectrum-switch-control-height-medium: 14px;
-    --spectrum-switch-control-height-large: 16px;
-    --spectrum-switch-control-height-extra-large: 18px;
-    --spectrum-switch-top-to-control-small: 6px;
-    --spectrum-switch-top-to-control-medium: 9px;
-    --spectrum-switch-top-to-control-large: 12px;
-    --spectrum-switch-top-to-control-extra-large: 15px;
-    --spectrum-radio-button-control-size-small: 12px;
-    --spectrum-radio-button-control-size-medium: 14px;
-    --spectrum-radio-button-control-size-large: 16px;
-    --spectrum-radio-button-control-size-extra-large: 18px;
-    --spectrum-radio-button-top-to-control-small: 6px;
-    --spectrum-radio-button-top-to-control-medium: 9px;
-    --spectrum-radio-button-top-to-control-large: 12px;
-    --spectrum-radio-button-top-to-control-extra-large: 15px;
-    --spectrum-slider-control-height-small: 14px;
-    --spectrum-slider-control-height-medium: 16px;
-    --spectrum-slider-control-height-large: 18px;
-    --spectrum-slider-control-height-extra-large: 20px;
-    --spectrum-slider-handle-size-small: 14px;
-    --spectrum-slider-handle-size-medium: 16px;
-    --spectrum-slider-handle-size-large: 18px;
-    --spectrum-slider-handle-size-extra-large: 20px;
-    --spectrum-slider-handle-border-width-down-small: 5px;
-    --spectrum-slider-handle-border-width-down-medium: 6px;
-    --spectrum-slider-handle-border-width-down-large: 7px;
-    --spectrum-slider-handle-border-width-down-extra-large: 8px;
-    --spectrum-slider-bottom-to-handle-small: 5px;
-    --spectrum-slider-bottom-to-handle-medium: 8px;
-    --spectrum-slider-bottom-to-handle-large: 11px;
-    --spectrum-slider-bottom-to-handle-extra-large: 14px;
-    --spectrum-corner-radius-100: 4px;
-    --spectrum-corner-radius-200: 8px;
-    --spectrum-drop-shadow-y: 1px;
-    --spectrum-drop-shadow-blur: 4px;
     --spectrum-slider-tick-mark-height: 10px;
     --spectrum-slider-ramp-track-height: 16px;
+
     --spectrum-colorwheel-path: 'M 95 95 m -95 0 a 95 95 0 1 0 190 0 a 95 95 0 1 0 -190 0.2 M 95 95 m -73 0 a 73 73 0 1 0 146 0 a 73 73 0 1 0 -146 0';
     --spectrum-colorwheel-path-borders: 'M 96 96 m -96 0 a 96 96 0 1 0 192 0 a 96 96 0 1 0 -192 0.2 M 96 96 m -72 0 a 72 72 0 1 0 144 0 a 72 72 0 1 0 -144 0';
     --spectrum-colorwheel-colorarea-container-size: 144px;
+
     --spectrum-colorloupe-checkerboard-fill: url(#checkerboard-primary);
-    --spectrum-contextual-help-content-spacing: var(--spectrum-spacing-100);
+
     --spectrum-menu-item-selectable-edge-to-text-not-selected-small: 28px;
     --spectrum-menu-item-selectable-edge-to-text-not-selected-medium: 32px;
     --spectrum-menu-item-selectable-edge-to-text-not-selected-large: 38px;
@@ -4090,7 +3269,9 @@
     --spectrum-menu-item-checkmark-width-medium: 10px;
     --spectrum-menu-item-checkmark-width-large: 12px;
     --spectrum-menu-item-checkmark-width-extra-large: 14px;
+
     --spectrum-rating-icon-spacing: var(--spectrum-spacing-75);
+
     --spectrum-button-top-to-text-small: 5px;
     --spectrum-button-bottom-to-text-small: 4px;
     --spectrum-button-top-to-text-medium: 7px;
@@ -4105,11 +3286,14 @@
     --spectrum-alert-banner-text-to-button-vertical: var(
         --spectrum-spacing-100
     );
+
     --spectrum-alert-dialog-padding: var(--spectrum-spacing-500);
     --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-700);
+
     --spectrum-coach-indicator-gap: 6px;
     --spectrum-coach-indicator-ring-diameter: var(--spectrum-spacing-300);
     --spectrum-coach-indicator-quiet-ring-diameter: var(--spectrum-spacing-100);
+
     --spectrum-coachmark-buttongroup-display: flex;
     --spectrum-coachmark-buttongroup-mobile-display: none;
     --spectrum-coachmark-menu-display: inline-flex;
@@ -4143,8 +3327,10 @@
     --spectrum-datepicker-invalid-icon-to-button: 8px;
     --spectrum-datepicker-invalid-icon-to-button-quiet: 7px;
     --spectrum-datepicker-input-datetime-width: var(--spectrum-spacing-400);
+
     --spectrum-pagination-textfield-width: var(--spectrum-spacing-700);
     --spectrum-pagination-item-inline-spacing: 5px;
+
     --spectrum-dial-border-radius: 16px;
     --spectrum-dial-handle-position: 8px;
     --spectrum-dial-handle-block-margin: 16px;
@@ -4159,220 +3345,9 @@
         --spectrum-heading-size-xs
     );
     --spectrum-assetcard-content-font-size: var(--spectrum-body-size-s);
+
     --spectrum-tooltip-animation-distance: var(--spectrum-spacing-75);
+
     --spectrum-ui-icon-medium-display: block;
     --spectrum-ui-icon-large-display: none;
-}
-:host,
-:root {
-    --spectrum-drop-zone-background-color-rgb: var(--spectrum-indigo-900-rgb);
-    --spectrum-well-border-color: rgba(var(--spectrum-white-rgb), 0.05);
-    --spectrum-assetcard-border-color-selected: var(--spectrum-indigo-700);
-    --spectrum-assetcard-border-color-selected-hover: var(
-        --spectrum-indigo-700
-    );
-    --spectrum-assetcard-border-color-selected-down: var(--spectrum-indigo-800);
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-indigo-700
-    );
-}
-:host,
-:root {
-    --spectrum-neutral-background-color-selected-default: var(
-        --spectrum-gray-800
-    );
-    --spectrum-neutral-background-color-selected-hover: var(
-        --spectrum-gray-900
-    );
-    --spectrum-neutral-background-color-selected-down: var(--spectrum-gray-900);
-    --spectrum-neutral-background-color-selected-key-focus: var(
-        --spectrum-gray-900
-    );
-    --spectrum-slider-track-thickness: 4px;
-    --spectrum-slider-handle-gap: 0px;
-    --spectrum-picker-border-width: 0;
-    --spectrum-in-field-button-fill-stacked-inner-border-rounding: 1px;
-    --spectrum-in-field-button-edge-to-fill: 4px;
-    --spectrum-in-field-button-stacked-inner-edge-to-fill: 1px;
-    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium: 5px;
-    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large: 7px;
-    --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large: 8px;
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-small: 1px;
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-medium: 1px;
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-large: 3px;
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large: 4px;
-    --spectrum-border-width-100: 2px;
-    --spectrum-accent-color-100: var(--spectrum-indigo-100);
-    --spectrum-accent-color-200: var(--spectrum-indigo-200);
-    --spectrum-accent-color-300: var(--spectrum-indigo-300);
-    --spectrum-accent-color-400: var(--spectrum-indigo-400);
-    --spectrum-accent-color-500: var(--spectrum-indigo-500);
-    --spectrum-accent-color-600: var(--spectrum-indigo-600);
-    --spectrum-accent-color-700: var(--spectrum-indigo-700);
-    --spectrum-accent-color-800: var(--spectrum-indigo-800);
-    --spectrum-accent-color-900: var(--spectrum-indigo-900);
-    --spectrum-accent-color-1000: var(--spectrum-indigo-1000);
-    --spectrum-accent-color-1100: var(--spectrum-indigo-1100);
-    --spectrum-accent-color-1200: var(--spectrum-indigo-1200);
-    --spectrum-accent-color-1300: var(--spectrum-indigo-1300);
-    --spectrum-accent-color-1400: var(--spectrum-indigo-1400);
-    --spectrum-heading-sans-serif-font-weight: var(
-        --spectrum-black-font-weight
-    );
-    --spectrum-heading-serif-font-weight: var(--spectrum-black-font-weight);
-    --spectrum-heading-cjk-font-weight: var(--spectrum-black-font-weight);
-    --spectrum-heading-sans-serif-emphasized-font-weight: var(
-        --spectrum-black-font-weight
-    );
-    --spectrum-heading-serif-emphasized-font-weight: var(
-        --spectrum-black-font-weight
-    );
-    --system: express;
-}
-:host,
-:root {
-    --spectrum-checkbox-control-size-small: 18px;
-    --spectrum-checkbox-control-size-medium: 20px;
-    --spectrum-checkbox-control-size-large: 22px;
-    --spectrum-checkbox-control-size-extra-large: 26px;
-    --spectrum-checkbox-top-to-control-small: 6px;
-    --spectrum-checkbox-top-to-control-medium: 10px;
-    --spectrum-checkbox-top-to-control-large: 14px;
-    --spectrum-checkbox-top-to-control-extra-large: 17px;
-    --spectrum-switch-control-width-small: 32px;
-    --spectrum-switch-control-width-medium: 36px;
-    --spectrum-switch-control-width-large: 41px;
-    --spectrum-switch-control-width-extra-large: 46px;
-    --spectrum-switch-control-height-small: 18px;
-    --spectrum-switch-control-height-medium: 20px;
-    --spectrum-switch-control-height-large: 22px;
-    --spectrum-switch-control-height-extra-large: 26px;
-    --spectrum-switch-top-to-control-small: 6px;
-    --spectrum-switch-top-to-control-medium: 10px;
-    --spectrum-switch-top-to-control-large: 14px;
-    --spectrum-switch-top-to-control-extra-large: 17px;
-    --spectrum-radio-button-control-size-small: 18px;
-    --spectrum-radio-button-control-size-medium: 20px;
-    --spectrum-radio-button-control-size-large: 22px;
-    --spectrum-radio-button-control-size-extra-large: 26px;
-    --spectrum-radio-button-top-to-control-small: 6px;
-    --spectrum-radio-button-top-to-control-medium: 10px;
-    --spectrum-radio-button-top-to-control-large: 14px;
-    --spectrum-radio-button-top-to-control-extra-large: 17px;
-    --spectrum-slider-control-height-small: 22px;
-    --spectrum-slider-control-height-medium: 24px;
-    --spectrum-slider-control-height-large: 28px;
-    --spectrum-slider-control-height-extra-large: 30px;
-    --spectrum-slider-handle-size-small: 22px;
-    --spectrum-slider-handle-size-medium: 24px;
-    --spectrum-slider-handle-size-large: 28px;
-    --spectrum-slider-handle-size-extra-large: 30px;
-    --spectrum-slider-handle-border-width-down-small: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-medium: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-large: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-extra-large: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-bottom-to-handle-small: 4px;
-    --spectrum-slider-bottom-to-handle-medium: 8px;
-    --spectrum-slider-bottom-to-handle-large: 12px;
-    --spectrum-slider-bottom-to-handle-extra-large: 15px;
-    --spectrum-corner-radius-75: 4px;
-    --spectrum-corner-radius-100: 8px;
-    --spectrum-corner-radius-200: 16px;
-    --spectrum-drop-shadow-x: 0px;
-    --spectrum-drop-shadow-y: 4px;
-    --spectrum-drop-shadow-blur: 16px;
-    --spectrum-colorwheel-path: 'M 118 118 m -118 0 a 118 118 0 1 0 236 0 a 118 118 0 1 0 -236 0.2 M 118 118 m -92 0 a 92 92 0 1 0 184 0 a 92 92 0 1 0 -184 0';
-    --spectrum-colorwheel-path-borders: 'M 120 120 m -120 0 a 120 120 0 1 0 240 0 a 120 120 0 1 0 -240 0.2 M 120 120 m -90 0 a 90 90 0 1 0 180 0 a 90 90 0 1 0 -180 0';
-    --spectrum-dialog-confirm-border-radius: 8px;
-    --spectrum-dial-border-radius: 15px;
-    --spectrum-assetcard-focus-ring-border-radius: 12px;
-}
-:host,
-:root {
-    --spectrum-drop-zone-background-color-rgb: var(--spectrum-indigo-800-rgb);
-    --spectrum-well-border-color: rgba(var(--spectrum-black-rgb), 0.05);
-    --spectrum-assetcard-border-color-selected: var(--spectrum-indigo-900);
-    --spectrum-assetcard-border-color-selected-hover: var(
-        --spectrum-indigo-900
-    );
-    --spectrum-assetcard-border-color-selected-down: var(
-        --spectrum-indigo-1000
-    );
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-indigo-900
-    );
-}
-:host,
-:root {
-    --spectrum-checkbox-control-size-small: 14px;
-    --spectrum-checkbox-control-size-medium: 16px;
-    --spectrum-checkbox-control-size-large: 18px;
-    --spectrum-checkbox-control-size-extra-large: 20px;
-    --spectrum-checkbox-top-to-control-small: 5px;
-    --spectrum-checkbox-top-to-control-medium: 8px;
-    --spectrum-checkbox-top-to-control-large: 11px;
-    --spectrum-checkbox-top-to-control-extra-large: 14px;
-    --spectrum-switch-control-width-small: 25px;
-    --spectrum-switch-control-width-medium: 28px;
-    --spectrum-switch-control-width-large: 32px;
-    --spectrum-switch-control-width-extra-large: 35px;
-    --spectrum-switch-control-height-small: 14px;
-    --spectrum-switch-control-height-medium: 16px;
-    --spectrum-switch-control-height-large: 18px;
-    --spectrum-switch-control-height-extra-large: 20px;
-    --spectrum-switch-top-to-control-small: 5px;
-    --spectrum-switch-top-to-control-medium: 8px;
-    --spectrum-switch-top-to-control-large: 11px;
-    --spectrum-switch-top-to-control-extra-large: 14px;
-    --spectrum-radio-button-control-size-small: 14px;
-    --spectrum-radio-button-control-size-medium: 16px;
-    --spectrum-radio-button-control-size-large: 18px;
-    --spectrum-radio-button-control-size-extra-large: 20px;
-    --spectrum-radio-button-top-to-control-small: 5px;
-    --spectrum-radio-button-top-to-control-medium: 8px;
-    --spectrum-radio-button-top-to-control-large: 11px;
-    --spectrum-radio-button-top-to-control-extra-large: 14px;
-    --spectrum-slider-control-height-small: 18px;
-    --spectrum-slider-control-height-medium: 20px;
-    --spectrum-slider-control-height-large: 22px;
-    --spectrum-slider-control-height-extra-large: 24px;
-    --spectrum-slider-handle-size-small: 18px;
-    --spectrum-slider-handle-size-medium: 20px;
-    --spectrum-slider-handle-size-large: 22px;
-    --spectrum-slider-handle-size-extra-large: 24px;
-    --spectrum-slider-handle-border-width-down-small: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-medium: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-large: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-extra-large: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-bottom-to-handle-small: 3px;
-    --spectrum-slider-bottom-to-handle-medium: 6px;
-    --spectrum-slider-bottom-to-handle-large: 9px;
-    --spectrum-slider-bottom-to-handle-extra-large: 12px;
-    --spectrum-corner-radius-75: 3px;
-    --spectrum-corner-radius-100: 6px;
-    --spectrum-corner-radius-200: 12px;
-    --spectrum-drop-shadow-x: 0px;
-    --spectrum-drop-shadow-y: 4px;
-    --spectrum-drop-shadow-blur: 16px;
-    --spectrum-colorwheel-path: 'M 94 94 m -94 0 a 94 94 0 1 0 188 0 a 94 94 0 1 0 -188 0.2 M 94 94 m -74 0 a 74 74 0 1 0 148 0 a 74 74 0 1 0 -148 0';
-    --spectrum-colorwheel-path-borders: 'M 96 96 m -96 0 a 96 96 0 1 0 192 0 a 96 96 0 1 0 -192 0.2 M 96 96 m -72 0 a 72 72 0 1 0 144 0 a 72 72 0 1 0 -144 0';
-    --spectrum-dialog-confirm-border-radius: 6px;
-    --spectrum-dial-border-radius: 12px;
-    --spectrum-assetcard-focus-ring-border-radius: 10px;
 }

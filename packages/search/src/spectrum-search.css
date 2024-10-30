@@ -269,12 +269,17 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet]) {
-    --spectrum-search-quiet-button-offset: var(
-        --mod-search-quiet-button-offset,
-        calc(
-            var(--mod-search-block-size, var(--spectrum-search-block-size)) / 2 -
-                var(--mod-search-icon-size, var(--spectrum-search-icon-size)) /
-                2
+    --spectrum-search-quiet-button-offset: calc(
+        var(--mod-search-block-size, var(--spectrum-search-block-size)) / 2 -
+            var(--mod-search-icon-size, var(--spectrum-search-icon-size)) / 2
+    );
+}
+
+:host([quiet]) #button {
+    transform: translateX(
+        var(
+            --mod-search-quiet-button-offset,
+            var(--spectrum-search-quiet-button-offset)
         )
     );
 }
@@ -301,6 +306,10 @@ governing permissions and limitations under the License.
         var(
                 --mod-search-button-inline-size,
                 var(--spectrum-search-button-inline-size)
-            ) - var(--spectrum-search-quiet-button-offset)
+            ) -
+            var(
+                --mod-search-quiet-button-offset,
+                var(--spectrum-search-quiet-button-offset)
+            )
     );
 }

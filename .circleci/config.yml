@@ -14,7 +14,7 @@ parameters:
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: 34923d02e4b68736f367f04be8d5a4f3843bc091
+        default: 08de0cb86affdc8cec2cb320aa9899b07032fcf8
     wireit_cache_name:
         type: string
         default: wireit
@@ -101,8 +101,7 @@ commands:
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo "Netlify alias hash: $hash" 
-                      echo "Deploying from test/visual directory..."
+                      echo hash
                       yarn netlify deploy --alias=$hash --cwd test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
@@ -365,10 +364,10 @@ workflows:
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
-                          system: [spectrum, express, spectrum-two]
-                          color: [light]
-                          scale: [medium]
-                          dir: [ltr]
+                          system: [spectrum, express]
+                          color: [light, dark]
+                          scale: [medium, large]
+                          dir: [ltr, rtl]
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
@@ -377,10 +376,10 @@ workflows:
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
-                          system: [spectrum, express, spectrum-two]
-                          color: [dark]
-                          scale: [large]
-                          dir: [rtl]
+                          system: [spectrum-two]
+                          color: [light, dark]
+                          scale: [medium, large]
+                          dir: [ltr, rtl]
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX

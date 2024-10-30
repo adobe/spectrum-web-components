@@ -151,6 +151,7 @@ const packagePaths = tokenPackages
 
 const spectrumThemeSelectorRegExp =
     /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large|legacy)?,?(\n|\s)*)?)+\s?\{/g;
+const importantCommentRegExp = /\/\*![^*]*\*+([^\/*][^*]*\*+)*\//g;
 
 const targetHost = (css) => {
     /** @note Could use this regex to more permissive of class names */
@@ -169,30 +170,7 @@ const targetHost = (css) => {
     return css.replaceAll(spectrumThemeSelectorRegExp, ':host,\n:root {');
 };
 
-/**
- * Core entry function for generating tokens from Spectrum CSS packages
- * to be used by the sp-theme
- * @param {'spectrum'|'spectrum-two'} spectrumVersion
- * @param {Object} options
- * @param {boolean} options.clean - Whether to clean the output directory before writing
- * @returns {Promise}
- */
-export async function generateTokensWrapper(
-    spectrumVersion,
-    { clean = true } = {}
-) {
-    const isSpectrumOne = spectrumVersion === 'spectrum';
-    const tokenPaths = ['tokens', 'tokens-v2'];
-    const pathIdx = isSpectrumOne ? 0 : 1;
-    const tokenPackageName = tokenPaths[pathIdx];
-
-    let tokenSourcePath = getPackagePath(tokenPackageName);
-    if (tokenSourcePath) {
-        tokenSourcePath = path.join(tokenSourcePath, 'dist', 'css');
-    }
-
-    const outputPath = path.join(__dirname, '..', 'tools', 'styles');
-
+const removeImportantComments = (css) => {
     /**
      * @TODO
      * These assets are not provided by the tokens or tokens-v2 packages;
@@ -223,95 +201,70 @@ export async function generateTokensWrapper(
               'spectrum/custom-vars.css',
           ];
 
-    // If clean is true, remove the existing directory before writing
-    if (clean) {
-        rimrafSync(path.join(outputPath, tokenPackageName), {
-            // do not remove the deprecated token files
-            filter: (file, dirent) =>
-                dirent.isFile() &&
-                !deprecatedAssets.includes(
-                    path.relative(path.join(outputPath, tokenPackageName), file)
-                ),
-        });
-    }
+/**
+ * copies @spectrum-css/dist/css/*.css and @spectrum-css/dist/css/**\/*.css
+ * replaces classes with :root, :host, and pastes them into
+ * corresponding /tools/styles/*.css and /tools/styles/tokens/**\/*.css
+ * @param {string} srcPath @spectrum-css/dist/css path
+ * @param {*} tokensDir styles/tokens path
+ */
+const processTokens = (srcPath, tokensDir) => {
+    let css = fs.readFileSync(srcPath, 'utf8');
+    const fileName = srcPath.split(path.sep + 'css' + path.sep).at(-1);
 
-    // Only create express directory for tokens not tokens-v2
-    if (isSpectrumOne) {
-        ['spectrum', 'express'].forEach((folder) => {
-            // Create the directories if they don't exist
-            fs.mkdirSync(path.join(outputPath, tokenPackageName, folder), {
-                recursive: true,
-            });
-        });
-    } else {
-        fs.mkdirSync(path.join(outputPath, tokenPackageName), {
-            recursive: true,
-        });
-    }
+    css = removeImportantComments(targetHost(css));
 
-    /**
-     * copies @spectrum-css/dist/css/*.css and @spectrum-css/dist/css/**\/*.css
-     * replaces classes with :root, :host, and pastes them into
-     * corresponding /tools/styles/*.css and /tools/styles/tokens/**\/*.css
-     */
-    const themeTokens = await Promise.all([
-        fg(['*.css', 'spectrum/*.css', 'express/*.css'], {
-            cwd: tokenSourcePath,
-        }),
-        // S1 has their index.css file outside of the css directory
-        fg(['../index.css'], {
-            cwd: tokenSourcePath,
-        }),
-    ]).then(([files, indexFiles]) => [...files, ...indexFiles]);
+    try {
+        fs.writeFileSync(
+            path.join(__dirname, '..', 'tools', 'styles', tokensDir, fileName),
+            css
+        );
+    } catch (er) {}
+};
+const processPackages = async (tokensDir, index) => {
+    const packagename = tokenPackages[index];
 
-    const promises = themeTokens.map(async (fileName) =>
-        fsp
-            .readFile(path.join(tokenSourcePath, fileName), 'utf8')
-            .then(async (content) => {
-                /* If the file is empty, return */
-                if (!content) {
-                    return;
-                }
-
-                const output = path.join(
-                    outputPath,
-                    tokenPackageName,
-                    fileName.replace(/\.\.\//, '')
-                );
-
-                const { code } = await transform({
-                    filename: path.join(tokenSourcePath, fileName),
-                    minify: true,
-                    code: Buffer.from(content),
-                });
-
-                const formatted = await prettier.format(
-                    targetHost(code.toString()),
-                    prettierSettings
-                );
-
-                return fs
-                    .writeFile(output, formatted, {
-                        encoding: 'utf8',
-                    })
-                    .then(() => {
-                        log.success(`${relativePath(output).yellow} written`);
-                    });
-            })
+    let componentLevelTokensPath = path.join(
+        __dirname,
+        '..',
+        'node_modules',
+        '@spectrum-css',
+        tokensDir,
+        'dist',
+        'css',
+        'components'
     );
 
-    await Promise.all([promises]);
+    return Promise.all(
+        ['spectrum', 'express', 'spectrum-two'].map((type) => {
+            const outputDir = type !== 'spectrum-two' ? 'tokens' : 'tokens-v2';
+            const outputType = outputDir === 'tokens-v2' ? 'spectrum' : type;
+            const cssFilePath = path.join(
+                componentLevelTokensPath,
+                type,
+                packagename + '.css'
+            );
 
-    // Write the following empty files to the directory as a temporary
-    // placeholder for erroneous / orphaned files that do not exist in the
-    // tokens packages
-
-    fs.mkdirSync(path.join(outputPath, tokenPackageName, 'spectrum'), {
-        recursive: true,
-    });
-
-    return processComponentThemes(outputPath);
-}
+            // check if cssFilePath exists
+            if (fs.existsSync(cssFilePath)) {
+                let content = fs.readFileSync(cssFilePath, 'utf8');
+                content = removeImportantComments(targetHost(content));
+                fs.appendFileSync(
+                    path.join(
+                        __dirname,
+                        '..',
+                        'tools',
+                        'styles',
+                        outputDir,
+                        outputType,
+                        'global-vars.css'
+                    ),
+                    content
+                );
+            }
+        })
+    );
+};
 
 /**
  * Every component package with a dist/themes folder
@@ -323,13 +276,14 @@ export async function generateTokensWrapper(
  * @param {string} outputPath
  * @returns {Promise}
  */
-async function processComponentThemes(outputPath) {
-    const filename = 'system-theme-bridge.css';
-    const writeOptions = { encoding: 'utf-8' };
-    const onFinished = async (outputPath) => {
-        if (!fs.existsSync(outputPath)) {
-            log.fail(`${relativePath(outputPath)} no written`);
-            return;
+export async function generateTokensWrapper(spectrumVersion) {
+    const isSpectrumOne = Boolean(spectrumVersion === 'spectrum');
+    const tokensDir = isSpectrumOne ? 'tokens' : 'tokens-v2';
+
+    fs.mkdirSync(
+        path.join(__dirname, '..', 'tools', 'styles', tokensDir, 'spectrum'),
+        {
+            recursive: true,
         }
 
         log.success(`${relativePath(outputPath).yellow} written`);
@@ -411,5 +365,28 @@ async function processComponentThemes(outputPath) {
         }
     }
 
-    Object.values(streams).forEach((stream) => stream.end());
+    fs.writeFileSync(
+        path.join(
+            __dirname,
+            '..',
+            'tools',
+            'styles',
+            tokensDir,
+            'spectrum',
+            'global-vars.css'
+        ),
+        ''
+    );
+
+    for (const tokensPath of await fg([`${tokensRoot(tokensDir)}`])) {
+        processTokens(tokensPath, tokensDir);
+    }
+    if (isSpectrumOne) {
+        return;
+    }
+    return Promise.all(
+        packagePaths.map((_, index) => {
+            return processPackages(tokensDir, index);
+        })
+    );
 }

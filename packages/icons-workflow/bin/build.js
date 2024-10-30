@@ -85,14 +85,6 @@ let manifestListings = `\r\nexport const iconManifest = [\r\n`;
 
 const defaultIconImport = `import { DefaultIcon as AlternateIcon } from '../DefaultIcon.js';\r\n`;
 
-// Temporary replacements for a few icon names that have different names in the new S2 icon set
-const replacements = {
-    UnLink: 'Unlink',
-    TextStrikeThrough: 'TextStrikethrough',
-    ChevronDownSize300: 'ChevronDown',
-    CheckmarkSize300: 'Checkmark',
-};
-
 // A function that process the raw svg name and returns the component name
 export const getComponentName = (i) => {
     let id = path
@@ -102,6 +94,11 @@ export const getComponentName = (i) => {
     if (i.startsWith('Ad')) {
         id = i.replace(/^Ad/, '') + 'Advert';
     }
+    const replacements = {
+        UnLink: 'Unlink',
+        TextStrikeThrough: 'TextStrikethrough',
+        github: 'GitHub',
+    };
     return Case.pascal(replacements[id] || id);
 };
 
@@ -118,10 +115,21 @@ async function buildIcons(icons, tag, iconsNameList) {
             id += 'Advert';
         }
 
-        // use replacements for icons that have different names in the icon set and update the id
-        id = replacements[id] || id;
+        if (id === 'UnLink') {
+            id = 'Unlink';
+        }
+        if (id === 'TextStrikeThrough') {
+            id = 'TextStrikethrough';
+        }
 
-        const ComponentName = Case.pascal(id);
+        let ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
+
+        if (ComponentName === 'TextStrikeThrough') {
+            ComponentName = 'TextStrikethrough';
+        }
+        if (ComponentName === 'UnLink') {
+            ComponentName = 'Unlink';
+        }
 
         const $ = load(svg, {
             xmlMode: true,

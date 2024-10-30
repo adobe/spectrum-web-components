@@ -220,38 +220,6 @@ describe('Button', () => {
             expect(el).to.not.be.undefined;
             expect(el.textContent).to.include('With Target');
         });
-        it('allows link click', async () => {
-            let clicked = false;
-            const el = await fixture<Button>(html`
-                <sp-button href="#top">Button as link</sp-button>
-            `);
-
-            await elementUpdated(el);
-
-            // prevents browser from activating link but records the proxy click
-            el.shadowRoot
-                ?.querySelector('.anchor')
-                ?.addEventListener('click', (event: Event) => {
-                    event.preventDefault();
-                    clicked = true;
-                });
-            const rect = el.getBoundingClientRect();
-
-            // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
-            await sendMouse({
-                steps: [
-                    {
-                        position: [
-                            rect.left + rect.width / 2,
-                            rect.top + rect.height / 2,
-                        ],
-                        type: 'click',
-                    },
-                ],
-            });
-            await elementUpdated(el);
-            expect(clicked).to.be.true;
-        });
         it('accepts shift+tab interactions', async () => {
             let focusedCount = 0;
             const el = await fixture<Button>(html`

@@ -1,16 +1,39 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+    Copyright 2023 Adobe. All rights reserved.
+    This file is licensed to you under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License. You may obtain a copy
+    of the License at http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing, software distributed under
+    the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+    OF ANY KIND, either express or implied. See the License for the specific language
+    governing permissions and limitations under the License.
+    */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-popover-border-width: var(--system-popover-border-width);
+    --spectrum-popover-animation-distance: var(
+        --system-popover-animation-distance
+    );
+    --spectrum-popover-background-color: var(--system-popover-background-color);
+    --spectrum-popover-border-color: var(--system-popover-border-color);
+    --spectrum-popover-content-area-spacing-vertical: var(
+        --system-popover-content-area-spacing-vertical
+    );
+    --spectrum-popover-shadow-horizontal: var(
+        --system-popover-shadow-horizontal
+    );
+    --spectrum-popover-shadow-vertical: var(--system-popover-shadow-vertical);
+    --spectrum-popover-shadow-blur: var(--system-popover-shadow-blur);
+    --spectrum-popover-shadow-color: var(--system-popover-shadow-color);
+    --spectrum-popover-corner-radius: var(--system-popover-corner-radius);
+    --spectrum-popover-pointer-width: var(--system-popover-pointer-width);
+    --spectrum-popover-pointer-height: var(--system-popover-pointer-height);
+    --spectrum-popover-pointer-edge-offset: var(
+        --system-popover-pointer-edge-offset
+    );
+    --spectrum-popover-pointer-edge-spacing: var(
+        --system-popover-pointer-edge-spacing
+    );
 }

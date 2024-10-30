@@ -29,6 +29,8 @@ import {
 
 import iconStyles from './icon.css.js';
 
+import type { SystemVariant } from '@spectrum-web-components/theme';
+
 export class IconBase extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [iconStyles];
@@ -39,7 +41,7 @@ export class IconBase extends SpectrumElement {
     @state()
     public spectrumVersion = 1;
 
-    @property({ reflect: true })
+    @property()
     public label = '';
 
     @property({ reflect: true })
@@ -47,6 +49,7 @@ export class IconBase extends SpectrumElement {
 
     public override connectedCallback(): void {
         super.connectedCallback();
+        this.requestSystemContext();
     }
 
     public override disconnectedCallback(): void {
@@ -57,6 +60,24 @@ export class IconBase extends SpectrumElement {
         }
     }
 
+    private requestSystemContext(): void {
+        this.dispatchEvent(
+            new CustomEvent('sp-system-context', {
+                detail: {
+                    callback: (
+                        system: SystemVariant,
+                        unsubscribe: () => void
+                    ) => {
+                        this.spectrumVersion =
+                            system === 'spectrum-two' ? 2 : 1;
+                        this.unsubscribeSystemContext = unsubscribe;
+                    },
+                },
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
     private systemResolver = new SystemResolutionController(this);
 
     protected override update(changes: PropertyValues): void {

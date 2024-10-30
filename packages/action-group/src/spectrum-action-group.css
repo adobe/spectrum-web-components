@@ -12,31 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-actiongroup-button-spacing-reset: 0;
-    --spectrum-actiongroup-border-radius-reset: 0;
-    --spectrum-actiongroup-border-radius: var(--spectrum-corner-radius-100);
-}
-
-:host([size='s']),
-:host([size='xs']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --spectrum-spacing-75
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
-}
-
-:host([size='l']),
-:host,
-:host([size='xl']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-}
-
-:host {
     gap: var(
         --mod-actiongroup-horizontal-spacing-regular,
         var(--spectrum-actiongroup-horizontal-spacing-regular)
@@ -259,5 +234,5 @@ governing permissions and limitations under the License.
 }
 
 :host([justified]) ::slotted(*) {
-    flex-grow: 1;
+    flex: 1;
 }

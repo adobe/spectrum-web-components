@@ -277,6 +277,9 @@
     --spectrum-alias-tag-focusring-border-radius: var(
         --spectrum-global-dimension-static-size-65
     );
+    --spectrum-button-m-primary-outline-texticon-padding-left: var(
+        --spectrum-global-dimension-size-175
+    );
     --spectrum-colorwheel-min-width: var(--spectrum-global-dimension-size-2400);
     --spectrum-dialog-confirm-title-text-size: var(
         --spectrum-alias-heading-s-text-size

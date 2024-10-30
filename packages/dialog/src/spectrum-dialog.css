@@ -68,10 +68,8 @@ governing permissions and limitations under the License.
     grid-template-columns: var(
             --mod-dialog-confirm-padding-grid,
             var(--spectrum-dialog-confirm-padding-grid)
-        ) auto 1fr auto minmax(0, auto) var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        );
+        )
+        auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     grid-template-areas:
         'hero hero hero hero hero hero'
         '. . . . . .'
@@ -80,10 +78,12 @@ governing permissions and limitations under the License.
         '. content content content content .'
         '. footer footer buttonGroup buttonGroup .'
         '. . . . . .';
-    grid-template-rows: auto var(
+    grid-template-rows:
+        auto var(
             --mod-dialog-confirm-padding-grid,
             var(--spectrum-dialog-confirm-padding-grid)
-        ) auto auto 1fr auto var(
+        )
+        auto auto 1fr auto var(
             --mod-dialog-confirm-padding-grid,
             var(--spectrum-dialog-confirm-padding-grid)
         );
@@ -257,7 +257,8 @@ governing permissions and limitations under the License.
                 --mod-dialog-confirm-close-button-size,
                 var(--spectrum-dialog-confirm-close-button-size)
             )
-        ) var(
+        )
+        var(
             --mod-dialog-confirm-padding-grid,
             var(--spectrum-dialog-confirm-padding-grid)
         );
@@ -269,10 +270,12 @@ governing permissions and limitations under the License.
         '. content content content content content .'
         '. footer footer buttonGroup buttonGroup buttonGroup .'
         '. . . . . . .';
-    grid-template-rows: auto var(
+    grid-template-rows:
+        auto var(
             --mod-dialog-confirm-padding-grid,
             var(--spectrum-dialog-confirm-padding-grid)
-        ) auto auto 1fr auto var(
+        )
+        auto auto 1fr auto var(
             --mod-dialog-confirm-padding-grid,
             var(--spectrum-dialog-confirm-padding-grid)
         );

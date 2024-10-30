@@ -60,5 +60,31 @@ describe('Theme', () => {
                 },
             });
         });
+
+        it('warns in Dev Mode when you use Spectrum Two theme ', async () => {
+            const el = await fixture<Theme>(html`
+                <sp-theme
+                    system="spectrum-two"
+                    color="dark"
+                    scale="medium"
+                ></sp-theme>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('beta version'),
+                'confirm "beta-theme"-centric message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-theme',
+                    type: 'api',
+                    level: 'high',
+                },
+            });
+        });
     });
 });

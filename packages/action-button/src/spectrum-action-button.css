@@ -133,8 +133,58 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    --spectrum-actionbutton-background-color: var(
-        --highcontrast-actionbutton-background-color,
+    --spectrum-actionbutton-focus-indicator-border-radius: calc(
+        var(--spectrum-actionbutton-border-radius) +
+            var(--spectrum-actionbutton-focus-indicator-gap)
+    );
+    --spectrum-actionbutton-edge-to-visual: calc(
+        var(--spectrum-actionbutton-edge-to-visual-size) -
+            var(--spectrum-actionbutton-border-width)
+    );
+    --spectrum-actionbutton-edge-to-text: calc(
+        var(--spectrum-actionbutton-edge-to-text-size) -
+            var(--spectrum-actionbutton-border-width)
+    );
+    --spectrum-actionbutton-edge-to-visual-only: calc(
+        var(--spectrum-actionbutton-edge-to-visual-only-size) -
+            var(--spectrum-actionbutton-border-width)
+    );
+    min-inline-size: var(
+        --mod-actionbutton-min-width,
+        var(--spectrum-actionbutton-min-width)
+    );
+    block-size: var(
+        --mod-actionbutton-height,
+        var(--spectrum-actionbutton-height)
+    );
+    border-radius: var(
+        --mod-actionbutton-border-radius,
+        var(--spectrum-actionbutton-border-radius)
+    );
+    border-width: var(
+        --mod-actionbutton-border-width,
+        var(--spectrum-actionbutton-border-width)
+    );
+    gap: calc(
+        var(
+                --mod-actionbutton-text-to-visual,
+                var(--spectrum-actionbutton-text-to-visual)
+            ) +
+            var(
+                --mod-actionbutton-edge-to-text,
+                var(--spectrum-actionbutton-edge-to-text)
+            ) -
+            var(
+                --mod-actionbutton-edge-to-visual-only,
+                var(--spectrum-actionbutton-edge-to-visual-only)
+            )
+    );
+    padding-inline: var(
+        --mod-actionbutton-edge-to-text,
+        var(--spectrum-actionbutton-edge-to-text)
+    );
+    background-color: var(
+        --highcontrast-actionbutton-background-color-default,
         var(
             --mod-actionbutton-background-color-default,
             var(--spectrum-actionbutton-background-color-default)
@@ -354,6 +404,11 @@ governing permissions and limitations under the License.
     );
 }
 
+:host:dir(rtl),
+:host([dir='rtl']) {
+    --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
+}
+
 @media (hover: hover) {
     :host(:hover) {
         --mod-actionbutton-background-color-default: var(
@@ -417,11 +472,80 @@ governing permissions and limitations under the License.
     );
 }
 
-:host,
-:host {
-    --spectrum-actionbutton-sized-height: var(--spectrum-component-height-100);
-    --spectrum-actionbutton-sized-icon-size: var(
-        --spectrum-workflow-icon-size-100
+:host([selected]) {
+    --mod-actionbutton-background-color-default: var(
+        --mod-actionbutton-background-color-default-selected
+    );
+    --mod-actionbutton-background-color-hover: var(
+        --mod-actionbutton-background-color-hover-selected
+    );
+    --mod-actionbutton-background-color-down: var(
+        --mod-actionbutton-background-color-down-selected
+    );
+    --mod-actionbutton-background-color-focus: var(
+        --mod-actionbutton-background-color-focus-selected
+    );
+    --mod-actionbutton-content-color-default: var(
+        --mod-actionbutton-content-color-default-selected
+    );
+    --mod-actionbutton-content-color-hover: var(
+        --mod-actionbutton-content-color-hover-selected
+    );
+    --mod-actionbutton-content-color-down: var(
+        --mod-actionbutton-content-color-down-selected
+    );
+    --mod-actionbutton-content-color-focus: var(
+        --mod-actionbutton-content-color-focus-selected
+    );
+}
+
+:host([selected][emphasized]) {
+    --mod-actionbutton-background-color-default: var(
+        --mod-actionbutton-background-color-default-selected-emphasized
+    );
+    --mod-actionbutton-background-color-hover: var(
+        --mod-actionbutton-background-color-hover-selected-emphasized
+    );
+    --mod-actionbutton-background-color-down: var(
+        --mod-actionbutton-background-color-down-selected-emphasized
+    );
+    --mod-actionbutton-background-color-focus: var(
+        --mod-actionbutton-background-color-focus-selected-emphasized
+    );
+    --mod-actionbutton-content-color-default: var(
+        --mod-actionbutton-content-color-default-selected-emphasized
+    );
+    --mod-actionbutton-content-color-hover: var(
+        --mod-actionbutton-content-color-hover-selected-emphasized
+    );
+    --mod-actionbutton-content-color-down: var(
+        --mod-actionbutton-content-color-down-selected-emphasized
+    );
+    --mod-actionbutton-content-color-focus: var(
+        --mod-actionbutton-content-color-focus-selected-emphasized
+    );
+}
+
+:host([selected][static-color='black']),
+:host([selected][static-color='white']) {
+    --mod-actionbutton-content-color-default: var(
+        --mod-actionbutton-static-content-color
+    );
+    --mod-actionbutton-content-color-hover: var(
+        --mod-actionbutton-static-content-color
+    );
+    --mod-actionbutton-content-color-down: var(
+        --mod-actionbutton-static-content-color
+    );
+    --mod-actionbutton-content-color-focus: var(
+        --mod-actionbutton-static-content-color
+    );
+}
+
+::slotted([slot='icon']) {
+    inline-size: var(
+        --mod-actionbutton-icon-size,
+        var(--spectrum-actionbutton-icon-size)
     );
     --spectrum-actionbutton-sized-font-size: var(--spectrum-font-size-100);
     --spectrum-actionbutton-sized-text-to-visual: var(
@@ -485,6 +609,11 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-sized-edge-to-visual-only: var(
         --spectrum-component-edge-to-visual-only-75
     );
+    white-space: nowrap;
+    color: inherit;
+    color: var(--mod-actionbutton-label-color, inherit);
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 :host([size='l']) {
@@ -639,51 +768,4 @@ governing permissions and limitations under the License.
 :host(:focus-visible):after {
     box-shadow: 0 0 0 var(--spectrum-actionbutton-focus-indicator-thickness)
         var(--spectrum-actionbutton-focus-indicator-color);
-}
-
-::slotted([slot='icon']) {
-    inline-size: var(--spectrum-actionbutton-icon-size);
-    block-size: var(--spectrum-actionbutton-icon-size);
-    color: inherit;
-    margin-inline-start: calc(
-        var(--spectrum-actionbutton-edge-to-visual) -
-            var(--spectrum-actionbutton-edge-to-text)
-    );
-    margin-inline-end: calc(
-        var(--spectrum-actionbutton-edge-to-visual-only) -
-            var(--spectrum-actionbutton-edge-to-text)
-    );
-}
-
-.hold-affordance + ::slotted([slot='icon']),
-[icon-only]::slotted([slot='icon']) {
-    margin-inline-start: calc(
-        var(--spectrum-actionbutton-edge-to-visual-only) -
-            var(--spectrum-actionbutton-edge-to-text)
-    );
-}
-
-#label {
-    pointer-events: none;
-    line-height: var(--spectrum-actionbutton-height);
-    font-size: var(--spectrum-actionbutton-font-size);
-    white-space: nowrap;
-    color: inherit;
-    color: var(--mod-actionbutton-label-color, inherit);
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.hold-affordance {
-    color: inherit;
-    transform: var(--spectrum-logical-rotation,);
-    position: absolute;
-    inset-block-end: calc(
-        var(--spectrum-actionbutton-edge-to-hold-icon) -
-            var(--spectrum-actionbutton-border-width)
-    );
-    inset-inline-end: calc(
-        var(--spectrum-actionbutton-edge-to-hold-icon) -
-            var(--spectrum-actionbutton-border-width)
-    );
 }

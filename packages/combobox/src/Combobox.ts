@@ -40,6 +40,7 @@ import type { Tooltip } from '@spectrum-web-components/tooltip';
 
 import styles from './combobox.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 
 export type ComboboxOption = {
@@ -55,7 +56,7 @@ export type ComboboxOption = {
  */
 export class Combobox extends Textfield {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, styles, chevronStyles];
+        return [...super.styles, styles, chevronStyles, chevronIconOverrides];
     }
 
     /**

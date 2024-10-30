@@ -15,10 +15,6 @@ governing permissions and limitations under the License.
 @import url('./spectrum-menu-item.css');
 @import url('./menu-item-overrides.css');
 
-:host {
-    text-align: initial;
-}
-
 :host([hidden]) {
     display: none;
 }

@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-icon.css');
+@import url('./icon-overrides.css');
 
 #container {
     height: 100%;
@@ -31,8 +32,4 @@ svg,
     ::slotted(*) {
         forced-color-adjust: auto;
     }
-}
-
-:host(:not(:root)) {
-    overflow: hidden;
 }
