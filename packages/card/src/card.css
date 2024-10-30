@@ -76,6 +76,7 @@ sp-popover {
 }
 
 .actions {
+    visibility: hidden;
     margin: auto;
 }
 
