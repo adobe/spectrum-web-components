@@ -17,6 +17,7 @@ import {
     toZoned,
     ZonedDateTime,
 } from '@internationalized/date';
+import { NumberFormatter } from '@internationalized/number';
 import {
     elementUpdated,
     expect,
@@ -52,7 +53,7 @@ describe('DateTimePicker', () => {
     let element: DateTimePicker;
     let editableSegments: EditableSegments;
     const originalDateNow = Date.now;
-    const fixedYear = 2022;
+    const fixedYear = 20;
     const fixedMonth = 5;
     const fixedDay = 15;
     let valueDateTime: CalendarDateTime;
@@ -60,13 +61,15 @@ describe('DateTimePicker', () => {
     let valueDate: CalendarDate;
 
     before(() => {
-        const fixedTime = new Date(
+        const fixedDate = new Date(
             fixedYear,
             fixedMonth - 1, // 0-indexed in Date but 1-indexed in CalendarDate
             fixedDay,
             15
-        ).getTime();
-        Date.now = () => fixedTime;
+        );
+        // Force the year to be fixedYear when it has 2-digits (instead of a year in the 1900s)
+        fixedDate.setFullYear(fixedYear);
+        Date.now = () => fixedDate.getTime();
         valueDate = new CalendarDate(fixedYear, fixedMonth, fixedDay);
         valueDateTime = new CalendarDateTime(
             fixedYear,
@@ -1126,6 +1129,14 @@ describe('DateTimePicker', () => {
             let daySegment: HTMLElement;
             let monthSegment: HTMLElement;
             let yearSegment: HTMLElement;
+            let initialDateNow: () => number;
+
+            before(() => {
+                initialDateNow = Date.now;
+                const today = new Date();
+                today.setFullYear(2022);
+                Date.now = () => today.getTime();
+            });
 
             beforeEach(async () => {
                 element = await fixtureElement({
@@ -1139,6 +1150,10 @@ describe('DateTimePicker', () => {
 
                 daySegment.focus();
                 await sendKeys({ press: 'ArrowDown' });
+            });
+
+            after(() => {
+                Date.now = initialDateNow;
             });
 
             it('when the month changes to February on ArrowUp key, with no year selected', async () => {
@@ -1641,6 +1656,14 @@ describe('DateTimePicker', () => {
             let daySegment: HTMLElement;
             let monthSegment: HTMLElement;
             let yearSegment: HTMLElement;
+            let initialDateNow: () => number;
+
+            before(() => {
+                initialDateNow = Date.now;
+                const today = new Date();
+                today.setFullYear(2022);
+                Date.now = () => today.getTime();
+            });
 
             beforeEach(async () => {
                 element = await fixtureElement({
@@ -1653,6 +1676,10 @@ describe('DateTimePicker', () => {
 
                 daySegment.focus();
                 await sendKeys({ press: 'ArrowDown' });
+            });
+
+            after(() => {
+                Date.now = initialDateNow;
             });
 
             it('when the month changes to February on ArrowDown key, with no year selected', async () => {
@@ -2396,7 +2423,7 @@ describe('DateTimePicker', () => {
                 new CalendarDateTime(20, month, day, hour, minute, second)
             );
 
-            await sendKeys({ press: 'Delete' });
+            await sendKeys({ press: 'Backspace' });
             await elementUpdated(element);
             expect(segment.innerText).to.equal(`2`);
             expectSameDates(
@@ -2404,7 +2431,7 @@ describe('DateTimePicker', () => {
                 new CalendarDateTime(2, month, day, hour, minute, second)
             );
 
-            await sendKeys({ press: 'Delete' });
+            await sendKeys({ press: 'Backspace' });
             await elementUpdated(element);
 
             expectPlaceholder(segment);
@@ -3736,6 +3763,7 @@ describe('DateTimePicker', () => {
 
     describe('Segments creation on a 12h format', () => {
         const locale = 'en-US';
+        const fixedYear = 20;
         const value: DateTimePickerValue = new ZonedDateTime(
             fixedYear,
             fixedMonth,
@@ -3746,7 +3774,7 @@ describe('DateTimePicker', () => {
             45,
             23
         );
-        const paddedYear = String(fixedYear).padStart(4, '0');
+        const unpaddedYear = String(fixedYear);
         const paddedMonth = String(fixedMonth).padStart(2, '0');
         const paddedDay = String(fixedDay).padStart(2, '0');
         const paddedHour = '03';
@@ -3867,7 +3895,7 @@ describe('DateTimePicker', () => {
             const daySegment = editableSegments.getByType(SegmentTypes.Day);
 
             expect(editableSegments.length).to.equal(3);
-            expect(yearSegment.innerText).to.equal(paddedYear);
+            expect(yearSegment.innerText).to.equal(unpaddedYear);
             expect(monthSegment.innerText).to.equal(paddedMonth);
             expect(daySegment.innerText).to.equal(paddedDay);
         });
@@ -3888,7 +3916,7 @@ describe('DateTimePicker', () => {
             );
 
             expect(editableSegments.length).to.equal(5);
-            expect(yearSegment.innerText).to.equal(paddedYear);
+            expect(yearSegment.innerText).to.equal(unpaddedYear);
             expect(monthSegment.innerText).to.equal(paddedMonth);
             expect(daySegment.innerText).to.equal(paddedDay);
             expect(hourSegment.innerText).to.equal(paddedHour);
@@ -3914,7 +3942,7 @@ describe('DateTimePicker', () => {
             );
 
             expect(editableSegments.length).to.equal(6);
-            expect(yearSegment.innerText).to.equal(paddedYear);
+            expect(yearSegment.innerText).to.equal(unpaddedYear);
             expect(monthSegment.innerText).to.equal(paddedMonth);
             expect(daySegment.innerText).to.equal(paddedDay);
             expect(hourSegment.innerText).to.equal(paddedHour);
@@ -3944,7 +3972,7 @@ describe('DateTimePicker', () => {
             );
 
             expect(editableSegments.length).to.equal(7);
-            expect(yearSegment.innerText).to.equal(paddedYear);
+            expect(yearSegment.innerText).to.equal(unpaddedYear);
             expect(monthSegment.innerText).to.equal(paddedMonth);
             expect(daySegment.innerText).to.equal(paddedDay);
             expect(hourSegment.innerText).to.equal(paddedHour);
@@ -3956,6 +3984,7 @@ describe('DateTimePicker', () => {
 
     describe('Segments creation on a 24h format', () => {
         const locale = 'en-GB';
+        const fixedYear = 20;
         const value: DateTimePickerValue = new ZonedDateTime(
             fixedYear,
             fixedMonth,
@@ -3966,7 +3995,7 @@ describe('DateTimePicker', () => {
             45,
             23
         );
-        const paddedYear = String(fixedYear).padStart(4, '0');
+        const unpaddedYear = String(fixedYear);
         const paddedMonth = String(fixedMonth).padStart(2, '0');
         const paddedDay = String(fixedDay).padStart(2, '0');
         const paddedHour = '15';
@@ -4075,7 +4104,7 @@ describe('DateTimePicker', () => {
             const daySegment = editableSegments.getByType(SegmentTypes.Day);
 
             expect(editableSegments.length).to.equal(3);
-            expect(yearSegment.innerText).to.equal(paddedYear);
+            expect(yearSegment.innerText).to.equal(unpaddedYear);
             expect(monthSegment.innerText).to.equal(paddedMonth);
             expect(daySegment.innerText).to.equal(paddedDay);
         });
@@ -4093,7 +4122,7 @@ describe('DateTimePicker', () => {
             const hourSegment = editableSegments.getByType(SegmentTypes.Hour);
 
             expect(editableSegments.length).to.equal(4);
-            expect(yearSegment.innerText).to.equal(paddedYear);
+            expect(yearSegment.innerText).to.equal(unpaddedYear);
             expect(monthSegment.innerText).to.equal(paddedMonth);
             expect(daySegment.innerText).to.equal(paddedDay);
             expect(hourSegment.innerText).to.equal(paddedHour);
@@ -4115,7 +4144,7 @@ describe('DateTimePicker', () => {
             );
 
             expect(editableSegments.length).to.equal(5);
-            expect(yearSegment.innerText).to.equal(paddedYear);
+            expect(yearSegment.innerText).to.equal(unpaddedYear);
             expect(monthSegment.innerText).to.equal(paddedMonth);
             expect(daySegment.innerText).to.equal(paddedDay);
             expect(hourSegment.innerText).to.equal(paddedHour);
@@ -4141,7 +4170,7 @@ describe('DateTimePicker', () => {
             );
 
             expect(editableSegments.length).to.equal(6);
-            expect(yearSegment.innerText).to.equal(paddedYear);
+            expect(yearSegment.innerText).to.equal(unpaddedYear);
             expect(monthSegment.innerText).to.equal(paddedMonth);
             expect(daySegment.innerText).to.equal(paddedDay);
             expect(hourSegment.innerText).to.equal(paddedHour);
@@ -4204,5 +4233,129 @@ describe('DateTimePicker', () => {
         it('should not open the calendar');
     });
 
-    describe('Non-english formats', () => {});
+    describe('Localization', () => {
+        let numberFormatter: NumberFormatter;
+        const locale = 'bn-IN';
+        let zeroFormatted: string;
+
+        beforeEach(() => {
+            numberFormatter = new NumberFormatter(locale, {
+                useGrouping: false,
+            });
+            zeroFormatted = numberFormatter.format(0);
+        });
+
+        it('should format the editable segments according to the locale when a value is provided', async () => {
+            element = await fixtureElement({
+                locale,
+                props: { value: valueDate },
+            });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            const unpaddedYear = numberFormatter.format(valueDate.year);
+            const monthPadded = numberFormatter
+                .format(valueDate.month)
+                .padStart(2, zeroFormatted);
+            const dayPadded = numberFormatter
+                .format(valueDate.day)
+                .padStart(2, zeroFormatted);
+
+            expect(yearSegment.innerText).to.equal(unpaddedYear);
+            expect(monthSegment.innerText).to.equal(monthPadded);
+            expect(daySegment.innerText).to.equal(dayPadded);
+        });
+
+        it('should format the segments when incrementing/decrementing on an empty value', async () => {
+            element = await fixtureElement({ locale });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            const unpaddedYear = numberFormatter.format(fixedYear);
+            const monthPadded = numberFormatter
+                .format(1)
+                .padStart(2, zeroFormatted);
+            const dayPadded = numberFormatter
+                .format(1)
+                .padStart(2, zeroFormatted);
+
+            yearSegment.focus();
+            await sendKeys({ press: 'ArrowDown' });
+            await elementUpdated(element);
+            expect(yearSegment.innerText).to.equal(unpaddedYear);
+
+            monthSegment.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            expect(monthSegment.innerText).to.equal(monthPadded);
+
+            daySegment.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            expect(daySegment.innerText).to.equal(dayPadded);
+        });
+
+        it('should format the segments when incrementing/decrementing on a defined value', async () => {
+            element = await fixtureElement({
+                locale,
+                props: { value: valueDate },
+            });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            const unpaddedYear = numberFormatter.format(valueDate.year + 1);
+            const monthPadded = numberFormatter
+                .format(valueDate.month - 1)
+                .padStart(2, zeroFormatted);
+            const dayPadded = numberFormatter
+                .format(valueDate.day - 1)
+                .padStart(2, zeroFormatted);
+
+            yearSegment.focus();
+            await sendKeys({ press: 'ArrowUp' });
+            await elementUpdated(element);
+            expect(yearSegment.innerText).to.equal(unpaddedYear);
+
+            monthSegment.focus();
+            await sendKeys({ press: 'ArrowDown' });
+            await elementUpdated(element);
+            expect(monthSegment.innerText).to.equal(monthPadded);
+
+            daySegment.focus();
+            await sendKeys({ press: 'ArrowDown' });
+            await elementUpdated(element);
+            expect(daySegment.innerText).to.equal(dayPadded);
+        });
+
+        it('should format the segments when typing', async () => {
+            element = await fixtureElement({ locale });
+            editableSegments = getEditableSegments(element);
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+
+            yearSegment.focus();
+            await sendKeys({ type: '১২৩৪' });
+            await elementUpdated(element);
+            expect(yearSegment.innerText).to.equal('১২৩৪');
+
+            monthSegment.focus();
+            await sendKeys({ type: '০২' });
+            await elementUpdated(element);
+            expect(monthSegment.innerText).to.equal('০২');
+
+            daySegment.focus();
+            await sendKeys({ type: '২৭' });
+            await elementUpdated(element);
+            expect(daySegment.innerText).to.equal('২৭');
+
+            daySegment.focus();
+            await sendKeys({ type: '১৯' });
+            await elementUpdated(element);
+            expect(daySegment.innerText).to.equal('১৯');
+        });
+    });
 });

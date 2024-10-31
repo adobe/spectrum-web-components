@@ -11,13 +11,14 @@ governing permissions and limitations under the License.
 */
 import {
     CalendarDate,
+    CalendarDateTime,
     endOfMonth,
     getLocalTimeZone,
     parseDate,
     today,
 } from '@internationalized/date';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { Button } from '@spectrum-web-components/button';
+import { ActionButton } from '@spectrum-web-components/action-button';
 import { Calendar, DAYS_PER_WEEK } from '@spectrum-web-components/calendar';
 import '@spectrum-web-components/calendar/sp-calendar.js';
 import '@spectrum-web-components/theme/sp-theme.js';
@@ -70,11 +71,18 @@ describe('Calendar', () => {
     });
 
     describe('Initial month', () => {
-        it("should display today's month when no pre-selected value is provided", async () => {
-            element = await fixtureElement();
-            const localToday = today(getLocalTimeZone());
+        it("should display today's month when the selected value is deleted", async () => {
+            const value = new CalendarDate(2, 7, 21);
+            element = await fixtureElement({
+                props: { value },
+            });
 
-            expectSameDates(element['currentDate'], localToday);
+            expectSameDates(element['currentDate'], value);
+
+            element.value = undefined;
+            await elementUpdated(element);
+
+            expectSameDates(element['currentDate'], today(getLocalTimeZone()));
         });
 
         it("should display the provided value's month when it is provided", async () => {
@@ -85,12 +93,64 @@ describe('Calendar', () => {
 
             expectSameDates(element['currentDate'], value);
         });
+
+        describe('when no pre-selected value is provided', () => {
+            it("should display today's month", async () => {
+                element = await fixtureElement();
+                const localToday = today(getLocalTimeZone());
+
+                expectSameDates(element['currentDate'], localToday);
+            });
+
+            it("should display the min value's month when today's value is less than min", async () => {
+                const todayDate = today(getLocalTimeZone());
+                const min = todayDate.set({ day: todayDate.day + 2 });
+
+                element = await fixtureElement({
+                    props: { min },
+                });
+
+                expectSameDates(element['currentDate'], min);
+            });
+
+            it("should display the min value's month when today's value doesn't comply with the min-max interval", async () => {
+                const todayDate = today(getLocalTimeZone());
+                let max = todayDate.set({ day: todayDate.day - 2 });
+                let min = max.set({ day: max.day - 2 });
+
+                element = await fixtureElement({
+                    props: { min, max },
+                });
+
+                expectSameDates(element['currentDate'], min);
+
+                min = todayDate.set({ day: todayDate.day + 2 });
+                max = min.set({ day: min.day + 2 });
+
+                element = await fixtureElement({
+                    props: { min, max },
+                });
+
+                expectSameDates(element['currentDate'], min);
+            });
+
+            it("should display the max value's month when today's value is greater than max", async () => {
+                const todayDate = today(getLocalTimeZone());
+                const max = todayDate.set({ day: todayDate.day - 2 });
+
+                element = await fixtureElement({
+                    props: { max },
+                });
+
+                expectSameDates(element['currentDate'], max);
+            });
+        });
     });
 
     describe('Focus', () => {
         let focusableDay: HTMLElement;
-        let nextButton: Button;
-        let prevButton: Button;
+        let nextButton: ActionButton;
+        let prevButton: ActionButton;
 
         beforeEach(() => {
             focusableDay = element.shadowRoot.querySelector(
@@ -178,8 +238,8 @@ describe('Calendar', () => {
     });
 
     describe('Navigation', () => {
-        let nextButton: Button;
-        let prevButton: Button;
+        let nextButton: ActionButton;
+        let prevButton: ActionButton;
         let focusableDay: HTMLElement;
 
         const resetElementPosition = (): void => {
@@ -740,6 +800,108 @@ describe('Calendar', () => {
         it('should disable the next and previous month buttons');
         it("should not focus the calendar's days");
         it("should not select a day when it's clicked");
+    });
+
+    describe('Gregorian AD era limits', () => {
+        let nextButton: ActionButton;
+        let prevButton: ActionButton;
+
+        it("should convert provided date properties' era to AD", async () => {
+            const value = new CalendarDate('BC', 23, 7, 21);
+            const min = new CalendarDateTime('BC', 23, 6, 21);
+            element = await fixtureElement({ props: { value, min } });
+
+            expectSameDates(element.min!, min.set({ era: 'AD' }));
+            expectSameDates(element.value!, value.set({ era: 'AD' }));
+        });
+
+        it('should disable the previous month button when reaching the BC era', async () => {
+            const value = new CalendarDate(1, 1, 1);
+            element = await fixtureElement({ props: { value } });
+            prevButton =
+                element.shadowRoot.querySelector(PREV_BUTTON_SELECTOR)!;
+
+            expect(prevButton.disabled).to.be.true;
+        });
+
+        it('should not navigate to BC era - ArrowUp', async () => {
+            const value = new CalendarDate(1, 1, 5);
+            element = await fixtureElement({ props: { value } });
+            const focusableDay = element.shadowRoot.querySelector(
+                "td.tableCell[tabindex='0']"
+            ) as HTMLElement;
+
+            focusableDay.focus();
+            await sendKeyMultipleTimes(
+                'ArrowUp',
+                value.day / DAYS_PER_WEEK + 1
+            );
+            await elementUpdated(element);
+
+            expectSameDates(element['currentDate'], value.set({ day: 1 }));
+        });
+
+        it('should not navigate to BC era - ArrowLeft', async () => {
+            const value = new CalendarDate(1, 1, 5);
+            element = await fixtureElement({ props: { value } });
+            const focusableDay = element.shadowRoot.querySelector(
+                "td.tableCell[tabindex='0']"
+            ) as HTMLElement;
+
+            focusableDay.focus();
+            await sendKeyMultipleTimes('ArrowLeft', value.day + 3);
+            await elementUpdated(element);
+
+            expectSameDates(element['currentDate'], value.set({ day: 1 }));
+        });
+
+        it('should disable the next month button when reaching the end of the AD era', async () => {
+            let value = new CalendarDate(9999, 12, 31);
+            value = value.set({ year: value.calendar.getYearsInEra(value) });
+            element = await fixtureElement({ props: { value } });
+            nextButton =
+                element.shadowRoot.querySelector(NEXT_BUTTON_SELECTOR)!;
+
+            expect(nextButton.disabled).to.be.true;
+        });
+
+        it('should not navigate beyond the AD era - ArrowDown', async () => {
+            let value = new CalendarDate(9999, 12, 20);
+            value = value.set({ year: value.calendar.getYearsInEra(value) });
+            const lastDate = endOfMonth(value);
+            element = await fixtureElement({ props: { value } });
+            const focusableDay = element.shadowRoot.querySelector(
+                "td.tableCell[tabindex='0']"
+            ) as HTMLElement;
+
+            focusableDay.focus();
+            await sendKeyMultipleTimes(
+                'ArrowDown',
+                (lastDate.day - value.day) / DAYS_PER_WEEK + 1
+            );
+            await elementUpdated(element);
+
+            expectSameDates(element['currentDate'], lastDate);
+        });
+
+        it('should not navigate beyond the AD era - ArrowRight', async () => {
+            let value = new CalendarDate(9999, 12, 20);
+            value = value.set({ year: value.calendar.getYearsInEra(value) });
+            const lastDate = endOfMonth(value);
+            element = await fixtureElement({ props: { value } });
+            const focusableDay = element.shadowRoot.querySelector(
+                "td.tableCell[tabindex='0']"
+            ) as HTMLElement;
+
+            focusableDay.focus();
+            await sendKeyMultipleTimes(
+                'ArrowRight',
+                lastDate.day - value.day + 3
+            );
+            await elementUpdated(element);
+
+            expectSameDates(element['currentDate'], lastDate);
+        });
     });
 
     describe('Localized', () => {});

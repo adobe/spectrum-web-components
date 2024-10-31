@@ -236,6 +236,7 @@ export class DateTimePicker extends ManageHelpText(
         );
         const changesPrecision = changedProperties.has('precision');
         const changesSegments = changedProperties.has('segments');
+        const changesDisabled = changedProperties.has('disabled');
 
         if (changesLocale) this.setNumberParser();
         if (changesLocale || changesPrecision) this.setDateFormatter();
@@ -254,6 +255,8 @@ export class DateTimePicker extends ManageHelpText(
             this.setSegments();
 
         if (changesSegments) this.setValueFromSegments();
+
+        if (changesDisabled && this.isCalendarOpen) this.isCalendarOpen = false;
     }
 
     /**
@@ -318,22 +321,24 @@ export class DateTimePicker extends ManageHelpText(
         if (checkInterval && this.min && this.max) {
             const isValidInterval = this.min.compare(this.max) < 0;
             if (!isValidInterval) {
-                window.__swc.warn(
-                    this,
-                    `<${this.localName}> expects the 'min' to be less than 'max'. Please ensure that 'min' property's date is earlier than 'max' property's date.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
-                );
+                if (window.__swc.DEBUG)
+                    window.__swc.warn(
+                        this,
+                        `<${this.localName}> expects the 'min' to be less than 'max'. Please ensure that 'min' property's date is earlier than 'max' property's date.`,
+                        'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
+                    );
                 this.min = undefined;
                 this.max = undefined;
             }
         }
 
         if (this.isNonCompliantValue()) {
-            window.__swc.warn(
-                this,
-                `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
-                'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
-            );
+            if (window.__swc.DEBUG)
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
+                );
             this.value = undefined;
         }
 
@@ -466,7 +471,6 @@ export class DateTimePicker extends ManageHelpText(
                     @focusout=${() => (this.focused = false)}
                     @keydown=${this.handleKeydown}
                     @input=${this.handleInput}
-                    @beforeinput=${this.handleBeforeInput}
                 >
                     ${this.segments.all.map((segment) =>
                         when(
@@ -506,8 +510,12 @@ export class DateTimePicker extends ManageHelpText(
             'is-placeholder': usePlaceholder,
         };
 
+        const minWidth =
+            segment.type !== SegmentTypes.Year &&
+            String(segment.maxValue).length;
+
         const segmentStyles: StyleInfo = {
-            'min-width': `${String(segment.maxValue).length}ch`,
+            minWidth: minWidth ? `${minWidth}ch` : undefined,
         };
 
         /**
@@ -579,6 +587,12 @@ export class DateTimePicker extends ManageHelpText(
             case 'Enter':
             case 'Space': {
                 this.commitValue();
+                break;
+            }
+            case 'Backspace':
+            case 'Delete': {
+                event.preventDefault();
+                this.clearSegmentContent(segmentType);
                 break;
             }
         }
@@ -670,23 +684,6 @@ export class DateTimePicker extends ManageHelpText(
 
         this.previousCommitedValue = this.value;
         this.dispatchChange();
-    }
-
-    private handleBeforeInput(event: InputEvent): void {
-        const segmentType = (event.target as HTMLElement).dataset
-            .type as EditableSegmentType;
-
-        switch (event.inputType) {
-            case 'deleteContentBackward':
-            case 'deleteContentForward':
-                event.preventDefault();
-                this.clearSegmentContent(segmentType);
-                break;
-            case 'insertParagraph': // “Enter” key
-            case 'insertLineBreak': // Shift + “Enter” keys
-                event.preventDefault();
-                break;
-        }
     }
 
     private clearSegmentContent(segmentType: EditableSegmentType): void {

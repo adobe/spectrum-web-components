@@ -96,7 +96,7 @@ sp-popover .popover-content {
     display: flex;
     align-items: center;
     height: 100%;
-    overflow-x: auto;
+    overflow: auto hidden;
     scrollbar-width: none;
     line-height: normal;
 }
@@ -130,6 +130,8 @@ sp-popover .popover-content {
 .literal-segment {
     white-space: pre;
     user-select: none;
+
+    /* -webkit-user-select: none; */
 }
 
 .is-placeholder,
