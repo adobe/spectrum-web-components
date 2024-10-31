@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
+
+### Bug Fixes
+
+-   **dialog-wrapper:** update heading to fully span grid area ([#4810](https://github.com/adobe/spectrum-web-components/issues/4810)) ([7d1f461](https://github.com/adobe/spectrum-web-components/commit/7d1f4612046ed5aedd8b3ff7db4cfa3e183b30a8))
+-   **help-text:** apply aria-live to ensure full help text is read to user ([#4210](https://github.com/adobe/spectrum-web-components/issues/4210)) ([049dc56](https://github.com/adobe/spectrum-web-components/commit/049dc568ddef88bdde0a72d26ced150c8edfc727))
+
+### Features
+
+-   1.0.0 ([#4886](https://github.com/adobe/spectrum-web-components/issues/4886)) ([b64b501](https://github.com/adobe/spectrum-web-components/commit/b64b5012ca3939a34577dcf51833736c44c25dd9))
+-   introduce new major feature ([f1a702f](https://github.com/adobe/spectrum-web-components/commit/f1a702ff2245d68c4c9562deae13c0e2ef0aa49e))
+
+### BREAKING CHANGES
+
+-   this introduces breaking changes
+-   1.0.0 release
+
 # [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
 
 ### Bug Fixes
