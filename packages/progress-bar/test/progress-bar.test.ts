@@ -147,92 +147,108 @@ describe('ProgressBar', () => {
 
         expect(el.hasAttribute('aria-valuenow')).to.be.false;
     });
-    it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
-        const consoleWarnStub = stub(console, 'warn');
-        const el = await fixture<ProgressBar>(html`
-            <sp-progress-bar progress="50"></sp-progress-bar>
-        `);
 
-        await elementUpdated(el);
-
-        expect(consoleWarnStub.called).to.be.true;
-        const spyCall = consoleWarnStub.getCall(0);
-        expect(
-            spyCall.args.at(0).includes('accessible'),
-            'confirm accessibility-centric message'
-        ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-            data: {
-                localName: 'sp-progress-bar',
-                type: 'accessibility',
-                level: 'default',
-            },
+    describe('dev mode', () => {
+        let consoleWarnStub!: ReturnType<typeof stub>;
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
         });
-        consoleWarnStub.restore();
-    });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+        });
 
-    it('resolves a language (en-US)', async () => {
-        const [languageContext] = createLanguageContext('en-US');
-        const test = await fixture(html`
-            <div @sp-language-context=${languageContext}>
+        it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+            const el = await fixture<ProgressBar>(html`
+                <sp-progress-bar progress="50"></sp-progress-bar>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('accessible'),
+                'confirm accessibility-centric message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-progress-bar',
+                    type: 'accessibility',
+                    level: 'default',
+                },
+            });
+        });
+        it('resolves a language (en-US)', async () => {
+            const [languageContext] = createLanguageContext('en-US');
+            const test = await fixture(html`
+                <div @sp-language-context=${languageContext}>
+                    <sp-progress-bar
+                        label="Changing Value"
+                        progress="45"
+                    ></sp-progress-bar>
+                </div>
+            `);
+            const el = test.querySelector('sp-progress-bar') as ProgressBar;
+            const percentage = el.shadowRoot.querySelector(
+                '.percentage'
+            ) as HTMLElement;
+            expect(percentage.textContent?.search('%')).to.not.equal(-1);
+        });
+
+        it('resolves a language (ar-sa)', async () => {
+            const [languageContext] = createLanguageContext('ar-sa');
+            const test = await fixture(html`
+                <div @sp-language-context=${languageContext}>
+                    <sp-progress-bar
+                        label="Changing Value"
+                        progress="45"
+                    ></sp-progress-bar>
+                </div>
+            `);
+            const el = test.querySelector('sp-progress-bar') as ProgressBar;
+            const percentage = el.shadowRoot.querySelector(
+                '.percentage'
+            ) as HTMLElement;
+            expect(percentage.textContent?.search('٪')).to.not.equal(-1);
+        });
+
+        it('accepts `aria-label`', async () => {
+            const el = await fixture<ProgressBar>(html`
+                <sp-progress-bar aria-label="Loading"></sp-progress-bar>
+            `);
+
+            await elementUpdated(el);
+
+            expect(el.hasAttribute('aria-label')).to.be.true;
+            expect(el.getAttribute('aria-label')).to.equal('Loading');
+        });
+        it('sets `aria-label` to equal `label` if `label` is set', async () => {
+            const el = await fixture<ProgressBar>(html`
+                <sp-progress-bar label="Loading"></sp-progress-bar>
+            `);
+
+            await elementUpdated(el);
+
+            expect(el.hasAttribute('aria-label')).to.be.true;
+            expect(el.getAttribute('aria-label')).to.equal('Loading');
+        });
+        it('does not remove `aria-label` if set independently of `label`', async () => {
+            const el = await fixture<ProgressBar>(html`
                 <sp-progress-bar
-                    label="Changing Value"
-                    progress="45"
+                    label=""
+                    aria-label="Loading"
                 ></sp-progress-bar>
-            </div>
-        `);
-        const el = test.querySelector('sp-progress-bar') as ProgressBar;
-        const percentage = el.shadowRoot.querySelector(
-            '.percentage'
-        ) as HTMLElement;
-        expect(percentage.textContent?.search('%')).to.not.equal(-1);
-    });
+            `);
 
-    it('resolves a language (ar-sa)', async () => {
-        const [languageContext] = createLanguageContext('ar-sa');
-        const test = await fixture(html`
-            <div @sp-language-context=${languageContext}>
-                <sp-progress-bar
-                    label="Changing Value"
-                    progress="45"
-                ></sp-progress-bar>
-            </div>
-        `);
-        const el = test.querySelector('sp-progress-bar') as ProgressBar;
-        const percentage = el.shadowRoot.querySelector(
-            '.percentage'
-        ) as HTMLElement;
-        expect(percentage.textContent?.search('٪')).to.not.equal(-1);
-    });
+            await elementUpdated(el);
 
-    it('accepts `aria-label`', async () => {
-        const el = await fixture<ProgressBar>(html`
-            <sp-progress-bar aria-label="Loading"></sp-progress-bar>
-        `);
-
-        await elementUpdated(el);
-
-        expect(el.hasAttribute('aria-label')).to.be.true;
-        expect(el.getAttribute('aria-label')).to.equal('Loading');
-    });
-    it('sets `aria-label` to equal `label` if `label` is set', async () => {
-        const el = await fixture<ProgressBar>(html`
-            <sp-progress-bar label="Loading"></sp-progress-bar>
-        `);
-
-        await elementUpdated(el);
-
-        expect(el.hasAttribute('aria-label')).to.be.true;
-        expect(el.getAttribute('aria-label')).to.equal('Loading');
-    });
-    it('does not remove `aria-label` if set independently of `label`', async () => {
-        const el = await fixture<ProgressBar>(html`
-            <sp-progress-bar label="" aria-label="Loading"></sp-progress-bar>
-        `);
-
-        await elementUpdated(el);
-
-        expect(el.hasAttribute('aria-label')).to.be.true;
-        expect(el.getAttribute('aria-label')).to.equal('Loading');
+            expect(el.hasAttribute('aria-label')).to.be.true;
+            expect(el.getAttribute('aria-label')).to.equal('Loading');
+        });
     });
 });

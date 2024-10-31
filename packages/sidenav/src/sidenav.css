@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-sidenav.css');
+@import url('./sidenav-overrides.css');
 
 :host {
     display: block;

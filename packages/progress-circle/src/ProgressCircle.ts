@@ -43,11 +43,8 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
     @property({ type: String })
     public label = '';
 
-    @property({ type: Boolean, reflect: true, attribute: 'over-background' })
-    public overBackground = false;
-
-    @property({ reflect: true })
-    public static?: 'white';
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white';
 
     @property({ type: Number })
     public progress = 0;
@@ -59,26 +56,6 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
         return this.indeterminate
             ? undefined
             : `transform: rotate(${rotation}deg);`;
-    }
-
-    protected override willUpdate(changes: PropertyValues<this>): void {
-        if (changes.has('overBackground')) {
-            // Apply "static" from "overBackground", preferring "static",
-            // until the deprecation period is over.
-            this.static = this.overBackground
-                ? 'white'
-                : this.static || undefined;
-            if (window.__swc.DEBUG) {
-                if (this.overBackground) {
-                    window.__swc.warn(
-                        this,
-                        `<${this.localName}> element will stop accepting the "over-background" attribute, and its related "overBackground" property in a future release. Use the "static" attribute/property with a value of "white" instead.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#static',
-                        { level: 'deprecation' }
-                    );
-                }
-            }
-        }
     }
 
     protected override render(): TemplateResult {

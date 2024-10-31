@@ -20,18 +20,14 @@ import { createLanguageContext } from '../../../tools/reactive-controllers/test/
 describe('Meter', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Meter>(
-                html`
-                    <sp-meter label="Loading"></sp-meter>
-                `
-            )
+            await fixture<Meter>(html`
+                <sp-meter label="Loading"></sp-meter>
+            `)
     );
     it('loads default meter accessibly', async () => {
-        const el = await fixture<Meter>(
-            html`
-                <sp-meter label="Loading"></sp-meter>
-            `
-        );
+        const el = await fixture<Meter>(html`
+            <sp-meter label="Loading"></sp-meter>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -40,13 +36,11 @@ describe('Meter', () => {
     });
     meterVariants.map((variant) => {
         it(`loads - [variant="${variant}"]`, async () => {
-            const el = await fixture<Meter>(
-                html`
-                    <sp-meter variant=${variant}>
-                        This meter is of the \`${variant}\` variant.
-                    </sp-meter>
-                `
-            );
+            const el = await fixture<Meter>(html`
+                <sp-meter variant=${variant}>
+                    This meter is of the \`${variant}\` variant.
+                </sp-meter>
+            `);
 
             await elementUpdated(el);
 
@@ -141,13 +135,11 @@ describe('Meter', () => {
     });
 
     it('validates variants', async () => {
-        const el = await fixture<Meter>(
-            html`
-                <sp-meter variant="invalid">
-                    This meter validates variants.
-                </sp-meter>
-            `
-        );
+        const el = await fixture<Meter>(html`
+            <sp-meter variant="invalid">
+                This meter validates variants.
+            </sp-meter>
+        `);
 
         await elementUpdated(el);
         expect(el.variant).to.equal('');

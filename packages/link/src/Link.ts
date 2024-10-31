@@ -34,8 +34,8 @@ export class Link extends LikeAnchor(Focusable) {
     @property({ type: String, reflect: true })
     public variant: 'secondary' | undefined;
 
-    @property({ type: String, reflect: true })
-    public static: 'black' | 'white' | undefined;
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'black' | 'white';
 
     /**
      * Uses quiet styles or not

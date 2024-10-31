@@ -32,7 +32,7 @@ import styles from './meter.css.js';
 
 export const meterVariants = ['positive', 'notice', 'negative'];
 
-export type MeterVariants = typeof meterVariants[number];
+export type MeterVariants = (typeof meterVariants)[number];
 
 /**
  * @element sp-meter
@@ -89,8 +89,8 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
     // called sideLabel
     public sideLabel = false;
 
-    @property({ type: String, reflect: true })
-    public static: 'white' | undefined;
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white';
 
     protected override render(): TemplateResult {
         return html`

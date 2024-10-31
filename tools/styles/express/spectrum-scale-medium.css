@@ -128,6 +128,12 @@
     --spectrum-alias-control-three-width-xl: var(
         --spectrum-global-dimension-static-size-500
     );
+    --spectrum-alias-tag-text-padding-top-s: var(
+        --spectrum-global-dimension-size-25
+    );
+    --spectrum-alias-tag-icon-size-l: var(
+        --spectrum-global-dimension-static-size-225
+    );
     --spectrum-alias-focus-ring-radius-default: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -263,6 +269,10 @@
     --spectrum-alias-ui-icon-asterisk-size-300: var(
         --spectrum-global-dimension-static-size-125
     );
+    --spectrum-alias-avatar-size-100: var(--spectrum-global-dimension-size-250);
+    --spectrum-alias-avatar-size-400: var(--spectrum-global-dimension-size-350);
+    --spectrum-alias-avatar-size-600: var(--spectrum-global-dimension-size-450);
+    --spectrum-colorwheel-min-width: var(--spectrum-global-dimension-size-2400);
     --spectrum-dialog-confirm-title-text-size: var(
         --spectrum-alias-heading-s-text-size
     );

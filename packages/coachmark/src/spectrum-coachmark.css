@@ -12,65 +12,15 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-coachmark-min-width: var(--spectrum-coach-mark-minimum-width);
-    --spectrum-coachmark-width: var(--spectrum-coach-mark-width);
-    --spectrum-coachmark-max-width: var(--spectrum-coach-mark-maximum-width);
-    --spectrum-coachmark-media-height: var(--spectrum-coach-mark-media-height);
-    --spectrum-coachmark-media-min-height: var(
-        --spectrum-coach-mark-media-minimum-height
-    );
-    --spectrum-coachmark-border-size: var(--mod-popover-border-width);
-    --spectrum-coachmark-border-radius: var(--mod-popover-corner-radius);
-    --spectrum-coachmark-padding: var(--spectrum-coach-mark-edge-to-content);
-    --spectrum-coachmark-heading-to-action-button: var(--spectrum-spacing-300);
-    --spectrum-coachmark-header-to-body: var(--spectrum-spacing-200);
-    --spectrum-coachmark-body-to-footer: var(--spectrum-spacing-300);
-    --spectrum-coachmark-title-color: var(--spectrum-heading-color);
-    --spectrum-coachmark-title-font-family: var(--spectrum-sans-serif-font);
-    --spectrum-coachmark-title-font-style: var(
-        --spectrum-heading-serif-font-style
-    );
-    --spectrum-coachmark-title-text-font-weight: var(
-        --spectrum-heading-sans-serif-font-weight
-    );
-    --spectrum-coachmark-title-font-size: var(--spectrum-coach-mark-title-size);
-    --spectrum-coachmark-title-text-line-height: var(
-        --spectrum-heading-line-height
-    );
-    --spectrum-coachmark-content-font-color: var(--spectrum-body-color);
-    --spectrum-coachmark-content-font-weight: var(
-        --spectrum-body-sans-serif-font-weight
-    );
-    --spectrum-coachmark-content-font-family: var(--spectrum-sans-serif-font);
-    --spectrum-coachmark-content-font-style: var(
-        --spectrum-body-sans-serif-font-style
-    );
-    --spectrum-coachmark-content-line-height: var(--spectrum-body-line-height);
-    --spectrum-coachmark-content-font-size: var(
-        --spectrum-coach-mark-body-size
-    );
-    --spectrum-coachmark-step-color: var(
-        --spectrum-coach-mark-pagination-color
-    );
-    --spectrum-coachmark-step-font-weight: var(
-        --spectrum-body-medium-font-weight
-    );
-    --spectrum-coachmark-step-font-family: var(--spectrum-sans-serif-font);
-    --spectrum-coachmark-step-font-style: var(
-        --spectrum-body-sans-serif-font-style
-    );
-    --spectrum-coachmark-step-line-height: var(--spectrum-body-line-height);
-    --spectrum-coachmark-step-font-size: var(
-        --spectrum-coach-mark-pagination-body-size
-    );
-    --spectrum-coachmark-step-to-bottom: var(
-        --spectrum-coach-mark-pagination-text-to-bottom-edge
-    );
     --mod-buttongroup-justify-content: flex-end;
-    --mod-popover-border-width: var(--spectrum-border-width-100);
-    --mod-popover-corner-radius: var(--spectrum-corner-radius-100);
+    --mod-popover-border-width: var(--spectrum-coachmark-popover-border-width);
+    --mod-popover-corner-radius: var(
+        --spectrum-coachmark-popover-corner-radius
+    );
     --mod-popover-content-area-spacing-vertical: 0;
     --mod-button-edge-to-visual-only: 9px;
+    --spectrum-coachmark-border-size: var(--mod-popover-border-width);
+    --spectrum-coachmark-border-radius: var(--mod-popover-corner-radius);
     min-inline-size: var(
         --mod-coachmark-min-width,
         var(--spectrum-coachmark-min-width)
@@ -88,7 +38,9 @@ governing permissions and limitations under the License.
 }
 
 .buttongroup-mobile {
-    --mod-buttongroup-spacing-horizontal: var(--spectrum-spacing-100);
+    --mod-buttongroup-spacing-horizontal: var(
+        --spectrum-coachmark-buttongroup-spacing-horizontal
+    );
     display: var(--spectrum-coachmark-buttongroup-mobile-display);
 }
 

@@ -50,7 +50,7 @@ async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {
     const test = await fixture<Theme>(html`
-        <sp-theme theme="classic" scale="medium" color="dark">
+        <sp-theme system="spectrum" scale="medium" color="dark">
             ${story}
         </sp-theme>
     `);
@@ -366,5 +366,20 @@ describe('Dialog Wrapper', () => {
         await nextFrame();
         await nextFrame();
         expect(contentElement.hasAttribute('tabindex')).to.be.true;
+    });
+});
+
+describe('dev mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+        window.__swc.verbose = true;
+        consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+        consoleWarnStub.resetHistory();
+    });
+    after(() => {
+        window.__swc.verbose = false;
+        consoleWarnStub.restore();
     });
 });

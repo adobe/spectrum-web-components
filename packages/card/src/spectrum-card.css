@@ -12,84 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-card-background-color: var(--spectrum-background-layer-2-color);
-    --spectrum-card-body-spacing: var(--spectrum-spacing-400);
-    --spectrum-card-title-padding-top: var(--spectrum-spacing-300);
-    --spectrum-card-title-padding-right: var(--spectrum-spacing-400);
-    --spectrum-card-content-margin-top: var(--spectrum-spacing-100);
-    --spectrum-card-content-margin-bottom: var(--spectrum-spacing-300);
-    --spectrum-card-footer-padding-top: var(--spectrum-spacing-100);
-    --spectrum-card-subtitle-padding-right: var(--spectrum-spacing-100);
-    --spectrum-card-border-width: var(--spectrum-border-width-100);
-    --spectrum-card-corner-radius: var(--spectrum-corner-radius-100);
-    --spectrum-card-border-color: var(--spectrum-gray-200);
-    --spectrum-card-border-color-hover: var(--spectrum-gray-300);
-    --spectrum-card-border-color-selected: var(--spectrum-blue-700);
-    --spectrum-card-divider-color: var(--spectrum-gray-300);
-    --spectrum-card-title-font-family: var(--spectrum-sans-font-family-stack);
-    --spectrum-card-title-font-size: var(--spectrum-heading-size-xxs);
-    --spectrum-card-title-font-weight: var(
-        --spectrum-heading-sans-serif-font-weight
-    );
-    --spectrum-card-title-font-style: var(
-        --spectrum-heading-sans-serif-font-style
-    );
-    --spectrum-card-title-line-height: var(--spectrum-heading-line-height);
-    --spectrum-card-title-font-color: var(--spectrum-heading-color);
-    --spectrum-card-body-font-family: var(--spectrum-sans-font-family-stack);
-    --spectrum-card-body-font-size: var(--spectrum-body-size-s);
-    --spectrum-card-body-font-weight: var(
-        --spectrum-body-sans-serif-font-weight
-    );
-    --spectrum-card-body-font-style: var(--spectrum-body-sans-serif-font-style);
-    --spectrum-card-body-line-height: var(--spectrum-body-line-height);
-    --spectrum-card-body-font-color: var(--spectrum-body-color);
-    --spectrum-card-actions-spacing: var(--spectrum-spacing-300);
-    --spectrum-card-actions-size: var(
-        --spectrum-card-selection-background-size
-    );
-    --spectrum-card-actions-border-radius: var(--spectrum-corner-radius-100);
-    --spectrum-card-actions-background-color-rgb: var(--spectrum-gray-100-rgb);
-    --spectrum-card-actions-background-color-opacity: var(
-        --spectrum-card-selection-background-color-opacity
-    );
-    --spectrum-card-actions-drop-shadow-color: var(
-        --spectrum-drop-shadow-color
-    );
-    --spectrum-card-actions-drop-shadow-x: var(--spectrum-drop-shadow-x);
-    --spectrum-card-actions-drop-shadow-y: var(--spectrum-drop-shadow-y);
-    --spectrum-card-actions-drop-shadow-blur: var(--spectrum-drop-shadow-blur);
-    --spectrum-card-focus-indicator-color: var(
-        --spectrum-focus-indicator-color
-    );
-    --spectrum-card-focus-indicator-width: var(
-        --spectrum-focus-indicator-thickness
-    );
-    --spectrum-card-selected-background-opacity: 0.1;
-    --spectrum-card-preview-border-width-selected: var(
-        --spectrum-border-width-100
-    );
-    --spectrum-card-preview-background-color: var(
-        --spectrum-background-base-color
-    );
-    --spectrum-card-preview-background-color-hover: var(--spectrum-gray-300);
-    --spectrum-card-horizontal-body-padding: var(--spectrum-spacing-300);
-    --spectrum-card-horizontal-preview-padding: var(--spectrum-spacing-200);
-}
-
-:host([variant='gallery']),
-:host([variant='quiet']) {
-    --mod-card-content-margin-top: var(
-        --mod-card-content-margin-top-quiet,
-        var(--spectrum-spacing-100)
-    );
-    --mod-card-minimum-width: var(
-        --mod-card-minimum-width-quiet,
-        var(--spectrum-card-minimum-width)
-    );
-}
-
-:host {
     box-sizing: border-box;
     min-inline-size: var(
         --mod-card-minimum-width,
@@ -107,13 +29,7 @@ governing permissions and limitations under the License.
     );
     background-color: var(
         --highcontrast-card-background-color,
-        var(
-            --mod-card-background-color,
-            var(
-                --mod-spectrum-card-background-color,
-                var(--spectrum-card-background-color)
-            )
-        )
+        var(--mod-card-background-color, var(--spectrum-card-background-color))
     );
     flex-direction: column;
     -webkit-text-decoration: none;
@@ -210,10 +126,6 @@ governing permissions and limitations under the License.
 }
 
 :host([drop-target]) {
-    --mod-card-background-color: var(
-        --spectrum-card-background-color-quiet,
-        var(--spectrum-background-base-color)
-    );
     border-color: var(
         --highcontrast-card-border-color-selected,
         var(
@@ -231,22 +143,22 @@ governing permissions and limitations under the License.
         );
     background-color: var(
         --mod-card-background-color,
-        var(--spectrum-card-background-color)
+        var(--spectrum-card-background-color-quiet)
     );
 }
 
 :host([focused]) .actions,
-:host([focused]) .quick-actions,
+:host([focused]) .checkbox-toggle,
 :host([selected]) .actions,
-:host([selected]) .quick-actions,
+:host([selected]) .checkbox-toggle,
 :host(:focus) .actions,
-:host(:focus) .quick-actions {
+:host(:focus) .checkbox-toggle {
     visibility: visible;
     opacity: 1;
     pointer-events: all;
 }
 
-.quick-actions {
+.checkbox-toggle {
     visibility: hidden;
     box-shadow: var(
             --mod-card-actions-drop-shadow-x,
@@ -283,6 +195,33 @@ governing permissions and limitations under the License.
             var(--spectrum-card-actions-background-color-opacity)
         )
     );
+    pointer-events: auto;
+    box-sizing: border-box;
+    transition:
+        transform 0.13s ease-in-out,
+        opacity 0.13s ease-in-out,
+        visibility 0s linear 0.13s;
+    transition:
+        transform
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            )
+            ease-in-out,
+        opacity
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            )
+            ease-in-out,
+        visibility 0s linear
+            var(
+                --mod-overlay-animation-duration,
+                var(--spectrum-animation-duration-100, 0.13s)
+            );
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
     position: absolute;
     inset-block-start: calc(
         var(--mod-card-actions-spacing, var(--spectrum-card-actions-spacing)) -
@@ -314,8 +253,8 @@ governing permissions and limitations under the License.
     background-position: 50%;
     background-size: cover;
     background-color: var(
-        --mod-card-background-color,
-        var(--spectrum-card-background-color)
+        --mod-card-preview-background-color,
+        var(--spectrum-card-preview-background-color)
     );
     border-block-end-color: var(
         --mod-card-border-color,
@@ -530,13 +469,13 @@ governing permissions and limitations under the License.
 }
 
 .header {
+    justify-content: space-between;
     align-items: center;
     display: flex;
 }
 
 .action-button {
     z-index: 1;
-    flex: 1;
     justify-content: flex-end;
     align-self: center;
     display: flex;
@@ -583,6 +522,14 @@ governing permissions and limitations under the License.
 
 :host([variant='gallery']),
 :host([variant='quiet']) {
+    --spectrum-card-content-margin-top: var(
+        --mod-card-content-margin-top-quiet,
+        var(--spectrum-card-content-margin-top-quiet)
+    );
+    --spectrum-card-minimum-width: var(
+        --mod-card-minimum-width-quiet,
+        var(--spectrum-card-minimum-width-quiet)
+    );
     block-size: 100%;
     min-inline-size: var(
         --mod-card-minimum-width,
@@ -633,7 +580,9 @@ governing permissions and limitations under the License.
     overflow: visible;
 }
 
+:host([variant='gallery']) #preview:after,
 :host([variant='gallery']) #preview:before,
+:host([variant='quiet']) #preview:after,
 :host([variant='quiet']) #preview:before {
     content: '';
     block-size: 100%;
@@ -645,9 +594,6 @@ governing permissions and limitations under the License.
 
 :host([variant='gallery']) #preview:after,
 :host([variant='quiet']) #preview:after {
-    content: '';
-    block-size: 100%;
-    inline-size: 100%;
     border-radius: calc(
         var(--mod-card-corner-radius, var(--spectrum-card-corner-radius)) +
             var(
@@ -668,9 +614,7 @@ governing permissions and limitations under the License.
                 var(--spectrum-card-focus-indicator-width)
             ) * -1
     );
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline: 0;
+    inset-inline-end: 0;
 }
 
 :host([variant='gallery'][drop-target]),
@@ -749,7 +693,7 @@ governing permissions and limitations under the License.
     }
 
     :host(:hover) .actions,
-    :host(:hover) .quick-actions {
+    :host(:hover) .checkbox-toggle {
         visibility: visible;
         opacity: 1;
         pointer-events: all;

@@ -18,28 +18,15 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('CoachIndicator', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<CoachIndicator>(
-                html`
-                    <sp-coach-indicator></sp-coach-indicator>
-                `
-            )
+            await fixture<CoachIndicator>(html`
+                <sp-coach-indicator></sp-coach-indicator>
+            `)
     );
     it('loads default coach-indicator accessibly', async () => {
-        const el = await fixture<CoachIndicator>(
-            html`
-                <sp-coach-indicator></sp-coach-indicator>
-            `
-        );
+        const el = await fixture<CoachIndicator>(html`
+            <sp-coach-indicator></sp-coach-indicator>
+        `);
         await elementUpdated(el);
         await expect(el).to.be.accessible();
-    });
-    it('loads coach-indicator white static variant', async () => {
-        const el = await fixture<CoachIndicator>(
-            html`
-                <sp-coach-indicator variant="white"></sp-coach-indicator>
-            `
-        );
-        await elementUpdated(el);
-        expect(el.static == 'white').to.be.true;
     });
 });

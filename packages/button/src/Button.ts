@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,7 +9,6 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
 import {
     CSSResultArray,
     html,
@@ -23,13 +22,13 @@ import buttonStyles from './button.css.js';
 import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 
 export type DeprecatedButtonVariants = 'cta' | 'overBackground';
-export type ButtonStatics = 'white' | 'black';
+export type ButtonStaticColors = 'white' | 'black';
 export type ButtonVariants =
     | 'accent'
     | 'primary'
     | 'secondary'
     | 'negative'
-    | ButtonStatics
+    | ButtonStaticColors
     | DeprecatedButtonVariants;
 export const VALID_VARIANTS = [
     'accent',
@@ -39,7 +38,7 @@ export const VALID_VARIANTS = [
     'white',
     'black',
 ];
-export const VALID_STATICS = ['white', 'black'];
+export const VALID_STATIC_COLORS = ['white', 'black'];
 
 export type ButtonTreatments = 'fill' | 'outline';
 
@@ -57,7 +56,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
 
-    // pending is the property that consumers can use to set the button into a pending state
+    // Use this property to set the button into a pending state
     @property({ type: Boolean, reflect: true, attribute: true })
     public pending = false;
 
@@ -97,31 +96,45 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                     window.__swc.warn(
                         this,
                         `The "cta" value of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "variant='accent'" instead.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/button/#variants'
+                        'https://opensource.adobe.com/spectrum-web-components/components/button/#variants',
+                        { level: 'deprecation' }
                     );
                 }
                 break;
             case 'overBackground':
                 this.removeAttribute('variant');
-                this.static = 'white';
+                this.staticColor = 'white';
                 this.treatment = 'outline';
                 if (window.__swc.DEBUG) {
                     window.__swc.warn(
                         this,
-                        `The "overBackground" value of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static='white'" with "treatment='outline'" instead.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/button#static'
+                        `The "overBackground" value of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "staticColor='white'" with "treatment='outline'" instead.`,
+                        'https://opensource.adobe.com/spectrum-web-components/components/button',
+                        { level: 'deprecation' }
                     );
                 }
                 return;
             case 'white':
-            case 'black':
-                this.static = variant;
+                this.staticColor = variant;
                 this.removeAttribute('variant');
                 if (window.__swc.DEBUG) {
                     window.__swc.warn(
                         this,
-                        `The "black" and "white" values of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static='black'" or "static='white'" instead.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/button#static'
+                        `The "black" and "white" values of the "variant" attribute on <${this.localName}> have been deprecated and will be removed in a future release. Use "static-color='black'" or "static-color='white'" instead.`,
+                        'https://opensource.adobe.com/spectrum-web-components/components/button/api',
+                        { level: 'deprecation' }
+                    );
+                }
+                return;
+            case 'black':
+                this.staticColor = variant;
+                this.removeAttribute('variant');
+                if (window.__swc.DEBUG) {
+                    window.__swc.warn(
+                        this,
+                        `The "black" and "white" values of the "variant" attribute on <${this.localName}> have been deprecated and will be removed in a future release. Use "static-color='black'" or "static-color='white'" instead.`,
+                        'https://opensource.adobe.com/spectrum-web-components/components/button/api',
+                        { level: 'deprecation' }
                     );
                 }
                 return;
@@ -139,11 +152,14 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     }
     private _variant: ButtonVariants = 'accent';
 
-    @property({ type: String, reflect: true })
-    public static: 'black' | 'white' | undefined;
+    /**
+     * The static color variant to use for this button.
+     */
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'black' | 'white';
 
     /**
-     * The visual variant to apply to this button.
+     * The visual treatment to apply to this button.
      */
     @property({ reflect: true })
     public treatment: ButtonTreatments = 'fill';
@@ -156,6 +172,15 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         this.treatment = quiet ? 'outline' : 'fill';
     }
 
+    /**
+     * Disables text wrapping within the button component's label.
+     * Please note that this option is not a part of the design specification
+     * and should be used carefully, with consideration of this overflow behavior
+     * and the readability of the button's content.
+     */
+    @property({ type: Boolean, attribute: 'no-wrap', reflect: true })
+    public noWrap = false;
+
     public get quiet(): boolean {
         return this.treatment === 'outline';
     }
@@ -164,20 +189,13 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         super.firstUpdated(changes);
         // There is no Spectrum design context for an `<sp-button>` without a variant
         // apply one manually when a consumer has not applied one themselves.
+
         if (!this.hasAttribute('variant')) {
             this.setAttribute('variant', this.variant);
         }
         if (this.pending) {
             this.pendingStateController.hostUpdated();
         }
-    }
-
-    protected override update(changes: PropertyValues): void {
-        super.update(changes);
-    }
-
-    protected override updated(changed: PropertyValues): void {
-        super.updated(changed);
     }
 
     protected override renderButton(): TemplateResult {
