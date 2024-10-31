@@ -11,14 +11,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **help-text:** apply aria-live to ensure full help text is read to user ([#4210](https://github.com/adobe/spectrum-web-components/issues/4210)) ([049dc56](https://github.com/adobe/spectrum-web-components/commit/049dc568ddef88bdde0a72d26ced150c8edfc727))
 
 ### Features
-
--   1.0.0 ([#4886](https://github.com/adobe/spectrum-web-components/issues/4886)) ([b64b501](https://github.com/adobe/spectrum-web-components/commit/b64b5012ca3939a34577dcf51833736c44c25dd9))
--   introduce new major feature ([f1a702f](https://github.com/adobe/spectrum-web-components/commit/f1a702ff2245d68c4c9562deae13c0e2ef0aa49e))
-
+- spectrum-web-components now supports Spectrum 2 system ([#4829](https://github.com/adobe/spectrum-web-components/issues/4829))
+  
 ### BREAKING CHANGES
-
--   this introduces breaking changes
--   1.0.0 release
+- coach-indicator: remove 'variant' and 'static' attributes from coach-indicator ([#4772](https://github.com/adobe/spectrum-web-components/issues/4772))
+- split-button: remove split-button component ([#4729](https://github.com/adobe/spectrum-web-components/issues/4729))
+- banner: remove banner component ([#4723](https://github.com/adobe/spectrum-web-components/issues/4723))
+- badge: remove deprecated badge values ([#4742](https://github.com/adobe/spectrum-web-components/issues/4742))
+- quick-actions: remove sp-quick-actions ([#4761](https://github.com/adobe/spectrum-web-components/issues/4761))
+- popover: remove popover's dialog property ([#4751](https://github.com/adobe/spectrum-web-components/issues/4751))
+- thumbnail: remove thumbnail deprecated sizes ([#4760](https://github.com/adobe/spectrum-web-components/issues/4760))
+- progress-circle: remove progress-circle overBackground property ([#4750](https://github.com/adobe/spectrum-web-components/issues/4750))
+- action-button, action-group, action-menu, button, link, meter, progress-bar: remove deprecated 'static' references ([#4818](https://github.com/adobe/spectrum-web-components/issues/4818))
+- action-button: remove action-button variant property ([#4741](https://github.com/adobe/spectrum-web-components/issues/4741))
+- theme: remove 'theme' attribute from sp-theme ([#4765](https://github.com/adobe/spectrum-web-components/issues/4765))
 
 # [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
 
