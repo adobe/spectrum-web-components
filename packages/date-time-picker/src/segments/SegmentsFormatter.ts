@@ -16,6 +16,7 @@ import {
     getMinimumMonthInYear,
     ZonedDateTime,
 } from '@internationalized/date';
+import { NumberFormatter } from '@internationalized/number';
 import { convertHourTo24hFormat, isNumber } from '../helpers';
 import { DEFAULT_LEAP_YEAR, SegmentTypes } from '../types';
 import { DateTimeSegments } from './DateTimeSegments';
@@ -31,11 +32,16 @@ interface DateInfo {
 
 export class SegmentsFormatter {
     private dateFormatter: DateFormatter;
+    private numberFormatter: NumberFormatter;
     private currentDate: ZonedDateTime;
 
     constructor(dateFormatter: DateFormatter, currentDate: ZonedDateTime) {
         this.dateFormatter = dateFormatter;
         this.currentDate = currentDate;
+        this.numberFormatter = new NumberFormatter(
+            this.dateFormatter.resolvedOptions().locale,
+            { useGrouping: false }
+        );
     }
 
     /**
@@ -64,13 +70,9 @@ export class SegmentsFormatter {
         const { year, month, day, hour, minute, second } = dateInfo;
         const date = new Date(year, month - 1, day, hour, minute, second);
 
-        /**
-         * For the year we do not use the value returned by the formatter, to avoid that the typed year is displayed in
-         * an unexpected way. For example, when typing “2”, the year would be formatted as “1902”, but we keep it as it
-         * is being displayed on the screen. If the user wants to enter the year “1902”, he will enter number by number
-         */
         if (!segments.year) return;
-        segments.year.formatted = String(year);
+        // Avoid unexpected display (e.g., "2" becoming "1902").
+        segments.year.formatted = this.numberFormatter.format(year);
 
         const segmentTypesToFormat = [
             SegmentTypes.Month,
@@ -108,7 +110,10 @@ export class SegmentsFormatter {
         for (const segmentType of segmentTypesToPad) {
             const segment = segments[segmentType];
             if (!segment) continue;
-            segment.formatted = segment.formatted.padStart(2, '0');
+            segment.formatted = segment.formatted.padStart(
+                2,
+                this.numberFormatter.format(0)
+            );
         }
     }
 
@@ -122,12 +127,7 @@ export class SegmentsFormatter {
         const month =
             segments.month.value ?? getMinimumMonthInYear(this.currentDate);
 
-        /**
-         * If the day being formatted is February 29th but the year segment has not yet been filled, we need to use a
-         * leap year to allow the 29th to remain, otherwise, if we use the current year and it is not a leap year, the
-         * day that would be displayed would be March 1st, as February 29th would not exist and JavaScript “moves” the
-         * day to the next day.
-         */
+        // Allow 29th of February to be displayed if the year is not set
         const year = segments.year.value ?? DEFAULT_LEAP_YEAR;
 
         const dayPeriod = segments.dayPeriod?.value;
