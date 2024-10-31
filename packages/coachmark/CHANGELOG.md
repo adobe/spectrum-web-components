@@ -5,7 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
 
-**Note:** Version bump only for package @spectrum-web-components/coachmark
+### BREAKING CHANGES
+
+-   remove 'variant' and 'static' attributes from coach-indicator ([#4772](https://github.com/adobe/spectrum-web-components/issues/4772))
 
 # [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
 

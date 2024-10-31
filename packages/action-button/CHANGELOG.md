@@ -5,7 +5,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
 
-**Note:** Version bump only for package @spectrum-web-components/action-button
+### BREAKING CHANGES
+
+-   remove action-button variant property ([#4741](https://github.com/adobe/spectrum-web-components/issues/4741))
+-   remove deprecated 'static' references ([#4818](https://github.com/adobe/spectrum-web-components/issues/4818))
 
 # [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
 
