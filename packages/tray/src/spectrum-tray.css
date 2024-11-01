@@ -11,24 +11,9 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-tray-exit-animation-delay: 0s;
-    --spectrum-tray-entry-animation-delay: 0.16s;
-    --spectrum-tray-max-inline-size: 375px;
-    --spectrum-tray-spacing-edge-to-tray-safe-zone: 64px;
-    --spectrum-tray-entry-animation-duration: var(
-        --spectrum-animation-duration-500
-    );
-    --spectrum-tray-exit-animation-duration: var(
-        --spectrum-animation-duration-100
-    );
-    --spectrum-tray-corner-radius: var(--spectrum-corner-radius-100);
-    --spectrum-tray-background-color: var(--spectrum-background-layer-2-color);
-}
-
 .tray {
-    inline-size: 100%;
     --mod-modal-max-width: 100%;
+    inline-size: 100%;
     max-inline-size: 100%;
     max-block-size: calc(
         100vh -
@@ -38,6 +23,7 @@ governing permissions and limitations under the License.
             )
     );
     box-sizing: border-box;
+    border-radius: 0;
     border-radius: var(--mod-tray-corner-radius-portrait, 0)
         var(--mod-tray-corner-radius-portrait, 0) 0 0;
     transition:

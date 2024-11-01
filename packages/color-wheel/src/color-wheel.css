@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-color-wheel.css');
+@import url('./color-wheel-overrides.css');
 
 :host {
     touch-action: none;
@@ -27,7 +28,7 @@ governing permissions and limitations under the License.
     );
     border-radius: 100%;
     border-style: solid;
-    border-width: var(--border-width);
+    border-width: var(--_border-width);
     box-sizing: border-box;
     block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
     position: relative;

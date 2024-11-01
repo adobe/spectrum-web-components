@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-progress-circle.css');
+@import url('./progress-circle-overrides.css');
 
 :host {
     block-size: var(

@@ -40,7 +40,6 @@ const elements = {
     'sp-asset': () => import('@spectrum-web-components/asset/sp-asset.js'),
     'sp-avatar': () => import('@spectrum-web-components/avatar/sp-avatar.js'),
     'sp-badge': () => import('@spectrum-web-components/badge/sp-badge.js'),
-    'sp-banner': () => import('@spectrum-web-components/banner/sp-banner.js'),
     'sp-dialog-wrapper': () =>
         import('@spectrum-web-components/dialog/sp-dialog-wrapper.js'),
     'sp-dialog': () => import('@spectrum-web-components/dialog/sp-dialog.js'),
@@ -104,8 +103,6 @@ const elements = {
         import(
             '@spectrum-web-components/progress-circle/sp-progress-circle.js'
         ),
-    'sp-quick-actions': () =>
-        import('@spectrum-web-components/quick-actions/sp-quick-actions.js'),
     'sp-radio-group': () =>
         import('@spectrum-web-components/radio/sp-radio-group.js'),
     'sp-radio': () => import('@spectrum-web-components/radio/sp-radio.js'),
@@ -117,8 +114,6 @@ const elements = {
     'sp-slider': () => import('@spectrum-web-components/slider/sp-slider.js'),
     'sp-slider-handle': () =>
         import('@spectrum-web-components/slider/sp-slider-handle.js'),
-    'sp-split-button': () =>
-        import('@spectrum-web-components/split-button/sp-split-button.js'),
     'sp-split-view': () =>
         import('@spectrum-web-components/split-view/sp-split-view.js'),
     'sp-status-light': () =>
@@ -163,8 +158,8 @@ const elements = {
 const browser: 'webkit' | 'firefox' | 'chromium' = isWebKit()
     ? 'webkit'
     : isFirefox()
-    ? 'firefox'
-    : 'chromium';
+      ? 'firefox'
+      : 'chromium';
 
 describe('define-element', function () {
     // registrations are globally-unique, so retries will always fail

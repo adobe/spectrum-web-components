@@ -27,6 +27,7 @@ const config = {
             inPackage: '@spectrum-css/actionbutton',
             outPackage: 'action-button',
             fileName: 'action-button',
+            systemOverrides: true,
             excludeByComponents: [
                 {
                     type: 'type',
@@ -186,6 +187,33 @@ const config = {
                             replace: builder.class('hold-affordance'),
                         },
                     ],
+                },
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'disabled',
+                                },
+                            ],
+                        ],
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'disabled',
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
                 },
             ],
         },

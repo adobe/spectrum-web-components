@@ -28,7 +28,6 @@ const targetDir = path.resolve(
 const targetFile = path.resolve(targetDir, 'spectrumURLs.js');
 
 const packageNameCorrections = {
-    quickaction: 'quick-actions',
     tag: 'tags',
 };
 

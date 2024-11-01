@@ -5,7 +5,7 @@
     "description": "",
     "type": "module",
     "engines": {
-        "node": ">=18.20.2",
+        "node": ">=20",
         "yarn": ">=1.16.0"
     },
     "scripts": {
@@ -211,7 +211,8 @@
             "files": [
                 "packages/**/*.css",
                 "tools/**/*.css",
-                "tasks/build-css.js"
+                "tasks/build-css.js",
+                "tasks/css-tools.js"
             ],
             "output": [
                 "packages/**/*.css.ts",
@@ -244,6 +245,7 @@
                 "!tools/**/*.d.ts",
                 "tasks/esbuild-packages.js",
                 "tasks/ts-tools.js",
+                "tasks/hydrate-export-maps.js",
                 "packages/**/exports.json",
                 "tools/**/exports.json"
             ],
@@ -263,6 +265,7 @@
                 "!**/spectrum-config.js",
                 "!**/spectrum-config.v1.js",
                 "!**/build.js",
+                "!**/build-icons-mapping.js",
                 "test/**/*.js",
                 "test/**/*.js.map",
                 "!test/visual/create.js",
@@ -325,7 +328,8 @@
             "files": [
                 "packages/icons-ui/bin/build.js",
                 "packages/icons-ui/packages.json",
-                "node_modules/@spectrum-css/ui-icons/dist/medium/**.svg"
+                "node_modules/@spectrum-css/ui-icons/dist/medium/**.svg",
+                "node_modules/@spectrum-css/ui-icons-s2/dist/medium/**.svg"
             ],
             "output": [
                 "packages/icons-ui/**/*.ts",
@@ -334,15 +338,16 @@
                 "packages/icons-ui/stories/icon-manifest.ts",
                 "!packages/icons-ui/test/**/*.ts",
                 "!packages/icons-ui/src/index.ts",
-                "!packages/icons-ui/src/custom-tag.ts"
+                "!packages/icons-ui/src/custom-tag.ts",
+                "!packages/icons-workflow/src/DefaultIcon.ts"
             ],
             "clean": "if-file-deleted"
         },
         "icons:workflow": {
             "command": "yarn workspace @spectrum-web-components/icons-workflow build",
             "files": [
-                "packages/icons-workflow/bin/build.js",
-                "node_modules/@adobe/spectrum-css-workflow-icons/dist/18/**.svg"
+                "!packages/icons-workflow/bin/build.js",
+                "packages/icons-workflow/bin/build-icons-mapping.js"
             ],
             "output": [
                 "packages/icons-workflow/**/*.ts",
@@ -351,7 +356,9 @@
                 "packages/icons-workflow/stories/icon-manifest.ts",
                 "!packages/icons-workflow/test/**/*.ts",
                 "!packages/icons-workflow/src/index.ts",
-                "!packages/icons-workflow/src/custom-tag.ts"
+                "!packages/icons-workflow/src/custom-tag.ts",
+                "!packages/icons-workflow/src/DefaultIcon.ts",
+                "!packages/icons-workflow/bin/icons-mapping.json"
             ],
             "clean": "if-file-deleted"
         },
@@ -424,5 +431,6 @@
         "projects/*",
         "tools/*",
         "react/*"
-    ]
+    ],
+    "packageManager": "yarn@1.22.22"
 }
