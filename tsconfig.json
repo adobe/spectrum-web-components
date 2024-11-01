@@ -20,7 +20,8 @@
         "strict": true,
         "sourceMap": true,
         "target": "es2018",
-        "types": ["mocha", "chai", "sinon", "node", "swc"]
+        "types": ["mocha", "chai", "sinon", "node", "swc"],
+        "resolveJsonModule": true
     },
     "include": ["./global.d.ts"]
 }

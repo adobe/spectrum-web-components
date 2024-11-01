@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 import { TemplateResult } from '@spectrum-web-components/base';
 import {
     renderButtonSet,
-    renderIconSizeOverridden,
     renderLink,
     renderLinkWithTarget,
     renderMinWidthButton,
@@ -45,9 +44,6 @@ export const withIcon = (props: Properties): TemplateResult =>
 
 export const withIconOnly = (props: Properties): TemplateResult =>
     renderWithIconOnly(props);
-
-export const iconSizeOverridden = (): TemplateResult =>
-    renderIconSizeOverridden(variant, treatment);
 
 export const minWidthButton = (props: Properties): TemplateResult =>
     renderMinWidthButton(props);

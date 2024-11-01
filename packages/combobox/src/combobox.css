@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-combobox.css');
+@import url('./combobox-overrides.css');
 
 :host {
     display: inline-flex;

@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-picker.css');
+@import url('./picker-overrides.css');
 
 :host {
     display: inline-flex;

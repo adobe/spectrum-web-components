@@ -10,11 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    CSSResultArray,
-    PropertyValues,
-    TemplateResult,
-} from '@spectrum-web-components/base';
+import { CSSResultArray, TemplateResult } from '@spectrum-web-components/base';
 import {
     property,
     query,
@@ -38,12 +34,6 @@ export class Link extends LikeAnchor(Focusable) {
     @property({ type: String, reflect: true })
     public variant: 'secondary' | undefined;
 
-    /**
-     * @deprecated Use `staticColor` instead.
-     */
-    @property({ type: String, reflect: true })
-    public static: 'black' | 'white' | undefined;
-
     @property({ reflect: true, attribute: 'static-color' })
     public staticColor?: 'black' | 'white';
 
@@ -59,23 +49,5 @@ export class Link extends LikeAnchor(Focusable) {
 
     protected override render(): TemplateResult {
         return this.renderAnchor({ id: 'anchor' });
-    }
-
-    protected override updated(changes: PropertyValues): void {
-        super.updated(changes);
-        if (
-            changes.has('static') &&
-            (this.static !== undefined || changes.get('static') !== undefined)
-        ) {
-            this.staticColor = this.static;
-            if (window.__swc.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `The "static" attribute of <${this.localName}> has been deprecated. Use "static-color" with the same values instead. "static" will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/link/api/',
-                    { level: 'deprecation' }
-                );
-            }
-        }
     }
 }
