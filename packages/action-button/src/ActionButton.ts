@@ -22,6 +22,7 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from '@spectrum-web-components/button';
 import buttonStyles from './action-button.css.js';
 import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
+import cornerTriangleOverrides from '@spectrum-web-components/icon/src/icon-corner-triangle-overrides.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
 
 const holdAffordanceClass = {
@@ -54,7 +55,12 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, buttonStyles, cornerTriangleStyles];
+        return [
+            ...super.styles,
+            buttonStyles,
+            cornerTriangleStyles,
+            cornerTriangleOverrides,
+        ];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -89,18 +95,6 @@ export class ActionButton extends SizedMixin(ButtonBase, {
      */
     @property({ reflect: true, attribute: 'static-color' })
     public staticColor?: 'white' | 'black';
-
-    /**
-     * @deprecated Use `staticColor` instead.
-     */
-    @property({ reflect: true })
-    public static?: 'white' | 'black';
-
-    /**
-     * @deprecated Use `staticColor` instead.
-     */
-    @property({ reflect: true })
-    public variant?: 'white' | 'black';
 
     @property({ type: String })
     public get value(): string {
@@ -266,34 +260,6 @@ export class ActionButton extends SizedMixin(ButtonBase, {
                         this.selected ? 'true' : 'false'
                     );
                 }
-            }
-        }
-        if (
-            changes.has('variant') &&
-            (this.variant !== undefined || changes.get('variant') !== undefined)
-        ) {
-            this.staticColor = this.variant;
-            if (window.__swc.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `The "variant" attribute/property of <${this.localName}> has been deprecated. Use "static-color" with the same values instead. "variant" will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/action-button/api/',
-                    { level: 'deprecation' }
-                );
-            }
-        }
-        if (
-            changes.has('static') &&
-            (this.static !== undefined || changes.get('static') !== undefined)
-        ) {
-            this.staticColor = this.static;
-            if (window.__swc.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `The "static" attribute/property of <${this.localName}> has been deprecated. Use "static-color" with the same values instead. "static" will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/action-button/api/',
-                    { level: 'deprecation' }
-                );
             }
         }
         if (changes.has('holdAffordance')) {

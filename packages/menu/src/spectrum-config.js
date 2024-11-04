@@ -79,6 +79,20 @@ const config = {
                     builder.class('spectrum-Menu-item'),
                 ],
             ],
+            includeByWholeSelector: [
+                [
+                    /** .spectrum-Menu .spectrum-Menu-itemIcon */
+                    builder.class('spectrum-Menu'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Menu-itemIcon'),
+                ],
+                [
+                    /** .spectrum-Menu .spectrum-Menu-itemIcon--workflowIcon */
+                    builder.class('spectrum-Menu'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Menu-itemIcon--workflowIcon'),
+                ],
+            ],
             components: [
                 converter.classToHost('spectrum-Menu-item'),
                 converter.classToAttribute('is-disabled', 'disabled'),
@@ -126,6 +140,34 @@ const config = {
                     'has-submenu'
                 ),
                 converter.classToSlotted('spectrum-Icon', 'icon'),
+                {
+                    collapseSelector: true,
+                    find: [
+                        /** .spectrum-Menu .spectrum-Menu-itemIcon */
+                        builder.class('spectrum-Menu'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-Menu-itemIcon'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.slotted('icon'),
+                        },
+                    ],
+                },
+                {
+                    collapseSelector: true,
+                    find: [
+                        /** .spectrum-Menu .spectrum-Menu-itemIcon--workflowIcon */
+                        builder.class('spectrum-Menu'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-Menu-itemIcon--workflowIcon'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.slotted('icon'),
+                        },
+                    ],
+                },
                 converter.classToSlotted('spectrum-Menu-itemIcon', 'icon'),
                 converter.classToSlotted(
                     'spectrum-Menu-itemIcon--workflowIcon',
@@ -349,12 +391,34 @@ const config = {
                     regex: /spectrum-Menu-item/,
                 },
             ],
+            includeByWholeSelector: [
+                [
+                    /** .spectrum-Menu .spectrum-Menu-checkmark */
+                    builder.class('spectrum-Menu'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Menu-checkmark'),
+                ],
+            ],
             components: [
                 converter.classToClass('spectrum-Menu-checkmark', 'checkmark'),
                 converter.classToClass(
                     'spectrum-Menu-checkmark--withAdjacentIcon',
                     'checkmark--withAdjacentIcon'
                 ),
+                {
+                    collapseSelector: true,
+                    find: [
+                        /** .spectrum-Menu .spectrum-Menu-checkmark */
+                        builder.class('spectrum-Menu'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-Menu-checkmark'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.class('checkmark'),
+                        },
+                    ],
+                },
             ],
         },
         {
@@ -383,12 +447,34 @@ const config = {
                     regex: /spectrum-Menu-item/,
                 },
             ],
+            includeByWholeSelector: [
+                [
+                    /** .spectrum-Menu .spectrum-Menu-chevron */
+                    builder.class('spectrum-Menu'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Menu-chevron'),
+                ],
+            ],
             components: [
                 converter.classToClass('spectrum-Menu-chevron', 'chevron'),
                 converter.classToClass(
                     'spectrum-Menu-chevron--withAdjacentIcon',
                     'chevron--withAdjacentIcon'
                 ),
+                {
+                    collapseSelector: true,
+                    find: [
+                        /** .spectrum-Menu .spectrum-Menu-checkmark */
+                        builder.class('spectrum-Menu'),
+                        builder.combinator(' '),
+                        builder.class('spectrum-Menu-chevron'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.class('chevron'),
+                        },
+                    ],
+                },
             ],
         },
         {

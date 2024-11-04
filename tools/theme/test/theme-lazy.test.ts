@@ -32,7 +32,7 @@ describe('Themes - lazy', () => {
             Theme as unknown as TestableThemeConstructor
         ).themeFragmentsByKind.clear();
         // Core is registered by default in `theme.ts`
-        Theme.registerThemeFragment('spectrum', 'theme', coreStyles);
+        Theme.registerThemeFragment('spectrum', 'system', coreStyles);
     });
     after(() => {
         Theme.registerThemeFragment('light', 'color', lightStyles);
@@ -43,11 +43,9 @@ describe('Themes - lazy', () => {
         Theme.registerThemeFragment('medium', 'scale', mediumStyles);
     });
     it('loads w/ no themes and none set', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -62,11 +60,9 @@ describe('Themes - lazy', () => {
         expect(el.scale).to.equal('');
     });
     it('loads w/ themes and none set', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -86,11 +82,9 @@ describe('Themes - lazy', () => {
         expect(el.scale).to.equal('medium');
     });
     it('loads w/ no themes', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme color="lightest" scale="large"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme color="light" scale="large"></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -103,11 +97,9 @@ describe('Themes - lazy', () => {
         }
     });
     it('loads w/ not enough themes', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme color="lightest" scale="large"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme color="lightest" scale="large"></sp-theme>
+        `);
 
         await elementUpdated(el);
 
@@ -125,11 +117,9 @@ describe('Themes - lazy', () => {
         }
     });
     it('loads w/ lazy themes', async () => {
-        const el = await fixture<Theme>(
-            html`
-                <sp-theme color="lightest" scale="large"></sp-theme>
-            `
-        );
+        const el = await fixture<Theme>(html`
+            <sp-theme color="lightest" scale="large"></sp-theme>
+        `);
 
         await elementUpdated(el);
 

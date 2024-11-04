@@ -316,7 +316,14 @@ describe('Sidenav', () => {
                 },
             ],
         });
-
+        toBeSelected.dispatchEvent(
+            new CustomEvent('sidenav-select', {
+                bubbles: true,
+                detail: {
+                    value: 'Section 0',
+                },
+            })
+        );
         await elementUpdated(el);
 
         expect(el.value).to.equal('Section 0');

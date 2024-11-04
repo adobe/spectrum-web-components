@@ -13,7 +13,6 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import {
     renderButton,
     renderButtonSet,
-    renderIconSizeOverridden,
     renderLink,
     renderLinkWithTarget,
     renderMinWidthButton,
@@ -46,9 +45,6 @@ export const withIcon = (props: Properties): TemplateResult =>
 
 export const withIconOnly = (props: Properties): TemplateResult =>
     renderWithIconOnly(props);
-
-export const iconSizeOverridden = (): TemplateResult =>
-    renderIconSizeOverridden(variant, treatment);
 
 export const minWidthButton = (props: Properties): TemplateResult =>
     renderMinWidthButton(props);
