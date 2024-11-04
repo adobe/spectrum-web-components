@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-action-group.css');
+@import url('./action-group-overrides.css');
 
 :host([size='xs']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(

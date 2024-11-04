@@ -17,7 +17,7 @@ governing permissions and limitations under the License.
     --spectrum-thumbnail-border-width: var(--spectrum-border-width-100);
     --spectrum-thumbnail-border-color-rgba: rgba(
         var(--spectrum-gray-800-rgb),
-        var(--spectrum-thumbnail-border-color-opacity)
+        var(--spectrum-thumbnail-border-opacity)
     );
     --spectrum-thumbnail-layer-border-width-inner: var(
         --spectrum-border-width-400
@@ -98,10 +98,6 @@ governing permissions and limitations under the License.
 :host {
     inline-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
     block-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
-    border-radius: var(
-        --mod-thumbnail-border-radius,
-        var(--spectrum-thumbnail-border-radius)
-    );
     vertical-align: top;
     z-index: 0;
     margin: 0;
@@ -111,15 +107,19 @@ governing permissions and limitations under the License.
     overflow: hidden;
 }
 
+:host,
+:host:before {
+    border-radius: var(
+        --mod-thumbnail-border-radius,
+        var(--spectrum-thumbnail-border-radius)
+    );
+}
+
 :host:before {
     content: '';
     z-index: 2;
     inline-size: 100%;
     block-size: 100%;
-    border-radius: var(
-        --mod-thumbnail-border-radius,
-        var(--spectrum-thumbnail-border-radius)
-    );
     box-shadow: inset 0 0 0
         var(
             --mod-thumbnail-border-width,
@@ -352,11 +352,11 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     :host {
-        forced-color-adjust: none;
         --highcontrast-thumbnail-border-color-selected: Highlight;
         --highcontrast-thumbnail-focus-indicator-color: Highlight;
         --highcontrast-thumbnail-border-color: CanvasText;
         --highcontrast-thumbnail-layer-border-color-inner: Canvas;
         --highcontrast-thumbnail-layer-border-color-outer: CanvasText;
+        forced-color-adjust: none;
     }
 }

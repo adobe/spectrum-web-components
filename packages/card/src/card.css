@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-card.css');
+@import url('./card-overrides.css');
 
 :host([href]:not([href=''])) {
     cursor: pointer;
@@ -70,8 +71,13 @@ slot[name='description'] {
     height: inherit;
 }
 
-sp-quick-actions {
-    z-index: 1;
+sp-popover {
+    align-items: center;
+}
+
+.actions {
+    visibility: hidden;
+    margin: auto;
 }
 
 /**

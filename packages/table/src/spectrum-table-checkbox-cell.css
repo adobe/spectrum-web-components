@@ -47,6 +47,7 @@ governing permissions and limitations under the License.
         --mod-table-header-line-height,
         var(--spectrum-table-row-line-height)
     );
+    text-transform: none;
     text-transform: var(--mod-table-header-text-transform, none);
     block-size: var(
         --mod-table-min-header-height,
@@ -81,6 +82,7 @@ governing permissions and limitations under the License.
             )
         )
         ease-in-out;
+    cursor: auto;
     cursor: var(--mod-table-cursor-header-default, initial);
     border-radius: 0;
     outline: 0;
@@ -165,6 +167,12 @@ governing permissions and limitations under the License.
                 var(--spectrum-table-focus-indicator-color)
             )
         )
+    );
+    outline-offset: calc(
+        var(
+                --mod-table-focus-indicator-thickness,
+                var(--spectrum-table-focus-indicator-thickness)
+            ) * -1
     );
     outline-offset: calc(
         var(

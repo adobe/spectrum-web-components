@@ -62,7 +62,7 @@ This is a <sp-link href="#" variant="secondary">secondary link</sp-link>.
 
 ### Static colored links
 
-When a link needs to be placed on top of a colored background or a visual it may be appropriate to ship it with a static color, regardless of the theme settings with which it is delivered. Leverage the `static` attribute with its `white` or `black` values to ensure the delivery is the same in all contexts.
+When a link needs to be placed on top of a colored background or a visual it may be appropriate to ship it with a static color, regardless of the theme settings with which it is delivered. Leverage the `static-color` attribute with its `white` or `black` values to ensure the delivery is the same in all contexts.
 
 <sp-tabs selected="white" auto label="Static Attribute Options">
 <sp-tab value="white">White</sp-tab>
