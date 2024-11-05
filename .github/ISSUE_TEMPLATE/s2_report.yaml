@@ -1,0 +1,103 @@
+name: Spectrum 2 Bug Report
+description: Report an issue with the Spectrum 2 system
+title: '[S2 Bug]: '
+labels: [bug, triage, needs jira ticket, Spectrum 2]
+# assignees:
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to fill out this bug report! Your issue will be triaged within a week of filing the issue.
+    - type: checkboxes
+      id: terms
+      attributes:
+          label: Code of conduct
+          description: By submitting this issue, you agree to follow our [code of conduct](https://github.com/adobe/spectrum-web-components/blob/main/CODE_OF_CONDUCT.md#adobe-code-of-conduct).
+          options:
+              - label: I agree to follow this project's code of conduct.
+                required: true
+    - type: checkboxes
+      id: reviewed-issues
+      attributes:
+          label: Have you reviewed existing issues?
+          description: Confirm if you've reviewed existing [Spectrum 2 issues](https://github.com/adobe/spectrum-web-components/labels/Spectrum%202) to avoid duplicates.
+          options:
+              - label: Yes, I’ve reviewed existing issues.
+                required: true
+    - type: dropdown
+      id: severity
+      attributes:
+          label: Severity
+          description: Please select the severity level of this issue. For descriptions of each level, refer to our [issue severity documentation](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md#issue-severity-classification)
+          options:
+              - SEV 5
+              - SEV 4
+              - SEV 3
+              - SEV 2
+              - SEV 1
+          default: 0
+      validations:
+          required: true
+    - type: input
+      id: components
+      attributes:
+          label: Impacted component(s)
+          description: List the component(s) impacted by this issue.
+      validations:
+          required: true
+    - type: textarea
+      id: observed-behavior
+      attributes:
+          label: Observed behavior
+          description: Describe the behavior you are experiencing.
+      validations:
+          required: true
+    - type: textarea
+      id: expected-behavior
+      attributes:
+          label: Expected behavior
+          description: Provide a brief description of what you expected to happen.
+    - type: dropdown
+      id: browsers
+      attributes:
+          label: What browser(s) does the issue appear in?
+          multiple: true
+          options:
+              - Firefox
+              - Chrome
+              - Safari
+              - Microsoft Edge
+    - type: textarea
+      id: screenshot
+      attributes:
+          label: Do you have screenshots?
+          description: Attach images by clicking this area to highlight it and then drag files in.
+
+    - type: textarea
+      id: code
+      attributes:
+          label: Have you reproduced this issue in isolation to illustrate the problem?
+          description: Provide an code sample from [webcomponents.dev](https://studio.webcomponents.dev/workspace/adobe). In most cases, a video or code block is not sufficient enough for us to diagnose the problem.
+    - type: textarea
+      id: reproduce
+      attributes:
+          label: What are the steps to manually reproduce this issue?
+          description: Provide detailed steps for reproducing the issue.
+          value: |
+              1. Go to '...'
+              2. Click on '....'
+              3. Scroll to '....'
+              4. Check console
+              5. See error
+    - type: textarea
+      id: logs
+      attributes:
+          label: Did you capture any logs while reproducing problem?
+          description: Attach log files by clicking this area to highlight it and then drag files in.
+    - type: checkboxes
+      id: jira-number
+      attributes:
+          label: Would you like to track this issue in Jira?
+          description: We will share the Jira ticket ID in a comment on the issue once it has been triaged.
+          options:
+              - label: Yes, please tell me the ticket number!

@@ -77,7 +77,10 @@ const makeOverBackground =
 export const staticWhite = (): TemplateResult => {
     return makeOverBackground('white')(
         () => html`
-            <sp-progress-bar progress="50" static="white"></sp-progress-bar>
+            <sp-progress-bar
+                progress="50"
+                static-color="white"
+            ></sp-progress-bar>
         `
     );
 };
@@ -88,7 +91,7 @@ export const staticWhiteLabel = (): TemplateResult => {
             <sp-progress-bar
                 label="Loading"
                 progress="50"
-                static="white"
+                static-color="white"
             ></sp-progress-bar>
         `
     );
@@ -100,7 +103,7 @@ export const staticWhiteIndeterminate = (): TemplateResult => {
             <sp-progress-bar
                 label="Loading"
                 indeterminate
-                static="white"
+                static-color="white"
             ></sp-progress-bar>
         `
     );
@@ -112,7 +115,7 @@ export const staticWhiteSideLabel = (): TemplateResult => {
             <sp-progress-bar
                 label="Loading"
                 progress="50"
-                static="white"
+                static-color="white"
                 side-label
             ></sp-progress-bar>
         `
@@ -125,7 +128,7 @@ export const staticWhiteSideLabelIndeterminate = (): TemplateResult => {
             <sp-progress-bar
                 label="Loading"
                 indeterminate
-                static="white"
+                static-color="white"
                 side-label
             ></sp-progress-bar>
         `

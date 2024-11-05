@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
+
+### Bug Fixes
+
+-   **dialog-wrapper:** update heading to fully span grid area ([#4810](https://github.com/adobe/spectrum-web-components/issues/4810)) ([7d1f461](https://github.com/adobe/spectrum-web-components/commit/7d1f4612046ed5aedd8b3ff7db4cfa3e183b30a8))
+-   **help-text:** apply aria-live to ensure full help text is read to user ([#4210](https://github.com/adobe/spectrum-web-components/issues/4210)) ([049dc56](https://github.com/adobe/spectrum-web-components/commit/049dc568ddef88bdde0a72d26ced150c8edfc727))
+
+### Features
+- spectrum-web-components now supports Spectrum 2 system ([#4829](https://github.com/adobe/spectrum-web-components/issues/4829))
+  
+### BREAKING CHANGES
+- coach-indicator: remove 'variant' and 'static' attributes from coach-indicator ([#4772](https://github.com/adobe/spectrum-web-components/issues/4772))
+- split-button: remove split-button component ([#4729](https://github.com/adobe/spectrum-web-components/issues/4729))
+- banner: remove banner component ([#4723](https://github.com/adobe/spectrum-web-components/issues/4723))
+- badge: remove deprecated badge values ([#4742](https://github.com/adobe/spectrum-web-components/issues/4742))
+- quick-actions: remove sp-quick-actions ([#4761](https://github.com/adobe/spectrum-web-components/issues/4761))
+- popover: remove popover's dialog property ([#4751](https://github.com/adobe/spectrum-web-components/issues/4751))
+- thumbnail: remove thumbnail deprecated sizes ([#4760](https://github.com/adobe/spectrum-web-components/issues/4760))
+- progress-circle: remove progress-circle overBackground property ([#4750](https://github.com/adobe/spectrum-web-components/issues/4750))
+- action-button, action-group, action-menu, button, link, meter, progress-bar: remove deprecated 'static' references ([#4818](https://github.com/adobe/spectrum-web-components/issues/4818))
+- action-button: remove action-button variant property ([#4741](https://github.com/adobe/spectrum-web-components/issues/4741))
+- theme: remove 'theme' attribute from sp-theme ([#4765](https://github.com/adobe/spectrum-web-components/issues/4765))
+
+# [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
+
+### Bug Fixes
+
+-   **number-field:** show decimal on iPad minimized keyboard ([#4784](https://github.com/adobe/spectrum-web-components/issues/4784)) ([deb7a1c](https://github.com/adobe/spectrum-web-components/commit/deb7a1cce452f120a9c2c96d73b0d03132c02565))
+-   **tabs:** scroll exceeding tabs limit ([#4722](https://github.com/adobe/spectrum-web-components/issues/4722)) ([fc9a448](https://github.com/adobe/spectrum-web-components/commit/fc9a4489c13e2471226e0f79a1197a61ef8242a7))
+
+### Features
+
+-   add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
+-   **button:** add noWrap property ([#4779](https://github.com/adobe/spectrum-web-components/issues/4779)) ([6760ec2](https://github.com/adobe/spectrum-web-components/commit/6760ec283ad190f45f9639e636953e90ea562385))
+
+## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
+
+### Bug Fixes
+
+-   add file extension to Theme imports and respective eslint rule ([#4771](https://github.com/adobe/spectrum-web-components/issues/4771)) ([a2b6bea](https://github.com/adobe/spectrum-web-components/commit/a2b6bea7142930d8143d9ca887e2c56ffa71a669))
+-   **breadcrumbs:** trigger change event on breadcrumbs via keyboard ([#4769](https://github.com/adobe/spectrum-web-components/issues/4769)) ([e14d082](https://github.com/adobe/spectrum-web-components/commit/e14d0827cd5a190e63b14418b8dd89fe2cab49ac))
+
 # [0.48.0](https://github.com/adobe/spectrum-web-components/compare/v0.47.2...v0.48.0) (2024-09-17)
 
 ### Bug Fixes

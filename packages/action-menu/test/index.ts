@@ -239,20 +239,20 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(el.quiet).to.be.true;
         });
-        it('can be `static`', async () => {
+        it('can be `staticColor`', async () => {
             const el = await actionMenuFixture();
 
-            expect(el.static == undefined).to.be.true;
+            expect(el.staticColor == undefined).to.be.true;
 
-            el.static = 'black';
+            el.staticColor = 'black';
             await elementUpdated(el);
 
-            expect(el.static == 'black').to.be.true;
+            expect(el.staticColor == 'black').to.be.true;
 
-            el.static = 'white';
+            el.staticColor = 'white';
             await elementUpdated(el);
 
-            expect(el.static == 'white').to.be.true;
+            expect(el.staticColor == 'white').to.be.true;
         });
         it('stay `valid`', async () => {
             const el = await actionMenuFixture();

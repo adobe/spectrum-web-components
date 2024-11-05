@@ -120,10 +120,11 @@ export default {
                 type: 'boolean',
             },
         },
-        staticValue: {
-            name: 'static',
+        staticColorValue: {
+            name: 'static-color',
             type: { name: 'string', required: false },
-            description: 'The visual static variant to apply to the button.',
+            description:
+                'The visual static color variant to apply to the button.',
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'none' },

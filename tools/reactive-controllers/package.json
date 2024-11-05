@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/reactive-controllers",
-    "version": "0.48.0",
+    "version": "1.0.0",
     "publishConfig": {
         "access": "public"
     },
@@ -56,6 +56,10 @@
         "./src/RovingTabindex.js": {
             "development": "./src/RovingTabindex.dev.js",
             "default": "./src/RovingTabindex.js"
+        },
+        "./src/SystemContextResolution.js": {
+            "development": "./src/SystemContextResolution.dev.js",
+            "default": "./src/SystemContextResolution.js"
         },
         "./src/index.js": {
             "development": "./src/index.dev.js",

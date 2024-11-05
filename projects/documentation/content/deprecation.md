@@ -97,9 +97,9 @@ window.__swc.warn(
 
 ```json
 {
-    "name": "@spectrum-web-components/split-button",
+    "name": "@spectrum-web-components/some-component",
     "version": "0.0.1",
-    "deprecationNotice": "@spectrum-web-components/split-button is deprecated and will be removed in the SWC 1.0 release."
+    "deprecationNotice": "@spectrum-web-components/some-component is deprecated and will be removed in some future release."
 }
 ```
 

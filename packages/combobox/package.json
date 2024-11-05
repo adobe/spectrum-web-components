@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/combobox",
-    "version": "0.48.0",
+    "version": "1.0.0",
     "publishConfig": {
         "access": "public"
     },
@@ -29,6 +29,7 @@
             "development": "./src/Combobox.dev.js",
             "default": "./src/Combobox.js"
         },
+        "./src/combobox-overrides.css.js": "./src/combobox-overrides.css.js",
         "./src/combobox.css.js": "./src/combobox.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -57,19 +58,19 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.48.0",
-        "@spectrum-web-components/base": "^0.48.0",
-        "@spectrum-web-components/icon": "^0.48.0",
-        "@spectrum-web-components/icons-ui": "^0.48.0",
-        "@spectrum-web-components/menu": "^0.48.0",
-        "@spectrum-web-components/overlay": "^0.48.0",
-        "@spectrum-web-components/picker-button": "^0.48.0",
-        "@spectrum-web-components/popover": "^0.48.0",
-        "@spectrum-web-components/progress-circle": "^0.48.0",
-        "@spectrum-web-components/textfield": "^0.48.0"
+        "@spectrum-web-components/action-button": "^1.0.0",
+        "@spectrum-web-components/base": "^1.0.0",
+        "@spectrum-web-components/icon": "^1.0.0",
+        "@spectrum-web-components/icons-ui": "^1.0.0",
+        "@spectrum-web-components/menu": "^1.0.0",
+        "@spectrum-web-components/overlay": "^1.0.0",
+        "@spectrum-web-components/picker-button": "^1.0.0",
+        "@spectrum-web-components/popover": "^1.0.0",
+        "@spectrum-web-components/progress-circle": "^1.0.0",
+        "@spectrum-web-components/textfield": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/combobox": "^3.1.2"
+        "@spectrum-css/combobox": "^4.0.0-s2-foundations.18"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

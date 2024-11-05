@@ -106,6 +106,12 @@ governing permissions and limitations under the License.
         var(
                 --mod-table-focus-indicator-thickness,
                 var(--spectrum-table-focus-indicator-thickness)
+            ) * -1
+    );
+    outline-offset: calc(
+        var(
+                --mod-table-focus-indicator-thickness,
+                var(--spectrum-table-focus-indicator-thickness)
             ) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px)
     );
 }

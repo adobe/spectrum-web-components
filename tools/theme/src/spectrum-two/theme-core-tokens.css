@@ -22,6 +22,17 @@ governing permissions and limitations under the License.
     --spectrum-picker-border-width: var(--spectrum-border-width-100);
 
     /* end workaround */
+    font-family: var(--spectrum-font-family);
+    font-size: var(--spectrum-font-size);
+    font-style: var(--spectrum-font-style);
+
+    &:lang(ar) {
+        font-family: var(--spectrum-font-family-ar);
+    }
+
+    &:lang(he) {
+        font-family: var(--spectrum-font-family-he);
+    }
 }
 
 #scale,

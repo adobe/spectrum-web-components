@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-number-field.css');
+@import url('./number-field-overrides.css');
 
 :host {
     inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
@@ -31,6 +32,7 @@ governing permissions and limitations under the License.
             ) * 2
     );
     --mod-infield-button-border-width: var(--unset-value-resets-inheritance);
+    --spectrum-stepper-width: var(--swc-number-field-width);
 }
 
 :host([size='s']) {
@@ -75,4 +77,16 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-border-color)
         );
     border-radius: var(--spectrum-textfield-corner-radius);
+}
+
+:host([quiet]) #textfield .button {
+    --mod-infield-button-border-color: var(
+        --mod-infield-border-color-quiet,
+        transparent
+    );
+    --mod-infield-button-edge-to-fill: 0;
+    --mod-infield-button-border-width: var(
+        --mod-infield-button-border-width-quiet,
+        0
+    );
 }

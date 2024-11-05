@@ -350,9 +350,9 @@ describe('ActionGroup', () => {
         expect(el.getAttribute('role')).to.equal('toolbar');
         expect(el.children[0].getAttribute('role')).to.equal('button');
     });
-    it('applies `static` attribute to its children', async () => {
+    it('applies `static-color` attribute to its children', async () => {
         const el = await fixture<ActionGroup>(html`
-            <sp-action-group static="white">
+            <sp-action-group static-color="white">
                 <sp-action-button id="first">First</sp-action-button>
                 <sp-action-button id="second">Second</sp-action-button>
             </sp-action-group>
@@ -362,15 +362,15 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
 
-        expect(firstButton.static).to.equal('white');
-        expect(secondButton.static).to.equal('white');
+        expect(firstButton.staticColor).to.equal('white');
+        expect(secondButton.staticColor).to.equal('white');
 
-        el.static = undefined;
+        el.staticColor = undefined;
 
         await elementUpdated(el);
 
-        expect(firstButton.static).to.be.undefined;
-        expect(secondButton.static).to.be.undefined;
+        expect(firstButton.staticColor).to.be.undefined;
+        expect(secondButton.staticColor).to.be.undefined;
     });
     it('manages "label"', async () => {
         const testLabel = 'Testable action group';

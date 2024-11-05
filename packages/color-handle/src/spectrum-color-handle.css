@@ -12,41 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-colorhandle-size: var(--spectrum-color-handle-size);
-    --spectrum-colorhandle-focused-size: var(
-        --spectrum-color-handle-size-key-focus
-    );
-    --spectrum-colorhandle-hitarea-size: var(
-        --spectrum-color-control-track-width
-    );
-    --spectrum-colorhandle-animation-duration: var(
-        --spectrum-animation-duration-100
-    );
-    --spectrum-colorhandle-animation-easing: ease-in-out;
-    --spectrum-colorhandle-outer-border-color: rgba(
-        var(--spectrum-black-rgb),
-        var(--spectrum-color-handle-outer-border-opacity)
-    );
-    --spectrum-colorhandle-outer-border-width: var(
-        --spectrum-color-handle-outer-border-width
-    );
-    --spectrum-colorhandle-inner-border-color: rgba(
-        var(--spectrum-black-rgb),
-        var(--spectrum-color-handle-inner-border-opacity)
-    );
-    --spectrum-colorhandle-inner-border-width: var(
-        --spectrum-color-handle-inner-border-width
-    );
-    --spectrum-colorhandle-border-width: var(
-        --spectrum-color-handle-border-width
-    );
-    --spectrum-colorhandle-border-color: var(--spectrum-white);
-    --spectrum-colorhandle-border-color-disabled: var(
-        --spectrum-disabled-content-color
-    );
-    --spectrum-colorhandle-fill-color-disabled: var(
-        --spectrum-disabled-background-color
-    );
     --mod-opacity-checkerboard-position: 50%;
     z-index: 1;
     box-sizing: border-box;
@@ -88,6 +53,10 @@ governing permissions and limitations under the License.
             var(--spectrum-colorhandle-animation-easing)
         );
     border-style: solid;
+}
+
+:host,
+:host:after {
     border-radius: 100%;
     display: block;
     position: absolute;
@@ -118,8 +87,6 @@ governing permissions and limitations under the License.
         var(--spectrum-colorhandle-hitarea-size)
     );
     border-radius: var(--mod-colorhandle-hitarea-border-radius, 100%);
-    display: block;
-    position: absolute;
 }
 
 :host([focused]),
