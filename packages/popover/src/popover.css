@@ -14,7 +14,9 @@ governing permissions and limitations under the License.
 @import url('./popover-overrides.css');
 
 :host {
+    min-width: max-content;
     max-height: 100%;
+    max-width: 100%;
     clip-path: none;
 }
 
