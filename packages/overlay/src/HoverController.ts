@@ -11,13 +11,16 @@ governing permissions and limitations under the License.
 */
 
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
-
+import { noop } from './AbstractOverlay.js';
 import {
     InteractionController,
     InteractionTypes,
+    lastInteractionType,
 } from './InteractionController.js';
-import { noop } from './AbstractOverlay.js';
+
+export const SAFARI_FOCUS_RING_CLASS = 'remove-focus-ring-safari-hack';
 
 const HOVER_DELAY = 300;
 
@@ -32,15 +35,33 @@ export class HoverController extends InteractionController {
 
     pointerentered = false;
 
+    handleKeyup(event: KeyboardEvent): void {
+        if (isWebKit() && (event.code === 'Tab' || event.code === 'Escape')) {
+            this.open = true;
+            this.removeSafariFocusRingClass();
+        }
+    }
+
     handleTargetFocusin(): void {
         if (!this.target.matches(':focus-visible')) {
             return;
         }
+
+        if (
+            isWebKit() &&
+            this.target[lastInteractionType] === InteractionTypes.click
+        ) {
+            this.target.classList.add(SAFARI_FOCUS_RING_CLASS);
+            return;
+        }
+
         this.open = true;
         this.focusedin = true;
+        this.removeSafariFocusRingClass();
     }
 
     handleTargetFocusout(): void {
+        this.removeSafariFocusRingClass();
         this.focusedin = false;
         if (this.pointerentered) return;
         this.open = false;
@@ -139,6 +160,11 @@ export class HoverController extends InteractionController {
         this.abortController = new AbortController();
         const { signal } = this.abortController;
         this.target.addEventListener(
+            'keyup',
+            (event) => this.handleKeyup(event),
+            { signal }
+        );
+        this.target.addEventListener(
             'focusin',
             () => this.handleTargetFocusin(),
             { signal }
@@ -178,5 +204,13 @@ export class HoverController extends InteractionController {
             () => this.handleHostPointerleave(),
             { signal }
         );
+    }
+
+    private removeSafariFocusRingClass(): void {
+        if (
+            isWebKit() &&
+            this.target.classList.contains(SAFARI_FOCUS_RING_CLASS)
+        )
+            this.target.classList.remove(SAFARI_FOCUS_RING_CLASS);
     }
 }

@@ -17,27 +17,30 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
+import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import { TemplateResult } from '@spectrum-web-components/base';
+import { Button } from '@spectrum-web-components/button';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
-import { spy } from 'sinon';
-import { ActionButton } from '@spectrum-web-components/action-button';
-import { sendKeys } from '@web/test-runner-commands';
-import { Button } from '@spectrum-web-components/button';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import { Theme } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import { TemplateResult } from '@spectrum-web-components/base';
-import { Theme } from '@spectrum-web-components/theme';
 import { Tooltip } from '@spectrum-web-components/tooltip';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
 import {
     fixture,
     ignoreResizeObserverLoopError,
 } from '../../../test/testing-helpers.js';
+
+// This should be moved to Overlay/ shared
+export const SAFARI_FOCUS_RING_CLASS = 'remove-focus-ring-safari-hack';
 
 ignoreResizeObserverLoopError(before, after);
 
