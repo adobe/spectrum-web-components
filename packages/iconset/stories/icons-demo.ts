@@ -241,11 +241,13 @@ export class IconsDemo extends SpectrumElement {
             : this.icons;
 
         const iconVersion = this.spectrumVersion === 2 ? 's2' : 's1';
-        // Filter out icons that are not in the current version
-        matchingIcons = matchingIcons.filter((icon) => {
-            const iconName = icon.name.replace(/\s/g, '').toLowerCase();
-            return iconsList[iconVersion].includes(iconName);
-        });
+        // Filter out icons that are not in the current version for workflow icons
+        if (this.package === 'workflow') {
+            matchingIcons = matchingIcons.filter((icon) => {
+                const iconName = icon.name.replace(/\s/g, '').toLowerCase();
+                return iconsList[iconVersion].includes(iconName);
+            });
+        }
 
         return html`
             <div class="search" part="search">
