@@ -648,8 +648,25 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                 // However, `appliesLabel` is applied by external elements that must be update complete as well to be bound appropriately.
                 await new Promise((res) => requestAnimationFrame(res));
                 await new Promise((res) => requestAnimationFrame(res));
-                if (!this.hasAccessibleLabel()) {
-                    this.warnNoLabel();
+                if (
+                    !this.label &&
+                    !this.getAttribute('aria-label') &&
+                    !this.getAttribute('aria-labelledby') &&
+                    !this.appliedLabel
+                ) {
+                    window.__swc.warn(
+                        this,
+                        `<${this.localName}> needs one of the following to be accessible:`,
+                        'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+                        {
+                            type: 'accessibility',
+                            issues: [
+                                `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
+                                'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
+                                'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
+                            ],
+                        }
+                    );
                 }
             });
         }
