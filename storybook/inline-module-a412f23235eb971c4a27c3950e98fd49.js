@@ -101,9 +101,9 @@ const importers = {
   './packages/help-text/stories/help-text-sizes.stories.js': () => import('./help-text-sizes.stories-BNNJ7XvS.js'),
   './packages/help-text/stories/help-text.stories.js': () => import('./help-text.stories-D7DbJjuM.js'),
   './packages/icon/stories/icon.stories.js': () => import('./icon.stories-BJ3bbwIa.js'),
-  './packages/icons-ui/stories/icons-ui.stories.js': () => import('./icons-ui.stories-C-U1sEB-.js'),
-  './packages/icons-workflow/stories/icons-workflow.stories.js': () => import('./icons-workflow.stories-c7UJ2CAH.js'),
-  './packages/icons/stories/icons.stories.js': () => import('./icons.stories-DLM2VLKI.js'),
+  './packages/icons-ui/stories/icons-ui.stories.js': () => import('./icons-ui.stories-Bbof6U73.js'),
+  './packages/icons-workflow/stories/icons-workflow.stories.js': () => import('./icons-workflow.stories-DEVAtH2F.js'),
+  './packages/icons/stories/icons.stories.js': () => import('./icons.stories-CyO1Lr2A.js'),
   './packages/illustrated-message/stories/illustrated-message.stories.js': () => import('./illustrated-message.stories-DmOEbr_S.js'),
   './packages/infield-button/stories/infield-button-sizes.stories.js': () => import('./infield-button-sizes.stories-CP7HpTti.js'),
   './packages/infield-button/stories/infield-button.stories.js': () => import('./infield-button.stories-BLikNv0x.js'),
@@ -191,7 +191,7 @@ const getProjectAnnotations = async () => {
     import('./preview-BT9ta7nr.js'),
     import('./preview-CDagOaLU.js'),
     import('./preview-CtQuewXd.js'),
-    import('./preview-BX1cPnFA.js')
+    import('./preview-CkXyrnVz.js')
   ]);
   return __STORYBOOK_MODULE_PREVIEW_API__.composeConfigs(configs);
 };
