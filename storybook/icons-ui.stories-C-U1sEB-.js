@@ -1,7 +1,7 @@
 import './sp-icon-Cr3qyNV8.js';
-import './icons-demo-CvC1a2Ni.js';
-import { x } from './lit-html-COgVUehj.js';
+import './icons-demo-C4a6wywn.js';
 import { m } from './until-9Rn6bNib.js';
+import { x } from './lit-html-COgVUehj.js';
 import './IconBase-sFh2_uG3.js';
 import './lit-element-BulMEkr1.js';
 import './state-DWB0FQGh.js';
@@ -40,8 +40,8 @@ import './sp-help-text-Cp9a106m.js';
 import './custom-element-Drg7uMpU.js';
 import './async-directive-DF6rMZJ5.js';
 
-var iconsWorkflow_stories = {
-  title: "Icons/Workflow",
+var iconsUi_stories = {
+  title: "Icons/UI",
   argTypes: {
     color: { control: "color" },
     size: {
@@ -57,17 +57,18 @@ var iconsWorkflow_stories = {
   },
   swc_vrt: {
     preload: async () => {
-      await import('./icon-manifest-B-jaQ2dM.js');
+      await import('./icon-manifest-BiQWcTc7.js');
     }
   }
 };
 const elements = ({ color, size }) => {
-  const content = import('./icon-manifest-B-jaQ2dM.js').then(
+  const content = import('./icon-manifest-BiQWcTc7.js').then(
     (iconManifest) => x`
             <icons-demo
                 style="color: ${color}"
                 size=${size}
                 .icons=${iconManifest.iconManifest}
+                name="ui"
             ></icons-demo>
         `
   );
@@ -94,7 +95,7 @@ const elements = ({ color, size }) => {
     `;
 };
 const Icons = ({ color, size }) => {
-  const content = import('./index-CtQ95BrO.js').then((icons) => {
+  const content = import('./index-_JhMVSYt.js').then((icons) => {
     const iconTemplates = [];
     for (const icon in icons) {
       if (icon === "setCustomTemplateLiteralTag") continue;
@@ -141,4 +142,4 @@ const Icons = ({ color, size }) => {
 };
 const __namedExportsOrder = ['elements', 'Icons'];
 
-export { Icons, __namedExportsOrder, iconsWorkflow_stories as default, elements };
+export { Icons, __namedExportsOrder, iconsUi_stories as default, elements };

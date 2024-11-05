@@ -1,5 +1,5 @@
 import './sp-icons-large-Bz73aAo7.js';
-import './icons-demo-CvC1a2Ni.js';
+import './icons-demo-C4a6wywn.js';
 import { x } from './lit-html-COgVUehj.js';
 import './define-element-BacrH-dd.js';
 import './lit-element-BulMEkr1.js';

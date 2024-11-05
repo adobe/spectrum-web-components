@@ -1447,10 +1447,12 @@ let IconsDemo = class extends SpectrumElement {
       (icon) => icon.name.toLowerCase().includes(this.search.toLowerCase())
     ) : this.icons;
     const iconVersion = this.spectrumVersion === 2 ? "s2" : "s1";
-    matchingIcons = matchingIcons.filter((icon) => {
-      const iconName = icon.name.replace(/\s/g, "").toLowerCase();
-      return iconsList[iconVersion].includes(iconName);
-    });
+    if (this.name === "workflow") {
+      matchingIcons = matchingIcons.filter((icon) => {
+        const iconName = icon.name.replace(/\s/g, "").toLowerCase();
+        return iconsList[iconVersion].includes(iconName);
+      });
+    }
     return x`
             <div class="search" part="search">
                 <sp-field-label for="search">Spectrum icons:</sp-field-label>
