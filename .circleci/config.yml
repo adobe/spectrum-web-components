@@ -18,15 +18,6 @@ commands:
     downstream:
         steps:
             - checkout
-            - restore_cache:
-                  keys:
-                      - v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            - restore_cache:
-                  keys:
-                      - v3b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
-            - run:
-                  name: Clean yarn cache
-                  command: yarn cache clean
             - run:
                   name: Installing Dependencies
                   command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
