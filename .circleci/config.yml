@@ -25,6 +25,9 @@ commands:
                   keys:
                       - v3b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
             - run:
+                  name: Clean yarn cache
+                  command: yarn cache clean
+            - run:
                   name: Installing Dependencies
                   command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
             - run:
