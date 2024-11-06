@@ -26,56 +26,29 @@ export const buildPreviewURLComment = (ref) => {
     const branchSlug = slugify(branch);
 
     const previewLinks = [];
-
-    const previewCombinations = [
-        {
-            system: 'Spectrum',
-            color: 'Light',
-            scale: 'Medium',
-            direction: 'LTR',
-        },
-        { system: 'Spectrum', color: 'Dark', scale: 'Large', direction: 'RTL' },
-        {
-            system: 'Express',
-            color: 'Light',
-            scale: 'Medium',
-            direction: 'LTR',
-        },
-        { system: 'Express', color: 'Dark', scale: 'Large', direction: 'RTL' },
-        {
-            system: 'Spectrum-two',
-            color: 'Light',
-            scale: 'Medium',
-            direction: 'LTR',
-        },
-        {
-            system: 'Spectrum-two',
-            color: 'Dark',
-            scale: 'Large',
-            direction: 'RTL',
-        },
-    ];
-
-    // Generate preview links for each combination of system, color, scale, and direction
-    previewCombinations.forEach(({ system, color, scale, direction }) => {
-        // Create a unique context string for each combination
-        const context = `${branch}-${system.toLowerCase()}-${color.toLowerCase()}-${scale.toLowerCase()}-${direction.toLowerCase()}`;
-
-        // Add the generated preview link to the array
-        previewLinks.push(`
-- [${system} | ${color} | ${scale} | ${direction}](https://${createHash(
-            context
-        )}--spectrumwc.netlify.app/review/)`);
-    });
-
-    // Add a high contrast mode preview link
+    const themes = ['Spectrum', 'Express', 'Spectrum-two'];
+    const scales = ['Medium', 'Large'];
+    const colors = ['Light', 'Dark'];
+    const directions = ['LTR', 'RTL'];
     previewLinks.push(
         `
 - [High Contrast Mode | Medium | LTR](https://${createHash(
             `${branch}-hcm`
         )}--spectrumwc.netlify.app/review/)`
     );
-
+    themes.map((theme) =>
+        colors.map((color) => {
+            scales.map((scale) =>
+                directions.map((direction) => {
+                    const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+                    previewLinks.push(`
+- [${theme} | ${color} | ${scale} | ${direction}](https://${getHash(
+                        context
+                    )}--spectrum-web-components.netlify.app/review/)`);
+                })
+            );
+        })
+    );
     let comment = `## Branch preview
 
 - [Documentation Site](https://${branchSlug}--spectrumwc.netlify.app/)
