@@ -27,6 +27,9 @@ commands:
             - run:
                   name: Installing Dependencies
                   command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+            - run:
+                  name: Print dependency tree
+                  command: yarn list --all
             - save_cache:
                   paths:
                       - ~/.cache/yarn
