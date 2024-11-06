@@ -56,13 +56,12 @@ import {
 } from './slottable-request-event.js';
 
 import styles from './overlay.css.js';
-import { isWebKit } from '@spectrum-web-components/shared';
 
 const supportsPopover = 'showPopover' in document.createElement('div');
 
 let OverlayFeatures = OverlayDialog(AbstractOverlay);
 /* c8 ignore next 2 */
-if (supportsPopover && !isWebKit()) {
+if (supportsPopover) {
     OverlayFeatures = OverlayPopover(OverlayFeatures);
 } else {
     OverlayFeatures = OverlayNoPopover(OverlayFeatures);
