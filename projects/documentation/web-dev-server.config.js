@@ -24,9 +24,13 @@ export default {
         exportConditions: ['browser', 'development'],
         moduleDirectories: ['node_modules', 'packages', 'projects', 'tools'],
     },
+    mimeTypes: {
+        '**/*.json': 'js',
+    },
     // in a monorepo you need to set the root dir to resolve modules
     rootDir: '_site',
     plugins: [
+        json(),
         alias({
             entries: [
                 {
@@ -35,6 +39,5 @@ export default {
                 },
             ],
         }),
-        json(),
     ],
 };
