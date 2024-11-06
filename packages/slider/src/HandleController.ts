@@ -554,7 +554,6 @@ export class HandleController {
                     aria-disabled=${ifDefined(
                         this.host.disabled ? 'true' : undefined
                     )}
-                    tabindex=${ifDefined(this.host.editable ? -1 : undefined)}
                     aria-label=${ifDefined(model.ariaLabel)}
                     aria-labelledby=${ariaLabelledBy}
                     aria-valuetext=${this.formattedValueForHandle(model)}
