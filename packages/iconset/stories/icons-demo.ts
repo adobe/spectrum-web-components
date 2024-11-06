@@ -249,6 +249,16 @@ export class IconsDemo extends SpectrumElement {
             });
         }
 
+        // Use a Set to remove duplicates that may get added because of the same icon name in both versionsa
+        const uniqueIcons = new Set();
+        matchingIcons = matchingIcons.filter((icon) => {
+            if (!uniqueIcons.has(icon.name)) {
+                uniqueIcons.add(icon.name);
+                return true;
+            }
+            return false;
+        });
+
         return html`
             <div class="search" part="search">
                 <sp-field-label for="search">Spectrum icons:</sp-field-label>

@@ -12,8 +12,10 @@ governing permissions and limitations under the License.
 
 import { fromRollup } from '@web/dev-server-rollup';
 import rollupAlias from '@rollup/plugin-alias';
+import rollupJson from '@rollup/plugin-json';
 
 const alias = fromRollup(rollupAlias);
+const json = fromRollup(rollupJson);
 
 export default {
     open: true,
@@ -33,5 +35,6 @@ export default {
                 },
             ],
         }),
+        json(),
     ],
 };
