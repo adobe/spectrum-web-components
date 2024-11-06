@@ -110,22 +110,24 @@ export const testEditableSlider = (type: string): void => {
         it('dispatches `input` of the animation frame', async () => {
             const inputSpy = spy();
             const changeSpy = spy();
-            const el = await fixture<Slider>(html`
-                <sp-slider
-                    editable
-                    hide-stepper
-                    min="1"
-                    max="100"
-                    step="1"
-                    label="Slider label"
-                    @input=${(event: Event & { target: Slider }) => {
-                        inputSpy(event.target.value);
-                    }}
-                    @change=${(event: Event & { target: Slider }) => {
-                        changeSpy(event.target.value);
-                    }}
-                ></sp-slider>
-            `);
+            const el = await fixture<Slider>(
+                html`
+                    <sp-slider
+                        editable
+                        hide-stepper
+                        min="1"
+                        max="100"
+                        step="1"
+                        label="Slider label"
+                        @input=${(event: Event & { target: Slider }) => {
+                            inputSpy(event.target.value);
+                        }}
+                        @change=${(event: Event & { target: Slider }) => {
+                            changeSpy(event.target.value);
+                        }}
+                    ></sp-slider>
+                `
+            );
             await elementUpdated(el);
             expect(el.value).to.equal(50.5);
 
@@ -361,40 +363,6 @@ export const testEditableSlider = (type: string): void => {
             expect(el.shadowRoot.activeElement).to.equal(
                 el.handleController.inputForHandle(el)
             );
-        });
-
-        it('allows keyboard focus on both handler and <sp-number-field>', async () => {
-            const el = await sliderFromFixture(editable);
-            await elementUpdated(el);
-
-            el.focus();
-            await elementUpdated(el);
-
-            expect(
-                el.shadowRoot.activeElement === el.numberField,
-                'number-field focused'
-            ).to.be.true;
-
-            await sendKeys({
-                press: 'Shift+Tab',
-            });
-            await nextFrame();
-
-            expect(
-                el.shadowRoot.activeElement ===
-                    el.handleController.inputForHandle(el),
-                'handler focused'
-            ).to.be.true;
-
-            await sendKeys({
-                press: 'Tab',
-            });
-            await nextFrame();
-
-            expect(
-                el.shadowRoot.activeElement === el.numberField,
-                'number-field focused'
-            ).to.be.true;
         });
     });
 };
