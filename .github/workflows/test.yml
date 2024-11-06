@@ -13,12 +13,7 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout main
-              uses: actions/checkout@v4
-              with:
-                  ref: main
-
-            - name: Checkout PR branch
+            - name: Checkout Branch
               uses: actions/checkout@v4
 
             - name: Setup Node 20
@@ -41,12 +36,7 @@ jobs:
         runs-on: ubuntu-22.04
         needs: comment-previews
         steps:
-            - name: Checkout main
-              uses: actions/checkout@v4
-              with:
-                  ref: main
-
-            - name: Checkout PR branch
+            - name: Checkout Branch
               uses: actions/checkout@v4
 
             - name: Setup Node 20
@@ -95,12 +85,7 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-22.04
         steps:
-            - name: Checkout main
-              uses: actions/checkout@v4
-              with:
-                  ref: main
-
-            - name: Checkout PR branch
+            - name: Checkout Branch
               uses: actions/checkout@v4
 
             - name: Setup Node 20
@@ -135,12 +120,7 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout main
-              uses: actions/checkout@v4
-              with:
-                  ref: main
-
-            - name: Checkout PR branch
+            - name: Checkout Branch
               uses: actions/checkout@v4
 
             - name: Setup Node 20
@@ -176,12 +156,7 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout main
-              uses: actions/checkout@v4
-              with:
-                  ref: main
-
-            - name: Checkout PR branch
+            - name: Checkout Branch
               uses: actions/checkout@v4
 
             - name: Setup Node 20
