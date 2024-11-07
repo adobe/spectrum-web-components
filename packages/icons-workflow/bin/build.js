@@ -117,20 +117,14 @@ async function buildIcons(icons, tag, iconsNameList) {
             id += 'Advert';
         }
 
-        if (id === 'UnLink') {
-            id = 'Unlink';
-        }
-        if (id === 'TextStrikeThrough') {
-            id = 'TextStrikethrough';
-        }
+        const replacements = {
+            UnLink: 'Unlink',
+            TextStrikeThrough: 'TextStrikethrough',
+            ChevronDownSize300: 'ChevronDown',
+            CheckmarkSize300: 'Checkmark',
+        };
 
-        if (id === 'ChevronDownSize300') {
-            id = 'ChevronDown';
-        }
-
-        if (id === 'CheckmarkSize300') {
-            id = 'Checkmark';
-        }
+        id = Case.pascal(replacements[id] || id);
 
         let ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
 
