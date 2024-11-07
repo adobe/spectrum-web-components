@@ -56,7 +56,7 @@ export const buildPreviewURLComment = (ref) => {
     const previewLinks = [];
     const themes = ['Spectrum', 'Express', 'Spectrum-two'];
     const scales = ['Medium', 'Large'];
-    const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
+    const colors = ['Light', 'Dark'];
     const directions = ['LTR', 'RTL'];
     previewLinks.push(
         `- [High Contrast Mode | Medium | LTR](https://${getHash(
@@ -65,12 +65,6 @@ export const buildPreviewURLComment = (ref) => {
     );
     themes.map((theme) =>
         colors.map((color) => {
-            if (
-                theme === 'Spectrum-two' &&
-                (color === 'Lightest' || color === 'Darkest')
-            ) {
-                return;
-            }
             scales.map((scale) =>
                 directions.map((direction) => {
                     const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;

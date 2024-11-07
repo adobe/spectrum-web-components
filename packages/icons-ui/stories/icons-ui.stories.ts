@@ -49,6 +49,7 @@ export const elements = ({ color, size }: Properties): TemplateResult => {
                 style="color: ${color}"
                 size=${size}
                 .icons=${iconManifest.iconManifest}
+                name="ui"
             ></icons-demo>
         `
     );

@@ -567,7 +567,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 ) {
                     window.__swc.warn(
                         this,
-                        '<${this.localName}> needs one of the following to be accessible:',
+                        `<${this.localName}> needs one of the following to be accessible:`,
                         'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
                         {
                             type: 'accessibility',
