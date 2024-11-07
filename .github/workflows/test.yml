@@ -41,6 +41,7 @@ jobs:
     lighthouse:
         name: Lighthouse CI
         runs-on: ubuntu-22.04
+        needs: comment-previews
         steps:
             - uses: actions/checkout@v4
               with:

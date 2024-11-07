@@ -10,7 +10,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: 08de0cb86affdc8cec2cb320aa9899b07032fcf8
+        default: 5ab4db0cb7a707b3465bbcc85b02edaa5c8b96ae
     wireit_cache_name:
         type: string
         default: wireit
@@ -20,10 +20,10 @@ commands:
             - checkout
             - restore_cache:
                   keys:
-                      - v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - restore_cache:
                   keys:
-                      - v3b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
+                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
             - run:
                   name: Installing Dependencies
                   command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
@@ -31,11 +31,11 @@ commands:
                   paths:
                       - ~/.cache/yarn
                       - ~/.cache/ms-playwright
-                  key: v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                  key: v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - save_cache:
                   paths:
                       - .wireit
-                  key: v3b-wireit-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
+                  key: v4b-wireit-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
             - attach_workspace:
                   at: /
     run-regressions:
