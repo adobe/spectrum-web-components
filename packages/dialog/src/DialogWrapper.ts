@@ -24,8 +24,10 @@ import '@spectrum-web-components/button/sp-button.js';
 
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
 import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
 import { DialogBase } from './DialogBase.js';
 import { Dialog } from './Dialog.js';
+import { AlertDialog } from '@spectrum-web-components/alert-dialog';
 
 /**
  * @element sp-dialog-wrapper
@@ -41,9 +43,6 @@ export class DialogWrapper extends DialogBase {
         return [...super.styles];
     }
 
-    /**
-     * @deprecated Use the Alert Dialog component with `variant="error"` instead.
-     */
     @property({ type: Boolean, reflect: true })
     public error = false;
 
@@ -80,8 +79,10 @@ export class DialogWrapper extends DialogBase {
     @property({ type: String, attribute: 'headline-visibility' })
     public headlineVisibility: 'none' | undefined;
 
-    protected override get dialog(): Dialog {
-        return this.shadowRoot.querySelector('sp-dialog') as Dialog;
+    protected override get dialog(): Dialog | AlertDialog {
+        return this.error
+            ? (this.shadowRoot.querySelector('sp-alert-dialog') as AlertDialog)
+            : (this.shadowRoot.querySelector('sp-dialog') as Dialog);
     }
 
     private clickSecondary(): void {
@@ -108,6 +109,46 @@ export class DialogWrapper extends DialogBase {
         );
     }
 
+    protected renderButtons(): TemplateResult {
+        return html`
+            ${this.cancelLabel
+                ? html`
+                      <sp-button
+                          variant="secondary"
+                          treatment="outline"
+                          slot="button"
+                          @click=${this.clickCancel}
+                      >
+                          ${this.cancelLabel}
+                      </sp-button>
+                  `
+                : nothing}
+            ${this.secondaryLabel
+                ? html`
+                      <sp-button
+                          variant="primary"
+                          treatment="outline"
+                          slot="button"
+                          @click=${this.clickSecondary}
+                      >
+                          ${this.secondaryLabel}
+                      </sp-button>
+                  `
+                : nothing}
+            ${this.confirmLabel
+                ? html`
+                      <sp-button
+                          variant="accent"
+                          slot="button"
+                          @click=${this.clickConfirm}
+                      >
+                          ${this.confirmLabel}
+                      </sp-button>
+                  `
+                : nothing}
+        `;
+    }
+
     protected override renderDialog(): TemplateResult {
         const hideDivider =
             this.noDivider ||
@@ -127,12 +168,30 @@ export class DialogWrapper extends DialogBase {
             }
         }
 
+        if (this.error) {
+            return html`
+                <sp-alert-dialog variant="error">
+                    ${this.headline
+                        ? html`
+                              <h2
+                                  slot="heading"
+                                  ?hidden=${this.headlineVisibility === 'none'}
+                              >
+                                  ${this.headline}
+                              </h2>
+                          `
+                        : nothing}
+                    <slot></slot>
+                    ${this.renderButtons()}
+                </sp-alert-dialog>
+            `;
+        }
+
         return html`
             <sp-dialog
                 ?dismissable=${this.dismissable}
                 dismiss-label=${this.dismissLabel}
                 ?no-divider=${hideDivider}
-                ?error=${this.error}
                 mode=${ifDefined(this.mode)}
                 size=${ifDefined(this.size)}
             >
@@ -166,41 +225,7 @@ export class DialogWrapper extends DialogBase {
                           <div slot="footer">${this.footer}</div>
                       `
                     : nothing}
-                ${this.cancelLabel
-                    ? html`
-                          <sp-button
-                              variant="secondary"
-                              treatment="outline"
-                              slot="button"
-                              @click=${this.clickCancel}
-                          >
-                              ${this.cancelLabel}
-                          </sp-button>
-                      `
-                    : nothing}
-                ${this.secondaryLabel
-                    ? html`
-                          <sp-button
-                              variant="primary"
-                              treatment="outline"
-                              slot="button"
-                              @click=${this.clickSecondary}
-                          >
-                              ${this.secondaryLabel}
-                          </sp-button>
-                      `
-                    : nothing}
-                ${this.confirmLabel
-                    ? html`
-                          <sp-button
-                              variant="accent"
-                              slot="button"
-                              @click=${this.clickConfirm}
-                          >
-                              ${this.confirmLabel}
-                          </sp-button>
-                      `
-                    : nothing}
+                ${this.renderButtons()}
             </sp-dialog>
         `;
     }
