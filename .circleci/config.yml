@@ -31,11 +31,11 @@ commands:
                   paths:
                       - ~/.cache/yarn
                       - ~/.cache/ms-playwright
-                  key: v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                  key: v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - save_cache:
                   paths:
                       - .wireit
-                  key: v3b-wireit-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
+                  key: v4b-wireit-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
             - attach_workspace:
                   at: /
     run-regressions:
