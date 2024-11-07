@@ -98,6 +98,8 @@ export const getComponentName = (i) => {
         UnLink: 'Unlink',
         TextStrikeThrough: 'TextStrikethrough',
         github: 'GitHub',
+        ChevronDownSize300: 'ChevronDown',
+        CheckmarkSize300: 'Checkmark',
     };
     return Case.pascal(replacements[id] || id);
 };
@@ -122,14 +124,15 @@ async function buildIcons(icons, tag, iconsNameList) {
             id = 'TextStrikethrough';
         }
 
-        let ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
+        if (id === 'ChevronDownSize300') {
+            id = 'ChevronDown';
+        }
 
-        if (ComponentName === 'TextStrikeThrough') {
-            ComponentName = 'TextStrikethrough';
+        if (id === 'CheckmarkSize300') {
+            id = 'Checkmark';
         }
-        if (ComponentName === 'UnLink') {
-            ComponentName = 'Unlink';
-        }
+
+        let ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
 
         const $ = load(svg, {
             xmlMode: true,
