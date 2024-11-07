@@ -11,29 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-color-slider-handle-margin-block: var(
-        --spectrum-component-top-to-text-75
-    );
-    --spectrum-color-slider-border-color-rgba: rgba(
-        var(--spectrum-gray-900-rgb),
-        var(--spectrum-color-slider-border-opacity)
-    );
-    --spectrum-color-slider-checkerboard-size: var(
-        --spectrum-opacity-checkerboard-square-size
-    );
-    --spectrum-color-slider-checkerboard-dark-color: var(
-        --spectrum-opacity-checkerboard-square-dark
-    );
-    --spectrum-color-slider-checkerboard-light-color: var(
-        --spectrum-opacity-checkerboard-square-light
-    );
-    --mod-colorhandle-hitarea-border-radius: var(
-        --mod-color-slider-handle-hitarea-border-radius,
-        0px
-    );
-}
-
 @media (forced-colors: active) {
     :host {
         --highcontrast-color-slider-border-color: CanvasText;
@@ -44,6 +21,10 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    --mod-colorhandle-hitarea-border-radius: var(
+        --mod-color-slider-handle-hitarea-border-radius,
+        0px
+    );
     min-inline-size: var(
         --mod-color-slider-minimum-length,
         var(--spectrum-color-slider-minimum-length)

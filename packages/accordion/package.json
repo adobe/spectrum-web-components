@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/accordion",
-    "version": "0.48.1",
+    "version": "1.0.0",
     "publishConfig": {
         "access": "public"
     },
@@ -33,7 +33,9 @@
             "development": "./src/AccordionItem.dev.js",
             "default": "./src/AccordionItem.js"
         },
+        "./src/accordion-item-overrides.css.js": "./src/accordion-item-overrides.css.js",
         "./src/accordion-item.css.js": "./src/accordion-item.css.js",
+        "./src/accordion-overrides.css.js": "./src/accordion-overrides.css.js",
         "./src/accordion.css.js": "./src/accordion.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -66,14 +68,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.48.1",
-        "@spectrum-web-components/icon": "^0.48.1",
-        "@spectrum-web-components/icons-ui": "^0.48.1",
-        "@spectrum-web-components/reactive-controllers": "^0.48.1",
-        "@spectrum-web-components/shared": "^0.48.1"
+        "@spectrum-web-components/base": "^1.0.0",
+        "@spectrum-web-components/icon": "^1.0.0",
+        "@spectrum-web-components/icons-ui": "^1.0.0",
+        "@spectrum-web-components/reactive-controllers": "^1.0.0",
+        "@spectrum-web-components/shared": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/accordion": "^5.1.2"
+        "@spectrum-css/accordion": "^6.0.0-s2-foundations.16"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

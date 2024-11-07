@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/split-view",
-    "version": "0.48.1",
+    "version": "1.0.0",
     "publishConfig": {
         "access": "public"
     },
@@ -33,6 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/split-view-overrides.css.js": "./src/split-view-overrides.css.js",
         "./src/split-view.css.js": "./src/split-view.css.js",
         "./src/types.js": {
             "development": "./src/types.dev.js",
@@ -61,10 +62,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.48.1"
+        "@spectrum-web-components/base": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/splitview": "^5.1.0"
+        "@spectrum-css/splitview": "^6.0.0-s2-foundations.15"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

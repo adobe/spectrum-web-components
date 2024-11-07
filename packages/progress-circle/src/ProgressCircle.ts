@@ -43,18 +43,6 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
     @property({ type: String })
     public label = '';
 
-    /**
-     * @deprecated Use `staticColor` instead.
-     */
-    @property({ type: Boolean, reflect: true, attribute: 'over-background' })
-    public overBackground = false;
-
-    /**
-     * @deprecated Use `staticColor` instead.
-     */
-    @property({ reflect: true })
-    public static?: 'white';
-
     @property({ reflect: true, attribute: 'static-color' })
     public staticColor?: 'white';
 
@@ -68,41 +56,6 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
         return this.indeterminate
             ? undefined
             : `transform: rotate(${rotation}deg);`;
-    }
-
-    protected override willUpdate(changes: PropertyValues<this>): void {
-        if (changes.has('overBackground')) {
-            // Apply "staticColor" from "overBackground", preferring "staticColor",
-            // until the deprecation period is over.
-            this.staticColor = this.overBackground
-                ? 'white'
-                : this.staticColor || undefined;
-            if (window.__swc.DEBUG) {
-                if (this.overBackground) {
-                    window.__swc.warn(
-                        this,
-                        `<${this.localName}> element will stop accepting the "over-background" attribute, and its related "overBackground" property in a future release. Use the "static-color" attribute with a value of "white" instead.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#static',
-                        { level: 'deprecation' }
-                    );
-                }
-            }
-        }
-        if (changes.has('static')) {
-            // Apply "staticColor" from "static", preferring "staticColor",
-            // until the deprecation period is over.
-            this.staticColor = this.static;
-            if (window.__swc.DEBUG) {
-                if (this.static) {
-                    window.__swc.warn(
-                        this,
-                        `<${this.localName}> element will stop accepting the "static" attribute. Use the "static-color" attribute with a value of "white" instead.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#static',
-                        { level: 'deprecation' }
-                    );
-                }
-            }
-        }
     }
 
     protected override render(): TemplateResult {

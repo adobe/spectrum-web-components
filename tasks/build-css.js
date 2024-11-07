@@ -20,7 +20,11 @@ const buildCSS = async () => {
         './tools/*/src/*.css',
         './tools/*/src/**/*.css',
     ])) {
-        await processCSS(cssPath);
+        try {
+            await processCSS(cssPath);
+        } catch (error) {
+            console.error(`Error processing ${cssPath}: ${error}`);
+        }
     }
     process.exit(0);
 };

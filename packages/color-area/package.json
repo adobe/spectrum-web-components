@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-area",
-    "version": "0.48.1",
+    "version": "1.0.0",
     "publishConfig": {
         "access": "public"
     },
@@ -29,6 +29,7 @@
             "development": "./src/ColorArea.dev.js",
             "default": "./src/ColorArea.js"
         },
+        "./src/color-area-overrides.css.js": "./src/color-area-overrides.css.js",
         "./src/color-area.css.js": "./src/color-area.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -62,14 +63,14 @@
     ],
     "dependencies": {
         "@ctrl/tinycolor": "^4.0.3",
-        "@spectrum-web-components/base": "^0.48.1",
-        "@spectrum-web-components/color-handle": "^0.48.1",
-        "@spectrum-web-components/opacity-checkerboard": "^0.48.1",
-        "@spectrum-web-components/reactive-controllers": "^0.48.1",
-        "@spectrum-web-components/shared": "^0.48.1"
+        "@spectrum-web-components/base": "^1.0.0",
+        "@spectrum-web-components/color-handle": "^1.0.0",
+        "@spectrum-web-components/opacity-checkerboard": "^1.0.0",
+        "@spectrum-web-components/reactive-controllers": "^1.0.0",
+        "@spectrum-web-components/shared": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/colorarea": "^5.1.0"
+        "@spectrum-css/colorarea": "^6.0.0-s2-foundations.15"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

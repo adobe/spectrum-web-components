@@ -217,11 +217,6 @@ module.exports = {
             dir: '../../components/progress-circle',
         },
         {
-            name: '@spectrum-web-components/quick-actions',
-            version: '0.6.0',
-            dir: '../../components/quick-actions',
-        },
-        {
             name: '@spectrum-web-components/radio',
             version: '0.9.0',
             dir: '../../components/radio',
@@ -245,11 +240,6 @@ module.exports = {
             name: '@spectrum-web-components/slider',
             version: '0.12.0',
             dir: '../../components/slider',
-        },
-        {
-            name: '@spectrum-web-components/split-button',
-            version: '0.7.0',
-            dir: '../../components/split-button',
         },
         {
             name: '@spectrum-web-components/split-view',

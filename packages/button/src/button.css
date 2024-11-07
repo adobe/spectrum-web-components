@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-button.css');
+@import url('./button-overrides.css');
 
 @media (forced-colors: active) {
     :host([treatment][disabled]) {
@@ -79,6 +80,7 @@ governing permissions and limitations under the License.
     visibility: revert-layer;
 
     --mod-progress-circle-position: relative;
+    --spectrum-icon-size: inherit;
 }
 
 sp-progress-circle {

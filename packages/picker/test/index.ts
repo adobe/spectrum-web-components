@@ -76,7 +76,7 @@ export function runPickerTests(): void {
     let el: Picker;
     const pickerFixture = async (): Promise<Picker> => {
         const test = await fixture<HTMLDivElement>(html`
-            <sp-theme scale="medium" color="light">
+            <sp-theme scale="medium" color="light" system="spectrum">
                 <sp-field-label for="picker">Where do you live?</sp-field-label>
                 <sp-picker
                     id="picker"

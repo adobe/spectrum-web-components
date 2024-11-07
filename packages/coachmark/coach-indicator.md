@@ -23,16 +23,16 @@ When looking to leverage the `CoachIndicator` base class as a type and/or for ex
 import { CoachIndicator } from '@spectrum-web-components/coachmark';
 ```
 
-## Variants
+## Static color variants
 
-<sp-tabs selected="standard" auto label="Variant Options">
+<sp-tabs selected="standard" auto label="Static Color Options">
 <sp-tab value="standard">Standard</sp-tab>
 <sp-tab-panel value="standard">
 
 ```html
 <sp-coach-indicator></sp-coach-indicator>
-<sp-coach-indicator variant="dark"></sp-coach-indicator>
-<sp-coach-indicator variant="light"></sp-coach-indicator>
+<sp-coach-indicator static-color="dark"></sp-coach-indicator>
+<sp-coach-indicator static-color="light"></sp-coach-indicator>
 ```
 
 </sp-tab-panel>
@@ -41,8 +41,8 @@ import { CoachIndicator } from '@spectrum-web-components/coachmark';
 
 ```html
 <sp-coach-indicator quiet></sp-coach-indicator>
-<sp-coach-indicator quiet variant="dark"></sp-coach-indicator>
-<sp-coach-indicator quiet variant="light"></sp-coach-indicator>
+<sp-coach-indicator quiet static-color="dark"></sp-coach-indicator>
+<sp-coach-indicator quiet static-color="light"></sp-coach-indicator>
 ```
 
 </sp-tab-panel>

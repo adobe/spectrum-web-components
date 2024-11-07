@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
@@ -17,25 +18,23 @@ describe('popover', () => {
     let popover!: Popover;
 
     beforeEach(async () => {
-        popover = await fixture<Popover>(
-            html`
-                <sp-popover variant="dialog" placement="top" open>
-                    <div id="title">Popover Title</div>
-                    <div id="content">
-                        Cupcake ipsum dolor sit amet jelly beans. Chocolate
-                        jelly caramels. Icing soufflé chupa chups donut
-                        cheesecake. Jelly-o chocolate cake sweet roll cake
-                        danish candy biscuit halvah
-                    </div>
-                </sp-popover>
-            `
-        );
+        popover = await fixture<Popover>(html`
+            <sp-popover placement="top" open>
+                <sp-dialog>
+                    <h3 slot="heading">Popover title</h3>
+                    Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly
+                    caramels. Icing soufflé chupa chups donut cheesecake.
+                    Jelly-o chocolate cake sweet roll cake danish candy biscuit
+                    halvah
+                </sp-dialog>
+            </sp-popover>
+        `);
         await elementUpdated(popover);
     });
 
     it('loads', async () => {
         expect(popover).to.not.equal(undefined);
-        expect(popover.textContent).to.include('Popover Title');
+        expect(popover.textContent?.trim()).to.include('Popover title');
 
         await expect(popover).to.be.accessible();
     });
@@ -53,19 +52,17 @@ describe('popover', () => {
     });
 
     it('surfaces tip element', async () => {
-        const el = await fixture<Popover>(
-            html`
-                <sp-popover variant="dialog" placement="top" tip open>
-                    <div id="title">Popover Title</div>
-                    <div id="content">
-                        Cupcake ipsum dolor sit amet jelly beans. Chocolate
-                        jelly caramels. Icing soufflé chupa chups donut
-                        cheesecake. Jelly-o chocolate cake sweet roll cake
-                        danish candy biscuit halvah
-                    </div>
-                </sp-popover>
-            `
-        );
+        const el = await fixture<Popover>(html`
+            <sp-popover placement="top" tip open>
+                <div id="title">Popover Title</div>
+                <div id="content">
+                    Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly
+                    caramels. Icing soufflé chupa chups donut cheesecake.
+                    Jelly-o chocolate cake sweet roll cake danish candy biscuit
+                    halvah
+                </div>
+            </sp-popover>
+        `);
 
         await elementUpdated(el);
 

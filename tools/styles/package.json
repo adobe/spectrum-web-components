@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/styles",
-    "version": "0.48.1",
+    "version": "1.0.0",
     "publishConfig": {
         "access": "public"
     },
@@ -65,12 +65,22 @@
             "development": "./typography.dev.js",
             "default": "./typography.js"
         },
+        "./src/body-overrides.css.js": "./src/body-overrides.css.js",
+        "./src/code-overrides.css.js": "./src/code-overrides.css.js",
+        "./src/detail-overrides.css.js": "./src/detail-overrides.css.js",
+        "./src/heading-overrides.css.js": "./src/heading-overrides.css.js",
+        "./src/lang-overrides.css.js": "./src/lang-overrides.css.js",
         "./src/spectrum-base.css": "./src/spectrum-base.css",
         "./src/spectrum-body.css": "./src/spectrum-body.css",
+        "./src/body-overrides.css": "./src/body-overrides.css",
         "./src/spectrum-code.css": "./src/spectrum-code.css",
+        "./src/code-overrides.css": "./src/code-overrides.css",
         "./src/spectrum-detail.css": "./src/spectrum-code.css",
+        "./src/detail-overrides.css": "./src/detail-overrides.css",
         "./src/spectrum-heading.css": "./src/spectrum-heading.css",
+        "./src/heading-overrides.css": "./src/heading-overrides.css",
         "./src/spectrum-lang.css": "./src/spectrum-lang.css",
+        "./src/lang-overrides.css": "./src/lang-overrides.css",
         "./src/spectrum-typography.css": "./src/spectrum-typography.css",
         "./tokens/express/custom-large-vars.css": "./tokens/express/custom-large-vars.css",
         "./tokens/express/custom-medium-vars.css": "./tokens/express/custom-medium-vars.css",
@@ -109,14 +119,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.48.1"
+        "@spectrum-web-components/base": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/commons": "^10.0.0",
+        "@spectrum-css/commons": "^11.0.0-s2-foundations.15",
         "@spectrum-css/expressvars": "^3.0.9",
-        "@spectrum-css/tokens": "^14.0.0",
-        "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@^14.0.0-next.3",
-        "@spectrum-css/typography": "^6.1.0",
+        "@spectrum-css/tokens": "^@spectrum-css/tokens@14.3.1",
+        "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.0.0-s2-foundations.27",
+        "@spectrum-css/typography": "^7.0.0-s2-foundations.17",
         "@spectrum-css/vars": "^9.0.8"
     },
     "customElements": "custom-elements.json",

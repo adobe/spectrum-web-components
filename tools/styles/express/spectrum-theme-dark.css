@@ -258,6 +258,11 @@
     --spectrum-global-color-gray-900: rgb(
         var(--spectrum-global-color-gray-900-rgb)
     );
+    --spectrum-alias-avatar-border-color-default: #ffffff1a;
+    --spectrum-alias-avatar-border-color-hover: #ffffff40;
+    --spectrum-alias-avatar-border-color-down: #fff6;
+    --spectrum-alias-avatar-border-color-key-focus: #ffffff40;
+    --spectrum-alias-avatar-border-color-selected-disabled: #ffffff1a;
     --spectrum-alias-transparent-blue-background-color-default: #7c81fb26;
     --spectrum-alias-transparent-blue-background-color-hover: #9195ff26;
     --spectrum-alias-transparent-blue-background-color-down: #a7aaff26;

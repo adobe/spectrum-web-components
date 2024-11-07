@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/button-group",
-    "version": "0.48.1",
+    "version": "1.0.0",
     "publishConfig": {
         "access": "public"
     },
@@ -29,6 +29,7 @@
             "development": "./src/ButtonGroup.dev.js",
             "default": "./src/ButtonGroup.js"
         },
+        "./src/button-group-overrides.css.js": "./src/button-group-overrides.css.js",
         "./src/button-group.css.js": "./src/button-group.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -57,11 +58,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.48.1",
-        "@spectrum-web-components/button": "^0.48.1"
+        "@spectrum-web-components/base": "^1.0.0",
+        "@spectrum-web-components/button": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/buttongroup": "^7.1.1"
+        "@spectrum-css/buttongroup": "^8.0.0-s2-foundations.15"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

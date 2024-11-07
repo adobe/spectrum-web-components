@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icon",
-    "version": "0.48.1",
+    "version": "1.0.0",
     "publishConfig": {
         "access": "public"
     },
@@ -33,6 +33,16 @@
             "development": "./src/IconBase.dev.js",
             "default": "./src/IconBase.js"
         },
+        "./src/icon-arrow-overrides.css.js": "./src/icon-arrow-overrides.css.js",
+        "./src/icon-asterisk-overrides.css.js": "./src/icon-asterisk-overrides.css.js",
+        "./src/icon-checkmark-overrides.css.js": "./src/icon-checkmark-overrides.css.js",
+        "./src/icon-chevron-overrides.css.js": "./src/icon-chevron-overrides.css.js",
+        "./src/icon-corner-triangle-overrides.css.js": "./src/icon-corner-triangle-overrides.css.js",
+        "./src/icon-cross-overrides.css.js": "./src/icon-cross-overrides.css.js",
+        "./src/icon-dash-overrides.css.js": "./src/icon-dash-overrides.css.js",
+        "./src/icon-overrides.css.js": "./src/icon-overrides.css.js",
+        "./src/icon-single-gripper-overrides.css.js": "./src/icon-single-gripper-overrides.css.js",
+        "./src/icon-triple-gripper-overrides.css.js": "./src/icon-triple-gripper-overrides.css.js",
         "./src/icon.css.js": "./src/icon.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -71,11 +81,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.48.1",
-        "@spectrum-web-components/iconset": "^0.48.1"
+        "@spectrum-web-components/base": "^1.0.0",
+        "@spectrum-web-components/iconset": "^1.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/icon": "^7.1.0"
+        "@spectrum-css/icon": "^8.0.0-s2-foundations.17"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
