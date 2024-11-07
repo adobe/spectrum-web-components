@@ -83,7 +83,6 @@ class OverlayStack {
                     // `triggerInteraction` of "longpress", meaning it was opened by this poitner interaction
                     (i === lastIndex &&
                         overlay !== lastOverlay &&
-                        overlay !== this.lastOverlay &&
                         overlay.triggerInteraction === 'longpress')
             );
             return (
