@@ -20,10 +20,10 @@ commands:
             - checkout
             - restore_cache:
                   keys:
-                      - v3c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - restore_cache:
                   keys:
-                      - v3b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
+                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
             - run:
                   name: Installing Dependencies
                   command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
