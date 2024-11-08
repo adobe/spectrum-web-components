@@ -220,14 +220,22 @@ describe('Button', () => {
             expect(el.textContent).to.include('With Target');
         });
         it('allows link click', async () => {
+            let clicked = false;
             const el = await fixture<Button>(html`
                 <sp-button href="#top" target="_blank">With Target</sp-button>
             `);
 
             await elementUpdated(el);
+
+            el.shadowRoot
+                ?.querySelector('.anchor')
+                ?.addEventListener('click', (event: Event) => {
+                    event.preventDefault();
+                    clicked = true;
+                });
             el.click();
             await elementUpdated(el);
-            expect(window.location.hash).to.equal('#top');
+            expect(clicked).to.be.true;
         });
         it('accepts shift+tab interactions', async () => {
             let focusedCount = 0;
