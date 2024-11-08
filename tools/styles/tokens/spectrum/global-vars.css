@@ -90,6 +90,17 @@
 
     --spectrum-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
 
+    --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro',
+        -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu,
+        'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro',
+        -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu,
+        'Trebuchet MS', 'Lucida Grande', sans-serif;
+
+    --spectrum-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-font-style: var(--spectrum-default-font-style);
+    --spectrum-font-size: var(--spectrum-font-size-100);
+
     --spectrum-cjk-font-family-stack: adobe-clean-han-japanese,
         var(--spectrum-cjk-font-family), sans-serif;
     --spectrum-cjk-font: var(--spectrum-code-font-family-stack);
@@ -101,6 +112,8 @@
     --spectrum-docs-static-black-background-color: rgba(
         var(--spectrum-docs-static-black-background-color-rgb)
     );
+
+    --spectrum-coach-indicator-ring-static-white-color: var(--spectrum-white);
 }
 
 :host,
