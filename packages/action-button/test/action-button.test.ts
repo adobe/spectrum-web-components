@@ -295,4 +295,16 @@ describe('ActionButton', () => {
         expect(el.staticColor).to.be.null;
         expect(el.hasAttribute('static-color')).to.be.false;
     });
+    it('allows link click', async () => {
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button href="#top" target="_blank">
+                With Target
+            </sp-action-button>
+        `);
+
+        await elementUpdated(el);
+        el.click();
+        await elementUpdated(el);
+        expect(window.location.hash).to.equal('#top');
+    });
 });
