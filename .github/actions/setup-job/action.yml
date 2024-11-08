@@ -11,4 +11,5 @@ runs:
               registry-url: 'https://registry.npmjs.org'
 
         - name: Install dependencies
+          shell: bash
           run: yarn --frozen-lockfile
