@@ -351,15 +351,10 @@ workflows:
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
-                          system: [spectrum, express]
-                          color: [light, dark]
-                          scale: [medium, large]
-                          dir: [ltr, rtl]
-                      exclude:
-                          - color: dark
-                            scale: large
-                          - color: dark
-                            dir: ltr
+                          system: [spectrum, express, spectrum-two]
+                          color: [light]
+                          scale: [medium]
+                          dir: [ltr]
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
@@ -368,10 +363,10 @@ workflows:
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
-                          system: [spectrum-two]
-                          color: [light, dark]
-                          scale: [medium, large]
-                          dir: [ltr, rtl]
+                          system: [spectrum, express, spectrum-two]
+                          color: [dark]
+                          scale: [large]
+                          dir: [rtl]
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
