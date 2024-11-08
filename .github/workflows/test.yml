@@ -174,7 +174,7 @@ jobs:
                       tachometer.chrome-ran.txt
 
     comment-performance:
-        name: Comment performance results
+        name: Comment tachometer performance results
         needs: [compare-chrome, compare-firefox]
 
         # The job will only run if the pull request is from the same repository.
@@ -210,7 +210,7 @@ jobs:
               with:
                   name: tachometer-results-chrome
 
-            - name: Post Performance
+            - name: Post Tachometer Performance Comment
               uses: actions/github-script@v7
               with:
                   script: |
