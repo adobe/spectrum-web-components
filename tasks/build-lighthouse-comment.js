@@ -135,15 +135,9 @@ const compareResourceUsage = (branch, main, latest) => {
     };
 };
 
-type LighthouseReport = {
-    main?: string;
-    latest?: string;
-    branch?: string;
-};
-
 // Build the Lighthouse comment for the pull request
 export const buildLighthouseComment = (links, manifest) => {
-    const report: LighthouseReport = {};
+    const report = {};
     // Map the links to their respective categories (main, latest, branch)
     Object.keys(links).forEach((key) => {
         if (key === mainURL) {

@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 
 import slugify from '@sindresorhus/slugify';
 import crypto from 'crypto';
-import { getChangedPackages } from './get-changed-packages.ts';
+import { getChangedPackages } from './get-changed-packages.js';
 
 const createHash = (context) => {
     const md5 = crypto.createHash('md5');
@@ -28,7 +28,7 @@ export const buildPreviewURLComment = (ref) => {
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
 
-    const previewLinks: string[] = [];
+    const previewLinks = [];
 
     // Define the themes, scales, colors, and directions for the previews
     const themes = ['Spectrum', 'Express', 'Spectrum-two'];

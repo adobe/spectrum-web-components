@@ -104,7 +104,7 @@ function formatDifference({ absolute, percentChange: relative }) {
 
 const buildTable = (results) => {
     const packageName = `${results[0].name.split(':')[0]}`;
-    const table: string[] = [];
+    const table = [];
 
     table.push(`<a id="${packageName}"></a>
 

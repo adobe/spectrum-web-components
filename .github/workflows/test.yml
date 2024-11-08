@@ -25,13 +25,13 @@ jobs:
               uses: ./.github/actions/setup-job
 
             - name: Post Previews Comment
-              run: |
-                  ts-node -e "
-                    const { buildPreviewURLComment } = require('${{ github.workspace }}/tasks/build-preview-urls-comment.ts');
-                    const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
-                    const { commentOrUpdate } = require('${{ github.workspace }}/tasks/comment-or-update.ts');
-                    commentOrUpdate(github, context, '## Branch preview', body);
-                  "
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const { buildPreviewURLComment } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.ts');
+                      const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.ts');
+                      commentOrUpdate(github, context, '## Branch preview', body);
     lighthouse:
         name: Lighthouse CI
         runs-on: ubuntu-22.04

@@ -15,7 +15,7 @@ governing permissions and limitations under the License.
 import { execSync } from 'child_process';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { getChangedPackages } from './get-changed-packages.ts';
+import { getChangedPackages } from './get-changed-packages.js';
 
 const { browser = 'chrome' } = yargs(hideBin(process.argv)).argv;
 
