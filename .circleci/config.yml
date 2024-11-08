@@ -355,6 +355,11 @@ workflows:
                           color: [light, dark]
                           scale: [medium, large]
                           dir: [ltr, rtl]
+                      exclude:
+                          - color: dark
+                            scale: large
+                          - color: dark
+                            dir: ltr
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
