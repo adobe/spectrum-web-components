@@ -38,8 +38,6 @@ import {
     systemResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
 
-import type { SystemVariant } from '@spectrum-web-components/theme';
-
 @customElement('delayed-ready')
 export class DelayedReady extends SpectrumElement {
     _delayedReady!: Promise<void>;
@@ -95,6 +93,12 @@ export class IconsDemo extends SpectrumElement {
         tag: string;
     }[] = [];
 
+    private filteredIcons: {
+        name: string;
+        story(size: string): TemplateResult;
+        tag: string;
+    }[] = [];
+
     private unsubscribeSystemContext: (() => void) | null = null;
 
     @state()
@@ -109,7 +113,6 @@ export class IconsDemo extends SpectrumElement {
 
     public override async connectedCallback(): Promise<void> {
         super.connectedCallback();
-        this.requestSystemContext();
         window.addEventListener('sp-iconset-added', this.handleIconSetAdded);
     }
     public override disconnectedCallback(): void {
@@ -121,30 +124,41 @@ export class IconsDemo extends SpectrumElement {
         }
     }
 
-    private requestSystemContext(): void {
-        this.dispatchEvent(
-            new CustomEvent('sp-system-context', {
-                detail: {
-                    callback: (
-                        system: SystemVariant,
-                        unsubscribe: () => void
-                    ) => {
-                        this.spectrumVersion =
-                            system === 'spectrum-two' ? 2 : 1;
-                        this.unsubscribeSystemContext = unsubscribe;
-                    },
-                },
-                bubbles: true,
-                composed: true,
-            })
-        );
+    private filterIconsBySpectrumVersion(): void {
+        const iconVersion = this.spectrumVersion === 2 ? 's2' : 's1';
+        let filteredIcons = this.icons;
+        // Filter out icons that are not in the current version for workflow icons
+        if (this.name === 'workflow') {
+            filteredIcons = filteredIcons.filter((icon) => {
+                const iconName = icon.name.replace(/\s/g, '').toLowerCase();
+                return iconsList[iconVersion].includes(iconName);
+            });
+        }
+
+        // Use a Set to remove duplicates that may get added because of the same icon name in both versions
+        const iconSet = new Set();
+        filteredIcons = filteredIcons.filter((icon) => {
+            if (iconSet.has(icon.name)) {
+                return false;
+            }
+            iconSet.add(icon.name);
+            return true;
+        });
+
+        this.filteredIcons = filteredIcons;
     }
+
     private systemResolver = new SystemResolutionController(this);
 
     protected override update(changes: PropertyValues): void {
         if (changes.has(systemResolverUpdatedSymbol)) {
             this.spectrumVersion =
                 this.systemResolver.system === 'spectrum-two' ? 2 : 1;
+            this.filterIconsBySpectrumVersion();
+        }
+
+        if (changes.has('icons')) {
+            this.filterIconsBySpectrumVersion();
         }
 
         super.update(changes);
@@ -234,20 +248,11 @@ export class IconsDemo extends SpectrumElement {
         this.updateSearch(event);
     }
     private renderSearch(): TemplateResult {
-        let matchingIcons = this.search
-            ? this.icons.filter((icon) =>
+        const matchingIcons = this.search
+            ? this.filteredIcons.filter((icon) =>
                   icon.name.toLowerCase().includes(this.search.toLowerCase())
               )
-            : this.icons;
-
-        const iconVersion = this.spectrumVersion === 2 ? 's2' : 's1';
-        // Filter out icons that are not in the current version for workflow icons
-        if (this.name === 'workflow') {
-            matchingIcons = matchingIcons.filter((icon) => {
-                const iconName = icon.name.replace(/\s/g, '').toLowerCase();
-                return iconsList[iconVersion].includes(iconName);
-            });
-        }
+            : this.filteredIcons;
 
         return html`
             <div class="search" part="search">
