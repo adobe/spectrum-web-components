@@ -16,7 +16,7 @@ import './sp-menu-item-Do1WjPZJ.js';
 import './sp-menu-group-CJvG66N5.js';
 import './sp-menu-divider-D1sl1aH2.js';
 import './sp-popover-DVq3btVN.js';
-import './sp-slider-DNsOYBag.js';
+import './sp-slider-1WqkVbrC.js';
 import './sp-radio-2zvpSd1o.js';
 import './sp-radio-group-B94UrDgW.js';
 import './sp-tooltip-MS59NcA-.js';

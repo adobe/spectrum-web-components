@@ -9,7 +9,7 @@ import './sp-menu-item-Do1WjPZJ.js';
 import './sp-menu-divider-D1sl1aH2.js';
 import './sp-link-B-tAgac0.js';
 import './sp-tooltip-MS59NcA-.js';
-import './sp-slider-DNsOYBag.js';
+import './sp-slider-1WqkVbrC.js';
 import './sp-icon-rect-select-DwPRgtp0.js';
 import { notAgain } from './dialog-base.stories-B4zyCNN3.js';
 import './overlay-story-components-BsFvgev5.js';

@@ -1,7 +1,10 @@
-import { v as variants } from './sp-slider-DNsOYBag.js';
+import { v as variants } from './sp-slider-1WqkVbrC.js';
 import './sp-popover-DVq3btVN.js';
 import './sp-dialog-HOyCxUdK.js';
 import { s as spreadProps } from './lit-helpers-DFCD1oU3.js';
+import './overlay-trigger-APpiGOSV.js';
+import './sp-button-qhC4v0uH.js';
+import './sp-tray-C6Rt-Tc7.js';
 import { x } from './lit-html-COgVUehj.js';
 import './focusable-Qk_nX99k.js';
 import './focus-visible-D29Av9Xb.js';
@@ -43,11 +46,15 @@ import './sp-button-group-nrGxMcPT.js';
 import './sp-icon-alert-CTB_1kHZ.js';
 import './custom-tag-Diwq7nXX.js';
 import './AlertDialog-CYZalv2x.js';
-import './sp-button-qhC4v0uH.js';
-import './PendingState-Dc-7wEUb.js';
-import './get-label-from-slot-Cg6mfN40.js';
 import './resize-controller-BJKfu6ft.js';
 import './observe-slot-presence-Ceiwt-jV.js';
+import './PendingState-Dc-7wEUb.js';
+import './get-label-from-slot-Cg6mfN40.js';
+import './sp-underlay-DGHsMwd7.js';
+import './first-focusable-in-BK_DAWOm.js';
+import './focusable-selectors-CUZEb4r9.js';
+import './MatchMedia-SZ42m4IA.js';
+import './modal.css-fEtfRe6E.js';
 
 var slider_stories = {
   component: "sp-slider",
@@ -93,7 +100,11 @@ var slider_stories = {
   args: {
     variant: void 0,
     tickStep: 0.1,
-    labelVisibility: void 0
+    labelVisibility: void 0,
+    min: void 0,
+    max: void 0,
+    value: void 0,
+    step: void 0
   }
 };
 const handleEvent = ({ onInput, onChange }) => (event) => {
@@ -456,6 +467,66 @@ const editable = (args = {}) => {
     `;
 };
 editable.decorators = [editableDecorator];
+const Multiple = (args) => {
+  const updateSliderConfig = (min, max, value, step) => {
+    const slider = document.querySelector("sp-slider");
+    if (slider) {
+      slider.value = value;
+      slider.min = min;
+      slider.max = max;
+      slider.step = step;
+    }
+  };
+  return x`
+        <overlay-trigger type="modal">
+            <sp-button slot="trigger" variant="secondary">
+                Toggle menu
+            </sp-button>
+            <sp-tray slot="click-content">
+                <div style="padding: 8px; width: 100%">
+                    <sp-slider
+                        label="Slider Label"
+                        min=${args.min}
+                        max=${args.max}
+                        value=${args.value}
+                        step=${args.step}
+                        variant="filled"
+                        hide-stepper
+                        editable
+                    ></sp-slider>
+                    <div
+                        style="display: grid; gap: 8px; padding: 8px; width: 50%; margin: auto;"
+                    >
+                        <sp-button
+                            size="s"
+                            @click=${() => updateSliderConfig(0.25, 4, 0.75, 0.01)}
+                        >
+                            Duration
+                        </sp-button>
+                        <sp-button
+                            size="s"
+                            @click=${() => updateSliderConfig(2, 100, 2, 1)}
+                        >
+                            Personality
+                        </sp-button>
+                        <sp-button
+                            size="s"
+                            @click=${() => updateSliderConfig(2, 25, 3, 1)}
+                        >
+                            Intensity
+                        </sp-button>
+                    </div>
+                </div>
+            </sp-tray>
+        </overlay-trigger>
+    `;
+};
+Multiple.args = {
+  min: 0.25,
+  max: 4,
+  value: 0.75,
+  step: 0.01
+};
 const editableWithDefaultValue = (args = {}) => {
   return x`
         <div style="width: 500px; margin: 12px 20px;">
@@ -1079,6 +1150,6 @@ const focusTabDemo = (args = {}) => {
         </div>
     `;
 };
-const __namedExportsOrder = ['Default', 'Filled', 'HasADefaultValue', 'FillStart', 'FillStartWithValue', 'FillStartWithNegativeMinRange', 'autofocus', 'minimalDOM', 'noVisibleTextLabel', 'noVisibleValueLabel', 'noVisibleLabels', 'px', 'max20', 'editable', 'editableWithDefaultValue', 'editableWithFractionValue', 'editableDisabled', 'editableCustom', 'editableWithoutVisibleLabels', 'hideStepper', 'Gradient', 'tick', 'tickLabels', 'Disabled', 'Quiet', 'inPopover', 'Indeterminate', 'ExplicitHandle', 'TwoHandles', 'TwoHandlesPt', 'ThreeHandlesPc', 'ThreeHandlesOrdered', 'ThreeHandlesComplex', 'focusTabDemo'];
+const __namedExportsOrder = ['Default', 'Filled', 'HasADefaultValue', 'FillStart', 'FillStartWithValue', 'FillStartWithNegativeMinRange', 'autofocus', 'minimalDOM', 'noVisibleTextLabel', 'noVisibleValueLabel', 'noVisibleLabels', 'px', 'max20', 'editable', 'Multiple', 'editableWithDefaultValue', 'editableWithFractionValue', 'editableDisabled', 'editableCustom', 'editableWithoutVisibleLabels', 'hideStepper', 'Gradient', 'tick', 'tickLabels', 'Disabled', 'Quiet', 'inPopover', 'Indeterminate', 'ExplicitHandle', 'TwoHandles', 'TwoHandlesPt', 'ThreeHandlesPc', 'ThreeHandlesOrdered', 'ThreeHandlesComplex', 'focusTabDemo'];
 
-export { Default, Disabled, ExplicitHandle, FillStart, FillStartWithNegativeMinRange, FillStartWithValue, Filled, Gradient, HasADefaultValue, Indeterminate, Quiet, ThreeHandlesComplex, ThreeHandlesOrdered, ThreeHandlesPc, TwoHandles, TwoHandlesPt, __namedExportsOrder, autofocus, slider_stories as default, editable, editableCustom, editableDisabled, editableWithDefaultValue, editableWithFractionValue, editableWithoutVisibleLabels, focusTabDemo, hideStepper, inPopover, max20, minimalDOM, noVisibleLabels, noVisibleTextLabel, noVisibleValueLabel, px, tick, tickLabels };
+export { Default, Disabled, ExplicitHandle, FillStart, FillStartWithNegativeMinRange, FillStartWithValue, Filled, Gradient, HasADefaultValue, Indeterminate, Multiple, Quiet, ThreeHandlesComplex, ThreeHandlesOrdered, ThreeHandlesPc, TwoHandles, TwoHandlesPt, __namedExportsOrder, autofocus, slider_stories as default, editable, editableCustom, editableDisabled, editableWithDefaultValue, editableWithFractionValue, editableWithoutVisibleLabels, focusTabDemo, hideStepper, inPopover, max20, minimalDOM, noVisibleLabels, noVisibleTextLabel, noVisibleValueLabel, px, tick, tickLabels };

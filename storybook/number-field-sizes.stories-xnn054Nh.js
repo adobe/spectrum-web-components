@@ -1,4 +1,4 @@
-import './sp-number-field-o0iefiWk.js';
+import './sp-number-field-BYwZaJJT.js';
 import './sp-field-label-C3IFjzeK.js';
 import { x } from './lit-html-COgVUehj.js';
 import { o } from './if-defined-DDJGFaN4.js';

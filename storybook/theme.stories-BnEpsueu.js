@@ -2,7 +2,7 @@ import './scale-large-G8OE064Y.js';
 import './sp-button-qhC4v0uH.js';
 import './sp-button-group-nrGxMcPT.js';
 import './sp-switch-B_YGDqIl.js';
-import './sp-slider-DNsOYBag.js';
+import './sp-slider-1WqkVbrC.js';
 import { x } from './lit-html-COgVUehj.js';
 import './lit-element-BulMEkr1.js';
 import './define-element-BacrH-dd.js';

@@ -1,4 +1,4 @@
-import './sp-slider-DNsOYBag.js';
+import './sp-slider-1WqkVbrC.js';
 import { x } from './lit-html-COgVUehj.js';
 import { o } from './if-defined-DDJGFaN4.js';
 import './focusable-Qk_nX99k.js';
