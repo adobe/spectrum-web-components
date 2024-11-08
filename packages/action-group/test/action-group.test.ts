@@ -122,7 +122,7 @@ async function multipleSelectedActionGroup(
 }
 
 describe('ActionGroup', () => {
-    it('throws an error if slotElement is null', async () => {
+    it('does not throw an error if slotElement is null', async () => {
         // To verify that this test is not evergreen, you can temporarily disable the safeguard
         // clause in `manageButtons` by commenting out the following lines:
         // if (!this.slotElement) { return; }
