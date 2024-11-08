@@ -36,14 +36,23 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         return [buttonStyles];
     }
 
+    // TODO we need to document this property for consumers,
+    // as it's not a 1:1 equivalent to active
     @property({ type: Boolean, reflect: true })
     public active = false;
 
+    /**
+     * The default behavior of the button.
+     * Possible values are: `button` (default), `submit`, and `reset`.
+     */
     @property({ type: String })
     public type: 'button' | 'submit' | 'reset' = 'button';
 
+    /**
+     * HTML anchor element that component clicks by proxy
+     */
     @query('.anchor')
-    private anchorElement!: HTMLButtonElement;
+    private anchorElement!: HTMLAnchorElement;
 
     public override get focusElement(): HTMLElement {
         return this;
@@ -104,9 +113,12 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     private shouldProxyClick(): boolean {
         let handled = false;
         if (this.anchorElement) {
+            // click HTML anchor element by proxy
             this.anchorElement.click();
             handled = true;
+            // if the button type is `submit` or `reset`
         } else if (this.type !== 'button') {
+            // create an HTML Button Element by proxy, click it, and remove it
             const proxy = document.createElement('button');
             proxy.type = this.type;
             this.insertAdjacentElement('afterend', proxy);
@@ -145,6 +157,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         switch (code) {
             case 'Space':
                 event.preventDefault();
+                // allows button to activate when `Space` is pressed
                 if (typeof this.href === 'undefined') {
                     this.addEventListener('keyup', this.handleKeyup);
                     this.active = true;
@@ -160,6 +173,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         switch (code) {
             case 'Enter':
             case 'NumpadEnter':
+                // allows button or link to be activated with `Enter` and `NumpadEnter`
                 this.click();
                 break;
             default:
@@ -181,22 +195,26 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     }
 
     private manageAnchor(): void {
+        // for a link
         if (this.href && this.href.length > 0) {
+            // if the role is set to button
             if (
                 !this.hasAttribute('role') ||
                 this.getAttribute('role') === 'button'
             ) {
+                // change role to link
                 this.setAttribute('role', 'link');
             }
-            this.removeEventListener('click', this.shouldProxyClick);
+            // else for a button
         } else {
+            // if the role is set to link
             if (
                 !this.hasAttribute('role') ||
                 this.getAttribute('role') === 'link'
             ) {
+                // change role to button
                 this.setAttribute('role', 'button');
             }
-            this.addEventListener('click', this.shouldProxyClick);
         }
     }
 
@@ -215,6 +233,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         this.manageAnchor();
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('keypress', this.handleKeypress);
+        this.addEventListener('click', this.shouldProxyClick);
     }
 
     protected override updated(changed: PropertyValues): void {
