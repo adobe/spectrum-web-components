@@ -12,38 +12,8 @@ governing permissions and limitations under the License.
 */
 
 import slugify from '@sindresorhus/slugify';
-import { execSync } from 'child_process';
 import crypto from 'crypto';
-
-// Duplicated from `tasks/test-changes.js` because GitHub Actions and CJS. 🤦
-const getChangedPackages = () => {
-    let command;
-    try {
-        // Execute the command to list changed packages since the last commit on origin/main
-        command = execSync(
-            'yarn --silent lerna ls --since origin/main --json --loglevel silent'
-        );
-    } catch (error) {
-        console.log(error.message);
-        console.log(error.stdout.toString());
-        return [];
-    }
-    let packageList;
-    packageList = JSON.parse(command.toString()).reduce((acc, item) => {
-        // Remove the '@spectrum-web-components/' prefix from the package name
-        const name = item.name.replace('@spectrum-web-components/', '');
-        if (
-            // Exclude packages located in the 'projects' directory as here are no benchmarks available
-            item.location.search('projects') === -1 &&
-            // Exclude packages that start with 'icons-' as they are long-running tests
-            !name.startsWith('icons-')
-        ) {
-            acc.push(name);
-        }
-        return acc;
-    }, []);
-    return packageList;
-};
+import { getChangedPackages } from './get-changed-packages.ts';
 
 const createHash = (context) => {
     const md5 = crypto.createHash('md5');
@@ -58,7 +28,7 @@ export const buildPreviewURLComment = (ref) => {
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
 
-    const previewLinks = [];
+    const previewLinks: string[] = [];
 
     // Define the themes, scales, colors, and directions for the previews
     const themes = ['Spectrum', 'Express', 'Spectrum-two'];
@@ -82,10 +52,11 @@ export const buildPreviewURLComment = (ref) => {
                     const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
 
                     // Add the generated preview link to the array
-                    previewLinks.push(`
-- [${theme} | ${color} | ${scale} | ${direction}](https://${createHash(
-                        context
-                    )}--spectrum-web-components.netlify.app/review/)`);
+                    previewLinks.push(
+                        `- [${theme} | ${color} | ${scale} | ${direction}](https://${createHash(
+                            context
+                        )}--spectrum-web-components.netlify.app/review/)`
+                    );
                 })
             );
         })

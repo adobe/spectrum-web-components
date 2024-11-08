@@ -15,50 +15,22 @@ governing permissions and limitations under the License.
 import { execSync } from 'child_process';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { getChangedPackages } from './get-changed-packages.ts';
 
 const { browser = 'chrome' } = yargs(hideBin(process.argv)).argv;
 
-// Duplicated from `tasks/build-preview-urls-comments.cjs` because GitHub Actions and CJS. 🤦
-const getChangedPackages = () => {
-    let command;
-    try {
-        command = execSync(
-            'yarn --silent lerna ls --since origin/main --json --loglevel silent --ignore "@swc-react/*"'
-        );
-    } catch (error) {
-        console.log(error.message);
-        console.log(error.stdout.toString());
-        return [];
-    }
-    let packageList;
-    try {
-        packageList = JSON.parse(command.toString()).reduce((acc, item) => {
-            const name = item.name.replace('@spectrum-web-components/', '');
-            if (
-                // There are no benchmarks available in this directory.
-                item.location.search('projects') === -1 &&
-                // The icons-* tests are particular and long, exclude in CI.
-                !name.startsWith('icons-')
-            ) {
-                acc.push(name);
-            }
-            return acc;
-        }, []);
-    } catch (error) {
-        packageList = [];
-    }
-    return packageList;
-};
-
 const testChangedPackages = () => {
     const packages = getChangedPackages();
+
     if (packages.length) {
         console.log(
             `Running tachometer on the following packages: ${packages.join(
                 ', '
             )}`
         );
+
         execSync('yarn build:tests');
+
         execSync(
             `yarn test:bench --browser ${browser} -j -p ${packages.join(' ')}`,
             {
