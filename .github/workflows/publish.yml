@@ -13,6 +13,9 @@ jobs:
         # Run the job if manually triggered or if the commit message includes '#publish' & the check suite has passed
         if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '#publish')
         steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
+
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
 
