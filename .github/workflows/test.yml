@@ -28,9 +28,10 @@ jobs:
               uses: actions/github-script@v7
               with:
                   script: |
-                      const { buildPreviewURLComment } = ts-node ${{ github.workspace }}/tasks/build-preview-urls-comment.ts;
+                      const { tsImport } = await import('${{ github.workspace }}/node_modules/tsx/dist/esm/api/index.cjs');
+                      const { buildPreviewURLComment } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.ts');
                       const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
-                      const { commentOrUpdate } = ts-node ${{ github.workspace }}/tasks/comment-or-update.ts;
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.ts');
                       commentOrUpdate(github, context, '## Branch preview', body);
     lighthouse:
         name: Lighthouse CI
