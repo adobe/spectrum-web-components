@@ -54,6 +54,7 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
 import '../stories/action-group.stories.js';
 import { isWebKit } from '@spectrum-web-components/shared';
+import sinon from 'sinon';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
@@ -121,6 +122,34 @@ async function multipleSelectedActionGroup(
 }
 
 describe('ActionGroup', () => {
+    it('throws an error if slotElement is null', async () => {
+        // To verify that this test is not evergreen, you can temporarily disable the safeguard
+        // clause in `manageButtons` by commenting out the following lines:
+        // if (!this.slotElement) { return; }
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group>
+                <sp-action-button value="first">First</sp-action-button>
+                <sp-action-button value="second">Second</sp-action-button>
+            </sp-action-group>
+        `);
+
+        // Stub the slotElement getter to return null
+        const slotElementStub = sinon.stub(el, 'slotElement').get(() => null);
+
+        // Call manageButtons and expect a TypeError
+        expect(() => Reflect.get(el, 'manageButtons').call(el)).not.to.throw(
+            TypeError,
+            // Different browsers throw slightly different error messages when slotElement is null:
+            // - Chrome: "Cannot read properties of null"
+            // - Firefox: "this.slotElement is null"
+            // - WebKit: "null is not an object (evaluating 'this.slotElement.assignedElements')"
+            /(cannot read properties of null|this\.slotElement is null|null is not an object \(evaluating 'this\.slotElement\.assignedElements'\))/i
+        );
+
+        // Restore the original slotElement getter
+        slotElementStub.restore();
+    });
+
     it('loads empty action-group accessibly', async () => {
         const el = await fixture<ActionGroup>(html`
             <sp-action-group></sp-action-group>
