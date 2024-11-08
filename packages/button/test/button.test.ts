@@ -219,6 +219,16 @@ describe('Button', () => {
             expect(el).to.not.be.undefined;
             expect(el.textContent).to.include('With Target');
         });
+        it('allows link click', async () => {
+            const el = await fixture<Button>(html`
+                <sp-button href="#top" target="_blank">With Target</sp-button>
+            `);
+
+            await elementUpdated(el);
+            el.click();
+            await elementUpdated(el);
+            expect(window.location.hash).to.equal('#top');
+        });
         it('accepts shift+tab interactions', async () => {
             let focusedCount = 0;
             const el = await fixture<Button>(html`
