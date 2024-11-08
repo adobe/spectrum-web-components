@@ -10,13 +10,9 @@ jobs:
             contents: read
             pull-requests: write
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  cache: yarn
-                  node-version: 20
-            - name: Install dependencies
-              run: yarn install --frozen-lockfile
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+
               # README: https://github.com/castastrophe/actions-pr-auto-update#auto-update-pull-requests
             - uses: castastrophe/actions-pr-auto-update@v1.1.0
               with:

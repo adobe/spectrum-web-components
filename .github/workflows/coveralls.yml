@@ -13,18 +13,8 @@ jobs:
         name: Generate and upload coverage report
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - name: Setup Node 20
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '20'
-                  cache: 'yarn'
-                  registry-url: 'https://registry.npmjs.org'
-
-            - name: Install dependencies
-              run: yarn --frozen-lockfile
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
             - name: Install Playwright
               run: yarn playwright install

@@ -1,0 +1,17 @@
+name: Setup Job
+description: Common setup for all jobs
+runs:
+    using: 'composite'
+    steps:
+        - name: Checkout PR branch
+          uses: actions/checkout@v4
+
+        - name: Setup Node 20
+          uses: actions/setup-node@v4
+          with:
+              node-version: '20'
+              cache: 'yarn'
+              registry-url: 'https://registry.npmjs.org'
+
+        - name: Install dependencies
+          run: yarn --frozen-lockfile
