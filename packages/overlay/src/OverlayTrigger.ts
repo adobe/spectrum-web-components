@@ -74,22 +74,22 @@ export class OverlayTrigger extends SpectrumElement {
     public receivesFocus: 'true' | 'false' | 'auto' = 'auto';
 
     @state()
-    private clickContent: HTMLElement[] = [];
+    private clickContent: HTMLElement | undefined;
 
     private clickPlacement?: Placement;
 
     @state()
-    private longpressContent: HTMLElement[] = [];
+    private longpressContent: HTMLElement | undefined;
 
     private longpressPlacement?: Placement;
 
     @state()
-    private hoverContent: HTMLElement[] = [];
+    private hoverContent: HTMLElement | undefined;
 
     private hoverPlacement?: Placement;
 
     @state()
-    private targetContent: HTMLElement[] = [];
+    private targetContent: HTMLElement | undefined;
 
     @query('#click-overlay', true)
     clickOverlayElement!: Overlay;
@@ -100,8 +100,12 @@ export class OverlayTrigger extends SpectrumElement {
     @query('#hover-overlay', true)
     hoverOverlayElement!: Overlay;
 
-    private getAssignedElementsFromSlot(slot: HTMLSlotElement): HTMLElement[] {
-        return slot.assignedElements({ flatten: true }) as HTMLElement[];
+    private getAssignedElementsFromSlot(
+        slot: HTMLSlotElement
+    ): HTMLElement | undefined {
+        return slot.assignedElements({ flatten: true })[0] as
+            | HTMLElement
+            | undefined;
     }
 
     private handleTriggerContent(
@@ -155,22 +159,22 @@ export class OverlayTrigger extends SpectrumElement {
     protected override update(changes: PropertyValues): void {
         if (changes.has('clickContent')) {
             this.clickPlacement =
-                ((this.clickContent[0]?.getAttribute('placement') ||
-                    this.clickContent[0]?.getAttribute(
+                ((this.clickContent?.getAttribute('placement') ||
+                    this.clickContent?.getAttribute(
                         'direction'
                     )) as Placement) || undefined;
         }
         if (changes.has('hoverContent')) {
             this.hoverPlacement =
-                ((this.hoverContent[0]?.getAttribute('placement') ||
-                    this.hoverContent[0]?.getAttribute(
+                ((this.hoverContent?.getAttribute('placement') ||
+                    this.hoverContent?.getAttribute(
                         'direction'
                     )) as Placement) || undefined;
         }
         if (changes.has('longpressContent')) {
             this.longpressPlacement =
-                ((this.longpressContent[0]?.getAttribute('placement') ||
-                    this.longpressContent[0]?.getAttribute(
+                ((this.longpressContent?.getAttribute('placement') ||
+                    this.longpressContent?.getAttribute(
                         'direction'
                     )) as Placement) || undefined;
         }
@@ -186,17 +190,17 @@ export class OverlayTrigger extends SpectrumElement {
     protected renderClickOverlay(): TemplateResult {
         import('@spectrum-web-components/overlay/sp-overlay.js');
         const slot = this.renderSlot('click-content');
-        if (!this.clickContent.length) {
+        if (!this.clickContent) {
             return slot;
         }
         return html`
             <sp-overlay
                 id="click-overlay"
-                ?disabled=${this.disabled || !this.clickContent.length}
-                ?open=${this.open === 'click' && !!this.clickContent.length}
+                ?disabled=${this.disabled || !this.clickContent}
+                ?open=${this.open === 'click' && !!this.clickContent}
                 .offset=${this.offset}
                 .placement=${this.clickPlacement || this.placement}
-                .triggerElement=${this.targetContent[0]}
+                .triggerElement=${this.targetContent || null}
                 .triggerInteraction=${'click'}
                 .type=${this.type !== 'modal' ? 'auto' : 'modal'}
                 @beforetoggle=${this.handleBeforetoggle}
@@ -210,19 +214,19 @@ export class OverlayTrigger extends SpectrumElement {
     protected renderHoverOverlay(): TemplateResult {
         import('@spectrum-web-components/overlay/sp-overlay.js');
         const slot = this.renderSlot('hover-content');
-        if (!this.hoverContent.length) {
+        if (!this.hoverContent) {
             return slot;
         }
         return html`
             <sp-overlay
                 id="hover-overlay"
-                ?open=${this.open === 'hover' && !!this.hoverContent.length}
+                ?open=${this.open === 'hover' && !!this.hoverContent}
                 ?disabled=${this.disabled ||
-                !this.hoverContent.length ||
+                !this.hoverContent ||
                 (!!this.open && this.open !== 'hover')}
                 .offset=${this.offset}
                 .placement=${this.hoverPlacement || this.placement}
-                .triggerElement=${this.targetContent[0]}
+                .triggerElement=${this.targetContent || null}
                 .triggerInteraction=${'hover'}
                 .type=${'hint'}
                 @beforetoggle=${this.handleBeforetoggle}
@@ -236,18 +240,17 @@ export class OverlayTrigger extends SpectrumElement {
     protected renderLongpressOverlay(): TemplateResult {
         import('@spectrum-web-components/overlay/sp-overlay.js');
         const slot = this.renderSlot('longpress-content');
-        if (!this.longpressContent.length) {
+        if (!this.longpressContent) {
             return slot;
         }
         return html`
             <sp-overlay
                 id="longpress-overlay"
-                ?disabled=${this.disabled || !this.longpressContent.length}
-                ?open=${this.open === 'longpress' &&
-                !!this.longpressContent.length}
+                ?disabled=${this.disabled || !this.longpressContent}
+                ?open=${this.open === 'longpress' && !!this.longpressContent}
                 .offset=${this.offset}
                 .placement=${this.longpressPlacement || this.placement}
-                .triggerElement=${this.targetContent[0]}
+                .triggerElement=${this.targetContent || null}
                 .triggerInteraction=${'longpress'}
                 .type=${'auto'}
                 @beforetoggle=${this.handleBeforetoggle}
