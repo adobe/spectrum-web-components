@@ -28,9 +28,9 @@ jobs:
               uses: actions/github-script@v7
               with:
                   script: |
-                      const { buildPreviewURLComment } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.ts');
+                      const { buildPreviewURLComment } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.js');
                       const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
-                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.ts');
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Branch preview', body);
     lighthouse:
         name: Lighthouse CI
@@ -71,9 +71,9 @@ jobs:
               uses: actions/github-script@v7
               with:
                   script: |
-                      const { buildLighthouseComment } = await import('${{ github.workspace }}/tasks/build-lighthouse-comment.ts');
+                      const { buildLighthouseComment } = await import('${{ github.workspace }}/tasks/build-lighthouse-comment.js');
                       const body = buildLighthouseComment(${{ steps.lighthouse.outputs.links }}, ${{ steps.lighthouse.outputs.manifest }}, ${{ steps.lighthouse.outputs.assertionResults }});
-                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.ts');
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Lighthouse scores', body);
 
     compare-firefox:
@@ -179,7 +179,7 @@ jobs:
               uses: actions/github-script@v7
               with:
                   script: |
-                      const { buildTachometerComment } = await import('${{ github.workspace }}/tasks/build-tachometer-comment.ts');
+                      const { buildTachometerComment } = await import('${{ github.workspace }}/tasks/build-tachometer-comment.js');
                       const body = buildTachometerComment();
-                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.ts');
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Tachometer results', body);
