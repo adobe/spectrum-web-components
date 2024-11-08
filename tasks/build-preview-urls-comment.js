@@ -19,6 +19,7 @@ import crypto from 'crypto';
 const getChangedPackages = () => {
     let command;
     try {
+        // Execute the command to list changed packages since the last commit on origin/main
         command = execSync(
             'yarn --silent lerna ls --since origin/main --json --loglevel silent'
         );
@@ -29,11 +30,12 @@ const getChangedPackages = () => {
     }
     let packageList;
     packageList = JSON.parse(command.toString()).reduce((acc, item) => {
+        // Remove the '@spectrum-web-components/' prefix from the package name
         const name = item.name.replace('@spectrum-web-components/', '');
         if (
-            // There are no benchmarks available in this directory.
+            // Exclude packages located in the 'projects' directory as here are no benchmarks available
             item.location.search('projects') === -1 &&
-            // The icons-* tests are particular and long, exclude in CI.
+            // Exclude packages that start with 'icons-' as they are long-running tests
             !name.startsWith('icons-')
         ) {
             acc.push(name);
@@ -43,7 +45,7 @@ const getChangedPackages = () => {
     return packageList;
 };
 
-const getHash = (context) => {
+const createHash = (context) => {
     const md5 = crypto.createHash('md5');
     md5.update(context);
     return md5.digest('hex');
@@ -51,35 +53,51 @@ const getHash = (context) => {
 
 export const buildPreviewURLComment = (ref) => {
     const packages = getChangedPackages();
+
+    // Extract the branch name from the ref and slugify it for URL usage
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
+
     const previewLinks = [];
+
+    // Define the themes, scales, colors, and directions for the previews
     const themes = ['Spectrum', 'Express', 'Spectrum-two'];
     const scales = ['Medium', 'Large'];
     const colors = ['Light', 'Dark'];
     const directions = ['LTR', 'RTL'];
+
+    // Add a high contrast mode preview link
     previewLinks.push(
-        `- [High Contrast Mode | Medium | LTR](https://${getHash(
+        `- [High Contrast Mode | Medium | LTR](https://${createHash(
             `${branch}-hcm`
         )}--spectrum-web-components.netlify.app/review/)`
     );
+
+    // Generate preview links for each combination of theme, color, scale, and direction
     themes.map((theme) =>
         colors.map((color) => {
             scales.map((scale) =>
                 directions.map((direction) => {
+                    // Create a unique context string for each combination
                     const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+
+                    // Add the generated preview link to the array
                     previewLinks.push(`
-- [${theme} | ${color} | ${scale} | ${direction}](https://${getHash(
+- [${theme} | ${color} | ${scale} | ${direction}](https://${createHash(
                         context
                     )}--spectrum-web-components.netlify.app/review/)`);
                 })
             );
         })
     );
+
+    // Construct the main comment string with links to the documentation site and Storybook
     let comment = `## Branch preview
 
 - [Documentation Site](https://${branchSlug}--spectrum-web-components.netlify.app/)
 - [Storybook](https://${branchSlug}--spectrum-web-components.netlify.app/storybook/)`;
+
+    // If there are changed packages, add a collapsible section with visual regression test results
     if (packages.length > 0) {
         comment += `
 
