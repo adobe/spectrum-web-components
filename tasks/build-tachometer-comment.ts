@@ -23,11 +23,12 @@ const getTachometerResults = () => {
     for (const result of fg.sync(`./tach-results.*.json`)) {
         const file = fs.readFileSync(result, 'utf8');
         // Grab the ${bowserName}.${package} part of the results file name as an array of [browserName, package].
-        const [bowserName] = /tach-results\.(.*)\.json/
-            .exec(result)[1]
-            .split('.');
-        const json = JSON.parse(file);
-        results[bowserName].push(json.benchmarks);
+        const match = /tach-results\.(.*)\.json/.exec(result);
+        if (match) {
+            const [bowserName] = match[1].split('.');
+            const json = JSON.parse(file);
+            results[bowserName].push(json.benchmarks);
+        }
     }
     return results;
 };
@@ -103,7 +104,7 @@ function formatDifference({ absolute, percentChange: relative }) {
 
 const buildTable = (results) => {
     const packageName = `${results[0].name.split(':')[0]}`;
-    const table = [];
+    const table: string[] = [];
 
     table.push(`<a id="${packageName}"></a>
 
@@ -111,7 +112,9 @@ const buildTable = (results) => {
 `);
 
     results.forEach((result, i) => {
-        if (i % 2 > 0) return;
+        if (i % 2 > 0) {
+            return;
+        }
         const testName = `${result.name.split(':')[1]}`;
         const remote = result;
         const remoteDifferences = formatDifference(remote.differences[i + 1]);
