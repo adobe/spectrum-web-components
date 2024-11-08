@@ -296,6 +296,7 @@ describe('ActionButton', () => {
         expect(el.hasAttribute('static-color')).to.be.false;
     });
     it('allows link click', async () => {
+        let clicked = false;
         const el = await fixture<ActionButton>(html`
             <sp-action-button href="#top" target="_blank">
                 With Target
@@ -303,8 +304,15 @@ describe('ActionButton', () => {
         `);
 
         await elementUpdated(el);
+
+        el.shadowRoot
+            ?.querySelector('.anchor')
+            ?.addEventListener('click', (event: Event) => {
+                event.preventDefault();
+                clicked = true;
+            });
         el.click();
         await elementUpdated(el);
-        expect(window.location.hash).to.equal('#top');
+        expect(clicked).to.be.true;
     });
 });
