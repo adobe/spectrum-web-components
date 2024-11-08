@@ -92,6 +92,12 @@ export const buildPreviewURLComment = (ref) => {
         )}--spectrum-web-components.netlify.app/review/)`);
     });
 
+    previewLinks.push(
+        `- [High Contrast Mode | Medium | LTR](https://${getHash(
+            `${branch}-hcm`
+        )}--spectrum-web-components.netlify.app/review/)`
+    );
+
     let comment = `## Branch preview
 
 - [Documentation Site](https://${branchSlug}--spectrum-web-components.netlify.app/)
