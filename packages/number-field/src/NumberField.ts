@@ -786,13 +786,16 @@ export class NumberField extends TextfieldBase {
         if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
             this.clearNumberFormatterCache();
         }
-        if (changes.has('value') || changes.has('max') || changes.has('min')) {
+        if (
+            changes.has('value') ||
+            changes.has('max') ||
+            changes.has('min') ||
+            changes.has('step')
+        ) {
             const value = this.numberParser.parse(
                 this.formattedValue.replace(this._forcedUnit, '')
             );
             this.value = value;
-        }
-        if (changes.has('step')) {
             this.clearValueFormatterCache();
         }
         super.update(changes);
