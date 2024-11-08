@@ -28,7 +28,6 @@ jobs:
               uses: actions/github-script@v7
               with:
                   script: |
-                      yarn add ts-node
                       ts-node -e "
                         const { buildPreviewURLComment } = require('${{ github.workspace }}/tasks/build-preview-urls-comment.ts');
                         const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
