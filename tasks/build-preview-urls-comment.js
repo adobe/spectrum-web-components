@@ -93,7 +93,8 @@ export const buildPreviewURLComment = (ref) => {
     });
 
     previewLinks.push(
-        `- [High Contrast Mode | Medium | LTR](https://${getHash(
+        `
+        - [High Contrast Mode | Medium | LTR](https://${getHash(
             `${branch}-hcm`
         )}--spectrum-web-components.netlify.app/review/)`
     );
