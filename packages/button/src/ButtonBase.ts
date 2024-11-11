@@ -85,24 +85,16 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         });
     }
 
-    public override click(): void {
-        if (this.disabled) {
-            return;
-        }
-
-        if (this.shouldProxyClick()) {
-            return;
-        }
-
-        super.click();
-    }
-
     private handleClickCapture(event: Event): void | boolean {
         if (this.disabled) {
             event.preventDefault();
             event.stopImmediatePropagation();
             event.stopPropagation();
             return false;
+        }
+
+        if (this.shouldProxyClick()) {
+            return;
         }
     }
 
@@ -233,7 +225,6 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         this.manageAnchor();
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('keypress', this.handleKeypress);
-        this.addEventListener('click', this.shouldProxyClick);
     }
 
     protected override updated(changed: PropertyValues): void {
