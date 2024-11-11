@@ -119,7 +119,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.0.0"
+        "@spectrum-web-components/base": "^1.0.0",
+        "lit": "^2.5.0 || ^3.1.3"
     },
     "devDependencies": {
         "@spectrum-css/commons": "^11.0.0-s2-foundations.15",
