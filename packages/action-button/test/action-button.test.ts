@@ -27,6 +27,7 @@ import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { m as BlackActionButton } from '../stories/action-button-black.stories.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('ActionButton', () => {
     testForLitDevWarnings(
@@ -303,6 +304,9 @@ describe('ActionButton', () => {
             </sp-action-button>
         `);
 
+        // ensures that proxy listener isn't removed when button is updated to link
+        await elementUpdated(el);
+        el.href = '#top';
         await elementUpdated(el);
 
         el.shadowRoot
@@ -311,7 +315,18 @@ describe('ActionButton', () => {
                 event.preventDefault();
                 clicked = true;
             });
-        el.click();
+        const rect = el.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
         await elementUpdated(el);
         expect(clicked).to.be.true;
     });
