@@ -26,6 +26,7 @@ import {
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy, stub } from 'sinon';
 
 type TestableButtonType = {
@@ -222,9 +223,12 @@ describe('Button', () => {
         it('allows link click', async () => {
             let clicked = false;
             const el = await fixture<Button>(html`
-                <sp-button href="#top" target="_blank">With Target</sp-button>
+                <sp-button>Button as link</sp-button>
             `);
 
+            // ensures that proxy listener isn't removed when button is updated to link
+            await elementUpdated(el);
+            el.href = '#top';
             await elementUpdated(el);
 
             el.shadowRoot
@@ -233,7 +237,18 @@ describe('Button', () => {
                     event.preventDefault();
                     clicked = true;
                 });
-            el.click();
+            const rect = el.getBoundingClientRect();
+            await sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'click',
+                    },
+                ],
+            });
             await elementUpdated(el);
             expect(clicked).to.be.true;
         });
