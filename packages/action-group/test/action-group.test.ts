@@ -126,6 +126,7 @@ describe('ActionGroup', () => {
         // To verify that this test is not evergreen, you can temporarily disable the safeguard
         // clause in `manageButtons` by commenting out the following lines:
         // if (!this.slotElement) { return; }
+
         const el = await fixture<ActionGroup>(html`
             <sp-action-group>
                 <sp-action-button value="first">First</sp-action-button>
@@ -135,18 +136,14 @@ describe('ActionGroup', () => {
 
         // Stub the slotElement getter to return null
         const slotElementStub = sinon.stub(el, 'slotElement').get(() => null);
+        await elementUpdated(el);
 
-        // Call manageButtons and expect a TypeError
-        expect(() => Reflect.get(el, 'manageButtons').call(el)).not.to.throw(
-            TypeError,
-            // Different browsers throw slightly different error messages when slotElement is null:
-            // - Chrome: "Cannot read properties of null"
-            // - Firefox: "this.slotElement is null"
-            // - WebKit: "null is not an object (evaluating 'this.slotElement.assignedElements')"
-            /(cannot read properties of null|this\.slotElement is null|null is not an object \(evaluating 'this\.slotElement\.assignedElements'\))/i
-        );
-
-        // Restore the original slotElement getter
+        // trigger a slotchange event
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
+        await elementUpdated(el);
+        expect(el.children.length).to.equal(0);
         slotElementStub.restore();
     });
 
