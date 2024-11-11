@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
+
+### Bug Fixes
+
+-   **number-field, slider:** ensure cached value is cleared when toggling between different steps ([#4846](https://github.com/adobe/spectrum-web-components/issues/4846)) ([1c84c96](https://github.com/adobe/spectrum-web-components/commit/1c84c968f55cde28d0144a78153c9a33a078c726))
+-   **slider:** allow handler to be focusable when slider is editable ([23f8b89](https://github.com/adobe/spectrum-web-components/commit/23f8b8908a288f246f6330292b7ff090f931822a))
+-   **slider:** update slider config to process the tick css correctly ([#4905](https://github.com/adobe/spectrum-web-components/issues/4905)) ([7b1dfd0](https://github.com/adobe/spectrum-web-components/commit/7b1dfd0c12a15f5c3696f162347e5aace1d9c92e))
+
+### Reverts
+
+-   Revert "fix(slider): allow handler to be focusable when slider is editable" (#4907) ([92850ad](https://github.com/adobe/spectrum-web-components/commit/92850ade933dd3d20a3916d6a2f8e7ae6fc0cdc6)), closes [#4907](https://github.com/adobe/spectrum-web-components/issues/4907)
+
 # [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
 
 **Note:** Version bump only for package @spectrum-web-components/slider
