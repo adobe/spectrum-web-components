@@ -10,7 +10,8 @@
         "@typescript-eslint",
         "notice",
         "@spectrum-web-components",
-        "require-extensions"
+        "require-extensions",
+        "eslint-plugin-import"
     ],
     "extends": [
         "plugin:@typescript-eslint/recommended",
@@ -76,6 +77,21 @@
         ]
     },
     "overrides": [
+        {
+            // Apply these rules only to .ts files, excluding .test.ts and .stories.ts
+            "files": ["*.ts"],
+            "excludedFiles": ["*.test.ts", "*.stories.ts"],
+            "rules": {
+                "import/no-extraneous-dependencies": [
+                    "error",
+                    {
+                        "devDependencies": false,
+                        "optionalDependencies": false,
+                        "peerDependencies": false
+                    }
+                ]
+            }
+        },
         {
             "files": ["*.test.ts", "*.stories.ts", "**/benchmark/*.ts"],
             "rules": {
