@@ -309,6 +309,7 @@ describe('ActionButton', () => {
         el.href = '#top';
         await elementUpdated(el);
 
+        // prevents browser from activating link but records the proxy click
         el.shadowRoot
             ?.querySelector('.anchor')
             ?.addEventListener('click', (event: Event) => {
@@ -316,6 +317,8 @@ describe('ActionButton', () => {
                 clicked = true;
             });
         const rect = el.getBoundingClientRect();
+
+        // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
         await sendMouse({
             steps: [
                 {
