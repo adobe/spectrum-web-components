@@ -62,7 +62,6 @@
         "lit-html"
     ],
     "dependencies": {
-        "@ctrl/tinycolor": "^4.0.3",
         "@spectrum-web-components/base": "^1.0.1",
         "@spectrum-web-components/color-handle": "^1.0.1",
         "@spectrum-web-components/opacity-checkerboard": "^1.0.1",
