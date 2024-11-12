@@ -286,9 +286,11 @@ export class ColorWheel extends Focusable {
         const { width: diameter = 160 } = this.boundingClientRect || {};
         const styles = getComputedStyle(this);
         const borderWidth = parseFloat(
-            styles.getPropertyValue('--border-width')
+            styles.getPropertyValue('--_border-width')
         );
-        const trackWidth = parseFloat(styles.getPropertyValue('--track-width'));
+        const trackWidth = parseFloat(
+            styles.getPropertyValue('--_track-width')
+        );
 
         // Calculate wheel data.
         const radius = diameter / 2;

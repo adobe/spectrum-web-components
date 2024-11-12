@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-bar",
-    "version": "0.49.0",
+    "version": "1.0.1",
     "publishConfig": {
         "access": "public"
     },
@@ -29,6 +29,7 @@
             "development": "./src/ActionBar.dev.js",
             "default": "./src/ActionBar.js"
         },
+        "./src/action-bar-overrides.css.js": "./src/action-bar-overrides.css.js",
         "./src/action-bar.css.js": "./src/action-bar.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -57,14 +58,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-group": "^0.49.0",
-        "@spectrum-web-components/base": "^0.49.0",
-        "@spectrum-web-components/button": "^0.49.0",
-        "@spectrum-web-components/field-label": "^0.49.0",
-        "@spectrum-web-components/popover": "^0.49.0"
+        "@spectrum-web-components/action-group": "^1.0.1",
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/button": "^1.0.1",
+        "@spectrum-web-components/field-label": "^1.0.1",
+        "@spectrum-web-components/popover": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/actionbar": "^8.1.1"
+        "@spectrum-css/actionbar": "^9.0.0-s2-foundations.16"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

@@ -49,11 +49,12 @@ import {
 import { sendKeys } from '@web/test-runner-commands';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import { controlled } from '../stories/action-group-tooltip.stories.js';
-import { spy, stub } from 'sinon';
+import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
 import '../stories/action-group.stories.js';
 import { isWebKit } from '@spectrum-web-components/shared';
+import sinon from 'sinon';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
@@ -121,6 +122,31 @@ async function multipleSelectedActionGroup(
 }
 
 describe('ActionGroup', () => {
+    it('does not throw an error if slotElement is null', async () => {
+        // To verify that this test is not evergreen, you can temporarily disable the safeguard
+        // clause in `manageButtons` by commenting out the following lines:
+        // if (!this.slotElement) { return; }
+
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group>
+                <sp-action-button value="first">First</sp-action-button>
+                <sp-action-button value="second">Second</sp-action-button>
+            </sp-action-group>
+        `);
+
+        // Stub the slotElement getter to return null
+        const slotElementStub = sinon.stub(el, 'slotElement').get(() => null);
+        await elementUpdated(el);
+
+        // trigger a slotchange event
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
+        await elementUpdated(el);
+        expect(el.children.length).to.equal(0);
+        slotElementStub.restore();
+    });
+
     it('loads empty action-group accessibly', async () => {
         const el = await fixture<ActionGroup>(html`
             <sp-action-group></sp-action-group>
@@ -1521,65 +1547,5 @@ describe('ActionGroup', () => {
         expect(actionButtons[0].selected).to.be.false;
         expect(actionButtons[1].selected).to.be.true;
         expect(actionButtons[2].selected).to.be.false;
-    });
-    it('prefers `staticColor` over `static`', async () => {
-        const el = await fixture<ActionGroup>(html`
-            <sp-action-group
-                label="Selects Single Group"
-                selects="single"
-                static="white"
-                dir="ltr"
-            >
-                <sp-action-button>First</sp-action-button>
-            </sp-action-group>
-        `);
-        await elementUpdated(el);
-        expect(el.staticColor).to.equal('white');
-        el.setAttribute('static', 'white');
-        await elementUpdated(el);
-        expect(el.staticColor).to.equal('white');
-        expect(el.static).to.equal('white');
-        expect(el.getAttribute('static-color')).to.equal('white');
-    });
-});
-
-describe('dev mode', () => {
-    let consoleWarnStub!: ReturnType<typeof stub>;
-    before(() => {
-        window.__swc.verbose = true;
-        consoleWarnStub = stub(console, 'warn');
-    });
-    afterEach(() => {
-        consoleWarnStub.resetHistory();
-    });
-    after(() => {
-        window.__swc.verbose = false;
-        consoleWarnStub.restore();
-    });
-    it('warns in Dev Mode when static attribute is supplied', async () => {
-        const el = await fixture<ActionGroup>(html`
-            <sp-action-group
-                label="Selects Single Group"
-                selects="single"
-                static="white"
-                dir="ltr"
-            >
-                <sp-action-button>First</sp-action-button>
-            </sp-action-group>
-        `);
-        await elementUpdated(el);
-        expect(consoleWarnStub.called).to.be.true;
-        const spyCall = consoleWarnStub.getCall(0);
-        expect(
-            (spyCall.args.at(0) as string).includes('deprecated'),
-            'confirm attribute deprecation message'
-        ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-            data: {
-                localName: 'sp-action-group',
-                type: 'api',
-                level: 'deprecation',
-            },
-        });
     });
 });

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/infield-button",
-    "version": "0.49.0",
+    "version": "1.0.1",
     "publishConfig": {
         "access": "public"
     },
@@ -33,6 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/infield-button-overrides.css.js": "./src/infield-button-overrides.css.js",
         "./src/infield-button.css.js": "./src/infield-button.css.js",
         "./sp-infield-button.js": {
             "development": "./sp-infield-button.dev.js",
@@ -57,11 +58,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.49.0",
-        "@spectrum-web-components/button": "^0.49.0"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/button": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/infieldbutton": "^5.1.0"
+        "@spectrum-css/infieldbutton": "^6.0.0-s2-foundations.16"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

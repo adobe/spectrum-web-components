@@ -40,6 +40,7 @@ import {
     isIPhone,
 } from '@spectrum-web-components/shared/src/platform.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
+import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 import styles from './number-field.css.js';
 
 export const FRAMES_PER_CHANGE = 5;
@@ -105,7 +106,7 @@ const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
  */
 export class NumberField extends TextfieldBase {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, styles, chevronStyles];
+        return [...super.styles, styles, chevronStyles, chevronIconOverrides];
     }
 
     @query('.buttons')
@@ -496,6 +497,20 @@ export class NumberField extends TextfieldBase {
 
     protected override handleInput(event: InputEvent): void {
         if (this.isComposing) {
+            // If user actually types a new character.
+            if (event.data) {
+                // Don't allow non-numeric characters even in composing mode.
+                const partialValue = this.convertValueToNumber(event.data);
+
+                if (Number.isNaN(partialValue)) {
+                    this.inputElement.value = this.indeterminate
+                        ? indeterminatePlaceholder
+                        : this._trackingValue;
+
+                    this.isComposing = false;
+                }
+            }
+
             event.stopPropagation();
             return;
         }
@@ -535,6 +550,9 @@ export class NumberField extends TextfieldBase {
             this.inputElement.value = this.indeterminate
                 ? indeterminatePlaceholder
                 : this._trackingValue;
+
+            // Don't emit input event when the character is invalid.
+            event.stopPropagation();
         }
         const currentLength = value.length;
         const previousLength = this._trackingValue.length;
@@ -768,13 +786,16 @@ export class NumberField extends TextfieldBase {
         if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
             this.clearNumberFormatterCache();
         }
-        if (changes.has('value') || changes.has('max') || changes.has('min')) {
+        if (
+            changes.has('value') ||
+            changes.has('max') ||
+            changes.has('min') ||
+            changes.has('step')
+        ) {
             const value = this.numberParser.parse(
                 this.formattedValue.replace(this._forcedUnit, '')
             );
             this.value = value;
-        }
-        if (changes.has('step')) {
             this.clearValueFormatterCache();
         }
         super.update(changes);

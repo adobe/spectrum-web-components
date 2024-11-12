@@ -27,7 +27,7 @@ import {
     fullscreen,
     small,
 } from '../stories/dialog.stories.js';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Dialog', () => {
@@ -156,11 +156,9 @@ describe('Dialog', () => {
 
         customElements.define('hero-dialog', Override);
 
-        const el = await fixture<Override>(
-            html`
-                <hero-dialog></hero-dialog>
-            `
-        );
+        const el = await fixture<Override>(html`
+            <hero-dialog></hero-dialog>
+        `);
 
         const container = el.shadowRoot.querySelector('#hero-container');
         expect(container).to.not.be.null;
@@ -176,11 +174,9 @@ describe('Dialog', () => {
 
         customElements.define('heading-dialog', Override);
 
-        const el = await fixture<Override>(
-            html`
-                <heading-dialog></heading-dialog>
-            `
-        );
+        const el = await fixture<Override>(html`
+            <heading-dialog></heading-dialog>
+        `);
 
         const container = el.shadowRoot.querySelector('#heading-container');
         expect(container).to.not.be.null;
@@ -196,11 +192,9 @@ describe('Dialog', () => {
 
         customElements.define('content-dialog', Override);
 
-        const el = await fixture<Override>(
-            html`
-                <content-dialog></content-dialog>
-            `
-        );
+        const el = await fixture<Override>(html`
+            <content-dialog></content-dialog>
+        `);
 
         const container = el.shadowRoot.querySelector('#content-container');
         expect(container).to.not.be.null;
@@ -219,11 +213,9 @@ describe('Dialog', () => {
 
         customElements.define('footer-dialog', Override);
 
-        const el = await fixture<Override>(
-            html`
-                <footer-dialog></footer-dialog>
-            `
-        );
+        const el = await fixture<Override>(html`
+            <footer-dialog></footer-dialog>
+        `);
 
         const container = el.shadowRoot.querySelector('#footer-container');
         expect(container).to.not.be.null;
@@ -242,11 +234,9 @@ describe('Dialog', () => {
 
         customElements.define('button-dialog', Override);
 
-        const el = await fixture<Override>(
-            html`
-                <button-dialog></button-dialog>
-            `
-        );
+        const el = await fixture<Override>(html`
+            <button-dialog></button-dialog>
+        `);
 
         const container = el.shadowRoot.querySelector('#button-container');
         expect(container).to.not.be.null;
@@ -262,13 +252,46 @@ describe('Dialog', () => {
 
         customElements.define('dismiss-dialog', Override);
 
-        const el = await fixture<Override>(
-            html`
-                <dismiss-dialog dismissable></dismiss-dialog>
-            `
-        );
+        const el = await fixture<Override>(html`
+            <dismiss-dialog dismissable></dismiss-dialog>
+        `);
 
         const container = el.shadowRoot.querySelector('#dismiss-container');
         expect(container).to.not.be.null;
+    });
+});
+
+describe('dev mode', () => {
+    let consoleWarnStub!: ReturnType<typeof stub>;
+    before(() => {
+        window.__swc.verbose = true;
+        consoleWarnStub = stub(console, 'warn');
+    });
+    afterEach(() => {
+        consoleWarnStub.resetHistory();
+    });
+    after(() => {
+        window.__swc.verbose = false;
+        consoleWarnStub.restore();
+    });
+
+    it('warns that `error` is deprecated', async () => {
+        const el = await fixture<Dialog>(alertError());
+
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        const spyCall = consoleWarnStub.getCall(0);
+        expect(
+            (spyCall.args.at(0) as string).includes('"error"'),
+            'confirm error-centric message'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-dialog',
+                type: 'api',
+                level: 'deprecation',
+            },
+        });
     });
 });

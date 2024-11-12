@@ -20,10 +20,10 @@ jobs:
 
             - uses: actions/checkout@v4
 
-            - name: Setup Node 18
+            - name: Setup Node 20
               uses: actions/setup-node@v4
               with:
-                  node-version: '18'
+                  node-version: '20'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
@@ -41,6 +41,7 @@ jobs:
     lighthouse:
         name: Lighthouse CI
         runs-on: ubuntu-22.04
+        needs: comment-previews
         steps:
             - uses: actions/checkout@v4
               with:
@@ -48,10 +49,10 @@ jobs:
 
             - uses: actions/checkout@v4
 
-            - name: Setup Node 18
+            - name: Setup Node 20
               uses: actions/setup-node@v4
               with:
-                  node-version: '18'
+                  node-version: '20'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
@@ -100,10 +101,10 @@ jobs:
 
             - uses: actions/checkout@v4
 
-            - name: Setup Node 18
+            - name: Setup Node 20
               uses: actions/setup-node@v4
               with:
-                  node-version: '18'
+                  node-version: '20'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
@@ -141,10 +142,10 @@ jobs:
 
             - uses: actions/checkout@v4
 
-            - name: Setup Node 18
+            - name: Setup Node 20
               uses: actions/setup-node@v4
               with:
-                  node-version: '18'
+                  node-version: '20'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
@@ -181,10 +182,10 @@ jobs:
 
             - uses: actions/checkout@v4
 
-            - name: Setup Node 18
+            - name: Setup Node 20
               uses: actions/setup-node@v4
               with:
-                  node-version: '18'
+                  node-version: '20'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 

@@ -52,7 +52,7 @@ async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {
     const test = await fixture<Theme>(html`
-        <sp-theme theme="spectrum" scale="medium" color="light">
+        <sp-theme system="spectrum" scale="medium" color="light">
             ${story}
         </sp-theme>
     `);
@@ -389,7 +389,7 @@ describe('sp-overlay', () => {
                 this.page.open = false;
                 await closed;
             });
-            it('closes "page" overlays when opening', async function () {
+            it('should not close "modal" overlays when opening', async function () {
                 let opened = oneEvent(this.modal, 'sp-opened');
                 this.modal.open = true;
                 await opened;
@@ -400,11 +400,9 @@ describe('sp-overlay', () => {
                 expect(this.manual.open).to.be.false;
 
                 opened = oneEvent(this.page, 'sp-opened');
-                const closed = oneEvent(this.modal, 'sp-closed');
                 this.page.open = true;
                 await opened;
-                await closed;
-                expect(this.modal.open).to.be.false;
+                expect(this.modal.open).to.be.true;
                 expect(this.page.open).to.be.true;
                 expect(this.hint.open).to.be.false;
                 expect(this.auto.open).to.be.false;
@@ -841,19 +839,35 @@ describe('sp-overlay', () => {
 
             const sliderRect = track.getBoundingClientRect();
 
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            sliderRect.left + sliderRect.width - 5,
-                            sliderRect.top + sliderRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            let pointerId = -1;
+            slider.track.setPointerCapture = (id: number) => (pointerId = id);
+            slider.track.releasePointerCapture = (id: number) =>
+                (pointerId = id);
+            expect(pointerId).to.equal(-1);
+            track.dispatchEvent(
+                new PointerEvent('pointerdown', {
+                    clientX: sliderRect.left + sliderRect.width - 5,
+                    clientY: sliderRect.top + sliderRect.height / 2,
+                    pointerId: 1,
+                    cancelable: true,
+                    bubbles: true,
+                    composed: true,
+                    button: 0,
+                })
+            );
+            await elementUpdated(slider);
 
-            await aTimeout(500);
+            track.dispatchEvent(
+                new PointerEvent('pointerup', {
+                    pointerId: 1,
+                    cancelable: true,
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            await elementUpdated(slider);
+
+            await aTimeout(1500);
 
             expect(slider.value).to.equal(19.5);
             expect(el.open).to.be.true;

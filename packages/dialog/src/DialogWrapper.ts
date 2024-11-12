@@ -41,6 +41,9 @@ export class DialogWrapper extends DialogBase {
         return [...super.styles];
     }
 
+    /**
+     * @deprecated Use the Alert Dialog component with `variant="error"` instead.
+     */
     @property({ type: Boolean, reflect: true })
     public error = false;
 

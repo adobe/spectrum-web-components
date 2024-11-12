@@ -34,16 +34,30 @@ export class IconBase extends SpectrumElement {
         return [iconStyles];
     }
 
+    private unsubscribeSystemContext: (() => void) | null = null;
+
+    @state()
+    public spectrumVersion = 1;
+
     @property()
     public label = '';
 
     @property({ reflect: true })
     public size?: 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
 
-    private systemResolver = new SystemResolutionController(this);
+    public override connectedCallback(): void {
+        super.connectedCallback();
+    }
 
-    @state()
-    public spectrumVersion = 1;
+    public override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        if (this.unsubscribeSystemContext) {
+            this.unsubscribeSystemContext();
+            this.unsubscribeSystemContext = null;
+        }
+    }
+
+    private systemResolver = new SystemResolutionController(this);
 
     protected override update(changes: PropertyValues): void {
         if (changes.has('label')) {

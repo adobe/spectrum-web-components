@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/meter",
-    "version": "0.49.0",
+    "version": "1.0.1",
     "publishConfig": {
         "access": "public"
     },
@@ -33,7 +33,9 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/meter-overrides.css.js": "./src/meter-overrides.css.js",
         "./src/meter.css.js": "./src/meter.css.js",
+        "./src/progress-bar-overrides.css.js": "./src/progress-bar-overrides.css.js",
         "./sp-meter.js": {
             "development": "./sp-meter.dev.js",
             "default": "./sp-meter.js"
@@ -57,13 +59,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.49.0",
-        "@spectrum-web-components/field-label": "^0.49.0",
-        "@spectrum-web-components/reactive-controllers": "^0.49.0",
-        "@spectrum-web-components/shared": "^0.49.0"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/field-label": "^1.0.1",
+        "@spectrum-web-components/reactive-controllers": "^1.0.1",
+        "@spectrum-web-components/shared": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/progressbar": "^4.1.5"
+        "@spectrum-css/meter": "^0.0.0-s2-foundations.2",
+        "@spectrum-css/progressbar": "^5.0.0-s2-foundations.19"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
