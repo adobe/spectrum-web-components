@@ -8,7 +8,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 -   **number-field, slider:** ensure cached value is cleared when toggling between different steps ([#4846](https://github.com/adobe/spectrum-web-components/issues/4846)) ([1c84c96](https://github.com/adobe/spectrum-web-components/commit/1c84c968f55cde28d0144a78153c9a33a078c726))
--   **slider:** allow handler to be focusable when slider is editable ([23f8b89](https://github.com/adobe/spectrum-web-components/commit/23f8b8908a288f246f6330292b7ff090f931822a))
 -   **slider:** update slider config to process the tick css correctly ([#4905](https://github.com/adobe/spectrum-web-components/issues/4905)) ([7b1dfd0](https://github.com/adobe/spectrum-web-components/commit/7b1dfd0c12a15f5c3696f162347e5aace1d9c92e))
 
 # [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
