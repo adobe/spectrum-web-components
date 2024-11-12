@@ -17,12 +17,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **overlay:** remove flex display for dialog ([#4902](https://github.com/adobe/spectrum-web-components/issues/4902)) ([48448ea](https://github.com/adobe/spectrum-web-components/commit/48448ea75d7ffa61422947a18c3ea1ebf9ca25b7))
 -   **picker:** don't handle pointerdown for touch devices ([#4850](https://github.com/adobe/spectrum-web-components/issues/4850)) ([3a62d13](https://github.com/adobe/spectrum-web-components/commit/3a62d133b8074e5b40f1eedfa9a5566dc53b30ad))
 -   **search:** clear button ui in express ([#4910](https://github.com/adobe/spectrum-web-components/issues/4910)) ([f88e1e2](https://github.com/adobe/spectrum-web-components/commit/f88e1e2c03ed74f8d3f7924d395a34168afd244c))
--   **slider:** allow handler to be focusable when slider is editable ([23f8b89](https://github.com/adobe/spectrum-web-components/commit/23f8b8908a288f246f6330292b7ff090f931822a))
 -   **slider:** update slider config to process the tick css correctly ([#4905](https://github.com/adobe/spectrum-web-components/issues/4905)) ([7b1dfd0](https://github.com/adobe/spectrum-web-components/commit/7b1dfd0c12a15f5c3696f162347e5aace1d9c92e))
-
-### Reverts
-
--   Revert "fix(slider): allow handler to be focusable when slider is editable" (#4907) ([92850ad](https://github.com/adobe/spectrum-web-components/commit/92850ade933dd3d20a3916d6a2f8e7ae6fc0cdc6)), closes [#4907](https://github.com/adobe/spectrum-web-components/issues/4907)
 
 # [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
 
