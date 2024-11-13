@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
+.spectrum-Accordion {
     --spectrum-accordion-divider-color: var(--system-accordion-divider-color);
     --spectrum-accordion-item-content-disabled-color: var(
         --system-accordion-item-content-disabled-color

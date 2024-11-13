@@ -11,20 +11,3 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-accordion-item.css');
-
-:host {
-    display: block;
-}
-
-#heading {
-    /* .spectrum-Accordion-itemHeading */
-    height: auto;
-    position: relative;
-}
-
-:host([disabled]) #heading .indicator {
-    color: var(
-        --mod-accordion-item-header-disabled-color,
-        var(--spectrum-accordion-item-header-disabled-color)
-    );
-}

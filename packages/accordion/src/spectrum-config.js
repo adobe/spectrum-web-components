@@ -11,13 +11,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    builder,
-    converterFor,
-} from '../../../tasks/process-spectrum-utils.js';
-
-const converter = converterFor('spectrum-Accordion');
-const converterItem = converterFor('spectrum-Accordion-item');
+import { builder } from '../../../tasks/process-spectrum-utils.js';
 
 /**
  * @type { import('../../../tasks/spectrum-css-converter').SpectrumCSSConverter }
@@ -36,26 +30,7 @@ const config = {
                 builder.class('spectrum-Accordion-itemHeader'),
                 builder.class('spectrum-Accordion-itemContent'),
             ],
-            components: [
-                converter.classToHost(),
-                converter.classToAttribute('is-open', 'open'),
-                converter.classToAttribute('is-disabled', 'disabled'),
-                ...converter.enumerateAttributes(
-                    [
-                        ['spectrum-Accordion--compact', 'compact'],
-                        ['spectrum-Accordion--spacious', 'spacious'],
-                    ],
-                    'density'
-                ),
-                ...converter.enumerateAttributes(
-                    [
-                        ['spectrum-Accordion--sizeS', 's'],
-                        ['spectrum-Accordion--sizeL', 'l'],
-                        ['spectrum-Accordion--sizeXL', 'xl'],
-                    ],
-                    'size'
-                ),
-            ],
+            components: [],
         },
         {
             inPackage: '@spectrum-css/accordion',
@@ -66,94 +41,15 @@ const config = {
                 builder.class('spectrum-Accordion--compact'),
                 builder.class('spectrum-Accordion--spacious'),
                 builder.class('spectrum-Accordion--sizeS'),
+                builder.class('spectrum-Accordion--sizeM'),
                 builder.class('spectrum-Accordion--sizeL'),
                 builder.class('spectrum-Accordion--sizeXL'),
             ],
             components: [
-                converterItem.classToHost(),
-                converter.classToAttribute('is-open', 'open'),
-                converter.classToAttribute('is-disabled', 'disabled'),
-                converter.classToId(
-                    'spectrum-Accordion-itemHeading',
-                    'heading'
-                ),
-                converter.classToId('spectrum-Accordion-itemHeader', 'header'),
-                converter.classToId(
-                    'spectrum-Accordion-itemContent',
-                    'content'
-                ),
-                converter.classToClass(
-                    'spectrum-Accordion-itemIconContainer',
-                    'iconContainer'
-                ),
-                converter.classToClass(
-                    'spectrum-Accordion-itemIndicator',
-                    'indicator'
-                ),
-                {
-                    find: builder.pseudoClass('first-of-type'),
-                    replace: builder.pseudoClass('first-of-type'),
-                    hoist: true,
-                },
                 {
                     find: builder.pseudoClass('first-child'),
                     replace: builder.pseudoClass('first-child'),
                     hoist: true,
-                },
-                {
-                    find: {
-                        type: 'pseudo-class',
-                        kind: 'not',
-                        selectors: [
-                            [
-                                {
-                                    type: 'pseudo-class',
-                                    kind: 'first-of-type',
-                                },
-                            ],
-                        ],
-                    },
-                    replace: {
-                        type: 'pseudo-class',
-                        kind: 'not',
-                        selectors: [
-                            [
-                                {
-                                    type: 'pseudo-class',
-                                    kind: 'first-of-type',
-                                },
-                            ],
-                        ],
-                    },
-                    hoist: true,
-                },
-                {
-                    find: [
-                        builder.class('spectrum-Accordion-itemHeader'),
-                        builder.pseudoClass('hover'),
-                    ],
-                    replace: [
-                        {
-                            replace: builder.id('header'),
-                        },
-                        {
-                            replace: builder.pseudoClass('hover'),
-                        },
-                    ],
-                },
-                {
-                    find: [
-                        builder.class('spectrum-Accordion-itemHeader'),
-                        builder.pseudoClass('focus'),
-                    ],
-                    replace: [
-                        {
-                            replace: builder.id('header'),
-                        },
-                        {
-                            replace: builder.pseudoClass('focus'),
-                        },
-                    ],
                 },
             ],
         },

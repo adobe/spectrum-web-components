@@ -22,6 +22,7 @@ import {
     property,
     queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { classMap } from '@spectrum-web-components/base/src/directives.js';
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
 
 import { AccordionItem } from './AccordionItem.js';
@@ -114,10 +115,21 @@ export class Accordion extends SizedMixin(SpectrumElement, {
 
     protected override render(): TemplateResult {
         return html`
-            <slot
-                @slotchange=${this.handleSlotchange}
-                @sp-accordion-item-toggle=${this.onToggle}
-            ></slot>
+            <div
+                class=${classMap({
+                    'spectrum-Accordion': true,
+                    [`spectrum-Accordion--size${this.size?.toUpperCase()}`]:
+                        typeof this.size !== 'undefined',
+                    'spectrum-Accordion--compact': this.density === 'compact',
+                    'spectrum-Accordion--spacious': this.density === 'spacious',
+                })}
+                role="region"
+            >
+                <slot
+                    @slotchange=${this.handleSlotchange}
+                    @sp-accordion-item-toggle=${this.onToggle}
+                ></slot>
+            </div>
         `;
     }
 }
