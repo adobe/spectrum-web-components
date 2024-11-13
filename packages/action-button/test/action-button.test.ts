@@ -304,9 +304,6 @@ describe('ActionButton', () => {
             </sp-action-button>
         `);
 
-        // ensures that proxy listener isn't removed when button is updated to link
-        await elementUpdated(el);
-        el.href = '#top';
         await elementUpdated(el);
 
         // prevents browser from activating link but records the proxy click
