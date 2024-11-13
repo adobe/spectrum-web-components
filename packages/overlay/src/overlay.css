@@ -39,7 +39,6 @@ governing permissions and limitations under the License.
     border: 0;
     background: none;
     padding: 0;
-    display: flex;
     position: fixed;
     overflow: visible;
     opacity: 1 !important;
@@ -180,7 +179,8 @@ slot[name='longpress-describedby-descriptor'] {
 @supports (overlay: auto) {
     .dialog {
         display: none;
-        transition: all
+        transition:
+            all
                 var(
                     --mod-overlay-animation-duration,
                     var(--spectrum-animation-duration-100, 0.13s)
