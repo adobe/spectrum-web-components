@@ -89,7 +89,7 @@ export const buildPreviewURLComment = (ref) => {
         comment += `
 
 
-    <h4><strong>Visual regression test results</strong></h4>
+<h3><strong>Visual regression test results</strong></h3>
 
 When a visual regression test fails (or has previously failed while working on this branch), its results can be found in the following URLs:
 
