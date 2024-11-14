@@ -317,7 +317,7 @@ describe('Overlay Trigger - Hover and Click', () => {
 
         // This fails but when manually tested it works in the browser
         // in the test it shows that the tooltip is open (overlayTrigger.open === 'hover')
-        // expect(overlayTrigger.open).to.be.undefined;
+        expect(overlayTrigger.open).to.be.undefined;
         expect(document.activeElement === trigger, 'trigger focused').to.be
             .true;
         if (isWebKit())
@@ -349,7 +349,7 @@ describe('Overlay Trigger - Hover and Click', () => {
         await closed;
 
         // Manually testing this in the browser doesn't fail without the handleKeyup method but it should
-        // expect(overlayTrigger.open).to.equal('hover');
+        expect(overlayTrigger.open).to.equal('hover');
         expect(document.activeElement === trigger, 'trigger focused').to.be
             .true;
         if (isWebKit())
