@@ -89,11 +89,15 @@ export const buildPreviewURLComment = (ref) => {
         comment += `
 
 
-<h3><strong>Visual regression test results</strong></h3>
+<h3><strong>Review the following VRT differences</strong></h3>
 
 When a visual regression test fails (or has previously failed while working on this branch), its results can be found in the following URLs:
 
-${previewLinks.join('')}`;
+${previewLinks.join('')}
+
+If the changes are expected, update the golden_images_cache hash in the circleci config to accept the new images. Instructions are included in that file. 
+If the changes are unexpected, you can investigate the cause of the differences and update the code accordingly.
+`;
     }
 
     return comment;
