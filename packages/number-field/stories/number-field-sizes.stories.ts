@@ -27,7 +27,7 @@ const template = ({
 } = {}): TemplateResult => {
     return html`
         <sp-field-label for="name" size=${ifDefined(size)}>
-            Pick a numbers
+            Pick a number
         </sp-field-label>
         <sp-number-field
             id="name"
