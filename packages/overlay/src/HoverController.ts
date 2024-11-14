@@ -18,9 +18,8 @@ import {
     InteractionController,
     InteractionTypes,
     lastInteractionType,
+    SAFARI_FOCUS_RING_CLASS,
 } from './InteractionController.js';
-
-export const SAFARI_FOCUS_RING_CLASS = 'remove-focus-ring-safari-hack';
 
 const HOVER_DELAY = 300;
 
