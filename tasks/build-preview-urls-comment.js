@@ -74,7 +74,7 @@ export const buildPreviewURLComment = (ref) => {
     // Add a high contrast mode preview link
     previewLinks.push(
         `
-        - [High Contrast Mode | Medium | LTR](https://${createHash(
+- [High Contrast Mode | Medium | LTR](https://${createHash(
             `${branch}-hcm`
         )}--spectrum-web-components.netlify.app/review/)`
     );
@@ -84,18 +84,15 @@ export const buildPreviewURLComment = (ref) => {
 - [Documentation Site](https://${branchSlug}--spectrum-web-components.netlify.app/)
 - [Storybook](https://${branchSlug}--spectrum-web-components.netlify.app/storybook/)`;
 
-    // If there are changed packages, add a collapsible section with visual regression test results
+    // If there are changed packages, add a section with visual regression test results
     if (packages.length > 0) {
         comment += `
 
-<details>
     <summary><strong>Visual regression test results</strong></summary>
 
 When a visual regression test fails (or has previously failed while working on this branch), its results can be found in the following URLs:
 
-${previewLinks.join('')}
-
-</details>`;
+${previewLinks.join('')}`;
     }
 
     return comment;
