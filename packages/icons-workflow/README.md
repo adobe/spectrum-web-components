@@ -37,7 +37,7 @@ Search the available Spectrum Workflow icons below.
 
 <p class="for-github">Complete search experience available at: <a href="https://opensource.adobe.com/spectrum-web-components/components/icons-workflow/">https://opensource.adobe.com/spectrum-web-components/components/icons-workflow/</a>.</p>
 
-<icons-demo class="icon-search" package="icons-workflow" size="xxl"></icons-demo>
+<icons-demo class="icon-search" package="icons-workflow" size="xxl" name="workflow"></icons-demo>
 
 <script type="module">
 const search = document.querySelector('.icon-search');

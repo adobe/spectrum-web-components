@@ -121,7 +121,7 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-#controls:not(:has(.spectrum-Slider-ticks)) {
+#controls:not(:has(.ticks)) {
     align-items: center;
     display: flex;
 }

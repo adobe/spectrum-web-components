@@ -17,7 +17,6 @@ governing permissions and limitations under the License.
     --mod-textfield-spacing-inline: var(
         --spectrum-alias-infieldbutton-full-height-m
     );
-    --mod-clear-button-padding: 0;
 }
 
 input::-webkit-search-cancel-button {

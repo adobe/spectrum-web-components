@@ -389,7 +389,7 @@ describe('sp-overlay', () => {
                 this.page.open = false;
                 await closed;
             });
-            it('closes "page" overlays when opening', async function () {
+            it('should not close "modal" overlays when opening', async function () {
                 let opened = oneEvent(this.modal, 'sp-opened');
                 this.modal.open = true;
                 await opened;
@@ -400,11 +400,9 @@ describe('sp-overlay', () => {
                 expect(this.manual.open).to.be.false;
 
                 opened = oneEvent(this.page, 'sp-opened');
-                const closed = oneEvent(this.modal, 'sp-closed');
                 this.page.open = true;
                 await opened;
-                await closed;
-                expect(this.modal.open).to.be.false;
+                expect(this.modal.open).to.be.true;
                 expect(this.page.open).to.be.true;
                 expect(this.hint.open).to.be.false;
                 expect(this.auto.open).to.be.false;

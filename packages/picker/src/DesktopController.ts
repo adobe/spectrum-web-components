@@ -19,7 +19,7 @@ export class DesktopController extends InteractionController {
     override type = InteractionTypes.desktop;
 
     public override handlePointerdown(event: PointerEvent): void {
-        if (event.button !== 0) {
+        if (event.button !== 0 || event.pointerType === 'touch') {
             return;
         }
         this.pointerdownState = this.open;

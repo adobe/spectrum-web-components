@@ -12,8 +12,10 @@ governing permissions and limitations under the License.
 
 import { fromRollup } from '@web/dev-server-rollup';
 import rollupAlias from '@rollup/plugin-alias';
+import rollupJson from '@rollup/plugin-json';
 
 const alias = fromRollup(rollupAlias);
+const json = fromRollup(rollupJson);
 
 export default {
     open: true,
@@ -22,9 +24,13 @@ export default {
         exportConditions: ['browser', 'development'],
         moduleDirectories: ['node_modules', 'packages', 'projects', 'tools'],
     },
+    mimeTypes: {
+        '**/*.json': 'js',
+    },
     // in a monorepo you need to set the root dir to resolve modules
     rootDir: '_site',
     plugins: [
+        json(),
         alias({
             entries: [
                 {

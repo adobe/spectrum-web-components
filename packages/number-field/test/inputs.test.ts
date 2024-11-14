@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html } from '@spectrum-web-components/base';
-import { elementUpdated, expect } from '@open-wc/testing';
+import { elementUpdated, expect, nextFrame } from '@open-wc/testing';
 import { getElFrom } from './helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
@@ -465,6 +465,22 @@ describe('NumberField - inputs', () => {
 
             expect(el.formattedValue).to.equal('10%');
             expect(el.value).to.equal(Number(0.1));
+        });
+        it('does not accept non-numeric characters', async () => {
+            const el = await getElFrom(Default(Default.args));
+
+            el.focusElement.focus();
+            el.dispatchEvent(new CompositionEvent('compositionstart'));
+            await sendKeys({ type: 'あい' });
+
+            await elementUpdated(el.focusElement);
+            await nextFrame();
+
+            expect(el.focusElement.value).to.equal('100');
+            el.dispatchEvent(new CompositionEvent('compositionend'));
+
+            await nextFrame();
+            expect(el.focusElement.value).to.equal('100');
         });
     });
 });
