@@ -154,7 +154,7 @@ export class ColorArea extends SpectrumElement {
     @query('[name="y"]')
     public inputY!: HTMLInputElement;
 
-    public altered = 0;
+    private altered = 0;
 
     private activeKeys = new Set();
 
