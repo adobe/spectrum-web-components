@@ -38,7 +38,7 @@ import { Tooltip } from '@spectrum-web-components/tooltip/src/Tooltip.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { Button } from '@spectrum-web-components/button';
 import { isWebKit } from '@spectrum-web-components/shared';
-import { SAFARI_FOCUS_RING_CLASS } from '../src/HoverController.js';
+import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/overlay/src/InteractionController.js';
 
 ignoreResizeObserverLoopError(before, after);
 
