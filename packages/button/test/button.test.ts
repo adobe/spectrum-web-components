@@ -223,7 +223,7 @@ describe('Button', () => {
         it('allows link click', async () => {
             let clicked = false;
             const el = await fixture<Button>(html`
-                <sp-button>Button as link</sp-button>
+                <sp-button href="#top">Button as link</sp-button>
             `);
 
             await elementUpdated(el);
