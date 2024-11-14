@@ -95,7 +95,7 @@ When a visual regression test fails (or has previously failed while working on t
 
 ${previewLinks.join('')}
 
-If the changes are expected, update the golden_images_cache hash in the circleci config to accept the new images. Instructions are included in that file. 
+If the changes are expected, update the ${`current_golden_images_cache`} hash in the circleci config to accept the new images. Instructions are included in that file. 
 If the changes are unexpected, you can investigate the cause of the differences and update the code accordingly.
 `;
     }
