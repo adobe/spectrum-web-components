@@ -155,16 +155,39 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         this.handleTransitionEvent(event);
     }
 
+    private get hasTransitionDuration(): boolean {
+        const modal = this.shadowRoot.querySelector('.modal') as HTMLElement;
+        const underlay = this.shadowRoot.querySelector(
+            'sp-underlay'
+        ) as HTMLElement;
+
+        const modalTransitionDurations =
+            window.getComputedStyle(modal).transitionDuration;
+        const underlayTransitionDurations =
+            window.getComputedStyle(underlay).transitionDuration;
+
+        for (const duration of modalTransitionDurations.split(','))
+            if (parseFloat(duration) > 0) return true;
+
+        for (const duration of underlayTransitionDurations.split(','))
+            if (parseFloat(duration) > 0) return true;
+
+        return false;
+    }
+
     protected override update(changes: PropertyValues<this>): void {
         if (changes.has('open') && changes.get('open') !== undefined) {
+            const hasTransitionDuration = this.hasTransitionDuration;
             this.animating = true;
             this.transitionPromise = new Promise((res) => {
                 this.resolveTransitionPromise = () => {
                     this.animating = false;
-                    if (!this.open) this.dispatchClosed();
+                    if (!this.open && hasTransitionDuration)
+                        this.dispatchClosed();
                     res();
                 };
             });
+            if (!this.open && !hasTransitionDuration) this.dispatchClosed();
         }
         super.update(changes);
     }
