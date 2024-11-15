@@ -240,8 +240,8 @@ export const lazyLoaded = (): TemplateResult => {
             <sp-dialog size="m">
                 <h2 slot="heading">This is a heading</h2>
                 <p>
-                    The click on the "OK" button should close the overlay but it
-                    should wait for the animation to end.
+                    The click on the "OK" button should close the overlay with
+                    the correct animation (duration).
                 </p>
                 <sp-button variant="secondary" treatment="fill" slot="button">
                     Ok
