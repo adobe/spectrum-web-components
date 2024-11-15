@@ -161,12 +161,10 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
             this.transitionPromise = new Promise((res) => {
                 this.resolveTransitionPromise = () => {
                     this.animating = false;
+                    if (!this.open) this.dispatchClosed();
                     res();
                 };
             });
-            if (!this.open) {
-                this.dispatchClosed();
-            }
         }
         super.update(changes);
     }
