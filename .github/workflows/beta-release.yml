@@ -16,9 +16,6 @@ jobs:
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
 
-            - name: Install semver
-              run: npm install -g semver
-
             - name: Set Git identity
               run: |
                   git config --global user.email "support+actions@github.com"

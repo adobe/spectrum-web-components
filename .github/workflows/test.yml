@@ -13,15 +13,16 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout Branch
+            - name: Checkout main
+              uses: actions/checkout@v4
+              with:
+                  ref: main
+
+            - name: Checkout PR branch
               uses: actions/checkout@v4
 
-            - name: Setup Node 20
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '20'
-                  cache: 'yarn'
-                  registry-url: 'https://registry.npmjs.org'
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
             - name: Post Previews Comment
               uses: actions/github-script@v7
@@ -36,18 +37,16 @@ jobs:
         runs-on: ubuntu-22.04
         needs: comment-previews
         steps:
-            - name: Checkout Branch
+            - name: Checkout main
+              uses: actions/checkout@v4
+              with:
+                  ref: main
+
+            - name: Checkout PR branch
               uses: actions/checkout@v4
 
-            - name: Setup Node 20
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '20'
-                  cache: 'yarn'
-                  registry-url: 'https://registry.npmjs.org'
-
-            - name: Install dependencies
-              run: yarn --frozen-lockfile
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
             - name: Extract branch name
               shell: bash
@@ -85,15 +84,16 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-22.04
         steps:
-            - name: Checkout Branch
+            - name: Checkout main
+              uses: actions/checkout@v4
+              with:
+                  ref: main
+
+            - name: Checkout PR branch
               uses: actions/checkout@v4
 
-            - name: Setup Node 20
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '20'
-                  cache: 'yarn'
-                  registry-url: 'https://registry.npmjs.org'
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
             - name: Print Firefox version
               run: firefox --version
@@ -120,18 +120,16 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout Branch
+            - name: Checkout main
+              uses: actions/checkout@v4
+              with:
+                  ref: main
+
+            - name: Checkout PR branch
               uses: actions/checkout@v4
 
-            - name: Setup Node 20
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '20'
-                  cache: 'yarn'
-                  registry-url: 'https://registry.npmjs.org'
-
-            - name: Install dependencies
-              run: yarn --frozen-lockfile
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
             - name: Tachometer the changed packages
               run: yarn test:changed
@@ -156,18 +154,16 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout Branch
+            - name: Checkout main
+              uses: actions/checkout@v4
+              with:
+                  ref: main
+
+            - name: Checkout PR branch
               uses: actions/checkout@v4
 
-            - name: Setup Node 20
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '20'
-                  cache: 'yarn'
-                  registry-url: 'https://registry.npmjs.org'
-
-            - name: Install dependencies
-              run: yarn --frozen-lockfile
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
             - name: Retrieve tachometer results archives
               uses: actions/download-artifact@v4

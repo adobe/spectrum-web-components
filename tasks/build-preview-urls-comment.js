@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 
 import slugify from '@sindresorhus/slugify';
 import crypto from 'crypto';
+import { getChangedPackages } from './get-changed-packages.js';
 
 const createHash = (context) => {
     const md5 = crypto.createHash('md5');
@@ -21,13 +22,15 @@ const createHash = (context) => {
 };
 
 export const buildPreviewURLComment = (ref) => {
+    const packages = getChangedPackages();
+
     // Extract the branch name from the ref and slugify it for URL usage
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
 
     const previewLinks = [];
 
-    const combinations = [
+    const previewCombinations = [
         {
             system: 'Spectrum',
             color: 'Light',
@@ -56,26 +59,34 @@ export const buildPreviewURLComment = (ref) => {
         },
     ];
 
-    combinations.forEach(({ system, color, scale, direction }) => {
+    // Generate preview links for each combination of system, color, scale, and direction
+    previewCombinations.forEach(({ system, color, scale, direction }) => {
+        // Create a unique context string for each combination
         const context = `${branch}-${system.toLowerCase()}-${color.toLowerCase()}-${scale.toLowerCase()}-${direction.toLowerCase()}`;
+
+        // Add the generated preview link to the array
         previewLinks.push(`
-- [${system} | ${color} | ${scale} | ${direction}](https://${getHash(
+- [${system} | ${color} | ${scale} | ${direction}](https://${createHash(
             context
         )}--spectrum-web-components.netlify.app/review/)`);
     });
 
+    // Add a high contrast mode preview link
     previewLinks.push(
         `
-        - [High Contrast Mode | Medium | LTR](https://${getHash(
+- [High Contrast Mode | Medium | LTR](https://${createHash(
             `${branch}-hcm`
         )}--spectrumwc.netlify.app/review/)`
     );
 
     let comment = `## Branch preview
 
-- [Documentation Site](https://${branchSlug}--spectrumwc.netlify.app/)
-- [Storybook](https://${branchSlug}--spectrumwc.netlify.app/storybook/)
+- [Documentation Site](https://${branchSlug}--spectrum-web-components.netlify.app/)
+- [Storybook](https://${branchSlug}--spectrum-web-components.netlify.app/storybook/)`;
 
+    // If there are changed packages, add a section with visual regression test results
+    if (packages.length > 0) {
+        comment += `
 
 
 <h3><strong>Review the following VRT differences</strong></h3>
@@ -87,6 +98,8 @@ ${previewLinks.join('')}
 If the changes are expected, update the <code>current_golden_images_cache</code> hash in the circleci config to accept the new images. Instructions are included in that file. 
 If the changes are unexpected, you can investigate the cause of the differences and update the code accordingly.
 `;
+    }
+
     return comment;
 };
 
