@@ -16,7 +16,7 @@ import prettyBytes from 'pretty-bytes';
 
 const latestURL = 'https://opensource.adobe.com/spectrum-web-components/';
 const mainURL = 'https://main--spectrum-web-components.netlify.app/';
-const winnerSign = ' 🏆';
+const winnerSign = ' 🏆'; // Emoji to indicate the best performance
 
 const totalIndex = 0;
 const fontIndex = 1;
@@ -24,6 +24,7 @@ const scriptIndex = 2;
 const stylesheetIndex = 3;
 const documentIndex = 4;
 
+// Format resource usage by index and add winner sign if applicable
 const formatResourceByIndex = (index, resource, resourcesRaw, winner) =>
     resource === 'transferSize'
         ? prettyBytes(resourcesRaw[index][resource], {
@@ -31,6 +32,7 @@ const formatResourceByIndex = (index, resource, resourcesRaw, winner) =>
           }) + (winner ? winnerSign : '')
         : resourcesRaw[index][resource] + (winner ? winnerSign : '');
 
+// Format all resource usage categories
 const formatResources = (resource, resourcesRaw, winners) => ({
     total: formatResourceByIndex(
         totalIndex,
@@ -64,11 +66,13 @@ const formatResources = (resource, resourcesRaw, winners) => ({
     ),
 });
 
+// Format all resources for size and count
 const formatAllResources = (resourcesRaw, winners) => ({
     size: formatResources('transferSize', resourcesRaw, winners.size),
     count: formatResources('requestCount', resourcesRaw, winners.count),
 });
 
+// Determine if the current context is the winner for a specific resource
 const getWinnerByIndex = (index, test, context, competitorA, competitorB) => {
     return (
         context[index][test] < competitorA[index][test] &&
@@ -76,6 +80,7 @@ const getWinnerByIndex = (index, test, context, competitorA, competitorB) => {
     );
 };
 
+// Get winners for all resource categories
 const getWinners = (test, context, competitorA, competitorB) => ({
     total: getWinnerByIndex(
         totalIndex,
@@ -108,11 +113,13 @@ const getWinners = (test, context, competitorA, competitorB) => ({
     font: getWinnerByIndex(fontIndex, test, context, competitorA, competitorB),
 });
 
+// Get winners for all resources (size and count)
 const getAllWiners = (context, competitorA, competitorB) => ({
     size: getWinners('transferSize', context, competitorA, competitorB),
     count: getWinners('requestCount', context, competitorA, competitorB),
 });
 
+// Compare resource usage between branch, main, and latest
 const compareResourceUsage = (branch, main, latest) => {
     const branchWinners = getAllWiners(branch, latest, main);
     const mainWinners = getAllWiners(main, branch, latest);
@@ -128,8 +135,10 @@ const compareResourceUsage = (branch, main, latest) => {
     };
 };
 
-export const buildLighthouseComment = (links, manifest, assertionResults) => {
+// Build the Lighthouse comment for the pull request
+export const buildLighthouseComment = (links, manifest) => {
     const report = {};
+    // Map the links to their respective categories (main, latest, branch)
     Object.keys(links).forEach((key) => {
         if (key === mainURL) {
             report.main = links[key];
@@ -139,6 +148,8 @@ export const buildLighthouseComment = (links, manifest, assertionResults) => {
             report.branch = links[key];
         }
     });
+
+    // Find the representative run for branch, main, and latest
     const branch = manifest.find(
         (result) =>
             result.isRepresentativeRun &&
@@ -151,6 +162,8 @@ export const buildLighthouseComment = (links, manifest, assertionResults) => {
     const latest = manifest.find(
         (result) => result.isRepresentativeRun && result.url === latestURL
     );
+
+    // Read and parse the resource summary from the Lighthouse JSON reports
     const branchResourcesRaw = JSON.parse(
         fs.readFileSync(branch.jsonPath, 'utf8')
     ).audits['resource-summary'].details.items;
@@ -159,6 +172,8 @@ export const buildLighthouseComment = (links, manifest, assertionResults) => {
     const latestResourcesRaw = JSON.parse(
         fs.readFileSync(latest.jsonPath, 'utf8')
     ).audits['resource-summary'].details.items;
+
+    // Compare resource usage between branch, main, and latest
     const { branchResources, mainResources, latestResources } =
         compareResourceUsage(
             branchResourcesRaw,
@@ -166,7 +181,7 @@ export const buildLighthouseComment = (links, manifest, assertionResults) => {
             latestResourcesRaw
         );
 
-    /* eslint-disable prettier/prettier */
+    // Construct the comment with Lighthouse scores and resource usage
     const comment = `## Lighthouse scores
 
 | Category | Latest ([report](${report.latest})) | Main ([report](${report.main})) | Branch ([report](${report.branch})) |
@@ -204,6 +219,7 @@ export const buildLighthouseComment = (links, manifest, assertionResults) => {
 | Document | ${latestResources.count.document} | ${mainResources.count.document} | ${branchResources.count.document} |
 | Font | ${latestResources.count.font} | ${mainResources.count.font} | ${branchResources.count.font} |
 `;
-    /* eslint-enable prettier/prettier */
+
+    // Return the constructed comment
     return comment;
 };
