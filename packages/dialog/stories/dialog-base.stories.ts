@@ -34,7 +34,7 @@ export default {
     component: 'sp-dialog-base',
 };
 
-export const Slotted = (): TemplateResult => html`
+export const slotted = (): TemplateResult => html`
     <sp-dialog-base
         underlay
         @click=${(event: Event) => {
@@ -48,7 +48,7 @@ export const Slotted = (): TemplateResult => html`
         ${alertDestructive()}
     </sp-dialog-base>
 `;
-Slotted.decorators = [withOverlayDecorator];
+slotted.decorators = [withOverlayDecorator];
 
 export const disabledButton = (): TemplateResult => {
     return html`

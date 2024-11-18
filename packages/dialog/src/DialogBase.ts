@@ -157,20 +157,22 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     private get hasTransitionDuration(): boolean {
         const modal = this.shadowRoot.querySelector('.modal') as HTMLElement;
+
+        const modalTransitionDurations =
+            window.getComputedStyle(modal).transitionDuration;
+        for (const duration of modalTransitionDurations.split(','))
+            if (parseFloat(duration) > 0) return true;
+
         const underlay = this.shadowRoot.querySelector(
             'sp-underlay'
         ) as HTMLElement;
 
-        const modalTransitionDurations =
-            window.getComputedStyle(modal).transitionDuration;
-        const underlayTransitionDurations =
-            window.getComputedStyle(underlay).transitionDuration;
-
-        for (const duration of modalTransitionDurations.split(','))
-            if (parseFloat(duration) > 0) return true;
-
-        for (const duration of underlayTransitionDurations.split(','))
-            if (parseFloat(duration) > 0) return true;
+        if (underlay) {
+            const underlayTransitionDurations =
+                window.getComputedStyle(underlay).transitionDuration;
+            for (const duration of underlayTransitionDurations.split(','))
+                if (parseFloat(duration) > 0) return true;
+        }
 
         return false;
     }
