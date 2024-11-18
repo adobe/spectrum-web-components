@@ -498,6 +498,12 @@ export class ColorController {
     }
 
     getColor(format: string | ColorSpace): ColorObject {
+        const validFormats = ['rgb', 'rgba', 'hsva', 'hsv', 'hsl', 'hsla'];
+
+        if (typeof format === 'string' && !validFormats.includes(format)) {
+            throw new Error('not a valid format');
+        }
+
         return this._color.to(format);
     }
 
