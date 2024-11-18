@@ -8,6 +8,10 @@ executors:
         environment:
             NODE_ENV: development
 parameters:
+    # In order to update the VRT baseline images:
+    # 1. Copy the hash of the latest golden images cache from the left sidebar in the VRT preview link (not to be confused with the arbitrary hash in the URL).
+    # 2. Paste the hash in the current_golden_images_hash default parameter below.
+    # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
         default: f24a330121ab097c6f315e4dc7a670e8c0ace3b8
