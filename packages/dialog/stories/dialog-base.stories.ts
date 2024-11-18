@@ -15,19 +15,12 @@ import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import { trigger } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/sp-overlay.js';
 import { alertDestructive } from './dialog.stories.js';
 import { portrait } from './images.js';
-import { disabledButtonDecorator } from './index.js';
-
-const withOverlayDecorator = (story: () => TemplateResult): TemplateResult => {
-    return html`
-        <sp-button variant="primary" id="trigger">Toggle Dialog</sp-button>
-        <sp-overlay type="modal" trigger="trigger@click" open>
-            ${story()}
-        </sp-overlay>
-    `;
-};
+import {
+    disabledButtonWithOverlayDecorator,
+    withOverlayDecorator,
+} from './index.js';
 
 export default {
     title: 'Dialog Base',
@@ -115,7 +108,7 @@ export const disabledButton = (): TemplateResult => {
     `;
 };
 
-disabledButton.decorators = [withOverlayDecorator, disabledButtonDecorator];
+disabledButton.decorators = [disabledButtonWithOverlayDecorator];
 
 export const notAgain = (): TemplateResult => html`
     <sp-dialog-base
