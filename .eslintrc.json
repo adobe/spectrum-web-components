@@ -1,6 +1,7 @@
 {
     "root": true,
     "plugins": [
+        "@typescript-eslint",
         "notice",
         "@spectrum-web-components",
         "import",
@@ -13,7 +14,7 @@
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 8,
+        "ecmaVersion": 2020,
         "sourceType": "module"
     },
     "rules": {
@@ -70,6 +71,8 @@
         ]
     },
     "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended",
         "plugin:lit-a11y/recommended",
         "plugin:require-extensions/recommended"
