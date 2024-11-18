@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import '@spectrum-web-components/asset/sp-asset.js';
 import {
     CSSResultArray,
     html,
@@ -19,22 +20,24 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    ifDefined,
+    when,
+} from '@spectrum-web-components/base/src/directives.js';
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
+import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
+import '@spectrum-web-components/divider/sp-divider.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import '@spectrum-web-components/asset/sp-asset.js';
-
-import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/divider/sp-divider.js';
-import cardStyles from './card.css.js';
-import headingStyles from '@spectrum-web-components/styles/heading.js';
+import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import detailStyles from '@spectrum-web-components/styles/detail.js';
+import headingStyles from '@spectrum-web-components/styles/heading.js';
+import cardStyles from './card.css.js';
 
 /**
  * @element sp-card
@@ -48,10 +51,13 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  * @slot footer - Footer text
  */
 export class Card extends LikeAnchor(
-    SizedMixin(FocusVisiblePolyfillMixin(SpectrumElement), {
-        validSizes: ['s', 'm'],
-        noDefaultSize: true,
-    })
+    ObserveSlotPresence(
+        SizedMixin(FocusVisiblePolyfillMixin(SpectrumElement), {
+            validSizes: ['s', 'm'],
+            noDefaultSize: true,
+        }),
+        '[slot="image"]'
+    )
 ) {
     public static override get styles(): CSSResultArray {
         return [headingStyles, detailStyles, cardStyles];
@@ -95,6 +101,10 @@ export class Card extends LikeAnchor(
 
     @property()
     public subheading = '';
+
+    protected hasImage(): boolean {
+        return this.getSlotContentPresence('[slot="image"]');
+    }
 
     public override click(): void {
         this.likeAnchor?.click();
@@ -234,7 +244,11 @@ export class Card extends LikeAnchor(
 
     protected override render(): TemplateResult {
         return html`
-            ${this.renderImage()}
+            ${when(
+                this.hasImage(),
+                () => this.renderImage(),
+                () => nothing
+            )}
             <div class="body">
                 <div class="header">
                     ${this.renderHeading()}
