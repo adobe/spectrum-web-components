@@ -49,8 +49,8 @@ slot[name='description'] {
 }
 
 #cover-photo ::slotted(*),
-:host(:not([variant='quiet'])) #preview ::slotted(*) {
-    width: 100%;
+#preview ::slotted(*) {
+    inline-size: 100%;
     display: block;
 
     /* Since we're using <img> tags instead of background-image for the cover photo,
