@@ -276,7 +276,7 @@ describe('Overlay Trigger - Hover and Click', () => {
         expect(el.open, '"click" overlay no longer open').to.be.undefined;
         expect(tooltip.open).to.be.false;
     });
-    it('should not open right after closing the click overlay using the mouse', async () => {
+    it('should not open hover overlay right after closing the click overlay using the mouse', async () => {
         const overlayTrigger = await fixture<OverlayTrigger>(
             clickAndHoverTarget()
         );
@@ -325,7 +325,7 @@ describe('Overlay Trigger - Hover and Click', () => {
                 .true;
     });
 
-    it('should not open right after closing the click overlay using keyboard', async () => {
+    it('should open hover overlay right after closing the click overlay using keyboard', async () => {
         const overlayTrigger = await fixture<OverlayTrigger>(
             clickAndHoverTarget()
         );
