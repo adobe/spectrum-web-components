@@ -25,7 +25,6 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
-import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 
@@ -41,8 +40,7 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  * @element sp-card
  *
  * @fires change - Announces a change in the `selected` property of a card
- * @slot preview - This is the preview image for Gallery and Quiet Cards
- * @slot cover-photo - This is the cover photo for Default
+ * @slot image - This is the image of the card
  * @slot heading - HTML content to be listed as the heading
  * @slot subheading - HTML content to be listed as the subheading
  * @slot description - A description of the card
@@ -50,16 +48,10 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  * @slot footer - Footer text
  */
 export class Card extends LikeAnchor(
-    SizedMixin(
-        ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
-            '[slot="cover-photo"]',
-            '[slot="preview"]',
-        ]),
-        {
-            validSizes: ['s', 'm'],
-            noDefaultSize: true,
-        }
-    )
+    SizedMixin(FocusVisiblePolyfillMixin(SpectrumElement), {
+        validSizes: ['s', 'm'],
+        noDefaultSize: true,
+    })
 ) {
     public static override get styles(): CSSResultArray {
         return [headingStyles, detailStyles, cardStyles];
@@ -103,14 +95,6 @@ export class Card extends LikeAnchor(
 
     @property()
     public subheading = '';
-
-    protected get hasCoverPhoto(): boolean {
-        return this.getSlotContentPresence('[slot="cover-photo"]');
-    }
-
-    protected get hasPreview(): boolean {
-        return this.getSlotContentPresence('[slot="preview"]');
-    }
 
     public override click(): void {
         this.likeAnchor?.click();
@@ -207,7 +191,7 @@ export class Card extends LikeAnchor(
         this.addEventListener('pointercancel', handleEnd);
     }
 
-    protected get renderHeading(): TemplateResult {
+    protected renderHeading(): TemplateResult {
         return html`
             <div
                 class="title spectrum-Heading spectrum-Heading--sizeXS"
@@ -218,10 +202,18 @@ export class Card extends LikeAnchor(
         `;
     }
 
-    protected get renderPreviewImage(): TemplateResult {
+    protected renderImage(): TemplateResult {
+        const hasPreview =
+            this.variant === 'gallery' ||
+            this.variant === 'quiet' ||
+            this.horizontal;
+
         return html`
-            <sp-asset id="preview" variant=${ifDefined(this.asset)}>
-                <slot name="preview"></slot>
+            <sp-asset
+                id=${hasPreview ? 'preview' : 'cover-photo'}
+                variant=${ifDefined(this.asset)}
+            >
+                <slot name="image"></slot>
             </sp-asset>
             ${this.variant !== 'quiet' && !this.horizontal
                 ? html`
@@ -231,37 +223,7 @@ export class Card extends LikeAnchor(
         `;
     }
 
-    protected get renderCoverImage(): TemplateResult {
-        return html`
-            <sp-asset id="cover-photo" variant=${ifDefined(this.asset)}>
-                <slot name="cover-photo"></slot>
-            </sp-asset>
-            ${this.variant !== 'quiet' && !this.horizontal
-                ? html`
-                      <sp-divider size="s"></sp-divider>
-                  `
-                : nothing}
-        `;
-    }
-
-    protected get images(): TemplateResult[] {
-        const images: TemplateResult[] = [];
-        if (this.hasPreview) images.push(this.renderPreviewImage);
-        if (this.hasCoverPhoto) images.push(this.renderCoverImage);
-        return images;
-    }
-
-    private renderImage(): TemplateResult[] {
-        if (this.horizontal) {
-            return this.images;
-        }
-        if (this.variant !== 'standard') {
-            return [this.renderPreviewImage];
-        }
-        return this.images;
-    }
-
-    private get renderSubtitleAndDescription(): TemplateResult {
+    protected renderSubtitleAndDescription(): TemplateResult {
         return html`
             <div class="subtitle spectrum-Detail spectrum-Detail--sizeS">
                 <slot name="subheading">${this.subheading}</slot>
@@ -275,9 +237,9 @@ export class Card extends LikeAnchor(
             ${this.renderImage()}
             <div class="body">
                 <div class="header">
-                    ${this.renderHeading}
+                    ${this.renderHeading()}
                     ${this.variant === 'gallery'
-                        ? this.renderSubtitleAndDescription
+                        ? this.renderSubtitleAndDescription()
                         : nothing}
                     ${this.variant !== 'quiet' || this.size !== 's'
                         ? html`
@@ -293,7 +255,7 @@ export class Card extends LikeAnchor(
                 ${this.variant !== 'gallery'
                     ? html`
                           <div class="content">
-                              ${this.renderSubtitleAndDescription}
+                              ${this.renderSubtitleAndDescription()}
                           </div>
                       `
                     : nothing}

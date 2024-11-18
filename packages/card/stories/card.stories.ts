@@ -9,17 +9,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
-
-import '@spectrum-web-components/card/sp-card.js';
-import { landscape, portrait } from './images';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-file-txt.js';
-import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import '@spectrum-web-components/card/sp-card.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-file-txt.js';
 import '@spectrum-web-components/link/sp-link.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
+import { landscape, portrait } from './images';
 
 export default {
     component: 'sp-card',
@@ -56,7 +56,7 @@ export const Default = (args: StoryArgs): TemplateResult => {
             ?horizontal=${args.horizontal}
             style="width: 200px;"
         >
-            <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
+            <img slot="image" src=${portrait} alt="Demo Graphic" />
             <div slot="footer">Footer</div>
         </sp-card>
     `;
@@ -102,7 +102,7 @@ export const SmallQuiet = (args: StoryArgs): TemplateResult => {
                 <sp-menu-item>Save Selection</sp-menu-item>
                 <sp-menu-item disabled>Make Work Path</sp-menu-item>
             </sp-action-menu>
-            <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
+            <img slot="image" src=${portrait} alt="Demo Graphic" />
         </sp-card>
     `;
 };
@@ -146,7 +146,7 @@ export const href = (args: StoryArgs): TemplateResult => {
                 <sp-menu-item>Save Selection</sp-menu-item>
                 <sp-menu-item disabled>Make Work Path</sp-menu-item>
             </sp-action-menu>
-            <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
+            <img slot="image" src=${portrait} alt="Demo Graphic" />
         </sp-card>
     `;
 };
@@ -162,7 +162,7 @@ export const actions = (args: StoryArgs): TemplateResult => {
             ?horizontal=${args.horizontal}
             style="width: 200px;"
         >
-            <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
+            <img slot="image" src=${portrait} alt="Demo Graphic" />
             <div slot="footer">Footer</div>
             <sp-action-menu
                 label="More Actions"
@@ -191,7 +191,7 @@ export const Gallery = (args: StoryArgs): TemplateResult => {
             ?horizontal=${args.horizontal}
         >
             <img
-                slot="preview"
+                slot="image"
                 src=${landscape}
                 style="object-fit: cover"
                 alt="Demo Graphic"
@@ -224,7 +224,7 @@ export const Quiet = (args: StoryArgs): TemplateResult => {
                 ?horizontal=${args.horizontal}
                 style="width: 208px; height: 264px"
             >
-                <img src=${portrait} alt="Demo Graphic" slot="preview" />
+                <img src=${portrait} alt="Demo Graphic" slot="image" />
                 <div slot="description">10/15/18</div>
             </sp-card>
         </div>
@@ -241,7 +241,7 @@ export const quietFile = (args: StoryArgs): TemplateResult => {
                 ?horizontal=${args.horizontal}
                 style="width: 208px; height: 264px"
             >
-                <img src=${portrait} alt="Demo Graphic" slot="preview" />
+                <img src=${portrait} alt="Demo Graphic" slot="image" />
                 <div slot="heading">File Name</div>
                 <div slot="description">10/15/18</div>
             </sp-card>
@@ -259,7 +259,7 @@ export const quietFolder = (args: StoryArgs): TemplateResult => {
                 ?horizontal=${args.horizontal}
                 style="width: 208px; height: 264px"
             >
-                <img src=${portrait} alt="Demo Graphic" slot="preview" />
+                <img src=${portrait} alt="Demo Graphic" slot="image" />
                 <div slot="heading">Folder Name</div>
                 <div slot="description">10/15/18</div>
             </sp-card>
@@ -277,7 +277,7 @@ export const quietActions = (args: StoryArgs): TemplateResult => {
                 ?horizontal=${args.horizontal}
                 style="width: 208px; height: 264px"
             >
-                <img src=${portrait} alt="Demo Graphic" slot="preview" />
+                <img src=${portrait} alt="Demo Graphic" slot="image" />
                 <div slot="description">10/15/18</div>
                 <sp-action-menu
                     label="More Actions"
@@ -308,7 +308,7 @@ export const Horizontal = (args: StoryArgs): TemplateResult => {
             subheading="JPG"
         >
             <sp-icon-file-txt
-                slot="preview"
+                slot="image"
                 style="width: 36px; height: 36px;"
             ></sp-icon-file-txt>
         </sp-card>
@@ -328,7 +328,7 @@ export const horizontalWithHREF = (args: StoryArgs): TemplateResult => {
             target="_blank"
         >
             <sp-icon-file-txt
-                slot="preview"
+                slot="image"
                 style="width: 36px; height: 36px;"
             ></sp-icon-file-txt>
         </sp-card>
@@ -342,14 +342,14 @@ export const smallQuiet = (args: StoryArgs): TemplateResult => {
     return html`
         <div>
             <sp-card
-                size=${args.size}
+                size=${ifDefined(args.size)}
                 ?horizontal=${args.horizontal}
                 heading="Card Heading"
                 subheading="JPG"
                 variant="quiet"
                 style="width: 115px"
             >
-                <img src=${portrait} alt="Demo Graphic" slot="preview" />
+                <img src=${portrait} alt="Demo Graphic" slot="image" />
                 <div slot="footer">Footer</div>
                 <sp-action-menu
                     label="More Actions"
@@ -390,7 +390,7 @@ export const SlottedHeading = (args: StoryArgs): TemplateResult => {
             "
             ?horizontal=${args.horizontal}
         >
-            <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
+            <img slot="image" src=${portrait} alt="Demo Graphic" />
             <sp-textfield
                 class="slotted-textfield-heading"
                 slot="heading"
