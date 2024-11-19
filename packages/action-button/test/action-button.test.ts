@@ -296,4 +296,38 @@ describe('ActionButton', () => {
         expect(el.staticColor).to.be.null;
         expect(el.hasAttribute('static-color')).to.be.false;
     });
+    it('allows link click', async () => {
+        let clicked = false;
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button href="#top" target="_blank">
+                With Target
+            </sp-action-button>
+        `);
+
+        await elementUpdated(el);
+
+        // prevents browser from activating link but records the proxy click
+        el.shadowRoot
+            ?.querySelector('.anchor')
+            ?.addEventListener('click', (event: Event) => {
+                event.preventDefault();
+                clicked = true;
+            });
+        const rect = el.getBoundingClientRect();
+
+        // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
+        await sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+        await elementUpdated(el);
+        expect(clicked).to.be.true;
+    });
 });
