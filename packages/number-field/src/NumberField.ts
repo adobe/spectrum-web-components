@@ -747,7 +747,6 @@ export class NumberField extends TextfieldBase {
                               inline="end"
                               block="start"
                               class="button step-up"
-                              aria-describedby=${this.helpTextId}
                               aria-hidden="true"
                               label=${'Increase ' + this.appliedLabel}
                               size=${this.size}
@@ -765,7 +764,6 @@ export class NumberField extends TextfieldBase {
                               inline="end"
                               block="end"
                               class="button step-down"
-                              aria-describedby=${this.helpTextId}
                               aria-hidden="true"
                               label=${'Decrease ' + this.appliedLabel}
                               size=${this.size}
