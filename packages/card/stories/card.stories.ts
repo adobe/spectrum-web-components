@@ -231,6 +231,28 @@ export const Quiet = (args: StoryArgs): TemplateResult => {
     `;
 };
 
+export const quietContained = (args: StoryArgs): TemplateResult => {
+    return html`
+        <div>
+            <sp-card
+                variant="quiet"
+                heading="Card Heading"
+                subheading="JPG"
+                ?horizontal=${args.horizontal}
+                style="width: 208px; height: 264px"
+            >
+                <img
+                    src=${portrait}
+                    alt="Demo Graphic"
+                    slot="image"
+                    style="--mod-card-image-object-fit: contain;"
+                />
+                <div slot="description">10/15/18</div>
+            </sp-card>
+        </div>
+    `;
+};
+
 export const quietFile = (args: StoryArgs): TemplateResult => {
     return html`
         <div>

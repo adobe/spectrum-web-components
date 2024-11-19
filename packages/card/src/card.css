@@ -45,7 +45,7 @@ slot[name='description'] {
     /* Since we're using <img> tags instead of background-image for the cover photo,
     we need an additional object-fit property to preserve the aspect ratio of the image
     In spectrum-css, background-size is used */
-    object-fit: cover;
+    object-fit: var(--mod-card-image-object-fit, cover);
 }
 
 :host(:not([variant='gallery'])) #preview ::slotted(*) {
