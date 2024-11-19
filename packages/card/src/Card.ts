@@ -51,12 +51,15 @@ import cardStyles from './card.css.js';
  * @slot footer - Footer text
  */
 export class Card extends LikeAnchor(
-    ObserveSlotPresence(
-        SizedMixin(FocusVisiblePolyfillMixin(SpectrumElement), {
+    SizedMixin(
+        ObserveSlotPresence(
+            FocusVisiblePolyfillMixin(SpectrumElement),
+            '[slot="image"]'
+        ),
+        {
             validSizes: ['s', 'm'],
             noDefaultSize: true,
-        }),
-        '[slot="image"]'
+        }
     )
 ) {
     public static override get styles(): CSSResultArray {
