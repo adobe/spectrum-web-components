@@ -102,7 +102,6 @@ A switch can be disabled using the `disabled` property/attribute.
 
 ```html demo
 <sp-field-group vertical>
-    <sp-switch invalid>Invalid</sp-switch>
     <sp-switch disabled>Disabled</sp-switch>
     <sp-switch disabled checked>Disabled and checked</sp-switch>
 </sp-field-group>
