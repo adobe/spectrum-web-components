@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -56,20 +56,34 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
         return [toastStyles];
     }
 
+    /**
+     * The `open` property indicates whether the toast is visible or hidden.
+     *
+     * The `reflect` option is set to `true`, which means that changes to the `open` property will be reflected in the corresponding `open` attribute on the HTML element. This ensures that the property and attribute are always in sync.
+     *
+     * @param {Boolean} open
+     */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
     /**
-     * When a timeout is provided it represents the number of milliseconds from when
+     * When a timeout is provided, it represents the number of milliseconds from when
      * the Toast was placed on the page before it will automatically dismiss itself.
+     *
      * Accessibility concerns require that a Toast is available for at least 6000ms
      * before being dismissed, so any timeout of less than 6000ms will be raised to
-     * that baseline. It is suggested that messages longer than 120 words should
-     * receive another 1000ms in their timeout for each additional 120 words in the
-     * message. E.G. 240 words = 7000ms, 360 words = 8000ms, etc.
+     * that baseline.
      *
-     * @param {Number} timeout
+     * It is suggested that messages longer than 120 words should receive an additional
+     * 1000ms in their timeout for each additional 120 words in the message.
+     *
+     * For example, a message with 240 words should have a timeout of 7000ms,
+     * and a message with 360 words should have a timeout of 8000ms.
+     *
+     * @param {Number | null} timeout
+     * @default null
      */
+    //TODO(#4939): Align on the timeout minimum with design
     @property({ type: Number })
     public set timeout(timeout: number | null) {
         const hasTimeout = typeof timeout !== null && (timeout as number) > 0;
@@ -88,7 +102,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
         return this._timeout;
     }
 
-    public _timeout: number | null = null;
+    private _timeout: number | null = null;
 
     /**
      * The variant applies specific styling when set to `negative`, `positive`, `info`, `error`, or `warning`.
@@ -118,6 +132,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     private _variant: ToastVariants = '';
 
+    //TODO(#4931): Address the deprecated variants or remove the flags
     private renderIcon(variant: string): TemplateResult {
         switch (variant) {
             case 'info':
@@ -129,9 +144,12 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 `;
             case 'negative':
             case 'error': // deprecated
-            case 'warning': // deprecated
                 return html`
                     <sp-icon-alert label="Error" class="type"></sp-icon-alert>
+                `;
+            case 'warning': // deprecated
+                return html`
+                    <sp-icon-alert label="Warning" class="type"></sp-icon-alert>
                 `;
             case 'positive':
             case 'success': // deprecated

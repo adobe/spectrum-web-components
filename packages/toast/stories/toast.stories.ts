@@ -66,13 +66,23 @@ export default {
         open: {
             name: 'open',
             type: { name: 'boolean', required: false },
-            description: 'Whether the toast is open.',
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: false },
             },
             control: {
                 type: 'boolean',
+            },
+        },
+        timeout: {
+            name: 'timeout',
+            type: { name: 'number', required: false },
+            table: {
+                type: { summary: 'number' },
+                defaultValue: { summary: null },
+            },
+            control: {
+                type: 'number',
             },
         },
     },
@@ -82,6 +92,7 @@ interface Properties {
     variant: '' | 'negative' | 'positive' | 'info' | 'error' | 'warning';
     open: boolean;
     content: string;
+    timeout: number;
     onClose: (event: Event) => void;
 }
 
