@@ -59,8 +59,6 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**
      * The `open` property indicates whether the toast is visible or hidden.
      *
-     * The `reflect` option is set to `true`, which means that changes to the `open` property will be reflected in the corresponding `open` attribute on the HTML element. This ensures that the property and attribute are always in sync.
-     *
      * @param {Boolean} open
      */
     @property({ type: Boolean, reflect: true })
@@ -106,56 +104,56 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     /**
      * The variant applies specific styling when set to `negative`, `positive`, `info`, `error`, or `warning`.
+     *
      * `variant` attribute is removed when not matching one of the above.
      *
      * @param {String} variant
      */
-    @property({ type: String })
-    public set variant(variant: ToastVariants) {
-        if (variant === this.variant) {
-            return;
-        }
-        const oldValue = this.variant;
-        if (toastVariants.includes(variant)) {
-            this.setAttribute('variant', variant);
-            this._variant = variant;
-        } else {
-            this.removeAttribute('variant');
-            this._variant = '';
-        }
-        this.requestUpdate('variant', oldValue);
-    }
+    @property({ type: String, reflect: true })
+    public variant: ToastVariants = '';
 
-    public get variant(): ToastVariants {
-        return this._variant;
-    }
-
-    private _variant: ToastVariants = '';
+    /**
+     * The `iconLabel` property is used to set the `label` attribute on the icon element. This is used to provide a text alternative for the icon to ensure accessibility.
+     *
+     * If the `iconLabel` property is not set, the icon will use the `variant` to dynamically set the `label`.
+     *
+     * @param {String} iconLabel
+     */
+    @property({ type: String, attribute: 'icon-label' })
+    public iconLabel?: string;
 
     //TODO(#4931): Address the deprecated variants or remove the flags
-    private renderIcon(variant: string): TemplateResult {
+    private renderIcon(
+        variant: ToastVariants,
+        iconLabel?: string
+    ): TemplateResult {
         switch (variant) {
             case 'info':
                 return html`
                     <sp-icon-info
-                        label="Information"
+                        label=${iconLabel || 'Information'}
                         class="type"
                     ></sp-icon-info>
                 `;
             case 'negative':
             case 'error': // deprecated
                 return html`
-                    <sp-icon-alert label="Error" class="type"></sp-icon-alert>
+                    <sp-icon-alert
+                        label=${iconLabel || 'Error'}
+                        class="type"
+                    ></sp-icon-alert>
                 `;
             case 'warning': // deprecated
                 return html`
-                    <sp-icon-alert label="Warning" class="type"></sp-icon-alert>
+                    <sp-icon-alert
+                        label=${iconLabel || 'Warning'}
+                        class="type"
+                    ></sp-icon-alert>
                 `;
             case 'positive':
-            case 'success': // deprecated
                 return html`
                     <sp-icon-checkmark-circle
-                        label="Success"
+                        label=${iconLabel || 'Success'}
                         class="type"
                     ></sp-icon-checkmark-circle>
                 `;
@@ -223,7 +221,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     protected override render(): TemplateResult {
         return html`
-            ${this.renderIcon(this.variant)}
+            ${this.renderIcon(this.variant, this.iconLabel)}
             <div class="body" role="alert">
                 <div class="content">
                     <slot></slot>
