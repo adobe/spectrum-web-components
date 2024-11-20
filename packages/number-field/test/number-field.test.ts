@@ -1753,7 +1753,7 @@ describe('NumberField', () => {
         });
     });
     describe('accessibility model', () => {
-        it('buttons have proper label', async () => {
+        it('increment and decrement buttons cannot receive keyboard focus', async () => {
             await fixture<HTMLDivElement>(html`
                 <div>
                     ${Default({
@@ -1777,7 +1777,7 @@ describe('NumberField', () => {
                     (node) => node.name === 'Increase Enter a number'
                 ),
                 '`name` is the label text'
-            ).to.not.be.null;
+            ).to.be.null;
 
             expect(
                 findAccessibilityNode<NamedNode>(
@@ -1785,7 +1785,7 @@ describe('NumberField', () => {
                     (node) => node.name === 'Decrease Enter a number'
                 ),
                 '`name` is the label text'
-            ).to.not.be.null;
+            ).to.be.null;
         });
     });
 });
