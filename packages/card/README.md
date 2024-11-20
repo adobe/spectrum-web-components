@@ -229,3 +229,15 @@ When leveraging the `asset` attribute, a card can be declared as representing a 
 ```
 
 ### Accessibility
+
+#### Be concise
+
+Heading text should be no more than 5-7 words. If the card has an `href`, the heading is used as a link and should ideally be no more than 3 words. For buttons, 1-2 words.
+
+#### Use descriptive heading, link, and button text
+
+Be descriptive. Set expectations on what someone will find and where they will go once they interact with a card. Avoid using the same text on more than one interactive element, unless both elements go to the same place.
+
+#### Make the first word in a heading meaningful
+
+Consider making the first word of links, buttons and headings something an assistive technology user might search for when headings and links are listed alphabetically.
