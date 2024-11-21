@@ -80,7 +80,7 @@
         {
             // Apply these rules only to .ts files, excluding .test.ts and .stories.ts
             "files": ["*.ts"],
-            "excludedFiles": ["*.test.ts", "*.stories.ts"],
+            "excludedFiles": ["**/*test*.ts", "**/*.stories.ts", "**/*.d.ts"],
             "rules": {
                 "import/no-extraneous-dependencies": [
                     "error",
