@@ -335,6 +335,28 @@ With `variant="ramp"`, the slider with increases as it approaches the `max` posi
 <sp-slider label="Slider Label - Disabled" variant="ramp" disabled></sp-slider>
 ```
 
+### Range
+
+The `"range"` variant along with two handles to create a range slider. (See [slider handle](../slider-handle).)
+
+```html
+<sp-slider variant="range" step="1" min="0" max="255">
+    Output Levels
+    <sp-slider-handle
+        slot="handle"
+        name="min"
+        label="Minimum"
+        value="5"
+    ></sp-slider-handle>
+    <sp-slider-handle
+        slot="handle"
+        name="max"
+        label="Maximum"
+        value="250"
+    ></sp-slider-handle>
+</sp-slider>
+```
+
 #### Format options for labels
 
 An `<sp-slider>` or `<sp-slider-handle>` element will process its numeric value with `new Intl.NumberFormat(this.resolvedLanguage, this.formatOptions).format(this.value)` in order to prepare it for visual delivery in the input. In order to customize this processing supply your own `Intl.NumberFormatOptions` via the `formatOptions` property, or `format-options` attribute as seen below.

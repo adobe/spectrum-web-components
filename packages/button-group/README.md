@@ -48,6 +48,6 @@ A button group can be either horizontal or vertical in its orientation. By defau
 </sp-button-group>
 ```
 
-### Accessibility guidelines
+### Accessibility
 
 Review the guidelines for the [button](../button#accessibility-guidelines) children.

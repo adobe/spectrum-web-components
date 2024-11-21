@@ -330,9 +330,9 @@ Regardless of whether or not `<sp-menu>` carries a selection, when one of the `<
 
 Note: The `change` event is only dispatched on a left mouse click or Enter/Space keypress. Right/Middle mouse clicks will not dispatch the `change` event.
 
-### Accessibility guidelines
+### Accessibility
 
-Review the guidelines for the [menu-item](../menu-item#accessibility-guidelines) and [menu-group](../menu-group#accessibility-guidelines) descendants.
+Review the accessibility guidelines for the [menu-item](../menu-item#accessibility-guidelines) and [menu-group](../menu-group#accessibility-guidelines) descendants.
 
 #### Include a label
 

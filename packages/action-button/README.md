@@ -599,7 +599,7 @@ In addition to handling events like a native `<button>` HTML element, one can al
 </sp-action-button>
 ```
 
-### Accessibility guidelines
+### Accessibility
 
 #### Include a label
 
