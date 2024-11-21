@@ -133,6 +133,10 @@ A switch is required to have either a visible text label nested inside `<sp-swit
 
 Standalone switches should be used in situations where the context is clear without an associated text label. For example, a switch located at the top of a panel next to the panel's title makes it clear that the switch will enable/disable the panel options.
 
+<!--
+TODO: Update below when https://github.com/adobe/spectrum-web-components/issues/3269 is addressed.
+-->
+
 In those cases, you can use CSS to visually hide the text label.
 
 ```html
