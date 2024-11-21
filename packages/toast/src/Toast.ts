@@ -105,12 +105,35 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**
      * The variant applies specific styling when set to `negative`, `positive`, `info`, `error`, or `warning`.
      *
+     * The variants `error` and `warning` are deprecated and should be replaced with `negative`.
+     *
      * `variant` attribute is removed when not matching one of the above.
      *
      * @param {String} variant
      */
-    @property({ type: String, reflect: true })
-    public variant: ToastVariants = '';
+    @property({ type: String })
+    public set variant(variant: ToastVariants) {
+        if (variant === this.variant) {
+            return;
+        }
+        const oldValue = this.variant;
+
+        // validate the variant is one of the allowed values else remove the attribute
+        if (toastVariants.includes(variant)) {
+            this.setAttribute('variant', variant);
+            this._variant = variant;
+        } else {
+            this.removeAttribute('variant');
+            this._variant = '';
+        }
+        this.requestUpdate('variant', oldValue);
+    }
+
+    public get variant(): ToastVariants {
+        return this._variant;
+    }
+
+    private _variant: ToastVariants = '';
 
     /**
      * The `iconLabel` property is used to set the `label` attribute on the icon element. This is used to provide a text alternative for the icon to ensure accessibility.
