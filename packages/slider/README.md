@@ -76,6 +76,38 @@ Use `label-visibility="text"` to suppress the "value" label, use `label-visibili
 </sp-tab-panel>
 </sp-tabs>
 
+#### Handle slot
+
+The slider also optionally accepts two or more `<sp-slider-handle>` elements with `slot="handle"`:
+
+```html
+<sp-slider step="1" min="0" max="255">
+    Output Levels
+    <sp-slider-handle
+        slot="handle"
+        name="low"
+        label="Low"
+        value="5"
+        max="next"
+    ></sp-slider-handle>
+    <sp-slider-handle
+        slot="handle"
+        name="mid"
+        label="Mid"
+        value="100"
+        min="previous"
+        max="next"
+    ></sp-slider-handle>
+    <sp-slider-handle
+        slot="handle"
+        name="high"
+        label="High"
+        value="250"
+        min="previous"
+    ></sp-slider-handle>
+</sp-slider>
+```
+
 ### Options
 
 #### Sizes
@@ -411,7 +443,7 @@ Slider will reset to its `default-value` when the user double clicks on the slid
 <sp-slider value="50" default-value="20"></sp-slider>
 ```
 
-Note: If a slider with `default-value` attribute is contained in a modal and the slider-handle is focused then the following interaction will occur on pressing the `escape` key:
+Note: If a slider with `default-value` attribute is contained in a modal and the slider handle is focused then the following interaction will occur on pressing the `escape` key:
 
 -   If the slider value is different from the default value then the slider value will be reset to the default value and the modal will not be closed.
 -   If the slider value is equal to the default value then the modal will be closed.
@@ -497,3 +529,5 @@ Because multiple sliders are often used on the same page, the number field in th
 TODO when an option is created to focus on the number field via tab:
 When a slider is `editable`, the <kbd>Arrow Left (&larr;)</kbd> and <kbd>Arrow Right (&rarr;)</kbd> keys are used to move the cursor within the number input field. Since the slider itself can already be incremented via the arrow keys, the number field stepper buttons are not available via keyboard.
 -->
+
+Review the accessibility guidelines for the [slider handle](../slider-handle).
