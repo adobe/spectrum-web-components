@@ -73,6 +73,34 @@ export class ColorArea extends SpectrumElement {
 
     private languageResolver = new LanguageResolutionController(this);
 
+    /**
+     * A controller for managing color interactions within the ColorArea component.
+     *
+     * The `ColorController` is instantiated with the `manageAs` option set to `hsv`
+     * because the ColorArea component is designed to manipulate the saturation (`s`)
+     * and value (`v`) components of the HSV color model along the x and y axes,
+     * respectively. In the HSV color model:
+     *
+     * - The `hue` (h) represents the color type and is typically controlled by a separate input.
+     * - The `saturation` (s) represents the intensity of the color, ranging from 0% (gray) to 100% (full color).
+     * - The `value` (v) represents the brightness of the color, ranging from 0% (black) to 100% (full brightness).
+     *
+     * In the ColorArea component:
+     *
+     * - The x-axis controls the saturation (`s`), allowing users to adjust the intensity of the color.
+     * - The y-axis controls the value (`v`), allowing users to adjust the brightness of the color.
+     *
+     * By managing the color as `hsv`, the ColorController can efficiently handle the changes in saturation and value
+     * as the user interacts with the ColorArea component.
+     *
+     * @private
+     * @type {ColorController}
+     * @memberof ColorArea
+     *
+     * @property {ColorArea} this - The instance of the ColorArea component.
+     * @property {Object} options - Configuration options for the ColorController.
+     * @property {string} options.manageAs - Specifies the color model to manage, in this case 'hsv'.
+     */
     private colorController = new ColorController(this, { manageAs: 'hsv' });
 
     @property({ type: Number })
@@ -523,6 +551,18 @@ export class ColorArea extends SpectrumElement {
         this.addEventListener('keydown', this.handleKeydown);
     }
 
+    /**
+     * Overrides the `updated` method to handle changes in property values.
+     *
+     * @param changed - A map of changed properties with their previous values.
+     *
+     * This method performs the following actions:
+     * - Updates the saturation (`s`) of the color if `x` has changed.
+     * - Updates the value (`v`) of the color if `y` has changed.
+     * - If the `focused` property has changed and is now true, it lazily binds
+     *   the `input[type="range"]` elements in shadow roots to prevent multiple
+     *   tab stops within the Color Area for certain browser settings (e.g., Webkit).
+     */
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
         if (this.x !== this.inputX.valueAsNumber) {
