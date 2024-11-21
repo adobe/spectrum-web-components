@@ -65,9 +65,18 @@ export class Card extends LikeAnchor(
         return [headingStyles, detailStyles, cardStyles];
     }
 
+    /**
+     * Applies imagery representing a `file` or a `folder`
+     */
     @property()
     public asset?: 'file' | 'folder';
 
+    /**
+     * Applies alternate styling:
+     * `standard` for default styling;
+     * `gallery` for a heading, a subheading, an image preview, a description, and a footer;
+     * `quiet` a heading, a subheading, a cover photo, a description, and a footer plus optional actions
+     */
     @property({ reflect: true })
     public variant: 'standard' | 'gallery' | 'quiet' = 'standard';
 
