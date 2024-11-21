@@ -180,6 +180,10 @@ attribute controls the main variant of the card.
 
 Cards with `variant="quiet"` can contain a heading, a subheading, a cover photo, a description, and a footer. Quiet cards will also accept `actions` via a named slot.
 
+<!--
+TODO: Address example below when https://github.com/adobe/spectrum-web-components/issues/4945 is addressed.
+-->
+
 ```html
 <sp-card variant="quiet" heading="Card Heading" subheading="JPG Photo">
     <img alt="" slot="preview" src="https://picsum.photos/200/350" />
