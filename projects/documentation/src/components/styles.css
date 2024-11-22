@@ -151,8 +151,7 @@ body {
     }
 }
 
-.visually-hidden,
-[value='examples'] > .headerContainer:first-child {
+.visually-hidden {
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
     height: 1px;
@@ -841,17 +840,17 @@ docs-page:defined .section:not([selected]) {
 }
 
 docs-page:not(:defined) .section,
-sp-tabs[selected='examples'] sp-tab[value='api']:not(:defined),
-sp-tabs[selected='api'] sp-tab[value='examples']:not(:defined),
-sp-tabs[selected='examples'] sp-tab-panel[value='api'],
-sp-tabs[selected='api'] sp-tab-panel[value='examples'] {
+sp-tabs[selected='overview'] sp-tab[value='api']:not(:defined),
+sp-tabs[selected='api'] sp-tab[value='overview']:not(:defined),
+sp-tabs[selected='overview'] sp-tab-panel[value='api'],
+sp-tabs[selected='api'] sp-tab-panel[value='overview'] {
     order: 2;
 }
 
 docs-page:not(:defined) .section[selected],
-sp-tabs[selected='examples'] sp-tab[value='examples']:not(:defined),
+sp-tabs[selected='overview'] sp-tab[value='overview']:not(:defined),
 sp-tabs[selected='api'] sp-tab[value='api']:not(:defined),
-sp-tabs[selected='examples'] sp-tab-panel[value='examples'],
+sp-tabs[selected='overview'] sp-tab-panel[value='overview'],
 sp-tabs[selected='api'] sp-tab-panel[value='api'] {
     order: 1;
 }

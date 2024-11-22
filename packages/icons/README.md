@@ -24,6 +24,6 @@ When looking to leverage the `IconsMedium` or `IconsLarge` base classes as a typ
 import { IconsMedium, IconsLarge } from '@spectrum-web-components/icons';
 ```
 
-### Accessibility guidelines
+### Accessibility
 
-Review the guidelines for the [icon](../icon#accessibility-guidelines).
+Review the accessibility guidelines for the [icon](../icon#accessibility-guidelines).

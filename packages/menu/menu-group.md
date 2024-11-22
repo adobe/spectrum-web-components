@@ -231,6 +231,6 @@ The `<sp-menu-group>` element can be instructed to maintain a selection via the 
 </sp-tab-panel>
 </sp-tabs>
 
-### Accessibility guidelines
+### Accessibility
 
-Review the guidelines for the [menu-item](../menu-item#accessibility-guidelines) children and the guidelines for the parent [menu](../menu#accessibility-guidelines).
+Review the accessibility guidelines for the [menu-item](../menu-item#accessibility-guidelines) children and the guidelines for the parent [menu](../menu#accessibility-guidelines).

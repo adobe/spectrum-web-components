@@ -38,6 +38,9 @@ export class Switch extends SizedMixin(CheckboxBase) {
         return [switchStyles];
     }
 
+    /**
+     * provides an alternate style that is meant to be noticed
+     */
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 

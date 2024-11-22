@@ -391,7 +391,7 @@ popover or dialog opens.
 <sp-button autofocus>Confirm</sp-button>
 ```
 
-### Accessibility guidelines
+### Accessibility
 
 #### Include a label
 

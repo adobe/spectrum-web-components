@@ -282,9 +282,9 @@ Note: While `sp-menu-item` can accommodate any custom content in the `submenu` s
 </sp-menu>
 ```
 
-### Accessibility guidelines
+### Accessibility
 
-Review the guidelines for the parent [menu](../menu#accessibility-guidelines) and [menu-group](../menu-group#accessibility-guidelines).
+Review the accessibility guidelines for the parent [menu](../menu#accessibility-guidelines) and [menu-group](../menu-group#accessibility-guidelines).
 
 #### Include a label
 

@@ -564,7 +564,7 @@ While in pending state, `<sp-picker>` elements will not respond to click events 
 </sp-tab-panel>
 </sp-tabs>
 
-### Accessibility guidelines
+### Accessibility
 
 #### Include a visible label
 
