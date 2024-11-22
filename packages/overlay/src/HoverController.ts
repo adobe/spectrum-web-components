@@ -35,7 +35,7 @@ export class HoverController extends InteractionController {
     pointerentered = false;
 
     handleKeyup(event: KeyboardEvent): void {
-        if (isWebKit() && (event.code === 'Tab' || event.code === 'Escape')) {
+        if (event.code === 'Tab' || event.code === 'Escape') {
             this.open = true;
             this.removeSafariFocusRingClass();
         }
