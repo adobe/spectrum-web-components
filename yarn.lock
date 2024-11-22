@@ -5340,10 +5340,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-15.0.0-s2-foundations.27.tgz#f2c3a9fac5417a4c69aa004eaab8599a816f1d42"
   integrity sha512-FxL/DUTRXu337mMfcOykfucxzfoKvkraU55iRE8jsbpdpivvfM1ks7r6bapDq9nD9d22mGbDHqCF6Dq9Junshg==
 
-"@spectrum-css/tokens@^@spectrum-css/tokens@14.3.1":
-  version "14.3.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-14.3.1.tgz#52079bad1a9d6329bfcba00702c579366a83c72e"
-  integrity sha512-YQBEvccp5jC9dxNMSLb708ucrxY64nExvFfJ0iQ+ddlAraOykFFoCTGcQ5UvSNp31Dp348H05PB7zRoStl0Jdg==
+"@spectrum-css/tokens@^14.3.1":
+  version "14.6.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-14.6.0.tgz#c51aaf4fb512f946819edf32807f19e054243b02"
+  integrity sha512-v/ko2A2i2v4ShHizSdRkOs0fYBVLdiQe5yN/ECFBjpamd0YJHfZGh4uBIGSG+uZjwWpHbKhRusdCRFJKJ+WNYQ==
 
 "@spectrum-css/tooltip@^7.0.0-s2-foundations.15":
   version "7.0.0-s2-foundations.15"

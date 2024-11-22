@@ -57,6 +57,8 @@
 
     --spectrum-colorloupe-checkerboard-fill: url(#checkerboard-primary);
 
+    --spectrum-contextual-help-content-spacing: var(--spectrum-spacing-100);
+
     --spectrum-menu-item-selectable-edge-to-text-not-selected-small: 28px;
     --spectrum-menu-item-selectable-edge-to-text-not-selected-medium: 32px;
     --spectrum-menu-item-selectable-edge-to-text-not-selected-large: 38px;
