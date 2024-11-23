@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 :host {
     display: inline-flex;
+    background-color: red;
 }
 
 :host([quiet]) {
