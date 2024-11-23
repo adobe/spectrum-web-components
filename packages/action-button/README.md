@@ -540,3 +540,25 @@ With the application of the `toggles` attribute, the button will self manage its
     </div>
 </div>
 ```
+
+## Handling events
+
+Events handlers for clicks and other user actions can be registered on a
+`<sp-action-button>` as on a standard HTML `<button>` element.
+
+```html
+<sp-button onclick="spAlert(this, '<sp-action-button> clicked!')">
+    Click me
+</sp-button>
+```
+
+In addition to handling events like a native `<button>` HTML element, one can also use a `<sp-action-button>` in place of the `<a>` HTML element by using the `href` and optional `target` attribute.
+
+```html
+<sp-action-button
+    href="https://github.com/adobe/spectrum-web-components"
+    target="_blank"
+>
+    Click me
+</sp-action-button>
+```

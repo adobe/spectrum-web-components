@@ -31,11 +31,13 @@ export interface Properties {
     icon?: TemplateResult;
     label?: string;
     [prop: string]: unknown;
+    href: undefined;
 }
 
 export function renderButton(properties: Properties): TemplateResult {
     return html`
         <sp-action-button
+            href=${ifDefined(properties.href)}
             ?quiet="${!!properties.quiet}"
             ?emphasized="${!!properties.emphasized}"
             static-color="${ifDefined(properties.staticColor)}"
