@@ -157,7 +157,9 @@ describe('DateTimePicker', () => {
         });
 
         it('should update the value as CalendarDate when it is the most specific date value', async () => {
-            element = await fixtureElement({ props: { value: valueDate } });
+            element = await fixtureElement({
+                props: { value: valueDate.set({ year: 2222 }) },
+            });
             editableSegments = getEditableSegments(element);
 
             const year = editableSegments.getByType(SegmentTypes.Year);
@@ -195,7 +197,9 @@ describe('DateTimePicker', () => {
         });
 
         it('should update the value as CalendarDateTime when it is the most specific date value', async () => {
-            element = await fixtureElement({ props: { value: valueDateTime } });
+            element = await fixtureElement({
+                props: { value: valueDateTime.set({ year: 2222 }) },
+            });
             editableSegments = getEditableSegments(element);
 
             const year = editableSegments.getByType(SegmentTypes.Year);
@@ -237,7 +241,9 @@ describe('DateTimePicker', () => {
         });
 
         it('should update the value as ZonedDateTime when it is the most specific date value', async () => {
-            element = await fixtureElement({ props: { value: valueZoned } });
+            element = await fixtureElement({
+                props: { value: valueZoned.set({ year: 2222 }) },
+            });
             editableSegments = getEditableSegments(element);
 
             const year = editableSegments.getByType(SegmentTypes.Year);
@@ -1995,7 +2001,7 @@ describe('DateTimePicker', () => {
             await sendKeys({ type: '0' });
             expect(segment.innerText).to.equal('2030');
             await sendKeys({ type: '5' });
-            expect(segment.innerText).to.equal('305');
+            expect(segment.innerText).to.equal('5');
 
             expectPlaceholders(editableSegments, [segment]);
             expect(element.value).to.be.undefined;
@@ -2247,7 +2253,7 @@ describe('DateTimePicker', () => {
             expect(segment.innerText).to.equal('12');
             await sendKeys({ type: '3' });
             await elementUpdated(element);
-            expect(segment.innerText).to.equal('23');
+            expect(segment.innerText).to.equal('03');
             await sendKeys({ type: '5' });
             await elementUpdated(element);
             expect(segment.innerText).to.equal('05');
@@ -2663,7 +2669,7 @@ describe('DateTimePicker', () => {
             element = await fixtureElement({
                 props: {
                     precision: Precisions.Second,
-                    value: new CalendarDateTime(1010, 10, 15, 13, 10, 10),
+                    value: new CalendarDateTime(1010, 10, 15, 12, 10, 10),
                 },
             });
             element.addEventListener('input', inputSpy);
@@ -2900,7 +2906,6 @@ describe('DateTimePicker', () => {
             });
             element.addEventListener('input', inputSpy);
             editableSegments = getEditableSegments(element);
-            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
             const monthSegment = editableSegments.getByType(SegmentTypes.Month);
             const hourSegment = editableSegments.getByType(SegmentTypes.Hour);
             const secondSegment = editableSegments.getByType(
@@ -2909,10 +2914,6 @@ describe('DateTimePicker', () => {
             const dayPeriodSegment = editableSegments.getByType(
                 SegmentTypes.DayPeriod
             );
-
-            yearSegment.focus();
-            await sendKeys({ type: '222' });
-            await elementUpdated(element);
 
             monthSegment.focus();
             await sendKeys({ type: '5' });

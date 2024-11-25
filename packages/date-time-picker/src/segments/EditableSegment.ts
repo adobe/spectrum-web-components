@@ -62,26 +62,16 @@ export abstract class EditableSegment {
         const typedValue = numberParser.parse(eventData);
         if (isNaN(typedValue)) return;
 
-        let newValue: number | undefined = numberParser.parse(
+        const newValue: number | undefined = numberParser.parse(
             `${this.value ?? ''}${typedValue}`
         );
 
-        if (String(newValue).length > String(this.maxValue).length)
-            newValue = numberParser.parse(String(newValue).slice(1));
-
-        const { minValue, maxValue } = this.inputValidationLimits;
-
-        if (newValue < minValue) {
-            newValue = !this.isInputValueCompliant(typedValue)
-                ? this.value
-                : typedValue;
-        } else if (newValue > maxValue) {
-            newValue = !this.isInputValueCompliant(typedValue)
-                ? this.value
-                : typedValue;
+        if (this.isInputValueCompliant(newValue)) {
+            this.value = newValue;
+            return;
         }
 
-        this.value = newValue;
+        if (this.isInputValueCompliant(typedValue)) this.value = typedValue;
     }
 
     private isInputValueCompliant(value: number): boolean {
