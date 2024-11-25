@@ -125,7 +125,7 @@
     "devDependencies": {
         "@spectrum-css/commons": "^11.0.0-s2-foundations.15",
         "@spectrum-css/expressvars": "^3.0.9",
-        "@spectrum-css/tokens": "^14.3.1",
+        "@spectrum-css/tokens": "14.3.1",
         "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.0.0-s2-foundations.27",
         "@spectrum-css/typography": "^7.0.0-s2-foundations.17",
         "@spectrum-css/vars": "^9.0.8"
