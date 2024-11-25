@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     border-radius: var(
         --mod-table-border-radius,
@@ -22,6 +21,7 @@ governing permissions and limitations under the License.
 }
 
 :host([drop-target]) {
+    --spectrum-table-border-color: transparent;
     outline-width: var(
         --mod-table-focus-indicator-thickness,
         var(--spectrum-table-focus-indicator-thickness)
@@ -34,7 +34,6 @@ governing permissions and limitations under the License.
             var(--spectrum-table-drop-zone-outline-color)
         )
     );
-    --mod-table-border-color: transparent;
 }
 
 :host {

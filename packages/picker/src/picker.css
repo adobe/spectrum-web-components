@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-picker.css');
+@import url('./picker-overrides.css');
 
 :host {
     display: inline-flex;
@@ -112,4 +113,64 @@ sp-menu {
 
 sp-overlay:not(:defined) {
     display: none;
+}
+
+/* remove-focus-ring-safari-hack is a custom css class that we are using to 
+unset the focus ring styles in safari. This is a temporary fix because safari 
+sets the :focus-visible pseudo class on the parent element when the dialog is closed.
+*/
+#button.remove-focus-ring-safari-hack:focus-visible {
+    background-color: var(
+        --highcontrast-picker-background-color,
+        var(
+            --mod-picker-background-color-default,
+            var(--spectrum-picker-background-color-default)
+        )
+    );
+    border-color: var(
+        --highcontrast-picker-border-color-default,
+        var(
+            --mod-picker-border-color-default,
+            var(--spectrum-picker-border-color-default)
+        )
+    );
+    color: var(
+        --highcontrast-picker-content-color-default,
+        var(
+            --mod-picker-font-color-default,
+            var(--spectrum-picker-font-color-default)
+        )
+    );
+}
+
+#button.remove-focus-ring-safari-hack:after {
+    border: none;
+}
+
+#button.remove-focus-ring-safari-hack:focus-visible:after {
+    box-shadow: none;
+}
+
+#button.remove-focus-ring-safari-hack:active {
+    background-color: var(
+        --highcontrast-picker-background-color,
+        var(
+            --mod-picker-background-color-default,
+            var(--spectrum-picker-background-color-default)
+        )
+    );
+    border-color: var(
+        --highcontrast-picker-border-color-default,
+        var(
+            --mod-picker-border-color-default,
+            var(--spectrum-picker-border-color-default)
+        )
+    );
+    color: var(
+        --highcontrast-picker-content-color-default,
+        var(
+            --mod-picker-font-color-default,
+            var(--spectrum-picker-font-color-default)
+        )
+    );
 }

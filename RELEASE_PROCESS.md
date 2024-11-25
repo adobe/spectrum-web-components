@@ -28,7 +28,7 @@ If publishing fails with an error, check the [list of tags](https://github.com/a
 `yarn publish`
 in each package.
 
-## Publishing the docs site manually
+### Publishing the docs site manually
 
 Navigate to SWC's [Actions](https://github.com/adobe/spectrum-web-components/actions) and click the `Build & publish site` link under the _Workflows_ heading.
 

@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { NumberFormatter, NumberParser } from '@internationalized/number';
 import {
     CSSResultArray,
     html,
@@ -21,24 +22,25 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import {
     LanguageResolutionController,
     languageResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
-import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
-import { NumberFormatter, NumberParser } from '@internationalized/number';
 
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron50.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron50.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
 import '@spectrum-web-components/infield-button/sp-infield-button.js';
 import {
     isAndroid,
+    isIOS,
     isIPhone,
 } from '@spectrum-web-components/shared/src/platform.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 import styles from './number-field.css.js';
 
 export const FRAMES_PER_CHANGE = 5;
@@ -63,8 +65,17 @@ export const remapMultiByteCharacters: Record<string, string> = {
     '％': '%',
     '＋': '+',
     ー: '-',
+    一: '1',
+    二: '2',
+    三: '3',
+    四: '4',
+    五: '5',
+    六: '6',
+    七: '7',
+    八: '8',
+    九: '9',
+    零: '0',
 };
-
 const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
     s: (dir) => html`
         <sp-icon-chevron50
@@ -95,7 +106,7 @@ const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
  */
 export class NumberField extends TextfieldBase {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, styles, chevronStyles];
+        return [...super.styles, styles, chevronStyles, chevronIconOverrides];
     }
 
     @query('.buttons')
@@ -175,20 +186,25 @@ export class NumberField extends TextfieldBase {
     private _trackingValue = '';
     private lastCommitedValue?: number;
 
-    private setValue(value: number = this.value): void {
-        this.value = value;
+    private setValue(newValue: number = this.value): void {
+        // Capture previous value for accurate IME change detection
+        const previousValue = this.lastCommitedValue;
+
+        this.value = newValue;
+
         if (
-            typeof this.lastCommitedValue === 'undefined' ||
-            this.lastCommitedValue === this.value
+            typeof previousValue === 'undefined' ||
+            previousValue === this.value
         ) {
             // Do not announce when the value is unchanged.
             return;
         }
 
+        this.lastCommitedValue = this.value;
+
         this.dispatchEvent(
             new Event('change', { bubbles: true, composed: true })
         );
-        this.lastCommitedValue = this.value;
     }
 
     /**
@@ -214,16 +230,22 @@ export class NumberField extends TextfieldBase {
     private valueBeforeFocus: string = '';
     private isIntentDecimal: boolean = false;
 
-    private convertValueToNumber(value: string): number {
+    private convertValueToNumber(inputValue: string): number {
+        // Normalize full-width characters to their ASCII equivalents
+        let normalizedValue = inputValue
+            .split('')
+            .map((char) => remapMultiByteCharacters[char] || char)
+            .join('');
+
         const separators = this.valueBeforeFocus
             .split('')
             .filter((char) => this.decimalsChars.has(char));
         const uniqueSeparators = new Set(separators);
 
         if (
-            isIPhone() &&
+            isIOS() &&
             this.inputElement.inputMode === 'decimal' &&
-            value !== this.valueBeforeFocus
+            normalizedValue !== this.valueBeforeFocus
         ) {
             const parts = this.numberFormatter.formatToParts(1000.1);
 
@@ -234,12 +256,15 @@ export class NumberField extends TextfieldBase {
             for (const separator of uniqueSeparators) {
                 const isDecimalSeparator = separator === replacementDecimal;
                 if (!isDecimalSeparator && !this.isIntentDecimal) {
-                    value = value.replace(new RegExp(separator, 'g'), '');
+                    normalizedValue = normalizedValue.replace(
+                        new RegExp(separator, 'g'),
+                        ''
+                    );
                 }
             }
 
             let hasReplacedDecimal = false;
-            const valueChars = value.split('');
+            const valueChars = normalizedValue.split('');
             for (let index = valueChars.length - 1; index >= 0; index--) {
                 const char = valueChars[index];
                 if (this.decimalsChars.has(char)) {
@@ -249,11 +274,10 @@ export class NumberField extends TextfieldBase {
                     } else valueChars[index] = '';
                 }
             }
-            value = valueChars.join('');
+            normalizedValue = valueChars.join('');
         }
-        return this.numberParser.parse(value);
+        return this.numberParser.parse(normalizedValue);
     }
-
     private get _step(): number {
         if (typeof this.step !== 'undefined') {
             return this.step;
@@ -473,6 +497,20 @@ export class NumberField extends TextfieldBase {
 
     protected override handleInput(event: InputEvent): void {
         if (this.isComposing) {
+            // If user actually types a new character.
+            if (event.data) {
+                // Don't allow non-numeric characters even in composing mode.
+                const partialValue = this.convertValueToNumber(event.data);
+
+                if (Number.isNaN(partialValue)) {
+                    this.inputElement.value = this.indeterminate
+                        ? indeterminatePlaceholder
+                        : this._trackingValue;
+
+                    this.isComposing = false;
+                }
+            }
+
             event.stopPropagation();
             return;
         }
@@ -492,6 +530,7 @@ export class NumberField extends TextfieldBase {
             .split('')
             .map((char) => remapMultiByteCharacters[char] || char)
             .join('');
+
         if (this.numberParser.isValidPartialNumber(value)) {
             // Use starting value as this.value is the `input` value.
             this.lastCommitedValue = this.lastCommitedValue ?? this.value;
@@ -511,6 +550,9 @@ export class NumberField extends TextfieldBase {
             this.inputElement.value = this.indeterminate
                 ? indeterminatePlaceholder
                 : this._trackingValue;
+
+            // Don't emit input event when the character is invalid.
+            event.stopPropagation();
         }
         const currentLength = value.length;
         const previousLength = this._trackingValue.length;
@@ -705,7 +747,7 @@ export class NumberField extends TextfieldBase {
                               inline="end"
                               block="start"
                               class="button step-up"
-                              aria-describedby=${this.helpTextId}
+                              aria-hidden="true"
                               label=${'Increase ' + this.appliedLabel}
                               size=${this.size}
                               tabindex="-1"
@@ -722,7 +764,7 @@ export class NumberField extends TextfieldBase {
                               inline="end"
                               block="end"
                               class="button step-down"
-                              aria-describedby=${this.helpTextId}
+                              aria-hidden="true"
                               label=${'Decrease ' + this.appliedLabel}
                               size=${this.size}
                               tabindex="-1"
@@ -744,13 +786,16 @@ export class NumberField extends TextfieldBase {
         if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
             this.clearNumberFormatterCache();
         }
-        if (changes.has('value') || changes.has('max') || changes.has('min')) {
+        if (
+            changes.has('value') ||
+            changes.has('max') ||
+            changes.has('min') ||
+            changes.has('step')
+        ) {
             const value = this.numberParser.parse(
                 this.formattedValue.replace(this._forcedUnit, '')
             );
             this.value = value;
-        }
-        if (changes.has('step')) {
             this.clearValueFormatterCache();
         }
         super.update(changes);
@@ -773,31 +818,29 @@ export class NumberField extends TextfieldBase {
     }
 
     protected override updated(changes: PropertyValues<this>): void {
+        if (!this.inputElement || !this.isConnected) {
+            // Prevent race conditions if inputElement is removed from DOM while a queued update is still running.
+            return;
+        }
+
         if (changes.has('min') || changes.has('formatOptions')) {
-            let inputMode = 'numeric';
-            const hasNegative = typeof this.min !== 'undefined' && this.min < 0;
+            const hasOnlyPositives =
+                typeof this.min !== 'undefined' && this.min >= 0;
+
             const { maximumFractionDigits } =
                 this.numberFormatter.resolvedOptions();
-            const hasDecimals = maximumFractionDigits > 0;
-            /* c8 ignore next 18 */
-            if (isIPhone()) {
-                // iPhone doesn't have a minus sign in either numeric or decimal.
-                // Note this is only for iPhone, not iPad, which always has both
-                // minus and decimal in numeric.
-                if (hasNegative) {
-                    inputMode = 'text';
-                } else if (hasDecimals) {
-                    inputMode = 'decimal';
-                }
-            } else if (isAndroid()) {
-                // Android numeric has both a decimal point and minus key.
-                // decimal does not have a minus key.
-                if (hasNegative) {
-                    inputMode = 'numeric';
-                } else if (hasDecimals) {
-                    inputMode = 'decimal';
-                }
-            }
+            const hasDecimals =
+                maximumFractionDigits && maximumFractionDigits > 0;
+
+            let inputMode = 'numeric';
+            /* c8 ignore next 5 */
+            // iPhone doesn't have a minus sign in either numeric or decimal.
+            if (isIPhone() && !hasOnlyPositives) inputMode = 'text';
+            else if (isIOS() && hasDecimals) inputMode = 'decimal';
+            // Android numeric has both a decimal point and minus key. Decimal does not have a minus key.
+            else if (isAndroid() && hasDecimals && hasOnlyPositives)
+                inputMode = 'decimal';
+
             this.inputElement.inputMode = inputMode;
         }
         if (

@@ -13,15 +13,11 @@ jobs:
         # Run the job if manually triggered or if the commit message includes '#publish' & the check suite has passed
         if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '#publish')
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: '18'
-                  cache: 'yarn'
-                  registry-url: 'https://registry.npmjs.org'
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
 
-            - name: Install dependencies
-              run: yarn --frozen-lockfile
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
             - name: Generate Docs
               run: yarn docs:ci

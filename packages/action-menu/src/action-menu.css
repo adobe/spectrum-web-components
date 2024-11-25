@@ -59,17 +59,17 @@ governing permissions and limitations under the License.
 :host([dir]) slot[icon-only]::slotted([slot='icon']),
 :host([dir]) slot[icon-only] .icon {
     margin-inline: calc(
-            (
+        (
+                var(
+                        --custom-actionbutton-edge-to-text,
+                        var(--spectrum-actionbutton-edge-to-text)
+                    ) -
                     var(
-                            --custom-actionbutton-edge-to-text,
-                            var(--spectrum-actionbutton-edge-to-text)
-                        ) -
-                        var(
-                            --custom-actionbutton-edge-to-visual-only,
-                            var(--spectrum-actionbutton-edge-to-visual-only)
-                        )
-                ) * -1
-        ); /* .spectrum-ActionButton-hold+.spectrum-ActionButton-icon,
+                        --custom-actionbutton-edge-to-visual-only,
+                        var(--spectrum-actionbutton-edge-to-visual-only)
+                    )
+            ) * -1
+    ); /* .spectrum-ActionButton-hold+.spectrum-ActionButton-icon,
    * .spectrum-ActionButton-icon:only-child */
 }
 

@@ -11,11 +11,14 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 #tooltip {
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
+    transition:
+        transform 0.13s ease-in-out,
+        opacity 0.13s ease-in-out,
+        visibility 0s linear 0.13s;
     transition:
         transform
             var(
@@ -40,64 +43,10 @@ governing permissions and limitations under the License.
     pointer-events: auto;
     visibility: visible;
     opacity: 1;
+    transition-delay: 0s;
     transition-delay: var(
         --mod-overlay-animation-duration-opened,
         var(--spectrum-animation-duration-0, 0s)
-    );
-}
-
-#tooltip {
-    --spectrum-tooltip-animation-duration: var(
-        --spectrum-animation-duration-100
-    );
-    --spectrum-tooltip-margin: 0px;
-    --spectrum-tooltip-height: var(--spectrum-component-height-75);
-    --spectrum-tooltip-max-inline-size: var(--spectrum-tooltip-maximum-width);
-    --spectrum-tooltip-border-radius: var(--spectrum-corner-radius-100);
-    --spectrum-tooltip-icon-width: var(--spectrum-workflow-icon-size-50);
-    --spectrum-tooltip-icon-height: var(--spectrum-workflow-icon-size-50);
-    --spectrum-tooltip-font-size: var(--spectrum-font-size-75);
-    --spectrum-tooltip-line-height: var(--spectrum-line-height-100);
-    --spectrum-tooltip-cjk-line-height: var(--spectrum-cjk-line-height-100);
-    --spectrum-tooltip-font-weight: var(--spectrum-regular-font-weight);
-    --spectrum-tooltip-spacing-inline: var(
-        --spectrum-component-edge-to-text-75
-    );
-    --spectrum-tooltip-spacing-block-start: var(
-        --spectrum-component-top-to-text-75
-    );
-    --spectrum-tooltip-spacing-block-end: var(
-        --spectrum-component-bottom-to-text-75
-    );
-    --spectrum-tooltip-icon-spacing-inline-start: var(
-        --spectrum-text-to-visual-75
-    );
-    --spectrum-tooltip-icon-spacing-inline-end: var(
-        --spectrum-text-to-visual-75
-    );
-    --spectrum-tooltip-icon-spacing-block-start: var(
-        --spectrum-component-top-to-workflow-icon-75
-    );
-    --spectrum-tooltip-background-color-informative: var(
-        --spectrum-informative-background-color-default
-    );
-    --spectrum-tooltip-background-color-positive: var(
-        --spectrum-positive-background-color-default
-    );
-    --spectrum-tooltip-background-color-negative: var(
-        --spectrum-negative-background-color-default
-    );
-    --spectrum-tooltip-content-color: var(--spectrum-white);
-    --spectrum-tooltip-tip-inline-size: var(--spectrum-tooltip-tip-width);
-    --spectrum-tooltip-tip-block-size: var(--spectrum-tooltip-tip-height);
-    --spectrum-tooltip-tip-square-size: var(--spectrum-tooltip-tip-inline-size);
-    --spectrum-tooltip-tip-height-percentage: 50%;
-    --spectrum-tooltip-tip-antialiasing-inset: 0.5px;
-    --spectrum-tooltip-pointer-corner-spacing: var(
-        --spectrum-corner-radius-100
-    );
-    --spectrum-tooltip-background-color-default: var(
-        --spectrum-tooltip-backgound-color-default-neutral
     );
 }
 
@@ -107,17 +56,18 @@ governing permissions and limitations under the License.
     }
 
     #tip {
-        forced-color-adjust: none;
         --highcontrast-tooltip-background-color-default: CanvasText;
         --highcontrast-tooltip-background-color-informative: CanvasText;
         --highcontrast-tooltip-background-color-positive: CanvasText;
         --highcontrast-tooltip-background-color-negative: CanvasText;
+        forced-color-adjust: none;
     }
 }
 
 #tooltip {
     box-sizing: border-box;
     vertical-align: top;
+    inline-size: auto;
     padding-inline: var(
         --mod-tooltip-spacing-inline,
         var(--spectrum-tooltip-spacing-inline)
@@ -126,6 +76,7 @@ governing permissions and limitations under the License.
         --mod-tooltip-border-radius,
         var(--spectrum-tooltip-border-radius)
     );
+    block-size: auto;
     min-block-size: var(--mod-tooltip-height, var(--spectrum-tooltip-height));
     max-inline-size: var(
         --mod-tooltip-max-inline-size,
@@ -158,8 +109,6 @@ governing permissions and limitations under the License.
     user-select: none;
     flex-direction: row;
     align-items: center;
-    block-size: auto;
-    inline-size: auto;
     display: inline-flex;
     position: relative;
 }
@@ -806,11 +755,5 @@ governing permissions and limitations under the License.
                     var(--spectrum-tooltip-animation-distance)
                 ) * -1
         )
-    );
-}
-
-#tooltip {
-    --spectrum-tooltip-backgound-color-default-neutral: var(
-        --system-spectrum-tooltip-backgound-color-default-neutral
     );
 }

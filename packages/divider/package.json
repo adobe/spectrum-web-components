@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/divider",
-    "version": "0.44.0",
+    "version": "1.0.1",
     "publishConfig": {
         "access": "public"
     },
@@ -29,6 +29,7 @@
             "development": "./src/Divider.dev.js",
             "default": "./src/Divider.js"
         },
+        "./src/divider-overrides.css.js": "./src/divider-overrides.css.js",
         "./src/divider.css.js": "./src/divider.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -57,10 +58,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.44.0"
+        "@spectrum-web-components/base": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/divider": "^3.1.0"
+        "@spectrum-css/divider": "^4.0.0-s2-foundations.15"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

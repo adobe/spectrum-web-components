@@ -35,6 +35,7 @@ async function bundle(fileName) {
     let { code, map } = await bundleAsync({
         filename: fileName,
         minify: true,
+        errorRecovery: true,
         resolver: {
             read(filePath) {
                 const file = fs.readFileSync(filePath, 'utf8');

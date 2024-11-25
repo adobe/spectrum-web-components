@@ -102,11 +102,11 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             return;
         }
         if (variants.includes(variant) && this.fillStart === undefined) {
-            this.setAttribute('variant', variant);
             this._variant = variant;
+            this.setAttribute('variant', variant);
         } else {
-            this.removeAttribute('variant');
             this._variant = '';
+            this.removeAttribute('variant');
         }
         this.requestUpdate('variant', oldVariant);
     }

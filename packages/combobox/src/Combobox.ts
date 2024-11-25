@@ -27,19 +27,20 @@ import {
     ifDefined,
     live,
     repeat,
-    when,
 } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import { Textfield } from '@spectrum-web-components/textfield';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 
 import styles from './combobox.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 
 export type ComboboxOption = {
@@ -54,7 +55,7 @@ export type ComboboxOption = {
  */
 export class Combobox extends Textfield {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, styles, chevronStyles];
+        return [...super.styles, styles, chevronStyles, chevronIconOverrides];
     }
 
     /**
@@ -82,6 +83,17 @@ export class Combobox extends Textfield {
     /** Defines a string value that labels the Combobox while it is in pending state. */
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
+
+    public pendingStateController: PendingStateController<this>;
+
+    /**
+     * Initializes the `PendingStateController` for the Combobox component.
+     * When the pending state changes to `true`, the `open` property of the Combobox is set to `false`.
+     */
+    constructor() {
+        super();
+        this.pendingStateController = new PendingStateController(this);
+    }
 
     @query('slot:not([name])')
     private optionSlot!: HTMLSlotElement;
@@ -415,10 +427,7 @@ export class Combobox extends Textfield {
                 ?required=${this.required}
                 ?readonly=${this.readonly}
             />
-            ${when(
-                this.pending && !this.disabled && !this.readonly,
-                this.renderLoader
-            )}
+            ${this.pendingStateController.renderPendingState()}
         `;
     }
 
@@ -493,6 +502,8 @@ export class Combobox extends Textfield {
                                                   ? 'true'
                                                   : 'false'}
                                               .value=${option.value}
+                                              .selected=${option.value ===
+                                              this.itemValue}
                                           >
                                               ${option.itemText}
                                           </sp-menu-item>

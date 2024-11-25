@@ -35,18 +35,14 @@ interface TestableToast {
 describe('Toast', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Toast>(
-                html`
-                    <sp-toast open>Help text.</sp-toast>
-                `
-            )
+            await fixture<Toast>(html`
+                <sp-toast open>Help text.</sp-toast>
+            `)
     );
     it('loads', async () => {
-        const el = await fixture<Toast>(
-            html`
-                <sp-toast open>Help text.</sp-toast>
-            `
-        );
+        const el = await fixture<Toast>(html`
+            <sp-toast open>Help text.</sp-toast>
+        `);
 
         await elementUpdated(el);
 
@@ -54,13 +50,11 @@ describe('Toast', () => {
     });
     toastVariants.map((variant) => {
         it(`loads - [variant="${variant}"]`, async () => {
-            const el = await fixture<Toast>(
-                html`
-                    <sp-toast variant=${variant} open>
-                        This toast is of the \`${variant}\` variant.
-                    </sp-toast>
-                `
-            );
+            const el = await fixture<Toast>(html`
+                <sp-toast variant=${variant} open>
+                    This toast is of the \`${variant}\` variant.
+                </sp-toast>
+            `);
 
             await elementUpdated(el);
 
@@ -68,11 +62,9 @@ describe('Toast', () => {
         });
     });
     it('loads - timeout', async () => {
-        const el = await fixture<Toast>(
-            html`
-                <sp-toast timeout="100">Help text.</sp-toast>
-            `
-        );
+        const el = await fixture<Toast>(html`
+            <sp-toast timeout="100">Help text.</sp-toast>
+        `);
 
         await elementUpdated(el);
         expect(el.open).to.be.false;
@@ -85,11 +77,9 @@ describe('Toast', () => {
         expect(el.open).to.be.false;
     });
     it('`timeout` updates `countdownStart`', async () => {
-        const el = await fixture<Toast>(
-            html`
-                <sp-toast timeout="100">Help text.</sp-toast>
-            `
-        );
+        const el = await fixture<Toast>(html`
+            <sp-toast timeout="100">Help text.</sp-toast>
+        `);
 
         await elementUpdated(el);
         expect(el.open).to.be.false;
@@ -123,11 +113,9 @@ describe('Toast', () => {
         expect(thirdStart).to.equal(0);
     });
     it('stops timeout on `focusin`', async () => {
-        const el = await fixture<Toast>(
-            html`
-                <sp-toast timeout="100">Help text.</sp-toast>
-            `
-        );
+        const el = await fixture<Toast>(html`
+            <sp-toast timeout="100">Help text.</sp-toast>
+        `);
 
         await elementUpdated(el);
 
@@ -158,11 +146,9 @@ describe('Toast', () => {
         expect(el.open, 'not open to end').to.be.false;
     });
     it('closes', async () => {
-        const el = await fixture<Toast>(
-            html`
-                <sp-toast open>Help text.</sp-toast>
-            `
-        );
+        const el = await fixture<Toast>(html`
+            <sp-toast open>Help text.</sp-toast>
+        `);
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -179,13 +165,11 @@ describe('Toast', () => {
     it('`close` can be prevented', async () => {
         const handleClose = (event: CustomEvent): void =>
             event.preventDefault();
-        const el = await fixture<Toast>(
-            html`
-                <sp-toast open timeout="100" @close=${handleClose}>
-                    Help text.
-                </sp-toast>
-            `
-        );
+        const el = await fixture<Toast>(html`
+            <sp-toast open timeout="100" @close=${handleClose}>
+                Help text.
+            </sp-toast>
+        `);
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -205,13 +189,11 @@ describe('Toast', () => {
             event.preventDefault();
             closeSpy();
         };
-        const el = await fixture<Toast>(
-            html`
-                <sp-toast open timeout="100" @close=${handleClose}>
-                    Help text.
-                </sp-toast>
-            `
-        );
+        const el = await fixture<Toast>(html`
+            <sp-toast open timeout="100" @close=${handleClose}>
+                Help text.
+            </sp-toast>
+        `);
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -233,13 +215,11 @@ describe('Toast', () => {
         expect(closeSpy.callCount).to.equal(1);
     });
     it('validates variants', async () => {
-        const el = await fixture<Toast>(
-            html`
-                <sp-toast variant="invalid" open>
-                    This toast validates variants.
-                </sp-toast>
-            `
-        );
+        const el = await fixture<Toast>(html`
+            <sp-toast variant="invalid" open>
+                This toast validates variants.
+            </sp-toast>
+        `);
 
         await elementUpdated(el);
         expect(el.variant).to.equal('');
@@ -255,13 +235,11 @@ describe('Toast', () => {
         expect(el.variant).to.equal(toastVariants[0]);
     });
     it('maintains [variant] when disconnected/connected', async () => {
-        const el = await fixture<Toast>(
-            html`
-                <sp-toast variant="positive" open>
-                    This toast maintains variants.
-                </sp-toast>
-            `
-        );
+        const el = await fixture<Toast>(html`
+            <sp-toast variant="positive" open>
+                This toast maintains variants.
+            </sp-toast>
+        `);
 
         await elementUpdated(el);
         expect(el.variant).to.equal('positive');
@@ -277,19 +255,17 @@ describe('Toast', () => {
     });
     it('reopens', async () => {
         const closeSpy = spy();
-        const el = await fixture<Toast>(
-            html`
-                <sp-toast
-                    variant="positive"
-                    open
-                    @close=${() => {
-                        closeSpy();
-                    }}
-                >
-                    This toast maintains variants.
-                </sp-toast>
-            `
-        );
+        const el = await fixture<Toast>(html`
+            <sp-toast
+                variant="positive"
+                open
+                @close=${() => {
+                    closeSpy();
+                }}
+            >
+                This toast maintains variants.
+            </sp-toast>
+        `);
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -308,12 +284,10 @@ describe('Toast', () => {
         expect(el.open).to.be.true;
         expect(closeSpy.callCount).to.equal(1);
     });
-    it('sp close button renders with static="white"', async () => {
-        const el = await fixture<Toast>(
-            html`
-                <sp-toast open>Help text.</sp-toast>
-            `
-        );
+    it('sp close button renders with static-color="white"', async () => {
+        const el = await fixture<Toast>(html`
+            <sp-toast open>Help text.</sp-toast>
+        `);
         const renderRoot = el.shadowRoot ? el.shadowRoot : el;
         const closeButton = renderRoot.querySelector(
             'sp-close-button'
@@ -321,6 +295,6 @@ describe('Toast', () => {
 
         expect(closeButton).to.exist;
 
-        expect(closeButton.getAttribute('static')).to.equal('white');
+        expect(closeButton.getAttribute('static-color')).to.equal('white');
     });
 });

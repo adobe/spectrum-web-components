@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 @media (forced-colors: active) {
     :host {
         forced-color-adjust: none;
@@ -36,6 +35,9 @@ governing permissions and limitations under the License.
             --highcontrast-table-divider-color,
             var(--mod-table-divider-color, var(--spectrum-table-divider-color))
         );
+}
+
+:host {
     box-sizing: border-box;
     font-size: var(
         --mod-table-row-font-size,
@@ -77,6 +79,9 @@ governing permissions and limitations under the License.
                 var(--spectrum-table-outer-border-inline-width)
             )
     );
+}
+
+:host {
     position: relative;
 }
 
@@ -96,6 +101,12 @@ governing permissions and limitations under the License.
                 var(--spectrum-table-focus-indicator-color)
             )
         )
+    );
+    outline-offset: calc(
+        var(
+                --mod-table-focus-indicator-thickness,
+                var(--spectrum-table-focus-indicator-thickness)
+            ) * -1
     );
     outline-offset: calc(
         var(

@@ -62,7 +62,3 @@ export const testActiveElement = (
     ) as HTMLElement;
     expect(activeElement.getAttribute('aria-selected')).to.equal('true');
 };
-
-export const isWebKit =
-    /AppleWebKit/.test(window.navigator.userAgent) &&
-    !/Chrome/.test(window.navigator.userAgent);

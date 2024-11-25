@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
-    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -30,11 +29,8 @@ export class CoachIndicator extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
-    @property({ reflect: true })
-    public static?: 'white' | 'black';
-
-    @property({ reflect: true })
-    public variant?: 'white' | 'black';
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white' | 'black';
 
     protected override render(): TemplateResult {
         return html`
@@ -42,23 +38,5 @@ export class CoachIndicator extends SpectrumElement {
             <div class="ring"></div>
             <div class="ring"></div>
         `;
-    }
-
-    protected override updated(changes: PropertyValues): void {
-        super.updated(changes);
-        if (
-            changes.has('variant') &&
-            (this.variant || typeof changes.get('variant'))
-        ) {
-            this.static = this.variant;
-            if (window.__swc.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `The "variant" attribute/property of <${this.localName}> have been deprecated. Use "static" with any of the same values instead. "variant" will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/badge/#fixed',
-                    { level: 'deprecation' }
-                );
-            }
-        }
     }
 }

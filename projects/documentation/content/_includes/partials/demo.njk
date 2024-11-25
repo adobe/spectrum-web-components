@@ -25,9 +25,9 @@
                     {% endif %}
                 </sp-picker>
                 {% elif demoControl.control === 'text' %}
-                    <sp-textfield value="{{ demoControl.table.defaultValue.summary }}"></sp-textfield>
+                    <sp-textfield class="demo-control" value="{{ demoControl.table.defaultValue.summary }}" id="{{ demoControl.name }}"></sp-textfield>
                 {% elif demoControl.control === 'number' %}
-                    <sp-number-field value="{{ demoControl.table.defaultValue.summary }}"></sp-number-field>
+                    <sp-number-field class="demo-control" value="{{ demoControl.table.defaultValue.summary }}" id="{{ demoControl.name }}"></sp-number-field>
                 {% endif %}
             </div>
         {% endfor %}</sp-field-group>{% endif %}
@@ -38,7 +38,8 @@
         <sp-card
             size="s"
             horizontal
-            href="https://www.npmjs.com/package/@spectrum-web-components/button"
+            href="https://www.npmjs.com/package/@spectrum-web-components/{{ componentPackage }}"
+            target="_blank"
         >
             <h2 slot="heading">NPM</h2>
             <h3 slot="subheading">{% packageVersion componentPackage %}</h3>
@@ -58,6 +59,7 @@
             size="s"
             horizontal
             href={{ spectrumURLs.urls[componentPackage]}}
+            target="_blank"
         >
             <h2 slot="heading">Spectrum</h2>
             <h3 slot="subheading">View guidelines</h3>
@@ -75,6 +77,7 @@
             size="s"
             horizontal
             href={{ storybookURLs.urls[componentPackage]}}
+            target="_blank"
         >
             <h2 slot="heading">Storybook</h2>
             <h3 slot="subheading">View Storybook</h3>
@@ -90,6 +93,7 @@
             size="s"
             horizontal
             href={{ demoURLs.urls[componentPackage]}}
+            target="_blank"
         >
             <h2 slot="heading">Try it on</h2>
             <h3 slot="subheading">webcomponents.dev</h3>

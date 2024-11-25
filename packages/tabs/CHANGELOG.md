@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+# [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+# [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
+
+### Bug Fixes
+
+-   **tabs:** scroll exceeding tabs limit ([#4722](https://github.com/adobe/spectrum-web-components/issues/4722)) ([fc9a448](https://github.com/adobe/spectrum-web-components/commit/fc9a4489c13e2471226e0f79a1197a61ef8242a7))
+
+## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+# [0.48.0](https://github.com/adobe/spectrum-web-components/compare/v0.47.2...v0.48.0) (2024-09-17)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+# [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+# [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
+
+### Bug Fixes
+
+-   **tabs:** prevent vertical auto scroll ([#4613](https://github.com/adobe/spectrum-web-components/issues/4613)) ([e1ef097](https://github.com/adobe/spectrum-web-components/commit/e1ef097bc4c4a1e888de028f40b6f2bb5ea2d7b8))
+
 # [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
 
 **Note:** Version bump only for package @spectrum-web-components/tabs

@@ -3,42 +3,157 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
+
+### Bug Fixes
+
+-   **action-group:** add null check for slotElement in manageButtons ([#4924](https://github.com/adobe/spectrum-web-components/issues/4924)) ([60db5ab](https://github.com/adobe/spectrum-web-components/commit/60db5ab86155a1fea13452752c8995bf6da26cd5))
+-   **icon:** remove size300 suffix from chevron and checkmark icons in Spectrum 2 ([#4904](https://github.com/adobe/spectrum-web-components/issues/4904)) ([a22f42b](https://github.com/adobe/spectrum-web-components/commit/a22f42bf508e1d0f2ddc9824b0f4d4e08eac659a))
+-   **menu:** prevent sp-menu-item text-align cascading ([#4868](https://github.com/adobe/spectrum-web-components/issues/4868)) ([6663820](https://github.com/adobe/spectrum-web-components/commit/666382067e20a48a91d440ca1427698f9b58bc06))
+-   **number-field, slider:** ensure cached value is cleared when toggling between different steps ([#4846](https://github.com/adobe/spectrum-web-components/issues/4846)) ([1c84c96](https://github.com/adobe/spectrum-web-components/commit/1c84c968f55cde28d0144a78153c9a33a078c726))
+-   **number-field:** allow only numeric characters for Japanese/Chinese IME ([#4817](https://github.com/adobe/spectrum-web-components/issues/4817)) ([a791bd1](https://github.com/adobe/spectrum-web-components/commit/a791bd1c027ede4c88e8c066ef97610409a0f2c4))
+-   **overlay:** ensure smooth animation when opening modal overlays ([#4879](https://github.com/adobe/spectrum-web-components/issues/4879)) ([cd8dad7](https://github.com/adobe/spectrum-web-components/commit/cd8dad7b08c822a8224834b8775b0ab74bbaf3b6))
+-   **overlay:** overlay closing another overlay ([#4880](https://github.com/adobe/spectrum-web-components/issues/4880)) ([30434fa](https://github.com/adobe/spectrum-web-components/commit/30434fa52194884befd528ab88842092798859cc))
+-   **overlay:** remove flex display for dialog ([#4902](https://github.com/adobe/spectrum-web-components/issues/4902)) ([48448ea](https://github.com/adobe/spectrum-web-components/commit/48448ea75d7ffa61422947a18c3ea1ebf9ca25b7))
+-   **picker:** don't handle pointerdown for touch devices ([#4850](https://github.com/adobe/spectrum-web-components/issues/4850)) ([3a62d13](https://github.com/adobe/spectrum-web-components/commit/3a62d133b8074e5b40f1eedfa9a5566dc53b30ad))
+-   **search:** clear button ui in express ([#4910](https://github.com/adobe/spectrum-web-components/issues/4910)) ([f88e1e2](https://github.com/adobe/spectrum-web-components/commit/f88e1e2c03ed74f8d3f7924d395a34168afd244c))
+-   **slider:** update slider config to process the tick css correctly ([#4905](https://github.com/adobe/spectrum-web-components/issues/4905)) ([7b1dfd0](https://github.com/adobe/spectrum-web-components/commit/7b1dfd0c12a15f5c3696f162347e5aace1d9c92e))
+
+# [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
+
+### Bug Fixes
+
+-   **dialog-wrapper:** update heading to fully span grid area ([#4810](https://github.com/adobe/spectrum-web-components/issues/4810)) ([7d1f461](https://github.com/adobe/spectrum-web-components/commit/7d1f4612046ed5aedd8b3ff7db4cfa3e183b30a8))
+-   **help-text:** apply aria-live to ensure full help text is read to user ([#4210](https://github.com/adobe/spectrum-web-components/issues/4210)) ([049dc56](https://github.com/adobe/spectrum-web-components/commit/049dc568ddef88bdde0a72d26ced150c8edfc727))
+
+### Features
+
+-   spectrum-web-components now supports Spectrum 2 system ([#4829](https://github.com/adobe/spectrum-web-components/issues/4829))
+
+### BREAKING CHANGES
+
+-   coach-indicator: remove 'variant' and 'static' attributes from coach-indicator ([#4772](https://github.com/adobe/spectrum-web-components/issues/4772))
+-   split-button: remove split-button component ([#4729](https://github.com/adobe/spectrum-web-components/issues/4729))
+-   banner: remove banner component ([#4723](https://github.com/adobe/spectrum-web-components/issues/4723))
+-   badge: remove deprecated badge values ([#4742](https://github.com/adobe/spectrum-web-components/issues/4742))
+-   quick-actions: remove sp-quick-actions ([#4761](https://github.com/adobe/spectrum-web-components/issues/4761))
+-   popover: remove popover's dialog property ([#4751](https://github.com/adobe/spectrum-web-components/issues/4751))
+-   thumbnail: remove thumbnail deprecated sizes ([#4760](https://github.com/adobe/spectrum-web-components/issues/4760))
+-   progress-circle: remove progress-circle overBackground property ([#4750](https://github.com/adobe/spectrum-web-components/issues/4750))
+-   action-button, action-group, action-menu, button, link, meter, progress-bar: remove deprecated 'static' references ([#4818](https://github.com/adobe/spectrum-web-components/issues/4818))
+-   action-button: remove action-button variant property ([#4741](https://github.com/adobe/spectrum-web-components/issues/4741))
+-   theme: remove 'theme' attribute from sp-theme ([#4765](https://github.com/adobe/spectrum-web-components/issues/4765))
+
+# [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
+
+### Bug Fixes
+
+-   **number-field:** show decimal on iPad minimized keyboard ([#4784](https://github.com/adobe/spectrum-web-components/issues/4784)) ([deb7a1c](https://github.com/adobe/spectrum-web-components/commit/deb7a1cce452f120a9c2c96d73b0d03132c02565))
+-   **tabs:** scroll exceeding tabs limit ([#4722](https://github.com/adobe/spectrum-web-components/issues/4722)) ([fc9a448](https://github.com/adobe/spectrum-web-components/commit/fc9a4489c13e2471226e0f79a1197a61ef8242a7))
+
+### Features
+
+-   add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
+-   **button:** add noWrap property ([#4779](https://github.com/adobe/spectrum-web-components/issues/4779)) ([6760ec2](https://github.com/adobe/spectrum-web-components/commit/6760ec283ad190f45f9639e636953e90ea562385))
+
+## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
+
+### Bug Fixes
+
+-   add file extension to Theme imports and respective eslint rule ([#4771](https://github.com/adobe/spectrum-web-components/issues/4771)) ([a2b6bea](https://github.com/adobe/spectrum-web-components/commit/a2b6bea7142930d8143d9ca887e2c56ffa71a669))
+-   **breadcrumbs:** trigger change event on breadcrumbs via keyboard ([#4769](https://github.com/adobe/spectrum-web-components/issues/4769)) ([e14d082](https://github.com/adobe/spectrum-web-components/commit/e14d0827cd5a190e63b14418b8dd89fe2cab49ac))
+
+# [0.48.0](https://github.com/adobe/spectrum-web-components/compare/v0.47.2...v0.48.0) (2024-09-17)
+
+### Bug Fixes
+
+-   **action-menu:** dispatch scroll event ([#4715](https://github.com/adobe/spectrum-web-components/issues/4715)) ([c76f3f5](https://github.com/adobe/spectrum-web-components/commit/c76f3f54f5a08df82ea4247252f2e0114836a778))
+-   add null check in updated method of sp-number-field ([#4709](https://github.com/adobe/spectrum-web-components/issues/4709)) ([7b1eeab](https://github.com/adobe/spectrum-web-components/commit/7b1eeab613fffe833ea0f57a23d2cc11bef71ea7))
+-   **combobox:** update selected item state in menu ([#4730](https://github.com/adobe/spectrum-web-components/issues/4730)) ([c4cfd2a](https://github.com/adobe/spectrum-web-components/commit/c4cfd2a5a2b1d48727488023d1361e3a5b7c32db))
+-   **menu:** allow menu-item to support arbitrary element as the submenu root ([#4720](https://github.com/adobe/spectrum-web-components/issues/4720)) ([4c6a0dc](https://github.com/adobe/spectrum-web-components/commit/4c6a0dcf7c67560c664c1f7c0f93d0ef3f0005ab))
+-   **picker:** added a custom class to make `:focus-visible` styles consistent across all browsers ([#4724](https://github.com/adobe/spectrum-web-components/issues/4724)) ([d667d08](https://github.com/adobe/spectrum-web-components/commit/d667d0853b8122008ce8fe50c6c479a42dc96a9f))
+-   **toast:** added ability to wrap toast content with long words ([#4738](https://github.com/adobe/spectrum-web-components/issues/4738)) ([302d6fe](https://github.com/adobe/spectrum-web-components/commit/302d6fe927baff3a08dd567718eba8ee34473ac4))
+
+### Features
+
+-   locale picker in the storybook's decorator ([#4687](https://github.com/adobe/spectrum-web-components/issues/4687)) ([9e0cd08](https://github.com/adobe/spectrum-web-components/commit/9e0cd08d68cad858bbdc53e8b01b7eeabfde59fb))
+-   **reactive-controller:** new pending state controller ([#4605](https://github.com/adobe/spectrum-web-components/issues/4605)) ([68baf94](https://github.com/adobe/spectrum-web-components/commit/68baf94f257b9c7525253819a2ed3c8fa1b6c408))
+
+## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
+
+### Bug Fixes
+
+-   **slider:** update variant attribute correctly ([#4714](https://github.com/adobe/spectrum-web-components/issues/4714)) ([9c22dd6](https://github.com/adobe/spectrum-web-components/commit/9c22dd6b749a3c80dc516db616f8ac68d30136cf))
+
+## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
+
+### Bug Fixes
+
+-   **breadcrumbs:** adjust ref directives imports ([#4681](https://github.com/adobe/spectrum-web-components/issues/4681)) ([6e7ba13](https://github.com/adobe/spectrum-web-components/commit/6e7ba132cecfb9089cda4598986161104992345d))
+-   **reactive-controllers:** update focusable element's tab-index to 0 on accepting focus ([#4630](https://github.com/adobe/spectrum-web-components/issues/4630)) ([d359e84](https://github.com/adobe/spectrum-web-components/commit/d359e844fb00ff3a52f7f4346038aa8d5b620025))
+-   **slider:** bump css version to increase slider z-index ([#4682](https://github.com/adobe/spectrum-web-components/issues/4682)) ([04bba95](https://github.com/adobe/spectrum-web-components/commit/04bba95bcc0946bf8f7172830f2127ed41a89d8c))
+
+# [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
+
+### Bug Fixes
+
+-   **number-field:** update IME change detection ([#4672](https://github.com/adobe/spectrum-web-components/issues/4672)) ([de05aee](https://github.com/adobe/spectrum-web-components/commit/de05aee7c414e6cfcd27a12f129b03886311d3bf))
+-   **picker:** updated type for mobile and desktop ([#4666](https://github.com/adobe/spectrum-web-components/issues/4666)) ([d11da1f](https://github.com/adobe/spectrum-web-components/commit/d11da1ffb7faa7804a1383cffba90277cf401e45))
+-   **tray:** removed nonNull operator and initialized resolveTransitionPromise with dummy func ([#4658](https://github.com/adobe/spectrum-web-components/issues/4658)) ([1a8a479](https://github.com/adobe/spectrum-web-components/commit/1a8a4794c8601decd204db19302a296ed75c4deb))
+
+### Features
+
+-   **breadcrumbs:** add Breadcrumbs component ([#4578](https://github.com/adobe/spectrum-web-components/issues/4578)) ([acd4b5e](https://github.com/adobe/spectrum-web-components/commit/acd4b5e4401dad8cf26b50ee5dcda80a28b62999))
+
+# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+
+### Bug Fixes
+
+-   **contextual-help:** export typings ([#4655](https://github.com/adobe/spectrum-web-components/issues/4655)) ([8febc38](https://github.com/adobe/spectrum-web-components/commit/8febc383afa7fb67573c56ea4704d7397f07b661))
+-   docummentation demo controls should should have their changes reflected ([#4636](https://github.com/adobe/spectrum-web-components/issues/4636)) ([adc8af9](https://github.com/adobe/spectrum-web-components/commit/adc8af98e1a59c399551885506c9d68edb840fd0))
+-   **menu:** should not make a selection on right click ([#4642](https://github.com/adobe/spectrum-web-components/issues/4642)) ([d269629](https://github.com/adobe/spectrum-web-components/commit/d269629a64063515eddee9b178b6240b92b9bc76))
+-   rtl mobile layout view ([#4645](https://github.com/adobe/spectrum-web-components/issues/4645)) ([4b2d688](https://github.com/adobe/spectrum-web-components/commit/4b2d68826b064b6d36970793ae7fa54a7f83917e))
+
+### Features
+
+-   upgrade menu and dialog grid css ([#4638](https://github.com/adobe/spectrum-web-components/issues/4638)) ([ab9d468](https://github.com/adobe/spectrum-web-components/commit/ab9d468a5a1cf5721e169bd8dd8724be78c148a1))
+
+# [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
+
+### Bug Fixes
+
+-   **progress-bar:** removed duplicate label ([#4494](https://github.com/adobe/spectrum-web-components/issues/4494)) ([39b6622](https://github.com/adobe/spectrum-web-components/commit/39b6622658270400c6e44909096d0c6a9be5a040))
+-   **tabs:** prevent vertical auto scroll ([#4613](https://github.com/adobe/spectrum-web-components/issues/4613)) ([e1ef097](https://github.com/adobe/spectrum-web-components/commit/e1ef097bc4c4a1e888de028f40b6f2bb5ea2d7b8))
+-   **overlay** replace at() polyfill ([#4628](https://github.com/adobe/spectrum-web-components/issues/4628)) ([8cef2c6](https://github.com/adobe/spectrum-web-components/commit/8cef2c639433248257a72bfc2c98d0663e265b09))
+-   **picker** pointerup in mobile does not automatically make a selection ([4227](https://github.com/adobe/spectrum-web-components/issues/4227)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+-   **action-menu** clicking a menu item in an action menu tray doesn't register a click behind it ([4461] (https://github.com/adobe/spectrum-web-components/issues/4461)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+-   **tray** sp-tray now doesn't automatically retract when opened with fewer items in the iOS simulator ([4572] (https://github.com/adobe/spectrum-web-components/issues/4572)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+-   **action-menu** ActionMenu tray in mobile device doesn't dispatch multiple events ([4459] (https://github.com/adobe/spectrum-web-components/issues/4459)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+
+### Features
+
+-   add filled state to dropzone component ([#4617](https://github.com/adobe/spectrum-web-components/issues/4617)) ([f6b7144](https://github.com/adobe/spectrum-web-components/commit/f6b7144efde6507b2690f011af00b9529112c373))
+
 # [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
 
 ### Bug Fixes
 
 -   add keyboard handlers to sp-table-cell-head ([#4473](https://github.com/adobe/spectrum-web-components/issues/4473)) ([794263e](https://github.com/adobe/spectrum-web-components/commit/794263ed93fb498a8f4c9f22a02408c6ebbf5170))
--   **coachmark,overlay:** adjust imports of overlay and coachmark ([#4455](https://github.com/adobe/spectrum-web-components/issues/4455)) ([39706da](https://github.com/adobe/spectrum-web-components/commit/39706dafe58a598a86d7dc33629409f086a9694e))
--   duplicate code to empty global-vars before generating ([#4507](https://github.com/adobe/spectrum-web-components/issues/4507)) ([83215b6](https://github.com/adobe/spectrum-web-components/commit/83215b6cf47b13b5632e02e7d647fede4314be99))
--   **menu:** enable numpad arrow and Enter keys ([#4492](https://github.com/adobe/spectrum-web-components/issues/4492)) ([012c411](https://github.com/adobe/spectrum-web-components/commit/012c4116dac62031e5a329cf4da7fb9cd149bfdf))
 -   **number-field:** multiple separators use-cases in decimal inputs in iOS devices ([#4571](https://github.com/adobe/spectrum-web-components/issues/4571)) ([6319da8](https://github.com/adobe/spectrum-web-components/commit/6319da80a21511735d9e9518125dbc2a24364f88))
--   **number-field:** select full value when using Tab to enter a field with a unit ([#4340](https://github.com/adobe/spectrum-web-components/issues/4340)) ([a9d5cef](https://github.com/adobe/spectrum-web-components/commit/a9d5cef4a69af4f3f357bacbfdae9465d3e80fa5))
--   **number-field:** updated number field to respect all locales ([#4508](https://github.com/adobe/spectrum-web-components/issues/4508)) ([cc6e928](https://github.com/adobe/spectrum-web-components/commit/cc6e928bc6797280f119994b1908f17bbcb574e3))
--   **overlay:** ensure hint Overlays within shadow roots open as expected ([#4443](https://github.com/adobe/spectrum-web-components/issues/4443)) ([7dd64b9](https://github.com/adobe/spectrum-web-components/commit/7dd64b92e58ad2fd3a36986f24022728e3cb4c36))
--   **overlay:** ensure that passing "open" to the directive manages a single strategy ([#4474](https://github.com/adobe/spectrum-web-components/issues/4474)) ([15d6ac7](https://github.com/adobe/spectrum-web-components/commit/15d6ac71d586eb496b591fa5b097707961600f75))
--   **overlay:** persist "host" in directive rendered Overlay content ([#4475](https://github.com/adobe/spectrum-web-components/issues/4475)) ([5d189c2](https://github.com/adobe/spectrum-web-components/commit/5d189c2adf91545eb64a0136fa02d7c8caee8f48))
--   **swatch:** sync aria-label with changes in label, color, and mixed state ([#4519](https://github.com/adobe/spectrum-web-components/issues/4519)) ([50aef31](https://github.com/adobe/spectrum-web-components/commit/50aef31ab049fecb3567cd5df9613b1d9bffb593))
 
 ### Features
 
 -   **action-bar:** support for action-menus ([#3780](https://github.com/adobe/spectrum-web-components/issues/3780)) ([4aff599](https://github.com/adobe/spectrum-web-components/commit/4aff5995f6a22eefae0dd8e580d743c27ceb2c2d))
 -   **alert-banner:** add alert banner component ([#4266](https://github.com/adobe/spectrum-web-components/issues/4266)) ([10d456e](https://github.com/adobe/spectrum-web-components/commit/10d456ec3c79f7eb534b0ba66e426c3b0994aab5))
--   **combobox:** add `pending` state ([#4462](https://github.com/adobe/spectrum-web-components/issues/4462)) ([2d0c388](https://github.com/adobe/spectrum-web-components/commit/2d0c388cfde52bd5695b3d6db4b0425987ea6f85))
--   **contextual-help:** add contextual help pattern ([#4285](https://github.com/adobe/spectrum-web-components/issues/4285)) ([a259aa3](https://github.com/adobe/spectrum-web-components/commit/a259aa35ee4e8a7fba7afb21e806f13bffceeaf3))
--   Silder: adjust fillStart calculation for value=0 and normalization function ([#4573](https://github.com/adobe/spectrum-web-components/issues/4573)) ([369fee7](https://github.com/adobe/spectrum-web-components/commit/369fee7065f42008d9b356a98235ac8180655a96)), closes [#4558](https://github.com/adobe/spectrum-web-components/issues/4558)
+-   **sp-slider:** adjust fillStart calculation for value=0 and normalization function ([#4573](https://github.com/adobe/spectrum-web-components/issues/4573)) ([369fee7](https://github.com/adobe/spectrum-web-components/commit/369fee7065f42008d9b356a98235ac8180655a96)), closes [#4558](https://github.com/adobe/spectrum-web-components/issues/4558)
 
 # [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
 
 ### Bug Fixes
 
--   **coachmark,overlay:** adjust imports of overlay and coachmark ([#4455](https://github.com/adobe/spectrum-web-components/issues/4455)) ([39706da](https://github.com/adobe/spectrum-web-components/commit/39706dafe58a598a86d7dc33629409f086a9694e))
 -   duplicate code to empty global-vars before generating ([#4507](https://github.com/adobe/spectrum-web-components/issues/4507)) ([83215b6](https://github.com/adobe/spectrum-web-components/commit/83215b6cf47b13b5632e02e7d647fede4314be99))
 -   **menu:** enable numpad arrow and Enter keys ([#4492](https://github.com/adobe/spectrum-web-components/issues/4492)) ([012c411](https://github.com/adobe/spectrum-web-components/commit/012c4116dac62031e5a329cf4da7fb9cd149bfdf))
--   **number-field:** select full value when using Tab to enter a field with a unit ([#4340](https://github.com/adobe/spectrum-web-components/issues/4340)) ([a9d5cef](https://github.com/adobe/spectrum-web-components/commit/a9d5cef4a69af4f3f357bacbfdae9465d3e80fa5))
 -   **number-field:** updated number field to respect all locales ([#4508](https://github.com/adobe/spectrum-web-components/issues/4508)) ([cc6e928](https://github.com/adobe/spectrum-web-components/commit/cc6e928bc6797280f119994b1908f17bbcb574e3))
--   **overlay:** ensure hint Overlays within shadow roots open as expected ([#4443](https://github.com/adobe/spectrum-web-components/issues/4443)) ([7dd64b9](https://github.com/adobe/spectrum-web-components/commit/7dd64b92e58ad2fd3a36986f24022728e3cb4c36))
--   **overlay:** ensure that passing "open" to the directive manages a single strategy ([#4474](https://github.com/adobe/spectrum-web-components/issues/4474)) ([15d6ac7](https://github.com/adobe/spectrum-web-components/commit/15d6ac71d586eb496b591fa5b097707961600f75))
--   **overlay:** persist "host" in directive rendered Overlay content ([#4475](https://github.com/adobe/spectrum-web-components/issues/4475)) ([5d189c2](https://github.com/adobe/spectrum-web-components/commit/5d189c2adf91545eb64a0136fa02d7c8caee8f48))
 -   **swatch:** sync aria-label with changes in label, color, and mixed state ([#4519](https://github.com/adobe/spectrum-web-components/issues/4519)) ([50aef31](https://github.com/adobe/spectrum-web-components/commit/50aef31ab049fecb3567cd5df9613b1d9bffb593))
 
 ### Features

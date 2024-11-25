@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
+
+**Note:** Version bump only for package @spectrum-web-components/tray
+
+# [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
+
+**Note:** Version bump only for package @spectrum-web-components/tray
+
+# [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
+
+**Note:** Version bump only for package @spectrum-web-components/tray
+
+## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
+
+**Note:** Version bump only for package @spectrum-web-components/tray
+
+# [0.48.0](https://github.com/adobe/spectrum-web-components/compare/v0.47.2...v0.48.0) (2024-09-17)
+
+**Note:** Version bump only for package @spectrum-web-components/tray
+
+## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
+
+**Note:** Version bump only for package @spectrum-web-components/tray
+
+## [0.47.1](https://github.com/adobe/spectrum-web-components/compare/v0.47.0...v0.47.1) (2024-08-27)
+
+**Note:** Version bump only for package @spectrum-web-components/tray
+
+# [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
+
+### Bug Fixes
+
+-   **tray:** removed nonNull operator and initialized resolveTransitionPromise with dummy func ([#4658](https://github.com/adobe/spectrum-web-components/issues/4658)) ([1a8a479](https://github.com/adobe/spectrum-web-components/commit/1a8a4794c8601decd204db19302a296ed75c4deb))
+
+# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+
+**Note:** Version bump only for package @spectrum-web-components/tray
+
+# [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
+
+### Bug Fixes
+
+-   **tray** sp-tray now doesn't automatically retract when opened with fewer items in the iOS simulator ([4572] (https://github.com/adobe/spectrum-web-components/issues/4572)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+
+**Note:** Version bump only for package @spectrum-web-components/tray
+
 # [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
 
 **Note:** Version bump only for package @spectrum-web-components/tray

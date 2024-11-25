@@ -11,22 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
-:host {
-    --spectrum-colorarea-border-radius: var(
-        --spectrum-color-area-border-rounding
-    );
-    --spectrum-colorarea-border-color: #0000001a;
-    --spectrum-colorarea-disabled-background-color: var(
-        --spectrum-disabled-background-color
-    );
-    --spectrum-colorarea-border-width: var(--spectrum-color-area-border-width);
-    --spectrum-colorarea-height: var(--spectrum-color-area-height);
-    --spectrum-colorarea-width: var(--spectrum-color-area-width);
-    --spectrum-colorarea-min-width: var(--spectrum-color-area-minimum-width);
-    --spectrum-colorarea-min-height: var(--spectrum-color-area-minimum-height);
-}
-
 @media (forced-colors: active) {
     :host {
         --highcontrast-colorarea-border-color-disabled: GrayText;
@@ -115,20 +99,20 @@ governing permissions and limitations under the License.
 }
 
 .gradient {
+    inline-size: 100%;
+    block-size: 100%;
     border-radius: var(
         --mod-colorarea-border-radius,
         var(--spectrum-colorarea-border-radius)
     );
-    block-size: 100%;
-    inline-size: 100%;
 }
 
 .slider {
     opacity: 0;
+    inline-size: 100%;
+    block-size: 100%;
     z-index: 0;
     pointer-events: none;
-    block-size: 100%;
-    inline-size: 100%;
     margin: 0;
     position: absolute;
     inset-block-start: 0;

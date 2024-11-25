@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-dialog.css');
+@import url('./dialog-overrides.css');
 
 :host {
     --swc-alert-dialog-error-icon-color: var(--spectrum-negative-visual-color);
@@ -28,7 +29,7 @@ governing permissions and limitations under the License.
 }
 
 .type-icon {
-    grid-area: i;
+    grid-area: typeIcon;
     color: var(
         --mod-alert-dialog-error-icon-color,
         var(--swc-alert-dialog-error-icon-color)
@@ -44,30 +45,30 @@ governing permissions and limitations under the License.
     height: auto;
 }
 
+/* We may remove this override when CSS fixes unused `header` and `typeIcon` areas */
 .grid {
     grid-template-areas:
-        'a a a a a a'
+        'hero hero hero hero hero hero'
         '. . . . . .'
-        '. b c c i .'
-        '. d d d d .'
-        '. e e e e .'
-        '. f f g g .'
+        '. heading heading heading typeIcon . '
+        '. divider divider divider divider .'
+        '. content content content content .'
+        '. footer footer buttonGroup buttonGroup .'
         '. . . . . .';
+    inline-size: 100%;
+    display: grid;
 }
 
-:host([dismissable]) .grid {
+/* Needed while `error` attribute still exists as deprecated */
+:host(:not([error], [dismissable], [mode])) .grid {
     grid-template-areas:
-        'a a a a a a a'
-        '. . . . . l l'
-        '. b c c i l l'
-        '. d d d d d .'
-        '. e e e e e .'
-        '. f f g g g .'
-        '. . . . . . .';
+        'hero hero hero hero hero hero'
+        '. . . . . .'
+        '. heading heading heading heading . '
+        '. divider divider divider divider .'
+        '. content content content content .'
+        '. footer footer buttonGroup buttonGroup .'
+        '. . . . . .';
+    inline-size: 100%;
+    display: grid;
 }
-
-/* stylelint-disable */
-.button-group.button-group--noFooter {
-    grid-area: f/f/g/g;
-}
-/* stylelint-enable */

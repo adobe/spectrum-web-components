@@ -112,8 +112,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     @property({ type: String })
     public selects: undefined | 'single' | 'multiple';
 
-    @property({ reflect: true })
-    public static?: 'white' | 'black';
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white' | 'black';
 
     @property({ type: Boolean, reflect: true })
     public vertical = false;
@@ -359,7 +359,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             changes.has('quiet') ||
             changes.has('emphasized') ||
             changes.has('size') ||
-            changes.has('static')
+            changes.has('staticColor')
         ) {
             this.manageChildren(changes);
         }
@@ -384,8 +384,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             if (this.emphasized || changes?.get('emphasized')) {
                 button.emphasized = this.emphasized;
             }
-            if (this.static || changes?.get('static')) {
-                button.static = this.static;
+            if (this.staticColor || changes?.get('staticColor')) {
+                button.staticColor = this.staticColor;
             }
             if (this.selects || !this.hasManaged) {
                 button.selected = this.selected.includes(button.value);
@@ -403,6 +403,9 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     private hasManaged = false;
 
     private manageButtons = (): void => {
+        if (!this.slotElement) {
+            return;
+        }
         const assignedElements = this.slotElement.assignedElements({
             flatten: true,
         });

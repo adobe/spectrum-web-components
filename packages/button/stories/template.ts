@@ -27,6 +27,7 @@ export interface Properties {
     size?: 's' | 'm' | 'l' | 'xl';
     href?: string;
     target?: '_blank' | '_parent' | '_self' | '_top';
+    noWrap?: boolean;
     iconOnly?: boolean;
 }
 

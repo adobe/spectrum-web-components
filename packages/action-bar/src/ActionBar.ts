@@ -100,7 +100,7 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
             <sp-popover ?open=${this.open} id="popover">
                 <slot name="override">
                     <sp-close-button
-                        static=${ifDefined(
+                        static-color=${ifDefined(
                             this.emphasized ? 'white' : undefined
                         )}
                         class="close-button"
@@ -113,7 +113,7 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
                     <sp-action-group
                         class="action-group"
                         quiet
-                        static=${ifDefined(
+                        static-color=${ifDefined(
                             this.emphasized ? 'white' : undefined
                         )}
                     >

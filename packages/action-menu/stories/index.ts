@@ -44,7 +44,7 @@ export const ActionMenuMarkup = ({
             ?disabled=${disabled}
             ?open=${open}
             ?quiet=${quiet}
-            static=${ifDefined(
+            static-color=${ifDefined(
                 staticValue === 'none'
                     ? undefined
                     : (staticValue as 'black' | 'white')

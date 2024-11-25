@@ -43,6 +43,56 @@ describe('ColorArea', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('handleBlur returns early if _pointerDown is true', async () => {
+        const el = await fixture<ColorArea>(html`
+            <sp-color-area></sp-color-area>
+        `);
+
+        await sendKeys({ press: 'Tab' });
+        await el.updateComplete;
+
+        el._pointerDown = true;
+        await el.updateComplete;
+
+        el.handleBlur();
+        await el.updateComplete;
+
+        expect(el.focused).to.be.true;
+    });
+    it('updates color when x value changes', async () => {
+        const el = await fixture<ColorArea>(html`
+            <sp-color-area></sp-color-area>
+        `);
+
+        await el.updateComplete;
+
+        expect(el.x).to.equal(1);
+
+        el.x = 0.3;
+        await el.updateComplete;
+
+        expect(el.x).to.equal(0.3);
+
+        const handle = el.shadowRoot.querySelector('.handle') as ColorHandle;
+        expect(handle.color).to.equal('hsl(0, 100%, 85%)');
+    });
+    it('updates color when y value changes', async () => {
+        const el = await fixture<ColorArea>(html`
+            <sp-color-area></sp-color-area>
+        `);
+
+        await el.updateComplete;
+
+        expect(el.y).to.equal(1);
+
+        el.y = 0.5;
+        await el.updateComplete;
+
+        expect(el.y).to.equal(0.5);
+
+        const handle = el.shadowRoot.querySelector('.handle') as ColorHandle;
+        expect(handle.color).to.equal('hsl(0, 100%, 25%)');
+    });
     it('manages a single tab stop', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>
@@ -306,6 +356,61 @@ describe('ColorArea', () => {
         });
         await changeEvent;
 
+        expect(el.x).to.equal(0.67);
+        expect(el.y).to.equal(0.75);
+        el.setAttribute('dir', 'rtl');
+        changeEvent = oneEvent(el, 'change');
+        await sendKeys({
+            press: 'ArrowLeft',
+        });
+        await changeEvent;
+        changeEvent = oneEvent(el, 'change');
+        await sendKeys({
+            press: 'ArrowLeft',
+        });
+        await changeEvent;
+        expect(el.x).to.equal(0.69);
+        expect(el.y).to.equal(0.75);
+        changeEvent = oneEvent(el, 'change');
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        await changeEvent;
+        changeEvent = oneEvent(el, 'change');
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        await changeEvent;
+        expect(el.x).to.equal(0.67);
+        expect(el.y).to.equal(0.75);
+
+        await sendKeys({
+            press: 'Home',
+        });
+        await changeEvent;
+        expect(el.x).to.equal(0.77);
+        expect(el.y).to.equal(0.75);
+
+        await sendKeys({
+            press: 'End',
+        });
+        await changeEvent;
+        expect(el.x).to.equal(0.67);
+        expect(el.y).to.equal(0.75);
+
+        el.dir = 'ltr';
+
+        await sendKeys({
+            press: 'Home',
+        });
+        await changeEvent;
+        expect(el.x).to.equal(0.57);
+        expect(el.y).to.equal(0.75);
+
+        await sendKeys({
+            press: 'End',
+        });
+        await changeEvent;
         expect(el.x).to.equal(0.67);
         expect(el.y).to.equal(0.75);
     });

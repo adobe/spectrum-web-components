@@ -11,35 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
-    --spectrum-alert-banner-min-height: var(
-        --spectrum-alert-banner-minimum-height
-    );
-    --spectrum-alert-banner-max-inline-size: var(--spectrum-alert-banner-width);
-    --spectrum-alert-banner-size: auto;
-    --spectrum-alert-banner-font-size: var(--spectrum-font-size-100);
-    --spectrum-alert-banner-icon-size: var(--spectrum-workflow-icon-size-100);
-    --spectrum-alert-banner-icon-to-text: var(--spectrum-text-to-visual-300);
-    --spectrum-alert-banner-start-edge: var(--spectrum-spacing-300);
-    --spectrum-alert-banner-text-to-button-horizontal: var(
-        --spectrum-spacing-300
-    );
-    --spectrum-alert-banner-text-to-divider: var(--spectrum-spacing-300);
-    --spectrum-alert-banner-top-icon: var(
-        --spectrum-alert-banner-top-to-workflow-icon
-    );
-    --spectrum-alert-banner-top-text: var(--spectrum-alert-banner-top-to-text);
-    --spectrum-alert-banner-bottom-text: var(
-        --spectrum-alert-banner-bottom-to-text
-    );
-    --spectrum-alert-banner-informative-background: var(
-        --spectrum-informative-background-color-default
-    );
-    --spectrum-alert-banner-negative-background: var(
-        --spectrum-negative-background-color-default
-    );
-    --spectrum-alert-banner-font-color: var(--spectrum-white);
     --mod-divider-vertical-margin: var(
         --mod-alert-banner-edge-to-divider,
         var(--spectrum-alert-banner-edge-to-divider)
@@ -85,9 +57,13 @@ governing permissions and limitations under the License.
         var(--spectrum-alert-banner-font-color)
     );
     background-color: var(
-        --mod-alert-banner-netural-background,
-        var(--spectrum-alert-banner-netural-background)
+        --mod-alert-banner-neutral-background,
+        var(
+            --mod-alert-banner-neutral-background,
+            var(--spectrum-alert-banner-neutral-background)
+        )
     );
+    border: 0 solid #0000;
     border: var(--highcontrast-alert-banner-border-width, 0) solid
         var(--highcontrast-alert-banner-border-color, transparent);
     justify-content: space-between;
@@ -113,6 +89,7 @@ governing permissions and limitations under the License.
 }
 
 .body {
+    inline-size: 100%;
     gap: max(
         calc(
             var(
@@ -128,7 +105,6 @@ governing permissions and limitations under the License.
     );
     flex-wrap: wrap;
     align-items: center;
-    inline-size: 100%;
     margin-inline-start: var(
         --mod-alert-banner-start-edge,
         var(--spectrum-alert-banner-start-edge)
@@ -187,10 +163,4 @@ governing permissions and limitations under the License.
             --spectrum-border-width-100
         );
     }
-}
-
-:host {
-    --spectrum-alert-banner-netural-background: var(
-        --system-spectrum-alertbanner-spectrum-alert-banner-netural-background
-    );
 }

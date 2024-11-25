@@ -11,18 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
-:host {
-    --spectrum-contextual-help-padding: var(--spectrum-spacing-400);
-    --spectrum-contextual-help-content-spacing: var(--spectrum-spacing-100);
-    --spectrum-contextual-help-link-spacing: var(--spectrum-spacing-300);
-    --spectrum-contextual-help-heading-size: var(
-        --spectrum-contextual-help-title-size
-    );
-    --spectrum-contextual-help-heading-color: var(--spectrum-heading-color);
-    --spectrum-contextual-help-body-color: var(--spectrum-body-color);
-}
-
 .popover {
     min-inline-size: var(
         --mod-spectrum-contextual-help-minimum-width,
@@ -50,8 +38,8 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-.popover ::slotted([slot='heading']),
-.popover .body {
+.popover .body,
+.popover ::slotted([slot='heading']) {
     margin: 0;
 }
 

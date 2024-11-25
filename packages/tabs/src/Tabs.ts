@@ -67,6 +67,38 @@ export const ScaledIndicator = {
 };
 
 /**
+ * Given that the scroll needs to be on the right side of the viewport.
+ * Returns the coordonate x it needs to scroll so that the tab with given index is visible.
+ */
+export function calculateScrollTargetForRightSide(
+    index: number,
+    direction: 'rtl' | 'ltr',
+    tabs: Tab[],
+    container: HTMLDivElement
+): number {
+    const nextIndex = index + (direction === 'rtl' ? -1 : 1);
+    const nextTab = tabs[nextIndex];
+    const viewportEnd = container.scrollLeft + container.offsetWidth;
+    return nextTab ? nextTab.offsetLeft - container.offsetWidth : viewportEnd;
+}
+
+/**
+ * Given that the scroll needs to be on the left side of the viewport.
+ * Returns the coordonate x it needs to scroll so that the tab with given index is visible.
+ */
+export function calculateScrollTargetForLeftSide(
+    index: number,
+    direction: 'rtl' | 'ltr',
+    tabs: Tab[],
+    container: HTMLDivElement
+): number {
+    const prevIndex = index + (direction === 'rtl' ? 1 : -1);
+    const prevTab = tabs[prevIndex];
+    const leftmostElement = direction === 'rtl' ? -container.offsetWidth : 0;
+    return prevTab ? prevTab.offsetLeft + prevTab.offsetWidth : leftmostElement;
+}
+
+/**
  * @element sp-tabs
  *
  * @slot - Tab elements to manage as a group
@@ -203,12 +235,35 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return this.rovingTabindexController.focusInElement || this;
     }
 
+    private limitDeltaToInterval(min: number, max: number) {
+        return (delta: number): number => {
+            if (delta < min) return min;
+            if (delta > max) return max;
+            return delta;
+        };
+    }
+
+    /**
+     * Scrolls through the tabs component, on the X-axis, by a given ammount of pixels/ delta. The given delta is limited to the scrollable area of the tabs component.
+     * @param {number} delta - The ammount of pixels to scroll by. If the value is positive, the tabs will scroll to the right. If the value is negative, the tabs will scroll to the left.
+     * @param {ScrollBehavior} behavior - The scroll behavior to use. Defaults to 'smooth'.
+     */
     public scrollTabs(
         delta: number,
         behavior: ScrollBehavior = 'smooth'
     ): void {
+        if (delta === 0) return;
+
+        const { scrollLeft, clientWidth, scrollWidth } = this.tabList;
+        const dirLimit = scrollWidth - clientWidth - Math.abs(scrollLeft);
+
+        const limitDelta =
+            this.dir === 'ltr'
+                ? this.limitDeltaToInterval(-scrollLeft, dirLimit)
+                : this.limitDeltaToInterval(-dirLimit, Math.abs(scrollLeft));
+
         this.tabList?.scrollBy({
-            left: delta,
+            left: limitDelta(delta),
             top: 0,
             behavior,
         });
@@ -245,16 +300,54 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return complete;
     }
 
+    private getNecessaryAutoScroll(index: number): number {
+        const selectedTab = this.tabs[index];
+        const selectionEnd = selectedTab.offsetLeft + selectedTab.offsetWidth;
+        const viewportEnd = this.tabList.scrollLeft + this.tabList.offsetWidth;
+        const selectionStart = selectedTab.offsetLeft;
+        const viewportStart = this.tabList.scrollLeft;
+
+        if (selectionEnd > viewportEnd) {
+            // Selection is on the right side, not visible.
+            return calculateScrollTargetForRightSide(
+                index,
+                this.dir,
+                this.tabs,
+                this.tabList
+            );
+        } else if (selectionStart < viewportStart) {
+            // Selection is on the left side, not visible.
+            return calculateScrollTargetForLeftSide(
+                index,
+                this.dir,
+                this.tabs,
+                this.tabList
+            );
+        }
+
+        return -1;
+    }
+
     public async scrollToSelection(): Promise<void> {
         if (!this.enableTabsScroll || !this.selected) {
             return;
         }
 
         await this.updateComplete;
-        const selectedTab = this.tabs.find(
+
+        const selectedIndex = this.tabs.findIndex(
             (tab) => tab.value === this.selected
         );
-        selectedTab?.scrollIntoView();
+
+        if (selectedIndex !== -1 && this.tabList) {
+            // We have a selection, calculate the scroll needed to bring it into view
+            const scrollTarget = this.getNecessaryAutoScroll(selectedIndex);
+
+            // scrollTarget = -1 means it is already into view.
+            if (scrollTarget !== -1) {
+                this.tabList.scrollTo({ left: scrollTarget });
+            }
+        }
     }
 
     protected override updated(

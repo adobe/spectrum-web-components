@@ -11,10 +11,9 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
-    justify-content: center;
     inline-size: 100%;
+    justify-content: center;
     display: flex;
     position: fixed;
     inset-block-end: 0;

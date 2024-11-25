@@ -11,14 +11,13 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-500);
     --spectrum-thumbnail-border-radius: var(--spectrum-corner-radius-75);
     --spectrum-thumbnail-border-width: var(--spectrum-border-width-100);
     --spectrum-thumbnail-border-color-rgba: rgba(
         var(--spectrum-gray-800-rgb),
-        var(--spectrum-thumbnail-border-color-opacity)
+        var(--spectrum-thumbnail-border-opacity)
     );
     --spectrum-thumbnail-layer-border-width-inner: var(
         --spectrum-border-width-400
@@ -99,10 +98,6 @@ governing permissions and limitations under the License.
 :host {
     inline-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
     block-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
-    border-radius: var(
-        --mod-thumbnail-border-radius,
-        var(--spectrum-thumbnail-border-radius)
-    );
     vertical-align: top;
     z-index: 0;
     margin: 0;
@@ -112,13 +107,19 @@ governing permissions and limitations under the License.
     overflow: hidden;
 }
 
+:host,
 :host:before {
-    content: '';
-    z-index: 2;
     border-radius: var(
         --mod-thumbnail-border-radius,
         var(--spectrum-thumbnail-border-radius)
     );
+}
+
+:host:before {
+    content: '';
+    z-index: 2;
+    inline-size: 100%;
+    block-size: 100%;
     box-shadow: inset 0 0 0
         var(
             --mod-thumbnail-border-width,
@@ -131,8 +132,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-thumbnail-border-color-rgba)
             )
         );
-    block-size: 100%;
-    inline-size: 100%;
     position: absolute;
 }
 
@@ -315,37 +314,37 @@ governing permissions and limitations under the License.
 }
 
 .image-wrapper {
+    inline-size: 100%;
+    block-size: 100%;
     justify-content: center;
     align-items: center;
-    block-size: 100%;
-    inline-size: 100%;
     display: flex;
 }
 
 ::slotted(*) {
-    z-index: 1;
     max-block-size: 100%;
     max-inline-size: 100%;
+    z-index: 1;
     position: relative;
 }
 
 :host([cover]) ::slotted(*) {
-    object-fit: cover;
-    object-position: center;
     block-size: 100%;
     inline-size: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 .background {
     z-index: 0;
+    block-size: 100%;
+    inline-size: 100%;
     border-radius: var(
         --mod-thumbnail-border-radius,
         var(--spectrum-thumbnail-border-radius)
     );
     background-position: 50%;
     background-size: cover;
-    block-size: 100%;
-    inline-size: 100%;
     position: absolute;
     inset-block: 0;
     inset-inline: 0;
@@ -353,11 +352,11 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     :host {
-        forced-color-adjust: none;
         --highcontrast-thumbnail-border-color-selected: Highlight;
         --highcontrast-thumbnail-focus-indicator-color: Highlight;
         --highcontrast-thumbnail-border-color: CanvasText;
         --highcontrast-thumbnail-layer-border-color-inner: Canvas;
         --highcontrast-thumbnail-layer-border-color-outer: CanvasText;
+        forced-color-adjust: none;
     }
 }

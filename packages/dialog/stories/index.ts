@@ -11,6 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 
 class CountdownWatcher extends HTMLElement {
     ready!: (value: boolean | PromiseLike<boolean>) => void;
@@ -43,3 +45,18 @@ export const disabledButtonDecorator = (
         <countdown-complete-watcher></countdown-complete-watcher>
     `;
 };
+
+export const withOverlayDecorator = (
+    story: () => TemplateResult
+): TemplateResult => {
+    return html`
+        <sp-button variant="primary" id="trigger">Toggle Dialog</sp-button>
+        <sp-overlay type="modal" trigger="trigger@click" open>
+            ${story()}
+        </sp-overlay>
+    `;
+};
+
+export const disabledButtonWithOverlayDecorator = (
+    story: () => TemplateResult
+): TemplateResult => withOverlayDecorator(() => disabledButtonDecorator(story));

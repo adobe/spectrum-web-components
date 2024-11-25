@@ -120,10 +120,11 @@ export default {
                 type: 'boolean',
             },
         },
-        staticValue: {
-            name: 'static',
+        staticColorValue: {
+            name: 'static-color',
             type: { name: 'string', required: false },
-            description: 'The visual static variant to apply to the button.',
+            description:
+                'The visual static color variant to apply to the button.',
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'none' },
@@ -465,4 +466,28 @@ export const directive = (): TemplateResult => {
 
 directive.swc_vrt = {
     skip: true,
+};
+
+export const withScrollEvent = (): TemplateResult => {
+    function handleActionMenuScroll(): void {
+        console.log('attached action menu scroll listener');
+    }
+
+    function renderMenuItems(): TemplateResult[] {
+        return Array.from(
+            { length: 30 },
+            (_, i) => html`
+                <sp-menu-item style="width: 100%;">
+                    This is an Action Menu Item ${i + 1}
+                </sp-menu-item>
+            `
+        );
+    }
+
+    return html`
+        <sp-action-menu @scroll=${handleActionMenuScroll} open>
+            <span slot="label">This is an Action Menu</span>
+            ${renderMenuItems()}
+        </sp-action-menu>
+    `;
 };

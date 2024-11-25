@@ -11,33 +11,29 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+@media (forced-colors: active) {
+    :host {
+        background-color: CanvasText !important;
+    }
+}
 
 :host {
-    --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
-    --spectrum-divider-background-color: var(
-        --spectrum-divider-background-color-medium
+    block-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
+    inline-size: 100%;
+    border: none;
+    border-width: var(
+        --mod-divider-thickness,
+        var(--spectrum-divider-thickness)
     );
-    --spectrum-divider-background-color-small: var(--spectrum-gray-300);
-    --spectrum-divider-background-color-medium: var(--spectrum-gray-300);
-    --spectrum-divider-background-color-large: var(--spectrum-gray-800);
-    --spectrum-divider-background-color-small-static-white: var(
-        --spectrum-transparent-white-300
+    border-radius: var(
+        --mod-divider-thickness,
+        var(--spectrum-divider-thickness)
     );
-    --spectrum-divider-background-color-medium-static-white: var(
-        --spectrum-transparent-white-300
+    background-color: var(
+        --mod-divider-background-color,
+        var(--spectrum-divider-background-color)
     );
-    --spectrum-divider-background-color-large-static-white: var(
-        --spectrum-transparent-white-800
-    );
-    --spectrum-divider-background-color-small-static-black: var(
-        --spectrum-transparent-black-300
-    );
-    --spectrum-divider-background-color-medium-static-black: var(
-        --spectrum-transparent-black-300
-    );
-    --spectrum-divider-background-color-large-static-black: var(
-        --spectrum-transparent-black-800
-    );
+    overflow: visible;
 }
 
 :host([size='s']) {
@@ -47,6 +43,7 @@ governing permissions and limitations under the License.
     );
 }
 
+:host,
 :host {
     --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
     --spectrum-divider-background-color: var(
@@ -61,76 +58,42 @@ governing permissions and limitations under the License.
     );
 }
 
-@media (forced-colors: active) {
-    :host,
-    :host([size='l']),
-    :host,
-    :host([size='s']) {
-        --spectrum-divider-background-color: CanvasText;
-        --spectrum-divider-background-color-small-static-white: CanvasText;
-        --spectrum-divider-background-color-medium-static-white: CanvasText;
-        --spectrum-divider-background-color-large-static-white: CanvasText;
-        --spectrum-divider-background-color-small-static-black: CanvasText;
-        --spectrum-divider-background-color-medium-static-black: CanvasText;
-        --spectrum-divider-background-color-large-static-black: CanvasText;
-    }
-}
-
-:host {
-    block-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
-    border: none;
-    border-width: var(
-        --mod-divider-thickness,
-        var(--spectrum-divider-thickness)
-    );
-    border-radius: var(
-        --mod-divider-thickness,
-        var(--spectrum-divider-thickness)
-    );
-    background-color: var(
-        --mod-divider-background-color,
-        var(--spectrum-divider-background-color)
-    );
-    inline-size: 100%;
-    overflow: visible;
-}
-
-:host([static='white'][size='s']) {
+:host([static-color='white'][size='s']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-small-static-white,
         var(--spectrum-divider-background-color-small-static-white)
     );
 }
 
-:host([static='white']) {
+:host([static-color='white']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-medium-static-white,
         var(--spectrum-divider-background-color-medium-static-white)
     );
 }
 
-:host([static='white'][size='l']) {
+:host([static-color='white'][size='l']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-large-static-white,
         var(--spectrum-divider-background-color-large-static-white)
     );
 }
 
-:host([static='black'][size='s']) {
+:host([static-color='black'][size='s']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-small-static-black,
         var(--spectrum-divider-background-color-small-static-black)
     );
 }
 
-:host([static='black']) {
+:host([static-color='black']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-medium-static-black,
         var(--spectrum-divider-background-color-medium-static-black)
     );
 }
 
-:host([static='black'][size='l']) {
+:host([static-color='black'][size='l']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-large-static-black,
         var(--spectrum-divider-background-color-large-static-black)
@@ -143,6 +106,7 @@ governing permissions and limitations under the License.
         var(--spectrum-divider-thickness)
     );
     margin-block: var(--mod-divider-vertical-margin);
+    block-size: 100%;
     block-size: var(--mod-divider-vertical-height, 100%);
     align-self: var(--mod-divider-vertical-align);
 }

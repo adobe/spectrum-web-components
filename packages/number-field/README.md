@@ -229,3 +229,41 @@ If the user types a value that is between two steps and blurs the input, the val
     step="3"
 ></sp-number-field>
 ```
+
+## Default value
+
+The `<sp-number-field>` component doesn't manage a default value by itself. This means that consumers can set the value of the number-field as an empty string by clearing the input. If we want the number-field to reset to a `default-value` when the user clears the input, we can listen for the `change` event on the number-field component and set its value to the desired `default-value` if the input is empty.
+
+```html-live
+<sp-field-label for="default">
+    Default value of this number field is 42
+</sp-field-label>
+<sp-number-field id="default" value="20"></sp-number-field>
+
+<script type="module">
+    customElements.whenDefined('sp-number-field').then(() => {
+        const numberField = document.querySelector('#default');
+
+        numberField.addEventListener('change', (event) => {
+            const target = event.target;
+            if (isNaN(target.value)) {
+                target.value = '42';
+            }
+        });
+    });
+</script>
+
+```
+
+<script type="module">
+    customElements.whenDefined('sp-number-field').then(() => {
+        const numberField = document.querySelector('#default');
+
+        numberField.addEventListener('change', (event) => {
+            const target = event.target;
+            if (isNaN(target.value)) {
+                target.value = '42';
+            }
+        });
+    });
+</script>

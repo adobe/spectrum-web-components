@@ -36,26 +36,7 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('Sidenav', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<SideNav>(
-                html`
-                    <sp-sidenav>
-                        <sp-sidenav-heading label="CATEGORY 1">
-                            <sp-sidenav-item
-                                value="Section 1"
-                                label="Section 1"
-                            ></sp-sidenav-item>
-                            <sp-sidenav-item
-                                value="Section 2"
-                                label="Section 2"
-                            ></sp-sidenav-item>
-                        </sp-sidenav-heading>
-                    </sp-sidenav>
-                `
-            )
-    );
-    it('loads', async () => {
-        const el = await fixture<SideNav>(
-            html`
+            await fixture<SideNav>(html`
                 <sp-sidenav>
                     <sp-sidenav-heading label="CATEGORY 1">
                         <sp-sidenav-item
@@ -68,19 +49,32 @@ describe('Sidenav', () => {
                         ></sp-sidenav-item>
                     </sp-sidenav-heading>
                 </sp-sidenav>
-            `
-        );
+            `)
+    );
+    it('loads', async () => {
+        const el = await fixture<SideNav>(html`
+            <sp-sidenav>
+                <sp-sidenav-heading label="CATEGORY 1">
+                    <sp-sidenav-item
+                        value="Section 1"
+                        label="Section 1"
+                    ></sp-sidenav-item>
+                    <sp-sidenav-item
+                        value="Section 2"
+                        label="Section 2"
+                    ></sp-sidenav-item>
+                </sp-sidenav-heading>
+            </sp-sidenav>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('does not accept focus/click/blur when empty', async () => {
-        const el = await fixture<SideNav>(
-            html`
-                <sp-sidenav></sp-sidenav>
-            `
-        );
+        const el = await fixture<SideNav>(html`
+            <sp-sidenav></sp-sidenav>
+        `);
 
         await elementUpdated(el);
 
@@ -103,16 +97,14 @@ describe('Sidenav', () => {
     });
     it('does not accept keyboard events when items are not present', async () => {
         const errorSpy = spy();
-        const el = await fixture<SideNav>(
-            html`
-                <sp-sidenav>
-                    <sp-sidenav-item
-                        value="Section 1"
-                        label="Section 1"
-                    ></sp-sidenav-item>
-                </sp-sidenav>
-            `
-        );
+        const el = await fixture<SideNav>(html`
+            <sp-sidenav>
+                <sp-sidenav-item
+                    value="Section 1"
+                    label="Section 1"
+                ></sp-sidenav-item>
+            </sp-sidenav>
+        `);
 
         await elementUpdated(el);
         const item = el.querySelector('sp-sidenav-item') as SideNavItem;
@@ -131,22 +123,20 @@ describe('Sidenav', () => {
         expect(errorSpy.callCount).to.equal(0);
     });
     it('does not accept focus when all children [disabled]', async () => {
-        const el = await fixture<SideNav>(
-            html`
-                <sp-sidenav>
-                    <sp-sidenav-item
-                        disabled
-                        value="Section 1"
-                        label="Section 1"
-                    ></sp-sidenav-item>
-                    <sp-sidenav-item
-                        disabled
-                        value="Section 2"
-                        label="Section 2"
-                    ></sp-sidenav-item>
-                </sp-sidenav>
-            `
-        );
+        const el = await fixture<SideNav>(html`
+            <sp-sidenav>
+                <sp-sidenav-item
+                    disabled
+                    value="Section 1"
+                    label="Section 1"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    disabled
+                    value="Section 2"
+                    label="Section 2"
+                ></sp-sidenav-item>
+            </sp-sidenav>
+        `);
 
         await elementUpdated(el);
 
@@ -159,20 +149,18 @@ describe('Sidenav', () => {
         expect(el.matches(':focus-within')).to.be.false;
     });
     it('sets manageTabIndex on new children', async () => {
-        const el = await fixture<SideNav>(
-            html`
-                <sp-sidenav>
-                    <sp-sidenav-item
-                        value="Section 1"
-                        label="Section 1"
-                    ></sp-sidenav-item>
-                    <sp-sidenav-item
-                        value="Section 2"
-                        label="Section 2"
-                    ></sp-sidenav-item>
-                </sp-sidenav>
-            `
-        );
+        const el = await fixture<SideNav>(html`
+            <sp-sidenav>
+                <sp-sidenav-item
+                    value="Section 1"
+                    label="Section 1"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    value="Section 2"
+                    label="Section 2"
+                ></sp-sidenav-item>
+            </sp-sidenav>
+        `);
 
         await elementUpdated(el);
         expect(el.manageTabIndex).to.be.false;
@@ -201,24 +189,22 @@ describe('Sidenav', () => {
     });
     it('handles select', async () => {
         const changeSpy = spy();
-        const el = await fixture<SideNav>(
-            html`
-                <sp-sidenav @change=${() => changeSpy()}>
-                    <sp-sidenav-heading label="CATEGORY 1">
+        const el = await fixture<SideNav>(html`
+            <sp-sidenav @change=${() => changeSpy()}>
+                <sp-sidenav-heading label="CATEGORY 1">
+                    <sp-sidenav-item
+                        value="Section 1"
+                        label="Section 1"
+                    ></sp-sidenav-item>
+                    <sp-sidenav-item value="Section 2" label="Section 2">
                         <sp-sidenav-item
-                            value="Section 1"
-                            label="Section 1"
+                            value="Section 2a"
+                            label="Section 2a"
                         ></sp-sidenav-item>
-                        <sp-sidenav-item value="Section 2" label="Section 2">
-                            <sp-sidenav-item
-                                value="Section 2a"
-                                label="Section 2a"
-                            ></sp-sidenav-item>
-                        </sp-sidenav-item>
-                    </sp-sidenav-heading>
-                </sp-sidenav>
-            `
-        );
+                    </sp-sidenav-item>
+                </sp-sidenav-heading>
+            </sp-sidenav>
+        `);
 
         await elementUpdated(el);
 
@@ -257,33 +243,27 @@ describe('Sidenav', () => {
     });
     it('prevents selection', async () => {
         const changeSpy = spy();
-        const el = await fixture<SideNav>(
-            html`
-                <sp-sidenav
-                    @change=${(event: Event) => {
-                        event.preventDefault();
-                        changeSpy();
-                    }}
-                >
-                    <sp-sidenav-heading label="CATEGORY 1">
+        const el = await fixture<SideNav>(html`
+            <sp-sidenav
+                @change=${(event: Event) => {
+                    event.preventDefault();
+                    changeSpy();
+                }}
+            >
+                <sp-sidenav-heading label="CATEGORY 1">
+                    <sp-sidenav-item
+                        value="Section 1"
+                        label="Section 1"
+                    ></sp-sidenav-item>
+                    <sp-sidenav-item value="Section 2" label="Section 2" opened>
                         <sp-sidenav-item
-                            value="Section 1"
-                            label="Section 1"
+                            value="Section 2a"
+                            label="Section 2a"
                         ></sp-sidenav-item>
-                        <sp-sidenav-item
-                            value="Section 2"
-                            label="Section 2"
-                            opened
-                        >
-                            <sp-sidenav-item
-                                value="Section 2a"
-                                label="Section 2a"
-                            ></sp-sidenav-item>
-                        </sp-sidenav-item>
-                    </sp-sidenav-heading>
-                </sp-sidenav>
-            `
-        );
+                    </sp-sidenav-item>
+                </sp-sidenav-heading>
+            </sp-sidenav>
+        `);
 
         await elementUpdated(el);
 
@@ -315,7 +295,7 @@ describe('Sidenav', () => {
         await elementUpdated(el);
 
         expect(el.value).to.equal('Section 1');
-        expect(selected.tabIndex, '-1 when focusin').to.equal(-1);
+        expect(selected.tabIndex, '0 when focusin').to.equal(0);
 
         el.blur();
 
@@ -336,12 +316,19 @@ describe('Sidenav', () => {
                 },
             ],
         });
-
+        toBeSelected.dispatchEvent(
+            new CustomEvent('sidenav-select', {
+                bubbles: true,
+                detail: {
+                    value: 'Section 0',
+                },
+            })
+        );
         await elementUpdated(el);
 
         expect(el.value).to.equal('Section 0');
         expect(toBeSelected.tabIndex, 'will be new focusable child').to.equal(
-            -1
+            0
         );
         expect(selected.tabIndex, 'no longer selected').to.equal(-1);
     });
@@ -486,20 +473,18 @@ describe('Sidenav', () => {
         expect(typeof outsideFocused).not.to.equal(SideNavItem);
     });
     it('manage tab index for late added items', async () => {
-        const el = await fixture<SideNav>(
-            html`
-                <sp-sidenav manage-tab-index>
-                    <sp-sidenav-item
-                        value="Section 0"
-                        label="Section 0"
-                    ></sp-sidenav-item>
-                    <sp-sidenav-item
-                        value="Section 1"
-                        label="Section 1"
-                    ></sp-sidenav-item>
-                </sp-sidenav>
-            `
-        );
+        const el = await fixture<SideNav>(html`
+            <sp-sidenav manage-tab-index>
+                <sp-sidenav-item
+                    value="Section 0"
+                    label="Section 0"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    value="Section 1"
+                    label="Section 1"
+                ></sp-sidenav-item>
+            </sp-sidenav>
+        `);
 
         await elementUpdated(el);
         expect(el.manageTabIndex).to.be.true;

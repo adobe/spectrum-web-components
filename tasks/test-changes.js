@@ -98,11 +98,14 @@ const getChangedPackages = () => {
 
 const testChangedPackages = () => {
     const packages = getChangedPackages();
+
     if (packages.length) {
         console.log(
             `Running tachometer on the following packages: ${packages.join(', ')}`
         );
+
         execSync('yarn build:tests');
+
         execSync(
             `yarn test:bench --browser ${browser} -j -p ${packages.join(' ')}`,
             {

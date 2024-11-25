@@ -36,7 +36,7 @@ const config = {
                         ['spectrum-CoachIndicator--dark', 'black'],
                         ['spectrum-CoachIndicator--light', 'white'],
                     ],
-                    'static'
+                    'static-color'
                 ),
             ],
         },

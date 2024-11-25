@@ -106,9 +106,27 @@ An `<sp-menu-item>` can also accept content addressed to its `submenu` slot. Usi
 </sp-menu>
 ```
 
+Note: While `sp-menu-item` can accommodate any custom content in the `submenu` slot, it will not handle selection or keyboard navigation for such content. To ensure proper management of selection and keyboard navigation, it is recommended to use `sp-menu` within the `submenu` slot```
+
+```html
+<sp-menu style="width: 200px;">
+    <sp-menu-item>
+        Item with arbitrary content in submenu
+        <div role="menuitem" slot="submenu" style="padding: 12px">
+            <img
+                src="https://placekitten.com/200/200"
+                alt="Kitten"
+                style="width: 100%; height: auto; border-radius: 4px"
+            />
+            <p>I am an arbitrary content in submenu</p>
+        </div>
+    </sp-menu-item>
+</sp-menu>
+```
+
 ### Value attribute
 
-When displayed as a descendent of an element that manages selection (e.g. `<sp-action-menu>`, `<sp-picker>`, `<sp-split-button>`, etc.), an `<sp-menu-item>` will represent the "selected" value of that ancestor when its `value` attribute or the trimmed `textContent` (represeted by `el.itemText`) matches the `value` of the ancestor element.
+When displayed as a descendent of an element that manages selection (e.g. `<sp-action-menu>`, `<sp-picker>`, etc.), an `<sp-menu-item>` will represent the "selected" value of that ancestor when its `value` attribute or the trimmed `textContent` (represeted by `el.itemText`) matches the `value` of the ancestor element.
 
 In the following example, the selected `<sp-menu-item>` represents a `value` of `Text that is really long and useful to a visitor, but not exactly good to use in your application or component state.` for the ancestor element.
 

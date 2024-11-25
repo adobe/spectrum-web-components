@@ -15,10 +15,6 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
-import {
-    ButtonTreatments,
-    ButtonVariants,
-} from '@spectrum-web-components/button/src/Button.js';
 
 import type { Properties } from './template.js';
 export type { Properties };
@@ -122,6 +118,7 @@ export function renderButton(properties: Properties): TemplateResult {
             ?icon-only=${properties.iconOnly}
             ?pending=${!!properties.pending}
             ?quiet="${!!properties.quiet}"
+            ?no-wrap="${!!properties.noWrap}"
             size=${properties.size}
             target=${ifDefined(properties.target)}
             treatment=${ifDefined(properties.treatment)}
@@ -205,28 +202,6 @@ export const renderWithIconOnly = (props: Properties): TemplateResult => {
                 <sp-icon-help slot="icon"></sp-icon-help>
             `,
         })}
-    `;
-};
-
-export const renderIconSizeOverridden = (
-    variant: ButtonVariants,
-    treatment: ButtonTreatments
-): TemplateResult => {
-    return html`
-        <sp-button
-            label="Edit"
-            size="xl"
-            variant=${variant}
-            treatment=${treatment}
-        >
-            <sp-icon-help slot="icon" size="s">Testing</sp-icon-help>
-        </sp-button>
-        <h1>For testing purposes only</h1>
-        <p>
-            This is a test to ensure that sizing the icon will still work when
-            it's in the scope of a parent element. You shouldn't normally do
-            this as it deviates from the Spectrum design specification.
-        </p>
     `;
 };
 

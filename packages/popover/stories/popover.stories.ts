@@ -97,7 +97,6 @@ const Template = ({ tip, placement, open }: StoryArgs): TemplateResult => {
             style="color: var(--spectrum-gray-800); position: relative; display: contents"
         >
             <sp-popover
-                variant="dialog"
                 placement=${placement}
                 ?open=${open}
                 style=" max-width: 320px"

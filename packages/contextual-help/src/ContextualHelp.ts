@@ -43,7 +43,7 @@ import styles from './contextual-help.css.js';
  * @slot link - link to additional informations
  */
 export class ContextualHelp extends SpectrumElement {
-    protected isMobile = new MatchMediaController(this, IS_MOBILE);
+    public isMobile = new MatchMediaController(this, IS_MOBILE);
 
     public static override get styles(): CSSResultArray {
         return [styles];
@@ -82,7 +82,7 @@ export class ContextualHelp extends SpectrumElement {
     @property({ type: Boolean })
     open = false;
 
-    private get buttonAriaLabel(): string {
+    public get buttonAriaLabel(): string {
         if (this.label) {
             return this.label;
         } else {
@@ -137,6 +137,7 @@ export class ContextualHelp extends SpectrumElement {
     }
 
     protected override render(): TemplateResult {
+        /* c8 ignore next 3 */
         const actualPlacement = this.isMobile.matches
             ? undefined
             : this.placement;

@@ -154,7 +154,7 @@ export class AlertBanner extends SpectrumElement {
                           <sp-close-button
                               @click=${this.shouldClose}
                               label="Close"
-                              static="white"
+                              static-color="white"
                           ></sp-close-button>
                       `
                     : html``}

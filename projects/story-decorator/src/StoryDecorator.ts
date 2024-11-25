@@ -25,7 +25,7 @@ import {
 import { DARK_MODE } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/theme/src/spectrum-two/themes-core-tokens.js';
+import '@spectrum-web-components/theme/src/spectrum-two/themes.js';
 import '@spectrum-web-components/theme/src/express/themes.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/picker/sp-picker.js';
@@ -41,6 +41,7 @@ import {
     Theme,
 } from '@spectrum-web-components/theme';
 import './types.js';
+import { type Locale, Locales } from './locales.js';
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -57,6 +58,7 @@ export let color: Color =
 export let scale: Scale = (urlParams.get('sp_scale') as Scale) || 'medium';
 export let reduceMotion = urlParams.get('sp_reduceMotion') === 'true';
 export let screenshot = urlParams.get('sp_screenshot') === 'true';
+export let locale = urlParams.get('sp_locale') || 'en-US';
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
     defaultSystemVariant: system,
@@ -64,6 +66,7 @@ window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
     defaultScale: scale,
     defaultDirection: dir,
     defaultReduceMotion: reduceMotion,
+    defaultLocale: locale,
 };
 
 const reduceMotionProperties = css`
@@ -118,7 +121,7 @@ export class StoryDecorator extends SpectrumElement {
                                 var(--spectrum-component-height-100)
                         );
                     box-sizing: border-box;
-                    background-color: var(--spectrum-gray-100);
+                    background-color: var(--spectrum-background-base-color);
                     color: var(--spectrum-body-color);
 
                     --decorator-padding-100: calc(
@@ -146,7 +149,6 @@ export class StoryDecorator extends SpectrumElement {
                     align-items: flex-start;
                     justify-content: flex-end;
                     box-sizing: border-box;
-                    background-color: var(--spectrum-gray-100);
                     padding-bottom: calc(
                         2 * var(--spectrum-alias-focus-ring-size)
                     );
@@ -181,6 +183,9 @@ export class StoryDecorator extends SpectrumElement {
 
     @property({ type: Boolean, attribute: 'reduce-motion', reflect: true })
     public reduceMotion = window.__swc_hack_knobs__.defaultReduceMotion;
+
+    @property({ type: String })
+    public override lang: Locale = window.__swc_hack_knobs__.defaultLocale;
 
     @property({ type: Boolean, reflect: true })
     public screenshot = screenshot;
@@ -234,7 +239,18 @@ export class StoryDecorator extends SpectrumElement {
                     window.__swc_hack_knobs__.defaultReduceMotion =
                         checked as boolean;
                 break;
+            case 'locale':
+                this.lang = window.__swc_hack_knobs__.defaultLocale =
+                    value as Locale;
+                break;
         }
+    }
+
+    public get backgroundStyle() {
+        if (system === 'spectrum-two') {
+            return `background-color: var(--spectrum-background-base-color);`;
+        }
+        return `background-color: var(--spectrum-gray-100);`;
     }
 
     protected handleKeydown(event: KeyboardEvent): void {
@@ -257,6 +273,7 @@ export class StoryDecorator extends SpectrumElement {
                 color=${this.color}
                 scale=${this.scale}
                 dir=${this.direction}
+                style=${this.backgroundStyle}
                 part="container"
                 @keydown=${this.handleKeydown}
             >
@@ -301,7 +318,8 @@ export class StoryDecorator extends SpectrumElement {
         return html`
             <div class="manage-theme" part="controls">
                 ${this.systemControl} ${this.colorControl} ${this.scaleControl}
-                ${this.dirControl} ${this.reduceMotionControl}
+                ${this.localeControl} ${this.dirControl}
+                ${this.reduceMotionControl}
             </div>
         `;
     }
@@ -358,6 +376,28 @@ export class StoryDecorator extends SpectrumElement {
             >
                 <sp-menu-item value="medium">Medium</sp-menu-item>
                 <sp-menu-item value="large">Large</sp-menu-item>
+            </sp-picker>
+        `;
+    }
+
+    private get localeControl(): TemplateResult {
+        const renderLocaleOption = (locale: Locale): TemplateResult => html`
+            <sp-menu-item value=${locale}>${Locales[locale]}</sp-menu-item>
+        `;
+
+        return html`
+            <sp-field-label side-aligned="start" for="locale">
+                Locale
+            </sp-field-label>
+            <sp-picker
+                id="locale"
+                label="Locale"
+                placement="top"
+                quiet
+                .value=${this.lang}
+                @change=${this.updateTheme}
+            >
+                ${(Object.keys(Locales) as Locale[]).map(renderLocaleOption)}
             </sp-picker>
         `;
     }

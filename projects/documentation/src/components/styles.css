@@ -14,8 +14,11 @@ governing permissions and limitations under the License.
 @import '@spectrum-web-components/styles/tokens/spectrum/global-vars.css';
 @import '@spectrum-web-components/styles/tokens/spectrum/custom-vars.css';
 @import '@spectrum-web-components/styles/src/spectrum-heading.css';
+@import '@spectrum-web-components/styles/src/heading-overrides.css';
 @import '@spectrum-web-components/styles/src/spectrum-body.css';
+@import '@spectrum-web-components/styles/src/body-overrides.css';
 @import '@spectrum-web-components/styles/src/spectrum-code.css';
+@import '@spectrum-web-components/styles/src/code-overrides.css';
 @import '@spectrum-web-components/opacity-checkerboard/src/spectrum-opacity-checkerboard.css';
 @import './inline-alert.css';
 @import './fonts.css';
@@ -442,7 +445,8 @@ sp-sidenav-item:not(:defined) span {
     );
     position: relative;
     text-decoration: none;
-    transition: background-color var(--spectrum-animation-duration-100) ease-out,
+    transition:
+        background-color var(--spectrum-animation-duration-100) ease-out,
         color var(--spectrum-animation-duration-100) ease-out;
     word-break: break-word;
 }
@@ -794,7 +798,8 @@ docs-page:defined .section {
     overflow: hidden;
     opacity: 1;
     height: 100%;
-    transition: opacity var(--spectrum-animation-duration-300) ease-in-out,
+    transition:
+        opacity var(--spectrum-animation-duration-300) ease-in-out,
         transform var(--spectrum-animation-duration-300) ease-in-out;
 }
 
@@ -809,7 +814,8 @@ docs-page:defined .section:not([selected]) {
             calc(var(--swc-scale-factor) * 6px)
         )
     );
-    transition: opacity var(--spectrum-animation-duration-300) ease-in-out,
+    transition:
+        opacity var(--spectrum-animation-duration-300) ease-in-out,
         transform var(--spectrum-animation-duration-300) ease-in-out,
         height 0s ease var(--spectrum-animation-duration-300);
 }
@@ -932,6 +938,10 @@ sp-link {
     gap: 16px;
     border: 1px solid rgb(63, 63, 63);
     border-radius: 6px;
+}
+
+.demo-control {
+    width: 100%;
 }
 
 .deprecation-container {

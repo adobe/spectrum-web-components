@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/thumbnail",
-    "version": "0.44.0",
+    "version": "1.0.1",
     "publishConfig": {
         "access": "public"
     },
@@ -33,6 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/thumbnail-overrides.css.js": "./src/thumbnail-overrides.css.js",
         "./src/thumbnail.css.js": "./src/thumbnail.css.js",
         "./sp-thumbnail.js": {
             "development": "./sp-thumbnail.dev.js",
@@ -57,11 +58,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.44.0",
-        "@spectrum-web-components/opacity-checkerboard": "^0.44.0"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/opacity-checkerboard": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/thumbnail": "^6.1.0"
+        "@spectrum-css/thumbnail": "6.2.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

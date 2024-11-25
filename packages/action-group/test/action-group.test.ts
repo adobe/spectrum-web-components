@@ -53,6 +53,8 @@ import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
 import '../stories/action-group.stories.js';
+import { isWebKit } from '@spectrum-web-components/shared';
+import sinon from 'sinon';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
@@ -120,6 +122,31 @@ async function multipleSelectedActionGroup(
 }
 
 describe('ActionGroup', () => {
+    it('does not throw an error if slotElement is null', async () => {
+        // To verify that this test is not evergreen, you can temporarily disable the safeguard
+        // clause in `manageButtons` by commenting out the following lines:
+        // if (!this.slotElement) { return; }
+
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group>
+                <sp-action-button value="first">First</sp-action-button>
+                <sp-action-button value="second">Second</sp-action-button>
+            </sp-action-group>
+        `);
+
+        // Stub the slotElement getter to return null
+        const slotElementStub = sinon.stub(el, 'slotElement').get(() => null);
+        await elementUpdated(el);
+
+        // trigger a slotchange event
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
+        await elementUpdated(el);
+        expect(el.children.length).to.equal(0);
+        slotElementStub.restore();
+    });
+
     it('loads empty action-group accessibly', async () => {
         const el = await fixture<ActionGroup>(html`
             <sp-action-group></sp-action-group>
@@ -165,8 +192,8 @@ describe('ActionGroup', () => {
         // expect the first button to be focused
         expect(document.activeElement?.id).to.equal('first');
 
-        // expect all the elements of the focus group to have a tabIndex of -1
-        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(-1);
+        // expect all the elements of the focus group to have a tabIndex of -1 except the first button because it is focused using Tab
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
         expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
@@ -252,8 +279,8 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
         await aTimeout(500);
 
-        // expect all the elements of the focus group to have a tabIndex of -1
-        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(-1);
+        // expect all the elements of the focus group to have a tabIndex of -1 except the first button because it is focused using mouse
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
         expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
         expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
@@ -304,6 +331,17 @@ describe('ActionGroup', () => {
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
         await closed;
 
+        if (!isWebKit()) {
+            sendMouse({
+                steps: [
+                    {
+                        position: [0, 0],
+                        type: 'click',
+                    },
+                ],
+            });
+        }
+
         await aTimeout(500);
 
         expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
@@ -338,9 +376,9 @@ describe('ActionGroup', () => {
         expect(el.getAttribute('role')).to.equal('toolbar');
         expect(el.children[0].getAttribute('role')).to.equal('button');
     });
-    it('applies `static` attribute to its children', async () => {
+    it('applies `static-color` attribute to its children', async () => {
         const el = await fixture<ActionGroup>(html`
-            <sp-action-group static="white">
+            <sp-action-group static-color="white">
                 <sp-action-button id="first">First</sp-action-button>
                 <sp-action-button id="second">Second</sp-action-button>
             </sp-action-group>
@@ -350,15 +388,15 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
 
-        expect(firstButton.static).to.equal('white');
-        expect(secondButton.static).to.equal('white');
+        expect(firstButton.staticColor).to.equal('white');
+        expect(secondButton.staticColor).to.equal('white');
 
-        el.static = undefined;
+        el.staticColor = undefined;
 
         await elementUpdated(el);
 
-        expect(firstButton.static).to.be.undefined;
-        expect(secondButton.static).to.be.undefined;
+        expect(firstButton.staticColor).to.be.undefined;
+        expect(secondButton.staticColor).to.be.undefined;
     });
     it('manages "label"', async () => {
         const testLabel = 'Testable action group';
