@@ -39,7 +39,7 @@ export class IconBase extends SpectrumElement {
     @state()
     public spectrumVersion = 1;
 
-    @property()
+    @property({ reflect: true })
     public label = '';
 
     @property({ reflect: true })

@@ -30,13 +30,25 @@ class IsOverlayOpen extends HTMLElement {
 
     async setup(): Promise<void> {
         await nextFrame();
-
         document.addEventListener('sp-opened', this.handleOpened);
     }
 
+    private sendFocus = async (): Promise<void> => {
+        const selectedItem = document
+            .querySelector('[focusable]')
+            ?.querySelector('[selected]') as HTMLElement & {
+            focused?: boolean;
+        };
+
+        if (selectedItem) {
+            selectedItem.focus();
+            selectedItem.focused = true;
+        }
+    };
+
     handleOpened = async (event: Event): Promise<void> => {
         const overlay = event.target as Overlay;
-        const actions = [nextFrame(), overlay.updateComplete];
+        const actions = [nextFrame(), overlay.updateComplete, this.sendFocus()];
 
         await Promise.all(actions);
         // Focus happens _after_ `sp-opened` by at least two frames.
