@@ -58,7 +58,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@internationalized/number": "^3.1.0",
+        "@internationalized/number": "^3.6.0",
         "@spectrum-web-components/base": "^1.0.1",
         "@spectrum-web-components/icon": "^1.0.1",
         "@spectrum-web-components/icons-ui": "^1.0.1",
