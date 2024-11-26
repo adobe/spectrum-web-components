@@ -295,6 +295,24 @@ export class ColorController {
     private _colorOrigin!: ColorTypes;
 
     /**
+     * Gets the original color value provided by the user.
+     *
+     * @returns {ColorTypes} The original color value.
+     */
+    get colorOrigin(): ColorTypes {
+        return this._colorOrigin;
+    }
+
+    /**
+     * Sets the original color value provided by the user.
+     *
+     * @param {ColorTypes} colorOrigin - The original color value to set.
+     */
+    set colorOrigin(colorOrigin: ColorTypes) {
+        this._colorOrigin = colorOrigin;
+    }
+
+    /**
      * An optional string property that specifies how the color should be managed(its value is the name of color space in which color object will be managed).
      * This property can be used to define a specific management strategy or identifier.
      */

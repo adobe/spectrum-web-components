@@ -251,7 +251,7 @@ describe('ColorController', () => {
 
     it('should return correct color values for srgb spaceId with percentage origin', () => {
         colorController.color = new Color('srgb', [0.5, 0.25, 0.75]);
-        colorController._colorOrigin = { r: '50%', g: '25%', b: '75%' };
+        colorController.colorOrigin = { r: '50%', g: '25%', b: '75%' };
         const result = colorController.colorValue;
         expect(result).to.deep.equal({
             r: '128%',
