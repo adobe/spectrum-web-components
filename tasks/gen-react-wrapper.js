@@ -105,6 +105,7 @@ const main = () => {
     const allPackages = getWorkspacePackages(ignoredPackages);
     runCemAnalyze(allPackages);
     generateReactWrapper();
+    console.log('react wrapper generated');
 };
 
 main();
