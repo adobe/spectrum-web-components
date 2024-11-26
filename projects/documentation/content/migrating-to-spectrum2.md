@@ -1,11 +1,11 @@
 ---
 layout: root.njk
-title: 'Migrate to Spectrum 2'
-displayName: Migrate to Spectrum 2
-slug: migrate-to-spectrum2
+title: 'Migrating to Spectrum 2'
+displayName: Migrating to Spectrum 2
+slug: migrating-to-spectrum2
 ---
 
-# Migrate to Spectrum 2
+# Migrating to Spectrum 2
 
 In Spectrum 2, sp-theme's system variables are updated to support new design tokens, which optimize for different scales and themes. To complete the migration, update the system variable in sp-theme to reference Spectrum 2, adjust import paths, and ensure all components are using version 1.0.0.
 

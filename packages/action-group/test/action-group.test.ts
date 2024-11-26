@@ -54,6 +54,7 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
 import '../stories/action-group.stories.js';
 import { isWebKit } from '@spectrum-web-components/shared';
+import sinon from 'sinon';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
@@ -121,6 +122,31 @@ async function multipleSelectedActionGroup(
 }
 
 describe('ActionGroup', () => {
+    it('does not throw an error if slotElement is null', async () => {
+        // To verify that this test is not evergreen, you can temporarily disable the safeguard
+        // clause in `manageButtons` by commenting out the following lines:
+        // if (!this.slotElement) { return; }
+
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group>
+                <sp-action-button value="first">First</sp-action-button>
+                <sp-action-button value="second">Second</sp-action-button>
+            </sp-action-group>
+        `);
+
+        // Stub the slotElement getter to return null
+        const slotElementStub = sinon.stub(el, 'slotElement').get(() => null);
+        await elementUpdated(el);
+
+        // trigger a slotchange event
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
+        await elementUpdated(el);
+        expect(el.children.length).to.equal(0);
+        slotElementStub.restore();
+    });
+
     it('loads empty action-group accessibly', async () => {
         const el = await fixture<ActionGroup>(html`
             <sp-action-group></sp-action-group>

@@ -23,6 +23,8 @@ const toast = ({
     variant = '',
     open = true,
     content = '',
+    timeout = 0,
+    iconLabel = '',
 }): TemplateResult => html`
     <sp-toast
         variant=${variant as
@@ -33,6 +35,8 @@ const toast = ({
             | 'error'
             | 'warning'}
         ?open=${open}
+        timeout=${ifDefined(timeout)}
+        .iconLabel=${iconLabel}
     >
         ${content}
         <sp-button
@@ -61,18 +65,40 @@ export default {
                 type: { summary: 'string' },
                 defaultValue: { summary: '' },
             },
-            control: 'text',
         },
         open: {
             name: 'open',
             type: { name: 'boolean', required: false },
-            description: 'Whether the toast is open.',
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: false },
             },
+        },
+        variant: {
+            name: 'variant',
+            options: ['', 'negative', 'positive', 'info', 'error', 'warning'],
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
+            },
             control: {
-                type: 'boolean',
+                type: 'select',
+            },
+        },
+        timeout: {
+            name: 'timeout',
+            type: { name: 'number', required: false },
+            table: {
+                type: { summary: 'number' },
+                defaultValue: { summary: null },
+            },
+        },
+        iconLabel: {
+            name: 'iconLabel',
+            type: { name: 'string', required: false },
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
             },
         },
     },
@@ -82,6 +108,8 @@ interface Properties {
     variant: '' | 'negative' | 'positive' | 'info' | 'error' | 'warning';
     open: boolean;
     content: string;
+    timeout: number;
+    iconLabel: string;
     onClose: (event: Event) => void;
 }
 
@@ -89,16 +117,20 @@ export const Default = ({
     variant,
     open,
     content,
+    timeout,
+    iconLabel,
 }: Properties): TemplateResult => {
-    return toast({ variant, open, content });
+    return toast({ variant, open, content, timeout, iconLabel });
 };
 
 const variantDemo = ({
     variant,
     open,
     content,
+    timeout,
+    iconLabel,
 }: Properties): TemplateResult => {
-    return toast({ variant, open, content });
+    return toast({ variant, open, content, timeout, iconLabel });
 };
 
 export const Positive = (args: Properties): TemplateResult =>

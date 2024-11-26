@@ -25,7 +25,6 @@ import sideNavStyles from './side-nav.css';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 @customElement('docs-side-nav')
 export class SideNav extends LitElement {

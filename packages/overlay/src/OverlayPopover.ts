@@ -97,9 +97,7 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             });
         }
 
-        private async shouldShowPopover(
-            targetOpenState: boolean
-        ): Promise<void> {
+        private shouldShowPopover(targetOpenState: boolean): void {
             let popoverOpen = false;
             try {
                 popoverOpen = this.dialogEl.matches(':popover-open');
@@ -118,7 +116,7 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                 this.isConnected
             ) {
                 this.dialogEl.showPopover();
-                await this.managePosition();
+                this.managePosition();
             }
         }
 
@@ -129,7 +127,7 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             if (!supportsOverlayAuto) {
                 await this.shouldHidePopover(targetOpenState);
             }
-            await this.shouldShowPopover(targetOpenState);
+            this.shouldShowPopover(targetOpenState);
             await nextFrame();
         }
 

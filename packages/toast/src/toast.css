@@ -34,3 +34,27 @@ governing permissions and limitations under the License.
     transition-delay: 0s;
     visibility: visible;
 }
+
+:host([variant='error']),
+:host([variant='warning']) {
+    background-color: var(
+        --highcontrast-toast-negative-background-color-default,
+        var(
+            --mod-toast-negative-background-color-default,
+            var(--spectrum-toast-negative-background-color-default)
+        )
+    );
+}
+
+:host([variant='negative']),
+:host([variant='negative']) .closeButton:focus-visible:not(:active),
+:host([variant='warning']),
+:host([variant='warning']) .closeButton:focus-visible:not(:active) {
+    color: var(
+        --highcontrast-toast-negative-background-color-default,
+        var(
+            --mod-toast-negative-background-color-default,
+            var(--spectrum-toast-negative-background-color-default)
+        )
+    );
+}

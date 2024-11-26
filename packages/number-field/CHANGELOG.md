@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
+
+### Bug Fixes
+
+-   **number-field, slider:** ensure cached value is cleared when toggling between different steps ([#4846](https://github.com/adobe/spectrum-web-components/issues/4846)) ([1c84c96](https://github.com/adobe/spectrum-web-components/commit/1c84c968f55cde28d0144a78153c9a33a078c726))
+-   **number-field:** allow only numeric characters for Japanese/Chinese IME ([#4817](https://github.com/adobe/spectrum-web-components/issues/4817)) ([a791bd1](https://github.com/adobe/spectrum-web-components/commit/a791bd1c027ede4c88e8c066ef97610409a0f2c4))
+
 # [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
 
 **Note:** Version bump only for package @spectrum-web-components/number-field

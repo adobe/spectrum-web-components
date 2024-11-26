@@ -10,33 +10,24 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
+import { trigger } from '@spectrum-web-components/overlay';
 import { alertDestructive } from './dialog.stories.js';
 import { portrait } from './images.js';
-import { disabledButtonDecorator } from './index.js';
+import {
+    disabledButtonWithOverlayDecorator,
+    withOverlayDecorator,
+} from './index.js';
 
 export default {
     title: 'Dialog Base',
     component: 'sp-dialog-base',
-    decorators: [
-        (story: () => TemplateResult): TemplateResult => {
-            return html`
-                <sp-button variant="primary" id="trigger">
-                    Toggle Dialog
-                </sp-button>
-                <sp-overlay type="modal" trigger="trigger@click" open>
-                    ${story()}
-                </sp-overlay>
-            `;
-        },
-    ],
 };
 
-export const Slotted = (): TemplateResult => html`
+export const slotted = (): TemplateResult => html`
     <sp-dialog-base
         underlay
         @click=${(event: Event) => {
@@ -50,6 +41,7 @@ export const Slotted = (): TemplateResult => html`
         ${alertDestructive()}
     </sp-dialog-base>
 `;
+slotted.decorators = [withOverlayDecorator];
 
 export const disabledButton = (): TemplateResult => {
     return html`
@@ -116,7 +108,7 @@ export const disabledButton = (): TemplateResult => {
     `;
 };
 
-disabledButton.decorators = [disabledButtonDecorator];
+disabledButton.decorators = [disabledButtonWithOverlayDecorator];
 
 export const notAgain = (): TemplateResult => html`
     <sp-dialog-base
@@ -143,6 +135,7 @@ export const notAgain = (): TemplateResult => html`
         </sp-dialog>
     </sp-dialog-base>
 `;
+notAgain.decorators = [withOverlayDecorator];
 
 export const moreCustom = (): TemplateResult => html`
     <sp-dialog-base
@@ -189,6 +182,7 @@ export const moreCustom = (): TemplateResult => html`
         </div>
     </sp-dialog-base>
 `;
+moreCustom.decorators = [withOverlayDecorator];
 
 export const fullyCustom = (): TemplateResult => html`
     <sp-dialog-base
@@ -222,3 +216,46 @@ export const fullyCustom = (): TemplateResult => html`
         </div>
     </sp-dialog-base>
 `;
+fullyCustom.decorators = [withOverlayDecorator];
+
+export const lazyLoaded = (): TemplateResult => {
+    const template = (): TemplateResult => html`
+        <sp-dialog-base
+            underlay
+            @click=${(event: Event) => {
+                if ((event.target as HTMLElement).localName === 'sp-button') {
+                    (event.target as HTMLElement).dispatchEvent(
+                        new Event('close', { bubbles: true, composed: true })
+                    );
+                }
+            }}
+        >
+            <sp-dialog size="m">
+                <h2 slot="heading">This is a heading</h2>
+                <p>
+                    The click on the "OK" button should close the overlay with
+                    the correct animation (duration).
+                </p>
+                <sp-button variant="secondary" treatment="fill" slot="button">
+                    Ok
+                </sp-button>
+            </sp-dialog>
+        </sp-dialog-base>
+    `;
+
+    return html`
+        <sp-button
+            variant="primary"
+            ${trigger(template, {
+                open: false,
+                triggerInteraction: 'click',
+            })}
+        >
+            Open dialog
+        </sp-button>
+    `;
+};
+
+lazyLoaded.swc_vrt = {
+    skip: true,
+};
