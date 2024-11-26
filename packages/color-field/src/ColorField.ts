@@ -47,7 +47,7 @@ export class ColorField extends TextfieldBase {
 
     protected override _value = '';
 
-    private cachedColor: string = 'null';
+    private cachedColor: string = 'nulll';
 
     public getColorValue(): string {
         if (!this.value) {
