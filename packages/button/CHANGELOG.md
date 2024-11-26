@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.0.2
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/clear-button@1.0.2
+    -   @spectrum-web-components/close-button@1.0.2
+    -   @spectrum-web-components/icon@1.0.2
+    -   @spectrum-web-components/icons-ui@1.0.2
+    -   @spectrum-web-components/progress-circle@1.0.2
+    -   @spectrum-web-components/base@1.0.2
+    -   @spectrum-web-components/shared@1.0.2
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.0.2
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/field-label@1.0.2
+    -   @spectrum-web-components/menu@1.0.2
+    -   @spectrum-web-components/overlay@1.0.2
+    -   @spectrum-web-components/picker@1.0.2
+    -   @spectrum-web-components/switch@1.0.2
+    -   @spectrum-web-components/base@1.0.2
+    -   @spectrum-web-components/reactive-controllers@1.0.2
+    -   @spectrum-web-components/theme@1.0.2
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

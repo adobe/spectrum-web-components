@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.0.2
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/modal@1.0.2
+    -   @spectrum-web-components/underlay@1.0.2
+    -   @spectrum-web-components/base@1.0.2
+    -   @spectrum-web-components/reactive-controllers@1.0.2
+    -   @spectrum-web-components/shared@1.0.2
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

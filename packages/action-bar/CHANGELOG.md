@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.0.2
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/action-group@1.0.2
+    -   @spectrum-web-components/button@1.0.2
+    -   @spectrum-web-components/field-label@1.0.2
+    -   @spectrum-web-components/popover@1.0.2
+    -   @spectrum-web-components/base@1.0.2
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

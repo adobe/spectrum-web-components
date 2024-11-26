@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.0.2
+
+### Patch Changes
+
+-   [#4956](https://github.com/adobe/spectrum-web-components/pull/4956) [`3a64aa3`](https://github.com/adobe/spectrum-web-components/commit/3a64aa3a3577062782645f6f23f1270d99b85178) Thanks [@blunteshwar](https://github.com/blunteshwar)! - [DO NOT MERGE]Release testing
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/color-handle@1.0.2
+    -   @spectrum-web-components/textfield@1.0.2
+    -   @spectrum-web-components/base@1.0.2
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.0.2
+
+### Patch Changes
+
+-   Updated dependencies [[`3a64aa3`](https://github.com/adobe/spectrum-web-components/commit/3a64aa3a3577062782645f6f23f1270d99b85178)]:
+    -   @spectrum-web-components/styles@1.0.2
+    -   @spectrum-web-components/asset@1.0.2
+    -   @spectrum-web-components/checkbox@1.0.2
+    -   @spectrum-web-components/divider@1.0.2
+    -   @spectrum-web-components/icons-workflow@1.0.2
+    -   @spectrum-web-components/base@1.0.2
+    -   @spectrum-web-components/shared@1.0.2
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
