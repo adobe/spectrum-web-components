@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/modal",
-    "version": "1.0.2",
+    "version": "1.0.1-testing",
     "publishConfig": {
         "access": "public"
     },
@@ -44,7 +44,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.0.2"
+        "@spectrum-web-components/base": "^1.0.1-testing"
     },
     "devDependencies": {
         "@spectrum-css/modal": "^6.0.0-s2-foundations.16"

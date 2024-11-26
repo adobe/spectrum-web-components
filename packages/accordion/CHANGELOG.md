@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.0.3
+
+### Patch Changes
+
+-   [#4956](https://github.com/adobe/spectrum-web-components/pull/4956) [`fe7d335`](https://github.com/adobe/spectrum-web-components/commit/fe7d335a4660a735fd3200dd53a8108bbcc351d5) Thanks [@blunteshwar](https://github.com/blunteshwar)! - [DO NOT MERGE]Release testing
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/icon@1.0.3
+    -   @spectrum-web-components/icons-ui@1.0.3
+    -   @spectrum-web-components/base@1.0.3
+    -   @spectrum-web-components/reactive-controllers@1.0.3
+    -   @spectrum-web-components/shared@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes

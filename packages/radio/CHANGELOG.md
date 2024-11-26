@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.0.3
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/field-group@1.0.3
+    -   @spectrum-web-components/help-text@1.0.3
+    -   @spectrum-web-components/base@1.0.3
+    -   @spectrum-web-components/reactive-controllers@1.0.3
+    -   @spectrum-web-components/shared@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes

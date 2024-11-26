@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.0.3
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/action-button@1.0.3
+    -   @spectrum-web-components/icon@1.0.3
+    -   @spectrum-web-components/icons-workflow@1.0.3
+    -   @spectrum-web-components/picker@1.0.3
+    -   @spectrum-web-components/base@1.0.3
+    -   @spectrum-web-components/shared@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes

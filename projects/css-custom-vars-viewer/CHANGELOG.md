@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.0.3
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/field-label@1.0.3
+    -   @spectrum-web-components/link@1.0.3
+    -   @spectrum-web-components/menu@1.0.3
+    -   @spectrum-web-components/picker@1.0.3
+    -   @spectrum-web-components/swatch@1.0.3
+    -   @spectrum-web-components/table@1.0.3
+    -   @spectrum-web-components/toast@1.0.3
+    -   @spectrum-web-components/story-decorator@1.0.3
+    -   @spectrum-web-components/base@1.0.3
+    -   @spectrum-web-components/styles@1.0.3
+    -   @spectrum-web-components/theme@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes

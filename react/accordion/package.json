@@ -1,0 +1,39 @@
+{
+    "name": "@swc-react/accordion",
+    "version": "1.0.1-testing",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "React and Next.js wrapper of the @spectrum-web-components/accordion component",
+    "license": "Apache-2.0",
+    "author": "",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./index.dev.js",
+            "default": "./index.js"
+        },
+        "./next.js": {
+            "development": "./next.dev.js",
+            "default": "./next.js"
+        }
+    },
+    "files": ["**/*.d.ts", "**/*.js", "**/*.js.map"],
+    "keywords": [
+        "React",
+        "Spectrum Web Components",
+        "@spectrum-web-components/accordion"
+    ],
+    "dependencies": {
+        "@lit/react": "^1.0.2",
+        "@spectrum-web-components/accordion": "^1.0.1-testing"
+    },
+    "peerDependencies": {
+        "next": "~13.4 || ~14"
+    },
+    "peerDependenciesMeta": {
+        "next": {
+            "optional": true
+        }
+    }
+}

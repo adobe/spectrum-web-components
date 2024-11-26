@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-handle",
-    "version": "1.0.2",
+    "version": "1.0.1-testing",
     "publishConfig": {
         "access": "public"
     },
@@ -58,9 +58,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.0.2",
-        "@spectrum-web-components/color-loupe": "^1.0.2",
-        "@spectrum-web-components/opacity-checkerboard": "^1.0.2"
+        "@spectrum-web-components/base": "^1.0.1-testing",
+        "@spectrum-web-components/color-loupe": "^1.0.1-testing",
+        "@spectrum-web-components/opacity-checkerboard": "^1.0.1-testing"
     },
     "devDependencies": {
         "@spectrum-css/colorhandle": "^9.0.0-s2-foundations.16"

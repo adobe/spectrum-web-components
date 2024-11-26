@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.0.3
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/color-loupe@1.0.3
+    -   @spectrum-web-components/base@1.0.3
+    -   @spectrum-web-components/opacity-checkerboard@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes

@@ -1,5 +1,7 @@
 # Change Log
 
+## 1.0.3
+
 ## 1.0.2
 
 All notable changes to this project will be documented in this file.

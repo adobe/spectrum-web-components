@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-area",
-    "version": "1.0.2",
+    "version": "1.0.1-testing",
     "publishConfig": {
         "access": "public"
     },
@@ -63,11 +63,11 @@
     ],
     "dependencies": {
         "@ctrl/tinycolor": "^4.0.3",
-        "@spectrum-web-components/base": "^1.0.2",
-        "@spectrum-web-components/color-handle": "^1.0.2",
-        "@spectrum-web-components/opacity-checkerboard": "^1.0.2",
-        "@spectrum-web-components/reactive-controllers": "^1.0.2",
-        "@spectrum-web-components/shared": "^1.0.2"
+        "@spectrum-web-components/base": "^1.0.1-testing",
+        "@spectrum-web-components/color-handle": "^1.0.1-testing",
+        "@spectrum-web-components/opacity-checkerboard": "^1.0.1-testing",
+        "@spectrum-web-components/reactive-controllers": "^1.0.1-testing",
+        "@spectrum-web-components/shared": "^1.0.1-testing"
     },
     "devDependencies": {
         "@spectrum-css/colorarea": "^6.0.0-s2-foundations.15"
