@@ -43,6 +43,11 @@ class IsOverlayOpen extends HTMLElement {
         if (selectedItem) {
             selectedItem.focus();
             selectedItem.focused = true;
+
+            // scroll the selected item into view with block start alignment to ensure consistent behavior in VRTs
+            await nextFrame();
+            selectedItem.scrollIntoView({ block: 'start' });
+            await nextFrame();
         }
     };
 
