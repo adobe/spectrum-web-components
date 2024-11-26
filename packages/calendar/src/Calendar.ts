@@ -191,16 +191,7 @@ export class Calendar extends SpectrumElement {
         if (changesDates) {
             this.convertToCalendarDates();
             this.checkDatePropsCompliance(changesMin || changesMax);
-            if (this.value) this.currentDate = this.value as CalendarDate;
-            else {
-                const isTodayNonCompliant = this.isNonCompliantDate(this.today);
-
-                if (isTodayNonCompliant) {
-                    if (this.min) this.currentDate = this.min as CalendarDate;
-                    else if (this.max)
-                        this.currentDate = this.max as CalendarDate;
-                } else this.currentDate = this.today;
-            }
+            this.updateCurrentDate();
         }
 
         const previousDate = changedProperties.get('currentDate');
@@ -262,6 +253,20 @@ export class Calendar extends SpectrumElement {
                 );
             this.value = undefined;
         }
+    }
+
+    private updateCurrentDate(): void {
+        if (this.value) {
+            this.currentDate = this.value as CalendarDate;
+            return;
+        }
+
+        const isTodayNonCompliant = this.isNonCompliantDate(this.today);
+
+        if (isTodayNonCompliant) {
+            if (this.min) this.currentDate = this.min as CalendarDate;
+            else if (this.max) this.currentDate = this.max as CalendarDate;
+        } else this.currentDate = this.today;
     }
 
     /**
