@@ -47,7 +47,7 @@ export const ReadOnly = (args?: Properties): TemplateResult =>
     ColorFieldMarkup(args);
 ReadOnly.args = {
     readonly: true,
-    value: 'rgb(255,255,255)',
+    value: 'rgb(255,255,254)',
 };
 
 export const Disabled = (args?: Properties): TemplateResult =>
