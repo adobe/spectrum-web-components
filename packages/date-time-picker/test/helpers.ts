@@ -136,3 +136,11 @@ export async function openCalendar(element: DateTimePicker): Promise<void> {
     await sendKeys({ press: 'Enter' });
     await opened;
 }
+
+export function getElementCenter(element: HTMLElement): [number, number] {
+    const rect = element.getBoundingClientRect();
+    return [
+        Math.round(rect.left + rect.width / 2),
+        Math.round(rect.top + rect.height / 2),
+    ];
+}

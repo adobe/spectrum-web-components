@@ -45,6 +45,7 @@ import {
     expectSameDates,
     fixtureElement,
     getEditableSegments,
+    getElementCenter,
     openCalendar,
     sendKeyMultipleTimes,
 } from './helpers.js';
@@ -613,14 +614,10 @@ describe('DateTimePicker', () => {
                 'sp-picker-button'
             ) as PickerButton;
 
-            const rect = calendarButton.getBoundingClientRect();
-            const centerX = Math.round(rect.left + rect.width / 2);
-            const centerY = Math.round(rect.top + rect.height / 2);
-
             const opened = oneEvent(element, 'sp-opened');
             await sendMouse({
                 type: 'click',
-                position: [centerX, centerY],
+                position: getElementCenter(calendarButton),
             });
             await opened;
 
@@ -903,17 +900,168 @@ describe('DateTimePicker', () => {
     });
 
     describe('Focus', () => {
-        it('should focus segments by clicking on them');
-        it(
-            "should change segment focus to right by using the 'Right Arrow' key"
-        );
-        it("should change segment focus to left by using the 'Left Arrow' key");
-        it(
-            'should change segment focus to left by using the Backspace/Delete key on a placeholder'
-        );
-        // TODO: one TAB press should focus the calendar button, not the next segment
-        it("should focus the calendar button by using the 'Tab' key");
-        it('should focus the calendar button after the Calendar closes');
+        it('should focus segments by clicking on them', async () => {
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+
+            await sendMouse({
+                type: 'click',
+                position: getElementCenter(yearSegment),
+            });
+            await sendKeys({ press: 'ArrowUp' });
+
+            expect(document.activeElement === element).to.be.true;
+            expect(element.shadowRoot.activeElement === yearSegment).to.be.true;
+            expect(yearSegment.innerText).to.equal(`${fixedYear}`);
+
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+
+            await sendMouse({
+                type: 'click',
+                position: getElementCenter(daySegment),
+            });
+            await sendKeys({ press: 'ArrowUp' });
+
+            expect(document.activeElement === element).to.be.true;
+            expect(element.shadowRoot.activeElement === daySegment).to.be.true;
+            expect(daySegment.innerText).to.equal('01');
+        });
+
+        it('should focus the first editable segment when the focus method is called', async () => {
+            element.focus();
+
+            expect(document.activeElement === element).to.be.true;
+            expect(
+                element.shadowRoot.activeElement ===
+                    element.firstEditableSegment
+            ).to.be.true;
+        });
+
+        it("should change segment focus to right by using the 'Right Arrow' key", async () => {
+            element = await fixtureElement({
+                props: { precision: Precisions.Second },
+            });
+            editableSegments = getEditableSegments(element);
+            const dayPeriodSegment = editableSegments.getByType(
+                SegmentTypes.DayPeriod
+            );
+
+            element.focus();
+            await sendKeyMultipleTimes(
+                'ArrowRight',
+                editableSegments.length - 1
+            );
+
+            expect(element.shadowRoot.activeElement === dayPeriodSegment).to.be
+                .true;
+
+            await sendKeys({ press: 'ArrowRight' });
+
+            expect(element.shadowRoot.activeElement === dayPeriodSegment).to.be
+                .true;
+        });
+
+        it("should change segment focus to left by using the 'Left Arrow' key", async () => {
+            element = await fixtureElement({
+                props: { precision: Precisions.Second },
+            });
+            editableSegments = getEditableSegments(element);
+            const dayPeriodSegment = editableSegments.getByType(
+                SegmentTypes.DayPeriod
+            );
+
+            await sendMouse({
+                type: 'click',
+                position: getElementCenter(dayPeriodSegment),
+            });
+
+            expect(document.activeElement === element).to.be.true;
+            expect(element.shadowRoot.activeElement === dayPeriodSegment).to.be
+                .true;
+
+            await sendKeyMultipleTimes(
+                'ArrowLeft',
+                editableSegments.length - 1
+            );
+
+            expect(
+                element.shadowRoot.activeElement ===
+                    element.firstEditableSegment
+            ).to.be.true;
+
+            await sendKeys({ press: 'ArrowLeft' });
+
+            expect(
+                element.shadowRoot.activeElement ===
+                    element.firstEditableSegment
+            ).to.be.true;
+        });
+
+        it('should change segment focus to left by using the Backspace/Delete key on a placeholder', async () => {
+            element = await fixtureElement({
+                props: {
+                    precision: Precisions.Hour,
+                },
+            });
+
+            editableSegments = getEditableSegments(element);
+            expectPlaceholders(editableSegments);
+
+            const dayPeriod = editableSegments.getByType(
+                SegmentTypes.DayPeriod
+            );
+            await sendMouse({
+                type: 'click',
+                position: getElementCenter(dayPeriod),
+            });
+
+            expect(document.activeElement === element).to.be.true;
+            expect(element.shadowRoot.activeElement === dayPeriod).to.be.true;
+
+            await sendKeys({ press: 'Backspace' });
+
+            const hourSegment = editableSegments.getByType(SegmentTypes.Hour);
+            expect(element.shadowRoot.activeElement === hourSegment).to.be.true;
+
+            await sendKeys({ press: 'Backspace' });
+
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            expect(element.shadowRoot.activeElement === yearSegment).to.be.true;
+
+            await sendKeys({ press: 'Delete' });
+
+            const daySegment = editableSegments.getByType(SegmentTypes.Day);
+            expect(element.shadowRoot.activeElement === daySegment).to.be.true;
+
+            await sendKeys({ press: 'Delete' });
+
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            expect(element.shadowRoot.activeElement === monthSegment).to.be
+                .true;
+
+            await sendKeys({ press: 'Delete' });
+            expect(element.shadowRoot.activeElement === monthSegment).to.be
+                .true;
+        });
+
+        it("should change focus up to the calendar button by using the 'Tab' key", async () => {
+            element.focus();
+            const dayPeriodSegment = editableSegments.getByType(
+                SegmentTypes.DayPeriod
+            );
+            const calendarButton = element.shadowRoot!.querySelector(
+                'sp-picker-button'
+            ) as PickerButton;
+
+            await sendKeyMultipleTimes('Tab', editableSegments.length - 1);
+
+            expect(element.shadowRoot.activeElement === dayPeriodSegment).to.be
+                .true;
+
+            await sendKeys({ press: 'Tab' });
+
+            expect(element.shadowRoot.activeElement === calendarButton).to.be
+                .true;
+        });
     });
 
     describe('ArrowUp key', () => {
@@ -2857,7 +3005,6 @@ describe('DateTimePicker', () => {
 
             inputSpy.resetHistory();
             await sendKeys({ press: 'Delete' });
-            await sendKeys({ press: 'Delete' });
             await elementUpdated(element);
 
             expect(inputSpy.callCount).to.equal(0);
@@ -2889,7 +3036,6 @@ describe('DateTimePicker', () => {
                 expect(inputSpy.callCount).to.equal(1);
 
                 inputSpy.resetHistory();
-                await sendKeys({ press: 'Delete' });
                 await sendKeys({ press: 'Delete' });
                 await elementUpdated(element);
 
