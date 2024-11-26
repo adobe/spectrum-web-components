@@ -36,7 +36,7 @@
         "icons": "wireit",
         "icons:ui": "wireit",
         "icons:workflow": "wireit",
-        "changeset-publish": "yarn changeset version && yarn changeset publish",
+        "changeset-publish": "yarn changeset version && yarn changeset publish --tag=testing",
         "lint": "run-p lint:js lint:docs lint:ts lint:css lint:packagejson",
         "lint:css": "stylelint \"packages/**/*.css\" \"tools/**/*.css\"",
         "lint:docs": "eslint -f pretty \"projects/documentation/**/*.ts\"",
