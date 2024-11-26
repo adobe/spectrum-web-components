@@ -1,5 +1,5 @@
 ---
-"@spectrum-web-components/accordion": 1.0.1-beta
+'@spectrum-web-components/accordion': patch
 ---
 
 [DO NOT MERGE]Release testing
