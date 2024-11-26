@@ -47,6 +47,7 @@ import {
     fixtureElement,
     getEditableSegments,
     getElementCenter,
+    isCalendarOpen,
     openCalendar,
     sendKeyMultipleTimes,
 } from './helpers.js';
@@ -588,7 +589,7 @@ describe('DateTimePicker', () => {
 
     describe('Calendar', () => {
         it('should have the calendar closed by default', () => {
-            expect(element['isCalendarOpen']).to.be.false;
+            expect(isCalendarOpen(element)).to.be.false;
         });
 
         it('should open and close the calendar using the keyboard', async () => {
@@ -601,13 +602,13 @@ describe('DateTimePicker', () => {
             await sendKeys({ press: 'Enter' });
             await opened;
 
-            expect(element['isCalendarOpen']).to.be.true;
+            expect(isCalendarOpen(element)).to.be.true;
 
             const closed = oneEvent(element, 'sp-closed');
             await sendKeys({ press: 'Escape' });
             await closed;
 
-            expect(element['isCalendarOpen']).to.be.false;
+            expect(isCalendarOpen(element)).to.be.false;
         });
 
         it('should open and close the calendar using the pointer', async () => {
@@ -622,7 +623,7 @@ describe('DateTimePicker', () => {
             });
             await opened;
 
-            expect(element['isCalendarOpen']).to.be.true;
+            expect(isCalendarOpen(element)).to.be.true;
 
             const closed = oneEvent(element, 'sp-closed');
             await sendMouse({
@@ -631,7 +632,7 @@ describe('DateTimePicker', () => {
             });
             await closed;
 
-            expect(element['isCalendarOpen']).to.be.false;
+            expect(isCalendarOpen(element)).to.be.false;
         });
 
         it('should pass the value and min/max constraints to the calendar', async () => {
@@ -663,7 +664,7 @@ describe('DateTimePicker', () => {
         describe('change event', () => {
             it('should close the calendar when handling its change event', async () => {
                 await openCalendar(element);
-                expect(element['isCalendarOpen']).to.be.true;
+                expect(isCalendarOpen(element)).to.be.true;
 
                 const closed = oneEvent(element, 'sp-closed');
                 await dispatchCalendarChange(
@@ -672,7 +673,7 @@ describe('DateTimePicker', () => {
                 );
                 await closed;
 
-                expect(element['isCalendarOpen']).to.be.false;
+                expect(isCalendarOpen(element)).to.be.false;
             });
 
             it('should update the value as CalendarDate when its the most specific date value', async () => {
@@ -929,6 +930,7 @@ describe('DateTimePicker', () => {
 
         it('should focus the first editable segment when the focus method is called', async () => {
             element.focus();
+            await elementUpdated(element);
 
             expectFocused(document, element, 'element not focused');
             expectFocused(element.shadowRoot, element.firstEditableSegment);
@@ -944,6 +946,7 @@ describe('DateTimePicker', () => {
             );
 
             element.focus();
+            await elementUpdated(element);
             await sendKeyMultipleTimes(
                 'ArrowRight',
                 editableSegments.length - 1
@@ -1056,6 +1059,7 @@ describe('DateTimePicker', () => {
 
         it("should change focus up to the calendar button by using the 'Tab' key", async () => {
             element.focus();
+            await elementUpdated(element);
             const dayPeriodSegment = editableSegments.getByType(
                 SegmentTypes.DayPeriod
             );
@@ -4391,10 +4395,44 @@ describe('DateTimePicker', () => {
     });
 
     describe('Disabled', () => {
-        it('should not accept focus');
-        it('should not accept typed in values');
-        it('should not accept arrow key inputs');
-        it('should not open the calendar');
+        beforeEach(async () => {
+            element = await fixtureElement({ props: { disabled: true } });
+            editableSegments = getEditableSegments(element);
+        });
+
+        it('should not accept focus', async () => {
+            element.focus();
+            await elementUpdated(element);
+            expect(document.activeElement === element).to.be.false;
+
+            const yearSegment = editableSegments.getByType(SegmentTypes.Year);
+            yearSegment.focus();
+
+            expect(document.activeElement === element).to.be.false;
+
+            const monthSegment = editableSegments.getByType(SegmentTypes.Month);
+            await sendMouse({
+                type: 'click',
+                position: getElementCenter(monthSegment),
+            });
+            await sendKeys({ press: 'Tab' });
+            await sendKeys({ press: 'Shift+Tab' });
+
+            expect(document.activeElement === element).to.be.false;
+        });
+
+        it('should not open the calendar', async () => {
+            const calendarButton = element.shadowRoot!.querySelector(
+                'sp-picker-button'
+            ) as PickerButton;
+
+            await sendMouse({
+                type: 'click',
+                position: getElementCenter(calendarButton),
+            });
+
+            expect(isCalendarOpen(element)).to.be.false;
+        });
     });
 
     describe('Localization', () => {

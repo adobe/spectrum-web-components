@@ -24,6 +24,7 @@ import {
     SegmentPlaceholders,
 } from '@spectrum-web-components/date-time-picker';
 import '@spectrum-web-components/date-time-picker/sp-date-time-picker.js';
+import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spreadProps } from '../../../test/lit-helpers.js';
@@ -192,4 +193,14 @@ export function expectFocused(
     message?: string
 ): void {
     expect(rootEl.activeElement === focusedEl, message).to.be.true;
+}
+
+/**
+ * @param element - The DateTimePicker to check
+ * @returns Whether the Calendar is open
+ */
+export function isCalendarOpen(element: DateTimePicker): boolean {
+    const calendar = element.shadowRoot.querySelector('sp-calendar');
+    const calendarOverlay = calendar?.closest('sp-overlay') as Overlay;
+    return calendarOverlay.open;
 }
