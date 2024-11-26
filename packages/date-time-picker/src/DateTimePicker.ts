@@ -560,8 +560,10 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     private handleKeydown(event: KeyboardEvent): void {
-        const segmentType = (event.target as HTMLElement).dataset
-            .type as EditableSegmentType;
+        const segmentElement = event.target as HTMLElement;
+        if (!segmentElement) return;
+        const segmentType = segmentElement.dataset.type as EditableSegmentType;
+        if (!segmentType) return;
 
         switch (event.code) {
             case 'ArrowUp': {
@@ -573,15 +575,11 @@ export class DateTimePicker extends ManageHelpText(
                 break;
             }
             case 'ArrowRight': {
-                const segment = event.target;
-                if (!segment) return;
-                this.focusSegment(segment as HTMLElement, 'next');
+                this.focusSegment(segmentElement, 'next');
                 break;
             }
             case 'ArrowLeft': {
-                const segment = event.target;
-                if (!segment) return;
-                this.focusSegment(segment as HTMLElement, 'previous');
+                this.focusSegment(segmentElement, 'previous');
                 break;
             }
             case 'Enter':
@@ -592,7 +590,9 @@ export class DateTimePicker extends ManageHelpText(
             case 'Backspace':
             case 'Delete': {
                 event.preventDefault();
-                this.clearSegmentContent(segmentType);
+                if (this.segments.getByType(segmentType)?.value === undefined)
+                    this.focusSegment(segmentElement, 'previous');
+                else this.clearSegmentContent(segmentType);
                 break;
             }
         }
