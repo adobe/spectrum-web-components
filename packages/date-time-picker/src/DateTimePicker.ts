@@ -421,9 +421,9 @@ export class DateTimePicker extends ManageHelpText(
 
             <sp-overlay
                 .triggerElement=${this.input}
+                type="modal"
                 placement="top"
                 offset="0"
-                receives-focus="true"
                 ?open=${this.isCalendarOpen}
                 @sp-closed=${() => (this.isCalendarOpen = false)}
             >
