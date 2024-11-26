@@ -74,7 +74,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@internationalized/number": "^3.1.0",
+        "@internationalized/number": "^3.6.0",
         "@lit-labs/observers": "^2.0.2",
         "@spectrum-web-components/base": "^1.0.1",
         "@spectrum-web-components/field-label": "^1.0.1",
