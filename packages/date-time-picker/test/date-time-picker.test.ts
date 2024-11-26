@@ -40,6 +40,7 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import {
     dispatchCalendarChange,
     type EditableSegments,
+    expectFocused,
     expectPlaceholder,
     expectPlaceholders,
     expectSameDates,
@@ -909,8 +910,8 @@ describe('DateTimePicker', () => {
             });
             await sendKeys({ press: 'ArrowUp' });
 
-            expect(document.activeElement === element).to.be.true;
-            expect(element.shadowRoot.activeElement === yearSegment).to.be.true;
+            expectFocused(document, element, 'element not focused');
+            expectFocused(element.shadowRoot, yearSegment, 'year not focused');
             expect(yearSegment.innerText).to.equal(`${fixedYear}`);
 
             const daySegment = editableSegments.getByType(SegmentTypes.Day);
@@ -921,19 +922,16 @@ describe('DateTimePicker', () => {
             });
             await sendKeys({ press: 'ArrowUp' });
 
-            expect(document.activeElement === element).to.be.true;
-            expect(element.shadowRoot.activeElement === daySegment).to.be.true;
+            expectFocused(document, element, 'element not focused');
+            expectFocused(element.shadowRoot, daySegment, 'day not focused');
             expect(daySegment.innerText).to.equal('01');
         });
 
         it('should focus the first editable segment when the focus method is called', async () => {
             element.focus();
 
-            expect(document.activeElement === element).to.be.true;
-            expect(
-                element.shadowRoot.activeElement ===
-                    element.firstEditableSegment
-            ).to.be.true;
+            expectFocused(document, element, 'element not focused');
+            expectFocused(element.shadowRoot, element.firstEditableSegment);
         });
 
         it("should change segment focus to right by using the 'Right Arrow' key", async () => {
@@ -951,13 +949,15 @@ describe('DateTimePicker', () => {
                 editableSegments.length - 1
             );
 
-            expect(element.shadowRoot.activeElement === dayPeriodSegment).to.be
-                .true;
+            expectFocused(element.shadowRoot, dayPeriodSegment);
 
             await sendKeys({ press: 'ArrowRight' });
 
-            expect(element.shadowRoot.activeElement === dayPeriodSegment).to.be
-                .true;
+            expectFocused(
+                element.shadowRoot,
+                dayPeriodSegment,
+                'dayPeriod no longer focused'
+            );
         });
 
         it("should change segment focus to left by using the 'Left Arrow' key", async () => {
@@ -974,26 +974,27 @@ describe('DateTimePicker', () => {
                 position: getElementCenter(dayPeriodSegment),
             });
 
-            expect(document.activeElement === element).to.be.true;
-            expect(element.shadowRoot.activeElement === dayPeriodSegment).to.be
-                .true;
+            expectFocused(document, element, 'element not focused');
+            expectFocused(
+                element.shadowRoot,
+                dayPeriodSegment,
+                'dayPeriod not focused'
+            );
 
             await sendKeyMultipleTimes(
                 'ArrowLeft',
                 editableSegments.length - 1
             );
 
-            expect(
-                element.shadowRoot.activeElement ===
-                    element.firstEditableSegment
-            ).to.be.true;
+            expectFocused(element.shadowRoot, element.firstEditableSegment);
 
             await sendKeys({ press: 'ArrowLeft' });
 
-            expect(
-                element.shadowRoot.activeElement ===
-                    element.firstEditableSegment
-            ).to.be.true;
+            expectFocused(
+                element.shadowRoot,
+                element.firstEditableSegment,
+                'firstEditableSegment no longer focused'
+            );
         });
 
         it('should change segment focus to left by using the Backspace/Delete key on a placeholder', async () => {
@@ -1014,33 +1015,43 @@ describe('DateTimePicker', () => {
                 position: getElementCenter(dayPeriod),
             });
 
-            expect(document.activeElement === element).to.be.true;
-            expect(element.shadowRoot.activeElement === dayPeriod).to.be.true;
+            expectFocused(document, element, 'element not focused');
+            expectFocused(
+                element.shadowRoot,
+                dayPeriod,
+                'dayPeriod not focused'
+            );
 
             await sendKeys({ press: 'Backspace' });
 
             const hourSegment = editableSegments.getByType(SegmentTypes.Hour);
-            expect(element.shadowRoot.activeElement === hourSegment).to.be.true;
+            expectFocused(element.shadowRoot, hourSegment, 'hour not focused');
 
             await sendKeys({ press: 'Backspace' });
 
             const yearSegment = editableSegments.getByType(SegmentTypes.Year);
-            expect(element.shadowRoot.activeElement === yearSegment).to.be.true;
+            expectFocused(element.shadowRoot, yearSegment, 'year not focused');
 
             await sendKeys({ press: 'Delete' });
 
             const daySegment = editableSegments.getByType(SegmentTypes.Day);
-            expect(element.shadowRoot.activeElement === daySegment).to.be.true;
+            expectFocused(element.shadowRoot, daySegment, 'day not focused');
 
             await sendKeys({ press: 'Delete' });
 
             const monthSegment = editableSegments.getByType(SegmentTypes.Month);
-            expect(element.shadowRoot.activeElement === monthSegment).to.be
-                .true;
+            expectFocused(
+                element.shadowRoot,
+                monthSegment,
+                'month not focused'
+            );
 
             await sendKeys({ press: 'Delete' });
-            expect(element.shadowRoot.activeElement === monthSegment).to.be
-                .true;
+            expectFocused(
+                element.shadowRoot,
+                monthSegment,
+                'month not focused'
+            );
         });
 
         it("should change focus up to the calendar button by using the 'Tab' key", async () => {
@@ -1054,13 +1065,19 @@ describe('DateTimePicker', () => {
 
             await sendKeyMultipleTimes('Tab', editableSegments.length - 1);
 
-            expect(element.shadowRoot.activeElement === dayPeriodSegment).to.be
-                .true;
+            expectFocused(
+                element.shadowRoot,
+                dayPeriodSegment,
+                'dayPeriod not focused'
+            );
 
             await sendKeys({ press: 'Tab' });
 
-            expect(element.shadowRoot.activeElement === calendarButton).to.be
-                .true;
+            expectFocused(
+                element.shadowRoot,
+                calendarButton,
+                'calendarButton not focused'
+            );
         });
     });
 

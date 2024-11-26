@@ -56,6 +56,11 @@ export async function fixtureElement({
     return el;
 }
 
+/**
+ * Returns an array of all editable segments in the DateTimePicker
+ * with a `getByType` method to find a segment by type.
+ * @param element - The DateTimePicker to get the segments from
+ */
 export function getEditableSegments(element: DateTimePicker): EditableSegments {
     const elements = Array.from(
         element.shadowRoot.querySelectorAll('.editable-segment')
@@ -71,29 +76,11 @@ export function getEditableSegments(element: DateTimePicker): EditableSegments {
     return elements as EditableSegments;
 }
 
-export function expectPlaceholders(
-    editableSegments: EditableSegments,
-    exceptions: HTMLElement[] = []
-): void {
-    for (const segment of editableSegments.filter(
-        (segment) => !exceptions.includes(segment)
-    ))
-        expectPlaceholder(segment);
-}
-
-export function expectPlaceholder(segment: HTMLElement): void {
-    expect(isPlaceholderSegment(segment)).to.be.true;
-}
-
-function isPlaceholderSegment(segment: HTMLElement): boolean {
-    const type = segment.dataset.type as EditableSegmentType;
-    const placeholder = SegmentPlaceholders[type];
-
-    if (segment.innerText !== placeholder) return false;
-
-    return true;
-}
-
+/**
+ * Returns a promise that resolves when the key has been sent for the given number of times.
+ * @param key - The key to send
+ * @param times - The number of times to send the key
+ */
 export function sendKeyMultipleTimes(
     key: string,
     times: number
@@ -103,14 +90,22 @@ export function sendKeyMultipleTimes(
     );
 }
 
-export function expectSameDates(
-    a: DateValue,
-    b: DateValue,
-    message?: string
-): void {
-    expect(isSameDay(a, b), message).to.be.true;
+export async function openCalendar(element: DateTimePicker): Promise<void> {
+    const calendarButton = element.shadowRoot!.querySelector(
+        'sp-picker-button'
+    ) as HTMLElement;
+
+    const opened = oneEvent(element, 'sp-opened');
+    calendarButton.focus();
+    await sendKeys({ press: 'Enter' });
+    await opened;
 }
 
+/**
+ * Simulates a date selection in the Calendar by dispatching a change event with the given date.
+ * @param element - The DateTimePicker with the Calendar to dispatch the event on
+ * @param date - The date to set the Calendar to
+ */
 export async function dispatchCalendarChange(
     element: DateTimePicker,
     date: DateValue
@@ -126,21 +121,75 @@ export async function dispatchCalendarChange(
     await elementUpdated(element);
 }
 
-export async function openCalendar(element: DateTimePicker): Promise<void> {
-    const calendarButton = element.shadowRoot!.querySelector(
-        'sp-picker-button'
-    ) as HTMLElement;
-
-    const opened = oneEvent(element, 'sp-opened');
-    calendarButton.focus();
-    await sendKeys({ press: 'Enter' });
-    await opened;
-}
-
+/**
+ * Returns the x and y coordinates of the center of the given element, rounded to the nearest integer.
+ * @param element - The element to get the center of
+ * @returns - The x and y coordinates of the center of the element
+ */
 export function getElementCenter(element: HTMLElement): [number, number] {
     const rect = element.getBoundingClientRect();
     return [
         Math.round(rect.left + rect.width / 2),
         Math.round(rect.top + rect.height / 2),
     ];
+}
+
+/**
+ * Asserts that the given editable segments have only placeholders.
+ * @param editableSegments - The segments to check
+ * @param exceptions - Segments that are allowed to have content
+ */
+export function expectPlaceholders(
+    editableSegments: EditableSegments,
+    exceptions: HTMLElement[] = []
+): void {
+    for (const segment of editableSegments.filter(
+        (segment) => !exceptions.includes(segment)
+    ))
+        expectPlaceholder(segment);
+}
+
+/**
+ * Asserts that the given segment is a placeholder and does not have a value.
+ * @param segment - The segment to check
+ */
+export function expectPlaceholder(segment: HTMLElement): void {
+    expect(isPlaceholderSegment(segment)).to.be.true;
+}
+
+function isPlaceholderSegment(segment: HTMLElement): boolean {
+    const type = segment.dataset.type as EditableSegmentType;
+    const placeholder = SegmentPlaceholders[type];
+
+    if (segment.innerText !== placeholder) return false;
+
+    return true;
+}
+
+/**
+ * Asserts that the given date values are the same day.
+ * @param a - The first date value
+ * @param b - The second date value
+ * @param message - The message to display if the assertion fails
+ */
+export function expectSameDates(
+    a: DateValue,
+    b: DateValue,
+    message?: string
+): void {
+    expect(isSameDay(a, b), message).to.be.true;
+}
+
+/**
+ * Asserts that the given element is focused.
+ * @param rootEl - The document or shadow root to check the active element of
+ * @param focusedEl - The element that should be focused
+ * @param message - The message to display if the assertion fails
+ */
+export function expectFocused(
+    rootEl: Document | ShadowRoot,
+    focusedEl: HTMLElement,
+    message?: string
+): void {
+    expect(rootEl.activeElement === focusedEl, message).to.be.true;
 }
