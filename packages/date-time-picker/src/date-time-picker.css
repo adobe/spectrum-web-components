@@ -131,7 +131,10 @@ sp-popover .popover-content {
     white-space: pre;
     user-select: none;
 
-    /* -webkit-user-select: none; */
+    /* Currently Safari needs this to work as intended.
+     * The literal segments should not be selectable.
+     */
+    -webkit-user-select: none; /* stylelint-disable-line */
 }
 
 .is-placeholder,
