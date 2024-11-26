@@ -68,16 +68,6 @@
     --spectrum-search-text-to-icon: var(--system-search-text-to-icon);
 }
 
-:host([size='s']) #textfield {
-    --spectrum-search-border-radius: var(--system-search-size-s-border-radius);
-    --spectrum-search-edge-to-visual: var(
-        --system-search-size-s-edge-to-visual
-    );
-    --spectrum-search-block-size: var(--system-search-size-s-block-size);
-    --spectrum-search-icon-size: var(--system-search-size-s-icon-size);
-    --spectrum-search-text-to-icon: var(--system-search-size-s-text-to-icon);
-}
-
 :host([size='m']) #textfield {
     --spectrum-search-border-radius: var(--system-search-size-m-border-radius);
     --spectrum-search-edge-to-visual: var(
@@ -86,6 +76,16 @@
     --spectrum-search-block-size: var(--system-search-size-m-block-size);
     --spectrum-search-icon-size: var(--system-search-size-m-icon-size);
     --spectrum-search-text-to-icon: var(--system-search-size-m-text-to-icon);
+}
+
+:host([size='s']) #textfield {
+    --spectrum-search-border-radius: var(--system-search-size-s-border-radius);
+    --spectrum-search-edge-to-visual: var(
+        --system-search-size-s-edge-to-visual
+    );
+    --spectrum-search-block-size: var(--system-search-size-s-block-size);
+    --spectrum-search-icon-size: var(--system-search-size-s-icon-size);
+    --spectrum-search-text-to-icon: var(--system-search-size-s-text-to-icon);
 }
 
 :host([size='l']) #textfield {
