@@ -78,3 +78,10 @@ governing permissions and limitations under the License.
 :host([no-wrap]) #label {
     display: block;
 }
+
+sp-icon {
+    /* I want to decrease the value of --spectrum-icon-size by 6px here to match the
+    value of icon-size in the snippet from packages/icon/src/icon-**-overrides.css */
+    block-size: calc(var(--spectrum-icon-size) - 6px);
+    inline-size: calc(var(--spectrum-icon-size) - 6px);
+}

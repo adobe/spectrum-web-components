@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
+    ElementSize,
     html,
     PropertyValues,
     SizedMixin,
@@ -20,45 +21,28 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { when } from '@spectrum-web-components/base/src/directives.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
+import '@spectrum-web-components/icon/sp-icon.js';
+import { Chevron100Icon } from '@spectrum-web-components/icons-ui';
 
 import styles from './accordion-item.css.js';
 
-const chevronIcon: Record<string, () => TemplateResult> = {
-    s: () => html`
+/** Note:
+ *  The current logic deviates from the earlier design of the accordion
+ *  Earlier the s-accordion size would correspond to the --system-ui-icon-chevron-right-75-icon-size=10px;
+ *  Now its pointing to --spectrum-icon-size-s=16px; and similarly for other sizes
+ *  Need to discuss with the design team to understand the correct size to be used
+ *  and update the logic accordingly
+ *
+ *  Goal here is to avoid using the direct css of the chevron icon and use the sp-icon component instead
+ */
+const chevronIcon = (size: ElementSize): TemplateResult => {
+    return html`
         <span class="iconContainer">
-            <sp-icon-chevron100
-                class="indicator spectrum-UIIcon-ChevronRight75"
-                slot="icon"
-            ></sp-icon-chevron100>
+            <sp-icon class="indicator" slot="icon" size=${size}>
+                ${Chevron100Icon()}
+            </sp-icon>
         </span>
-    `,
-    m: () => html`
-        <span class="iconContainer">
-            <sp-icon-chevron100
-                class="indicator spectrum-UIIcon-ChevronRight100"
-                slot="icon"
-            ></sp-icon-chevron100>
-        </span>
-    `,
-    l: () => html`
-        <span class="iconContainer">
-            <sp-icon-chevron100
-                class="indicator spectrum-UIIcon-ChevronRight200"
-                slot="icon"
-            ></sp-icon-chevron100>
-        </span>
-    `,
-    xl: () => html`
-        <span class="iconContainer">
-            <sp-icon-chevron100
-                class="indicator spectrum-UIIcon-ChevronRight300"
-                slot="icon"
-            ></sp-icon-chevron100>
-        </span>
-    `,
+    `;
 };
 
 /**
@@ -70,7 +54,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [styles, chevronIconStyles, chevronIconOverrides];
+        return [styles];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -109,7 +93,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
     }
 
     protected renderChevronIcon = (): TemplateResult => {
-        return chevronIcon[this.size || 'm']();
+        return chevronIcon(this.size || 'm');
     };
 
     protected override render(): TemplateResult {

@@ -31,13 +31,9 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 
 import menuItemStyles from './menu-item.css.js';
-import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
-import checkmarkSmallOverrides from '@spectrum-web-components/icon/src/icon-checkmark-overrides.css.js';
 import type { Menu } from './Menu.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
@@ -97,13 +93,7 @@ export class MenuItem extends LikeAnchor(
     ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
 ) {
     public static override get styles(): CSSResultArray {
-        return [
-            menuItemStyles,
-            checkmarkStyles,
-            checkmarkSmallOverrides,
-            chevronStyles,
-            chevronIconOverrides,
-        ];
+        return [menuItemStyles];
     }
 
     abortControllerSubmenu!: AbortController;
