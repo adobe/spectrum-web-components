@@ -9,11 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { CalendarDate, DateValue } from '@internationalized/date';
 import { html, type TemplateResult } from '@spectrum-web-components/base';
+import '@spectrum-web-components/calendar/sp-calendar.js';
+import '@spectrum-web-components/theme/sp-theme.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { CalendarValue } from '../src/types.js';
-import { CalendarDate, DateValue } from '@internationalized/date';
-import '@spectrum-web-components/calendar/sp-calendar.js';
 
 type ComponentArgs = {
     value?: CalendarValue;
@@ -119,6 +120,10 @@ const Template = (args: StoryArgs = {}): TemplateResult => {
 };
 
 export const Default = (args: StoryArgs): TemplateResult => Template(args);
+Default.swc_vrt = {
+    // Needed because the style on the current day will cause the snapshot to fail every day it runs
+    skip: true,
+};
 
 export const disabled = (args: StoryArgs): TemplateResult => Template(args);
 disabled.args = {
@@ -173,3 +178,14 @@ export const minAndMaxDates = (args: StoryArgs): TemplateResult => {
     `;
 };
 minAndMaxDates.argTypes = dateControlsDisabledArgTypes;
+
+export const bengaliIndiaLocale = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-theme lang="bn-IN">
+            <sp-calendar
+                ...=${spreadProps(args)}
+                .value=${new CalendarDate(2022, 4, 16)}
+            ></sp-calendar>
+        </sp-theme>
+    `;
+};

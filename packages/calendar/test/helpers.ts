@@ -39,6 +39,24 @@ export async function fixtureElement({
     return el;
 }
 
+/**
+ * Computes the x and y coordinates of the center of the given element, rounded to the nearest integer.
+ * @param element - The element to get the center of
+ * @returns - The x and y coordinates of the center of the element
+ */
+export function getElementCenter(element: HTMLElement): [number, number] {
+    const rect = element.getBoundingClientRect();
+    return [
+        Math.round(rect.left + rect.width / 2),
+        Math.round(rect.top + rect.height / 2),
+    ];
+}
+
+/**
+ * Sends the specified key the given number of times.
+ * @param key - The key to send
+ * @param times - The number of times to send the key
+ */
 export function sendKeyMultipleTimes(
     key: string,
     times: number
@@ -48,6 +66,12 @@ export function sendKeyMultipleTimes(
     );
 }
 
+/**
+ * Asserts that the given date values are the same day.
+ * @param a - The first date value
+ * @param b - The second date value
+ * @param message - The message to display if the assertion fails
+ */
 export function expectSameDates(
     a: DateValue,
     b: DateValue,

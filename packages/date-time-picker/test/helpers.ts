@@ -78,7 +78,7 @@ export function getEditableSegments(element: DateTimePicker): EditableSegments {
 }
 
 /**
- * Returns a promise that resolves when the key has been sent for the given number of times.
+ * Sends the specified key the given number of times.
  * @param key - The key to send
  * @param times - The number of times to send the key
  */
@@ -91,6 +91,10 @@ export function sendKeyMultipleTimes(
     );
 }
 
+/**
+ * Opens the Calendar by focusing the Calendar button and pressing Enter.
+ * @param element - The DateTimePicker with the Calendar to open
+ */
 export async function openCalendar(element: DateTimePicker): Promise<void> {
     const calendarButton = element.shadowRoot!.querySelector(
         'sp-picker-button'
@@ -123,7 +127,7 @@ export async function dispatchCalendarChange(
 }
 
 /**
- * Returns the x and y coordinates of the center of the given element, rounded to the nearest integer.
+ * Computes the x and y coordinates of the center of the given element, rounded to the nearest integer.
  * @param element - The element to get the center of
  * @returns - The x and y coordinates of the center of the element
  */
@@ -195,10 +199,6 @@ export function expectFocused(
     expect(rootEl.activeElement === focusedEl, message).to.be.true;
 }
 
-/**
- * @param element - The DateTimePicker to check
- * @returns Whether the Calendar is open
- */
 export function isCalendarOpen(element: DateTimePicker): boolean {
     const calendar = element.shadowRoot.querySelector('sp-calendar');
     const calendarOverlay = calendar?.closest('sp-overlay') as Overlay;
