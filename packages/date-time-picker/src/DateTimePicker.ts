@@ -506,6 +506,8 @@ export class DateTimePicker extends ManageHelpText(
     public renderEditableSegment(segment: EditableSegment): TemplateResult {
         const isActive = !this.disabled && !this.readonly;
         const usePlaceholder = segment.value === undefined;
+        const inputMode =
+            segment.type === SegmentTypes.DayPeriod ? 'text' : 'numeric';
 
         const segmentClasses: ClassInfo = {
             'editable-segment': true,
@@ -540,7 +542,7 @@ export class DateTimePicker extends ManageHelpText(
             <div
                 role="spinbutton"
                 contenteditable=${ifDefined(isActive ? true : undefined)}
-                inputmode=${ifDefined(isActive ? 'numeric' : undefined)}
+                inputmode=${ifDefined(isActive ? inputMode : undefined)}
                 tabindex=${ifDefined(isActive ? '0' : undefined)}
                 aria-hidden=${ifDefined(usePlaceholder ? 'true' : undefined)}
                 class=${classMap(segmentClasses)}
