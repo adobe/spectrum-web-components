@@ -661,6 +661,16 @@ describe('DateTimePicker', () => {
             );
         });
 
+        it("should close the calendar when the component gets disabled and it's open", async () => {
+            await openCalendar(element);
+            expect(isCalendarOpen(element)).to.be.true;
+
+            element.disabled = true;
+            await elementUpdated(element);
+
+            expect(isCalendarOpen(element)).to.be.false;
+        });
+
         describe('change event', () => {
             it('should close the calendar when handling its change event', async () => {
                 await openCalendar(element);

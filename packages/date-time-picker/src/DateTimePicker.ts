@@ -497,7 +497,7 @@ export class DateTimePicker extends ManageHelpText(
             <span
                 class="literal-segment"
                 data-test-id=${segment.type}
-            >${segment.formatted ?? ''}</span>
+            >${segment.formatted}</span>
         `;
     }
 
@@ -561,7 +561,6 @@ export class DateTimePicker extends ManageHelpText(
 
     private handleKeydown(event: KeyboardEvent): void {
         const segmentElement = event.target as HTMLElement;
-        if (!segmentElement) return;
         const segmentType = segmentElement.dataset.type as EditableSegmentType;
         if (!segmentType) return;
 
@@ -732,12 +731,10 @@ export class DateTimePicker extends ManageHelpText(
         segment: EditableSegment,
         segmentElement: HTMLElement
     ): void {
-        const content =
+        segmentElement.innerText =
             segment.value !== undefined
                 ? segment.formatted
                 : segment.placeholder;
-
-        segmentElement.innerText = content ?? '';
     }
 
     private dispatchChange(): void {
