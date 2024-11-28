@@ -17,11 +17,14 @@ import {
     parseDate,
     today,
 } from '@internationalized/date';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
 import { ActionButton } from '@spectrum-web-components/action-button';
 import { Calendar, DAYS_PER_WEEK } from '@spectrum-web-components/calendar';
+
 import '@spectrum-web-components/calendar/sp-calendar.js';
 import '@spectrum-web-components/theme/sp-theme.js';
+
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 import { spy, stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';

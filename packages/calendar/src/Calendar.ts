@@ -24,6 +24,7 @@ import {
     today,
 } from '@internationalized/date';
 import { NumberFormatter } from '@internationalized/number';
+
 import {
     CSSResultArray,
     html,
@@ -45,18 +46,18 @@ import {
     languageResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
+import styles from './calendar.css.js';
+
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-left.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-right.js';
+
 import {
     CalendarValue,
     CalendarWeekday,
     DateCellProperties,
     DateValue,
 } from './types.js';
-
-import styles from './calendar.css.js';
-
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-left.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-right.js';
 
 export const DAYS_PER_WEEK = 7;
 /**

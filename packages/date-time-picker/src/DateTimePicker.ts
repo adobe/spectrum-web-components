@@ -23,6 +23,7 @@ import {
     ZonedDateTime,
 } from '@internationalized/date';
 import { NumberParser } from '@internationalized/number';
+
 import {
     CSSResultArray,
     html,
@@ -53,13 +54,6 @@ import {
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import styles from './date-time-picker.css.js';
-import {
-    DateTimePickerValue,
-    EditableSegmentType,
-    Precision,
-    Precisions,
-    SegmentTypes,
-} from './types.js';
 
 // TODO: Load dependencies lazily when possible
 import '@spectrum-web-components/calendar/sp-calendar.js';
@@ -69,6 +63,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-calendar.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+
 import {
     equalSegmentValues,
     isCalendarDate,
@@ -84,6 +79,13 @@ import { DecrementModifier } from './segments/modifiers/DecrementModifier.js';
 import { IncrementModifier } from './segments/modifiers/IncrementModifier.js';
 import { InputModifier } from './segments/modifiers/InputModifier.js';
 import { type SegmentsModifierParams } from './segments/modifiers/SegmentsModifier.js';
+import {
+    DateTimePickerValue,
+    EditableSegmentType,
+    Precision,
+    Precisions,
+    SegmentTypes,
+} from './types.js';
 
 /**
  * @element sp-date-time-picker
@@ -197,7 +199,7 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     /**
-     * Returns whether the component's precision includes time segments (hour, minute, second)
+     * @return Whether the component's precision includes time segments (hour, minute, second)
      */
     private get includesTime(): boolean {
         const timePrecisions = [
@@ -260,7 +262,7 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     /**
-     * Returns the component's most precise date property (min, max or value) or undefined if none is defined.
+     * Computes the component's most precise date property (min, max or value) or undefined if none is defined.
      * The order of precedence is: ZonedDateTime, CalendarDateTime, CalendarDate.
      */
     private get mostSpecificDateValue(): DateValue | undefined {

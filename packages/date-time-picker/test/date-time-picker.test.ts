@@ -18,13 +18,7 @@ import {
     ZonedDateTime,
 } from '@internationalized/date';
 import { NumberFormatter } from '@internationalized/number';
-import {
-    elementUpdated,
-    expect,
-    fixture,
-    html,
-    oneEvent,
-} from '@open-wc/testing';
+
 import { Calendar } from '@spectrum-web-components/calendar';
 import {
     DateTimePicker,
@@ -34,6 +28,14 @@ import {
     SegmentTypes,
 } from '@spectrum-web-components/date-time-picker';
 import { PickerButton } from '@spectrum-web-components/picker-button';
+
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    oneEvent,
+} from '@open-wc/testing';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 import { spy, stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
