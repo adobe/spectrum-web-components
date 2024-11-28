@@ -10,11 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { CalendarDate, DateValue } from '@internationalized/date';
+
 import { html, type TemplateResult } from '@spectrum-web-components/base';
+import { CalendarValue } from '@spectrum-web-components/calendar';
+
+import { spreadProps } from '../../../test/lit-helpers.js';
+
 import '@spectrum-web-components/calendar/sp-calendar.js';
 import '@spectrum-web-components/theme/sp-theme.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
-import { CalendarValue } from '../src/types.js';
 
 type ComponentArgs = {
     value?: CalendarValue;
@@ -72,48 +75,36 @@ export default {
     },
 };
 
-const dateControlsDisabledArgTypes = {
-    min: {
-        table: {
-            disable: true,
-        },
-    },
-    max: {
-        table: {
-            disable: true,
-        },
-    },
-    value: {
-        table: {
-            disable: true,
-        },
-    },
-};
+const computeProps = (args: StoryArgs): ComponentArgs => {
+    const timestampToValue = (timestamp: number): CalendarValue => {
+        const date = new Date();
+        date.setTime(timestamp);
+        return new CalendarDate(
+            date.getFullYear(),
+            date.getMonth() + 1, // Date months are 0-indexed while CalendarDate months are 1-indexed
+            date.getDate()
+        );
+    };
 
-const timestampToValue = (timestamp: number): CalendarValue => {
-    const date = new Date();
-    date.setTime(timestamp);
-    return new CalendarDate(
-        date.getFullYear(),
-        date.getMonth() + 1, // Date months are 0-indexed while CalendarDate months are 1-indexed
-        date.getDate()
-    );
+    return {
+        value: args.value
+            ? timestampToValue(args.value as unknown as number)
+            : undefined,
+        min: args.min
+            ? timestampToValue(args.min as unknown as number)
+            : undefined,
+        max: args.max
+            ? timestampToValue(args.max as unknown as number)
+            : undefined,
+        padded: args.padded,
+        disabled: args.disabled,
+    };
 };
 
 const Template = (args: StoryArgs = {}): TemplateResult => {
-    args.value = args.value
-        ? timestampToValue(args.value as unknown as number)
-        : undefined;
-    args.min = args.min
-        ? timestampToValue(args.min as unknown as number)
-        : undefined;
-    args.max = args.max
-        ? timestampToValue(args.max as unknown as number)
-        : undefined;
-
     return html`
         <sp-calendar
-            ...=${spreadProps(args)}
+            ...=${spreadProps(computeProps(args))}
             @change=${args.onChange}
         ></sp-calendar>
     `;
@@ -138,53 +129,49 @@ padded.args = {
 export const preselectedValue = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-calendar
-            ...=${spreadProps(args)}
             .value=${new CalendarDate(2022, 4, 16)}
+            ...=${spreadProps(computeProps(args))}
         ></sp-calendar>
     `;
 };
-preselectedValue.argTypes = dateControlsDisabledArgTypes;
 
 export const minDate = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-calendar
-            ...=${spreadProps(args)}
             .min=${new CalendarDate(2022, 4, 12)}
             .value=${new CalendarDate(2022, 4, 16)}
+            ...=${spreadProps(computeProps(args))}
         ></sp-calendar>
     `;
 };
-minDate.argTypes = dateControlsDisabledArgTypes;
 
 export const maxDate = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-calendar
-            ...=${spreadProps(args)}
             .max=${new CalendarDate(2022, 4, 19)}
             .value=${new CalendarDate(2022, 4, 16)}
+            ...=${spreadProps(computeProps(args))}
         ></sp-calendar>
     `;
 };
-maxDate.argTypes = dateControlsDisabledArgTypes;
 
 export const minAndMaxDates = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-calendar
-            ...=${spreadProps(args)}
             .min=${new CalendarDate(2022, 4, 12)}
             .max=${new CalendarDate(2022, 4, 19)}
             .value=${new CalendarDate(2022, 4, 16)}
+            ...=${spreadProps(computeProps(args))}
         ></sp-calendar>
     `;
 };
-minAndMaxDates.argTypes = dateControlsDisabledArgTypes;
 
 export const bengaliIndiaLocale = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-theme lang="bn-IN">
             <sp-calendar
-                ...=${spreadProps(args)}
                 .value=${new CalendarDate(2022, 4, 16)}
+                ...=${spreadProps(computeProps(args))}
             ></sp-calendar>
         </sp-theme>
     `;

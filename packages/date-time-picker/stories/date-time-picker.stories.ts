@@ -12,15 +12,16 @@ governing permissions and limitations under the License.
 import {
     CalendarDate,
     CalendarDateTime,
+    DateValue,
     toZoned,
 } from '@internationalized/date';
+
 import {
     css,
     html,
     TemplateResult,
     unsafeCSS,
 } from '@spectrum-web-components/base';
-import { DateValue } from '@spectrum-web-components/calendar';
 import {
     DateTimePickerValue,
     Precision,
@@ -115,35 +116,45 @@ const storyMeta = {
     },
 };
 
-const timestampToValue = (timestamp: number): DateValue => {
-    const date = new Date();
-    date.setTime(timestamp);
-    return new CalendarDateTime(
-        date.getFullYear(),
-        date.getMonth() + 1, // Date months are 0-indexed while CalendarDate months are 1-indexed
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds()
-    );
+const computeProps = (args: StoryArgs): ComponentArgs => {
+    const timestampToValue = (timestamp: number): DateValue => {
+        const date = new Date();
+        date.setTime(timestamp);
+        return new CalendarDateTime(
+            date.getFullYear(),
+            date.getMonth() + 1, // Date months are 0-indexed while CalendarDate months are 1-indexed
+            date.getDate(),
+            date.getHours(),
+            date.getMinutes(),
+            date.getSeconds()
+        );
+    };
+
+    return {
+        value: args.value
+            ? timestampToValue(args.value as unknown as number)
+            : undefined,
+        min: args.min
+            ? timestampToValue(args.min as unknown as number)
+            : undefined,
+        max: args.max
+            ? timestampToValue(args.max as unknown as number)
+            : undefined,
+        disabled: args.disabled,
+        readonly: args.readonly,
+        quiet: args.quiet,
+        invalid: args.invalid,
+        autofocus: args.autofocus,
+        precision: args.precision,
+    };
 };
 
 const Template = (args: StoryArgs = {}): TemplateResult => {
-    args.value = args.value
-        ? timestampToValue(args.value as unknown as number)
-        : undefined;
-    args.min = args.min
-        ? timestampToValue(args.min as unknown as number)
-        : undefined;
-    args.max = args.max
-        ? timestampToValue(args.max as unknown as number)
-        : undefined;
-
     return html`
         <sp-date-time-picker
-            ...=${spreadProps(args)}
             @change=${args.onChange}
             @input=${args.onInput}
+            ...=${spreadProps(computeProps(args))}
         ></sp-date-time-picker>
     `;
 };
@@ -175,84 +186,65 @@ autofocus.args = {
     autofocus: true,
 };
 
-const dateControlsDisabledArgTypes = {
-    min: {
-        table: {
-            disable: true,
-        },
-    },
-    max: {
-        table: {
-            disable: true,
-        },
-    },
-    value: {
-        table: {
-            disable: true,
-        },
-    },
-};
-
 export const preselectedValue = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-date-time-picker
-            ...=${spreadProps(args)}
             .value=${new CalendarDateTime(2020, 2, 16, 8, 20)}
+            ...=${spreadProps(computeProps(args))}
         ></sp-date-time-picker>
     `;
 };
-preselectedValue.argTypes = dateControlsDisabledArgTypes;
 
 export const minDate = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-date-time-picker
-            ...=${spreadProps(args)}
             .value=${new CalendarDate(2022, 4, 16)}
             .min=${new CalendarDate(2022, 4, 12)}
+            ...=${spreadProps(computeProps(args))}
         ></sp-date-time-picker>
     `;
 };
-minDate.argTypes = dateControlsDisabledArgTypes;
 
 export const maxDate = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-date-time-picker
-            ...=${spreadProps(args)}
             .value=${new CalendarDate(2022, 4, 16)}
             .max=${new CalendarDateTime(2022, 4, 19, 20, 30)}
+            ...=${spreadProps(computeProps(args))}
         ></sp-date-time-picker>
     `;
 };
-maxDate.argTypes = dateControlsDisabledArgTypes;
 
 export const minAndMaxDates = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-date-time-picker
-            ...=${spreadProps(args)}
             .value=${new CalendarDate(2022, 4, 16)}
             .min=${toZoned(
                 new CalendarDateTime(2022, 4, 12, 9, 15),
                 'Europe/Bucharest'
             )}
             .max=${new CalendarDateTime(2022, 4, 19, 20, 30)}
+            ...=${spreadProps(computeProps(args))}
         ></sp-date-time-picker>
     `;
 };
-minAndMaxDates.argTypes = dateControlsDisabledArgTypes;
 
 export const secondPrecision = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-date-time-picker
-            ...=${spreadProps(args)}
             .value=${new CalendarDate(2022, 4, 16)}
             precision="second"
+            ...=${spreadProps(computeProps(args))}
         ></sp-date-time-picker>
     `;
 };
 
 export const helpText = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-date-time-picker ...=${spreadProps(args)} precision="day">
+        <sp-date-time-picker
+            precision="day"
+            ...=${spreadProps(computeProps(args))}
+        >
             <sp-help-text slot="help-text">
                 Please select your birthday
             </sp-help-text>
@@ -263,9 +255,9 @@ export const helpText = (args: StoryArgs): TemplateResult => {
 export const negativeHelpText = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-date-time-picker
-            ...=${spreadProps(args)}
             .min=${new CalendarDate(2020, 0, 1)}
             .max=${new CalendarDate(2025, 0, 1)}
+            ...=${spreadProps(computeProps(args))}
         >
             <sp-help-text slot="help-text">
                 Change state to invalid to see the negative help text
@@ -276,11 +268,10 @@ export const negativeHelpText = (args: StoryArgs): TemplateResult => {
         </sp-date-time-picker>
     `;
 };
-negativeHelpText.argTypes = dateControlsDisabledArgTypes;
 
-export const customIcon = (): TemplateResult => {
+export const customIcon = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-date-time-picker>
+        <sp-date-time-picker ...=${spreadProps(computeProps(args))}>
             <sp-icon-alert slot="calendar-icon"></sp-icon-alert>
         </sp-date-time-picker>
     `;
@@ -303,7 +294,7 @@ export const customWidth = (args: StoryArgs): TemplateResult[] => {
             <div>
                 <sp-date-time-picker
                     id=${id}
-                    ...=${spreadProps(args)}
+                    ...=${spreadProps(computeProps(args))}
                 ></sp-date-time-picker>
             </div>
         `;
