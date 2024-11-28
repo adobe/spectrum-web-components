@@ -673,6 +673,19 @@ describe('Calendar', () => {
 
             expectSameDates(element.value!, availableDateToSelect);
         });
+
+        it('should clear the selected value when the clear method is called', async () => {
+            await sendMouse({
+                type: 'click',
+                position: getElementCenter(availableDayElement),
+            });
+            await elementUpdated(element);
+
+            element.clear();
+            await elementUpdated(element);
+
+            expect(element.value).to.be.undefined;
+        });
     });
 
     describe('Dispatched change', () => {
