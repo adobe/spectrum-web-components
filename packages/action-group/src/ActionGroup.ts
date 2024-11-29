@@ -403,6 +403,9 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     private hasManaged = false;
 
     private manageButtons = (): void => {
+        if (!this.slotElement) {
+            return;
+        }
         const assignedElements = this.slotElement.assignedElements({
             flatten: true,
         });

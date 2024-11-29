@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/progress-bar",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publishConfig": {
         "access": "public"
     },
@@ -58,10 +58,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.0.0",
-        "@spectrum-web-components/field-label": "^1.0.0",
-        "@spectrum-web-components/reactive-controllers": "^1.0.0",
-        "@spectrum-web-components/shared": "^1.0.0"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/field-label": "^1.0.1",
+        "@spectrum-web-components/reactive-controllers": "^1.0.1",
+        "@spectrum-web-components/shared": "^1.0.1"
     },
     "devDependencies": {
         "@spectrum-css/progressbar": "^5.0.0-s2-foundations.19"

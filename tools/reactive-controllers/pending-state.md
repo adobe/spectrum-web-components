@@ -25,20 +25,25 @@ import { PendingStateController } from '@spectrum-web-components/reactive-contro
 
 ```js
 import { LitElement } from 'lit';
-import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
-class Host extends LitElement{
+import { PendingStateController, HostWithPendingState } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
+
+class Host extends LitElement<HostWithPendingState> {
 
     /** Whether the items are currently loading. */
     @property({ type: Boolean, reflect: true })
     public pending = false;
 
-    /** Defines a string value that labels the Picker while it is in pending state. */
+    /** Whether the host is disabled. */
+    @property({type: boolean})
+    public disabled = false;
+
+    /** Defines a string value that labels the while it is in pending state. */
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
     public pendingStateController: PendingStateController<this>;
 
     /**
-     * Initializes the `PendingStateController` for the Picker component.
+     * Initializes the `PendingStateController` for the component.
      * The `PendingStateController` manages the pending state of the Component.
      */
     constructor() {
