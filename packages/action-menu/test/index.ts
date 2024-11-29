@@ -41,7 +41,7 @@ import type { Overlay } from '@spectrum-web-components/overlay';
 import { sendKeys, setViewport } from '@web/test-runner-commands';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { isWebKit } from '@spectrum-web-components/shared';
-import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/MobileController.js';
+import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
 
 ignoreResizeObserverLoopError(before, after);
 

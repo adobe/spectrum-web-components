@@ -12,10 +12,9 @@ governing permissions and limitations under the License.
 import {
     InteractionController,
     InteractionTypes,
+    SAFARI_FOCUS_RING_CLASS,
 } from './InteractionController.js';
 import { isWebKit } from '@spectrum-web-components/shared';
-
-export const SAFARI_FOCUS_RING_CLASS = 'remove-focus-ring-safari-hack';
 
 export class MobileController extends InteractionController {
     override type = InteractionTypes.mobile;
