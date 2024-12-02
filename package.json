@@ -434,5 +434,5 @@
         "react/*"
     ],
     "customElements": "custom-elements.json",
-    "packageManager": "yarn@1.22.22"
+    "packageManager": "yarn@4.1.1"
 }
