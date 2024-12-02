@@ -1,9 +1,7 @@
-## Description
+## Overview
 
 Some advanced slider uses require more than one handle. One example of this is the
-range slider above. `<sp-slider>` supports multiple handles via the `<sp-slider-handle>` sub-component, although it would be very rare to ever require more than two handles.
-
-### Single Handles
+range slider. `<sp-slider>` supports multiple handles via the `<sp-slider-handle>` sub-component, although it would be very rare to ever require more than two handles.
 
 `<sp-slider-handle>` is unnecessary for single-handle sliders. Always slot two or more `<sp-slider-handle>` components together.
 To customize the properties of a single-handle slider (`normalization`, `value`, etc), set them on the `<sp-slider>` element directly.
@@ -25,11 +23,9 @@ import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/slider/sp-slider-handle.js';
 ```
 
-## Examples
+## Anatomy
 
-### Range Slider
-
-This examples uses the `"range"` variant along with two handles to create a range slider.
+When two or more sliders are present, the `label` attribute can be used to identify each handle to assistive technology. For form submission, the `name` property is a unique identifier for each handle. Each handle will also have its own `value` based on its position on the slider.
 
 ```html
 <sp-slider variant="range" step="1" min="0" max="255">
@@ -48,8 +44,6 @@ This examples uses the `"range"` variant along with two handles to create a rang
     ></sp-slider-handle>
 </sp-slider>
 ```
-
-## Multi-handle Slider with Ordered Handles
 
 For slider handles that have the same numeric range, you can specify `min="previous"` or `max="next"` to constrain handles by the values of their `previous/nextElementSiblings`. Keep in mind that the _first_ slider handle with not have a `previous` handle to be its `min` and the _last_ slider handle will not have a `next` handle to be its `max`.
 
@@ -80,3 +74,11 @@ For slider handles that have the same numeric range, you can specify `min="previ
     ></sp-slider-handle>
 </sp-slider>
 ```
+
+### Accessibility
+
+#### Include a label
+
+For sliders with more than one handle, each slider handle should have a label. A slider without a label is ambiguous and not accessible.
+
+Review the accessibility guidelines for the [slider](../slider).

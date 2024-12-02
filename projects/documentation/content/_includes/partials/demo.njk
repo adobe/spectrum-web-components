@@ -41,8 +41,7 @@
             href="https://www.npmjs.com/package/@spectrum-web-components/{{ componentPackage }}"
             target="_blank"
         >
-            <h2 slot="heading">NPM</h2>
-            <h3 slot="subheading">{% packageVersion componentPackage %}</h3>
+            <p slot="heading">NPM {% packageVersion componentPackage %}</p>
             <sp-icon
                 slot="preview"
             >
@@ -61,8 +60,7 @@
             href={{ spectrumURLs.urls[componentPackage]}}
             target="_blank"
         >
-            <h2 slot="heading">Spectrum</h2>
-            <h3 slot="subheading">View guidelines</h3>
+            <p slot="heading">Spectrum guidelines</p>
             <sp-icon
                 slot="preview"
             >
@@ -79,8 +77,7 @@
             href={{ storybookURLs.urls[componentPackage]}}
             target="_blank"
         >
-            <h2 slot="heading">Storybook</h2>
-            <h3 slot="subheading">View Storybook</h3>
+            <p slot="heading">View Storybook</p>
             <sp-icon
                 slot="preview"
             >
@@ -95,8 +92,7 @@
             href={{ demoURLs.urls[componentPackage]}}
             target="_blank"
         >
-            <h2 slot="heading">Try it on</h2>
-            <h3 slot="subheading">webcomponents.dev</h3>
+            <p slot="heading">Try it on webcomponents.dev</p>
             <sp-icon
                 slot="preview"
             >

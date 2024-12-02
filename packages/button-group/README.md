@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `sp-button-group` delivers a set of buttons in horizontal or vertical orientation while ensuring the appropriate spacing between those buttons.
 
@@ -24,7 +24,11 @@ When looking to leverage the `ButtonGroup` base class as a type and/or for exten
 import { ButtonGroup } from '@spectrum-web-components/button-group';
 ```
 
-## Horizontal
+### Options
+
+A button group can be either horizontal or vertical in its orientation. By default, a button group is horizontal. Use vertical option when horizontal space is limited.
+
+#### Horizontal
 
 ```html
 <sp-button-group>
@@ -34,7 +38,7 @@ import { ButtonGroup } from '@spectrum-web-components/button-group';
 </sp-button-group>
 ```
 
-## Vertical
+#### Vertical
 
 ```html
 <sp-button-group vertical>
@@ -43,3 +47,7 @@ import { ButtonGroup } from '@spectrum-web-components/button-group';
     <sp-button>Short 3</sp-button>
 </sp-button-group>
 ```
+
+### Accessibility
+
+Review the guidelines for the [button](../button#accessibility-guidelines) children.

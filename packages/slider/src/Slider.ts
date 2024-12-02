@@ -95,6 +95,13 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     @property({ reflect: true })
     public override dir!: 'ltr' | 'rtl';
 
+    /**
+     * Defines the filled variant starting point.
+     * If fill start does not have a number associated with it, the starting point will be the `value`.
+     * Any number (including `0`) can be used as a fill-start value.
+     * If a [custom normalization](#advanced-normalization) function is provided,
+     * it will also normalize all fill-related params.
+     */
     @property({ type: String })
     public set variant(variant: string) {
         const oldVariant = this.variant;
@@ -143,27 +150,57 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         return this.getAriaValueText(this.handleController.formattedValues);
     }
 
+    /**
+     * Determines which labels are visible:
+     * by default both text and value labels are visible,
+     * `text` will make only text label visible,
+     * `value` will make only `value` label visible,
+     * `none` will hide both labels
+     */
     @property({ type: String, reflect: true, attribute: 'label-visibility' })
     public labelVisibility?: 'text' | 'value' | 'none';
 
+    /**
+     * Minimum value to accept; must be less than or equal to `max`.
+     */
     @property({ type: Number, reflect: true })
     public override min = 0;
 
+    /**
+     * Maximum value to accept; must be less than or equal to `min`.
+     */
     @property({ type: Number, reflect: true })
     public override max = 100;
 
+    /**
+     * Level of granularity for value
+     */
     @property({ type: Number })
     public override step = 1;
 
+    /**
+     * Level of granularity for tick marks
+     */
     @property({ type: Number, attribute: 'tick-step' })
     public tickStep = 0;
 
+    /**
+     * Applies labels for tick marks
+     */
     @property({ type: Boolean, attribute: 'tick-labels' })
     public tickLabels = false;
 
+    /**
+     * Prevents slider value from being altered or submitted
+     */
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
+    /**
+     * Defines the starting point.
+     * If fill start does not have a number associated with it,
+     * the starting point will be the value.
+     */
     @property({ type: Number, reflect: true, attribute: 'fill-start' })
     public fillStart?: number | boolean;
 
@@ -174,7 +211,8 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     public quiet = false;
 
     /**
-     * Applies `indeterminate` to the underlying `sp-number-field` when `editable === true`. Is removed on the next `change` event.
+     * Applies `indeterminate` to the underlying `sp-number-field` when `editable === true`.
+     * Is removed on the next `change` event.
      */
     @property({ type: Boolean })
     public indeterminate = false;
