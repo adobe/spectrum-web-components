@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
-    ElementSize,
+    DefaultElementSize,
     html,
     PropertyValues,
     SizedMixin,
@@ -22,37 +22,81 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { CheckboxMixin } from './CheckboxMixin.js';
 import checkboxStyles from './checkbox.css.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import { Checkmark75Icon } from '@spectrum-web-components/icons-ui';
-import { Dash50Icon } from '@spectrum-web-components/icons-ui';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark75.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-dash75.js';
+import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import checkmarkSmallOverrides from '@spectrum-web-components/icon/src/icon-checkmark-overrides.css.js';
+import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
+import dashSmallOverrides from '@spectrum-web-components/icon/src/icon-dash-overrides.css.js';
 
-/** Note:
- *  The current logic deviates from the earlier design of the accordion
- *  Earlier the s-checkbox size would correspond to the --system-ui-icon-checkbox-75-icon-size=10px;
- *  Now its pointing to --spectrum-icon-size-s=16px; and similarly for other sizes
- *  Need to discuss with the design team to understand the correct size to be used
- *  and update the logic accordingly
- *
- *  Goal here is to avoid using the direct css of the checkbox icon and use the sp-icon component instead
- */
-const checkmarkIcon = (size: ElementSize): TemplateResult => {
-    return html`
-        <sp-icon id="checkmark" class="spectrum-Icon" size=${size}>
-            ${Checkmark75Icon()}
-        </sp-icon>
-    `;
+const checkmarkIcon = {
+    s: () => {
+        return html`
+            <sp-icon-checkmark75
+                id="checkmark"
+                class="spectrum-Icon spectrum-UIIcon-Checkmark75"
+            ></sp-icon-checkmark75>
+        `;
+    },
+    m: () => {
+        return html`
+            <sp-icon-checkmark75
+                id="checkmark"
+                class="spectrum-Icon spectrum-UIIcon-Checkmark100"
+            ></sp-icon-checkmark75>
+        `;
+    },
+    l: () => {
+        return html`
+            <sp-icon-checkmark75
+                id="checkmark"
+                class="spectrum-Icon spectrum-UIIcon-Checkmark200"
+            ></sp-icon-checkmark75>
+        `;
+    },
+    xl: () => {
+        return html`
+            <sp-icon-checkmark75
+                id="checkmark"
+                class="spectrum-Icon spectrum-UIIcon-Checkmark300"
+            ></sp-icon-checkmark75>
+        `;
+    },
 };
 
-const dashIcon = (size: ElementSize): TemplateResult => {
-    return html`
-        <sp-icon
-            id="partialCheckmark"
-            class="spectrum-Icon spectrum-UIIcon-Dash75"
-            size=${size}
-        >
-            ${Dash50Icon()}
-        </sp-icon>
-    `;
+const dashIcon = {
+    s: () => {
+        return html`
+            <sp-icon-dash75
+                id="partialCheckmark"
+                class="spectrum-Icon spectrum-UIIcon-Dash75"
+            ></sp-icon-dash75>
+        `;
+    },
+    m: () => {
+        return html`
+            <sp-icon-dash75
+                id="partialCheckmark"
+                class="spectrum-Icon spectrum-UIIcon-Dash100"
+            ></sp-icon-dash75>
+        `;
+    },
+    l: () => {
+        return html`
+            <sp-icon-dash75
+                id="partialCheckmark"
+                class="spectrum-Icon spectrum-UIIcon-Dash200"
+            ></sp-icon-dash75>
+        `;
+    },
+    xl: () => {
+        return html`
+            <sp-icon-dash75
+                id="partialCheckmark"
+                class="spectrum-Icon spectrum-UIIcon-Dash300"
+            ></sp-icon-dash75>
+        `;
+    },
 };
 
 /**
@@ -96,7 +140,13 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
     }
 
     public static override get styles(): CSSResultArray {
-        return [checkboxStyles];
+        return [
+            checkboxStyles,
+            checkmarkSmallStyles,
+            dashSmallStyles,
+            checkmarkSmallOverrides,
+            dashSmallOverrides,
+        ];
     }
 
     public override click(): void {
@@ -117,10 +167,10 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
             ${super.render()}
             <span id="box">
                 ${this.checked
-                    ? checkmarkIcon(this.size as ElementSize)
+                    ? checkmarkIcon[this.size as DefaultElementSize]()
                     : html``}
                 ${this.indeterminate
-                    ? dashIcon(this.size as ElementSize)
+                    ? dashIcon[this.size as DefaultElementSize]()
                     : html``}
             </span>
             <label id="label" for="input"><slot></slot></label>
