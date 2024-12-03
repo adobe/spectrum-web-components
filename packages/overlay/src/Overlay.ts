@@ -30,7 +30,6 @@ import {
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
-
 import type {
     OpenableElement,
     OverlayState,
@@ -57,14 +56,15 @@ import {
 
 import styles from './overlay.css.js';
 
-const supportsPopover = 'showPopover' in document.createElement('div');
+const browserSupportsPopover = 'showPopover' in document.createElement('div');
 
-let OverlayFeatures = OverlayDialog(AbstractOverlay);
-/* c8 ignore next 2 */
-if (supportsPopover) {
-    OverlayFeatures = OverlayPopover(OverlayFeatures);
+// Start the base class and add the popover or no-popover functionality
+let ComputedOverlayBase = OverlayDialog(AbstractOverlay);
+
+if (browserSupportsPopover) {
+    ComputedOverlayBase = OverlayPopover(ComputedOverlayBase);
 } else {
-    OverlayFeatures = OverlayNoPopover(OverlayFeatures);
+    ComputedOverlayBase = OverlayNoPopover(ComputedOverlayBase);
 }
 
 /**
@@ -74,16 +74,19 @@ if (supportsPopover) {
  * @fires sp-closed - announce that an overlay has compelted any exit animations
  * @fires slottable-request - requests to add or remove slottable content
  */
-export class Overlay extends OverlayFeatures {
+export class Overlay extends ComputedOverlayBase {
     static override styles = [styles];
 
     /**
      * An Overlay that is `delayed` will wait until a warm-up period of 1000ms
-     * has completed before opening. Once the warmup period has completed, all
+     * has completed before opening. Once the warm-up period has completed, all
      * subsequent Overlays will open immediately. When no Overlays are opened,
-     * a cooldown period of 1000ms will begin. Once the cooldown has completed,
+     * a cool-down period of 1000ms will begin. Once the cool-down has completed,
      * the next Overlay to be opened will be subject to the warm-up period if
      * provided that option.
+     *
+     * @type {boolean}
+     * @default false
      */
     @property({ type: Boolean })
     override get delayed(): boolean {
@@ -96,6 +99,10 @@ export class Overlay extends OverlayFeatures {
 
     private _delayed = false;
 
+    /**
+     * A reference to the dialog element within the overlay.
+     * This element is expected to have `showPopover` and `hidePopover` methods.
+     */
     @query('.dialog')
     override dialogEl!: HTMLDialogElement & {
         showPopover(): void;
@@ -103,7 +110,14 @@ export class Overlay extends OverlayFeatures {
     };
 
     /**
-     * Whether the overlay is currently functional or not
+     * Indicates whether the overlay is currently functional or not.
+     *
+     * When set to `true`, the overlay is disabled, and any active strategy is aborted.
+     * The overlay will also close if it is currently open. When set to `false`, the
+     * overlay will re-bind events and re-open if it was previously open.
+     *
+     * @type {boolean}
+     * @default false
      */
     @property({ type: Boolean })
     override get disabled(): boolean {
@@ -113,10 +127,12 @@ export class Overlay extends OverlayFeatures {
     override set disabled(disabled: boolean) {
         this._disabled = disabled;
         if (disabled) {
+            // Abort any active strategy and close the overlay if it is currently open
             this.strategy?.abort();
             this.wasOpen = this.open;
             this.open = false;
         } else {
+            // Re-bind events and re-open the overlay if it was previously open
             this.bindEvents();
             this.open = this.open || this.wasOpen;
             this.wasOpen = false;
@@ -125,14 +141,26 @@ export class Overlay extends OverlayFeatures {
 
     private _disabled = false;
 
+    /**
+     * A query to gather all elements slotted into the default slot, excluding elements
+     * with the slot name "longpress-describedby-descriptor".
+     */
     @queryAssignedElements({
         flatten: true,
-        selector: ':not([slot="longpress-describedby-descriptor"], slot)', // gather only elements slotted into the default slot
+        selector: ':not([slot="longpress-describedby-descriptor"], slot)',
     })
     override elements!: OpenableElement[];
 
+    /**
+     * A reference to the parent overlay that should be force-closed, if any.
+     */
     public parentOverlayToForceClose?: Overlay;
 
+    /**
+     * Determines if the overlay has a non-virtual trigger element.
+     *
+     * @returns {boolean} `true` if the trigger element is not a virtual trigger, otherwise `false`.
+     */
     private get hasNonVirtualTrigger(): boolean {
         return (
             !!this.triggerElement &&
@@ -141,15 +169,27 @@ export class Overlay extends OverlayFeatures {
     }
 
     /**
-     * The `offset` property accepts either a single number, to
-     * define the offset of the Overlay along the main axis from
-     * the trigger, or 2-tuple, to define the offset along the
-     * main axis and the cross axis. This option has no effect
-     * when there is no trigger element.
+     * The `offset` property accepts either a single number to define the offset of the
+     * Overlay along the main axis from the trigger, or a 2-tuple to define the offset
+     * along both the main axis and the cross axis. This option has no effect when there
+     * is no trigger element.
+     *
+     * @type {number | [number, number]}
+     * @default 0
      */
     @property({ type: Number })
     override offset: number | [number, number] = 0;
 
+    /**
+     * Provides an instance of the `PlacementController` for managing the positioning
+     * of the overlay relative to its trigger element.
+     *
+     * If the `PlacementController` instance does not already exist, it is created and
+     * assigned to the `_placementController` property.
+     *
+     * @protected
+     * @returns {PlacementController} The `PlacementController` instance.
+     */
     protected override get placementController(): PlacementController {
         if (!this._placementController) {
             this._placementController = new PlacementController(this);
@@ -158,7 +198,12 @@ export class Overlay extends OverlayFeatures {
     }
 
     /**
-     * Whether the Overlay is projected onto the "top layer" or not.
+     * Indicates whether the Overlay is projected onto the "top layer" or not.
+     *
+     * When set to `true`, the overlay is open and visible. When set to `false`, the overlay is closed and hidden.
+     *
+     * @type {boolean}
+     * @default false
      */
     @property({ type: Boolean, reflect: true })
     override get open(): boolean {
@@ -166,18 +211,28 @@ export class Overlay extends OverlayFeatures {
     }
 
     override set open(open: boolean) {
-        // Don't respond when disabled.
+        // Don't respond if the overlay is disabled.
         if (open && this.disabled) return;
-        // Don't respond when state not dirty
+
+        // Don't respond if the state is not changing.
         if (open === this.open) return;
-        // Don't respond when you're in the shadow on a longpress
-        // Shadow occurs when the first "click" would normally close the popover
+
+        // Don't respond if the overlay is in the shadow state during a longpress.
+        // The shadow state occurs when the first "click" would normally close the popover.
         if (this.strategy?.activelyOpening && !open) return;
+
+        // Update the internal _open property.
         this._open = open;
+
+        // Increment the open count if the overlay is opening.
         if (this.open) {
             Overlay.openCount += 1;
         }
+
+        // Request an update to re-render the component if necessary.
         this.requestUpdate('open', !this.open);
+
+        // Request slottable content if the overlay is opening.
         if (this.open) {
             this.requestSlottable();
         }
@@ -185,11 +240,19 @@ export class Overlay extends OverlayFeatures {
 
     private _open = false;
 
+    /**
+     * Tracks the number of overlays that have been opened.
+     *
+     * This static property is used to manage the stacking context of multiple overlays.
+     *
+     * @type {number}
+     * @default 1
+     */
     static openCount = 1;
 
     /**
-     * Instruct the Overlay where to place itself in
-     * relationship to the trigger element.
+     * Instruct the Overlay where to place itself in relationship to the trigger element.
+     *
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
      */
     @property()
@@ -197,7 +260,11 @@ export class Overlay extends OverlayFeatures {
 
     /**
      * The state in which the last `request-slottable` event was dispatched.
-     * Do not allow overlays from dispatching the same state twice in a row.
+     *
+     * This property ensures that overlays do not dispatch the same state twice in a row.
+     *
+     * @type {boolean}
+     * @default false
      */
     private lastRequestSlottableState = false;
 
@@ -206,25 +273,48 @@ export class Overlay extends OverlayFeatures {
      * to the appropriate value based on the "type" of the overlay
      * when set to `"auto"`.
      *
+     * @type {'true' | 'false' | 'auto'}
+     * @default 'auto'
      */
     @property({ attribute: 'receives-focus' })
     override receivesFocus: 'true' | 'false' | 'auto' = 'auto';
 
+    /**
+     * A reference to the slot element within the overlay.
+     *
+     * This element is used to manage the content slotted into the overlay.
+     *
+     * @type {HTMLSlotElement}
+     */
     @query('slot')
     slotEl!: HTMLSlotElement;
 
+    /**
+     * The current state of the overlay.
+     *
+     * This property reflects the current state of the overlay, such as 'opened' or 'closed'.
+     * When the state changes, it triggers the appropriate actions and updates the component.
+     *
+     * @type {OverlayState}
+     * @default 'closed'
+     */
     @state()
     override get state(): OverlayState {
         return this._state;
     }
 
     override set state(state) {
+        // Do not respond if the state is not changing.
         if (state === this.state) return;
+
         const oldState = this.state;
         this._state = state;
+
+        // Complete the opening strategy if the state is 'opened' or 'closed'.
         if (this.state === 'opened' || this.state === 'closed') {
             this.strategy?.shouldCompleteOpen();
         }
+        // Request an update to re-render the component if necessary.
         this.requestUpdate('state', oldState);
     }
 
