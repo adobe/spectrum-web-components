@@ -1,0 +1,106 @@
+# logging / private config
+yarn-error.log
+.DS_STORE
+.DS_Store
+.chrome
+.firefox
+.tsbuildinfo
+.rush
+.devcontainer
+tach-results.*
+.gitconfig
+.netlify/plugins
+
+# documentation
+documentation/components/searchIndex.json
+documentation/api-docs
+documentation/dist
+.lighthouseci
+
+# dependency folders
+coverage
+lib
+
+# build artifacts
+custom-elements.json
+
+!packages/icons-workflow/bin/build.js
+!packages/icons-workflow/src/DefaultIcon.ts
+
+packages/*/src/**/*.css.js
+packages/*/custom-elements.json
+packages/**/*.js
+packages/**/spectrum-vars.json
+packages/**/*.js.map
+packages/**/*.d.ts
+packages/**/*.test-vrt.ts
+!packages/**/*/spectrum-config.js
+!packages/**/*/spectrum-config.v1.js
+!packages/*/test/global.d.ts
+!packages/*/global.d.ts
+!packages/*/local.d.ts
+
+# react
+
+projects/**/*.js
+projects/**/*.js.map
+projects/**/*.d.ts
+!projects/*/global.d.ts
+
+tools/*/src/**/*.css.js
+tools/*/custom-elements.json
+tools/**/spectrum-vars.json
+tools/**/*.js
+tools/**/*.js.map
+tools/**/*.d.ts
+tools/**/*.test-vrt.ts
+!tools/**/*/spectrum-config.js
+!tools/*/test/global.d.ts
+!tools/*/global.d.ts
+!tools/*/local.d.ts
+!tools/base/src/version.js
+!tools/base/src/version.d.ts
+
+
+.wireit
+
+stats.html
+
+# typescript assets
+!test/global.d.ts
+*.tsbuildinfo
+
+# built css assets
+packages/**/*.css.ts
+projects/**/*.css.ts
+tools/**/*.css.ts
+styles/**/*.css.ts
+
+# test assets
+TESTS.xml
+test-results.xml
+test/benchmark/cli.cjs
+test/visual/review/
+test/visual/screenshots-baseline/
+test/visual/screenshots-actual/
+test/visual/screenshots-current/
+test/visual/src/data.json
+test/**/*.js
+test/**/*.js.map
+test/**/*.d.ts
+!test/visual/**/*.js
+test/visual/test.js
+
+# npm assets
+node_modules
+npm-debug.log
+package-lock.json
+
+# yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

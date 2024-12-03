@@ -1,0 +1,1 @@
+import { svg } from '@spectrum-web-components/base'; export default svg`<svg xmlns="http://www.w3.org/2000/svg">
