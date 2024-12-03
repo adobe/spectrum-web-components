@@ -41,8 +41,6 @@
         "./src/icon-cross-overrides.css.js": "./src/icon-cross-overrides.css.js",
         "./src/icon-dash-overrides.css.js": "./src/icon-dash-overrides.css.js",
         "./src/icon-overrides.css.js": "./src/icon-overrides.css.js",
-        "./src/icon-single-gripper-overrides.css.js": "./src/icon-single-gripper-overrides.css.js",
-        "./src/icon-triple-gripper-overrides.css.js": "./src/icon-triple-gripper-overrides.css.js",
         "./src/icon.css.js": "./src/icon.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -81,8 +79,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.0.1",
-        "@spectrum-web-components/iconset": "^1.0.1"
+        "@spectrum-web-components/base": "^1.0.1"
     },
     "devDependencies": {
         "@spectrum-css/icon": "^8.0.0-s2-foundations.17"
