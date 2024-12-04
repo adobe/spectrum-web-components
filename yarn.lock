@@ -5034,9 +5034,9 @@
   integrity sha512-voPc0KdIB8aF3LmBiBg8yiR5NbffWbChtIS9V4hCicoD/pc202dFVaWOQGYp4DsDNLV2XzxA+brtPCYvNxfh4w==
 
 "@spectrum-css/actiongroup@^6.0.0-s2-foundations.15":
-  version "6.0.0-s2-foundations.15"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actiongroup/-/actiongroup-6.0.0-s2-foundations.15.tgz#5ceca8b0d203ac8dbac6b58b67b1bc8822f3a2db"
-  integrity sha512-Bx8NJIm1OTVlHlPlrfOvxas2f5DHP/OeInxrcCwybZtQ2QgKsoWgVJQ2KME56qVNcGZEC9XRVWSdR5gGUWM1RA==
+  version "6.0.0-s2-foundations.16"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actiongroup/-/actiongroup-6.0.0-s2-foundations.16.tgz#7af4b087a297890639e687cd331ce32489b86e39"
+  integrity sha512-K7Wordak29JhiGPxJ/sISayPk5pwpz0DDbU5dXcmSqIyRWgTmIRv3WR2J2CYcy8KLS9bI7yPetGtAiZREozHMg==
 
 "@spectrum-css/actionmenu@^7.0.0-s2-foundations.15":
   version "7.0.0-s2-foundations.15"
@@ -5089,9 +5089,9 @@
   integrity sha512-a4S9+UiRks25dKGWTxfFGgthGQsDtPN8n3W2Ph01vjurNUucgznCeFwkMWA9EltxYR1EIadWzcUNF9vvmmO4YQ==
 
 "@spectrum-css/checkbox@^10.0.0-s2-foundations.18":
-  version "10.0.0-s2-foundations.18"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-10.0.0-s2-foundations.18.tgz#85b0163fb04a252e57e3cbce73e5158f7f4b63cd"
-  integrity sha512-waxb4pLSfT7HS6Bz/fsLHHNEqfmJZUZU6r1aw1fZIoKpVrFfMnkVn/eH7qMyMZ8oM3wpecd5XxV+4dP6YWU0PA==
+  version "10.0.0-s2-foundations.19"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-10.0.0-s2-foundations.19.tgz#73dc984bf9b05f76d211ab710c64b24b37f7038e"
+  integrity sha512-Y7BGvj9pu+Wz4bbMz67qX83DlVVk4Fr+SY4zyjiqvAsofsemSWM3EMZZ91KU4PU4U8q/vy+N9VHc7/havbiqyw==
 
 "@spectrum-css/clearbutton@^7.0.0-s2-foundations.16":
   version "7.0.0-s2-foundations.16"
@@ -5188,12 +5188,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/helptext/-/helptext-6.0.0-s2-foundations.15.tgz#c90d5f5e3fd27d53e1bb7f4a48516e939dad6630"
   integrity sha512-TskWjui0Kx6XRWZFr+GZ59lZCktdPSGCGL5cgOHNXLUpTB49aGM7wNreJzKw+OytGLkJoQ59G0Ms2SZRhhNnGQ==
 
-"@spectrum-css/icon@^8.0.0-s2-foundations.16":
-  version "8.0.0-s2-foundations.16"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-8.0.0-s2-foundations.16.tgz#94b04fa1d30c378d21bb12a137095472b2596451"
-  integrity sha512-Cy2kAgP9vO2+Jw93zToIZrlJITp+HiOmvVkUchpX8Og7M2zEV8FixlDaqFaZ4A8uN3aFuYb0tcHa6u6rxyDQlA==
-
-"@spectrum-css/icon@^8.0.0-s2-foundations.17":
+"@spectrum-css/icon@^8.0.0-s2-foundations.16", "@spectrum-css/icon@^8.0.0-s2-foundations.17":
   version "8.0.0-s2-foundations.17"
   resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-8.0.0-s2-foundations.17.tgz#f03087beb736cdfe0ba05e28e79cff6dc4a8db89"
   integrity sha512-zOu84SxjW8AOtjrgtIG7ZkAyZHeAnTnKwRNWsSCR/WnApFhbf8nuAzQyWJAw5i8WPgsd8KqcRdLPcMWrc8jDqg==
