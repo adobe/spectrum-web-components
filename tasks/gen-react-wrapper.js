@@ -70,13 +70,10 @@ const ignoredPackages = [
     '@types/swc',
 ];
 
-// Use the function
-//const allPackages = getWorkspacePackages(ignoredPackages);
-
 const __filename = dirname(fileURLToPath(import.meta.url));
 const __dirname = dirname(__filename);
 const configPath = path.resolve(__dirname, 'cem-react-wrapper.config.js');
-//const configPath = path.resolve('./cem-react-wrapper.config.js');
+
 console.log(configPath);
 const command = `cem analyze --config ${configPath}`;
 
@@ -90,15 +87,6 @@ const runCemAnalyze = (packages) => {
         }
     });
 };
-
-/*allPackages.forEach((pkg) => {
-    console.log(`Running ${command} in ${pkg.path}`);
-    try {
-        execSync(command, { stdio: 'inherit', cwd: pkg.path });
-    } catch (error) {
-        console.error(`Error running command in ${pkg.path}:`, error);
-    }
-});*/
 
 const main = () => {
     removeReactDir();

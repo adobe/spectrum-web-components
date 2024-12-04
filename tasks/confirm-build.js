@@ -10,9 +10,6 @@ governing permissions and limitations under the License.
 */
 
 import { execSync } from 'child_process';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 // Get a list of all packages except those you want to ignore
 const getWorkspacePackages = (ignoredPackages) => {

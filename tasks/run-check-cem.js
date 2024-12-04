@@ -13,7 +13,7 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -73,26 +73,3 @@ allPackages.forEach((pkg) => {
         console.warn(`check-cem.js not found for ${pkg.name}`);
     }
 });
-
-/*Object.keys(packagesInfo).forEach((pkgName) => {
-    if (
-        !ignorePackages.some((ignore) =>
-            new RegExp(ignore.replace('*', '.*')).test(pkgName)
-        )
-    ) {
-        const packageLocation = packagesInfo[pkgName].location;
-        const checkCemPath = path.join(
-            packageLocation,
-            '../../tasks/check-cem.js'
-        );
-
-        if (fs.existsSync(checkCemPath)) {
-            console.log(`Running check-cem.js for ${pkgName}`);
-            execSync(`node ${checkCemPath}`, { stdio: 'inherit' });
-        } else {
-            console.warn(`check-cem.js not found for ${pkgName}`);
-        }
-    } else {
-        console.log(`Ignoring package ${pkgName}`);
-    }
-});*/
