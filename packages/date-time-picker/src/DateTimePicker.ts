@@ -23,6 +23,7 @@ import {
     ZonedDateTime,
 } from '@internationalized/date';
 import { NumberParser } from '@internationalized/number';
+
 import {
     CSSResultArray,
     html,
@@ -53,13 +54,6 @@ import {
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import styles from './date-time-picker.css.js';
-import {
-    DateTimePickerValue,
-    EditableSegmentType,
-    Precision,
-    Precisions,
-    SegmentTypes,
-} from './types.js';
 
 // TODO: Load dependencies lazily when possible
 import '@spectrum-web-components/calendar/sp-calendar.js';
@@ -69,6 +63,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-calendar.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+
 import {
     equalSegmentValues,
     isCalendarDate,
@@ -84,6 +79,13 @@ import { DecrementModifier } from './segments/modifiers/DecrementModifier.js';
 import { IncrementModifier } from './segments/modifiers/IncrementModifier.js';
 import { InputModifier } from './segments/modifiers/InputModifier.js';
 import { type SegmentsModifierParams } from './segments/modifiers/SegmentsModifier.js';
+import {
+    DateTimePickerValue,
+    EditableSegmentType,
+    Precision,
+    Precisions,
+    SegmentTypes,
+} from './types.js';
 
 /**
  * @element sp-date-time-picker
@@ -197,7 +199,7 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     /**
-     * Returns whether the component's precision includes time segments (hour, minute, second)
+     * @return Whether the component's precision includes time segments (hour, minute, second)
      */
     private get includesTime(): boolean {
         const timePrecisions = [
@@ -260,7 +262,7 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     /**
-     * Returns the component's most precise date property (min, max or value) or undefined if none is defined.
+     * Computes the component's most precise date property (min, max or value) or undefined if none is defined.
      * The order of precedence is: ZonedDateTime, CalendarDateTime, CalendarDate.
      */
     private get mostSpecificDateValue(): DateValue | undefined {
@@ -421,9 +423,9 @@ export class DateTimePicker extends ManageHelpText(
 
             <sp-overlay
                 .triggerElement=${this.input}
+                type="modal"
                 placement="top"
                 offset="0"
-                receives-focus="true"
                 ?open=${this.isCalendarOpen}
                 @sp-closed=${() => (this.isCalendarOpen = false)}
             >
@@ -497,13 +499,15 @@ export class DateTimePicker extends ManageHelpText(
             <span
                 class="literal-segment"
                 data-test-id=${segment.type}
-            >${segment.formatted ?? ''}</span>
+            >${segment.formatted}</span>
         `;
     }
 
     public renderEditableSegment(segment: EditableSegment): TemplateResult {
         const isActive = !this.disabled && !this.readonly;
         const usePlaceholder = segment.value === undefined;
+        const inputMode =
+            segment.type === SegmentTypes.DayPeriod ? 'text' : 'numeric';
 
         const segmentClasses: ClassInfo = {
             'editable-segment': true,
@@ -538,7 +542,7 @@ export class DateTimePicker extends ManageHelpText(
             <div
                 role="spinbutton"
                 contenteditable=${ifDefined(isActive ? true : undefined)}
-                inputmode=${ifDefined(isActive ? 'numeric' : undefined)}
+                inputmode=${ifDefined(isActive ? inputMode : undefined)}
                 tabindex=${ifDefined(isActive ? '0' : undefined)}
                 aria-hidden=${ifDefined(usePlaceholder ? 'true' : undefined)}
                 class=${classMap(segmentClasses)}
@@ -560,8 +564,9 @@ export class DateTimePicker extends ManageHelpText(
     }
 
     private handleKeydown(event: KeyboardEvent): void {
-        const segmentType = (event.target as HTMLElement).dataset
-            .type as EditableSegmentType;
+        const segmentElement = event.target as HTMLElement;
+        const segmentType = segmentElement.dataset.type as EditableSegmentType;
+        if (!segmentType) return;
 
         switch (event.code) {
             case 'ArrowUp': {
@@ -573,15 +578,11 @@ export class DateTimePicker extends ManageHelpText(
                 break;
             }
             case 'ArrowRight': {
-                const segment = event.target;
-                if (!segment) return;
-                this.focusSegment(segment as HTMLElement, 'next');
+                this.focusSegment(segmentElement, 'next');
                 break;
             }
             case 'ArrowLeft': {
-                const segment = event.target;
-                if (!segment) return;
-                this.focusSegment(segment as HTMLElement, 'previous');
+                this.focusSegment(segmentElement, 'previous');
                 break;
             }
             case 'Enter':
@@ -592,7 +593,9 @@ export class DateTimePicker extends ManageHelpText(
             case 'Backspace':
             case 'Delete': {
                 event.preventDefault();
-                this.clearSegmentContent(segmentType);
+                if (this.segments.getByType(segmentType)?.value === undefined)
+                    this.focusSegment(segmentElement, 'previous');
+                else this.clearSegmentContent(segmentType);
                 break;
             }
         }
@@ -732,12 +735,10 @@ export class DateTimePicker extends ManageHelpText(
         segment: EditableSegment,
         segmentElement: HTMLElement
     ): void {
-        const content =
+        segmentElement.innerText =
             segment.value !== undefined
                 ? segment.formatted
                 : segment.placeholder;
-
-        segmentElement.innerText = content ?? '';
     }
 
     private dispatchChange(): void {

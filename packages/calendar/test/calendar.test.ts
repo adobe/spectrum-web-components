@@ -17,17 +17,21 @@ import {
     parseDate,
     today,
 } from '@internationalized/date';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+
 import { ActionButton } from '@spectrum-web-components/action-button';
 import { Calendar, DAYS_PER_WEEK } from '@spectrum-web-components/calendar';
+
 import '@spectrum-web-components/calendar/sp-calendar.js';
 import '@spectrum-web-components/theme/sp-theme.js';
+
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 import { spy, stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import {
     expectSameDates,
     fixtureElement,
+    getElementCenter,
     sendKeyMultipleTimes,
 } from './helpers.js';
 
@@ -498,13 +502,9 @@ describe('Calendar', () => {
             await sendKeys({ press: 'Enter' });
             await elementUpdated(element);
 
-            const rect = unavailableDayElement.getBoundingClientRect();
-            const centerX = Math.round(rect.left + rect.width / 2);
-            const centerY = Math.round(rect.top + rect.height / 2);
-
             await sendMouse({
                 type: 'click',
-                position: [centerX, centerY],
+                position: getElementCenter(unavailableDayElement),
             });
             await elementUpdated(element);
 
@@ -652,13 +652,9 @@ describe('Calendar', () => {
         });
 
         it('should update value when an available day is clicked', async () => {
-            const rect = availableDayElement.getBoundingClientRect();
-            const centerX = Math.round(rect.left + rect.width / 2);
-            const centerY = Math.round(rect.top + rect.height / 2);
-
             await sendMouse({
                 type: 'click',
-                position: [centerX, centerY],
+                position: getElementCenter(availableDayElement),
             });
             await elementUpdated(element);
 
@@ -679,6 +675,19 @@ describe('Calendar', () => {
             await elementUpdated(element);
 
             expectSameDates(element.value!, availableDateToSelect);
+        });
+
+        it('should clear the selected value when the clear method is called', async () => {
+            await sendMouse({
+                type: 'click',
+                position: getElementCenter(availableDayElement),
+            });
+            await elementUpdated(element);
+
+            element.clear();
+            await elementUpdated(element);
+
+            expect(element.value).to.be.undefined;
         });
     });
 
@@ -701,13 +710,9 @@ describe('Calendar', () => {
         });
 
         it("should dispatch 'change' when an available day is selected by clicking", async () => {
-            const rect = availableDayElement.getBoundingClientRect();
-            const centerX = Math.round(rect.left + rect.width / 2);
-            const centerY = Math.round(rect.top + rect.height / 2);
-
             await sendMouse({
                 type: 'click',
-                position: [centerX, centerY],
+                position: getElementCenter(availableDayElement),
             });
             await elementUpdated(element);
 
@@ -716,7 +721,7 @@ describe('Calendar', () => {
             changeSpy.resetHistory();
             await sendMouse({
                 type: 'click',
-                position: [centerX, centerY],
+                position: getElementCenter(availableDayElement),
             });
             await elementUpdated(element);
             expect(changeSpy.callCount).to.equal(0);
@@ -797,9 +802,48 @@ describe('Calendar', () => {
     });
 
     describe('Disabled', () => {
-        it('should disable the next and previous month buttons');
-        it("should not focus the calendar's days");
-        it("should not select a day when it's clicked");
+        beforeEach(async () => {
+            element = await fixtureElement({ props: { disabled: true } });
+        });
+
+        it('should disable the next and previous month buttons', () => {
+            const nextButton = element.shadowRoot.querySelector(
+                NEXT_BUTTON_SELECTOR
+            ) as ActionButton;
+            const prevButton = element.shadowRoot.querySelector(
+                PREV_BUTTON_SELECTOR
+            ) as ActionButton;
+
+            expect(nextButton.disabled).to.be.true;
+            expect(prevButton.disabled).to.be.true;
+        });
+
+        it('should not have focusable days', () => {
+            const focusableDay = element.shadowRoot.querySelector(
+                "td.tableCell[tabindex='0']"
+            ) as HTMLElement;
+
+            expect(focusableDay).to.be.null;
+        });
+
+        it("should not select a day when it's clicked", async () => {
+            const availableDateToSelect = new CalendarDate(
+                fixedYear,
+                fixedMonth,
+                fixedDay + 1
+            );
+            const availableDayElement = element.shadowRoot.querySelector(
+                `[data-value='${availableDateToSelect.toString()}']`
+            ) as HTMLElement;
+
+            await sendMouse({
+                type: 'click',
+                position: getElementCenter(availableDayElement),
+            });
+            await elementUpdated(element);
+
+            expect(element.value).to.be.undefined;
+        });
     });
 
     describe('Gregorian AD era limits', () => {
@@ -903,6 +947,4 @@ describe('Calendar', () => {
             expectSameDates(element['currentDate'], lastDate);
         });
     });
-
-    describe('Localized', () => {});
 });

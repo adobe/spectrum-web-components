@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-// import { ZonedDateTime } from '@internationalized/date';
 import { DateFormatter, ZonedDateTime } from '@internationalized/date';
 import { NumberFormatter } from '@internationalized/number';
 import { SegmentType, SegmentTypes } from '../types';
