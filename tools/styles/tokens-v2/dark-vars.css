@@ -362,7 +362,7 @@
     --spectrum-blue-600: rgba(var(--spectrum-blue-600-rgb));
     --spectrum-blue-700-rgb: 52, 91, 248;
     --spectrum-blue-700: rgba(var(--spectrum-blue-700-rgb));
-    --spectrum-blue-800-rgb: 64, 105, 253;
+    --spectrum-blue-800-rgb: 69, 110, 254;
     --spectrum-blue-800: rgba(var(--spectrum-blue-800-rgb));
     --spectrum-blue-900-rgb: 86, 129, 255;
     --spectrum-blue-900: rgba(var(--spectrum-blue-900-rgb));
@@ -394,7 +394,7 @@
     --spectrum-red-600: rgba(var(--spectrum-red-600-rgb));
     --spectrum-red-700-rgb: 205, 46, 29;
     --spectrum-red-700: rgba(var(--spectrum-red-700-rgb));
-    --spectrum-red-800-rgb: 223, 52, 34;
+    --spectrum-red-800-rgb: 230, 54, 35;
     --spectrum-red-800: rgba(var(--spectrum-red-800-rgb));
     --spectrum-red-900-rgb: 252, 67, 46;
     --spectrum-red-900: rgba(var(--spectrum-red-900-rgb));
@@ -426,7 +426,7 @@
     --spectrum-orange-600: rgba(var(--spectrum-orange-600-rgb));
     --spectrum-orange-700-rgb: 185, 73, 0;
     --spectrum-orange-700: rgba(var(--spectrum-orange-700-rgb));
-    --spectrum-orange-800-rgb: 199, 82, 0;
+    --spectrum-orange-800-rgb: 205, 86, 0;
     --spectrum-orange-800: rgba(var(--spectrum-orange-800-rgb));
     --spectrum-orange-900-rgb: 224, 100, 0;
     --spectrum-orange-900: rgba(var(--spectrum-orange-900-rgb));
@@ -458,7 +458,7 @@
     --spectrum-yellow-600: rgba(var(--spectrum-yellow-600-rgb));
     --spectrum-yellow-700-rgb: 151, 97, 0;
     --spectrum-yellow-700: rgba(var(--spectrum-yellow-700-rgb));
-    --spectrum-yellow-800-rgb: 164, 106, 0;
+    --spectrum-yellow-800-rgb: 169, 110, 0;
     --spectrum-yellow-800: rgba(var(--spectrum-yellow-800-rgb));
     --spectrum-yellow-900-rgb: 186, 124, 0;
     --spectrum-yellow-900: rgba(var(--spectrum-yellow-900-rgb));
@@ -490,7 +490,7 @@
     --spectrum-chartreuse-600: rgba(var(--spectrum-chartreuse-600-rgb));
     --spectrum-chartreuse-700-rgb: 97, 116, 0;
     --spectrum-chartreuse-700: rgba(var(--spectrum-chartreuse-700-rgb));
-    --spectrum-chartreuse-800-rgb: 106, 127, 0;
+    --spectrum-chartreuse-800-rgb: 109, 131, 0;
     --spectrum-chartreuse-800: rgba(var(--spectrum-chartreuse-800-rgb));
     --spectrum-chartreuse-900-rgb: 122, 147, 0;
     --spectrum-chartreuse-900: rgba(var(--spectrum-chartreuse-900-rgb));
@@ -522,7 +522,7 @@
     --spectrum-celery-600: rgba(var(--spectrum-celery-600-rgb));
     --spectrum-celery-700-rgb: 60, 122, 15;
     --spectrum-celery-700: rgba(var(--spectrum-celery-700-rgb));
-    --spectrum-celery-800-rgb: 66, 134, 18;
+    --spectrum-celery-800-rgb: 69, 138, 19;
     --spectrum-celery-800: rgba(var(--spectrum-celery-800-rgb));
     --spectrum-celery-900-rgb: 78, 154, 23;
     --spectrum-celery-900: rgba(var(--spectrum-celery-900-rgb));
@@ -554,7 +554,7 @@
     --spectrum-green-600: rgba(var(--spectrum-green-600-rgb));
     --spectrum-green-700-rgb: 4, 124, 75;
     --spectrum-green-700: rgba(var(--spectrum-green-700-rgb));
-    --spectrum-green-800-rgb: 6, 136, 80;
+    --spectrum-green-800-rgb: 6, 140, 82;
     --spectrum-green-800: rgba(var(--spectrum-green-800-rgb));
     --spectrum-green-900-rgb: 9, 157, 89;
     --spectrum-green-900: rgba(var(--spectrum-green-900-rgb));
@@ -586,7 +586,7 @@
     --spectrum-seafoam-600: rgba(var(--spectrum-seafoam-600-rgb));
     --spectrum-seafoam-700-rgb: 6, 122, 103;
     --spectrum-seafoam-700: rgba(var(--spectrum-seafoam-700-rgb));
-    --spectrum-seafoam-800-rgb: 8, 134, 112;
+    --spectrum-seafoam-800-rgb: 8, 138, 116;
     --spectrum-seafoam-800: rgba(var(--spectrum-seafoam-800-rgb));
     --spectrum-seafoam-900-rgb: 10, 154, 128;
     --spectrum-seafoam-900: rgba(var(--spectrum-seafoam-900-rgb));
@@ -618,7 +618,7 @@
     --spectrum-cyan-600: rgba(var(--spectrum-cyan-600-rgb));
     --spectrum-cyan-700-rgb: 8, 115, 168;
     --spectrum-cyan-700: rgba(var(--spectrum-cyan-700-rgb));
-    --spectrum-cyan-800-rgb: 13, 125, 186;
+    --spectrum-cyan-800-rgb: 15, 128, 194;
     --spectrum-cyan-800: rgba(var(--spectrum-cyan-800-rgb));
     --spectrum-cyan-900-rgb: 24, 142, 220;
     --spectrum-cyan-900: rgba(var(--spectrum-cyan-900-rgb));
@@ -650,7 +650,7 @@
     --spectrum-indigo-600: rgba(var(--spectrum-indigo-600-rgb));
     --spectrum-indigo-700-rgb: 109, 75, 248;
     --spectrum-indigo-700: rgba(var(--spectrum-indigo-700-rgb));
-    --spectrum-indigo-800-rgb: 116, 91, 252;
+    --spectrum-indigo-800-rgb: 119, 97, 252;
     --spectrum-indigo-800: rgba(var(--spectrum-indigo-800-rgb));
     --spectrum-indigo-900-rgb: 128, 119, 254;
     --spectrum-indigo-900: rgba(var(--spectrum-indigo-900-rgb));
@@ -682,7 +682,7 @@
     --spectrum-purple-600: rgba(var(--spectrum-purple-600-rgb));
     --spectrum-purple-700-rgb: 148, 62, 224;
     --spectrum-purple-700: rgba(var(--spectrum-purple-700-rgb));
-    --spectrum-purple-800-rgb: 157, 78, 228;
+    --spectrum-purple-800-rgb: 161, 84, 229;
     --spectrum-purple-800: rgba(var(--spectrum-purple-800-rgb));
     --spectrum-purple-900-rgb: 173, 105, 233;
     --spectrum-purple-900: rgba(var(--spectrum-purple-900-rgb));
@@ -714,7 +714,7 @@
     --spectrum-fuchsia-600: rgba(var(--spectrum-fuchsia-600-rgb));
     --spectrum-fuchsia-700-rgb: 173, 51, 192;
     --spectrum-fuchsia-700: rgba(var(--spectrum-fuchsia-700-rgb));
-    --spectrum-fuchsia-800-rgb: 186, 60, 206;
+    --spectrum-fuchsia-800-rgb: 192, 64, 212;
     --spectrum-fuchsia-800: rgba(var(--spectrum-fuchsia-800-rgb));
     --spectrum-fuchsia-900-rgb: 213, 73, 235;
     --spectrum-fuchsia-900: rgba(var(--spectrum-fuchsia-900-rgb));
@@ -746,7 +746,7 @@
     --spectrum-magenta-600: rgba(var(--spectrum-magenta-600-rgb));
     --spectrum-magenta-700-rgb: 207, 31, 92;
     --spectrum-magenta-700: rgba(var(--spectrum-magenta-700-rgb));
-    --spectrum-magenta-800-rgb: 224, 38, 101;
+    --spectrum-magenta-800-rgb: 231, 41, 105;
     --spectrum-magenta-800: rgba(var(--spectrum-magenta-800-rgb));
     --spectrum-magenta-900-rgb: 255, 51, 119;
     --spectrum-magenta-900: rgba(var(--spectrum-magenta-900-rgb));
@@ -778,7 +778,7 @@
     --spectrum-pink-600: rgba(var(--spectrum-pink-600-rgb));
     --spectrum-pink-700-rgb: 196, 39, 138;
     --spectrum-pink-700: rgba(var(--spectrum-pink-700-rgb));
-    --spectrum-pink-800-rgb: 213, 45, 151;
+    --spectrum-pink-800-rgb: 220, 47, 156;
     --spectrum-pink-800: rgba(var(--spectrum-pink-800-rgb));
     --spectrum-pink-900-rgb: 236, 67, 175;
     --spectrum-pink-900: rgba(var(--spectrum-pink-900-rgb));
@@ -810,7 +810,7 @@
     --spectrum-turquoise-600: rgba(var(--spectrum-turquoise-600-rgb));
     --spectrum-turquoise-700-rgb: 7, 120, 131;
     --spectrum-turquoise-700: rgba(var(--spectrum-turquoise-700-rgb));
-    --spectrum-turquoise-800-rgb: 9, 131, 142;
+    --spectrum-turquoise-800-rgb: 9, 135, 147;
     --spectrum-turquoise-800: rgba(var(--spectrum-turquoise-800-rgb));
     --spectrum-turquoise-900-rgb: 11, 151, 164;
     --spectrum-turquoise-900: rgba(var(--spectrum-turquoise-900-rgb));
@@ -842,7 +842,7 @@
     --spectrum-brown-600: rgba(var(--spectrum-brown-600-rgb));
     --spectrum-brown-700-rgb: 132, 104, 61;
     --spectrum-brown-700: rgba(var(--spectrum-brown-700-rgb));
-    --spectrum-brown-800-rgb: 143, 114, 69;
+    --spectrum-brown-800-rgb: 148, 118, 73;
     --spectrum-brown-800: rgba(var(--spectrum-brown-800-rgb));
     --spectrum-brown-900-rgb: 163, 132, 84;
     --spectrum-brown-900: rgba(var(--spectrum-brown-900-rgb));
@@ -874,7 +874,7 @@
     --spectrum-silver-600: rgba(var(--spectrum-silver-600-rgb));
     --spectrum-silver-700-rgb: 108, 108, 108;
     --spectrum-silver-700: rgba(var(--spectrum-silver-700-rgb));
-    --spectrum-silver-800-rgb: 118, 118, 118;
+    --spectrum-silver-800-rgb: 123, 123, 123;
     --spectrum-silver-800: rgba(var(--spectrum-silver-800-rgb));
     --spectrum-silver-900-rgb: 137, 137, 137;
     --spectrum-silver-900: rgba(var(--spectrum-silver-900-rgb));
@@ -906,7 +906,7 @@
     --spectrum-cinnamon-600: rgba(var(--spectrum-cinnamon-600-rgb));
     --spectrum-cinnamon-700-rgb: 163, 88, 52;
     --spectrum-cinnamon-700: rgba(var(--spectrum-cinnamon-700-rgb));
-    --spectrum-cinnamon-800-rgb: 176, 98, 59;
+    --spectrum-cinnamon-800-rgb: 179, 103, 64;
     --spectrum-cinnamon-800: rgba(var(--spectrum-cinnamon-800-rgb));
     --spectrum-cinnamon-900-rgb: 192, 119, 80;
     --spectrum-cinnamon-900: rgba(var(--spectrum-cinnamon-900-rgb));
@@ -946,26 +946,8 @@
     --spectrum-negative-subtle-background-color-default: var(
         --spectrum-negative-color-300
     );
-    --color-scheme: dark;
-    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-800);
-    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-800);
-    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-900);
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-blue-800
-    );
-    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-700);
-
-    --spectrum-assetlist-item-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.25
-    );
-    --spectrum-assetlist-item-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.15
-    );
-    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
-
-    --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
+    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-900-rgb);
+    --spectrum-dropindicator-color: var(--spectrum-blue-700);
 
     --spectrum-calendar-day-background-color-selected: rgba(
         var(--spectrum-blue-800-rgb),
@@ -996,13 +978,22 @@
     );
     --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-700);
 
-    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-500-rgb);
+    --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
 
     --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-700);
 
-    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-900-rgb);
+    --spectrum-steplist-current-marker-color-key-focus: var(
+        --spectrum-blue-700
+    );
 
-    --spectrum-dropindicator-color: var(--spectrum-blue-700);
+    --spectrum-treeview-item-background-color-quiet-selected: rgba(
+        var(--spectrum-gray-900-rgb),
+        0.07
+    );
+    --spectrum-treeview-item-background-color-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.15
+    );
 
     --spectrum-logic-button-and-background-color: var(--spectrum-blue-800);
     --spectrum-logic-button-and-border-color: var(--spectrum-blue-800);
@@ -1018,31 +1009,23 @@
     );
     --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-900);
 
-    --spectrum-steplist-current-marker-color-key-focus: var(
-        --spectrum-blue-700
+    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-800);
+    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-800);
+    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-900);
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
+        --spectrum-blue-800
     );
+    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-700);
 
-    --spectrum-swatch-border-color-rgb: 255, 255, 255;
-
-    --spectrum-swatch-border-color-opacity: 0.51;
-
-    --spectrum-swatch-border-color: rgba(
-        var(--spectrum-swatch-border-color-rgb),
-        var(--spectrum-swatch-border-color-opacity)
+    --spectrum-assetlist-item-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
     );
-    --spectrum-swatch-border-color-light-rgb: 255, 255, 255;
-    --spectrum-swatch-border-color-light-opacity: 0.2;
-    --spectrum-swatch-border-color-light: rgba(
-        var(--spectrum-swatch-border-color-light-rgb),
-        var(--spectrum-swatch-border-color-light-opacity)
-    );
-
-    --spectrum-treeview-item-background-color-quiet-selected: rgba(
-        var(--spectrum-gray-900-rgb),
-        0.07
-    );
-    --spectrum-treeview-item-background-color-selected: rgba(
+    --spectrum-assetlist-item-background-color-selected: rgba(
         var(--spectrum-blue-800-rgb),
         0.15
     );
+    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
+
+    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-500-rgb);
 }

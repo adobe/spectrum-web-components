@@ -1021,6 +1021,7 @@
     --spectrum-code-color: var(--spectrum-gray-800);
     --system: spectrum;
 
+    --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
     --spectrum-animation-duration-0: 0ms;
     --spectrum-animation-duration-100: 130ms;
     --spectrum-animation-duration-200: 160ms;
@@ -1035,9 +1036,6 @@
     --spectrum-animation-duration-2000: 1000ms;
     --spectrum-animation-duration-4000: 2000ms;
     --spectrum-animation-duration-6000: 3000ms;
-
-    --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
-
     --spectrum-animation-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1);
     --spectrum-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
     --spectrum-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
@@ -1076,4 +1074,6 @@
     --spectrum-docs-static-black-background-color: rgba(
         var(--spectrum-docs-static-black-background-color-rgb)
     );
+
+    --spectrum-coach-indicator-ring-static-white-color: var(--spectrum-white);
 }
