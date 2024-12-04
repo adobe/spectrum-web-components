@@ -664,18 +664,32 @@ export class Overlay extends ComputedOverlayBase {
         event.relatedTarget.dispatchEvent(relationEvent);
     };
 
+    /**
+     * Manages the process of opening or closing the overlay.
+     *
+     * This method handles the necessary steps to open or close the overlay, including updating the state,
+     * managing the overlay stack, and handling focus events.
+     *
+     * @protected
+     * @param {boolean} oldOpen - The previous open state of the overlay.
+     * @returns {Promise<void>} A promise that resolves when the overlay has been fully managed.
+     */
     protected async manageOpen(oldOpen: boolean): Promise<void> {
+        // Prevent entering the manage workflow if the overlay is not connected to the DOM.
         // The `.showPopover()` and `.showModal()` events will error on content that is not connected to the DOM.
-        // Prevent from entering the manage workflow in order to avoid this.
         if (!this.isConnected && this.open) return;
 
+        // Wait for the component to finish updating if it has not already done so.
         if (!this.hasUpdated) {
             await this.updateComplete;
         }
 
         if (this.open) {
+            // Add the overlay to the overlay stack.
             overlayStack.add(this);
+
             if (this.willPreventClose) {
+                // Add an event listener to handle the pointerup event and toggle the 'not-immediately-closable' class.
                 document.addEventListener(
                     'pointerup',
                     () => {
@@ -694,21 +708,29 @@ export class Overlay extends ComputedOverlayBase {
             }
         } else {
             if (oldOpen) {
+                // Dispose of the overlay if it was previously open.
                 this.dispose();
             }
+
+            // Remove the overlay from the overlay stack.
             overlayStack.remove(this);
         }
+
+        // Update the state of the overlay based on the open property.
         if (this.open && this.state !== 'opened') {
             this.state = 'opening';
         } else if (!this.open && this.state !== 'closed') {
             this.state = 'closing';
         }
 
+        // Manage the dialog or popover based on the overlay type.
         if (this.usesDialog) {
             this.manageDialogOpen();
         } else {
             this.managePopoverOpen();
         }
+
+        // Handle focus events for auto type overlays.
         if (this.type === 'auto') {
             const listenerRoot = this.getRootNode() as Document;
             if (this.open) {
