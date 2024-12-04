@@ -85,6 +85,10 @@ export class Overlay extends ComputedOverlayBase {
      * the next Overlay to be opened will be subject to the warm-up period if
      * provided that option.
      *
+     * This behavior helps to manage the performance and user experience by
+     * preventing multiple overlays from opening simultaneously and ensuring
+     * a smooth transition between opening and closing overlays.
+     *
      * @type {boolean}
      * @default false
      */
@@ -749,11 +753,26 @@ export class Overlay extends ComputedOverlayBase {
         }
     }
 
+    /**
+     * Binds event handling strategies to the overlay based on the specified trigger interaction.
+     *
+     * This method sets up the appropriate event handling strategy for the overlay, ensuring that
+     * it responds correctly to user interactions such as clicks, hovers, or long presses.
+     *
+     * @protected
+     */
     protected bindEvents(): void {
+        // Abort any existing strategy to ensure a clean setup.
         this.strategy?.abort();
         this.strategy = undefined;
+
+        // Return early if there is no non-virtual trigger element.
         if (!this.hasNonVirtualTrigger) return;
+
+        // Return early if no trigger interaction is specified.
         if (!this.triggerInteraction) return;
+
+        // Set up a new event handling strategy based on the specified trigger interaction.
         this.strategy = new strategies[this.triggerInteraction](
             this.triggerElement as HTMLElement,
             {
@@ -762,12 +781,30 @@ export class Overlay extends ComputedOverlayBase {
         );
     }
 
+    /**
+     * Handles the `beforetoggle` event to manage the overlay's state.
+     *
+     * This method checks the new state of the event and calls `handleBrowserClose`
+     * if the new state is not 'open'.
+     *
+     * @protected
+     * @param {Event & { newState: string }} event - The `beforetoggle` event with the new state.
+     */
     protected handleBeforetoggle(event: Event & { newState: string }): void {
         if (event.newState !== 'open') {
             this.handleBrowserClose(event);
         }
     }
 
+    /**
+     * Handles the browser's close event to manage the overlay's state.
+     *
+     * This method stops the propagation of the event and closes the overlay if it is not
+     * actively opening. If the overlay is actively opening, it calls `manuallyKeepOpen`.
+     *
+     * @protected
+     * @param {Event} event - The browser's close event.
+     */
     protected handleBrowserClose(event: Event): void {
         event.stopPropagation();
         if (!this.strategy?.activelyOpening) {
@@ -777,57 +814,116 @@ export class Overlay extends ComputedOverlayBase {
         this.manuallyKeepOpen();
     }
 
+    /**
+     * Manually keeps the overlay open.
+     *
+     * This method sets the overlay to open, allows placement updates, and manages the open state.
+     *
+     * @public
+     * @override
+     */
     public override manuallyKeepOpen(): void {
         this.open = true;
         this.placementController.allowPlacementUpdate = true;
         this.manageOpen(false);
     }
 
+    /**
+     * Handles the `slotchange` event to manage the overlay's state.
+     *
+     * This method checks if there are any elements in the slot. If there are no elements,
+     * it releases the description from the strategy. If there are elements and the trigger
+     * is non-virtual, it prepares the description for the trigger element.
+     *
+     * @protected
+     */
     protected handleSlotchange(): void {
         if (!this.elements.length) {
+            // Release the description if there are no elements in the slot.
             this.strategy?.releaseDescription();
         } else if (this.hasNonVirtualTrigger) {
+            // Prepare the description for the trigger element if it is non-virtual.
             this.strategy?.prepareDescription(
                 this.triggerElement as HTMLElement
             );
         }
     }
 
+    /**
+     * Determines whether the overlay should prevent closing.
+     *
+     * This method checks the `willPreventClose` flag and resets it to `false`.
+     * It returns the value of the `willPreventClose` flag.
+     *
+     * @public
+     * @returns {boolean} `true` if the overlay should prevent closing, otherwise `false`.
+     */
     public shouldPreventClose(): boolean {
         const shouldPreventClose = this.willPreventClose;
         this.willPreventClose = false;
         return shouldPreventClose;
     }
 
+    /**
+     * Requests slottable content for the overlay.
+     *
+     * This method dispatches a `SlottableRequestEvent` to request or remove slottable content
+     * based on the current open state of the overlay. It ensures that the same state is not
+     * dispatched twice in a row.
+     *
+     * @protected
+     * @override
+     */
     protected override requestSlottable(): void {
+        // Do not dispatch the same state twice in a row.
         if (this.lastRequestSlottableState === this.open) {
             return;
         }
+
+        // Force a reflow if the overlay is closing.
         if (!this.open) {
             document.body.offsetHeight;
         }
+
         /**
          * @ignore
          */
+        // Dispatch a custom event to request or remove slottable content based on the open state.
         this.dispatchEvent(
             new SlottableRequestEvent(
                 'overlay-content',
                 this.open ? {} : removeSlottableRequest
             )
         );
+
+        // Update the last request slottable state.
         this.lastRequestSlottableState = this.open;
     }
 
+    /**
+     * Lifecycle method called before the component updates.
+     *
+     * This method handles various tasks before the component updates, such as setting an ID,
+     * managing the open state, resolving the trigger element, and binding events.
+     *
+     * @override
+     * @param {PropertyValues} changes - The properties that have changed.
+     */
     override willUpdate(changes: PropertyValues): void {
+        // Ensure the component has an ID attribute.
         if (!this.hasAttribute('id')) {
             this.setAttribute(
                 'id',
                 `${this.tagName.toLowerCase()}-${randomID()}`
             );
         }
+
+        // Manage the open state if the 'open' property has changed.
         if (changes.has('open') && (this.hasUpdated || this.open)) {
             this.manageOpen(changes.get('open'));
         }
+
+        // Resolve the trigger element if the 'trigger' property has changed.
         if (changes.has('trigger')) {
             const [id, interaction] = this.trigger?.split('@') || [];
             this.elementResolver.selector = id ? `#${id}` : '';
@@ -837,63 +933,119 @@ export class Overlay extends ComputedOverlayBase {
                 | 'hover'
                 | undefined;
         }
-        // Merge multiple possible calls to `bindEvents()`.
+
+        // Initialize oldTrigger to track the previous trigger element.
         let oldTrigger: HTMLElement | false | undefined = false;
+
+        // Check if the element resolver has been updated.
         if (changes.has(elementResolverUpdatedSymbol)) {
+            // Store the current trigger element.
             oldTrigger = this.triggerElement as HTMLElement;
+            // Update the trigger element from the element resolver.
             this.triggerElement = this.elementResolver.element;
         }
+
+        // Check if the 'triggerElement' property has changed.
         if (changes.has('triggerElement')) {
+            // Store the old trigger element.
             oldTrigger = changes.get('triggerElement');
         }
+
+        // If the trigger element has changed, bind the new events.
         if (oldTrigger !== false) {
             this.bindEvents();
         }
     }
 
+    /**
+     * Lifecycle method called after the component updates.
+     *
+     * This method handles various tasks after the component updates, such as updating the placement
+     * attribute, resetting the overlay position, and clearing the overlay position based on the state.
+     *
+     * @override
+     * @param {PropertyValues} changes - The properties that have changed.
+     */
     protected override updated(changes: PropertyValues): void {
+        // Call the base class method to handle any initial setup.
         super.updated(changes);
+
+        // Check if the 'placement' property has changed.
         if (changes.has('placement')) {
             if (this.placement) {
+                // Set the 'actual-placement' attribute on the dialog element.
                 this.dialogEl.setAttribute('actual-placement', this.placement);
             } else {
+                // Remove the 'actual-placement' attribute from the dialog element.
                 this.dialogEl.removeAttribute('actual-placement');
             }
+
+            // If the overlay is open and the 'placement' property has changed, reset the overlay position.
             if (this.open && typeof changes.get('placement') !== 'undefined') {
                 this.placementController.resetOverlayPosition();
             }
         }
+
+        // Check if the 'state' property has changed and the overlay is closed.
         if (
             changes.has('state') &&
             this.state === 'closed' &&
             typeof changes.get('state') !== 'undefined'
         ) {
+            // Clear the overlay position.
             this.placementController.clearOverlayPosition();
         }
     }
 
+    /**
+     * Renders the content of the overlay.
+     *
+     * This method returns a template result containing a slot element. The slot element
+     * listens for the `slotchange` event to manage the overlay's state.
+     *
+     * @protected
+     * @returns {TemplateResult} The template result containing the slot element.
+     */
     protected renderContent(): TemplateResult {
         return html`
             <slot @slotchange=${this.handleSlotchange}></slot>
         `;
     }
 
+    /**
+     * Generates a style map for the dialog element.
+     *
+     * This method returns an object containing CSS custom properties for the dialog element.
+     * The `--swc-overlay-open-count` custom property is set to the current open count of overlays.
+     *
+     * @private
+     * @returns {StyleInfo} The style map for the dialog element.
+     */
     private get dialogStyleMap(): StyleInfo {
         return {
             '--swc-overlay-open-count': Overlay.openCount.toString(),
         };
     }
 
+    /**
+     * Renders the dialog element for the overlay.
+     *
+     * This method returns a template result containing a dialog element. The dialog element
+     * includes various attributes and event listeners to manage the overlay's state and behavior.
+     *
+     * @protected
+     * @returns {TemplateResult} The template result containing the dialog element.
+     */
     protected renderDialog(): TemplateResult {
         /**
-         * `--swc-overlay-open-count` is applied to mimic the single stack
+         * The `--swc-overlay-open-count` custom property is applied to mimic the single stack
          * nature of the top layer in browsers that do not yet support it.
          *
-         * The value should always be the full number of overlays ever opened
-         * which will be added to `--swc-overlay-z-index-base` which can be
-         * provided by a consuming developer but defaults to 1000 to beat as
-         * much stacking as possible durring fallback delivery.
-         **/
+         * The value should always represent the total number of overlays that have ever been opened.
+         * This value will be added to the `--swc-overlay-z-index-base` custom property, which can be
+         * provided by a consuming developer. By default, `--swc-overlay-z-index-base` is set to 1000
+         * to ensure that the overlay stacks above most other elements during fallback delivery.
+         */
         return html`
             <dialog
                 class="dialog"
@@ -914,16 +1066,25 @@ export class Overlay extends ComputedOverlayBase {
         `;
     }
 
+    /**
+     * Renders the popover element for the overlay.
+     *
+     * This method returns a template result containing a div element styled as a popover.
+     * The popover element includes various attributes and event listeners to manage the overlay's state and behavior.
+     *
+     * @protected
+     * @returns {TemplateResult} The template result containing the popover element.
+     */
     protected renderPopover(): TemplateResult {
         /**
-         * `--swc-overlay-open-count` is applied to mimic the single stack
+         * The `--swc-overlay-open-count` custom property is applied to mimic the single stack
          * nature of the top layer in browsers that do not yet support it.
          *
-         * The value should always be the full number of overlays ever opened
-         * which will be added to `--swc-overlay-z-index-base` which can be
-         * provided by a consuming developer but defaults to 1000 to beat as
-         * much stacking as possible durring fallback delivery.
-         **/
+         * The value should always represent the total number of overlays that have ever been opened.
+         * This value will be added to the `--swc-overlay-z-index-base` custom property, which can be
+         * provided by a consuming developer. By default, `--swc-overlay-z-index-base` is set to 1000
+         * to ensure that the overlay stacks above most other elements during fallback delivery.
+         */
         return html`
             <div
                 class="dialog"
@@ -944,6 +1105,15 @@ export class Overlay extends ComputedOverlayBase {
         `;
     }
 
+    /**
+     * Renders the overlay component.
+     *
+     * This method returns a template result containing either a dialog or popover element
+     * based on the overlay type. It also includes a slot for longpress descriptors.
+     *
+     * @override
+     * @returns {TemplateResult} The template result containing the overlay content.
+     */
     public override render(): TemplateResult {
         const isDialog = this.type === 'modal' || this.type === 'page';
         return html`
@@ -952,18 +1122,38 @@ export class Overlay extends ComputedOverlayBase {
         `;
     }
 
+    /**
+     * Lifecycle method called when the component is added to the DOM.
+     *
+     * This method sets up event listeners and binds events if the component has already updated.
+     *
+     * @override
+     */
     override connectedCallback(): void {
         super.connectedCallback();
+
+        // Add an event listener to handle the 'close' event and update the 'open' property.
         this.addEventListener('close', () => {
             this.open = false;
         });
+
+        // Bind events if the component has already updated.
         if (this.hasUpdated) {
             this.bindEvents();
         }
     }
 
+    /**
+     * Lifecycle method called when the component is removed from the DOM.
+     *
+     * This method releases the description from the strategy and updates the 'open' property.
+     *
+     * @override
+     */
     override disconnectedCallback(): void {
+        // Release the description from the strategy.
         this.strategy?.releaseDescription();
+        // Update the 'open' property to false.
         this.open = false;
         super.disconnectedCallback();
     }
