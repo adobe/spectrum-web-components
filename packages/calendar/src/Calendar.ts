@@ -24,6 +24,7 @@ import {
     today,
 } from '@internationalized/date';
 import { NumberFormatter } from '@internationalized/number';
+
 import {
     CSSResultArray,
     html,
@@ -45,18 +46,18 @@ import {
     languageResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
+import styles from './calendar.css.js';
+
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-left.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-right.js';
+
 import {
     CalendarValue,
     CalendarWeekday,
     DateCellProperties,
     DateValue,
 } from './types.js';
-
-import styles from './calendar.css.js';
-
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-left.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-right.js';
 
 export const DAYS_PER_WEEK = 7;
 /**
@@ -191,16 +192,7 @@ export class Calendar extends SpectrumElement {
         if (changesDates) {
             this.convertToCalendarDates();
             this.checkDatePropsCompliance(changesMin || changesMax);
-            if (this.value) this.currentDate = this.value as CalendarDate;
-            else {
-                const isTodayNonCompliant = this.isNonCompliantDate(this.today);
-
-                if (isTodayNonCompliant) {
-                    if (this.min) this.currentDate = this.min as CalendarDate;
-                    else if (this.max)
-                        this.currentDate = this.max as CalendarDate;
-                } else this.currentDate = this.today;
-            }
+            this.updateCurrentDate();
         }
 
         const previousDate = changedProperties.get('currentDate');
@@ -262,6 +254,20 @@ export class Calendar extends SpectrumElement {
                 );
             this.value = undefined;
         }
+    }
+
+    private updateCurrentDate(): void {
+        if (this.value) {
+            this.currentDate = this.value as CalendarDate;
+            return;
+        }
+
+        const isTodayNonCompliant = this.isNonCompliantDate(this.today);
+
+        if (isTodayNonCompliant) {
+            if (this.min) this.currentDate = this.min as CalendarDate;
+            else if (this.max) this.currentDate = this.max as CalendarDate;
+        } else this.currentDate = this.today;
     }
 
     /**
