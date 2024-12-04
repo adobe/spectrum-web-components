@@ -308,70 +308,122 @@ export class Overlay extends ComputedOverlayBase {
         if (state === this.state) return;
 
         const oldState = this.state;
+
         this._state = state;
 
         // Complete the opening strategy if the state is 'opened' or 'closed'.
         if (this.state === 'opened' || this.state === 'closed') {
             this.strategy?.shouldCompleteOpen();
         }
+
         // Request an update to re-render the component if necessary.
         this.requestUpdate('state', oldState);
     }
 
     override _state: OverlayState = 'closed';
 
+    /**
+     * The interaction strategy for opening the overlay.
+     * This can be a ClickController, HoverController, or LongpressController.
+     */
     public strategy?: ClickController | HoverController | LongpressController;
 
+    /**
+     * The padding around the tip of the overlay.
+     * This property defines the padding around the tip of the overlay, which can be used to adjust its positioning.
+     *
+     * @type {number}
+     */
     @property({ type: Number, attribute: 'tip-padding' })
     tipPadding?: number;
 
     /**
      * An optional ID reference for the trigger element combined with the optional
-     * interaction (click | hover | longpress) by which the overlay shold open
-     * the overlay with an `@`: e.g. `trigger@click` opens the overlay when an
-     * element with the ID "trigger" is clicked.
+     * interaction (click | hover | longpress) by which the overlay should open.
+     * The format is `trigger@interaction`, e.g., `trigger@click` opens the overlay
+     * when an element with the ID "trigger" is clicked.
+     *
+     * @type {string}
      */
     @property()
     trigger?: string;
 
     /**
      * An element reference for the trigger element that the overlay should relate to.
+     * This property is not reflected as an attribute.
+     *
+     * @type {HTMLElement | VirtualTrigger | null}
      */
     @property({ attribute: false })
     override triggerElement: HTMLElement | VirtualTrigger | null = null;
 
     /**
      * The specific interaction to listen for on the `triggerElement` to open the overlay.
+     * This property is not reflected as an attribute.
+     *
+     * @type {TriggerInteraction}
      */
     @property({ attribute: false })
     triggerInteraction?: TriggerInteraction;
 
     /**
      * Configures the open/close heuristics of the Overlay.
+     *
      * @type {"auto" | "hint" | "manual" | "modal" | "page"}
+     * @default "auto"
      */
     @property()
     override type: OverlayTypes = 'auto';
 
+    /**
+     * Tracks whether the overlay was previously open.
+     * This is used to restore the open state when re-enabling the overlay.
+     *
+     * @type {boolean}
+     * @default false
+     */
     protected wasOpen = false;
 
+    /**
+     * Provides an instance of the `ElementResolutionController` for managing the element
+     * that the overlay should be associated with. If the instance does not already exist,
+     * it is created and assigned to the `_elementResolver` property.
+     *
+     * @protected
+     * @returns {ElementResolutionController} The `ElementResolutionController` instance.
+     */
     protected override get elementResolver(): ElementResolutionController {
         if (!this._elementResolver) {
             this._elementResolver = new ElementResolutionController(this);
         }
+
         return this._elementResolver;
     }
 
+    /**
+     * Determines if the overlay uses a dialog.
+     * Returns `true` if the overlay type is "modal" or "page".
+     *
+     * @private
+     * @returns {boolean} `true` if the overlay uses a dialog, otherwise `false`.
+     */
     private get usesDialog(): boolean {
         return this.type === 'modal' || this.type === 'page';
     }
 
+    /**
+     * Determines the value for the popover attribute based on the overlay type.
+     *
+     * @private
+     * @returns {'auto' | 'manual' | undefined} The popover value or undefined if not applicable.
+     */
     private get popoverValue(): 'auto' | 'manual' | undefined {
         const hasPopoverAttribute = 'popover' in this;
+
         if (!hasPopoverAttribute) {
             return undefined;
         }
-        /* c8 ignore next 9 */
+
         switch (this.type) {
             case 'modal':
             case 'page':
@@ -383,22 +435,44 @@ export class Overlay extends ComputedOverlayBase {
         }
     }
 
-    protected get requiresPosition(): boolean {
+    /**
+     * Determines if the overlay requires positioning based on its type and state.
+     *
+     * @protected
+     * @returns {boolean} True if the overlay requires positioning, otherwise false.
+     */
+    protected get requiresPositioning(): boolean {
         // Do not position "page" overlays as they should block the entire UI.
         if (this.type === 'page' || !this.open) return false;
-        // Do not position content without a trigger element, what would you position it in relation to?
-        // Do not automatically position content, unless it is a "hint".
+
+        // Do not position content without a trigger element, as there is nothing to position it relative to.
+        // Do not automatically position content unless it is a "hint".
         if (!this.triggerElement || (!this.placement && this.type !== 'hint'))
             return false;
+
         return true;
     }
 
+    /**
+     * Manages the positioning of the overlay relative to its trigger element.
+     *
+     * This method calculates the necessary parameters for positioning the overlay,
+     * such as offset, placement, and tip padding, and then delegates the actual
+     * positioning to the `PlacementController`.
+     *
+     * @protected
+     * @override
+     */
     protected override managePosition(): void {
-        if (!this.requiresPosition || !this.open) return;
+        // Do not proceed if positioning is not required or the overlay is not open.
+        if (!this.requiresPositioning || !this.open) return;
 
         const offset = this.offset || 0;
+
         const trigger = this.triggerElement as HTMLElement;
+
         const placement = (this.placement as Placement) || 'right';
+
         const tipPadding = this.tipPadding;
 
         this.placementController.placeOverlay(this.dialogEl, {
@@ -410,42 +484,80 @@ export class Overlay extends ComputedOverlayBase {
         });
     }
 
+    /**
+     * Manages the process of opening the popover.
+     *
+     * This method handles the necessary steps to open the popover, including managing delays,
+     * ensuring the popover is in the DOM, making transitions, and applying focus.
+     *
+     * @protected
+     * @override
+     * @returns {Promise<void>} A promise that resolves when the popover has been fully opened.
+     */
     protected override async managePopoverOpen(): Promise<void> {
+        // Call the base class method to handle any initial setup.
         super.managePopoverOpen();
+
         const targetOpenState = this.open;
-        /* c8 ignore next 3 */
+
+        // Ensure the open state has not changed before proceeding.
         if (this.open !== targetOpenState) {
             return;
         }
+
+        // Manage any delays before opening the popover.
         await this.manageDelay(targetOpenState);
+
         if (this.open !== targetOpenState) {
             return;
         }
+
+        // Ensure the popover is in the DOM before proceeding.
         await this.ensureOnDOM(targetOpenState);
-        /* c8 ignore next 3 */
+
         if (this.open !== targetOpenState) {
             return;
         }
+
+        // Make any necessary transitions for opening the popover.
         const focusEl = await this.makeTransition(targetOpenState);
+
         if (this.open !== targetOpenState) {
             return;
         }
+
+        // Apply focus to the appropriate element after opening the popover.
         await this.applyFocus(targetOpenState, focusEl);
     }
 
+    /**
+     * Applies focus to the appropriate element after the popover has been opened.
+     *
+     * This method handles the focus management for the overlay, ensuring that the correct
+     * element receives focus based on the overlay's type and state.
+     *
+     * @protected
+     * @override
+     * @param {boolean} targetOpenState - The target open state of the overlay.
+     * @param {HTMLElement | null} focusEl - The element to focus after opening the popover.
+     * @returns {Promise<void>} A promise that resolves when the focus has been applied.
+     */
     protected override async applyFocus(
         targetOpenState: boolean,
         focusEl: HTMLElement | null
     ): Promise<void> {
-        // Do not move focus when explicitly told not to
-        // and when the Overlay is a "hint"
+        // Do not move focus when explicitly told not to or when the overlay is a "hint".
         if (this.receivesFocus === 'false' || this.type === 'hint') {
             return;
         }
 
+        // Wait for the next two animation frames to ensure the DOM is updated.
         await nextFrame();
         await nextFrame();
+
+        // If the open state has changed during the delay, do not proceed.
         if (targetOpenState === this.open && !this.open) {
+            // If the overlay is closing and the trigger element is still focused, return focus to the trigger element.
             if (
                 this.hasNonVirtualTrigger &&
                 this.contains((this.getRootNode() as Document).activeElement)
@@ -454,22 +566,41 @@ export class Overlay extends ComputedOverlayBase {
             }
             return;
         }
+
+        // Apply focus to the specified focus element.
         focusEl?.focus();
     }
 
+    /**
+     * Returns focus to the trigger element if the overlay is closed.
+     *
+     * This method ensures that focus is returned to the trigger element when the overlay is closed,
+     * unless the overlay is of type "hint" or the focus is already outside the overlay.
+     *
+     * @protected
+     * @override
+     */
     protected override returnFocus(): void {
+        // Do not proceed if the overlay is open or if the overlay type is "hint".
         if (this.open || this.type === 'hint') return;
 
-        // If the focus remains inside of the overlay or
-        // a slotted descendent of the overlay you need to return
-        // focus back to the trigger.
+        /**
+         * Retrieves the ancestors of the currently focused element.
+         *
+         * @returns {HTMLElement[]} An array of ancestor elements.
+         */
         const getAncestors = (): HTMLElement[] => {
             const ancestors: HTMLElement[] = [];
+
             // eslint-disable-next-line @spectrum-web-components/document-active-element
             let currentNode = document.activeElement;
+
+            // Traverse the shadow DOM to find the active element.
             while (currentNode?.shadowRoot?.activeElement) {
                 currentNode = currentNode.shadowRoot.activeElement;
             }
+
+            // Traverse the DOM tree to collect ancestor elements.
             while (currentNode) {
                 const ancestor =
                     currentNode.assignedSlot ||
@@ -482,6 +613,8 @@ export class Overlay extends ComputedOverlayBase {
             }
             return ancestors;
         };
+
+        // Check if focus should be returned to the trigger element.
         if (
             this.receivesFocus !== 'false' &&
             !!(this.triggerElement as HTMLElement)?.focus &&
@@ -490,28 +623,44 @@ export class Overlay extends ComputedOverlayBase {
                 // eslint-disable-next-line @spectrum-web-components/document-active-element
                 document.activeElement === document.body)
         ) {
+            // Return focus to the trigger element.
             (this.triggerElement as HTMLElement).focus();
         }
     }
 
+    /**
+     * Handles the focus out event to close the overlay if the focus moves outside of it.
+     *
+     * This method ensures that the overlay is closed when the focus moves to an element
+     * outside of the overlay, unless the focus is moved to a related element.
+     *
+     * @private
+     * @param {FocusEvent} event - The focus out event.
+     */
     private closeOnFocusOut = (event: FocusEvent): void => {
-        // If you don't know where the focus went, we can't do anyting here.
+        // If the related target (newly focused element) is not known, do nothing.
         if (!event.relatedTarget) {
-            // this.open = false;
             return;
         }
+
+        // Create a custom event to query the relationship of the newly focused element.
         const relationEvent = new Event('overlay-relation-query', {
             bubbles: true,
             composed: true,
         });
+
+        // Add an event listener to the related target to handle the custom event.
         event.relatedTarget.addEventListener(
             relationEvent.type,
             (event: Event) => {
+                // If the newly focused element is not within the overlay, close the overlay.
                 if (!event.composedPath().includes(this)) {
                     this.open = false;
                 }
             }
         );
+
+        // Dispatch the custom event to the related target.
         event.relatedTarget.dispatchEvent(relationEvent);
     };
 
@@ -728,7 +877,7 @@ export class Overlay extends ComputedOverlayBase {
                 class="dialog"
                 part="dialog"
                 placement=${ifDefined(
-                    this.requiresPosition
+                    this.requiresPositioning
                         ? this.placement || 'right'
                         : undefined
                 )}
@@ -758,7 +907,7 @@ export class Overlay extends ComputedOverlayBase {
                 class="dialog"
                 part="dialog"
                 placement=${ifDefined(
-                    this.requiresPosition
+                    this.requiresPositioning
                         ? this.placement || 'right'
                         : undefined
                 )}
