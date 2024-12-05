@@ -53,6 +53,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-left.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-right.js';
 
 import {
+    CalendarLabels,
     CalendarValue,
     CalendarWeekday,
     DateCellProperties,
@@ -99,6 +100,18 @@ export class Calendar extends SpectrumElement {
     public disabled = false;
 
     /**
+     * Labels read by screen readers. The default values are in English
+     * and can be overridden to localize the content.
+     */
+    @property({ attribute: false })
+    labels: CalendarLabels = {
+        previous: 'Previous',
+        next: 'Next',
+        today: 'Today',
+        selected: 'Selected',
+    };
+
+    /**
      * The date that indicates the current position in the calendar.
      */
     @state()
@@ -120,7 +133,6 @@ export class Calendar extends SpectrumElement {
         return this.languageResolver.language;
     }
 
-    // TODO: Implement a cache mechanism to store the value of `today`
     private timeZone: string = getLocalTimeZone();
     public get today(): CalendarDate {
         return today(this.timeZone);
@@ -311,11 +323,10 @@ export class Calendar extends SpectrumElement {
                     ${this.monthAndYear}
                 </h2>
 
-                <!-- TODO: Translate the "Previous" text -->
                 <sp-action-button
                     quiet
                     size="s"
-                    label="Previous"
+                    label=${this.labels.previous}
                     class="prevMonth"
                     data-test-id="prev-btn"
                     ?disabled=${this.isPreviousMonthDisabled}
@@ -328,11 +339,10 @@ export class Calendar extends SpectrumElement {
                     </div>
                 </sp-action-button>
 
-                <!-- TODO: Translate the "Next" text -->
                 <sp-action-button
                     quiet
                     size="s"
-                    label="Next"
+                    label=${this.labels.next}
                     class="nextMonth"
                     data-test-id="next-btn"
                     ?disabled=${this.isNextMonthDisabled}
@@ -495,9 +505,9 @@ export class Calendar extends SpectrumElement {
         };
 
         let currentDayLabelPrefix = '';
-        // TODO: translate the "Today" and "Selected" strings
-        if (isToday) currentDayLabelPrefix = 'Today, ';
-        else if (isSelected) currentDayLabelPrefix = 'Selected, ';
+        if (isToday) currentDayLabelPrefix = `${this.labels.today}, `;
+        else if (isSelected)
+            currentDayLabelPrefix = `${this.labels.selected}, `;
 
         const currentDayLabel =
             currentDayLabelPrefix +
