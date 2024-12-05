@@ -227,10 +227,9 @@ export class PlacementController implements ReactiveController {
     /**
      * Flag to allow or disallow placement updates.
      *
-     * @private
      * @type {boolean}
      */
-    private allowPlacementUpdate = false;
+    public allowPlacementUpdate = false;
 
     /**
      * Closes the overlay if an ancestor element is updated.
@@ -238,8 +237,6 @@ export class PlacementController implements ReactiveController {
      * This method checks if placement updates are allowed and if the overlay type is not 'modal'.
      * If these conditions are met and a cleanup function is defined, it dispatches a 'close' event
      * on the target element to close the overlay.
-     *
-     * @private
      */
     closeForAncestorUpdate = (): void => {
         if (
