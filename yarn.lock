@@ -24319,16 +24319,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit-html@npm:^2.0.0 || ^3.0.0, lit-html@npm:^3.1.2":
-  version: 3.1.3
-  resolution: "lit-html@npm:3.1.3"
-  dependencies:
-    "@types/trusted-types": "npm:^2.0.2"
-  checksum: 10c0/0d0b6fd0db7151d38387fa7b07e4203f3598e3b89567997d6d37f84ba7cd76e0e6fd5a41c5eb13d70e10e632dbce6bfc69c5b24c6e8b54975eeb942bb5fa334c
-  languageName: node
-  linkType: hard
-
-"lit-html@npm:^2.4.0 || ^3.1.3":
+"lit-html@npm:^2.0.0 || ^3.0.0, lit-html@npm:^2.4.0 || ^3.1.3, lit-html@npm:^3.1.2":
   version: 3.2.1
   resolution: "lit-html@npm:3.2.1"
   dependencies:
