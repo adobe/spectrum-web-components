@@ -26,12 +26,12 @@ import {
 import {
     executeServerCommand,
     sendKeys,
-    // setViewport,
+    setViewport,
 } from '@web/test-runner-commands';
 import { PickerButton } from '@spectrum-web-components/picker-button';
 import {
     comboboxFixture,
-    // longComboboxFixture,
+    longComboboxFixture,
     TestableCombobox,
     testActiveElement,
 } from './helpers.js';
@@ -961,26 +961,26 @@ describe('Combobox', () => {
         expect(el.open).to.be.false;
     });
 
-    // it('scrolls to fit window', async () => {
-    //     await setViewport({ width: 360, height: 640 });
-    //     const el = await longComboboxFixture();
+    it('scrolls to fit window', async () => {
+        await setViewport({ width: 360, height: 640 });
+        const el = await longComboboxFixture();
 
-    //     await elementUpdated(el);
+        await elementUpdated(el);
 
-    //     expect(el.value).to.equal('');
-    //     expect(el.activeDescendant).to.be.undefined;
-    //     expect(el.open).to.be.false;
+        expect(el.value).to.equal('');
+        expect(el.activeDescendant).to.be.undefined;
+        expect(el.open).to.be.false;
 
-    //     const opened = oneEvent(el, 'sp-opened');
-    //     el.focusElement.click();
-    //     await opened;
-    //     expect(el.open).to.be.true;
+        const opened = oneEvent(el, 'sp-opened');
+        el.focusElement.click();
+        await opened;
+        expect(el.open).to.be.true;
 
-    //     const menu = el.shadowRoot.querySelector(
-    //         '[role="listbox"]'
-    //     ) as HTMLElement;
-    //     await elementUpdated(menu);
+        const menu = el.shadowRoot.querySelector(
+            '[role="listbox"]'
+        ) as HTMLElement;
+        await elementUpdated(menu);
 
-    //     expect(menu.scrollHeight > window.innerHeight).to.be.true;
-    // });
+        expect(menu.scrollHeight > window.innerHeight).to.be.true;
+    });
 });
