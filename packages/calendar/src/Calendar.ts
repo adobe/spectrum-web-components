@@ -204,16 +204,19 @@ export class Calendar extends SpectrumElement {
     }
 
     override updated(changedProperties: PropertyValues): void {
-        /**
-         * Keeps the focus on the correct day when navigating through the calendar.
-         * Particularly useful when the month changes and the focus is lost.
-         */
-        if (changedProperties.has('currentDate') && this.isDateFocusIntent) {
-            const elementToFocus = this.shadowRoot?.querySelector(
-                'td[tabindex="0"]'
-            ) as HTMLElement;
-            elementToFocus.focus();
-        }
+        if (changedProperties.has('currentDate') && this.isDateFocusIntent)
+            this.focusCurrentDate();
+    }
+
+    /**
+     * Focuses the tabbable day element in the calendar represented by the current date.
+     * Useful while navigating through the calendar as the focus might be lost when the month changes.
+     */
+    private focusCurrentDate(): void {
+        const elementToFocus = this.shadowRoot?.querySelector(
+            'td span[tabindex="0"]'
+        ) as HTMLElement;
+        if (elementToFocus) elementToFocus.focus();
     }
 
     private convertToCalendarDates(): void {
@@ -539,19 +542,19 @@ export class Calendar extends SpectrumElement {
 
         switch (event.code) {
             case 'ArrowLeft': {
-                this.focusPreviousDay();
+                this.moveToPreviousDay();
                 break;
             }
             case 'ArrowDown': {
-                this.focusNextWeek();
+                this.moveToNextWeek();
                 break;
             }
             case 'ArrowRight': {
-                this.focusNextDay();
+                this.moveToNextDay();
                 break;
             }
             case 'ArrowUp': {
-                this.focusPreviousWeek();
+                this.moveToPreviousWeek();
                 break;
             }
             case 'Space':
@@ -571,14 +574,6 @@ export class Calendar extends SpectrumElement {
         const dateCell = (event.target as Element).closest(
             'td.tableCell'
         ) as HTMLTableCellElement;
-
-        if (event instanceof MouseEvent) {
-            const dateContent = dateCell.querySelector('span')!;
-            if (!this.isClickInsideContentRadius(event, dateContent)) {
-                event.preventDefault();
-                return;
-            }
-        }
 
         const dateString = dateCell.dataset.value!;
         const calendarDateEngaged = parseDate(dateString);
@@ -604,66 +599,49 @@ export class Calendar extends SpectrumElement {
         );
     }
 
-    private isClickInsideContentRadius(
-        event: MouseEvent,
-        element: HTMLElement
-    ): boolean {
-        const rect = element.getBoundingClientRect();
-        const radius = rect.width / 2;
-        const centerX = rect.left + radius;
-        const centerY = rect.top + radius;
-        const clickCenterDistance = Math.sqrt(
-            Math.pow(event.clientX - centerX, 2) +
-                Math.pow(event.clientY - centerY, 2)
-        );
-
-        return clickCenterDistance <= radius;
-    }
-
-    private focusPreviousDay(): void {
+    private moveToPreviousDay(): void {
         const previousDay = this.currentDate.subtract({ days: 1 });
 
-        if (this.canNavigateBackToDate(previousDay))
-            this.currentDate = previousDay;
+        if (this.canMoveBackToDate(previousDay)) this.currentDate = previousDay;
     }
 
-    private focusNextDay(): void {
+    private moveToNextDay(): void {
         const nextDay = this.currentDate.add({ days: 1 });
 
-        if (this.canNavigateForwardToDate(nextDay)) this.currentDate = nextDay;
+        if (this.canMoveForwardToDate(nextDay)) this.currentDate = nextDay;
     }
 
-    private focusPreviousWeek(): void {
+    private moveToPreviousWeek(): void {
         const previousWeek = this.currentDate.subtract({ weeks: 1 });
 
-        if (this.canNavigateBackToDate(previousWeek)) {
+        if (this.canMoveBackToDate(previousWeek)) {
             this.currentDate = previousWeek;
             return;
         }
 
         let dayToFocus = previousWeek.add({ days: 1 });
-        while (!this.canNavigateBackToDate(dayToFocus)) {
+        while (!this.canMoveBackToDate(dayToFocus)) {
             dayToFocus = dayToFocus.add({ days: 1 });
         }
         this.currentDate = dayToFocus;
     }
 
-    private focusNextWeek(): void {
+    private moveToNextWeek(): void {
         const nextWeek = this.currentDate.add({ weeks: 1 });
 
-        if (this.canNavigateForwardToDate(nextWeek)) {
+        if (this.canMoveForwardToDate(nextWeek)) {
             this.currentDate = nextWeek;
             return;
         }
 
         let dayToFocus = nextWeek.subtract({ days: 1 });
-        while (!this.canNavigateForwardToDate(dayToFocus)) {
+        while (!this.canMoveForwardToDate(dayToFocus)) {
             dayToFocus = dayToFocus.subtract({ days: 1 });
         }
         this.currentDate = dayToFocus;
     }
 
-    private canNavigateBackToDate(previousDate: CalendarDate): boolean {
+    private canMoveBackToDate(previousDate: CalendarDate): boolean {
         if (this.isMinLimitReached(previousDate)) return false;
 
         return (
@@ -672,7 +650,7 @@ export class Calendar extends SpectrumElement {
         );
     }
 
-    private canNavigateForwardToDate(nextDate: CalendarDate): boolean {
+    private canMoveForwardToDate(nextDate: CalendarDate): boolean {
         if (this.isMaxLimitReached(nextDate)) return false;
 
         return (
