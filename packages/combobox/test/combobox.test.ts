@@ -23,10 +23,15 @@ import {
     fixture,
     homeEvent,
 } from '../../../test/testing-helpers.js';
-import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
+import {
+    executeServerCommand,
+    sendKeys,
+    // setViewport,
+} from '@web/test-runner-commands';
 import { PickerButton } from '@spectrum-web-components/picker-button';
 import {
     comboboxFixture,
+    // longComboboxFixture,
     TestableCombobox,
     testActiveElement,
 } from './helpers.js';
@@ -367,7 +372,7 @@ describe('Combobox', () => {
             expect(el.shadowRoot.activeElement).to.equal(input);
         });
     });
-    describe('manage active decendent', () => {
+    describe('manage active descendent', () => {
         it('sets activeDescendant to first descendent on ArrowDown', async () => {
             const el = await comboboxFixture();
 
@@ -621,7 +626,7 @@ describe('Combobox', () => {
                     ?.querySelector('[selected]')?.textContent
             ).to.equal(item.textContent);
         });
-        it('sets the value when an item is clicked programatically', async () => {
+        it('sets the value when an item is clicked programmatically', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
@@ -955,4 +960,27 @@ describe('Combobox', () => {
         expect(tooltipEl.open).to.be.false;
         expect(el.open).to.be.false;
     });
+
+    // it('scrolls to fit window', async () => {
+    //     await setViewport({ width: 360, height: 640 });
+    //     const el = await longComboboxFixture();
+
+    //     await elementUpdated(el);
+
+    //     expect(el.value).to.equal('');
+    //     expect(el.activeDescendant).to.be.undefined;
+    //     expect(el.open).to.be.false;
+
+    //     const opened = oneEvent(el, 'sp-opened');
+    //     el.focusElement.click();
+    //     await opened;
+    //     expect(el.open).to.be.true;
+
+    //     const menu = el.shadowRoot.querySelector(
+    //         '[role="listbox"]'
+    //     ) as HTMLElement;
+    //     await elementUpdated(menu);
+
+    //     expect(menu.scrollHeight > window.innerHeight).to.be.true;
+    // });
 });
