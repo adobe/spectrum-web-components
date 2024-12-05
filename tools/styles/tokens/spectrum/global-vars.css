@@ -582,6 +582,9 @@
     --system-combobox-border-color-focus: var(--spectrum-gray-500);
     --system-combobox-border-color-focus-hover: var(--spectrum-gray-600);
     --system-combobox-border-color-key-focus: var(--spectrum-gray-600);
+    --system-combobox-background-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
 }
 
 :host,
@@ -669,6 +672,7 @@
     --system-picker-border-color-hover-open: var(--spectrum-gray-600);
     --system-picker-border-color-active: var(--spectrum-gray-700);
     --system-picker-border-color-key-focus: var(--spectrum-gray-600);
+    --system-picker-border-color-disabled: transparent;
     --system-picker-border-width: var(--spectrum-border-width-100);
 }
 

@@ -525,6 +525,9 @@
     --system-combobox-border-color-focus: var(--spectrum-gray-900);
     --system-combobox-border-color-focus-hover: var(--spectrum-gray-800);
     --system-combobox-border-color-key-focus: var(--spectrum-gray-900);
+    --system-combobox-background-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
 }
 
 :host,
@@ -614,6 +617,7 @@
     --system-picker-border-color-hover-open: transparent;
     --system-picker-border-color-active: transparent;
     --system-picker-border-color-key-focus: transparent;
+    --system-picker-border-color-disabled: transparent;
     --system-picker-border-width: 0px;
 }
 

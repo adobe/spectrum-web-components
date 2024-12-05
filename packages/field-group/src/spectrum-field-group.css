@@ -38,7 +38,7 @@ governing permissions and limitations under the License.
 }
 
 :host([horizontal]) .group slot:not([name])::slotted(:not(:last-child)) {
-    margin-inline-end: var(--spectrum-fieldgroup-margin);
+    margin-inline-end: var(--spectrum-spacing-300);
 }
 
 :host([horizontal]) .group .spectrum-HelpText {

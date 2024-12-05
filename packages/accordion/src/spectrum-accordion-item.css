@@ -315,6 +315,15 @@ governing permissions and limitations under the License.
     );
 }
 
+@media (forced-colors: active) {
+    #header:after {
+        forced-color-adjust: none;
+        content: '';
+        position: absolute;
+        inset-inline-start: 0;
+    }
+}
+
 :host([open]) > #heading > .iconContainer > .indicator,
 :host([open]) > .iconContainer > .indicator {
     transform: rotate(90deg);
@@ -327,13 +336,4 @@ governing permissions and limitations under the License.
 
 :host([disabled]) #header {
     cursor: default;
-}
-
-@media (forced-colors: active) {
-    #header:after {
-        forced-color-adjust: none;
-        content: '';
-        position: absolute;
-        inset-inline-start: 0;
-    }
 }

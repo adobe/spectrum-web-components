@@ -463,9 +463,10 @@
 :root {
     --system-combobox-border-color-default: var(--spectrum-gray-500);
     --system-combobox-border-color-hover: var(--spectrum-gray-600);
-    --system-combobox-border-color-focus: var(--spectrum-gray-500);
-    --system-combobox-border-color-focus-hover: var(--spectrum-gray-600);
-    --system-combobox-border-color-key-focus: var(--spectrum-gray-600);
+    --system-combobox-border-color-focus: var(--spectrum-gray-800);
+    --system-combobox-border-color-focus-hover: var(--spectrum-gray-900);
+    --system-combobox-border-color-key-focus: var(--spectrum-gray-800);
+    --system-combobox-background-color-disabled: var(--spectrum-gray-25);
 }
 
 :host,
@@ -541,18 +542,19 @@
 
 :host,
 :root {
-    --system-picker-background-color-default: var(--spectrum-gray-50);
+    --system-picker-background-color-default: var(--spectrum-gray-100);
     --system-picker-background-color-default-open: var(--spectrum-gray-100);
-    --system-picker-background-color-hover: var(--spectrum-gray-100);
-    --system-picker-background-color-hover-open: var(--spectrum-gray-100);
+    --system-picker-background-color-hover: var(--spectrum-gray-200);
+    --system-picker-background-color-hover-open: var(--spectrum-gray-200);
     --system-picker-background-color-active: var(--spectrum-gray-200);
-    --system-picker-background-color-key-focus: var(--spectrum-gray-100);
-    --system-picker-border-color-default: var(--spectrum-gray-500);
+    --system-picker-background-color-key-focus: var(--spectrum-gray-200);
+    --system-picker-border-color-default: var(--spectrum-gray-800);
     --system-picker-border-color-default-open: var(--spectrum-gray-500);
     --system-picker-border-color-hover: var(--spectrum-gray-600);
-    --system-picker-border-color-hover-open: var(--spectrum-gray-600);
+    --system-picker-border-color-hover-open: var(--spectrum-gray-900);
     --system-picker-border-color-active: var(--spectrum-gray-700);
-    --system-picker-border-color-key-focus: var(--spectrum-gray-600);
+    --system-picker-border-color-key-focus: var(--spectrum-gray-900);
+    --system-picker-border-color-disabled: var(--spectrum-gray-300);
     --system-picker-border-width: var(--spectrum-border-width-100);
 }
 
