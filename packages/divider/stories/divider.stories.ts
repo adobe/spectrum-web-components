@@ -59,9 +59,7 @@ export const small = (): TemplateResult => {
 
 export const verticalSmall = (): TemplateResult => {
     return html`
-        <div
-            style="height: var(--spectrum-global-dimension-size-400, 32px); display: flex;"
-        >
+        <div style="height: var(--spectrum-spacing-600, 32px); display: flex;">
             <sp-action-button quiet>
                 <sp-icon-align-left slot="icon"></sp-icon-align-left>
             </sp-action-button>
@@ -79,9 +77,7 @@ export const verticalSmall = (): TemplateResult => {
 
 export const verticalMedium = (): TemplateResult => {
     return html`
-        <div
-            style="height: var(--spectrum-global-dimension-size-400, 32px); display: flex;"
-        >
+        <div style="height: var(--spectrum-spacing-600, 32px); display: flex;">
             <sp-action-button quiet>
                 <sp-icon-align-left slot="icon"></sp-icon-align-left>
             </sp-action-button>
@@ -99,9 +95,7 @@ export const verticalMedium = (): TemplateResult => {
 
 export const verticalLarge = (): TemplateResult => {
     return html`
-        <div
-            style="height: var(--spectrum-global-dimension-size-400, 32px); display: flex;"
-        >
+        <div style="height: var(--spectrum-spacing-600, 32px); display: flex;">
             <sp-action-button quiet>
                 <sp-icon-align-left slot="icon"></sp-icon-align-left>
             </sp-action-button>
