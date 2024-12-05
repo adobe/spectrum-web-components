@@ -73,12 +73,21 @@ export class AccordionItem extends SizedMixin(Focusable, {
         return [styles, chevronIconStyles, chevronIconOverrides];
     }
 
+    /**
+     * Whether the accordion item is opened to display its contents
+     */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    /**
+     * Label for the accordion heading
+     */
     @property({ type: String, reflect: true })
     public label = '';
 
+    /**
+     * Whether accordion item's heading is can be used to toggle open or closed
+     */
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
