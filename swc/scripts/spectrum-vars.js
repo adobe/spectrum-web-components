@@ -206,14 +206,13 @@ systems.forEach((system) => {
 async function processSpectrumVars() {
     {
         // Typography
-        const typographyPath = path.join(
-            __dirname,
-            '..',
-            'node_modules',
-            '@spectrum-css',
-            'typography',
-            'dist'
-        );
+        const typographyPath = path
+            .dirname(
+                import.meta.resolve(
+                    '@spectrum-css/typography/dist/index-base.css'
+                )
+            )
+            .replace('file://', '');
         const baseSrcPath = path.join(typographyPath, 'index-base.css');
         const overridesSrcPath = path.join(typographyPath, 'index-theme.css');
         const dstPath = path.resolve(

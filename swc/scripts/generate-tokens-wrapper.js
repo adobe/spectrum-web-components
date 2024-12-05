@@ -16,18 +16,20 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+const cssPackageRoot = (packageName) => {
+    try {
+        return import.meta
+            .resolve(`@spectrum-css/${packageName}`)
+            .replace('file://', '')
+            .split('dist')[0];
+    } catch (_error) {
+        console.warn(`Could not find package @spectrum-css/${packageName}`);
+        return null;
+    }
+};
+
 const tokensRoot = (tokensDir) => {
-    return path.join(
-        __dirname,
-        '..',
-        'node_modules',
-        '@spectrum-css',
-        tokensDir,
-        'dist',
-        'css',
-        '**',
-        '*.css'
-    );
+    return path.join(cssPackageRoot(tokensDir), 'dist', 'css', '**', '*.css');
 };
 
 /** @todo Could generate this from CSS packages that have @spectrum-css/tokens as a dependency */
@@ -102,18 +104,6 @@ const tokenPackages = [
     'typography',
 ];
 
-const packagePaths = tokenPackages.map((packageName) => {
-    return path.join(
-        __dirname,
-        '..',
-        'node_modules',
-        '@spectrum-css',
-        packageName,
-        'dist',
-        'themes'
-    );
-});
-
 const spectrumThemeSelectorRegExp =
     /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large|legacy)?,?(\n|\s)*)?)+\s?\{/g;
 const importantCommentRegExp = /\/\*![^*]*\*+([^\/*][^*]*\*+)*\//g;
@@ -163,15 +153,9 @@ const processTokens = (srcPath, tokensDir) => {
         );
     } catch (er) {}
 };
-const processPackages = async (tokensDir, index) => {
-    const packagename = tokenPackages[index];
-
+const processPackages = async (tokensDir, packageName) => {
     let componentLevelTokensPath = path.join(
-        __dirname,
-        '..',
-        'node_modules',
-        '@spectrum-css',
-        tokensDir,
+        cssPackageRoot(tokensDir),
         'dist',
         'css',
         'components'
@@ -184,7 +168,7 @@ const processPackages = async (tokensDir, index) => {
             const cssFilePath = path.join(
                 componentLevelTokensPath,
                 type,
-                packagename + '.css'
+                packageName + '.css'
             );
 
             // check if cssFilePath exists
@@ -251,8 +235,8 @@ export async function generateTokensWrapper(spectrumVersion) {
         return;
     }
     return Promise.all(
-        packagePaths.map((_, index) => {
-            return processPackages(tokensDir, index);
+        tokenPackages.map((packageName) => {
+            return processPackages(tokensDir, packageName);
         })
     );
 }

@@ -27,7 +27,6 @@ const wrapCSSResult = (content) => {
 };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const nodeModulesDir = path.resolve(__dirname, '..', 'node_modules');
 const configPath = path.resolve(path.join(__dirname, '..', 'config'));
 let header;
 try {
@@ -55,7 +54,9 @@ export const processCSS = async (cssPath) => {
                     const resolution = path.resolve(from, '..', specifier);
                     return resolution;
                 } else {
-                    const resolution = path.resolve(nodeModulesDir, specifier);
+                    const resolution = import.meta
+                        .resolve(specifier)
+                        .replace('file://', '');
                     return resolution;
                 }
             },
