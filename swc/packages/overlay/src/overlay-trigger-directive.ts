@@ -16,7 +16,9 @@ import {
     type RenderOptions,
     type TemplateResult,
 } from '@spectrum-web-components/base';
-import { directive } from '@spectrum-web-components/base/src/async-directive.js';
+// TODO: Why have we been facading this import?
+// import { directive } from '@spectrum-web-components/base/src/async-directive.js';
+import { directive } from 'lit/directive.js';
 import { strategies } from './strategies.js';
 import type { OverlayOptions, TriggerInteraction } from './overlay-types.js';
 import type { ClickController } from './ClickController.js';

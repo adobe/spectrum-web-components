@@ -15,10 +15,15 @@ import {
     render,
     TemplateResult,
 } from '@spectrum-web-components/base';
+// TODO: Why have we been facading this import?
+// import {
+//     AsyncDirective,
+//     directive,
+// } from '@spectrum-web-components/base/src/async-directive.js';
 import {
     AsyncDirective,
     directive,
-} from '@spectrum-web-components/base/src/async-directive.js';
+} from 'lit/async-directive.js';
 import {
     removeSlottableRequest,
     SlottableRequestEvent,
