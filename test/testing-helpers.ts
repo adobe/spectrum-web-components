@@ -327,7 +327,7 @@ export async function fixture<T extends Element>(
 export async function usedHeapMB(): Promise<
     Record<'dom' | 'js' | 'shared' | 'total', number>
 > {
-    // @ts-expect-error - expect typescpript error
+    // @ts-expect-error - expect typescript error
     const memorySample = performance.measureUserAgentSpecificMemory();
     const result = (await memorySample) as {
         bytes: number;
