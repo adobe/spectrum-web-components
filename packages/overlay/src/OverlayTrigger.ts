@@ -101,7 +101,10 @@ export class OverlayTrigger extends SpectrumElement {
     hoverOverlayElement!: Overlay;
 
     private getAssignedElementsFromSlot(slot: HTMLSlotElement): HTMLElement[] {
-        return slot.assignedElements({ flatten: true }) as HTMLElement[];
+        const nodes = slot.assignedNodes({ flatten: true });
+        return [
+            nodes.find((node) => node instanceof HTMLElement),
+        ] as HTMLElement[];
     }
 
     private handleTriggerContent(
