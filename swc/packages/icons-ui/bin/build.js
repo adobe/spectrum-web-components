@@ -36,8 +36,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */`;
 
-const S1IConsPackageDir = '@spectrum-css/ui-icons/dist/medium';
-const S2IConsPackageDir = '@spectrum-css/ui-icons-s2/dist/medium';
+const S1IconsPackageDir = import.meta.resolve('@spectrum-css/ui-icons/dist/medium').replace('file://', '');
+const S2IconsPackageDir = import.meta.resolve('@spectrum-css/ui-icons-s2/dist/medium').replace('file://', '');
+
 const keepColors = '';
 
 if (!fs.existsSync(`${rootDir}packages/icons-ui/src`)) {
@@ -329,11 +330,11 @@ async function buildIcons(icons, tag, iconsNameList) {
 }
 
 const iconsV1 = (
-    await fg(`${rootDir}/node_modules/${S1IConsPackageDir}/**.svg`)
+    await fg(`${S1IconsPackageDir}/**.svg`)
 ).sort();
 
 const iconsV2 = (
-    await fg(`${rootDir}/node_modules/${S2IConsPackageDir}/**.svg`)
+    await fg(`${S2IconsPackageDir}/**.svg`)
 ).sort();
 
 const iconsV1NameList = iconsV1.map((i) => {

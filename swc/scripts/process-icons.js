@@ -43,16 +43,9 @@ const processIcon = (srcPath, fd, scaleWidth, scaleHeight) => {
 
 // where is spectrum-css?
 // TODO: use resolve package to find node_modules
-const spectrumIconsPath = path.resolve(
-    path.join(
-        __dirname,
-        '..',
-        'node_modules',
-        '@spectrum-css',
-        'ui-icons',
-        'dist'
-    )
-);
+const spectrumIconsPath = import.meta
+    .resolve('@spectrum-css/ui-icons/dist')
+    .replace('file://', '');
 
 // define the target icon sizes for each scale
 const scales = {

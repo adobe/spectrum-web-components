@@ -19,7 +19,7 @@ import prettier from 'prettier';
 import Case from 'case';
 import { fileURLToPath } from 'url';
 
-import systemsIconMapping from './icons-mapping.json' assert { type: 'json' };
+import systemsIconMapping from './icons-mapping.json' with { type: 'json' };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -38,9 +38,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */`;
 
-const S1IConsPackageDir = '@adobe/spectrum-css-workflow-icons/dist/18';
-const S2IConsPackageDir =
-    '@adobe/spectrum-css-workflow-icons-s2/dist/assets/svg';
+const S1IconsPackageDir = import.meta.resolve('@adobe/spectrum-css-workflow-icons/dist/18').replace('file://', '');
+const S2IconsPackageDir = import.meta.resolve('@adobe/spectrum-css-workflow-icons-s2/dist/assets/svg').replace('file://', '');
 const keepColors = '';
 
 const ensureDirectoryExists = (dirPath) => {
@@ -352,11 +351,11 @@ async function buildIcons(icons, tag, iconsNameList) {
 }
 
 const iconsV1 = (
-    await fg(`${rootDir}/node_modules/${S1IConsPackageDir}/**.svg`)
+    await fg(`${S1IconsPackageDir}/**.svg`)
 ).sort();
 
 const iconsV2 = (
-    await fg(`${rootDir}/node_modules/${S2IConsPackageDir}/**.svg`)
+    await fg(`${S2IconsPackageDir}/**.svg`)
 ).sort();
 
 const iconsV1NameList = iconsV1.map((i) => {
