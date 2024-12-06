@@ -107,6 +107,9 @@ export class TopNav extends SizedMixin(SpectrumElement) {
 
     /**
      * The selected top navigation item.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
      */
     @property({ reflect: true })
     public set selected(value: string | undefined) {

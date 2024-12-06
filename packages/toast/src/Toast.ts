@@ -65,6 +65,9 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     /**
      * The `open` property indicates whether the toast is visible or hidden.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
      */
     @property({ type: Boolean, reflect: true })
     public open = false;

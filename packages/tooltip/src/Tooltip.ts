@@ -223,6 +223,9 @@ export class Tooltip extends SpectrumElement {
 
     /**
      * The placement of the tooltip relative to the trigger element.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
      */
     @property({ reflect: true })
     public placement?: Placement;
