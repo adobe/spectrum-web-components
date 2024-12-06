@@ -80,9 +80,6 @@ export class AccordionItem extends SizedMixin(Focusable, {
     /**
      * Indicates whether the accordion item is open to display its contents.
      * When true, the contents are visible; otherwise, they are hidden.
-     *
-     * @attr
-     * @default false
      */
     @property({ type: Boolean, reflect: true })
     public open = false;
@@ -90,9 +87,6 @@ export class AccordionItem extends SizedMixin(Focusable, {
     /**
      * The label for the accordion heading.
      * This is displayed as the title of the accordion item.
-     *
-     * @attr
-     * @default ''
      */
     @property({ type: String, reflect: true })
     public label = '';
@@ -100,10 +94,6 @@ export class AccordionItem extends SizedMixin(Focusable, {
     /**
      * Indicates whether the accordion item's heading can be used to toggle open or closed.
      * When true, the heading is disabled and cannot be interacted with.
-     *
-     * @override
-     * @attr
-     * @default false
      */
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
@@ -111,8 +101,6 @@ export class AccordionItem extends SizedMixin(Focusable, {
     /**
      * Returns the element that should receive focus when the accordion item is focused.
      * In this case, it is the header element.
-     *
-     * @returns {HTMLElement} The element that should receive focus.
      */
     public override get focusElement(): HTMLElement {
         return this.shadowRoot.querySelector('#header') as HTMLElement;
@@ -149,7 +137,6 @@ export class AccordionItem extends SizedMixin(Focusable, {
     }
     /**
      * Renders the chevron icon based on the size of the accordion item.
-     * @returns {TemplateResult} The chevron icon template.
      */
     protected renderChevronIcon = (): TemplateResult => {
         return chevronIcon[this.size || 'm']();
@@ -158,7 +145,6 @@ export class AccordionItem extends SizedMixin(Focusable, {
     /**
      * Renders the accordion item template.
      * Includes the heading with a button to toggle the open state and a content area for the item details.
-     * @returns {TemplateResult} The template for the accordion item.
      */
     protected override render(): TemplateResult {
         return html`
@@ -181,9 +167,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
     }
 
     /**
-     * Called when the element is updated.
      * Updates the 'aria-disabled' attribute based on the disabled property.
-     * @param {PropertyValues} changes - The changed properties.
      */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);

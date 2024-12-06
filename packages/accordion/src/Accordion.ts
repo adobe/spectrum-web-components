@@ -30,7 +30,7 @@ import styles from './accordion.css.js';
 
 /**
  * @element sp-accordion
- * @slot - The sp-accordion-item children to display.
+ * @slot - The sp-accordion-item children to display within the accordion.
  */
 export class Accordion extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
@@ -40,49 +40,70 @@ export class Accordion extends SizedMixin(SpectrumElement, {
     }
 
     /**
-     * Allows multiple accordion items to be opened at the same time
+     * Allows multiple accordion items to be opened at the same time.
+     * When true, more than one accordion item can be expanded simultaneously.
      */
     @property({ type: Boolean, reflect: true, attribute: 'allow-multiple' })
     public allowMultiple = false;
 
     /**
-     * Sets the spacing between the content to borders of an accordion item
+     * Sets the spacing between the content and borders of an accordion item.
+     * Can be 'compact' or 'spacious'.
      */
     @property({ type: String, reflect: true })
     public density?: 'compact' | 'spacious';
 
+    /**
+     * Retrieves the default nodes assigned to the slot.
+     * These nodes are expected to be AccordionItem elements.
+     */
     @queryAssignedNodes()
     private defaultNodes!: NodeListOf<AccordionItem>;
 
+    /**
+     * Gets the list of accordion items.
+     * Filters the default nodes to include only valid AccordionItem elements.
+     */
     private get items(): AccordionItem[] {
         return [...(this.defaultNodes || [])].filter(
             (node: HTMLElement) => typeof node.tagName !== 'undefined'
         ) as AccordionItem[];
     }
 
+    /**
+     * Controller for managing focus within the accordion.
+     * Configures focus behavior for the accordion items.
+     */
     focusGroupController = new FocusGroupController<AccordionItem>(this, {
         direction: 'vertical',
         elements: () => this.items,
         isFocusableElement: (el: AccordionItem) => !el.disabled,
     });
 
+    /**
+     * Overrides the focus method to delegate focus to the focus group controller.
+     */
     public override focus(): void {
         this.focusGroupController.focus();
     }
 
+    /**
+     * Handles the toggle event for an accordion item.
+     * Closes other accordion items if `allowMultiple` is false and the event is not prevented.
+     */
     private async onToggle(event: Event): Promise<void> {
         const target = event.target as AccordionItem;
         // Let the event pass through the DOM so that it can be
         // prevented from the outside if a user so desires.
         await 0;
         if (this.allowMultiple || event.defaultPrevented) {
-            // No toggling when `allowMultiple` or the user prevents it.
+            // No toggling when `allowMultiple` is true or the user prevents it.
             return;
         }
         const items = [...this.items] as AccordionItem[];
         /* c8 ignore next 3 */
         if (items && !items.length) {
-            // no toggling when there aren't items.
+            // No toggling when there aren't items.
             return;
         }
         items.forEach((item) => {
@@ -93,6 +114,10 @@ export class Accordion extends SizedMixin(SpectrumElement, {
         });
     }
 
+    /**
+     * Handles the slotchange event.
+     * Clears the element cache in the focus group controller and updates the size of each accordion item.
+     */
     private handleSlotchange(): void {
         this.focusGroupController.clearElementCache();
         this.items.forEach((item) => {
