@@ -769,7 +769,7 @@
     --spectrum-heading-cjk-size-xxs: var(--spectrum-font-size-100);
     --spectrum-heading-line-height: var(--spectrum-line-height-100);
     --spectrum-heading-cjk-line-height: var(--spectrum-cjk-line-height-100);
-    --spectrum-heading-margin-top-multiplier: 0.88888889;
+    --spectrum-heading-margin-top-multiplier: 0.888889;
     --spectrum-heading-margin-bottom-multiplier: 0.25;
     --spectrum-heading-color: var(--spectrum-gray-900);
     --spectrum-body-sans-serif-font-family: var(
@@ -975,7 +975,7 @@
     --spectrum-detail-size-s: var(--spectrum-font-size-50);
     --spectrum-detail-line-height: var(--spectrum-line-height-100);
     --spectrum-detail-cjk-line-height: var(--spectrum-cjk-line-height-100);
-    --spectrum-detail-margin-top-multiplier: 0.88888889;
+    --spectrum-detail-margin-top-multiplier: 0.888889;
     --spectrum-detail-margin-bottom-multiplier: 0.25;
     --spectrum-detail-letter-spacing: 0.06em;
     --spectrum-detail-sans-serif-text-transform: uppercase;
@@ -1020,24 +1020,21 @@
     --spectrum-code-cjk-line-height: var(--spectrum-cjk-line-height-200);
     --spectrum-code-color: var(--spectrum-gray-800);
     --system: spectrum;
-
-    --spectrum-animation-duration-0: 0ms;
-    --spectrum-animation-duration-100: 130ms;
-    --spectrum-animation-duration-200: 160ms;
-    --spectrum-animation-duration-300: 190ms;
-    --spectrum-animation-duration-400: 220ms;
-    --spectrum-animation-duration-500: 250ms;
-    --spectrum-animation-duration-600: 300ms;
-    --spectrum-animation-duration-700: 350ms;
-    --spectrum-animation-duration-800: 400ms;
-    --spectrum-animation-duration-900: 450ms;
-    --spectrum-animation-duration-1000: 500ms;
-    --spectrum-animation-duration-2000: 1000ms;
-    --spectrum-animation-duration-4000: 2000ms;
-    --spectrum-animation-duration-6000: 3000ms;
-
+    --spectrum-animation-duration-0: 0s;
+    --spectrum-animation-duration-100: 0.13s;
+    --spectrum-animation-duration-200: 0.16s;
+    --spectrum-animation-duration-300: 0.19s;
+    --spectrum-animation-duration-400: 0.22s;
+    --spectrum-animation-duration-500: 0.25s;
+    --spectrum-animation-duration-600: 0.3s;
+    --spectrum-animation-duration-700: 0.35s;
+    --spectrum-animation-duration-800: 0.4s;
+    --spectrum-animation-duration-900: 0.45s;
+    --spectrum-animation-duration-1000: 0.5s;
+    --spectrum-animation-duration-2000: 1s;
+    --spectrum-animation-duration-4000: 2s;
+    --spectrum-animation-duration-6000: 3s;
     --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
-
     --spectrum-animation-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1);
     --spectrum-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
     --spectrum-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
@@ -1047,24 +1044,19 @@
         BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
         'Lucida Grande', sans-serif;
     --spectrum-sans-serif-font: var(--spectrum-sans-font-family-stack);
-
     --spectrum-serif-font-family-stack: adobe-clean-serif,
         var(--spectrum-serif-font-family), 'Source Serif Pro', Georgia, serif;
     --spectrum-serif-font: var(--spectrum-serif-font-family-stack);
-
     --spectrum-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
-
     --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro',
         -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
         'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro',
         -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
         'Trebuchet MS', 'Lucida Grande', sans-serif;
-
     --spectrum-font-family: var(--spectrum-sans-font-family-stack);
     --spectrum-font-style: var(--spectrum-default-font-style);
     --spectrum-font-size: var(--spectrum-font-size-100);
-
     --spectrum-cjk-font-family-stack: adobe-clean-han-japanese,
         var(--spectrum-cjk-font-family), sans-serif;
     --spectrum-cjk-font: var(--spectrum-code-font-family-stack);

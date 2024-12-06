@@ -155,63 +155,26 @@ const config = {
                     ],
                 },
                 {
-                    find: [
-                        builder.class('spectrum-ActionButton-hold'),
-                        {
-                            type: 'pseudo-class',
-                            kind: 'dir',
-                            direction: 'rtl',
-                        },
-                    ],
-                    replace: [
-                        {
-                            replace: {
-                                type: 'pseudo-class',
-                                kind: 'host',
-                                selectors: [
-                                    {
-                                        type: 'attribute',
-                                        name: 'dir',
-                                        operation: {
-                                            value: 'rtl',
-                                            operator: 'equal',
-                                        },
-                                    },
-                                ],
-                            },
-                        },
-                        {
-                            replace: builder.combinator(' '),
-                        },
-                        {
-                            replace: builder.class('hold-affordance'),
-                        },
-                    ],
-                },
-                {
                     find: {
                         type: 'pseudo-class',
                         kind: 'not',
                         selectors: [
                             [
-                                {
-                                    type: 'pseudo-class',
-                                    kind: 'disabled',
-                                },
+                                builder.class(
+                                    'spectrum-ActionButton--staticBlack'
+                                ),
+                            ],
+                            [
+                                builder.class(
+                                    'spectrum-ActionButton--staticWhite'
+                                ),
                             ],
                         ],
                     },
                     replace: {
                         type: 'pseudo-class',
                         kind: 'not',
-                        selectors: [
-                            [
-                                {
-                                    type: 'pseudo-class',
-                                    kind: 'disabled',
-                                },
-                            ],
-                        ],
+                        selectors: [[builder.attribute('static-color')]],
                     },
                     hoist: true,
                 },
