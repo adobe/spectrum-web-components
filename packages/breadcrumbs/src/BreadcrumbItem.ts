@@ -22,8 +22,6 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
-
 import styles from './breadcrumb-item.css.js';
 
 export interface BreadcrumbSelectDetail {
@@ -32,7 +30,7 @@ export interface BreadcrumbSelectDetail {
 
 export class BreadcrumbItem extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
-        return [styles, chevronStyles, chevronIconOverrides];
+        return [styles, chevronStyles];
     }
 
     @property()

@@ -30,8 +30,6 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
 
 import styles from './swatch.css.js';
 import dashStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
-import dashSmallOverrides from '@spectrum-web-components/icon/src/icon-dash-overrides.css.js';
-
 export type SwatchBorder = 'light' | 'none' | undefined;
 export type SwatchRounding = 'none' | 'full' | undefined;
 export type SwatchShape = 'rectangle' | undefined;
@@ -71,12 +69,7 @@ export class Swatch extends SizedMixin(Focusable, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [
-            opacityCheckerboardStyles,
-            styles,
-            dashStyles,
-            dashSmallOverrides,
-        ];
+        return [opacityCheckerboardStyles, styles, dashStyles];
     }
 
     @property({ reflect: true })
