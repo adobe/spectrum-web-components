@@ -89,8 +89,8 @@
         "@spectrum-web-components/icon": "^1.0.1",
         "@spectrum-web-components/icons-ui": "^1.0.1",
         "@spectrum-web-components/progress-circle": "^1.0.1",
-        "@spectrum-web-components/shared": "^1.0.1",
-        "@spectrum-web-components/reactive-controllers": "^1.0.1"
+        "@spectrum-web-components/reactive-controllers": "^1.0.1",
+        "@spectrum-web-components/shared": "^1.0.1"
     },
     "devDependencies": {
         "@spectrum-css/button": "^14.0.0-s2-foundations.18"

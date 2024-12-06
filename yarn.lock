@@ -8124,6 +8124,7 @@ __metadata:
     "@spectrum-web-components/icon": "npm:^1.0.1"
     "@spectrum-web-components/icons-ui": "npm:^1.0.1"
     "@spectrum-web-components/progress-circle": "npm:^1.0.1"
+    "@spectrum-web-components/reactive-controllers": "npm:^1.0.1"
     "@spectrum-web-components/shared": "npm:^1.0.1"
   languageName: unknown
   linkType: soft
