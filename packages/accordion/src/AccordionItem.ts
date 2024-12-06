@@ -26,6 +26,10 @@ import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron
 
 import styles from './accordion-item.css.js';
 
+/**
+ * A mapping of size keys to functions that return the corresponding chevron icon template.
+ * The chevron icon indicates the open/closed state of the accordion item.
+ */
 const chevronIcon: Record<string, () => TemplateResult> = {
     s: () => html`
         <span class="iconContainer">
@@ -74,27 +78,49 @@ export class AccordionItem extends SizedMixin(Focusable, {
     }
 
     /**
-     * Whether the accordion item is opened to display its contents
+     * Indicates whether the accordion item is open to display its contents.
+     * When true, the contents are visible; otherwise, they are hidden.
+     *
+     * @attr
+     * @default false
      */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
     /**
-     * Label for the accordion heading
+     * The label for the accordion heading.
+     * This is displayed as the title of the accordion item.
+     *
+     * @attr
+     * @default ''
      */
     @property({ type: String, reflect: true })
     public label = '';
 
     /**
-     * Whether accordion item's heading is can be used to toggle open or closed
+     * Indicates whether the accordion item's heading can be used to toggle open or closed.
+     * When true, the heading is disabled and cannot be interacted with.
+     *
+     * @override
+     * @attr
+     * @default false
      */
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
+    /**
+     * Returns the element that should receive focus when the accordion item is focused.
+     * In this case, it is the header element.
+     *
+     * @returns {HTMLElement} The element that should receive focus.
+     */
     public override get focusElement(): HTMLElement {
         return this.shadowRoot.querySelector('#header') as HTMLElement;
     }
-
+    /**
+     * Handles the click event on the accordion item's header.
+     * Toggles the open state of the accordion item if it is not disabled.
+     */
     private onClick(): void {
         /* c8 ignore next 3 */
         if (this.disabled) {
@@ -103,6 +129,11 @@ export class AccordionItem extends SizedMixin(Focusable, {
         this.toggle();
     }
 
+    /**
+     * Toggles the open state of the accordion item.
+     * Dispatches a custom event 'sp-accordion-item-toggle' to notify listeners of the toggle action.
+     * If the event is canceled, the open state is reverted.
+     */
     private toggle(): void {
         this.open = !this.open;
         const applyDefault = this.dispatchEvent(
@@ -116,11 +147,19 @@ export class AccordionItem extends SizedMixin(Focusable, {
             this.open = !this.open;
         }
     }
-
+    /**
+     * Renders the chevron icon based on the size of the accordion item.
+     * @returns {TemplateResult} The chevron icon template.
+     */
     protected renderChevronIcon = (): TemplateResult => {
         return chevronIcon[this.size || 'm']();
     };
 
+    /**
+     * Renders the accordion item template.
+     * Includes the heading with a button to toggle the open state and a content area for the item details.
+     * @returns {TemplateResult} The template for the accordion item.
+     */
     protected override render(): TemplateResult {
         return html`
             <h3 id="heading">
@@ -141,6 +180,11 @@ export class AccordionItem extends SizedMixin(Focusable, {
         `;
     }
 
+    /**
+     * Called when the element is updated.
+     * Updates the 'aria-disabled' attribute based on the disabled property.
+     * @param {PropertyValues} changes - The changed properties.
+     */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('disabled')) {
