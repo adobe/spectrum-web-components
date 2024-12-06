@@ -40,9 +40,6 @@ import styles from './tray.css.js';
 export class Tray extends SpectrumElement {
     /**
      * Returns the styles to be applied to the component.
-     *
-     * @override
-     * @returns {CSSResultArray} The styles for the component.
      */
     public static override get styles(): CSSResultArray {
         return [modalStyles, styles];
@@ -53,32 +50,36 @@ export class Tray extends SpectrumElement {
      *
      * This property is reflected as an attribute, meaning changes to the property
      * will be mirrored in the corresponding HTML attribute.
-     *
-     * @type {boolean}
      */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
-    // Controller to manage the user's motion preference.
+    /**
+     * Controller to manage the user's motion preference.
+     */
     protected prefersMotion = new MatchMediaController(
         this,
         '(prefers-reduced-motion: no-preference)'
     );
 
-    // Promise to manage the transition state.
+    /**
+     * Promise to manage the transition state.
+     */
     private transitionPromise = Promise.resolve();
 
-    // Function to resolve the transition promise.
+    /**
+     * Function to resolve the transition promise.
+     */
     private resolveTransitionPromise: () => void = () => {};
 
-    // Query to select the tray element.
+    /**
+     * Query to select the tray element.
+     */
     @query('.tray')
     private tray!: HTMLDivElement;
 
     /**
      * Sets focus on the first focusable element within the tray.
-     *
-     * @override
      */
     public override focus(): void {
         const firstFocusable = firstFocusableIn(this);
@@ -91,13 +92,13 @@ export class Tray extends SpectrumElement {
         }
     }
 
-    // Flag to track whether the tray is animating.
+    /**
+     * Tracks whether the tray is currently animating.
+     */
     private animating = false;
 
     /**
      * Callback to handle the overlay close event.
-     *
-     * @returns {boolean} True if the tray is animating, otherwise false.
      */
     public overlayWillCloseCallback(): boolean {
         if (!this.open) return this.animating;
@@ -117,8 +118,6 @@ export class Tray extends SpectrumElement {
 
     /**
      * Dispatches the 'close' event.
-     *
-     * @private
      */
     private dispatchClosed(): void {
         this.dispatchEvent(
@@ -133,8 +132,6 @@ export class Tray extends SpectrumElement {
      *
      * This method resolves the transition promise and dispatches the 'close' event
      * if the tray is not open.
-     *
-     * @protected
      */
     protected handleUnderlayTransitionend(): void {
         if (!this.open) {
@@ -147,8 +144,6 @@ export class Tray extends SpectrumElement {
      * Handles the transitionend event for the tray.
      *
      * This method resolves the transition promise if the tray is open.
-     *
-     * @protected
      */
     protected handleTrayTransitionend(): void {
         if (this.open) {
@@ -161,9 +156,6 @@ export class Tray extends SpectrumElement {
      *
      * This method sets up the transition promise if the 'open' property has changed
      * and the user prefers motion.
-     *
-     * @override
-     * @param {PropertyValues<this>} changes - The properties that have changed.
      */
     protected override update(changes: PropertyValues<this>): void {
         if (
@@ -186,9 +178,6 @@ export class Tray extends SpectrumElement {
      * Renders the content of the tray component.
      *
      * This method returns a template result containing the underlay and tray elements.
-     *
-     * @override
-     * @returns {TemplateResult} The template result containing the tray content.
      */
     protected override render(): TemplateResult {
         return html`
@@ -212,10 +201,6 @@ export class Tray extends SpectrumElement {
      *
      * This method ensures that the overlay system waits for the tray to be visibly ready
      * before attempting to throw focus into the content contained within.
-     *
-     * @protected
-     * @override
-     * @returns {Promise<boolean>} A promise that resolves when the update is complete.
      */
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;

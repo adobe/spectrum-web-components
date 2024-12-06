@@ -37,15 +37,14 @@ import topNavItemStyles from './top-nav-item.css.js';
 export class TopNavItem extends LikeAnchor(Focusable) {
     /**
      * Returns the styles to be applied to the component.
-     *
-     * @override
-     * @returns {CSSResultArray} The styles for the component.
      */
     public static override get styles(): CSSResultArray {
         return [itemStyles, topNavItemStyles];
     }
 
-    // Query to select the anchor element within the component.
+    /**
+     * Query to select the anchor element within the component.
+     */
     @query('a')
     private anchor!: HTMLAnchorElement;
 
@@ -54,20 +53,17 @@ export class TopNavItem extends LikeAnchor(Focusable) {
      *
      * This property is reflected as an attribute, meaning changes to the property
      * will be mirrored in the corresponding HTML attribute.
-     *
-     * @type {boolean}
      */
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
-    // The value of the top nav item, representing the href of the anchor element.
+    /**
+     * The value of the top nav item, representing the href of the anchor element.
+     */
     public value = '';
 
     /**
      * Returns the focusable element within the component.
-     *
-     * @override
-     * @returns {HTMLAnchorElement} The anchor element.
      */
     public override get focusElement(): HTMLAnchorElement {
         return this.anchor;
@@ -75,8 +71,6 @@ export class TopNavItem extends LikeAnchor(Focusable) {
 
     /**
      * Simulates a click on the anchor element.
-     *
-     * @override
      */
     public override click(): void {
         this.anchor.click();
@@ -87,10 +81,6 @@ export class TopNavItem extends LikeAnchor(Focusable) {
      *
      * This method returns a template result containing an anchor element with various attributes
      * and a slot for the text label.
-     *
-     * @protected
-     * @override
-     * @returns {TemplateResult} The template result containing the top nav item content.
      */
     protected override render(): TemplateResult {
         return html`
@@ -114,9 +104,6 @@ export class TopNavItem extends LikeAnchor(Focusable) {
      * Lifecycle method called when the component updates.
      *
      * This method updates the value property to reflect the href of the anchor element.
-     *
-     * @override
-     * @param {PropertyValues} changes - The properties that have changed.
      */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);

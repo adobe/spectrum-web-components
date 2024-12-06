@@ -44,9 +44,6 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 export class TopNav extends SizedMixin(SpectrumElement) {
     /**
      * Returns the styles to be applied to the component.
-     *
-     * @override
-     * @returns {CSSResultArray} The styles for the component.
      */
     public static override get styles(): CSSResultArray {
         return [tabsSizes, tabStyles, ScaledIndicator.baseStyles()];
@@ -57,16 +54,12 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      *
      * This property is reflected as an attribute, meaning changes to the property
      * will be mirrored in the corresponding HTML attribute.
-     *
-     * @type {'ltr' | 'rtl'}
      */
     @property({ reflect: true })
     public override dir!: 'ltr' | 'rtl';
 
     /**
      * The label for the top navigation bar.
-     *
-     * @type {string}
      */
     @property({ type: String })
     public label = '';
@@ -76,24 +69,18 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      * for the "selected" Top Nav Item. Currently supported values are
      * `hash` and `search`, which will remove the `#hash` and
      * `?search=value` respectively.
-     *
-     * @type {string}
      */
     @property({ attribute: 'ignore-url-parts' })
     public ignoreURLParts = '';
 
     /**
      * The style for the selection indicator.
-     *
-     * @type {string}
      */
     @property()
     public selectionIndicatorStyle = noSelectionStyle;
 
     /**
      * Indicates whether the selection indicator should animate.
-     *
-     * @type {boolean}
      */
     @property({ attribute: false })
     public shouldAnimate = false;
@@ -103,8 +90,6 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      *
      * This property is reflected as an attribute, meaning changes to the property
      * will be mirrored in the corresponding HTML attribute.
-     *
-     * @type {boolean}
      */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
@@ -113,9 +98,6 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      * Handles the click event on a Top Nav Item.
      *
      * This method sets the shouldAnimate flag to true and selects the clicked target.
-     *
-     * @private
-     * @param {Event} event - The click event.
      */
     private onClick = (event: Event): void => {
         const target = event.target as TopNavItem;
@@ -125,26 +107,16 @@ export class TopNav extends SizedMixin(SpectrumElement) {
 
     /**
      * The selected top navigation item.
-     *
-     * This property is reflected as an attribute, meaning changes to the property
-     * will be mirrored in the corresponding HTML attribute. It updates the checked
-     * state of the items and requests an update when the selected value changes.
-     *
-     * @type {string | undefined}
      */
     @property({ reflect: true })
     public set selected(value: string | undefined) {
         const oldValue = this.selected;
 
-        // Return early if the new value is the same as the old value.
         if (value === oldValue) {
             return;
         }
 
-        // Update the checked state of the items.
         this.updateCheckedState(value);
-
-        // Set the new selected value and request an update.
         this._selected = value;
         this.requestUpdate('selected', oldValue);
     }
@@ -153,18 +125,16 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         return this._selected;
     }
 
-    // Internal property to store the selected value.
     private _selected!: string | undefined;
 
-    // Query to select the slot element within the component.
+    /**
+     * Query to select the slot element within the component.
+     */
     @query('slot')
     private slotEl!: HTMLSlotElement;
 
     /**
      * Gets the items in the top navigation bar.
-     *
-     * @protected
-     * @returns {TopNavItem[]} The array of top navigation items.
      */
     protected get items(): TopNavItem[] {
         return this._items;
@@ -174,9 +144,6 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      * Sets the items in the top navigation bar.
      *
      * This method observes the new items for resize events and updates the internal items array.
-     *
-     * @protected
-     * @param {TopNavItem[]} items - The array of top navigation items.
      */
     protected set items(items: TopNavItem[]) {
         if (items === this.items) return;
@@ -189,10 +156,14 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         this._items = items;
     }
 
-    // Internal array to store the top navigation items.
+    /**
+     * Internal array to store the top navigation items.
+     */
     private _items: TopNavItem[] = [];
 
-    // Controller to manage resize events for the items.
+    /**
+     * Controller to manage resize events for the items.
+     */
     protected resizeController = new ResizeController(this, {
         callback: () => {
             this.updateSelectionIndicator();
@@ -204,8 +175,6 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      *
      * This method filters the assigned elements to find top navigation items,
      * updates the items array, and selects the appropriate item based on the URL.
-     *
-     * @private
      */
     private manageItems(): void {
         // Get the assigned elements from the slot and filter for top navigation items.
@@ -213,7 +182,6 @@ export class TopNav extends SizedMixin(SpectrumElement) {
             .assignedElements({ flatten: true })
             .filter((el) => el.localName === 'sp-top-nav-item') as TopNavItem[];
 
-        // Get the current URL.
         let { href } = window.location;
         const ignoredURLParts = this.ignoreURLParts.split(' ');
 
@@ -229,11 +197,10 @@ export class TopNav extends SizedMixin(SpectrumElement) {
 
         // Find the top navigation item that matches the current URL.
         const selectedChild = this.items.find((item) => item.value === href);
+
         if (selectedChild) {
-            // Select the matching item.
             this.selectTarget(selectedChild);
         } else {
-            // If no matching item is found, clear the selection.
             this.selected = '';
         }
     }
@@ -243,10 +210,6 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      *
      * This method returns a template result containing the slot for nav items
      * and the selection indicator.
-     *
-     * @protected
-     * @override
-     * @returns {TemplateResult} The template result containing the top navigation bar content.
      */
     protected override render(): TemplateResult {
         return html`
@@ -267,16 +230,10 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      * Lifecycle method called after the component's DOM has been rendered for the first time.
      *
      * This method sets up the initial attributes for the component.
-     *
-     * @protected
-     * @override
-     * @param {PropertyValues} changes - The properties that have changed.
      */
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        // Set the direction attribute to 'horizontal'.
         this.setAttribute('direction', 'horizontal');
-        // Set the role attribute to 'navigation'.
         this.setAttribute('role', 'navigation');
     }
 
@@ -285,10 +242,6 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      *
      * This method handles various tasks after the component updates, such as updating the
      * selection indicator, enabling animations, and setting the aria-label attribute.
-     *
-     * @protected
-     * @override
-     * @param {PropertyValues} changes - The properties that have changed.
      */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
@@ -296,6 +249,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         if (changes.has('dir')) {
             this.updateSelectionIndicator();
         }
+
         // Enable animations if the 'shouldAnimate' property has changed.
         if (
             !this.shouldAnimate &&
@@ -303,6 +257,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         ) {
             this.shouldAnimate = true;
         }
+
         // Set or remove the aria-label attribute based on the 'label' property.
         if (
             changes.has('label') &&
@@ -320,9 +275,6 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      * Selects the target top navigation item.
      *
      * This method sets the selected value to the value of the target item.
-     *
-     * @private
-     * @param {TopNavItem} target - The target top navigation item.
      */
     private selectTarget(target: TopNavItem): void {
         const { value } = target;
@@ -335,8 +287,6 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      * Handles the slotchange event.
      *
      * This method manages the items in the top navigation bar when the slot content changes.
-     *
-     * @protected
      */
     protected onSlotChange(): void {
         this.manageItems();
@@ -346,9 +296,6 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      * Updates the checked state of the top navigation items.
      *
      * This method sets the selected state of the items based on the provided value.
-     *
-     * @protected
-     * @param {string | undefined} value - The selected value.
      */
     protected updateCheckedState(value: string | undefined): void {
         // Deselect all items.
@@ -367,15 +314,12 @@ export class TopNav extends SizedMixin(SpectrumElement) {
                 );
 
                 if (currentItem) {
-                    // Select the matching item.
                     currentItem.selected = true;
                 } else {
-                    // Clear the selection if no matching item is found.
                     this.selected = '';
                 }
             }
 
-            // Update the selection indicator.
             this.updateSelectionIndicator();
         });
     }
@@ -384,9 +328,6 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      * Updates the selection indicator.
      *
      * This method sets the style of the selection indicator based on the selected item.
-     *
-     * @private
-     * @returns {Promise<void>} A promise that resolves when the selection indicator has been updated.
      */
     private updateSelectionIndicator = async (): Promise<void> => {
         // Find the item that matches the selected value or the current URL.
@@ -395,16 +336,20 @@ export class TopNav extends SizedMixin(SpectrumElement) {
                 item.value === this.selected ||
                 item.value === window.location.href
         );
+
         if (!selectedItem) {
             // Set the selection indicator style to no selection if no matching item is found.
             this.selectionIndicatorStyle = noSelectionStyle;
             return;
         }
+
         await Promise.all([
             selectedItem.updateComplete,
             document.fonts ? document.fonts.ready : Promise.resolve(),
         ]);
+
         const { width } = selectedItem.getBoundingClientRect();
+
         // Set the selection indicator style based on the selected item's position and width.
         this.selectionIndicatorStyle = ScaledIndicator.transformX(
             selectedItem.offsetLeft,
@@ -416,12 +361,12 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      * Lifecycle method called when the component is connected to the DOM.
      *
      * This method sets up event listeners for resize and font loading events.
-     *
-     * @override
      */
     public override connectedCallback(): void {
         super.connectedCallback();
+
         window.addEventListener('resize', this.updateSelectionIndicator);
+
         if ('fonts' in document) {
             document.fonts.addEventListener(
                 'loadingdone',
@@ -434,11 +379,10 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      * Lifecycle method called when the component is disconnected from the DOM.
      *
      * This method removes event listeners for resize and font loading events.
-     *
-     * @override
      */
     public override disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
+
         if ('fonts' in document) {
             (
                 document as unknown as {
@@ -454,6 +398,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
                 this.updateSelectionIndicator
             );
         }
+
         super.disconnectedCallback();
     }
 }
