@@ -530,11 +530,7 @@ export class Calendar extends SpectrumElement {
                     data-value=${calendarDate.toString()}
                     @mousedown=${this.handleDaySelect}
                 >
-                    <span
-                        role="presentation"
-                        class=${classMap(dayClasses)}
-                        data-test-id="calendar-day"
-                    >
+                    <span role="presentation" class=${classMap(dayClasses)}>
                         ${this.formatNumber(calendarDate.day)}
                     </span>
                 </span>
@@ -576,15 +572,13 @@ export class Calendar extends SpectrumElement {
             return;
         }
 
-        const dateCell = (event.target as Element).closest(
-            'td.table-cell'
-        ) as HTMLTableCellElement;
-
-        const cellButton = dateCell.querySelector(
+        const cellButton = (event.target as HTMLElement).closest(
             'span[role="button"]'
         ) as HTMLSpanElement;
 
-        const dateString = cellButton.dataset.value!;
+        const dateString = cellButton && cellButton.dataset.value;
+        if (!dateString) return;
+
         const calendarDateEngaged = parseDate(dateString);
         const isAlreadySelected =
             this.value && isSameDay(this.value, calendarDateEngaged);

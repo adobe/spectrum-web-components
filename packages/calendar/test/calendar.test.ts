@@ -32,6 +32,7 @@ import {
     expectSameDates,
     fixtureElement,
     getElementCenter,
+    getFocusableDay,
     sendKeyMultipleTimes,
 } from './helpers.js';
 
@@ -157,9 +158,7 @@ describe('Calendar', () => {
         let prevButton: ActionButton;
 
         beforeEach(() => {
-            focusableDay = element.shadowRoot.querySelector(
-                "td.tableCell[tabindex='0']"
-            ) as HTMLElement;
+            focusableDay = getFocusableDay(element);
             nextButton =
                 element.shadowRoot.querySelector(NEXT_BUTTON_SELECTOR)!;
             prevButton =
@@ -257,9 +256,7 @@ describe('Calendar', () => {
             nextButton =
                 element.shadowRoot.querySelector(NEXT_BUTTON_SELECTOR)!;
 
-            focusableDay = element.shadowRoot.querySelector(
-                "td.tableCell[tabindex='0']"
-            )!;
+            focusableDay = getFocusableDay(element);
         });
 
         afterEach(async () => {
@@ -577,9 +574,7 @@ describe('Calendar', () => {
             element = await fixtureElement({
                 props: { min, max },
             });
-            const focusableDay = element.shadowRoot.querySelector(
-                "td.tableCell[tabindex='0']"
-            ) as HTMLElement;
+            const focusableDay = getFocusableDay(element);
             focusableDay.focus();
             await sendKeyMultipleTimes('ArrowRight', dayOffset + 3);
             await elementUpdated(element);
@@ -591,9 +586,7 @@ describe('Calendar', () => {
             element = await fixtureElement({
                 props: { min, max },
             });
-            const focusableDay = element.shadowRoot.querySelector(
-                "td.tableCell[tabindex='0']"
-            ) as HTMLElement;
+            const focusableDay = getFocusableDay(element);
             focusableDay.focus();
             await sendKeyMultipleTimes('ArrowLeft', dayOffset + 3);
             await elementUpdated(element);
@@ -605,9 +598,7 @@ describe('Calendar', () => {
             element = await fixtureElement({
                 props: { min, max },
             });
-            const focusableDay = element.shadowRoot.querySelector(
-                "td.tableCell[tabindex='0']"
-            ) as HTMLElement;
+            const focusableDay = getFocusableDay(element);
             focusableDay.focus();
             await sendKeyMultipleTimes(
                 'ArrowUp',
@@ -622,9 +613,7 @@ describe('Calendar', () => {
             element = await fixtureElement({
                 props: { min, max },
             });
-            const focusableDay = element.shadowRoot.querySelector(
-                "td.tableCell[tabindex='0']"
-            ) as HTMLElement;
+            const focusableDay = getFocusableDay(element);
             focusableDay.focus();
             await sendKeyMultipleTimes(
                 'ArrowDown',
@@ -654,7 +643,9 @@ describe('Calendar', () => {
         it('should update value when an available day is clicked', async () => {
             await sendMouse({
                 type: 'click',
-                position: getElementCenter(availableDayElement),
+                position: getElementCenter(
+                    availableDayElement.querySelector('span') as HTMLElement
+                ),
             });
             await elementUpdated(element);
 
@@ -712,7 +703,9 @@ describe('Calendar', () => {
         it("should dispatch 'change' when an available day is selected by clicking", async () => {
             await sendMouse({
                 type: 'click',
-                position: getElementCenter(availableDayElement),
+                position: getElementCenter(
+                    availableDayElement.querySelector('span') as HTMLElement
+                ),
             });
             await elementUpdated(element);
 
@@ -819,9 +812,7 @@ describe('Calendar', () => {
         });
 
         it('should not have focusable days', () => {
-            const focusableDay = element.shadowRoot.querySelector(
-                "td.tableCell[tabindex='0']"
-            ) as HTMLElement;
+            const focusableDay = getFocusableDay(element);
 
             expect(focusableDay).to.be.null;
         });
@@ -871,9 +862,7 @@ describe('Calendar', () => {
         it('should not navigate to BC era - ArrowUp', async () => {
             const value = new CalendarDate(1, 1, 5);
             element = await fixtureElement({ props: { value } });
-            const focusableDay = element.shadowRoot.querySelector(
-                "td.tableCell[tabindex='0']"
-            ) as HTMLElement;
+            const focusableDay = getFocusableDay(element);
 
             focusableDay.focus();
             await sendKeyMultipleTimes(
@@ -888,9 +877,7 @@ describe('Calendar', () => {
         it('should not navigate to BC era - ArrowLeft', async () => {
             const value = new CalendarDate(1, 1, 5);
             element = await fixtureElement({ props: { value } });
-            const focusableDay = element.shadowRoot.querySelector(
-                "td.tableCell[tabindex='0']"
-            ) as HTMLElement;
+            const focusableDay = getFocusableDay(element);
 
             focusableDay.focus();
             await sendKeyMultipleTimes('ArrowLeft', value.day + 3);
@@ -914,9 +901,7 @@ describe('Calendar', () => {
             value = value.set({ year: value.calendar.getYearsInEra(value) });
             const lastDate = endOfMonth(value);
             element = await fixtureElement({ props: { value } });
-            const focusableDay = element.shadowRoot.querySelector(
-                "td.tableCell[tabindex='0']"
-            ) as HTMLElement;
+            const focusableDay = getFocusableDay(element);
 
             focusableDay.focus();
             await sendKeyMultipleTimes(
@@ -933,9 +918,7 @@ describe('Calendar', () => {
             value = value.set({ year: value.calendar.getYearsInEra(value) });
             const lastDate = endOfMonth(value);
             element = await fixtureElement({ props: { value } });
-            const focusableDay = element.shadowRoot.querySelector(
-                "td.tableCell[tabindex='0']"
-            ) as HTMLElement;
+            const focusableDay = getFocusableDay(element);
 
             focusableDay.focus();
             await sendKeyMultipleTimes(
