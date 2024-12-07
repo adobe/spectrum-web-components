@@ -88,19 +88,22 @@ export class Overlay extends ComputedOverlayBase {
      * This behavior helps to manage the performance and user experience by
      * preventing multiple overlays from opening simultaneously and ensuring
      * a smooth transition between opening and closing overlays.
-     *
-     * @type {boolean}
-     * @default false
      */
     @property({ type: Boolean })
     override get delayed(): boolean {
         return this.elements.at(-1)?.hasAttribute('delayed') || this._delayed;
     }
 
+    /**
+     * Sets the delayed state of the overlay.
+     */
     override set delayed(delayed: boolean) {
         this._delayed = delayed;
     }
 
+    /**
+     * Internal property to store the delayed state of the overlay.
+     */
     private _delayed = false;
 
     /**
@@ -119,15 +122,15 @@ export class Overlay extends ComputedOverlayBase {
      * When set to `true`, the overlay is disabled, and any active strategy is aborted.
      * The overlay will also close if it is currently open. When set to `false`, the
      * overlay will re-bind events and re-open if it was previously open.
-     *
-     * @type {boolean}
-     * @default false
      */
     @property({ type: Boolean })
     override get disabled(): boolean {
         return this._disabled;
     }
 
+    /**
+     * Sets the disabled state of the overlay.
+     */
     override set disabled(disabled: boolean) {
         this._disabled = disabled;
         if (disabled) {
@@ -143,6 +146,9 @@ export class Overlay extends ComputedOverlayBase {
         }
     }
 
+    /**
+     * Internal property to store the disabled state of the overlay.
+     */
     private _disabled = false;
 
     /**
@@ -162,8 +168,6 @@ export class Overlay extends ComputedOverlayBase {
 
     /**
      * Determines if the overlay has a non-virtual trigger element.
-     *
-     * @returns {boolean} `true` if the trigger element is not a virtual trigger, otherwise `false`.
      */
     private get hasNonVirtualTrigger(): boolean {
         return (
@@ -177,9 +181,6 @@ export class Overlay extends ComputedOverlayBase {
      * Overlay along the main axis from the trigger, or a 2-tuple to define the offset
      * along both the main axis and the cross axis. This option has no effect when there
      * is no trigger element.
-     *
-     * @type {number | [number, number]}
-     * @default 0
      */
     @property({ type: Number })
     override offset: number | [number, number] = 0;
@@ -190,9 +191,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * If the `PlacementController` instance does not already exist, it is created and
      * assigned to the `_placementController` property.
-     *
-     * @protected
-     * @returns {PlacementController} The `PlacementController` instance.
      */
     protected override get placementController(): PlacementController {
         if (!this._placementController) {
@@ -205,35 +203,30 @@ export class Overlay extends ComputedOverlayBase {
      * Indicates whether the Overlay is projected onto the "top layer" or not.
      *
      * When set to `true`, the overlay is open and visible. When set to `false`, the overlay is closed and hidden.
-     *
-     * @type {boolean}
-     * @default false
      */
     @property({ type: Boolean, reflect: true })
     override get open(): boolean {
         return this._open;
     }
 
+    /**
+     * Sets the open state of the overlay.
+     */
     override set open(open: boolean) {
-        // Don't respond if the overlay is disabled.
         if (open && this.disabled) return;
 
-        // Don't respond if the state is not changing.
         if (open === this.open) return;
 
         // Don't respond if the overlay is in the shadow state during a longpress.
         // The shadow state occurs when the first "click" would normally close the popover.
         if (this.strategy?.activelyOpening && !open) return;
 
-        // Update the internal _open property.
         this._open = open;
 
-        // Increment the open count if the overlay is opening.
         if (this.open) {
             Overlay.openCount += 1;
         }
 
-        // Request an update to re-render the component if necessary.
         this.requestUpdate('open', !this.open);
 
         // Request slottable content if the overlay is opening.
@@ -242,22 +235,20 @@ export class Overlay extends ComputedOverlayBase {
         }
     }
 
+    /**
+     * Internal property to store the open state of the overlay.
+     */
     private _open = false;
 
     /**
      * Tracks the number of overlays that have been opened.
      *
      * This static property is used to manage the stacking context of multiple overlays.
-     *
-     * @type {number}
-     * @default 1
      */
     static openCount = 1;
 
     /**
      * Instruct the Overlay where to place itself in relationship to the trigger element.
-     *
-     * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
      */
     @property()
     override placement?: Placement;
@@ -266,9 +257,6 @@ export class Overlay extends ComputedOverlayBase {
      * The state in which the last `request-slottable` event was dispatched.
      *
      * This property ensures that overlays do not dispatch the same state twice in a row.
-     *
-     * @type {boolean}
-     * @default false
      */
     private lastRequestSlottableState = false;
 
@@ -276,9 +264,6 @@ export class Overlay extends ComputedOverlayBase {
      * Whether to pass focus to the overlay once opened, or
      * to the appropriate value based on the "type" of the overlay
      * when set to `"auto"`.
-     *
-     * @type {'true' | 'false' | 'auto'}
-     * @default 'auto'
      */
     @property({ attribute: 'receives-focus' })
     override receivesFocus: 'true' | 'false' | 'auto' = 'auto';
@@ -287,8 +272,6 @@ export class Overlay extends ComputedOverlayBase {
      * A reference to the slot element within the overlay.
      *
      * This element is used to manage the content slotted into the overlay.
-     *
-     * @type {HTMLSlotElement}
      */
     @query('slot')
     slotEl!: HTMLSlotElement;
@@ -298,17 +281,16 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This property reflects the current state of the overlay, such as 'opened' or 'closed'.
      * When the state changes, it triggers the appropriate actions and updates the component.
-     *
-     * @type {OverlayState}
-     * @default 'closed'
      */
     @state()
     override get state(): OverlayState {
         return this._state;
     }
 
+    /**
+     * Sets the state of the overlay.
+     */
     override set state(state) {
-        // Do not respond if the state is not changing.
         if (state === this.state) return;
 
         const oldState = this.state;
@@ -324,6 +306,9 @@ export class Overlay extends ComputedOverlayBase {
         this.requestUpdate('state', oldState);
     }
 
+    /**
+     * Internal property to store the state of the overlay.
+     */
     override _state: OverlayState = 'closed';
 
     /**
@@ -335,8 +320,6 @@ export class Overlay extends ComputedOverlayBase {
     /**
      * The padding around the tip of the overlay.
      * This property defines the padding around the tip of the overlay, which can be used to adjust its positioning.
-     *
-     * @type {number}
      */
     @property({ type: Number, attribute: 'tip-padding' })
     tipPadding?: number;
@@ -346,8 +329,6 @@ export class Overlay extends ComputedOverlayBase {
      * interaction (click | hover | longpress) by which the overlay should open.
      * The format is `trigger@interaction`, e.g., `trigger@click` opens the overlay
      * when an element with the ID "trigger" is clicked.
-     *
-     * @type {string}
      */
     @property()
     trigger?: string;
@@ -355,8 +336,6 @@ export class Overlay extends ComputedOverlayBase {
     /**
      * An element reference for the trigger element that the overlay should relate to.
      * This property is not reflected as an attribute.
-     *
-     * @type {HTMLElement | VirtualTrigger | null}
      */
     @property({ attribute: false })
     override triggerElement: HTMLElement | VirtualTrigger | null = null;
@@ -364,27 +343,20 @@ export class Overlay extends ComputedOverlayBase {
     /**
      * The specific interaction to listen for on the `triggerElement` to open the overlay.
      * This property is not reflected as an attribute.
-     *
-     * @type {TriggerInteraction}
      */
     @property({ attribute: false })
     triggerInteraction?: TriggerInteraction;
 
     /**
      * Configures the open/close heuristics of the Overlay.
-     *
-     * @type {"auto" | "hint" | "manual" | "modal" | "page"}
-     * @default "auto"
      */
     @property()
     override type: OverlayTypes = 'auto';
 
     /**
      * Tracks whether the overlay was previously open.
-     * This is used to restore the open state when re-enabling the overlay.
      *
-     * @type {boolean}
-     * @default false
+     * This is used to restore the open state when re-enabling the overlay.
      */
     protected wasOpen = false;
 
@@ -392,9 +364,6 @@ export class Overlay extends ComputedOverlayBase {
      * Provides an instance of the `ElementResolutionController` for managing the element
      * that the overlay should be associated with. If the instance does not already exist,
      * it is created and assigned to the `_elementResolver` property.
-     *
-     * @protected
-     * @returns {ElementResolutionController} The `ElementResolutionController` instance.
      */
     protected override get elementResolver(): ElementResolutionController {
         if (!this._elementResolver) {
@@ -406,10 +375,8 @@ export class Overlay extends ComputedOverlayBase {
 
     /**
      * Determines if the overlay uses a dialog.
-     * Returns `true` if the overlay type is "modal" or "page".
      *
-     * @private
-     * @returns {boolean} `true` if the overlay uses a dialog, otherwise `false`.
+     * Returns `true` if the overlay type is "modal" or "page".
      */
     private get usesDialog(): boolean {
         return this.type === 'modal' || this.type === 'page';
@@ -417,9 +384,6 @@ export class Overlay extends ComputedOverlayBase {
 
     /**
      * Determines the value for the popover attribute based on the overlay type.
-     *
-     * @private
-     * @returns {'auto' | 'manual' | undefined} The popover value or undefined if not applicable.
      */
     private get popoverValue(): 'auto' | 'manual' | undefined {
         const hasPopoverAttribute = 'popover' in this;
@@ -441,9 +405,6 @@ export class Overlay extends ComputedOverlayBase {
 
     /**
      * Determines if the overlay requires positioning based on its type and state.
-     *
-     * @protected
-     * @returns {boolean} True if the overlay requires positioning, otherwise false.
      */
     protected get requiresPositioning(): boolean {
         // Do not position "page" overlays as they should block the entire UI.
@@ -463,12 +424,8 @@ export class Overlay extends ComputedOverlayBase {
      * This method calculates the necessary parameters for positioning the overlay,
      * such as offset, placement, and tip padding, and then delegates the actual
      * positioning to the `PlacementController`.
-     *
-     * @protected
-     * @override
      */
     protected override managePosition(): void {
-        // Do not proceed if positioning is not required or the overlay is not open.
         if (!this.requiresPositioning || !this.open) return;
 
         const offset = this.offset || 0;
@@ -493,10 +450,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method handles the necessary steps to open the popover, including managing delays,
      * ensuring the popover is in the DOM, making transitions, and applying focus.
-     *
-     * @protected
-     * @override
-     * @returns {Promise<void>} A promise that resolves when the popover has been fully opened.
      */
     protected override async managePopoverOpen(): Promise<void> {
         // Call the base class method to handle any initial setup.
@@ -539,12 +492,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method handles the focus management for the overlay, ensuring that the correct
      * element receives focus based on the overlay's type and state.
-     *
-     * @protected
-     * @override
-     * @param {boolean} targetOpenState - The target open state of the overlay.
-     * @param {HTMLElement | null} focusEl - The element to focus after opening the popover.
-     * @returns {Promise<void>} A promise that resolves when the focus has been applied.
      */
     protected override async applyFocus(
         targetOpenState: boolean,
@@ -580,9 +527,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method ensures that focus is returned to the trigger element when the overlay is closed,
      * unless the overlay is of type "hint" or the focus is already outside the overlay.
-     *
-     * @protected
-     * @override
      */
     protected override returnFocus(): void {
         // Do not proceed if the overlay is open or if the overlay type is "hint".
@@ -590,8 +534,6 @@ export class Overlay extends ComputedOverlayBase {
 
         /**
          * Retrieves the ancestors of the currently focused element.
-         *
-         * @returns {HTMLElement[]} An array of ancestor elements.
          */
         const getAncestors = (): HTMLElement[] => {
             const ancestors: HTMLElement[] = [];
@@ -637,9 +579,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method ensures that the overlay is closed when the focus moves to an element
      * outside of the overlay, unless the focus is moved to a related element.
-     *
-     * @private
-     * @param {FocusEvent} event - The focus out event.
      */
     private closeOnFocusOut = (event: FocusEvent): void => {
         // If the related target (newly focused element) is not known, do nothing.
@@ -673,10 +612,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method handles the necessary steps to open or close the overlay, including updating the state,
      * managing the overlay stack, and handling focus events.
-     *
-     * @protected
-     * @param {boolean} oldOpen - The previous open state of the overlay.
-     * @returns {Promise<void>} A promise that resolves when the overlay has been fully managed.
      */
     protected async manageOpen(oldOpen: boolean): Promise<void> {
         // Prevent entering the manage workflow if the overlay is not connected to the DOM.
@@ -758,8 +693,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method sets up the appropriate event handling strategy for the overlay, ensuring that
      * it responds correctly to user interactions such as clicks, hovers, or long presses.
-     *
-     * @protected
      */
     protected bindEvents(): void {
         // Abort any existing strategy to ensure a clean setup.
@@ -786,9 +719,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method checks the new state of the event and calls `handleBrowserClose`
      * if the new state is not 'open'.
-     *
-     * @protected
-     * @param {Event & { newState: string }} event - The `beforetoggle` event with the new state.
      */
     protected handleBeforetoggle(event: Event & { newState: string }): void {
         if (event.newState !== 'open') {
@@ -801,9 +731,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method stops the propagation of the event and closes the overlay if it is not
      * actively opening. If the overlay is actively opening, it calls `manuallyKeepOpen`.
-     *
-     * @protected
-     * @param {Event} event - The browser's close event.
      */
     protected handleBrowserClose(event: Event): void {
         event.stopPropagation();
@@ -818,9 +745,6 @@ export class Overlay extends ComputedOverlayBase {
      * Manually keeps the overlay open.
      *
      * This method sets the overlay to open, allows placement updates, and manages the open state.
-     *
-     * @public
-     * @override
      */
     public override manuallyKeepOpen(): void {
         this.open = true;
@@ -834,8 +758,6 @@ export class Overlay extends ComputedOverlayBase {
      * This method checks if there are any elements in the slot. If there are no elements,
      * it releases the description from the strategy. If there are elements and the trigger
      * is non-virtual, it prepares the description for the trigger element.
-     *
-     * @protected
      */
     protected handleSlotchange(): void {
         if (!this.elements.length) {
@@ -854,9 +776,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method checks the `willPreventClose` flag and resets it to `false`.
      * It returns the value of the `willPreventClose` flag.
-     *
-     * @public
-     * @returns {boolean} `true` if the overlay should prevent closing, otherwise `false`.
      */
     public shouldPreventClose(): boolean {
         const shouldPreventClose = this.willPreventClose;
@@ -870,9 +789,6 @@ export class Overlay extends ComputedOverlayBase {
      * This method dispatches a `SlottableRequestEvent` to request or remove slottable content
      * based on the current open state of the overlay. It ensures that the same state is not
      * dispatched twice in a row.
-     *
-     * @protected
-     * @override
      */
     protected override requestSlottable(): void {
         // Do not dispatch the same state twice in a row.
@@ -905,9 +821,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method handles various tasks before the component updates, such as setting an ID,
      * managing the open state, resolving the trigger element, and binding events.
-     *
-     * @override
-     * @param {PropertyValues} changes - The properties that have changed.
      */
     override willUpdate(changes: PropertyValues): void {
         // Ensure the component has an ID attribute.
@@ -962,9 +875,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method handles various tasks after the component updates, such as updating the placement
      * attribute, resetting the overlay position, and clearing the overlay position based on the state.
-     *
-     * @override
-     * @param {PropertyValues} changes - The properties that have changed.
      */
     protected override updated(changes: PropertyValues): void {
         // Call the base class method to handle any initial setup.
@@ -1002,9 +912,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method returns a template result containing a slot element. The slot element
      * listens for the `slotchange` event to manage the overlay's state.
-     *
-     * @protected
-     * @returns {TemplateResult} The template result containing the slot element.
      */
     protected renderContent(): TemplateResult {
         return html`
@@ -1017,9 +924,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method returns an object containing CSS custom properties for the dialog element.
      * The `--swc-overlay-open-count` custom property is set to the current open count of overlays.
-     *
-     * @private
-     * @returns {StyleInfo} The style map for the dialog element.
      */
     private get dialogStyleMap(): StyleInfo {
         return {
@@ -1032,9 +936,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method returns a template result containing a dialog element. The dialog element
      * includes various attributes and event listeners to manage the overlay's state and behavior.
-     *
-     * @protected
-     * @returns {TemplateResult} The template result containing the dialog element.
      */
     protected renderDialog(): TemplateResult {
         /**
@@ -1071,9 +972,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method returns a template result containing a div element styled as a popover.
      * The popover element includes various attributes and event listeners to manage the overlay's state and behavior.
-     *
-     * @protected
-     * @returns {TemplateResult} The template result containing the popover element.
      */
     protected renderPopover(): TemplateResult {
         /**
@@ -1110,9 +1008,6 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method returns a template result containing either a dialog or popover element
      * based on the overlay type. It also includes a slot for longpress descriptors.
-     *
-     * @override
-     * @returns {TemplateResult} The template result containing the overlay content.
      */
     public override render(): TemplateResult {
         const isDialog = this.type === 'modal' || this.type === 'page';
@@ -1126,8 +1021,6 @@ export class Overlay extends ComputedOverlayBase {
      * Lifecycle method called when the component is added to the DOM.
      *
      * This method sets up event listeners and binds events if the component has already updated.
-     *
-     * @override
      */
     override connectedCallback(): void {
         super.connectedCallback();
@@ -1147,8 +1040,6 @@ export class Overlay extends ComputedOverlayBase {
      * Lifecycle method called when the component is removed from the DOM.
      *
      * This method releases the description from the strategy and updates the 'open' property.
-     *
-     * @override
      */
     override disconnectedCallback(): void {
         // Release the description from the strategy.

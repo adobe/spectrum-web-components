@@ -23,26 +23,56 @@ import styles from './underlay.css.js';
 /**
  * @element sp-underlay
  *
- * @fires close - When the underlay is "clicked" and the consuming pattern should chose whether to close based on that interaction
+ * The `Underlay` component is a custom web component that provides an underlay element
+ * which can be used to create a backdrop for modals, dialogs, or other overlay elements.
+ * It includes properties and methods to manage its state and interactions.
+ *
+ * @fires close - Dispatched when the underlay is clicked, allowing the consuming pattern to decide whether to close based on that interaction.
  */
 export class Underlay extends SpectrumElement {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
         return [styles];
     }
 
+    /**
+     * Tracks whether a click event can be processed.
+     */
     private canClick = false;
 
+    /**
+     * Indicates whether the underlay is open.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    /**
+     * Dispatches a 'close' event when the underlay is clicked.
+     */
     public override click(): void {
         this.dispatchEvent(new Event('close'));
     }
 
+    /**
+     * Handles the pointerdown event.
+     *
+     * This method sets the canClick flag to true, indicating that a click event can be processed.
+     */
     protected handlePointerdown(): void {
         this.canClick = true;
     }
 
+    /**
+     * Handles the pointerup event.
+     *
+     * This method checks if the canClick flag is true and, if so, calls the click method to dispatch
+     * the close event. It then resets the canClick flag to false.
+     */
     protected handlePointerup(): void {
         if (this.canClick) {
             this.click();
@@ -50,10 +80,20 @@ export class Underlay extends SpectrumElement {
         this.canClick = false;
     }
 
+    /**
+     * Renders the content of the underlay component.
+     *
+     * This method returns an empty template result.
+     */
     protected override render(): TemplateResult {
         return html``;
     }
 
+    /**
+     * Lifecycle method called after the component's DOM has been rendered for the first time.
+     *
+     * This method sets up event listeners for pointerdown and pointerup events.
+     */
     protected override firstUpdated(): void {
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('pointerup', this.handlePointerup);
