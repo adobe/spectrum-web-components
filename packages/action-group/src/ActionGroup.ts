@@ -32,9 +32,8 @@ const EMPTY_SELECTION: string[] = [];
 
 /**
  * @element sp-action-group
- * @slot - the sp-action-button elements that make up the group
- *
- * @fires change - Announces that selection state has been changed by user
+ * @slot - The sp-action-button elements that make up the group.
+ * @fires change - Announces that the selection state has been changed by the user.
  */
 export class ActionGroup extends SizedMixin(SpectrumElement, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],
@@ -43,7 +42,10 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
-
+    /**
+     * Sets the list of action buttons in the group.
+     * Clears the element cache in the roving tabindex controller.
+     */
     public set buttons(buttons: ActionButton[]) {
         /* c8 ignore next 1 */
         if (buttons === this.buttons) return;
@@ -55,13 +57,23 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         return this._buttons;
     }
 
+    /**
+     * The internal list of action buttons
+     */
     public _buttons: ActionButton[] = [];
 
+    /**
+     * The CSS selector used to identify action buttons within the group.
+     */
     protected _buttonSelector = 'sp-action-button, sp-action-menu';
 
     constructor() {
         super();
 
+        /**
+         * Initializes the MutationController to observe changes in the child elements.
+         * Configures the controller to manage buttons when changes are detected.
+         */
         new MutationController(this, {
             config: {
                 childList: true,
@@ -74,9 +86,17 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         });
     }
 
+    /**
+     * Initializes the RovingTabindexController to manage focus within the action group.
+     * Configures the controller to determine the initial focus index and manage focusable elements.
+     */
     rovingTabindexController = new RovingTabindexController<ActionButton>(
         this,
         {
+            /**
+             * Determines the initial focus index within the action group.
+             * Finds the first selected and enabled button, or the first enabled button if none are selected.
+             */
             focusInIndex: (elements: ActionButton[]) => {
                 let firstEnabledIndex = -1;
                 const firstSelectedIndex = elements.findIndex((el, index) => {
@@ -89,37 +109,73 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     ? firstSelectedIndex
                     : firstEnabledIndex;
             },
+
+            /**
+             * Retrieves the list of action buttons within the group.
+             */
             elements: () => this.buttons,
             isFocusableElement: (el: ActionButton) => !el.disabled,
         }
     );
 
+    /**
+     * When true, the action group is styled in a compact form.
+     */
     @property({ type: Boolean, reflect: true })
     public compact = false;
 
+    /**
+     * When true, the action group is styled with emphasis.
+     */
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    /**
+     * When true, the action group items are justified to take up the full width.
+     */
     @property({ type: Boolean, reflect: true })
     public justified = false;
 
+    /**
+     * The label for the action group.
+     */
     @property({ type: String })
     public label = '';
 
+    /**
+     * When true, the action group is styled with a quieter appearance.
+     */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
+    /**
+     * Defines the selection mode for the action group.
+     * Can be 'single' for single selection or 'multiple' for multiple selections.
+     */
     @property({ type: String })
     public selects: undefined | 'single' | 'multiple';
 
+    /**
+     * The static color variant to use for the action group.
+     * Can be 'white' or 'black'.
+     */
     @property({ reflect: true, attribute: 'static-color' })
     public staticColor?: 'white' | 'black';
 
+    /**
+     * When true, the action group is displayed vertically.
+     */
     @property({ type: Boolean, reflect: true })
     public vertical = false;
 
+    /**
+     * The internal list of selected items.
+     */
     private _selected: string[] = EMPTY_SELECTION;
 
+    /**
+     * The list of selected items.
+     */
     set selected(selected: string[]) {
         this.requestUpdate('selected', this._selected);
         this._selected = selected;
@@ -137,6 +193,10 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     @query('slot')
     slotElement!: HTMLSlotElement;
 
+    /**
+     * Dispatches a 'change' event to notify listeners of the selection change.
+     * If the event is canceled, the selection state is reverted.
+     */
     private dispatchChange(old: string[]): void {
         const applyDefault = this.dispatchEvent(
             new Event('change', {
@@ -154,6 +214,11 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         }
     }
 
+    /**
+     * Sets the selected items and optionally announces the change.
+     * If the selection is the same as the current selection, no action is taken.
+     * If announce is true, a 'change' event is dispatched.
+     */
     private setSelected(selected: string[], announce?: boolean): void {
         /* c8 ignore next 1 */
         if (selected === this.selected) return;
@@ -165,10 +230,17 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         this.dispatchChange(old);
     }
 
+    /**
+     * Sets focus on the action group using the roving tabindex controller.
+     */
     public override focus(options?: FocusOptions): void {
         this.rovingTabindexController.focus(options);
     }
 
+    /**
+     * Deselects all selected buttons in the action group.
+     * Updates the selected state and tabindex of each button.
+     */
     private deselectSelectedButtons(): void {
         this.buttons.forEach((button) => {
             if (!button.selected) return;
@@ -182,11 +254,19 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         });
     }
 
+    /**
+     * Handles the change event for an action button.
+     * Stops propagation and prevents the default action.
+     */
     private handleActionButtonChange(event: Event): void {
         event.stopPropagation();
         event.preventDefault();
     }
 
+    /**
+     * Handles the click event on an action button.
+     * Updates the selection state based on the selection mode (single or multiple).
+     */
     private handleClick(event: Event): void {
         const target = event.target as ActionButton;
         if (typeof target.value === 'undefined') {
@@ -194,6 +274,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         }
         switch (this.selects) {
             case 'single': {
+                // Deselect all buttons and select the clicked button
                 this.deselectSelectedButtons();
                 target.selected = true;
                 target.tabIndex = 0;
@@ -202,6 +283,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 break;
             }
             case 'multiple': {
+                // Toggle the selected state of the clicked button
                 const selected = [...this.selected];
                 target.selected = !target.selected;
                 target.setAttribute(
@@ -215,6 +297,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 }
                 this.setSelected(selected, true);
 
+                // Update tabindex for all buttons
                 this.buttons.forEach((button) => {
                     button.tabIndex = -1;
                 });
@@ -228,10 +311,18 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         }
     }
 
+    /**
+     * Applies the selection state to the action buttons.
+     * Waits for the manageSelects method to complete.
+     */
     private async applySelects(): Promise<void> {
         await this.manageSelects(true);
     }
 
+    /**
+     * Manages the selection state of the action buttons.
+     * Updates the role and aria attributes based on the selection mode.
+     */
     private async manageSelects(applied?: boolean): Promise<void> {
         if (!this.buttons.length) {
             return;
@@ -240,7 +331,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         const options = this.buttons;
         switch (this.selects) {
             case 'single': {
-                // single behaves as a radio group
+                // Single selection mode, behaves as a radio group
                 this.setAttribute('role', 'radiogroup');
                 const selections: ActionButton[] = [];
                 const updates = options.map(async (option) => {
@@ -265,7 +356,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 break;
             }
             case 'multiple': {
-                // switching from single to multiple, remove role="radiogroup"
+                // Multiple selection mode, remove role="radiogroup" if present
                 if (this.getAttribute('role') === 'radiogroup') {
                     this.removeAttribute('role');
                 }
@@ -292,7 +383,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 break;
             }
             default:
-                // if user defines .selected
+                // Default behavior when user defines .selected
                 if (this.selected.length) {
                     const selections: ActionButton[] = [];
                     const updates = options.map(async (option) => {
@@ -314,6 +405,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                         })
                     );
                 } else {
+                    // Set role to 'button' for all options
                     this.buttons.forEach((option) => {
                         option.setAttribute('role', 'button');
                     });
@@ -376,6 +468,10 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         }
     }
 
+    /**
+     * Updates the properties of the action buttons based on the current state of the action group.
+     * Applies changes to quiet, emphasized, staticColor, selected, and size properties.
+     */
     private manageChildren(changes?: PropertyValues): void {
         this.buttons.forEach((button) => {
             if (this.quiet || changes?.get('quiet')) {
@@ -399,9 +495,13 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             }
         });
     }
-
+    // Indicates whether the action buttons have been managed.
     private hasManaged = false;
 
+    /**
+     * Manages the action buttons within the group.
+     * Updates the internal list of buttons and applies necessary properties.
+     */
     private manageButtons = (): void => {
         if (!this.slotElement) {
             return;
@@ -422,7 +522,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         }, []);
         this.buttons = buttons as ActionButton[];
         if (this.selects || !this.hasManaged) {
-            // <select> element merges selected so following paradigm here
+            // Merge selected buttons similar to <select> element behavior
             const currentlySelectedButtons: string[] = [];
             this.buttons.forEach((button: ActionButton) => {
                 if (button.selected) {
