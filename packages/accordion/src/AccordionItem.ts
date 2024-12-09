@@ -105,6 +105,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
     public override get focusElement(): HTMLElement {
         return this.shadowRoot.querySelector('#header') as HTMLElement;
     }
+
     /**
      * Handles the click event on the accordion item's header.
      * Toggles the open state of the accordion item if it is not disabled.
@@ -135,6 +136,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
             this.open = !this.open;
         }
     }
+
     /**
      * Renders the chevron icon based on the size of the accordion item.
      */

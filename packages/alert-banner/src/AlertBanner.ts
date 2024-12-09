@@ -101,7 +101,7 @@ export class AlertBanner extends SpectrumElement {
     /**
      * Renders the appropriate icon based on the variant.
      */
-    renderIcon(variant: string): TemplateResult {
+    protected renderIcon(variant: string): TemplateResult {
         switch (variant) {
             case 'info':
                 return html`
@@ -138,7 +138,7 @@ export class AlertBanner extends SpectrumElement {
     /**
      * Closes the alert banner by setting the open property to false.
      */
-    close(): void {
+    public close(): void {
         this.open = false;
     }
 

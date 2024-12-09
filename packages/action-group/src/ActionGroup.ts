@@ -495,6 +495,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             }
         });
     }
+
     // Indicates whether the action buttons have been managed.
     private hasManaged = false;
 
