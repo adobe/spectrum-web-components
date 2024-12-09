@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
+
+### Bug Fixes
+
+-   **action-button:** action-button with href can be perceived by screen reader ([#4927](https://github.com/adobe/spectrum-web-components/issues/4927)) ([2a0b3a5](https://github.com/adobe/spectrum-web-components/commit/2a0b3a5b300d51c002db60c6d899694d74834d39))
+
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
 **Note:** Version bump only for package @spectrum-web-components/action-button

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/progress-bar",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -59,8 +59,8 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^1.0.1",
-        "@spectrum-web-components/field-label": "^1.0.1",
-        "@spectrum-web-components/reactive-controllers": "^1.0.1",
+        "@spectrum-web-components/field-label": "^1.0.3",
+        "@spectrum-web-components/reactive-controllers": "^1.0.3",
         "@spectrum-web-components/shared": "^1.0.1"
     },
     "devDependencies": {
