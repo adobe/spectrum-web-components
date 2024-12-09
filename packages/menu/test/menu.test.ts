@@ -419,6 +419,38 @@ describe('Menu', () => {
         el.dispatchEvent(arrowDownEvent());
         expect(secondItem.focused, 'second').to.be.true;
     });
+
+    it('allows keyboard events to bubble up', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu id="test">
+                <sp-menu-item class="first">Deselect</sp-menu-item>
+                <sp-menu-item>Invert Selection</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-item selected class="selected">
+                    Save Selection
+                </sp-menu-item>
+            </sp-menu>
+        `);
+
+        await elementUpdated(el);
+        await nextFrame();
+        el.focus();
+
+        expect(document.activeElement).to.equal(el);
+
+        // Add a listener to the document to check if the event bubbles up
+        const eventSpy = spy();
+        document.addEventListener('keydown', eventSpy);
+
+        // press a key
+        await sendKeys({
+            press: 'S',
+        });
+
+        expect(eventSpy.callCount).to.equal(1);
+    });
+
     it('handles focus across focused MenuItem removals', async () => {
         const el = await fixture<Menu>(html`
             <sp-menu id="test">
