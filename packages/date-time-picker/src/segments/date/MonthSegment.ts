@@ -19,8 +19,8 @@ export class MonthSegment extends EditableSegment {
     public maxValue: number = 12;
     public value?: number;
 
-    constructor(formatted: string) {
-        super(SegmentTypes.Month, formatted);
+    constructor(formatted: string, label: string) {
+        super(SegmentTypes.Month, formatted, label);
     }
 
     public setLimits(currentDate: ZonedDateTime): void {

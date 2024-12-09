@@ -11,3 +11,10 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-calendar.css');
+
+.table-cell span[role='button'] {
+    border-radius: var(
+        --mod-calendar-day-width,
+        var(--spectrum-calendar-day-width)
+    );
+}

@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { DateFormatter, ZonedDateTime } from '@internationalized/date';
-import { EditableSegment } from '../EditableSegment';
-import { AM, PM, SegmentTypes } from '../../types';
 import { getDayPeriodModifier } from '../../helpers';
+import { AM, PM, SegmentTypes } from '../../types';
+import { EditableSegment } from '../EditableSegment';
 
 export class DayPeriodSegment extends EditableSegment {
     public minValue: typeof AM = AM;
@@ -22,8 +22,8 @@ export class DayPeriodSegment extends EditableSegment {
     private localizedMinValue: string = 'AM';
     private localizedMaxValue: string = 'PM';
 
-    constructor(formatted: string) {
-        super(SegmentTypes.DayPeriod, formatted);
+    constructor(formatted: string, label: string) {
+        super(SegmentTypes.DayPeriod, formatted, label);
     }
 
     private toggleAmPm(): void {
