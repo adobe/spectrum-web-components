@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/breadcrumbs",
-    "version": "1.0.1",
+    "version": "0.0.0-20241209155954",
     "publishConfig": {
         "access": "public"
     },
@@ -67,11 +67,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-menu": "^1.0.1",
-        "@spectrum-web-components/base": "^1.0.1",
-        "@spectrum-web-components/icons-workflow": "^1.0.1",
-        "@spectrum-web-components/link": "^1.0.1",
-        "@spectrum-web-components/menu": "^1.0.1"
+        "@spectrum-web-components/action-menu": "0.0.0-20241209155954",
+        "@spectrum-web-components/base": "0.0.0-20241209155954",
+        "@spectrum-web-components/icons-workflow": "0.0.0-20241209155954",
+        "@spectrum-web-components/link": "0.0.0-20241209155954",
+        "@spectrum-web-components/menu": "0.0.0-20241209155954"
     },
     "devDependencies": {
         "@spectrum-css/breadcrumb": "^10.0.0-s2-foundations.15"

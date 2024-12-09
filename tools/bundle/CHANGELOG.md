@@ -1,5 +1,85 @@
 # Change Log
 
+## 0.0.0-20241209155954
+
+### Patch Changes
+
+-   Updated dependencies [[`f1d24e0`](https://github.com/adobe/spectrum-web-components/commit/f1d24e095e48e804d601c97abfbb28d3a9ad1a92), [`b34b6fa`](https://github.com/adobe/spectrum-web-components/commit/b34b6faae1d77114d7dd6ce9aa6c8ba5972122b3)]:
+    -   @spectrum-web-components/action-button@0.0.0-20241209155954
+    -   @spectrum-web-components/button@0.0.0-20241209155954
+    -   @spectrum-web-components/styles@0.0.0-20241209155954
+    -   @spectrum-web-components/accordion@0.0.0-20241209155954
+    -   @spectrum-web-components/action-bar@0.0.0-20241209155954
+    -   @spectrum-web-components/action-group@0.0.0-20241209155954
+    -   @spectrum-web-components/action-menu@0.0.0-20241209155954
+    -   @spectrum-web-components/alert-banner@0.0.0-20241209155954
+    -   @spectrum-web-components/asset@0.0.0-20241209155954
+    -   @spectrum-web-components/avatar@0.0.0-20241209155954
+    -   @spectrum-web-components/badge@0.0.0-20241209155954
+    -   @spectrum-web-components/breadcrumbs@0.0.0-20241209155954
+    -   @spectrum-web-components/button-group@0.0.0-20241209155954
+    -   @spectrum-web-components/card@0.0.0-20241209155954
+    -   @spectrum-web-components/checkbox@0.0.0-20241209155954
+    -   @spectrum-web-components/clear-button@0.0.0-20241209155954
+    -   @spectrum-web-components/close-button@0.0.0-20241209155954
+    -   @spectrum-web-components/coachmark@0.0.0-20241209155954
+    -   @spectrum-web-components/color-area@0.0.0-20241209155954
+    -   @spectrum-web-components/color-field@0.0.0-20241209155954
+    -   @spectrum-web-components/color-handle@0.0.0-20241209155954
+    -   @spectrum-web-components/color-loupe@0.0.0-20241209155954
+    -   @spectrum-web-components/color-slider@0.0.0-20241209155954
+    -   @spectrum-web-components/color-wheel@0.0.0-20241209155954
+    -   @spectrum-web-components/combobox@0.0.0-20241209155954
+    -   @spectrum-web-components/contextual-help@0.0.0-20241209155954
+    -   @spectrum-web-components/dialog@0.0.0-20241209155954
+    -   @spectrum-web-components/divider@0.0.0-20241209155954
+    -   @spectrum-web-components/dropzone@0.0.0-20241209155954
+    -   @spectrum-web-components/field-group@0.0.0-20241209155954
+    -   @spectrum-web-components/field-label@0.0.0-20241209155954
+    -   @spectrum-web-components/help-text@0.0.0-20241209155954
+    -   @spectrum-web-components/icon@0.0.0-20241209155954
+    -   @spectrum-web-components/icons@0.0.0-20241209155954
+    -   @spectrum-web-components/icons-ui@0.0.0-20241209155954
+    -   @spectrum-web-components/icons-workflow@0.0.0-20241209155954
+    -   @spectrum-web-components/iconset@0.0.0-20241209155954
+    -   @spectrum-web-components/illustrated-message@0.0.0-20241209155954
+    -   @spectrum-web-components/infield-button@0.0.0-20241209155954
+    -   @spectrum-web-components/link@0.0.0-20241209155954
+    -   @spectrum-web-components/menu@0.0.0-20241209155954
+    -   @spectrum-web-components/meter@0.0.0-20241209155954
+    -   @spectrum-web-components/modal@0.0.0-20241209155954
+    -   @spectrum-web-components/number-field@0.0.0-20241209155954
+    -   @spectrum-web-components/overlay@0.0.0-20241209155954
+    -   @spectrum-web-components/picker@0.0.0-20241209155954
+    -   @spectrum-web-components/picker-button@0.0.0-20241209155954
+    -   @spectrum-web-components/popover@0.0.0-20241209155954
+    -   @spectrum-web-components/progress-bar@0.0.0-20241209155954
+    -   @spectrum-web-components/progress-circle@0.0.0-20241209155954
+    -   @spectrum-web-components/radio@0.0.0-20241209155954
+    -   @spectrum-web-components/search@0.0.0-20241209155954
+    -   @spectrum-web-components/sidenav@0.0.0-20241209155954
+    -   @spectrum-web-components/slider@0.0.0-20241209155954
+    -   @spectrum-web-components/split-view@0.0.0-20241209155954
+    -   @spectrum-web-components/status-light@0.0.0-20241209155954
+    -   @spectrum-web-components/swatch@0.0.0-20241209155954
+    -   @spectrum-web-components/switch@0.0.0-20241209155954
+    -   @spectrum-web-components/table@0.0.0-20241209155954
+    -   @spectrum-web-components/tabs@0.0.0-20241209155954
+    -   @spectrum-web-components/tags@0.0.0-20241209155954
+    -   @spectrum-web-components/textfield@0.0.0-20241209155954
+    -   @spectrum-web-components/thumbnail@0.0.0-20241209155954
+    -   @spectrum-web-components/toast@0.0.0-20241209155954
+    -   @spectrum-web-components/tooltip@0.0.0-20241209155954
+    -   @spectrum-web-components/top-nav@0.0.0-20241209155954
+    -   @spectrum-web-components/tray@0.0.0-20241209155954
+    -   @spectrum-web-components/underlay@0.0.0-20241209155954
+    -   @spectrum-web-components/base@0.0.0-20241209155954
+    -   @spectrum-web-components/grid@0.0.0-20241209155954
+    -   @spectrum-web-components/reactive-controllers@0.0.0-20241209155954
+    -   @spectrum-web-components/shared@0.0.0-20241209155954
+    -   @spectrum-web-components/theme@0.0.0-20241209155954
+    -   @spectrum-web-components/truncated@0.0.0-20241209155954
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

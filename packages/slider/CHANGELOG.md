@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.0.0-20241209155954
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/field-label@0.0.0-20241209155954
+    -   @spectrum-web-components/number-field@0.0.0-20241209155954
+    -   @spectrum-web-components/base@0.0.0-20241209155954
+    -   @spectrum-web-components/reactive-controllers@0.0.0-20241209155954
+    -   @spectrum-web-components/shared@0.0.0-20241209155954
+    -   @spectrum-web-components/theme@0.0.0-20241209155954
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

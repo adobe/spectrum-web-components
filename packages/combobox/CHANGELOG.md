@@ -1,5 +1,21 @@
 # Change Log
 
+## 0.0.0-20241209155954
+
+### Patch Changes
+
+-   Updated dependencies [[`f1d24e0`](https://github.com/adobe/spectrum-web-components/commit/f1d24e095e48e804d601c97abfbb28d3a9ad1a92)]:
+    -   @spectrum-web-components/action-button@0.0.0-20241209155954
+    -   @spectrum-web-components/icon@0.0.0-20241209155954
+    -   @spectrum-web-components/icons-ui@0.0.0-20241209155954
+    -   @spectrum-web-components/menu@0.0.0-20241209155954
+    -   @spectrum-web-components/overlay@0.0.0-20241209155954
+    -   @spectrum-web-components/picker-button@0.0.0-20241209155954
+    -   @spectrum-web-components/popover@0.0.0-20241209155954
+    -   @spectrum-web-components/progress-circle@0.0.0-20241209155954
+    -   @spectrum-web-components/textfield@0.0.0-20241209155954
+    -   @spectrum-web-components/base@0.0.0-20241209155954
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

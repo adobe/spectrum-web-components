@@ -64,7 +64,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     }
 
     @property({ type: Boolean, reflect: true })
-    public emphasizzed = false;
+    public emphasized = false;
 
     @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
     public holdAffordance = false;

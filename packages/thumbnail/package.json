@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/thumbnail",
-    "version": "1.0.1",
+    "version": "0.0.0-20241209155954",
     "publishConfig": {
         "access": "public"
     },
@@ -58,8 +58,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.0.1",
-        "@spectrum-web-components/opacity-checkerboard": "^1.0.1"
+        "@spectrum-web-components/base": "0.0.0-20241209155954",
+        "@spectrum-web-components/opacity-checkerboard": "0.0.0-20241209155954"
     },
     "devDependencies": {
         "@spectrum-css/thumbnail": "6.2.0"
