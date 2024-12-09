@@ -22,8 +22,8 @@ export class DayPeriodSegment extends EditableSegment {
     private localizedMinValue: string = 'AM';
     private localizedMaxValue: string = 'PM';
 
-    constructor(formatted: string) {
-        super(SegmentTypes.DayPeriod, formatted);
+    constructor(formatted: string, label: string) {
+        super(SegmentTypes.DayPeriod, formatted, label);
     }
 
     private toggleAmPm(): void {

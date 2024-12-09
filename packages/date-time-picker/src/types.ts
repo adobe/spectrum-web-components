@@ -23,9 +23,14 @@ export const SegmentTypes = {
     Literal: 'literal',
 } as const;
 
-export type SegmentType = (typeof SegmentTypes)[keyof typeof SegmentTypes];
+export type LiteralSegmentType = 'literal';
 
-export type EditableSegmentType = Exclude<SegmentType, 'literal'>;
+export type EditableSegmentType = Exclude<
+    (typeof SegmentTypes)[keyof typeof SegmentTypes],
+    LiteralSegmentType
+>;
+
+export type SegmentType = EditableSegmentType | LiteralSegmentType;
 
 export const SegmentPlaceholders: Readonly<
     Record<EditableSegmentType, string>

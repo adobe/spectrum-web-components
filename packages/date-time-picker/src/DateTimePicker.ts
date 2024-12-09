@@ -499,6 +499,7 @@ export class DateTimePicker extends ManageHelpText(
             <span
                 class="literal-segment"
                 data-test-id=${segment.type}
+                aria-hidden="true"
             >${segment.formatted}</span>
         `;
     }
@@ -541,6 +542,13 @@ export class DateTimePicker extends ManageHelpText(
         return html`
             <div
                 role="spinbutton"
+                aria-valuenow=${ifDefined(segment.value)}
+                aria-valuemin=${segment.minValue}
+                aria-valuemax=${segment.maxValue}
+                aria-label=${segment.label}
+                aria-valuetext=${ifDefined(
+                    segment.value === undefined ? 'Empty' : undefined
+                )}
                 contenteditable=${ifDefined(isActive ? true : undefined)}
                 inputmode=${ifDefined(isActive ? inputMode : undefined)}
                 tabindex=${ifDefined(isActive ? '0' : undefined)}

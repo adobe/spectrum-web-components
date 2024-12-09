@@ -20,8 +20,8 @@ export class HourSegment extends EditableSegment {
     public maxValue: number = 23;
     public value?: number;
 
-    constructor(formatted: string) {
-        super(SegmentTypes.Hour, formatted);
+    constructor(formatted: string, label: string) {
+        super(SegmentTypes.Hour, formatted, label);
     }
 
     public setLimits(is12HourClock?: boolean): void {

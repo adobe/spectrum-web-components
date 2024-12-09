@@ -23,13 +23,15 @@ export abstract class EditableSegment {
     public type: EditableSegmentType;
     public formatted: string;
     public placeholder: SegmentPlaceholder;
+    public label: string;
     public abstract minValue: number;
     public abstract maxValue: number;
     public abstract value?: number;
 
-    constructor(type: EditableSegmentType, formatted: string) {
+    constructor(type: EditableSegmentType, formatted: string, label: string) {
         this.type = type;
         this.formatted = formatted;
+        this.label = label;
         this.placeholder = SegmentPlaceholders[type];
     }
 

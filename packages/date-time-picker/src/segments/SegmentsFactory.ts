@@ -12,8 +12,14 @@ governing permissions and limitations under the License.
 
 import { DateFormatter, ZonedDateTime } from '@internationalized/date';
 import { NumberFormatter } from '@internationalized/number';
-import { SegmentType, SegmentTypes } from '../types';
+import {
+    EditableSegmentType,
+    LiteralSegmentType,
+    SegmentType,
+    SegmentTypes,
+} from '../types';
 import { DateTimeSegments, Segment } from './DateTimeSegments';
+import { EditableSegment } from './EditableSegment';
 import { LiteralSegment } from './LiteralSegment';
 import { DaySegment } from './date/DaySegment';
 import { MonthSegment } from './date/MonthSegment';
@@ -26,13 +32,18 @@ import { SecondSegment } from './time/SecondSegment';
 export class SegmentsFactory {
     private dateFormatter: DateFormatter;
     private numberFormatter: NumberFormatter;
+    private dateTimeFieldDisplayNames: Intl.DisplayNames;
 
     constructor(dateFormatter: DateFormatter) {
         this.dateFormatter = dateFormatter;
-        this.numberFormatter = new NumberFormatter(
-            this.dateFormatter.resolvedOptions().locale,
-            { useGrouping: false }
-        );
+
+        const locale = this.dateFormatter.resolvedOptions().locale;
+        this.numberFormatter = new NumberFormatter(locale, {
+            useGrouping: false,
+        });
+        this.dateTimeFieldDisplayNames = new Intl.DisplayNames([locale], {
+            type: 'dateTimeField',
+        });
     }
 
     /**
@@ -109,35 +120,38 @@ export class SegmentsFactory {
         return segments;
     }
 
-    private createSegment(type: SegmentType, formatted: string): Segment {
-        let segment: Segment;
+    private createSegment(
+        type: EditableSegmentType | LiteralSegmentType,
+        formatted: string
+    ): Segment {
+        const editableSegmentConstructors: Record<
+            EditableSegmentType,
+            new (formatted: string, label: string) => EditableSegment
+        > = {
+            [SegmentTypes.Year]: YearSegment,
+            [SegmentTypes.Month]: MonthSegment,
+            [SegmentTypes.Day]: DaySegment,
+            [SegmentTypes.Hour]: HourSegment,
+            [SegmentTypes.Minute]: MinuteSegment,
+            [SegmentTypes.Second]: SecondSegment,
+            [SegmentTypes.DayPeriod]: DayPeriodSegment,
+        };
 
-        switch (type) {
-            case SegmentTypes.Year:
-                segment = new YearSegment(formatted);
-                break;
-            case SegmentTypes.Month:
-                segment = new MonthSegment(formatted);
-                break;
-            case SegmentTypes.Day:
-                segment = new DaySegment(formatted);
-                break;
-            case SegmentTypes.Hour:
-                segment = new HourSegment(formatted);
-                break;
-            case SegmentTypes.Minute:
-                segment = new MinuteSegment(formatted);
-                break;
-            case SegmentTypes.Second:
-                segment = new SecondSegment(formatted);
-                break;
-            case SegmentTypes.DayPeriod:
-                segment = new DayPeriodSegment(formatted);
-                break;
-            default:
-                segment = new LiteralSegment(formatted);
+        if (type !== SegmentTypes.Literal) {
+            const SegmentConstructor = editableSegmentConstructors[type];
+            return new SegmentConstructor(
+                formatted,
+                this.displayNameOfType(type)
+            );
         }
 
-        return segment;
+        return new LiteralSegment(formatted);
+    }
+
+    private displayNameOfType(type: EditableSegmentType): string {
+        const label = this.dateTimeFieldDisplayNames.of(type);
+        if (!label) return '';
+
+        return label.charAt(0).toUpperCase() + label.slice(1);
     }
 }
