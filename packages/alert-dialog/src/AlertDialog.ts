@@ -26,6 +26,11 @@ import { conditionAttributeWithId } from '@spectrum-web-components/base/src/cond
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import alertStyles from './alert-dialog.css.js';
 
+/**
+ * Type definition for alert dialog variants.
+ * Can be 'confirmation', 'information', 'warning', 'error',
+ * 'destructive', 'secondary', or ''.
+ */
 export type AlertDialogVariants =
     | 'confirmation'
     | 'information'
@@ -35,6 +40,7 @@ export type AlertDialogVariants =
     | 'secondary'
     | '';
 
+// List of valid alert dialog variants
 export const alertDialogVariants: AlertDialogVariants[] = [
     'confirmation',
     'information',
@@ -44,6 +50,10 @@ export const alertDialogVariants: AlertDialogVariants[] = [
     'secondary',
 ];
 
+/**
+ * Gathers applied IDs from slotted children.
+ * If an element does not have an ID, a new one is generated and assigned.
+ */
 function gatherAppliedIdsFromSlottedChildren(
     slot: HTMLSlotElement,
     idBase: string
@@ -61,6 +71,14 @@ function gatherAppliedIdsFromSlottedChildren(
     });
     return ids;
 }
+
+/**
+ * @element sp-alert-dialog
+ *
+ * The `sp-alert-dialog` displays important information that users need to acknowledge.
+ * When used directly the `sp-alert-dialog` element surfaces a slot based API for
+ * deep customization of the content to be included in the overlay.
+ */
 export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
         return [alertStyles];
@@ -69,6 +87,7 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
     @query('.content')
     private contentElement!: HTMLDivElement;
 
+    // Resize controller to manage tab order for scrolling
     private resizeController = new ResizeController(this, {
         callback: () => {
             this.shouldManageTabOrderForScrolling();
@@ -77,6 +96,10 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     public _variant: AlertDialogVariants = '';
 
+    /**
+     * The variant applies specific styling when set to a valid variant.
+     * The `variant` attribute is removed when it's passed an invalid variant.
+     */
     @property({ type: String, reflect: true })
     public set variant(variant: AlertDialogVariants) {
         if (variant === this.variant) {
@@ -97,6 +120,9 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
         return this._variant;
     }
 
+    /**
+     * Renders the appropriate icon based on the variant.
+     */
     protected renderIcon(): TemplateResult {
         switch (this.variant) {
             case 'warning':
@@ -110,12 +136,18 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
+    /**
+     * Renders the heading slot.
+     */
     protected renderHeading(): TemplateResult {
         return html`
             <slot name="heading" @slotchange=${this.onHeadingSlotchange}></slot>
         `;
     }
 
+    /**
+     * Renders the content slot.
+     */
     protected renderContent(): TemplateResult {
         return html`
             <div class="content">
@@ -124,11 +156,22 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
         `;
     }
 
+    // Static instance count for generating unique IDs
     static instanceCount = 0;
+
+    // ID for the labelledby attribute
     private labelledbyId = `sp-dialog-label-${AlertDialog.instanceCount++}`;
+
+    // Condition for setting the labelledby attribute
     private conditionLabelledby?: () => void;
+
+    // Condition for setting the describedby attribute
     private conditionDescribedby?: () => void;
 
+    /**
+     * Handles the slotchange event for the heading slot.
+     * Updates the aria-labelledby attribute based on the slotted elements.
+     */
     private onHeadingSlotchange({
         target,
     }: Event & { target: HTMLSlotElement }): void {
@@ -149,6 +192,10 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
+    /**
+     * Manages the tab order for scrolling within the content element.
+     * Adds or removes the tabindex attribute based on the scroll height.
+     */
     public shouldManageTabOrderForScrolling = (): void => {
         if (!this.contentElement) return;
 
@@ -160,8 +207,13 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     };
 
+    // ID for the describedby attribute
     private describedbyId = `sp-dialog-description-${AlertDialog.instanceCount++}`;
 
+    /**
+     * Handles the slotchange event for the content slot.
+     * Observes the content element for resizing and updates the aria-describedby attribute.
+     */
     protected onContentSlotChange({
         target,
     }: Event & { target: HTMLSlotElement }): void {
@@ -202,6 +254,9 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
+    /**
+     * Renders the buttons slot.
+     */
     protected renderButtons(): TemplateResult {
         return html`
             <sp-button-group class="button-group">
@@ -210,6 +265,10 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
         `;
     }
 
+    /**
+     * Renders the alert dialog template.
+     * Includes the header, content, and buttons.
+     */
     protected override render(): TemplateResult {
         return html`
             <div class="grid">

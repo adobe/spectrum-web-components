@@ -30,14 +30,13 @@ import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slot
 /**
  * @element sp-action-menu
  *
- * @slot - menu items to be listed in the Action Menu
- * @slot icon - The icon to use for the Action Menu
- * @slot label - The label to use for the Action Menu
- * @slot label-only - The label to use for the Action Menu (no icon space reserved)
- * @slot tooltip - Tooltip to be applied to the Action Button
- * @attr selects - By default `sp-action-menu` does not manage a selection. If
- *   you'd like for a selection to be held by the `sp-menu` that it presents in
- *   its overlay, use `selects="single" to activate this functionality.
+ * @slot - Menu items to be listed in the Action Menu.
+ * @slot icon - The icon to use for the Action Menu.
+ * @slot label - The label to use for the Action Menu.
+ * @slot label-only - The label to use for the Action Menu (no icon space reserved).
+ * @slot tooltip - Tooltip to be applied to the Action Button.
+ * @attr selects - By default, the Action Menu does not manage a selection.
+ *                 Use `selects="single"` to activate selection functionality in the menu.
  */
 export class ActionMenu extends ObserveSlotPresence(
     ObserveSlotText(PickerBase, 'label'),
@@ -47,14 +46,33 @@ export class ActionMenu extends ObserveSlotPresence(
         return [actionMenuStyles];
     }
 
+    /**
+     * Defines the selection mode for the action menu.
+     * Can be 'single' for single selection or undefined for no selection management.
+     */
     @property({ type: String })
     public override selects: undefined | 'single' = undefined;
 
+    /**
+     * Defines the static color variant for the action menu.
+     * Can be 'white' or 'black'.
+     */
     @property({ reflect: true, attribute: 'static-color' })
     public staticColor?: 'white' | 'black';
 
+    /*
+     * Defines the role of the list element
+     */
     protected override listRole: 'listbox' | 'menu' = 'menu';
+
+    /*
+     * Defines the role of the item elements
+     */
     protected override itemRole = 'menuitem';
+
+    /*
+     * Whether the label slot has content
+     */
     private get hasLabel(): boolean {
         return this.slotHasContent;
     }
@@ -64,12 +82,18 @@ export class ActionMenu extends ObserveSlotPresence(
         return this.slotContentIsPresent;
     }
 
+    /**
+     * Handles slottable request events and re-dispatches them.
+     */
     public override handleSlottableRequest = (
         event: SlottableRequestEvent
     ): void => {
         this.dispatchEvent(new SlottableRequestEvent(event.name, event.data));
     };
 
+    /*
+     * Retrieves the content to be rendered inside the button.
+     */
     protected override get buttonContent(): TemplateResult[] {
         return [
             html`

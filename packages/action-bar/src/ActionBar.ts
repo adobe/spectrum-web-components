@@ -29,6 +29,8 @@ export const actionBarVariants = ['sticky', 'fixed'];
 /**
  * @element sp-action-bar
  * @slot - Content to display with the Action Bar
+ *
+ * The ActionBar component provides a container for actions that can be performed on selected items.
  */
 export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
@@ -37,27 +39,28 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     /**
      * Deliver the Action Bar with additional visual emphasis.
+     * When true, the action bar is styled with emphasis.
      */
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
     /**
-     * When `flexible` the action bar sizes itself to its content
+     * When `flexible`, the action bar sizes itself to its content
      * rather than a specific width.
-     *
-     * @param {Boolean} flexible
      */
     @property({ type: Boolean, reflect: true })
     public flexible = false;
 
+    /**
+     * Indicates whether the action bar is open.
+     * When true, the action bar is visible; otherwise, it is hidden.
+     */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
     /**
-     * The variant applies specific styling when set to `sticky` or `fixed`.
-     * `variant` attribute is removed when not matching one of the above.
-     *
-     * @param {String} variant
+     * Applies specific styling when set to `sticky` or `fixed`.
+     * The `variant` attribute is removed when not matching one of the above.
      */
     @property({ type: String })
     public set variant(variant: string) {
@@ -73,12 +76,22 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
         this._variant = '';
     }
 
+    /**
+     * Gets the current variant of the action bar.
+     */
     public get variant(): string {
         return this._variant;
     }
 
     private _variant = '';
 
+    /**
+     * Handles the click event on the close button.
+     * Toggles the open state of the action bar and dispatches a 'close' event.
+     * If the event is canceled, the open state is reverted.
+     *
+     * @fires close - Announces that the action bar is closing.
+     */
     private handleClick(): void {
         this.open = false;
 
@@ -95,6 +108,10 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
+    /**
+     * Renders the action bar template.
+     * Includes a popover with a close button, field label, and action group.
+     */
     public override render(): TemplateResult {
         return html`
             <sp-popover ?open=${this.open} id="popover">
