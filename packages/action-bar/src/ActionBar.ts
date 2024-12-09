@@ -59,9 +59,8 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public open = false;
 
     /**
-     * The variant applies specific styling when set to `sticky` or `fixed`.
+     * Applies specific styling when set to `sticky` or `fixed`.
      * The `variant` attribute is removed when not matching one of the above.
-     *
      */
     @property({ type: String })
     public set variant(variant: string) {
@@ -77,6 +76,9 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
         this._variant = '';
     }
 
+    /**
+     * Gets the current variant of the action bar.
+     */
     public get variant(): string {
         return this._variant;
     }
@@ -105,6 +107,7 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
             this.open = true;
         }
     }
+
     /**
      * Renders the action bar template.
      * Includes a popover with a close button, field label, and action group.
