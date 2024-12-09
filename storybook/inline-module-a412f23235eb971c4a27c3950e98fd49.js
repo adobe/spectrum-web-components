@@ -191,7 +191,7 @@ const getProjectAnnotations = async () => {
     import('./preview-BT9ta7nr.js'),
     import('./preview-CDagOaLU.js'),
     import('./preview-CtQuewXd.js'),
-    import('./preview-eEOaoFOx.js')
+    import('./preview-DKmJatze.js')
   ]);
   return __STORYBOOK_MODULE_PREVIEW_API__.composeConfigs(configs);
 };
