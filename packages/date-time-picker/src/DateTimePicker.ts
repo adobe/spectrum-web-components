@@ -65,6 +65,7 @@ import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 
 import {
+    dateValueToDate,
     equalSegmentValues,
     isCalendarDate,
     isCalendarDateTime,
@@ -202,6 +203,7 @@ export class DateTimePicker extends ManageHelpText(
     private timeZone = getLocalTimeZone();
     private cachedLocalTime: ZonedDateTime = now(this.timeZone);
     private dateFormatter!: DateFormatter;
+    private ariaDateFormatter!: DateFormatter;
     private numberParser!: NumberParser;
 
     public override get focusElement(): HTMLElement {
@@ -237,6 +239,7 @@ export class DateTimePicker extends ManageHelpText(
         super();
         this.setNumberParser();
         this.setDateFormatter();
+        this.setAriaDateFormatter();
         this.addEventListener(
             'focusin',
             () => (this.previousCommitedValue = this.value)
@@ -256,7 +259,10 @@ export class DateTimePicker extends ManageHelpText(
         const changesDisabled = changedProperties.has('disabled');
 
         if (changesLocale) this.setNumberParser();
-        if (changesLocale || changesPrecision) this.setDateFormatter();
+        if (changesLocale || changesPrecision) {
+            this.setDateFormatter();
+            this.setAriaDateFormatter();
+        }
 
         if (changesValue || changesMin || changesMax) {
             const mostSpecificDateValue = this.mostSpecificDateValue;
@@ -274,6 +280,11 @@ export class DateTimePicker extends ManageHelpText(
         if (changesSegments) this.setValueFromSegments();
 
         if (changesDisabled && this.isCalendarOpen) this.isCalendarOpen = false;
+
+        const selectedDate =
+            this.value &&
+            this.ariaDateFormatter.format(dateValueToDate(this.value));
+        this.setAttribute('aria-label', selectedDate ?? this.labels.empty);
     }
 
     /**
@@ -806,41 +817,6 @@ export class DateTimePicker extends ManageHelpText(
         }
     }
 
-    private setDateFormatter(): void {
-        const dateOptions: Intl.DateTimeFormatOptions = {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-        };
-        let timeOptions: Intl.DateTimeFormatOptions = {};
-
-        if (this.includesTime) {
-            const minPrecisions: Precision[] = [
-                SegmentTypes.Minute,
-                SegmentTypes.Second,
-            ];
-            const includeMinutes = minPrecisions.includes(this.precision!);
-            const includeSeconds = this.precision === SegmentTypes.Second;
-
-            timeOptions = {
-                hour: '2-digit',
-                ...(includeMinutes && { minute: '2-digit' }),
-                ...(includeSeconds && { second: '2-digit' }),
-            };
-        }
-
-        this.dateFormatter = new DateFormatter(this.locale, {
-            ...dateOptions,
-            ...timeOptions,
-        });
-    }
-
-    private setNumberParser(): void {
-        this.numberParser = new NumberParser(this.locale, {
-            maximumFractionDigits: 0,
-        });
-    }
-
     private setSegments(): void {
         const segmentsFactory = new SegmentsFactory(this.dateFormatter);
         const segments = segmentsFactory.createSegments(
@@ -849,5 +825,53 @@ export class DateTimePicker extends ManageHelpText(
         );
 
         this.segments = segments;
+    }
+
+    private setNumberParser(): void {
+        this.numberParser = new NumberParser(this.locale, {
+            maximumFractionDigits: 0,
+        });
+    }
+
+    private setDateFormatter(): void {
+        this.dateFormatter = new DateFormatter(this.locale, {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            ...this.getTimeOptions('2-digit'),
+        });
+    }
+
+    private setAriaDateFormatter(): void {
+        this.ariaDateFormatter = new DateFormatter(this.locale, {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            ...this.getTimeOptions('numeric'),
+        });
+    }
+
+    private getTimeOptions(
+        digitType: '2-digit' | 'numeric'
+    ): Intl.DateTimeFormatOptions {
+        switch (this.precision) {
+            case Precisions.Second:
+                return {
+                    hour: digitType,
+                    minute: digitType,
+                    second: digitType,
+                };
+            case Precisions.Minute:
+                return {
+                    hour: digitType,
+                    minute: digitType,
+                };
+            case Precisions.Hour:
+                return {
+                    hour: digitType,
+                };
+            default:
+                return {};
+        }
     }
 }
