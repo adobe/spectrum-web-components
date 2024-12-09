@@ -197,6 +197,11 @@ withSlider.swc_vrt = {
     skip: true,
 };
 
+withSlider.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const hover = (args: Properties): TemplateResult => Template(args);
 hover.args = {
     interaction: 'hover',
@@ -684,6 +689,11 @@ transientHover.swc_vrt = {
     skip: true,
 };
 
+transientHover.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const lazyElements = (): TemplateResult => {
     const handleSlottableRequest = (event: SlottableRequestEvent): void => {
         const template =
@@ -726,4 +736,9 @@ export const lazyElements = (): TemplateResult => {
 
 lazyElements.swc_vrt = {
     skip: true,
+};
+
+lazyElements.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
