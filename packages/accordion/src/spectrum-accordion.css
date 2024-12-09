@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
+.spectrum-Accordion {
     --spectrum-accordion-min-block-size: max(
         var(--mod-accordion-item-height, var(--spectrum-accordion-item-height)),
         calc(
@@ -39,9 +39,9 @@ governing permissions and limitations under the License.
     display: block;
 }
 
-:host:lang(ja),
-:host:lang(ko),
-:host:lang(zh) {
+.spectrum-Accordion:lang(ja),
+.spectrum-Accordion:lang(ko),
+.spectrum-Accordion:lang(zh) {
     --spectrum-accordion-item-header-line-height: var(
         --spectrum-accordion-item-header-line-height-cjk
     );
@@ -50,7 +50,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host:dir(rtl),
-:host([dir='rtl']) {
+.spectrum-Accordion:dir(rtl),
+:host([dir='rtl']) .spectrum-Accordion {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
