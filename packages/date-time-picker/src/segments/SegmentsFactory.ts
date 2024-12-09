@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import { DateFormatter, ZonedDateTime } from '@internationalized/date';
 import { NumberFormatter } from '@internationalized/number';
+import { dateValueToDate } from '../helpers';
 import {
     EditableSegmentType,
     LiteralSegmentType,
@@ -19,7 +20,6 @@ import {
     SegmentTypes,
 } from '../types';
 import { DateTimeSegments, Segment } from './DateTimeSegments';
-import { EditableSegment } from './EditableSegment';
 import { LiteralSegment } from './LiteralSegment';
 import { DaySegment } from './date/DaySegment';
 import { MonthSegment } from './date/MonthSegment';
@@ -55,14 +55,7 @@ export class SegmentsFactory {
         currentDate: ZonedDateTime,
         setValues: boolean = false
     ): DateTimeSegments {
-        const date = new Date(
-            currentDate.year,
-            currentDate.month - 1, // 0-indexed in Date but 1-indexed in ZonedDateTime
-            currentDate.day,
-            currentDate.hour,
-            currentDate.minute,
-            currentDate.second
-        );
+        const date = dateValueToDate(currentDate);
 
         const createdSegments = this.dateFormatter
             .formatToParts(date)
@@ -124,28 +117,26 @@ export class SegmentsFactory {
         type: EditableSegmentType | LiteralSegmentType,
         formatted: string
     ): Segment {
-        const editableSegmentConstructors: Record<
-            EditableSegmentType,
-            new (formatted: string, label: string) => EditableSegment
-        > = {
-            [SegmentTypes.Year]: YearSegment,
-            [SegmentTypes.Month]: MonthSegment,
-            [SegmentTypes.Day]: DaySegment,
-            [SegmentTypes.Hour]: HourSegment,
-            [SegmentTypes.Minute]: MinuteSegment,
-            [SegmentTypes.Second]: SecondSegment,
-            [SegmentTypes.DayPeriod]: DayPeriodSegment,
-        };
+        if (type === SegmentTypes.Literal) return new LiteralSegment(formatted);
 
-        if (type !== SegmentTypes.Literal) {
-            const SegmentConstructor = editableSegmentConstructors[type];
-            return new SegmentConstructor(
-                formatted,
-                this.displayNameOfType(type)
-            );
+        const label = this.displayNameOfType(type);
+
+        switch (type) {
+            case SegmentTypes.Year:
+                return new YearSegment(formatted, label);
+            case SegmentTypes.Month:
+                return new MonthSegment(formatted, label);
+            case SegmentTypes.Day:
+                return new DaySegment(formatted, label);
+            case SegmentTypes.Hour:
+                return new HourSegment(formatted, label);
+            case SegmentTypes.Minute:
+                return new MinuteSegment(formatted, label);
+            case SegmentTypes.Second:
+                return new SecondSegment(formatted, label);
+            case SegmentTypes.DayPeriod:
+                return new DayPeriodSegment(formatted, label);
         }
-
-        return new LiteralSegment(formatted);
     }
 
     private displayNameOfType(type: EditableSegmentType): string {

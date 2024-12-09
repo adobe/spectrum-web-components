@@ -69,23 +69,24 @@ import {
     isCalendarDate,
     isCalendarDateTime,
     isZonedDateTime,
-} from './helpers.js';
-import { DateTimeSegments } from './segments/DateTimeSegments.js';
-import { EditableSegment } from './segments/EditableSegment.js';
-import { LiteralSegment } from './segments/LiteralSegment.js';
-import { SegmentsFactory } from './segments/SegmentsFactory.js';
-import { ClearModifier } from './segments/modifiers/ClearModifier.js';
-import { DecrementModifier } from './segments/modifiers/DecrementModifier.js';
-import { IncrementModifier } from './segments/modifiers/IncrementModifier.js';
-import { InputModifier } from './segments/modifiers/InputModifier.js';
-import { type SegmentsModifierParams } from './segments/modifiers/SegmentsModifier.js';
+} from './helpers';
+import { DateTimeSegments } from './segments/DateTimeSegments';
+import { EditableSegment } from './segments/EditableSegment';
+import { LiteralSegment } from './segments/LiteralSegment';
+import { SegmentsFactory } from './segments/SegmentsFactory';
+import { ClearModifier } from './segments/modifiers/ClearModifier';
+import { DecrementModifier } from './segments/modifiers/DecrementModifier';
+import { IncrementModifier } from './segments/modifiers/IncrementModifier';
+import { InputModifier } from './segments/modifiers/InputModifier';
+import { type SegmentsModifierParams } from './segments/modifiers/SegmentsModifier';
 import {
+    DateTimePickerLabels,
     DateTimePickerValue,
     EditableSegmentType,
     Precision,
     Precisions,
     SegmentTypes,
-} from './types.js';
+} from './types';
 
 /**
  * @element sp-date-time-picker
@@ -160,6 +161,20 @@ export class DateTimePicker extends ManageHelpText(
      */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
+
+    /**
+     * Labels read by screen readers. The default values are in English
+     * and can be overridden to localize the content.
+     */
+    @property({ attribute: false })
+    labels: DateTimePickerLabels = {
+        previous: 'Previous',
+        next: 'Next',
+        today: 'Today',
+        selected: 'Selected',
+        empty: 'Empty',
+        calendar: 'Calendar',
+    };
 
     /**
      * @private
@@ -415,6 +430,7 @@ export class DateTimePicker extends ManageHelpText(
                 ?invalid=${this.invalid}
                 ?disabled=${this.disabled}
                 @click=${() => (this.isCalendarOpen = true)}
+                label=${this.labels.calendar}
             >
                 <slot name="calendar-icon" slot="icon">
                     <sp-icon-calendar></sp-icon-calendar>
@@ -435,6 +451,7 @@ export class DateTimePicker extends ManageHelpText(
                             .value=${this.value}
                             .min=${this.min}
                             .max=${this.max}
+                            .labels=${this.labels}
                             @change=${this.handleChange}
                         ></sp-calendar>
                     </div>
@@ -547,7 +564,9 @@ export class DateTimePicker extends ManageHelpText(
                 aria-valuemax=${segment.maxValue}
                 aria-label=${segment.label}
                 aria-valuetext=${ifDefined(
-                    segment.value === undefined ? 'Empty' : undefined
+                    segment.value !== undefined
+                        ? segment.formatted
+                        : this.labels.empty
                 )}
                 contenteditable=${ifDefined(isActive ? true : undefined)}
                 inputmode=${ifDefined(isActive ? inputMode : undefined)}

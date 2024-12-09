@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { DateFormatter, ZonedDateTime } from '@internationalized/date';
-import { EditableSegment } from '../EditableSegment';
-import { AM, PM, SegmentTypes } from '../../types';
 import { getDayPeriodModifier } from '../../helpers';
+import { AM, PM, SegmentTypes } from '../../types';
+import { EditableSegment } from '../EditableSegment';
 
 export class DayPeriodSegment extends EditableSegment {
     public minValue: typeof AM = AM;

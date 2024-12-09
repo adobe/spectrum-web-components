@@ -53,3 +53,19 @@ export function equalSegmentValues(
         a.length === b.length && a.every((value, index) => value === b[index])
     );
 }
+
+export function dateValueToDate(dateValue: DateValue): Date {
+    if (isCalendarDate(dateValue)) {
+        // Month is 0-indexed in Date but 1-indexed in DateValue
+        return new Date(dateValue.year, dateValue.month - 1, dateValue.day);
+    }
+
+    return new Date(
+        dateValue.year,
+        dateValue.month - 1,
+        dateValue.day,
+        dateValue.hour,
+        dateValue.minute,
+        dateValue.second
+    );
+}

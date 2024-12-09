@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import { ZonedDateTime } from '@internationalized/date';
 import { NumberParser } from '@internationalized/number';
 import {
+    EditableSegmentLimits,
     EditableSegmentType,
     SegmentPlaceholder,
     SegmentPlaceholders,
@@ -81,10 +82,7 @@ export abstract class EditableSegment {
         return value >= minValue && value <= maxValue;
     }
 
-    protected get inputValidationLimits(): {
-        minValue: number;
-        maxValue: number;
-    } {
+    public get inputValidationLimits(): EditableSegmentLimits {
         return {
             minValue: this.minValue,
             maxValue: this.maxValue,

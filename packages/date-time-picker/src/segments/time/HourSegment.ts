@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { ZonedDateTime } from '@internationalized/date';
-import { SegmentTypes } from '../../types';
+import { EditableSegmentLimits, SegmentTypes } from '../../types';
 import { EditableSegment } from '../EditableSegment';
 import { getDayPeriodModifier } from '../../helpers';
 
@@ -53,10 +53,7 @@ export class HourSegment extends EditableSegment {
      * the hour value of 0 should be displayed as 12. Therefore, in the 12h format, the user should be able to type in "12" but not "00",
      * for the 00 time, which is represented by the value of 0 of the hour segment.
      */
-    protected override get inputValidationLimits(): {
-        minValue: number;
-        maxValue: number;
-    } {
+    public override get inputValidationLimits(): EditableSegmentLimits {
         const isAmPm = this.maxValue === 11;
 
         return {
