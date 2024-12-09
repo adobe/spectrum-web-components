@@ -31,30 +31,56 @@ import styles from './tray.css.js';
 /**
  * @element sp-tray
  *
- * @slot - content to display within the Tray
+ * The `Tray` component is a custom web component that provides a tray element
+ * which can be opened and closed. It includes various properties and methods
+ * to manage its state, focus, and transitions.
  *
- * @fires close - Announces that the Tray has been closed.
+ * @fires close - Dispatched when the tray is closed.
  */
 export class Tray extends SpectrumElement {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
         return [modalStyles, styles];
     }
 
+    /**
+     * Indicates whether the tray is open.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    /**
+     * Controller to manage the user's motion preference.
+     */
     protected prefersMotion = new MatchMediaController(
         this,
         '(prefers-reduced-motion: no-preference)'
     );
 
+    /**
+     * Promise to manage the transition state.
+     */
     private transitionPromise = Promise.resolve();
 
-    private resolveTransitionPromise = () => {};
+    /**
+     * Function to resolve the transition promise.
+     */
+    private resolveTransitionPromise: () => void = () => {};
 
+    /**
+     * Query to select the tray element.
+     */
     @query('.tray')
     private tray!: HTMLDivElement;
 
+    /**
+     * Sets focus on the first focusable element within the tray.
+     */
     public override focus(): void {
         const firstFocusable = firstFocusableIn(this);
         if (firstFocusable) {
@@ -66,14 +92,23 @@ export class Tray extends SpectrumElement {
         }
     }
 
+    /**
+     * Tracks whether the tray is currently animating.
+     */
     private animating = false;
 
+    /**
+     * Callback to handle the overlay close event.
+     */
     public overlayWillCloseCallback(): boolean {
         if (!this.open) return this.animating;
         this.close();
         return true;
     }
 
+    /**
+     * Closes the tray.
+     */
     public close(): void {
         this.open = false;
         if (!this.prefersMotion.matches) {
@@ -81,6 +116,9 @@ export class Tray extends SpectrumElement {
         }
     }
 
+    /**
+     * Dispatches the 'close' event.
+     */
     private dispatchClosed(): void {
         this.dispatchEvent(
             new Event('close', {
@@ -89,6 +127,12 @@ export class Tray extends SpectrumElement {
         );
     }
 
+    /**
+     * Handles the transition end event for the underlay.
+     *
+     * This method resolves the transition promise and dispatches the 'close' event
+     * if the tray is not open.
+     */
     protected handleUnderlayTransitionend(): void {
         if (!this.open) {
             this.resolveTransitionPromise();
@@ -96,12 +140,23 @@ export class Tray extends SpectrumElement {
         }
     }
 
+    /**
+     * Handles the transitionend event for the tray.
+     *
+     * This method resolves the transition promise if the tray is open.
+     */
     protected handleTrayTransitionend(): void {
         if (this.open) {
             this.resolveTransitionPromise();
         }
     }
 
+    /**
+     * Lifecycle method called when the component updates.
+     *
+     * This method sets up the transition promise if the 'open' property has changed
+     * and the user prefers motion.
+     */
     protected override update(changes: PropertyValues<this>): void {
         if (
             changes.has('open') &&
@@ -119,6 +174,11 @@ export class Tray extends SpectrumElement {
         super.update(changes);
     }
 
+    /**
+     * Renders the content of the tray component.
+     *
+     * This method returns a template result containing the underlay and tray elements.
+     */
     protected override render(): TemplateResult {
         return html`
             <sp-underlay
@@ -137,12 +197,10 @@ export class Tray extends SpectrumElement {
     }
 
     /**
-     * Bind the open/close transition into the update complete lifecycle so
-     * that the overlay system can wait for it to be "visibly ready" before
-     * attempting to throw focus into the content contained herein. Not
-     * waiting for this can cause small amounts of page scroll to happen
-     * while opening the Tray when focusable content is included: e.g. Menu
-     * elements whose selected Menu Item is not the first Menu Item.
+     * Binds the open/close transition into the update complete lifecycle.
+     *
+     * This method ensures that the overlay system waits for the tray to be visibly ready
+     * before attempting to throw focus into the content contained within.
      */
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;

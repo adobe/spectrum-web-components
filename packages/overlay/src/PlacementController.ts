@@ -43,9 +43,6 @@ type OverlayOptionsV1 = {
 
 /**
  * Rounds a number by the device pixel ratio (DPR).
- *
- * @param {number} [num] - The number to round.
- * @returns {number} The rounded number.
  */
 function roundByDPR(num?: number): number {
     if (typeof num === 'undefined') return 0;
@@ -62,9 +59,6 @@ const MIN_OVERLAY_HEIGHT = 100;
 
 /**
  * Gets fallback placements for the overlay based on the initial placement.
- *
- * @param {Placement} placement - The initial placement of the overlay.
- * @returns {Placement[]} An array of fallback placements.
  */
 const getFallbackPlacements = (placement: Placement): Placement[] => {
     const fallbacks: Record<Placement, Placement[]> = {
@@ -98,66 +92,45 @@ export const placementUpdatedSymbol = Symbol('placement updated');
 export class PlacementController implements ReactiveController {
     /**
      * Function to clean up resources when the controller is no longer needed.
-     *
-     * @private
      */
     private cleanup?: () => void;
 
     /**
      * Initial height of the overlay.
-     *
-     * @type {number}
      */
     initialHeight?: number;
 
     /**
      * Indicates whether the overlay is constrained by available space.
-     *
-     * @type {boolean}
      */
     isConstrained?: boolean;
 
     /**
      * The host element that uses this controller.
-     *
-     * @private
-     * @type {ReactiveElement & { elements: OpenableElement[] }}
      */
     private host!: ReactiveElement & { elements: OpenableElement[] };
 
     /**
      * Options for configuring the overlay placement.
-     *
-     * @private
-     * @type {OverlayOptionsV1}
      */
     private options!: OverlayOptionsV1;
 
     /**
      * A WeakMap to store the original placements of overlay elements.
-     *
-     * @private
-     * @type {WeakMap<HTMLElement, Placement>}
      */
     private originalPlacements = new WeakMap<HTMLElement, Placement>();
 
     /**
      * The target element for the overlay.
-     *
-     * @private
-     * @type {HTMLElement}
      */
     private target!: HTMLElement;
 
     /**
      * Creates an instance of the PlacementController.
-     *
-     * @param {ReactiveElement & { elements: OpenableElement[] }} host - The host element that uses this controller.
      */
     constructor(host: ReactiveElement & { elements: OpenableElement[] }) {
         this.host = host;
-        // Add the controller after the MutationObserver has been created in preparation
-        // for the `hostConnected`/`hostDisconnected` callbacks to be run.
+        // Add the controller after the MutationObserver has been created in preparation for the `hostConnected`/`hostDisconnected` callbacks to be run.
         this.host.addController(this);
     }
 
@@ -166,16 +139,11 @@ export class PlacementController implements ReactiveController {
      *
      * This method sets up the necessary configurations and event listeners to manage the
      * positioning and constraints of the overlay element.
-     *
-     * @param {HTMLElement} [target=this.target] - The target element for the overlay.
-     * @param {OverlayOptionsV1} [options=this.options] - The options for configuring the overlay placement.
-     * @returns {Promise<void>} A promise that resolves when the overlay has been placed.
      */
     public async placeOverlay(
         target: HTMLElement = this.target,
         options: OverlayOptionsV1 = this.options
     ): Promise<void> {
-        // Set the target and options for the overlay.
         this.target = target;
         this.options = options;
         if (!target || !options) return;
@@ -226,8 +194,6 @@ export class PlacementController implements ReactiveController {
 
     /**
      * Flag to allow or disallow placement updates.
-     *
-     * @type {boolean}
      */
     public allowPlacementUpdate = false;
 
@@ -244,7 +210,6 @@ export class PlacementController implements ReactiveController {
             this.options.type !== 'modal' &&
             this.cleanup
         ) {
-            // Dispatch a 'close' event to close the overlay.
             this.target.dispatchEvent(new Event('close', { bubbles: true }));
         }
 
@@ -256,8 +221,6 @@ export class PlacementController implements ReactiveController {
      * Updates the placement of the overlay.
      *
      * This method calls the computePlacement method to recalculate the overlay's position.
-     *
-     * @private
      */
     private updatePlacement = (): void => {
         this.computePlacement();
@@ -269,8 +232,6 @@ export class PlacementController implements ReactiveController {
      * This method calculates the necessary positioning and constraints for the overlay element
      * using various middleware functions. It updates the overlay's style and attributes based
      * on the computed position.
-     *
-     * @returns {Promise<void>} A promise that resolves when the placement has been computed.
      */
     async computePlacement(): Promise<void> {
         const { options, target } = this;
