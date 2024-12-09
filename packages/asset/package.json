@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/asset",
-    "version": "1.0.1",
+    "version": "1.0.1-color-testing",
     "publishConfig": {
         "access": "public"
     },
@@ -58,7 +58,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.0.1"
+        "@spectrum-web-components/base": "^1.0.1-color-testing"
     },
     "devDependencies": {
         "@spectrum-css/asset": "^6.0.0-s2-foundations.15"

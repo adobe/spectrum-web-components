@@ -1,6 +1,6 @@
 {
     "name": "@types/swc",
-    "version": "1.0.1",
+    "version": "1.0.1-color-testing",
     "private": true,
     "main": "",
     "types": "./global.d.ts",

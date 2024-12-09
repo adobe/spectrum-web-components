@@ -140,7 +140,7 @@
         "@web/test-runner-playwright": "^0.11.0",
         "@web/test-runner-visual-regression": "^0.9.0",
         "@webcomponents/webcomponentsjs": "^2.8.0",
-        "alex": "^11.0.1",
+        "alex": "^11.0.1-color-testing",
         "cem-plugin-module-file-extensions": "^0.0.5",
         "chalk": "^5.0.1",
         "chromedriver": "^130.0.1",
