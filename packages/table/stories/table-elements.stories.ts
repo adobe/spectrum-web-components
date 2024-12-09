@@ -30,15 +30,12 @@ export default {
     argTypes: {
         selected: {
             name: 'selected',
-            description: 'The value of the selected `<sp-table-row>`(s).',
             control: {
                 type: 'text',
             },
         },
         selects: {
             name: 'selects',
-            description:
-                'Whether the elements selects its children and how many it can select at a time.',
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: '' },

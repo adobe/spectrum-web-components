@@ -26,7 +26,6 @@ export default {
         direction: {
             name: 'direction',
             type: { name: 'string', required: false },
-            description: 'The direction of the Tabs element',
             table: {
                 type: {
                     summary: '"vertical" | "vertical-right" | "horizontal"',
@@ -42,7 +41,6 @@ export default {
         size: {
             name: 'size',
             type: { name: 'string', required: false },
-            description: 'The size at which to display the Tabs element',
             table: {
                 type: { summary: '"s" | "m" | "l" | "xl"' },
                 defaultValue: { summary: 'm' },

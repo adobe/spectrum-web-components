@@ -26,8 +26,13 @@ import { Checkbox } from '@spectrum-web-components/checkbox';
 
 /**
  * @element sp-table-checkbox-cell
+ *
+ * This component represents a checkbox cell within a table.
  */
 export class TableCheckboxCell extends SpectrumElement {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -38,31 +43,58 @@ export class TableCheckboxCell extends SpectrumElement {
     @property({ type: Boolean, reflect: true, attribute: 'head-cell' })
     public headCell = false;
 
+    /**
+     * The ARIA role of the table cell.
+     */
     @property({ reflect: true })
     public override role = 'gridcell';
 
+    /**
+     * The checkbox element within the cell.
+     */
     @query('.checkbox')
     public checkbox!: Checkbox;
 
+    /**
+     * Whether or not the checkbox is in an indeterminate state.
+     */
     @property({ type: Boolean })
     public indeterminate = false;
 
+    /**
+     * Whether or not the checkbox is checked.
+     */
     @property({ type: Boolean })
     public checked = false;
 
+    /**
+     * Whether or not the checkbox is disabled.
+     */
     @property({ type: Boolean })
     public disabled = false;
 
+    /**
+     * Whether or not the checkbox selects a single row.
+     */
     @property({ type: Boolean, reflect: true, attribute: 'selects-single' })
     public selectsSingle = false;
 
+    /**
+     * Whether or not the checkbox is emphasized.
+     */
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    /**
+     * Simulates a click on the checkbox.
+     */
     public override click(): void {
         this.checkbox.click();
     }
 
+    /**
+     * Renders the component template.
+     */
     protected override render(): TemplateResult {
         return html`
             <sp-checkbox

@@ -24,18 +24,32 @@ import styles from './table-head.css.js';
 /**
  * @element sp-table-head
  *
+ * This component represents the table head row.
  */
 export class TableHead extends SpectrumElement {
+    /**
+     * Returns the styles to be applied to the component
+     */
     public static override get styles(): CSSResultArray {
         return [styles];
     }
 
+    /**
+     * The ARIA role of the table row.
+     */
     @property({ reflect: true })
     public override role = 'row';
 
+    /**
+     * Indicates whether the table head row is selected.
+     */
     @property({ type: Boolean, reflect: true })
     public selected?: boolean;
 
+    /**
+     * Handles the sorted event for the table head cells.
+     * Resets the sort direction of all other cells except the target cell.
+     */
     private handleSorted({ target }: Event): void {
         const childCells = [...this.children] as TableHeadCell[];
         childCells.forEach((cell) => {
@@ -45,6 +59,10 @@ export class TableHead extends SpectrumElement {
         });
     }
 
+    /**
+     * Handles the change event for the table head checkbox cell.
+     * Updates the selected state based on the checkbox state.
+     */
     protected handleChange({
         target: checkboxCell,
     }: Event & { target: TableCheckboxCell }): void {
@@ -53,6 +71,9 @@ export class TableHead extends SpectrumElement {
             checkboxCell.checkbox.indeterminate;
     }
 
+    /**
+     * Renders the component template.
+     */
     protected override render(): TemplateResult {
         return html`
             <slot

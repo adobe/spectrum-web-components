@@ -21,15 +21,28 @@ import styles from './table-cell.css.js';
 
 /**
  * @element sp-table-cell
+ *
+ * This component represents a cell within a table row.
+ *
+ * @slot Cell content
  */
 export class TableCell extends SpectrumElement {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
         return [styles];
     }
 
+    /**
+     * Indicates the ARIA role of the cell.
+     */
     @property({ reflect: true })
     public override role = 'gridcell';
 
+    /**
+     * Renders the component template.
+     */
     protected override render(): TemplateResult {
         return html`
             <slot></slot>

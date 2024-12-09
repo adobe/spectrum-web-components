@@ -34,14 +34,11 @@ export default {
         onChange: { action: 'change' },
         selected: {
             name: 'selected',
-            description: 'The array of item values selected by the Table.',
             type: { name: '', required: false },
             control: 'text',
         },
         selects: {
             name: 'selects',
-            description:
-                'If the Table accepts a "single" or "multiple" selection.',
             control: {
                 type: 'inline-radio',
                 options: ['', 'single', 'multiple'],
