@@ -281,10 +281,12 @@ export class DateTimePicker extends ManageHelpText(
 
         if (changesDisabled && this.isCalendarOpen) this.isCalendarOpen = false;
 
-        const selectedDate =
+        const selectedDateLabel =
             this.value &&
-            this.ariaDateFormatter.format(dateValueToDate(this.value));
-        this.setAttribute('aria-label', selectedDate ?? this.labels.empty);
+            this.labels.selected +
+                ': ' +
+                this.ariaDateFormatter.format(dateValueToDate(this.value));
+        this.setAttribute('aria-label', selectedDateLabel ?? this.labels.empty);
     }
 
     /**
