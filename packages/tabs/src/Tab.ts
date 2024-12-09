@@ -29,39 +29,78 @@ import tabItemStyles from './tab.css.js';
 /**
  * @element sp-tab
  *
+ * This component represents a single tab within a tab list.
+ *
  * @slot - text label of the Tab
  * @slot icon - The icon that appears on the left of the label
  */
 export class Tab extends FocusVisiblePolyfillMixin(
     ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), '')
 ) {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
         return [tabItemStyles];
     }
 
+    /**
+     * Indicates whether the tab has an icon.
+     */
     protected get hasIcon(): boolean {
         return this.slotContentIsPresent;
     }
-
+    /**
+     * Indicates whether the tab has a label.
+     */
     protected get hasLabel(): boolean {
         return !!this.label || this.slotHasContent;
     }
 
+    /**
+     * Indicates whether the tab is disabled.
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
+    /**
+     * The text label of the tab.
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ reflect: true })
     public label = '';
 
+    /**
+     * Indicates whether the tab is selected.
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
+    /**
+     * Indicates whether the tab is vertical.
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ type: Boolean, reflect: true })
     public vertical = false;
 
+    /**
+     * The value of the tab.
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ type: String, reflect: true })
     public value = '';
 
+    /**
+     * Renders the component template.
+     * Displays the icon slot if present and the label.
+     */
     protected override render(): TemplateResult {
         return html`
             ${this.hasIcon
@@ -76,14 +115,24 @@ export class Tab extends FocusVisiblePolyfillMixin(
         `;
     }
 
+    /**
+     * Called after the element's DOM has been updated the first time.
+     * Sets up initial attributes and properties.
+     */
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('role', 'tab');
+
+        // Generate a unique ID if the element does not have one
         if (!this.hasAttribute('id')) {
             this.id = `sp-tab-${randomID()}`;
         }
     }
 
+    /**
+     * Called when the element is updated.
+     * Updates ARIA attributes and tabindex based on the selected and disabled states.
+     */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('selected')) {

@@ -40,40 +40,73 @@ interface TabsOverflowState {
 }
 /**
  * @element sp-tabs-overflow
+ *
+ * This component handles the overflow behavior of tabs, allowing users to scroll through tabs when they exceed the available space.
  */
 export class TabsOverflow extends SizedMixin(SpectrumElement) {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
         return [styles, tabSizes, chevronIconStyles, chevronIconOverrides];
     }
 
+    /**
+     * Indicates if the tabs are in compact mode.
+     */
     @property({ type: Boolean, reflect: true })
     public compact = false;
 
+    /**
+     * The label for the button to scroll to previous tabs.
+     */
     @property({ type: String, attribute: 'label-previous' })
     public labelPrevious = 'Scroll to previous tabs';
 
+    /**
+     * The label for the button to scroll to next tabs.
+     */
     @property({ type: String, attribute: 'label-next' })
     public labelNext = 'Scroll to next tabs';
 
+    /**
+     * The text direction of the tabs.
+     */
     @property({ reflect: true })
     public override dir!: 'ltr' | 'rtl';
 
+    /**
+     * The state of the overflow, indicating if scrolling is possible.
+     */
     @state()
     private overflowState: TabsOverflowState = {
         canScrollLeft: false,
         canScrollRight: false,
     };
 
+    /**
+     * The list of tab elements assigned to the slot.
+     */
     @queryAssignedElements({ selector: 'sp-tabs', flatten: true })
     private scrollContent!: Tabs[];
 
+    /**
+     * The container element for the tabs overflow.
+     */
     @query('.tabs-overflow-container')
     private overflowContainer!: HTMLDivElement;
 
+    /**
+     * Controller to handle resize events.
+     */
     resizeController!: ResizeController;
 
+    /**
+     * Constructor to initialize the resize controller.
+     */
     public constructor() {
         super();
+
         this.resizeController = new ResizeController(this, {
             target: this,
             callback: (): void => {
@@ -82,22 +115,35 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
         });
     }
 
+    /**
+     * Called after the element's DOM has been updated the first time.
+     * Sets up the scroll event listener and observes the overflow container for resize events.
+     */
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        // enable scroll event
+        // Enable scroll event
         const [tabs] = this.scrollContent;
+
         if (tabs) {
             tabs.enableTabsScroll = true;
         }
+
         this.resizeController.observe(this.overflowContainer);
     }
 
+    /**
+     * Handles changes to the slot content.
+     * Waits for the tabs element to complete updating and then updates the scroll state.
+     */
     private async _handleSlotChange(): Promise<void> {
         const [tabsElement] = this.scrollContent;
         await tabsElement?.updateComplete;
         this._updateScrollState();
     }
 
+    /**
+     * Updates the state of the overflow, indicating if scrolling is possible.
+     */
     private _updateScrollState(): void {
         const { scrollContent, overflowState } = this;
 
@@ -117,7 +163,16 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
         }
     }
 
+    /**
+     * Factor by which the tabs should scroll when a scroll button is clicked.
+     * @property {number}
+     */
     private scrollFactor = 0.5;
+
+    /**
+     * Handles click events on the scroll buttons.
+     * Scrolls the tabs left or right based on the button clicked.
+     */
     private _handleScrollClick(event: MouseEvent): void {
         const currentTarget = event.currentTarget as HTMLElement;
         const [tabsElement] = this.scrollContent;
@@ -138,10 +193,15 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
         }
     }
 
+    /**
+     * Renders the component template.
+     * Displays the scroll buttons and the slot for tab elements.
+     */
     protected override render(): TemplateResult {
         const { canScrollRight, canScrollLeft } = this.overflowState;
         const ariaLabelPrevious = this.labelPrevious;
         const ariaLabelNext = this.labelNext;
+
         return html`
             <div
                 class=${classMap({

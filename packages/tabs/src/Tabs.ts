@@ -38,21 +38,39 @@ import tabStyles from './tabs.css.js';
 import tabSizes from './tabs-sizes.css.js';
 import { TabPanel } from './TabPanel.js';
 
-// Encapsulated for use both here and in TopNav
+/**
+ * ScaledIndicator provides utility methods and styles for scaling and transforming
+ * the selection indicator in the Tabs component.
+ *
+ * Encapsulated for use both here and in TopNav
+ */
 export const ScaledIndicator = {
-    baseSize: 100 as const,
-    noSelectionStyle: 'transform: translateX(0px) scaleX(0) scaleY(0)',
+    baseSize: 100 as const, // The base size for scaling the selection indicator.
 
+    noSelectionStyle: 'transform: translateX(0px) scaleX(0) scaleY(0)', // The style for no selection.
+
+    /**
+     * Transforms the selection indicator horizontally.
+     * Calculates the scale based on the width and translates the indicator to the specified left position.
+     */
     transformX(left: number, width: number): string {
         const scale = width / this.baseSize;
         return `transform: translateX(${left}px) scaleX(${scale});`;
     },
 
+    /**
+     * Transforms the selection indicator vertically.
+     * Calculates the scale based on the height and translates the indicator to the specified top position.
+     */
     transformY(top: number, height: number): string {
         const scale = height / this.baseSize;
         return `transform: translateY(${top}px) scaleY(${scale});`;
     },
 
+    /**
+     * Returns the base styles for the selection indicator.
+     * These styles set the width or height of the indicator based on the direction.
+     */
     baseStyles(): CSSResult {
         return css`
             :host([direction='vertical-right']) #selection-indicator,
@@ -79,6 +97,7 @@ export function calculateScrollTargetForRightSide(
     const nextIndex = index + (direction === 'rtl' ? -1 : 1);
     const nextTab = tabs[nextIndex];
     const viewportEnd = container.scrollLeft + container.offsetWidth;
+
     return nextTab ? nextTab.offsetLeft - container.offsetWidth : viewportEnd;
 }
 
@@ -95,19 +114,26 @@ export function calculateScrollTargetForLeftSide(
     const prevIndex = index + (direction === 'rtl' ? 1 : -1);
     const prevTab = tabs[prevIndex];
     const leftmostElement = direction === 'rtl' ? -container.offsetWidth : 0;
+
     return prevTab ? prevTab.offsetLeft + prevTab.offsetWidth : leftmostElement;
 }
 
 /**
  * @element sp-tabs
  *
+ * The `Tabs` component is a custom web component that manages a group of tab elements.
+ *
  * @slot - Tab elements to manage as a group
  * @slot tab-panel - Tab Panel elements related to the listed Tab elements
  * @csspart tablist - Container element for the slotted sp-tab elements
  *
  * @fires change - The selected Tab child has changed.
+ * @fires sp-tabs-scroll - The tabs have been scrolled.
  */
 export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
         return [tabSizes, tabStyles, ScaledIndicator.baseStyles()];
     }
@@ -125,47 +151,106 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     /**
      * The tab items are displayed closer together.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
      */
     @property({ type: Boolean, reflect: true })
     public compact = false;
 
+    /**
+     * The direction of the text within the tabs component.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ reflect: true })
     public override dir!: 'ltr' | 'rtl';
 
+    /**
+     * The direction of the tabs component.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ reflect: true })
     public direction: 'vertical' | 'vertical-right' | 'horizontal' =
         'horizontal';
 
+    /**
+     * Indicates whether the tabs are emphasized.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    /**
+     * The label for the aria-label in the tabs component.
+     *
+     * This property provides an accessible name for the tabs component.
+     */
     @property()
     public label = '';
 
+    /**
+     * Enables scrolling for the tabs if there are more tabs than can fit in the available space.
+     */
     @property({ type: Boolean })
     public enableTabsScroll = false;
 
     /**
      * The tab list is displayed without a border.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
      */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
+    /**
+     * The style for the selection indicator.
+     *
+     * This property is used to set the CSS style for the selection indicator.
+     */
     @property({ attribute: false })
     public selectionIndicatorStyle = ScaledIndicator.noSelectionStyle;
 
+    /**
+     * Indicates whether the selection indicator should animate.
+     *
+     * This property is used to control the animation of the selection indicator.
+     */
     @property({ attribute: false })
     public shouldAnimate = false;
 
+    /**
+     * Query to select the slot element within the component.
+     */
     @query('slot')
     private slotEl!: HTMLSlotElement;
 
+    /**
+     * Query to select the tab list element within the component.
+     */
     @query('#list')
     private tabList!: HTMLDivElement;
 
+    /**
+     * The selected tab.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ reflect: true })
     selected = '';
 
+    /**
+     * Sets the tabs managed by the component.
+     *
+     * Observes the new tabs for resize events and updates the internal tabs array.
+     */
     private set tabs(tabs: Tab[]) {
         if (tabs === this.tabs) return;
         this._tabs.forEach((tab) => {
@@ -178,14 +263,21 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.rovingTabindexController.clearElementCache();
     }
 
+    /**
+     * Gets the tabs managed by the component.
+     */
     private get tabs(): Tab[] {
         return this._tabs;
     }
 
+    /**
+     * Internal array to store the tabs.
+     */
     private _tabs: Tab[] = [];
 
     constructor() {
         super();
+        // Initialize IntersectionController to observe the visibility of the tabs component.
         new IntersectionController(this, {
             config: {
                 root: null,
@@ -198,12 +290,18 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         });
     }
 
+    /**
+     * Controller to manage resize events for the tabs component.
+     *
+     * Updates the selection indicator when the component is resized.
+     */
     protected resizeController = new ResizeController(this, {
         callback: () => {
             this.updateSelectionIndicator();
         },
     });
 
+    // Controller to manage roving tabindex for the tab elements.
     rovingTabindexController = new RovingTabindexController<Tab>(this, {
         focusInIndex: (elements) => {
             let focusInIndex = 0;
@@ -229,24 +327,31 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     });
 
     /**
-     * @private
+     * Gets the focusable element within the tabs component.
      */
     public override get focusElement(): Tab | this {
         return this.rovingTabindexController.focusInElement || this;
     }
 
+    /**
+     * Limits the delta value to the specified interval.
+     */
     private limitDeltaToInterval(min: number, max: number) {
         return (delta: number): number => {
             if (delta < min) return min;
+
             if (delta > max) return max;
+
             return delta;
         };
     }
 
     /**
-     * Scrolls through the tabs component, on the X-axis, by a given ammount of pixels/ delta. The given delta is limited to the scrollable area of the tabs component.
-     * @param {number} delta - The ammount of pixels to scroll by. If the value is positive, the tabs will scroll to the right. If the value is negative, the tabs will scroll to the left.
-     * @param {ScrollBehavior} behavior - The scroll behavior to use. Defaults to 'smooth'.
+     * Scrolls through the tabs component, on the X-axis, by a given amount of pixels/delta.
+     * The given delta is limited to the scrollable area of the tabs component.
+     *
+     * @param delta - The amount of pixels to scroll by. If the value is positive, the tabs will scroll to the right. If the value is negative, the tabs will scroll to the left.
+     * @param behavior - The scroll behavior to use. Defaults to 'smooth'.
      */
     public scrollTabs(
         delta: number,
@@ -269,12 +374,17 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         });
     }
 
+    /**
+     * Gets the scroll state of the tabs component.
+     * Determines whether the tabs can scroll left or right based on the current scroll position and direction.
+     */
     public get scrollState(): Record<string, boolean> {
         if (this.tabList) {
             const { scrollLeft, clientWidth, scrollWidth } = this.tabList;
             const canScrollLeft = Math.abs(scrollLeft) > 0;
             const canScrollRight =
                 Math.ceil(Math.abs(scrollLeft)) < scrollWidth - clientWidth;
+
             return {
                 canScrollLeft:
                     this.dir === 'ltr' ? canScrollLeft : canScrollRight,
@@ -285,6 +395,10 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return {};
     }
 
+    /**
+     * Lifecycle method called when the component updates.
+     * Waits for the update to complete and ensures all child tabs have completed their updates.
+     */
     override async getUpdateComplete(): Promise<boolean> {
         const complete = await super.getUpdateComplete();
 
@@ -300,6 +414,9 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return complete;
     }
 
+    /**
+     * Calculates the necessary scroll amount to bring the selected tab into view.
+     */
     private getNecessaryAutoScroll(index: number): number {
         const selectedTab = this.tabs[index];
         const selectionEnd = selectedTab.offsetLeft + selectedTab.offsetWidth;
@@ -328,6 +445,9 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return -1;
     }
 
+    /**
+     * Scrolls the tabs component to bring the selected tab into view.
+     */
     public async scrollToSelection(): Promise<void> {
         if (!this.enableTabsScroll || !this.selected) {
             return;
@@ -350,6 +470,10 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     }
 
+    /**
+     * Lifecycle method called when the component updates.
+     * Checks if the 'selected' property has changed and scrolls to the selected tab if necessary.
+     */
     protected override updated(
         changedProperties: PropertyValueMap<this>
     ): void {
@@ -360,21 +484,34 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     }
 
+    /**
+     * Manages the tab panels associated with the tabs component.
+     * Sets the appropriate ARIA attributes and updates the selected state of each panel.
+     */
     protected managePanels({
         target,
     }: Event & { target: HTMLSlotElement }): void {
         const panels = target.assignedElements() as TabPanel[];
+
         panels.map((panel) => {
             const { value, id } = panel;
             const tab = this.querySelector(`[role="tab"][value="${value}"]`);
+
             if (tab) {
+                // Set ARIA attributes to link the tab and panel.
                 tab.setAttribute('aria-controls', id);
                 panel.setAttribute('aria-labelledby', tab.id);
             }
+
+            // Update the selected state of the panel.
             panel.selected = value === this.selected;
         });
     }
 
+    /**
+     * Renders the content of the tabs component.
+     * This method returns a template result containing the tab list and tab panels.
+     */
     protected override render(): TemplateResult {
         return html`
             <div
@@ -401,32 +538,48 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         `;
     }
 
+    /**
+     * Lifecycle method called before the component updates.
+     * Handles initial selection, updates checked state, and manages ARIA attributes based on property changes.
+     */
     protected override willUpdate(changes: PropertyValues): void {
+        // Handle initial selection if the component has not updated yet
         if (!this.hasUpdated) {
             const selectedChild = this.querySelector(
                 ':scope > [selected]'
             ) as Tab;
+
             if (selectedChild) {
                 this.selectTarget(selectedChild);
             }
         }
 
         super.willUpdate(changes);
+
+        // Update checked state if the 'selected' property has changed
         if (changes.has('selected')) {
             if (this.tabs.length) {
                 this.updateCheckedState();
             }
+
+            // Update the previously selected tab panel
             if (changes.get('selected')) {
                 const previous = this.querySelector(
                     `[role="tabpanel"][value="${changes.get('selected')}"]`
                 ) as TabPanel;
+
                 if (previous) previous.selected = false;
             }
+
+            // Update the newly selected tab panel
             const next = this.querySelector(
                 `[role="tabpanel"][value="${this.selected}"]`
             ) as TabPanel;
+
             if (next) next.selected = true;
         }
+
+        // Update ARIA orientation attribute if the 'direction' property has changed
         if (changes.has('direction')) {
             if (this.direction === 'horizontal') {
                 this.removeAttribute('aria-orientation');
@@ -434,9 +587,13 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 this.setAttribute('aria-orientation', 'vertical');
             }
         }
+
+        // Update the selection indicator if the 'dir' property has changed
         if (changes.has('dir')) {
             this.updateSelectionIndicator();
         }
+
+        // Update ARIA disabled attribute if the 'disabled' property has changed
         if (changes.has('disabled')) {
             if (this.disabled) {
                 this.setAttribute('aria-disabled', 'true');
@@ -444,6 +601,8 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 this.removeAttribute('aria-disabled');
             }
         }
+
+        // Enable animation if the 'shouldAnimate' property has changed
         if (
             !this.shouldAnimate &&
             typeof changes.get('shouldAnimate') !== 'undefined'
@@ -452,6 +611,10 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     }
 
+    /**
+     * Handles the scroll event on the tabs component.
+     * Dispatches a custom 'sp-tabs-scroll' event when the tabs are scrolled.
+     */
     private onTabsScroll = (): void => {
         this.dispatchEvent(
             new Event('sp-tabs-scroll', {
@@ -461,20 +624,31 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         );
     };
 
+    /**
+     * Handles the click event on the tabs component.
+     * Selects the clicked tab if it is not disabled.
+     */
     private onClick = (event: Event): void => {
         if (this.disabled) {
             return;
         }
+
         const target = event
             .composedPath()
             .find((el) => (el as Tab).parentElement === this) as Tab;
+
         if (!target || target.disabled) {
             return;
         }
+
         this.shouldAnimate = true;
         this.selectTarget(target);
     };
 
+    /**
+     * Handles the keydown event on the tabs component.
+     * Selects the target tab if the Enter or Space key is pressed.
+     */
     private onKeyDown = (event: KeyboardEvent): void => {
         if (event.code === 'Enter' || event.code === 'Space') {
             event.preventDefault();
@@ -485,8 +659,13 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     };
 
+    /**
+     * Selects the target tab.
+     * Dispatches a 'change' event and updates the selected tab if the event is not canceled.
+     */
     private selectTarget(target: HTMLElement): void {
         const value = target.getAttribute('value');
+
         if (value) {
             const selected = this.selected;
             this.selected = value;
@@ -501,60 +680,96 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     }
 
+    /**
+     * Handles the slotchange event.
+     * Updates the tabs array and the checked state of the tabs.
+     */
     private onSlotChange(): void {
         this.tabs = this.slotEl
             .assignedElements()
             .filter((el) => el.getAttribute('role') === 'tab') as Tab[];
+
         this.updateCheckedState();
     }
 
+    /**
+     * Updates the checked state of the tabs.
+     * Removes the 'selected' attribute from all tabs and sets it on the currently selected tab.
+     * If no tab is selected, the first tab is set as selected.
+     */
     private updateCheckedState = (): void => {
+        // Remove the 'selected' attribute from all tabs
         this.tabs.forEach((element) => {
             element.removeAttribute('selected');
         });
 
+        // Check if a tab is currently selected
         if (this.selected) {
+            // Find the tab with the value matching the selected value
             const currentChecked = this.tabs.find(
                 (el) => el.value === this.selected
             );
 
+            // If a matching tab is found, set it as selected, otherwise clear the selected value
             if (currentChecked) {
                 currentChecked.selected = true;
             } else {
                 this.selected = '';
             }
         } else {
+            // If no tab is selected, set the first tab as selected
             const firstTab = this.tabs[0];
             if (firstTab) {
                 firstTab.setAttribute('tabindex', '0');
             }
         }
 
+        // Update the selection indicator to reflect the new state
         this.updateSelectionIndicator();
     };
 
+    /**
+     * Updates the selection indicator to reflect the currently selected tab.
+     */
     private updateSelectionIndicator = async (): Promise<void> => {
+        // Find the currently selected tab element
         const selectedElement = this.tabs.find((el) => el.selected);
+
+        // If no tab is selected, set the selection indicator style to no selection and return
         if (!selectedElement) {
             this.selectionIndicatorStyle = ScaledIndicator.noSelectionStyle;
             return;
         }
+
+        // Wait for the selected element to complete updating and for fonts to be ready
         await Promise.all([
             selectedElement.updateComplete,
             document.fonts ? document.fonts.ready : Promise.resolve(),
         ]);
+
+        // Get the dimensions of the selected element
         const { width, height } = selectedElement.getBoundingClientRect();
 
+        // Update the selection indicator style based on the direction of the tabs
         this.selectionIndicatorStyle =
             this.direction === 'horizontal'
                 ? ScaledIndicator.transformX(selectedElement.offsetLeft, width)
                 : ScaledIndicator.transformY(selectedElement.offsetTop, height);
     };
 
+    /**
+     * Called when the element is added to the document's DOM.
+     * Sets up event listeners for window resize and font loading events to update the selection indicator.
+     */
     public override connectedCallback(): void {
         super.connectedCallback();
+
+        // Add event listener for window resize to update the selection indicator
         window.addEventListener('resize', this.updateSelectionIndicator);
+
+        // Check if the document supports the fonts API
         if ('fonts' in document) {
+            // Add event listener for font loading completion to update the selection indicator
             (
                 document as unknown as {
                     fonts: {
@@ -571,9 +786,17 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     }
 
+    /**
+     * Called when the element is removed from the document's DOM.
+     * Cleans up event listeners for window resize and font loading events.
+     */
     public override disconnectedCallback(): void {
+        // Remove event listener for window resize
         window.removeEventListener('resize', this.updateSelectionIndicator);
+
+        // Check if the document supports the fonts API
         if ('fonts' in document) {
+            // Remove event listener for font loading completion
             (
                 document as unknown as {
                     fonts: {

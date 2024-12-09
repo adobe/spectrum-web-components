@@ -24,25 +24,45 @@ import panelStyles from './tab-panel.css.js';
 /**
  * @element sp-tab-panel
  *
+ * This component creates a tabpanel container for Tabs.
+ *
  * @slot - content of the Tab Panel
  */
 export class TabPanel extends SpectrumElement {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     static override styles = [panelStyles];
 
+    /**
+     * Indicates if the tab panel is selected.
+     */
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
+    /**
+     * The value associated with the tab panel.
+     */
     @property({ type: String, reflect: true })
     public value = '';
 
+    /**
+     * Handles focusin event by removing the tabindex attribute.
+     */
     protected handleFocusin(): void {
         this.removeAttribute('tabindex');
     }
 
+    /**
+     * Handles focusout event by setting the tabindex attribute based on the selected state.
+     */
     protected handleFocusout(): void {
         this.tabIndex = this.selected ? 0 : -1;
     }
 
+    /**
+     * Renders the component template.
+     */
     protected override render(): TemplateResult {
         return html`
             <slot
@@ -52,15 +72,27 @@ export class TabPanel extends SpectrumElement {
         `;
     }
 
+    /**
+     * Called after the element's DOM has been updated the first time.
+     * Sets up initial attributes and properties.
+     */
     protected override firstUpdated(): void {
         this.slot = 'tab-panel';
+
         this.setAttribute('role', 'tabpanel');
+
         this.tabIndex = 0;
+
+        // Generate a unique ID if the element does not have one
         if (!this.hasAttribute('id')) {
             this.id = `sp-tab-panel-${randomID()}`;
         }
     }
 
+    /**
+     * Called when the element is updated.
+     * Updates the aria-hidden attribute and tabindex based on the selected state.
+     */
     protected override updated(changes: PropertyValues<this>): void {
         if (changes.has('selected')) {
             if (this.selected) {
