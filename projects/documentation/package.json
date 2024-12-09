@@ -1,6 +1,6 @@
 {
     "name": "documentation",
-    "version": "1.0.1",
+    "version": "1.0.1-color-testing",
     "private": true,
     "description": "The documentation site for Spectrum Web Components",
     "license": "Apache-2.0",
@@ -22,8 +22,8 @@
         "watch": "yarn serve --watch"
     },
     "dependencies": {
-        "@spectrum-web-components/bundle": "^1.0.1",
-        "@spectrum-web-components/custom-vars-viewer": "^1.0.1"
+        "@spectrum-web-components/bundle": "^1.0.1-color-testing",
+        "@spectrum-web-components/custom-vars-viewer": "^1.0.1-color-testing"
     },
     "devDependencies": {
         "@11ty/eleventy": "^3.0.0-alpha.4",
@@ -39,14 +39,14 @@
         "@web/dev-server": "^0.4.3",
         "@web/rollup-plugin-copy": "^0.5.1",
         "@web/rollup-plugin-html": "^2.1.2",
-        "alex": "^11.0.1",
+        "alex": "^11.0.1-color-testing",
         "esbuild-plugin-lit-css": "^3.0.0",
         "lunr": "^2.3.9",
         "markdown-it": "^14.0.0",
         "markdown-it-anchor": "^8.4.1",
         "markdown-it-for-inline": "^2.0.1",
         "posthtml": "^0.16.6",
-        "posthtml-attrs-parser": "^1.0.1",
+        "posthtml-attrs-parser": "^1.0.1-color-testing",
         "posthtml-match-helper": "^2.0.0",
         "prismjs": "^1.29.0",
         "rimraf": "^5.0.1",
