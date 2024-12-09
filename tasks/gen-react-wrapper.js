@@ -28,12 +28,12 @@ const removeReactDir = () => {
 // Generate the React wrapper
 const generateReactWrapper = () => {
     try {
-        execSync('node ./scripts/generate-icon-react-wrapper.js', {
+        execSync('pwd && node ./scripts/generate-icon-react-wrapper.js', {
             stdio: 'inherit',
         });
         console.log('Generated React wrapper.');
     } catch (error) {
-        console.error('Error generating React wrapper:', error);
+        console.error('Errrror generating React wrapper:', error);
     }
 };
 
@@ -79,7 +79,7 @@ const command = `cem analyze --config ${configPath}`;
 
 const runCemAnalyze = (packages) => {
     packages.forEach((pkg) => {
-        console.log(`Running ${command} in ${pkg.path}`);
+        //console.log(`Running ${command} in ${pkg.path}`);
         try {
             execSync(command, { stdio: 'inherit', cwd: pkg.path });
         } catch (error) {

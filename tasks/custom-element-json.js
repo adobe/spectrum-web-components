@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { dirname } from 'path';
 import path from 'path';
 
 // Get a list of all packages except those you want to ignore
@@ -62,7 +62,6 @@ const command = `cem analyze --config ${configPath} --packagejson`;
 console.log(__dirname, 'Updating custom elements JSON files...');
 allPackages.forEach((pkg) => {
     try {
-        // Execute the command using Change Sets
         execSync(command, { cwd: pkg.path, stdio: 'inherit' });
     } catch (error) {
         console.error('Error executing custom-element-json command:', error);
