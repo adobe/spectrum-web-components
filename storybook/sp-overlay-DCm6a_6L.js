@@ -1,0 +1,23 @@
+import { d as defineElement } from './define-element-CbLZvyrL.js';
+import { Overlay } from './Overlay-DlCLRGh2.js';
+import './lit-element-BulMEkr1.js';
+import './lit-html-COgVUehj.js';
+import './ElementResolution-B9KteuX8.js';
+import './random-id-BST1Puzz.js';
+import './AbstractOverlay-BxIPKR0l.js';
+import './first-focusable-in-BK_DAWOm.js';
+import './focusable-selectors-CUZEb4r9.js';
+import './VirtualTrigger-CGWkC4Ha.js';
+import './strategies-B4y9GD8J.js';
+import './condition-attribute-with-id-Cnyhr7Mp.js';
+import './platform-r3Lf9REX.js';
+import './slottable-request-event-DXuuyGoq.js';
+import './query-DQF6X5qW.js';
+import './base-u8Z1Hrsd.js';
+import './query-assigned-elements-C9WOp2R6.js';
+import './state-DMEtq-nM.js';
+import './if-defined-DDJGFaN4.js';
+import './style-map-DtKTc8KS.js';
+import './directive-Bn5c4u4M.js';
+
+defineElement("sp-overlay",Overlay);
