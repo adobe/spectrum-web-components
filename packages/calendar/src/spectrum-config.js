@@ -37,7 +37,7 @@ const config = {
                     ],
                     replace: [
                         {
-                            replace: builder.class('tableCell'),
+                            replace: builder.class('table-cell'),
                         },
                         {
                             replace: builder.pseudoClass('focus-within'),
@@ -69,7 +69,7 @@ const config = {
                 converter.classToClass('spectrum-Calendar-table', 'table'),
                 converter.classToClass(
                     'spectrum-Calendar-tableCell',
-                    'tableCell'
+                    'table-cell'
                 ),
                 converter.classToClass('spectrum-Calendar-date', 'date'),
             ],

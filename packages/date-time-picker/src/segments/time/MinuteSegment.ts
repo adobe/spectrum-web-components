@@ -18,7 +18,7 @@ export class MinuteSegment extends EditableSegment {
     public maxValue: number = 59;
     public value?: number;
 
-    constructor(formatted: string) {
-        super(SegmentTypes.Minute, formatted);
+    constructor(formatted: string, label: string) {
+        super(SegmentTypes.Minute, formatted, label);
     }
 }

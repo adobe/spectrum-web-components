@@ -79,3 +79,12 @@ export function expectSameDates(
 ): void {
     expect(isSameDay(a, b), message).to.be.true;
 }
+
+/**
+ * Queries the calendar for the focusable day element.
+ */
+export function getFocusableDay(calendar: Calendar): HTMLElement {
+    return calendar.shadowRoot.querySelector(
+        'td.table-cell span[tabindex="0"]'
+    ) as HTMLElement;
+}

@@ -31,3 +31,10 @@ export interface DateCellProperties {
     isDisabled: boolean;
     isTabbable: boolean;
 }
+
+export interface CalendarLabels {
+    previous: string;
+    next: string;
+    today: string;
+    selected: string;
+}
