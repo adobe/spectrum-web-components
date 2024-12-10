@@ -29,9 +29,15 @@ export class ColorLoupe extends SpectrumElement {
         return [opacityCheckerboardStyles, styles];
     }
 
+    /**
+     * Indicates whether the loupe is open.
+     */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    /**
+     * The color value of the loupe.
+     */
     @property({ type: String })
     public color = 'rgba(255, 0, 0, 0.5)';
 

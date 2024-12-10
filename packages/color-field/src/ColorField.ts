@@ -29,6 +29,9 @@ export class ColorField extends TextfieldBase {
         return [...super.styles];
     }
 
+    /**
+     * Indicates whether to display the color handle.
+     */
     @property({ type: Boolean, attribute: 'view-color' })
     public viewColor = false;
 
@@ -49,6 +52,9 @@ export class ColorField extends TextfieldBase {
 
     private cachedColor: string | null = null;
 
+    /**
+     * Retrieves the color value of the color field.
+     */
     public getColorValue(): string {
         if (!this.value) {
             return '';
@@ -62,6 +68,9 @@ export class ColorField extends TextfieldBase {
         return this.cachedColor;
     }
 
+    /**
+     * Renders the color handle.
+     */
     private renderColorHandle(): TemplateResult {
         return this.viewColor
             ? html`
@@ -84,6 +93,9 @@ export class ColorField extends TextfieldBase {
 
     private cachedTinyColor: TinyColor | null = null;
 
+    /**
+     * Checks the validity of the color field value.
+     */
     public override checkValidity(): boolean {
         let validity = super.checkValidity();
         if (this.value) {
