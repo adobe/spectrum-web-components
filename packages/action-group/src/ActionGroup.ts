@@ -42,81 +42,6 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
-    /**
-     * Sets the list of action buttons in the group.
-     * Clears the element cache in the roving tabindex controller.
-     */
-    public set buttons(buttons: ActionButton[]) {
-        /* c8 ignore next 1 */
-        if (buttons === this.buttons) return;
-        this._buttons = buttons;
-        this.rovingTabindexController.clearElementCache();
-    }
-
-    public get buttons(): ActionButton[] {
-        return this._buttons;
-    }
-
-    /**
-     * The internal list of action buttons
-     */
-    public _buttons: ActionButton[] = [];
-
-    /**
-     * The CSS selector used to identify action buttons within the group.
-     */
-    protected _buttonSelector = 'sp-action-button, sp-action-menu';
-
-    constructor() {
-        super();
-
-        /**
-         * Initializes the MutationController to observe changes in the child elements.
-         * Configures the controller to manage buttons when changes are detected.
-         */
-        new MutationController(this, {
-            config: {
-                childList: true,
-                subtree: true,
-            },
-            callback: () => {
-                this.manageButtons();
-            },
-            skipInitial: true,
-        });
-    }
-
-    /**
-     * Initializes the RovingTabindexController to manage focus within the action group.
-     * Configures the controller to determine the initial focus index and manage focusable elements.
-     */
-    rovingTabindexController = new RovingTabindexController<ActionButton>(
-        this,
-        {
-            /**
-             * Determines the initial focus index within the action group.
-             * Finds the first selected and enabled button, or the first enabled button if none are selected.
-             */
-            focusInIndex: (elements: ActionButton[]) => {
-                let firstEnabledIndex = -1;
-                const firstSelectedIndex = elements.findIndex((el, index) => {
-                    if (!elements[firstEnabledIndex] && !el.disabled) {
-                        firstEnabledIndex = index;
-                    }
-                    return el.selected && !el.disabled;
-                });
-                return elements[firstSelectedIndex]
-                    ? firstSelectedIndex
-                    : firstEnabledIndex;
-            },
-
-            /**
-             * Retrieves the list of action buttons within the group.
-             */
-            elements: () => this.buttons,
-            isFocusableElement: (el: ActionButton) => !el.disabled,
-        }
-    );
 
     /**
      * When true, the action group is styled in a compact form.
@@ -189,9 +114,84 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     get selected(): string[] {
         return this._selected;
     }
+    /**
+     * Sets the list of action buttons in the group.
+     * Clears the element cache in the roving tabindex controller.
+     */
+    public set buttons(buttons: ActionButton[]) {
+        /* c8 ignore next 1 */
+        if (buttons === this.buttons) return;
+        this._buttons = buttons;
+        this.rovingTabindexController.clearElementCache();
+    }
+
+    public get buttons(): ActionButton[] {
+        return this._buttons;
+    }
+
+    /**
+     * The internal list of action buttons
+     */
+    public _buttons: ActionButton[] = [];
+
+    /**
+     * The CSS selector used to identify action buttons within the group.
+     */
+    protected _buttonSelector = 'sp-action-button, sp-action-menu';
+
+    /**
+     * Initializes the RovingTabindexController to manage focus within the action group.
+     * Configures the controller to determine the initial focus index and manage focusable elements.
+     */
+    rovingTabindexController = new RovingTabindexController<ActionButton>(
+        this,
+        {
+            /**
+             * Determines the initial focus index within the action group.
+             * Finds the first selected and enabled button, or the first enabled button if none are selected.
+             */
+            focusInIndex: (elements: ActionButton[]) => {
+                let firstEnabledIndex = -1;
+                const firstSelectedIndex = elements.findIndex((el, index) => {
+                    if (!elements[firstEnabledIndex] && !el.disabled) {
+                        firstEnabledIndex = index;
+                    }
+                    return el.selected && !el.disabled;
+                });
+                return elements[firstSelectedIndex]
+                    ? firstSelectedIndex
+                    : firstEnabledIndex;
+            },
+
+            /**
+             * Retrieves the list of action buttons within the group.
+             */
+            elements: () => this.buttons,
+            isFocusableElement: (el: ActionButton) => !el.disabled,
+        }
+    );
 
     @query('slot')
     slotElement!: HTMLSlotElement;
+
+    constructor() {
+        super();
+
+        /**
+         * Initializes the MutationController to observe changes in the child elements.
+         * Configures the controller to manage buttons when changes are detected.
+         */
+        new MutationController(this, {
+            config: {
+                childList: true,
+                subtree: true,
+            },
+            callback: () => {
+                this.manageButtons();
+            },
+            skipInitial: true,
+        });
+    }
 
     /**
      * Dispatches a 'change' event to notify listeners of the selection change.
