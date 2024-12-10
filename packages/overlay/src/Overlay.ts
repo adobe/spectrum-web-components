@@ -30,7 +30,6 @@ import {
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
-
 import type {
     OpenableElement,
     OverlayState,
@@ -57,14 +56,15 @@ import {
 
 import styles from './overlay.css.js';
 
-const supportsPopover = 'showPopover' in document.createElement('div');
+const browserSupportsPopover = 'showPopover' in document.createElement('div');
 
-let OverlayFeatures = OverlayDialog(AbstractOverlay);
-/* c8 ignore next 2 */
-if (supportsPopover) {
-    OverlayFeatures = OverlayPopover(OverlayFeatures);
+// Start the base class and add the popover or no-popover functionality
+let ComputedOverlayBase = OverlayDialog(AbstractOverlay);
+
+if (browserSupportsPopover) {
+    ComputedOverlayBase = OverlayPopover(ComputedOverlayBase);
 } else {
-    OverlayFeatures = OverlayNoPopover(OverlayFeatures);
+    ComputedOverlayBase = OverlayNoPopover(ComputedOverlayBase);
 }
 
 /**
@@ -74,28 +74,42 @@ if (supportsPopover) {
  * @fires sp-closed - announce that an overlay has compelted any exit animations
  * @fires slottable-request - requests to add or remove slottable content
  */
-export class Overlay extends OverlayFeatures {
+export class Overlay extends ComputedOverlayBase {
     static override styles = [styles];
 
     /**
      * An Overlay that is `delayed` will wait until a warm-up period of 1000ms
-     * has completed before opening. Once the warmup period has completed, all
+     * has completed before opening. Once the warm-up period has completed, all
      * subsequent Overlays will open immediately. When no Overlays are opened,
-     * a cooldown period of 1000ms will begin. Once the cooldown has completed,
+     * a cool-down period of 1000ms will begin. Once the cool-down has completed,
      * the next Overlay to be opened will be subject to the warm-up period if
      * provided that option.
+     *
+     * This behavior helps to manage the performance and user experience by
+     * preventing multiple overlays from opening simultaneously and ensuring
+     * a smooth transition between opening and closing overlays.
      */
     @property({ type: Boolean })
     override get delayed(): boolean {
         return this.elements.at(-1)?.hasAttribute('delayed') || this._delayed;
     }
 
+    /**
+     * Sets the delayed state of the overlay.
+     */
     override set delayed(delayed: boolean) {
         this._delayed = delayed;
     }
 
+    /**
+     * Internal property to store the delayed state of the overlay.
+     */
     private _delayed = false;
 
+    /**
+     * A reference to the dialog element within the overlay.
+     * This element is expected to have `showPopover` and `hidePopover` methods.
+     */
     @query('.dialog')
     override dialogEl!: HTMLDialogElement & {
         showPopover(): void;
@@ -103,36 +117,58 @@ export class Overlay extends OverlayFeatures {
     };
 
     /**
-     * Whether the overlay is currently functional or not
+     * Indicates whether the overlay is currently functional or not.
+     *
+     * When set to `true`, the overlay is disabled, and any active strategy is aborted.
+     * The overlay will also close if it is currently open. When set to `false`, the
+     * overlay will re-bind events and re-open if it was previously open.
      */
     @property({ type: Boolean })
     override get disabled(): boolean {
         return this._disabled;
     }
 
+    /**
+     * Sets the disabled state of the overlay.
+     */
     override set disabled(disabled: boolean) {
         this._disabled = disabled;
         if (disabled) {
+            // Abort any active strategy and close the overlay if it is currently open
             this.strategy?.abort();
             this.wasOpen = this.open;
             this.open = false;
         } else {
+            // Re-bind events and re-open the overlay if it was previously open
             this.bindEvents();
             this.open = this.open || this.wasOpen;
             this.wasOpen = false;
         }
     }
 
+    /**
+     * Internal property to store the disabled state of the overlay.
+     */
     private _disabled = false;
 
+    /**
+     * A query to gather all elements slotted into the default slot, excluding elements
+     * with the slot name "longpress-describedby-descriptor".
+     */
     @queryAssignedElements({
         flatten: true,
-        selector: ':not([slot="longpress-describedby-descriptor"], slot)', // gather only elements slotted into the default slot
+        selector: ':not([slot="longpress-describedby-descriptor"], slot)',
     })
     override elements!: OpenableElement[];
 
+    /**
+     * A reference to the parent overlay that should be force-closed, if any.
+     */
     public parentOverlayToForceClose?: Overlay;
 
+    /**
+     * Determines if the overlay has a non-virtual trigger element.
+     */
     private get hasNonVirtualTrigger(): boolean {
         return (
             !!this.triggerElement &&
@@ -141,15 +177,21 @@ export class Overlay extends OverlayFeatures {
     }
 
     /**
-     * The `offset` property accepts either a single number, to
-     * define the offset of the Overlay along the main axis from
-     * the trigger, or 2-tuple, to define the offset along the
-     * main axis and the cross axis. This option has no effect
-     * when there is no trigger element.
+     * The `offset` property accepts either a single number to define the offset of the
+     * Overlay along the main axis from the trigger, or a 2-tuple to define the offset
+     * along both the main axis and the cross axis. This option has no effect when there
+     * is no trigger element.
      */
     @property({ type: Number })
     override offset: number | [number, number] = 0;
 
+    /**
+     * Provides an instance of the `PlacementController` for managing the positioning
+     * of the overlay relative to its trigger element.
+     *
+     * If the `PlacementController` instance does not already exist, it is created and
+     * assigned to the `_placementController` property.
+     */
     protected override get placementController(): PlacementController {
         if (!this._placementController) {
             this._placementController = new PlacementController(this);
@@ -158,46 +200,63 @@ export class Overlay extends OverlayFeatures {
     }
 
     /**
-     * Whether the Overlay is projected onto the "top layer" or not.
+     * Indicates whether the Overlay is projected onto the "top layer" or not.
+     *
+     * When set to `true`, the overlay is open and visible. When set to `false`, the overlay is closed and hidden.
      */
     @property({ type: Boolean, reflect: true })
     override get open(): boolean {
         return this._open;
     }
 
+    /**
+     * Sets the open state of the overlay.
+     */
     override set open(open: boolean) {
-        // Don't respond when disabled.
         if (open && this.disabled) return;
-        // Don't respond when state not dirty
+
         if (open === this.open) return;
-        // Don't respond when you're in the shadow on a longpress
-        // Shadow occurs when the first "click" would normally close the popover
+
+        // Don't respond if the overlay is in the shadow state during a longpress.
+        // The shadow state occurs when the first "click" would normally close the popover.
         if (this.strategy?.activelyOpening && !open) return;
+
         this._open = open;
+
         if (this.open) {
             Overlay.openCount += 1;
         }
+
         this.requestUpdate('open', !this.open);
+
+        // Request slottable content if the overlay is opening.
         if (this.open) {
             this.requestSlottable();
         }
     }
 
+    /**
+     * Internal property to store the open state of the overlay.
+     */
     private _open = false;
 
+    /**
+     * Tracks the number of overlays that have been opened.
+     *
+     * This static property is used to manage the stacking context of multiple overlays.
+     */
     static openCount = 1;
 
     /**
-     * Instruct the Overlay where to place itself in
-     * relationship to the trigger element.
-     * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
+     * Instruct the Overlay where to place itself in relationship to the trigger element.
      */
     @property()
     override placement?: Placement;
 
     /**
      * The state in which the last `request-slottable` event was dispatched.
-     * Do not allow overlays from dispatching the same state twice in a row.
+     *
+     * This property ensures that overlays do not dispatch the same state twice in a row.
      */
     private lastRequestSlottableState = false;
 
@@ -205,83 +264,134 @@ export class Overlay extends OverlayFeatures {
      * Whether to pass focus to the overlay once opened, or
      * to the appropriate value based on the "type" of the overlay
      * when set to `"auto"`.
-     *
      */
     @property({ attribute: 'receives-focus' })
     override receivesFocus: 'true' | 'false' | 'auto' = 'auto';
 
+    /**
+     * A reference to the slot element within the overlay.
+     *
+     * This element is used to manage the content slotted into the overlay.
+     */
     @query('slot')
     slotEl!: HTMLSlotElement;
 
+    /**
+     * The current state of the overlay.
+     *
+     * This property reflects the current state of the overlay, such as 'opened' or 'closed'.
+     * When the state changes, it triggers the appropriate actions and updates the component.
+     */
     @state()
     override get state(): OverlayState {
         return this._state;
     }
 
+    /**
+     * Sets the state of the overlay.
+     */
     override set state(state) {
         if (state === this.state) return;
+
         const oldState = this.state;
+
         this._state = state;
+
+        // Complete the opening strategy if the state is 'opened' or 'closed'.
         if (this.state === 'opened' || this.state === 'closed') {
             this.strategy?.shouldCompleteOpen();
         }
+
+        // Request an update to re-render the component if necessary.
         this.requestUpdate('state', oldState);
     }
 
+    /**
+     * Internal property to store the state of the overlay.
+     */
     override _state: OverlayState = 'closed';
 
+    /**
+     * The interaction strategy for opening the overlay.
+     * This can be a ClickController, HoverController, or LongpressController.
+     */
     public strategy?: ClickController | HoverController | LongpressController;
 
+    /**
+     * The padding around the tip of the overlay.
+     * This property defines the padding around the tip of the overlay, which can be used to adjust its positioning.
+     */
     @property({ type: Number, attribute: 'tip-padding' })
     tipPadding?: number;
 
     /**
      * An optional ID reference for the trigger element combined with the optional
-     * interaction (click | hover | longpress) by which the overlay shold open
-     * the overlay with an `@`: e.g. `trigger@click` opens the overlay when an
-     * element with the ID "trigger" is clicked.
+     * interaction (click | hover | longpress) by which the overlay should open.
+     * The format is `trigger@interaction`, e.g., `trigger@click` opens the overlay
+     * when an element with the ID "trigger" is clicked.
      */
     @property()
     trigger?: string;
 
     /**
      * An element reference for the trigger element that the overlay should relate to.
+     * This property is not reflected as an attribute.
      */
     @property({ attribute: false })
     override triggerElement: HTMLElement | VirtualTrigger | null = null;
 
     /**
      * The specific interaction to listen for on the `triggerElement` to open the overlay.
+     * This property is not reflected as an attribute.
      */
     @property({ attribute: false })
     triggerInteraction?: TriggerInteraction;
 
     /**
      * Configures the open/close heuristics of the Overlay.
-     * @type {"auto" | "hint" | "manual" | "modal" | "page"}
      */
     @property()
     override type: OverlayTypes = 'auto';
 
+    /**
+     * Tracks whether the overlay was previously open.
+     *
+     * This is used to restore the open state when re-enabling the overlay.
+     */
     protected wasOpen = false;
 
+    /**
+     * Provides an instance of the `ElementResolutionController` for managing the element
+     * that the overlay should be associated with. If the instance does not already exist,
+     * it is created and assigned to the `_elementResolver` property.
+     */
     protected override get elementResolver(): ElementResolutionController {
         if (!this._elementResolver) {
             this._elementResolver = new ElementResolutionController(this);
         }
+
         return this._elementResolver;
     }
 
+    /**
+     * Determines if the overlay uses a dialog.
+     *
+     * Returns `true` if the overlay type is "modal" or "page".
+     */
     private get usesDialog(): boolean {
         return this.type === 'modal' || this.type === 'page';
     }
 
+    /**
+     * Determines the value for the popover attribute based on the overlay type.
+     */
     private get popoverValue(): 'auto' | 'manual' | undefined {
         const hasPopoverAttribute = 'popover' in this;
+
         if (!hasPopoverAttribute) {
             return undefined;
         }
-        /* c8 ignore next 9 */
+
         switch (this.type) {
             case 'modal':
             case 'page':
@@ -293,22 +403,37 @@ export class Overlay extends OverlayFeatures {
         }
     }
 
-    protected get requiresPosition(): boolean {
+    /**
+     * Determines if the overlay requires positioning based on its type and state.
+     */
+    protected get requiresPositioning(): boolean {
         // Do not position "page" overlays as they should block the entire UI.
         if (this.type === 'page' || !this.open) return false;
-        // Do not position content without a trigger element, what would you position it in relation to?
-        // Do not automatically position content, unless it is a "hint".
+
+        // Do not position content without a trigger element, as there is nothing to position it relative to.
+        // Do not automatically position content unless it is a "hint".
         if (!this.triggerElement || (!this.placement && this.type !== 'hint'))
             return false;
+
         return true;
     }
 
+    /**
+     * Manages the positioning of the overlay relative to its trigger element.
+     *
+     * This method calculates the necessary parameters for positioning the overlay,
+     * such as offset, placement, and tip padding, and then delegates the actual
+     * positioning to the `PlacementController`.
+     */
     protected override managePosition(): void {
-        if (!this.requiresPosition || !this.open) return;
+        if (!this.requiresPositioning || !this.open) return;
 
         const offset = this.offset || 0;
+
         const trigger = this.triggerElement as HTMLElement;
+
         const placement = (this.placement as Placement) || 'right';
+
         const tipPadding = this.tipPadding;
 
         this.placementController.placeOverlay(this.dialogEl, {
@@ -320,42 +445,70 @@ export class Overlay extends OverlayFeatures {
         });
     }
 
+    /**
+     * Manages the process of opening the popover.
+     *
+     * This method handles the necessary steps to open the popover, including managing delays,
+     * ensuring the popover is in the DOM, making transitions, and applying focus.
+     */
     protected override async managePopoverOpen(): Promise<void> {
+        // Call the base class method to handle any initial setup.
         super.managePopoverOpen();
+
         const targetOpenState = this.open;
-        /* c8 ignore next 3 */
+
+        // Ensure the open state has not changed before proceeding.
         if (this.open !== targetOpenState) {
             return;
         }
+
+        // Manage any delays before opening the popover.
         await this.manageDelay(targetOpenState);
+
         if (this.open !== targetOpenState) {
             return;
         }
+
+        // Ensure the popover is in the DOM before proceeding.
         await this.ensureOnDOM(targetOpenState);
-        /* c8 ignore next 3 */
+
         if (this.open !== targetOpenState) {
             return;
         }
+
+        // Make any necessary transitions for opening the popover.
         const focusEl = await this.makeTransition(targetOpenState);
+
         if (this.open !== targetOpenState) {
             return;
         }
+
+        // Apply focus to the appropriate element after opening the popover.
         await this.applyFocus(targetOpenState, focusEl);
     }
 
+    /**
+     * Applies focus to the appropriate element after the popover has been opened.
+     *
+     * This method handles the focus management for the overlay, ensuring that the correct
+     * element receives focus based on the overlay's type and state.
+     */
     protected override async applyFocus(
         targetOpenState: boolean,
         focusEl: HTMLElement | null
     ): Promise<void> {
-        // Do not move focus when explicitly told not to
-        // and when the Overlay is a "hint"
+        // Do not move focus when explicitly told not to or when the overlay is a "hint".
         if (this.receivesFocus === 'false' || this.type === 'hint') {
             return;
         }
 
+        // Wait for the next two animation frames to ensure the DOM is updated.
         await nextFrame();
         await nextFrame();
+
+        // If the open state has changed during the delay, do not proceed.
         if (targetOpenState === this.open && !this.open) {
+            // If the overlay is closing and the trigger element is still focused, return focus to the trigger element.
             if (
                 this.hasNonVirtualTrigger &&
                 this.contains((this.getRootNode() as Document).activeElement)
@@ -364,22 +517,36 @@ export class Overlay extends OverlayFeatures {
             }
             return;
         }
+
+        // Apply focus to the specified focus element.
         focusEl?.focus();
     }
 
+    /**
+     * Returns focus to the trigger element if the overlay is closed.
+     *
+     * This method ensures that focus is returned to the trigger element when the overlay is closed,
+     * unless the overlay is of type "hint" or the focus is already outside the overlay.
+     */
     protected override returnFocus(): void {
+        // Do not proceed if the overlay is open or if the overlay type is "hint".
         if (this.open || this.type === 'hint') return;
 
-        // If the focus remains inside of the overlay or
-        // a slotted descendent of the overlay you need to return
-        // focus back to the trigger.
+        /**
+         * Retrieves the ancestors of the currently focused element.
+         */
         const getAncestors = (): HTMLElement[] => {
             const ancestors: HTMLElement[] = [];
+
             // eslint-disable-next-line @spectrum-web-components/document-active-element
             let currentNode = document.activeElement;
+
+            // Traverse the shadow DOM to find the active element.
             while (currentNode?.shadowRoot?.activeElement) {
                 currentNode = currentNode.shadowRoot.activeElement;
             }
+
+            // Traverse the DOM tree to collect ancestor elements.
             while (currentNode) {
                 const ancestor =
                     currentNode.assignedSlot ||
@@ -392,6 +559,8 @@ export class Overlay extends OverlayFeatures {
             }
             return ancestors;
         };
+
+        // Check if focus should be returned to the trigger element.
         if (
             this.receivesFocus !== 'false' &&
             !!(this.triggerElement as HTMLElement)?.focus &&
@@ -400,43 +569,66 @@ export class Overlay extends OverlayFeatures {
                 // eslint-disable-next-line @spectrum-web-components/document-active-element
                 document.activeElement === document.body)
         ) {
+            // Return focus to the trigger element.
             (this.triggerElement as HTMLElement).focus();
         }
     }
 
+    /**
+     * Handles the focus out event to close the overlay if the focus moves outside of it.
+     *
+     * This method ensures that the overlay is closed when the focus moves to an element
+     * outside of the overlay, unless the focus is moved to a related element.
+     */
     private closeOnFocusOut = (event: FocusEvent): void => {
-        // If you don't know where the focus went, we can't do anyting here.
+        // If the related target (newly focused element) is not known, do nothing.
         if (!event.relatedTarget) {
-            // this.open = false;
             return;
         }
+
+        // Create a custom event to query the relationship of the newly focused element.
         const relationEvent = new Event('overlay-relation-query', {
             bubbles: true,
             composed: true,
         });
+
+        // Add an event listener to the related target to handle the custom event.
         event.relatedTarget.addEventListener(
             relationEvent.type,
             (event: Event) => {
+                // If the newly focused element is not within the overlay, close the overlay.
                 if (!event.composedPath().includes(this)) {
                     this.open = false;
                 }
             }
         );
+
+        // Dispatch the custom event to the related target.
         event.relatedTarget.dispatchEvent(relationEvent);
     };
 
+    /**
+     * Manages the process of opening or closing the overlay.
+     *
+     * This method handles the necessary steps to open or close the overlay, including updating the state,
+     * managing the overlay stack, and handling focus events.
+     */
     protected async manageOpen(oldOpen: boolean): Promise<void> {
+        // Prevent entering the manage workflow if the overlay is not connected to the DOM.
         // The `.showPopover()` and `.showModal()` events will error on content that is not connected to the DOM.
-        // Prevent from entering the manage workflow in order to avoid this.
         if (!this.isConnected && this.open) return;
 
+        // Wait for the component to finish updating if it has not already done so.
         if (!this.hasUpdated) {
             await this.updateComplete;
         }
 
         if (this.open) {
+            // Add the overlay to the overlay stack.
             overlayStack.add(this);
+
             if (this.willPreventClose) {
+                // Add an event listener to handle the pointerup event and toggle the 'not-immediately-closable' class.
                 document.addEventListener(
                     'pointerup',
                     () => {
@@ -455,21 +647,29 @@ export class Overlay extends OverlayFeatures {
             }
         } else {
             if (oldOpen) {
+                // Dispose of the overlay if it was previously open.
                 this.dispose();
             }
+
+            // Remove the overlay from the overlay stack.
             overlayStack.remove(this);
         }
+
+        // Update the state of the overlay based on the open property.
         if (this.open && this.state !== 'opened') {
             this.state = 'opening';
         } else if (!this.open && this.state !== 'closed') {
             this.state = 'closing';
         }
 
+        // Manage the dialog or popover based on the overlay type.
         if (this.usesDialog) {
             this.manageDialogOpen();
         } else {
             this.managePopoverOpen();
         }
+
+        // Handle focus events for auto type overlays.
         if (this.type === 'auto') {
             const listenerRoot = this.getRootNode() as Document;
             if (this.open) {
@@ -488,11 +688,24 @@ export class Overlay extends OverlayFeatures {
         }
     }
 
+    /**
+     * Binds event handling strategies to the overlay based on the specified trigger interaction.
+     *
+     * This method sets up the appropriate event handling strategy for the overlay, ensuring that
+     * it responds correctly to user interactions such as clicks, hovers, or long presses.
+     */
     protected bindEvents(): void {
+        // Abort any existing strategy to ensure a clean setup.
         this.strategy?.abort();
         this.strategy = undefined;
+
+        // Return early if there is no non-virtual trigger element.
         if (!this.hasNonVirtualTrigger) return;
+
+        // Return early if no trigger interaction is specified.
         if (!this.triggerInteraction) return;
+
+        // Set up a new event handling strategy based on the specified trigger interaction.
         this.strategy = new strategies[this.triggerInteraction](
             this.triggerElement as HTMLElement,
             {
@@ -501,12 +714,24 @@ export class Overlay extends OverlayFeatures {
         );
     }
 
+    /**
+     * Handles the `beforetoggle` event to manage the overlay's state.
+     *
+     * This method checks the new state of the event and calls `handleBrowserClose`
+     * if the new state is not 'open'.
+     */
     protected handleBeforetoggle(event: Event & { newState: string }): void {
         if (event.newState !== 'open') {
             this.handleBrowserClose(event);
         }
     }
 
+    /**
+     * Handles the browser's close event to manage the overlay's state.
+     *
+     * This method stops the propagation of the event and closes the overlay if it is not
+     * actively opening. If the overlay is actively opening, it calls `manuallyKeepOpen`.
+     */
     protected handleBrowserClose(event: Event): void {
         event.stopPropagation();
         if (!this.strategy?.activelyOpening) {
@@ -516,57 +741,102 @@ export class Overlay extends OverlayFeatures {
         this.manuallyKeepOpen();
     }
 
+    /**
+     * Manually keeps the overlay open.
+     *
+     * This method sets the overlay to open, allows placement updates, and manages the open state.
+     */
     public override manuallyKeepOpen(): void {
         this.open = true;
         this.placementController.allowPlacementUpdate = true;
         this.manageOpen(false);
     }
 
+    /**
+     * Handles the `slotchange` event to manage the overlay's state.
+     *
+     * This method checks if there are any elements in the slot. If there are no elements,
+     * it releases the description from the strategy. If there are elements and the trigger
+     * is non-virtual, it prepares the description for the trigger element.
+     */
     protected handleSlotchange(): void {
         if (!this.elements.length) {
+            // Release the description if there are no elements in the slot.
             this.strategy?.releaseDescription();
         } else if (this.hasNonVirtualTrigger) {
+            // Prepare the description for the trigger element if it is non-virtual.
             this.strategy?.prepareDescription(
                 this.triggerElement as HTMLElement
             );
         }
     }
 
+    /**
+     * Determines whether the overlay should prevent closing.
+     *
+     * This method checks the `willPreventClose` flag and resets it to `false`.
+     * It returns the value of the `willPreventClose` flag.
+     */
     public shouldPreventClose(): boolean {
         const shouldPreventClose = this.willPreventClose;
         this.willPreventClose = false;
         return shouldPreventClose;
     }
 
+    /**
+     * Requests slottable content for the overlay.
+     *
+     * This method dispatches a `SlottableRequestEvent` to request or remove slottable content
+     * based on the current open state of the overlay. It ensures that the same state is not
+     * dispatched twice in a row.
+     */
     protected override requestSlottable(): void {
+        // Do not dispatch the same state twice in a row.
         if (this.lastRequestSlottableState === this.open) {
             return;
         }
+
+        // Force a reflow if the overlay is closing.
         if (!this.open) {
             document.body.offsetHeight;
         }
+
         /**
          * @ignore
          */
+        // Dispatch a custom event to request or remove slottable content based on the open state.
         this.dispatchEvent(
             new SlottableRequestEvent(
                 'overlay-content',
                 this.open ? {} : removeSlottableRequest
             )
         );
+
+        // Update the last request slottable state.
         this.lastRequestSlottableState = this.open;
     }
 
+    /**
+     * Lifecycle method called before the component updates.
+     *
+     * This method handles various tasks before the component updates, such as setting an ID,
+     * managing the open state, resolving the trigger element, and binding events.
+     */
     override willUpdate(changes: PropertyValues): void {
+        // Ensure the component has an ID attribute.
         if (!this.hasAttribute('id')) {
             this.setAttribute(
                 'id',
                 `${this.tagName.toLowerCase()}-${randomID()}`
             );
         }
+
+        // Manage the open state if the 'open' property has changed.
         if (changes.has('open') && (this.hasUpdated || this.open)) {
             this.manageOpen(changes.get('open'));
         }
+
+        // Resolve the trigger element if the 'trigger' property has changed.
         if (changes.has('trigger')) {
             const [id, interaction] = this.trigger?.split('@') || [];
             this.elementResolver.selector = id ? `#${id}` : '';
@@ -576,69 +846,113 @@ export class Overlay extends OverlayFeatures {
                 | 'hover'
                 | undefined;
         }
-        // Merge multiple possible calls to `bindEvents()`.
+
+        // Initialize oldTrigger to track the previous trigger element.
         let oldTrigger: HTMLElement | false | undefined = false;
+
+        // Check if the element resolver has been updated.
         if (changes.has(elementResolverUpdatedSymbol)) {
+            // Store the current trigger element.
             oldTrigger = this.triggerElement as HTMLElement;
+            // Update the trigger element from the element resolver.
             this.triggerElement = this.elementResolver.element;
         }
+
+        // Check if the 'triggerElement' property has changed.
         if (changes.has('triggerElement')) {
+            // Store the old trigger element.
             oldTrigger = changes.get('triggerElement');
         }
+
+        // If the trigger element has changed, bind the new events.
         if (oldTrigger !== false) {
             this.bindEvents();
         }
     }
 
+    /**
+     * Lifecycle method called after the component updates.
+     *
+     * This method handles various tasks after the component updates, such as updating the placement
+     * attribute, resetting the overlay position, and clearing the overlay position based on the state.
+     */
     protected override updated(changes: PropertyValues): void {
+        // Call the base class method to handle any initial setup.
         super.updated(changes);
+
+        // Check if the 'placement' property has changed.
         if (changes.has('placement')) {
             if (this.placement) {
+                // Set the 'actual-placement' attribute on the dialog element.
                 this.dialogEl.setAttribute('actual-placement', this.placement);
             } else {
+                // Remove the 'actual-placement' attribute from the dialog element.
                 this.dialogEl.removeAttribute('actual-placement');
             }
+
+            // If the overlay is open and the 'placement' property has changed, reset the overlay position.
             if (this.open && typeof changes.get('placement') !== 'undefined') {
                 this.placementController.resetOverlayPosition();
             }
         }
+
+        // Check if the 'state' property has changed and the overlay is closed.
         if (
             changes.has('state') &&
             this.state === 'closed' &&
             typeof changes.get('state') !== 'undefined'
         ) {
+            // Clear the overlay position.
             this.placementController.clearOverlayPosition();
         }
     }
 
+    /**
+     * Renders the content of the overlay.
+     *
+     * This method returns a template result containing a slot element. The slot element
+     * listens for the `slotchange` event to manage the overlay's state.
+     */
     protected renderContent(): TemplateResult {
         return html`
             <slot @slotchange=${this.handleSlotchange}></slot>
         `;
     }
 
+    /**
+     * Generates a style map for the dialog element.
+     *
+     * This method returns an object containing CSS custom properties for the dialog element.
+     * The `--swc-overlay-open-count` custom property is set to the current open count of overlays.
+     */
     private get dialogStyleMap(): StyleInfo {
         return {
             '--swc-overlay-open-count': Overlay.openCount.toString(),
         };
     }
 
+    /**
+     * Renders the dialog element for the overlay.
+     *
+     * This method returns a template result containing a dialog element. The dialog element
+     * includes various attributes and event listeners to manage the overlay's state and behavior.
+     */
     protected renderDialog(): TemplateResult {
         /**
-         * `--swc-overlay-open-count` is applied to mimic the single stack
+         * The `--swc-overlay-open-count` custom property is applied to mimic the single stack
          * nature of the top layer in browsers that do not yet support it.
          *
-         * The value should always be the full number of overlays ever opened
-         * which will be added to `--swc-overlay-z-index-base` which can be
-         * provided by a consuming developer but defaults to 1000 to beat as
-         * much stacking as possible durring fallback delivery.
-         **/
+         * The value should always represent the total number of overlays that have ever been opened.
+         * This value will be added to the `--swc-overlay-z-index-base` custom property, which can be
+         * provided by a consuming developer. By default, `--swc-overlay-z-index-base` is set to 1000
+         * to ensure that the overlay stacks above most other elements during fallback delivery.
+         */
         return html`
             <dialog
                 class="dialog"
                 part="dialog"
                 placement=${ifDefined(
-                    this.requiresPosition
+                    this.requiresPositioning
                         ? this.placement || 'right'
                         : undefined
                 )}
@@ -653,22 +967,28 @@ export class Overlay extends OverlayFeatures {
         `;
     }
 
+    /**
+     * Renders the popover element for the overlay.
+     *
+     * This method returns a template result containing a div element styled as a popover.
+     * The popover element includes various attributes and event listeners to manage the overlay's state and behavior.
+     */
     protected renderPopover(): TemplateResult {
         /**
-         * `--swc-overlay-open-count` is applied to mimic the single stack
+         * The `--swc-overlay-open-count` custom property is applied to mimic the single stack
          * nature of the top layer in browsers that do not yet support it.
          *
-         * The value should always be the full number of overlays ever opened
-         * which will be added to `--swc-overlay-z-index-base` which can be
-         * provided by a consuming developer but defaults to 1000 to beat as
-         * much stacking as possible durring fallback delivery.
-         **/
+         * The value should always represent the total number of overlays that have ever been opened.
+         * This value will be added to the `--swc-overlay-z-index-base` custom property, which can be
+         * provided by a consuming developer. By default, `--swc-overlay-z-index-base` is set to 1000
+         * to ensure that the overlay stacks above most other elements during fallback delivery.
+         */
         return html`
             <div
                 class="dialog"
                 part="dialog"
                 placement=${ifDefined(
-                    this.requiresPosition
+                    this.requiresPositioning
                         ? this.placement || 'right'
                         : undefined
                 )}
@@ -683,6 +1003,12 @@ export class Overlay extends OverlayFeatures {
         `;
     }
 
+    /**
+     * Renders the overlay component.
+     *
+     * This method returns a template result containing either a dialog or popover element
+     * based on the overlay type. It also includes a slot for longpress descriptors.
+     */
     public override render(): TemplateResult {
         const isDialog = this.type === 'modal' || this.type === 'page';
         return html`
@@ -691,18 +1017,34 @@ export class Overlay extends OverlayFeatures {
         `;
     }
 
+    /**
+     * Lifecycle method called when the component is added to the DOM.
+     *
+     * This method sets up event listeners and binds events if the component has already updated.
+     */
     override connectedCallback(): void {
         super.connectedCallback();
+
+        // Add an event listener to handle the 'close' event and update the 'open' property.
         this.addEventListener('close', () => {
             this.open = false;
         });
+
+        // Bind events if the component has already updated.
         if (this.hasUpdated) {
             this.bindEvents();
         }
     }
 
+    /**
+     * Lifecycle method called when the component is removed from the DOM.
+     *
+     * This method releases the description from the strategy and updates the 'open' property.
+     */
     override disconnectedCallback(): void {
+        // Release the description from the strategy.
         this.strategy?.releaseDescription();
+        // Update the 'open' property to false.
         this.open = false;
         super.disconnectedCallback();
     }
