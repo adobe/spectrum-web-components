@@ -39,8 +39,8 @@ import styles from './contextual-help.css.js';
  * @element sp-contextual-help
  *
  * @slot heading - content to display as the heading of the popover
- * @slot Text content to display in the popover
- * @slot link - link to additional informations
+ * @slot - Text content to display in the popover
+ * @slot link - link to additional information
  */
 export class ContextualHelp extends SpectrumElement {
     public isMobile = new MatchMediaController(this, IS_MOBILE);
@@ -51,37 +51,41 @@ export class ContextualHelp extends SpectrumElement {
 
     /**
      * Provides an accessible name for the action button trigger.
-     * @param {String} label
      */
     @property()
     public label?: string;
 
     /**
      * The `variant` property applies specific styling on the action button trigger.
-     * @param {String} variant
+     * Can be 'info' or 'help'.
      */
     @property()
     public variant: 'info' | 'help' = 'info';
 
     /**
-     * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
-     * @attr
+     * The placement of the contextual help popover.
+     * Can be 'top', 'top-start', 'top-end', 'right', 'right-start', 'right-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', or 'left-end'.
      */
     @property({ reflect: true })
     public placement?: Placement = 'bottom-start';
 
     /**
-     * The `offset` property accepts either a single number, to
-     * define the offset of the Popover along the main axis from
-     * the action button, or 2-tuple, to define the offset along the
-     * main axis and the cross axis.
+     * The offset of the popover along the main axis from the action button.
+     * Can be a single number or a 2-tuple to define the offset along the main axis and the cross axis.
      */
     @property({ type: Number })
     public offset: number | [number, number] = 0;
 
+    /**
+     * Indicates whether the contextual help popover is open.
+     */
     @property({ type: Boolean })
-    open = false;
+    public open = false;
 
+    /**
+     * Gets the aria-label for the action button trigger.
+     * Returns the provided label or a default label based on the variant.
+     */
     public get buttonAriaLabel(): string {
         if (this.label) {
             return this.label;
@@ -89,10 +93,14 @@ export class ContextualHelp extends SpectrumElement {
             if (this.variant === 'help') {
                 return 'Help';
             }
-            return 'Informations';
+            return 'Information';
         }
     }
 
+    /**
+     * Renders the overlay content for the contextual help.
+     * Includes the heading, content, and link slots.
+     */
     private renderOverlayContent(): TemplateResult {
         if (this.isMobile.matches) {
             import('@spectrum-web-components/dialog/sp-dialog-base.js');
@@ -122,6 +130,10 @@ export class ContextualHelp extends SpectrumElement {
         }
     }
 
+    /**
+     * Handles the slottable request event.
+     * Opens or closes the contextual help popover based on the event data.
+     */
     private handleSlottableRequest(event: SlottableRequestEvent): void {
         event.stopPropagation();
 
@@ -136,6 +148,10 @@ export class ContextualHelp extends SpectrumElement {
         render(template, event.target as HTMLElement);
     }
 
+    /**
+     * Renders the contextual help component.
+     * Includes the action button trigger and the overlay content.
+     */
     protected override render(): TemplateResult {
         /* c8 ignore next 3 */
         const actualPlacement = this.isMobile.matches

@@ -46,21 +46,37 @@ export class ColorWheel extends Focusable {
         return [styles];
     }
 
+    /**
+     * The text direction of the color wheel.
+     * Can be 'ltr' (left-to-right) or 'rtl' (right-to-left).
+     */
     @property({ type: String, reflect: true })
     public override dir!: 'ltr' | 'rtl';
 
+    /**
+     * Indicates whether the color wheel is disabled.
+     */
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
+    /**
+     * Indicates whether the color wheel is focused.
+     */
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
     @query('.handle')
     private handle!: ColorHandle;
 
+    /**
+     * The label for the color wheel.
+     */
     @property({ type: String })
     public label = 'hue';
 
+    /**
+     * The step value of the color wheel.
+     */
     @property({ type: Number })
     public step = 1;
 
@@ -78,6 +94,9 @@ export class ColorWheel extends Focusable {
         maintains: 'saturation',
     });
 
+    /**
+     * The current value of the color wheel.
+     */
     @property({ type: Number })
     public get value(): number {
         return this.colorController.hue;
@@ -87,6 +106,9 @@ export class ColorWheel extends Focusable {
         this.colorController.hue = hue;
     }
 
+    /**
+     * The current color value of the color wheel.
+     */
     @property({ type: String })
     public get color(): ColorValue {
         return this.colorController.color;
@@ -110,6 +132,9 @@ export class ColorWheel extends Focusable {
     @query('input')
     public input!: HTMLInputElement;
 
+    /**
+     * The element that receives focus when the color wheel is focused.
+     */
     public override get focusElement(): HTMLInputElement {
         return this.input;
     }
@@ -159,6 +184,10 @@ export class ColorWheel extends Focusable {
         }
     }
 
+    /**
+     * Handles the input event for the color wheel.
+     * Updates the color value based on the input.
+     */
     private handleInput(event: Event & { target: HTMLInputElement }): void {
         const { valueAsNumber } = event.target;
 
@@ -166,6 +195,10 @@ export class ColorWheel extends Focusable {
         this.colorController.applyColorFromState();
     }
 
+    /**
+     * Handles the change event for the color wheel.
+     * Updates the color value and dispatches the change event.
+     */
     private handleChange(event: Event & { target: HTMLInputElement }): void {
         this.handleInput(event);
         this.dispatchEvent(
@@ -186,10 +219,18 @@ export class ColorWheel extends Focusable {
         this.input.focus();
     }
 
+    /**
+     * Handles the focus event for the color wheel.
+     * Sets the focused state to true.
+     */
     private handleFocus(): void {
         this.focused = true;
     }
 
+    /**
+     * Handles the blur event for the color wheel.
+     * Resets the altered state and sets the focused state to false.
+     */
     private handleBlur(): void {
         if (this._pointerDown) {
             return;
@@ -201,6 +242,10 @@ export class ColorWheel extends Focusable {
     private boundingClientRect!: DOMRect;
     private _pointerDown = false;
 
+    /**
+     * Handles the pointerdown event for the color wheel.
+     * Activates the color wheel and starts tracking pointer movements.
+     */
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             event.preventDefault();
@@ -215,6 +260,10 @@ export class ColorWheel extends Focusable {
         }
     }
 
+    /**
+     * Handles the pointermove event for the color wheel.
+     * Updates the color value based on the pointer position.
+     */
     private handlePointermove(event: PointerEvent): void {
         this.value = this.calculateHandlePosition(event);
         this.colorController.applyColorFromState();
@@ -228,6 +277,10 @@ export class ColorWheel extends Focusable {
         );
     }
 
+    /**
+     * Handles the pointerup event for the color wheel.
+     * Deactivates the color wheel and restores the previous color if necessary.
+     */
     private handlePointerup(event: PointerEvent): void {
         this._pointerDown = false;
         (event.target as HTMLElement).releasePointerCapture(event.pointerId);
@@ -270,6 +323,10 @@ export class ColorWheel extends Focusable {
         return (360 + (360 + (this.isLTR ? value : 180 - value))) % 360;
     }
 
+    /**
+     * Handles the pointerdown event for the gradient.
+     * Activates the color wheel and starts tracking pointer movements.
+     */
     private handleGradientPointerdown(event: PointerEvent): void {
         if (
             event.button !== 0 ||
@@ -290,6 +347,10 @@ export class ColorWheel extends Focusable {
         this.handlePointermove(event);
     }
 
+    /**
+     * Calculates the style data for the color wheel.
+     * Includes clip paths and handle location styles.
+     */
     calculateStyleData(): {
         clipPath: string;
         clipPathBorders: string;
@@ -401,6 +462,10 @@ export class ColorWheel extends Focusable {
         `;
     }
 
+    /**
+     * Called when the element is first updated.
+     * Sets the bounding client rectangle and adds event listeners for focus and blur events.
+     */
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
@@ -410,6 +475,10 @@ export class ColorWheel extends Focusable {
 
     private observer?: WithSWCResizeObserver['ResizeObserver'];
 
+    /**
+     * Called when the element is connected to the DOM.
+     * Sets up a resize observer to update the bounding client rectangle.
+     */
     public override connectedCallback(): void {
         super.connectedCallback();
         if (
@@ -428,6 +497,10 @@ export class ColorWheel extends Focusable {
         this.observer?.observe(this);
     }
 
+    /**
+     * Called when the element is disconnected from the DOM.
+     * Cleans up the resize observer.
+     */
     public override disconnectedCallback(): void {
         this.observer?.unobserve(this);
         super.disconnectedCallback();
