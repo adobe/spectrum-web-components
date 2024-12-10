@@ -41,17 +41,25 @@ type OverlayOptionsV1 = {
     type?: 'modal' | 'page' | 'hint' | 'auto' | 'manual';
 };
 
+/**
+ * Rounds a number by the device pixel ratio (DPR).
+ */
 function roundByDPR(num?: number): number {
     if (typeof num === 'undefined') return 0;
     const dpr = window.devicePixelRatio || 1;
-    return Math.round(num * dpr) / dpr ?? -10000;
+    return Math.round(num * dpr) / dpr;
 }
 
+// Minimum distance required between the overlay and the edge of the container.
 // See: https://spectrum.adobe.com/page/popover/#Container-padding
 const REQUIRED_DISTANCE_TO_EDGE = 8;
+// Minimum height for the overlay.
 // See: https://github.com/adobe/spectrum-web-components/issues/910
 const MIN_OVERLAY_HEIGHT = 100;
 
+/**
+ * Gets fallback placements for the overlay based on the initial placement.
+ */
 const getFallbackPlacements = (placement: Placement): Placement[] => {
     const fallbacks: Record<Placement, Placement[]> = {
         left: ['right', 'bottom', 'top'],
@@ -70,30 +78,68 @@ const getFallbackPlacements = (placement: Placement): Placement[] => {
     return fallbacks[placement] ?? [placement];
 };
 
+/**
+ * Symbol used to indicate that the placement has been updated.
+ */
 export const placementUpdatedSymbol = Symbol('placement updated');
 
+/**
+ * Controller for managing the placement of an overlay.
+ *
+ * This class implements the ReactiveController interface and provides methods
+ * for managing the positioning and constraints of an overlay element.
+ */
 export class PlacementController implements ReactiveController {
+    /**
+     * Function to clean up resources when the controller is no longer needed.
+     */
     private cleanup?: () => void;
 
+    /**
+     * Initial height of the overlay.
+     */
     initialHeight?: number;
 
+    /**
+     * Indicates whether the overlay is constrained by available space.
+     */
     isConstrained?: boolean;
 
+    /**
+     * The host element that uses this controller.
+     */
     private host!: ReactiveElement & { elements: OpenableElement[] };
 
+    /**
+     * Options for configuring the overlay placement.
+     */
     private options!: OverlayOptionsV1;
 
+    /**
+     * A WeakMap to store the original placements of overlay elements.
+     */
     private originalPlacements = new WeakMap<HTMLElement, Placement>();
 
+    /**
+     * The target element for the overlay.
+     */
     private target!: HTMLElement;
 
+    /**
+     * Creates an instance of the PlacementController.
+     */
     constructor(host: ReactiveElement & { elements: OpenableElement[] }) {
         this.host = host;
-        // Add the controller after the MutationObserver has been created in preparation
-        // for the `hostConnected`/`hostDisconnected` callbacks to be run.
+        // Add the controller after the MutationObserver has been created in preparation for the `hostConnected`/`hostDisconnected` callbacks to be run.
         this.host.addController(this);
     }
 
+    /**
+     * Places the overlay relative to the target element.
+     *
+     * This method sets up the necessary configurations and event listeners to manage the
+     * positioning and constraints of the overlay element.
+     */
     public async placeOverlay(
         target: HTMLElement = this.target,
         options: OverlayOptionsV1 = this.options
@@ -102,6 +148,7 @@ export class PlacementController implements ReactiveController {
         this.options = options;
         if (!target || !options) return;
 
+        // Set up auto-update for ancestor resize events.
         const cleanupAncestorResize = autoUpdate(
             options.trigger,
             target,
@@ -112,6 +159,8 @@ export class PlacementController implements ReactiveController {
                 layoutShift: false,
             }
         );
+
+        // Set up auto-update for element resize events.
         const cleanupElementResize = autoUpdate(
             options.trigger,
             target,
@@ -120,15 +169,19 @@ export class PlacementController implements ReactiveController {
                 ancestorScroll: false,
             }
         );
+
+        // Define the cleanup function to remove event listeners and reset placements.
         this.cleanup = () => {
             this.host.elements?.forEach((element) => {
                 element.addEventListener(
                     'sp-closed',
                     () => {
                         const placement = this.originalPlacements.get(element);
+
                         if (placement) {
                             element.setAttribute('placement', placement);
                         }
+
                         this.originalPlacements.delete(element);
                     },
                     { once: true }
@@ -139,8 +192,18 @@ export class PlacementController implements ReactiveController {
         };
     }
 
-    allowPlacementUpdate = false;
+    /**
+     * Flag to allow or disallow placement updates.
+     */
+    public allowPlacementUpdate = false;
 
+    /**
+     * Closes the overlay if an ancestor element is updated.
+     *
+     * This method checks if placement updates are allowed and if the overlay type is not 'modal'.
+     * If these conditions are met and a cleanup function is defined, it dispatches a 'close' event
+     * on the target element to close the overlay.
+     */
     closeForAncestorUpdate = (): void => {
         if (
             !this.allowPlacementUpdate &&
@@ -149,18 +212,34 @@ export class PlacementController implements ReactiveController {
         ) {
             this.target.dispatchEvent(new Event('close', { bubbles: true }));
         }
+
+        // Reset the flag to disallow placement updates.
         this.allowPlacementUpdate = false;
     };
 
-    updatePlacement = (): void => {
+    /**
+     * Updates the placement of the overlay.
+     *
+     * This method calls the computePlacement method to recalculate the overlay's position.
+     */
+    private updatePlacement = (): void => {
         this.computePlacement();
     };
 
+    /**
+     * Computes the placement of the overlay relative to the target element.
+     *
+     * This method calculates the necessary positioning and constraints for the overlay element
+     * using various middleware functions. It updates the overlay's style and attributes based
+     * on the computed position.
+     */
     async computePlacement(): Promise<void> {
         const { options, target } = this;
 
+        // Wait for document fonts to be ready before computing placement.
         await (document.fonts ? document.fonts.ready : Promise.resolve());
 
+        // Determine the flip middleware based on the type of trigger element.
         const flipMiddleware = !(options.trigger instanceof HTMLElement)
             ? flip({
                   padding: REQUIRED_DISTANCE_TO_EDGE,
@@ -168,14 +247,17 @@ export class PlacementController implements ReactiveController {
               })
             : flip();
 
+        // Extract main axis and cross axis offsets from options.
         const [mainAxis = 0, crossAxis = 0] = Array.isArray(options?.offset)
             ? options.offset
             : [options.offset, 0];
 
+        // Find the tip element within the host elements.
         const tipElement = this.host.elements.find(
             (el) => el.tipElement
         )?.tipElement;
 
+        // Define middleware functions for positioning and constraints.
         const middleware = [
             offset({
                 mainAxis,
@@ -220,6 +302,8 @@ export class PlacementController implements ReactiveController {
                   ]
                 : []),
         ];
+
+        // Compute the position of the overlay using the defined middleware.
         const { x, y, placement, middlewareData } = await computePosition(
             options.trigger,
             target,
@@ -229,13 +313,18 @@ export class PlacementController implements ReactiveController {
                 strategy: 'fixed',
             }
         );
+
+        // Update the overlay's style with the computed position.
         Object.assign(target.style, {
             top: '0px',
             left: '0px',
             translate: `${roundByDPR(x)}px ${roundByDPR(y)}px`,
         });
 
+        // Set the 'actual-placement' attribute on the target element.
         target.setAttribute('actual-placement', placement);
+
+        // Update the placement attribute for each host element.
         this.host.elements?.forEach((element) => {
             if (!this.originalPlacements.has(element)) {
                 this.originalPlacements.set(
@@ -246,6 +335,7 @@ export class PlacementController implements ReactiveController {
             element.setAttribute('placement', placement);
         });
 
+        // Update the tip element's style with the computed arrow position.
         if (tipElement && middlewareData.arrow) {
             const { x: arrowX, y: arrowY } = middlewareData.arrow;
 
@@ -265,25 +355,45 @@ export class PlacementController implements ReactiveController {
         }
     }
 
+    /**
+     * Clears the overlay's position styles.
+     *
+     * This method removes the max-height and max-width styles from the target element,
+     * and resets the initial height and constrained state of the overlay.
+     */
     public clearOverlayPosition(): void {
         if (!this.target) {
             return;
         }
+        // Remove max-height and max-width styles from the target element.
         this.target.style.removeProperty('max-height');
         this.target.style.removeProperty('max-width');
+        // Reset the initial height and constrained state.
         this.initialHeight = undefined;
         this.isConstrained = false;
     }
 
+    /**
+     * Resets the overlay's position.
+     *
+     * This method clears the overlay's position, forces a reflow, and recomputes the placement.
+     */
     public resetOverlayPosition = (): void => {
         if (!this.target || !this.options) return;
+        // Clear the overlay's position.
         this.clearOverlayPosition();
 
-        // force paint
+        // Force a reflow.
         this.host.offsetHeight;
+        // Recompute the placement.
         this.computePlacement();
     };
 
+    /**
+     * Lifecycle method called when the host element is connected to the DOM.
+     *
+     * This method sets up an event listener to reset the overlay's position when the 'sp-update-overlays' event is dispatched.
+     */
     hostConnected(): void {
         document.addEventListener(
             'sp-update-overlays',
@@ -291,16 +401,29 @@ export class PlacementController implements ReactiveController {
         );
     }
 
+    /**
+     * Lifecycle method called when the host element is updated.
+     *
+     * This method cleans up resources if the overlay is not open.
+     */
     hostUpdated(): void {
         if (!(this.host as Overlay).open) {
+            // Clean up resources if the overlay is not open.
             this.cleanup?.();
             this.cleanup = undefined;
         }
     }
 
+    /**
+     * Lifecycle method called when the host element is disconnected from the DOM.
+     *
+     * This method removes the event listener and cleans up resources.
+     */
     hostDisconnected(): void {
+        // Clean up resources.
         this.cleanup?.();
         this.cleanup = undefined;
+        // Remove the event listener.
         document.removeEventListener(
             'sp-update-overlays',
             this.resetOverlayPosition
