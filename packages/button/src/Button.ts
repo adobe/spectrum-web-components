@@ -21,8 +21,19 @@ import { ButtonBase } from './ButtonBase.js';
 import buttonStyles from './button.css.js';
 import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 
+/**
+ * Type definition for deprecated button variants.
+ */
 export type DeprecatedButtonVariants = 'cta' | 'overBackground';
+
+/**
+ * Type definition for button static colors.
+ */
 export type ButtonStaticColors = 'white' | 'black';
+
+/**
+ * Type definition for button variants.
+ */
 export type ButtonVariants =
     | 'accent'
     | 'primary'
@@ -30,6 +41,10 @@ export type ButtonVariants =
     | 'negative'
     | ButtonStaticColors
     | DeprecatedButtonVariants;
+
+/**
+ * List of valid button variants.
+ */
 export const VALID_VARIANTS = [
     'accent',
     'primary',
@@ -38,8 +53,15 @@ export const VALID_VARIANTS = [
     'white',
     'black',
 ];
+
+/**
+ * List of valid static colors for buttons.
+ */
 export const VALID_STATIC_COLORS = ['white', 'black'];
 
+/**
+ * Type definition for button treatments.
+ */
 export type ButtonTreatments = 'fill' | 'outline';
 
 /**
@@ -53,30 +75,17 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         return [...super.styles, buttonStyles];
     }
 
+    /**
+     * The label to display when the button is in a pending state.
+     */
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
 
-    // Use this property to set the button into a pending state
+    /**
+     * Use this property to set the button into a pending state.
+     */
     @property({ type: Boolean, reflect: true, attribute: true })
     public pending = false;
-
-    public pendingStateController: PendingStateController<this>;
-
-    /**
-     * Initializes the `PendingStateController` for the Button component.
-     * The `PendingStateController` manages the pending state of the Button.
-     */
-    constructor() {
-        super();
-        this.pendingStateController = new PendingStateController(this);
-    }
-
-    public override click(): void {
-        if (this.pending) {
-            return;
-        }
-        super.click();
-    }
 
     /**
      * The visual variant to apply to this button.
@@ -185,6 +194,24 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         return this.treatment === 'outline';
     }
 
+    public pendingStateController: PendingStateController<this>;
+
+    /**
+     * Initializes the `PendingStateController` for the Button component.
+     * The `PendingStateController` manages the pending state of the Button.
+     */
+    constructor() {
+        super();
+        this.pendingStateController = new PendingStateController(this);
+    }
+
+    public override click(): void {
+        if (this.pending) {
+            return;
+        }
+        super.click();
+    }
+
     protected override firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
         // There is no Spectrum design context for an `<sp-button>` without a variant
@@ -198,6 +225,10 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         }
     }
 
+    /**
+     * Renders the button content.
+     * Includes the button content and the pending state.
+     */
     protected override renderButton(): TemplateResult {
         return html`
             ${this.buttonContent}
