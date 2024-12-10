@@ -52,39 +52,40 @@ export class ColorArea extends SpectrumElement {
         return [styles];
     }
 
+    /**
+     * The text direction of the color area.
+     * Can be 'ltr' (left-to-right) or 'rtl' (right-to-left).
+     */
     @property({ type: String, reflect: true })
     public override dir!: 'ltr' | 'rtl';
 
+    /**
+     * Indicates whether the color area is disabled.
+     */
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
+    /**
+     * Indicates whether the color area is focused.
+     */
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    /**
+     * The label for the x-axis of the color area.
+     */
     @property({ type: String, attribute: 'label-x' })
     public labelX = 'saturation';
 
+    /**
+     * The label for the y-axis of the color area.
+     */
     @property({ type: String, attribute: 'label-y' })
     public labelY = 'luminosity';
 
-    @query('.handle')
-    private handle!: ColorHandle;
-
-    private languageResolver = new LanguageResolutionController(this);
-
-    private colorController = new ColorController(this, {
-        extractColorFromState: () => ({
-            h: this.hue,
-            s: this.x,
-            v: this.y,
-        }),
-        applyColorToState: ({ s, v }) => {
-            this._x = s;
-            this._y = v;
-            this.requestUpdate();
-        },
-    });
-
+    /**
+     * The hue value of the color area.
+     */
     @property({ type: Number })
     public get hue(): number {
         return this.colorController.hue;
@@ -94,11 +95,17 @@ export class ColorArea extends SpectrumElement {
         this.colorController.hue = value;
     }
 
+    /**
+     * The current color value of the color area.
+     */
     @property({ type: String })
     public get value(): ColorValue {
         return this.colorController.color;
     }
 
+    /**
+     * The current color value of the color area.
+     */
     @property({ type: String })
     public get color(): ColorValue {
         return this.colorController.color;
@@ -108,9 +115,15 @@ export class ColorArea extends SpectrumElement {
         this.colorController.color = color;
     }
 
+    /**
+     * The active axis of the color area.
+     */
     @property({ attribute: false })
     private activeAxis = 'x';
 
+    /**
+     * The x-coordinate value of the color area.
+     */
     @property({ type: Number })
     public get x(): number {
         return this._x;
@@ -133,6 +146,9 @@ export class ColorArea extends SpectrumElement {
 
     private _x = 1;
 
+    /**
+     * The y-coordinate value of the color area.
+     */
     @property({ type: Number })
     public get y(): number {
         return this._y;
@@ -155,6 +171,9 @@ export class ColorArea extends SpectrumElement {
 
     private _y = 1;
 
+    /**
+     * The step value for the color area.
+     */
     @property({ type: Number })
     public step = 0.01;
 
@@ -164,12 +183,33 @@ export class ColorArea extends SpectrumElement {
     @query('[name="y"]')
     public inputY!: HTMLInputElement;
 
+    @query('.handle')
+    private handle!: ColorHandle;
+
+    private languageResolver = new LanguageResolutionController(this);
+
+    private colorController = new ColorController(this, {
+        extractColorFromState: () => ({
+            h: this.hue,
+            s: this.x,
+            v: this.y,
+        }),
+        applyColorToState: ({ s, v }) => {
+            this._x = s;
+            this._y = v;
+            this.requestUpdate();
+        },
+    });
+
     private altered = 0;
 
     private activeKeys = new Set();
 
     private _valueChanged = false;
 
+    /**
+     * Focuses the color area.
+     */
     public override focus(focusOptions: FocusOptions = {}): void {
         super.focus(focusOptions);
         this.forwardFocus();
@@ -189,6 +229,9 @@ export class ColorArea extends SpectrumElement {
         this._valueChanged = false;
     }
 
+    /**
+     * Handles the blur event for the color area.
+     */
     public handleBlur(): void {
         if (this._pointerDown) {
             return;
@@ -198,6 +241,10 @@ export class ColorArea extends SpectrumElement {
         this._valueChanged = false;
     }
 
+    /**
+     * Handles the keydown event for the color area.
+     * Activates the color area and processes arrow key inputs.
+     */
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
         this.focused = true;
@@ -216,6 +263,10 @@ export class ColorArea extends SpectrumElement {
         }
     }
 
+    /**
+     * Handles the keypress event for the color area.
+     * Activates the color area and processes arrow key inputs.
+     */
     private handleKeypress(): void {
         let deltaX = 0;
         let deltaY = 0;
@@ -285,12 +336,20 @@ export class ColorArea extends SpectrumElement {
         }
     }
 
+    /**
+     * Handles the keyup event for the color area.
+     * Deactivates the color area and processes arrow key inputs.
+     */
     private handleKeyup(event: KeyboardEvent): void {
         event.preventDefault();
         const { code } = event;
         this.activeKeys.delete(code);
     }
 
+    /**
+     * Handles the input event for the color area.
+     * Updates the color value based on the input.
+     */
     private handleInput(event: Event & { target: HTMLInputElement }): void {
         const { valueAsNumber, name } = event.target;
 
@@ -298,6 +357,10 @@ export class ColorArea extends SpectrumElement {
         this.colorController.applyColorFromState();
     }
 
+    /**
+     * Handles the change event for the color area.
+     * Updates the color value and dispatches the change event.
+     */
     private handleChange(event: Event & { target: HTMLInputElement }): void {
         this.handleInput(event);
         this.dispatchEvent(
@@ -312,6 +375,10 @@ export class ColorArea extends SpectrumElement {
     private boundingClientRect!: DOMRect;
     public _pointerDown = false;
 
+    /**
+     * Handles the pointerdown event for the color area.
+     * Activates the color area and saves the previous color.
+     */
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             event.preventDefault();
@@ -326,6 +393,10 @@ export class ColorArea extends SpectrumElement {
         }
     }
 
+    /**
+     * Handles the pointermove event for the color area.
+     * Updates the color value based on the pointer position.
+     */
     private handlePointermove(event: PointerEvent): void {
         const [x, y] = this.calculateHandlePosition(event);
 
@@ -343,6 +414,10 @@ export class ColorArea extends SpectrumElement {
         );
     }
 
+    /**
+     * Handles the pointerup event for the color area.
+     * Deactivates the color area and restores the previous color if necessary.
+     */
     private handlePointerup(event: PointerEvent): void {
         event.preventDefault();
         this._pointerDown = false;
@@ -393,6 +468,10 @@ export class ColorArea extends SpectrumElement {
         return [this.isLTR ? percentX : 1 - percentX, percentY];
     }
 
+    /**
+     * Handles the pointerdown event for the color area.
+     * Activates the color area and starts tracking pointer movements.
+     */
     private handleAreaPointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             return;
@@ -524,6 +603,10 @@ export class ColorArea extends SpectrumElement {
         `;
     }
 
+    /**
+     * Called when the element is first updated.
+     * Sets the bounding client rectangle and adds event listeners for focus, blur, keyup, and keydown events.
+     */
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
