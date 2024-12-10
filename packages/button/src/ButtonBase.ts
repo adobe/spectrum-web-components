@@ -36,8 +36,10 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         return [buttonStyles];
     }
 
-    // TODO we need to document this property for consumers,
-    // as it's not a 1:1 equivalent to active
+    /**
+     * Indicates whether the button is active.
+     * This is not a 1:1 equivalent to the active state.
+     */
     @property({ type: Boolean, reflect: true })
     public active = false;
 
@@ -49,6 +51,18 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     public type: 'button' | 'submit' | 'reset' = 'button';
 
     /**
+     * The name of the button.
+     */
+    @property({ type: String })
+    public name = '';
+
+    /**
+     * The value of the button.
+     */
+    @property({ type: String })
+    public value = '';
+
+    /**
      * HTML anchor element that component clicks by proxy
      */
     @query('.anchor')
@@ -58,10 +72,17 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         return this;
     }
 
+    /**
+     * Checks if the button has a label.
+     */
     protected get hasLabel(): boolean {
         return this.slotHasContent;
     }
 
+    /**
+     * Retrieves the content to be rendered inside the button.
+     * Includes the icon slot and the label slot.
+     */
     protected get buttonContent(): TemplateResult[] {
         const content = [
             html`
@@ -85,6 +106,11 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         });
     }
 
+    /**
+     * Handles the click event capture phase.
+     * Prevents the default action and stops propagation if the button is disabled.
+     * Proxies the click event if necessary.
+     */
     private handleClickCapture(event: Event): void | boolean {
         if (this.disabled) {
             event.preventDefault();
@@ -98,10 +124,17 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         }
     }
 
+    /**
+     * Proxies the focus event to the button element.
+     */
     private proxyFocus(): void {
         this.focus();
     }
 
+    /**
+     * Determines if the click event should be proxied.
+     * Proxies the click event to the anchor element or creates a proxy button element if necessary.
+     */
     private shouldProxyClick(): boolean {
         let handled = false;
         if (this.anchorElement) {
@@ -121,6 +154,10 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         return handled;
     }
 
+    /**
+     * Renders the anchor element for the button.
+     * Includes the button content and the anchor element.
+     */
     public override renderAnchor(): TemplateResult {
         return html`
             ${this.buttonContent}
@@ -132,18 +169,29 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         `;
     }
 
+    /**
+     * Renders the button content.
+     * Includes the button content.
+     */
     protected renderButton(): TemplateResult {
         return html`
             ${this.buttonContent}
         `;
     }
 
+    /**
+     * Renders the button or anchor element based on the href property.
+     */
     protected override render(): TemplateResult {
         return this.href && this.href.length > 0
             ? this.renderAnchor()
             : this.renderButton();
     }
 
+    /**
+     * Handles the keydown event for the button.
+     * Activates the button when the Space key is pressed.
+     */
     protected handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
         switch (code) {
@@ -160,6 +208,10 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         }
     }
 
+    /**
+     * Handles the keypress event for the button.
+     * Activates the button or link when the Enter or NumpadEnter key is pressed.
+     */
     private handleKeypress(event: KeyboardEvent): void {
         const { code } = event;
         switch (code) {
@@ -173,6 +225,10 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         }
     }
 
+    /**
+     * Handles the keyup event for the button.
+     * Deactivates the button when the Space key is released.
+     */
     protected handleKeyup(event: KeyboardEvent): void {
         const { code } = event;
         switch (code) {
@@ -186,6 +242,10 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         }
     }
 
+    /**
+     * Manages the role attribute for the anchor element.
+     * Sets the role to 'link' if the href property is set, otherwise sets it to 'button'.
+     */
     private manageAnchor(): void {
         // for a link
         if (this.href && this.href.length > 0) {
@@ -238,6 +298,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             this.anchorElement.tabIndex = -1;
         }
     }
+
     protected override update(changes: PropertyValues): void {
         super.update(changes);
         if (changes.has('label')) {

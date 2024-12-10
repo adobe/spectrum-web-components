@@ -26,6 +26,9 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-cross300.js';
 import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
 import crossMediumOverrides from '@spectrum-web-components/icon/src/icon-cross-overrides.css.js';
 
+/**
+ * A record of cross icon templates for different sizes.
+ */
 const crossIcon: Record<string, () => TemplateResult> = {
     s: () => html`
         <sp-icon-cross75
@@ -77,10 +80,18 @@ export class ClearButton extends SizedMixin(StyledButton, {
     @property({ reflect: true })
     public variant: 'overBackground' | '' = '';
 
+    /**
+     * Retrieves the content to be rendered inside the button.
+     * Includes the cross icon based on the button size.
+     */
     protected override get buttonContent(): TemplateResult[] {
         return [crossIcon[this.size]()];
     }
 
+    /**
+     * Renders the clear button.
+     * Wraps the button content in a div with class "fill".
+     */
     protected override render(): TemplateResult {
         return html`
             <div class="fill">${super.render()}</div>

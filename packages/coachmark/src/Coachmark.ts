@@ -38,7 +38,7 @@ import '@spectrum-web-components/button-group/sp-button-group.js';
  * @slot cover-photo - This is the cover photo for Default and Quiet Coachmark
  * @slot heading - HTML content to be listed as the heading
  * @slot description - A description of the card
- * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
+ * @slot actions - an `sp-action-menu` element outlining actions to take on the represented object
  * @slot step-count - Override the default pagination delivery with your own internationalized content
  */
 export class Coachmark extends Popover {
@@ -50,12 +50,23 @@ export class Coachmark extends Popover {
             chevronIconOverrides,
         ];
     }
+    /**
+     * The item associated with the coachmark.
+     */
     @property({ type: Object })
     public item?: CoachmarkItem;
 
+    /**
+     * The placement of the coachmark.
+     * Can be 'top', 'bottom', 'left', or 'right'.
+     */
     @property({ type: String })
     public override placement: Placement = 'right';
 
+    /**
+     * The content of the coachmark.
+     * Includes title, description, and image alt text.
+     */
     @property({ type: Object, attribute: false })
     private content?: {
         title?: string;
@@ -63,37 +74,71 @@ export class Coachmark extends Popover {
         imageAlt?: string;
     };
 
+    /**
+     * The shortcut key for the coachmark.
+     */
     @property({ attribute: 'shortcut-key' })
     private shortcutKey?: string;
 
+    /**
+     * The modifier keys for the coachmark.
+     */
     @property({ type: Array })
     public modifierKeys?: string[] = [];
 
+    /**
+     * The source URL for the coachmark.
+     */
     @property({ attribute: 'src' })
     private source?: string;
 
+    /**
+     * The media type for the coachmark.
+     */
     @property({ attribute: 'media-type' })
     private mediaType?: MediaType;
 
+    /**
+     * Indicates whether the coachmark has an asset.
+     */
     @property({ type: Boolean, attribute: 'has-asset', reflect: true })
     public hasAsset = false;
 
+    /**
+     * The type of asset represented by the coachmark.
+     * Can be 'file' or 'folder'.
+     */
     @property()
     public asset?: 'file' | 'folder';
 
+    /**
+     * The current step of the coachmark.
+     */
     @property({ type: Number, attribute: 'current-step' })
     public currentStep?: number;
 
+    /**
+     * The total number of steps in the coachmark.
+     */
     @property({ type: Number, attribute: 'total-steps' })
     public totalSteps?: number;
 
+    /**
+     * The primary call-to-action label for the coachmark.
+     */
     @property({ type: String, attribute: 'primary-cta' })
     primaryCTA?: string;
 
+    /**
+     * The secondary call-to-action label for the coachmark.
+     */
     @property({ type: String, attribute: 'secondary-cta' })
     secondaryCTA?: string;
 
-    // render video and images
+    /**
+     * Renders the media content of the coachmark.
+     * Includes the video or image based on the media type.
+     */
     private renderMedia(): TemplateResult {
         const isImage = this.mediaType === MediaType.IMAGE;
         if (!isImage) {
@@ -115,7 +160,10 @@ export class Coachmark extends Popover {
             </sp-asset>
         `;
     }
-    // method to render modifier
+
+    /**
+     * Renders a keyboard shortcut modifier key.
+     */
     private renderModifier(
         modifierKey: string,
         type: 'modifier' | 'shortcut' = 'modifier'
@@ -125,12 +173,19 @@ export class Coachmark extends Popover {
         `;
     }
 
+    /**
+     * Renders a joiner symbol for keyboard shortcuts.
+     */
     private renderJoiner(): TemplateResult {
         return html`
             <span class="plus">&plus;</span>
         `;
     }
-    // render heading title and modifier
+
+    /**
+     * Renders the header of the coachmark.
+     * Includes the title and keyboard shortcuts.
+     */
     private renderHeader(): TemplateResult {
         const hasModifier = this.modifierKeys && this.modifierKeys?.length > 0;
         const hasShortcut = Boolean(this.shortcutKey);
@@ -171,7 +226,11 @@ export class Coachmark extends Popover {
                 : nothing}
         `;
     }
-    // render description
+
+    /**
+     * Renders the content of the coachmark.
+     * Includes the description.
+     */
     private renderContent(): TemplateResult {
         const hasDescription = Boolean(this.content?.description);
         if (!hasDescription)
@@ -183,7 +242,10 @@ export class Coachmark extends Popover {
         `;
     }
 
-    // event on primary button
+    /**
+     * Handles the click event on the primary button.
+     * Dispatches the "primary" event.
+     */
     private handlePrimaryCTA(): void {
         this.dispatchEvent(
             new Event('primary', {
@@ -192,7 +254,11 @@ export class Coachmark extends Popover {
             })
         );
     }
-    // event on secondary button
+
+    /**
+     * Handles the click event on the secondary button.
+     * Dispatches the "secondary" event.
+     */
     private handleSecondaryCTA(): void {
         this.dispatchEvent(
             new Event('secondary', {
@@ -202,6 +268,9 @@ export class Coachmark extends Popover {
         );
     }
 
+    /**
+     * Renders the secondary button.
+     */
     private renderSecondaryButton = (): TemplateResult => {
         return html`
             <sp-button
@@ -214,6 +283,9 @@ export class Coachmark extends Popover {
         `;
     };
 
+    /**
+     * Renders the primary button.
+     */
     private renderPrimaryButton = (): TemplateResult => {
         return html`
             <sp-button
@@ -227,6 +299,9 @@ export class Coachmark extends Popover {
         `;
     };
 
+    /**
+     * Renders the secondary button for mobile view.
+     */
     private renderSecondaryButtonMobile = (): TemplateResult => {
         return html`
             <sp-button
@@ -245,6 +320,9 @@ export class Coachmark extends Popover {
         `;
     };
 
+    /**
+     * Renders the primary button for mobile view.
+     */
     private renderPrimaryButtonMobile = (): TemplateResult => {
         return html`
             <sp-button
@@ -258,6 +336,9 @@ export class Coachmark extends Popover {
         `;
     };
 
+    /**
+     * Renders the buttons for the coachmark.
+     */
     protected renderButtons(): TemplateResult {
         return html`
             <sp-button-group class="spectrum-ButtonGroup buttongroup">
@@ -274,7 +355,9 @@ export class Coachmark extends Popover {
         `;
     }
 
-    // render steps
+    /**
+     * Renders the step count for the coachmark.
+     */
     protected renderSteps = (): TemplateResult => {
         return html`
             <div class="step" role="status">
@@ -286,7 +369,10 @@ export class Coachmark extends Popover {
             </div>
         `;
     };
-    // render action menu
+
+    /**
+     * Renders the action menu for the coachmark.
+     */
     protected renderActionMenu = (): TemplateResult => {
         return html`
             <div class="action-menu">
@@ -295,6 +381,9 @@ export class Coachmark extends Popover {
         `;
     };
 
+    /**
+     * Renders the coachmark.
+     */
     protected override render(): TemplateResult {
         return html`
             ${this.renderMedia()}

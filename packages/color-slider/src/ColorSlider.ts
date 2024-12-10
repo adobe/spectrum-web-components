@@ -50,21 +50,37 @@ export class ColorSlider extends Focusable {
         return [opacityCheckerBoardStyles, styles];
     }
 
+    /**
+     * The text direction of the color slider.
+     * Can be 'ltr' (left-to-right) or 'rtl' (right-to-left).
+     */
     @property({ type: String, reflect: true })
     public override dir!: 'ltr' | 'rtl';
 
+    /**
+     * Indicates whether the color slider is disabled.
+     */
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
+    /**
+     * Indicates whether the color slider is focused.
+     */
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
     @query('.handle')
     private handle!: ColorHandle;
 
+    /**
+     * The label for the color slider.
+     */
     @property({ type: String })
     public label = 'hue';
 
+    /**
+     * Indicates whether the color slider is vertical.
+     */
     @property({ type: Boolean, reflect: true })
     public vertical = false;
 
@@ -82,6 +98,9 @@ export class ColorSlider extends Focusable {
         maintains: 'saturation',
     });
 
+    /**
+     * The current value of the color slider.
+     */
     @property({ type: Number })
     public get value(): number {
         return this.colorController.hue;
@@ -91,9 +110,15 @@ export class ColorSlider extends Focusable {
         this.colorController.hue = hue;
     }
 
+    /**
+     * The position of the slider handle.
+     */
     @property({ type: Number, reflect: true })
     public sliderHandlePosition = 0;
 
+    /**
+     * The current color value of the color slider.
+     */
     @property({ type: String })
     public get color(): ColorValue {
         return this.colorController.color;
@@ -103,6 +128,9 @@ export class ColorSlider extends Focusable {
         this.colorController.color = color;
     }
 
+    /**
+     * The step value of the color slider.
+     */
     @property({ type: Number })
     public step = 1;
 
@@ -174,6 +202,10 @@ export class ColorSlider extends Focusable {
         }
     }
 
+    /**
+     * Handles the input event for the color slider.
+     * Updates the color value based on the input.
+     */
     private handleInput(event: Event & { target: HTMLInputElement }): void {
         const { valueAsNumber } = event.target;
 
@@ -182,6 +214,10 @@ export class ColorSlider extends Focusable {
         this.colorController.applyColorFromState();
     }
 
+    /**
+     * Handles the change event for the color slider.
+     * Updates the color value and dispatches the change event.
+     */
     private handleChange(event: Event & { target: HTMLInputElement }): void {
         this.handleInput(event);
         this.dispatchEvent(
@@ -202,10 +238,18 @@ export class ColorSlider extends Focusable {
         this.input.focus();
     }
 
+    /**
+     * Handles the focus event for the color slider.
+     * Sets the focused state to true.
+     */
     private handleFocus(): void {
         this.focused = true;
     }
 
+    /**
+     * Handles the blur event for the color slider.
+     * Resets the altered state and sets the focused state to false.
+     */
     private handleBlur(): void {
         if (this._pointerDown) {
             return;
@@ -217,6 +261,10 @@ export class ColorSlider extends Focusable {
     private boundingClientRect!: DOMRect;
     private _pointerDown = false;
 
+    /**
+     * Handles the pointerdown event for the color slider.
+     * Activates the color slider and starts tracking pointer movements.
+     */
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             event.preventDefault();
@@ -231,6 +279,10 @@ export class ColorSlider extends Focusable {
         }
     }
 
+    /**
+     * Handles the pointermove event for the color slider.
+     * Updates the color value based on the pointer position.
+     */
     private handlePointermove(event: PointerEvent): void {
         this.sliderHandlePosition = this.calculateHandlePosition(event);
         this.value = 360 * (this.sliderHandlePosition / 100);
@@ -246,6 +298,10 @@ export class ColorSlider extends Focusable {
         );
     }
 
+    /**
+     * Handles the pointerup event for the color slider.
+     * Deactivates the color slider and restores the previous color if necessary.
+     */
     private handlePointerup(event: PointerEvent): void {
         this._pointerDown = false;
         (event.target as HTMLElement).releasePointerCapture(event.pointerId);
@@ -289,6 +345,10 @@ export class ColorSlider extends Focusable {
         return sliderHandlePosition;
     }
 
+    /**
+     * Handles the pointerdown event for the gradient.
+     * Activates the color slider and starts tracking pointer movements.
+     */
     private handleGradientPointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             return;
@@ -299,12 +359,18 @@ export class ColorSlider extends Focusable {
         this.handlePointermove(event);
     }
 
+    /**
+     * Gets the styles for the handle position.
+     */
     private get handlePositionStyles(): string {
         return `${this.vertical ? 'inset-block-end' : 'inset-inline-start'}: ${
             this.sliderHandlePosition
         }%`;
     }
 
+    /**
+     * Gets the styles for the color slider.
+     */
     private get getColorSliderStyle(): StyleInfo {
         const orientation = this.vertical ? 'top' : 'right';
         return {
@@ -312,6 +378,10 @@ export class ColorSlider extends Focusable {
         };
     }
 
+    /**
+     * Renders the color slider.
+     * Includes the gradient background and the color handle.
+     */
     protected override render(): TemplateResult {
         return html`
             <div
@@ -373,6 +443,10 @@ export class ColorSlider extends Focusable {
         `;
     }
 
+    /**
+     * Called when the element is first updated.
+     * Sets the bounding client rectangle and adds event listeners for focus, blur, keyup, and keydown events.
+     */
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
