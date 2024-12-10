@@ -25,6 +25,9 @@ import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-ico
 import cornerTriangleOverrides from '@spectrum-web-components/icon/src/icon-corner-triangle-overrides.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
 
+/**
+ * A mapping of size keys to corresponding CSS classes for the hold affordance icon.
+ */
 const holdAffordanceClass = {
     xs: 'spectrum-UIIcon-CornerTriangle75',
     s: 'spectrum-UIIcon-CornerTriangle75',
@@ -33,9 +36,20 @@ const holdAffordanceClass = {
     xl: 'spectrum-UIIcon-CornerTriangle300',
 };
 
+/**
+ * The duration (in milliseconds) required to trigger a long press event.
+ */
 export const LONGPRESS_DURATION = 300;
+
+/**
+ * A timeout identifier for the long press event.
+ */
 let LONGPRESS_TIMEOUT: ReturnType<typeof setTimeout>;
 
+/**
+ * The type definition for a long press event.
+ * Indicates the source of the event, which can be either 'pointer' or 'keyboard'.
+ */
 export type LongpressEvent = {
     source: 'pointer' | 'keyboard';
 };
@@ -43,9 +57,9 @@ export type LongpressEvent = {
 /**
  * @element sp-action-button
  *
- * @slot - text label of the Action Button
- * @slot icon - The icon to use for Action Button
- * @fires change - Announces a change in the `selected` property of an action button
+ * @slot - The text label of the Action Button.
+ * @slot icon - The icon to use for the Action Button.
+ * @fires change - Announces a change in the `selected` property of an action button.
  * @fires longpress - Synthesizes a "longpress" interaction that signifies a
  * `pointerdown` event that is >=300ms or a keyboard event where code is `Space` or code is `ArrowDown`
  * while `altKey===true`.
@@ -63,39 +77,56 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         ];
     }
 
+    /**
+     * When true, the action button is styled with emphasis.
+     */
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    /**
+     * When true, the action button displays a hold affordance icon.
+     */
     @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
     public holdAffordance = false;
 
+    /**
+     * When true, the action button is styled with a quieter appearance.
+     */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
+    /**
+     * The ARIA role of the action button.
+     * Defaults to 'button'.
+     */
     @property({ reflect: true })
     public override role = 'button';
 
     /**
-     * Whether an Action Button with `role='button'`
-     * should also be `aria-pressed='true'`
+     * Indicates whether the action button is in a selected state.
+     * When true, the action button has `aria-pressed='true'`.
      */
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
     /**
-     * Whether to automatically manage the `selected`
-     * attribute on interaction and whether `aria-pressed="false"`
-     * should be used when `selected === false`
+     * Whether to automatically manage the `selected` attribute on interaction.
+     * When true, `aria-pressed="false"` is used when `selected === false`.
      */
     @property({ type: Boolean, reflect: true })
     public toggles = false;
 
     /**
      * The static color variant to use for the action button.
+     * Can be 'white' or 'black'.
      */
     @property({ reflect: true, attribute: 'static-color' })
     public staticColor?: 'white' | 'black';
 
+    /**
+     * The value associated with the action button.
+     * If not set, defaults to the text content of the button.
+     */
     @property({ type: String })
     public get value(): string {
         return this._value || this.itemText;
@@ -114,7 +145,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     private _value = '';
 
     /**
-     * @private
+     * Retrieves the text content of the action button.
      */
     public get itemText(): string {
         return (this.textContent || /* c8 ignore next */ '').trim();
@@ -125,6 +156,12 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         this.addEventListener('click', this.onClick);
     }
 
+    /**
+     * Handles the click event on the action button.
+     * Toggles the selected state if the button is configured to toggle.
+     * Dispatches a 'change' event to notify listeners of the state change.
+     * If the event is canceled, the selected state is reverted.
+     */
     private onClick = (): void => {
         if (!this.toggles) {
             return;
@@ -142,6 +179,11 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         }
     };
 
+    /**
+     * Handles the pointerdown event to display the hold affordance icon.
+     * Sets up event listeners for pointerup and pointercancel events.
+     * Dispatches a 'longpress' event if the pointer is held down for the duration of LONGPRESS_DURATION.
+     */
     private handlePointerdownHoldAffordance(event: PointerEvent): void {
         if (event.button !== 0) return;
         this.addEventListener('pointerup', this.handlePointerupHoldAffordance);
@@ -162,6 +204,10 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         }, LONGPRESS_DURATION);
     }
 
+    /**
+     * Handles the pointerup event to clear the hold affordance timeout.
+     * Removes the event listeners for pointerup and pointercancel events.
+     */
     private handlePointerupHoldAffordance(): void {
         clearTimeout(LONGPRESS_TIMEOUT);
         this.removeEventListener(
@@ -175,7 +221,8 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     }
 
     /**
-     * @private
+     * Handles the keydown event to manage the hold affordance icon.
+     * Prevents default behavior for Space or Alt+ArrowDown keys and sets up the keyup event listener.
      */
     protected override handleKeydown(event: KeyboardEvent): void {
         if (!this.holdAffordance) {
@@ -193,6 +240,10 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         }
     }
 
+    /**
+     * Handles the keyup event to dispatch a 'longpress' event.
+     * Stops propagation for Space or Alt+ArrowDown keys and dispatches the event.
+     */
     protected override handleKeyup(event: KeyboardEvent): void {
         if (!this.holdAffordance) {
             return super.handleKeyup(event);
@@ -213,6 +264,10 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         }
     }
 
+    /**
+     * Gets the content to be rendered inside the button.
+     * Adds the hold affordance icon if the holdAffordance property is true.
+     */
     protected override get buttonContent(): TemplateResult[] {
         const buttonContent = super.buttonContent;
         if (this.holdAffordance) {
@@ -227,6 +282,11 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         return buttonContent;
     }
 
+    /**
+     * Called when the element is updated.
+     * Updates the aria-pressed attribute based on the selected and role properties.
+     * Adds or removes event listeners for the hold affordance based on the holdAffordance property.
+     */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         const isButton = this.role === 'button';

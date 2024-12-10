@@ -20,6 +20,11 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import styles from './asset.css.js';
 
+/**
+ * Generates and SVG element with a label for a file icon.
+ *
+ * @param label the `aria-label` for the SVG element
+ */
 const file = (label: string): TemplateResult => html`
     <svg
         class="file"
@@ -38,6 +43,11 @@ const file = (label: string): TemplateResult => html`
     </svg>
 `;
 
+/**
+ * Generates and SVG element with a label for a folder icon.
+ *
+ * @param label the `aria-label` for the SVG element
+ */
 const folder = (label: string): TemplateResult => html`
     <svg
         class="folder"
@@ -65,12 +75,25 @@ export class Asset extends SpectrumElement {
         return [styles];
     }
 
+    /**
+     * The type of asset to display, either 'file' or 'folder'.
+     */
+
     @property({ type: String, reflect: true })
     public variant: 'file' | 'folder' | undefined;
 
+    /**
+     * The label for the file icon.
+     */
     @property()
     public label = '';
 
+    /**
+     * Renders the asset template based on the variant.
+     * If the variant is 'file', it renders the file icon.
+     * If the variant is 'folder', it renders the folder icon.
+     * Otherwise, it renders the default slot content.
+     */
     protected override render(): TemplateResult {
         if (this.variant === 'file') {
             return file(this.label);

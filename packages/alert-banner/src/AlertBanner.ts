@@ -22,7 +22,10 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import styles from './alert-banner.css.js';
 
+// Valid variants for the alert banner
 const VALID_VARIANTS = ['neutral', 'info', 'negative'];
+
+// Type definition for alert banner variants
 export type AlertBannerVariants = (typeof VALID_VARIANTS)[number];
 
 /**
@@ -39,26 +42,20 @@ export class AlertBanner extends SpectrumElement {
     }
 
     /**
-     * Controls the display of the alert banner
-     *
-     * @param {Boolean} open
+     * Controls the display of the alert banner.
      */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
     /**
-     * Whether to include an icon-only close button to dismiss the alert banner
-     *
-     * @param {Boolean} dismissible
+     * Whether to include an icon-only close button to dismiss the alert banner.
      */
     @property({ type: Boolean, reflect: true })
     public dismissible = false;
 
     /**
-     * The variant applies specific styling when set to `negative` or `info`;
-     * `variant` attribute is removed when it's passed an invalid variant.
-     *
-     * @param {String} variant
+     * The variant applies specific styling when set to `negative` or `info`.
+     * The `variant` attribute is removed when it's passed an invalid variant.
      */
     @property({ type: String })
     public set variant(variant: AlertBannerVariants) {
@@ -94,10 +91,16 @@ export class AlertBanner extends SpectrumElement {
 
     private _variant: AlertBannerVariants = '';
 
+    /**
+     * Checks if the provided variant is valid.
+     */
     protected isValidVariant(variant: string): boolean {
         return VALID_VARIANTS.includes(variant);
     }
 
+    /**
+     * Renders the appropriate icon based on the variant.
+     */
     protected renderIcon(variant: string): TemplateResult {
         switch (variant) {
             case 'info':
@@ -116,6 +119,9 @@ export class AlertBanner extends SpectrumElement {
         }
     }
 
+    /**
+     * Dispatches a 'close' event and closes the alert banner if the event is not canceled.
+     */
     private shouldClose(): void {
         const applyDefault = this.dispatchEvent(
             new CustomEvent('close', {
@@ -129,16 +135,26 @@ export class AlertBanner extends SpectrumElement {
         }
     }
 
+    /**
+     * Closes the alert banner by setting the open property to false.
+     */
     public close(): void {
         this.open = false;
     }
 
+    /**
+     * Handles the keydown event to close the alert banner when the Escape key is pressed.
+     */
     private handleKeydown(event: KeyboardEvent): void {
         if (event.code === 'Escape' && this.dismissible) {
             this.shouldClose();
         }
     }
 
+    /**
+     * Renders the alert banner template.
+     * Includes the body with content and an optional close button.
+     */
     protected override render(): TemplateResult {
         return html`
             <div class="body" role="alert">
@@ -162,6 +178,10 @@ export class AlertBanner extends SpectrumElement {
         `;
     }
 
+    /**
+     * Updates the alert banner when properties change.
+     * Adds or removes the keydown event listener based on the open property.
+     */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
 
