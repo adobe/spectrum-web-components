@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-action-button>` represents an action a user can take.
 
@@ -24,9 +24,11 @@ When looking to leverage the `ActionButton` base class as a type and/or for exte
 import { ActionButton } from '@spectrum-web-components/action-button';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="xs">Extra Small</sp-tab>
 <sp-tab-panel value="xs">
 
@@ -129,11 +131,13 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 </sp-tab-panel>
 </sp-tabs>
 
-## Variants
+#### Variants
 
 The `<sp-action-button>` can be customized with either or both of the `emphasized` and `quiet` attributes. These will pair with either or both of the state attributes (`selected` and `disabled`) to decide the final visual delivery of the `<sp-action-button>`. Content addressed to the `icon` slot can also be provided and will be positioned just before the rest of the the supplied button content.
 
-### Standard
+<sp-tabs selected="default" auto label="Variant options">
+<sp-tab value="default">Default</sp-tab>
+<sp-tab-panel value="default">
 
 ```html demo
 <div
@@ -211,7 +215,9 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
 </div>
 ```
 
-### Quiet
+</sp-tab-panel>
+<sp-tab value="quiet">Quiet</sp-tab>
+<sp-tab-panel value="quiet">
 
 ```html demo
 <div
@@ -289,7 +295,9 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
 </div>
 ```
 
-### Emphasized
+</sp-tab-panel>
+<sp-tab value="emphasized">Emphasized</sp-tab>
+<sp-tab-panel value="emphasized">
 
 ```html demo
 <div
@@ -369,7 +377,9 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
 </div>
 ```
 
-### Emphasized + Quiet
+</sp-tab-panel>
+<sp-tab value="emq">Emphasized + quiet</sp-tab>
+<sp-tab-panel value="emq">
 
 ```html demo
 <div
@@ -455,7 +465,12 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
 </div>
 ```
 
-## Action button with hold affordance
+</sp-tab-panel>
+</sp-tabs>
+
+### Behaviors
+
+#### Action button with hold affordance
 
 The use of the `hold-affordance` attribute signifies that the `<sp-action-button>` in question will be delivered with a visual affordance outlining that special interaction with the button will dispatch a `longpress` event. Via a pointer input, this even will be dispatched when 300ms has passed after a `pointerdown` event without the presence of a `pointerup` or `pointercancel` event. Via the keyboard, an event with a code of `Space` or or `ArrowDown` while `altKey === true` will dispatch the event.
 
@@ -499,49 +514,70 @@ The use of the `hold-affordance` attribute signifies that the `<sp-action-button
 </div>
 ```
 
-## Toggles
+#### Toggles
 
 With the application of the `toggles` attribute, the button will self manage its `selected` property on `click`. When this value is updated, a cancellable `change` event will be dispatched to inform the parent application.
 
+<sp-tabs selected="default" auto label="Toggled action buttons">
+<sp-tab value="default">Default</sp-tab>
+<sp-tab-panel value="default">
+
 ```html demo
-<div
-    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 2em;"
->
-    <div>
-        <sp-field-label for="toggles-default">Standard</sp-field-label>
-        <sp-action-button toggles id="toggles-default">
-            Toggle button
-        </sp-action-button>
-    </div>
-    <div>
-        <sp-field-label for="toggles-quiet">Quiet</sp-field-label>
-        <sp-action-button toggles quiet id="toggles-quiet">
-            Toggle button
-        </sp-action-button>
-    </div>
-    <div>
-        <sp-field-label for="toggles-emphasized">Emphasized</sp-field-label>
-        <sp-action-button toggles emphasized id="toggles-emphasized">
-            Toggle button
-        </sp-action-button>
-    </div>
-    <div>
-        <sp-field-label for="toggles-emphasized-quiet">
-            Emphasized + Quiet
-        </sp-field-label>
-        <sp-action-button
-            toggles
-            emphasized
-            quiet
-            id="toggles-emphasized-quiet"
-        >
-            Toggle button
-        </sp-action-button>
-    </div>
-</div>
+<sp-action-button toggles id="toggles-default">Toggle button</sp-action-button>
+<sp-action-button toggles selected id="toggles-default">
+    Toggle button
+</sp-action-button>
 ```
 
-## Handling events
+</sp-tab-panel>
+<sp-tab value="quiet">Quiet</sp-tab>
+<sp-tab-panel value="quiet">
+
+```html demo
+<sp-action-button toggles quiet id="toggles-quiet">
+    Toggle button
+</sp-action-button>
+<sp-action-button toggles quiet selected id="toggles-quiet">
+    Toggle button
+</sp-action-button>
+```
+
+</sp-tab-panel>
+<sp-tab value="emphasized">Emphasized</sp-tab>
+<sp-tab-panel value="emphasized">
+
+```html demo
+<sp-action-button toggles emphasized id="toggles-emphasized">
+    Toggle button
+</sp-action-button>
+<sp-action-button toggles emphasized selected id="toggles-emphasized">
+    Toggle button
+</sp-action-button>
+```
+
+</sp-tab-panel>
+<sp-tab value="emphasized-quiet">Emphasized + Quiet</sp-tab>
+<sp-tab-panel value="emphasized-quiet">
+
+```html demo
+<sp-action-button toggles emphasized quiet id="toggles-emphasized-quiet">
+    Toggle button
+</sp-action-button>
+<sp-action-button
+    toggles
+    emphasized
+    quiet
+    selected
+    id="toggles-emphasized-quiet"
+>
+    Toggle button
+</sp-action-button>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+#### Handling events
 
 Events handlers for clicks and other user actions can be registered on a
 `<sp-action-button>` as on a standard HTML `<button>` element.
@@ -562,3 +598,47 @@ In addition to handling events like a native `<button>` HTML element, one can al
     Click me
 </sp-action-button>
 ```
+
+### Accessibility
+
+#### Include a label
+
+A button is required to have either a visible text label or a `label` attribute on either the `<sp-button>` itself,
+or on an `<sp-icon*>` element child.
+
+#### Don't override color
+
+Do not use custom colors for buttons. The colors of different button variations have been designed to be consistent and accessible.
+
+#### Use static black or static white to contrast with backgrounds and images
+
+To ensure maximum contrast with the background, use static black for light backgrounds and images, and static white for dark backgrounds and images. Avoid placing static components on top of busy images with a lot of variance in contrast.
+
+<sp-tabs selected="black" auto label="Static variants for contrast">
+<sp-tab value="black">Static black on light background</sp-tab>
+<sp-tab-panel value="black">
+
+```html demo
+<div style="background-color: #ccffee; padding: 20px">
+    <sp-action-button static="black">Click me</sp-action-button>
+    <sp-action-button static="black" selected>Click me</sp-action-button>
+</div>
+```
+
+</sp-tab-panel>
+<sp-tab value="white">Static white on dark background</sp-tab>
+<sp-tab-panel value="white">
+
+```html demo
+<div style="background-color: #220033; padding: 20px">
+    <sp-action-button static="white">Click me</sp-action-button>
+    <sp-action-button static="white" selected>Click me</sp-action-button>
+</div>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+#### Clearly state the action
+
+Make sure that an action button’s label clearly states the outcome of the action. Use the same word or phrase as found elsewhere in the experience.

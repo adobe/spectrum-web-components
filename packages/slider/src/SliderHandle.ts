@@ -108,15 +108,30 @@ export class SliderHandle extends Focusable {
     @property({ type: String })
     public name = '';
 
+    /**
+     * Minimum value to accept; must be less than or equal to `max`.
+     */
     @property({ reflect: true, converter: MinConverter })
     public min?: number | 'previous';
 
+    /**
+     * Maximum value to accept; must be less than or equal to `min`.
+     */
     @property({ reflect: true, converter: MaxConverter })
     public max?: number | 'next';
 
+    /**
+     * Level of granularity
+     */
     @property({ type: Number, reflect: true })
     public step?: number;
 
+    /**
+     * Enables options for number formatting and internationalization, including those supported by
+     * [`Intl.NumberFormatOptions`](https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier),
+     * as well as polyfills for additional units (e.g. the graphics units of `pixel`, `pixels`, `points`, etc.)
+     * that are not supported therein in the format `{ style: "unit", unit: "px" }` .
+     */
     @property({ type: Object, attribute: 'format-options' })
     public formatOptions?: NumberFormatOptions;
 

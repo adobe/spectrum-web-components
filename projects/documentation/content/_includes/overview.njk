@@ -2,11 +2,12 @@
 layout: component.njk
 ---
 <sp-tabs
-    selected="examples"
+    selected="overview"
     direction="horizontal"
     aria-labelledby="component-name"
+    size="xl"
 >
-    <sp-tab value="examples">Examples</sp-tab>
+    <sp-tab value="overview">Overview</sp-tab>
     {% set hasAPI = false %}
     {% for component in collections['component-api'] %}
         {% if component.data.componentName === componentName %}

@@ -1,7 +1,8 @@
-## Description
+## Overview
 
 An `<sp-help-text>` provides either an informative description or an error message that gives more context about what a user needs to input. It's commonly used in forms.
 
+## Usage
 ## Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/help-text?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/help-text)
@@ -23,17 +24,11 @@ When looking to leverage the `HelpText` base class as a type and/or for extensio
 import { HelpText } from '@spectrum-web-components/help-text';
 ```
 
-## Example
+### Options
 
-Good descriptive help text includes 1-2 short sentences information such as:
+#### Sizes
 
--   An overall description of an input field or controls
--   Hints for what kind of information needs to be input or selected
--   Specific formatting examples or requirements
-
-## Sizes
-
-<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
@@ -88,7 +83,7 @@ Good descriptive help text includes 1-2 short sentences information such as:
 </sp-tab-panel>
 </sp-tabs>
 
-## Negative
+#### Negative
 
 The negative variant of `<sp-help-text>` is used to convey error messages.
 
@@ -112,7 +107,7 @@ For help text, usually the error is related to something that needs to be fixed 
 </sp-textfield>
 ```
 
-### Icon
+##### Icon
 
 When associated with content that does not supply an icon outlining the presence of an error, use the `icon` attribute to display one as part of the `<sp-help-text>` element.
 
@@ -133,9 +128,9 @@ When associated with content that does not supply an icon outlining the presence
 </sp-field-group>
 ```
 
-## Disabled
+#### Disabled
 
-When associated to content the is disabled, use the `disabled` attribute to match the delivery of the `<sp-help-text>` element to that content.
+When the content associated to the element is disabled, use the `disabled` attribute to match the delivery of the `<sp-help-text>` element to that content.
 
 ```html demo
 <sp-field-label for="color" disabled>Color</sp-field-label>
