@@ -62,7 +62,7 @@
         "pretest:visual": "yarn build && yarn build",
         "process-icons": "wireit",
         "process-spectrum": "wireit",
-        "publish:react": "yarn changeset publish --dir ./react --tag testing --no-push",
+        "publish:react": "yarn changeset publish --tag testingReact --no-push",
         "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\" && git push",
         "spectrum-css": "wireit",
         "spectrum-tokens": "wireit",
