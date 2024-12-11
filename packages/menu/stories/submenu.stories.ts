@@ -382,6 +382,34 @@ export const customRootSubmenu = (): TemplateResult => {
                         style="width: 100%; height: auto; border-radius: 4px"
                     />
                     <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
                 </div>
             </sp-menu-item>
         </sp-action-menu>

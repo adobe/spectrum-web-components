@@ -40,25 +40,58 @@ export type SwatchSelects = 'single' | 'multiple' | undefined;
 /**
  * @element sp-swatch-group
  *
+ * This component represents a group of swatches.
+ *
  * @slot - Swatch elements to manage as a group
+ * @fires change - Dispatched when the selected swatch changes
  */
 export class SwatchGroup extends SizedMixin(SpectrumElement, {
     validSizes: ['xs', 's', 'm', 'l'],
     noDefaultSize: true,
 }) {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
         return [styles];
     }
 
+    /**
+     * The border style of the swatch.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     *
+     * The border style can be set to `light` or `none`.
+     */
     @property({ reflect: true })
     public border: SwatchBorder;
 
+    /**
+     * The density of the swatch group.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     *
+     * The density can be set to `compact` or `spacious` which will adjust the gap between swatches.
+     */
     @property({ reflect: true })
     public density: 'compact' | 'spacious' | undefined;
 
+    /**
+     * The rounding of the swatch.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     *
+     * The rounding can be set to `none` or `full`.
+     */
     @property({ reflect: true })
     public rounding: SwatchRounding;
 
+    /**
+     * The selected swatches in the group.
+     */
     @property({ type: Array })
     public get selected(): string[] {
         return this._selected;
@@ -76,20 +109,38 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
     // without triggering the update lifecycle directly.
     private _selected: string[] = [];
 
+    /**
+     * The selection mode of the swatch group.
+     *
+     * The selection mode can be set to `single` or `multiple`.
+     */
     @property()
     public selects: SwatchSelects;
 
+    // Internal set to manage selected values.
     private selectedSet = new Set<string>();
 
+    /**
+     * The shape of the swatch.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     *
+     * The shape can be set to `rectangle`.
+     */
     @property({ reflect: true })
     public shape: SwatchShape;
 
+    /**
+     * The list of swatch elements assigned to the slot.
+     */
     @queryAssignedElements({ flatten: true })
     public swatches!: Swatch[];
 
     constructor() {
         super();
 
+        // Initialize a MutationController to observe changes in attributes, child elements, and subtree
         new MutationController(this, {
             config: {
                 attributes: true,
@@ -102,6 +153,9 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         });
     }
 
+    /**
+     * Initializes a RovingTabindexController to manage focus within the swatch group.
+     */
     rovingTabindexController = new RovingTabindexController<Swatch>(this, {
         focusInIndex: (elements: Swatch[]) => {
             let firstEnabledIndex = -1;
@@ -119,70 +173,112 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         isFocusableElement: (el: Swatch) => !el.disabled,
     });
 
+    /**
+     * Sets focus on the swatch group.
+     * Uses the RovingTabindexController to manage focus within the group.
+     */
     public override focus(options?: FocusOptions): void {
         this.rovingTabindexController.focus(options);
     }
 
+    /**
+     * Handles the change event for the swatch group.
+     * Manages the selected state of swatches based on the selection mode.
+     */
     protected handleChange(event: Event & { target: Swatch }): void {
         event.stopPropagation();
         const oldSelected = this.selected;
+
+        // Prevent default if no selection mode is set
         if (!this.selects) {
             event.preventDefault();
             return;
         }
+
         if (this.selects === 'single') {
             const { target } = event;
             target.tabIndex = 0;
             target.selected = true;
+
+            // If the target is already selected, return early
             if (this.selectedSet.has(target.value)) {
                 return;
             }
+
+            // Clear the selected set and add the new selection
             this.selectedSet.clear();
             this.selectedSet.add(target.value);
+
+            // Deselect all other swatches
             this.rovingTabindexController.elements.forEach((child) => {
                 if (child === target) return;
                 child.selected = false;
             });
         } else if (this.selects === 'multiple') {
             const { target } = event;
+
+            // Add or remove the target from the selected set based on its state
             if (target.selected) {
                 this.selectedSet.add(target.value);
             } else {
                 this.selectedSet.delete(target.value);
             }
         }
+
+        // Update the selected property
         this._selected = [...this.selectedSet];
+
+        // Dispatch a change event and revert selection if the event is prevented
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 cancelable: true,
                 bubbles: true,
             })
         );
+
         if (!applyDefault) {
             this._selected = oldSelected;
             event.preventDefault();
         }
     }
 
+    /**
+     * Manages changes in the swatch group.
+     * Updates the selected state of swatches based on changes in the DOM.
+     */
     private manageChange = async (): Promise<void> => {
         const presentSet = new Set();
         this.selectedSet = new Set(this.selected);
+
+        // Wait for all swatches to complete updating
         await Promise.all(this.swatches.map((swatch) => swatch.updateComplete));
+
+        // Add swatch values to the present set and update the selected set
         this.swatches.forEach((swatch) => {
             presentSet.add(swatch.value);
             if (swatch.selected) {
                 this.selectedSet.add(swatch.value);
             }
         });
+
+        // Remove values from the selected set that are not present in the swatches
         this.selectedSet.forEach((value) => {
             if (!presentSet.has(value)) {
                 this.selectedSet.delete(value);
             }
         });
+
+        // Update the selected property
         this._selected = [...this.selectedSet];
+
+        // Clear the element cache in the RovingTabindexController
         this.rovingTabindexController.clearElementCache();
     };
 
+    /**
+     * Gets the actions to be applied to each swatch based on property changes.
+     * Updates swatch properties such as border, rounding, shape, size, and selects.
+     */
     private getPassthroughSwatchActions(
         changes: PropertyValues
     ): ((swatch: Swatch) => void)[] {
@@ -193,37 +289,45 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
             size?: SwatchGroupSizes;
             selects?: SwatchSelects;
         } = {};
+
         if (
             changes.has('selects') &&
             (this.selects || typeof changes.get('selects') !== 'undefined')
         ) {
             targetValues.selects = this.selects;
         }
+
         if (
             changes.has('border') &&
             (this.border || typeof changes.get('border') !== 'undefined')
         ) {
             targetValues.border = this.border;
         }
+
         if (
             changes.has('rounding') &&
             (this.rounding || typeof changes.get('rounding') !== 'undefined')
         ) {
             targetValues.rounding = this.rounding;
         }
+
         if (
             changes.has('size') &&
             (this.size !== 'm' || typeof changes.get('size') !== 'undefined')
         ) {
             targetValues.size = this.size as SwatchGroupSizes;
         }
+
         if (
             changes.has('shape') &&
             (this.shape || typeof changes.get('shape') !== 'undefined')
         ) {
             targetValues.shape = this.shape;
         }
+
         const passThroughSwatchActions: ((swatch: Swatch) => void)[] = [];
+
+        // Apply the target values to each swatch
         if (Object.keys(targetValues).length) {
             passThroughSwatchActions.push((swatch) => {
                 if (window.__swc.DEBUG) {
@@ -242,23 +346,34 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
                         );
                     }
                 }
+
                 if ('border' in targetValues)
                     swatch.border = targetValues.border;
+
                 if ('rounding' in targetValues)
                     swatch.rounding = targetValues.rounding;
+
                 if ('shape' in targetValues) swatch.shape = targetValues.shape;
+
                 if ('size' in targetValues)
                     swatch.size = targetValues.size as SwatchGroupSizes;
             });
         }
+
         return passThroughSwatchActions;
     }
 
+    /**
+     * Gets the actions to be applied to each swatch based on the selection mode.
+     * Updates swatch roles such as radio, checkbox, or button.
+     */
     private getSelectionSwatchActions(
         changes: PropertyValues
     ): ((swatch: Swatch) => void)[] {
         const selectionSwatchActions: ((swatch: Swatch) => void)[] = [];
         if (!changes.has('selects')) return selectionSwatchActions;
+
+        // Set the role attribute based on the selection mode
         if (this.selects) {
             this.setAttribute(
                 'role',
@@ -267,14 +382,18 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         } else {
             this.removeAttribute('role');
         }
+
         const swatchRoles = {
             single: 'radio',
             multiple: 'checkbox',
         };
         const swatchRole = this.selects ? swatchRoles[this.selects] : 'button';
+
+        // Apply the role to each swatch
         selectionSwatchActions.push((swatch) => {
             swatch.setAttribute('role', swatchRole);
         });
+
         return selectionSwatchActions;
     }
 
@@ -287,6 +406,10 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         `;
     }
 
+    /**
+     * Called before the element updates.
+     * Manages changes in the swatch group and updates swatch properties based on property changes.
+     */
     protected override willUpdate(changes: PropertyValues<this>): void {
         const swatchActions = [
             ...this.getPassthroughSwatchActions(changes),

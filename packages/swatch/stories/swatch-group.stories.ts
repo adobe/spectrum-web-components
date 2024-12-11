@@ -36,65 +36,34 @@ export default {
     args: {},
     argTypes: {
         border: {
-            name: 'border',
-            type: { name: 'string', required: false },
-            description: 'The border to apply to the Swatch children.',
             table: {
                 defaultValue: { summary: '' },
             },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'light', 'none'],
-            },
+            options: ['normal', 'light', 'none'],
         },
         density: {
-            name: 'density',
-            type: { name: 'string', required: false },
-            description: 'The density at which to display the Swatch children.',
             table: {
                 defaultValue: { summary: '' },
             },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'compact', 'spacious'],
-            },
+            options: ['normal', 'compact', 'spacious'],
         },
         rounding: {
-            name: 'rounding',
-            type: { name: 'string', required: false },
-            description: 'The rounding to apply to the Swatch children.',
             table: {
                 defaultValue: { summary: '' },
             },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'none', 'full'],
-            },
+            options: ['normal', 'none', 'full'],
         },
         selects: {
-            name: 'selects',
-            type: { name: 'string', required: false },
-            description:
-                'Whether the Swatch Group manages a selection, and whether it is a sinlge or multiple selection.',
             table: {
                 defaultValue: { summary: '' },
             },
-            control: {
-                type: 'inline-radio',
-                options: ['none', 'single', 'multiple'],
-            },
+            options: ['none', 'single', 'multiple'],
         },
         shape: {
-            name: 'shape',
-            type: { name: 'string', required: false },
-            description: 'The shape to apply to the Swatch children.',
             table: {
                 defaultValue: { summary: '' },
             },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'rectangle'],
-            },
+            options: ['normal', 'rectangle'],
         },
     },
     decorators: [
