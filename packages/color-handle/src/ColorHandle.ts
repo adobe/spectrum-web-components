@@ -31,18 +31,34 @@ export class ColorHandle extends SpectrumElement {
         return [opacityCheckerboardStyles, styles];
     }
 
+    /**
+     * Indicates whether the handle is disabled.
+     */
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
+    /**
+     * Indicates whether the handle is focused.
+     */
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    /**
+     * Indicates whether the handle is open.
+     */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    /**
+     * The color value of the handle.
+     */
     @property({ type: String })
     public color = 'rgba(255, 0, 0, 0.5)';
 
+    /**
+     * Handles the pointerdown event for the color handle.
+     * Activates the color loupe if the pointer type is touch.
+     */
     private handlePointerdown(event: PointerEvent): void {
         if (event.pointerType === 'touch') {
             this.open = true;
@@ -50,11 +66,19 @@ export class ColorHandle extends SpectrumElement {
         this.setPointerCapture(event.pointerId);
     }
 
+    /**
+     * Handles the pointerup event for the color handle.
+     * Deactivates the color loupe.
+     */
     private handlePointerup(event: PointerEvent): void {
         this.open = false;
         this.releasePointerCapture(event.pointerId);
     }
 
+    /**
+     * Renders the color handle.
+     * Includes the inner div with the background color and the color loupe.
+     */
     protected override render(): TemplateResult {
         return html`
             <div class="inner" style="background-color: ${this.color}"></div>
@@ -65,6 +89,10 @@ export class ColorHandle extends SpectrumElement {
         `;
     }
 
+    /**
+     * Called when the element is first updated.
+     * Adds event listeners for pointerdown, pointerup, and pointercancel events.
+     */
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.addEventListener('pointerdown', this.handlePointerdown);

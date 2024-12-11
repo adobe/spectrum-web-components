@@ -27,6 +27,9 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
+/**
+ * Interface for a checkbox element.
+ */
 export interface CheckboxElement {
     checked: boolean;
     handleChange(): void;
@@ -35,22 +38,43 @@ export interface CheckboxElement {
     readonly?: boolean;
 }
 
+/**
+ * A mixin function to add checkbox functionality to a class.
+ * @param constructor - The base class to extend.
+ */
 export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<CheckboxElement> {
     class MixedElement extends constructor {
+        /**
+         * Indicates whether the checkbox is checked.
+         */
         @property({ type: Boolean, reflect: true })
         public checked = false;
 
+        /**
+         * The name of the checkbox.
+         */
         @property({ type: String, reflect: true })
         public name: string | undefined;
 
+        /**
+         * Indicates whether the checkbox is readonly.
+         */
         @property({ type: Boolean, reflect: true })
         public readonly = false;
 
+        /**
+         * The input element of the checkbox.
+         */
         @query('#input')
         inputElement!: HTMLInputElement;
 
+        /**
+         * Handles the change event for the checkbox.
+         *
+         * @event change - Dispatched when the checkbox is changed.
+         */
         public handleChange(): void {
             if (this.readonly) {
                 this.inputElement.checked = this.checked;

@@ -65,12 +65,23 @@ export class Card extends LikeAnchor(
         return [headingStyles, detailStyles, cardStyles];
     }
 
+    /**
+     * The type of asset represented by the card.
+     * Can be 'file' or 'folder'.
+     */
     @property()
     public asset?: 'file' | 'folder';
 
+    /**
+     * The variant of the card.
+     * Can be 'standard', 'gallery', or 'quiet'.
+     */
     @property({ reflect: true })
     public variant: 'standard' | 'gallery' | 'quiet' = 'standard';
 
+    /**
+     * Indicates whether the card is selected.
+     */
     @property({ type: Boolean, reflect: true })
     get selected(): boolean {
         return this._selected;
@@ -83,31 +94,55 @@ export class Card extends LikeAnchor(
 
     private _selected = false;
 
+    /**
+     * The heading of the card.
+     */
     @property()
     public heading = '';
 
+    /**
+     * Indicates whether the card is displayed horizontally.
+     */
     @property({ type: Boolean, reflect: true })
     public horizontal = false;
 
     @query('#like-anchor')
     private likeAnchor?: HTMLAnchorElement;
 
+    /**
+     * Indicates whether the card is focused.
+     */
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    /**
+     * Indicates whether the card toggles its selected state when clicked.
+     */
     @property({ type: Boolean, reflect: true })
     public toggles = false;
 
+    /**
+     * The value associated with the card.
+     */
     @property()
     public value = '';
 
+    /**
+     * The subheading of the card.
+     */
     @property()
     public subheading = '';
 
+    /**
+     * Checks if the card has a cover photo.
+     */
     protected get hasCoverPhoto(): boolean {
         return this.getSlotContentPresence('[slot="cover-photo"]');
     }
 
+    /**
+     * Checks if the card has a preview image.
+     */
     protected get hasPreview(): boolean {
         return this.getSlotContentPresence('[slot="preview"]');
     }
@@ -116,6 +151,10 @@ export class Card extends LikeAnchor(
         this.likeAnchor?.click();
     }
 
+    /**
+     * Handles the focusin event for the card.
+     * Adds the keydown event listener if the target is the card itself.
+     */
     private handleFocusin = (event: Event): void => {
         this.focused = true;
         const target = event.composedPath()[0];
@@ -126,6 +165,10 @@ export class Card extends LikeAnchor(
         this.addEventListener('keydown', this.handleKeydown);
     };
 
+    /**
+     * Handles the focusout event for the card.
+     * Removes the keydown event listener if the target is the card itself.
+     */
     private handleFocusout(event: Event): void {
         this.focused = false;
         const target = event.composedPath()[0];
@@ -134,6 +177,11 @@ export class Card extends LikeAnchor(
         }
     }
 
+    /**
+     * Handles the keydown event for the card.
+     * Toggles the selected state when the Space key is pressed.
+     * Clicks the card when the Enter or NumpadEnter key is pressed.
+     */
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
         switch (code) {
@@ -149,12 +197,20 @@ export class Card extends LikeAnchor(
         }
     }
 
+    /**
+     * Handles the change event for the selected state.
+     * Updates the selected state and announces the change.
+     */
     private handleSelectedChange(event: Event & { target: Checkbox }): void {
         event.stopPropagation();
         this.selected = event.target.checked;
         this.announceChange();
     }
 
+    /**
+     * Toggles the selected state of the card.
+     * Announces the change in the selected state.
+     */
     public toggleSelected(): void {
         if (!this.toggles) {
             this.dispatchEvent(
@@ -169,6 +225,9 @@ export class Card extends LikeAnchor(
         this.announceChange();
     }
 
+    /**
+     * Announces a change in the selected state of the card.
+     */
     private announceChange(): void {
         const applyDefault = this.dispatchEvent(
             new Event('change', {
@@ -182,12 +241,19 @@ export class Card extends LikeAnchor(
         }
     }
 
+    /**
+     * Stops the propagation of the event if the card has an href attribute.
+     */
     private stopPropagationOnHref(event: Event): void {
         if (this.href) {
             event.stopPropagation();
         }
     }
 
+    /**
+     * Handles the pointerdown event for the card.
+     * Clicks the card if the pointer is released within 200ms.
+     */
     private handlePointerdown(event: Event): void {
         const path = event.composedPath();
         const hasAnchor = path.some(
@@ -207,6 +273,9 @@ export class Card extends LikeAnchor(
         this.addEventListener('pointercancel', handleEnd);
     }
 
+    /**
+     * Renders the heading of the card.
+     */
     protected get renderHeading(): TemplateResult {
         return html`
             <div
@@ -218,6 +287,9 @@ export class Card extends LikeAnchor(
         `;
     }
 
+    /**
+     * Renders the preview image of the card.
+     */
     protected get renderPreviewImage(): TemplateResult {
         return html`
             <sp-asset id="preview" variant=${ifDefined(this.asset)}>
@@ -231,6 +303,9 @@ export class Card extends LikeAnchor(
         `;
     }
 
+    /**
+     * Renders the cover image of the card.
+     */
     protected get renderCoverImage(): TemplateResult {
         return html`
             <sp-asset id="cover-photo" variant=${ifDefined(this.asset)}>
@@ -244,6 +319,9 @@ export class Card extends LikeAnchor(
         `;
     }
 
+    /**
+     * Retrieves the images to be rendered inside the card.
+     */
     protected get images(): TemplateResult[] {
         const images: TemplateResult[] = [];
         if (this.hasPreview) images.push(this.renderPreviewImage);
@@ -251,6 +329,9 @@ export class Card extends LikeAnchor(
         return images;
     }
 
+    /**
+     * Renders the image of the card.
+     */
     private renderImage(): TemplateResult[] {
         if (this.horizontal) {
             return this.images;
@@ -261,6 +342,9 @@ export class Card extends LikeAnchor(
         return this.images;
     }
 
+    /**
+     * Renders the subtitle and description of the card.
+     */
     private get renderSubtitleAndDescription(): TemplateResult {
         return html`
             <div class="subtitle spectrum-Detail spectrum-Detail--sizeS">
@@ -270,6 +354,9 @@ export class Card extends LikeAnchor(
         `;
     }
 
+    /**
+     * Renders the card.
+     */
     protected override render(): TemplateResult {
         return html`
             ${this.renderImage()}
@@ -337,6 +424,10 @@ export class Card extends LikeAnchor(
         `;
     }
 
+    /**
+     * Called when the element is first updated.
+     * Adds event listeners for pointerdown, focusin, and focusout events.
+     */
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('pointerdown', this.handlePointerdown);

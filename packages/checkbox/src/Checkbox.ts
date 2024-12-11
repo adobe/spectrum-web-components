@@ -35,6 +35,9 @@ import checkmarkSmallOverrides from '@spectrum-web-components/icon/src/icon-chec
 import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
 import dashSmallOverrides from '@spectrum-web-components/icon/src/icon-dash-overrides.css.js';
 
+/**
+ * Checkmark icons for different sizes.
+ */
 const checkmarkIcon = {
     s: () => {
         return html`
@@ -70,6 +73,9 @@ const checkmarkIcon = {
     },
 };
 
+/**
+ * Dash icons for different sizes.
+ */
 const dashIcon = {
     s: () => {
         return html`
@@ -118,21 +124,43 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
         delegatesFocus: true,
     };
 
+    public static override get styles(): CSSResultArray {
+        return [
+            checkboxStyles,
+            checkmarkSmallStyles,
+            dashSmallStyles,
+            checkmarkSmallOverrides,
+            dashSmallOverrides,
+        ];
+    }
+
     /**
-     * Disable this control. It will not receive focus or events
+     * Disable this control. It will not receive focus or events.
      */
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
+    /**
+     * Indicates whether the checkbox is in an indeterminate state.
+     */
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;
 
+    /**
+     * Indicates whether the checkbox is in an invalid state.
+     */
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
+    /**
+     * Indicates whether the checkbox is emphasized.
+     */
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    /**
+     * The tabindex of the checkbox.
+     */
     @property({ reflect: true, type: Number, attribute: 'tabindex' })
     public override tabIndex = 0;
 
@@ -143,16 +171,6 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
                 this.focus();
             });
         }
-    }
-
-    public static override get styles(): CSSResultArray {
-        return [
-            checkboxStyles,
-            checkmarkSmallStyles,
-            dashSmallStyles,
-            checkmarkSmallOverrides,
-            dashSmallOverrides,
-        ];
     }
 
     public override click(): void {
@@ -168,6 +186,10 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
         super.handleChange();
     }
 
+    /**
+     * Renders the checkbox element.
+     * Includes the checkbox input, checkmark or dash icon, and label.
+     */
     protected override render(): TemplateResult {
         return html`
             ${super.render()}
@@ -183,6 +205,10 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
         `;
     }
 
+    /**
+     * Updates the checkbox element when properties change.
+     * Handles changes to disabled, indeterminate, and invalid properties.
+     */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (

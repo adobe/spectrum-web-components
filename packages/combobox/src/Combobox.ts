@@ -51,7 +51,7 @@ export type ComboboxOption = {
 /**
  * @element sp-combobox
  * @slot - Supply Menu Item elements to the default slot in order to populate the available options
- * @slot tooltip - Tooltip to to be applied to the the Picker Button
+ * @slot tooltip - Tooltip to be applied to the Picker Button
  */
 export class Combobox extends Textfield {
     public static override get styles(): CSSResultArray {
@@ -64,9 +64,16 @@ export class Combobox extends Textfield {
     @state()
     private activeDescendant?: ComboboxOption | MenuItem;
 
+    /**
+     * The autocomplete behavior for the combobox.
+     * Can be 'list' or 'none'.
+     */
     @property({ type: String })
     public override autocomplete: 'list' | 'none' = 'none';
 
+    /**
+     * The list of available options in the combobox.
+     */
     @state()
     private availableOptions: (ComboboxOption | MenuItem)[] = [];
 
@@ -76,24 +83,19 @@ export class Combobox extends Textfield {
     @property({ type: Boolean, reflect: true })
     public open = false;
 
-    /** Whether the items are currently loading. */
+    /**
+     * Whether the items are currently loading.
+     */
     @property({ type: Boolean, reflect: true })
     public pending = false;
 
-    /** Defines a string value that labels the Combobox while it is in pending state. */
+    /**
+     * Defines a string value that labels the Combobox while it is in pending state.
+     */
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
 
     public pendingStateController: PendingStateController<this>;
-
-    /**
-     * Initializes the `PendingStateController` for the Combobox component.
-     * When the pending state changes to `true`, the `open` property of the Combobox is set to `false`.
-     */
-    constructor() {
-        super();
-        this.pendingStateController = new PendingStateController(this);
-    }
 
     @query('slot:not([name])')
     private optionSlot!: HTMLSlotElement;
@@ -104,10 +106,13 @@ export class Combobox extends Textfield {
     @query('#input')
     private input!: HTMLInputElement;
 
+    /**
+     * The value of the selected item.
+     */
     private itemValue = '';
 
     /**
-     * An array of options to present in the Menu provided while typing into the input
+     * An array of options to present in the Menu provided while typing into the input.
      */
     @property({ type: Array })
     public options?: ComboboxOption[];
@@ -120,6 +125,15 @@ export class Combobox extends Textfield {
 
     private tooltipEl?: Tooltip;
 
+    /**
+     * Initializes the `PendingStateController` for the Combobox component.
+     * When the pending state changes to `true`, the `open` property of the Combobox is set to `false`.
+     */
+    constructor() {
+        super();
+        this.pendingStateController = new PendingStateController(this);
+    }
+
     public override focus(): void {
         this.focusElement.focus();
     }
@@ -129,6 +143,9 @@ export class Combobox extends Textfield {
         this.focusElement.click();
     }
 
+    /**
+     * Scrolls to the active descendant element in the combobox.
+     */
     private scrollToActiveDescendant(): void {
         if (!this.activeDescendant) {
             return;
@@ -141,6 +158,10 @@ export class Combobox extends Textfield {
         }
     }
 
+    /**
+     * Handles the keydown event for the combobox.
+     * Manages the combobox behavior based on the key pressed.
+     */
     public handleComboboxKeydown(event: KeyboardEvent): void {
         if (this.readonly || this.pending) {
             return;
@@ -195,6 +216,10 @@ export class Combobox extends Textfield {
         });
     }
 
+    /**
+     * Handles the slotchange event for the tooltip slot.
+     * Sets the tooltip element based on the assigned elements.
+     */
     protected handleTooltipSlotchange(
         event: Event & { target: HTMLSlotElement }
     ): void {
@@ -203,6 +228,9 @@ export class Combobox extends Textfield {
             | undefined;
     }
 
+    /**
+     * Sets the options for the combobox from the slotted items.
+     */
     public setOptionsFromSlottedItems(): void {
         const elements = this.optionSlot.assignedElements({
             flatten: true,
@@ -211,6 +239,9 @@ export class Combobox extends Textfield {
         this.optionEls = elements;
     }
 
+    /**
+     * Activates the next descendant element in the combobox.
+     */
     public activateNextDescendant(): void {
         const activeIndex = !this.activeDescendant
             ? -1
@@ -221,6 +252,9 @@ export class Combobox extends Textfield {
         this.activeDescendant = this.availableOptions[nextActiveIndex];
     }
 
+    /**
+     * Activates the previous descendant element in the combobox.
+     */
     public activatePreviousDescendant(): void {
         const activeIndex = !this.activeDescendant
             ? 0
@@ -231,6 +265,9 @@ export class Combobox extends Textfield {
         this.activeDescendant = this.availableOptions[previousActiveIndex];
     }
 
+    /**
+     * Selects the active descendant element in the combobox.
+     */
     public selectDescendant(): void {
         if (!this.activeDescendant) {
             return;
@@ -244,6 +281,9 @@ export class Combobox extends Textfield {
         }
     }
 
+    /**
+     * Filters the available options based on the current input value.
+     */
     public filterAvailableOptions(): void {
         if (this.autocomplete === 'none' || this.pending) {
             return;
@@ -257,6 +297,10 @@ export class Combobox extends Textfield {
         );
     }
 
+    /**
+     * Handles the input event for the combobox.
+     * Updates the active descendant and opens the combobox.
+     */
     public override handleInput(event: Event): void {
         super.handleInput(event);
         if (!this.pending) {
@@ -265,6 +309,10 @@ export class Combobox extends Textfield {
         }
     }
 
+    /**
+     * Handles the menu change event for the combobox.
+     * Updates the value based on the selected item and closes the combobox.
+     */
     protected handleMenuChange(event: PointerEvent & { target: Menu }): void {
         const { target } = event;
         const value = target.selected[0];
@@ -278,15 +326,26 @@ export class Combobox extends Textfield {
         this.focus();
     }
 
+    /**
+     * Handles the closed event for the combobox.
+     * Sets the open and overlayOpen properties to false.
+     */
     public handleClosed(): void {
         this.open = false;
         this.overlayOpen = false;
     }
 
+    /**
+     * Handles the opened event for the combobox.
+     */
     public handleOpened(): void {
         // Do stuff here?
     }
 
+    /**
+     * Toggles the open state of the combobox.
+     * Opens the combobox if it is closed and vice versa.
+     */
     public toggleOpen(): void {
         if (this.readonly || this.pending) {
             this.open = false;
@@ -296,6 +355,10 @@ export class Combobox extends Textfield {
         this.inputElement.focus();
     }
 
+    /**
+     * Determines whether the component should update based on the changed properties.
+     * Handles changes to the `open` and `value` properties.
+     */
     protected override shouldUpdate(
         changed: PropertyValues<this & { optionEls: MenuItem[] }>
     ): boolean {
@@ -316,6 +379,10 @@ export class Combobox extends Textfield {
         return super.shouldUpdate(changed);
     }
 
+    /**
+     * Handles the blur event for the combobox.
+     * Closes the combobox if the focus is lost.
+     */
     protected override onBlur(event: FocusEvent): void {
         if (
             event.relatedTarget &&
@@ -327,11 +394,12 @@ export class Combobox extends Textfield {
         super.onBlur(event);
     }
 
+    /**
+     * Renders the applied label for the combobox.
+     * The applied label corresponds to `<label for="...">`, which is overridden
+     * if the user adds the `label` attribute manually to `<sp-combobox>`.
+     */
     protected renderAppliedLabel(): TemplateResult {
-        /**
-         * appliedLabel corresponds to `<label for="...">`, which is overriden
-         * if user adds the `label` attribute manually to `<sp-combobox>`.
-         **/
         const appliedLabel = this.label || this.appliedLabel;
 
         return html`
@@ -367,6 +435,10 @@ export class Combobox extends Textfield {
         `;
     }
 
+    /**
+     * Renders the loader for the combobox.
+     * Includes a progress circle to indicate loading state.
+     */
     protected renderLoader(): TemplateResult {
         import(
             '@spectrum-web-components/progress-circle/sp-progress-circle.js'
@@ -381,6 +453,10 @@ export class Combobox extends Textfield {
         `;
     }
 
+    /**
+     * Renders the input field for the combobox.
+     * Includes state icons, input attributes, and event listeners.
+     */
     protected override renderField(): TemplateResult {
         return html`
             ${this.renderStateIcons()}
@@ -431,6 +507,10 @@ export class Combobox extends Textfield {
         `;
     }
 
+    /**
+     * Renders the combobox component.
+     * Includes the input field, picker button, overlay, and menu.
+     */
     protected override render(): TemplateResult {
         const width = (this.input || this).offsetWidth;
         if (this.tooltipEl) {
@@ -528,10 +608,18 @@ export class Combobox extends Textfield {
         `;
     }
 
+    /**
+     * Applies the focus element label.
+     * Sets the applied label to the provided value.
+     */
     applyFocusElementLabel = (value?: string): void => {
         this.appliedLabel = value;
     };
 
+    /**
+     * Called when the element is first updated.
+     * Adds an event listener for the focusout event.
+     */
     protected override firstUpdated(
         changed: PropertyValues<this & { optionEls: MenuItem[] }>
     ): void {
@@ -550,6 +638,10 @@ export class Combobox extends Textfield {
         return;
     };
 
+    /**
+     * Manages the list overlay for the combobox.
+     * Sets the focused state to true and focuses the combobox if it is open.
+     */
     protected async manageListOverlay(): Promise<void> {
         if (this.open) {
             this.focused = true;
@@ -557,6 +649,10 @@ export class Combobox extends Textfield {
         }
     }
 
+    /**
+     * Called when the element is updated.
+     * Manages the list overlay and handles changes to properties.
+     */
     protected override updated(
         changed: PropertyValues<
             this & { optionEls: MenuItem[]; activeDescendant: MenuItem }
@@ -591,6 +687,9 @@ export class Combobox extends Textfield {
         }
     }
 
+    /**
+     * Waits for the element and its descendants to complete updating.
+     */
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = await super.getUpdateComplete();
         const list = this.shadowRoot.querySelector(
@@ -605,6 +704,10 @@ export class Combobox extends Textfield {
         return complete;
     }
 
+    /**
+     * Called when the element is connected to the DOM.
+     * Sets up a mutation observer to monitor changes to the slotted items.
+     */
     public override connectedCallback(): void {
         super.connectedCallback();
         if (!this.itemObserver) {
@@ -614,6 +717,10 @@ export class Combobox extends Textfield {
         }
     }
 
+    /**
+     * Called when the element is disconnected from the DOM.
+     * Disconnects the mutation observer and closes the combobox.
+     */
     public override disconnectedCallback(): void {
         this.itemObserver.disconnect();
         this.open = false;

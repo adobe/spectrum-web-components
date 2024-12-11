@@ -27,6 +27,9 @@ import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-c
 import crossMediumOverrides from '@spectrum-web-components/icon/src/icon-cross-overrides.css.js';
 import type { ButtonStaticColors } from './Button.js';
 
+/**
+ * A record of cross icon templates for different sizes.
+ */
 const crossIcon: Record<string, () => TemplateResult> = {
     s: () => html`
         <sp-icon-cross200
@@ -78,9 +81,16 @@ export class CloseButton extends SizedMixin(StyledButton, {
     @property({ reflect: true })
     public variant: ButtonStaticColors | '' = '';
 
+    /**
+     * The static color variant to use for this button.
+     */
     @property({ reflect: true, attribute: 'static-color' })
     public staticColor?: 'black' | 'white';
 
+    /**
+     * Retrieves the content to be rendered inside the button.
+     * Includes the cross icon based on the button size.
+     */
     protected override get buttonContent(): TemplateResult[] {
         return [crossIcon[this.size]()];
     }

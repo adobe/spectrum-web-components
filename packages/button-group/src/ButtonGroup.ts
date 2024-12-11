@@ -33,9 +33,16 @@ export class ButtonGroup extends SizedMixin(SpectrumElement, {
         return [styles];
     }
 
+    /**
+     * When true, the button group is displayed vertically.
+     */
     @property({ type: Boolean, reflect: true })
     public vertical = false;
 
+    /**
+     * Handles the slotchange event for the button group.
+     * Updates the size of the assigned button elements.
+     */
     protected handleSlotchange({
         target: slot,
     }: Event & { target: HTMLSlotElement }): void {
@@ -45,6 +52,10 @@ export class ButtonGroup extends SizedMixin(SpectrumElement, {
         });
     }
 
+    /**
+     * Renders the button group.
+     * Includes the slot for the button elements.
+     */
     protected override render(): TemplateResult {
         return html`
             <slot @slotchange=${this.handleSlotchange}></slot>

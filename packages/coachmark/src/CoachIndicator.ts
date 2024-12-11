@@ -26,12 +26,23 @@ export class CoachIndicator extends SpectrumElement {
         return [styles];
     }
 
+    /**
+     * Indicates whether the coach indicator is in quiet mode.
+     */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
+    /**
+     * The static color variant to use for the coach indicator.
+     * Can be 'white' or 'black'.
+     */
     @property({ reflect: true, attribute: 'static-color' })
     public staticColor?: 'white' | 'black';
 
+    /**
+     * Renders the coach indicator.
+     * Includes the message and the position of the indicator.
+     */
     protected override render(): TemplateResult {
         return html`
             <div class="ring"></div>
