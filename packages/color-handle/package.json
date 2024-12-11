@@ -58,9 +58,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "1.0.1",
-        "@spectrum-web-components/color-loupe": "1.0.1",
-        "@spectrum-web-components/opacity-checkerboard": "1.0.1"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/color-loupe": "^1.0.1",
+        "@spectrum-web-components/opacity-checkerboard": "^1.0.1"
     },
     "devDependencies": {
         "@spectrum-css/colorhandle": "^9.0.0-s2-foundations.16"

@@ -1,19 +1,5 @@
 # Change Log
 
-## 0.0.0-20241209155954
-
-### Patch Changes
-
--   Updated dependencies [[`f1d24e0`](https://github.com/adobe/spectrum-web-components/commit/f1d24e095e48e804d601c97abfbb28d3a9ad1a92), [`b34b6fa`](https://github.com/adobe/spectrum-web-components/commit/b34b6faae1d77114d7dd6ce9aa6c8ba5972122b3)]:
-    -   @spectrum-web-components/button@0.0.0-20241209155954
-    -   @spectrum-web-components/asset@0.0.0-20241209155954
-    -   @spectrum-web-components/button-group@0.0.0-20241209155954
-    -   @spectrum-web-components/icon@0.0.0-20241209155954
-    -   @spectrum-web-components/icons-ui@0.0.0-20241209155954
-    -   @spectrum-web-components/base@0.0.0-20241209155954
-    -   @spectrum-web-components/reactive-controllers@0.0.0-20241209155954
-    -   @spectrum-web-components/shared@0.0.0-20241209155954
-
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

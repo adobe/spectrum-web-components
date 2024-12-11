@@ -1,17 +1,5 @@
 # Change Log
 
-## 0.0.0-20241209155954
-
-### Patch Changes
-
--   Updated dependencies []:
-    -   @spectrum-web-components/help-text@0.0.0-20241209155954
-    -   @spectrum-web-components/icon@0.0.0-20241209155954
-    -   @spectrum-web-components/icons-ui@0.0.0-20241209155954
-    -   @spectrum-web-components/icons-workflow@0.0.0-20241209155954
-    -   @spectrum-web-components/base@0.0.0-20241209155954
-    -   @spectrum-web-components/shared@0.0.0-20241209155954
-
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
