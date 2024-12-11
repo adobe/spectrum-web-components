@@ -16,6 +16,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
+
+### Bug Fixes
+
+-   **number-field:** added aria-hidden attribute for inc/dec buttons ([#4933](https://github.com/adobe/spectrum-web-components/issues/4933)) ([b16a839](https://github.com/adobe/spectrum-web-components/commit/b16a839b33cc7d02b42e012afaa6327972eb0c6b))
+
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
 ### Bug Fixes

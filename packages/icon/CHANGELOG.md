@@ -11,6 +11,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
+
+### Bug Fixes
+
+-   **toast:** adds iconLabel to address accessibility ([#4944](https://github.com/adobe/spectrum-web-components/issues/4944)) ([8121057](https://github.com/adobe/spectrum-web-components/commit/8121057518062fb000279659b9597396753e21b7))
+
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
 ### Bug Fixes
