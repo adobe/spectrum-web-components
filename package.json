@@ -49,7 +49,7 @@
         "postcustom-element-json": "node ./tasks/run-check-cem.js",
         "postdocs:analyze": "node ./scripts/add-custom-properties.js --src=\"projects/documentation/custom-elements.json\"",
         "postinstall": "patch-package && yarn get-ready",
-        "postpublish": "yarn prepublish:react && yarn publish:react && yarn postpublish:react",
+        "postpublish": "yarn publish:react",
         "postpublish:react": "git reset --hard HEAD^ && git prune && rimraf react",
         "precustom-element-json": "node tasks/remove-custom-elements-json.js",
         "preeleventy": "yarn docs:analyze",
