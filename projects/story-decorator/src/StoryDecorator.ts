@@ -48,7 +48,7 @@ const urlParams = new URLSearchParams(queryString);
 
 export let dir: 'ltr' | 'rtl' =
     (urlParams.get('sp_dir') as 'ltr' | 'rtl') || 'ltr';
-export let theme: SystemVariant =
+export const theme: SystemVariant =
     (urlParams.get('sp_theme') as SystemVariant) || 'spectrum';
 export let system: SystemVariant =
     (urlParams.get('sp_system') as SystemVariant) || 'spectrum';
@@ -57,8 +57,8 @@ export let color: Color =
     (matchMedia(DARK_MODE).matches ? 'dark' : 'light');
 export let scale: Scale = (urlParams.get('sp_scale') as Scale) || 'medium';
 export let reduceMotion = urlParams.get('sp_reduceMotion') === 'true';
-export let screenshot = urlParams.get('sp_screenshot') === 'true';
-export let locale = urlParams.get('sp_locale') || 'en-US';
+export const screenshot = urlParams.get('sp_screenshot') === 'true';
+export const locale = urlParams.get('sp_locale') || 'en-US';
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
     defaultSystemVariant: system,
@@ -70,18 +70,6 @@ window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
 };
 
 const reduceMotionProperties = css`
-    --spectrum-global-animation-duration-100: 0ms;
-    --spectrum-global-animation-duration-200: 0ms;
-    --spectrum-global-animation-duration-300: 0ms;
-    --spectrum-global-animation-duration-400: 0ms;
-    --spectrum-global-animation-duration-500: 0ms;
-    --spectrum-global-animation-duration-600: 0ms;
-    --spectrum-global-animation-duration-700: 0ms;
-    --spectrum-global-animation-duration-800: 0ms;
-    --spectrum-global-animation-duration-900: 0ms;
-    --spectrum-global-animation-duration-1000: 0ms;
-    --spectrum-global-animation-duration-2000: 0ms;
-    --spectrum-global-animation-duration-4000: 0ms;
     --spectrum-animation-duration-0: 0ms;
     --spectrum-animation-duration-100: 0ms;
     --spectrum-animation-duration-200: 0ms;

@@ -45,12 +45,12 @@ export class CssTable extends SpectrumElement {
         sp-toast {
             position: fixed;
             z-index: 300;
-            bottom: var(--spectrum-global-dimension-size-200);
+            bottom: var(--spectrum-spacing-400);
             left: 50%;
             transform: translateX(-50%);
         }
         sp-table {
-            height: var(--spectrum-global-dimension-size-4600);
+            height: calc(var(--spectrum-spacing-1000) * 5);
         }
         sp-swatch {
             pointer-events: none;
@@ -88,11 +88,11 @@ export class CssTable extends SpectrumElement {
         (
             a: {
                 customVar: string;
-                sets: Object;
+                sets: object;
             },
             b: {
                 customVar: string;
-                sets: Object;
+                sets: object;
             }
         ): number => {
             const doSortKey = sortKey;

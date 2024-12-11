@@ -69,10 +69,8 @@ textarea {
 
 :host([multiline]) textarea {
     transition:
-        box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
-            ease-in-out,
-        border-color var(--spectrum-global-animation-duration-100, 0.13s)
-            ease-in-out;
+        box-shadow var(--spectrum-animation-duration-100, 0.13s) ease-in-out,
+        border-color var(--spectrum-animation-duration-100, 0.13s) ease-in-out;
 }
 
 :host([multiline]:not([quiet])) #textfield:after {
