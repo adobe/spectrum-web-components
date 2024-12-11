@@ -5426,9 +5426,9 @@
   integrity sha512-SiRZppJsPTZm3MtQt7nRUxbUVgP5eQWgH0pcZxC+6lA3W46ww+KEt1VIYpP1sMeud16RG+2vyKj2gGtOkgdu6A==
 
 "@spectrum-css/opacitycheckerboard@^3.0.0-s2-foundations.13":
-  version "3.0.0-s2-foundations.16"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/opacitycheckerboard/-/opacitycheckerboard-3.0.0-s2-foundations.16.tgz#bc64491824fd2a15353d9b9436b6f7894b0c80d0"
-  integrity sha512-zaslZr8bqtj3ebHq7ugT4YXKWTC1lwWDPesqpns8vDH5OFLKP5iS1pg7hc3RHH7b5dA5m2DaZgKRiWhf4tXxcQ==
+  version "3.0.0-s2-foundations.15"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/opacitycheckerboard/-/opacitycheckerboard-3.0.0-s2-foundations.15.tgz#1d8024c46ba149a89066686a0f9692c35b5770bd"
+  integrity sha512-dlf84/8Wgmd4qDFd9nSrIOoLH97TvOL7qCFnlJ3+VD5qjg2g9II4mXyABmaMnf3ZWZsGNtLU8o9s2huo4DSn9Q==
 
 "@spectrum-css/picker@^9.0.0-s2-foundations.15":
   version "9.0.0-s2-foundations.15"
@@ -5561,9 +5561,9 @@
   integrity sha512-NxtdtEjt23/z3Njr+fKBDQJSZp1NfGBmF9Ec14zGY1PR1vbnstlt6Ocgp+ZWFHng+u71F/Bc6qNEPARemJlXVw==
 
 "@spectrum-css/typography@^7.0.0-s2-foundations.17":
-  version "7.0.0-s2-foundations.18"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-7.0.0-s2-foundations.18.tgz#b8e9e6b170d8e04264f1093ec04f12407e39f83c"
-  integrity sha512-le9sCd1zN0CI7uzVxVTe69X5c3KRQXJbNjv++riZfq1FlqDmTER26pdHXKDzUHLWPCaRokIpGymoI6bgHhYLJg==
+  version "7.0.0-s2-foundations.17"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-7.0.0-s2-foundations.17.tgz#661a488a3f886a0582c7198c97e496ce4ebf279b"
+  integrity sha512-gEEgUytlVdxdU0yv0RKuDrmjD8lP/Lh9ZMDSrYCNFEfRuAdVzc2LLFV/192neBGATCvfs5asvTHSl/lriCsmjg==
 
 "@spectrum-css/ui-icons-s2@npm:@spectrum-css/ui-icons@^2.0.0-s2-foundations.10":
   version "2.0.0-s2-foundations.10"
@@ -20595,9 +20595,9 @@ package-json@^8.1.0:
     semver "^7.3.7"
 
 package-manager-detector@^0.2.0:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/package-manager-detector/-/package-manager-detector-0.2.5.tgz#d72296f18f8334516531d9d2a2b088c795a21ea6"
-  integrity sha512-3dS7y28uua+UDbRCLBqltMBrbI+A5U2mI9YuxHRxIWYmLj3DwntEBmERYzIAQ4DMeuCUOBSak7dBHHoXKpOTYQ==
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/package-manager-detector/-/package-manager-detector-0.2.7.tgz#6c3e47d7794fdd513512d02e2160c24ba559e39b"
+  integrity sha512-g4+387DXDKlZzHkP+9FLt8yKj8+/3tOkPv7DVTJGGRm00RkEWgqbFstX1mXJ4M0VDYhUqsTOiISqNOJnhAu3PQ==
 
 pacote@^17.0.5:
   version "17.0.7"
