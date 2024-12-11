@@ -1,5 +1,23 @@
 # Change Log
 
+## 0.0.0-20241209155954
+
+### Patch Changes
+
+-   [#4533](https://github.com/adobe/spectrum-web-components/pull/4533) [`f1d24e0`](https://github.com/adobe/spectrum-web-components/commit/f1d24e095e48e804d601c97abfbb28d3a9ad1a92) Thanks [@blunteshwar](https://github.com/blunteshwar)! - testing
+
+-   [#4533](https://github.com/adobe/spectrum-web-components/pull/4533) [`b34b6fa`](https://github.com/adobe/spectrum-web-components/commit/b34b6faae1d77114d7dd6ce9aa6c8ba5972122b3) Thanks [@blunteshwar](https://github.com/blunteshwar)! - testing
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/clear-button@0.0.0-20241209155954
+    -   @spectrum-web-components/close-button@0.0.0-20241209155954
+    -   @spectrum-web-components/icon@0.0.0-20241209155954
+    -   @spectrum-web-components/icons-ui@0.0.0-20241209155954
+    -   @spectrum-web-components/progress-circle@0.0.0-20241209155954
+    -   @spectrum-web-components/base@0.0.0-20241209155954
+    -   @spectrum-web-components/reactive-controllers@0.0.0-20241209155954
+    -   @spectrum-web-components/shared@0.0.0-20241209155954
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
