@@ -134,7 +134,7 @@ export class Calendar extends SpectrumElement {
     }
 
     private timeZone: string = getLocalTimeZone();
-    public get today(): CalendarDate {
+    private get today(): CalendarDate {
         return today(this.timeZone);
     }
 
@@ -316,7 +316,7 @@ export class Calendar extends SpectrumElement {
             <div class="header" @focusin=${this.resetDateFocusIntent}>
                 <h2
                     class="title"
-                    aria-live="assertive"
+                    aria-live="polite"
                     aria-atomic="true"
                     data-test-id="calendar-title"
                 >
