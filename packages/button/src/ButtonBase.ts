@@ -51,18 +51,6 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     public type: 'button' | 'submit' | 'reset' = 'button';
 
     /**
-     * The name of the button.
-     */
-    @property({ type: String })
-    public name = '';
-
-    /**
-     * The value of the button.
-     */
-    @property({ type: String })
-    public value = '';
-
-    /**
      * HTML anchor element that component clicks by proxy
      */
     @query('.anchor')
