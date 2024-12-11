@@ -22,7 +22,6 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow100.js';
 
 import styles from './table-head-cell.css.js';
 import arrowStyles from '@spectrum-web-components/icon/src/spectrum-icon-arrow.css.js';
-import arrowOverrides from '@spectrum-web-components/icon/src/icon-arrow-overrides.css.js';
 
 export type SortedEventDetails = {
     sortDirection: 'asc' | 'desc';
@@ -44,7 +43,7 @@ const ariaSortValue = (sortDirection?: 'asc' | 'desc'): string => {
  */
 export class TableHeadCell extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles, arrowStyles, arrowOverrides];
+        return [styles, arrowStyles];
     }
 
     @property({ type: Boolean, reflect: true })
