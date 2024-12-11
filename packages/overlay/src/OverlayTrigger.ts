@@ -113,23 +113,25 @@ export class OverlayTrigger extends SpectrumElement {
     private handleSlotContent(
         event: Event & { target: HTMLSlotElement }
     ): void {
-        switch (event.target.name) {
-            case 'click-content':
-                this.clickContent = this.getAssignedElementsFromSlot(
-                    event.target
-                );
-                break;
-            case 'longpress-content':
-                this.longpressContent = this.getAssignedElementsFromSlot(
-                    event.target
-                );
-                break;
-            case 'hover-content':
-                this.hoverContent = this.getAssignedElementsFromSlot(
-                    event.target
-                );
-                break;
-        }
+        requestAnimationFrame(() => {
+            switch (event.target.name) {
+                case 'click-content':
+                    this.clickContent = this.getAssignedElementsFromSlot(
+                        event.target
+                    );
+                    break;
+                case 'longpress-content':
+                    this.longpressContent = this.getAssignedElementsFromSlot(
+                        event.target
+                    );
+                    break;
+                case 'hover-content':
+                    this.hoverContent = this.getAssignedElementsFromSlot(
+                        event.target
+                    );
+                    break;
+            }
+        });
     }
 
     private handleBeforetoggle(event: BeforetoggleOpenEvent): void {
