@@ -1,0 +1,11 @@
+:host,
+:root {
+    --spectrum-colorwheel-path: 'M 94 94 m -94 0 a 94 94 0 1 0 188 0 a 94 94 0 1 0 -188 0.2 M 94 94 m -74 0 a 74 74 0 1 0 148 0 a 74 74 0 1 0 -148 0';
+    --spectrum-colorwheel-path-borders: 'M 96 96 m -96 0 a 96 96 0 1 0 192 0 a 96 96 0 1 0 -192 0.2 M 96 96 m -72 0 a 72 72 0 1 0 144 0 a 72 72 0 1 0 -144 0';
+
+    --spectrum-dialog-confirm-border-radius: 6px;
+
+    --spectrum-dial-border-radius: 12px;
+
+    --spectrum-assetcard-focus-ring-border-radius: 10px;
+}
