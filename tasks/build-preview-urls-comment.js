@@ -13,34 +13,9 @@ governing permissions and limitations under the License.
 
 import slugify from '@sindresorhus/slugify';
 import crypto from 'crypto';
+import { getChangedPackages } from './get-changed-packages.js';
 
-// Duplicated from `tasks/test-changes.js` because GitHub Actions and CJS. 🤦
-const getChangedPackages = () => {
-    let command;
-    try {
-        command = execSync('yarn changeset since --base origin/main --json');
-    } catch (error) {
-        console.log(error.message);
-        console.log(error.stdout.toString());
-        return [];
-    }
-    let packageList;
-    packageList = JSON.parse(command.toString()).reduce((acc, item) => {
-        const name = item.name.replace('@spectrum-web-components/', '');
-        if (
-            // There are no benchmarks available in this directory.
-            item.location.search('projects') === -1 &&
-            // The icons-* tests are particular and long, exclude in CI.
-            !name.startsWith('icons-')
-        ) {
-            acc.push(name);
-        }
-        return acc;
-    }, []);
-    return packageList;
-};
-
-const getHash = (context) => {
+const createHash = (context) => {
     const md5 = crypto.createHash('md5');
     md5.update(context);
     return md5.digest('hex');
