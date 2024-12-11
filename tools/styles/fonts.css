@@ -41,7 +41,65 @@
     );
 }
 
+.spectrum-Heading,
+.spectrum-Heading--sizeM {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-m);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-m);
+}
+
+.spectrum-Heading--sizeXXS {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xxs);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxs);
+}
+
+.spectrum-Heading--sizeXS {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xs);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xs);
+}
+
+.spectrum-Heading--sizeS {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-s);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-s);
+}
+
+.spectrum-Heading--sizeL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-l);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-l);
+}
+
+.spectrum-Heading--sizeXL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xl);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xl);
+}
+
+.spectrum-Heading--sizeXXL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xxl);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxl);
+}
+
+.spectrum-Heading--sizeXXXL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xxxl);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxxl);
+}
+
 .spectrum-Heading {
+    --spectrum-heading-sans-serif-font-family: var(
+        --spectrum-sans-font-family-stack
+    );
+    --spectrum-heading-serif-font-family: var(
+        --spectrum-serif-font-family-stack
+    );
+    --spectrum-heading-cjk-font-family: var(--spectrum-cjk-font-family-stack);
+    --spectrum-heading-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
+    --spectrum-heading-font-color: var(--spectrum-heading-color);
+    --spectrum-heading-margin-start: calc(
+        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
+            var(--spectrum-heading-margin-top-multiplier)
+    );
+    --spectrum-heading-margin-end: calc(
+        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
+            var(--spectrum-heading-margin-bottom-multiplier)
+    );
     font-family: var(
         --mod-heading-sans-serif-font-family,
         var(--spectrum-heading-sans-serif-font-family)
@@ -570,7 +628,43 @@
     );
 }
 
+.spectrum-Body,
+.spectrum-Body--sizeM {
+    --spectrum-body-font-size: var(--spectrum-body-size-m);
+}
+
+.spectrum-Body--sizeXS {
+    --spectrum-body-font-size: var(--spectrum-body-size-xs);
+}
+
+.spectrum-Body--sizeS {
+    --spectrum-body-font-size: var(--spectrum-body-size-s);
+}
+
+.spectrum-Body--sizeL {
+    --spectrum-body-font-size: var(--spectrum-body-size-l);
+}
+
+.spectrum-Body--sizeXL {
+    --spectrum-body-font-size: var(--spectrum-body-size-xl);
+}
+
+.spectrum-Body--sizeXXL {
+    --spectrum-body-font-size: var(--spectrum-body-size-xxl);
+}
+
+.spectrum-Body--sizeXXXL {
+    --spectrum-body-font-size: var(--spectrum-body-size-xxxl);
+}
+
 .spectrum-Body {
+    --spectrum-body-sans-serif-font-family: var(
+        --spectrum-sans-font-family-stack
+    );
+    --spectrum-body-serif-font-family: var(--spectrum-serif-font-family-stack);
+    --spectrum-body-cjk-font-family: var(--spectrum-cjk-font-family-stack);
+    --spectrum-body-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
+    --spectrum-body-font-color: var(--spectrum-body-color);
     font-family: var(
         --mod-body-sans-serif-font-family,
         var(--spectrum-body-sans-serif-font-family)
@@ -589,10 +683,7 @@
         var(--mod-body-font-color, var(--spectrum-body-font-color))
     );
     line-height: var(--mod-body-line-height, var(--spectrum-body-line-height));
-    margin-block-start: var(
-        --mod-body-margin-start,
-        var(--mod-body-margin, var(--spectrum-body-margin-start, 0))
-    );
+    margin-block-start: var(--mod-body-margin-start, var(--mod-body-margin, 0));
     margin-block-end: var(
         --mod-body-margin-end,
         var(--mod-body-margin, var(--spectrum-body-margin-end, 0))
@@ -764,7 +855,40 @@
     );
 }
 
+.spectrum-Detail,
+.spectrum-Detail--sizeM {
+    --spectrum-detail-font-size: var(--spectrum-detail-size-m);
+}
+
+.spectrum-Detail--sizeS {
+    --spectrum-detail-font-size: var(--spectrum-detail-size-s);
+}
+
+.spectrum-Detail--sizeL {
+    --spectrum-detail-font-size: var(--spectrum-detail-size-l);
+}
+
+.spectrum-Detail--sizeXL {
+    --spectrum-detail-font-size: var(--spectrum-detail-size-xl);
+}
+
 .spectrum-Detail {
+    --spectrum-detail-sans-serif-font-family: var(
+        --spectrum-sans-font-family-stack
+    );
+    --spectrum-detail-serif-font-family: var(
+        --spectrum-serif-font-family-stack
+    );
+    --spectrum-detail-cjk-font-family: var(--spectrum-cjk-font-family-stack);
+    --spectrum-detail-margin-start: calc(
+        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
+            var(--spectrum-detail-margin-top-multiplier)
+    );
+    --spectrum-detail-margin-end: calc(
+        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
+            var(--spectrum-detail-margin-bottom-multiplier)
+    );
+    --spectrum-detail-font-color: var(--spectrum-detail-color);
     font-family: var(
         --mod-detail-sans-serif-font-family,
         var(--spectrum-detail-sans-serif-font-family)
@@ -1120,7 +1244,31 @@
     );
 }
 
+.spectrum-Code,
+.spectrum-Code--sizeM {
+    --spectrum-code-font-size: var(--spectrum-code-size-m);
+}
+
+.spectrum-Code--sizeXS {
+    --spectrum-code-font-size: var(--spectrum-code-size-xs);
+}
+
+.spectrum-Code--sizeS {
+    --spectrum-code-font-size: var(--spectrum-code-size-s);
+}
+
+.spectrum-Code--sizeL {
+    --spectrum-code-font-size: var(--spectrum-code-size-l);
+}
+
+.spectrum-Code--sizeXL {
+    --spectrum-code-font-size: var(--spectrum-code-size-xl);
+}
+
 .spectrum-Code {
+    --spectrum-code-font-family: var(--spectrum-code-font-family-stack);
+    --spectrum-code-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
+    --spectrum-code-font-color: var(--spectrum-code-color);
     font-family: var(--mod-code-font-family, var(--spectrum-code-font-family));
     font-style: var(--mod-code-font-style, var(--spectrum-code-font-style));
     font-weight: var(--mod-code-font-weight, var(--spectrum-code-font-weight));
@@ -1130,14 +1278,8 @@
         --highcontrast-code-font-color,
         var(--mod-code-font-color, var(--spectrum-code-font-color))
     );
-    margin-block-start: var(
-        --mod-code-margin-start,
-        var(--spectrum-code-margin-end, 0)
-    );
-    margin-block-end: var(
-        --mod-code-margin-end,
-        var(--spectrum-code-margin-end, 0)
-    );
+    margin-block-start: var(--mod-code-margin-start, 0);
+    margin-block-end: var(--mod-code-margin-end, 0);
 }
 
 .spectrum-Code .spectrum-Code-strong,
