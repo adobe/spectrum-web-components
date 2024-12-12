@@ -105,7 +105,7 @@ The project will be linted on a pre-commit hook, but you can also run the lint s
 
 Mismatched versions within this project can cause significant issues for downstream customers. This is particularly an issue for dependencies below `1.0.0`. By default, Changesets bumps the version number of internal dependencies when packages are published, but only if that package is pointing to the latest release. If versions should get out-of-sync, you can use the `yarn lint:versions` tool to validate and correct any mismatched dependencies in the project.
 
-A good rule of thumb is to use the semantic caret `^` prefix for all your dependencies to pull in the latest features and patches for a package (but not breaking changes).
+A good rule of thumb is to use the semantic caret `^` prefix, eg. `^0.0.0`, for all your dependencies to pull in the latest features and patches for a package (but not breaking changes).
 
 `yarn list:versions --fix` will reach into the `package.json` files and update all dependencies to the latest version available in the library, _a possibly dangerous operation_. If you know this is what you want to do when there are mismatched versions found by `yarn lint:versions`, this can make greatly shorten the amount of work to catch the versions up to each other.
 
