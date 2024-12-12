@@ -6,12 +6,21 @@
         "es6": true
     },
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "notice", "@spectrum-web-components"],
+    "plugins": [
+        "@typescript-eslint",
+        "notice",
+        "@spectrum-web-components",
+        "@stylistic",
+        "jsdoc",
+        "lit-a11y"
+    ],
     "extends": [
         "plugin:@typescript-eslint/recommended",
         "prettier",
-        "plugin:lit-a11y/recommended"
+        "plugin:lit-a11y/recommended",
+        "plugin:jsdoc/recommended-typescript"
     ],
+    "ignorePatterns": ["packages/**/*.css.ts"],
     "rules": {
         "no-debugger": 2,
         "no-console": [
@@ -20,6 +29,14 @@
                 "allow": ["warn", "error"]
             }
         ],
+        "jsdoc/check-tag-names": [
+            "warn",
+            {
+                "definedTags": ["element", "slot"]
+            }
+        ],
+        "jsdoc/require-param": 0,
+        "jsdoc/require-returns": 0,
         "@spectrum-web-components/prevent-argument-names": [
             "error",
             ["e", "ev", "evt", "err"]
@@ -66,6 +83,20 @@
             "error",
             {
                 "argsIgnorePattern": "^_"
+            }
+        ],
+        "@stylistic/padding-line-between-statements": [
+            "error",
+            { "blankLine": "always", "prev": "*", "next": ["return", "if"] },
+            {
+                "blankLine": "always",
+                "prev": ["const", "let", "var", "if"],
+                "next": "*"
+            },
+            {
+                "blankLine": "any",
+                "prev": ["const", "let", "var"],
+                "next": ["const", "let", "var"]
             }
         ]
     },

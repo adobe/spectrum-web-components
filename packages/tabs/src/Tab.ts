@@ -30,7 +30,6 @@ import tabItemStyles from './tab.css.js';
  * @element sp-tab
  *
  * This component represents a single tab within a tab list.
- *
  * @slot - text label of the Tab
  * @slot icon - The icon that appears on the left of the label
  */
@@ -135,6 +134,7 @@ export class Tab extends FocusVisiblePolyfillMixin(
      */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (changes.has('selected')) {
             this.setAttribute(
                 'aria-selected',
@@ -142,6 +142,7 @@ export class Tab extends FocusVisiblePolyfillMixin(
             );
             this.setAttribute('tabindex', this.selected ? '0' : '-1');
         }
+
         if (changes.has('disabled')) {
             if (this.disabled) {
                 this.setAttribute('aria-disabled', 'true');

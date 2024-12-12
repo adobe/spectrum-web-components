@@ -134,6 +134,7 @@ export class SearchComponent extends LitElement {
         const { value } = this.searchField;
         if (value.length < 3 || !this.searchField.focused) {
             this.closePopover();
+
             return false;
         }
 

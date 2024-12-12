@@ -31,9 +31,13 @@ export interface Item extends TableItem {
     date: number;
 }
 
+/**
+ *
+ */
 export function makeItems(count: number): Item[] {
     const total = count;
     const items: Item[] = [];
+
     while (count) {
         count--;
         items.push({
@@ -41,6 +45,7 @@ export function makeItems(count: number): Item[] {
             date: count,
         });
     }
+
     return items;
 }
 
@@ -50,6 +55,7 @@ export const renderItem = (item: Item, index: number): TemplateResult => {
             <sp-table-cell>This row has no checkbox!</sp-table-cell>
         `;
     }
+
     return html`
         <sp-table-cell>Row Item ${item.name}</sp-table-cell>
         <sp-table-cell>Row Item ${item.date}</sp-table-cell>

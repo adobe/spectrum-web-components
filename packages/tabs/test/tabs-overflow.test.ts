@@ -89,6 +89,7 @@ const renderTabsOverflow = async ({
             </div>
         </sp-theme>
     `);
+
     await elementUpdated(theme);
     const tabsContainer = theme.querySelector('.container') as HTMLDivElement;
 
@@ -126,10 +127,12 @@ describe('TabsOverflow', () => {
         const rightButton = spTabsOverflows.shadowRoot.querySelector(
             '.right-scroll'
         ) as ActionButton;
+
         expect(rightButton).to.exist;
         const leftButton = spTabsOverflows.shadowRoot.querySelector(
             '.left-scroll'
         ) as ActionButton;
+
         expect(leftButton).to.exist;
     });
 
@@ -153,6 +156,7 @@ describe('TabsOverflow', () => {
             size: ElementSizes.L,
             includeTabPanel: true,
         });
+
         await elementUpdated(el);
 
         const spTabsOverflows: TabsOverflow = el.querySelector(
@@ -170,6 +174,7 @@ describe('TabsOverflow', () => {
 
         const tabsEl = spTabsOverflows.querySelector('sp-tab') as Tab;
         const initialLeft = tabsEl.getBoundingClientRect().left;
+
         rightButton.dispatchEvent(new Event('click', {}));
         await elementUpdated(el);
         rightButton.dispatchEvent(new Event('click', {}));
@@ -177,6 +182,7 @@ describe('TabsOverflow', () => {
         rightButton.dispatchEvent(new Event('click', {}));
         await elementUpdated(el);
         const finalLeft = tabsEl.getBoundingClientRect().left;
+
         expect(finalLeft).to.be.lessThanOrEqual(initialLeft);
     });
 
@@ -195,6 +201,7 @@ describe('TabsOverflow', () => {
             includeTabPanel: true,
             dir: 'ltr',
         });
+
         await elementUpdated(el);
         await setViewport({ width: 360, height: 640 });
         await nextFrame();
@@ -232,6 +239,7 @@ describe('TabsOverflow', () => {
             includeTabPanel: true,
             dir: 'rtl',
         });
+
         await elementUpdated(el);
         await setViewport({ width: 360, height: 640 });
         await nextFrame();
@@ -264,6 +272,7 @@ describe('TabsOverflow', () => {
         await elementUpdated(el);
         const slot = el.shadowRoot.querySelector('slot');
         const slotContent = slot?.assignedElements() || '';
+
         expect(slotContent[0].toString()).to.not.contains('Tabs');
     });
 
@@ -274,6 +283,7 @@ describe('TabsOverflow', () => {
             includeTabPanel: false,
             selected: 10,
         });
+
         await elementUpdated(el);
 
         // Grab the list of tabs.
@@ -283,6 +293,7 @@ describe('TabsOverflow', () => {
         let selectedTab = tabsEl.querySelector(
             `[role="tab"][value="10"]`
         ) as Tab;
+
         expect(selectedTab).to.exist;
         let selectedTabPosition = selectedTab.getBoundingClientRect();
 
@@ -293,6 +304,7 @@ describe('TabsOverflow', () => {
         // First tab is not in the viewport anymore, its offset left is less than 0.
         const firstTab = tabsEl.querySelector(`[role="tab"][value="1"]`) as Tab;
         const firstTabPosition = firstTab.getBoundingClientRect();
+
         expect(firstTabPosition.left).to.be.lessThan(0);
 
         // Make the component automatically scroll left by selecting the first tab.
@@ -313,6 +325,7 @@ describe('TabsOverflow', () => {
         ) as Tab;
         const previousSelectionPosition =
             previousSelection.getBoundingClientRect();
+
         expect(previousSelectionPosition.left).to.be.greaterThan(
             tabsEl.offsetWidth
         );
@@ -324,6 +337,7 @@ describe('TabsOverflow', () => {
             size: ElementSizes.M,
             includeTabPanel: true,
         });
+
         await elementUpdated(el);
 
         const spTabsOverflows: TabsOverflow = el.querySelector(
@@ -375,6 +389,7 @@ describe('TabsOverflow', () => {
                 </sp-tabs-overflow>
             </div>
         `);
+
         await elementUpdated(tabsContainer);
         const el = tabsContainer;
 
@@ -448,6 +463,9 @@ describe('calculateScrollTargetForLeftSide', () => {
     });
 });
 
+/**
+ *
+ */
 async function repeatScroll(
     options: {
         times: number;
@@ -463,6 +481,7 @@ async function repeatScroll(
         elementToScroll,
         distanceToReachInIteration,
     } = options;
+
     if (iteration > times) return;
 
     const distanceToReach = distanceToReachInIteration(iteration);
@@ -476,9 +495,13 @@ async function repeatScroll(
             0,
         `scroll to ${distanceToReach}`
     );
+
     return await repeatScroll(options, iteration + 1);
 }
 
+/**
+ *
+ */
 async function scrollToEnd(
     tabsContainer: HTMLDivElement,
     buttonSelector: string,
@@ -516,6 +539,7 @@ async function scrollToEnd(
     }
 
     button.focus();
+
     return await repeatScroll({
         times: scrollsToEnd,
         elementToUpdate: tabsOverflow,
@@ -524,6 +548,9 @@ async function scrollToEnd(
     });
 }
 
+/**
+ *
+ */
 function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }

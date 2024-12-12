@@ -34,6 +34,7 @@ const ariaSortValue = (sortDirection?: 'asc' | 'desc'): string => {
         asc: 'ascending',
         desc: 'descending',
     };
+
     return values[sortDirection as 'asc' | 'desc'] || 'none';
 };
 
@@ -41,7 +42,6 @@ const ariaSortValue = (sortDirection?: 'asc' | 'desc'): string => {
  * @element sp-table-head-cell
  *
  * This component represents a table cell in the table head row.
- *
  * @fires sorted - Announces that the table head has been sorted and handles the sorted event
  */
 export class TableHeadCell extends SpectrumElement {

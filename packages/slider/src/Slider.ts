@@ -43,7 +43,6 @@ export const variants = ['filled', 'ramp', 'range', 'tick'];
 
 /**
  * @element sp-slider
- *
  * @slot - text label for the Slider
  * @slot handle - optionally accepts two or more sp-slider-handle elements
  */
@@ -69,13 +68,17 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
 
     public set editable(editable: boolean) {
         if (editable === this.editable) return;
+
         const oldValue = this.editable;
+
         this._editable = this.handleController.size < 2 ? editable : false;
+
         if (this.editable) {
             this._numberFieldInput = import(
                 '@spectrum-web-components/number-field/sp-number-field.js'
             );
         }
+
         if (oldValue !== this.editable) {
             this.requestUpdate('editable', oldValue);
         }
@@ -98,9 +101,11 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     @property({ type: String })
     public set variant(variant: string) {
         const oldVariant = this.variant;
+
         if (variant === this.variant) {
             return;
         }
+
         if (variants.includes(variant) && this.fillStart === undefined) {
             this._variant = variant;
             this.setAttribute('variant', variant);
@@ -108,6 +113,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             this._variant = '';
             this.removeAttribute('variant');
         }
+
         this.requestUpdate('variant', oldVariant);
     }
 
@@ -131,8 +137,10 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         values
     ) => {
         const valueArray = [...values.values()];
+
         if (valueArray.length === 2)
             return `${valueArray[0]} - ${valueArray[1]}`;
+
         return valueArray.join(', ');
     };
 
@@ -140,6 +148,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         if (!this.getAriaValueText) {
             return `${this.value}${this._forcedUnit}`;
         }
+
         return this.getAriaValueText(this.handleController.formattedValues);
     }
 
@@ -240,9 +249,11 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
 
     public override update(changedProperties: Map<string, boolean>): void {
         this.handleController.hostUpdate();
+
         if (changedProperties.has('disabled') && this.disabled) {
             this.handleController.cancelDrag();
         }
+
         super.update(changedProperties);
     }
 
@@ -251,6 +262,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             this.labelVisibility === 'none' || this.labelVisibility === 'value';
         const valueLabelVisible =
             this.labelVisibility === 'none' || this.labelVisibility === 'text';
+
         return html`
             <div id="label-container">
                 <sp-field-label
@@ -290,6 +302,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         if (this.variant !== 'ramp') {
             return html``;
         }
+
         return html`
             <div id="ramp">
                 <svg
@@ -310,12 +323,15 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         if (this.variant !== 'tick') {
             return html``;
         }
+
         const tickStep = this.tickStep || this.step;
         const tickCount =
             ((this.max as number) - (this.min as number)) / tickStep;
         const partialFit = tickCount % 1 !== 0;
         const ticks = new Array(Math.floor(tickCount + 1));
+
         ticks.fill(0, 0, tickCount + 1);
+
         return html`
             <div
                 class="${partialFit ? 'not-exact ' : ''}ticks"
@@ -346,6 +362,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         if (this.variant === 'ramp') {
             return html``;
         }
+
         return html`
             <div
                 class="track"
@@ -369,6 +386,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         currentValue: number
     ): number {
         const distance = Math.abs(currentValue - fillStartValue);
+
         return distance * 100;
     }
 
@@ -392,6 +410,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             [position]: `${offsetPosition}%`,
             width: `${offsetWidth}%`,
         };
+
         return styles;
     }
 
@@ -399,6 +418,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         if (this._cachedValue === undefined || this.centerPoint === undefined) {
             return html``;
         }
+
         return html`
             <div
                 class=${classMap({
@@ -413,6 +433,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         if (this.variant === 'tick') {
             return html``;
         }
+
         return html`
             ${this.handleController.render()}
         `;
@@ -496,10 +517,13 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
 
     private handleNumberInput(event: Event & { target: NumberField }): void {
         const { value } = event.target;
+
         if (event.target?.managedInput && !isNaN(value)) {
             this.value = value;
+
             return;
         }
+
         // Do not apply uncommited values to the parent element unless interacting with the stepper UI.
         // Stop uncommitted input from being announced to the parent application.
         event.stopPropagation();
@@ -507,17 +531,20 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
 
     private handleNumberChange(event: Event & { target: NumberField }): void {
         const { value } = event.target;
+
         if (isNaN(value)) {
             event.target.value = this.value;
             event.stopPropagation();
         } else {
             this.value = value;
+
             if (!event.target?.managedInput) {
                 // When stepper is not active, sythesize an `input` event so that the
                 // `change` event isn't surprising.
                 this.dispatchInputEvent();
             }
         }
+
         this.indeterminate = false;
     }
 
@@ -528,6 +555,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             '--spectrum-slider-track-background-size': `${(1 / size) * 100}%`,
             '--spectrum-slider-track-segment-position': `${start * 100}%`,
         };
+
         return styles;
     }
 
@@ -535,17 +563,21 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
 
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
+
         if (this.editable) {
             await this._numberFieldInput;
             await this.numberField.updateComplete;
         }
+
         await this.handleController.handleUpdatesComplete();
+
         return complete;
     }
 
     protected override willUpdate(changed: PropertyValues): void {
         if (changed.has('value') && changed.has('fillStart')) {
             this._cachedValue = Number(this.value);
+
             // Test if fill-start is set without a value
             if (this.getAttribute('fill-start') === '') {
                 this.centerPoint =

@@ -107,6 +107,7 @@ invalid.args = {
 
 export const tooltip = (args: StoryArgs): TemplateResult => {
     const { open, ...rest } = args;
+
     return html`
         <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
             Where do you live?
@@ -597,6 +598,7 @@ export const readonly = (args: StoryArgs): TemplateResult => {
 
 export const custom = (args: StoryArgs): TemplateResult => {
     const initialState = 'lb1-mo';
+
     return html`
         <sp-field-label for="picker-state" size=${ifDefined(args.size)}>
             What state do you live in?

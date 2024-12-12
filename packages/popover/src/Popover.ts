@@ -26,7 +26,6 @@ import popoverStyles from './popover.css.js';
 
 /**
  * @element sp-popover
- *
  * @slot - content to display within the Popover
  */
 export class Popover extends SpectrumElement {

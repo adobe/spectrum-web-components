@@ -34,6 +34,7 @@ export class Typography extends LitElement {
 
     protected override render(): TemplateResult {
         if (!this.story) return html``;
+
         return html`
             <div class="spectrum-Typography">${this.story}</div>
         `;

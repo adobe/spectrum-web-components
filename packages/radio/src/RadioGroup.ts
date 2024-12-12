@@ -23,11 +23,9 @@ import { RovingTabindexController } from '@spectrum-web-components/reactive-cont
 
 /**
  * @element sp-radio-group
- *
  * @slot - The `sp-radio` elements to display/manage in the group.
  * @slot help-text - default or non-negative help text to associate to your form element
  * @slot negative-help-text - negative help text to associate to your form element when `invalid`
- *
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
 export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
@@ -66,6 +64,7 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
         if (value === this.selected) {
             return;
         }
+
         const oldValue = this.selected;
         const radio = value
             ? (this.querySelector(`sp-radio[value="${value}"]`) as Radio)
@@ -80,10 +79,13 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
                 composed: true,
             })
         );
+
         if (!applyDefault) {
             this.selected = oldValue;
+
             return;
         }
+
         this.validateRadios();
     }
 
@@ -97,13 +99,16 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
                 'sp-radio[checked]'
             ) as Radio;
             const checkedRadioValue = checkedRadio ? checkedRadio.value : '';
+
             // Prefer the checked item over the selected value
             this.selected = checkedRadioValue || this.selected;
+
             // Validate the selected value is actual a radio option
             if (this.selected && this.selected !== checkedRadioValue) {
                 const selectedRadio = this.querySelector(
                     `sp-radio[value="${this.selected}"]`
                 ) as Radio;
+
                 if (selectedRadio) {
                     selectedRadio.checked = true;
                 }
@@ -112,6 +117,7 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
             this.shadowRoot.addEventListener('change', (event: Event) => {
                 event.stopPropagation();
                 const target = event.target as Radio;
+
                 this._setSelected(target.value);
             });
         }
@@ -123,15 +129,18 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
 
     private async validateRadios(): Promise<void> {
         let validSelection = false;
+
         if (!this.hasUpdated) {
             // Initial validation has to happen after the initial render to allow
             // the buttons to be queries from the rendered <slot> element
             await this.updateComplete;
         }
+
         this.buttons.map((button) => {
             button.checked = this.selected === button.value;
             validSelection = validSelection || button.checked;
         });
+
         if (!validSelection) {
             this.selected = '';
         }

@@ -95,6 +95,7 @@ export const makeOverBackground =
             variant === 'black'
                 ? 'rgb(181, 209, 211)'
                 : 'var(--spectrum-seafoam-900)';
+
         return html`
             <div
                 style="
@@ -110,6 +111,9 @@ export const makeOverBackground =
         `;
     };
 
+/**
+ *
+ */
 export function renderButton(properties: Properties): TemplateResult {
     return html`
         <sp-button
@@ -129,6 +133,9 @@ export function renderButton(properties: Properties): TemplateResult {
     `;
 }
 
+/**
+ *
+ */
 export function renderButtonSet(properties: Properties): TemplateResult {
     const disabled = Object.assign({}, properties, { disabled: true });
     const icon = Object.assign({}, properties, {
@@ -137,12 +144,16 @@ export function renderButtonSet(properties: Properties): TemplateResult {
             Click Me
         `,
     });
+
     return html`
         ${renderButton(properties)} ${renderButton(disabled)}
         ${renderButton(icon)}
     `;
 }
 
+/**
+ *
+ */
 export function renderIconButtonSet(properties: Properties): TemplateResult {
     const disabled = Object.assign({}, properties, {
         iconOnly: true,
@@ -154,6 +165,7 @@ export function renderIconButtonSet(properties: Properties): TemplateResult {
             <sp-icon-help slot="icon"></sp-icon-help>
         `,
     });
+
     return html`
         ${renderButton(iconOnly)} ${renderButton(disabled)}
     `;

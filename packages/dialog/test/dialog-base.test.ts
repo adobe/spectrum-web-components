@@ -30,6 +30,9 @@ import { alertDestructive } from '../stories/dialog.stories.js';
 import { Button } from '@spectrum-web-components/button/src/Button.js';
 import { DialogBase } from '@spectrum-web-components/dialog';
 
+/**
+ *
+ */
 async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {
@@ -38,6 +41,7 @@ async function styledFixture<T extends Element>(
             ${story}
         </sp-theme>
     `);
+
     return test.children[0] as T;
 }
 
@@ -59,9 +63,11 @@ describe('dialog base', () => {
                 `
             )
         );
+
         await elementUpdated(el);
 
         const dialog = el.querySelector('sp-dialog-base') as DialogBase;
+
         await elementUpdated(dialog);
         const secondaryButton = el.querySelector(
             '[variant="secondary"]'
@@ -73,6 +79,7 @@ describe('dialog base', () => {
         expect(el.open).to.be.undefined;
         expect(dialog.open).to.be.false;
         const opened = oneEvent(el, 'sp-opened');
+
         el.open = 'click';
         await opened;
 
@@ -92,6 +99,7 @@ describe('dialog base', () => {
         expect(el.open).to.be.equal('click');
 
         const closed = oneEvent(el, 'sp-closed');
+
         dialog.open = false;
         await closed;
 
@@ -107,9 +115,11 @@ describe('dialog base', () => {
                 `
             )
         );
+
         await elementUpdated(el);
 
         const dialog = el.querySelector('sp-dialog-base') as DialogBase;
+
         await elementUpdated(dialog);
         const secondaryButton = el.querySelector(
             '[variant="secondary"]'
@@ -121,6 +131,7 @@ describe('dialog base', () => {
         expect(el.open).to.be.undefined;
         expect(dialog.open).to.be.false;
         const opened = oneEvent(el, 'sp-opened');
+
         el.open = 'click';
         await opened;
 
@@ -140,6 +151,7 @@ describe('dialog base', () => {
         expect(el.open).to.be.equal('click');
 
         const closed = oneEvent(el, 'sp-closed');
+
         dialog.open = false;
         await closed;
         await elementUpdated(el);

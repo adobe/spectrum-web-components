@@ -126,11 +126,13 @@ export class ColorSlider extends Focusable {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { key } = event;
+
         this.focused = true;
         this.altered = [event.shiftKey, event.ctrlKey, event.altKey].filter(
             (key) => !!key
         ).length;
         let delta = 0;
+
         switch (key) {
             case 'ArrowUp':
                 delta = this.step;
@@ -151,6 +153,7 @@ export class ColorSlider extends Focusable {
 
         const range = 360;
         const mult = 100 / range;
+
         this.sliderHandlePosition = Math.min(
             100,
             Math.max(0, this.sliderHandlePosition + delta * mult)
@@ -210,6 +213,7 @@ export class ColorSlider extends Focusable {
         if (this._pointerDown) {
             return;
         }
+
         this.altered = 0;
         this.focused = false;
     }
@@ -220,12 +224,15 @@ export class ColorSlider extends Focusable {
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             event.preventDefault();
+
             return;
         }
+
         this._pointerDown = true;
         this.colorController.savePreviousColor();
         this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
+
         if (event.pointerType === 'mouse') {
             this.focused = true;
         }
@@ -257,11 +264,14 @@ export class ColorSlider extends Focusable {
                 cancelable: true,
             })
         );
+
         if (!applyDefault) {
             this.colorController.restorePreviousColor();
         }
+
         // Retain focus on input element after mouse up to enable keyboard interactions
         this.focus();
+
         if (event.pointerType === 'mouse') {
             this.focused = false;
         }
@@ -277,6 +287,7 @@ export class ColorSlider extends Focusable {
         if (!this.boundingClientRect) {
             return this.sliderHandlePosition;
         }
+
         const rect = this.boundingClientRect;
         const minOffset = this.vertical ? rect.top : rect.left;
         const offset = this.vertical ? event.clientY : event.clientX;
@@ -293,6 +304,7 @@ export class ColorSlider extends Focusable {
         if (event.button !== 0) {
             return;
         }
+
         event.stopPropagation();
         event.preventDefault();
         this.handle.dispatchEvent(new PointerEvent('pointerdown', event));
@@ -307,6 +319,7 @@ export class ColorSlider extends Focusable {
 
     private get getColorSliderStyle(): StyleInfo {
         const orientation = this.vertical ? 'top' : 'right';
+
         return {
             background: `linear-gradient(to ${orientation}, var(--sp-color-slider-gradient, var(--sp-color-slider-gradient-fallback)))`,
         };

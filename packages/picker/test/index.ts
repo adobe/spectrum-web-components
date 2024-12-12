@@ -72,6 +72,9 @@ const isMenuActiveElement = function (el: Picker): boolean {
     return el.shadowRoot.activeElement?.localName === 'sp-menu';
 };
 
+/**
+ *
+ */
 export function runPickerTests(): void {
     let el: Picker;
     const pickerFixture = async (): Promise<Picker> => {
@@ -94,6 +97,7 @@ export function runPickerTests(): void {
 
         return test.querySelector('sp-picker') as Picker;
     };
+
     describe('accessibility model', () => {
         it('accessible with "<sp-field-label>"', async function () {
             const test = await fixture<HTMLDivElement>(html`
@@ -192,6 +196,7 @@ export function runPickerTests(): void {
                 </div>
             `);
             const el = test.querySelector('sp-picker') as Picker;
+
             await elementUpdated(el);
             await nextFrame();
             await nextFrame();
@@ -250,6 +255,7 @@ export function runPickerTests(): void {
             await elementUpdated(el);
             expect(el.shadowRoot.activeElement).to.equal(el.button);
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
 
@@ -257,12 +263,14 @@ export function runPickerTests(): void {
             const accessibleCloseButton = el.shadowRoot.querySelector(
                 '.visually-hidden button'
             ) as HTMLButtonElement;
+
             expect(accessibleCloseButton).to.have.attribute(
                 'aria-label',
                 'Dismiss'
             );
 
             const closed = oneEvent(el, 'sp-closed');
+
             accessibleCloseButton.click();
             await closed;
 
@@ -276,6 +284,7 @@ export function runPickerTests(): void {
             await nextFrame();
             await nextFrame();
             const option2 = el.querySelector('[value="option-2"') as MenuItem;
+
             el.value = 'option-2';
             await elementUpdated(option2);
             await elementUpdated(el);
@@ -286,6 +295,7 @@ export function runPickerTests(): void {
             );
             let itemUpdated = oneEvent(el, 'sp-menu-item-added-or-updated');
             const newLabel1 = 'Invert Selection';
+
             option2.innerHTML = newLabel1;
             await itemUpdated;
             await elementUpdated(el);
@@ -293,6 +303,7 @@ export function runPickerTests(): void {
             expect((el.button.textContent || '').trim()).to.include(newLabel1);
             itemUpdated = oneEvent(el, 'sp-menu-item-added-or-updated');
             const newLabel2 = 'Other option';
+
             option2.childNodes[0].textContent = newLabel2;
             await itemUpdated;
             await elementUpdated(el);
@@ -302,6 +313,7 @@ export function runPickerTests(): void {
         it('accepts new selected item content when open', async () => {
             await nextFrame();
             const option2 = el.querySelector('[value="option-2"') as MenuItem;
+
             el.value = 'option-2';
             await elementUpdated(el);
             await aTimeout(150);
@@ -310,12 +322,14 @@ export function runPickerTests(): void {
                 'Select Inverse'
             );
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
             const itemUpdated = oneEvent(
                 option2,
                 'sp-menu-item-added-or-updated'
             );
+
             option2.innerHTML = 'Invert Selection';
             await itemUpdated;
             await elementUpdated(el);
@@ -337,6 +351,7 @@ export function runPickerTests(): void {
             );
 
             const items = el.querySelectorAll('sp-menu-item');
+
             items.forEach((item) => {
                 item.remove();
             });
@@ -346,9 +361,11 @@ export function runPickerTests(): void {
             expect(
                 (el as unknown as TestablePicker).optionsMenu.childItems.length
             ).to.equal(0);
+
             if ('showPopover' in document.createElement('div')) {
                 return;
             }
+
             expect(el.value).to.equal('');
             expect((el.button.textContent || '').trim()).to.not.include(
                 'Select Inverse'
@@ -361,6 +378,7 @@ export function runPickerTests(): void {
             expect(el.value).to.equal('option-2');
 
             const item = document.createElement('sp-menu-item');
+
             item.value = 'option-new';
             item.textContent = 'New Option';
 
@@ -378,6 +396,7 @@ export function runPickerTests(): void {
             await elementUpdated(el);
             expect(el.value).to.equal('option-2');
             const item = document.createElement('sp-menu-item');
+
             item.value = 'option-new';
             item.textContent = 'New Option';
 
@@ -386,6 +405,7 @@ export function runPickerTests(): void {
             await elementUpdated(el);
 
             let opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
             // Overlaid content is outside of the context of the Picker element
@@ -393,6 +413,7 @@ export function runPickerTests(): void {
             await nextFrame();
 
             const close = oneEvent(el, 'sp-closed');
+
             item.click();
             await close;
             // Overlaid content is outside of the context of the Picker element
@@ -445,6 +466,7 @@ export function runPickerTests(): void {
             const firstItem = el.querySelector('sp-menu-item:nth-child(1)');
             const secondItem = el.querySelector('sp-menu-item:nth-child(2)');
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
             expect(
@@ -484,6 +506,7 @@ export function runPickerTests(): void {
             el.focus();
             await elementUpdated(el);
             const opened = oneEvent(el, 'sp-opened');
+
             await sendKeys({ press: 'ArrowRight' });
             await sendKeys({ press: 'ArrowLeft' });
             await sendKeys({ press: 'ArrowDown' });
@@ -493,6 +516,7 @@ export function runPickerTests(): void {
             expect(firstItem.focused, 'should be visually focused').to.be.true;
 
             const closed = oneEvent(el, 'sp-closed');
+
             await sendKeys({
                 press: 'Escape',
             });
@@ -523,6 +547,7 @@ export function runPickerTests(): void {
             el.focus();
             await elementUpdated(el);
             const opened = oneEvent(el, 'sp-opened');
+
             await sendKeys({ press: 'ArrowRight' });
             await sendKeys({ press: 'ArrowLeft' });
             await sendKeys({ press: 'Space' });
@@ -532,6 +557,7 @@ export function runPickerTests(): void {
             expect(firstItem.focused, 'should be visually focused').to.be.true;
 
             const closed = oneEvent(el, 'sp-closed');
+
             await sendKeys({
                 press: 'Escape',
             });
@@ -559,6 +585,7 @@ export function runPickerTests(): void {
 
             expect(firstItem.focused, 'not visually focused').to.be.false;
             const opened = oneEvent(el, 'sp-opened');
+
             sendMouse({
                 steps: [
                     {
@@ -585,6 +612,7 @@ export function runPickerTests(): void {
 
             expect(el.value).to.not.equal(thirdItem.value);
             const opened = oneEvent(el, 'sp-opened');
+
             await sendMouse({
                 steps: [
                     {
@@ -603,6 +631,7 @@ export function runPickerTests(): void {
 
             const thirdItemRect = thirdItem.getBoundingClientRect();
             const closed = oneEvent(el, 'sp-closed');
+
             await sendMouse({
                 steps: [
                     {
@@ -628,6 +657,7 @@ export function runPickerTests(): void {
             expect(el.open).to.be.false;
             const boundingRect = el.button.getBoundingClientRect();
             let opened = oneEvent(el, 'sp-opened');
+
             sendMouse({
                 steps: [
                     {
@@ -643,6 +673,7 @@ export function runPickerTests(): void {
             expect(el.open).to.be.true;
 
             let closed = oneEvent(el, 'sp-closed');
+
             sendMouse({
                 steps: [
                     {
@@ -701,18 +732,21 @@ export function runPickerTests(): void {
         it('closes when clicking away', async () => {
             el.id = 'closing';
             const other = document.createElement('div');
+
             document.body.append(other);
 
             await elementUpdated(el);
 
             expect(el.open).to.be.false;
             const opened = oneEvent(el, 'sp-opened');
+
             el.click();
             await opened;
             await elementUpdated(el);
 
             expect(el.open).to.be.true;
             const closed = oneEvent(el, 'sp-closed');
+
             other.click();
             closed;
             await elementUpdated(el);
@@ -725,6 +759,7 @@ export function runPickerTests(): void {
             ) as MenuItem;
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.click();
             await opened;
 
@@ -733,6 +768,7 @@ export function runPickerTests(): void {
             expect(el.value).to.equal('');
 
             const closed = oneEvent(el, 'sp-closed');
+
             secondItem.click();
             await closed;
 
@@ -749,6 +785,7 @@ export function runPickerTests(): void {
             ) as MenuItem;
 
             let opened = oneEvent(el, 'sp-opened');
+
             el.click();
             await opened;
 
@@ -757,6 +794,7 @@ export function runPickerTests(): void {
             expect(el.value).to.equal('');
 
             let closed = oneEvent(el, 'sp-closed');
+
             secondItem.click();
             await closed;
 
@@ -783,6 +821,7 @@ export function runPickerTests(): void {
         it('dispatches bubbling and composed events', async () => {
             const changeSpy = spy();
             const parent = el.parentElement as HTMLElement;
+
             (parent.shadowRoot as ShadowRoot).append(el);
             const secondItem = el.querySelector(
                 'sp-menu-item:nth-of-type(2)'
@@ -793,10 +832,12 @@ export function runPickerTests(): void {
             expect(el.value).to.equal('');
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
 
             const closed = oneEvent(el, 'sp-closed');
+
             secondItem.click();
             await closed;
 
@@ -810,6 +851,7 @@ export function runPickerTests(): void {
             ) as MenuItem;
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.click();
             await opened;
 
@@ -824,6 +866,7 @@ export function runPickerTests(): void {
             });
 
             const changed = oneEvent(el, 'change');
+
             secondItem.click();
             // The `change` event is dispatched _after_ the `updateComplete` promise.
             await changed;
@@ -836,6 +879,7 @@ export function runPickerTests(): void {
         });
         it('can throw focus after `change`', async () => {
             const input = document.createElement('input');
+
             document.body.append(input);
 
             await elementUpdated(el);
@@ -845,6 +889,7 @@ export function runPickerTests(): void {
             ) as MenuItem;
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.click();
             await opened;
             await elementUpdated(el);
@@ -859,6 +904,7 @@ export function runPickerTests(): void {
             });
 
             const closed = oneEvent(el, 'sp-closed');
+
             secondItem.click();
             await closed;
             await elementUpdated(el);
@@ -886,6 +932,7 @@ export function runPickerTests(): void {
             expect(el.open, 'still closed').to.be.false;
 
             const opened = oneEvent(el, 'sp-opened');
+
             button.dispatchEvent(arrowUpEvent());
             await elementUpdated(el);
 
@@ -893,6 +940,7 @@ export function runPickerTests(): void {
             await opened;
 
             const closed = oneEvent(el, 'sp-closed');
+
             sendKeys({
                 press: 'Escape',
             });
@@ -911,6 +959,7 @@ export function runPickerTests(): void {
             expect(el.open, 'inially closed').to.be.false;
 
             const opened = oneEvent(el, 'sp-opened');
+
             button.dispatchEvent(arrowDownEvent());
             await opened;
 
@@ -919,6 +968,7 @@ export function runPickerTests(): void {
             expect(el.value).to.equal('');
 
             const closed = oneEvent(el, 'sp-closed');
+
             firstItem.click();
             await closed;
 
@@ -928,8 +978,10 @@ export function runPickerTests(): void {
         });
         it('quick selects on ArrowLeft/Right', async () => {
             const selectionSpy = spy();
+
             el.addEventListener('change', (event: Event) => {
                 const { value } = event.target as Picker;
+
                 selectionSpy(value);
             });
 
@@ -989,8 +1041,10 @@ export function runPickerTests(): void {
         it('quick selects first item on ArrowRight when no value', async () => {
             await nextFrame();
             const selectionSpy = spy();
+
             el.addEventListener('change', (event: Event) => {
                 const { value } = event.target as Picker;
+
                 selectionSpy(value);
             });
             const button = el.button as HTMLButtonElement;
@@ -1013,6 +1067,7 @@ export function runPickerTests(): void {
             ) as MenuItem;
             const button = el.button;
             const input = document.createElement('input');
+
             el.insertAdjacentElement('afterend', input);
 
             el.focus();
@@ -1021,6 +1076,7 @@ export function runPickerTests(): void {
             await sendKeys({ press: 'Shift+Tab' });
             expect(document.activeElement === el).to.be.true;
             const opened = oneEvent(el, 'sp-opened');
+
             sendKeys({ press: 'Enter' });
             await opened;
             await elementUpdated(el);
@@ -1035,6 +1091,7 @@ export function runPickerTests(): void {
             expect(thirdItem.focused).to.be.true;
 
             const closed = oneEvent(el, 'sp-closed');
+
             button.focus();
             await closed;
             expect(isMenuActiveElement(el)).to.be.false;
@@ -1043,6 +1100,7 @@ export function runPickerTests(): void {
         it('does not listen to streaming `Enter` keydown', async () => {
             const openSpy = spy();
             const closedSpy = spy();
+
             el.addEventListener('sp-opened', () => openSpy());
             el.addEventListener('sp-closed', () => closedSpy());
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
@@ -1050,6 +1108,7 @@ export function runPickerTests(): void {
                 'sp-menu-item:nth-of-type(3)'
             ) as MenuItem;
             const input = document.createElement('input');
+
             el.insertAdjacentElement('afterend', input);
 
             el.focus();
@@ -1058,6 +1117,7 @@ export function runPickerTests(): void {
             await sendKeys({ press: 'Shift+Tab' });
             expect(document.activeElement === el).to.be.true;
             const opened = oneEvent(el, 'sp-opened');
+
             sendKeys({ down: 'Enter' });
             await opened;
             await aTimeout(300);
@@ -1074,6 +1134,7 @@ export function runPickerTests(): void {
             expect(thirdItem.focused).to.be.true;
 
             const closed = oneEvent(el, 'sp-closed');
+
             sendKeys({ down: 'Enter' });
             await closed;
             await aTimeout(300);
@@ -1085,8 +1146,10 @@ export function runPickerTests(): void {
         });
         it('allows tabing to close', async () => {
             const input = document.createElement('input');
+
             el.insertAdjacentElement('afterend', input);
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
             await nextFrame();
@@ -1095,6 +1158,7 @@ export function runPickerTests(): void {
             el.focus();
 
             const closed = oneEvent(el, 'sp-closed');
+
             sendKeys({ press: 'Tab' });
             await closed;
 
@@ -1103,13 +1167,17 @@ export function runPickerTests(): void {
         describe('tab order', () => {
             let input1: HTMLInputElement;
             let input2: HTMLInputElement;
+
             beforeEach(() => {
                 const surroundingInput = (): HTMLInputElement => {
                     const input = document.createElement('input');
+
                     input.type = 'text';
                     input.tabIndex = 0;
+
                     return input;
                 };
+
                 input1 = surroundingInput();
                 input2 = surroundingInput();
 
@@ -1128,6 +1196,7 @@ export function runPickerTests(): void {
                     .true;
                 // tab to the picker
                 let focused = oneEvent(el, 'focus');
+
                 await sendKeys({ press: 'Tab' });
                 await focused;
 
@@ -1150,6 +1219,7 @@ export function runPickerTests(): void {
                 );
                 // tab to the picker
                 let focused = oneEvent(el, 'focus');
+
                 await sendKeys({ press: 'Shift+Tab' });
                 await focused;
 
@@ -1170,6 +1240,7 @@ export function runPickerTests(): void {
                 expect(document.activeElement, 'focuses el').to.equal(el);
                 // press down to open the picker
                 const opened = oneEvent(el, 'sp-opened');
+
                 await sendKeys({ press: 'ArrowUp' });
                 await opened;
 
@@ -1180,6 +1251,7 @@ export function runPickerTests(): void {
                 );
 
                 const closed = oneEvent(el, 'sp-closed');
+
                 el.open = false;
                 await closed;
 
@@ -1187,6 +1259,7 @@ export function runPickerTests(): void {
                 expect(document.activeElement === el).to.be.true;
 
                 const focused = oneEvent(input2, 'focus');
+
                 await sendKeys({ press: 'Tab' });
                 await focused;
 
@@ -1199,6 +1272,7 @@ export function runPickerTests(): void {
                 expect(document.activeElement === el, 'focuses el').to.be.true;
                 // press down to open the picker
                 const opened = oneEvent(el, 'sp-opened');
+
                 await sendKeys({ press: 'ArrowUp' });
                 await opened;
 
@@ -1209,6 +1283,7 @@ export function runPickerTests(): void {
                 );
 
                 const closed = oneEvent(el, 'sp-closed');
+
                 el.open = false;
                 await closed;
 
@@ -1216,6 +1291,7 @@ export function runPickerTests(): void {
                 expect(document.activeElement === el).to.be.true;
 
                 const focused = oneEvent(input1, 'focus');
+
                 sendKeys({ press: 'Shift+Tab' });
                 await focused;
 
@@ -1236,6 +1312,7 @@ export function runPickerTests(): void {
         it('scrolls selected into view on open', async () => {
             // the Popover is transient, you need to be able to apply custom styles to it...
             const styles = document.createElement('style');
+
             styles.innerText = 'sp-popover { height: 40px; }';
             el.shadowRoot.append(styles);
 
@@ -1245,12 +1322,14 @@ export function runPickerTests(): void {
             const lastItem = el.querySelector(
                 'sp-menu-item:last-child'
             ) as MenuItem;
+
             lastItem.disabled = false;
             el.value = lastItem.value;
 
             await elementUpdated(el);
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
             await waitUntil(
@@ -1263,8 +1342,10 @@ export function runPickerTests(): void {
                         .assignedSlot.parentElement as HTMLElement
                 ).scrollTop;
                 const parentOffset = el.offsetTop - parentScroll;
+
                 return parentOffset;
             };
+
             expect(getParentOffset(lastItem)).to.be.lessThan(40);
             expect(getParentOffset(firstItem)).to.be.lessThan(-1);
 
@@ -1283,6 +1364,7 @@ export function runPickerTests(): void {
             if (!isWebKit()) {
                 return;
             }
+
             /**
              * This is a hack to set the `isMobile` property to true so that we can test the MobileController
              */
@@ -1296,6 +1378,7 @@ export function runPickerTests(): void {
             let opened = oneEvent(el, 'sp-opened');
 
             const boundingRect = el.button.getBoundingClientRect();
+
             sendMouse({
                 steps: [
                     {
@@ -1311,12 +1394,14 @@ export function runPickerTests(): void {
             await opened;
 
             const tray = el.shadowRoot.querySelector('sp-tray');
+
             expect(tray).to.not.be.null;
 
             // Make a selection
             let closed = oneEvent(el, 'sp-closed');
 
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+
             firstItem.click();
 
             await elementUpdated(el);
@@ -1328,6 +1413,7 @@ export function runPickerTests(): void {
             const button = el.shadowRoot.querySelector(
                 '#button'
             ) as HTMLButtonElement;
+
             expect(button).to.not.be.null;
 
             // we should have SAFARI_FOCUS_RING_CLASS in the classList
@@ -1400,6 +1486,7 @@ export function runPickerTests(): void {
                 </sp-picker>
             `);
         };
+
         beforeEach(async () => {
             el = await groupedFixture();
             await elementUpdated(el);
@@ -1408,6 +1495,7 @@ export function runPickerTests(): void {
         });
         it('selects the item with a matching value in a group', async () => {
             const item = el.querySelector('#should-be-selected') as MenuItem;
+
             expect(item.selected).to.be.true;
         });
     });
@@ -1437,6 +1525,7 @@ export function runPickerTests(): void {
 
             return test.querySelector('sp-picker') as Picker;
         };
+
         beforeEach(async () => {
             el = await pickerFixture();
             await elementUpdated(el);
@@ -1445,6 +1534,7 @@ export function runPickerTests(): void {
         afterEach(async () => {
             if (el.open) {
                 const closed = oneEvent(el, 'sp-closed');
+
                 el.open = false;
                 await closed;
             }
@@ -1456,6 +1546,7 @@ export function runPickerTests(): void {
     });
     describe('Dev mode', () => {
         let consoleWarnStub!: ReturnType<typeof stub>;
+
         before(() => {
             window.__swc.verbose = true;
             consoleWarnStub = stub(console, 'warn');
@@ -1466,8 +1557,10 @@ export function runPickerTests(): void {
         after(async () => {
             window.__swc.verbose = false;
             consoleWarnStub.restore();
+
             if (el.open) {
                 const closed = oneEvent(el, 'sp-closed');
+
                 el.open = false;
                 await closed;
             }
@@ -1499,6 +1592,7 @@ export function runPickerTests(): void {
 
             return test.querySelector('sp-picker') as Picker;
         };
+
         it('does not warn in Dev Mode when accessible elements leveraged', async () => {
             const test = await fixture<Picker>(html`
                 <div>
@@ -1535,6 +1629,7 @@ export function runPickerTests(): void {
 
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
+
             expect(
                 (spyCall.args.at(0) as string).includes('accessible'),
                 'confirm accessibility-centric message'
@@ -1554,6 +1649,7 @@ export function runPickerTests(): void {
 
                 expect(consoleWarnStub.called).to.be.true;
                 const spyCall = consoleWarnStub.getCall(0);
+
                 expect(
                     (spyCall.args.at(0) as string).includes('<sp-menu>'),
                     'confirm <sp-menu>-centric message'
@@ -1572,6 +1668,7 @@ export function runPickerTests(): void {
         });
         describe('Dev mode ignored', () => {
             const { ignoreWarningLocalNames } = window.__swc;
+
             before(() => {
                 window.__swc.ignoreWarningLocalNames = {
                     'sp-picker': true,
@@ -1588,6 +1685,7 @@ export function runPickerTests(): void {
             afterEach(async () => {
                 if (el.open) {
                     const closed = oneEvent(el, 'sp-closed');
+
                     el.open = false;
                     await closed;
                 }
@@ -1598,6 +1696,7 @@ export function runPickerTests(): void {
                 ) as MenuItem;
 
                 const opened = oneEvent(el, 'sp-opened');
+
                 el.click();
                 await opened;
 
@@ -1606,6 +1705,7 @@ export function runPickerTests(): void {
                 expect(el.value).to.equal('');
 
                 const closed = oneEvent(el, 'sp-closed');
+
                 secondItem.click();
                 await closed;
 
@@ -1668,6 +1768,7 @@ export function runPickerTests(): void {
         expect(el1.open, 'closed 1').to.be.false;
         expect(el2.open, 'closed 1').to.be.false;
         let open = oneEvent(el1, 'sp-opened');
+
         el1.click();
         await open;
         expect(el1.open).to.be.true;
@@ -1675,6 +1776,7 @@ export function runPickerTests(): void {
 
         open = oneEvent(el2, 'sp-opened');
         let closed = oneEvent(el1, 'sp-closed');
+
         el2.click();
         await Promise.all([open, closed]);
         expect(el1.open).to.be.false;
@@ -1708,6 +1810,7 @@ export function runPickerTests(): void {
                 <sp-menu-item disabled>Make Work Path</sp-menu-item>
             </sp-picker>
         `);
+
         await nextFrame();
 
         await elementUpdated(el);
@@ -1734,6 +1837,7 @@ export function runPickerTests(): void {
         ).to.be.true;
 
         const opened = oneEvent(el, 'sp-opened');
+
         sendKeys({ press: 'Enter' });
         await opened;
 
@@ -1794,6 +1898,7 @@ export function runPickerTests(): void {
         const hoverEl = el.querySelector('sp-menu-item') as MenuItem;
 
         const opened = oneEvent(el, 'sp-opened');
+
         el.open = true;
         await opened;
         await elementUpdated(el);
@@ -1805,6 +1910,7 @@ export function runPickerTests(): void {
         expect(el.open).to.be.true;
 
         const closed = oneEvent(el, 'sp-closed');
+
         el.open = false;
         await closed;
         await elementUpdated(el);
@@ -1830,6 +1936,7 @@ export function runPickerTests(): void {
 
         await elementUpdated(el);
         const opened = oneEvent(el, 'sp-opened');
+
         el.open = true;
         await opened;
         await elementUpdated(el);
@@ -1838,6 +1945,7 @@ export function runPickerTests(): void {
         expect(closedSpy.calledOnce).to.be.false;
 
         const closed = oneEvent(el, 'sp-closed');
+
         el.open = false;
         await closed;
         await elementUpdated(el);
@@ -1849,15 +1957,18 @@ export function runPickerTests(): void {
             <div>${tooltip(tooltip.args)}</div>
         `);
         const el = test.querySelector('sp-picker') as Picker;
+
         await elementUpdated(el);
         const input1 = document.createElement('input');
         const input2 = document.createElement('input');
         const tooltipEl = el.querySelector('sp-tooltip') as Tooltip;
+
         el.insertAdjacentElement('beforebegin', input1);
         el.insertAdjacentElement('afterend', input2);
         input1.focus();
         expect(document.activeElement === input1).to.be.true;
         const tooltipOpened = oneEvent(el, 'sp-opened');
+
         await sendKeys({
             press: 'Tab',
         });
@@ -1872,6 +1983,7 @@ export function runPickerTests(): void {
 
         const menuOpen = oneEvent(el, 'sp-opened');
         const tooltipClosed = oneEvent(el, 'sp-closed');
+
         await sendKeys({
             press: 'ArrowDown',
         });
@@ -1882,6 +1994,7 @@ export function runPickerTests(): void {
         expect(el.open).to.be.true;
 
         const menuClosed = oneEvent(el, 'sp-closed');
+
         await sendKeys({
             press: 'Tab',
         });
@@ -1895,6 +2008,7 @@ export function runPickerTests(): void {
             const test = await fixture(html`
                 <div>${disabled(disabled.args)}</div>
             `);
+
             this.label = test.querySelector('sp-field-label') as FieldLabel;
             this.el = test.querySelector('sp-picker') as Picker;
             await elementUpdated(this.elel);
@@ -1948,6 +2062,7 @@ export function runPickerTests(): void {
             const test = await fixture(html`
                 <div>${pending({ pending: true })}</div>
             `);
+
             this.label = test.querySelector('sp-field-label') as FieldLabel;
             this.el = test.querySelector('sp-picker') as Picker;
             await elementUpdated(this.elel);

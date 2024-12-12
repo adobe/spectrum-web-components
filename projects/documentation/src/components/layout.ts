@@ -272,6 +272,7 @@ export class LayoutElement extends LitElement {
 
                 element: (count: number, message: string) => {
                     import('@spectrum-web-components/toast/sp-toast.js');
+
                     return html`
                         <sp-toast
                             .timeout=${count}
@@ -309,6 +310,7 @@ export class LayoutElement extends LitElement {
             <slot name="side-nav"></slot>
         `;
         import('./side-nav.js');
+
         return html`
             <docs-side-nav id="side-nav" .isNarrow=${this.isNarrow}>
                 ${navContent}
@@ -318,6 +320,7 @@ export class LayoutElement extends LitElement {
 
     private get settingsContent(): TemplateResult {
         import('@spectrum-web-components/underlay/sp-underlay.js');
+
         return html`
             <sp-underlay
                 class="scrim"
@@ -341,6 +344,7 @@ export class LayoutElement extends LitElement {
 
     private get manageTheme(): TemplateResult {
         import('./settings.js');
+
         return html`
             <div class="manage-theme" role="form" aria-label="Settings">
                 <div class="theme-control">
@@ -413,6 +417,7 @@ export class LayoutElement extends LitElement {
                 where: 'afterbegin',
             },
         };
+
         return html`
             <header>
                 <sp-action-button

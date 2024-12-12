@@ -44,7 +44,6 @@ export type ButtonTreatments = 'fill' | 'outline';
 
 /**
  * @element sp-button
- *
  * @slot - text label of the Button
  * @slot icon - The icon to use for Button
  */
@@ -75,6 +74,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         if (this.pending) {
             return;
         }
+
         super.click();
     }
 
@@ -92,6 +92,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         switch (variant) {
             case 'cta':
                 this._variant = 'accent';
+
                 if (window.__swc.DEBUG) {
                     window.__swc.warn(
                         this,
@@ -100,11 +101,13 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                         { level: 'deprecation' }
                     );
                 }
+
                 break;
             case 'overBackground':
                 this.removeAttribute('variant');
                 this.staticColor = 'white';
                 this.treatment = 'outline';
+
                 if (window.__swc.DEBUG) {
                     window.__swc.warn(
                         this,
@@ -113,10 +116,12 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                         { level: 'deprecation' }
                     );
                 }
+
                 return;
             case 'white':
                 this.staticColor = variant;
                 this.removeAttribute('variant');
+
                 if (window.__swc.DEBUG) {
                     window.__swc.warn(
                         this,
@@ -125,10 +130,12 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                         { level: 'deprecation' }
                     );
                 }
+
                 return;
             case 'black':
                 this.staticColor = variant;
                 this.removeAttribute('variant');
+
                 if (window.__swc.DEBUG) {
                     window.__swc.warn(
                         this,
@@ -137,6 +144,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                         { level: 'deprecation' }
                     );
                 }
+
                 return;
             case null:
                 return;
@@ -146,6 +154,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                 } else {
                     this._variant = variant;
                 }
+
                 break;
         }
         this.setAttribute('variant', this.variant);
@@ -193,6 +202,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         if (!this.hasAttribute('variant')) {
             this.setAttribute('variant', this.variant);
         }
+
         if (this.pending) {
             this.pendingStateController.hostUpdated();
         }

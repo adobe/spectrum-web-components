@@ -15,6 +15,9 @@ import { elementUpdated, fixture, nextFrame } from '@open-wc/testing';
 import { NumberField } from '@spectrum-web-components/number-field';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
+/**
+ *
+ */
 export async function getElFrom(test: TemplateResult): Promise<NumberField> {
     const wrapped = await fixture<HTMLDivElement>(html`
         <div style="--spectrum-alias-ui-icon-chevron-size-75: 20px;">
@@ -22,10 +25,15 @@ export async function getElFrom(test: TemplateResult): Promise<NumberField> {
         </div>
     `);
     const el = wrapped.querySelector('sp-number-field') as NumberField;
+
     await elementUpdated(el);
+
     return el;
 }
 
+/**
+ *
+ */
 export async function clickBySelector(
     el: NumberField,
     selector: string,
@@ -33,6 +41,7 @@ export async function clickBySelector(
 ): Promise<void> {
     const target = el.shadowRoot.querySelector(selector) as HTMLElement;
     const targetRect = target.getBoundingClientRect();
+
     await sendMouse({
         steps: [
             {

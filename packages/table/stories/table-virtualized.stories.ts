@@ -76,15 +76,18 @@ class VirtualTable extends SpectrumElement {
             }
         ): number => {
             const doSortKey = sortKey;
+
             if (!isNaN(Number(a[doSortKey]))) {
                 const first = Number(a[doSortKey]);
                 const second = Number(b[doSortKey]);
+
                 return sortDirection === 'asc'
                     ? first - second
                     : second - first;
             } else {
                 const first = String(a[doSortKey]);
                 const second = String(b[doSortKey]);
+
                 return sortDirection === 'asc'
                     ? first.localeCompare(second)
                     : second.localeCompare(first);
@@ -102,6 +105,7 @@ class VirtualTable extends SpectrumElement {
                 @sorted=${(event: CustomEvent<SortedEventDetails>): void => {
                     const { sortKey, sortDirection } = event.detail; // leveraged CustomEvent().detail, works across shadow boundaries
                     const items = [...this.items];
+
                     // depending on the column, sort asc or desc depending on the arrow direction
                     items.sort(
                         this.compareItems(
@@ -160,6 +164,7 @@ export const virtualizedSingle = (args: Properties): TemplateResult => {
             .selected=${args.selected}
             @change=${({ target }: Event & { target: Table }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
+
                 next.textContent = `Selected: ${JSON.stringify(
                     target.selected
                 )}`;
@@ -203,12 +208,14 @@ export const virtualizedMultiple = (args: Properties): TemplateResult => {
             .selected=${args.selected}
             @change=${({ target }: Event & { target: Table }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
+
                 next.textContent = `Selected: ${JSON.stringify(
                     target.selected,
                     null,
                     ' '
                 )}`;
                 const nextNext = next.nextElementSibling as HTMLDivElement;
+
                 nextNext.textContent = `Selected Count: ${target.selected.length}`;
             }}
             .items=${virtualItems}
@@ -258,12 +265,14 @@ virtualizedCustomValue.args = {
     selects: 'multiple',
     onChange: ({ target }: Event & { target: Table }) => {
         const next = target.nextElementSibling as HTMLDivElement;
+
         next.textContent = `Selected: ${JSON.stringify(
             target.selected,
             null,
             ' '
         )}`;
         const nextNext = next.nextElementSibling as HTMLDivElement;
+
         nextNext.textContent = `Selected Count: ${target.selected.length}`;
     },
 };
@@ -280,12 +289,14 @@ export const virtualizedCustomRow = (args: Properties): TemplateResult => {
             .selected=${args.selected}
             @change=${({ target }: Event & { target: Table }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
+
                 next.textContent = `Selected: ${JSON.stringify(
                     target.selected,
                     null,
                     ' '
                 )}`;
                 const nextNext = next.nextElementSibling as HTMLDivElement;
+
                 nextNext.textContent = `Selected Count: ${target.selected.length}`;
             }}
             scroller?="false"

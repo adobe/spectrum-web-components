@@ -53,12 +53,17 @@ const selectsWithKeyboardData = [
 ] as SelectsWithKeyboardTest[];
 
 describe('Submenu', () => {
+    /**
+     *
+     */
     function selectWithPointer(): void {
         it('with pointer', async function () {
             const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
+
             expect(this.rootItem.open).to.be.false;
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
+
             await sendMouse({
                 steps: [
                     {
@@ -80,6 +85,7 @@ describe('Submenu', () => {
             const item2BoundingRect = item2.getBoundingClientRect();
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
+
             await sendMouse({
                 steps: [
                     {
@@ -105,6 +111,9 @@ describe('Submenu', () => {
             ).to.be.true;
         });
     }
+    /**
+     *
+     */
     function selectsWithKeyboard(testData: SelectsWithKeyboardTest): void {
         it(`with keyboard: ${testData.dir}`, async function () {
             this.el.parentElement.dir = testData.dir;
@@ -112,6 +121,7 @@ describe('Submenu', () => {
             await elementUpdated(this.el);
             expect(this.rootItem.open).to.be.false;
             const input = document.createElement('input');
+
             this.el.insertAdjacentElement('beforebegin', input);
             input.focus();
             await sendKeys({
@@ -125,6 +135,7 @@ describe('Submenu', () => {
             expect(this.rootItem.focused).to.be.true;
 
             let opened = oneEvent(this.rootItem, 'sp-opened');
+
             await sendKeys({
                 press: testData.openKey,
             });
@@ -142,6 +153,7 @@ describe('Submenu', () => {
             ).to.be.true;
 
             let closed = oneEvent(this.rootItem, 'sp-closed');
+
             await sendKeys({
                 press: testData.closeKey,
             });
@@ -189,9 +201,13 @@ describe('Submenu', () => {
             ).to.be.true;
         });
     }
+    /**
+     *
+     */
     function returnsFocusToRootWhenClosingSubmenu(): void {
         it('returns visible focus when submenu closed', async function () {
             const input = document.createElement('input');
+
             this.el.insertAdjacentElement('beforebegin', input);
             input.focus();
             await sendKeys({
@@ -214,6 +230,7 @@ describe('Submenu', () => {
             expect(this.rootItem.open, 'not open').to.be.false;
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
+
             await sendKeys({
                 press: 'ArrowRight',
             });
@@ -232,6 +249,7 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
+
             await sendKeys({
                 press: 'ArrowLeft',
             });
@@ -242,12 +260,17 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.false;
         });
     }
+    /**
+     *
+     */
     function closesOnPointerLeave(): void {
         it('closes on `pointerleave`', async function () {
             const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
+
             expect(this.rootItem.open).to.be.false;
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
+
             await sendMouse({
                 steps: [
                     {
@@ -266,6 +289,7 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
+
             await sendMouse({
                 steps: [
                     {
@@ -284,12 +308,17 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.false;
         });
     }
+    /**
+     *
+     */
     function persistsThroughMouseLeaveAndReturn(): void {
         it('stays open when mousing off menu item and back again', async function () {
             const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
+
             expect(this.rootItem.open).to.be.false;
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
+
             await sendMouse({
                 steps: [
                     {
@@ -334,6 +363,7 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
+
             await sendMouse({
                 steps: [
                     {
@@ -350,12 +380,16 @@ describe('Submenu', () => {
             await closed;
         });
     }
+    /**
+     *
+     */
     function doesNotOpenWhenDisabled(): void {
         it('does not open when disabled', async function () {
             this.rootItem.disabled = true;
             await elementUpdated(this.rootItem);
 
             const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
+
             expect(this.rootItem.open).to.be.false;
 
             await sendMouse({
@@ -377,12 +411,17 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.false;
         });
     }
+    /**
+     *
+     */
     function persistsWhenMovingBetweenItemAndSubmenu(): void {
         it('stays open when mousing between menu item and submenu', async function () {
             const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
+
             expect(this.rootItem.open).to.be.false;
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
+
             await sendMouse({
                 steps: [
                     {
@@ -404,8 +443,10 @@ describe('Submenu', () => {
                 '.submenu-item-2'
             ) as MenuItem;
             const clickSpy = spy();
+
             subItem.addEventListener('click', () => clickSpy());
             const subItemBoundingRect = subItem.getBoundingClientRect();
+
             expect(this.rootItem.open).to.be.true;
 
             await sendMouse({
@@ -428,6 +469,7 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
+
             await sendMouse({
                 steps: [
                     {
@@ -446,12 +488,17 @@ describe('Submenu', () => {
             expect(clickSpy.callCount).to.equal(1);
         });
     }
+    /**
+     *
+     */
     function continuesToOpenWhenMovingBetweenItemAndSubmenu(): void {
         it('continues to open when mousing between menu item and submenu', async function () {
             const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
+
             expect(this.rootItem.open).to.be.false;
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
+
             await sendMouse({
                 steps: [
                     {
@@ -478,8 +525,10 @@ describe('Submenu', () => {
                 '.submenu-item-2'
             ) as MenuItem;
             const clickSpy = spy();
+
             subItem.addEventListener('click', () => clickSpy());
             const subItemBoundingRect = subItem.getBoundingClientRect();
+
             await sendMouse({
                 steps: [
                     {
@@ -501,6 +550,7 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
+
             await sendMouse({
                 steps: [
                     {
@@ -524,6 +574,7 @@ describe('Submenu', () => {
         <sp-menu-item class="submenu-item-2">Two</sp-menu-item>
         <sp-menu-item class="submenu-item-3">Three</sp-menu-item>
     `;
+
     describe('static DOM', () => {
         beforeEach(async function () {
             this.rootChanged = spy();
@@ -654,9 +705,11 @@ describe('Submenu', () => {
         const rootItemBoundingRect = rootItem.getBoundingClientRect();
         const item2 = document.querySelector('.submenu-item-2') as MenuItem;
         const itemC = document.querySelector('.sub-submenu-item-3') as MenuItem;
+
         expect(rootItem.open).to.be.false;
 
         let opened = oneEvent(rootItem, 'sp-opened');
+
         // Hover the root menu item to open a submenu
         await sendMouse({
             steps: [
@@ -697,6 +750,7 @@ describe('Submenu', () => {
         const closed = oneEvent(rootItem, 'sp-closed');
         // click to select and close
         const itemCBoundingRect = itemC.getBoundingClientRect();
+
         await sendMouse({
             steps: [
                 {
@@ -763,6 +817,7 @@ describe('Submenu', () => {
 
         expect(el.open).to.be.false;
         let opened = oneEvent(el, 'sp-opened');
+
         el.click();
         await opened;
         expect(el.open).to.be.true;
@@ -784,6 +839,7 @@ describe('Submenu', () => {
         const childMenu2Closed = oneEvent(childMenu2, 'sp-closed');
         const rootMenu1Closed = oneEvent(rootMenu1, 'sp-closed');
         const rootMenu2Opened = oneEvent(rootMenu2, 'sp-opened');
+
         rootMenu2.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
@@ -849,6 +905,7 @@ describe('Submenu', () => {
 
             expect(this.el.open).to.be.false;
             let opened = oneEvent(this.el, 'sp-opened');
+
             this.el.click();
             await opened;
             expect(this.el.open).to.be.true;
@@ -869,6 +926,7 @@ describe('Submenu', () => {
                 oneEvent(rootMenu1, 'sp-closed'),
                 oneEvent(this.el, 'sp-closed'),
             ]);
+
             await sendMouse({
                 steps: [
                     {
@@ -887,6 +945,7 @@ describe('Submenu', () => {
 
             expect(this.el.open).to.be.false;
             let opened = oneEvent(this.el, 'sp-opened');
+
             this.el.click();
             await opened;
             expect(this.el.open).to.be.true;
@@ -898,6 +957,7 @@ describe('Submenu', () => {
             await opened;
 
             const closed = oneEvent(rootMenu, 'sp-closed');
+
             noSubmenu.dispatchEvent(
                 new PointerEvent('pointerenter', { bubbles: true })
             );
@@ -916,6 +976,7 @@ describe('Submenu', () => {
 
             expect(this.el.open).to.be.false;
             let opened = oneEvent(this.el, 'sp-opened');
+
             this.el.click();
             await opened;
             expect(this.el.open).to.be.true;
@@ -938,6 +999,7 @@ describe('Submenu', () => {
                 oneEvent(this.el, 'sp-closed'),
             ]);
             const rect = ancestorItem.getBoundingClientRect();
+
             await sendMouse({
                 steps: [
                     {
@@ -956,6 +1018,7 @@ describe('Submenu', () => {
         if ('showPopover' in document.createElement('div')) {
             return;
         }
+
         await sendMouse({
             steps: [
                 {
@@ -980,6 +1043,7 @@ describe('Submenu', () => {
         await elementUpdated(el);
         const rootItem1 = el.querySelector('.root-1') as MenuItem;
         const rootItem2 = el.querySelector('.root-2') as MenuItem;
+
         expect(rootItem1.open, 'initially closed 1').to.be.false;
         expect(rootItem2.open, 'initially closed 2').to.be.false;
 
@@ -1049,6 +1113,7 @@ describe('Submenu', () => {
         await nextFrame();
         await nextFrame();
         const closed = oneEvent(rootItem2, 'sp-closed');
+
         // Close the second submenu
         await sendMouse({
             steps: [
@@ -1082,6 +1147,7 @@ describe('Submenu', () => {
                 </sp-menu-item>
             </sp-menu>
         `);
+
         await elementUpdated(el);
         const rootItem = el.querySelector('.root') as MenuItem;
         const rootItemBoundingRect = rootItem.getBoundingClientRect();

@@ -33,7 +33,6 @@ import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focu
 
 /**
  * @element sp-dialog-base
- *
  * @slot - A Dialog element to display.
  * @fires close - Announces that the dialog has been closed.
  */
@@ -70,6 +69,7 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         const dialog = (
             this.shadowRoot.querySelector('slot') as HTMLSlotElement
         ).assignedElements()[0] as Dialog;
+
         if (window.__swc.DEBUG) {
             if (!dialog) {
                 window.__swc.warn(
@@ -79,16 +79,19 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 );
             }
         }
+
         return dialog || this;
     }
 
     public override async focus(): Promise<void> {
         if (this.shadowRoot) {
             const firstFocusable = firstFocusableIn(this.dialog);
+
             if (firstFocusable) {
                 if ((firstFocusable as SpectrumElement).updateComplete) {
                     await firstFocusable.updateComplete;
                 }
+
                 firstFocusable.focus();
             } else {
                 this.dialog.focus();
@@ -103,7 +106,9 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     public overlayWillCloseCallback(): boolean {
         if (!this.open) return this.animating;
+
         this.close();
+
         return true;
     }
 
@@ -111,6 +116,7 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         if (!this.dismissable) {
             return;
         }
+
         this.close();
     }
 
@@ -145,6 +151,7 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         if (!this.open && event.propertyName === 'visibility') {
             this.resolveTransitionPromise();
         }
+
         this.handleTransitionEvent(event);
     }
 
@@ -152,6 +159,7 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         if (this.open || !this.underlay) {
             this.resolveTransitionPromise();
         }
+
         this.handleTransitionEvent(event);
     }
 
@@ -160,6 +168,7 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
         const modalTransitionDurations =
             window.getComputedStyle(modal).transitionDuration;
+
         for (const duration of modalTransitionDurations.split(','))
             if (parseFloat(duration) > 0) return true;
 
@@ -170,6 +179,7 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         if (underlay) {
             const underlayTransitionDurations =
                 window.getComputedStyle(underlay).transitionDuration;
+
             for (const duration of underlayTransitionDurations.split(','))
                 if (parseFloat(duration) > 0) return true;
         }
@@ -180,17 +190,22 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
     protected override update(changes: PropertyValues<this>): void {
         if (changes.has('open') && changes.get('open') !== undefined) {
             const hasTransitionDuration = this.hasTransitionDuration;
+
             this.animating = true;
             this.transitionPromise = new Promise((res) => {
                 this.resolveTransitionPromise = () => {
                     this.animating = false;
+
                     if (!this.open && hasTransitionDuration)
                         this.dispatchClosed();
+
                     res();
                 };
             });
+
             if (!this.open && !hasTransitionDuration) this.dispatchClosed();
         }
+
         super.update(changes);
     }
 
@@ -250,7 +265,9 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
      */
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
+
         await this.transitionPromise;
+
         return complete;
     }
 }

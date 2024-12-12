@@ -27,7 +27,6 @@ import { TableCheckboxCell } from './TableCheckboxCell.js';
  * @element sp-table-row
  *
  * This component represents a table row.
- *
  * @fires sorted - Announces that `selected` of the table row has changed
  */
 export class TableRow extends SpectrumElement {
@@ -174,6 +173,7 @@ export class TableRow extends SpectrumElement {
         if (changed.has('selected')) {
             this.manageSelected();
         }
+
         if (changed.has('selectable')) {
             if (this.selectable) {
                 this.addEventListener('click', this.handleClick);

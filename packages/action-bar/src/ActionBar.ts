@@ -67,11 +67,14 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
         if (variant === this.variant) {
             return;
         }
+
         if (actionBarVariants.includes(variant)) {
             this.setAttribute('variant', variant);
             this._variant = variant;
+
             return;
         }
+
         this.removeAttribute('variant');
         this._variant = '';
     }
@@ -89,7 +92,6 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
      * Handles the click event on the close button.
      * Toggles the open state of the action bar and dispatches a 'close' event.
      * If the event is canceled, the open state is reverted.
-     *
      * @fires close - Announces that the action bar is closing.
      */
     private handleClick(): void {

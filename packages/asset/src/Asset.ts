@@ -22,7 +22,6 @@ import styles from './asset.css.js';
 
 /**
  * Generates and SVG element with a label for a file icon.
- *
  * @param label the `aria-label` for the SVG element
  */
 const file = (label: string): TemplateResult => html`
@@ -45,7 +44,6 @@ const file = (label: string): TemplateResult => html`
 
 /**
  * Generates and SVG element with a label for a folder icon.
- *
  * @param label the `aria-label` for the SVG element
  */
 const folder = (label: string): TemplateResult => html`
@@ -100,6 +98,7 @@ export class Asset extends SpectrumElement {
         } else if (this.variant === 'folder') {
             return folder(this.label);
         }
+
         return html`
             <slot></slot>
         `;

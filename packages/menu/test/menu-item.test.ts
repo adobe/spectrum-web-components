@@ -31,6 +31,7 @@ describe('Menu item', () => {
                 <sp-menu-item selected>Selected</sp-menu-item>
             </sp-menu>
         `);
+
         await waitUntil(
             () => el.childItems.length == 1,
             'expected menu group to manage 1 child'
@@ -48,11 +49,13 @@ describe('Menu item', () => {
                 <sp-menu-item disabled>Disabled</sp-menu-item>
             </sp-menu>
         `);
+
         await elementUpdated(el);
         expect(el.value).to.equal('Selected');
 
         const disabled = el.querySelector('[disabled]') as MenuItem;
         const boundingRect = disabled.getBoundingClientRect();
+
         sendMouse({
             steps: [
                 {
@@ -112,6 +115,7 @@ describe('Menu item', () => {
         const { anchorElement } = item as unknown as {
             anchorElement: HTMLAnchorElement;
         };
+
         (
             item as unknown as { anchorElement: HTMLAnchorElement }
         ).anchorElement.dispatchEvent(new FocusEvent('focus'));
@@ -126,6 +130,7 @@ describe('Menu item', () => {
         const el = await fixture<MenuItem>(html`
             <sp-menu-item value="selected" selected>Selected Text</sp-menu-item>
         `);
+
         expect(el.itemText).to.equal('Selected Text');
         expect(el.value).to.equal('selected');
     });
@@ -133,6 +138,7 @@ describe('Menu item', () => {
         const el = await fixture<MenuItem>(html`
             <sp-menu-item selected>Selected Text</sp-menu-item>
         `);
+
         expect(el.itemText).to.equal('Selected Text');
         expect(el.value).to.equal('Selected Text');
     });
@@ -140,6 +146,7 @@ describe('Menu item', () => {
         const el = await fixture<MenuItem>(html`
             <sp-menu-item selected>Selected Text</sp-menu-item>
         `);
+
         expect(el.itemText).to.equal('Selected Text');
         expect(el.value).to.equal('Selected Text');
         expect(el.hasAttribute('value')).to.be.false;
@@ -164,6 +171,7 @@ describe('Menu item', () => {
             </sp-menu-item>
         `);
         const descriptionElement = el.querySelector('span') as HTMLElement;
+
         expect(descriptionElement.assignedSlot).to.not.be.null;
     });
     it('acualizes a submenu', async () => {
@@ -179,6 +187,7 @@ describe('Menu item', () => {
 
         const submenuItem = document.createElement('sp-menu-item');
         const submenu = document.createElement('sp-menu');
+
         submenuItem.textContent = 'Test Submenu Item';
         submenu.slot = 'submenu';
         submenu.append(submenuItem);

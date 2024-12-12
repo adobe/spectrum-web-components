@@ -65,6 +65,7 @@ Default.args = {};
 
 export const SmallQuiet = (args: StoryArgs): TemplateResult => {
     const { onClick } = args;
+
     return html`
         <sp-card
             heading="Card Heading"
@@ -78,7 +79,9 @@ export const SmallQuiet = (args: StoryArgs): TemplateResult => {
             toggles
             @click=${(event: Event) => {
                 const composedTarget = event.composedPath()[0] as HTMLElement;
+
                 if (composedTarget.id !== 'like-anchor') return;
+
                 event.stopPropagation();
                 event.preventDefault();
                 onClick && onClick(event);
@@ -112,6 +115,7 @@ SmallQuiet.argTypes = {
 
 export const href = (args: StoryArgs): TemplateResult => {
     const { onClick } = args;
+
     return html`
         <sp-card
             heading="Card Heading"
@@ -122,7 +126,9 @@ export const href = (args: StoryArgs): TemplateResult => {
             href="https://opensource.adobe.com/spectrum-web-components"
             @click=${(event: Event) => {
                 const composedTarget = event.composedPath()[0] as HTMLElement;
+
                 if (composedTarget.id !== 'like-anchor') return;
+
                 event.stopPropagation();
                 event.preventDefault();
                 onClick && onClick(event);

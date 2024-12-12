@@ -137,6 +137,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
      */
     private async _handleSlotChange(): Promise<void> {
         const [tabsElement] = this.scrollContent;
+
         await tabsElement?.updateComplete;
         this._updateScrollState();
     }
@@ -181,6 +182,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
         const left = currentTarget.classList.contains('left-scroll')
             ? -dist
             : dist;
+
         tabsElement.scrollTabs(left, 'smooth');
     }
 
@@ -188,6 +190,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
         changedProperties: PropertyValueMap<this>
     ): void {
         super.updated(changedProperties);
+
         if (changedProperties.has('dir')) {
             this._updateScrollState();
         }

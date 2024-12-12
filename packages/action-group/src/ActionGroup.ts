@@ -49,6 +49,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     public set buttons(buttons: ActionButton[]) {
         /* c8 ignore next 1 */
         if (buttons === this.buttons) return;
+
         this._buttons = buttons;
         this.rovingTabindexController.clearElementCache();
     }
@@ -103,8 +104,10 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     if (!elements[firstEnabledIndex] && !el.disabled) {
                         firstEnabledIndex = index;
                     }
+
                     return el.selected && !el.disabled;
                 });
+
                 return elements[firstSelectedIndex]
                     ? firstSelectedIndex
                     : firstEnabledIndex;
@@ -224,9 +227,12 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         if (selected === this.selected) return;
 
         const old = this.selected;
+
         this.requestUpdate('selected', old);
         this._selected = selected;
+
         if (!announce) return;
+
         this.dispatchChange(old);
     }
 
@@ -269,9 +275,11 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
      */
     private handleClick(event: Event): void {
         const target = event.target as ActionButton;
+
         if (typeof target.value === 'undefined') {
             return;
         }
+
         switch (this.selects) {
             case 'single': {
                 // Deselect all buttons and select the clicked button
@@ -285,16 +293,19 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             case 'multiple': {
                 // Toggle the selected state of the clicked button
                 const selected = [...this.selected];
+
                 target.selected = !target.selected;
                 target.setAttribute(
                     'aria-checked',
                     target.selected ? 'true' : 'false'
                 );
+
                 if (target.selected) {
                     selected.push(target.value);
                 } else {
                     selected.splice(this.selected.indexOf(target.value), 1);
                 }
+
                 this.setSelected(selected, true);
 
                 // Update tabindex for all buttons
@@ -329,6 +340,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         }
 
         const options = this.buttons;
+
         switch (this.selects) {
             case 'single': {
                 // Single selection mode, behaves as a radio group
@@ -341,11 +353,14 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                         'aria-checked',
                         option.selected ? 'true' : 'false'
                     );
+
                     if (option.selected) {
                         selections.push(option);
                     }
                 });
+
                 if (applied) break;
+
                 await Promise.all(updates);
 
                 const selected = selections.map((button) => {
@@ -360,6 +375,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 if (this.getAttribute('role') === 'radiogroup') {
                     this.removeAttribute('role');
                 }
+
                 const selection: string[] = [];
                 const selections: ActionButton[] = [];
                 const updates = options.map(async (option) => {
@@ -369,16 +385,20 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                         'aria-checked',
                         option.selected ? 'true' : 'false'
                     );
+
                     if (option.selected) {
                         selection.push(option.value);
                         selections.push(option);
                     }
                 });
+
                 if (applied) break;
+
                 await Promise.all(updates);
                 const selected = !!selection.length
                     ? selection
                     : EMPTY_SELECTION;
+
                 this.setSelected(selected);
                 break;
             }
@@ -389,6 +409,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     const updates = options.map(async (option) => {
                         await option.updateComplete;
                         option.setAttribute('role', 'button');
+
                         if (option.selected) {
                             option.setAttribute('aria-pressed', 'true');
                             selections.push(option);
@@ -396,7 +417,9 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                             option.removeAttribute('aria-pressed');
                         }
                     });
+
                     if (applied) break;
+
                     await Promise.all(updates);
 
                     this.setSelected(
@@ -432,9 +455,11 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (changes.has('selects')) {
             this.manageSelects();
             this.manageChildren();
+
             if (!!this.selects) {
                 this.shadowRoot.addEventListener(
                     'change',
@@ -447,6 +472,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 );
             }
         }
+
         if (
             changes.has('quiet') ||
             changes.has('emphasized') ||
@@ -455,6 +481,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         ) {
             this.manageChildren(changes);
         }
+
         // Update `aria-label` when `label` available or not first `updated`
         if (
             changes.has('label') &&
@@ -477,15 +504,19 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             if (this.quiet || changes?.get('quiet')) {
                 button.quiet = this.quiet;
             }
+
             if (this.emphasized || changes?.get('emphasized')) {
                 button.emphasized = this.emphasized;
             }
+
             if (this.staticColor || changes?.get('staticColor')) {
                 button.staticColor = this.staticColor;
             }
+
             if (this.selects || !this.hasManaged) {
                 button.selected = this.selected.includes(button.value);
             }
+
             if (
                 this.size &&
                 (this.size !== 'm' ||
@@ -507,6 +538,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         if (!this.slotElement) {
             return;
         }
+
         const assignedElements = this.slotElement.assignedElements({
             flatten: true,
         });
@@ -517,14 +549,19 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 const buttonDescendents = Array.from(
                     el.querySelectorAll(`:scope > ${this._buttonSelector}`)
                 );
+
                 acc.push(...buttonDescendents);
             }
+
             return acc;
         }, []);
+
         this.buttons = buttons as ActionButton[];
+
         if (this.selects || !this.hasManaged) {
             // Merge selected buttons similar to <select> element behavior
             const currentlySelectedButtons: string[] = [];
+
             this.buttons.forEach((button: ActionButton) => {
                 if (button.selected) {
                     currentlySelectedButtons.push(button.value);
@@ -532,6 +569,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             });
             this.setSelected(this.selected.concat(currentlySelectedButtons));
         }
+
         this.manageChildren();
         this.manageSelects();
         this.hasManaged = true;

@@ -61,7 +61,6 @@ export interface TableItem extends Record<string, unknown> {
  * @element sp-table
  *
  * The `sp-table` component represents a table element.
- *
  * @fires rangeChanged - Announces a change in the range of visible cells on the table body
  * @event change - Announces a change in the `selected` property of a table row
  */
@@ -224,6 +223,7 @@ export class Table extends SizedMixin(SpectrumElement, {
         if (this.isVirtualized) {
             return [];
         }
+
         return [...this.querySelectorAll('sp-table-row')] as TableRow[];
     }
 
@@ -265,9 +265,11 @@ export class Table extends SizedMixin(SpectrumElement, {
                 this.selectedSet.add(row.value); // Prepares table state
             });
         }
+
         this.selected = [...this.selectedSet];
 
         if (!this.tableHeadCheckboxCell) return;
+
         this.tableHeadCheckboxCell.checked = true;
         this.tableHeadCheckboxCell.indeterminate = false;
     }
@@ -292,6 +294,7 @@ export class Table extends SizedMixin(SpectrumElement, {
         }
 
         if (!this.tableHeadCheckboxCell) return;
+
         this.tableHeadCheckboxCell.checked = false;
         this.tableHeadCheckboxCell.indeterminate = false;
     }
@@ -321,6 +324,7 @@ export class Table extends SizedMixin(SpectrumElement, {
                     if (!row.querySelector(':scope > sp-table-checkbox-cell')) {
                         const clonedCheckbox =
                             checkbox.cloneNode() as TableCheckboxCell;
+
                         checkbox.emphasized = this.emphasized;
                         row.insertAdjacentElement('afterbegin', clonedCheckbox);
                         checkbox.checked = row.selected;
@@ -366,6 +370,7 @@ export class Table extends SizedMixin(SpectrumElement, {
             // Add all item values to the set in a virtualized table
             this.items.forEach((item, index) => {
                 const value = this.itemValue(item, index);
+
                 rowValues.add(value);
             });
         } else {
@@ -431,6 +436,7 @@ export class Table extends SizedMixin(SpectrumElement, {
             this.tableHeadCheckboxCell.emphasized = this.emphasized;
 
             const allSelected = this.selected.length === this.tableRows.length;
+
             this.manageHeadCheckbox(allSelected);
 
             this.tableHead?.insertAdjacentElement(
@@ -443,6 +449,7 @@ export class Table extends SizedMixin(SpectrumElement, {
                 const checkbox = document.createElement(
                     'sp-table-checkbox-cell'
                 );
+
                 checkbox.emphasized = this.emphasized;
                 row.insertAdjacentElement('afterbegin', checkbox);
                 row.selected = this.selectedSet.has(row.value);
@@ -453,6 +460,7 @@ export class Table extends SizedMixin(SpectrumElement, {
             this.tableHead?.querySelector('sp-table-checkbox-cell')?.remove();
             this.tableRows.forEach((row) => {
                 row.checkboxCells[0]?.remove();
+
                 if (this.selected.length) {
                     row.selected = this.selectedSet.has(row.value);
                 }
@@ -589,9 +597,11 @@ export class Table extends SizedMixin(SpectrumElement, {
             this.validateSelected();
             this.manageCheckboxes();
         }
+
         if (changed.has('selects')) {
             this.manageSelects();
         }
+
         if (changed.has('selected') && this.hasUpdated) {
             this.manageSelected();
         }
@@ -617,6 +627,7 @@ export class Table extends SizedMixin(SpectrumElement, {
         // Rendering updates into the table while disconnected can
         // cause runaway event binding in ancestor elements.
         if (!this.isConnected) return;
+
         if (!this.tableBody) {
             this.tableBody = this.querySelector('sp-table-body') as TableBody;
 

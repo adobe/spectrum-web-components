@@ -56,7 +56,6 @@ export type LongpressEvent = {
 
 /**
  * @element sp-action-button
- *
  * @slot - The text label of the Action Button.
  * @slot icon - The icon to use for the Action Button.
  * @fires change - Announces a change in the `selected` property of an action button.
@@ -135,7 +134,9 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         if (value === this._value) {
             return;
         }
+
         this._value = value || '';
+
         if (this._value) {
             this.setAttribute('value', this._value);
         } else {
@@ -166,6 +167,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         if (!this.toggles) {
             return;
         }
+
         this.selected = !this.selected;
         const applyDefault = this.dispatchEvent(
             new Event('change', {
@@ -174,6 +176,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
                 composed: true,
             })
         );
+
         if (!applyDefault) {
             this.selected = !this.selected;
         }
@@ -186,6 +189,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
      */
     private handlePointerdownHoldAffordance(event: PointerEvent): void {
         if (event.button !== 0) return;
+
         this.addEventListener('pointerup', this.handlePointerupHoldAffordance);
         this.addEventListener(
             'pointercancel',
@@ -228,13 +232,17 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         if (!this.holdAffordance) {
             return super.handleKeydown(event);
         }
+
         const { code, altKey } = event;
+
         if (code === 'Space' || (altKey && code === 'ArrowDown')) {
             event.preventDefault();
+
             if (code === 'ArrowDown') {
                 event.stopPropagation();
                 event.stopImmediatePropagation();
             }
+
             this.addEventListener('keyup', this.handleKeyup);
             this.active = true;
         }
@@ -248,7 +256,9 @@ export class ActionButton extends SizedMixin(ButtonBase, {
         if (!this.holdAffordance) {
             return super.handleKeyup(event);
         }
+
         const { code, altKey } = event;
+
         if (code === 'Space' || (altKey && code === 'ArrowDown')) {
             event.stopPropagation();
             this.dispatchEvent(
@@ -270,6 +280,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
      */
     protected override get buttonContent(): TemplateResult[] {
         const buttonContent = super.buttonContent;
+
         if (this.holdAffordance) {
             buttonContent.unshift(html`
                 <sp-icon-corner-triangle300
@@ -279,6 +290,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
                 ></sp-icon-corner-triangle300>
             `);
         }
+
         return buttonContent;
     }
 
@@ -297,6 +309,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
                 this.hasAttribute('aria-haspopup') &&
                 this.hasAttribute('aria-expanded')
             );
+
         if (changes.has('selected') || changes.has('role')) {
             // When role !== 'button' then the Action Button is within
             // an Action Group that manages selects which means the
@@ -310,6 +323,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
             } else {
                 // When !this.toggles the lack of "aria-pressed" is inconsequential.
                 this.removeAttribute('aria-pressed');
+
                 if (
                     isButton &&
                     this.toggles &&
@@ -322,6 +336,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
                 }
             }
         }
+
         if (changes.has('holdAffordance')) {
             if (this.holdAffordance) {
                 this.addEventListener(

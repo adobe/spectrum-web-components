@@ -79,6 +79,7 @@ describe('Dialog', () => {
         await expect(el).to.be.accessible();
 
         const paragraph = document.createElement('p');
+
         paragraph.textContent = 'Added paragraph.';
 
         el.querySelector('p')?.remove();
@@ -110,6 +111,7 @@ describe('Dialog', () => {
         await expect(el).to.be.accessible();
 
         const heading = document.createElement('h2');
+
         heading.slot = 'heading';
         heading.textContent = 'New heading';
 
@@ -126,6 +128,7 @@ describe('Dialog', () => {
     it('closes', async () => {
         const closeSpy = spy();
         const el = await fixture<Dialog>(dismissable());
+
         el.addEventListener('close', () => closeSpy());
         await elementUpdated(el);
 
@@ -161,6 +164,7 @@ describe('Dialog', () => {
         `);
 
         const container = el.shadowRoot.querySelector('#hero-container');
+
         expect(container).to.not.be.null;
     });
     it('allows heading override', async () => {
@@ -179,6 +183,7 @@ describe('Dialog', () => {
         `);
 
         const container = el.shadowRoot.querySelector('#heading-container');
+
         expect(container).to.not.be.null;
     });
     it('allows content override', async () => {
@@ -197,6 +202,7 @@ describe('Dialog', () => {
         `);
 
         const container = el.shadowRoot.querySelector('#content-container');
+
         expect(container).to.not.be.null;
     });
     it('allows footer override', async () => {
@@ -218,6 +224,7 @@ describe('Dialog', () => {
         `);
 
         const container = el.shadowRoot.querySelector('#footer-container');
+
         expect(container).to.not.be.null;
     });
     it('allows button override', async () => {
@@ -239,6 +246,7 @@ describe('Dialog', () => {
         `);
 
         const container = el.shadowRoot.querySelector('#button-container');
+
         expect(container).to.not.be.null;
     });
     it('allows dismiss override', async () => {
@@ -257,12 +265,14 @@ describe('Dialog', () => {
         `);
 
         const container = el.shadowRoot.querySelector('#dismiss-container');
+
         expect(container).to.not.be.null;
     });
 });
 
 describe('dev mode', () => {
     let consoleWarnStub!: ReturnType<typeof stub>;
+
     before(() => {
         window.__swc.verbose = true;
         consoleWarnStub = stub(console, 'warn');
@@ -282,6 +292,7 @@ describe('dev mode', () => {
 
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
+
         expect(
             (spyCall.args.at(0) as string).includes('"error"'),
             'confirm error-centric message'

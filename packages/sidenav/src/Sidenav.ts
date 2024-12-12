@@ -31,7 +31,6 @@ export interface SidenavSelectDetail {
 
 /**
  * @element sp-sidenav
- *
  * @slot - the Sidenav Items to display
  * @fires change - Announces a change in the `value` property of the navigation element.
  * This change can be "canceled" via `event.preventDefault()`.
@@ -63,16 +62,19 @@ export class SideNav extends Focusable {
                         'sp-sidenav-item:not([expanded])'
                     ) as SideNavItem;
                 }
+
                 return this.value
                     ? !el.disabled &&
                           !this.isDisabledChild(el) &&
                           el.value === this.value
                     : !el.disabled && !this.isDisabledChild(el);
             });
+
             // If the selected item's parent is collapsed, focus the collapsed parent.
             if (index === -1 && parentSideNavItem) {
                 index = elements.findIndex((el) => el === parentSideNavItem);
             }
+
             return index;
         },
         direction: 'vertical',
@@ -107,10 +109,13 @@ export class SideNav extends Focusable {
         event: CustomEvent<SidenavSelectDetail> & { target: SideNavItem }
     ): void {
         event.stopPropagation();
+
         if (this.value === event.detail.value) {
             return;
         }
+
         const oldValue = this.value;
+
         this.value = event.detail.value;
         const applyDefault = this.dispatchEvent(
             new Event('change', {
@@ -119,6 +124,7 @@ export class SideNav extends Focusable {
                 cancelable: true,
             })
         );
+
         if (!applyDefault) {
             this.value = oldValue;
             event.target.selected = false;
@@ -156,10 +162,12 @@ export class SideNav extends Focusable {
         if (child.disabled) {
             return true;
         }
+
         let parent = child.parentElement as
             | SideNavItem
             | SideNav
             | SideNavHeading;
+
         while (
             parent instanceof SideNavHeading ||
             (!(parent as SideNavItem).disabled &&
@@ -171,6 +179,7 @@ export class SideNav extends Focusable {
                 | SideNav
                 | SideNavHeading;
         }
+
         return parent !== this;
     }
 
@@ -203,6 +212,7 @@ export class SideNav extends Focusable {
             const selectedChild = this.querySelector(
                 '[selected]'
             ) as SideNavItem;
+
             if (selectedChild) {
                 this.value = selectedChild.value;
             }
@@ -211,6 +221,7 @@ export class SideNav extends Focusable {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (changes.has('manageTabIndex')) {
             if (this.manageTabIndex) {
                 this.rovingTabindexController.manage();

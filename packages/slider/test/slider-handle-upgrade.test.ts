@@ -37,6 +37,7 @@ describe('Slider - upgrade order', () => {
         import('../sp-slider-handle.js');
 
         const handles = el.shadowRoot.querySelectorAll('.handle');
+
         expect(handles).to.have.lengthOf(2);
     });
 });

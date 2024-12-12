@@ -29,7 +29,6 @@ import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slot
 
 /**
  * @element sp-action-menu
- *
  * @slot - Menu items to be listed in the Action Menu.
  * @slot icon - The icon to use for the Action Menu.
  * @slot label - The label to use for the Action Menu.
@@ -126,6 +125,7 @@ export class ActionMenu extends ObserveSlotPresence(
         if (this.tooltipEl) {
             this.tooltipEl.disabled = this.open;
         }
+
         return html`
             <sp-action-button
                 aria-describedby=${DESCRIPTION_ID}
@@ -157,6 +157,7 @@ export class ActionMenu extends ObserveSlotPresence(
         if (changedProperties.has('invalid')) {
             this.invalid = false;
         }
+
         super.update(changedProperties);
     }
 }

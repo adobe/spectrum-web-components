@@ -38,7 +38,6 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
  *
  * The `TopNav` component is a custom web component that represents a top navigation bar.
  * It includes various properties and methods to manage its state, selection, and animations.
- *
  * @slot - Nav Items to display as a group
  */
 export class TopNav extends SizedMixin(SpectrumElement) {
@@ -101,6 +100,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      */
     private onClick = (event: Event): void => {
         const target = event.target as TopNavItem;
+
         this.shouldAnimate = true;
         this.selectTarget(target);
     };
@@ -150,6 +150,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      */
     protected set items(items: TopNavItem[]) {
         if (items === this.items) return;
+
         this._items.forEach((item) => {
             this.resizeController.unobserve(item);
         });
@@ -248,6 +249,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         // Update the selection indicator if the 'dir' property has changed.
         if (changes.has('dir')) {
             this.updateSelectionIndicator();
@@ -281,6 +283,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
      */
     private selectTarget(target: TopNavItem): void {
         const { value } = target;
+
         if (value) {
             this.selected = value;
         }
@@ -343,6 +346,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         if (!selectedItem) {
             // Set the selection indicator style to no selection if no matching item is found.
             this.selectionIndicatorStyle = noSelectionStyle;
+
             return;
         }
 

@@ -39,7 +39,6 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
 
 /**
  * @element sp-card
- *
  * @fires change - Announces a change in the `selected` property of a card
  * @slot preview - This is the preview image for Gallery Cards
  * @slot cover-photo - This is the cover photo for Default and Quiet Cards
@@ -77,6 +76,7 @@ export class Card extends LikeAnchor(
     }
     set selected(selected: boolean) {
         if (selected === this.selected) return;
+
         this._selected = selected;
         this.requestUpdate('selected', !this._selected);
     }
@@ -119,16 +119,20 @@ export class Card extends LikeAnchor(
     private handleFocusin = (event: Event): void => {
         this.focused = true;
         const target = event.composedPath()[0];
+
         if (target !== this) {
             this.removeEventListener('keydown', this.handleKeydown);
+
             return;
         }
+
         this.addEventListener('keydown', this.handleKeydown);
     };
 
     private handleFocusout(event: Event): void {
         this.focused = false;
         const target = event.composedPath()[0];
+
         if (target === this) {
             this.removeEventListener('keydown', this.handleKeydown);
         }
@@ -136,9 +140,11 @@ export class Card extends LikeAnchor(
 
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
+
         switch (code) {
             case 'Space':
                 this.toggleSelected();
+
                 if (this.toggles) {
                     event.preventDefault();
                     break;
@@ -163,8 +169,10 @@ export class Card extends LikeAnchor(
                     composed: true,
                 })
             );
+
             return;
         }
+
         this.selected = !this.selected;
         this.announceChange();
     }
@@ -177,6 +185,7 @@ export class Card extends LikeAnchor(
                 composed: true,
             })
         );
+
         if (!applyDefault) {
             this.selected = !this.selected;
         }
@@ -193,16 +202,21 @@ export class Card extends LikeAnchor(
         const hasAnchor = path.some(
             (el) => (el as HTMLElement).localName === 'a'
         );
+
         if (hasAnchor) return;
+
         const start = +new Date();
         const handleEnd = (): void => {
             const end = +new Date();
+
             if (end - start < 200) {
                 this.click();
             }
+
             this.removeEventListener('pointerup', handleEnd);
             this.removeEventListener('pointercancel', handleEnd);
         };
+
         this.addEventListener('pointerup', handleEnd);
         this.addEventListener('pointercancel', handleEnd);
     }
@@ -246,8 +260,11 @@ export class Card extends LikeAnchor(
 
     protected get images(): TemplateResult[] {
         const images: TemplateResult[] = [];
+
         if (this.hasPreview) images.push(this.renderPreviewImage);
+
         if (this.hasCoverPhoto) images.push(this.renderCoverImage);
+
         return images;
     }
 
@@ -255,9 +272,11 @@ export class Card extends LikeAnchor(
         if (this.horizontal) {
             return this.images;
         }
+
         if (this.variant !== 'standard') {
             return [this.renderPreviewImage];
         }
+
         return this.images;
     }
 

@@ -88,12 +88,15 @@ describe('Textfield', () => {
         const el = await litFixture<Textfield>(html`
             <sp-textfield placeholder=${testPlaceholder}></sp-textfield>
         `);
+
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('input')
             : null;
+
         expect(input).to.not.be.null;
         const placeholder = input ? input.placeholder : null;
+
         expect(placeholder).to.equal(testPlaceholder);
     });
     it('multiline', async () => {
@@ -103,10 +106,12 @@ describe('Textfield', () => {
                 multiline
             ></sp-textfield>
         `);
+
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('textarea')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('multiline with rows', async () => {
@@ -117,10 +122,12 @@ describe('Textfield', () => {
                 rows="5"
             ></sp-textfield>
         `);
+
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('textarea')
             : null;
+
         expect(input).to.not.be.null;
         expect(input?.getAttribute('rows')).to.equal('5');
     });
@@ -132,10 +139,12 @@ describe('Textfield', () => {
                 rows="1"
             ></sp-textfield>
         `);
+
         expect(oneRowEl).to.not.equal(undefined);
         const oneRowTextarea = oneRowEl.shadowRoot
             ? oneRowEl.shadowRoot.querySelector('textarea')
             : null;
+
         expect(oneRowTextarea).to.not.be.null;
         expect(oneRowTextarea?.getAttribute('rows')).to.equal('1');
 
@@ -145,15 +154,18 @@ describe('Textfield', () => {
                 multiline
             ></sp-textfield>
         `);
+
         expect(defaultEL).to.not.equal(undefined);
         const defaultTextarea = oneRowEl.shadowRoot
             ? defaultEL.shadowRoot.querySelector('textarea')
             : null;
+
         expect(defaultTextarea).to.not.be.null;
         expect(defaultTextarea?.getAttribute('rows')).to.be.null;
 
         const boundsDefaultElement = defaultTextarea?.getBoundingClientRect();
         const boundsOneRowElement = oneRowTextarea?.getBoundingClientRect();
+
         expect(boundsDefaultElement?.height).to.be.greaterThan(
             boundsOneRowElement?.height ?? 0
         );
@@ -171,6 +183,7 @@ describe('Textfield', () => {
         const sizedElement = (el as HTMLElement & { focusElement: HTMLElement })
             .focusElement;
         const startBounds = sizedElement.getBoundingClientRect();
+
         await sendMouse({
             steps: [
                 {
@@ -191,6 +204,7 @@ describe('Textfield', () => {
         });
 
         const endBounds = sizedElement.getBoundingClientRect();
+
         expect(endBounds.height).equals(startBounds.height);
         expect(endBounds.width).equals(startBounds.width);
     });
@@ -198,6 +212,7 @@ describe('Textfield', () => {
         if (isWebKit()) {
             this.skip();
         }
+
         const el = await fixture<Textfield>(html`
             <sp-textfield
                 multiline
@@ -209,6 +224,7 @@ describe('Textfield', () => {
         const sizedElement = (el as HTMLElement & { focusElement: HTMLElement })
             .focusElement;
         const startBounds = sizedElement.getBoundingClientRect();
+
         await sendMouse({
             steps: [
                 {
@@ -229,6 +245,7 @@ describe('Textfield', () => {
         });
 
         const endBounds = sizedElement.getBoundingClientRect();
+
         expect(endBounds.height).to.be.greaterThan(startBounds.height);
         expect(endBounds.width).to.be.greaterThan(startBounds.width);
     });
@@ -263,6 +280,7 @@ describe('Textfield', () => {
         });
 
         const endBounds = el.getBoundingClientRect();
+
         expect(endBounds.width).equals(startBounds.width);
         expect(endBounds.height).equals(startBounds.height);
     });
@@ -274,10 +292,12 @@ describe('Textfield', () => {
                 grows
             ></sp-textfield>
         `);
+
         expect(el).to.not.equal(undefined);
         const sizer = el.shadowRoot
             ? el.shadowRoot.querySelector('#sizer')
             : null;
+
         expect(sizer).to.not.be.null;
     });
     it('multiline with rows and grows does not grow', async () => {
@@ -289,10 +309,12 @@ describe('Textfield', () => {
                 rows="5"
             ></sp-textfield>
         `);
+
         expect(el).to.not.equal(undefined);
         const sizer = el.shadowRoot
             ? el.shadowRoot.querySelector('#sizer')
             : null;
+
         expect(sizer).to.be.null;
     });
     it('multiline with grows actually grow', async () => {
@@ -303,11 +325,15 @@ describe('Textfield', () => {
                 grows
             ></sp-textfield>
         `);
+
         expect(el).to.not.equal(undefined);
         const textArea = el.shadowRoot.querySelector('textarea');
+
         expect(textArea).to.not.be.null;
+
         if (textArea) {
             const initialHeight = textArea.offsetHeight;
+
             el.focus();
             el.select();
             for (let i = 0; i < 100; i++) {
@@ -317,6 +343,7 @@ describe('Textfield', () => {
                 await sendKeys({ press: 'Enter' });
             }
             const finalHeight = textArea.offsetHeight;
+
             expect(initialHeight).to.be.lt(finalHeight);
         }
     });
@@ -330,18 +357,21 @@ describe('Textfield', () => {
                 required
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#valid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('handles `name` attribute', async () => {
         const el = await litFixture<Textfield>(html`
             <sp-textfield placeholder="Enter your name"></sp-textfield>
         `);
+
         expect(el).to.not.equal(undefined);
         expect(el.name).to.be.undefined;
 
@@ -356,10 +386,12 @@ describe('Textfield', () => {
                 multiline
             ></sp-textfield>
         `);
+
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('textarea')
             : null;
+
         expect(input?.name).to.equal('name');
     });
     it('valid - multiline', async () => {
@@ -372,12 +404,14 @@ describe('Textfield', () => {
                 multiline
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#valid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('valid - required', async () => {
@@ -388,12 +422,14 @@ describe('Textfield', () => {
                 required
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#valid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('valid - multiline - required', async () => {
@@ -405,12 +441,14 @@ describe('Textfield', () => {
                 multiline
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#valid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('valid - boundary-type assertions', async () => {
@@ -422,12 +460,14 @@ describe('Textfield', () => {
                 required
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#valid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('valid - multiline - boundary-type assertions', async () => {
@@ -440,12 +480,14 @@ describe('Textfield', () => {
                 multiline
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#valid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('valid - boundary-type assertions and title', async () => {
@@ -456,10 +498,12 @@ describe('Textfield', () => {
                 value="123"
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot.querySelector('#valid');
+
         expect(input).to.not.be.null;
         expect(el.focusElement).to.not.have.attribute('title');
     });
@@ -472,10 +516,12 @@ describe('Textfield', () => {
                 value="123"
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot.querySelector('#valid');
+
         expect(input).to.not.be.null;
         expect(el.focusElement).to.not.have.attribute('title');
     });
@@ -488,12 +534,14 @@ describe('Textfield', () => {
                 required
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#valid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('valid - multiline - unicode', async () => {
@@ -506,12 +554,14 @@ describe('Textfield', () => {
                 multiline
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#valid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('invalid', async () => {
@@ -523,12 +573,14 @@ describe('Textfield', () => {
                 required
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#invalid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('invalid - multiline', async () => {
@@ -541,12 +593,14 @@ describe('Textfield', () => {
                 multiline
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#invalid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('invalid - required', async () => {
@@ -557,12 +611,14 @@ describe('Textfield', () => {
                 required
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#invalid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('invalid - multiline - required', async () => {
@@ -574,12 +630,14 @@ describe('Textfield', () => {
                 multiline
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#invalid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('invalid - unicode', async () => {
@@ -591,12 +649,14 @@ describe('Textfield', () => {
                 required
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#invalid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('invalid - multiline - unicode', async () => {
@@ -609,12 +669,14 @@ describe('Textfield', () => {
                 multiline
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#invalid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('invalid - boundary-type assertions', async () => {
@@ -626,12 +688,14 @@ describe('Textfield', () => {
                 required
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#invalid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('invalid - boundary-type assertions and title', async () => {
@@ -643,10 +707,12 @@ describe('Textfield', () => {
                 invalid
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot.querySelector('#invalid');
+
         expect(input).to.not.be.null;
         expect(el.focusElement).to.have.attribute('title');
     });
@@ -660,10 +726,12 @@ describe('Textfield', () => {
                 invalid
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot.querySelector('#invalid');
+
         expect(input).to.not.be.null;
         expect(el.focusElement).to.have.attribute('title');
     });
@@ -677,24 +745,29 @@ describe('Textfield', () => {
                 multiline
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         expect(el).to.not.equal(undefined);
         const input = el.shadowRoot
             ? el.shadowRoot.querySelector('#invalid')
             : null;
+
         expect(input).to.not.be.null;
     });
     it('receives focus', async () => {
         let activeElement: HTMLInputElement | null = null;
         const onFocusIn = (event: Event): void => {
             const path = event.composedPath();
+
             activeElement = path[0] as HTMLInputElement;
         };
+
         document.addEventListener('focusin', onFocusIn);
         const el = await litFixture<Textfield>(html`
             <sp-textfield placeholder="Enter your name"></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         el.focus();
@@ -707,12 +780,15 @@ describe('Textfield', () => {
         let activeElement: HTMLInputElement | null = null;
         const onFocusIn = (event: Event): void => {
             const path = event.composedPath();
+
             activeElement = path[0] as HTMLInputElement;
         };
+
         document.addEventListener('focusin', onFocusIn);
         const el = await litFixture<Textfield>(html`
             <sp-textfield disabled placeholder="Enter your name"></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         el.focus();
@@ -734,6 +810,7 @@ describe('Textfield', () => {
         const el = await litFixture<Textfield>(html`
             <sp-textfield placeholder="Enter your name"></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         el.focusElement.value = testValue;
@@ -746,6 +823,7 @@ describe('Textfield', () => {
         const el = await litFixture<Textfield>(html`
             <sp-textfield value=${testValue}></sp-textfield>
         `);
+
         await elementUpdated(el);
         expect(el.value).to.equal(testValue);
 
@@ -759,6 +837,7 @@ describe('Textfield', () => {
         const el = await litFixture<Textfield>(html`
             <sp-textfield value=${testValue}></sp-textfield>
         `);
+
         await elementUpdated(el);
         expect(el.value).to.equal(testValue);
 
@@ -771,6 +850,7 @@ describe('Textfield', () => {
         const el = await litFixture<Textfield>(html`
             <sp-textfield required minlength="3"></sp-textfield>
         `);
+
         el.focus();
         await sendKeys({
             type: 'ab',
@@ -797,6 +877,7 @@ describe('Textfield', () => {
                 required
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
         el.focus();
 
@@ -854,6 +935,7 @@ describe('Textfield', () => {
                 @change=${onChange}
             ></sp-textfield>
         `);
+
         await elementUpdated(el);
 
         el.focusElement.value = testValue;
@@ -862,15 +944,19 @@ describe('Textfield', () => {
 
         expect(el.value).to.equal(testValue);
         const testSource = eventSource as Textfield;
+
         expect(testSource).to.equal(el);
     });
     it('passes through `autocomplete` attribute', async () => {
         let el = await litFixture<Textfield>(html`
             <sp-textfield autocomplete="off"></sp-textfield>
         `);
+
         await elementUpdated(el);
         let input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
+
         expect(input).to.exist;
+
         if (input) {
             expect(input.getAttribute('autocomplete')).to.equal('off');
         }
@@ -881,6 +967,7 @@ describe('Textfield', () => {
         await elementUpdated(el);
         input = el.shadowRoot ? el.shadowRoot.querySelector('input') : null;
         expect(input).to.exist;
+
         if (input) {
             expect(input.getAttribute('autocomplete')).to.not.exist;
         }
@@ -889,6 +976,7 @@ describe('Textfield', () => {
         const el = await litFixture<Textfield>(html`
             <sp-textfield value=""></sp-textfield>
         `);
+
         await elementUpdated(el);
         expect(el.invalid).to.be.false;
 
@@ -900,6 +988,7 @@ describe('Textfield', () => {
         const el = await litFixture<Textfield>(html`
             <sp-textfield allowed-keys="asdf"></sp-textfield>
         `);
+
         await elementUpdated(el);
         expect(el.value).to.equal('');
 
@@ -941,10 +1030,12 @@ describe('Textfield', () => {
                 'email',
                 'password',
             ];
+
             for await (const t of types) {
                 const el = await litFixture<Textfield>(html`
                     <sp-textfield type=${t}></sp-textfield>
                 `);
+
                 expect(el.type).equals(t);
 
                 el.setAttribute('type', 'url');
@@ -959,6 +1050,7 @@ describe('Textfield', () => {
             const el2 = await litFixture<Textfield>(html`
                 <sp-textfield type="time"></sp-textfield>
             `);
+
             expect(el1.type).equals('text');
             expect(el2.type).equals('text');
 
@@ -994,6 +1086,7 @@ describe('Textfield', () => {
         const name = 'This is a textfield';
         const description = 'This text helps you fill it out';
         const descriptionNegative = 'This text helps you when invalid';
+
         it('accepts help text in `slot="help-text"`', async () => {
             const el = await litFixture(html`
                 <sp-textfield label=${name}>
@@ -1046,6 +1139,7 @@ describe('Textfield', () => {
             // when our tooling no longer runs into this error.
             try {
                 await findDescribedNode(name, descriptionNegative);
+
                 if (isFirefox()) {
                     throw new Error('this does not fail anymore...');
                 }
@@ -1085,6 +1179,7 @@ describe('Textfield', () => {
             // when our tooling no longer runs into this error.
             try {
                 await findDescribedNode(name, descriptionNegative);
+
                 if (isFirefox()) {
                     throw new Error('this does not fail anymore...');
                 }

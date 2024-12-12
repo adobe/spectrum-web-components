@@ -46,6 +46,9 @@ export interface StoryArgs {
     [prop: string]: unknown;
 }
 
+/**
+ *
+ */
 function renderSwitch(args: StoryArgs): TemplateResult {
     return html`
         <sp-switch ${spreadProps(args)}>Switch</sp-switch>

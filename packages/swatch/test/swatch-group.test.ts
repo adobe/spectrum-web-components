@@ -21,6 +21,7 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Swatch Group', () => {
     let el: SwatchGroup;
+
     beforeEach(async () => {
         el = await fixture<SwatchGroup>(Default(Default.args));
 
@@ -226,6 +227,7 @@ describe('Swatch Group', () => {
     it('maintains a single tab stop', async () => {
         const inputBefore = document.createElement('input');
         const inputAfter = document.createElement('input');
+
         el.insertAdjacentElement('beforebegin', inputBefore);
         el.insertAdjacentElement('afterend', inputAfter);
         inputBefore.focus();
@@ -247,10 +249,12 @@ describe('Swatch Group', () => {
         const selectedChild = el.querySelector(
             ':scope > sp-swatch:nth-child(4)'
         ) as Swatch;
+
         expect(selectedChild.selected).to.be.false;
 
         const inputBefore = document.createElement('input');
         const inputAfter = document.createElement('input');
+
         el.insertAdjacentElement('beforebegin', inputBefore);
         el.insertAdjacentElement('afterend', inputAfter);
         inputBefore.focus();
@@ -284,6 +288,7 @@ describe('Swatch Group', () => {
         const selectedChild = el.querySelector(
             ':scope > sp-swatch:nth-child(4)'
         ) as Swatch;
+
         expect(selectedChild.selected).to.be.false;
         el.selects = 'single';
         el.selected = [selectedChild.value];
@@ -299,6 +304,7 @@ describe('Swatch Group', () => {
 describe('Swatch Group - DOM selected', () => {
     describe('dev mode', () => {
         let consoleWarnStub!: ReturnType<typeof stub>;
+
         before(() => {
             window.__swc.verbose = true;
             consoleWarnStub = stub(console, 'warn');
@@ -312,13 +318,11 @@ describe('Swatch Group - DOM selected', () => {
         });
 
         it('warns in Dev Mode when mixed-value attribute is added in sp-swatch when parent sp-swatch-group is not having selects="multiple"', async () => {
-            const el = await fixture<SwatchGroup>(
-                html`
-                    <sp-swatch-group selects="single">
-                        <sp-swatch mixed-value></sp-swatch>
-                    </sp-swatch-group>
-                `
-            );
+            const el = await fixture<SwatchGroup>(html`
+                <sp-swatch-group selects="single">
+                    <sp-swatch mixed-value></sp-swatch>
+                </sp-swatch-group>
+            `);
 
             await elementUpdated(el);
             await nextFrame();
@@ -405,6 +409,7 @@ describe('Swatch Group - DOM selected', () => {
                 <sp-swatch value="color-2" color="blue"></sp-swatch>
             </sp-swatch-group>
         `);
+
         await elementUpdated(el);
         expect(el.selected).to.deep.equal(['color-1']);
         el.selected = ['color-2'];
@@ -415,20 +420,19 @@ describe('Swatch Group - DOM selected', () => {
 
 describe('Swatch Group - slotted', () => {
     it('manages [selects="single"] selection through multiple slots', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-swatch value="First">First</sp-swatch>
-                    <sp-swatch value="Second">Second</sp-swatch>
-                    <sp-swatch value="Third" selected>Third</sp-swatch>
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-swatch value="First">First</sp-swatch>
+                <sp-swatch value="Second">Second</sp-swatch>
+                <sp-swatch value="Third" selected>Third</sp-swatch>
+            </div>
+        `);
 
         const firstItem = test.querySelector('sp-swatch') as Swatch;
         const thirdItem = test.querySelector('sp-swatch[selected]') as Swatch;
 
         const shadowRoot = test.attachShadow({ mode: 'open' });
+
         shadowRoot.innerHTML = `
             <sp-swatch-group label="Selects Single Group" selects="single">
                 <slot></slot>
@@ -436,6 +440,7 @@ describe('Swatch Group - slotted', () => {
         `;
 
         const el = shadowRoot.querySelector('sp-swatch-group') as SwatchGroup;
+
         await elementUpdated(el);
         // Await test slot change time.
         await nextFrame();

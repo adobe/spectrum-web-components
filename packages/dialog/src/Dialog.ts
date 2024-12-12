@@ -35,7 +35,6 @@ import { classMap } from '@spectrum-web-components/base/src/directives.js';
 
 /**
  * @element sp-dialog
- *
  * @slot hero - Accepts a hero image to display at the top of the dialog
  * @slot heading - Acts as the heading of the dialog. This should be an actual heading tag `<h1-6 />`
  * @slot - Content not addressed to a specific slot will be interpreted as the main content of the dialog
@@ -118,6 +117,7 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
             'button-group': true,
             'button-group--noFooter': !this.hasFooter,
         };
+
         return html`
             <sp-button-group class=${classMap(classes)}>
                 <slot name="button"></slot>
@@ -163,9 +163,11 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
         if (changes.has('mode') && !!this.mode) {
             this.dismissable = false;
         }
+
         if (changes.has('dismissable') && this.dismissable) {
             this.dismissable = !this.mode;
         }
+
         return super.shouldUpdate(changes);
     }
 
@@ -176,6 +178,7 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (changes.has('error') && this.error) {
             if (window.__swc.DEBUG) {
                 window.__swc.warn(

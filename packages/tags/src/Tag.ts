@@ -29,11 +29,9 @@ import styles from './tag.css.js';
  * @element sp-tag
  *
  * The `Tag` component is a custom web component that represents a tag element.
- *
  * @slot - Text content for labeling the tag.
  * @slot avatar - An avatar element to display within the tag.
  * @slot icon - An icon element to display within the tag.
- *
  * @fires delete - Dispatched when the tag is deleted.
  */
 export class Tag extends SizedMixin(SpectrumElement, {
@@ -42,7 +40,8 @@ export class Tag extends SizedMixin(SpectrumElement, {
 }) {
     /**
      * Returns the styles to be applied to the component.
-\     */
+\
+     */
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -109,6 +108,7 @@ export class Tag extends SizedMixin(SpectrumElement, {
         if (!this.deletable || this.disabled) {
             return;
         }
+
         const { code } = event;
 
         switch (code) {
@@ -130,6 +130,7 @@ export class Tag extends SizedMixin(SpectrumElement, {
         if (this.readonly) {
             return;
         }
+
         const applyDefault = this.dispatchEvent(
             new Event('delete', {
                 bubbles: true,
@@ -137,9 +138,11 @@ export class Tag extends SizedMixin(SpectrumElement, {
                 composed: true,
             })
         );
+
         if (!applyDefault) {
             return;
         }
+
         this.remove();
     }
 
@@ -175,9 +178,11 @@ export class Tag extends SizedMixin(SpectrumElement, {
      */
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
+
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'listitem');
         }
+
         if (this.deletable) {
             this.setAttribute('tabindex', '0');
         }
@@ -190,6 +195,7 @@ export class Tag extends SizedMixin(SpectrumElement, {
      */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (changes.has('disabled')) {
             if (this.disabled) {
                 this.setAttribute('aria-disabled', 'true');

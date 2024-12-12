@@ -135,6 +135,7 @@ describe('Slider', () => {
         expect(pointerId).to.equal(-1);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+
         el.track.setPointerCapture = (id: number) => (pointerId = id);
         el.track.releasePointerCapture = (id: number) => (pointerId = id);
         handle.dispatchEvent(
@@ -219,6 +220,7 @@ describe('Slider', () => {
             '#controls'
         ) as HTMLDivElement;
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+
         el.track.setPointerCapture = (id: number) => (pointerId = id);
         el.track.releasePointerCapture = (id: number) => (pointerId = id);
 
@@ -298,6 +300,7 @@ describe('Slider', () => {
         expect(el.value).to.equal(50);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+
         handle.setPointerCapture = (id: number) => (pointerId = id);
 
         handle.dispatchEvent(
@@ -333,6 +336,7 @@ describe('Slider', () => {
         const el = await fixture<Slider>(html`
             <sp-slider></sp-slider>
         `);
+
         await elementUpdated(el);
 
         expect(el.value).to.equal(50);
@@ -378,6 +382,7 @@ describe('Slider', () => {
         const el = await fixture<Slider>(html`
             <sp-slider style="width: 100px"></sp-slider>
         `);
+
         await elementUpdated(el);
 
         expect(el.value).to.equal(50);
@@ -386,6 +391,7 @@ describe('Slider', () => {
         const trackBoundingRect = track.getBoundingClientRect();
 
         let pointerId = -1;
+
         el.track.setPointerCapture = (id: number) => (pointerId = id);
         el.track.releasePointerCapture = (id: number) => (pointerId = id);
 
@@ -465,6 +471,7 @@ describe('Slider', () => {
                 }}
             ></sp-slider>
         `);
+
         await elementUpdated(el);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
@@ -478,9 +485,11 @@ describe('Slider', () => {
         let shouldCountFrames = true;
         const countFrames = (): void => {
             if (!shouldCountFrames) return;
+
             frames += 1;
             requestAnimationFrame(countFrames);
         };
+
         countFrames();
         type Steps = {
             type: 'move';
@@ -524,12 +533,14 @@ describe('Slider', () => {
         const el = await fixture<Slider>(html`
             <sp-slider min="1" max="11" dir="rtl"></sp-slider>
         `);
+
         await elementUpdated(el);
 
         expect(el.value).to.equal(6);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         const handleBoundingRect = handle.getBoundingClientRect();
+
         await sendMouse({
             steps: [
                 {
@@ -566,12 +577,14 @@ describe('Slider', () => {
         const el = await fixture<Slider>(html`
             <sp-slider></sp-slider>
         `);
+
         await elementUpdated(el);
 
         expect(el.value).to.equal(50);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         const handleBoundingRect = handle.getBoundingClientRect();
+
         await sendMouse({
             steps: [
                 {
@@ -593,6 +606,7 @@ describe('Slider', () => {
         expect(el.value).to.equal(50);
 
         const inputEvent = oneEvent(el, 'input');
+
         await sendMouse({
             steps: [
                 {
@@ -635,11 +649,13 @@ describe('Slider', () => {
         const el = await fixture<Slider>(html`
             <sp-slider style="width: 100px"></sp-slider>
         `);
+
         await elementUpdated(el);
 
         expect(el.value, 'initial').to.equal(50);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+
         el.track.setPointerCapture = (id: number) => (pointerId = id);
         el.track.releasePointerCapture = (id: number) => (pointerId = id);
         handle.dispatchEvent(
@@ -754,6 +770,7 @@ describe('Slider', () => {
                 Step = 0
             </sp-slider>
         `);
+
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
@@ -766,6 +783,7 @@ describe('Slider', () => {
             handleBoundingRect.x + handleBoundingRect.width / 2,
             handleBoundingRect.y + handleBoundingRect.height / 2,
         ];
+
         await sendMouse({
             steps: [
                 {
@@ -784,6 +802,7 @@ describe('Slider', () => {
         expect(el.dragging, 'dragging').to.be.true;
 
         let inputEvent = oneEvent(el, 'input');
+
         await sendMouse({
             steps: [
                 {
@@ -977,6 +996,7 @@ describe('Slider', () => {
             handleBoundingRect.x + handleBoundingRect.width / 2,
             handleBoundingRect.y + handleBoundingRect.height / 2,
         ];
+
         await sendMouse({
             steps: [
                 {
@@ -1015,12 +1035,14 @@ describe('Slider', () => {
                 .normalization=${{
                     toNormalized: (value: number): number => {
                         if (value === 0) return 0.5;
+
                         return value < 0
                             ? 0.5 - (value / -50) * 0.5
                             : 0.5 + (value / 100) * 0.5;
                     },
                     fromNormalized: (value: number): number => {
                         if (value === 0.5) return 0;
+
                         return value < 0.5
                             ? (1 - value / 0.5) * -50
                             : ((value - 0.5) / 0.5) * 100;
@@ -1049,6 +1071,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         const input = el.focusElement as HTMLInputElement;
+
         expect(input).to.not.be.undefined;
         expect(input.type).to.equal('range');
     });
@@ -1065,6 +1088,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         const input = el.focusElement as HTMLInputElement;
+
         expect(input.getAttribute('aria-valuetext')).to.equal('50%');
 
         el.value = 100;
@@ -1085,6 +1109,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         const input = el.focusElement as HTMLInputElement;
+
         expect(input.getAttribute('aria-valuetext')).to.equal('50%');
 
         el.value = 100;
@@ -1108,6 +1133,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         let input = el.focusElement as HTMLInputElement;
+
         expect(
             input.getAttribute('aria-valuetext'),
             'First German number'
@@ -1163,6 +1189,7 @@ describe('Slider', () => {
         ).getAriaValueText = false;
 
         const input = el.focusElement as HTMLInputElement;
+
         await elementUpdated(el);
 
         expect(input.getAttribute('aria-valuetext')).to.equal('50');
@@ -1180,6 +1207,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         const input = el.focusElement as HTMLInputElement;
+
         await elementUpdated(el);
 
         expect(input.getAttribute('aria-valuetext')).to.equal('50px');
@@ -1210,6 +1238,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         let shadowRoot = el.shadowRoot as ShadowRoot;
+
         expect(shadowRoot.querySelector('input#input-0[aria-valuetext="5px"]'))
             .to.exist;
         expect(
@@ -1306,6 +1335,7 @@ describe('Slider', () => {
         expect(el.values).to.deep.equal({ a: 10, b: 20, c: 30 });
 
         const middleHandle = el.querySelector('#middle-handle') as SliderHandle;
+
         middleHandle.value = 22;
 
         await elementUpdated(el);
@@ -1380,6 +1410,7 @@ describe('Slider', () => {
     });
     it('warns in Dev Mode when `min="previous"` is leveraged on first handle', async () => {
         const consoleWarnStub = stub(console, 'warn');
+
         window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
         const el = await fixture<Slider>(html`
             <sp-slider min="0" max="100">
@@ -1413,6 +1444,7 @@ describe('Slider', () => {
 
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
+
         expect(
             spyCall.args.at(0).includes('previous'),
             'confirm "previous" in message'
@@ -1428,6 +1460,7 @@ describe('Slider', () => {
     });
     it('warns in Dev Mode when `max="next"` is leveraged on last handle', async () => {
         const consoleWarnStub = stub(console, 'warn');
+
         window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
         const el = await fixture<Slider>(html`
             <sp-slider min="0" max="100">
@@ -1461,6 +1494,7 @@ describe('Slider', () => {
 
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
+
         expect(spyCall.args.at(0).includes('next'), 'confirm "next" in message')
             .to.be.true;
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
@@ -1474,6 +1508,7 @@ describe('Slider', () => {
     });
     it('builds both handles from a <template>', async () => {
         const template = document.createElement('template');
+
         template.innerHTML = `
             <sp-slider variant="range" step="1" id="price" name="price" label="Max Price" min="35425" max="86610">
                 <sp-slider-handle slot="handle" name="min" label="Minimum" max="next" value="35425"></sp-slider-handle>
@@ -1495,6 +1530,7 @@ describe('Slider', () => {
             el
                 .querySelector('sp-slider')
                 ?.shadowRoot.querySelectorAll('.handle') || [];
+
         expect(createdHandles).to.have.lengthOf(2);
     });
     it('enforces next/previous max/min', async () => {
@@ -1663,6 +1699,7 @@ describe('Slider', () => {
         expect(el.values).to.deep.equal({ a: 10, b: 20, c: 30 });
 
         const lastHandle = el.querySelector('#last-handle') as SliderHandle;
+
         lastHandle.focus();
 
         await sendKeys({
@@ -1688,6 +1725,7 @@ describe('Slider', () => {
                 }}
             ></sp-slider>
         `);
+
         await elementUpdated(el);
         expect(el.value, 'initial').to.equal(50);
 
@@ -1697,6 +1735,7 @@ describe('Slider', () => {
             handleBoundingRect.x + handleBoundingRect.width / 2,
             handleBoundingRect.y + handleBoundingRect.height / 2,
         ];
+
         await sendMouse({
             steps: [
                 {
@@ -1784,11 +1823,13 @@ describe('Slider', () => {
         // open the overlay
         const trigger = el.querySelector('#trigger') as HTMLButtonElement;
         const opened = oneEvent(el, 'sp-opened');
+
         trigger.click();
         await opened;
 
         // current slider value should be 70
         const slider = el.querySelector('sp-slider') as Slider;
+
         expect(slider.value).to.equal(70);
 
         slider.focus();
@@ -1808,9 +1849,11 @@ describe('Slider', () => {
 
         // and the overlay should be in open state
         const overlay = el.querySelector('sp-overlay') as Overlay;
+
         expect(overlay.open).to.be.true;
 
         const closed = oneEvent(el, 'sp-closed');
+
         // send escape key again
         await sendKeys({
             press: 'Escape',

@@ -41,7 +41,6 @@ export type SwatchSelects = 'single' | 'multiple' | undefined;
  * @element sp-swatch-group
  *
  * This component represents a group of swatches.
- *
  * @slot - Swatch elements to manage as a group
  * @fires change - Dispatched when the selected swatch changes
  */
@@ -101,6 +100,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         if (selected === this.selected) return;
 
         const oldSelected = this.selected;
+
         this._selected = selected;
         this.requestUpdate('selected', oldSelected);
     }
@@ -163,8 +163,10 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
                 if (!elements[firstEnabledIndex] && !el.disabled) {
                     firstEnabledIndex = index;
                 }
+
                 return el.selected && !el.disabled;
             });
+
             return elements[firstSelectedIndex]
                 ? firstSelectedIndex
                 : firstEnabledIndex;
@@ -192,11 +194,13 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         // Prevent default if no selection mode is set
         if (!this.selects) {
             event.preventDefault();
+
             return;
         }
 
         if (this.selects === 'single') {
             const { target } = event;
+
             target.tabIndex = 0;
             target.selected = true;
 
@@ -212,6 +216,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
             // Deselect all other swatches
             this.rovingTabindexController.elements.forEach((child) => {
                 if (child === target) return;
+
                 child.selected = false;
             });
         } else if (this.selects === 'multiple') {
@@ -248,6 +253,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
      */
     private manageChange = async (): Promise<void> => {
         const presentSet = new Set();
+
         this.selectedSet = new Set(this.selected);
 
         // Wait for all swatches to complete updating
@@ -256,6 +262,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         // Add swatch values to the present set and update the selected set
         this.swatches.forEach((swatch) => {
             presentSet.add(swatch.value);
+
             if (swatch.selected) {
                 this.selectedSet.add(swatch.value);
             }
@@ -371,6 +378,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         changes: PropertyValues
     ): ((swatch: Swatch) => void)[] {
         const selectionSwatchActions: ((swatch: Swatch) => void)[] = [];
+
         if (!changes.has('selects')) return selectionSwatchActions;
 
         // Set the role attribute based on the selection mode
@@ -419,9 +427,11 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         // Create Swatch actions that build state to be applied later.
         let nextSelected = new Set(this.selected);
         const currentValues = new Set();
+
         if (changes.has('selected')) {
             swatchActions.push((swatch) => {
                 currentValues.add(swatch.value);
+
                 if (
                     nextSelected.has(swatch.value) ||
                     (!this.hasUpdated && swatch.selected)

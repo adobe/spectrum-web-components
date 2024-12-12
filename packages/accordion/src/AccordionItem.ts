@@ -115,6 +115,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
         if (this.disabled) {
             return;
         }
+
         this.toggle();
     }
 
@@ -132,6 +133,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
                 cancelable: true,
             })
         );
+
         if (!applyDefault) {
             this.open = !this.open;
         }
@@ -173,6 +175,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
      */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (changes.has('disabled')) {
             if (this.disabled) {
                 this.setAttribute('aria-disabled', 'true');

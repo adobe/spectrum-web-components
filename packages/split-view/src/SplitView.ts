@@ -49,7 +49,6 @@ const COLLAPSE_THREASHOLD = 50;
  * @element sp-split-view
  *
  * This component represents a split view layout.
- *
  * @slot - Two sibling elements to be sized by the element attributes
  * @fires change - Announces the new position of the splitter
  */
@@ -100,7 +99,6 @@ export class SplitView extends SpectrumElement {
     /**
      * The start size of the primary pane, can be a real pixel number|string, percentage or "auto"
      * For example: "100", "120px", "75%" or "auto" are valid values
-     *
      * @attr
      */
     @property({ type: String, attribute: 'primary-size' })
@@ -343,6 +341,7 @@ export class SplitView extends SpectrumElement {
     private onPointerdown(event: PointerEvent): void {
         if (!this.resizable || (event.button && event.button !== 0)) {
             event.preventDefault();
+
             return;
         }
 
@@ -429,6 +428,7 @@ export class SplitView extends SpectrumElement {
             case 'Home':
                 event.preventDefault();
                 this.updatePosition(this.collapsible ? 0 : this.minPos);
+
                 return;
             case 'End':
                 event.preventDefault();
@@ -437,6 +437,7 @@ export class SplitView extends SpectrumElement {
                         ? this.viewSize - this.splitterSize
                         : this.maxPos
                 );
+
                 return;
             case 'ArrowLeft':
                 direction = isLTRorVertical ? -1 : 1;
@@ -481,6 +482,7 @@ export class SplitView extends SpectrumElement {
 
         if (this.splitterPos === undefined) {
             const startPos = await this.calcStartPos();
+
             this.updatePosition(startPos);
         }
     }
@@ -536,9 +538,11 @@ export class SplitView extends SpectrumElement {
         if (input <= this.minPos) {
             return this.minPos;
         }
+
         if (input >= this.maxPos) {
             return this.maxPos;
         }
+
         return Math.max(this.minPos, Math.min(this.maxPos, input));
     }
 

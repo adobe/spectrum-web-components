@@ -57,12 +57,15 @@ describe('NumberField', () => {
     before(async () => {
         const shouldPolyfillEn = shouldPolyfill('en');
         const shouldPolyfillFr = shouldPolyfill('fr');
+
         if (shouldPolyfillEn || shouldPolyfillFr) {
             await import('@formatjs/intl-numberformat/polyfill-force.js');
         }
+
         if (shouldPolyfillEn) {
             await import('@formatjs/intl-numberformat/locale-data/en.js');
         }
+
         if (shouldPolyfillFr) {
             await import('@formatjs/intl-numberformat/locale-data/fr.js');
         }
@@ -70,6 +73,7 @@ describe('NumberField', () => {
     testForLitDevWarnings(async () => await getElFrom(Default({})));
     it('loads default number-field accessibly', async () => {
         const el = await getElFrom(Default({}));
+
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
@@ -123,6 +127,7 @@ describe('NumberField', () => {
             'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1'
         );
         const el = await getElFrom(decimals({ value: 1234 }));
+
         expect(el.formattedValue).to.equal('1,234');
 
         el.focus();
@@ -174,6 +179,7 @@ describe('NumberField', () => {
                     step: 0.01,
                 })
             );
+
             el.value = 2.42;
             await elementUpdated(el);
             el.size = 'xl';
@@ -481,6 +487,7 @@ describe('NumberField', () => {
         const inputSpy = spy();
         const changeSpy = spy();
         let el: NumberField;
+
         beforeEach(async () => {
             inputSpy.resetHistory();
             changeSpy.resetHistory();
@@ -625,6 +632,7 @@ describe('NumberField', () => {
                 clientX: stepUpRect.x + 1,
                 clientY: stepUpRect.y + 1,
             };
+
             (
                 el as unknown as {
                     buttons: HTMLDivElement;
@@ -640,6 +648,7 @@ describe('NumberField', () => {
                 return;
             };
             let input = oneEvent(el, 'input');
+
             target.dispatchEvent(new PointerEvent('pointerdown', options));
             await input;
             target.dispatchEvent(new PointerEvent('pointerup', options));
@@ -648,6 +657,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(60);
             target = el.shadowRoot.querySelector('.step-down') as HTMLElement;
             const stepDownRect = target.getBoundingClientRect();
+
             options.clientX = stepDownRect.x + 1;
             options.clientY = stepDownRect.y + 1;
             input = oneEvent(el, 'input');
@@ -675,6 +685,7 @@ describe('NumberField', () => {
                 buttonDownRect.x + buttonDownRect.width / 2,
                 buttonDownRect.y + buttonDownRect.height / 2,
             ];
+
             sendMouse({
                 steps: [
                     {
@@ -707,6 +718,7 @@ describe('NumberField', () => {
                 ],
             });
             let framesToWait = FRAMES_PER_CHANGE * 2;
+
             while (framesToWait) {
                 // input is only processed onces per FRAMES_PER_CHANGE number of frames
                 framesToWait -= 1;
@@ -741,6 +753,7 @@ describe('NumberField', () => {
                 buttonDownRect.x + buttonDownRect.width / 2,
                 buttonDownRect.y + buttonDownRect.height / 2,
             ];
+
             sendMouse({
                 steps: [
                     {
@@ -769,6 +782,7 @@ describe('NumberField', () => {
                 ],
             });
             let framesToWait = FRAMES_PER_CHANGE * 2;
+
             while (framesToWait) {
                 // input is only processed onces per FRAMES_PER_CHANGE number of frames
                 framesToWait -= 1;
@@ -793,6 +807,7 @@ describe('NumberField', () => {
     it('accepts pointer interactions with the stepper UI', async () => {
         const inputSpy = spy();
         const el = await getElFrom(Default({ value: 50 }));
+
         el.addEventListener('input', () => inputSpy());
         expect(el.formattedValue).to.equal('50');
         expect(el.valueAsString).to.equal('50');
@@ -815,6 +830,7 @@ describe('NumberField', () => {
             buttonDownRect.x + buttonDownRect.width + 5,
             buttonDownRect.y + buttonDownRect.height + 5,
         ];
+
         await sendMouse({
             steps: [
                 {
@@ -828,6 +844,7 @@ describe('NumberField', () => {
         });
         await oneEvent(el, 'input');
         let value = 50 + inputSpy.callCount;
+
         expect(el.formattedValue).to.equal(String(value));
         expect(el.valueAsString).to.equal(String(value));
         expect(el.value).to.equal(value);
@@ -872,6 +889,7 @@ describe('NumberField', () => {
             ],
         });
         let framesToWait = FRAMES_PER_CHANGE;
+
         while (framesToWait) {
             // input is only processed onces per FRAMES_PER_CHANGE number of frames
             framesToWait -= 1;
@@ -885,6 +903,7 @@ describe('NumberField', () => {
     });
     it('surfaces `valueAsNumber`', async () => {
         const el = await getElFrom(Default({}));
+
         el.value = 1000;
         await elementUpdated(el);
         expect(el.formattedValue).to.equal('1,000');
@@ -899,12 +918,14 @@ describe('NumberField', () => {
     describe('manages `value` with `formatOptions`', () => {
         it('manages decimals', async () => {
             const el = await getElFrom(decimals({ value: 1.333333 }));
+
             expect(el.value).to.equal(1.33);
             expect(el.formattedValue).to.equal('+1.33');
             expect(el.valueAsString).to.equal('1.33');
         });
         it('manages precents', async () => {
             const el = await getElFrom(percents({ value: 0.45 }));
+
             expect(el.formattedValue).to.equal('45%');
             expect(el.valueAsString).to.equal('0.45');
             expect(el.value).to.equal(0.45);
@@ -932,12 +953,14 @@ describe('NumberField', () => {
         });
         it('manages currency', async () => {
             const el = await getElFrom(currency({ value: 234.21 }));
+
             expect(el.formattedValue).to.equal('EUR 234.21');
             expect(el.valueAsString).to.equal('234.21');
             expect(el.value).to.equal(234.21);
         });
         it('manages units', async () => {
             const el = await getElFrom(units({ value: 17 }));
+
             expect(el.formattedValue).to.equal('17 inches');
             expect(el.valueAsString).to.equal('17');
             expect(el.value).to.equal(17);
@@ -946,8 +969,10 @@ describe('NumberField', () => {
             this.retries(0);
             const modifier = isMac() ? 'Meta' : 'Control';
             const el = await getElFrom(units({ value: 17 }));
+
             expect(el.value).to.equal(17);
             const rect = el.focusElement.getBoundingClientRect();
+
             await sendMouse({
                 steps: [
                     {
@@ -990,6 +1015,7 @@ describe('NumberField', () => {
             const modifier = isMac() ? 'Meta' : 'Control';
             const el = await getElFrom(units({ value: 17 }));
             const input = document.createElement('input');
+
             el.insertAdjacentElement('beforebegin', input);
             input.focus();
             await sendKeys({
@@ -1025,6 +1051,7 @@ describe('NumberField', () => {
         });
         it('manages units not supported by the browser', async () => {
             const el = await getElFrom(pixels({ value: 17 }));
+
             expect(el.formattedValue).to.equal('17px');
             expect(el.valueAsString).to.equal('17');
             expect(el.value).to.equal(17);
@@ -1036,6 +1063,7 @@ describe('NumberField', () => {
         let lastChangeValue = 0;
         const inputSpy = spy();
         const changeSpy = spy();
+
         beforeEach(async () => {
             inputSpy.resetHistory();
             changeSpy.resetHistory();
@@ -1096,6 +1124,7 @@ describe('NumberField', () => {
                 buttonUpRect.x + buttonUpRect.width / 2,
                 buttonUpRect.y + buttonUpRect.height / 2,
             ];
+
             await sendMouse({
                 steps: [
                     {
@@ -1159,6 +1188,7 @@ describe('NumberField', () => {
         let lastChangeValue = 0;
         const inputSpy = spy();
         const changeSpy = spy();
+
         beforeEach(async () => {
             inputSpy.resetHistory();
             changeSpy.resetHistory();
@@ -1336,6 +1366,7 @@ describe('NumberField', () => {
                 buttonDownRect.x + buttonDownRect.width / 2,
                 buttonDownRect.y + buttonDownRect.height / 2,
             ];
+
             await sendMouse({
                 steps: [
                     {
@@ -1372,6 +1403,7 @@ describe('NumberField', () => {
     });
     describe('step', () => {
         let el: NumberField;
+
         beforeEach(async () => {
             el = await getElFrom(Default({ value: 10, step: 5 }));
             expect(el.formattedValue).to.equal('10');
@@ -1411,6 +1443,7 @@ describe('NumberField', () => {
     });
     describe('step + constraints', () => {
         let el: NumberField;
+
         beforeEach(async () => {
             el = await getElFrom(Default({ step: 5 }));
             expect(el.formattedValue).to.equal('');
@@ -1522,6 +1555,7 @@ describe('NumberField', () => {
     });
     describe('indeterminate', () => {
         let el: NumberField;
+
         beforeEach(async () => {
             el = await getElFrom(indeterminate(indeterminate.args));
             expect(el.formattedValue).to.equal('100');
@@ -1669,11 +1703,13 @@ describe('NumberField', () => {
         const el = await getElFrom(Default({ hideStepper: true }));
         const stepUp = el.shadowRoot.querySelector('.step-up');
         const stepDown = el.shadowRoot.querySelector('.step-down');
+
         expect(stepUp).to.be.null;
         expect(stepDown).to.be.null;
     });
     describe('Disabled', () => {
         let el: NumberField;
+
         beforeEach(async () => {
             el = await getElFrom(Default({ disabled: true, value: 1337 }));
             expect(el.formattedValue).to.equal('1,337');
@@ -1714,6 +1750,7 @@ describe('NumberField', () => {
     });
     describe('Readonly', () => {
         let el: NumberField;
+
         beforeEach(async () => {
             el = await getElFrom(Default({ readonly: true, value: 1337 }));
             expect(el.formattedValue).to.equal('1,337');

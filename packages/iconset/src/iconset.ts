@@ -22,6 +22,7 @@ export abstract class Iconset extends LitElement {
     protected override firstUpdated(): void {
         // force no display for all iconsets
         this.style.display = 'none';
+
         if (window.__swc.DEBUG) {
             window.__swc.warn(
                 this,
@@ -51,6 +52,7 @@ export abstract class Iconset extends LitElement {
                 IconsetRegistry.getInstance().addIconset(value, this);
             }
         }
+
         this._name = value;
     }
     public get name(): string {
@@ -104,6 +106,7 @@ export abstract class Iconset extends LitElement {
         if (!this.name || this.registered) {
             return;
         }
+
         IconsetRegistry.getInstance().addIconset(this.name, this);
         this.registered = true;
     }
@@ -112,6 +115,7 @@ export abstract class Iconset extends LitElement {
         if (!this.name) {
             return;
         }
+
         IconsetRegistry.getInstance().removeIconset(this.name);
         this.registered = false;
     }

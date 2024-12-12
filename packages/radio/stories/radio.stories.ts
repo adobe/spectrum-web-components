@@ -84,6 +84,9 @@ export interface StoryArgs {
     [prop: string]: unknown;
 }
 
+/**
+ *
+ */
 function renderRadio(args: StoryArgs): TemplateResult {
     return html`
         <sp-radio ${spreadProps(args)}>Radio</sp-radio>

@@ -72,7 +72,6 @@ export type FixedValues = (typeof FIXED_VALUES)[number];
 
 /**
  * @element sp-badge
- *
  * @slot - Text label of the badge
  * @slot icon - Optional icon that appears to the left of the label
  */
@@ -97,13 +96,17 @@ export class Badge extends SizedMixin(
 
     public set fixed(fixed: FixedValues | undefined) {
         if (fixed === this.fixed) return;
+
         const oldValue = this.fixed;
+
         this._fixed = fixed;
+
         if (fixed) {
             this.setAttribute('fixed', fixed);
         } else {
             this.removeAttribute('fixed');
         }
+
         this.requestUpdate('fixed', oldValue);
     }
 
@@ -140,6 +143,7 @@ export class Badge extends SizedMixin(
                 );
             }
         }
+
         return html`
             ${this.hasIcon
                 ? html`

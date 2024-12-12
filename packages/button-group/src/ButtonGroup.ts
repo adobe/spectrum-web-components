@@ -40,6 +40,7 @@ export class ButtonGroup extends SizedMixin(SpectrumElement, {
         target: slot,
     }: Event & { target: HTMLSlotElement }): void {
         const assignedElements = slot.assignedElements() as Button[];
+
         assignedElements.forEach((button) => {
             button.size = this.size;
         });

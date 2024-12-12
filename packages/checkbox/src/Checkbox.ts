@@ -138,6 +138,7 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
 
     public override connectedCallback(): void {
         super.connectedCallback();
+
         if (this.hasAttribute('autofocus')) {
             this.updateComplete.then(() => {
                 this.focus();
@@ -185,6 +186,7 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (
             changes.has('disabled') &&
             (typeof changes.get('disabled') !== 'undefined' || this.disabled)
@@ -196,11 +198,14 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
                 this.tabIndex = this.inputElement.tabIndex;
                 this.inputElement.removeAttribute('tabindex');
             }
+
             this.inputElement.disabled = this.disabled;
         }
+
         if (changes.has('indeterminate')) {
             this.inputElement.indeterminate = this.indeterminate;
         }
+
         if (changes.has('invalid')) {
             if (this.invalid) {
                 this.inputElement.setAttribute('aria-invalid', 'true');

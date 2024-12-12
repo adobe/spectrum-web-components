@@ -80,9 +80,12 @@ export default {
             <div
                 @change=${async (event: Event & { target: SwatchGroup }) => {
                     await 0;
+
                     if (event.defaultPrevented) return;
+
                     const next = event.target
                         .nextElementSibling as HTMLDivElement;
+
                     next.textContent = `Selected: ${JSON.stringify(
                         event.target.selected
                     )}`;
@@ -124,6 +127,7 @@ const template = ({
             ? 'Select a color'
             : 'Selects color(s)'
         : undefined;
+
     return html`
         <sp-swatch-group
             border=${ifDefined(border === 'normal' ? undefined : border)}

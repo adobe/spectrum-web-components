@@ -34,6 +34,9 @@ export interface Properties {
     href: undefined;
 }
 
+/**
+ *
+ */
 export function renderButton(properties: Properties): TemplateResult {
     return html`
         <sp-action-button
@@ -53,12 +56,16 @@ export function renderButton(properties: Properties): TemplateResult {
     `;
 }
 
+/**
+ *
+ */
 function renderGroup(properties: Properties): TemplateResult {
     const label = 'Edit';
     const holdAffordance = true;
     const icon = html`
         <sp-icon-edit slot="icon"></sp-icon-edit>
     `;
+
     return html`
         <sp-action-group
             ?quiet="${!!properties.quiet}"
@@ -88,9 +95,13 @@ function renderGroup(properties: Properties): TemplateResult {
     `;
 }
 
+/**
+ *
+ */
 export function renderButtons(properties: Properties): TemplateResult {
     const selected = true;
     const disabled = true;
+
     return html`
         <div
             style="display: flex; flex-direction: column; gap: calc(var(--spectrum-spacing-100) * var(--swc-scale-factor));"

@@ -96,11 +96,13 @@ export class Coachmark extends Popover {
     // render video and images
     private renderMedia(): TemplateResult {
         const isImage = this.mediaType === MediaType.IMAGE;
+
         if (!isImage) {
             return html`
                 <slot name="asset"></slot>
             `;
         }
+
         return html`
             <sp-asset id="cover-photo">
                 <div class="image-wrapper">
@@ -135,11 +137,13 @@ export class Coachmark extends Popover {
         const hasModifier = this.modifierKeys && this.modifierKeys?.length > 0;
         const hasShortcut = Boolean(this.shortcutKey);
         const hasTitle = Boolean(this.content?.title);
+
         if (!hasTitle && !hasModifier && !hasShortcut) {
             return html`
                 <div class="title"><slot name="title"></slot></div>
             `;
         }
+
         return html`
             ${hasTitle
                 ? html`
@@ -174,10 +178,12 @@ export class Coachmark extends Popover {
     // render description
     private renderContent(): TemplateResult {
         const hasDescription = Boolean(this.content?.description);
+
         if (!hasDescription)
             return html`
                 <slot name="content"></slot>
             `;
+
         return html`
             <div>${this.content?.description}</div>
         `;

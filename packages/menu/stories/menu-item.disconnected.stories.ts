@@ -87,6 +87,7 @@ class MyView1 extends XElement {
                 subtitle: 'Brighten highlights with contrast and details',
             },
         ];
+
         return html`
             View 1
             <my-picker
@@ -119,6 +120,7 @@ class MyView2 extends XElement {
                 subtitle: 'Brighten highlights with contrast and details',
             },
         ];
+
         return html`
             View 2
             <my-picker
@@ -147,15 +149,12 @@ class MyPicker extends XElement {
                 // MenuItem.childrenItem
                 // Using .value for the key will workaround the issue
                 (blendModeOption) => blendModeOption,
-                (blendModeOption: BlendModeOption) =>
-                    html`
-                        <sp-menu-item value=${blendModeOption.value}>
-                            ${blendModeOption.title}
-                            <span slot="value">
-                                ${blendModeOption.subtitle}
-                            </span>
-                        </sp-menu-item>
-                    `
+                (blendModeOption: BlendModeOption) => html`
+                    <sp-menu-item value=${blendModeOption.value}>
+                        ${blendModeOption.title}
+                        <span slot="value">${blendModeOption.subtitle}</span>
+                    </sp-menu-item>
+                `
             )}
         `;
     }

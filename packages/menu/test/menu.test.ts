@@ -42,6 +42,7 @@ describe('Menu', () => {
         `);
 
         const anchor = el.querySelector('a') as HTMLAnchorElement;
+
         await elementUpdated(el);
         expect(document.activeElement === el, 'self not focused, 1').to.be
             .false;
@@ -128,6 +129,7 @@ describe('Menu', () => {
         const inTabindexElement = el.querySelector(
             '[tabindex]:not([tabindex="-1"])'
         );
+
         expect(inTabindexElement).to.be.null;
         await expect(el).to.be.accessible();
     });
@@ -161,6 +163,7 @@ describe('Menu', () => {
         if (isWebKit()) {
             this.skip();
         }
+
         const el = await fixture<Menu>(html`
             <sp-menu
                 selects="single"
@@ -179,6 +182,7 @@ describe('Menu', () => {
         await elementUpdated(el);
 
         const otherItem = el.querySelector('#other') as MenuItem;
+
         otherItem.focus();
         await elementUpdated(el);
         await sendKeys({
@@ -192,6 +196,7 @@ describe('Menu', () => {
         await elementUpdated(el);
 
         const clipboardText = await navigator.clipboard.readText();
+
         expect(clipboardText).to.equal('Other');
     });
 
@@ -199,6 +204,7 @@ describe('Menu', () => {
         if (isWebKit()) {
             this.skip();
         }
+
         const el = await fixture<Menu>(html`
             <sp-menu
                 selects="single"
@@ -217,6 +223,7 @@ describe('Menu', () => {
         await elementUpdated(el);
 
         const otherItem = el.querySelector('#other') as MenuItem;
+
         otherItem.focus();
         await elementUpdated(el);
         await sendKeys({
@@ -230,6 +237,7 @@ describe('Menu', () => {
         await elementUpdated(el);
 
         const clipboardText = await navigator.clipboard.readText();
+
         expect(clipboardText).to.equal('Other');
     });
 
@@ -340,8 +348,10 @@ describe('Menu', () => {
 
         const group = el.querySelector('sp-menu-group') as HTMLElement;
         const prependedItem = document.createElement('sp-menu-item');
+
         prependedItem.textContent = 'Prepended Item';
         const appendedItem = document.createElement('sp-menu-item');
+
         appendedItem.textContent = 'Appended Item';
         group.prepend(prependedItem);
         group.append(appendedItem);
@@ -529,6 +539,7 @@ describe('Menu', () => {
 
         // send right mouse click to the secondItem
         const rect = secondItem.getBoundingClientRect();
+
         sendMouse({
             steps: [
                 {
@@ -636,9 +647,11 @@ describe('Menu', () => {
         ): void => {
             event.preventDefault();
             const selected: string[] = [];
+
             if (event.target.selected.length) {
                 selected.push(event.target.selected.at(-1) as string);
             }
+
             event.target.updateComplete.then(() => {
                 event.target.selected = selected;
             });
@@ -650,11 +663,13 @@ describe('Menu', () => {
                 <sp-menu-item value="3">Third</sp-menu-item>
             </sp-menu>
         `);
+
         await nextFrame();
         await nextFrame();
         expect(el.selected).to.deep.equal([]);
 
         const items = [...el.children] as MenuItem[];
+
         await Promise.all(items.map((child) => child.updateComplete));
 
         items[0].click();

@@ -128,6 +128,7 @@ export const controlled = (): TemplateResult => {
             event.target.selected = ['Select and Mask...'];
         });
     };
+
     return html`
         <p>
             This Menu will default to a

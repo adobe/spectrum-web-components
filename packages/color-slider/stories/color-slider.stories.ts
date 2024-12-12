@@ -57,6 +57,7 @@ export const canvas = (): TemplateResult => {
 class CanvasWriter extends HTMLElement {
     writeToCanvas(): void {
         const { previousElementSibling } = this;
+
         if (previousElementSibling) {
             const canvas = previousElementSibling.querySelector(
                 'canvas[slot="gradient"]'
@@ -66,6 +67,7 @@ class CanvasWriter extends HTMLElement {
                 canvas.width = canvas.offsetWidth;
                 canvas.height = canvas.offsetHeight;
                 const context = canvas.getContext('2d');
+
                 if (context) {
                     context.rect(0, 0, canvas.width, canvas.height);
 

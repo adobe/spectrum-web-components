@@ -43,28 +43,7 @@ const focusableItems = (menu: Menu | MenuGroup): MenuItem[] => {
 describe('Menu group', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Menu>(
-                html`
-                    <sp-menu selects="single">
-                        <sp-menu-group selects="inherit">
-                            <span slot="header">Section Heading</span>
-                            <sp-menu-item>Action 1</sp-menu-item>
-                            <sp-menu-item>Action 2</sp-menu-item>
-                            <sp-menu-item>Action 3</sp-menu-item>
-                        </sp-menu-group>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-group selects="inherit">
-                            <span slot="header">Section Heading</span>
-                            <sp-menu-item>Save</sp-menu-item>
-                            <sp-menu-item disabled>Download</sp-menu-item>
-                        </sp-menu-group>
-                    </sp-menu>
-                `
-            )
-    );
-    it('renders', async () => {
-        const el = await fixture<Menu>(
-            html`
+            await fixture<Menu>(html`
                 <sp-menu selects="single">
                     <sp-menu-group selects="inherit">
                         <span slot="header">Section Heading</span>
@@ -79,31 +58,52 @@ describe('Menu group', () => {
                         <sp-menu-item disabled>Download</sp-menu-item>
                     </sp-menu-group>
                 </sp-menu>
-            `
-        );
+            `)
+    );
+    it('renders', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-group selects="inherit">
+                    <span slot="header">Section Heading</span>
+                    <sp-menu-item>Action 1</sp-menu-item>
+                    <sp-menu-item>Action 2</sp-menu-item>
+                    <sp-menu-item>Action 3</sp-menu-item>
+                </sp-menu-group>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-group selects="inherit">
+                    <span slot="header">Section Heading</span>
+                    <sp-menu-item>Save</sp-menu-item>
+                    <sp-menu-item disabled>Download</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `);
 
-        await waitUntil(() => {
-            return managedItems(el).length === 5;
-        }, `expected menu group to manage 5 children, received ${managedItems(el).length} of ${el.childItems.length}`);
+        await waitUntil(
+            () => {
+                return managedItems(el).length === 5;
+            },
+            `expected menu group to manage 5 children, received ${managedItems(el).length} of ${el.childItems.length}`
+        );
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('manages [slot="header"] content', async () => {
-        const el = await fixture<MenuGroup>(
-            html`
-                <sp-menu-group></sp-menu-group>
-            `
-        );
+        const el = await fixture<MenuGroup>(html`
+            <sp-menu-group></sp-menu-group>
+        `);
+
         await elementUpdated(el);
         const slot = el.shadowRoot.querySelector(
             '[name="header"'
         ) as HTMLSlotElement;
         const header = document.createElement('span');
+
         header.textContent = 'Header';
         header.slot = 'header';
         expect(header.id).to.equal('');
         let slotchanged = oneEvent(slot, 'slotchange');
+
         el.append(header);
         await slotchanged;
         expect(header.id).to.equal(
@@ -116,46 +116,44 @@ describe('Menu group', () => {
         expect(header.id).to.equal('');
     });
     it('handles selects for nested menu groups', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu selects="single">
-                    <sp-menu-item selected>First</sp-menu-item>
-                    <!-- 1 -->
-                    <sp-menu-item>Second</sp-menu-item>
-                    <!-- 1 -->
-                    <sp-menu-group id="mg-multi" selects="multiple">
-                        <sp-menu-item selected>Multi1</sp-menu-item>
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item selected>First</sp-menu-item>
+                <!-- 1 -->
+                <sp-menu-item>Second</sp-menu-item>
+                <!-- 1 -->
+                <sp-menu-group id="mg-multi" selects="multiple">
+                    <sp-menu-item selected>Multi1</sp-menu-item>
+                    <!-- 2 -->
+                    <sp-menu-item>Multi2</sp-menu-item>
+                    <!-- 2 -->
+                    <sp-menu-group id="mg-sub-inherit" selects="inherit">
+                        <sp-menu-item>SubInherit1</sp-menu-item>
                         <!-- 2 -->
-                        <sp-menu-item>Multi2</sp-menu-item>
+                        <sp-menu-item>SubInherit2</sp-menu-item>
                         <!-- 2 -->
-                        <sp-menu-group id="mg-sub-inherit" selects="inherit">
-                            <sp-menu-item>SubInherit1</sp-menu-item>
-                            <!-- 2 -->
-                            <sp-menu-item>SubInherit2</sp-menu-item>
-                            <!-- 2 -->
-                        </sp-menu-group>
                     </sp-menu-group>
-                    <sp-menu-group id="mg-single" selects="single">
-                        <sp-menu-item selected>Single1</sp-menu-item>
-                        <!-- 3 -->
-                        <sp-menu-item>Single2</sp-menu-item>
-                        <!-- 3 -->
-                    </sp-menu-group>
-                    <sp-menu-group id="mg-none">
-                        <sp-menu-item>Inherit1</sp-menu-item>
-                        <!-- - -->
-                        <sp-menu-item>Inherit2</sp-menu-item>
-                        <!-- - -->
-                    </sp-menu-group>
-                    <sp-menu-group id="mg-inherit" selects="inherit">
-                        <sp-menu-item>Inherit1</sp-menu-item>
-                        <!-- 1 -->
-                        <sp-menu-item>Inherit2</sp-menu-item>
-                        <!-- 1 -->
-                    </sp-menu-group>
-                </sp-menu>
-            `
-        );
+                </sp-menu-group>
+                <sp-menu-group id="mg-single" selects="single">
+                    <sp-menu-item selected>Single1</sp-menu-item>
+                    <!-- 3 -->
+                    <sp-menu-item>Single2</sp-menu-item>
+                    <!-- 3 -->
+                </sp-menu-group>
+                <sp-menu-group id="mg-none">
+                    <sp-menu-item>Inherit1</sp-menu-item>
+                    <!-- - -->
+                    <sp-menu-item>Inherit2</sp-menu-item>
+                    <!-- - -->
+                </sp-menu-group>
+                <sp-menu-group id="mg-inherit" selects="inherit">
+                    <sp-menu-item>Inherit1</sp-menu-item>
+                    <!-- 1 -->
+                    <sp-menu-item>Inherit2</sp-menu-item>
+                    <!-- 1 -->
+                </sp-menu-group>
+            </sp-menu>
+        `);
 
         // 1 & 3 should be menuitemradio
         // 2 shouwl menuitemcheckbox
@@ -189,6 +187,7 @@ describe('Menu group', () => {
         const multiItem2 = multiGroup.querySelector(
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
+
         await waitUntil(
             () => managedItems(multiGroup).length === 4,
             `selects="#mg-multi should manage 4 items (2 are inherited), received ${
@@ -206,6 +205,7 @@ describe('Menu group', () => {
         const singleItem2 = singleGroup.querySelector(
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
+
         await waitUntil(
             () => managedItems(singleGroup).length === 2,
             'selects="#mg-none should manage 4 items (2 are inherited)'
@@ -220,6 +220,7 @@ describe('Menu group', () => {
         const noneItem2 = noneGroup.querySelector(
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
+
         await waitUntil(
             () => managedItems(noneGroup).length === 2,
             `selects="#mg-none" should manage 2 items, received ${
@@ -317,22 +318,20 @@ describe('Menu group', () => {
     });
 
     it('handles changing managed items for selects changes', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu selects="multiple" value-separator="--">
-                    <sp-menu-item selected>First</sp-menu-item>
-                    <sp-menu-item>Second</sp-menu-item>
-                    <sp-menu-group id="mg-inherit" selects="inherit">
-                        <sp-menu-item>Inherit1</sp-menu-item>
-                        <sp-menu-item>Inherit2</sp-menu-item>
-                        <sp-menu-group id="mg-sub-inherit" selects="inherit">
-                            <sp-menu-item>SubInherit1</sp-menu-item>
-                            <sp-menu-item selected>SubInherit2</sp-menu-item>
-                        </sp-menu-group>
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="multiple" value-separator="--">
+                <sp-menu-item selected>First</sp-menu-item>
+                <sp-menu-item>Second</sp-menu-item>
+                <sp-menu-group id="mg-inherit" selects="inherit">
+                    <sp-menu-item>Inherit1</sp-menu-item>
+                    <sp-menu-item>Inherit2</sp-menu-item>
+                    <sp-menu-group id="mg-sub-inherit" selects="inherit">
+                        <sp-menu-item>SubInherit1</sp-menu-item>
+                        <sp-menu-item selected>SubInherit2</sp-menu-item>
                     </sp-menu-group>
-                </sp-menu>
-            `
-        );
+                </sp-menu-group>
+            </sp-menu>
+        `);
 
         await waitUntil(
             () => managedItems(el).length == 6,
@@ -381,9 +380,12 @@ describe('Menu group', () => {
         await elementUpdated(inheritGroup);
         await elementUpdated(el);
 
-        await waitUntil(() => {
-            return managedItems(inheritGroup).length === 4;
-        }, `expected new single sub-group to manage 4 items, received ${managedItems(inheritGroup).length} because "selects === ${inheritGroup.selects}`);
+        await waitUntil(
+            () => {
+                return managedItems(inheritGroup).length === 4;
+            },
+            `expected new single sub-group to manage 4 items, received ${managedItems(inheritGroup).length} because "selects === ${inheritGroup.selects}`
+        );
 
         await waitUntil(
             () => managedItems(el).length === 2,
@@ -411,6 +413,7 @@ describe('Menu group', () => {
 
         const menu = el.menu;
         const items: Record<string, MenuItem> = {};
+
         items.i2 = el.querySelector('#i-2') as MenuItem;
         items.i8 = el.querySelector('#i-8') as MenuItem;
         items.i9 = el.querySelector('#i-9') as MenuItem;
@@ -421,6 +424,7 @@ describe('Menu group', () => {
         const group = el.renderRoot.querySelector(
             '#group'
         ) as ComplexSlottedGroup;
+
         items.i1 = group.renderRoot.querySelector('#i-1') as MenuItem;
         items.i4 = group.renderRoot.querySelector('#i-4') as MenuItem;
         items.i10 = group.renderRoot.querySelector('#i-10') as MenuItem;
@@ -428,6 +432,7 @@ describe('Menu group', () => {
         items.i12 = group.renderRoot.querySelector('#i-12') as MenuItem;
 
         const rect = items.i9.getBoundingClientRect();
+
         await sendMouse({
             steps: [
                 {
@@ -454,6 +459,7 @@ describe('Menu group', () => {
         });
         let i = 9;
         const count = Object.keys(items).length + 1;
+
         while (!items.i9.focused) {
             i = Math.max(1, (i + 1 + count) % count);
             await elementUpdated(menu);

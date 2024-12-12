@@ -35,7 +35,6 @@ const stopPropagation = (event: Event): void => event.stopPropagation();
  * @element sp-search
  * @slot help-text - default or non-negative help text to associate to your form element
  * @slot negative-help-text - negative help text to associate to your form element when `invalid`
- *
  * @fires submit - The search form has been submitted.
  */
 export class Search extends Textfield {
@@ -68,6 +67,7 @@ export class Search extends Textfield {
                 bubbles: true,
             })
         );
+
         if (!applyDefault) {
             event.preventDefault();
         }
@@ -75,12 +75,15 @@ export class Search extends Textfield {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
+
         if (code === 'Escape' && this.holdValueOnEscape) {
             return;
         }
+
         if (!this.value || code !== 'Escape') {
             return;
         }
+
         this.reset();
     }
 
@@ -137,6 +140,7 @@ export class Search extends Textfield {
 
     public override firstUpdated(changedProperties: PropertyValues): void {
         super.firstUpdated(changedProperties);
+
         // if holdValueOnEscape is not set, default to search type
         if (!this.hasAttribute('holdValueOnEscape')) {
             this.inputElement.setAttribute('type', 'search');

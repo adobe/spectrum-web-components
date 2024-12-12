@@ -52,6 +52,7 @@ export class TableHead extends SpectrumElement {
      */
     private handleSorted({ target }: Event): void {
         const childCells = [...this.children] as TableHeadCell[];
+
         childCells.forEach((cell) => {
             if (cell !== target) {
                 cell.sortDirection = undefined;

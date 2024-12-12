@@ -82,6 +82,7 @@ const handleEvent =
     ({ onInput, onChange }: StoryArgs) =>
     (event: Event): void => {
         const { value } = event.target as Slider;
+
         if (onInput && event.type === 'input') {
             onInput(value.toString());
         } else if (onChange && event.type === 'change') {
@@ -93,9 +94,11 @@ const handleHandleEvent =
     ({ onInput, onChange }: StoryArgs) =>
     (event: Event): void => {
         const target = event.target as SliderHandle;
+
         if (target.value != null) {
             if (typeof target.value === 'object') {
                 const value = JSON.stringify(target.value, null, 2);
+
                 if (onInput && event.type === 'input') {
                     onInput(value);
                 } else if (onChange && event.type === 'change') {
@@ -103,6 +106,7 @@ const handleHandleEvent =
                 }
             } else {
                 const value = `${target.name}: ${target.value}`;
+
                 if (onInput && event.type === 'input') {
                     onInput(value);
                 } else if (onChange && event.type === 'change') {
@@ -260,12 +264,14 @@ export const FillStartWithNegativeMinRange = (
                 .normalization=${{
                     toNormalized: (value: number): number => {
                         if (value === 0) return 0.5;
+
                         return value < 0
                             ? 0.5 - (value / -50) * 0.5
                             : 0.5 + (value / 100) * 0.5;
                     },
                     fromNormalized: (value: number): number => {
                         if (value === 0.5) return 0;
+
                         return value < 0.5
                             ? (1 - value / 0.5) * -50
                             : ((value - 0.5) / 0.5) * 100;
@@ -483,6 +489,7 @@ export const Multiple = (args: StoryArgs): TemplateResult => {
         step: number
     ): void => {
         const slider = document.querySelector('sp-slider');
+
         if (slider) {
             slider.value = value;
             slider.min = min;
@@ -1070,9 +1077,11 @@ export const ThreeHandlesComplex = (args: StoryArgs = {}): TemplateResult => {
         ({ onInput, onChange }: StoryArgs) =>
         (event: Event): void => {
             const target = event.target as SliderHandle;
+
             if (target.value != null) {
                 if (typeof target.value === 'object') {
                     const value = JSON.stringify(target.value, null, 2);
+
                     if (onInput && event.type === 'input') {
                         onInput(value);
                     } else if (onChange && event.type === 'change') {
@@ -1080,12 +1089,14 @@ export const ThreeHandlesComplex = (args: StoryArgs = {}): TemplateResult => {
                     }
                 } else {
                     const value = `${target.name}: ${target.value}`;
+
                     if (onInput && event.type === 'input') {
                         onInput(value);
                     } else if (onChange && event.type === 'change') {
                         onChange(value);
                     }
                 }
+
                 values[target.name] = target.value;
             }
         };
@@ -1094,6 +1105,7 @@ export const ThreeHandlesComplex = (args: StoryArgs = {}): TemplateResult => {
             const normalizedBlack = values.black / 255;
             const normalizedWhite = values.white / 255;
             const clamped = Math.max(Math.min(value, 1), 0);
+
             return (
                 clamped * (normalizedWhite - normalizedBlack) + normalizedBlack
             );
@@ -1115,38 +1127,46 @@ export const ThreeHandlesComplex = (args: StoryArgs = {}): TemplateResult => {
     const blackNormalization = {
         toNormalized(value: number) {
             const clamped = Math.min(value, values.white);
+
             return clamped / 255;
         },
         fromNormalized(value: number) {
             const denormalized = value * 255;
+
             return Math.min(denormalized, values.white);
         },
     };
     const whiteNormalization = {
         toNormalized(value: number) {
             const clamped = Math.max(value, values.black);
+
             return clamped / 255;
         },
         fromNormalized(value: number) {
             const denormalized = value * 255;
+
             return Math.max(denormalized, values.black);
         },
     };
     const computeGray = (value: number): string => {
         let result = 1.0;
+
         if (value > 0.5) {
             result = Math.max(2 * (1 - value), 0.01);
         } else if (value < 0.5) {
             result = ((1 - 2 * value) * (Math.sqrt(9.99) - 1) + 1) ** 2;
         }
+
         const formatOptions = {
             maximumFractionDigits: 2,
             minimumFractionDigits: 2,
         };
+
         return new Intl.NumberFormat(navigator.language, formatOptions).format(
             result
         );
     };
+
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -1197,6 +1217,7 @@ export const focusTabDemo = (args: StoryArgs = {}): TemplateResult => {
     const min = 0;
     const max = 100;
     const step = 1;
+
     return html`
         <div style="width: 500px; margin: 12px 20px 20px;">
             <sp-slider

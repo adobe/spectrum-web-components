@@ -41,6 +41,9 @@ import {
 
 ignoreResizeObserverLoopError(before, after);
 
+/**
+ *
+ */
 async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {
@@ -49,6 +52,7 @@ async function styledFixture<T extends Element>(
             ${story}
         </sp-theme>
     `);
+
     return test.children[0] as T;
 }
 
@@ -71,6 +75,7 @@ describe('Overlay Trigger - Hover', () => {
                 </overlay-trigger>
             `)()
         );
+
         await elementUpdated(el);
 
         await waitUntil(
@@ -90,6 +95,7 @@ describe('Overlay Trigger - Hover', () => {
         let el: OverlayTrigger;
         let button: ActionButton;
         let tooltip: Tooltip;
+
         beforeEach(async () => {
             el = await fixture<OverlayTrigger>(
                 (() => html`
@@ -109,6 +115,7 @@ describe('Overlay Trigger - Hover', () => {
         });
         it('allows pointer to enter the "tooltip" without closing the "tooltip"', async () => {
             const opened = oneEvent(button, 'sp-opened');
+
             button.dispatchEvent(
                 new MouseEvent('pointerenter', {
                     bubbles: true,
@@ -156,6 +163,7 @@ describe('Overlay Trigger - Hover', () => {
             expect(el.open).to.equal('hover');
 
             const closed = oneEvent(button, 'sp-closed');
+
             button.dispatchEvent(
                 new MouseEvent('pointerleave', {
                     relatedTarget: null,
@@ -169,6 +177,7 @@ describe('Overlay Trigger - Hover', () => {
         });
         it('closes the "tooltip" when leaving the "tooltip"', async () => {
             const opened = oneEvent(button, 'sp-opened');
+
             button.dispatchEvent(
                 new MouseEvent('pointerenter', {
                     bubbles: true,
@@ -188,6 +197,7 @@ describe('Overlay Trigger - Hover', () => {
             expect(el.open).to.equal('hover');
 
             const closed = oneEvent(button, 'sp-closed');
+
             tooltip.dispatchEvent(
                 new MouseEvent('pointerleave', {
                     relatedTarget: null,
@@ -211,12 +221,14 @@ describe('Overlay Trigger - Hover', () => {
                 </overlay-trigger>
             `)()
         );
+
         await elementUpdated(el);
 
         expect(el.open).to.be.undefined;
 
         const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
         const opened = oneEvent(trigger, 'sp-opened');
+
         trigger.dispatchEvent(
             new Event('pointerenter', {
                 bubbles: true,
@@ -245,12 +257,14 @@ describe('Overlay Trigger - Hover', () => {
                 </overlay-trigger>
             `)()
         );
+
         await elementUpdated(el);
 
         expect(el.open).to.be.undefined;
 
         const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
         let opened = oneEvent(trigger, 'sp-opened');
+
         trigger.dispatchEvent(
             new Event('pointerenter', {
                 bubbles: true,
@@ -281,14 +295,17 @@ describe('Overlay Trigger - Hover', () => {
                 </overlay-trigger>
             `)()
         );
+
         await elementUpdated(el);
         const input = document.createElement('input');
+
         el.insertAdjacentElement('beforebegin', input);
 
         expect(el.open).to.be.undefined;
 
         const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
         const opened = oneEvent(el, 'sp-opened');
+
         input.focus();
         await sendKeys({
             press: 'Tab',
@@ -298,6 +315,7 @@ describe('Overlay Trigger - Hover', () => {
         expect(el.open).to.equal('hover');
 
         const closed = oneEvent(el, 'sp-closed');
+
         trigger.blur();
         await closed;
 
@@ -327,6 +345,7 @@ describe('Overlay Trigger - Hover', () => {
                 </sp-dialog-wrapper>
             </overlay-trigger>
         `);
+
         await elementUpdated(el);
 
         const button = el.querySelector('sp-button') as Button;
@@ -334,11 +353,13 @@ describe('Overlay Trigger - Hover', () => {
         const button1 = dialog.querySelector('#button-1') as Button;
         const button2 = dialog.querySelector('#button-2') as Button;
         const button3 = dialog.querySelector('#button-3') as Button;
+
         await elementUpdated(button);
         await elementUpdated(dialog);
 
         let opened = oneEvent(button, 'sp-opened');
         const openedHint = oneEvent(button1, 'sp-opened');
+
         button.dispatchEvent(new Event('click', { bubbles: true }));
         await opened;
         await openedHint;

@@ -36,7 +36,6 @@ export const noop = (): void => {
 /**
  * Apply a "transitionend" listener to an element that may not transition but
  * guarantee the callback will be fired either way.
- *
  * @param el {HTMLElement} - Target of the "transition" listeners.
  * @param action {Function} - Method to trigger the "transition".
  * @param cb {Function} - Callback to trigger when the "transition" has ended.
@@ -68,13 +67,16 @@ export const guaranteedAllTransitionend = (
         if (event.target !== el) {
             return;
         }
+
         runningTransitions.set(
             event.propertyName,
             (runningTransitions.get(event.propertyName) as number) - 1
         );
+
         if (!runningTransitions.get(event.propertyName)) {
             runningTransitions.delete(event.propertyName);
         }
+
         if (runningTransitions.size === 0) {
             cleanup();
         }
@@ -83,9 +85,11 @@ export const guaranteedAllTransitionend = (
         if (event.target !== el) {
             return;
         }
+
         if (!runningTransitions.has(event.propertyName)) {
             runningTransitions.set(event.propertyName, 0);
         }
+
         runningTransitions.set(
             event.propertyName,
             (runningTransitions.get(event.propertyName) as number) + 1
@@ -94,6 +98,7 @@ export const guaranteedAllTransitionend = (
         cancelAnimationFrame(guarantee2);
         cancelAnimationFrame(guarantee3);
     };
+
     el.addEventListener('transitionrun', handleTransitionrun, {
         signal: abortController.signal,
     });
@@ -106,6 +111,9 @@ export const guaranteedAllTransitionend = (
     action();
 };
 
+/**
+ *
+ */
 export function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }
@@ -216,6 +224,7 @@ export class AbstractOverlay extends SpectrumElement {
             composed: true,
             cancelable: true,
         });
+
         document.dispatchEvent(overlayUpdateEvent);
     }
 
@@ -251,12 +260,14 @@ export class AbstractOverlay extends SpectrumElement {
         // specific imported constructor to prevent opening a circular dependency.
         const overlay = new this() as Overlay;
         let restored = false;
+
         overlay.dispose = () => {
             overlay.addEventListener('sp-closed', () => {
                 if (!restored) {
                     restoreContent();
                     restored = true;
                 }
+
                 requestAnimationFrame(() => {
                     overlay.remove();
                 });
@@ -268,14 +279,16 @@ export class AbstractOverlay extends SpectrumElement {
          * Since content must exist in an <sp-overlay>, we need a way to get it there.
          * The best & most-direct way is to declaratively use an <sp-overlay> element,
          * but for imperative users, we'll reparent content into an overlay that we've created for them.
-         **/
+         */
         const restoreContent = reparentChildren([overlayContent], overlay, {
             position: 'beforeend',
             prepareCallback: (el) => {
                 // Ensure that content to be overlaid is no longer targetted to a specific `slot`.
                 // This allow for it to be visible in the overlaid context.
                 const slot = el.slot;
+
                 el.removeAttribute('slot');
+
                 return () => {
                     el.slot = slot;
                 };
@@ -283,6 +296,7 @@ export class AbstractOverlay extends SpectrumElement {
         });
 
         const v1 = !v2 && overlayContent && optionsV1;
+
         if (v1) {
             if (window.__swc.DEBUG) {
                 window.__swc.warn(
@@ -292,9 +306,11 @@ export class AbstractOverlay extends SpectrumElement {
                     { level: 'deprecation' }
                 );
             }
+
             const trigger = triggerOrContent;
             const interaction = interactionOrOptions;
             const options = optionsV1;
+
             AbstractOverlay.applyOptions(overlay, {
                 ...options,
                 delayed:
@@ -310,10 +326,12 @@ export class AbstractOverlay extends SpectrumElement {
             trigger.insertAdjacentElement('afterend', overlay);
             await overlay.updateComplete;
             overlay.open = true;
+
             return overlay.dispose;
         }
 
         const options = interactionOrOptions as OverlayOptions;
+
         overlay.append(overlayContent);
         AbstractOverlay.applyOptions(overlay, {
             ...options,
@@ -323,6 +341,7 @@ export class AbstractOverlay extends SpectrumElement {
             // Do we want to "open" this path, or leave that to the consumer?
             overlay.open = true;
         });
+
         return overlay;
     }
 

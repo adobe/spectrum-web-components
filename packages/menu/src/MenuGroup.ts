@@ -28,7 +28,6 @@ import menuGroupStyles from './menu-group.css.js';
 
 /**
  * @element sp-menu-group
- *
  * @slot header - headline of the menu group
  * @slot - menu items to be listed in the group
  */
@@ -63,22 +62,27 @@ export class MenuGroup extends Menu {
         const headerElement = this.headerElements.length
             ? this.headerElements[0]
             : undefined;
+
         if (headerElement !== this.headerElement) {
             if (this.headerElement && this.headerElement.id === this.headerId) {
                 this.headerElement.removeAttribute('id');
             }
+
             if (headerElement) {
                 this.headerId =
                     this.headerId || `sp-menu-group-label-${randomID()}`;
                 const headerId = headerElement.id || this.headerId;
+
                 if (!headerElement.id) {
                     headerElement.id = headerId;
                 }
+
                 this.setAttribute('aria-labelledby', headerId);
             } else {
                 this.removeAttribute('aria-labelledby');
             }
         }
+
         this.headerElement = headerElement;
     }
 

@@ -96,6 +96,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         testForLitDevWarnings(async () => await actionMenuFixture());
         it('loads', async () => {
             const el = await actionMenuFixture();
+
             await elementUpdated(el);
 
             expect(el).to.not.be.undefined;
@@ -172,6 +173,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 'sp-menu-item:nth-child(2)'
             ) as MenuItem;
             const opened = oneEvent(el, 'sp-opened');
+
             el.click();
             await elementUpdated(el);
             await opened;
@@ -179,6 +181,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.open).to.be.true;
 
             const closed = oneEvent(el, 'sp-closed');
+
             menuItem2.click();
             await closed;
 
@@ -217,12 +220,14 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             ) as MenuItem;
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.click();
             await opened;
 
             expect(el.open).to.be.true;
 
             const closed = oneEvent(el, 'sp-closed');
+
             menuItem2.click();
             await closed;
 
@@ -273,10 +278,12 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.shadowRoot.activeElement).to.equal(el.focusElement);
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
 
             const closed = oneEvent(el, 'sp-closed');
+
             el.open = false;
             await closed;
 
@@ -303,6 +310,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             let opened = oneEvent(el, 'sp-opened');
 
             const boundingRect = el.button.getBoundingClientRect();
+
             sendMouse({
                 steps: [
                     {
@@ -318,12 +326,14 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await opened;
 
             const tray = el.shadowRoot.querySelector('sp-tray');
+
             expect(tray).to.not.be.null;
 
             // Make a selection
             let closed = oneEvent(el, 'sp-closed');
 
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+
             firstItem.click();
 
             await elementUpdated(el);
@@ -335,6 +345,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const button = el.shadowRoot.querySelector(
                 '#button'
             ) as HTMLButtonElement;
+
             expect(button).to.not.be.null;
 
             // we should have SAFARI_FOCUS_RING_CLASS in the classList
@@ -385,6 +396,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const el = await actionMenuFixture();
 
             const button = el.button as HTMLButtonElement;
+
             expect(button).to.have.attribute('aria-haspopup', 'true');
             expect(button).to.not.have.attribute('aria-expanded', 'true');
             expect(button).to.not.have.attribute('aria-controls', 'menu');
@@ -409,6 +421,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             el.focus();
             await elementUpdated(el);
             let opened = oneEvent(el, 'sp-opened');
+
             await sendKeys({ press: 'ArrowRight' });
             await sendKeys({ press: 'ArrowLeft' });
             await sendKeys({ press: 'Space' });
@@ -419,6 +432,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             ).overlayElement.dialogEl.getBoundingClientRect();
 
             let closed = oneEvent(el, 'sp-closed');
+
             await sendKeys({ press: 'Space' });
             await closed;
 
@@ -445,6 +459,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(el.value).to.not.equal(thirdItem.value);
             const opened = oneEvent(el, 'sp-opened');
+
             await sendMouse({
                 steps: [
                     {
@@ -464,6 +479,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const thirdItemRect = thirdItem.getBoundingClientRect();
             const closed = oneEvent(el, 'sp-closed');
             let selected = '';
+
             el.addEventListener('change', (event: Event) => {
                 selected = (event.target as ActionMenu).value;
             });
@@ -515,11 +531,13 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await elementUpdated(el);
 
             const button = el.button as HTMLButtonElement;
+
             expect(button).to.have.attribute('aria-haspopup', 'true');
             expect(button).to.have.attribute('aria-expanded', 'false');
             expect(button).not.to.have.attribute('aria-controls');
 
             let opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
 
@@ -528,6 +546,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(button).to.have.attribute('aria-controls', 'menu');
 
             let closed = oneEvent(el, 'sp-closed');
+
             el.open = false;
             await closed;
 
@@ -565,6 +584,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 .to.be.true;
 
             let opened = oneEvent(root, 'sp-opened');
+
             root.click();
             await opened;
             expect(root.open).to.be.true;
@@ -626,12 +646,14 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(selectedItem.selected).to.be.true;
 
             let opened = oneEvent(root, 'sp-opened');
+
             root.click();
             await opened;
 
             // close by clicking selected
             // (with event listener: should set selected = false)
             let closed = oneEvent(root, 'sp-closed');
+
             selectedItem.click();
             await closed;
 
@@ -679,6 +701,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             );
             const tooltip = el.querySelector('sp-tooltip') as Tooltip;
             const rect = el.getBoundingClientRect();
+
             tooltip.addEventListener('sp-opened', () => openSpy());
             await elementUpdated(tooltip);
 
@@ -688,10 +711,12 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const overlay = tooltip.shadowRoot.querySelector(
                 'sp-overlay'
             ) as Overlay;
+
             await elementUpdated(overlay);
 
             expect(overlay.triggerElement === el.button).to.be.true;
             let open = oneEvent(tooltip, 'sp-opened');
+
             await sendMouse({
                 steps: [
                     {
@@ -708,6 +733,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(tooltip.open).to.be.true;
 
             const close = oneEvent(tooltip, 'sp-closed');
+
             open = oneEvent(el, 'sp-opened');
             await sendMouse({
                 steps: [
@@ -753,6 +779,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await nextFrame();
 
             const open = oneEvent(el, 'sp-opened');
+
             await sendMouse({
                 steps: [
                     {
@@ -771,6 +798,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.open).to.be.true;
 
             const close = oneEvent(el, 'sp-closed');
+
             await sendMouse({
                 steps: [
                     {

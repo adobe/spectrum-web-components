@@ -55,6 +55,7 @@ export const ScaledIndicator = {
      */
     transformX(left: number, width: number): string {
         const scale = width / this.baseSize;
+
         return `transform: translateX(${left}px) scaleX(${scale});`;
     },
 
@@ -64,6 +65,7 @@ export const ScaledIndicator = {
      */
     transformY(top: number, height: number): string {
         const scale = height / this.baseSize;
+
         return `transform: translateY(${top}px) scaleY(${scale});`;
     },
 
@@ -122,11 +124,9 @@ export function calculateScrollTargetForLeftSide(
  * @element sp-tabs
  *
  * The `Tabs` component is a custom web component that manages a group of tab elements.
- *
  * @slot - Tab elements to manage as a group
  * @slot tab-panel - Tab Panel elements related to the listed Tab elements
  * @csspart tablist - Container element for the slotted sp-tab elements
- *
  * @fires change - The selected Tab child has changed.
  * @fires sp-tabs-scroll - The tabs have been scrolled.
  */
@@ -253,6 +253,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
      */
     private set tabs(tabs: Tab[]) {
         if (tabs === this.tabs) return;
+
         this._tabs.forEach((tab) => {
             this.resizeController.unobserve(tab);
         });
@@ -309,9 +310,12 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 const focusInElement = this.selected
                     ? !el.disabled && el.value === this.selected
                     : !el.disabled;
+
                 focusInIndex = index;
+
                 return focusInElement;
             });
+
             return firstFocusableElement ? focusInIndex : -1;
         },
         direction: () => 'both',
@@ -349,7 +353,6 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     /**
      * Scrolls through the tabs component, on the X-axis, by a given amount of pixels/delta.
      * The given delta is limited to the scrollable area of the tabs component.
-     *
      * @param delta - The amount of pixels to scroll by. If the value is positive, the tabs will scroll to the right. If the value is negative, the tabs will scroll to the left.
      * @param behavior - The scroll behavior to use. Defaults to 'smooth'.
      */
@@ -392,6 +395,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     this.dir === 'ltr' ? canScrollRight : canScrollLeft,
             };
         }
+
         return {};
     }
 
@@ -407,10 +411,12 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
             if (typeof tab.updateComplete !== 'undefined') {
                 return tab.updateComplete;
             }
+
             return Promise.resolve(true);
         });
 
         await Promise.all(tabUpdateCompletes);
+
         return complete;
     }
 
@@ -653,6 +659,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         if (event.code === 'Enter' || event.code === 'Space') {
             event.preventDefault();
             const target = event.target as HTMLElement;
+
             if (target) {
                 this.selectTarget(target);
             }
@@ -668,12 +675,14 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
         if (value) {
             const selected = this.selected;
+
             this.selected = value;
             const applyDefault = this.dispatchEvent(
                 new Event('change', {
                     cancelable: true,
                 })
             );
+
             if (!applyDefault) {
                 this.selected = selected;
             }
@@ -719,6 +728,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         } else {
             // If no tab is selected, set the first tab as selected
             const firstTab = this.tabs[0];
+
             if (firstTab) {
                 firstTab.setAttribute('tabindex', '0');
             }
@@ -738,6 +748,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         // If no tab is selected, set the selection indicator style to no selection and return
         if (!selectedElement) {
             this.selectionIndicatorStyle = ScaledIndicator.noSelectionStyle;
+
             return;
         }
 
@@ -811,6 +822,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 this.updateSelectionIndicator
             );
         }
+
         super.disconnectedCallback();
     }
 }

@@ -59,16 +59,19 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
         const code = [...(this.children || [])].find(
             (child) => child.slot === 'code'
         );
+
         return code || this;
     }
 
     public get highlightedHTML(): string {
         const el = this.codeSlot;
+
         return el.innerHTML || '';
     }
 
     public get liveHTML(): string {
         const el = this.codeSlot;
+
         return el.textContent || '';
     }
 
@@ -76,6 +79,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
         if (this.classList.contains('language-javascript')) {
             return 'javascript';
         }
+
         return 'markup';
     }
 
@@ -83,6 +87,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
         if (this.noDemo) {
             return false;
         }
+
         return (
             this.classList.contains('language-html') ||
             this.classList.contains('language-html-live')
@@ -120,6 +125,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
             this.append(demo);
             this.liveHTMLTransferred = true;
         }
+
         return toHtmlTemplateString(this.liveHTML);
     }
 
@@ -133,6 +139,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
                 this.requestUpdate();
             });
         }
+
         return false;
     }
 
@@ -140,6 +147,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
         // highlighedCode needs to happen first in case the HTML is live and
         // needs to be placed into the light DOM
         const { highlightedCode, renderedCode } = this;
+
         return html`
             ${this.showDemo
                 ? html`

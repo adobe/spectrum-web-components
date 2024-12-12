@@ -27,6 +27,7 @@ export const tooltip = function tooltip(
         () => {
             // Dynamically import the tooltip component.
             import('@spectrum-web-components/tooltip/sp-tooltip.js');
+
             return html`
                 <sp-tooltip variant=${ifDefined(options?.variant)}>
                     ${tooltipContent()}

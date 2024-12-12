@@ -133,6 +133,7 @@ export const selectsSingle = (): TemplateResult => {
             .selected=${['row1']}
             @change=${({ target }: Event & { target: Table }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
+
                 next.textContent = `Selected: ${JSON.stringify(
                     target.selected
                 )}`;
@@ -221,12 +222,14 @@ export const selectsMultiple = (): TemplateResult => {
             .selected=${['row1', 'row2']}
             @change=${({ target }: Event & { target: Table }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
+
                 next.textContent = `Selected: ${JSON.stringify(
                     target.selected,
                     null,
                     ' '
                 )}`;
                 const nextNext = next.nextElementSibling as HTMLDivElement;
+
                 nextNext.textContent = `Selected Count: ${target.selected.length}`;
             }}
         >

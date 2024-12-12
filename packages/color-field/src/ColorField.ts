@@ -36,7 +36,9 @@ export class ColorField extends TextfieldBase {
         if (value === this.value) {
             return;
         }
+
         const oldValue = this._value;
+
         this._value = value;
         this.requestUpdate('value', oldValue);
     }
@@ -56,6 +58,7 @@ export class ColorField extends TextfieldBase {
 
         if (!this.cachedColor || this.cachedColor !== this.value) {
             const tinyColor = new TinyColor(this.value);
+
             this.cachedColor = tinyColor.isValid ? tinyColor.toRgbString() : '';
         }
 
@@ -77,6 +80,7 @@ export class ColorField extends TextfieldBase {
         if (this.viewColor) {
             import('@spectrum-web-components/color-handle/sp-color-handle.js');
         }
+
         return html`
             ${super.render()} ${this.renderColorHandle()}
         `;
@@ -86,6 +90,7 @@ export class ColorField extends TextfieldBase {
 
     public override checkValidity(): boolean {
         let validity = super.checkValidity();
+
         if (this.value) {
             if (
                 !this.cachedTinyColor ||
@@ -93,9 +98,11 @@ export class ColorField extends TextfieldBase {
             ) {
                 this.cachedTinyColor = new TinyColor(this.value);
             }
+
             this.valid = validity = this.cachedTinyColor.isValid;
             this.invalid = !validity;
         }
+
         return validity;
     }
 }

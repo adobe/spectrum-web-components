@@ -299,24 +299,36 @@ export const controlled = ({ align = 'start' } = {}): TemplateResult => {
         guides: true,
         latestChange: '',
     };
+
+    /**
+     *
+     */
     function toggle(prop: 'snap' | 'grid' | 'guides') {
         return (event: Event): void => {
             const item = event.target as MenuItem;
+
             state[prop] = !state[prop];
             // in Lit-based usage, this would be handled via render():
             // <sp-menu-item ?selected=${this.isSomethingSelected}>
             item.selected = state[prop];
         };
     }
+    /**
+     *
+     */
     function onChange(event: Event): void {
         state.latestChange = (event.target as MenuItem).value;
         logState();
     }
+    /**
+     *
+     */
     function logState(): void {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         document.getElementById('state-json')!.textContent =
             `application state: ${JSON.stringify(state)}`;
     }
+
     return html`
         <sp-action-menu
             label="View"
@@ -455,6 +467,7 @@ export const directive = (): TemplateResult => {
         <sp-menu-item>Save Selection</sp-menu-item>
         <sp-menu-item disabled>Make Work Path</sp-menu-item>
     `;
+
     return html`
         <sp-action-menu ${slottableRequest(renderOptions)}>
             <span slot="label">
@@ -469,10 +482,16 @@ directive.swc_vrt = {
 };
 
 export const withScrollEvent = (): TemplateResult => {
+    /**
+     *
+     */
     function handleActionMenuScroll(): void {
         console.log('attached action menu scroll listener');
     }
 
+    /**
+     *
+     */
     function renderMenuItems(): TemplateResult[] {
         return Array.from(
             { length: 30 },

@@ -214,6 +214,7 @@ const template = ({
             </sp-dialog>
         </sp-popover>
     `;
+
     return html`
         ${storyStyles}
         <sp-button
@@ -241,6 +242,7 @@ export const Default = ({ open }: Properties = {}): TemplateResult => {
         </sp-popover>
     `;
     const options = typeof open !== 'undefined' ? { open } : undefined;
+
     return html`
         <sp-button ${trigger(renderPopover, options)}>Open Popover</sp-button>
     `;
@@ -315,6 +317,7 @@ class ManagedOverlayTrigger extends LitElement {
                                 if (event.target !== event.currentTarget) {
                                     return;
                                 }
+
                                 console.log('sp-opened');
                                 this.isOpenState = true;
                             }}
@@ -324,6 +327,7 @@ class ManagedOverlayTrigger extends LitElement {
                                 if (event.target !== event.currentTarget) {
                                     return;
                                 }
+
                                 console.log('sp-closed');
                                 this.isOpenState = false;
                             }}

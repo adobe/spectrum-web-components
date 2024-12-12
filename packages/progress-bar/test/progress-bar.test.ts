@@ -69,6 +69,7 @@ describe('ProgressBar', () => {
         const el = await fixture<ProgressBar>(html`
             <sp-progress-bar label="myLabel" indeterminate></sp-progress-bar>
         `);
+
         expect(el.getAttribute('label')).to.equal('myLabel');
     });
 
@@ -76,6 +77,7 @@ describe('ProgressBar', () => {
         const el = await fixture<ProgressBar>(html`
             <sp-progress-bar label="myLabel" indeterminate></sp-progress-bar>
         `);
+
         el.removeAttribute('label');
         el.shadowRoot.textContent = '';
         expect(el.getAttribute('label')).to.equal(null);
@@ -150,6 +152,7 @@ describe('ProgressBar', () => {
 
     describe('dev mode', () => {
         let consoleWarnStub!: ReturnType<typeof stub>;
+
         before(() => {
             window.__swc.verbose = true;
             consoleWarnStub = stub(console, 'warn');
@@ -171,6 +174,7 @@ describe('ProgressBar', () => {
 
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
+
             expect(
                 (spyCall.args.at(0) as string).includes('accessible'),
                 'confirm accessibility-centric message'
@@ -197,6 +201,7 @@ describe('ProgressBar', () => {
             const percentage = el.shadowRoot.querySelector(
                 '.percentage'
             ) as HTMLElement;
+
             expect(percentage.textContent?.search('%')).to.not.equal(-1);
         });
 
@@ -214,6 +219,7 @@ describe('ProgressBar', () => {
             const percentage = el.shadowRoot.querySelector(
                 '.percentage'
             ) as HTMLElement;
+
             expect(percentage.textContent?.search('٪')).to.not.equal(-1);
         });
 

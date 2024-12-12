@@ -34,12 +34,10 @@ export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
 
 /**
  * @element overlay-trigger
- *
  * @slot trigger - The content that will trigger the various overlays
  * @slot hover-content - The content that will be displayed on hover
  * @slot click-content - The content that will be displayed on click
  * @slot longpress-content - The content that will be displayed on click
- *
  * @fires sp-opened - Announces that the overlay has been opened
  * @fires sp-closed - Announces that the overlay has been closed
  */
@@ -135,6 +133,7 @@ export class OverlayTrigger extends SpectrumElement {
     private handleBeforetoggle(event: BeforetoggleOpenEvent): void {
         const { target } = event;
         let type: OverlayContentTypes;
+
         if (target === this.clickOverlayElement) {
             type = 'click';
         } else if (target === this.longpressOverlayElement) {
@@ -145,6 +144,7 @@ export class OverlayTrigger extends SpectrumElement {
         } else {
             return;
         }
+
         if (event.newState === 'open') {
             this.open = type;
         } else if (this.open === type) {
@@ -160,6 +160,7 @@ export class OverlayTrigger extends SpectrumElement {
                         'direction'
                     )) as Placement) || undefined;
         }
+
         if (changes.has('hoverContent')) {
             this.hoverPlacement =
                 ((this.hoverContent[0]?.getAttribute('placement') ||
@@ -167,6 +168,7 @@ export class OverlayTrigger extends SpectrumElement {
                         'direction'
                     )) as Placement) || undefined;
         }
+
         if (changes.has('longpressContent')) {
             this.longpressPlacement =
                 ((this.longpressContent[0]?.getAttribute('placement') ||
@@ -174,6 +176,7 @@ export class OverlayTrigger extends SpectrumElement {
                         'direction'
                     )) as Placement) || undefined;
         }
+
         super.update(changes);
     }
 
@@ -186,9 +189,11 @@ export class OverlayTrigger extends SpectrumElement {
     protected renderClickOverlay(): TemplateResult {
         import('@spectrum-web-components/overlay/sp-overlay.js');
         const slot = this.renderSlot('click-content');
+
         if (!this.clickContent.length) {
             return slot;
         }
+
         return html`
             <sp-overlay
                 id="click-overlay"
@@ -210,9 +215,11 @@ export class OverlayTrigger extends SpectrumElement {
     protected renderHoverOverlay(): TemplateResult {
         import('@spectrum-web-components/overlay/sp-overlay.js');
         const slot = this.renderSlot('hover-content');
+
         if (!this.hoverContent.length) {
             return slot;
         }
+
         return html`
             <sp-overlay
                 id="hover-overlay"
@@ -236,9 +243,11 @@ export class OverlayTrigger extends SpectrumElement {
     protected renderLongpressOverlay(): TemplateResult {
         import('@spectrum-web-components/overlay/sp-overlay.js');
         const slot = this.renderSlot('longpress-content');
+
         if (!this.longpressContent.length) {
             return slot;
         }
+
         return html`
             <sp-overlay
                 id="longpress-overlay"
@@ -261,6 +270,7 @@ export class OverlayTrigger extends SpectrumElement {
 
     protected override render(): TemplateResult {
         const content = this.content.split(' ');
+
         // Keyboard event availability documented in README.md
         /* eslint-disable lit-a11y/click-events-have-key-events */
         return html`
@@ -282,14 +292,17 @@ export class OverlayTrigger extends SpectrumElement {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (this.disabled && changes.has('disabled')) {
             this.open = undefined;
+
             return;
         }
     }
 
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
+
         return complete;
     }
 }

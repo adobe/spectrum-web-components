@@ -31,7 +31,6 @@ import topNavItemStyles from './top-nav-item.css.js';
  *
  * The `TopNavItem` component is a custom web component that represents an item in a top navigation bar.
  * It extends the `LikeAnchor` and `Focusable` mixins to provide anchor-like behavior and focus management.
- *
  * @slot - The text label of the Top Nav Item.
  */
 export class TopNavItem extends LikeAnchor(Focusable) {

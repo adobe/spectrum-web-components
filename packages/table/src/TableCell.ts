@@ -23,7 +23,6 @@ import styles from './table-cell.css.js';
  * @element sp-table-cell
  *
  * This component represents a cell within a table row.
- *
  * @slot Cell content
  */
 export class TableCell extends SpectrumElement {

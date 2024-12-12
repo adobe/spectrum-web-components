@@ -49,6 +49,7 @@ const fixtureElements = async (): Promise<{
         </sp-theme>
     `);
     const picker = test.querySelector('sp-picker') as Picker;
+
     return {
         picker,
         before: test.querySelector('#before') as HTMLDivElement,
@@ -83,11 +84,13 @@ describe('Reparented Picker', () => {
         const item2 = picker.querySelector('[value="2"]') as MenuItem;
         const item3 = picker.querySelector('[value="3"]') as MenuItem;
         let opened = oneEvent(picker, 'sp-opened');
+
         picker.click();
         await opened;
         expect(picker.open).to.be.true;
         expect(picker.value).to.equal('');
         let closed = oneEvent(picker, 'sp-closed');
+
         item2.click();
         await closed;
 

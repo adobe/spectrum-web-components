@@ -59,7 +59,6 @@ export interface HandleValueDictionary {
 
 /**
  * Manages the handles of a slider component.
- *
  * @fires change - An alteration to the value of the element has been committed by the user.
  * @fires input - Dispatched when the value of a handle changes.
  * @fires keydown - Trick :focus-visible polyfill into thinking keyboard based focus
@@ -139,6 +138,7 @@ export class HandleController {
     public inputForHandle(handle: SliderHandle): HTMLInputElement | undefined {
         if (this.handles.has(handle.handleName)) {
             const { input } = this.getHandleElements(handle) || {};
+
             return input;
         }
 
@@ -158,7 +158,6 @@ export class HandleController {
      * It is possible for value attributes to be set programmatically. The <input>
      * for a particular slider needs to have an opportunity to validate any such
      * values
-     *
      * @param handle Handle who's value needs validation
      */
     public setValueFromHandle(handle: SliderHandle): void {
@@ -167,6 +166,7 @@ export class HandleController {
         if (!elements) return;
 
         const { input } = elements;
+
         if (input.valueAsNumber === handle.value) {
             if (handle.dragging) {
                 handle.dispatchInputEvent();
@@ -175,6 +175,7 @@ export class HandleController {
             input.valueAsNumber = handle.value;
             this.requestUpdate();
         }
+
         handle.value = input.valueAsNumber;
     }
 
@@ -336,6 +337,7 @@ export class HandleController {
             if (!handle.handleName?.length) {
                 handle.name = `handle${index + 1}`;
             }
+
             this.handles.set(handle.handleName, handle);
             this.handleOrder.push(handle.handleName);
             handle.handleController = this;
@@ -380,6 +382,7 @@ export class HandleController {
      */
     public get activeHandleModel(): ModelValue {
         const active = this.activeHandle;
+
         return this.model.find((model) => model.name === active)!;
     }
 
@@ -389,6 +392,7 @@ export class HandleController {
         const elements = this.getHandleElements(
             handleSlider
         ) as HandleReference;
+
         return { model: handleSlider, ...elements };
     }
 
@@ -398,12 +402,14 @@ export class HandleController {
 
             const inputNodes =
                 this.host.shadowRoot.querySelectorAll('.handle > input');
+
             for (const inputNode of inputNodes) {
                 const input = inputNode as HTMLInputElement;
                 const handle = input.parentElement as HTMLElement;
                 const model = this.handles.get(
                     handle.getAttribute('name') as string
                 );
+
                 if (model) {
                     this.handleRefMap.set(model, { input, handle });
                 }
@@ -413,6 +419,7 @@ export class HandleController {
         const components = this.handleRefMap.get(
             sliderHandle
         ) as HandleReference;
+
         return components;
     }
 
@@ -426,6 +433,7 @@ export class HandleController {
         if (!this._boundingClientRect) {
             this._boundingClientRect = this.host.track.getBoundingClientRect();
         }
+
         return this._boundingClientRect;
     }
 
@@ -447,15 +455,18 @@ export class HandleController {
             const model = input
                 ? input.model
                 : this.model.find((item) => item.name === this.activeHandle);
+
             if (!input && !!model) {
                 input = model.handle.focusElement as InputWithModel;
             }
+
             this._activePointerEventData = {
                 input,
                 model,
                 resolvedInput,
             };
         }
+
         return this._activePointerEventData;
     }
 
@@ -480,34 +491,45 @@ export class HandleController {
 
     public handlePointerdown(event: PointerEvent): void {
         const { resolvedInput, model } = this.extractDataFromEvent(event);
+
         if (!model || this.host.disabled || event.button !== 0) {
             event.preventDefault();
+
             return;
         }
+
         this.host.track.setPointerCapture(event.pointerId);
         this.updateBoundingRect();
+
         if (event.pointerType === 'mouse') {
             this.host.labelEl.click();
         }
+
         this.draggingHandle = model.handle;
         model.handle.dragging = true;
         this.activateHandle(model.name);
+
         if (resolvedInput) {
             // When the input is resolved forward the pointer event to
             // `handlePointermove` in order to update the value/UI becuase
             // the pointer event was on the track not a handle
             this.handlePointermove(event);
         }
+
         this.requestUpdate();
     }
 
     public handlePointerup(event: PointerEvent): void {
         const { input, model } = this.extractDataFromEvent(event);
+
         delete this._activePointerEventData;
+
         if (!model) return;
+
         if (event.pointerType === 'mouse') {
             this.host.labelEl.click();
         }
+
         this.cancelDrag(model);
         this.requestUpdate();
         this.host.track.releasePointerCapture(event.pointerId);
@@ -516,11 +538,14 @@ export class HandleController {
 
     public handlePointermove(event: PointerEvent): void {
         const { input, model } = this.extractDataFromEvent(event);
+
         if (!model) return;
+
         /* c8 ignore next 3 */
         if (!this.draggingHandle) {
             return;
         }
+
         input.value = this.calculateHandlePosition(event, model).toString();
         model.handle.value = parseFloat(input.value);
         this.host.indeterminate = false;
@@ -530,7 +555,9 @@ export class HandleController {
     public cancelDrag(model?: ModelValue): void {
         model =
             model || this.model.find((item) => item.name === this.activeHandle);
+
         if (!model) return;
+
         model.handle.highlight = false;
         delete this.draggingHandle;
         model.handle.dragging = false;
@@ -541,6 +568,7 @@ export class HandleController {
      */
     private onInputChange = (event: Event): void => {
         const input = event.target as InputWithModel;
+
         input.model.handle.value = input.valueAsNumber;
 
         this.requestUpdate();
@@ -550,6 +578,7 @@ export class HandleController {
     private onInputFocus = (event: Event): void => {
         const input = event.target as InputWithModel;
         let isFocusVisible;
+
         try {
             isFocusVisible =
                 input.matches(':focus-visible') ||
@@ -564,6 +593,7 @@ export class HandleController {
 
     private onInputBlur = (event: Event): void => {
         const input = event.target as InputWithModel;
+
         input.model.handle.highlight = false;
         this.requestUpdate();
     };
@@ -571,6 +601,7 @@ export class HandleController {
     private onInputKeydown = (event: KeyboardEvent): void => {
         if (event.key == 'Escape') {
             const input = event.target as InputWithModel;
+
             if (
                 input.model.handle?.defaultValue !== undefined &&
                 input.model.handle.value !== input.model.handle.defaultValue
@@ -582,9 +613,12 @@ export class HandleController {
                 event.preventDefault();
                 event.stopPropagation();
             }
+
             return;
         }
+
         const input = event.target as InputWithModel;
+
         input.model.handle.highlight = true;
         this.requestUpdate();
     };
@@ -651,6 +685,7 @@ export class HandleController {
             }),
         };
         const ariaLabelledBy = isMultiHandle ? `label input-${index}` : 'label';
+
         return html`
             <div
                 class=${classMap(classes)}
@@ -690,8 +725,10 @@ export class HandleController {
 
     public render(): TemplateResult[] {
         this.clearHandleComponentCache();
+
         return this.model.map((model, index) => {
             const zIndex = this.handleOrder.indexOf(model.name) + 2;
+
             return this.renderHandle(
                 model,
                 index,
@@ -708,10 +745,12 @@ export class HandleController {
      */
     public trackSegments(): [number, number][] {
         const values = this.model.map((model) => model.normalizedValue);
+
         values.sort((a, b) => a - b);
 
         // The first segment always starts at 0
         values.unshift(0);
+
         return values.map((value, index, array) => [
             value,
             array[index + 1] ?? 1,
@@ -744,6 +783,7 @@ export class HandleController {
                 if (previous) {
                     for (let j = index - 1; j >= 0; j--) {
                         const item = handles[j];
+
                         if (typeof item.min === 'number') {
                             result.range.min = item.min;
                             break;
@@ -754,6 +794,7 @@ export class HandleController {
                         result.range.min
                     );
                 }
+
                 if (window.__swc.DEBUG) {
                     if (!previous) {
                         window.__swc.warn(
@@ -764,10 +805,12 @@ export class HandleController {
                     }
                 }
             }
+
             if (handle.max === 'next') {
                 if (next) {
                     for (let j = index + 1; j < handles.length; j++) {
                         const item = handles[j];
+
                         if (typeof item.max === 'number') {
                             result.range.max = item.max;
                             break;
@@ -775,6 +818,7 @@ export class HandleController {
                     }
                     result.clamp.max = Math.min(next.value, result.range.max);
                 }
+
                 if (window.__swc.DEBUG) {
                     if (!next) {
                         window.__swc.warn(
@@ -785,6 +829,7 @@ export class HandleController {
                     }
                 }
             }
+
             return result;
         };
 
@@ -814,6 +859,7 @@ export class HandleController {
                         : undefined,
                 ...rangeAndClamp,
             };
+
             return model;
         });
 
@@ -824,6 +870,7 @@ export class HandleController {
         const updates = [...this.handles.values()]
             .filter((handle) => handle !== this.host)
             .map((handle) => handle.updateComplete);
+
         await Promise.all(updates);
     }
 }

@@ -120,13 +120,17 @@ export class ColorArea extends SpectrumElement {
         if (x === this.x) {
             return;
         }
+
         const oldValue = this.x;
+
         this._x = x;
+
         if (this.inputX) {
             // Use the native `input[type='range']` control to validate this value after `firstUpdate`
             this.inputX.value = x.toString();
             this._x = this.inputX.valueAsNumber;
         }
+
         this.requestUpdate('x', oldValue);
         this.colorController.applyColorFromState();
     }
@@ -142,13 +146,17 @@ export class ColorArea extends SpectrumElement {
         if (y === this.y) {
             return;
         }
+
         const oldValue = this.y;
+
         this._y = y;
+
         if (this.inputY) {
             // Use the native `input[type='range']` control to validate this value after `firstUpdate`
             this.inputY.value = y.toString();
             this._y = this.inputY.valueAsNumber;
         }
+
         this.requestUpdate('y', oldValue);
         this.colorController.applyColorFromState();
     }
@@ -177,6 +185,7 @@ export class ColorArea extends SpectrumElement {
 
     private forwardFocus(): void {
         this.focused = this.hasVisibleFocusInTree();
+
         if (this.activeAxis === 'x') {
             this.inputX.focus();
         } else {
@@ -193,6 +202,7 @@ export class ColorArea extends SpectrumElement {
         if (this._pointerDown) {
             return;
         }
+
         this.altered = 0;
         this.focused = false;
         this._valueChanged = false;
@@ -200,6 +210,7 @@ export class ColorArea extends SpectrumElement {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
+
         this.focused = true;
         this.altered = [event.shiftKey, event.ctrlKey, event.altKey].filter(
             (key) => !!key
@@ -209,6 +220,7 @@ export class ColorArea extends SpectrumElement {
             code.search('Page') === 0 ||
             code.search('Home') === 0 ||
             code.search('End') === 0;
+
         if (isArrowKey) {
             event.preventDefault();
             this.activeKeys.add(code);
@@ -220,6 +232,7 @@ export class ColorArea extends SpectrumElement {
         let deltaX = 0;
         let deltaY = 0;
         const step = Math.max(this.step, this.altered * 5 * this.step);
+
         this.activeKeys.forEach((code) => {
             switch (code) {
                 case 'ArrowUp':
@@ -251,6 +264,7 @@ export class ColorArea extends SpectrumElement {
                     break;
             }
         });
+
         if (deltaX != 0) {
             this.activeAxis = 'x';
             this.inputX.focus();
@@ -258,6 +272,7 @@ export class ColorArea extends SpectrumElement {
             this.activeAxis = 'y';
             this.inputY.focus();
         }
+
         this.x = Math.min(1, Math.max(this.x + deltaX, 0));
         this.y = Math.min(1, Math.max(this.y + deltaY, 0));
 
@@ -279,6 +294,7 @@ export class ColorArea extends SpectrumElement {
                     cancelable: true,
                 })
             );
+
             if (!applyDefault) {
                 this.colorController.restorePreviousColor();
             }
@@ -288,6 +304,7 @@ export class ColorArea extends SpectrumElement {
     private handleKeyup(event: KeyboardEvent): void {
         event.preventDefault();
         const { code } = event;
+
         this.activeKeys.delete(code);
     }
 
@@ -315,12 +332,15 @@ export class ColorArea extends SpectrumElement {
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             event.preventDefault();
+
             return;
         }
+
         this._pointerDown = true;
         this.colorController.savePreviousColor();
         this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
+
         if (event.pointerType === 'mouse') {
             this.focused = true;
         }
@@ -354,10 +374,13 @@ export class ColorArea extends SpectrumElement {
                 cancelable: true,
             })
         );
+
         this.inputX.focus();
+
         if (event.pointerType === 'mouse') {
             this.focused = false;
         }
+
         if (!applyDefault) {
             this.colorController.restorePreviousColor();
         }
@@ -373,6 +396,7 @@ export class ColorArea extends SpectrumElement {
         if (!this.boundingClientRect) {
             return [this.x, this.y];
         }
+
         const rect = this.boundingClientRect;
         const minOffsetX = rect.left;
         const minOffsetY = rect.top;
@@ -397,6 +421,7 @@ export class ColorArea extends SpectrumElement {
         if (event.button !== 0) {
             return;
         }
+
         event.stopPropagation();
         event.preventDefault();
         this.handle.dispatchEvent(new PointerEvent('pointerdown', event));
@@ -536,22 +561,27 @@ export class ColorArea extends SpectrumElement {
 
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
+
         if (this.x !== this.inputX.valueAsNumber) {
             this._x = this.inputX.valueAsNumber;
         }
+
         if (this.y !== this.inputY.valueAsNumber) {
             this._y = this.inputY.valueAsNumber;
         }
+
         if (changed.has('focused') && this.focused) {
             // Lazily bind the `input[type="range"]` elements in shadow roots
             // so that browsers with certain settings (Webkit) aren't allowed
             // multiple tab stops within the Color Area.
             const parentX = this.inputX.parentElement as HTMLDivElement;
             const parentY = this.inputY.parentElement as HTMLDivElement;
+
             if (!parentX.shadowRoot && !parentY.shadowRoot) {
                 parentX.attachShadow({ mode: 'open' });
                 parentY.attachShadow({ mode: 'open' });
                 const slot = '<div tabindex="-1"><slot></slot></div>';
+
                 (parentX.shadowRoot as unknown as ShadowRoot).innerHTML = slot;
                 (parentY.shadowRoot as unknown as ShadowRoot).innerHTML = slot;
             }
@@ -562,6 +592,7 @@ export class ColorArea extends SpectrumElement {
 
     public override connectedCallback(): void {
         super.connectedCallback();
+
         if (
             !this.observer &&
             (window as unknown as WithSWCResizeObserver).ResizeObserver
@@ -575,6 +606,7 @@ export class ColorArea extends SpectrumElement {
                 this.requestUpdate();
             });
         }
+
         this.observer?.observe(this);
     }
 

@@ -26,7 +26,6 @@ import legacyStyles from './switch-legacy.css.js';
  * @element sp-switch
  *
  * This component represents a toggle switch.
- *
  * @slot - text label of the Switch
  * @fires change - Announces a change in the `checked` property of a Switch
  */
@@ -39,6 +38,7 @@ export class Switch extends SizedMixin(CheckboxBase) {
             // Override some styles if we are using the web component polyfill
             return [switchStyles, legacyStyles];
         }
+
         return [switchStyles];
     }
 

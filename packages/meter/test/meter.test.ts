@@ -117,6 +117,7 @@ describe('Meter', () => {
         const percentage = el.shadowRoot.querySelector(
             '.percentage'
         ) as HTMLElement;
+
         expect(percentage.textContent?.search('%')).to.not.equal(-1);
     });
 
@@ -131,6 +132,7 @@ describe('Meter', () => {
         const percentage = el.shadowRoot.querySelector(
             '.percentage'
         ) as HTMLElement;
+
         expect(percentage.textContent?.search('٪')).to.not.equal(-1);
     });
 

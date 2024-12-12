@@ -25,7 +25,6 @@ import panelStyles from './tab-panel.css.js';
  * @element sp-tab-panel
  *
  * This component creates a tabpanel container for Tabs.
- *
  * @slot - content of the Tab Panel
  */
 export class TabPanel extends SpectrumElement {

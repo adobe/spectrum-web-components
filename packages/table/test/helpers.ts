@@ -16,6 +16,9 @@ import { fixture, html } from '@open-wc/testing';
 import { virtualizerRef } from '@lit-labs/virtualizer/virtualize.js';
 import { Virtualizer } from '@lit-labs/virtualizer/Virtualizer.js';
 
+/**
+ *
+ */
 export async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {
@@ -24,11 +27,15 @@ export async function styledFixture<T extends Element>(
             ${story}
         </sp-theme>
     `);
+
     return test.children[0] as T;
 }
 
 /* awaiting a `rangeChanged` event does not guarantee that the component has updated. We need to use
  ** layout complete to ensure the TableBody has updated for tests involving scrolling.
+ */
+/**
+ *
  */
 export async function tableLayoutComplete(table: Table): Promise<void> {
     const body = table.querySelector(
@@ -36,5 +43,6 @@ export async function tableLayoutComplete(table: Table): Promise<void> {
     ) as unknown as TableBody & {
         [virtualizerRef]: Virtualizer;
     };
+
     await body[virtualizerRef].layoutComplete;
 }

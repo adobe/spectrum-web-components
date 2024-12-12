@@ -30,10 +30,8 @@ export type AlertBannerVariants = (typeof VALID_VARIANTS)[number];
 
 /**
  * @element sp-alert-banner
- *
  * @slot - The alert banner text context
  * @slot action - Slot for the button element that surfaces the contextual action a user can take
- *
  * @fires close - Announces the alert banner has been closed
  */
 export class AlertBanner extends SpectrumElement {
@@ -62,6 +60,7 @@ export class AlertBanner extends SpectrumElement {
         if (variant === this.variant) {
             return;
         }
+
         const oldValue = this.variant;
 
         if (this.isValidVariant(variant)) {
@@ -82,6 +81,7 @@ export class AlertBanner extends SpectrumElement {
                 );
             }
         }
+
         this.requestUpdate('variant', oldValue);
     }
 
@@ -130,6 +130,7 @@ export class AlertBanner extends SpectrumElement {
                 cancelable: true,
             })
         );
+
         if (applyDefault) {
             this.close();
         }

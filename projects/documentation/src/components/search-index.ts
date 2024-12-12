@@ -85,7 +85,9 @@ export async function search(value: string): Promise<ResultGroup[]> {
         if (a.maxScore > b.maxScore) {
             return -1;
         }
+
         return 0;
     });
+
     return result;
 }

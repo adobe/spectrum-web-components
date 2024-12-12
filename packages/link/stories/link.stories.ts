@@ -113,6 +113,7 @@ export const Download = (): TemplateResult => {
     const blob = new Blob(['some text for the file'], {
         type: 'text/plain;charset=utf-8',
     });
+
     return html`
         This is a
         <sp-link download="somefile.txt" href="${URL.createObjectURL(blob)}">

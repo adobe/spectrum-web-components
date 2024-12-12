@@ -46,8 +46,12 @@ import { OverlayStateEvent } from '@spectrum-web-components/overlay/src/events.j
 import { Slider } from '@spectrum-web-components/slider/src/Slider.js';
 
 const OVERLAY_TYPES = ['modal', 'page', 'hint', 'auto', 'manual'] as const;
+
 type OverlayTypes = (typeof OVERLAY_TYPES)[number];
 
+/**
+ *
+ */
 async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {
@@ -56,10 +60,14 @@ async function styledFixture<T extends Element>(
             ${story}
         </sp-theme>
     `);
+
     return test.children[0] as T;
 }
 
 describe('sp-overlay', () => {
+    /**
+     *
+     */
     function opensDeclaratively(overlayType: OverlayTypes): void {
         it(`as [type="'${overlayType}'"]`, async () => {
             const el = await styledFixture<Overlay>(html`
@@ -69,10 +77,12 @@ describe('sp-overlay', () => {
             `);
             const content = el.children[0] as Tooltip;
             let opened = oneEvent(el, 'sp-opened');
+
             await opened;
 
             expect(content.open).to.be.true;
             const closed = oneEvent(el, 'sp-closed');
+
             el.open = false;
             await closed;
 
@@ -102,6 +112,7 @@ describe('sp-overlay', () => {
             await elementUpdated(el);
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
 
@@ -123,6 +134,7 @@ describe('sp-overlay', () => {
             await elementUpdated(el);
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
 
@@ -130,6 +142,7 @@ describe('sp-overlay', () => {
             await nextFrame();
 
             const closed = oneEvent(el, 'sp-closed');
+
             el.open = false;
             await closed;
 
@@ -145,11 +158,13 @@ describe('sp-overlay', () => {
             let slottableRequestTime = 0;
             let openedTime = 0;
             const popover = document.createElement('sp-popover');
+
             popover.textContent = 'Test';
             const el = await fixture<Overlay>(html`
                 <sp-overlay
                     @slottable-request=${(event: SlottableRequestEvent) => {
                         slottableRequestTime = performance.now();
+
                         if (event.data !== removeSlottableRequest) {
                             (event.target as HTMLElement).append(popover);
                         } else {
@@ -163,6 +178,7 @@ describe('sp-overlay', () => {
             await elementUpdated(el);
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
 
@@ -172,6 +188,7 @@ describe('sp-overlay', () => {
 
         describe('dev mode', () => {
             let consoleWarnStub!: ReturnType<typeof stub>;
+
             before(() => {
                 window.__swc.verbose = true;
                 consoleWarnStub = stub(console, 'warn');
@@ -194,11 +211,13 @@ describe('sp-overlay', () => {
                 await elementUpdated(el);
 
                 const opened = oneEvent(el, 'sp-opened');
+
                 el.open = true;
                 await opened;
 
                 expect(consoleWarnStub.called).to.be.true;
                 const spyCall = consoleWarnStub.getCall(0);
+
                 expect(
                     (spyCall.args.at(0) as string).includes(
                         '`slottable-request` events are experimental'
@@ -259,11 +278,13 @@ describe('sp-overlay', () => {
             });
             afterEach(async function () {
                 const closed = oneEvent(this.modal, 'sp-closed');
+
                 this.modal.open = false;
                 await closed;
             });
             it('closes "page" overlays when opening', async function () {
                 let opened = oneEvent(this.page, 'sp-opened');
+
                 this.page.open = true;
                 await opened;
                 expect(this.modal.open).to.be.false;
@@ -274,6 +295,7 @@ describe('sp-overlay', () => {
 
                 opened = oneEvent(this.modal, 'sp-opened');
                 const closed = oneEvent(this.page, 'sp-closed');
+
                 this.modal.open = true;
                 await opened;
                 await closed;
@@ -285,6 +307,7 @@ describe('sp-overlay', () => {
             });
             it('closes "hint" overlays when opening', async function () {
                 let opened = oneEvent(this.hint, 'sp-opened');
+
                 this.hint.open = true;
                 await opened;
                 expect(this.modal.open).to.be.false;
@@ -295,6 +318,7 @@ describe('sp-overlay', () => {
 
                 opened = oneEvent(this.modal, 'sp-opened');
                 const closed = oneEvent(this.hint, 'sp-closed');
+
                 this.modal.open = true;
                 await opened;
                 await closed;
@@ -306,6 +330,7 @@ describe('sp-overlay', () => {
             });
             it('closes "auto" overlays when opening', async function () {
                 let opened = oneEvent(this.auto, 'sp-opened');
+
                 this.auto.open = true;
                 await opened;
                 expect(this.modal.open).to.be.false;
@@ -316,6 +341,7 @@ describe('sp-overlay', () => {
 
                 opened = oneEvent(this.modal, 'sp-opened');
                 const closed = oneEvent(this.auto, 'sp-closed');
+
                 this.modal.open = true;
                 await opened;
                 await closed;
@@ -327,6 +353,7 @@ describe('sp-overlay', () => {
             });
             it('does not close "manual" overlays when opening', async function () {
                 let opened = oneEvent(this.manual, 'sp-opened');
+
                 this.manual.open = true;
                 await opened;
                 expect(this.modal.open).to.be.false;
@@ -386,11 +413,13 @@ describe('sp-overlay', () => {
             });
             afterEach(async function () {
                 const closed = oneEvent(this.page, 'sp-closed');
+
                 this.page.open = false;
                 await closed;
             });
             it('should not close "modal" overlays when opening', async function () {
                 let opened = oneEvent(this.modal, 'sp-opened');
+
                 this.modal.open = true;
                 await opened;
                 expect(this.modal.open).to.be.true;
@@ -410,6 +439,7 @@ describe('sp-overlay', () => {
             });
             it('closes "hint" overlays when opening', async function () {
                 let opened = oneEvent(this.hint, 'sp-opened');
+
                 this.hint.open = true;
                 await opened;
                 expect(this.modal.open).to.be.false;
@@ -420,6 +450,7 @@ describe('sp-overlay', () => {
 
                 opened = oneEvent(this.page, 'sp-opened');
                 const closed = oneEvent(this.hint, 'sp-closed');
+
                 this.page.open = true;
                 await opened;
                 await closed;
@@ -431,6 +462,7 @@ describe('sp-overlay', () => {
             });
             it('closes "auto" overlays when opening', async function () {
                 let opened = oneEvent(this.auto, 'sp-opened');
+
                 this.auto.open = true;
                 await opened;
                 expect(this.modal.open).to.be.false;
@@ -441,6 +473,7 @@ describe('sp-overlay', () => {
 
                 opened = oneEvent(this.page, 'sp-opened');
                 const closed = oneEvent(this.auto, 'sp-closed');
+
                 this.page.open = true;
                 await opened;
                 await closed;
@@ -452,6 +485,7 @@ describe('sp-overlay', () => {
             });
             it('does not close "manual" overlays when opening', async function () {
                 let opened = oneEvent(this.manual, 'sp-opened');
+
                 this.manual.open = true;
                 await opened;
                 expect(this.modal.open).to.be.false;
@@ -477,6 +511,7 @@ describe('sp-overlay', () => {
                 </sp-overlay>
             `);
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
 
@@ -514,6 +549,7 @@ describe('sp-overlay', () => {
             expect(hint2.open).to.be.false;
 
             let opened = oneEvent(hint1, 'sp-opened');
+
             hint1.open = true;
             await opened;
 
@@ -522,6 +558,7 @@ describe('sp-overlay', () => {
 
             opened = oneEvent(hint2, 'sp-opened');
             let closed = oneEvent(hint1, 'sp-closed');
+
             hint2.open = true;
             await opened;
             await closed;
@@ -570,6 +607,7 @@ describe('sp-overlay', () => {
             await expect(button).to.be.accessible();
             // Pointer enter the button to trigger the tooltip
             let opened = oneEvent(button, 'sp-opened');
+
             await sendMouse({
                 steps: [
                     {
@@ -621,6 +659,7 @@ describe('sp-overlay', () => {
             await expect(button).to.be.accessible();
 
             let closed = oneEvent(button, 'sp-closed');
+
             // point enter the button to trigger the tooltip
             await sendMouse({
                 steps: [
@@ -695,6 +734,7 @@ describe('sp-overlay', () => {
             await expect(button).to.be.accessible();
             // Pointer enter the button to trigger the tooltip
             let opened = oneEvent(button, 'sp-opened');
+
             await sendMouse({
                 steps: [
                     {
@@ -718,6 +758,7 @@ describe('sp-overlay', () => {
                 tooltipRect.x + tooltipRect.width / 2,
                 tooltipRect.y + tooltipRect.height / 2,
             ] as [number, number];
+
             // Pointer leave the button to close the tooltip, but...
             // Pointer enter the tooltip to keep the tooltip open
             await sendMouse({
@@ -734,6 +775,7 @@ describe('sp-overlay', () => {
             await expect(button).to.be.accessible();
 
             let closed = oneEvent(button, 'sp-closed');
+
             // point enter the button to trigger the tooltip
             await sendMouse({
                 steps: [
@@ -801,6 +843,7 @@ describe('sp-overlay', () => {
             expect(document.activeElement === overlay).to.be.false;
 
             const opened = oneEvent(trigger, 'sp-opened');
+
             trigger.click();
             await opened;
 
@@ -821,6 +864,7 @@ describe('sp-overlay', () => {
 
             const opened = oneEvent(el, 'sp-opened');
             const buttonRect = button.getBoundingClientRect();
+
             sendMouse({
                 steps: [
                     {
@@ -840,6 +884,7 @@ describe('sp-overlay', () => {
             const sliderRect = track.getBoundingClientRect();
 
             let pointerId = -1;
+
             slider.track.setPointerCapture = (id: number) => (pointerId = id);
             slider.track.releasePointerCapture = (id: number) =>
                 (pointerId = id);
@@ -913,11 +958,13 @@ describe('sp-overlay', () => {
             });
             afterEach(async function () {
                 const closed = oneEvent(this.manual, 'sp-closed');
+
                 this.manual.open = false;
                 await closed;
             });
             it('does not close "modal" overlays when opening', async function () {
                 let opened = oneEvent(this.modal, 'sp-opened');
+
                 this.modal.open = true;
                 await opened;
                 expect(this.modal.open).to.be.true;
@@ -937,6 +984,7 @@ describe('sp-overlay', () => {
             });
             it('does not close "modal" overlays when opening', async function () {
                 let opened = oneEvent(this.page, 'sp-opened');
+
                 this.page.open = true;
                 await opened;
                 expect(this.modal.open).to.be.false;
@@ -956,6 +1004,7 @@ describe('sp-overlay', () => {
             });
             it('does not close "hint" overlays when opening', async function () {
                 let opened = oneEvent(this.hint, 'sp-opened');
+
                 this.hint.open = true;
                 await opened;
                 expect(this.modal.open).to.be.false;
@@ -976,6 +1025,7 @@ describe('sp-overlay', () => {
             });
             it('does not close "auto" overlays when opening', async function () {
                 let opened = oneEvent(this.auto, 'sp-opened');
+
                 this.auto.open = true;
                 await opened;
 
@@ -1015,8 +1065,10 @@ describe('sp-overlay', () => {
                 expect(el.open).to.be.false;
 
                 const opened = oneEvent<OverlayStateEvent>(el, 'sp-opened');
+
                 el.open = true;
                 let { overlay } = await opened;
+
                 expect(el === overlay).to.be.true;
 
                 await sendMouse({
@@ -1033,6 +1085,7 @@ describe('sp-overlay', () => {
                 expect(el.open).to.be.true;
 
                 const closed = oneEvent<OverlayStateEvent>(el, 'sp-closed');
+
                 el.open = false;
                 ({ overlay } = await closed);
                 expect(el === overlay).to.be.true;
@@ -1057,8 +1110,10 @@ describe('sp-overlay', () => {
                 expect(el.open).to.be.false;
 
                 const opened = oneEvent<OverlayStateEvent>(el, 'sp-opened');
+
                 el.open = true;
                 let { overlay } = await opened;
+
                 expect(el === overlay).to.be.true;
 
                 await sendKeys({
@@ -1070,6 +1125,7 @@ describe('sp-overlay', () => {
                 expect(el.open).to.be.true;
 
                 const closed = oneEvent<OverlayStateEvent>(el, 'sp-closed');
+
                 el.open = false;
                 ({ overlay } = await closed);
                 expect(el === overlay).to.be.true;

@@ -93,19 +93,24 @@ export class Accordion extends SizedMixin(SpectrumElement, {
      */
     private async onToggle(event: Event): Promise<void> {
         const target = event.target as AccordionItem;
+
         // Let the event pass through the DOM so that it can be
         // prevented from the outside if a user so desires.
         await 0;
+
         if (this.allowMultiple || event.defaultPrevented) {
             // No toggling when `allowMultiple` is true or the user prevents it.
             return;
         }
+
         const items = [...this.items] as AccordionItem[];
+
         /* c8 ignore next 3 */
         if (items && !items.length) {
             // No toggling when there aren't items.
             return;
         }
+
         items.forEach((item) => {
             if (item !== target) {
                 // Close all the items that didn't dispatch the event.
@@ -127,6 +132,7 @@ export class Accordion extends SizedMixin(SpectrumElement, {
 
     protected override updated(changed: PropertyValues<this>): void {
         super.updated(changed);
+
         if (
             changed.has('size') &&
             (!!changed.get('size') || this.size !== 'm')

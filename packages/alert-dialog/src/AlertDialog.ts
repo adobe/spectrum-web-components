@@ -60,15 +60,18 @@ function gatherAppliedIdsFromSlottedChildren(
 ): string[] {
     const assignedElements = slot.assignedElements();
     const ids: string[] = [];
+
     assignedElements.forEach((el) => {
         if (el.id) {
             ids.push(el.id);
         } else {
             const id = idBase + `-${randomID()}`;
+
             el.id = id;
             ids.push(id);
         }
     });
+
     return ids;
 }
 
@@ -105,7 +108,9 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
         if (variant === this.variant) {
             return;
         }
+
         const oldValue = this.variant;
+
         if (alertDialogVariants.includes(variant)) {
             this.setAttribute('variant', variant);
             this._variant = variant;
@@ -113,6 +118,7 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
             this.removeAttribute('variant');
             this._variant = '';
         }
+
         this.requestUpdate('variant', oldValue);
     }
 
@@ -179,10 +185,12 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
             this.conditionLabelledby();
             delete this.conditionLabelledby;
         }
+
         const ids = gatherAppliedIdsFromSlottedChildren(
             target,
             this.labelledbyId
         );
+
         if (ids.length) {
             this.conditionLabelledby = conditionAttributeWithId(
                 this,
@@ -200,6 +208,7 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
         if (!this.contentElement) return;
 
         const { offsetHeight, scrollHeight } = this.contentElement;
+
         if (offsetHeight < scrollHeight) {
             this.contentElement.tabIndex = 0;
         } else {
@@ -223,14 +232,17 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
             this.resizeController.unobserve(this.contentElement);
             this.resizeController.observe(this.contentElement);
         });
+
         if (this.conditionDescribedby) {
             this.conditionDescribedby();
             delete this.conditionDescribedby;
         }
+
         const ids = gatherAppliedIdsFromSlottedChildren(
             target,
             this.describedbyId
         );
+
         if (ids.length && ids.length < 4) {
             this.conditionDescribedby = conditionAttributeWithId(
                 this,
@@ -239,14 +251,18 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
             );
         } else if (!ids.length) {
             const idProvided = !!this.id;
+
             if (!idProvided) this.id = this.describedbyId;
+
             const conditionDescribedby = conditionAttributeWithId(
                 this,
                 'aria-describedby',
                 this.id
             );
+
             this.conditionDescribedby = () => {
                 conditionDescribedby();
+
                 if (!idProvided) {
                     this.removeAttribute('id');
                 }

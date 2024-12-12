@@ -75,6 +75,7 @@ describe('Combobox', () => {
     describe('keyboard events', () => {
         it('opens on ArrowDown', async () => {
             const el = await comboboxFixture();
+
             await elementUpdated(el);
 
             el.focusElement.focus();
@@ -87,6 +88,7 @@ describe('Combobox', () => {
         });
         it('opens on Alt+ArrowDown', async () => {
             const el = await comboboxFixture();
+
             await elementUpdated(el);
 
             el.focusElement.focus();
@@ -288,6 +290,7 @@ describe('Combobox', () => {
             await elementUpdated(el);
 
             const opened = oneEvent(el.focusElement, 'sp-opened');
+
             el.focusElement.click();
             await opened;
 
@@ -301,11 +304,13 @@ describe('Combobox', () => {
             await elementUpdated(el);
 
             const opened = oneEvent(el.focusElement, 'sp-opened');
+
             el.open = true;
             await opened;
             expect(el.open).to.be.true;
 
             const closed = oneEvent(el.focusElement, 'sp-closed');
+
             el.focusElement.click();
             await closed;
 
@@ -322,6 +327,7 @@ describe('Combobox', () => {
             await elementUpdated(el);
 
             const opened = oneEvent(el.focusElement, 'sp-opened');
+
             button.click();
             await opened;
 
@@ -340,9 +346,11 @@ describe('Combobox', () => {
             const input = el.shadowRoot.querySelector(
                 'input'
             ) as HTMLInputElement;
+
             expect(el.shadowRoot.activeElement).to.not.equal(input);
 
             const opened = oneEvent(el.focusElement, 'sp-opened');
+
             el.open = true;
             await opened;
             expect(el.open).to.be.true;
@@ -350,6 +358,7 @@ describe('Combobox', () => {
 
             const closed = oneEvent(el.focusElement, 'sp-closed');
             const rect = button.getBoundingClientRect();
+
             // required to test that focus remains with the <input>,
             // since button.click() doesn't allow the button to steal focus
             await sendMouse({
@@ -491,6 +500,7 @@ describe('Combobox', () => {
 
             el.focusElement.focus();
             const opened = oneEvent(el, 'sp-opened');
+
             el.focusElement.dispatchEvent(arrowDownEvent());
             await opened;
 
@@ -518,6 +528,7 @@ describe('Combobox', () => {
             expect(el.open).to.be.false;
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.focusElement.click();
             await opened;
 
@@ -542,10 +553,12 @@ describe('Combobox', () => {
             expect(el.open).to.be.false;
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.focusElement.click();
             await opened;
 
             const item = el.shadowRoot.querySelector('#cherry') as HTMLElement;
+
             await elementUpdated(item);
 
             expect(el.open).to.be.true;
@@ -580,12 +593,14 @@ describe('Combobox', () => {
             expect(el.open).to.be.false;
 
             let opened = oneEvent(el, 'sp-opened');
+
             el.focusElement.click();
             await opened;
 
             const item = el.shadowRoot.querySelector(
                 '[value="banana"]'
             ) as MenuItem;
+
             await elementUpdated(item);
 
             expect(el.open).to.be.true;
@@ -593,6 +608,7 @@ describe('Combobox', () => {
             const itemValue = item.itemText;
             const rect = item.getBoundingClientRect();
             const closed = oneEvent(el, 'sp-closed');
+
             await sendMouse({
                 steps: [
                     {
@@ -636,12 +652,14 @@ describe('Combobox', () => {
             expect(el.open).to.be.false;
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.focusElement.click();
             await opened;
 
             const item = el.shadowRoot.querySelector(
                 '[value="cherry"]'
             ) as MenuItem;
+
             await elementUpdated(item);
 
             expect(el.open).to.be.true;
@@ -660,17 +678,20 @@ describe('Combobox', () => {
     describe('responds to value changes', () => {
         it('applies a visible selection based on `itemText`', async () => {
             const el = await comboboxFixture();
+
             el.autocomplete = 'none';
             el.options = countries;
             await elementUpdated(el);
 
             let selected = el.shadowRoot.querySelector('[selected]');
+
             expect(selected).to.be.null;
 
             el.value = 'af';
             await elementUpdated(el);
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
 
@@ -694,6 +715,7 @@ describe('Combobox', () => {
             el.focus();
 
             const opened = oneEvent(el, 'sp-opened');
+
             executeServerCommand('send-keys', {
                 press: 'g',
             });
@@ -721,6 +743,7 @@ describe('Combobox', () => {
             expect(el.availableOptions.length).equal(12);
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.click();
             await opened;
 
@@ -731,6 +754,7 @@ describe('Combobox', () => {
             expect(el.open).to.be.true;
             expect(el.availableOptions.length).equal(0);
             const options = [...el.shadowRoot.querySelectorAll('sp-menu-item')];
+
             expect(options.length).to.equal(0);
         });
         it('filters options when the value typed and is found', async () => {
@@ -744,12 +768,14 @@ describe('Combobox', () => {
             expect(el.options?.length).equal(12);
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.click();
             await opened;
 
             let items = [
                 ...el.shadowRoot.querySelectorAll('#listbox sp-menu-item'),
             ];
+
             expect(items.length).to.equal(12);
             await Promise.all(items.map((item) => elementUpdated(item)));
 
@@ -790,6 +816,7 @@ describe('Combobox', () => {
             expect(el.availableOptions.length).equal(12);
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.click();
             await opened;
 
@@ -818,6 +845,7 @@ describe('Combobox', () => {
 
             el.focus();
             const opened = oneEvent(el, 'sp-opened');
+
             el.focusElement.dispatchEvent(arrowDownEvent());
             await opened;
             await elementUpdated(el);
@@ -836,6 +864,7 @@ describe('Combobox', () => {
             await elementUpdated(el);
 
             const opened = oneEvent(el, 'sp-opened');
+
             executeServerCommand('send-keys', {
                 press: 'B',
             });
@@ -868,6 +897,7 @@ describe('Combobox', () => {
     describe('pending state', () => {
         it('renders a progress circle', async () => {
             const el = await comboboxFixture();
+
             el.pending = true;
             await elementUpdated(el);
 
@@ -875,6 +905,7 @@ describe('Combobox', () => {
         });
         it('receives focus', async () => {
             const el = await comboboxFixture();
+
             el.pending = true;
             await elementUpdated(el);
 
@@ -885,6 +916,7 @@ describe('Combobox', () => {
         });
         it('does not open the dropdown on mouse events', async () => {
             const el = await comboboxFixture();
+
             el.pending = true;
             await elementUpdated(el);
 
@@ -895,6 +927,7 @@ describe('Combobox', () => {
         });
         it('does not open the dropdown on keyboard events', async () => {
             const el = await comboboxFixture();
+
             el.pending = true;
             await elementUpdated(el);
 
@@ -906,6 +939,7 @@ describe('Combobox', () => {
             await elementUpdated(el);
 
             const typed = oneEvent(el, 'input');
+
             await sendKeys({
                 press: 'g',
             });
@@ -919,15 +953,18 @@ describe('Combobox', () => {
 
     it('closes tooltip on button blur', async () => {
         const el = await fixture<TestableCombobox>(withTooltip());
+
         await elementUpdated(el);
         const input1 = document.createElement('input');
         const input2 = document.createElement('input');
         const tooltipEl = el.querySelector('sp-tooltip') as Tooltip;
+
         el.insertAdjacentElement('beforebegin', input1);
         el.insertAdjacentElement('afterend', input2);
         input1.focus();
         expect(document.activeElement === input1).to.be.true;
         const tooltipOpened = oneEvent(el, 'sp-opened');
+
         await sendKeys({
             press: 'Tab',
         });
@@ -942,6 +979,7 @@ describe('Combobox', () => {
 
         const menuOpen = oneEvent(el, 'sp-opened');
         const tooltipClosed = oneEvent(el, 'sp-closed');
+
         await sendKeys({
             press: 'ArrowDown',
         });
@@ -952,6 +990,7 @@ describe('Combobox', () => {
         expect(el.open).to.be.true;
 
         const menuClosed = oneEvent(el, 'sp-closed');
+
         await sendKeys({
             press: 'Tab',
         });
@@ -972,6 +1011,7 @@ describe('Combobox', () => {
         expect(el.open).to.be.false;
 
         const opened = oneEvent(el, 'sp-opened');
+
         el.focusElement.click();
         await opened;
         expect(el.open).to.be.true;
@@ -979,6 +1019,7 @@ describe('Combobox', () => {
         const menu = el.shadowRoot.querySelector(
             '[role="listbox"]'
         ) as HTMLElement;
+
         await elementUpdated(menu);
 
         expect(menu.scrollHeight > window.innerHeight).to.be.true;

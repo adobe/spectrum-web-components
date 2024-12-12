@@ -25,10 +25,13 @@ import { sendKeys } from '@web/test-runner-commands';
 import { render, TemplateResult } from '@spectrum-web-components/base';
 
 describe('Tooltip Directive', () => {
-    const renderTooltip = (): TemplateResult =>
-        html`
-            Tip me!
-        `;
+    const renderTooltip = (): TemplateResult => html`
+        Tip me!
+    `;
+
+    /**
+     *
+     */
     function renderButton(
         ...directiveParams: Parameters<typeof tooltip>
     ): TemplateResult {
@@ -38,17 +41,22 @@ describe('Tooltip Directive', () => {
             </sp-button>
         `;
     }
+    /**
+     *
+     */
     function opensTooltip(): void {
         it('opens tooltip not previously on DOM', async function () {
             await elementUpdated(this.el);
 
             const input = document.createElement('input');
+
             this.el.insertAdjacentElement('beforebegin', input);
 
             this.overlays = document.querySelectorAll('sp-overlay');
             expect(this.overlays.length).to.equal(0);
 
             const opened = oneEvent(this.el, 'sp-opened');
+
             input.focus();
             await sendKeys({
                 press: 'Tab',
@@ -61,10 +69,14 @@ describe('Tooltip Directive', () => {
             expect(this.overlays.length).to.equal(1);
         });
     }
+    /**
+     *
+     */
     function closesTooltip(): void {
         it('closes a tooltip and removes it from the DOM', async function () {
             // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup
             const closed = oneEvent(this.overlays[0], 'slottable-request');
+
             this.el.blur();
             await closed;
 
@@ -117,6 +129,7 @@ describe('Tooltip Directive', () => {
             const tooltipEl = this.overlays[0].querySelector(
                 'sp-tooltip'
             ) as Tooltip;
+
             expect(tooltipEl.variant).to.equal(this.variant);
         });
         closesTooltip();

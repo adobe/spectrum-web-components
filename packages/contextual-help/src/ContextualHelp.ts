@@ -37,7 +37,6 @@ import styles from './contextual-help.css.js';
  * Spectrum Contextual help provides additional information about
  * the state of either an adjacent component or an entire view.
  * @element sp-contextual-help
- *
  * @slot heading - content to display as the heading of the popover
  * @slot Text content to display in the popover
  * @slot link - link to additional informations
@@ -51,14 +50,14 @@ export class ContextualHelp extends SpectrumElement {
 
     /**
      * Provides an accessible name for the action button trigger.
-     * @param {String} label
+     * @param {string} label
      */
     @property()
     public label?: string;
 
     /**
      * The `variant` property applies specific styling on the action button trigger.
-     * @param {String} variant
+     * @param {string} variant
      */
     @property()
     public variant: 'info' | 'help' = 'info';
@@ -89,6 +88,7 @@ export class ContextualHelp extends SpectrumElement {
             if (this.variant === 'help') {
                 return 'Help';
             }
+
             return 'Informations';
         }
     }
@@ -128,11 +128,13 @@ export class ContextualHelp extends SpectrumElement {
         if (event.data === removeSlottableRequest) {
             this.open = false;
             render(undefined, event.target as HTMLElement);
+
             return;
         }
 
         this.open = true;
         const template = this.renderOverlayContent();
+
         render(template, event.target as HTMLElement);
     }
 

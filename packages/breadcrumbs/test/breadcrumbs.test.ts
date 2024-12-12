@@ -62,6 +62,7 @@ describe('Breadcrumbs', () => {
         await elementUpdated(el);
 
         const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
+
         breadcrumbs.forEach((breadcrumb) => {
             expect(breadcrumb).to.be.displayed;
         });
@@ -76,6 +77,7 @@ describe('Breadcrumbs', () => {
         await elementUpdated(el);
 
         const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
+
         expect(breadcrumbs[0]).not.to.be.displayed;
         expect(breadcrumbs[1]).to.be.displayed;
         expect(breadcrumbs[2]).to.be.displayed;
@@ -84,6 +86,7 @@ describe('Breadcrumbs', () => {
         const menu = el.shadowRoot.querySelector(
             'sp-action-menu'
         ) as ActionMenu;
+
         expect(menu).to.exist;
 
         menu.click();
@@ -91,6 +94,7 @@ describe('Breadcrumbs', () => {
         expect(menu.open).to.be.true;
 
         const menuitems = menu.querySelectorAll('sp-menu-item');
+
         expect(menuitems.length).to.equal(4);
         expect(menu.getAttribute('value')).to.equal('3');
     });
@@ -107,6 +111,7 @@ describe('Breadcrumbs', () => {
         await elementUpdated(el);
 
         const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
+
         expect(breadcrumbs[0]).to.be.displayed;
         expect(breadcrumbs[1]).not.to.be.displayed;
         expect(breadcrumbs[2]).to.be.displayed;
@@ -116,6 +121,7 @@ describe('Breadcrumbs', () => {
         const menu = el.shadowRoot.querySelector(
             'sp-action-menu'
         ) as ActionMenu;
+
         expect(menu).to.exist;
     });
     it('should emit a change event on breadcrumb click if no href is provided', async () => {
@@ -138,6 +144,7 @@ describe('Breadcrumbs', () => {
 
         // Simulate a click from the visible breadcrumb.
         const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
+
         breadcrumbs[1].click();
 
         expect(changeSpy).to.have.been.calledOnce;
@@ -149,15 +156,18 @@ describe('Breadcrumbs', () => {
         const menu = el.shadowRoot.querySelector(
             'sp-action-menu'
         ) as ActionMenu;
+
         expect(menu).to.exist;
 
         const opened = oneEvent(el, 'sp-opened');
+
         menu.click();
         await elementUpdated(menu);
         await opened;
 
         const closed = oneEvent(el, 'sp-closed');
         const menuitems = menu.querySelectorAll('sp-menu-item');
+
         menuitems[0].click();
         await closed;
 

@@ -23,7 +23,6 @@ import statusLightStyles from './status-light.css.js';
 
 /**
  * @element sp-status-light
- *
  * @slot - text label of the Status Light
  */
 export class StatusLight extends SizedMixin(SpectrumElement, {
@@ -66,6 +65,7 @@ export class StatusLight extends SizedMixin(SpectrumElement, {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (changes.has('disabled')) {
             if (this.disabled) {
                 this.setAttribute('aria-disabled', 'true');

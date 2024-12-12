@@ -51,6 +51,7 @@ export class IconBase extends SpectrumElement {
 
     public override disconnectedCallback(): void {
         super.disconnectedCallback();
+
         if (this.unsubscribeSystemContext) {
             this.unsubscribeSystemContext();
             this.unsubscribeSystemContext = null;

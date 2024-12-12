@@ -30,6 +30,9 @@ export async function openOverlay(
     content: HTMLElement,
     options?: OverlayOptions
 ): Promise<Overlay>;
+/**
+ *
+ */
 export async function openOverlay(
     triggerOrContent: HTMLElement,
     interactionOrOptions: TriggerInteractionsV1 | OverlayOptions | undefined,

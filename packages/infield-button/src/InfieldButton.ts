@@ -54,6 +54,7 @@ export class InfieldButton extends SizedMixin(ButtonBase, {
                 <slot></slot>
             </div>
         `;
+
         return [buttonContent];
     }
 }

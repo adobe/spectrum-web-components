@@ -23,7 +23,6 @@ import { MutationController } from '@lit-labs/observers/mutation-controller.js';
  * @element sp-table-body
  *
  * This component represents the body of a table.
- *
  * @slot - The rows of the table.
  */
 export class TableBody extends SpectrumElement {

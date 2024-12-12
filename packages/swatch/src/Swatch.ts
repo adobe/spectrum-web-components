@@ -67,7 +67,6 @@ const dashIcon: Record<string, () => TemplateResult> = {
  * @element sp-swatch
  *
  * This component represents a color swatch.
- *
  * @fires change - Dispatched when the swatch is clicked.
  */
 export class Swatch extends SizedMixin(Focusable, {
@@ -192,6 +191,7 @@ export class Swatch extends SizedMixin(Focusable, {
         if (value === this._value) return;
 
         const oldValue = this.value;
+
         this._value = value;
         this.requestUpdate('value', oldValue);
     }
@@ -218,6 +218,7 @@ export class Swatch extends SizedMixin(Focusable, {
      */
     private handleClick(): void {
         if (this.disabled || this.mixedValue) return;
+
         this.toggle();
         const applyDefault = this.dispatchEvent(
             new Event('change', {
@@ -225,6 +226,7 @@ export class Swatch extends SizedMixin(Focusable, {
                 bubbles: true,
             })
         );
+
         if (!applyDefault) {
             this.toggle();
         }
@@ -236,6 +238,7 @@ export class Swatch extends SizedMixin(Focusable, {
      */
     protected handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
+
         switch (code) {
             case 'Space':
                 event.preventDefault();
@@ -252,6 +255,7 @@ export class Swatch extends SizedMixin(Focusable, {
      */
     private handleKeypress(event: KeyboardEvent): void {
         const { code } = event;
+
         switch (code) {
             case 'Enter':
             case 'NumpadEnter':
@@ -268,6 +272,7 @@ export class Swatch extends SizedMixin(Focusable, {
      */
     protected handleKeyup(event: KeyboardEvent): void {
         const { code } = event;
+
         switch (code) {
             case 'Space':
                 this.removeEventListener('keyup', this.handleKeyup);
@@ -384,6 +389,7 @@ export class Swatch extends SizedMixin(Focusable, {
         this.addEventListener('click', this.handleClick);
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('keypress', this.handleKeypress);
+
         if (!this.hasAttribute('tabindex')) {
             this.setAttribute('tabindex', '0');
         }

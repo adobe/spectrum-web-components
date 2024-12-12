@@ -50,7 +50,6 @@ type BreadcrumbItem = {
 
 /**
  * @element sp-breadcrumbs
- *
  * @slot icon - change the default icon of the action menu
  * @slot root - Breadcrumb item to always display
  * @slot - Breadcrumb items
@@ -123,8 +122,10 @@ export class Breadcrumbs extends SpectrumElement {
             if (this.firstRender) {
                 // Don't adjust overflow on first render, it is adjusted in slotChangeHandler
                 this.firstRender = false;
+
                 return;
             }
+
             this.adjustOverflow();
         });
 
@@ -214,8 +215,10 @@ export class Breadcrumbs extends SpectrumElement {
         }
 
         const start = 0;
+
         for (let i = this.items.length - 1; i >= start; i--) {
             occupiedSpace += this.items[i].offsetWidth;
+
             if (
                 occupiedSpace < availableSpace &&
                 newVisibleItems < Math.max(this.maxVisibleItems, 1)
@@ -326,6 +329,7 @@ export class Breadcrumbs extends SpectrumElement {
         if (this.breadcrumbsElements.length === 0) {
             this.items = [];
             this.visibleItems = 0;
+
             return;
         }
 

@@ -38,23 +38,23 @@ const defaultItem: CoachmarkItem = {
     heading: 'I am the heading for Coachmark',
     content: 'I am the content for this Coachmark',
 };
+
 describe('Coachmark', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Coachmark>(
-                html`
-                    <sp-coachmark
-                        id="coachmark"
-                        .content=${{
-                            title: defaultItem.heading,
-                            description: defaultItem.content,
-                        }}
-                    ></sp-coachmark>
-                `
-            )
+            await fixture<Coachmark>(html`
+                <sp-coachmark
+                    id="coachmark"
+                    .content=${{
+                        title: defaultItem.heading,
+                        description: defaultItem.content,
+                    }}
+                ></sp-coachmark>
+            `)
     );
     it('loads default coachmark accessibly', async () => {
         const el = await fixture<Coachmark>(Default());
+
         await elementUpdated(el);
         await expect(el).to.be.accessible();
     });
@@ -74,6 +74,7 @@ describe('Coachmark', () => {
         const divElement = nodes.find(
             (node) => (node as HTMLElement).id === 'heading'
         );
+
         expect(divElement, 'did not find div element').to.not.be.null;
         expect((divElement as HTMLDivElement).textContent).to.contain(
             testHeading,
@@ -91,6 +92,7 @@ describe('Coachmark', () => {
                 {}
             )
         );
+
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
@@ -102,18 +104,21 @@ describe('Coachmark', () => {
         const stepCountSlot = el.querySelector(
             '[slot="step-count"]'
         ) as HTMLSlotElement;
+
         expect(stepCountSlot?.textContent?.trim()).to.equal('2 of 8');
 
         expect(stepCount?.textContent);
         const nextButton = el.shadowRoot.querySelector(
             'sp-button[variant="primary"'
         );
+
         expect(nextButton).to.not.be.undefined;
         expect(nextButton?.textContent?.trim()).to.equal('Next');
 
         const prevButton = el.shadowRoot.querySelector(
             'sp-button[variant="secondary"'
         );
+
         expect(prevButton).to.not.be.undefined;
         expect(prevButton?.textContent?.trim()).to.equal('Previous');
     });
@@ -130,10 +135,12 @@ describe('Coachmark', () => {
                 {}
             )
         );
+
         await elementUpdated(el);
         const stepCountSlot = el.querySelector(
             '[slot="step-count"]'
         ) as HTMLSlotElement;
+
         expect(stepCountSlot?.textContent?.trim()).to.equal('2 of 8');
 
         await expect(el).to.be.accessible();
@@ -145,6 +152,7 @@ describe('Coachmark', () => {
         const okayButton = el.shadowRoot.querySelector(
             'sp-button[variant="primary"'
         );
+
         expect(okayButton).to.not.be.null;
         expect(okayButton?.textContent?.trim()).to.equal('Ok');
     });
@@ -157,11 +165,14 @@ describe('Coachmark', () => {
                 content: 'This is a Coachmark with nothing but text in it.',
             })
         );
+
         await elementUpdated(el);
         const modifier = el.shadowRoot.querySelector('span[type="modifier"]');
+
         expect(modifier).to.not.be.undefined;
         expect(modifier?.textContent?.trim()).to.include('⇧ Shift');
         const joiner = el.shadowRoot.querySelector('span[class="plus"]');
+
         expect(joiner).to.not.be.undefined;
         expect(joiner?.textContent?.trim()).to.include('+');
     });
@@ -172,11 +183,13 @@ describe('Coachmark', () => {
                 totalSteps: 8,
             })
         );
+
         await elementUpdated(el);
 
         const shortcutKey = el.shadowRoot.querySelector(
             'span[type="shortcut"]'
         );
+
         expect(shortcutKey).to.not.be.undefined;
         expect(shortcutKey?.textContent?.trim()).to.include('Z');
     });
@@ -187,10 +200,12 @@ describe('Coachmark', () => {
                 totalSteps: 8,
             })
         );
+
         await elementUpdated(el);
         const imageElement = el.shadowRoot.querySelector(
             'img[src="https://picsum.photos/id/237/200/300"'
         );
+
         expect(imageElement).not.to.be.undefined;
     });
     it('in tour dispatches `primary` and `secondary`', async () => {
@@ -208,6 +223,7 @@ describe('Coachmark', () => {
                 {}
             )
         );
+
         el.addEventListener('primary', handlePrimary);
         el.addEventListener('secondary', handleSecondary);
 
@@ -221,6 +237,7 @@ describe('Coachmark', () => {
         const secondaryButton = el.shadowRoot.querySelector(
             '[variant="secondary"]'
         ) as Button;
+
         primaryButton.click();
 
         await elementUpdated(el);

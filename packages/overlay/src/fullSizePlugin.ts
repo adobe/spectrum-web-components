@@ -31,6 +31,7 @@ export const fullSize = (options: { padding: number } = { padding: 0 }) => ({
             -overflow.left -
             overflow.right +
             middlewareArguments.rects.floating.width;
+
         if (middlewareArguments.placement.startsWith('bottom')) {
             availableHeight -= middlewareArguments.rects.reference.height;
             availableHeight -= middlewareArguments.rects.reference.y;
@@ -52,6 +53,7 @@ export const fullSize = (options: { padding: number } = { padding: 0 }) => ({
             availableWidth -= middlewareArguments.middlewareData.offset?.x || 0;
             availableWidth += options.padding;
         }
+
         return {
             data: {
                 availableWidth,

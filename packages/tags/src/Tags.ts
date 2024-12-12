@@ -28,7 +28,6 @@ import styles from './tags.css.js';
  * @element sp-tags
  *
  * The `Tags` component is a custom web component that manages a group of tag elements.
- *
  * @slot - Tag elements to manage as a group.
  */
 export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
@@ -99,6 +98,7 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
      */
     private handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
+
         if (code !== 'PageUp' && code !== 'PageDown') return;
 
         // Function to get the element at a circular index in a list.
@@ -113,6 +113,7 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 'sp-tags'
             ),
         ];
+
         if (tagsSiblings.length < 2) {
             return;
         }
@@ -172,6 +173,7 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'list');
         }
+
         if (!this.hasAttribute('aria-label')) {
             this.setAttribute('aria-label', 'Tags');
         }

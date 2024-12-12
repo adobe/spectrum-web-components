@@ -64,9 +64,11 @@ export const mixed = (): TemplateResult => {
     };
     const update = (event: Event): void => {
         const { value, id } = event.target as MenuGroup;
+
         switch (id) {
             case 'font':
                 const values = value.split(',');
+
                 style = values.indexOf('italic') > -1 ? 'italic' : 'normal';
                 weight = values.indexOf('bold') > -1 ? '700' : '400';
                 break;
@@ -85,6 +87,7 @@ export const mixed = (): TemplateResult => {
                 decoration,
             });
     };
+
     return html`
         <style>
             sp-popover {

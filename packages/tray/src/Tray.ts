@@ -34,7 +34,6 @@ import styles from './tray.css.js';
  * The `Tray` component is a custom web component that provides a tray element
  * which can be opened and closed. It includes various properties and methods
  * to manage its state, focus, and transitions.
- *
  * @fires close - Dispatched when the tray is closed.
  */
 export class Tray extends SpectrumElement {
@@ -83,6 +82,7 @@ export class Tray extends SpectrumElement {
      */
     public override focus(): void {
         const firstFocusable = firstFocusableIn(this);
+
         if (firstFocusable) {
             firstFocusable.focus();
         } else if (this.children.length === 1) {
@@ -102,7 +102,9 @@ export class Tray extends SpectrumElement {
      */
     public overlayWillCloseCallback(): boolean {
         if (!this.open) return this.animating;
+
         this.close();
+
         return true;
     }
 
@@ -111,6 +113,7 @@ export class Tray extends SpectrumElement {
      */
     public close(): void {
         this.open = false;
+
         if (!this.prefersMotion.matches) {
             this.dispatchClosed();
         }
@@ -171,6 +174,7 @@ export class Tray extends SpectrumElement {
                 };
             });
         }
+
         super.update(changes);
     }
 
@@ -204,7 +208,9 @@ export class Tray extends SpectrumElement {
      */
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
+
         await this.transitionPromise;
+
         return complete;
     }
 }
