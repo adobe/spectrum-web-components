@@ -29,20 +29,13 @@ export default {
         onInput: { action: 'input' },
         onChange: { action: 'change' },
         variant: {
-            name: 'Variant',
-            description: 'Determines the style of slider.',
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: undefined },
             },
-            control: {
-                type: 'inline-radio',
-                options: [undefined, ...variants],
-            },
+            options: [undefined, ...variants],
         },
         tickStep: {
-            name: 'Tick Step',
-            description: 'Tick spacing on slider.',
             table: {
                 type: { summary: 'number' },
                 defaultValue: { summary: 0.1 },
@@ -52,8 +45,6 @@ export default {
             },
         },
         labelVisibility: {
-            name: 'Label Visibility',
-            description: 'The labels visibily available in the UI',
             table: {
                 type: { summary: '"text" | "value" | "none" | undefined' },
                 defaultValue: { summary: undefined },

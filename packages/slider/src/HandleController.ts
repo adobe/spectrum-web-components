@@ -57,12 +57,43 @@ export interface HandleValueDictionary {
     [key: string]: number;
 }
 
+/**
+ * Manages the handles of a slider component.
+ *
+ * @fires change - An alteration to the value of the element has been committed by the user.
+ * @fires input - Dispatched when the value of a handle changes.
+ * @fires keydown - Trick :focus-visible polyfill into thinking keyboard based focus
+ * @fires sp-slider-handle-ready - Dispatched when a handle is upgraded.
+ */
 export class HandleController {
+    /**
+     * The host slider element.
+     */
     private host!: Slider;
+
+    /**
+     * A map of handle IDs to slider handles.
+     */
     private handles: Map<string, SliderHandle> = new Map();
+
+    /**
+     * The model values of the slider.
+     */
     private model: ModelValue[] = [];
+
+    /**
+     * The order of the handles.
+     */
     private handleOrder: string[] = [];
+
+    /**
+     * The handle currently being dragged.
+     */
     private draggingHandle?: SliderHandle;
+
+    /**
+     * A weak map of slider handles to handle references.
+     */
     private handleRefMap?: WeakMap<SliderHandle, HandleReference>;
 
     constructor(host: Slider) {
@@ -81,27 +112,42 @@ export class HandleController {
         this.extractModelFromLightDom();
     }
 
+    /**
+     * Gets the values of the handles.
+     */
     public get values(): HandleValueDictionary {
         const result: HandleValueDictionary = {};
+
         for (const model of this.handles.values()) {
             result[model.handleName] = model.value;
         }
+
         return result;
     }
 
+    /**
+     * Gets the number of handles.
+     */
     public get size(): number {
         return this.handles.size;
     }
 
+    /**
+     * Gets the input element for a given handle.
+     * Throws an error if the handle does not exist.
+     */
     public inputForHandle(handle: SliderHandle): HTMLInputElement | undefined {
         if (this.handles.has(handle.handleName)) {
             const { input } = this.getHandleElements(handle) || {};
             return input;
         }
-        /* c8 ignore next 2 */
+
         throw new Error(`No input for handle "${handle.name}"`);
     }
 
+    /**
+     * Requests an update for the host slider element.
+     */
     public requestUpdate(): void {
         if (this.host.hasUpdated) {
             this.host.requestUpdate();
@@ -117,7 +163,7 @@ export class HandleController {
      */
     public setValueFromHandle(handle: SliderHandle): void {
         const elements = this.getHandleElements(handle);
-        /* c8 ignore next */
+
         if (!elements) return;
 
         const { input } = elements;
@@ -132,12 +178,21 @@ export class HandleController {
         handle.value = input.valueAsNumber;
     }
 
+    /**
+     * Handles changes to a slider handle.
+     * Requests an update for the host slider element if the handle has changed.
+     */
     public handleHasChanged(handle: SliderHandle): void {
         if (handle !== this.host) {
             this.requestUpdate();
         }
     }
 
+    /**
+     * Gets the formatted value for a given handle.
+     * Formats the value using the handle's number format or the host's number format.
+     * Appends the forced unit to the formatted value.
+     */
     public formattedValueForHandle(model: ModelValue): string {
         const { handle } = model;
         const numberFormat = handle.numberFormat ?? this.host.numberFormat;
@@ -145,21 +200,32 @@ export class HandleController {
             handle._forcedUnit === ''
                 ? this.host._forcedUnit
                 : handle._forcedUnit;
+
         return (
             handle.getAriaHandleText(model.value, numberFormat) + _forcedUnit
         );
     }
 
+    /**
+     * Gets the formatted values for all handles.
+     */
     public get formattedValues(): Map<string, string> {
         const result = new Map<string, string>();
+
         for (const model of this.model) {
             result.set(model.name, this.formattedValueForHandle(model));
         }
+
         return result;
     }
 
+    /**
+     * Gets the focus element for the slider.
+     * Returns the input element for the active handle or the number field if the input is not available.
+     */
     public get focusElement(): HTMLElement {
         const { input } = this.getActiveHandleElements();
+
         if (
             !input ||
             (this.host.editable &&
@@ -167,13 +233,22 @@ export class HandleController {
         ) {
             return this.host.numberField;
         }
+
         return input;
     }
 
+    /**
+     * Handles orientation changes.
+     * Updates the bounding rectangle of the slider.
+     */
     protected handleOrientation = (): void => {
         this.updateBoundingRect();
     };
 
+    /**
+     * Called when the host slider element is connected to the DOM.
+     * Adds event listeners for orientation changes.
+     */
     public hostConnected(): void {
         if ('orientation' in screen) {
             screen.orientation.addEventListener(
@@ -188,6 +263,10 @@ export class HandleController {
         }
     }
 
+    /**
+     * Called when the host slider element is disconnected from the DOM.
+     * Removes event listeners for orientation changes.
+     */
     public hostDisconnected(): void {
         if ('orientation' in screen) {
             screen.orientation.removeEventListener(
@@ -202,39 +281,58 @@ export class HandleController {
         }
     }
 
+    /**
+     * Called when the host slider element is updated.
+     * Updates the model and requests an update.
+     */
     public hostUpdate(): void {
         this.updateModel();
     }
 
-    // Since extractModelFromLightDom bails on the first un-upgraded handle,
-    // a maximum of one listener will be set up per extraction attempt.
+    /**
+     * Waits for a handle to be upgraded.
+     * Adds an event listener for the 'sp-slider-handle-ready' event if the handle is not upgraded.
+     *
+     * Since extractModelFromLightDom bails on the first un-upgraded handle,
+     * a maximum of one listener will be set up per extraction attempt.
+     */
     private waitForUpgrade(handle: HTMLElement): boolean {
         if (handle instanceof SliderHandle) {
             return false;
         }
+
         handle.addEventListener(
             'sp-slider-handle-ready',
             () => this.extractModelFromLightDom(),
             { once: true, passive: true }
         );
+
         return true;
     }
 
+    /**
+     * Extracts the model from the light DOM.
+     * Updates the handles and handle order based on the slotted handles.
+     */
     private extractModelFromLightDom = (): void => {
         let handles = [
             ...this.host.querySelectorAll('[slot="handle"]'),
         ] as SliderHandle[];
+
         if (handles.length === 0) {
             handles = [this.host as SliderHandle];
         }
+
         // extractModelFromLightDom depends on slotted handles already having been upgraded
         if (handles.some((h) => this.waitForUpgrade(h))) {
             return;
         }
+
         this.handles = new Map();
+
         this.handleOrder = [];
+
         handles.forEach((handle, index) => {
-            /* c8 ignore next */
             if (!handle.handleName?.length) {
                 handle.name = `handle${index + 1}`;
             }
@@ -242,27 +340,44 @@ export class HandleController {
             this.handleOrder.push(handle.handleName);
             handle.handleController = this;
         });
+
         this.requestUpdate();
     };
 
+    /**
+     * Gets the name of the active handle.
+     */
     public get activeHandle(): string {
         return this.handleOrder[this.handleOrder.length - 1];
     }
 
+    /**
+     * Gets the ID of the input element for the active handle.
+     */
     public get activeHandleInputId(): string {
         const active = this.activeHandle;
         const index = this.model.findIndex((model) => model.name === active);
+
         return `input-${index}`;
     }
 
+    /**
+     * Activates the specified handle.
+     * Moves the handle to the end of the handle order.
+     */
     public activateHandle(name: string): void {
         const index = this.handleOrder.findIndex((item) => item === name);
+
         if (index >= 0) {
             this.handleOrder.splice(index, 1);
         }
+
         this.handleOrder.push(name);
     }
 
+    /**
+     * Gets the model value for the active handle.
+     */
     public get activeHandleModel(): ModelValue {
         const active = this.activeHandle;
         return this.model.find((model) => model.name === active)!;

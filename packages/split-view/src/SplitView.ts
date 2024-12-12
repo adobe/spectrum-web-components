@@ -50,7 +50,7 @@ const COLLAPSE_THREASHOLD = 50;
  *
  * This component represents a split view layout.
  *
- * @slot Two sibling elements to be sized by the element attributes
+ * @slot - Two sibling elements to be sized by the element attributes
  * @fires change - Announces the new position of the splitter
  */
 export class SplitView extends SpectrumElement {
