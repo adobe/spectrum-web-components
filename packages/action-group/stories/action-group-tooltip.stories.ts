@@ -108,10 +108,7 @@ export default {
             table: {
                 defaultValue: { summary: '' },
             },
-            control: {
-                type: 'inline-radio',
-                options: ['none', 'single', 'multiple'],
-            },
+            options: ['none', 'single', 'multiple'],
         },
         size: {
             name: 'size',
