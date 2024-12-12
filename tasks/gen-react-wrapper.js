@@ -14,7 +14,6 @@ import fs from 'fs';
 import path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { getWorkspacePackages } from './getWorkspacePackages.js';
 
 // Function to remove the 'react' directory
 const removeReactDir = () => {
@@ -38,6 +37,39 @@ const generateReactWrapper = () => {
     }
 };
 
+// Get a list of all packages except those you want to ignore
+const getWorkspacePackages = (ignoredPackages) => {
+    const workspaceInfo = execSync('yarn workspaces info --json').toString();
+    const workspacePackages = JSON.parse(workspaceInfo);
+    return Object.entries(workspacePackages)
+        .filter(([pkgName]) => !ignoredPackages.includes(pkgName))
+        .map(([pkgName, pkgDetails]) => ({
+            name: pkgName,
+            path: pkgDetails.location,
+        }));
+};
+
+const ignoredPackages = [
+    '@spectrum-web-components/base',
+    '@spectrum-web-components/bundle',
+    '@spectrum-web-components/clear-button',
+    '@spectrum-web-components/close-button',
+    '@spectrum-web-components/modal',
+    '@spectrum-web-components/iconset',
+    '@spectrum-web-components/shared',
+    '@spectrum-web-components/opacity-checkerboard',
+    '@spectrum-web-components/styles',
+    '@spectrum-web-components/custom-vars-viewer',
+    '@spectrum-web-components/eslint-plugin',
+    'stylelint-header',
+    '@swc-react/*',
+    'documentation',
+    'example-project-rollup',
+    'example-project-webpack',
+    'swc-templates',
+    '@types/swc',
+];
+
 const __filename = dirname(fileURLToPath(import.meta.url));
 const __dirname = dirname(__filename);
 const configPath = path.resolve(__dirname, 'cem-react-wrapper.config.js');
@@ -58,7 +90,7 @@ const runCemAnalyze = (packages) => {
 
 const main = () => {
     removeReactDir();
-    const allPackages = getWorkspacePackages();
+    const allPackages = getWorkspacePackages(ignoredPackages);
     runCemAnalyze(allPackages);
     generateReactWrapper();
 };

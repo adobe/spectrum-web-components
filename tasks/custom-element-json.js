@@ -12,7 +12,18 @@ import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
-import { getWorkspacePackages } from './getWorkspacePackages.js';
+
+// Get a list of all packages except those you want to ignore
+const getWorkspacePackages = (ignoredPackages) => {
+    const workspaceInfo = execSync('yarn workspaces info --json').toString();
+    const workspacePackages = JSON.parse(workspaceInfo);
+    return Object.entries(workspacePackages)
+        .filter(([pkgName]) => !ignoredPackages.includes(pkgName))
+        .map(([pkgName, pkgDetails]) => ({
+            name: pkgName,
+            path: pkgDetails.location,
+        }));
+};
 
 const __filename = dirname(fileURLToPath(import.meta.url));
 const __dirname = dirname(__filename);
@@ -21,8 +32,30 @@ const configPath = path.resolve(
     'custom-elements-manifest.config.js'
 );
 
+// Define the packages to ignore
+const ignoredPackages = [
+    '@spectrum-web-components/base',
+    '@spectrum-web-components/bundle',
+    '@spectrum-web-components/clear-button',
+    '@spectrum-web-components/close-button',
+    '@spectrum-web-components/modal',
+    '@spectrum-web-components/iconset',
+    '@spectrum-web-components/shared',
+    '@spectrum-web-components/opacity-checkerboard',
+    '@spectrum-web-components/styles',
+    '@spectrum-web-components/custom-vars-viewer',
+    '@spectrum-web-components/eslint-plugin',
+    'stylelint-header',
+    '@swc-react/*',
+    'documentation',
+    'example-project-rollup',
+    'example-project-webpack',
+    'swc-templates',
+    '@types/swc',
+];
+
 // Use the function
-const allPackages = getWorkspacePackages();
+const allPackages = getWorkspacePackages(ignoredPackages);
 // Define the command to execute
 const command = `cem analyze --config ${configPath} --packagejson`;
 

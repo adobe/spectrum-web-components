@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 
 import { generateIconWrapper } from './cem-plugin-react-wrapper.js';
 
+console.log(`hola`);
 (async () => {
     await generateIconWrapper('icons-ui');
     await generateIconWrapper('icons-workflow');
