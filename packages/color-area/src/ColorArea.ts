@@ -388,7 +388,7 @@ export class ColorArea extends SpectrumElement {
 
     /**
      * Returns the value under the cursor
-     * @param PointerEvent on slider
+     * @param {PointerEvent} event on slider
      * @returns Slider value that correlates to the position under the pointer
      */
     private calculateHandlePosition(event: PointerEvent): [number, number] {

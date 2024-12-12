@@ -639,7 +639,7 @@ export class HandleController {
      *
      *
      * @private
-     * @param event
+     * @param event - KeyboardEvent on input
      * @memberof HandleController
      */
     private onInputKeydown = (event: KeyboardEvent): void => {
