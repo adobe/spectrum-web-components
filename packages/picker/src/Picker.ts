@@ -138,7 +138,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
-     * @attr
+     * @attribute
      */
 
     @property()

@@ -1133,6 +1133,7 @@ describe('Textfield', () => {
             await elementUpdated(el);
 
             expect(negativeHelpText.variant).to.equal('negative');
+
             // There's an issue in the way Firefox processes the a11y tree for
             // elements with an `invalid` attribute/property. The following try/catch
             // wrapping preps the code to pass in that context regardless and error
@@ -1173,6 +1174,7 @@ describe('Textfield', () => {
             await elementUpdated(el);
 
             expect(negativeHelpText.variant).to.equal('negative');
+
             // There's an issue in the way Firefox processes the a11y tree for
             // elements with an `invalid` attribute/property. The following try/catch
             // wrapping preps the code to pass in that context regardless and error

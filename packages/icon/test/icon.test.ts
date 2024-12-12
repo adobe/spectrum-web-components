@@ -134,6 +134,7 @@ describe('Icon', () => {
         const el = document.createElement('sp-icon');
 
         el.name = 'ui:unknown-icon';
+
         try {
             document.body.appendChild(el);
             await elementUpdated(el);
@@ -143,6 +144,7 @@ describe('Icon', () => {
                 throw error;
             }).to.throw();
         }
+
         el.remove();
     });
 

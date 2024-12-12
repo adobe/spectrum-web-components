@@ -149,6 +149,7 @@ export class ColorSlider extends Focusable {
             default:
                 return;
         }
+
         event.preventDefault();
 
         const range = 360;

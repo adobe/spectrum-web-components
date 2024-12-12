@@ -26,10 +26,10 @@ import radioStyles from './radio.css.js';
 /**
  * @element sp-radio
  * @slot - text label of the Radio button
- * @attr invalid - Uses the invalid style
- * @attr disabled - Uses the disabled style
- * @attr checked - Represents when the input is checked
- * @attr value - Identifies this radio button within its radio group
+ * @attribute invalid - Uses the invalid style
+ * @attribute disabled - Uses the disabled style
+ * @attribute checked - Represents when the input is checked
+ * @attribute value - Identifies this radio button within its radio group
  * @fires change - When the input is interacted with and its state is changed
  */
 export class Radio extends SizedMixin(

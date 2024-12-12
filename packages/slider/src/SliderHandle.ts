@@ -222,6 +222,7 @@ export class SliderHandle extends Focusable {
                     formatOptionsNoUnit
                 );
             }
+
             this._numberFormatCache = {
                 language: this.languageResolver.language,
                 numberFormat: numberFormatter,

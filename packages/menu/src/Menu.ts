@@ -54,7 +54,7 @@ function elementIsOrContains(
  * @element sp-menu
  * @slot - menu items to be listed in the menu
  * @fires change - Announces that the `value` of the element has changed
- * @attr selects - whether the element has a specific selection algorithm that it applies
+ * @attribute selects - whether the element has a specific selection algorithm that it applies
  *   to its item descendants. `single` allows only one descendent to be selected at a time.
  *   `multiple` allows many descendants to be selected. `inherit` will be applied dynamically
  *   when an ancestor of this element is actively managing the selection of its descendents.

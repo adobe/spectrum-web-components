@@ -43,7 +43,7 @@ export class Dropzone extends SpectrumElement {
 
     /**
      * Controls the feedback (typically visual) the user is given during a drag and drop operation
-     * @attr
+     * @attribute
      * @type {'copy' | 'move' | 'link' | 'none'}
      */
     public get dropEffect(): DropEffects {

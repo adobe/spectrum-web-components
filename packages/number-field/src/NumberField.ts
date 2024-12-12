@@ -677,6 +677,7 @@ export class NumberField extends TextfieldBase {
                 this.languageResolver.language,
                 formatOptionsNoUnit
             );
+
             try {
                 this._numberFormatter = new NumberFormatter(
                     this.languageResolver.language,
@@ -738,6 +739,7 @@ export class NumberField extends TextfieldBase {
                 this.languageResolver.language,
                 formatOptionsNoUnit
             );
+
             try {
                 this._numberParser = new NumberParser(
                     this.languageResolver.language,

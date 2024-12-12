@@ -139,6 +139,7 @@ export class ColorWheel extends Focusable {
             default:
                 return;
         }
+
         event.preventDefault();
         this.value = (360 + this.value + delta) % 360;
         this.colorController.savePreviousColor();

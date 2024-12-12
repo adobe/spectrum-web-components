@@ -89,6 +89,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         if (variant === this.variant) return;
 
         this.requestUpdate('variant', this.variant);
+
         switch (variant) {
             case 'cta':
                 this._variant = 'accent';
@@ -157,6 +158,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
 
                 break;
         }
+
         this.setAttribute('variant', this.variant);
     }
     private _variant: ButtonVariants = 'accent';

@@ -41,6 +41,7 @@ function isOpen(el: HTMLElement): boolean {
         popoverOpen = el.matches(':popover-open');
         // eslint-disable-next-line no-empty
     } catch (error) {}
+
     let open = false;
 
     try {
@@ -121,6 +122,7 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                 popoverOpen = this.dialogEl.matches(':popover-open');
                 // eslint-disable-next-line no-empty
             } catch (error) {}
+
             let open = false;
 
             try {

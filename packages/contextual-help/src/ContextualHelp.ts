@@ -64,7 +64,7 @@ export class ContextualHelp extends SpectrumElement {
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
-     * @attr
+     * @attribute
      */
     @property({ reflect: true })
     public placement?: Placement = 'bottom-start';

@@ -587,6 +587,7 @@ export class HandleController {
         } catch (error) {
             isFocusVisible = this.host.matches('.focus-visible');
         }
+
         input.model.handle.highlight = isFocusVisible;
         this.requestUpdate();
     };

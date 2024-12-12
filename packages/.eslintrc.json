@@ -21,6 +21,13 @@
         "plugin:jsdoc/recommended-typescript"
     ],
     "ignorePatterns": ["packages/**/*.css.ts"],
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "attr": "attribute"
+            }
+        }
+    },
     "rules": {
         "no-debugger": 2,
         "no-console": [
@@ -32,7 +39,7 @@
         "jsdoc/check-tag-names": [
             "warn",
             {
-                "definedTags": ["element", "slot"]
+                "definedTags": ["element", "slot", "attribute"]
             }
         ],
         "jsdoc/require-param": 0,
@@ -87,10 +94,14 @@
         ],
         "@stylistic/padding-line-between-statements": [
             "error",
-            { "blankLine": "always", "prev": "*", "next": ["return", "if"] },
             {
                 "blankLine": "always",
-                "prev": ["const", "let", "var", "if"],
+                "prev": "*",
+                "next": ["return", "if", "try", "switch"]
+            },
+            {
+                "blankLine": "always",
+                "prev": ["const", "let", "var", "if", "try", "switch"],
                 "next": "*"
             },
             {

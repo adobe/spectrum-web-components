@@ -30,9 +30,11 @@ const saveIconsMapping = async () => {
     // check if there is file with .csv extension in the bin folder
     const files = fs.promises.readdir(__dirname);
     let data = '';
+
     try {
         const fileNames = await files;
         const csvFile = fileNames.find((file) => file.endsWith('.csv'));
+
         if (csvFile) {
             data = await fs.promises.readFile(
                 path.join(__dirname, csvFile),
@@ -51,8 +53,10 @@ const saveIconsMapping = async () => {
 
     const rows = data.split('\n');
     const mapping = {};
+
     rows.forEach((row) => {
         const columns = row.split(',');
+
         // if the third column says "name change"
         if (columns.length >= 3 && columns[2] === 'name change') {
             const oldName = getComponentName(columns[0]);
@@ -76,6 +80,7 @@ const saveIconsMapping = async () => {
     }
 
     const outputPath = path.join(__dirname, './icons-mapping.json');
+
     try {
         await fs.promises.writeFile(
             outputPath,

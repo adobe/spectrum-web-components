@@ -79,6 +79,7 @@ export const mixed = (): TemplateResult => {
                 decoration = value;
                 break;
         }
+
         (document.querySelector('#output') as HTMLElement).textContent =
             styleRules({
                 style,

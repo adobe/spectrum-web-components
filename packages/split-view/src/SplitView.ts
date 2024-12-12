@@ -99,7 +99,7 @@ export class SplitView extends SpectrumElement {
     /**
      * The start size of the primary pane, can be a real pixel number|string, percentage or "auto"
      * For example: "100", "120px", "75%" or "auto" are valid values
-     * @attr
+     * @attribute
      */
     @property({ type: String, attribute: 'primary-size' })
     public primarySize?: string;
