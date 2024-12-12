@@ -262,8 +262,8 @@ export class ColorWheel extends Focusable {
 
     /**
      * Returns the value under the cursor
-     * @param: PointerEvent on slider
-     * @return: Slider value that correlates to the position under the pointer
+     * @param PointerEvent on slider
+     * @returns Slider value that correlates to the position under the pointer
      */
     private calculateHandlePosition(event: PointerEvent): number {
         /* c8 ignore next 3 */

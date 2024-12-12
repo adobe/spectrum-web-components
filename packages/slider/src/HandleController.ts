@@ -155,7 +155,7 @@ export class HandleController {
     }
 
     /**
-     * It is possible for value attributes to be set programmatically. The <input>
+     * It is possible for value attributes to be set programmatically. The `<input>`
      * for a particular slider needs to have an opportunity to validate any such
      * values
      * @param handle Handle who's value needs validation
@@ -386,6 +386,9 @@ export class HandleController {
         return this.model.find((model) => model.name === active)!;
     }
 
+    /**
+     * Gets the elements associated with the active handle.
+     */
     private getActiveHandleElements(): HandleComponents {
         const name = this.activeHandle;
         const handleSlider = this.handles.get(name) as SliderHandle;
@@ -396,6 +399,9 @@ export class HandleController {
         return { model: handleSlider, ...elements };
     }
 
+    /**
+     * Gets the elements associated with a given handle.
+     */
     private getHandleElements(sliderHandle: SliderHandle): HandleReference {
         if (!this.handleRefMap) {
             this.handleRefMap = new WeakMap();
@@ -423,12 +429,21 @@ export class HandleController {
         return components;
     }
 
+    /**
+     * Clears the cache of handle components.
+     */
     private clearHandleComponentCache(): void {
         delete this.handleRefMap;
     }
 
+    /**
+     * The bounding client rectangle of the slider track.
+     */
     private _boundingClientRect?: DOMRect;
 
+    /**
+     * Gets the bounding client rectangle of the slider track.
+     */
     private get boundingClientRect(): DOMRect {
         if (!this._boundingClientRect) {
             this._boundingClientRect = this.host.track.getBoundingClientRect();
@@ -437,11 +452,15 @@ export class HandleController {
         return this._boundingClientRect;
     }
 
+    /**
+     * Updates the bounding client rectangle of the slider track.
+     */
     private updateBoundingRect(): void {
         delete this._boundingClientRect;
     }
 
     /**
+     * Extracts data from a pointer event.
      * Return the `input` and `model` associated with the event and
      * whether the `input` is a `resolvedInput` meaning it was acquired
      * from the `model` rather than the event.
@@ -470,11 +489,14 @@ export class HandleController {
         return this._activePointerEventData;
     }
 
+    /**
+     * The active pointer event data.
+     */
     private _activePointerEventData!: DataFromPointerEvent | undefined;
 
     /**
-     * @description check for defaultvalue(value) property in sp-slider and reset on double click on sliderHandle
-     * @param event
+     * Handles double-click events on the slider handle.
+     * Resets the handle value to its default value if defined.
      */
     public handleDoubleClick(event: PointerEvent): void {
         const input = (event.target as Element).querySelector(
@@ -489,6 +511,10 @@ export class HandleController {
         }
     }
 
+    /**
+     * Handles pointerdown events on the slider handle.
+     * Initiates dragging and updates the handle value based on the pointer position.
+     */
     public handlePointerdown(event: PointerEvent): void {
         const { resolvedInput, model } = this.extractDataFromEvent(event);
 
@@ -519,6 +545,10 @@ export class HandleController {
         this.requestUpdate();
     }
 
+    /**
+     * Handles pointerup events on the slider handle.
+     * Ends dragging and updates the handle value based on the pointer position.
+     */
     public handlePointerup(event: PointerEvent): void {
         const { input, model } = this.extractDataFromEvent(event);
 
@@ -536,12 +566,15 @@ export class HandleController {
         this.dispatchChangeEvent(input, model.handle);
     }
 
+    /**
+     * Handles pointermove events on the slider handle.
+     * Updates the handle value based on the pointer position.
+     */
     public handlePointermove(event: PointerEvent): void {
         const { input, model } = this.extractDataFromEvent(event);
 
         if (!model) return;
 
-        /* c8 ignore next 3 */
         if (!this.draggingHandle) {
             return;
         }
@@ -552,6 +585,9 @@ export class HandleController {
         this.requestUpdate();
     }
 
+    /**
+     * Cancels dragging for the specified handle model.
+     */
     public cancelDrag(model?: ModelValue): void {
         model =
             model || this.model.find((item) => item.name === this.activeHandle);
@@ -599,6 +635,13 @@ export class HandleController {
         this.requestUpdate();
     };
 
+    /**
+     *
+     *
+     * @private
+     * @param event
+     * @memberof HandleController
+     */
     private onInputKeydown = (event: KeyboardEvent): void => {
         if (event.key == 'Escape') {
             const input = event.target as InputWithModel;
@@ -624,6 +667,9 @@ export class HandleController {
         this.requestUpdate();
     };
 
+    /**
+     * Dispatches a change event for the slider handle.
+     */
     private dispatchChangeEvent(
         input: HTMLInputElement,
         handle: SliderHandle
@@ -640,8 +686,8 @@ export class HandleController {
 
     /**
      * Returns the value under the cursor
-     * @param: PointerEvent on slider
-     * @return: Slider value that correlates to the position under the pointer
+     * @param event - PointerEvent on slider
+     * @returns Slider value that correlates to the position under the pointer
      */
     private calculateHandlePosition(
         event: PointerEvent | MouseEvent,

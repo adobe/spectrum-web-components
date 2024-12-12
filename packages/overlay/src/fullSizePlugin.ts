@@ -11,46 +11,58 @@ governing permissions and limitations under the License.
 */
 import {
     detectOverflow,
-    MiddlewareArguments,
     MiddlewareReturn,
+    MiddlewareState,
 } from '@floating-ui/dom';
 
-export const fullSize = (options: { padding: number } = { padding: 0 }) => ({
+/**
+ * A plugin that sets the size of an element to full size based on available space.
+ * @property {number} padding - The padding to be applied to the element.
+ */
+export const fullSize = (
+    options: { padding: number } = { padding: 0 }
+): {
+    name: string;
+    fn: (middlewareState: MiddlewareState) => Promise<
+        MiddlewareReturn & {
+            data: { availableWidth: number; availableHeight: number };
+        }
+    >;
+} => ({
     name: 'fullSize',
-    async fn(middlewareArguments: MiddlewareArguments): Promise<
+    async fn(middlewareState: MiddlewareState): Promise<
         MiddlewareReturn & {
             data: { availableWidth: number; availableHeight: number };
         }
     > {
-        const overflow = await detectOverflow(middlewareArguments, options);
+        const overflow = await detectOverflow(middlewareState, options);
         let availableHeight =
             -overflow.top -
             overflow.bottom +
-            middlewareArguments.rects.floating.height;
+            middlewareState.rects.floating.height;
         let availableWidth =
             -overflow.left -
             overflow.right +
-            middlewareArguments.rects.floating.width;
+            middlewareState.rects.floating.width;
 
-        if (middlewareArguments.placement.startsWith('bottom')) {
-            availableHeight -= middlewareArguments.rects.reference.height;
-            availableHeight -= middlewareArguments.rects.reference.y;
-            availableHeight -=
-                middlewareArguments.middlewareData.offset?.y || 0;
+        // Adjust available height and width based on the placement of the floating element
+        if (middlewareState.placement.startsWith('bottom')) {
+            availableHeight -= middlewareState.rects.reference.height;
+            availableHeight -= middlewareState.rects.reference.y;
+            availableHeight -= middlewareState.middlewareData.offset?.y || 0;
             availableHeight += options.padding;
-        } else if (middlewareArguments.placement.startsWith('top')) {
-            availableHeight = middlewareArguments.rects.reference.y;
-            availableHeight -=
-                middlewareArguments.middlewareData.offset?.y || 0;
+        } else if (middlewareState.placement.startsWith('top')) {
+            availableHeight = middlewareState.rects.reference.y;
+            availableHeight -= middlewareState.middlewareData.offset?.y || 0;
             availableHeight += options.padding;
-        } else if (middlewareArguments.placement.startsWith('right')) {
-            availableWidth -= middlewareArguments.rects.reference.width;
-            availableWidth -= middlewareArguments.rects.reference.x;
-            availableWidth -= middlewareArguments.middlewareData.offset?.x || 0;
+        } else if (middlewareState.placement.startsWith('right')) {
+            availableWidth -= middlewareState.rects.reference.width;
+            availableWidth -= middlewareState.rects.reference.x;
+            availableWidth -= middlewareState.middlewareData.offset?.x || 0;
             availableWidth += options.padding;
-        } else if (middlewareArguments.placement.startsWith('left')) {
-            availableWidth = middlewareArguments.rects.reference.x;
-            availableWidth -= middlewareArguments.middlewareData.offset?.x || 0;
+        } else if (middlewareState.placement.startsWith('left')) {
+            availableWidth = middlewareState.rects.reference.x;
+            availableWidth -= middlewareState.middlewareData.offset?.x || 0;
             availableWidth += options.padding;
         }
 

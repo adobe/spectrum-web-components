@@ -39,7 +39,7 @@
         "jsdoc/check-tag-names": [
             "warn",
             {
-                "definedTags": ["element", "slot", "attribute"]
+                "definedTags": ["element", "slot", "attribute", "csspart"]
             }
         ],
         "jsdoc/require-param": 0,
