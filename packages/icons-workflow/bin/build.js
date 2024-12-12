@@ -281,7 +281,7 @@ async function buildIcons(icons, tag, iconsNameList) {
                 if(this.spectrumVersion === ${spectrumVersion}){
                     return CurrentIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
                 }
-                    
+
                 return AlternateIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
     
             }
