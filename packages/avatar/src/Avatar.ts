@@ -25,9 +25,19 @@ import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import avatarStyles from './avatar.css.js';
-
+/**
+ * Defines the possible sizes for the avatar.
+ */
 export type AvatarSize = 50 | 75 | 100 | 200 | 300 | 400 | 500 | 600 | 700;
+
+/**
+ * List of valid avatar sizes.
+ */
 const validSizes: AvatarSize[] = [50, 75, 100, 200, 300, 400, 500, 600, 700];
+
+/**
+ * Default size for the avatar.
+ */
 const defaultSize = validSizes[2];
 
 /**
@@ -45,9 +55,15 @@ export class Avatar extends LikeAnchor(Focusable) {
         return this.anchorElement || this;
     }
 
+    /**
+     * The source URL for the avatar image.
+     */
     @property()
     public src = '';
 
+    /**
+     * The size of the avatar.
+     */
     @property({ type: Number, reflect: true })
     public get size(): AvatarSize {
         return this._size;
@@ -71,6 +87,11 @@ export class Avatar extends LikeAnchor(Focusable) {
 
     private _size = defaultSize;
 
+    /**
+     * Renders the avatar template.
+     * If the href property is set, renders the avatar as a link.
+     * Otherwise, renders the avatar as an image.
+     */
     protected override render(): TemplateResult {
         const avatar = html`
             <img
@@ -89,6 +110,10 @@ export class Avatar extends LikeAnchor(Focusable) {
         return avatar;
     }
 
+    /**
+     * Called when the element is first updated.
+     * Ensures the size attribute is set if it is not already present.
+     */
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         if (!this.hasAttribute('size')) {
