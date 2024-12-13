@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import lunr from 'lunr';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
+import { Index } from 'lunr';
 
-let index: lunr.Index | undefined;
+let index: Index | undefined;
 
 export interface Result {
     name: string;

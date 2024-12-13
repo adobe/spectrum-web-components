@@ -27,6 +27,8 @@ import { AccordionItem } from './AccordionItem.js';
 import styles from './accordion.css.js';
 
 /**
+ * An accordion is a vertically stacked set of interactive headings that each contain a title, content panel, or both.
+ *
  * @element sp-accordion
  *
  * @slot - The sp-accordion-item children to display within the accordion.

@@ -23,6 +23,9 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
+/**
+ * Interface representing the base properties and methods for Spectrum components.
+ */
 export interface SpectrumInterface {
     shadowRoot: ShadowRoot;
     isLTR: boolean;
@@ -58,28 +61,47 @@ const canManageContentDirection = (el: ContentDirectionManager): boolean =>
     typeof el.startManagingContentDirection !== 'undefined' ||
     el.tagName === 'SP-THEME';
 
+/**
+ * A mixin function that adds Spectrum-specific properties and methods to a given LitElement-based class.
+ * This mixin provides support for text direction (LTR/RTL) and focus visibility within the component tree.
+ *
+ * @template T - The type of the base class that extends ReactiveElement.
+ *
+ * @param constructor - The constructor of the base class to which the mixin will be applied.
+ * @returns A new class that extends the base class with Spectrum-specific properties and methods.
+ */
 export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<SpectrumInterface> {
     class SpectrumMixinElement extends constructor {
         /**
-         * @private
+         * The shadow root of the component.
          */
         public override shadowRoot!: ShadowRoot;
+
         private _dirParent?: HTMLElement;
 
         /**
+         * The text direction of the component, either `ltr` (left-to-right) or `rtl` (right-to-left).
+         *
          * @private
          */
         public override dir!: 'ltr' | 'rtl';
 
         /**
+         * Indicates whether the component is in a left-to-right (LTR) layout.
+         *
          * @private
          */
         public get isLTR(): boolean {
             return this.dir === 'ltr';
         }
 
+        /**
+         * Determines if the component or any of its descendants have visible focus.
+         *
+         * @returns True if the component or any of its descendants have visible focus, otherwise false.
+         */
         public hasVisibleFocusInTree(): boolean {
             const getAncestors = (root: Document = document): HTMLElement[] => {
                 // eslint-disable-next-line @spectrum-web-components/document-active-element
@@ -202,6 +224,11 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 }
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {
+    /**
+     * The version of the custom element
+     *
+     * @static
+     */
     static VERSION = version;
 }
 

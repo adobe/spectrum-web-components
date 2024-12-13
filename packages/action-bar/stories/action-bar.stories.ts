@@ -39,6 +39,9 @@ export const Default = (): TemplateResult =>
         open: true,
     });
 
+/**
+ * The action bar can be emphasized to draw attention to it.
+ */
 export const emphasized = (): TemplateResult => {
     return html`
         <sp-action-bar open emphasized>

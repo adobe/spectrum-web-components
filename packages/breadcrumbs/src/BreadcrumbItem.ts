@@ -38,8 +38,9 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     public value: string | undefined = undefined;
 
     /**
-     * @private
      * Marks this breadcrumb item as the current route.
+     *
+     * @private
      */
     @property({ type: Boolean })
     public isLastOfType = false;

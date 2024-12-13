@@ -92,10 +92,12 @@ export const globalTypes = {
 };
 
 export const parameters = {
-    docs: { hidden: true },
     controls: {
         expanded: true,
         sort: 'requiredFirst',
+    },
+    docs: {
+        toc: true, // 👈 Enables the table of contents
     },
     layout: 'fullscreen',
     badgesConfig: {

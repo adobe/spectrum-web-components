@@ -41,11 +41,13 @@ export const swcThemeDecoratorWithConfig =
                 const decorator = document.querySelector(
                     'sp-story-decorator'
                 ) as HTMLElement;
+
                 render(story(), decorator);
             });
         }
 
         let hideNavStyles;
+
         // If the global settings exist, hide the bottom toolbar
         if (
             context?.globals?.system ||

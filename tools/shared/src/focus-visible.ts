@@ -121,7 +121,28 @@ export const FocusVisiblePolyfillMixin = <
     // IE11 doesn't natively support custom elements or JavaScript class
     // syntax The mixin implementation assumes that the user will take the
     // appropriate steps to support both:
+    /**
+     * The `FocusVisibleCoordinator` class extends `SuperClass` and manages the coordination
+     * with the focus-visible polyfill. It ensures that the polyfill is properly coordinated
+     * when the element is connected to or disconnected from the document.
+     *
+     * @extends SuperClass
+     *
+     * @private
+     * @property {EndPolyfillCoordinationCallback | null} [$endPolyfillCoordination] - A callback function for ending the polyfill coordination.
+     *
+     * @method connectedCallback
+     * @description Overrides the `connectedCallback` method to coordinate with the polyfill when the element is connected to the document.
+     *
+     * @method disconnectedCallback
+     * @description Overrides the `disconnectedCallback` method to remove the polyfill event listener when the element is disconnected from the document to prevent memory leaks.
+     */
     class FocusVisibleCoordinator extends SuperClass {
+        /**
+         * A callback function for ending the polyfill coordination.
+         *
+         * @private
+         */
         private [$endPolyfillCoordination]: EndPolyfillCoordinationCallback | null =
             null;
 
