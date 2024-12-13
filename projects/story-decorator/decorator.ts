@@ -32,7 +32,10 @@ export const swcThemeDecoratorWithConfig =
     ({ bundled } = { bundled: true }) =>
     (
         story: () => TemplateResult,
-        context: import('@storybook/csf').StoryContext<any, any>
+        context: import('@storybook/csf').StoryContext<
+            import('@storybook/csf').Renderer,
+            import('@storybook/csf').Parameters
+        >
     ) => {
         if (!bundled) {
             requestAnimationFrame(() => {

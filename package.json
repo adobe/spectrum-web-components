@@ -119,6 +119,7 @@
         "@storybook/addon-designs": "^8.0.0",
         "@storybook/addon-essentials": "^7.5.0",
         "@storybook/addon-links": "^7.5.0",
+        "@storybook/addons": "^7.6.17",
         "@storybook/web-components": "^7.5.0",
         "@stylistic/eslint-plugin": "^2.12.1",
         "@types/chai": "^4.1.7",
