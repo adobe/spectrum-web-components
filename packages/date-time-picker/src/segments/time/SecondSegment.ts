@@ -18,7 +18,7 @@ export class SecondSegment extends EditableSegment {
     public maxValue: number = 59;
     public value?: number;
 
-    constructor(formatted: string) {
-        super(SegmentTypes.Second, formatted);
+    constructor(formatted: string, label: string) {
+        super(SegmentTypes.Second, formatted, label);
     }
 }

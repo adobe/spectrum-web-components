@@ -53,6 +53,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-left.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-right.js';
 
 import {
+    CalendarLabels,
     CalendarValue,
     CalendarWeekday,
     DateCellProperties,
@@ -99,6 +100,18 @@ export class Calendar extends SpectrumElement {
     public disabled = false;
 
     /**
+     * Labels read by screen readers. The default values are in English
+     * and can be overridden to localize the content.
+     */
+    @property({ attribute: false })
+    labels: CalendarLabels = {
+        previous: 'Previous',
+        next: 'Next',
+        today: 'Today',
+        selected: 'Selected',
+    };
+
+    /**
      * The date that indicates the current position in the calendar.
      */
     @state()
@@ -120,9 +133,8 @@ export class Calendar extends SpectrumElement {
         return this.languageResolver.language;
     }
 
-    // TODO: Implement a cache mechanism to store the value of `today`
     private timeZone: string = getLocalTimeZone();
-    public get today(): CalendarDate {
+    private get today(): CalendarDate {
         return today(this.timeZone);
     }
 
@@ -133,14 +145,14 @@ export class Calendar extends SpectrumElement {
     private currentMonthDates: CalendarDate[][] = [];
 
     @state()
-    protected set isDateFocusIntent(value: boolean) {
+    private set isDateFocusIntent(value: boolean) {
         if (this._isDateFocusIntent === value) return;
 
         this._isDateFocusIntent = value;
         this.requestUpdate('isDateFocusIntent', !value);
     }
 
-    protected get isDateFocusIntent(): boolean {
+    private get isDateFocusIntent(): boolean {
         return this._isDateFocusIntent;
     }
     private _isDateFocusIntent: boolean = false;
@@ -200,20 +212,26 @@ export class Calendar extends SpectrumElement {
             changedProperties.has('currentDate') &&
             (!previousDate || !isSameMonth(previousDate, this.currentDate));
 
-        if (changesMonth) this.setCurrentMonthDates();
+        if (changesMonth) {
+            this.setCurrentMonthDates();
+            this.setAttribute('aria-label', this.monthAndYear);
+        }
     }
 
     override updated(changedProperties: PropertyValues): void {
-        /**
-         * Keeps the focus on the correct day when navigating through the calendar.
-         * Particularly useful when the month changes and the focus is lost.
-         */
-        if (changedProperties.has('currentDate') && this.isDateFocusIntent) {
-            const elementToFocus = this.shadowRoot?.querySelector(
-                'td[tabindex="0"]'
-            ) as HTMLElement;
-            elementToFocus.focus();
-        }
+        if (changedProperties.has('currentDate') && this.isDateFocusIntent)
+            this.focusCurrentDate();
+    }
+
+    /**
+     * Focuses the tabbable day element in the calendar represented by the current date.
+     * Useful while navigating through the calendar as the focus might be lost when the month changes.
+     */
+    private focusCurrentDate(): void {
+        const elementToFocus = this.shadowRoot?.querySelector(
+            'td span[tabindex="0"]'
+        ) as HTMLElement;
+        if (elementToFocus) elementToFocus.focus();
     }
 
     private convertToCalendarDates(): void {
@@ -286,36 +304,29 @@ export class Calendar extends SpectrumElement {
         `;
     }
 
-    protected renderCalendarHeader(): TemplateResult {
-        const monthAndYear = this.formatDate(this.currentDate, {
+    private get monthAndYear(): string {
+        return this.formatDate(this.currentDate, {
             month: 'long',
             year: 'numeric',
         });
+    }
 
+    protected renderCalendarHeader(): TemplateResult {
         return html`
             <div class="header" @focusin=${this.resetDateFocusIntent}>
-                <!--
-                 * TODO: Attribute 'role="heading"' removed, due to error 'The "heading" role requires the attribute
-                 * "aria-level"'
-                -->
-                <div
+                <h2
                     class="title"
-                    aria-live="assertive"
+                    aria-live="polite"
                     aria-atomic="true"
                     data-test-id="calendar-title"
                 >
-                    ${monthAndYear}
-                </div>
+                    ${this.monthAndYear}
+                </h2>
 
-                <!--
-                 * TODO: Translate the "Previous" text used in the "title" and "aria-label" of the button displayed in
-                 * the header of the calendar
-                -->
                 <sp-action-button
                     quiet
                     size="s"
-                    aria-label="Previous"
-                    title="Previous"
+                    label=${this.labels.previous}
                     class="prevMonth"
                     data-test-id="prev-btn"
                     ?disabled=${this.isPreviousMonthDisabled}
@@ -328,15 +339,10 @@ export class Calendar extends SpectrumElement {
                     </div>
                 </sp-action-button>
 
-                <!--
-                 * TODO: Translate the "Next" text used in the "title" and "aria-label" of the button displayed in the
-                 * header of the calendar
-                -->
                 <sp-action-button
                     quiet
                     size="s"
-                    aria-label="Next"
-                    title="Next"
+                    label=${this.labels.next}
                     class="nextMonth"
                     data-test-id="next-btn"
                     ?disabled=${this.isNextMonthDisabled}
@@ -404,21 +410,17 @@ export class Calendar extends SpectrumElement {
 
     protected renderCalendarGrid(): TemplateResult {
         return html`
-            <div
-                class="body"
+            <table
                 role="grid"
                 aria-readonly="true"
                 aria-disabled=${this.disabled}
+                role="presentation"
+                class="table body"
+                @keydown=${this.handleKeydown}
             >
-                <table
-                    role="presentation"
-                    class="table"
-                    @keydown=${this.handleKeydown}
-                >
-                    ${this.renderCalendarTableHead()}
-                    ${this.renderCalendarTableBody()}
-                </table>
-            </div>
+                ${this.renderCalendarTableHead()}
+                ${this.renderCalendarTableBody()}
+            </table>
         `;
     }
 
@@ -434,7 +436,7 @@ export class Calendar extends SpectrumElement {
 
     protected renderWeekdayColumn(weekday: CalendarWeekday): TemplateResult {
         return html`
-            <th role="columnheader" scope="col" class="tableCell">
+            <th role="columnheader" scope="col" class="table-cell">
                 <abbr class="dayOfWeek" title=${weekday.long}>
                     ${weekday.narrow}
                 </abbr>
@@ -502,33 +504,35 @@ export class Calendar extends SpectrumElement {
             'is-disabled': isDisabled,
         };
 
-        // TODO: The title must include "Today," and " selected" translated to the current language
-        const currentDayTitle = this.formatDate(calendarDate, {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        });
+        let currentDayLabelPrefix = '';
+        if (isToday) currentDayLabelPrefix = `${this.labels.today}, `;
+        else if (isSelected)
+            currentDayLabelPrefix = `${this.labels.selected}, `;
+
+        const currentDayLabel =
+            currentDayLabelPrefix +
+            this.formatDate(calendarDate, {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            });
 
         return html`
-            <td
-                role="gridcell"
-                class="tableCell"
-                title=${currentDayTitle}
-                tabindex=${ifDefined(
-                    !isOutsideMonth ? (isTabbable ? '0' : '-1') : undefined
-                )}
-                aria-disabled=${isOutsideMonth || isDisabled}
-                aria-selected=${isSelected}
-                data-value=${calendarDate.toString()}
-                @mousedown=${this.handleDaySelect}
-            >
+            <td role="gridcell" class="table-cell">
                 <span
-                    role="presentation"
-                    class=${classMap(dayClasses)}
-                    data-test-id="calendar-day"
+                    role="button"
+                    tabindex=${ifDefined(
+                        !isOutsideMonth ? (isTabbable ? '0' : '-1') : undefined
+                    )}
+                    aria-label=${currentDayLabel}
+                    aria-disabled=${isOutsideMonth || isDisabled}
+                    data-value=${calendarDate.toString()}
+                    @mousedown=${this.handleDaySelect}
                 >
-                    ${this.formatNumber(calendarDate.day)}
+                    <span role="presentation" class=${classMap(dayClasses)}>
+                        ${this.formatNumber(calendarDate.day)}
+                    </span>
                 </span>
             </td>
         `;
@@ -539,19 +543,19 @@ export class Calendar extends SpectrumElement {
 
         switch (event.code) {
             case 'ArrowLeft': {
-                this.focusPreviousDay();
+                this.moveToPreviousDay();
                 break;
             }
             case 'ArrowDown': {
-                this.focusNextWeek();
+                this.moveToNextWeek();
                 break;
             }
             case 'ArrowRight': {
-                this.focusNextDay();
+                this.moveToNextDay();
                 break;
             }
             case 'ArrowUp': {
-                this.focusPreviousWeek();
+                this.moveToPreviousWeek();
                 break;
             }
             case 'Space':
@@ -568,19 +572,13 @@ export class Calendar extends SpectrumElement {
             return;
         }
 
-        const dateCell = (event.target as Element).closest(
-            'td.tableCell'
-        ) as HTMLTableCellElement;
+        const cellButton = (event.target as HTMLElement).closest(
+            'span[role="button"]'
+        ) as HTMLSpanElement;
 
-        if (event instanceof MouseEvent) {
-            const dateContent = dateCell.querySelector('span')!;
-            if (!this.isClickInsideContentRadius(event, dateContent)) {
-                event.preventDefault();
-                return;
-            }
-        }
+        const dateString = cellButton && cellButton.dataset.value;
+        if (!dateString) return;
 
-        const dateString = dateCell.dataset.value!;
         const calendarDateEngaged = parseDate(dateString);
         const isAlreadySelected =
             this.value && isSameDay(this.value, calendarDateEngaged);
@@ -604,66 +602,49 @@ export class Calendar extends SpectrumElement {
         );
     }
 
-    private isClickInsideContentRadius(
-        event: MouseEvent,
-        element: HTMLElement
-    ): boolean {
-        const rect = element.getBoundingClientRect();
-        const radius = rect.width / 2;
-        const centerX = rect.left + radius;
-        const centerY = rect.top + radius;
-        const clickCenterDistance = Math.sqrt(
-            Math.pow(event.clientX - centerX, 2) +
-                Math.pow(event.clientY - centerY, 2)
-        );
-
-        return clickCenterDistance <= radius;
-    }
-
-    private focusPreviousDay(): void {
+    private moveToPreviousDay(): void {
         const previousDay = this.currentDate.subtract({ days: 1 });
 
-        if (this.canNavigateBackToDate(previousDay))
-            this.currentDate = previousDay;
+        if (this.canMoveBackToDate(previousDay)) this.currentDate = previousDay;
     }
 
-    private focusNextDay(): void {
+    private moveToNextDay(): void {
         const nextDay = this.currentDate.add({ days: 1 });
 
-        if (this.canNavigateForwardToDate(nextDay)) this.currentDate = nextDay;
+        if (this.canMoveForwardToDate(nextDay)) this.currentDate = nextDay;
     }
 
-    private focusPreviousWeek(): void {
+    private moveToPreviousWeek(): void {
         const previousWeek = this.currentDate.subtract({ weeks: 1 });
 
-        if (this.canNavigateBackToDate(previousWeek)) {
+        if (this.canMoveBackToDate(previousWeek)) {
             this.currentDate = previousWeek;
             return;
         }
 
         let dayToFocus = previousWeek.add({ days: 1 });
-        while (!this.canNavigateBackToDate(dayToFocus)) {
+        while (!this.canMoveBackToDate(dayToFocus)) {
             dayToFocus = dayToFocus.add({ days: 1 });
         }
         this.currentDate = dayToFocus;
     }
 
-    private focusNextWeek(): void {
+    private moveToNextWeek(): void {
         const nextWeek = this.currentDate.add({ weeks: 1 });
 
-        if (this.canNavigateForwardToDate(nextWeek)) {
+        if (this.canMoveForwardToDate(nextWeek)) {
             this.currentDate = nextWeek;
             return;
         }
 
         let dayToFocus = nextWeek.subtract({ days: 1 });
-        while (!this.canNavigateForwardToDate(dayToFocus)) {
+        while (!this.canMoveForwardToDate(dayToFocus)) {
             dayToFocus = dayToFocus.subtract({ days: 1 });
         }
         this.currentDate = dayToFocus;
     }
 
-    private canNavigateBackToDate(previousDate: CalendarDate): boolean {
+    private canMoveBackToDate(previousDate: CalendarDate): boolean {
         if (this.isMinLimitReached(previousDate)) return false;
 
         return (
@@ -672,7 +653,7 @@ export class Calendar extends SpectrumElement {
         );
     }
 
-    private canNavigateForwardToDate(nextDate: CalendarDate): boolean {
+    private canMoveForwardToDate(nextDate: CalendarDate): boolean {
         if (this.isMaxLimitReached(nextDate)) return false;
 
         return (

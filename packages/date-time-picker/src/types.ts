@@ -8,7 +8,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { DateValue } from '@spectrum-web-components/calendar';
+import { CalendarLabels, DateValue } from '@spectrum-web-components/calendar';
 
 export type DateTimePickerValue = DateValue;
 
@@ -23,9 +23,14 @@ export const SegmentTypes = {
     Literal: 'literal',
 } as const;
 
-export type SegmentType = (typeof SegmentTypes)[keyof typeof SegmentTypes];
+export type LiteralSegmentType = 'literal';
 
-export type EditableSegmentType = Exclude<SegmentType, 'literal'>;
+export type EditableSegmentType = Exclude<
+    (typeof SegmentTypes)[keyof typeof SegmentTypes],
+    LiteralSegmentType
+>;
+
+export type SegmentType = EditableSegmentType | LiteralSegmentType;
 
 export const SegmentPlaceholders: Readonly<
     Record<EditableSegmentType, string>
@@ -50,6 +55,16 @@ export const Precisions = {
 } as const;
 
 export type Precision = (typeof Precisions)[keyof typeof Precisions];
+
+export type EditableSegmentLimits = {
+    minValue: number;
+    maxValue: number;
+};
+
+export type DateTimePickerLabels = CalendarLabels & {
+    empty: string;
+    calendar: string;
+};
 
 /** AM modifier: `0` hours */
 export const AM = 0;

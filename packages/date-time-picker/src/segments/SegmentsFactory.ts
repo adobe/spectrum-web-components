@@ -12,7 +12,13 @@ governing permissions and limitations under the License.
 
 import { DateFormatter, ZonedDateTime } from '@internationalized/date';
 import { NumberFormatter } from '@internationalized/number';
-import { SegmentType, SegmentTypes } from '../types';
+import { dateValueToDate } from '../helpers';
+import {
+    EditableSegmentType,
+    LiteralSegmentType,
+    SegmentType,
+    SegmentTypes,
+} from '../types';
 import { DateTimeSegments, Segment } from './DateTimeSegments';
 import { LiteralSegment } from './LiteralSegment';
 import { DaySegment } from './date/DaySegment';
@@ -26,13 +32,18 @@ import { SecondSegment } from './time/SecondSegment';
 export class SegmentsFactory {
     private dateFormatter: DateFormatter;
     private numberFormatter: NumberFormatter;
+    private dateTimeFieldDisplayNames: Intl.DisplayNames;
 
     constructor(dateFormatter: DateFormatter) {
         this.dateFormatter = dateFormatter;
-        this.numberFormatter = new NumberFormatter(
-            this.dateFormatter.resolvedOptions().locale,
-            { useGrouping: false }
-        );
+
+        const locale = this.dateFormatter.resolvedOptions().locale;
+        this.numberFormatter = new NumberFormatter(locale, {
+            useGrouping: false,
+        });
+        this.dateTimeFieldDisplayNames = new Intl.DisplayNames([locale], {
+            type: 'dateTimeField',
+        });
     }
 
     /**
@@ -44,14 +55,7 @@ export class SegmentsFactory {
         currentDate: ZonedDateTime,
         setValues: boolean = false
     ): DateTimeSegments {
-        const date = new Date(
-            currentDate.year,
-            currentDate.month - 1, // 0-indexed in Date but 1-indexed in ZonedDateTime
-            currentDate.day,
-            currentDate.hour,
-            currentDate.minute,
-            currentDate.second
-        );
+        const date = dateValueToDate(currentDate);
 
         const createdSegments = this.dateFormatter
             .formatToParts(date)
@@ -109,35 +113,36 @@ export class SegmentsFactory {
         return segments;
     }
 
-    private createSegment(type: SegmentType, formatted: string): Segment {
-        let segment: Segment;
+    private createSegment(
+        type: EditableSegmentType | LiteralSegmentType,
+        formatted: string
+    ): Segment {
+        if (type === SegmentTypes.Literal) return new LiteralSegment(formatted);
+
+        const label = this.displayNameOfType(type);
 
         switch (type) {
             case SegmentTypes.Year:
-                segment = new YearSegment(formatted);
-                break;
+                return new YearSegment(formatted, label);
             case SegmentTypes.Month:
-                segment = new MonthSegment(formatted);
-                break;
+                return new MonthSegment(formatted, label);
             case SegmentTypes.Day:
-                segment = new DaySegment(formatted);
-                break;
+                return new DaySegment(formatted, label);
             case SegmentTypes.Hour:
-                segment = new HourSegment(formatted);
-                break;
+                return new HourSegment(formatted, label);
             case SegmentTypes.Minute:
-                segment = new MinuteSegment(formatted);
-                break;
+                return new MinuteSegment(formatted, label);
             case SegmentTypes.Second:
-                segment = new SecondSegment(formatted);
-                break;
+                return new SecondSegment(formatted, label);
             case SegmentTypes.DayPeriod:
-                segment = new DayPeriodSegment(formatted);
-                break;
-            default:
-                segment = new LiteralSegment(formatted);
+                return new DayPeriodSegment(formatted, label);
         }
+    }
 
-        return segment;
+    private displayNameOfType(type: EditableSegmentType): string {
+        const label = this.dateTimeFieldDisplayNames.of(type);
+        if (!label) return '';
+
+        return label.charAt(0).toUpperCase() + label.slice(1);
     }
 }

@@ -28,8 +28,8 @@ export class DaySegment extends EditableSegment {
     public maxValue: number = 31;
     public value?: number;
 
-    constructor(formatted: string) {
-        super(SegmentTypes.Day, formatted);
+    constructor(formatted: string, label: string) {
+        super(SegmentTypes.Day, formatted, label);
     }
 
     public setLimits(

@@ -188,7 +188,7 @@ governing permissions and limitations under the License.
     user-select: none;
 }
 
-.tableCell {
+.table-cell {
     text-align: center;
     box-sizing: content-box;
     block-size: var(
@@ -206,7 +206,7 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-.tableCell:focus {
+.table-cell:focus {
     outline: 0;
 }
 
@@ -610,7 +610,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.tableCell:focus-within .date:not(.is-range-selection) {
+.table-cell:focus-within .date:not(.is-range-selection) {
     background: var(
         --highcontrast-calendar-day-background-color-key-focus,
         var(
@@ -634,7 +634,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.tableCell:focus-within .date:not(.is-range-selection).is-today {
+.table-cell:focus-within .date:not(.is-range-selection).is-today {
     border-color: var(
         --highcontrast-calendar-day-border-color-key-focus,
         var(
@@ -644,8 +644,8 @@ governing permissions and limitations under the License.
     );
 }
 
-.tableCell:focus-within .date:not(.is-range-selection):active,
-.tableCell:focus-within .date:not(.is-range-selection).is-selected {
+.table-cell:focus-within .date:not(.is-range-selection):active,
+.table-cell:focus-within .date:not(.is-range-selection).is-selected {
     color: var(
         --highcontrast-calendar-day-text-color-selected,
         var(
@@ -669,8 +669,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.tableCell:focus-within .date.is-selected:before,
-.tableCell:focus-within .date.is-range-selection:before {
+.table-cell:focus-within .date.is-selected:before {
     background: var(
         --highcontrast-calendar-day-background-color-selected-hover,
         var(
@@ -680,7 +679,17 @@ governing permissions and limitations under the License.
     );
 }
 
-.tableCell:focus-within .date:before {
+.table-cell:focus-within .date.is-range-selection:before {
+    background: var(
+        --highcontrast-calendar-day-background-color-selected-hover,
+        var(
+            --mod-calendar-day-background-color-selected-hover,
+            var(--spectrum-calendar-day-background-color-selected-hover)
+        )
+    );
+}
+
+.table-cell:focus-within .date:before {
     border-color: var(
         --highcontrast-calendar-day-border-color-key-focus,
         var(

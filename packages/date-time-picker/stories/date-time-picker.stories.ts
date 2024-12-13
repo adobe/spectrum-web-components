@@ -31,6 +31,7 @@ import {
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '@spectrum-web-components/date-time-picker/sp-date-time-picker.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
@@ -150,8 +151,12 @@ const computeProps = (args: StoryArgs): ComponentArgs => {
 };
 
 const Template = (args: StoryArgs = {}): TemplateResult => {
+    const idNumber = Math.random().toString(36);
+    const id = `date-picker-${idNumber}`;
     return html`
+        <sp-field-label for=${id}>Event date</sp-field-label>
         <sp-date-time-picker
+            id=${id}
             @change=${args.onChange}
             @input=${args.onInput}
             ...=${spreadProps(computeProps(args))}
@@ -188,7 +193,9 @@ autofocus.args = {
 
 export const preselectedValue = (args: StoryArgs): TemplateResult => {
     return html`
+        <sp-field-label for="date-picker">Event date</sp-field-label>
         <sp-date-time-picker
+            id="date-picker-preselected"
             .value=${new CalendarDateTime(2020, 2, 16, 8, 20)}
             ...=${spreadProps(computeProps(args))}
         ></sp-date-time-picker>
@@ -197,7 +204,9 @@ export const preselectedValue = (args: StoryArgs): TemplateResult => {
 
 export const minDate = (args: StoryArgs): TemplateResult => {
     return html`
+        <sp-field-label for="date-picker-min">Event date</sp-field-label>
         <sp-date-time-picker
+            id="date-picker-min"
             .value=${new CalendarDate(2022, 4, 16)}
             .min=${new CalendarDate(2022, 4, 12)}
             ...=${spreadProps(computeProps(args))}
@@ -207,7 +216,9 @@ export const minDate = (args: StoryArgs): TemplateResult => {
 
 export const maxDate = (args: StoryArgs): TemplateResult => {
     return html`
+        <sp-field-label for="date-picker-max">Event date</sp-field-label>
         <sp-date-time-picker
+            id="date-picker-max"
             .value=${new CalendarDate(2022, 4, 16)}
             .max=${new CalendarDateTime(2022, 4, 19, 20, 30)}
             ...=${spreadProps(computeProps(args))}
@@ -217,7 +228,9 @@ export const maxDate = (args: StoryArgs): TemplateResult => {
 
 export const minAndMaxDates = (args: StoryArgs): TemplateResult => {
     return html`
+        <sp-field-label for="date-picker-min-max">Event date</sp-field-label>
         <sp-date-time-picker
+            id="date-picker-min-max"
             .value=${new CalendarDate(2022, 4, 16)}
             .min=${toZoned(
                 new CalendarDateTime(2022, 4, 12, 9, 15),
@@ -231,7 +244,9 @@ export const minAndMaxDates = (args: StoryArgs): TemplateResult => {
 
 export const secondPrecision = (args: StoryArgs): TemplateResult => {
     return html`
+        <sp-field-label for="date-picker-precision">Event date</sp-field-label>
         <sp-date-time-picker
+            id="date-picker-precision"
             .value=${new CalendarDate(2022, 4, 16)}
             precision="second"
             ...=${spreadProps(computeProps(args))}
@@ -241,7 +256,9 @@ export const secondPrecision = (args: StoryArgs): TemplateResult => {
 
 export const helpText = (args: StoryArgs): TemplateResult => {
     return html`
+        <sp-field-label for="date-picker-help">Event date</sp-field-label>
         <sp-date-time-picker
+            id="date-picker-help"
             precision="day"
             ...=${spreadProps(computeProps(args))}
         >
@@ -254,7 +271,9 @@ export const helpText = (args: StoryArgs): TemplateResult => {
 
 export const negativeHelpText = (args: StoryArgs): TemplateResult => {
     return html`
+        <sp-field-label for="date-picker-negative">Event date</sp-field-label>
         <sp-date-time-picker
+            id="date-picker-negative"
             .min=${new CalendarDate(2020, 0, 1)}
             .max=${new CalendarDate(2025, 0, 1)}
             ...=${spreadProps(computeProps(args))}
@@ -271,7 +290,11 @@ export const negativeHelpText = (args: StoryArgs): TemplateResult => {
 
 export const customIcon = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-date-time-picker ...=${spreadProps(computeProps(args))}>
+        <sp-field-label for="date-picker-icon">Event date</sp-field-label>
+        <sp-date-time-picker
+            id="date-picker-icon"
+            ...=${spreadProps(computeProps(args))}
+        >
             <sp-icon-alert slot="calendar-icon"></sp-icon-alert>
         </sp-date-time-picker>
     `;
@@ -279,7 +302,7 @@ export const customIcon = (args: StoryArgs): TemplateResult => {
 
 export const customWidth = (args: StoryArgs): TemplateResult[] => {
     return ['100%', '50%', '350px', 'auto'].map((width, index) => {
-        const id = `date-time-picker--${index}`;
+        const id = `date-picker--${index}`;
         const styles = css`
             sp-date-time-picker#${unsafeCSS(id)} {
                 inline-size: ${unsafeCSS(width)};
@@ -290,7 +313,9 @@ export const customWidth = (args: StoryArgs): TemplateResult[] => {
             <style>
                 ${styles}
             </style>
-            <p>Width: ${width}</p>
+            <sp-field-label for=${id}>
+                Event date - width: ${width}
+            </sp-field-label>
             <div>
                 <sp-date-time-picker
                     id=${id}

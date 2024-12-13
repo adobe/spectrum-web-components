@@ -65,27 +65,29 @@ import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 
 import {
+    dateValueToDate,
     equalSegmentValues,
     isCalendarDate,
     isCalendarDateTime,
     isZonedDateTime,
-} from './helpers.js';
-import { DateTimeSegments } from './segments/DateTimeSegments.js';
-import { EditableSegment } from './segments/EditableSegment.js';
-import { LiteralSegment } from './segments/LiteralSegment.js';
-import { SegmentsFactory } from './segments/SegmentsFactory.js';
-import { ClearModifier } from './segments/modifiers/ClearModifier.js';
-import { DecrementModifier } from './segments/modifiers/DecrementModifier.js';
-import { IncrementModifier } from './segments/modifiers/IncrementModifier.js';
-import { InputModifier } from './segments/modifiers/InputModifier.js';
-import { type SegmentsModifierParams } from './segments/modifiers/SegmentsModifier.js';
+} from './helpers';
+import { DateTimeSegments } from './segments/DateTimeSegments';
+import { EditableSegment } from './segments/EditableSegment';
+import { LiteralSegment } from './segments/LiteralSegment';
+import { SegmentsFactory } from './segments/SegmentsFactory';
+import { ClearModifier } from './segments/modifiers/ClearModifier';
+import { DecrementModifier } from './segments/modifiers/DecrementModifier';
+import { IncrementModifier } from './segments/modifiers/IncrementModifier';
+import { InputModifier } from './segments/modifiers/InputModifier';
+import { type SegmentsModifierParams } from './segments/modifiers/SegmentsModifier';
 import {
+    DateTimePickerLabels,
     DateTimePickerValue,
     EditableSegmentType,
     Precision,
     Precisions,
     SegmentTypes,
-} from './types.js';
+} from './types';
 
 /**
  * @element sp-date-time-picker
@@ -162,6 +164,20 @@ export class DateTimePicker extends ManageHelpText(
     public quiet = false;
 
     /**
+     * Labels read by screen readers. The default values are in English
+     * and can be overridden to localize the content.
+     */
+    @property({ attribute: false })
+    labels: DateTimePickerLabels = {
+        previous: 'Previous',
+        next: 'Next',
+        today: 'Today',
+        selected: 'Selected',
+        empty: 'Empty',
+        calendar: 'Calendar',
+    };
+
+    /**
      * @private
      */
     @property({ type: Boolean, reflect: true })
@@ -187,6 +203,7 @@ export class DateTimePicker extends ManageHelpText(
     private timeZone = getLocalTimeZone();
     private cachedLocalTime: ZonedDateTime = now(this.timeZone);
     private dateFormatter!: DateFormatter;
+    private ariaDateFormatter!: DateFormatter;
     private numberParser!: NumberParser;
 
     public override get focusElement(): HTMLElement {
@@ -222,6 +239,7 @@ export class DateTimePicker extends ManageHelpText(
         super();
         this.setNumberParser();
         this.setDateFormatter();
+        this.setAriaDateFormatter();
         this.addEventListener(
             'focusin',
             () => (this.previousCommitedValue = this.value)
@@ -241,7 +259,10 @@ export class DateTimePicker extends ManageHelpText(
         const changesDisabled = changedProperties.has('disabled');
 
         if (changesLocale) this.setNumberParser();
-        if (changesLocale || changesPrecision) this.setDateFormatter();
+        if (changesLocale || changesPrecision) {
+            this.setDateFormatter();
+            this.setAriaDateFormatter();
+        }
 
         if (changesValue || changesMin || changesMax) {
             const mostSpecificDateValue = this.mostSpecificDateValue;
@@ -259,6 +280,13 @@ export class DateTimePicker extends ManageHelpText(
         if (changesSegments) this.setValueFromSegments();
 
         if (changesDisabled && this.isCalendarOpen) this.isCalendarOpen = false;
+
+        const selectedDateLabel =
+            this.value &&
+            this.labels.selected +
+                ': ' +
+                this.ariaDateFormatter.format(dateValueToDate(this.value));
+        this.setAttribute('aria-label', selectedDateLabel ?? this.labels.empty);
     }
 
     /**
@@ -415,6 +443,7 @@ export class DateTimePicker extends ManageHelpText(
                 ?invalid=${this.invalid}
                 ?disabled=${this.disabled}
                 @click=${() => (this.isCalendarOpen = true)}
+                label=${this.labels.calendar}
             >
                 <slot name="calendar-icon" slot="icon">
                     <sp-icon-calendar></sp-icon-calendar>
@@ -435,6 +464,7 @@ export class DateTimePicker extends ManageHelpText(
                             .value=${this.value}
                             .min=${this.min}
                             .max=${this.max}
+                            .labels=${this.labels}
                             @change=${this.handleChange}
                         ></sp-calendar>
                     </div>
@@ -499,6 +529,7 @@ export class DateTimePicker extends ManageHelpText(
             <span
                 class="literal-segment"
                 data-test-id=${segment.type}
+                aria-hidden="true"
             >${segment.formatted}</span>
         `;
     }
@@ -541,6 +572,15 @@ export class DateTimePicker extends ManageHelpText(
         return html`
             <div
                 role="spinbutton"
+                aria-valuenow=${ifDefined(segment.value)}
+                aria-valuemin=${segment.minValue}
+                aria-valuemax=${segment.maxValue}
+                aria-label=${segment.label}
+                aria-valuetext=${ifDefined(
+                    segment.value !== undefined
+                        ? segment.formatted
+                        : this.labels.empty
+                )}
                 contenteditable=${ifDefined(isActive ? true : undefined)}
                 inputmode=${ifDefined(isActive ? inputMode : undefined)}
                 tabindex=${ifDefined(isActive ? '0' : undefined)}
@@ -779,41 +819,6 @@ export class DateTimePicker extends ManageHelpText(
         }
     }
 
-    private setDateFormatter(): void {
-        const dateOptions: Intl.DateTimeFormatOptions = {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-        };
-        let timeOptions: Intl.DateTimeFormatOptions = {};
-
-        if (this.includesTime) {
-            const minPrecisions: Precision[] = [
-                SegmentTypes.Minute,
-                SegmentTypes.Second,
-            ];
-            const includeMinutes = minPrecisions.includes(this.precision!);
-            const includeSeconds = this.precision === SegmentTypes.Second;
-
-            timeOptions = {
-                hour: '2-digit',
-                ...(includeMinutes && { minute: '2-digit' }),
-                ...(includeSeconds && { second: '2-digit' }),
-            };
-        }
-
-        this.dateFormatter = new DateFormatter(this.locale, {
-            ...dateOptions,
-            ...timeOptions,
-        });
-    }
-
-    private setNumberParser(): void {
-        this.numberParser = new NumberParser(this.locale, {
-            maximumFractionDigits: 0,
-        });
-    }
-
     private setSegments(): void {
         const segmentsFactory = new SegmentsFactory(this.dateFormatter);
         const segments = segmentsFactory.createSegments(
@@ -822,5 +827,53 @@ export class DateTimePicker extends ManageHelpText(
         );
 
         this.segments = segments;
+    }
+
+    private setNumberParser(): void {
+        this.numberParser = new NumberParser(this.locale, {
+            maximumFractionDigits: 0,
+        });
+    }
+
+    private setDateFormatter(): void {
+        this.dateFormatter = new DateFormatter(this.locale, {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            ...this.getTimeOptions('2-digit'),
+        });
+    }
+
+    private setAriaDateFormatter(): void {
+        this.ariaDateFormatter = new DateFormatter(this.locale, {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            ...this.getTimeOptions('numeric'),
+        });
+    }
+
+    private getTimeOptions(
+        digitType: '2-digit' | 'numeric'
+    ): Intl.DateTimeFormatOptions {
+        switch (this.precision) {
+            case Precisions.Second:
+                return {
+                    hour: digitType,
+                    minute: digitType,
+                    second: digitType,
+                };
+            case Precisions.Minute:
+                return {
+                    hour: digitType,
+                    minute: digitType,
+                };
+            case Precisions.Hour:
+                return {
+                    hour: digitType,
+                };
+            default:
+                return {};
+        }
     }
 }

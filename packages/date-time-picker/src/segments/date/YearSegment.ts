@@ -19,8 +19,8 @@ export class YearSegment extends EditableSegment {
     public maxValue: number = 9999;
     public value?: number;
 
-    constructor(formatted: string) {
-        super(SegmentTypes.Year, formatted);
+    constructor(formatted: string, label: string) {
+        super(SegmentTypes.Year, formatted, label);
     }
 
     public setLimits(currentDate: ZonedDateTime): void {
