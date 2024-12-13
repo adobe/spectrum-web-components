@@ -584,7 +584,6 @@ export class DateTimePicker extends ManageHelpText(
                 contenteditable=${ifDefined(isActive ? true : undefined)}
                 inputmode=${ifDefined(isActive ? inputMode : undefined)}
                 tabindex=${ifDefined(isActive ? '0' : undefined)}
-                aria-hidden=${ifDefined(usePlaceholder ? 'true' : undefined)}
                 class=${classMap(segmentClasses)}
                 style=${styleMap(segmentStyles)}
                 data-type=${segment.type}

@@ -112,8 +112,7 @@ describe('DateTimePicker', () => {
             `)
     );
 
-    // TODO: will fix in screen-reader accessibility PR
-    it.skip('loads default sp-date-time-picker accessibly', async () => {
+    it('loads default sp-date-time-picker accessibly', async () => {
         await expect(element).to.be.accessible();
     });
 

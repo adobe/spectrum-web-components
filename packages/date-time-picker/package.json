@@ -29,6 +29,7 @@
             "development": "./src/DateTimePicker.dev.js",
             "default": "./src/DateTimePicker.js"
         },
+        "./src/date-time-picker-overrides.css.js": "./src/date-time-picker-overrides.css.js",
         "./src/date-time-picker.css.js": "./src/date-time-picker.css.js",
         "./src/helpers.js": {
             "development": "./src/helpers.dev.js",
@@ -65,15 +66,15 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/calendar": "^0.0.1",
-        "@spectrum-web-components/field-label": "^0.49.0",
-        "@spectrum-web-components/icons-workflow": "^0.49.0",
-        "@spectrum-web-components/overlay": "^0.49.0",
-        "@spectrum-web-components/picker-button": "^0.49.0",
-        "@spectrum-web-components/popover": "^0.49.0"
+        "@spectrum-web-components/calendar": "^1.0.3",
+        "@spectrum-web-components/field-label": "^1.0.3",
+        "@spectrum-web-components/icons-workflow": "^1.0.3",
+        "@spectrum-web-components/overlay": "^1.0.3",
+        "@spectrum-web-components/picker-button": "^1.0.3",
+        "@spectrum-web-components/popover": "^1.0.3"
     },
     "devDependencies": {
-        "@spectrum-css/datepicker": "^3.2.1"
+        "@spectrum-css/datepicker": "^4.0.0-s2-foundations.16"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

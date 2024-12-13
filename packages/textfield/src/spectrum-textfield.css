@@ -596,7 +596,7 @@ governing permissions and limitations under the License.
     );
 }
 
-.input:read-only,
+:host([readonly]) .input,
 :host([readonly]) #textfield .input {
     background-color: initial;
     color: var(
@@ -610,7 +610,7 @@ governing permissions and limitations under the License.
     outline: none;
 }
 
-.input:read-only::placeholder,
+:host([readonly]) .input::placeholder,
 :host([readonly]) #textfield .input::placeholder {
     color: var(
         --highcontrast-textfield-text-color-readonly,
