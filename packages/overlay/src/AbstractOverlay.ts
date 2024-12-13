@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 import { SpectrumElement } from '@spectrum-web-components/base';
 import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-children.js';
-
 import type {
     OpenableElement,
     OverlayOptions,

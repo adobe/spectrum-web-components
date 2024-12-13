@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import { TemplateResult } from '@spectrum-web-components/base';
 import { AccordionMarkup } from './';
 import { argTypes } from './args.js';
-
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '@spectrum-web-components/link/sp-link.js';

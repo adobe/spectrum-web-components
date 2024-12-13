@@ -23,7 +23,6 @@ import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/f
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
-
 import tabItemStyles from './tab.css.js';
 
 /**

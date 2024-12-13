@@ -20,7 +20,9 @@ export class ElementResolutionController implements ReactiveController {
 
     set element(element: HTMLElement | null) {
         if (element === this.element) return;
+
         const previous = this.element;
+
         this._element = element;
         // requestUpdate leveraging the exported Symbol() so that the
         // changes can be easily tracked in the host element.
@@ -39,6 +41,7 @@ export class ElementResolutionController implements ReactiveController {
 
     set selector(selector: string) {
         if (selector === this.selector) return;
+
         this.releaseElement();
         this._selector = selector;
         this.resolveElement();
@@ -68,8 +71,10 @@ export class ElementResolutionController implements ReactiveController {
 
     protected mutationCallback: MutationCallback = (mutationList) => {
         let needsResolution = false;
+
         mutationList.forEach((mutation) => {
             if (needsResolution) return;
+
             if (mutation.type === 'childList') {
                 const currentElementRemoved =
                     this.element &&
@@ -79,23 +84,27 @@ export class ElementResolutionController implements ReactiveController {
                     ([...mutation.addedNodes] as HTMLElement[]).some(
                         this.elementIsSelected
                     );
+
                 needsResolution =
                     needsResolution ||
                     currentElementRemoved ||
                     matchingElementAdded;
             }
+
             if (mutation.type === 'attributes') {
                 const attributeChangedOnCurrentElement =
                     mutation.target === this.element;
                 const attributeChangedOnMatchingElement =
                     !!this.selector &&
                     this.elementIsSelected(mutation.target as HTMLElement);
+
                 needsResolution =
                     needsResolution ||
                     attributeChangedOnCurrentElement ||
                     attributeChangedOnMatchingElement;
             }
         });
+
         if (needsResolution) {
             this.resolveElement();
         }
@@ -118,10 +127,12 @@ export class ElementResolutionController implements ReactiveController {
     private resolveElement(): void {
         if (!this.selector) {
             this.releaseElement();
+
             return;
         }
 
         const parent = this.host.getRootNode() as ShadowRoot;
+
         this.element = this.selectorIsId
             ? (parent.getElementById(this.selectorAsId) as HTMLElement)
             : (parent.querySelector(this.selector) as HTMLElement);

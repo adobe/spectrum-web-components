@@ -22,7 +22,6 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable, LikeAnchor } from '@spectrum-web-components/shared';
-
 import itemStyles from '@spectrum-web-components/tabs/src/tab.css.js';
 import topNavItemStyles from './top-nav-item.css.js';
 
@@ -33,7 +32,6 @@ import topNavItemStyles from './top-nav-item.css.js';
  * @element sp-top-nav-item
  *
  * @slot - The text label of the Top Nav Item.
- *
  */
 export class TopNavItem extends LikeAnchor(Focusable) {
     /**

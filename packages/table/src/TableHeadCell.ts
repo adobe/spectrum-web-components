@@ -19,7 +19,6 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow100.js';
-
 import styles from './table-head-cell.css.js';
 import arrowStyles from '@spectrum-web-components/icon/src/spectrum-icon-arrow.css.js';
 import arrowOverrides from '@spectrum-web-components/icon/src/icon-arrow-overrides.css.js';
@@ -44,7 +43,6 @@ const ariaSortValue = (sortDirection?: 'asc' | 'desc'): string => {
  * @element sp-table-head-cell
  *
  * @fires sorted - Announces that the table head has been sorted and handles the sorted event
- *
  */
 export class TableHeadCell extends SpectrumElement {
     /**

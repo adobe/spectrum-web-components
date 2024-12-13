@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';

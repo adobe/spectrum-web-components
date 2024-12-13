@@ -32,6 +32,7 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
     const lightDomSelectors = Array.isArray(lightDomSelector)
         ? lightDomSelector
         : [lightDomSelector];
+
     class SlotPresenceObservingElement
         extends constructor
         implements SlotPresenceObservingInterface
@@ -74,6 +75,7 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
             if (this[slotContentIsPresent].has(selector)) {
                 return this[slotContentIsPresent].get(selector) || false;
             }
+
             throw new Error(
                 `The provided selector \`${selector}\` is not being observed.`
             );
@@ -81,16 +83,19 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
 
         public managePresenceObservedSlot = (): void => {
             let changes = false;
+
             lightDomSelectors.forEach((selector) => {
                 const nextValue = !!this.querySelector(`:scope > ${selector}`);
                 const previousValue =
                     this[slotContentIsPresent].get(selector) || false;
+
                 changes = changes || previousValue !== nextValue;
                 this[slotContentIsPresent].set(
                     selector,
                     !!this.querySelector(`:scope > ${selector}`)
                 );
             });
+
             if (changes) {
                 this.updateComplete.then(() => {
                     this.requestUpdate();
@@ -98,5 +103,6 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
             }
         };
     }
+
     return SlotPresenceObservingElement;
 }

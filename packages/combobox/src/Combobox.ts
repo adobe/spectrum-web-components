@@ -37,7 +37,6 @@ import { PendingStateController } from '@spectrum-web-components/reactive-contro
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import { Textfield } from '@spectrum-web-components/textfield';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
-
 import styles from './combobox.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';

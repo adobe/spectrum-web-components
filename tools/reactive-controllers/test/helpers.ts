@@ -33,5 +33,6 @@ export const createLanguageContext = (
             resolver(language, unsubscribe)
         );
     };
+
     return [createLangResolver, updateLanguage];
 };

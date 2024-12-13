@@ -18,7 +18,6 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-
 import '@spectrum-web-components/tray/sp-tray.js';
 import { Tray } from '@spectrum-web-components/tray';
 import '@spectrum-web-components/theme/sp-theme.js';

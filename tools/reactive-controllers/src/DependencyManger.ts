@@ -35,6 +35,7 @@ export class DependencyManagerController {
 
     private set loaded(loaded: boolean) {
         if (loaded === this.loaded) return;
+
         this._loaded = loaded;
         this.host.requestUpdate(dependencyManagerLoadedSymbol, !this.loaded);
     }
@@ -48,19 +49,21 @@ export class DependencyManagerController {
     /**
      * Submit a custom element tag name to be managed as a dependency.
      *
-     * @param dependency {string} - the custom element tag to manage
-     * @param alreadyLoaded {boolean} - force the managemented custom element to be listed as loaded
+     * @param dependency - {string} - the custom element tag to manage
+     * @param alreadyLoaded - {boolean} - force the managemented custom element to be listed as loaded
      */
     public add(dependency: string, alreadyLoaded?: boolean): void {
         const loaded =
             !!alreadyLoaded ||
             !!customElements.get(dependency) ||
             this.dependencies[dependency];
+
         if (!loaded) {
             customElements.whenDefined(dependency).then(() => {
                 this.add(dependency, true);
             });
         }
+
         this.dependencies = {
             ...this.dependencies,
             [dependency]: loaded,

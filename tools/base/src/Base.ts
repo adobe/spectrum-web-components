@@ -37,6 +37,7 @@ const updateRTL = (): void => {
         document.documentElement.dir === 'rtl'
             ? document.documentElement.dir
             : 'ltr';
+
     observedForElements.forEach((el) => {
         el.setAttribute('dir', dir);
     });
@@ -83,6 +84,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             const getAncestors = (root: Document = document): HTMLElement[] => {
                 // eslint-disable-next-line @spectrum-web-components/document-active-element
                 let currentNode = root.activeElement as HTMLElement;
+
                 while (
                     currentNode?.shadowRoot &&
                     currentNode.shadowRoot.activeElement
@@ -93,24 +95,30 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 const ancestors: HTMLElement[] = currentNode
                     ? [currentNode]
                     : [];
+
                 while (currentNode) {
                     const ancestor =
                         currentNode.assignedSlot ||
                         currentNode.parentElement ||
                         (currentNode.getRootNode() as ShadowRoot)?.host;
+
                     if (ancestor) {
                         ancestors.push(ancestor as HTMLElement);
                     }
+
                     currentNode = ancestor as HTMLElement;
                 }
+
                 return ancestors;
             };
             const activeElement = getAncestors(
                 this.getRootNode() as Document
             )[0];
+
             if (!activeElement) {
                 return false;
             }
+
             // Browsers without support for the `:focus-visible`
             // selector will throw on the following test (Safari, older things).
             // Some won't throw, but will be focusing item rather than the menu and
@@ -130,6 +138,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             if (!this.hasAttribute('dir')) {
                 let dirParent = ((this as HTMLElement).assignedSlot ||
                     this.parentNode) as HTMLElement;
+
                 while (
                     dirParent !== document.documentElement &&
                     !canManageContentDirection(
@@ -143,10 +152,12 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 }
                 this.dir =
                     dirParent.dir === 'rtl' ? dirParent.dir : this.dir || 'ltr';
+
                 if (dirParent === document.documentElement) {
                     observedForElements.add(this);
                 } else {
                     const { localName } = dirParent;
+
                     if (
                         localName.search('-') > -1 &&
                         !customElements.get(localName)
@@ -163,13 +174,16 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                         );
                     }
                 }
+
                 this._dirParent = dirParent as HTMLElement;
             }
+
             super.connectedCallback();
         }
 
         public override disconnectedCallback(): void {
             super.disconnectedCallback();
+
             if (this._dirParent) {
                 if (this._dirParent === document.documentElement) {
                     observedForElements.delete(this);
@@ -178,10 +192,12 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                         this
                     );
                 }
+
                 this.removeAttribute('dir');
             }
         }
     }
+
     return SpectrumMixinElement;
 }
 
@@ -202,6 +218,7 @@ if (window.__swc.DEBUG) {
         high: false,
         deprecation: false,
     };
+
     window.__swc = {
         ...window.__swc,
         ignoreWarningLocalNames: {
@@ -227,30 +244,40 @@ if (window.__swc.DEBUG) {
         ): void => {
             const { localName = 'base' } = element || {};
             const id = `${localName}:${type}:${level}` as BrandedSWCWarningID;
+
             if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id))
                 return;
+
             /* c8 ignore next 3 */
             if (window.__swc.ignoreWarningLocalNames[localName]) return;
+
             if (window.__swc.ignoreWarningTypes[type]) return;
+
             if (window.__swc.ignoreWarningLevels[level]) return;
+
             window.__swc.issuedWarnings.add(id);
             let listedIssues = '';
+
             if (issues && issues.length) {
                 issues.unshift('');
                 listedIssues = issues.join('\n    - ') + '\n';
             }
+
             const intro = level === 'deprecation' ? 'DEPRECATION NOTICE: ' : '';
             const inspectElement = element
                 ? '\nInspect this issue in the follow element:'
                 : '';
             const displayURL = (element ? '\n\n' : '\n') + url + '\n';
             const messages: unknown[] = [];
+
             messages.push(
                 intro + message + '\n' + listedIssues + inspectElement
             );
+
             if (element) {
                 messages.push(element);
             }
+
             messages.push(displayURL, {
                 data: {
                     localName,

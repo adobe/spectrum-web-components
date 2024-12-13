@@ -19,7 +19,6 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
-
 import styles from './thumbnail.css.js';
 
 /**
@@ -57,7 +56,6 @@ const defaultSize = validSizes[6];
  * @element sp-thumbnail
  *
  * @slot image - The image element to present in the Thumbnail.
- *
  */
 export class Thumbnail extends SpectrumElement {
     /**

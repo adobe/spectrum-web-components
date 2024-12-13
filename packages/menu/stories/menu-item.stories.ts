@@ -11,10 +11,8 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 
 export default {
     component: 'sp-menu-item',

@@ -31,6 +31,7 @@ function ensureMethod<T, RT>(
     } else if (typeof value === 'function') {
         return value as T;
     }
+
     return fallback;
 }
 
@@ -44,6 +45,7 @@ export class FocusGroupController<T extends HTMLElement>
         if (this._currentIndex === -1) {
             this._currentIndex = this.focusInIndex;
         }
+
         return this._currentIndex - this.offset;
     }
 
@@ -71,6 +73,7 @@ export class FocusGroupController<T extends HTMLElement>
         if (!this.cachedElements) {
             this.cachedElements = this._elements();
         }
+
         return this.cachedElements;
     }
 
@@ -79,6 +82,7 @@ export class FocusGroupController<T extends HTMLElement>
     protected set focused(focused: boolean) {
         /* c8 ignore next 1 */
         if (focused === this.focused) return;
+
         this._focused = focused;
     }
 
@@ -106,6 +110,7 @@ export class FocusGroupController<T extends HTMLElement>
 
     isEventWithinListenerScope(event: Event): boolean {
         if (this._listenerScope() === this.host) return true;
+
         return event.composedPath().includes(this._listenerScope());
     }
 
@@ -161,14 +166,20 @@ export class FocusGroupController<T extends HTMLElement>
             this.elements.length <= this._elements().length
         )
             return;
+
         const focusedElement = this.elements[this.currentIndex];
+
         this.clearElementCache();
+
         if (this.elements.includes(focusedElement)) return;
+
         const moveToNextElement = this.currentIndex !== this.elements.length;
         const diff = moveToNextElement ? 1 : -1;
+
         if (moveToNextElement) {
             this.setCurrentIndexCircularly(-1);
         }
+
         this.setCurrentIndexCircularly(diff);
         this.focus();
     }
@@ -182,12 +193,16 @@ export class FocusGroupController<T extends HTMLElement>
 
     focus(options?: FocusOptions): void {
         const elements = this.elements;
+
         if (!elements.length) return;
+
         let focusElement = elements[this.currentIndex];
+
         if (!focusElement || !this.isFocusableElement(focusElement)) {
             this.setCurrentIndexCircularly(1);
             focusElement = elements[this.currentIndex];
         }
+
         if (focusElement && this.isFocusableElement(focusElement)) {
             elements[this.prevIndex]?.setAttribute('tabindex', '-1');
             focusElement.tabIndex = 0;
@@ -211,9 +226,11 @@ export class FocusGroupController<T extends HTMLElement>
     setCurrentIndexCircularly(diff: number): void {
         const { length } = this.elements;
         let steps = length;
+
         this.prevIndex = this.currentIndex;
         // start at a possibly not 0 index
         let nextIndex = (length + this.currentIndex + diff) % length;
+
         while (
             // don't cycle the elements more than once
             steps &&
@@ -248,6 +265,7 @@ export class FocusGroupController<T extends HTMLElement>
         const isRelatedTargetContainedWithinElements = this.elements.some(
             (el) => el.contains(relatedTarget)
         );
+
         return !(
             isRelatedTargetAnElement || isRelatedTargetContainedWithinElements
         );
@@ -258,8 +276,10 @@ export class FocusGroupController<T extends HTMLElement>
 
         const path = event.composedPath() as T[];
         let targetIndex = -1;
+
         path.find((el) => {
             targetIndex = this.elements.indexOf(el);
+
             return targetIndex !== -1;
         });
         this.prevIndex = this.currentIndex;
@@ -272,20 +292,26 @@ export class FocusGroupController<T extends HTMLElement>
 
     /**
      * handleClick - Finds the element that was clicked and sets the tabindex to 0
+     *
      * @returns void
      */
     handleClick = (): void => {
         // Manually set the tabindex to 0 for the current element on receiving focus (from keyboard or mouse)
         const elements = this.elements;
+
         if (!elements.length) return;
+
         let focusElement = elements[this.currentIndex];
+
         if (this.currentIndex < 0) {
             return;
         }
+
         if (!focusElement || !this.isFocusableElement(focusElement)) {
             this.setCurrentIndexCircularly(1);
             focusElement = elements[this.currentIndex];
         }
+
         if (focusElement && this.isFocusableElement(focusElement)) {
             elements[this.prevIndex]?.setAttribute('tabindex', '-1');
             focusElement.setAttribute('tabindex', '0');
@@ -302,6 +328,7 @@ export class FocusGroupController<T extends HTMLElement>
         if (code === 'End' || code === 'Home') {
             return true;
         }
+
         switch (this.direction) {
             case 'horizontal':
                 return code === 'ArrowLeft' || code === 'ArrowRight';
@@ -317,8 +344,11 @@ export class FocusGroupController<T extends HTMLElement>
         if (!this.acceptsEventCode(event.code) || event.defaultPrevented) {
             return;
         }
+
         let diff = 0;
+
         this.prevIndex = this.currentIndex;
+
         switch (event.code) {
             case 'ArrowRight':
                 diff += 1;
@@ -341,7 +371,9 @@ export class FocusGroupController<T extends HTMLElement>
                 diff += 1;
                 break;
         }
+
         event.preventDefault();
+
         if (this.direction === 'grid' && this.currentIndex + diff < 0) {
             this.currentIndex = 0;
         } else if (
@@ -352,6 +384,7 @@ export class FocusGroupController<T extends HTMLElement>
         } else {
             this.setCurrentIndexCircularly(diff);
         }
+
         // To allow the `focusInIndex` to be calculated with the "after" state of the keyboard interaction
         // do `elementEnterAction` _before_ focusing the next element.
         this.elementEnterAction(this.elements[this.currentIndex]);

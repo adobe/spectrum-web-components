@@ -18,7 +18,6 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
-
 import sidenavStyles from './sidenav.css.js';
 import { Focusable } from '@spectrum-web-components/shared';
 import { SideNavItem } from './SidenavItem.js';
@@ -36,7 +35,6 @@ export interface SidenavSelectDetail {
  *
  * @fires change - Announces a change in the `value` property of the navigation element.
  * This change can be "canceled" via `event.preventDefault()`.
- *
  */
 export class SideNav extends Focusable {
     public static override get styles(): CSSResultArray {

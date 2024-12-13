@@ -19,6 +19,7 @@ export const firstFocusableIn = (
     const firstFocusable = root.querySelector(
         userFocusableSelector
     ) as SpectrumElement;
+
     return firstFocusable;
 };
 
@@ -30,5 +31,6 @@ export const firstFocusableSlottedIn = (
         .find((element) =>
             element.matches(userFocusableSelector)
         ) as SpectrumElement;
+
     return firstFocusable;
 };

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -23,7 +22,6 @@ import { states } from './states.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
-import '../../overlay/stories/index.js';
 import { handleChange, StoryArgs, Template } from './template.js';
 import { argTypes } from './args.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';

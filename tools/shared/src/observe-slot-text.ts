@@ -55,6 +55,7 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
                     for (const mutation of mutationsList) {
                         if (mutation.type === 'characterData') {
                             this.manageTextObservedSlot();
+
                             return;
                         }
                     }
@@ -73,15 +74,19 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
 
         public manageTextObservedSlot(): void {
             if (!this[assignedNodesList]) return;
+
             const assignedNodes = [...this[assignedNodesList]].filter(
                 (currentNode) => {
                     const node = currentNode as HTMLElement;
+
                     if (node.tagName) {
                         return !excludedSelectors.some(notExcluded(node));
                     }
+
                     return node.textContent ? node.textContent.trim() : false;
                 }
             );
+
             this.slotHasContent = assignedNodes.length > 0;
         }
 
@@ -90,10 +95,12 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
                 const { childNodes } = this;
                 const textNodes = [...childNodes].filter((currentNode) => {
                     const node = currentNode as HTMLElement;
+
                     if (node.tagName) {
                         const excluded = excludedSelectors.some(
                             notExcluded(node)
                         );
+
                         return !excluded
                             ? // This pass happens at element upgrade and before slot rendering.
                               // Confirm it would exisit in a targeted slot if there was one supplied.
@@ -102,10 +109,13 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
                                 : !node.hasAttribute('slot')
                             : false;
                     }
+
                     return node.textContent ? node.textContent.trim() : false;
                 });
+
                 this.slotHasContent = textNodes.length > 0;
             }
+
             super.update(changedProperties);
         }
 
@@ -118,5 +128,6 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
             });
         }
     }
+
     return SlotTextObservingElement;
 }

@@ -21,16 +21,13 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-
 import { SideNav, SidenavSelectDetail } from './Sidenav.js';
-
 import sidenavItemStyles from './sidenav-item.css.js';
 
 /**
  * @element sp-sidenav-item
  *
  * @slot - the Sidenav Items to display as children of this item
- *
  */
 export class SideNavItem extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {

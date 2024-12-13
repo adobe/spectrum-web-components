@@ -38,7 +38,6 @@ import {
     isAndroid,
     isIOS,
 } from '@spectrum-web-components/shared/src/platform.js';
-
 import styles from './color-area.css.js';
 
 /**

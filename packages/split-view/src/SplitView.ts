@@ -30,9 +30,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
-
 import { WithSWCResizeObserver } from './types';
-
 import styles from './split-view.css.js';
 
 const DEFAULT_MAX_SIZE = 3840;
@@ -53,7 +51,6 @@ const COLLAPSE_THREASHOLD = 50;
  * @slot - Two sibling elements to be sized by the element attributes
  *
  * @fires change - Announces the new position of the splitter
- *
  */
 export class SplitView extends SpectrumElement {
     /**

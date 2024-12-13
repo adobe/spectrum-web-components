@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { Theme } from '../Theme.js';
-
 import coreStyles from './theme.css.js';
 
 Theme.registerThemeFragment('express', 'system', coreStyles);

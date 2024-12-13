@@ -21,13 +21,11 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared';
-
 import styles from './dialog.css.js';
 import type { CloseButton } from '@spectrum-web-components/button';
 import { AlertDialog } from '@spectrum-web-components/alert-dialog/src/AlertDialog.js';

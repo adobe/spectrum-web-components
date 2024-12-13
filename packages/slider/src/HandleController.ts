@@ -645,7 +645,6 @@ export class HandleController {
      * @param event - KeyboardEvent on input
      *
      * @private
-     *
      */
     private onInputKeydown = (event: KeyboardEvent): void => {
         if (event.key == 'Escape') {

@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 import { html } from '@spectrum-web-components/base';
 import { Card } from '@spectrum-web-components/card';
-
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/scale-medium.js';
 import '@spectrum-web-components/theme/theme-light.js';
@@ -93,6 +92,7 @@ describe('Grid', () => {
             Math.round(firstRect.x + firstRect.width + 2),
             Math.round(firstRect.y + 2),
         ] as [number, number];
+
         await sendMouse({
             type: 'click',
             position,
@@ -174,6 +174,7 @@ describe('Grid', () => {
         await nextFrame();
 
         let focused = el.querySelector(el.focusableSelector) as Card;
+
         await elementUpdated(focused);
         expect(focused === document.activeElement).to.be.true;
         expect(focused.focused).to.be.true;
@@ -236,6 +237,7 @@ describe('Grid', () => {
         await nextFrame();
 
         let focused = el.querySelector(el.focusableSelector) as Card;
+
         await elementUpdated(focused);
         expect(focused === document.activeElement).to.be.true;
         expect(focused.focused).to.be.true;

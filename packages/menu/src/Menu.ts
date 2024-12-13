@@ -22,7 +22,6 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-
 import { MenuItem } from './MenuItem.js';
 import type { MenuItemAddedOrUpdatedEvent } from './MenuItem.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
@@ -64,7 +63,6 @@ function elementIsOrContains(
  *   when an ancestor of this element is actively managing the selection of its descendents.
  *   When the `selects` attribute is not present a `value` will not be maintained and the Menu
  *   Item children of this Menu will not have their `selected` state managed.
- *
  */
 export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {

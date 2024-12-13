@@ -17,7 +17,6 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-
 import {
     Default,
     Horizontal,
@@ -26,9 +25,11 @@ import {
 } from '../stories/card.stories.js';
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import { spy } from 'sinon';
-import { spaceEvent } from '../../../test/testing-helpers.js';
+import {
+    spaceEvent,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('card', () => {
     testForLitDevWarnings(

@@ -71,6 +71,7 @@ class StreamingListenerDirective extends AsyncDirective {
             this.element = (part as ElementPart).element;
             this.removeListeners();
         }
+
         this.host =
             (part.options?.host as Record<string, unknown>) || this.element;
         this.start = start;
@@ -82,6 +83,7 @@ class StreamingListenerDirective extends AsyncDirective {
 
     addListeners(state?: 'on' | 'off'): void {
         this.state = state || this.state;
+
         if (this.state === 'off') {
             this.addListener(this.streamOutside[0], this.handleOutside);
             this.addListener(this.start[0], this.handleStart);
@@ -109,6 +111,7 @@ class StreamingListenerDirective extends AsyncDirective {
         if (this.stream) {
             return;
         }
+
         this.callHandler(value, event);
         this.stream = requestAnimationFrame(() => {
             this.stream = undefined;
@@ -126,9 +129,11 @@ class StreamingListenerDirective extends AsyncDirective {
     handleStart = (event: Event): void => {
         this.clearStream();
         this.callHandler(this.start[1], event);
+
         if (event.defaultPrevented) {
             return;
         }
+
         this.removeListeners();
         this.addListeners('on');
     };

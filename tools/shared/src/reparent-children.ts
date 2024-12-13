@@ -19,14 +19,18 @@ function restoreChildren<T extends Element>(
         const placeholderItem = placeholderItems[index];
         const parentElement =
             placeholderItem.parentElement || placeholderItem.getRootNode();
+
         if (cleanupCallbacks[index]) {
             cleanupCallbacks[index](srcElement);
         }
+
         if (parentElement && parentElement !== placeholderItem) {
             parentElement.replaceChild(srcElement, placeholderItem);
         }
+
         delete placeholderItems[index];
     }
+
     return srcElements;
 }
 
@@ -42,6 +46,7 @@ export const reparentChildren = <T extends Element>(
     } = { position: 'beforeend' }
 ): (() => T[]) => {
     let { length } = srcElements;
+
     if (length === 0) {
         return () => srcElements;
     }
@@ -62,18 +67,22 @@ export const reparentChildren = <T extends Element>(
 
     do {
         const srcElement = srcElements[index];
+
         if (prepareCallback) {
             cleanupCallbacks[index] = prepareCallback(srcElement) as (
                 el: T
             ) => void;
         }
+
         placeholderItems[index] = placeholderTemplate.cloneNode() as Comment;
 
         const parentElement =
             srcElement.parentElement || srcElement.getRootNode();
+
         if (parentElement && parentElement !== srcElement) {
             parentElement.replaceChild(placeholderItems[index], srcElement);
         }
+
         destination.insertAdjacentElement(position, srcElement);
 
         index += step;

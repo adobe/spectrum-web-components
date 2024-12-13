@@ -48,6 +48,7 @@ export class SystemResolutionController implements ReactiveController {
                         unsubscribe: () => void
                     ) => {
                         const previous = this.system;
+
                         this.system = system;
                         this.unsubscribe = unsubscribe;
                         this.host.requestUpdate(
@@ -59,6 +60,7 @@ export class SystemResolutionController implements ReactiveController {
                 cancelable: true,
             }
         );
+
         this.host.dispatchEvent(querySystemEvent);
     }
 }

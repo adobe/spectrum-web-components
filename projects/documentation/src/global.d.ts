@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 declare module '*.css' {
     const content: CSSResultArray;
+
     export default content;
 }
 

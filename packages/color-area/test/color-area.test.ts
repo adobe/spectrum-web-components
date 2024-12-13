@@ -19,7 +19,6 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
-
 import '@spectrum-web-components/color-area/sp-color-area.js';
 import { ColorArea } from '@spectrum-web-components/color-area';
 import { sendKeys } from '@web/test-runner-commands';

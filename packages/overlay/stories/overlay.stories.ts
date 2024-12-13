@@ -29,7 +29,6 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
@@ -48,12 +47,10 @@ import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '../../../projects/story-decorator/src/types.js';
-
-import './overlay-story-components.js';
+import { PopoverContent } from './overlay-story-components.js';
 import { render } from 'lit-html';
 import { Popover } from '@spectrum-web-components/popover';
 import { Button } from '@spectrum-web-components/button';
-import { PopoverContent } from './overlay-story-components.js';
 
 const storyStyles = html`
     <style>

@@ -19,7 +19,6 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
-
 import {
     currency,
     decimals,

@@ -76,14 +76,17 @@ export class Grid extends LitVirtualizer {
             parseFloat(target.getAttribute('key') || '')
         ] as Record<string, unknown>;
         const selected: Record<string, unknown>[] = [...this.selected];
+
         if (!selected.includes(value)) {
             selected.push(value);
         } else {
             const index = selected.indexOf(value);
+
             if (index > -1) {
                 selected.splice(index, 1);
             }
         }
+
         this.selected = selected;
     }
 
@@ -93,10 +96,12 @@ export class Grid extends LitVirtualizer {
             this.attachShadow(
                 (this.constructor as typeof ReactiveElement).shadowRootOptions
             );
+
         adoptStyles(
             renderRoot,
             (this.constructor as typeof ReactiveElement).elementStyles
         );
+
         return renderRoot as unknown as this;
     }
 
@@ -135,16 +140,19 @@ export class Grid extends LitVirtualizer {
                 padding: this.padding || this.gap,
             });
         }
+
         if (changes.has('renderItem')) {
             const fn = this.renderItem as unknown as (
                 item: unknown,
                 index: number,
                 selected: boolean
             ) => TemplateResult;
+
             this.renderItem = (item, index: number): TemplateResult => {
                 const selected = this.selected.includes(
                     item as Record<string, unknown>
                 );
+
                 return fn(item, index, selected);
             };
         }
@@ -152,6 +160,7 @@ export class Grid extends LitVirtualizer {
         if (this.isConnected) {
             this.__gridPart = render(super.render(), this);
         }
+
         super.update(changes);
     }
 

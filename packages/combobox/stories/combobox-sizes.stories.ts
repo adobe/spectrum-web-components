@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-
 import { isOverlayOpen } from '../../overlay/stories/index.js';
 import { Template } from './template.js';
 import { StoryArgs } from './index.js';

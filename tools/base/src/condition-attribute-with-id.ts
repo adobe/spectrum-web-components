@@ -17,9 +17,11 @@ export function conditionAttributeWithoutId(
 ): void {
     const ariaDescribedby = el.getAttribute(attribute);
     let descriptors = ariaDescribedby ? ariaDescribedby.split(/\s+/) : [];
+
     descriptors = descriptors.filter(
         (descriptor) => !ids.find((id) => descriptor === id)
     );
+
     if (descriptors.length) {
         el.setAttribute(attribute, descriptors.join(' '));
     } else {
@@ -36,12 +38,15 @@ export function conditionAttributeWithId(
     const ariaDescribedby = el.getAttribute(attribute);
     const descriptors = ariaDescribedby ? ariaDescribedby.split(/\s+/) : [];
     const hadIds = ids.every((id) => descriptors.indexOf(id) > -1);
+
     if (hadIds)
         /* c8 ignore next 3 */
         return (): void => {
             return;
         };
+
     descriptors.push(...ids);
     el.setAttribute(attribute, descriptors.join(' '));
+
     return () => conditionAttributeWithoutId(el, attribute, ids);
 }

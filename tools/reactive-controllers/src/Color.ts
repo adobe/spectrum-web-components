@@ -100,11 +100,13 @@ export class ColorController {
 
             if (values !== null) {
                 const [, h] = values;
+
                 originalHue = Number(h);
             }
         } else if (!isString && format.startsWith('hs')) {
             const colorInput = currentColor.originalInput;
             const colorValues = Object.values(colorInput);
+
             originalHue = colorValues[0];
         }
 
@@ -125,18 +127,22 @@ export class ColorController {
 
             if (values !== null) {
                 const [, h, s] = values;
+
                 this.hue = Number(h);
                 this.saturation = Number(s);
             }
         } else if (!isString && format.startsWith('hs')) {
             const colorInput = currentColor.originalInput;
             const colorValues = Object.values(colorInput);
+
             this.hue = colorValues[0];
             this.saturation = colorValues[1];
         } else {
             const { h } = currentColor.toHsv();
+
             this.hue = h;
         }
+
         this.applyColorToState(currentColor.toHsv());
     }
 
@@ -179,11 +185,14 @@ export class ColorController {
 
     public set hue(value: number) {
         const hue = Math.min(360, Math.max(0, value));
+
         if (hue === this.hue) {
             return;
         }
+
         const oldValue = this.hue;
         const { s, v } = this._color.toHsv();
+
         this._color = new TinyColor({ h: hue, s, v });
         this._hue = hue;
         this.host.requestUpdate('hue', oldValue);
@@ -206,20 +215,24 @@ export class ColorController {
             if (this.maintains === 'hue') {
                 if (isString) {
                     const hslString = color.toHslString();
+
                     return hslString.replace(replaceHueRegExp, `$1${this.hue}`);
                 } else {
                     const { s, l, a } = color.toHsl();
+
                     return { h: this.hue, s, l, a };
                 }
             } else {
                 if (isString) {
                     const hslString = color.toHslString();
+
                     return hslString.replace(
                         replaceHueAndSaturationRegExp,
                         `$1${this.hue}$2${this.saturation}`
                     );
                 } else {
                     const { s, l, a } = color.toHsl();
+
                     return { h: this.hue, s, l, a };
                 }
             }
@@ -228,20 +241,24 @@ export class ColorController {
             if (this.maintains === 'hue') {
                 if (isString) {
                     const hsvString = color.toHsvString();
+
                     return hsvString.replace(replaceHueRegExp, `$1${this.hue}`);
                 } else {
                     const { s, v, a } = color.toHsv();
+
                     return { h: this.hue, s, v, a };
                 }
             } else {
                 if (isString) {
                     const hsvString = color.toHsvString();
+
                     return hsvString.replace(
                         replaceHueAndSaturationRegExp,
                         `$1${this.hue}$2${this.saturation}`
                     );
                 } else {
                     const { s, v, a } = color.toHsv();
+
                     return { h: this.hue, s, v, a };
                 }
             }
@@ -269,7 +286,9 @@ export class ColorController {
         if (color === this.color) {
             return;
         }
+
         const oldValue = this._color;
+
         this._color = new TinyColor(color);
         const format = this._color.format;
         let isString = typeof color === 'string' || color instanceof String;
@@ -293,6 +312,7 @@ export class ColorController {
         const formatOptions: Record<string, keyof TinyColorToValue> = {
             hsl: 'toHsl',
         };
+
         return this._color[formatOptions[format]]();
     }
 
@@ -301,6 +321,7 @@ export class ColorController {
         const isString =
             typeof this._color.originalInput === 'string' ||
             this._color.originalInput instanceof String;
+
         this.setColorProcess(this._color, color, this._color.format, isString);
     }
 

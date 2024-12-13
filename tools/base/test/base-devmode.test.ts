@@ -13,6 +13,7 @@ import { stub } from 'sinon';
 
 describe('Dev Mode', () => {
     let consoleWarnStub!: ReturnType<typeof stub>;
+
     before(() => {
         window.__swc = {
             ...window.__swc,
@@ -30,10 +31,12 @@ describe('Dev Mode', () => {
         const { SpectrumElement } = await import(
             '@spectrum-web-components/base'
         );
+
         expect(SpectrumElement).to.not.be.undefined;
 
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
+
         expect(
             spyCall.args.at(0) as string,
             'confirm "dev mode"-centric message'

@@ -53,7 +53,6 @@ import {
     removeSlottableRequest,
     SlottableRequestEvent,
 } from './slottable-request-event.js';
-
 import styles from './overlay.css.js';
 
 const browserSupportsPopover = 'showPopover' in document.createElement('div');

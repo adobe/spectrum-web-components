@@ -27,5 +27,6 @@ export function defineElement(
             );
         }
     }
+
     customElements.define(name, constructor);
 }

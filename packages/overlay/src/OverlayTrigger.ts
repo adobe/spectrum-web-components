@@ -23,11 +23,9 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import type { Placement } from '@floating-ui/dom';
-
 import type { BeforetoggleOpenEvent } from './events.js';
 import type { Overlay } from './Overlay.js';
 import type { OverlayTriggerInteractions } from './overlay-types';
-
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
 export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
@@ -55,7 +53,6 @@ export class OverlayTrigger extends SpectrumElement {
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
      *
      * @attribute
-     *
      */
     @property({ reflect: true })
     public placement?: Placement;

@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
-
 import '@spectrum-web-components/infield-button/sp-infield-button.js';
 import { InfieldButton } from '@spectrum-web-components/infield-button';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';

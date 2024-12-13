@@ -2,14 +2,19 @@
     "root": true,
     "env": {
         "browser": true,
-        "node": false,
+        "node": true,
         "es6": true
     },
     "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
     "plugins": [
         "@typescript-eslint",
         "notice",
         "@spectrum-web-components",
+        "import",
         "@stylistic",
         "jsdoc",
         "lit-a11y"
@@ -18,7 +23,9 @@
         "plugin:@typescript-eslint/recommended",
         "prettier",
         "plugin:lit-a11y/recommended",
-        "plugin:jsdoc/recommended-typescript"
+        "plugin:jsdoc/recommended-typescript",
+        "plugin:import/recommended",
+        "plugin:import/typescript"
     ],
     "ignorePatterns": ["packages/**/*.css.ts"],
     "settings": {
@@ -26,6 +33,12 @@
             "tagNamePreference": {
                 "attr": "attribute"
             }
+        },
+        "import/resolver": {
+            // You will also need to install and configure the TypeScript resolver
+            // See also https://github.com/import-js/eslint-import-resolver-typescript#configuration
+            "typescript": true,
+            "node": true
         }
     },
     "rules": {
@@ -243,7 +256,7 @@
                 "alphabetizeExtras": true
             }
         ],
-        "jsdoc/tag-lines": ["warn", "any", { "startLines": 1, "endLines": 1 }],
+        "jsdoc/tag-lines": ["warn", "any", { "startLines": 1 }],
         "jsdoc/no-blank-blocks": [
             "warn",
             {
@@ -273,9 +286,7 @@
             "error",
             {
                 "ignoreCase": true,
-                "ignoreDeclarationSort": true,
-                "ignoreMemberSort": false,
-                "allowSeparatedGroups": false
+                "ignoreDeclarationSort": true
             }
         ],
         "lit-a11y/click-events-have-key-events": [
@@ -315,6 +326,11 @@
                 "blankLine": "any",
                 "prev": ["const", "let", "var"],
                 "next": ["const", "let", "var"]
+            },
+            {
+                "blankLine": "never",
+                "prev": ["import"],
+                "next": ["import"]
             }
         ]
     },

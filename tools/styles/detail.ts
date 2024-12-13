@@ -15,7 +15,6 @@ import langBaseStyles from './src/spectrum-lang.css.js';
 import langOverrides from './src/lang-overrides.css.js';
 import detailBaseStyles from './src/spectrum-detail.css.js';
 import detailOverrides from './src/detail-overrides.css.js';
-
 import { css } from 'lit';
 
 const langStyles = css`

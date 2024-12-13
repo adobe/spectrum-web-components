@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -22,7 +21,6 @@ import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable
 import { ActionMenuMarkup } from './';
 import { makeOverBackground } from '../../button/stories/index.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
-
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
 import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';

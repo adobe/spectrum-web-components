@@ -11,8 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import type { Picker } from '@spectrum-web-components/picker';
-
-import type { MenuItem } from '@spectrum-web-components/menu';
+import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
     aTimeout,
     elementUpdated,
@@ -29,6 +28,8 @@ import {
     arrowDownEvent,
     arrowRightEvent,
     arrowUpEvent,
+    ignoreResizeObserverLoopError,
+    fixture as styledFixture,
     testForLitDevWarnings,
     tEvent,
 } from '../../../test/testing-helpers.js';
@@ -48,17 +49,12 @@ import {
 } from '../stories/picker.stories.js';
 import { M as pending } from '../stories/picker-pending.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import {
-    ignoreResizeObserverLoopError,
-    fixture as styledFixture,
-} from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import type { Menu } from '@spectrum-web-components/menu';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 import { FieldLabel } from '@spectrum-web-components/field-label/src/FieldLabel.js';
 import { isWebKit } from '@spectrum-web-components/shared';

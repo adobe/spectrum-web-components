@@ -31,11 +31,9 @@ import {
     query,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-
 import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
-
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
@@ -56,7 +54,6 @@ import { PendingStateController } from '@spectrum-web-components/reactive-contro
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
-
 import { DesktopController } from './DesktopController.js';
 import { MobileController } from './MobileController.js';
 import { strategies } from './strategies.js';
@@ -140,7 +137,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
      *
      * @attribute
-     *
      */
 
     @property()

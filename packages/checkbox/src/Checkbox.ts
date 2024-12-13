@@ -111,7 +111,6 @@ const dashIcon = {
  * @slot - content to display as the label for the Checkbox
  *
  * @fires change - Announces a change in the `checked` property of a Checkbox
- *
  */
 export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
     noDefaultSize: true,

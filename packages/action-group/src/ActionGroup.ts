@@ -25,7 +25,6 @@ import {
 import type { ActionButton } from '@spectrum-web-components/action-button';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
-
 import styles from './action-group.css.js';
 
 const EMPTY_SELECTION: string[] = [];
@@ -36,7 +35,6 @@ const EMPTY_SELECTION: string[] = [];
  * @slot - The sp-action-button elements that make up the group.
  *
  * @fires change - Announces that the selection state has been changed by the user.
- *
  */
 export class ActionGroup extends SizedMixin(SpectrumElement, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],

@@ -16,7 +16,6 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/button/sp-button.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
-import '../../overlay/stories/index.js';
 
 export default {
     component: 'sp-popover',

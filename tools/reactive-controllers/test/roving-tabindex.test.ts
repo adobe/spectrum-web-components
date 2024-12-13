@@ -22,6 +22,7 @@ describe('RovingTabindex', () => {
         const controller = new RovingTabindexController(
             el as LitElement & { shadowRoot: ShadowRoot }
         );
+
         expect(controller.direction).to.equal('both');
         expect(controller.focusInIndex).to.equal(0);
         expect(controller.isFocusableElement(el)).to.be.true;

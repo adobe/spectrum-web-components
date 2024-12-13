@@ -16,7 +16,6 @@ import {
     HostWithPendingState,
     PendingStateController,
 } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
-
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 
@@ -42,6 +41,7 @@ describe('PendingStateController', () => {
             await host.updateComplete;
 
             let ariaLabel = host.getAttribute('aria-label');
+
             expect(ariaLabel).to.equal('Pending');
 
             host.removeAttribute('pending');
@@ -73,6 +73,7 @@ describe('PendingStateController', () => {
 
         it('should render the pending state UI', async () => {
             const pendingLabel = 'Custom Pending Label';
+
             host.pendingLabel = pendingLabel;
             const templateResult = controller.renderPendingState();
 
@@ -132,6 +133,7 @@ describe('PendingStateController', () => {
             await host.updateComplete;
             let progressCircle =
                 host.shadowRoot?.querySelector('sp-progress-circle');
+
             expect(progressCircle).to.not.be.null;
             host.removeAttribute('pending');
             await host.updateComplete;
@@ -155,8 +157,10 @@ describe('PendingStateController', () => {
 
             const renderedAttributes = progressCircle?.attributes;
             const expectedAttributes = expectedElement.attributes;
+
             expect(renderedAttributes?.length === expectedAttributes.length).to
                 .be.true;
+
             if (renderedAttributes) {
                 for (let i = 0; i < renderedAttributes.length; i++) {
                     const renderedAttr = renderedAttributes[i];

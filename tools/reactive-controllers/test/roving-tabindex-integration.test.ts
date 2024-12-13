@@ -69,7 +69,9 @@ const createTabs = async (): Promise<Tabs> => {
             </sp-tab-panel>
         </sp-tabs>
     `);
+
     await elementUpdated(tabs);
+
     return tabs;
 };
 
@@ -94,7 +96,9 @@ const createGroup = async (): Promise<ActionGroup> => {
             </sp-action-menu>
         </sp-action-group>
     `);
+
     await elementUpdated(group);
+
     return group;
 };
 
@@ -173,6 +177,7 @@ describe('Action Group inside of Tabs', () => {
         expect(actionGroup3.contains(document.activeElement)).to.be.true;
 
         const boundingRect = tab1.getBoundingClientRect();
+
         // tab1.click() doesn't current reach into the focus management here.
         await sendMouse({
             steps: [

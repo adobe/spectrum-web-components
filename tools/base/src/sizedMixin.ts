@@ -60,13 +60,17 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
             const validSize = (
                 validSizes.includes(size) ? size : fallbackSize
             ) as ElementSize;
+
             if (validSize) {
                 this.setAttribute('size', validSize);
             }
+
             if (this._size === validSize) {
                 return;
             }
+
             const oldSize = this._size;
+
             this._size = validSize;
             this.requestUpdate('size', oldSize);
         }
@@ -77,8 +81,10 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
             if (!this.hasAttribute('size') && !noDefaultSize) {
                 this.setAttribute('size', this.size);
             }
+
             super.update(changes);
         }
     }
+
     return SizedElement;
 }

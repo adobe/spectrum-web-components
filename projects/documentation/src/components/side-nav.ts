@@ -46,6 +46,7 @@ export class SideNav extends LitElement {
         const target = document.querySelector(
             '[slot="logo"]'
         ) as HTMLAnchorElement;
+
         if (!target) {
             (
                 this.shadowRoot!.querySelector('#logo')! as HTMLAnchorElement
@@ -53,6 +54,7 @@ export class SideNav extends LitElement {
 
             return;
         }
+
         target.focus();
     }
 

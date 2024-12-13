@@ -17,7 +17,6 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import { Combobox } from '@spectrum-web-components/combobox';
 import { detectOS, fixture } from '../../../test/testing-helpers.js';

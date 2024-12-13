@@ -116,5 +116,6 @@ export function LikeAnchor<T extends Constructor<ReactiveElement>>(
                 >${anchorContent}</a>`;
         }
     }
+
     return LikeAnchorElement;
 }

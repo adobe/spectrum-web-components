@@ -23,7 +23,6 @@ import {
     ignoreResizeObserverLoopError,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
-
 import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
 import { ColorWheel } from '@spectrum-web-components/color-wheel';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';

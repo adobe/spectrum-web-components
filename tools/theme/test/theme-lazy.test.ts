@@ -56,6 +56,7 @@ describe('Themes - lazy', () => {
                 [...el.shadowRoot.querySelectorAll('style')].length
             ).to.equal(1);
         }
+
         expect(el.color).to.equal('');
         expect(el.scale).to.equal('');
     });
@@ -78,6 +79,7 @@ describe('Themes - lazy', () => {
                 [...el.shadowRoot.querySelectorAll('style')].length
             ).to.equal(1);
         }
+
         expect(el.color).to.equal('light');
         expect(el.scale).to.equal('medium');
     });

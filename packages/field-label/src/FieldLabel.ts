@@ -36,7 +36,6 @@ import {
     ElementResolutionController,
     elementResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
-
 import styles from './field-label.css.js';
 
 type AcceptsFocusVisisble = HTMLElement & { forceFocusVisible?(): void };
@@ -51,7 +50,6 @@ type Labelable = Focusable & {
  * @element sp-field-label
  *
  * @slot - text content of the label
- *
  */
 export class FieldLabel extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,

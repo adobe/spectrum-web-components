@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { ColorSlider } from '@spectrum-web-components/color-slider/src/ColorSlider';
 import '@spectrum-web-components/color-area/sp-color-area.js';

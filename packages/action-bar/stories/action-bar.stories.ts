@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -21,7 +20,6 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-
 import { Template } from './template.js';
 
 export default {

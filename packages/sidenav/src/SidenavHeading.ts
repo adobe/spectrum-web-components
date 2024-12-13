@@ -18,7 +18,6 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-
 import sidenavItemStyles from './sidenav-item.css.js';
 import sidenavHeadingStyles from './sidenav-heading.css.js';
 
@@ -26,7 +25,6 @@ import sidenavHeadingStyles from './sidenav-heading.css.js';
  * @element sp-sidenav-heading
  *
  * @slot - the Sidenav Items to display in association with the heading
- *
  */
 export class SideNavHeading extends SpectrumElement {
     @property({ reflect: true })

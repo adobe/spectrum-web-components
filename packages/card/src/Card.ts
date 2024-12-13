@@ -28,7 +28,6 @@ import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/f
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import '@spectrum-web-components/asset/sp-asset.js';
-
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/popover/sp-popover.js';

@@ -32,7 +32,6 @@ import {
     HSL,
 } from '@spectrum-web-components/reactive-controllers/src/Color.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
-
 import styles from './color-wheel.css.js';
 
 /**

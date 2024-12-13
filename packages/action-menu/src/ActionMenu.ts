@@ -16,9 +16,11 @@ import {
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { state } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    state,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { DESCRIPTION_ID, PickerBase } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';

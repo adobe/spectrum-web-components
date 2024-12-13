@@ -17,7 +17,6 @@ import {
     html,
     nextFrame,
 } from '@open-wc/testing';
-
 import { Coachmark, CoachmarkItem } from '@spectrum-web-components/coachmark';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';

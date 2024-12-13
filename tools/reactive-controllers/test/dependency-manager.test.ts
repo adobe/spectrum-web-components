@@ -23,6 +23,7 @@ describe('Dependency Manager', () => {
         const manager = new DependencyManagerController({
             requestUpdate: () => requestUpdateSpy(),
         } as unknown as ReactiveElement);
+
         expect(manager.loaded).to.be.false;
         manager.add(tagName);
         expect(manager.loaded).to.be.false;

@@ -25,7 +25,6 @@ import statusLightStyles from './status-light.css.js';
  * @element sp-status-light
  *
  * @slot - text label of the Status Light
- *
  */
 export class StatusLight extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,

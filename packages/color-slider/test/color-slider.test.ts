@@ -23,7 +23,6 @@ import {
     fixture,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
-
 import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { ColorSlider } from '@spectrum-web-components/color-slider';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';

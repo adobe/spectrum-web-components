@@ -20,7 +20,6 @@ import {
 import type { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';

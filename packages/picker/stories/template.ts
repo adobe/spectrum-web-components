@@ -19,7 +19,6 @@ import type { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 

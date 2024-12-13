@@ -10,11 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
-import '../../overlay/stories/index.js';
 import { ActionMenuMarkup } from './';
 
 export default {

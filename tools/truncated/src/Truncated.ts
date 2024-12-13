@@ -27,7 +27,6 @@ import {
     queryAssignedNodes,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-
 import styles from './truncated.css.js';
 
 /**
@@ -44,10 +43,12 @@ export class Truncated extends SpectrumElement {
     @property()
     placement: Placement = 'top-start';
 
-    /*
-     * @type {String}
-     * @attr success-message
+    /**
+     * @type {string}
+     *
      * @description The message to display when the text is copied to the clipboard after clicking on the truncated text
+     *
+     * @attribute success-message
      */
     @property({ type: String, attribute: 'success-message' })
     successMessage = 'Copied to clipboard';
@@ -109,6 +110,7 @@ export class Truncated extends SpectrumElement {
                 ></slot>
             `;
         }
+
         return html`
             <sp-overlay
                 id="overlay"
@@ -144,6 +146,7 @@ export class Truncated extends SpectrumElement {
 
     protected override updated(changedProperties: PropertyValues<this>): void {
         super.updated(changedProperties);
+
         if (
             changedProperties.has('hasCopied') &&
             this.hasCopied &&
@@ -156,6 +159,7 @@ export class Truncated extends SpectrumElement {
 
     private handleOverflowSlotchange(): void {
         this.mutationObserver.disconnect();
+
         if (!this.hasCustomOverflow) {
             /* c8 ignore next 5 */
             this.mutationObserver.observe(this.content, {
@@ -173,6 +177,7 @@ export class Truncated extends SpectrumElement {
             .map((node) => node.textContent ?? '')
             .join('')
             .trim();
+
         navigator.clipboard.writeText(textToCopy);
         this.hasCopied = true;
         /* c8 ignore next 3 */
@@ -189,6 +194,7 @@ export class Truncated extends SpectrumElement {
     // Copies just the textContent of slotted nodes into the tooltip to avoid duplicating the user's DOM
     private copyText(): void {
         if (this.hasCustomOverflow) return;
+
         this.fullText = this.slottedContent
             .map((node) => node.textContent ?? '')
             .join('');

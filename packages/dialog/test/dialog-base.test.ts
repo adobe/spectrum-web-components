@@ -19,7 +19,6 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 import { TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';

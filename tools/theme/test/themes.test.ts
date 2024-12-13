@@ -59,6 +59,7 @@ describe('Systems', () => {
 
         await elementUpdated(el);
         const testableTheme = Theme as unknown as TestableThemeConstructor;
+
         expect(testableTheme.instances.has(el), 'first').to.be.true;
         expect(testableTheme.instances.size).to.equal(1);
 
@@ -115,6 +116,7 @@ describe('App styles', () => {
         await elementUpdated(el);
 
         const preStylesDiv = getComputedStyle(div);
+
         expect(preStylesDiv.paddingBlockStart).to.equal('0px');
 
         Theme.registerThemeFragment(
@@ -129,6 +131,7 @@ describe('App styles', () => {
         await elementUpdated(el);
 
         const postStylesDiv = getComputedStyle(div);
+
         expect(postStylesDiv.paddingBlockStart).to.equal('10px');
 
         (

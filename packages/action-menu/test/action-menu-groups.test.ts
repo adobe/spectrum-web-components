@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
 import { fixture } from '../../../test/testing-helpers.js';
 import { sendKeys } from '@web/test-runner-commands';
-
 import { groupsWithSelects } from '../stories/action-menu.stories.js';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { MenuItem } from '@spectrum-web-components/menu';

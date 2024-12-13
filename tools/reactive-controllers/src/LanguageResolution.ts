@@ -44,6 +44,7 @@ export class LanguageResolutionController implements ReactiveController {
                 detail: {
                     callback: (lang: string, unsubscribe: () => void) => {
                         const previous = this.language;
+
                         this.language = lang;
                         this.unsubscribe = unsubscribe;
                         this.host.requestUpdate(
@@ -55,6 +56,7 @@ export class LanguageResolutionController implements ReactiveController {
                 cancelable: true,
             }
         );
+
         this.host.dispatchEvent(queryThemeEvent);
     }
 }

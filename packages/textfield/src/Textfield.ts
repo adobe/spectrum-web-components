@@ -27,12 +27,10 @@ import {
     query,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-
 import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import checkmarkSmallOverrides from '@spectrum-web-components/icon/src/icon-checkmark-overrides.css.js';

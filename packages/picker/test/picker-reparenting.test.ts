@@ -16,7 +16,6 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import { Picker } from '@spectrum-web-components/picker';
 import { MenuItem } from '@spectrum-web-components/menu';
 import { expect, fixture, html, nextFrame, oneEvent } from '@open-wc/testing';
-
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import type { TestablePicker } from './index.js';

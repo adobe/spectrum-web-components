@@ -27,7 +27,6 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-dash75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
-
 import styles from './swatch.css.js';
 import dashStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
 import dashSmallOverrides from '@spectrum-web-components/icon/src/icon-dash-overrides.css.js';
@@ -69,7 +68,6 @@ const dashIcon: Record<string, () => TemplateResult> = {
  * @element sp-swatch
  *
  * @fires change - Dispatched when the swatch is clicked.
- *
  */
 export class Swatch extends SizedMixin(Focusable, {
     validSizes: ['xs', 's', 'm', 'l'],

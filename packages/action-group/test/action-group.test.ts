@@ -20,7 +20,6 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-
 import { ActionButton } from '@spectrum-web-components/action-button';
 import { MenuItem } from '@spectrum-web-components/menu';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
@@ -49,12 +48,10 @@ import {
 import { sendKeys } from '@web/test-runner-commands';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import { controlled } from '../stories/action-group-tooltip.stories.js';
-import { spy } from 'sinon';
+import sinon, { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
-import '../stories/action-group.stories.js';
 import { isWebKit } from '@spectrum-web-components/shared';
-import sinon from 'sinon';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {

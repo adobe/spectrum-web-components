@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';

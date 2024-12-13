@@ -22,7 +22,6 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
-
 import styles from './demo-container.css';
 
 @customElement('demo-container')
@@ -43,6 +42,7 @@ export class DemoContainer extends SpectrumElement {
 
     public shouldUpdateScrollableState = (): void => {
         const { offsetHeight, scrollHeight } = this;
+
         this.scrollable = offsetHeight < scrollHeight;
     };
 

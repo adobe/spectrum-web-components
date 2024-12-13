@@ -24,7 +24,6 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-
 import progressCircleStyles from './progress-circle.css.js';
 
 /**

@@ -16,7 +16,6 @@ import {
     SizedMixin,
     SpectrumElement,
 } from '@spectrum-web-components/base';
-
 import menuDividerStyles from './menu-divider.css.js';
 import dividerStyles from '@spectrum-web-components/divider/src/divider.css.js';
 

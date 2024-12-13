@@ -51,12 +51,13 @@ try {
  * NOTE(cdata): The code here was adapted from an example proposed with the
  * introduction of ShadowDOM support in the :focus-visible polyfill.
  *
- * @see https://github.com/WICG/focus-visible/pull/196
- * @param {Function} SuperClass The base class implementation to decorate with
+ * @param SuperClass - The base class implementation to decorate with
  * implementation that coordinates with the :focus-visible polyfill
+ *
+ * @see https://github.com/WICG/focus-visible/pull/196
  */
 export const FocusVisiblePolyfillMixin = <
-    T extends Constructor<MixableBaseClass>
+    T extends Constructor<MixableBaseClass>,
 >(
     SuperClass: T
 ): T => {
@@ -92,6 +93,7 @@ export const FocusVisiblePolyfillMixin = <
                     instance.manageAutoFocus();
                 }
             };
+
             // Otherwise, wait for the polyfill to be loaded lazily. It might
             // never be loaded, but if it is then we can apply it to the
             // shadow root at the appropriate time by waiting for the ready
@@ -127,6 +129,7 @@ export const FocusVisiblePolyfillMixin = <
         // document:
         override connectedCallback(): void {
             super.connectedCallback && super.connectedCallback();
+
             if (!hasFocusVisible) {
                 requestAnimationFrame(() => {
                     if (this[$endPolyfillCoordination] == null) {
@@ -139,6 +142,7 @@ export const FocusVisiblePolyfillMixin = <
 
         override disconnectedCallback(): void {
             super.disconnectedCallback && super.disconnectedCallback();
+
             // It's important to remove the polyfill event listener when we
             // disconnect, otherwise we will leak the whole element via window:
             if (!hasFocusVisible) {

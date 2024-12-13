@@ -42,6 +42,7 @@ export async function search(value: string): Promise<ResultGroup[]> {
         const searchIndexURL = new URL('./searchIndex.json', import.meta.url)
             .href;
         const searchIndex = await (await fetch(searchIndexURL)).json();
+
         index = lunr.Index.load(searchIndex);
     }
 
@@ -54,6 +55,7 @@ export async function search(value: string): Promise<ResultGroup[]> {
     >();
 
     const search = index.search(value);
+
     for (const item of search) {
         const { category, name, url } = JSON.parse(item.ref);
 
@@ -63,7 +65,9 @@ export async function search(value: string): Promise<ResultGroup[]> {
                 results: [],
             });
         }
+
         const catagoryData = collatedResults.get(category);
+
         if (catagoryData) {
             catagoryData.maxScore = Math.max(catagoryData.maxScore, item.score);
             catagoryData.results.push({
@@ -75,6 +79,7 @@ export async function search(value: string): Promise<ResultGroup[]> {
     }
 
     const result: ResultGroup[] = [];
+
     for (const [name, { results, maxScore }] of collatedResults) {
         result.push({ name, results, maxScore });
     }
@@ -82,6 +87,7 @@ export async function search(value: string): Promise<ResultGroup[]> {
         if (a.maxScore < b.maxScore) {
             return 1;
         }
+
         if (a.maxScore > b.maxScore) {
             return -1;
         }

@@ -10,8 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { TemplateResult } from '@spectrum-web-components/base';
-import { makeOverBackground, Properties, renderButtonSet } from './index.js';
-import { args, argTypes } from './index.js';
+import {
+    args,
+    argTypes,
+    makeOverBackground,
+    Properties,
+    renderButtonSet,
+} from './index.js';
 
 const variant = 'black';
 const treatment = 'outline';

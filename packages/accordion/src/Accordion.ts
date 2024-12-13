@@ -23,16 +23,13 @@ import {
     queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
-
 import { AccordionItem } from './AccordionItem.js';
-
 import styles from './accordion.css.js';
 
 /**
  * @element sp-accordion
  *
  * @slot - The sp-accordion-item children to display within the accordion.
- *
  */
 export class Accordion extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,

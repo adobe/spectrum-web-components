@@ -15,7 +15,6 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
 import '@spectrum-web-components/table/sp-table-head.js';

@@ -10,8 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect, fixture } from '@open-wc/testing';
-import { html } from '@open-wc/testing';
+import { expect, fixture, html } from '@open-wc/testing';
 import { ComboboxOption } from '@spectrum-web-components/combobox';
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import { MenuItem } from '@spectrum-web-components/menu';
