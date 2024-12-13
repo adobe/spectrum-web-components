@@ -186,3 +186,8 @@ export const disconnectedChildItems = (): TemplateResult => html`
 disconnectedChildItems.swc_vrt = {
     skip: true,
 };
+
+disconnectedChildItems.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};

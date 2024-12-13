@@ -450,3 +450,8 @@ export const draggable = (): TemplateResult => {
 draggable.swc_vrt = {
     skip: true,
 };
+
+draggable.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};

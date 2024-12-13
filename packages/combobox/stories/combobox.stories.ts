@@ -229,3 +229,8 @@ export const controlled = (): TemplateResult => {
 controlled.swc_vrt = {
     skip: true,
 };
+
+controlled.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};

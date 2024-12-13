@@ -297,6 +297,11 @@ accordion.swc_vrt = {
     skip: true,
 };
 
+accordion.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const clickAndHoverTargets = (): TemplateResult => {
     return html`
         <div>
@@ -332,6 +337,11 @@ export const clickAndHoverTargets = (): TemplateResult => {
 };
 clickAndHoverTargets.swc_vrt = {
     skip: true,
+};
+
+clickAndHoverTargets.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 class ScrollForcer extends HTMLElement {
@@ -594,6 +604,11 @@ export const deep = (): TemplateResult => html`
 `;
 deep.swc_vrt = {
     skip: true,
+};
+
+deep.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 export const deepChildTooltip = (): TemplateResult => html`
@@ -1113,6 +1128,11 @@ noCloseOnResize.swc_vrt = {
     skip: true,
 };
 
+noCloseOnResize.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const openClickContent = (args: Properties): TemplateResult =>
     template({
         ...args,
@@ -1307,6 +1327,11 @@ export const updating = (): TemplateResult => {
 
 updating.swc_vrt = {
     skip: true,
+};
+
+updating.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 class StartEndContextmenu extends HTMLElement {
@@ -1554,4 +1579,9 @@ virtualElementDeclaratively.args = {
 
 virtualElementDeclaratively.swc_vrt = {
     skip: true,
+};
+
+virtualElementDeclaratively.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };

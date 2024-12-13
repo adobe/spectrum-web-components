@@ -156,6 +156,11 @@ controlled.swc_vrt = {
     skip: true,
 };
 
+controlled.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const menuItemWithDescription = (): TemplateResult => {
     return html`
         <sp-menu>
