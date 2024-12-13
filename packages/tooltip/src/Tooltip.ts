@@ -158,10 +158,10 @@ if (!customElements.get('sp-tooltip-openable')) {
 }
 
 /**
- * @element sp-tooltip
- *
  * The `Tooltip` component is a custom web component that provides a tooltip element.
  * It includes slots for an icon and text label, and manages its state and interactions.
+ *
+ * @element sp-tooltip
  *
  * @slot icon - The icon element appearing at the start of the label.
  * @slot - The text label of the Tooltip.
@@ -268,6 +268,7 @@ export class Tooltip extends SpectrumElement {
         if (['info', 'positive', 'negative'].includes(variant)) {
             this.setAttribute('variant', variant);
             this._variant = variant;
+
             return;
         }
 
@@ -325,6 +326,7 @@ export class Tooltip extends SpectrumElement {
                     }
                 );
             }
+
             return null;
         }
 
@@ -351,6 +353,7 @@ export class Tooltip extends SpectrumElement {
                         }
                     );
                 }
+
                 return null;
             }
 
@@ -359,6 +362,7 @@ export class Tooltip extends SpectrumElement {
                 (root as ShadowRoot).host ||
                 root) as HTMLElement;
         }
+
         return triggerElement;
     }
 
@@ -380,10 +384,12 @@ export class Tooltip extends SpectrumElement {
                 <span id="tip" aria-hidden="true"></span>
             </sp-tooltip-openable>
         `;
+
         if (this.selfManaged) {
             // Add 'sp-overlay' to the dependency manager and import the overlay module.
             this.dependencyManager.add('sp-overlay');
             import('@spectrum-web-components/overlay/sp-overlay.js');
+
             return html`
                 <sp-overlay
                     ?open=${this.open &&
@@ -418,9 +424,12 @@ export class Tooltip extends SpectrumElement {
             if (!this.selfManaged) {
                 return;
             }
+
             const overlayElement = this.overlayElement;
+
             if (overlayElement) {
                 const triggerElement = this.triggerElement;
+
                 overlayElement.triggerElement = triggerElement;
             }
         });

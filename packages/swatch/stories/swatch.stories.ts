@@ -37,40 +37,22 @@ export default {
     argTypes: {
         color: { control: 'color' },
         border: {
-            name: 'border',
-            type: { name: 'string', required: false },
-            description: 'The border to apply to the Swatch children.',
             table: {
                 defaultValue: { summary: '' },
             },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'light', 'none'],
-            },
+            options: ['default', 'light', 'none'],
         },
         rounding: {
-            name: 'rounding',
-            type: { name: 'string', required: false },
-            description: 'The rounding to apply to the Swatch children.',
             table: {
                 defaultValue: { summary: '' },
             },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'none', 'full'],
-            },
+            options: ['normal', 'none', 'full'],
         },
         shape: {
-            name: 'shape',
-            type: { name: 'string', required: false },
-            description: 'The shape to apply to the Swatch children.',
             table: {
                 defaultValue: { summary: '' },
             },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'rectangle'],
-            },
+            options: ['normal', 'rectangle'],
         },
     },
 };

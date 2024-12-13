@@ -78,6 +78,7 @@ describe('Tags', () => {
                 <sp-tag disabled>Tag 3</sp-tag>
             </sp-tags>
         `);
+
         await elementUpdated(el);
 
         const tag1 = el.querySelector('sp-tag:nth-child(1)') as Tag;

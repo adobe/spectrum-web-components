@@ -43,11 +43,11 @@ export type ToastVariants =
     | '';
 
 /**
- * @element sp-toast
- *
  * The `Toast` component is a custom web component that displays a brief message to the user.
  * It extends the `FocusVisiblePolyfillMixin` and `SpectrumElement` to provide focus management
  * and styling capabilities.
+ *
+ * @element sp-toast
  *
  * @slot - The toast content
  * @slot action - button element surfacing an action in the Toast
@@ -135,6 +135,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
         if (variant === this.variant) {
             return;
         }
+
         const oldValue = this.variant;
 
         // Validate the variant is one of the allowed values else remove the attribute.
@@ -145,6 +146,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
             this.removeAttribute('variant');
             this._variant = '';
         }
+
         this.requestUpdate('variant', oldValue);
     }
 
@@ -339,6 +341,7 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
      */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (changes.has('open')) {
             if (this.open) {
                 // Start the countdown if the toast is open and a timeout is set.

@@ -108,10 +108,7 @@ export default {
             table: {
                 defaultValue: { summary: '' },
             },
-            control: {
-                type: 'inline-radio',
-                options: ['none', 'single', 'multiple'],
-            },
+            options: ['none', 'single', 'multiple'],
         },
         size: {
             name: 'size',
@@ -144,18 +141,21 @@ const template = (args: Properties): TemplateResult => {
     requestAnimationFrame(() => {
         const group = document.querySelector('sp-action-group') as ActionGroup;
         const selectedDiv = group.nextElementSibling;
+
         if (selectedDiv) {
             selectedDiv.textContent = `Selected: ${JSON.stringify(
                 group.selected
             )}`;
         }
     });
+
     return html`
         <sp-action-group
             label="Favorite Color"
             ...=${spreadProps(args)}
             @change=${({ target }: Event & { target: ActionGroup }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
+
                 next.textContent = `Selected: ${JSON.stringify(
                     target.selected
                 )}`;

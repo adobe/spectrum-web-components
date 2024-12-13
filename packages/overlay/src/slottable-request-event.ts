@@ -22,6 +22,7 @@ export class SlottableRequestEvent extends Event {
         this.name = name;
         this.data = data;
         this.slotName = key !== undefined ? `${name}.${key}` : name;
+
         if (window.__swc.DEBUG) {
             window.__swc.warn(
                 undefined,

@@ -43,6 +43,7 @@ export class OverlayTimer {
                 this.close(this.component);
                 this.cancelCooldownTimer();
             }
+
             this.component = component;
 
             if (this.isWarm) {
@@ -58,6 +59,7 @@ export class OverlayTimer {
                     }
                 }, this.warmUpDelay);
             });
+
             return this.promise;
         } else if (this.promise) {
             return this.promise;
@@ -71,14 +73,17 @@ export class OverlayTimer {
     public close(component: HTMLElement): void {
         if (this.component && this.component === component) {
             this.resetCooldownTimer();
+
             if (this.timeout > 0) {
                 clearTimeout(this.timeout);
                 this.timeout = 0;
             }
+
             if (this.resolve) {
                 this.resolve(true);
                 delete this.resolve;
             }
+
             delete this.promise;
             delete this.component;
         }
@@ -89,6 +94,7 @@ export class OverlayTimer {
             if (this.cooldownTimeout) {
                 window.clearTimeout(this.cooldownTimeout);
             }
+
             this.cooldownTimeout = window.setTimeout(() => {
                 this.isWarm = false;
                 delete this.cooldownTimeout;
@@ -100,6 +106,7 @@ export class OverlayTimer {
         if (this.cooldownTimeout) {
             window.clearTimeout(this.cooldownTimeout);
         }
+
         delete this.cooldownTimeout;
     }
 }

@@ -429,6 +429,7 @@ class ComplexModalReady extends HTMLElement {
         const overlay = document.querySelector(
             `overlay-trigger`
         ) as OverlayTrigger;
+
         overlay.addEventListener('sp-opened', this.handleTriggerOpened);
     }
 
@@ -436,6 +437,7 @@ class ComplexModalReady extends HTMLElement {
         await nextFrame();
 
         const picker = document.querySelector('#test-picker') as Picker;
+
         picker.addEventListener('sp-opened', this.handlePickerOpen);
         picker.open = true;
     };
@@ -628,6 +630,7 @@ export const deepChildTooltip = (): TemplateResult => html`
 export const deepNesting = (): TemplateResult => {
     const color = window.__swc_hack_knobs__.defaultColor;
     const outter = color === 'light' ? 'dark' : 'light';
+
     return html`
         ${storyStyles}
         <sp-theme
@@ -680,6 +683,7 @@ class DefinedOverlayReady extends HTMLElement {
         const button = document.querySelector(
             `[slot="trigger"]`
         ) as HTMLButtonElement;
+
         this.overlayElement.addEventListener(
             'sp-opened',
             this.handleTriggerOpened
@@ -702,9 +706,11 @@ class DefinedOverlayReady extends HTMLElement {
         this.popoverElement = document.querySelector(
             'popover-content'
         ) as PopoverContent;
+
         if (!this.popoverElement) {
             return;
         }
+
         this.popoverElement.addEventListener(
             'sp-opened',
             this.handlePopoverOpen
@@ -774,9 +780,12 @@ export const detachedElement = (): TemplateResult => {
         if (overlay) {
             overlay.open = false;
             overlay = undefined;
+
             return;
         }
+
         const div = document.createElement('div');
+
         (div as HTMLDivElement & { open: boolean }).open = false;
         div.textContent = 'This div is overlaid';
         div.setAttribute(
@@ -800,6 +809,7 @@ export const detachedElement = (): TemplateResult => {
         });
         target.insertAdjacentElement('afterend', overlay);
     };
+
     requestAnimationFrame(() => {
         openDetachedOverlayContent({
             target: document.querySelector(
@@ -807,6 +817,7 @@ export const detachedElement = (): TemplateResult => {
             ) as HTMLElement,
         });
     });
+
     return html`
         <style>
             sp-overlay div:not([placement]) {
@@ -893,6 +904,7 @@ export const edges = (): TemplateResult => {
 
 export const inline = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
+
     return html`
         <overlay-trigger type="inline">
             <sp-button slot="trigger">Open</sp-button>
@@ -944,6 +956,7 @@ export const longpress = (): TemplateResult => {
 
 export const modalLoose = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
+
     return html`
         <overlay-trigger type="modal">
             <sp-button slot="trigger">Open</sp-button>
@@ -976,6 +989,7 @@ export const modalLoose = (): TemplateResult => {
 
 export const modalNoFocus = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
+
     return html`
         <overlay-trigger type="modal" receives-focus="false">
             <sp-button slot="trigger">Open</sp-button>
@@ -1021,6 +1035,7 @@ export const modalNoFocus = (): TemplateResult => {
 
 export const modalManaged = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
+
     return html`
         <overlay-trigger type="modal">
             <sp-button slot="trigger">Open</sp-button>
@@ -1112,6 +1127,7 @@ export const openHoverContent = (args: Properties): TemplateResult =>
 
 export const replace = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
+
     return html`
         <overlay-trigger type="replace">
             <sp-button slot="trigger">Open</sp-button>
@@ -1267,10 +1283,12 @@ export const updated = (): TemplateResult => {
 export const updating = (): TemplateResult => {
     const update = (): void => {
         const button = document.querySelector('[slot="trigger"]') as Button;
+
         button.style.left = `${Math.floor(Math.random() * 200)}px`;
         button.style.top = `${Math.floor(Math.random() * 200)}px`;
         button.style.position = 'fixed';
     };
+
     return html`
         <overlay-trigger type="click">
             <sp-button variant="primary" slot="trigger">
@@ -1352,6 +1370,7 @@ export const virtualElementV1 = (args: Properties): TemplateResult => {
         const trigger = event.target as HTMLElement;
         const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
         const fragment = document.createDocumentFragment();
+
         render(contextMenuTemplate(id), fragment);
         const popover = fragment.querySelector('sp-popover') as Popover;
 
@@ -1363,6 +1382,7 @@ export const virtualElementV1 = (args: Properties): TemplateResult => {
             notImmediatelyClosable: true,
         });
     };
+
     return html`
         <style>
             .app-root {
@@ -1421,6 +1441,7 @@ export const virtualElement = (args: Properties): TemplateResult => {
         const trigger = event.target as HTMLElement;
         const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
         const fragment = document.createDocumentFragment();
+
         render(contextMenuTemplate(id), fragment);
         const popover = fragment.querySelector('sp-popover') as Popover;
 
@@ -1431,8 +1452,10 @@ export const virtualElement = (args: Properties): TemplateResult => {
             notImmediatelyClosable: true,
             type: 'auto',
         });
+
         trigger.insertAdjacentElement('afterend', overlay);
     };
+
     return html`
         <style>
             .app-root {
@@ -1471,6 +1494,7 @@ export const virtualElementDeclaratively = (
                 event.clientY
             );
         }
+
         overlay.willPreventClose = true;
         overlay.open = true;
     };

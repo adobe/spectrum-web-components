@@ -44,6 +44,7 @@ const options = fruits;
 describe('Combobox Data', () => {
     afterEach(() => {
         const overlays = document.querySelectorAll('active-overlay');
+
         overlays.forEach((overlay) => overlay.remove());
     });
     it('accepts options as property', async () => {
@@ -62,6 +63,7 @@ describe('Combobox Data', () => {
                 <sp-menu-item value="durian">Durian</sp-menu-item>
             </sp-combobox>
         `);
+
         await elementUpdated(el);
 
         const processedOptions = el.availableOptions.map(
@@ -70,6 +72,7 @@ describe('Combobox Data', () => {
                 itemText,
             })
         );
+
         expect(processedOptions).to.deep.equal([
             {
                 value: 'pineapple',
@@ -106,6 +109,7 @@ describe('Combobox Data', () => {
                 })}
             </sp-combobox>
         `);
+
         await elementUpdated(el);
 
         let processedOptions = el.availableOptions.map(
@@ -123,6 +127,7 @@ describe('Combobox Data', () => {
         };
 
         const item = document.createElement('sp-menu-item');
+
         item.value = newOption.value;
         item.textContent = newOption.itemText;
         el.append(item);
@@ -149,6 +154,7 @@ describe('Combobox Data', () => {
                 })}
             </sp-combobox>
         `);
+
         await elementUpdated(el);
 
         let processedOptions = el.availableOptions.map(
@@ -168,11 +174,13 @@ describe('Combobox Data', () => {
         const option1 = el.querySelector(
             'sp-menu-item:first-of-type'
         ) as MenuItem;
+
         option1.textContent = newOption.itemText;
 
         await elementUpdated(el);
 
         const newOptions = options.slice();
+
         newOptions[0].value = newOption.value;
         newOptions[0].itemText = newOption.itemText;
 
@@ -199,6 +207,7 @@ describe('Combobox Data', () => {
                 })}
             </sp-combobox>
         `);
+
         await elementUpdated(el);
 
         let processedOptions = el.availableOptions.map(
@@ -218,11 +227,13 @@ describe('Combobox Data', () => {
         const option1 = el.querySelector(
             'sp-menu-item:first-of-type'
         ) as MenuItem;
+
         option1.value = newOption.value;
 
         await elementUpdated(el);
 
         const newOptions = options.slice();
+
         newOptions[0].value = newOption.value;
 
         await nextFrame();
@@ -248,6 +259,7 @@ describe('Combobox Data', () => {
                 })}
             </sp-combobox>
         `);
+
         await elementUpdated(el);
 
         let processedOptions = el.availableOptions.map(
@@ -267,8 +279,10 @@ describe('Combobox Data', () => {
         const option1 = el.querySelector(
             'sp-menu-item:first-of-type'
         ) as MenuItem;
+
         option1.remove();
         const item = document.createElement('sp-menu-item');
+
         item.value = newOption.value;
         item.textContent = newOption.itemText;
         el.insertAdjacentElement('afterbegin', item);
@@ -276,6 +290,7 @@ describe('Combobox Data', () => {
         await elementUpdated(el);
 
         const newOptions = options.slice();
+
         newOptions[0].value = newOption.value;
         newOptions[0].itemText = newOption.itemText;
 
@@ -305,6 +320,7 @@ describe('Combobox Data', () => {
         const el = test.shadowRoot.querySelector(
             'sp-combobox'
         ) as unknown as TestableCombobox;
+
         await elementUpdated(test);
         await elementUpdated(el);
 
@@ -337,6 +353,7 @@ describe('Combobox Data', () => {
         const el = test.shadowRoot.querySelector(
             'sp-combobox'
         ) as unknown as TestableCombobox;
+
         await elementUpdated(test);
         await elementUpdated(el);
 
@@ -359,6 +376,7 @@ describe('Combobox Data', () => {
         };
 
         const item = document.createElement('sp-menu-item');
+
         item.value = newOption.value;
         item.textContent = newOption.itemText;
         test.append(item);
@@ -387,6 +405,7 @@ describe('Combobox Data', () => {
                 <sp-menu-item value="5">Mambo no. 5</sp-menu-item>
             </sp-combobox>
         `);
+
         await elementUpdated(el);
 
         expect(el.activeDescendant).to.be.undefined;
@@ -409,6 +428,7 @@ describe('Combobox Data', () => {
         await nextFrame();
 
         const change = oneEvent(el, 'change');
+
         await sendKeys({
             press: 'Enter',
         });

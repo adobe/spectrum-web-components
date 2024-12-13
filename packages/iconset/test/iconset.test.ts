@@ -22,17 +22,20 @@ import { stub } from 'sinon';
 describe('Iconset', () => {
     after(() => {
         const sets = [...document.querySelectorAll('sp-icons-medium')];
+
         sets.map((set) => set.remove());
     });
     it('warns in Dev Mode of deprecation', async () => {
         const consoleWarnStub = stub(console, 'warn');
         const el = document.createElement('sp-icons-medium');
+
         document.body.append(el);
 
         await elementUpdated(el);
 
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
+
         expect(
             spyCall.args.at(0).includes('deprecated'),
             'confirm deprecation message'
@@ -49,6 +52,7 @@ describe('Iconset', () => {
 
     it('will re-register with new name', async () => {
         const icons = document.createElement('sp-icons-medium');
+
         document.body.append(icons);
         icons.name = 'first-name';
 
@@ -75,6 +79,7 @@ describe('Iconset', () => {
     });
     it('will not re-register on (dis)connect without a name', async () => {
         const icons = document.createElement('sp-icons-medium');
+
         document.body.append(icons);
 
         const registry = IconsetRegistry.getInstance();
@@ -93,9 +98,11 @@ describe('Iconset', () => {
     });
     it('renders after adding and removing a second iconset of same name', async () => {
         const icons = document.createElement('sp-icons-medium');
+
         document.body.append(icons);
 
         const icons2 = document.createElement('sp-icons-medium');
+
         document.body.append(icons2);
 
         icons2.remove();
@@ -106,11 +113,9 @@ describe('Iconset', () => {
             })
         );
 
-        const el = await fixture<Icon>(
-            html`
-                <sp-icon name="ui:Chevron200"></sp-icon>
-            `
-        );
+        const el = await fixture<Icon>(html`
+            <sp-icon name="ui:Chevron200"></sp-icon>
+        `);
 
         let svg = el.shadowRoot
             ? el.shadowRoot.querySelector('[role="img"]')
@@ -130,14 +135,12 @@ describe('Iconset', () => {
     });
 
     it('can be after `<sp-icon/>` in the DOM order', async () => {
-        const el = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-icon name="ui:Chevron200"></sp-icon>
-                    <sp-icons-medium></sp-icons-medium>
-                </div>
-            `
-        );
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-icon name="ui:Chevron200"></sp-icon>
+                <sp-icons-medium></sp-icons-medium>
+            </div>
+        `);
 
         const icon = el.querySelector('sp-icon') as Icon;
         const iconSet = el.querySelector('sp-icons-medium') as IconsMedium;
@@ -148,6 +151,7 @@ describe('Iconset', () => {
         const svg = icon.shadowRoot
             ? icon.shadowRoot.querySelector('[role="img"]')
             : null;
+
         expect(svg).to.not.be.null;
     });
 });

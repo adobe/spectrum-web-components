@@ -74,6 +74,7 @@ describe('ColorArea', () => {
         expect(el.x).to.equal(0.3);
 
         const handle = el.shadowRoot.querySelector('.handle') as ColorHandle;
+
         expect(handle.color).to.equal('hsl(0, 100%, 85%)');
     });
     it('updates color when y value changes', async () => {
@@ -91,6 +92,7 @@ describe('ColorArea', () => {
         expect(el.y).to.equal(0.5);
 
         const handle = el.shadowRoot.querySelector('.handle') as ColorHandle;
+
         expect(handle.color).to.equal('hsl(0, 100%, 25%)');
     });
     it('manages a single tab stop', async () => {
@@ -122,6 +124,7 @@ describe('ColorArea', () => {
 
         expect(document.activeElement, 'element').to.equal(el);
         let value = el.value;
+
         await sendKeys({
             press: 'ArrowRight',
         });
@@ -304,6 +307,7 @@ describe('ColorArea', () => {
         await nextFrame();
 
         let changeEvent = oneEvent(el, 'change');
+
         await sendKeys({
             press: 'ArrowUp',
         });
@@ -532,6 +536,7 @@ describe('ColorArea', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const gradient = root.querySelector('.gradient') as HTMLElement;
+
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
                 button: 1,
@@ -911,6 +916,7 @@ describe('ColorArea', () => {
         { name: 'HSV String', color: 'hsv(300, 75%, 100%)' },
         { name: 'HSV', color: { h: 300, s: 0.75, v: 1, a: 1 } },
     ];
+
     colorFormats.map((format) => {
         it(`maintains \`color\` format as ${format.name}`, async () => {
             const el = await fixture<ColorArea>(html`
@@ -918,6 +924,7 @@ describe('ColorArea', () => {
             `);
 
             el.color = format.color;
+
             if (format.name.startsWith('Hex')) {
                 expect(el.color).to.equal(format.color);
             } else expect(el.color).to.deep.equal(format.color);
@@ -928,6 +935,7 @@ describe('ColorArea', () => {
             <sp-color-area></sp-color-area>
         `);
         const color = new TinyColor('rgb(204, 51, 204)');
+
         el.color = color;
         expect(color.equals(el.color));
     });
@@ -935,6 +943,7 @@ describe('ColorArea', () => {
         const el = await fixture<ColorArea>(html`
             <sp-color-area></sp-color-area>
         `);
+
         el.color = '0f0';
         expect(el.color).to.equal('00ff00');
 
@@ -945,6 +954,7 @@ describe('ColorArea', () => {
         const el = await fixture<ColorArea>(html`
             <sp-color-area></sp-color-area>
         `);
+
         el.color = 'f3af';
         expect(el.color).to.equal('ff33aaff');
 

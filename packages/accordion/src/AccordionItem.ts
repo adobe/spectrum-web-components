@@ -67,8 +67,11 @@ const chevronIcon: Record<string, () => TemplateResult> = {
 
 /**
  * @element sp-accordion-item
+ *
  * @slot - The content of the item that is hidden when the item is not open
+ *
  * @fires sp-accordion-item-toggle - Announce that an accordion item has been toggled while allowing the event to be cancelled.
+ *
  */
 export class AccordionItem extends SizedMixin(Focusable, {
     noDefaultSize: true,
@@ -115,6 +118,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
         if (this.disabled) {
             return;
         }
+
         this.toggle();
     }
 
@@ -132,6 +136,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
                 cancelable: true,
             })
         );
+
         if (!applyDefault) {
             this.open = !this.open;
         }
@@ -173,6 +178,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
      */
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (changes.has('disabled')) {
             if (this.disabled) {
                 this.setAttribute('aria-disabled', 'true');

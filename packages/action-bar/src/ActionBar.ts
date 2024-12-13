@@ -27,10 +27,12 @@ import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/f
 export const actionBarVariants = ['sticky', 'fixed'];
 
 /**
+ * The ActionBar component provides a container for actions that can be performed on selected items.
+ *
  * @element sp-action-bar
+ *
  * @slot - Content to display with the Action Bar
  *
- * The ActionBar component provides a container for actions that can be performed on selected items.
  */
 export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
@@ -67,11 +69,14 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
         if (variant === this.variant) {
             return;
         }
+
         if (actionBarVariants.includes(variant)) {
             this.setAttribute('variant', variant);
             this._variant = variant;
+
             return;
         }
+
         this.removeAttribute('variant');
         this._variant = '';
     }

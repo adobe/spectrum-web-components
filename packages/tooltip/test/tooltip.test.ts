@@ -68,6 +68,7 @@ describe('Tooltip', () => {
         await expect(button).to.be.accessible();
 
         const opened = oneEvent(button, 'sp-opened');
+
         button.focus();
         await opened;
 
@@ -75,6 +76,7 @@ describe('Tooltip', () => {
         await expect(button).to.be.accessible();
 
         const closed = oneEvent(button, 'sp-closed');
+
         button.blur();
         await closed;
 
@@ -84,8 +86,11 @@ describe('Tooltip', () => {
         const test = await fixture<HTMLDivElement>(html`
             <div></div>
         `);
+
         test.attachShadow({ mode: 'open' });
+
         if (!test.shadowRoot) return;
+
         test.shadowRoot.innerHTML = `
             <sp-button>
                 This is a button.
@@ -105,6 +110,7 @@ describe('Tooltip', () => {
         await nextFrame();
 
         const opened = oneEvent(button, 'sp-opened');
+
         button.focus();
         await opened;
 
@@ -112,6 +118,7 @@ describe('Tooltip', () => {
         await expect(button).to.be.accessible();
 
         const closed = oneEvent(button, 'sp-closed');
+
         button.blur();
         await closed;
 
@@ -131,6 +138,7 @@ describe('Tooltip', () => {
 
         expect(el.open).to.be.false;
         const opened = oneEvent(button, 'sp-opened');
+
         button.focus();
         await opened;
         await elementUpdated(el);
@@ -138,6 +146,7 @@ describe('Tooltip', () => {
         expect(el.open).to.be.true;
 
         const closed = oneEvent(button, 'sp-closed');
+
         button.blur();
         await closed;
 
@@ -157,12 +166,14 @@ describe('Tooltip', () => {
 
         expect(el.open).to.be.false;
         const opened = oneEvent(button, 'sp-opened');
+
         button.focus();
         await opened;
 
         expect(el.open).to.be.true;
 
         const closed = oneEvent(button, 'sp-closed');
+
         button.remove();
         await closed;
 
@@ -235,6 +246,7 @@ describe('Tooltip', () => {
     });
     describe('self-managed', () => {
         let documentEventsSpy!: ReturnType<typeof spy>;
+
         before(() => {
             documentEventsSpy = spy(document, 'addEventListener');
         });
@@ -251,9 +263,11 @@ describe('Tooltip', () => {
 
             await elementUpdated(el);
             let calls = documentEventsSpy.callCount;
+
             while (calls) {
                 calls -= 1;
                 const call = documentEventsSpy.getCall(calls);
+
                 expect(call.args[0]).to.not.equal('pointerenter');
             }
             expect(el.overlayElement?.triggerElement).to.be.null;
@@ -261,6 +275,7 @@ describe('Tooltip', () => {
     });
     describe('dev mode', () => {
         let consoleWarnStub!: ReturnType<typeof stub>;
+
         before(() => {
             window.__swc.verbose = true;
             consoleWarnStub = stub(console, 'warn');
@@ -284,6 +299,7 @@ describe('Tooltip', () => {
 
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
+
             expect(
                 (spyCall.args.at(0) as string).includes('Self managed'),
                 'confirm self managed-centric message'

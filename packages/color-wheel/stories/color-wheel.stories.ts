@@ -48,6 +48,7 @@ export const canvas = (): TemplateResult => {
 class CanvasWriter extends HTMLElement {
     writeToCanvas(): void {
         const { previousElementSibling } = this;
+
         if (previousElementSibling) {
             const canvas = previousElementSibling.querySelector(
                 'canvas[slot="gradient"]'
@@ -57,6 +58,7 @@ class CanvasWriter extends HTMLElement {
                 canvas.width = canvas.offsetWidth;
                 canvas.height = canvas.offsetHeight;
                 const context = canvas.getContext('2d');
+
                 if (context) {
                     context.rect(0, 0, canvas.width, canvas.height);
 
@@ -68,6 +70,7 @@ class CanvasWriter extends HTMLElement {
 
                     for (let i = 0; i < 360; i += Math.PI / 8) {
                         const rad = (i * (2 * Math.PI)) / 360;
+
                         context.strokeStyle = `hsla(${i}, 100%, 50%, 1.0)`;
                         context.beginPath();
                         context.moveTo(

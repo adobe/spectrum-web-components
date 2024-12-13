@@ -66,6 +66,7 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
             ),
         ];
         const masks = ['Mask1', 'Mask2'];
+
         return html`
             <slot @slotchange=${this.handleSlotchange}></slot>
             <div class="track"></div>
@@ -88,6 +89,7 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
 
     protected handleSlotchange(): void {
         const labelFromSlot = getLabelFromSlot(this.label, this.slotEl);
+
         if (labelFromSlot) {
             this.label = labelFromSlot;
         }
@@ -95,6 +97,7 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
 
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
+
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'progressbar');
         }
@@ -102,11 +105,13 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (!this.indeterminate && changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);
         } else if (this.hasAttribute('aria-valuenow')) {
             this.removeAttribute('aria-valuenow');
         }
+
         if (changes.has('label')) {
             if (this.label.length) {
                 this.setAttribute('aria-label', this.label);

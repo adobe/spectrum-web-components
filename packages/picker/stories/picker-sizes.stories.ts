@@ -76,6 +76,7 @@ const picker = ({
             size=${size}
             @change="${(event: Event): void => {
                 const picker = event.target as Picker;
+
                 onChange(picker.value);
             }}"
             label="Select a Country with a very long label, too long, in fact"

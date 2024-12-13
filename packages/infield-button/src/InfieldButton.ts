@@ -33,6 +33,7 @@ export class InfieldButton extends SizedMixin(ButtonBase, {
 
     /**
      * Whether to style the button as if it is at the start or end of a vertical stack
+     *
      * @type {'start' | 'end'}
      */
     @property()
@@ -40,6 +41,7 @@ export class InfieldButton extends SizedMixin(ButtonBase, {
 
     /**
      * Whether to style the button as if it is at the start or end of a horizontal group
+     *
      * @type {'start' | 'end'}
      */
     @property()
@@ -54,6 +56,7 @@ export class InfieldButton extends SizedMixin(ButtonBase, {
                 <slot></slot>
             </div>
         `;
+
         return [buttonContent];
     }
 }

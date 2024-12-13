@@ -50,6 +50,7 @@ export class SideNav extends LitElement {
             (
                 this.shadowRoot!.querySelector('#logo')! as HTMLAnchorElement
             ).focus();
+
             return;
         }
         target.focus();

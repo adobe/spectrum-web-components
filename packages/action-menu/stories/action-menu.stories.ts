@@ -299,9 +299,11 @@ export const controlled = ({ align = 'start' } = {}): TemplateResult => {
         guides: true,
         latestChange: '',
     };
+
     function toggle(prop: 'snap' | 'grid' | 'guides') {
         return (event: Event): void => {
             const item = event.target as MenuItem;
+
             state[prop] = !state[prop];
             // in Lit-based usage, this would be handled via render():
             // <sp-menu-item ?selected=${this.isSomethingSelected}>
@@ -317,6 +319,7 @@ export const controlled = ({ align = 'start' } = {}): TemplateResult => {
         document.getElementById('state-json')!.textContent =
             `application state: ${JSON.stringify(state)}`;
     }
+
     return html`
         <sp-action-menu
             label="View"
@@ -455,6 +458,7 @@ export const directive = (): TemplateResult => {
         <sp-menu-item>Save Selection</sp-menu-item>
         <sp-menu-item disabled>Make Work Path</sp-menu-item>
     `;
+
     return html`
         <sp-action-menu ${slottableRequest(renderOptions)}>
             <span slot="label">

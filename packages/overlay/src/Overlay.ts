@@ -133,6 +133,7 @@ export class Overlay extends ComputedOverlayBase {
      */
     override set disabled(disabled: boolean) {
         this._disabled = disabled;
+
         if (disabled) {
             // Abort any active strategy and close the overlay if it is currently open
             this.strategy?.abort();
@@ -196,6 +197,7 @@ export class Overlay extends ComputedOverlayBase {
         if (!this._placementController) {
             this._placementController = new PlacementController(this);
         }
+
         return this._placementController;
     }
 
@@ -515,6 +517,7 @@ export class Overlay extends ComputedOverlayBase {
             ) {
                 (this.triggerElement as HTMLElement).focus();
             }
+
             return;
         }
 
@@ -552,11 +555,14 @@ export class Overlay extends ComputedOverlayBase {
                     currentNode.assignedSlot ||
                     currentNode.parentElement ||
                     (currentNode.getRootNode() as ShadowRoot)?.host;
+
                 if (ancestor) {
                     ancestors.push(ancestor as HTMLElement);
                 }
+
                 currentNode = ancestor;
             }
+
             return ancestors;
         };
 
@@ -672,6 +678,7 @@ export class Overlay extends ComputedOverlayBase {
         // Handle focus events for auto type overlays.
         if (this.type === 'auto') {
             const listenerRoot = this.getRootNode() as Document;
+
             if (this.open) {
                 listenerRoot.addEventListener(
                     'focusout',
@@ -734,10 +741,13 @@ export class Overlay extends ComputedOverlayBase {
      */
     protected handleBrowserClose(event: Event): void {
         event.stopPropagation();
+
         if (!this.strategy?.activelyOpening) {
             this.open = false;
+
             return;
         }
+
         this.manuallyKeepOpen();
     }
 
@@ -779,7 +789,9 @@ export class Overlay extends ComputedOverlayBase {
      */
     public shouldPreventClose(): boolean {
         const shouldPreventClose = this.willPreventClose;
+
         this.willPreventClose = false;
+
         return shouldPreventClose;
     }
 
@@ -839,6 +851,7 @@ export class Overlay extends ComputedOverlayBase {
         // Resolve the trigger element if the 'trigger' property has changed.
         if (changes.has('trigger')) {
             const [id, interaction] = this.trigger?.split('@') || [];
+
             this.elementResolver.selector = id ? `#${id}` : '';
             this.triggerInteraction = interaction as
                 | 'click'
@@ -1011,6 +1024,7 @@ export class Overlay extends ComputedOverlayBase {
      */
     public override render(): TemplateResult {
         const isDialog = this.type === 'modal' || this.type === 'page';
+
         return html`
             ${isDialog ? this.renderDialog() : this.renderPopover()}
             <slot name="longpress-describedby-descriptor"></slot>

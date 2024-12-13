@@ -22,10 +22,12 @@ describe('Slottable Request Directive', () => {
     it('Action Menu requests for options rendering when opening and closing', async function () {
         const el = await fixture<ActionMenu>(directive());
         const initialNodeLength = el.children.length;
+
         expect(el.open).to.be.false;
         expect(el.children.length).to.equal(initialNodeLength);
 
         const opened = oneEvent(el, 'sp-opened');
+
         el.click();
         await opened;
 
@@ -33,6 +35,7 @@ describe('Slottable Request Directive', () => {
         expect(el.children.length).to.be.gt(initialNodeLength);
 
         const closed = oneEvent(el, 'sp-closed');
+
         await sendKeys({
             press: 'Escape',
         });

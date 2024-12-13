@@ -53,6 +53,7 @@ describe('TopNav', () => {
         await elementUpdated(el);
 
         const items = [...el.querySelectorAll('sp-top-nav-item')];
+
         await Promise.all(items.map((item) => elementUpdated(item)));
 
         const indicator = el.shadowRoot.querySelector(
@@ -63,6 +64,7 @@ describe('TopNav', () => {
         const selectedItem = el.querySelector(
             `[href="${el.selected}"]`
         ) as TopNavItem;
+
         selectedItem.innerHTML = '0';
 
         // Wait for slotchange time before continuing the test.
@@ -100,9 +102,11 @@ describe('TopNavItem', () => {
             'sp-top-nav-item:nth-of-type(4)'
         ) as TopNavItem;
         const anchor = el.focusElement;
+
         test.addEventListener('click', (event: Event) => {
             event.preventDefault();
             const target = event.composedPath()[0];
+
             clickSpy(target);
         });
         await elementUpdated(el);
@@ -119,9 +123,11 @@ describe('TopNavItem', () => {
             'sp-top-nav-item:nth-of-type(4)'
         ) as TopNavItem;
         const anchor = el.focusElement;
+
         test.addEventListener('click', (event: Event) => {
             event.preventDefault();
             const target = event.composedPath()[0];
+
             clickSpy(target);
         });
         await elementUpdated(el);

@@ -32,6 +32,7 @@ describe('Accordion - keyboard', () => {
 
         await elementUpdated(el);
         const item = el.querySelector('sp-accordion-item') as AccordionItem;
+
         window.addEventListener('error', () => errorSpy());
 
         el.focus();
@@ -228,6 +229,7 @@ describe('Accordion Item - keyboard', () => {
         `);
 
         const button = el.querySelector('button') as HTMLButtonElement;
+
         await elementUpdated(el);
 
         expect(el.open).to.be.true;

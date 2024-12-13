@@ -25,6 +25,7 @@ export default {
 function renderButtonsSelected(args: Properties): TemplateResult {
     const disabled = Object.assign({}, args, { disabled: true });
     const selected = Object.assign({}, args, { selected: true });
+
     return html`
         <sp-action-group
             ?emphasized="${!!args.emphasized}"

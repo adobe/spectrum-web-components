@@ -146,6 +146,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 expect(this.outerButton).to.exist;
                 const open = oneEvent(this.outerTrigger, 'sp-opened');
+
                 this.outerButton.click();
                 await open;
                 expect(
@@ -164,6 +165,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 expect(this.outerButton).to.exist;
 
                 const opened = oneEvent(this.outerButton, 'sp-opened');
+
                 this.outerButton.click();
                 await opened;
 
@@ -173,6 +175,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const closed = oneEvent(this.outerButton, 'sp-closed');
+
                 this.outerTrigger.disabled = true;
                 await closed;
 
@@ -190,6 +193,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 expect(this.outerButton).to.exist;
                 const open = oneEvent(this.outerTrigger, 'sp-opened');
+
                 this.outerButton.click();
                 await open;
 
@@ -221,6 +225,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                     expect(this.outerButton).to.exist;
                     const opened = oneEvent(this.outerTrigger, 'sp-opened');
+
                     this.outerButton.click();
                     await opened;
                     expect(
@@ -242,6 +247,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 expect(this.outerButton).to.exist;
                 const open = oneEvent(this.outerTrigger, 'sp-opened');
+
                 this.outerButton.click();
                 await open;
 
@@ -280,6 +286,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 expect(this.outerTrigger.disabled).to.be.false;
                 let open = oneEvent(this.outerTrigger, 'sp-opened');
+
                 this.outerButton.click();
                 await open;
                 expect(
@@ -287,6 +294,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                     'hover available at point'
                 ).to.be.true;
                 let closed = oneEvent(this.outerTrigger, 'sp-closed');
+
                 sendMouse({
                     steps: [
                         {
@@ -355,6 +363,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 expect(this.outerButton).to.exist;
                 let open = oneEvent(this.outerTrigger, 'sp-opened');
+
                 this.outerButton.click();
                 await open;
 
@@ -392,6 +401,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.false;
 
                 const outerOpen = oneEvent(this.outerButton, 'sp-opened');
+
                 this.outerButton.click();
                 await outerOpen;
 
@@ -405,6 +415,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.false;
 
                 const innerOpen = oneEvent(this.innerButton, 'sp-opened');
+
                 this.innerButton.click();
                 await innerOpen;
 
@@ -432,6 +443,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const innerClose = oneEvent(this.innerButton, 'sp-closed');
+
                 await sendKeys({
                     press: 'Escape',
                 });
@@ -456,6 +468,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 this.outerTrigger.type = 'modal';
                 this.innerTrigger.type = 'modal';
                 const outerOpen = oneEvent(this.outerButton, 'sp-opened');
+
                 this.outerButton.click();
                 await outerOpen;
 
@@ -465,6 +478,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const innerOpen = oneEvent(this.innerButton, 'sp-opened');
+
                 this.innerButton.click();
                 await innerOpen;
 
@@ -478,6 +492,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const innerClose = oneEvent(this.innerButton, 'sp-closed');
+
                 await sendKeys({
                     press: 'Escape',
                 });
@@ -493,6 +508,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.false;
 
                 const outerClose = oneEvent(this.outerButton, 'sp-closed');
+
                 await sendKeys({
                     press: 'Escape',
                 });
@@ -512,6 +528,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 this.outerTrigger.type = 'auto';
                 this.innerTrigger.type = 'auto';
                 const outerOpen = oneEvent(this.outerButton, 'sp-opened');
+
                 this.outerButton.click();
                 await outerOpen;
 
@@ -521,6 +538,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const innerOpen = oneEvent(this.innerButton, 'sp-opened');
+
                 this.innerButton.click();
                 await innerOpen;
 
@@ -549,6 +567,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 const innerClose = oneEvent(this.innerButton, 'sp-closed');
                 const outerClose = oneEvent(this.outerButton, 'sp-closed');
+
                 sendMouse({
                     steps: [
                         {
@@ -575,6 +594,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 const rect = this.outerTrigger.getBoundingClientRect();
                 const open = oneEvent(this.outerTrigger, 'sp-opened');
+
                 sendMouse({
                     steps: [
                         {
@@ -593,6 +613,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const close = oneEvent(this.outerTrigger, 'sp-closed');
+
                 sendMouse({
                     steps: [
                         {
@@ -616,6 +637,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 const rect = this.outerTrigger.getBoundingClientRect();
                 const open = oneEvent(this.outerTrigger, 'sp-opened');
+
                 await sendMouse({
                     steps: [
                         {
@@ -629,6 +651,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 });
                 await open;
                 const close = oneEvent(this.outerTrigger, 'sp-closed');
+
                 expect(
                     await isOnTopLayer(this.hoverContent),
                     'hover content is available at point'
@@ -653,6 +676,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
             it('dispatches events on open/close', async function () {
                 const opened = oneEvent(this.outerButton, 'sp-opened');
+
                 this.outerButton.click();
                 const openedEvent = await opened;
 
@@ -665,6 +689,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 expect(openedEvent.detail.interaction).to.equal('auto');
 
                 const closed = oneEvent(this.outerButton, 'sp-closed');
+
                 sendMouse({
                     steps: [
                         {
@@ -674,6 +699,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                     ],
                 });
                 const closedEvent = await closed;
+
                 expect(closedEvent.detail.interaction).to.equal('auto');
                 expect(
                     await isOnTopLayer(this.outerClickContent),
@@ -688,9 +714,11 @@ export const runOverlayTriggerTests = (type: string): void => {
                         'overlay-trigger'
                     );
                 const closes: Promise<CustomEvent<unknown>>[] = [];
+
                 triggers.forEach((trigger) => {
                     if (trigger.open) {
                         const close = oneEvent(trigger, 'sp-closed');
+
                         trigger.open = undefined;
                         closes.push(close);
                     }

@@ -35,8 +35,9 @@ import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slot
  * @slot label - The label to use for the Action Menu.
  * @slot label-only - The label to use for the Action Menu (no icon space reserved).
  * @slot tooltip - Tooltip to be applied to the Action Button.
- * @attr selects - By default, the Action Menu does not manage a selection.
- *                 Use `selects="single"` to activate selection functionality in the menu.
+ *
+ * @attribute selects - By default, the Action Menu does not manage a selection.
+ *                      Use `selects="single"` to activate selection functionality in the menu.
  */
 export class ActionMenu extends ObserveSlotPresence(
     ObserveSlotText(PickerBase, 'label'),
@@ -126,6 +127,7 @@ export class ActionMenu extends ObserveSlotPresence(
         if (this.tooltipEl) {
             this.tooltipEl.disabled = this.open;
         }
+
         return html`
             <sp-action-button
                 aria-describedby=${DESCRIPTION_ID}
@@ -157,6 +159,7 @@ export class ActionMenu extends ObserveSlotPresence(
         if (changedProperties.has('invalid')) {
             this.invalid = false;
         }
+
         super.update(changedProperties);
     }
 }

@@ -24,6 +24,7 @@ import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 describe('Overlay trigger directive', () => {
     describe('dev mode', () => {
         let consoleWarnStub!: ReturnType<typeof stub>;
+
         before(() => {
             window.__swc.verbose = true;
             consoleWarnStub = stub(console, 'warn');
@@ -68,11 +69,13 @@ describe('Overlay trigger directive', () => {
             await elementUpdated(el);
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.click();
             await opened;
 
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
+
             expect(
                 (spyCall.args.at(0) as string).includes(
                     'The Overlay Trigger Directive is experimental'

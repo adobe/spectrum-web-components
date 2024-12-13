@@ -62,7 +62,8 @@ export class Avatar extends LikeAnchor(Focusable) {
     public src = '';
 
     /**
-     * The size of the avatar.
+     * The size of the avatar, which can be one of the predefined values.
+     * The size is reflected as an attribute and defaults to `100` if an invalid size is provided.
      */
     @property({ type: Number, reflect: true })
     public get size(): AvatarSize {
@@ -74,13 +75,17 @@ export class Avatar extends LikeAnchor(Focusable) {
         const validSize = (
             validSizes.includes(size) ? size : defaultSize
         ) as AvatarSize;
+
         if (validSize) {
             this.setAttribute('size', `${validSize}`);
         }
+
         if (this._size === validSize) {
             return;
         }
+
         const oldSize = this._size;
+
         this._size = validSize;
         this.requestUpdate('size', oldSize);
     }
@@ -100,6 +105,7 @@ export class Avatar extends LikeAnchor(Focusable) {
                 src=${this.src}
             />
         `;
+
         if (this.href) {
             return this.renderAnchor({
                 id: 'link',
@@ -107,6 +113,7 @@ export class Avatar extends LikeAnchor(Focusable) {
                 anchorContent: avatar,
             });
         }
+
         return avatar;
     }
 
@@ -116,6 +123,7 @@ export class Avatar extends LikeAnchor(Focusable) {
      */
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
+
         if (!this.hasAttribute('size')) {
             this.setAttribute('size', `${this.size}`);
         }

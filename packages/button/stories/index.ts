@@ -95,6 +95,7 @@ export const makeOverBackground =
             variant === 'black'
                 ? 'rgb(181, 209, 211)'
                 : 'var(--spectrum-seafoam-900)';
+
         return html`
             <div
                 style="
@@ -137,6 +138,7 @@ export function renderButtonSet(properties: Properties): TemplateResult {
             Click Me
         `,
     });
+
     return html`
         ${renderButton(properties)} ${renderButton(disabled)}
         ${renderButton(icon)}
@@ -154,6 +156,7 @@ export function renderIconButtonSet(properties: Properties): TemplateResult {
             <sp-icon-help slot="icon"></sp-icon-help>
         `,
     });
+
     return html`
         ${renderButton(iconOnly)} ${renderButton(disabled)}
     `;

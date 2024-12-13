@@ -24,6 +24,7 @@ import styles from './field-group.css.js';
 
 /**
  * @element sp-field-group
+ *
  * @slot - the form controls that make up the group
  * @slot help-text - default or non-negative help text to associate to your form element
  * @slot negative-help-text - negative help text to associate to your form element when `invalid`
@@ -63,6 +64,7 @@ export class FieldGroup extends ManageHelpText(SpectrumElement, {
 
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
+
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'group');
         }
@@ -70,6 +72,7 @@ export class FieldGroup extends ManageHelpText(SpectrumElement, {
 
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
+
         if (changes.has('label')) {
             if (this.label) {
                 this.setAttribute('aria-label', this.label);

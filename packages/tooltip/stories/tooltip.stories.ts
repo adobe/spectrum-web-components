@@ -37,18 +37,15 @@ const iconOptions: {
     }) => TemplateResult | string;
 } = {
     '': () => html``,
-    negative: () =>
-        html`
-            <sp-icon-alert slot="icon"></sp-icon-alert>
-        `,
-    positive: () =>
-        html`
-            <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
-        `,
-    info: () =>
-        html`
-            <sp-icon-info slot="icon"></sp-icon-info>
-        `,
+    negative: () => html`
+        <sp-icon-alert slot="icon"></sp-icon-alert>
+    `,
+    positive: () => html`
+        <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+    `,
+    info: () => html`
+        <sp-icon-info slot="icon"></sp-icon-info>
+    `,
 };
 
 export default {
@@ -428,6 +425,7 @@ export const draggable = (): TemplateResult => {
             event.offsetY
         );
     };
+
     return html`
         <sp-button>
             A simple button that should not be included in the DragImage

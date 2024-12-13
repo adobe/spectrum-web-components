@@ -62,6 +62,7 @@ export class AlertBanner extends SpectrumElement {
         if (variant === this.variant) {
             return;
         }
+
         const oldValue = this.variant;
 
         if (this.isValidVariant(variant)) {
@@ -82,6 +83,7 @@ export class AlertBanner extends SpectrumElement {
                 );
             }
         }
+
         this.requestUpdate('variant', oldValue);
     }
 
@@ -130,6 +132,7 @@ export class AlertBanner extends SpectrumElement {
                 cancelable: true,
             })
         );
+
         if (applyDefault) {
             this.close();
         }

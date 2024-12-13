@@ -20,6 +20,7 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Swatch', () => {
     let el: Swatch;
+
     beforeEach(async () => {
         el = await fixture<Swatch>(html`
             <sp-swatch color="red" label="Red"></sp-swatch>
@@ -165,6 +166,7 @@ describe('Swatch', () => {
     it('is in the tab order', async () => {
         const inputBefore = document.createElement('input');
         const inputAfter = document.createElement('input');
+
         el.insertAdjacentElement('beforebegin', inputBefore);
         el.insertAdjacentElement('afterend', inputAfter);
         inputBefore.focus();
@@ -185,6 +187,7 @@ describe('Swatch', () => {
     it('is not in the tab order when [disabled]', async () => {
         const inputBefore = document.createElement('input');
         const inputAfter = document.createElement('input');
+
         el.insertAdjacentElement('beforebegin', inputBefore);
         el.insertAdjacentElement('afterend', inputAfter);
         inputBefore.focus();

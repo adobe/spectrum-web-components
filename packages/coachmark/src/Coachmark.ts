@@ -33,13 +33,15 @@ import '@spectrum-web-components/button-group/sp-button-group.js';
 
 /**
  * @element sp-coachmark
- * @fires primary - Announces that the "primary" button has been clicked.
- * @fires secondary - Announces that the "secondary" button has been clicked.
+ *
  * @slot cover-photo - This is the cover photo for Default and Quiet Coachmark
  * @slot heading - HTML content to be listed as the heading
  * @slot description - A description of the card
  * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
  * @slot step-count - Override the default pagination delivery with your own internationalized content
+ *
+ * @fires primary - Announces that the "primary" button has been clicked.
+ * @fires secondary - Announces that the "secondary" button has been clicked.
  */
 export class Coachmark extends Popover {
     public static override get styles(): CSSResultArray {
@@ -96,11 +98,13 @@ export class Coachmark extends Popover {
     // render video and images
     private renderMedia(): TemplateResult {
         const isImage = this.mediaType === MediaType.IMAGE;
+
         if (!isImage) {
             return html`
                 <slot name="asset"></slot>
             `;
         }
+
         return html`
             <sp-asset id="cover-photo">
                 <div class="image-wrapper">
@@ -135,11 +139,13 @@ export class Coachmark extends Popover {
         const hasModifier = this.modifierKeys && this.modifierKeys?.length > 0;
         const hasShortcut = Boolean(this.shortcutKey);
         const hasTitle = Boolean(this.content?.title);
+
         if (!hasTitle && !hasModifier && !hasShortcut) {
             return html`
                 <div class="title"><slot name="title"></slot></div>
             `;
         }
+
         return html`
             ${hasTitle
                 ? html`
@@ -174,10 +180,12 @@ export class Coachmark extends Popover {
     // render description
     private renderContent(): TemplateResult {
         const hasDescription = Boolean(this.content?.description);
+
         if (!hasDescription)
             return html`
                 <slot name="content"></slot>
             `;
+
         return html`
             <div>${this.content?.description}</div>
         `;

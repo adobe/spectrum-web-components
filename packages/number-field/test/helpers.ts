@@ -22,7 +22,9 @@ export async function getElFrom(test: TemplateResult): Promise<NumberField> {
         </div>
     `);
     const el = wrapped.querySelector('sp-number-field') as NumberField;
+
     await elementUpdated(el);
+
     return el;
 }
 
@@ -33,6 +35,7 @@ export async function clickBySelector(
 ): Promise<void> {
     const target = el.shadowRoot.querySelector(selector) as HTMLElement;
     const targetRect = target.getBoundingClientRect();
+
     await sendMouse({
         steps: [
             {

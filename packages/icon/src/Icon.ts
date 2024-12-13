@@ -63,8 +63,10 @@ export class Icon extends IconBase {
         if (!this.name) {
             return;
         }
+
         // parse the icon name to get iconset name
         const icon = this.parseIcon(this.name);
+
         if (event.detail.name === icon.iconset) {
             this.updateIconPromise = this.updateIcon();
         }
@@ -94,6 +96,7 @@ export class Icon extends IconBase {
                 />
             `;
         }
+
         return super.render();
     }
 
@@ -101,21 +104,27 @@ export class Icon extends IconBase {
         if (this.updateIconPromise) {
             await this.updateIconPromise;
         }
+
         if (!this.name) {
             return Promise.resolve();
         }
+
         // parse the icon name to get iconset name
         const icon = this.parseIcon(this.name);
         // try to retrieve the iconset
         const iconset = IconsetRegistry.getInstance().getIconset(icon.iconset);
+
         if (!iconset) {
             // we can stop here as there's nothing to be done till we get the iconset
             return Promise.resolve();
         }
+
         if (!this.iconContainer) {
             return Promise.resolve();
         }
+
         this.iconContainer.innerHTML = '';
+
         return iconset.applyIconToElement(
             this.iconContainer,
             icon.icon,
@@ -128,16 +137,20 @@ export class Icon extends IconBase {
         const iconParts = icon.split(':');
         let iconsetName = 'default';
         let iconName = icon;
+
         if (iconParts.length > 1) {
             iconsetName = iconParts[0];
             iconName = iconParts[1];
         }
+
         return { iconset: iconsetName, icon: iconName };
     }
 
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
+
         await this.updateIconPromise;
+
         return complete;
     }
 }

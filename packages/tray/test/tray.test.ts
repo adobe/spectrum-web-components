@@ -50,6 +50,7 @@ describe('Tray', () => {
             </sp-tray>
         `);
         const anchor = el.querySelector('a');
+
         await elementUpdated(el);
 
         el.focus();
@@ -63,6 +64,7 @@ describe('Tray', () => {
                 <div></div>
             </sp-tray>
         `);
+
         await elementUpdated(el);
 
         el.focus();
@@ -81,6 +83,7 @@ describe('Tray', () => {
         `);
 
         const el = test.querySelector('sp-tray') as Tray;
+
         // Ensure closed styles are set before opening so that
         // the `transitionend` event will be met below.
         await nextFrame();
@@ -95,6 +98,7 @@ describe('Tray', () => {
         const overlay = el.shadowRoot.querySelector(
             'sp-underlay'
         ) as HTMLElement;
+
         overlay.click();
         await closed;
 

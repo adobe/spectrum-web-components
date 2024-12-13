@@ -137,6 +137,7 @@ export class TextfieldBase extends ManageHelpText(
     @state()
     set type(val: TextfieldType) {
         const prev = this._type;
+
         this._type = val;
         this.requestUpdate('type', prev);
     }
@@ -233,6 +234,7 @@ export class TextfieldBase extends ManageHelpText(
         }
 
         const oldValue = this._value;
+
         this._value = value;
         this.requestUpdate('value', oldValue);
     }
@@ -290,11 +292,11 @@ export class TextfieldBase extends ManageHelpText(
     /**
      * Sets the start and end positions of the current selection.
      *
-     * @param selectionStart — The 0-based index of the first selected character. An index greater than the length of the
+     * @param selectionStart - — The 0-based index of the first selected character. An index greater than the length of the
      *  element's value is treated as pointing to the end of the value.
-     * @param selectionEnd — The 0-based index of the character after the last selected character. An index greater than
+     * @param selectionEnd - — The 0-based index of the character after the last selected character. An index greater than
      *  the length of the element's value is treated as pointing to the end of the value.
-     * @param selectionDirection — A string indicating the direction in which the selection is considered to
+     * @param selectionDirection - — A string indicating the direction in which the selection is considered to
      *  have been performed.
      */
     public setSelectionRange(
@@ -335,6 +337,7 @@ export class TextfieldBase extends ManageHelpText(
                     nextSelectStart,
                     nextSelectStart
                 );
+
                 return;
             }
         }
@@ -399,6 +402,7 @@ export class TextfieldBase extends ManageHelpText(
                 ></sp-icon-checkmark100>
             `;
         }
+
         return nothing;
     }
 
@@ -550,6 +554,7 @@ export class TextfieldBase extends ManageHelpText(
             // Validate against the pattern if the textfield is disabled or multiline and a pattern is provided.
             if ((this.disabled || this.multiline) && this.pattern) {
                 const regex = new RegExp(`^${this.pattern}$`, 'u');
+
                 validity = regex.test(this.value.toString());
             }
 
@@ -563,14 +568,15 @@ export class TextfieldBase extends ManageHelpText(
             this.valid = validity;
             this.invalid = !validity;
         }
+
         return validity;
     }
 }
 
 /**
- * @element sp-textfield
- *
  * The `Textfield` component is a custom web component that provides a text input field.
+ *
+ * @element sp-textfield
  *
  * @slot help-text - Default or non-negative help text to associate with your form element.
  * @slot negative-help-text - Negative help text to associate with your form element when `invalid`.
@@ -588,6 +594,7 @@ export class Textfield extends TextfieldBase {
         }
 
         const oldValue = this._value;
+
         this._value = value;
         this.requestUpdate('value', oldValue);
     }

@@ -41,6 +41,7 @@ describe('Underlay', () => {
 
         await elementUpdated(el);
         const closeSpy = spy();
+
         el.addEventListener('close', () => closeSpy());
         expect(closeSpy.callCount).to.equal(0);
 

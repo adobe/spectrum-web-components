@@ -17,6 +17,7 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 const renderOptions = (): TemplateResult => {
     import('@spectrum-web-components/menu/sp-menu-item.js');
     import('@spectrum-web-components/menu/sp-menu-divider.js');
+
     return html`
         <sp-menu-item>Deselect</sp-menu-item>
         <sp-menu-item>Select Inverse</sp-menu-item>

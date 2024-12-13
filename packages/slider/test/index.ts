@@ -32,6 +32,7 @@ async function sliderFromFixture(
 ): Promise<Slider> {
     const el = await fixture<Slider>(sliderFixture({}));
     const slider = el.querySelector('sp-slider') as Slider;
+
     return slider;
 }
 
@@ -56,6 +57,7 @@ export const testEditableSlider = (type: string): void => {
 
         it('loads - [disabled]', async () => {
             const el = document.createElement('sp-slider');
+
             el.editable = true;
             el.disabled = true;
             el.label = 'Disabled, editable, slider';
@@ -110,24 +112,23 @@ export const testEditableSlider = (type: string): void => {
         it('dispatches `input` of the animation frame', async () => {
             const inputSpy = spy();
             const changeSpy = spy();
-            const el = await fixture<Slider>(
-                html`
-                    <sp-slider
-                        editable
-                        hide-stepper
-                        min="1"
-                        max="100"
-                        step="1"
-                        label="Slider label"
-                        @input=${(event: Event & { target: Slider }) => {
-                            inputSpy(event.target.value);
-                        }}
-                        @change=${(event: Event & { target: Slider }) => {
-                            changeSpy(event.target.value);
-                        }}
-                    ></sp-slider>
-                `
-            );
+            const el = await fixture<Slider>(html`
+                <sp-slider
+                    editable
+                    hide-stepper
+                    min="1"
+                    max="100"
+                    step="1"
+                    label="Slider label"
+                    @input=${(event: Event & { target: Slider }) => {
+                        inputSpy(event.target.value);
+                    }}
+                    @change=${(event: Event & { target: Slider }) => {
+                        changeSpy(event.target.value);
+                    }}
+                ></sp-slider>
+            `);
+
             await elementUpdated(el);
             expect(el.value).to.equal(50.5);
 
@@ -142,9 +143,11 @@ export const testEditableSlider = (type: string): void => {
             let shouldCountFrames = true;
             const countFrames = (): void => {
                 if (!shouldCountFrames) return;
+
                 frames += 1;
                 requestAnimationFrame(countFrames);
             };
+
             countFrames();
             type Steps = {
                 type: 'move';
@@ -158,6 +161,7 @@ export const testEditableSlider = (type: string): void => {
                 ],
             }));
             const toLeft: Steps = toRight.slice(0, -1).reverse();
+
             await sendMouse({
                 steps: [
                     {
@@ -194,6 +198,7 @@ export const testEditableSlider = (type: string): void => {
             const inputSpy = spy();
             const changeSpy = spy();
             const el = await sliderFromFixture(editable);
+
             el.addEventListener('input', () => inputSpy());
             el.addEventListener('change', () => changeSpy());
 
@@ -283,6 +288,7 @@ export const testEditableSlider = (type: string): void => {
             const handle = el.shadowRoot.querySelector(
                 '.handle'
             ) as HTMLDivElement;
+
             el.track.setPointerCapture = (id: number) => (pointerId = id);
             el.track.releasePointerCapture = (id: number) => (pointerId = id);
             handle.dispatchEvent(

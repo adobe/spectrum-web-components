@@ -41,6 +41,7 @@ describe('Combobox accessibility', () => {
     it('renders accessibly with `label` attribute', async () => {
         const el = await comboboxFixture();
         const opened = oneEvent(el, 'sp-opened');
+
         el.open = true;
         await opened;
 
@@ -91,6 +92,7 @@ describe('Combobox accessibility', () => {
             (node) =>
                 node.name === name && !node.value && node.role === 'combobox'
         );
+
         // by default, is there a combobox that has `name` as the label?
         expect(a11yNode, '`name` is the label text').to.not.be.null;
 
@@ -134,6 +136,7 @@ describe('Combobox accessibility', () => {
                     node.value === 'Banana' &&
                     node.role === 'combobox'
             );
+
             expect(
                 iOSNode,
                 `post escape hatch node available: ${JSON.stringify(
@@ -166,6 +169,7 @@ describe('Combobox accessibility', () => {
             (node) =>
                 node.name === name && !node.value && node.role === 'combobox'
         );
+
         // by default, is there a combobox that has `name` as the label?
         expect(a11yNode, '`name` is the label text').to.not.be.null;
 
@@ -209,6 +213,7 @@ describe('Combobox accessibility', () => {
                     node.value === 'Banana' &&
                     node.role === 'combobox'
             );
+
             expect(
                 iOSNode,
                 `post escape hatch node available: ${JSON.stringify(
@@ -233,6 +238,7 @@ describe('Combobox accessibility', () => {
         const el = await comboboxFixture();
 
         const opened = oneEvent(el, 'sp-opened');
+
         el.open = true;
         await opened;
 
@@ -242,6 +248,7 @@ describe('Combobox accessibility', () => {
     it('manages aria-activedescendant', async () => {
         // a11ySnapshot does not track the aria-activedescendant, hence querySelecting
         const el = await comboboxFixture();
+
         await elementUpdated(el);
 
         expect(el.activeDescendant).to.be.undefined;
@@ -289,6 +296,7 @@ describe('Combobox accessibility', () => {
         ).to.be.null;
 
         const opened = oneEvent(el, 'sp-opened');
+
         el.click();
         await opened;
         await elementUpdated(el);
@@ -354,6 +362,7 @@ describe('Combobox accessibility', () => {
     });
     it('renders accessibly with `pending` attribute', async () => {
         const el = await comboboxFixture();
+
         el.value = 'Banana';
         el.pending = true;
 

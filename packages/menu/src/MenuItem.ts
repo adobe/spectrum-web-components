@@ -46,7 +46,7 @@ import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slot
 /**
  * Duration during which a pointing device can leave an `<sp-menu-item>` element
  * and return to it or to the submenu opened from it before closing that submenu.
- **/
+ */
 const POINTERLEAVE_TIMEOUT = 100;
 
 type MenuCascadeItem = {
@@ -91,6 +91,7 @@ export type MenuItemChildren = { icon: Element[]; content: Node[] };
  * @slot icon - icon element to be placed at the start of the Menu Item
  * @slot value - content placed at the end of the Menu Item like values, keyboard shortcuts, etc.
  * @slot submenu - content placed in a submenu
+ *
  * @fires sp-menu-item-added - announces the item has been added so a parent menu can take ownerships
  */
 export class MenuItem extends LikeAnchor(
@@ -128,7 +129,9 @@ export class MenuItem extends LikeAnchor(
         if (value === this._value) {
             return;
         }
+
         this._value = value || '';
+
         if (this._value) {
             this.setAttribute('value', this._value);
         } else {
@@ -190,18 +193,23 @@ export class MenuItem extends LikeAnchor(
                 content: [],
             };
         }
+
         if (this._itemChildren) {
             return this._itemChildren;
         }
+
         const icon = this.iconSlot.assignedElements().map((element) => {
             const newElement = element.cloneNode(true) as HTMLElement;
+
             newElement.removeAttribute('slot');
             newElement.classList.toggle('icon');
+
             return newElement;
         });
         const content = this.contentSlot
             .assignedNodes()
             .map((node) => node.cloneNode(true));
+
         this._itemChildren = { icon, content };
 
         return this._itemChildren;
@@ -226,9 +234,11 @@ export class MenuItem extends LikeAnchor(
                     (mutation) =>
                         (mutation.target as HTMLElement).slot === 'submenu'
                 );
+
                 if (isSubmenu) {
                     return;
                 }
+
                 this.breakItemChildrenCache();
             },
         });
@@ -254,6 +264,7 @@ export class MenuItem extends LikeAnchor(
             event.preventDefault();
             event.stopImmediatePropagation();
             event.stopPropagation();
+
             return false;
         }
     }
@@ -270,10 +281,12 @@ export class MenuItem extends LikeAnchor(
 
     private shouldProxyClick(): boolean {
         let handled = false;
+
         if (this.anchorElement) {
             this.anchorElement.click();
             handled = true;
         }
+
         return handled;
     }
 
@@ -296,13 +309,16 @@ export class MenuItem extends LikeAnchor(
                 @focusin=${(event: Event) => event.stopPropagation()}
             ></slot>
         `;
+
         if (!this.hasSubmenu) {
             return slot;
         }
+
         this.dependencyManager.add('sp-overlay');
         this.dependencyManager.add('sp-popover');
         import('@spectrum-web-components/overlay/sp-overlay.js');
         import('@spectrum-web-components/popover/sp-popover.js');
+
         return html`
             <sp-overlay
                 .triggerElement=${this as HTMLElement}
@@ -372,6 +388,7 @@ export class MenuItem extends LikeAnchor(
             flatten: true,
         })[0] as HTMLElement;
         this.hasSubmenu = !!this.submenuElement;
+
         if (this.hasSubmenu) {
             this.setAttribute('aria-haspopup', 'true');
         }
@@ -394,6 +411,7 @@ export class MenuItem extends LikeAnchor(
         this.setAttribute('tabindex', '-1');
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('pointerenter', this.closeOverlaysForRoot);
+
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${randomID()}`;
         }
@@ -401,6 +419,7 @@ export class MenuItem extends LikeAnchor(
 
     protected closeOverlaysForRoot(): void {
         if (this.open) return;
+
         this.menuData.parentMenu?.closeDescendentOverlays();
     }
 
@@ -408,6 +427,7 @@ export class MenuItem extends LikeAnchor(
         if (event.composedPath().includes(this.overlayElement)) {
             return;
         }
+
         this.openOverlay();
     }
 
@@ -434,8 +454,10 @@ export class MenuItem extends LikeAnchor(
         if (this.leaveTimeout) {
             clearTimeout(this.leaveTimeout);
             delete this.leaveTimeout;
+
             return;
         }
+
         this.openOverlay();
     }
 
@@ -481,6 +503,7 @@ export class MenuItem extends LikeAnchor(
                 (el as HTMLElement).localName === 'sp-overlay'
             );
         }) as Overlay;
+
         this.overlayElement.parentOverlayToForceClose = parentOverlay;
     }
 
@@ -493,6 +516,7 @@ export class MenuItem extends LikeAnchor(
         if (!this.hasSubmenu || this.open || this.disabled) {
             return;
         }
+
         this.open = true;
         this.active = true;
         this.setAttribute('aria-expanded', 'true');
@@ -503,6 +527,7 @@ export class MenuItem extends LikeAnchor(
 
     updateAriaSelected(): void {
         const role = this.getAttribute('role');
+
         if (role === 'option') {
             this.setAttribute(
                 'aria-selected',
@@ -520,12 +545,14 @@ export class MenuItem extends LikeAnchor(
 
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
+
         if (
             changes.has('label') &&
             (this.label || typeof changes.get('label') !== 'undefined')
         ) {
             this.setAttribute('aria-label', this.label || '');
         }
+
         if (
             changes.has('active') &&
             (this.active || typeof changes.get('active') !== 'undefined')
@@ -534,13 +561,16 @@ export class MenuItem extends LikeAnchor(
                 this.menuData.selectionRoot?.closeDescendentOverlays();
             }
         }
+
         if (this.anchorElement) {
             this.anchorElement.addEventListener('focus', this.proxyFocus);
             this.anchorElement.tabIndex = -1;
         }
+
         if (changes.has('selected')) {
             this.updateAriaSelected();
         }
+
         if (
             changes.has('hasSubmenu') &&
             (this.hasSubmenu ||
@@ -549,6 +579,7 @@ export class MenuItem extends LikeAnchor(
             if (this.hasSubmenu) {
                 this.abortControllerSubmenu = new AbortController();
                 const options = { signal: this.abortControllerSubmenu.signal };
+
                 this.addEventListener(
                     'click',
                     this.handleSubmenuClick,
@@ -599,6 +630,7 @@ export class MenuItem extends LikeAnchor(
         if (this.willDispatchUpdate) {
             return;
         }
+
         this.willDispatchUpdate = true;
         await new Promise((ready) => requestAnimationFrame(ready));
         this.dispatchUpdate();
@@ -608,6 +640,7 @@ export class MenuItem extends LikeAnchor(
         if (!this.isConnected) {
             return;
         }
+
         this.dispatchEvent(new MenuItemAddedOrUpdatedEvent(this));
         this.willDispatchUpdate = false;
     }

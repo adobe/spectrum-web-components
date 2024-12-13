@@ -152,6 +152,7 @@ function renderButtons(args: Properties): TemplateResult {
 function displaySelectionState(): void {
     const group = document.querySelector('sp-action-group') as ActionGroup;
     const selectedDiv = group.nextElementSibling;
+
     if (selectedDiv) {
         selectedDiv.textContent = `Selected: ${JSON.stringify(group.selected)}`;
     }
@@ -187,6 +188,7 @@ export const HasActionMenuAsChild = (args: Properties): TemplateResult => {
 
 export const selectsSingle = (args: Properties): TemplateResult => {
     requestAnimationFrame(displaySelectionState);
+
     return html`
         <sp-action-group
             ?compact=${args.compact}
@@ -199,6 +201,7 @@ export const selectsSingle = (args: Properties): TemplateResult => {
             selects="single"
             @change=${({ target }: Event & { target: ActionGroup }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
+
                 next.textContent = `Selected: ${JSON.stringify(
                     target.selected
                 )}`;
@@ -215,6 +218,7 @@ export const selectsSingle = (args: Properties): TemplateResult => {
 
 export const selectsMultiple = (args: Properties): TemplateResult => {
     requestAnimationFrame(displaySelectionState);
+
     return html`
         <sp-action-group
             ${spreadProps(args)}
@@ -223,6 +227,7 @@ export const selectsMultiple = (args: Properties): TemplateResult => {
             size=${args.size}
             @change=${({ target }: Event & { target: ActionGroup }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
+
                 next.textContent = `Selected: ${JSON.stringify(
                     target.selected
                 )}`;
@@ -248,6 +253,7 @@ export const selectsMultipleWithTooltips = (
             size=${args.size}
             @change=${({ target }: Event & { target: ActionGroup }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
+
                 next.textContent = `Selected: ${JSON.stringify(
                     target.selected
                 )}`;
@@ -280,6 +286,7 @@ export const selectsMultipleWithTooltips = (
 
 export const selectsMultipleControlled = (args: Properties): TemplateResult => {
     requestAnimationFrame(displaySelectionState);
+
     return html`
         <sp-action-group
             ${spreadProps(args)}
@@ -289,6 +296,7 @@ export const selectsMultipleControlled = (args: Properties): TemplateResult => {
             size=${args.size}
             @change=${({ target }: Event & { target: ActionGroup }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
+
                 next.textContent = `Selected: ${JSON.stringify(
                     target.selected
                 )}`;

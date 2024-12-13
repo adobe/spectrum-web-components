@@ -38,16 +38,18 @@ class OverlayStack {
 
     private closeOverlay(overlay: Overlay): void {
         const overlayIndex = this.stack.indexOf(overlay);
+
         if (overlayIndex > -1) {
             this.stack.splice(overlayIndex, 1);
         }
+
         overlay.open = false;
     }
 
     /**
-     * Cach the `pointerdownTarget` for later testing
+     * Catch the `pointerdownTarget` for later testing
      *
-     * @param event {ClickEvent}
+     * @param event - The event triggered when a pointer is pressed down
      */
     handlePointerdown = (event: Event): void => {
         this.pointerdownPath = event.composedPath();
@@ -56,18 +58,21 @@ class OverlayStack {
 
     /**
      * Close all overlays that are not ancestors of this click event
-     *
-     * @param event {ClickEvent}
      */
     handlePointerup = (): void => {
         // Test against the composed path in `pointerdown` in case the visitor moved their
         // pointer during the course of the interaction.
         // Ensure that this value is cleared even if the work in this method goes undone.
         const composedPath = this.pointerdownPath;
+
         this.pointerdownPath = undefined;
+
         if (!this.stack.length) return;
+
         if (!composedPath?.length) return;
+
         const lastOverlay = this.lastOverlay;
+
         this.lastOverlay = undefined;
 
         const lastIndex = this.stack.length - 1;
@@ -85,6 +90,7 @@ class OverlayStack {
                         overlay !== lastOverlay &&
                         overlay.triggerInteraction === 'longpress')
             );
+
             return (
                 !inStack &&
                 !overlay.shouldPreventClose() &&
@@ -93,10 +99,12 @@ class OverlayStack {
                 !(overlay.type === 'modal' && lastOverlay !== overlay)
             );
         }) as Overlay[];
+
         nonAncestorOverlays.reverse();
         nonAncestorOverlays.forEach((overlay) => {
             this.closeOverlay(overlay);
             let parentToClose = overlay.parentOverlayToForceClose;
+
             while (parentToClose) {
                 this.closeOverlay(parentToClose);
                 parentToClose = parentToClose.parentOverlayToForceClose;
@@ -108,33 +116,42 @@ class OverlayStack {
         const { target, newState: open } = event as Event & {
             newState: string;
         };
+
         if (open === 'open') return;
+
         this.closeOverlay(target as Overlay);
     };
 
     private handleKeydown = (event: KeyboardEvent): void => {
         if (event.code !== 'Escape') return;
+
         if (!this.stack.length) return;
+
         const last = this.stack[this.stack.length - 1];
+
         if (last?.type === 'page') {
             event.preventDefault();
+
             return;
         }
+
         if (supportsPopover) return;
+
         if (last?.type === 'manual') {
             // Manual Overlays should not close on "light dismiss".
             return;
         }
 
         if (!last) return;
+
         this.closeOverlay(last);
     };
 
     /**
      * Get an array of Overlays that all share the same trigger element.
      *
-     * @param triggerElement {HTMLELement}
-     * @returns {Overlay[]}
+     * @param triggerElement - The HTML element that triggers the overlay.
+     * @returns An array of overlays that share the same trigger element.
      */
     overlaysByTriggerElement(triggerElement: HTMLElement): Overlay[] {
         return this.stack.filter(
@@ -153,12 +170,15 @@ class OverlayStack {
     add(overlay: Overlay): void {
         if (this.stack.includes(overlay)) {
             const overlayIndex = this.stack.indexOf(overlay);
+
             if (overlayIndex > -1) {
                 this.stack.splice(overlayIndex, 1);
                 this.stack.push(overlay);
             }
+
             return;
         }
+
         if (
             overlay.type === 'auto' ||
             overlay.type === 'modal' ||
@@ -170,12 +190,15 @@ class OverlayStack {
                 composed: true,
                 bubbles: true,
             });
+
             overlay.addEventListener(
                 queryPathEventName,
                 (event: Event) => {
                     const path = event.composedPath();
+
                     this.stack.forEach((overlayEl) => {
                         const inPath = path.find((el) => el === overlayEl);
+
                         if (
                             !inPath &&
                             overlayEl.type !== 'manual' &&
@@ -196,16 +219,20 @@ class OverlayStack {
                     overlayEl.triggerElement === overlay.triggerElement
                 );
             });
+
             if (hasPrevious) {
                 overlay.open = false;
+
                 return;
             }
+
             this.stack.forEach((overlayEl) => {
                 if (overlayEl.type === 'hint') {
                     this.closeOverlay(overlayEl);
                 }
             });
         }
+
         requestAnimationFrame(() => {
             this.stack.push(overlay);
             overlay.addEventListener('beforetoggle', this.handleBeforetoggle, {

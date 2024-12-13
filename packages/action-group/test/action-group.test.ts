@@ -98,6 +98,7 @@ async function singleSelectedActionGroup(
             </sp-action-button>
         </sp-action-group>
     `);
+
     return el;
 }
 
@@ -118,6 +119,7 @@ async function multipleSelectedActionGroup(
             </sp-action-button>
         </sp-action-group>
     `);
+
     return el;
 }
 
@@ -136,6 +138,7 @@ describe('ActionGroup', () => {
 
         // Stub the slotElement getter to return null
         const slotElementStub = sinon.stub(el, 'slotElement').get(() => null);
+
         await elementUpdated(el);
 
         // trigger a slotchange event
@@ -212,11 +215,13 @@ describe('ActionGroup', () => {
         await sendKeys({ press: 'Enter' });
 
         const opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
+
         await elementUpdated(el.children[3]);
         await opened;
 
         // expect the first menu item to be focused
         const firstMenuItem = el.querySelector('#first-menu-item') as MenuItem;
+
         expect(firstMenuItem?.focused).to.be.true;
 
         // navigate to the fourth menu item using the arrow keys
@@ -238,12 +243,14 @@ describe('ActionGroup', () => {
         const secondSubMenuItem = el.querySelector(
             '#second-sub-menu-item'
         ) as MenuItem;
+
         expect(secondSubMenuItem?.focused).to.be.true;
 
         // press Enter to select the second submenu item
         await sendKeys({ press: 'Enter' });
 
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
+
         await elementUpdated(el.children[3]);
 
         await closed;
@@ -264,6 +271,7 @@ describe('ActionGroup', () => {
         // get the bounding box of the first button
         const firstButton = el.querySelector('#first') as ActionButton;
         const rect = firstButton.getBoundingClientRect();
+
         sendMouse({
             steps: [
                 {
@@ -307,6 +315,7 @@ describe('ActionGroup', () => {
         // get the bounding box of the action-menu
         const actionMenu = el.querySelector('#action-menu') as ActionMenu;
         const actionMenuRect = actionMenu.getBoundingClientRect();
+
         sendMouse({
             steps: [
                 {
@@ -322,6 +331,7 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
 
         const opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
+
         await opened;
 
         // use keyboard to navigate to the second menu item and select it
@@ -329,6 +339,7 @@ describe('ActionGroup', () => {
         await sendKeys({ press: 'Enter' });
 
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
+
         await closed;
 
         if (!isWebKit()) {
@@ -629,6 +640,7 @@ describe('ActionGroup', () => {
         ) as ActionButton;
 
         const shadowRoot = test.attachShadow({ mode: 'open' });
+
         shadowRoot.innerHTML = `
             <sp-action-group label="Selects Single Group" selects="single">
                 <slot></slot>
@@ -636,6 +648,7 @@ describe('ActionGroup', () => {
         `;
 
         const el = shadowRoot.querySelector('sp-action-group') as ActionGroup;
+
         await elementUpdated(el);
 
         expect(el.selected, '"Third" selected').to.deep.equal(['Third']);
@@ -792,6 +805,7 @@ describe('ActionGroup', () => {
                 <sp-action-button class="third">Third</sp-action-button>
             </sp-action-group>
         `);
+
         await elementUpdated(el);
         expect(el.selected.length).to.equal(0);
 
@@ -830,11 +844,13 @@ describe('ActionGroup', () => {
 
     it('selects user-passed value while [selects="single"]', async () => {
         const el = await singleSelectedActionGroup(['first']);
+
         await elementUpdated(el);
         expect(el.selected.length).to.equal(1);
 
         const firstButton = el.querySelector('.first') as ActionButton;
         const secondButton = el.querySelector('.second') as ActionButton;
+
         expect(firstButton.selected, 'first button selected').to.be.true;
         expect(secondButton.selected, 'second button not selected').to.be.false;
 
@@ -848,11 +864,13 @@ describe('ActionGroup', () => {
 
     it('selects can be updated while [selects="single"]', async () => {
         const el = await singleSelectedActionGroup(['first']);
+
         await elementUpdated(el);
         expect(el.selected.length).to.equal(1);
 
         const firstButton = el.querySelector('.first') as ActionButton;
         const secondButton = el.querySelector('.second') as ActionButton;
+
         expect(firstButton.selected, 'first button selected').to.be.true;
         expect(secondButton.selected, 'second button not selected').to.be.false;
 
@@ -866,12 +884,14 @@ describe('ActionGroup', () => {
 
     it('does not allow interaction with child content to interrupt the selection mechanism', async () => {
         const el = await singleSelectedActionGroup([]);
+
         await elementUpdated(el);
         expect(el.selected.length).to.equal(0);
 
         const firstButton = el.querySelector('.first') as ActionButton;
         const secondButton = el.querySelector('.second') as ActionButton;
         const icon = secondButton.querySelector('[slot=icon]') as HTMLElement;
+
         expect(firstButton.selected, 'first button selected').to.be.false;
         expect(secondButton.selected, 'second button not selected').to.be.false;
 
@@ -892,6 +912,7 @@ describe('ActionGroup', () => {
         expect(secondButton.selected, 'second button not selected').to.be.false;
 
         const rect = icon.getBoundingClientRect();
+
         await sendMouse({
             steps: [
                 {
@@ -1012,11 +1033,13 @@ describe('ActionGroup', () => {
 
     it('selects multiple user-passed values while [selects="single"], but then proceeds with radio-button style functionality', async () => {
         const el = await singleSelectedActionGroup(['first', 'second']);
+
         await elementUpdated(el);
         expect(el.selected.length).to.equal(2);
 
         const firstButton = el.querySelector('.first') as ActionButton;
         const secondButton = el.querySelector('.second') as ActionButton;
+
         expect(firstButton.selected, 'first button selected').to.be.true;
         expect(secondButton.selected, 'second button selected').to.be.true;
 
@@ -1075,9 +1098,11 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
         expect(el.selected.length).to.equal(1);
         const secondButton = el.querySelector('.second') as ActionButton;
+
         expect(secondButton.selected, 'second button selected').to.be.true;
 
         const firstButton = el.querySelector('.first') as ActionButton;
+
         expect(firstButton.selected, 'first button selected').to.be.false;
     });
 
@@ -1100,6 +1125,7 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(1);
         const firstButton = el.querySelector('.first') as ActionButton;
         const secondButton = el.querySelector('.second') as ActionButton;
+
         expect(firstButton.selected, 'first button selected').to.be.true;
         expect(secondButton.selected, 'second button selected').to.be.false;
 
@@ -1131,6 +1157,7 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(2);
 
         const firstButton = el.querySelector('.first') as ActionButton;
+
         expect(firstButton.selected, 'first button selected').to.be.true;
         expect(firstButton.hasAttribute('aria-checked')).to.be.false;
         expect(
@@ -1142,6 +1169,7 @@ describe('ActionGroup', () => {
         );
 
         const secondButton = el.querySelector('.second') as ActionButton;
+
         expect(secondButton.selected, 'second button selected').to.be.true;
         expect(secondButton.hasAttribute('aria-checked')).to.be.false;
         expect(
@@ -1351,6 +1379,7 @@ describe('ActionGroup', () => {
                 </sp-action-button>
             </sp-action-group>
         `);
+
         // checking if the first element is selected
         await elementUpdated(el);
         const firstElement = el.querySelector('.first') as ActionButton;
@@ -1440,6 +1469,7 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('Second');
     };
+
     it('accepts keybord input', async () => {
         const el = await fixture<ActionGroup>(html`
             <sp-action-group label="Selects Single Group" selects="single">
@@ -1448,6 +1478,7 @@ describe('ActionGroup', () => {
                 <sp-action-button class="third">Third</sp-action-button>
             </sp-action-group>
         `);
+
         await acceptKeyboardInput(el);
     });
     it('accepts keybord input with tooltip', async () => {
@@ -1475,6 +1506,7 @@ describe('ActionGroup', () => {
                 </overlay-trigger>
             </sp-action-group>
         `);
+
         await acceptKeyboardInput(el);
     });
     it('accepts keybord input when [dir="ltr"]', async () => {
@@ -1528,8 +1560,10 @@ describe('ActionGroup', () => {
         expect(actionButtons[2].selected).to.be.false;
 
         const changeSpy = spy();
+
         test.addEventListener('change', () => changeSpy());
         const rect = actionButtons[1].getBoundingClientRect();
+
         sendMouse({
             steps: [
                 {

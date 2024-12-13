@@ -339,6 +339,7 @@ export const all = ({ delayed }: Properties): TemplateResult => html`
 
 export const actionGroup = ({ delayed }: Properties): TemplateResult => {
     const popoverOffset = [6, -13] as [number, number];
+
     return html`
         <style>
             sp-popover sp-action-group {
@@ -504,6 +505,7 @@ export const actionGroupWithFilters = ({
     delayed,
 }: Properties): TemplateResult => {
     const popoverOffset = [6, -13] as [number, number];
+
     return html`
         <style>
             sp-popover sp-action-group {
@@ -711,8 +713,10 @@ export const lazyElements = (): TemplateResult => {
                           </sp-dialog>
                       </sp-popover>
                   `;
+
         render(template, event.target as HTMLElement);
     };
+
     return html`
         <sp-button id="button">Trigger</sp-button>
         <sp-overlay

@@ -108,6 +108,7 @@ describe('Sidenav', () => {
 
         await elementUpdated(el);
         const item = el.querySelector('sp-sidenav-item') as SideNavItem;
+
         window.addEventListener('error', () => errorSpy());
 
         el.dispatchEvent(new FocusEvent('focusin'));
@@ -166,9 +167,11 @@ describe('Sidenav', () => {
         expect(el.manageTabIndex).to.be.false;
 
         const item1 = el.querySelector('sp-sidenav-item') as SideNavItem;
+
         expect(item1.tabIndex).to.equal(0);
 
         const newItem = document.createElement('sp-sidenav-item');
+
         newItem.value = 'Section 3';
         newItem.label = 'Section 3';
         el.appendChild(newItem);
@@ -179,6 +182,7 @@ describe('Sidenav', () => {
 
         el.focus();
         const focused = document.activeElement as SideNavItem;
+
         focused.click();
         expect(focused.selected).to.be.true;
 
@@ -213,6 +217,7 @@ describe('Sidenav', () => {
         const sidenavItem = el.querySelector(
             '[value="Section 2"]'
         ) as SideNavItem;
+
         sidenavItem.dispatchEvent(
             new CustomEvent('sidenav-select', {
                 bubbles: true,
@@ -234,6 +239,7 @@ describe('Sidenav', () => {
         const sidenavItemChild = el.querySelector(
             '[value="Section 2a"]'
         ) as SideNavItem;
+
         sidenavItemChild.click();
 
         await elementUpdated(el);
@@ -305,6 +311,7 @@ describe('Sidenav', () => {
         expect(selected.tabIndex, '0 when blur').to.equal(0);
 
         const bindingRect = toBeSelected.getBoundingClientRect();
+
         await sendMouse({
             steps: [
                 {
@@ -341,6 +348,7 @@ describe('Sidenav', () => {
         el.focus();
         el.dispatchEvent(arrowUpEvent());
         let focused = document.activeElement as SideNavItem;
+
         focused.click();
 
         await elementUpdated(el);
@@ -391,10 +399,12 @@ describe('Sidenav', () => {
             '[value="Section 0"]'
         ) as SideNavItem;
         const selected = el.querySelector('[selected]') as SideNavItem;
+
         expect(selected.tabIndex).to.equal(0);
         expect(firstItem.tabIndex).to.equal(-1);
 
         const firstRect = firstItem.getBoundingClientRect();
+
         await sendMouse({
             steps: [
                 {
@@ -435,6 +445,7 @@ describe('Sidenav', () => {
         sidenavEl.focus();
         sidenavEl.dispatchEvent(arrowUpEvent());
         let focused = rootNode.activeElement as SideNavItem;
+
         focused.focusElement.click();
 
         await elementUpdated(sidenavEl);
@@ -500,6 +511,7 @@ describe('Sidenav', () => {
         expect(item2.tabIndex, 'second item tabindex').to.equal(-1);
 
         const item3 = document.createElement('sp-sidenav-item');
+
         item3.value = 'Section 2';
         item3.label = 'Section 2';
 

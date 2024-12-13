@@ -40,9 +40,11 @@ describe('popover', () => {
     });
     it('tip exists only when tip attribute is true', async () => {
         if (!popover.shadowRoot) throw new Error('No shadowRoot');
+
         expect(popover.getAttribute('tip')).to.equal(null);
 
         let tip = popover.shadowRoot.querySelector('tip') as HTMLElement;
+
         expect(tip).to.equal(null);
 
         popover.setAttribute('tip', 'true');

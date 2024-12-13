@@ -4,3 +4,9 @@ tools/**/*.d.ts
 tools/*/node_modules/**/*
 config/*
 tools/base/src/version.js
+
+# built css assets
+packages/**/*.css.ts
+projects/**/*.css.ts
+tools/**/*.css.ts
+styles/**/*.css.ts

@@ -46,7 +46,9 @@ type OverlayOptionsV1 = {
  */
 function roundByDPR(num?: number): number {
     if (typeof num === 'undefined') return 0;
+
     const dpr = window.devicePixelRatio || 1;
+
     return Math.round(num * dpr) / dpr;
 }
 
@@ -75,6 +77,7 @@ const getFallbackPlacements = (placement: Placement): Placement[] => {
         'bottom-start': ['top-start', 'left', 'right'],
         'bottom-end': ['top-end', 'left', 'right'],
     };
+
     return fallbacks[placement] ?? [placement];
 };
 
@@ -146,6 +149,7 @@ export class PlacementController implements ReactiveController {
     ): Promise<void> {
         this.target = target;
         this.options = options;
+
         if (!target || !options) return;
 
         // Set up auto-update for ancestor resize events.
@@ -277,6 +281,7 @@ export class PlacementController implements ReactiveController {
                         Math.floor(availableHeight)
                     );
                     const actualHeight = floating.height;
+
                     this.initialHeight = !this.isConstrained // && !this.virtualTrigger
                         ? actualHeight
                         : this.initialHeight || actualHeight;
@@ -286,6 +291,7 @@ export class PlacementController implements ReactiveController {
                     const appliedHeight = this.isConstrained
                         ? `${maxHeight}px`
                         : '';
+
                     Object.assign(target.style, {
                         maxWidth: `${Math.floor(availableWidth)}px`,
                         maxHeight: appliedHeight,
@@ -332,6 +338,7 @@ export class PlacementController implements ReactiveController {
                     element.getAttribute('placement') as Placement
                 );
             }
+
             element.setAttribute('placement', placement);
         });
 
@@ -365,6 +372,7 @@ export class PlacementController implements ReactiveController {
         if (!this.target) {
             return;
         }
+
         // Remove max-height and max-width styles from the target element.
         this.target.style.removeProperty('max-height');
         this.target.style.removeProperty('max-width');
@@ -380,6 +388,7 @@ export class PlacementController implements ReactiveController {
      */
     public resetOverlayPosition = (): void => {
         if (!this.target || !this.options) return;
+
         // Clear the overlay's position.
         this.clearOverlayPosition();
 

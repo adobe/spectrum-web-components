@@ -27,12 +27,13 @@ import itemStyles from '@spectrum-web-components/tabs/src/tab.css.js';
 import topNavItemStyles from './top-nav-item.css.js';
 
 /**
- * @element sp-top-nav-item
- *
  * The `TopNavItem` component is a custom web component that represents an item in a top navigation bar.
  * It extends the `LikeAnchor` and `Focusable` mixins to provide anchor-like behavior and focus management.
  *
+ * @element sp-top-nav-item
+ *
  * @slot - The text label of the Top Nav Item.
+ *
  */
 export class TopNavItem extends LikeAnchor(Focusable) {
     /**

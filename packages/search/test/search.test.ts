@@ -43,6 +43,7 @@ describe('Search', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const clearButton = root.querySelector('#button') as HTMLButtonElement;
+
         clearButton.click();
 
         await elementUpdated(el);
@@ -59,6 +60,7 @@ describe('Search', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const clearButton = root.querySelector('#button') as HTMLButtonElement;
+
         clearButton.dispatchEvent(escapeEvent());
 
         await elementUpdated(el);
@@ -70,10 +72,12 @@ describe('Search', () => {
         const changeSpy = spy();
         const handleInput = (event: Event): void => {
             const target = event.target as HTMLInputElement;
+
             inputSpy(target.value);
         };
         const handleChange = (event: Event): void => {
             const target = event.target as HTMLInputElement;
+
             changeSpy(target.value);
         };
         const el = await litFixture<Search>(html`
@@ -89,6 +93,7 @@ describe('Search', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const clearButton = root.querySelector('#button') as HTMLButtonElement;
+
         inputSpy.resetHistory();
         changeSpy.resetHistory();
         clearButton.click();
@@ -106,10 +111,12 @@ describe('Search', () => {
         const changeSpy = spy();
         const handleInput = (event: Event): void => {
             const target = event.target as HTMLInputElement;
+
             inputSpy(target.value);
         };
         const handleChange = (event: Event): void => {
             const target = event.target as HTMLInputElement;
+
             changeSpy(target.value);
         };
         const el = await litFixture<Search>(html`
@@ -144,10 +151,12 @@ describe('Search', () => {
         const changeSpy = spy();
         const handleInput = (event: Event): void => {
             const target = event.target as HTMLInputElement;
+
             inputSpy(target.value);
         };
         const handleChange = (event: Event): void => {
             const target = event.target as HTMLInputElement;
+
             changeSpy(target.value);
         };
         const el = await litFixture<Search>(html`
@@ -225,6 +234,7 @@ describe('Search', () => {
             bubbles: false,
             composed: false,
         });
+
         searchForm.dispatchEvent(submitEvent);
 
         expect(submitEvent.defaultPrevented).to.be.true;

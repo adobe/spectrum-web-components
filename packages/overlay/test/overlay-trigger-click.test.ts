@@ -75,10 +75,12 @@ describe('Overlay Trigger - Click', () => {
             if (document.scrollingElement) {
                 document.scrollingElement.scrollTop = 0;
             }
+
             await waitUntil(() => {
                 if (document.scrollingElement) {
                     return document.scrollingElement.scrollTop === 0;
                 }
+
                 return true;
             });
         });
@@ -102,8 +104,10 @@ describe('Overlay Trigger - Click', () => {
                             </sp-popover>
                         </overlay-trigger>
                     `);
+
                     await nextFrame();
                     const popover = el.querySelector('sp-popover') as Popover;
+
                     expect(el.open).to.be.undefined;
 
                     await elementUpdated(el);
@@ -111,6 +115,7 @@ describe('Overlay Trigger - Click', () => {
                     const trigger = el.querySelector(
                         'sp-action-button'
                     ) as HTMLElement;
+
                     trigger.click();
 
                     await opened;
@@ -120,6 +125,7 @@ describe('Overlay Trigger - Click', () => {
                     expect(await isOnTopLayer(popover)).to.be.true;
 
                     const closed = oneEvent(el, 'sp-closed');
+
                     if (document.scrollingElement) {
                         document.scrollingElement.scrollTop = 100;
                     }
@@ -150,6 +156,7 @@ describe('Overlay Trigger - Click', () => {
                 <sp-popover slot="click-content" tip></sp-popover>
             </overlay-trigger>
         `);
+
         await elementUpdated(el);
         const trigger = el.querySelector('[slot=trigger]') as ActionButton;
 
@@ -196,6 +203,7 @@ describe('Overlay Trigger - Click', () => {
         await opened;
 
         const end = performance.now();
+
         expect(end - start).to.be.greaterThan(1000);
     });
 });

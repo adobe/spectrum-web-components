@@ -26,6 +26,7 @@ const makeOverBackground =
             variant === 'black'
                 ? 'rgb(181, 209, 211)'
                 : 'var(--spectrum-seafoam-900)';
+
         return html`
             <div
                 style="

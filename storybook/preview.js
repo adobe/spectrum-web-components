@@ -17,7 +17,10 @@ setCustomElementsManifest(cem);
 
 export const parameters = {
     docs: { hidden: true },
-    controls: { expanded: true },
+    controls: {
+        expanded: true,
+        sort: 'requiredFirst',
+    },
     layout: 'fullscreen',
     badgesConfig: {
         deprecated: {

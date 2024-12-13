@@ -22,6 +22,7 @@ export class DesktopController extends InteractionController {
         if (event.button !== 0 || event.pointerType === 'touch') {
             return;
         }
+
         this.pointerdownState = this.open;
         this.preventNextToggle = 'maybe';
         let cleanupAction = 0;
@@ -37,6 +38,7 @@ export class DesktopController extends InteractionController {
                 });
             });
         };
+
         // Ensure that however the pointer goes up we do `cleanup()`.
         document.addEventListener('pointerup', cleanup);
         document.addEventListener('pointercancel', cleanup);
@@ -48,14 +50,17 @@ export class DesktopController extends InteractionController {
         if (this.enterKeydownOn && this.enterKeydownOn !== this.target) {
             return;
         }
+
         if (this.preventNextToggle === 'yes') {
             return;
         }
+
         if (event?.type === 'click' && this.open !== this.pointerdownState) {
             // When activation comes from a `click` event ensure that the `pointerup`
             // event didn't already toggle the Picker state before doing so.
             return;
         }
+
         this.host.toggle();
     }
 
@@ -64,6 +69,7 @@ export class DesktopController extends InteractionController {
         this.abortController?.abort();
         this.abortController = new AbortController();
         const { signal } = this.abortController;
+
         this.target.addEventListener(
             'click',
             (event: Event) => this.handleActivate(event),

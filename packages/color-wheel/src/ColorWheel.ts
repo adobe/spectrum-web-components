@@ -37,7 +37,9 @@ import styles from './color-wheel.css.js';
 
 /**
  * @element sp-color-wheel
+ *
  * @slot gradient - a custom gradient visually outlining the available color values
+ *
  * @fires input - The value of the Color Wheel has changed.
  * @fires change - An alteration to the value of the Color Wheel has been committed by the user.
  */
@@ -116,11 +118,13 @@ export class ColorWheel extends Focusable {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { key } = event;
+
         this.focused = true;
         this.altered = [event.shiftKey, event.ctrlKey, event.altKey].filter(
             (key) => !!key
         ).length;
         let delta = 0;
+
         switch (key) {
             case 'ArrowUp':
                 delta = this.step;
@@ -137,6 +141,7 @@ export class ColorWheel extends Focusable {
             default:
                 return;
         }
+
         event.preventDefault();
         this.value = (360 + this.value + delta) % 360;
         this.colorController.savePreviousColor();
@@ -154,6 +159,7 @@ export class ColorWheel extends Focusable {
                 cancelable: true,
             })
         );
+
         if (!applyDefault) {
             this.colorController.restorePreviousColor();
         }
@@ -194,6 +200,7 @@ export class ColorWheel extends Focusable {
         if (this._pointerDown) {
             return;
         }
+
         this.altered = 0;
         this.focused = false;
     }
@@ -204,12 +211,15 @@ export class ColorWheel extends Focusable {
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             event.preventDefault();
+
             return;
         }
+
         this._pointerDown = true;
         this.colorController.savePreviousColor();
         this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
+
         if (event.pointerType === 'mouse') {
             this.focused = true;
         }
@@ -239,11 +249,14 @@ export class ColorWheel extends Focusable {
                 cancelable: true,
             })
         );
+
         if (!applyDefault) {
             this.colorController.restorePreviousColor();
         }
+
         // Retain focus on input element after mouse up to enable keyboard interactions
         this.focus();
+
         if (event.pointerType === 'mouse') {
             this.focused = false;
         }
@@ -251,14 +264,16 @@ export class ColorWheel extends Focusable {
 
     /**
      * Returns the value under the cursor
-     * @param: PointerEvent on slider
-     * @return: Slider value that correlates to the position under the pointer
+     *
+     * @param event - on slider
+     * @returns Slider value that correlates to the position under the pointer
      */
     private calculateHandlePosition(event: PointerEvent): number {
         /* c8 ignore next 3 */
         if (!this.boundingClientRect) {
             return this.value;
         }
+
         const rect = this.boundingClientRect;
         const { width, height, left, top } = rect;
         const centerX = left + width / 2;
@@ -277,9 +292,11 @@ export class ColorWheel extends Focusable {
         ) {
             return;
         }
+
         event.stopPropagation();
         event.preventDefault();
         const { button, pointerId, pointerType } = event;
+
         this.handle.dispatchEvent(
             new PointerEvent('pointerdown', {
                 button,
@@ -412,6 +429,7 @@ export class ColorWheel extends Focusable {
 
     public override connectedCallback(): void {
         super.connectedCallback();
+
         if (
             !this.observer &&
             (window as unknown as WithSWCResizeObserver).ResizeObserver
@@ -425,6 +443,7 @@ export class ColorWheel extends Focusable {
                 this.requestUpdate();
             });
         }
+
         this.observer?.observe(this);
     }
 

@@ -28,16 +28,15 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 describe('Menu [selects]', () => {
     let el!: Menu;
     let options!: MenuItem[];
+
     beforeEach(async () => {
-        el = await fixture<Menu>(
-            html`
-                <sp-menu selects="single">
-                    <sp-menu-item value="1">Option 1</sp-menu-item>
-                    <sp-menu-item value="2">Option 2</sp-menu-item>
-                    <sp-menu-item value="3">Option 3</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item value="1">Option 1</sp-menu-item>
+                <sp-menu-item value="2">Option 2</sp-menu-item>
+                <sp-menu-item value="3">Option 3</sp-menu-item>
+            </sp-menu>
+        `);
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
         await Promise.all(options.map((option) => option.updateComplete));
         await nextFrame();
@@ -48,6 +47,7 @@ describe('Menu [selects]', () => {
             const item1 = options[0];
             const boundingRect = item1.getBoundingClientRect();
             const change = oneEvent(el, 'change');
+
             await sendMouse({
                 steps: [
                     {
@@ -65,6 +65,7 @@ describe('Menu [selects]', () => {
         it('on JS clicks', async () => {
             const item1 = options[0];
             const change = oneEvent(el, 'change');
+
             item1.click();
             await change;
             expect(el.value).to.equal('1');
@@ -74,6 +75,7 @@ describe('Menu [selects]', () => {
         expect(el.value).to.equal('');
 
         let change = oneEvent(el, 'change');
+
         options[0].click();
         await change;
 
@@ -103,6 +105,7 @@ describe('Menu [selects]', () => {
         expect(el.value).to.equal('');
 
         let change = oneEvent(el, 'change');
+
         options[0].click();
         await change;
         expect(el.value).to.equal('1');
@@ -150,18 +153,17 @@ describe('Menu [selects]', () => {
 describe('Menu [selects] w/ group', () => {
     let el!: Menu;
     let options!: MenuItem[];
+
     beforeEach(async () => {
-        el = await fixture<Menu>(
-            html`
-                <sp-menu selects="single">
-                    <sp-menu-group selects="inherit">
-                        <sp-menu-item value="1">Option 1</sp-menu-item>
-                        <sp-menu-item value="2">Option 2</sp-menu-item>
-                        <sp-menu-item value="3">Option 3</sp-menu-item>
-                    </sp-menu-group>
-                </sp-menu>
-            `
-        );
+        el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-group selects="inherit">
+                    <sp-menu-item value="1">Option 1</sp-menu-item>
+                    <sp-menu-item value="2">Option 2</sp-menu-item>
+                    <sp-menu-item value="3">Option 3</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `);
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
         await Promise.all(options.map((option) => option.updateComplete));
         await nextFrame();
@@ -172,6 +174,7 @@ describe('Menu [selects] w/ group', () => {
             const item1 = options[0];
             const boundingRect = item1.getBoundingClientRect();
             const change = oneEvent(el, 'change');
+
             await sendMouse({
                 steps: [
                     {
@@ -189,6 +192,7 @@ describe('Menu [selects] w/ group', () => {
         it('on JS clicks', async () => {
             const item1 = options[0];
             const change = oneEvent(el, 'change');
+
             item1.click();
             await change;
             expect(el.value).to.equal('1');
@@ -197,6 +201,7 @@ describe('Menu [selects] w/ group', () => {
     it('manages a single selection when [selects="single"]', async () => {
         expect(el.value).to.equal('');
         let change = oneEvent(el, 'change');
+
         options[0].click();
         await change;
 
@@ -226,6 +231,7 @@ describe('Menu [selects] w/ group', () => {
         expect(el.value).to.equal('');
 
         let change = oneEvent(el, 'change');
+
         options[0].click();
         await change;
         expect(el.value).to.equal('1');
@@ -274,18 +280,17 @@ describe('Menu w/ group [selects]', () => {
     let el!: Menu;
     let group!: MenuGroup;
     let options!: MenuItem[];
+
     beforeEach(async () => {
-        el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-group selects="single">
-                        <sp-menu-item value="1">Option 1</sp-menu-item>
-                        <sp-menu-item value="2">Option 2</sp-menu-item>
-                        <sp-menu-item value="3">Option 3</sp-menu-item>
-                    </sp-menu-group>
-                </sp-menu>
-            `
-        );
+        el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-group selects="single">
+                    <sp-menu-item value="1">Option 1</sp-menu-item>
+                    <sp-menu-item value="2">Option 2</sp-menu-item>
+                    <sp-menu-item value="3">Option 3</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `);
         group = el.querySelector('sp-menu-group') as MenuGroup;
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
         await Promise.all(options.map((option) => option.updateComplete));
@@ -297,6 +302,7 @@ describe('Menu w/ group [selects]', () => {
             const item1 = options[0];
             const boundingRect = item1.getBoundingClientRect();
             const change = oneEvent(group, 'change');
+
             await sendMouse({
                 steps: [
                     {
@@ -314,6 +320,7 @@ describe('Menu w/ group [selects]', () => {
         it('on JS clicks', async () => {
             const item1 = options[0];
             const change = oneEvent(group, 'change');
+
             item1.click();
             await change;
             expect(group.value).to.equal('1');
@@ -324,6 +331,7 @@ describe('Menu w/ group [selects]', () => {
         expect(group.value).to.equal('');
 
         let change = oneEvent(el, 'change');
+
         options[0].click();
         await change;
 
@@ -353,6 +361,7 @@ describe('Menu w/ group [selects]', () => {
         expect(group.value).to.equal('');
 
         let change = oneEvent(el, 'change');
+
         options[0].click();
         await change;
         expect(group.value).to.equal('1');
@@ -402,23 +411,22 @@ describe('Menu w/ groups [selects]', () => {
     let groupA!: MenuGroup;
     let groupB!: MenuGroup;
     let options!: MenuItem[];
+
     beforeEach(async () => {
-        el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-group selects="single" id="group-1">
-                        <sp-menu-item value="1a">Option 1a</sp-menu-item>
-                        <sp-menu-item value="2a">Option 2a</sp-menu-item>
-                        <sp-menu-item value="3a">Option 3a</sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group selects="single" id="group-2">
-                        <sp-menu-item value="1b">Option 1b</sp-menu-item>
-                        <sp-menu-item value="2b">Option 2b</sp-menu-item>
-                        <sp-menu-item value="3b">Option 3b</sp-menu-item>
-                    </sp-menu-group>
-                </sp-menu>
-            `
-        );
+        el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-group selects="single" id="group-1">
+                    <sp-menu-item value="1a">Option 1a</sp-menu-item>
+                    <sp-menu-item value="2a">Option 2a</sp-menu-item>
+                    <sp-menu-item value="3a">Option 3a</sp-menu-item>
+                </sp-menu-group>
+                <sp-menu-group selects="single" id="group-2">
+                    <sp-menu-item value="1b">Option 1b</sp-menu-item>
+                    <sp-menu-item value="2b">Option 2b</sp-menu-item>
+                    <sp-menu-item value="3b">Option 3b</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `);
         groupA = el.querySelector('sp-menu-group:first-child') as MenuGroup;
         groupB = el.querySelector('sp-menu-group:last-child') as MenuGroup;
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
@@ -431,9 +439,11 @@ describe('Menu w/ groups [selects]', () => {
             const item1a = options[0];
             const item1b = options[3];
             const boundingRectA = item1a.getBoundingClientRect();
+
             expect(groupA.value).to.equal('');
             expect(groupB.value).to.equal('');
             let change = oneEvent(el, 'change');
+
             await sendMouse({
                 steps: [
                     {
@@ -451,6 +461,7 @@ describe('Menu w/ groups [selects]', () => {
             expect(groupB.value).to.equal('');
             change = oneEvent(el, 'change');
             const boundingRectB = item1b.getBoundingClientRect();
+
             await sendMouse({
                 steps: [
                     {
@@ -470,6 +481,7 @@ describe('Menu w/ groups [selects]', () => {
             const item1a = options[0];
             const item1b = options[3];
             let change = oneEvent(el, 'change');
+
             item1a.click();
             await change;
             expect(groupA.value).to.equal('1a');
@@ -480,15 +492,18 @@ describe('Menu w/ groups [selects]', () => {
         });
         it('can have them `preventDefault()`ed', async () => {
             const preventSpy = spy();
+
             expect(groupA.value).to.equal('');
             expect(groupB.value).to.equal('');
             const item1a = options[0];
             const item1b = options[3];
+
             groupA.addEventListener('change', (event: Event) => {
                 event.preventDefault();
                 preventSpy();
             });
             const change = oneEvent(el, 'change');
+
             item1a.click();
             item1b.click();
             await change;
@@ -503,6 +518,7 @@ describe('Menu w/ groups [selects]', () => {
         expect(groupB.value).to.equal('');
 
         let change = oneEvent(el, 'change');
+
         options[0].click();
         await change;
 
@@ -549,6 +565,7 @@ describe('Menu w/ groups [selects]', () => {
         expect(groupB.value).to.equal('');
 
         let change = oneEvent(el, 'change');
+
         options[0].click();
         await change;
         expect(groupA.value).to.equal('1a');
@@ -634,6 +651,7 @@ describe('Menu w/ groups [selects]', () => {
         await elementUpdated(groupA);
         await elementUpdated(groupB);
         const input = document.createElement('input');
+
         el.insertAdjacentElement('afterend', input);
         input.focus();
         expect(document.activeElement === input).to.be.true;
@@ -644,8 +662,10 @@ describe('Menu w/ groups [selects]', () => {
 
         await elementUpdated(el);
         let optionCount = 0;
+
         for (const option of options) {
             const parentElement = option.parentElement as Menu;
+
             expect(document.activeElement === parentElement, 'parent focused')
                 .to.be.true;
             expect(option.focused, `option ${optionCount} visually focused`).to

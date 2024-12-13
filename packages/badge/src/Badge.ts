@@ -97,13 +97,17 @@ export class Badge extends SizedMixin(
 
     public set fixed(fixed: FixedValues | undefined) {
         if (fixed === this.fixed) return;
+
         const oldValue = this.fixed;
+
         this._fixed = fixed;
+
         if (fixed) {
             this.setAttribute('fixed', fixed);
         } else {
             this.removeAttribute('fixed');
         }
+
         this.requestUpdate('fixed', oldValue);
     }
 
@@ -140,6 +144,7 @@ export class Badge extends SizedMixin(
                 );
             }
         }
+
         return html`
             ${this.hasIcon
                 ? html`

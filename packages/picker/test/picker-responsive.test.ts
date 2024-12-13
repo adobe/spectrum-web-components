@@ -66,7 +66,7 @@ describe('Picker, responsive', () => {
              * which prevents us from testing this at unit time. Hopefully there will be
              * a future version of Playwright and/or @web/test-runner that does allow this.
              * See: https://github.com/microsoft/playwright/issues/11781
-             **/
+             */
             await setViewport({ width: 360, height: 640 });
             // Allow viewport update to propagate.
             await nextFrame();
@@ -74,6 +74,7 @@ describe('Picker, responsive', () => {
             const opened = oneEvent(el, 'sp-opened');
 
             const boundingRect = el.button.getBoundingClientRect();
+
             sendMouse({
                 steps: [
                     {
@@ -100,6 +101,7 @@ describe('Picker, responsive', () => {
             await nextFrame();
 
             const opened = oneEvent(el, 'sp-opened');
+
             el.open = true;
             await opened;
 

@@ -36,6 +36,7 @@ describe('Breadcrumb Item', () => {
         const el = await fixture<BreadcrumbItem>(html`
             <sp-breadcrumb-item value="home" disabled>Home</sp-breadcrumb-item>
         `);
+
         expect(el.hasAttribute('aria-disabled')).to.be.true;
     });
 

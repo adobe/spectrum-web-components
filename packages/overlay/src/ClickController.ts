@@ -30,6 +30,7 @@ export class ClickController extends InteractionController {
         if (!this.preventNextToggle) {
             this.open = !this.open;
         }
+
         this.preventNextToggle = false;
     }
 
@@ -42,6 +43,7 @@ export class ClickController extends InteractionController {
         this.abortController?.abort();
         this.abortController = new AbortController();
         const { signal } = this.abortController;
+
         this.target.addEventListener('click', () => this.handleClick(), {
             signal,
         });

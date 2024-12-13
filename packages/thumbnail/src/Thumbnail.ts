@@ -51,12 +51,13 @@ export type ThumbnailSize = (typeof validSizes)[number];
 const defaultSize = validSizes[6];
 
 /**
- * @element sp-thumbnail
- *
  * The `Thumbnail` component is a custom web component that displays an image thumbnail.
  * It includes a slot for the image element to be presented within the thumbnail.
  *
+ * @element sp-thumbnail
+ *
  * @slot image - The image element to present in the Thumbnail.
+ *
  */
 export class Thumbnail extends SpectrumElement {
     /**
@@ -124,6 +125,7 @@ export class Thumbnail extends SpectrumElement {
         }
 
         const oldSize = this._size;
+
         this._size = size;
         this.requestUpdate('size', oldSize);
     }
@@ -142,6 +144,7 @@ export class Thumbnail extends SpectrumElement {
         if (!this.hasAttribute('size')) {
             this.setAttribute('size', this.size);
         }
+
         super.update(changes);
     }
 

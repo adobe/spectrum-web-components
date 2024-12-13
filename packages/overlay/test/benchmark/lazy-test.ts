@@ -49,15 +49,14 @@ const handleSlottableRequest = (event: SlottableRequestEvent): void => {
                       </sp-dialog>
                   </sp-popover>
               `;
+
     render(template, event.target as HTMLElement);
 };
 
-measureFixtureCreation(
-    html`
-        <sp-button id="button">Trigger</sp-button>
-        <sp-overlay
-            trigger="button@click"
-            @slottable-request=${handleSlottableRequest}
-        ></sp-overlay>
-    `
-);
+measureFixtureCreation(html`
+    <sp-button id="button">Trigger</sp-button>
+    <sp-overlay
+        trigger="button@click"
+        @slottable-request=${handleSlottableRequest}
+    ></sp-overlay>
+`);

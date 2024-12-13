@@ -20,16 +20,30 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import styles from './table-cell.css.js';
 
 /**
+ * This component represents a cell within a table row.
+ *
  * @element sp-table-cell
+ *
+ * @slot Cell content
+ *
  */
 export class TableCell extends SpectrumElement {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
         return [styles];
     }
 
+    /**
+     * Indicates the ARIA role of the cell.
+     */
     @property({ reflect: true })
     public override role = 'gridcell';
 
+    /**
+     * Renders the component template.
+     */
     protected override render(): TemplateResult {
         return html`
             <slot></slot>
