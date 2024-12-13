@@ -34,9 +34,6 @@ export interface Properties {
     href: undefined;
 }
 
-/**
- *
- */
 export function renderButton(properties: Properties): TemplateResult {
     return html`
         <sp-action-button
@@ -56,9 +53,6 @@ export function renderButton(properties: Properties): TemplateResult {
     `;
 }
 
-/**
- *
- */
 function renderGroup(properties: Properties): TemplateResult {
     const label = 'Edit';
     const holdAffordance = true;
@@ -95,9 +89,6 @@ function renderGroup(properties: Properties): TemplateResult {
     `;
 }
 
-/**
- *
- */
 export function renderButtons(properties: Properties): TemplateResult {
     const selected = true;
     const disabled = true;

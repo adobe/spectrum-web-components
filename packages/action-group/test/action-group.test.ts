@@ -80,9 +80,6 @@ class EmphasizedActionGroup extends LitElement {
 }
 customElements.define('emphasized-action-group', EmphasizedActionGroup);
 
-/**
- *
- */
 async function singleSelectedActionGroup(
     selected: string[]
 ): Promise<ActionGroup> {
@@ -105,9 +102,6 @@ async function singleSelectedActionGroup(
     return el;
 }
 
-/**
- *
- */
 async function multipleSelectedActionGroup(
     selected: string[]
 ): Promise<ActionGroup> {

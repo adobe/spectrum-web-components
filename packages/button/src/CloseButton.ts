@@ -56,6 +56,7 @@ const crossIcon: Record<string, () => TemplateResult> = {
 
 /**
  * @element sp-close-button
+ *
  * @slot - text label of the Close Button
  * @slot icon - The icon to use for Close Button
  */

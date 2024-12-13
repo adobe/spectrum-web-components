@@ -211,9 +211,6 @@ const extraText = html`
     </p>
 `;
 
-/**
- *
- */
 function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }

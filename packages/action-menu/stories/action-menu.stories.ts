@@ -300,9 +300,6 @@ export const controlled = ({ align = 'start' } = {}): TemplateResult => {
         latestChange: '',
     };
 
-    /**
-     *
-     */
     function toggle(prop: 'snap' | 'grid' | 'guides') {
         return (event: Event): void => {
             const item = event.target as MenuItem;
@@ -313,16 +310,10 @@ export const controlled = ({ align = 'start' } = {}): TemplateResult => {
             item.selected = state[prop];
         };
     }
-    /**
-     *
-     */
     function onChange(event: Event): void {
         state.latestChange = (event.target as MenuItem).value;
         logState();
     }
-    /**
-     *
-     */
     function logState(): void {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         document.getElementById('state-json')!.textContent =
@@ -482,16 +473,10 @@ directive.swc_vrt = {
 };
 
 export const withScrollEvent = (): TemplateResult => {
-    /**
-     *
-     */
     function handleActionMenuScroll(): void {
         console.log('attached action menu scroll listener');
     }
 
-    /**
-     *
-     */
     function renderMenuItems(): TemplateResult[] {
         return Array.from(
             { length: 30 },

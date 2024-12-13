@@ -33,13 +33,15 @@ import '@spectrum-web-components/button-group/sp-button-group.js';
 
 /**
  * @element sp-coachmark
- * @fires primary - Announces that the "primary" button has been clicked.
- * @fires secondary - Announces that the "secondary" button has been clicked.
+ *
  * @slot cover-photo - This is the cover photo for Default and Quiet Coachmark
  * @slot heading - HTML content to be listed as the heading
  * @slot description - A description of the card
  * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
  * @slot step-count - Override the default pagination delivery with your own internationalized content
+ *
+ * @fires primary - Announces that the "primary" button has been clicked.
+ * @fires secondary - Announces that the "secondary" button has been clicked.
  */
 export class Coachmark extends Popover {
     public static override get styles(): CSSResultArray {

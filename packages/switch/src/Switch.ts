@@ -23,11 +23,14 @@ import switchStyles from './switch.css.js';
 import legacyStyles from './switch-legacy.css.js';
 
 /**
+ * This component represents a toggle switch.
+ *
  * @element sp-switch
  *
- * This component represents a toggle switch.
  * @slot - text label of the Switch
+ *
  * @fires change - Announces a change in the `checked` property of a Switch
+ *
  */
 export class Switch extends SizedMixin(CheckboxBase) {
     /**

@@ -43,6 +43,7 @@ export const variants = ['filled', 'ramp', 'range', 'tick'];
 
 /**
  * @element sp-slider
+ *
  * @slot - text label for the Slider
  * @slot handle - optionally accepts two or more sp-slider-handle elements
  */
@@ -377,9 +378,10 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
 
     /**
      * @description calculates the fill width
-     * @param fillStartValue
-     * @param currentValue
-     * @returns
+     *
+     * @param fillStartValue - The starting value for the fill
+     * @param currentValue - The value of the slider at the current point in time
+     * @returns The calculated offset width as a percentage.
      */
     private getOffsetWidth(
         fillStartValue: number,

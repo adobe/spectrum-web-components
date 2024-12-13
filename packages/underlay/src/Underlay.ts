@@ -21,12 +21,14 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import styles from './underlay.css.js';
 
 /**
- * @element sp-underlay
- *
  * The `Underlay` component is a custom web component that provides an underlay element
  * which can be used to create a backdrop for modals, dialogs, or other overlay elements.
  * It includes properties and methods to manage its state and interactions.
+ *
+ * @element sp-underlay
+ *
  * @fires close - Dispatched when the underlay is clicked, allowing the consuming pattern to decide whether to close based on that interaction.
+ *
  */
 export class Underlay extends SpectrumElement {
     /**

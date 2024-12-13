@@ -32,8 +32,11 @@ const EMPTY_SELECTION: string[] = [];
 
 /**
  * @element sp-action-group
+ *
  * @slot - The sp-action-button elements that make up the group.
+ *
  * @fires change - Announces that the selection state has been changed by the user.
+ *
  */
 export class ActionGroup extends SizedMixin(SpectrumElement, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],

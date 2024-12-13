@@ -111,9 +111,6 @@ export const makeOverBackground =
         `;
     };
 
-/**
- *
- */
 export function renderButton(properties: Properties): TemplateResult {
     return html`
         <sp-button
@@ -133,9 +130,6 @@ export function renderButton(properties: Properties): TemplateResult {
     `;
 }
 
-/**
- *
- */
 export function renderButtonSet(properties: Properties): TemplateResult {
     const disabled = Object.assign({}, properties, { disabled: true });
     const icon = Object.assign({}, properties, {
@@ -151,9 +145,6 @@ export function renderButtonSet(properties: Properties): TemplateResult {
     `;
 }
 
-/**
- *
- */
 export function renderIconButtonSet(properties: Properties): TemplateResult {
     const disabled = Object.assign({}, properties, {
         iconOnly: true,

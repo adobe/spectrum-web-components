@@ -53,9 +53,6 @@ const selectsWithKeyboardData = [
 ] as SelectsWithKeyboardTest[];
 
 describe('Submenu', () => {
-    /**
-     *
-     */
     function selectWithPointer(): void {
         it('with pointer', async function () {
             const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
@@ -111,9 +108,6 @@ describe('Submenu', () => {
             ).to.be.true;
         });
     }
-    /**
-     *
-     */
     function selectsWithKeyboard(testData: SelectsWithKeyboardTest): void {
         it(`with keyboard: ${testData.dir}`, async function () {
             this.el.parentElement.dir = testData.dir;
@@ -201,9 +195,6 @@ describe('Submenu', () => {
             ).to.be.true;
         });
     }
-    /**
-     *
-     */
     function returnsFocusToRootWhenClosingSubmenu(): void {
         it('returns visible focus when submenu closed', async function () {
             const input = document.createElement('input');
@@ -260,9 +251,6 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.false;
         });
     }
-    /**
-     *
-     */
     function closesOnPointerLeave(): void {
         it('closes on `pointerleave`', async function () {
             const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
@@ -308,9 +296,6 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.false;
         });
     }
-    /**
-     *
-     */
     function persistsThroughMouseLeaveAndReturn(): void {
         it('stays open when mousing off menu item and back again', async function () {
             const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
@@ -380,9 +365,6 @@ describe('Submenu', () => {
             await closed;
         });
     }
-    /**
-     *
-     */
     function doesNotOpenWhenDisabled(): void {
         it('does not open when disabled', async function () {
             this.rootItem.disabled = true;
@@ -411,9 +393,6 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.false;
         });
     }
-    /**
-     *
-     */
     function persistsWhenMovingBetweenItemAndSubmenu(): void {
         it('stays open when mousing between menu item and submenu', async function () {
             const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
@@ -488,9 +467,6 @@ describe('Submenu', () => {
             expect(clickSpy.callCount).to.equal(1);
         });
     }
-    /**
-     *
-     */
     function continuesToOpenWhenMovingBetweenItemAndSubmenu(): void {
         it('continues to open when mousing between menu item and submenu', async function () {
             const rootItemBoundingRect = this.rootItem.getBoundingClientRect();

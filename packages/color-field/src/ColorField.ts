@@ -21,6 +21,7 @@ import { TextfieldBase } from '@spectrum-web-components/textfield';
 
 /**
  * @element sp-color-field
+ *
  * @fires input - The value of the color-field has changed.
  * @fires change - An alteration to the value of the color-field has been committed by the user.
  */

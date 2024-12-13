@@ -39,9 +39,10 @@ interface TabsOverflowState {
     canScrollRight: boolean;
 }
 /**
- * @element sp-tabs-overflow
  *
- * This component handles the overflow behavior of tabs, allowing users to scroll through tabs when they exceed the available space.
+ *This component handles the overflow behavior of tabs, allowing users to scroll through tabs when they exceed the available space.
+ *
+ * @element sp-tabs-overflow
  */
 export class TabsOverflow extends SizedMixin(SpectrumElement) {
     /**
@@ -166,7 +167,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
 
     /**
      * Factor by which the tabs should scroll when a scroll button is clicked.
-     * @property {number}
      */
     private scrollFactor = 0.5;
 

@@ -22,7 +22,8 @@ import styles from './asset.css.js';
 
 /**
  * Generates and SVG element with a label for a file icon.
- * @param label the `aria-label` for the SVG element
+ *
+ * @param label - the `aria-label` for the SVG element
  */
 const file = (label: string): TemplateResult => html`
     <svg
@@ -44,7 +45,8 @@ const file = (label: string): TemplateResult => html`
 
 /**
  * Generates and SVG element with a label for a folder icon.
- * @param label the `aria-label` for the SVG element
+ *
+ * @param label - the `aria-label` for the SVG element
  */
 const folder = (label: string): TemplateResult => html`
     <svg
@@ -66,7 +68,9 @@ const folder = (label: string): TemplateResult => html`
 
 /**
  * @element sp-asset
+ *
  * @slot - content to be displayed in the asset when an acceptable value for `file` is not present
+ *
  */
 export class Asset extends SpectrumElement {
     public static override get styles(): CSSResultArray {

@@ -37,7 +37,9 @@ import styles from './color-wheel.css.js';
 
 /**
  * @element sp-color-wheel
+ *
  * @slot gradient - a custom gradient visually outlining the available color values
+ *
  * @fires input - The value of the Color Wheel has changed.
  * @fires change - An alteration to the value of the Color Wheel has been committed by the user.
  */
@@ -262,7 +264,8 @@ export class ColorWheel extends Focusable {
 
     /**
      * Returns the value under the cursor
-     * @param event on slider
+     *
+     * @param event - on slider
      * @returns Slider value that correlates to the position under the pointer
      */
     private calculateHandlePosition(event: PointerEvent): number {

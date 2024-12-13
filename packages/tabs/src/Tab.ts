@@ -27,9 +27,10 @@ import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 import tabItemStyles from './tab.css.js';
 
 /**
+ * This component represents a single tab within a tab list.
+ *
  * @element sp-tab
  *
- * This component represents a single tab within a tab list.
  * @slot - text label of the Tab
  * @slot icon - The icon that appears on the left of the label
  */

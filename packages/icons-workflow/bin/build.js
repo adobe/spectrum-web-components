@@ -109,7 +109,10 @@ export const getComponentName = (i) => {
 };
 
 /**
- *
+ * Builds the icons based on the provided parameters.
+ * @property {Array} icons - The list of icons to be built.
+ * @property {string} tag - The tag to be used for the icons.
+ * @property {Array} iconsNameList - The list of icon names.
  */
 async function buildIcons(icons, tag, iconsNameList) {
     icons.forEach((i) => {

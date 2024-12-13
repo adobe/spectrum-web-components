@@ -34,11 +34,13 @@ import { ScaledIndicator } from '@spectrum-web-components/tabs/src/Tabs.js';
 const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
 /**
- * @element sp-top-nav
- *
  * The `TopNav` component is a custom web component that represents a top navigation bar.
  * It includes various properties and methods to manage its state, selection, and animations.
+ *
+ * @element sp-top-nav
+ *
  * @slot - Nav Items to display as a group
+ *
  */
 export class TopNav extends SizedMixin(SpectrumElement) {
     /**

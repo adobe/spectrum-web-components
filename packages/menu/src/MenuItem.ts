@@ -85,11 +85,13 @@ export type MenuItemChildren = { icon: Element[]; content: Node[] };
 
 /**
  * @element sp-menu-item
+ *
  * @slot - text content to display within the Menu Item
  * @slot description - description to be placed below the label of the Menu Item
  * @slot icon - icon element to be placed at the start of the Menu Item
  * @slot value - content placed at the end of the Menu Item like values, keyboard shortcuts, etc.
  * @slot submenu - content placed in a submenu
+ *
  * @fires sp-menu-item-added - announces the item has been added so a parent menu can take ownerships
  */
 export class MenuItem extends LikeAnchor(

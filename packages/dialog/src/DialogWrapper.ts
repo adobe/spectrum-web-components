@@ -29,7 +29,9 @@ import { Dialog } from './Dialog.js';
 
 /**
  * @element sp-dialog-wrapper
+ *
  * @slot - content for the dialog
+ *
  * @fires secondary - Announces that the "secondary" button has been clicked.
  * @fires cancel - Announces that the "cancel" button has been clicked.
  * @fires confirm - Announces that the "confirm" button has been clicked.

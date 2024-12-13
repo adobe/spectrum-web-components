@@ -24,6 +24,7 @@ import styles from './field-group.css.js';
 
 /**
  * @element sp-field-group
+ *
  * @slot - the form controls that make up the group
  * @slot help-text - default or non-negative help text to associate to your form element
  * @slot negative-help-text - negative help text to associate to your form element when `invalid`

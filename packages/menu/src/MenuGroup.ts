@@ -28,6 +28,7 @@ import menuGroupStyles from './menu-group.css.js';
 
 /**
  * @element sp-menu-group
+ *
  * @slot header - headline of the menu group
  * @slot - menu items to be listed in the group
  */

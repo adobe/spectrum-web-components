@@ -27,9 +27,6 @@ import {
 } from '../../../test/testing-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
-/**
- *
- */
 async function sliderFromFixture(
     sliderFixture: (args: StoryArgs) => TemplateResult
 ): Promise<Slider> {

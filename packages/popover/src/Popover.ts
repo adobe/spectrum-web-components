@@ -26,7 +26,9 @@ import popoverStyles from './popover.css.js';
 
 /**
  * @element sp-popover
+ *
  * @slot - content to display within the Popover
+ *
  */
 export class Popover extends SpectrumElement {
     public static override get styles(): CSSResultArray {
@@ -41,7 +43,9 @@ export class Popover extends SpectrumElement {
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
+     *
      * @attribute
+     *
      */
     @property({ reflect: true })
     public placement?: Placement;

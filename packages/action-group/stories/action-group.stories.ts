@@ -123,9 +123,6 @@ interface Properties {
     [prop: string]: unknown;
 }
 
-/**
- *
- */
 function renderIconButtons(args: Properties): TemplateResult {
     return html`
         <sp-action-group ${spreadProps(args)}>
@@ -142,9 +139,6 @@ function renderIconButtons(args: Properties): TemplateResult {
     `;
 }
 
-/**
- *
- */
 function renderButtons(args: Properties): TemplateResult {
     return html`
         <sp-action-group ${spreadProps(args)}>
@@ -155,9 +149,6 @@ function renderButtons(args: Properties): TemplateResult {
     `;
 }
 
-/**
- *
- */
 function displaySelectionState(): void {
     const group = document.querySelector('sp-action-group') as ActionGroup;
     const selectedDiv = group.nextElementSibling;

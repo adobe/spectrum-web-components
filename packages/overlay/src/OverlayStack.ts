@@ -47,8 +47,9 @@ class OverlayStack {
     }
 
     /**
-     * Cach the `pointerdownTarget` for later testing
-     * @param event {ClickEvent}
+     * Catch the `pointerdownTarget` for later testing
+     *
+     * @param event - The event triggered when a pointer is pressed down
      */
     handlePointerdown = (event: Event): void => {
         this.pointerdownPath = event.composedPath();
@@ -57,7 +58,6 @@ class OverlayStack {
 
     /**
      * Close all overlays that are not ancestors of this click event
-     * @param event {ClickEvent}
      */
     handlePointerup = (): void => {
         // Test against the composed path in `pointerdown` in case the visitor moved their
@@ -149,8 +149,9 @@ class OverlayStack {
 
     /**
      * Get an array of Overlays that all share the same trigger element.
-     * @param triggerElement {HTMLELement}
-     * @returns
+     *
+     * @param triggerElement - The HTML element that triggers the overlay.
+     * @returns An array of overlays that share the same trigger element.
      */
     overlaysByTriggerElement(triggerElement: HTMLElement): Overlay[] {
         return this.stack.filter(

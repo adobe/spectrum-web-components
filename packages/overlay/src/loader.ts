@@ -26,12 +26,19 @@ export async function openOverlay(
     content: HTMLElement,
     optionsV1: OverlayOptionsV1
 ): Promise<() => void>;
+
 export async function openOverlay(
     content: HTMLElement,
     options?: OverlayOptions
 ): Promise<Overlay>;
+
 /**
+ * Opens an overlay based on the provided parameters.
  *
+ * @property {HTMLElement} triggerOrContent - The element that triggers the overlay or the content of the overlay.
+ * @property {TriggerInteractionsV1 | OverlayOptions} interactionOrOptions - The interaction type or overlay options.
+ * @property {HTMLElement} content - The HTML element that will be displayed inside the overlay.
+ * @property {OverlayOptionsV1} optionsV1 - The overlay options for version 1.
  */
 export async function openOverlay(
     triggerOrContent: HTMLElement,

@@ -26,10 +26,12 @@ export type DropEffects = 'copy' | 'move' | 'link' | 'none';
 
 /**
  * @element sp-dropzone
+ *
  * @slot - The default slot on an `sp-dropzone` is a great place to place upload instructions
  * built with an `sp-illustrated-message` or other information, possibly even built from data
  * provided by the upload, to support users successfully interacting with the drag and drop
  * based features of your application
+ *
  * @fires sp-dropzone-should-accept - A cancellable event that confirms whether or not
  * a file dropped on the UI should be accepted.
  * @fires sp-dropzone-dragover - Announces when files have been dragged over the UI, but not yet dropped.
@@ -43,8 +45,11 @@ export class Dropzone extends SpectrumElement {
 
     /**
      * Controls the feedback (typically visual) the user is given during a drag and drop operation
-     * @attribute
+     *
      * @type {'copy' | 'move' | 'link' | 'none'}
+     *
+     * @attribute
+     *
      */
     public get dropEffect(): DropEffects {
         return this._dropEffect;

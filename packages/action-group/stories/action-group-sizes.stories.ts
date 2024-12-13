@@ -119,9 +119,6 @@ interface Properties {
     [prop: string]: unknown;
 }
 
-/**
- *
- */
 function renderButtons(args: Properties): TemplateResult {
     return html`
         <sp-action-group ${spreadProps(args)}>

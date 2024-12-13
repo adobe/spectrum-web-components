@@ -58,11 +58,12 @@ export interface TableItem extends Record<string, unknown> {
 }
 
 /**
+ * The `sp-table` component represents a table element.
+ *
  * @element sp-table
  *
- * The `sp-table` component represents a table element.
- * @fires rangeChanged - Announces a change in the range of visible cells on the table body
  * @event change - Announces a change in the `selected` property of a table row
+ * @fires rangeChanged - Announces a change in the range of visible cells on the table body
  */
 
 export class Table extends SizedMixin(SpectrumElement, {
@@ -129,7 +130,8 @@ export class Table extends SizedMixin(SpectrumElement, {
 
     /**
      * The ARIA role of the table.
-     * @property {string}
+     *
+     * @property {string} role - The ARIA role of the table.
      */
     @property({ reflect: true })
     public override role = 'grid';
@@ -205,7 +207,7 @@ export class Table extends SizedMixin(SpectrumElement, {
     private tableBody?: TableBody;
 
     /**
-     * The table head checkbox cell.
+     * The checkbox cell located in the table head, used for selecting or deselecting all rows.
      */
     private tableHeadCheckboxCell?: TableCheckboxCell;
 
@@ -217,7 +219,8 @@ export class Table extends SizedMixin(SpectrumElement, {
     }
 
     /**
-     * The table rows.
+     * Retrieves all table rows if the table is not virtualized.
+     * Returns an empty array if the table is virtualized.
      */
     private get tableRows(): TableRow[] {
         if (this.isVirtualized) {

@@ -62,7 +62,8 @@ export class Avatar extends LikeAnchor(Focusable) {
     public src = '';
 
     /**
-     * The size of the avatar.
+     * The size of the avatar, which can be one of the predefined values.
+     * The size is reflected as an attribute and defaults to `100` if an invalid size is provided.
      */
     @property({ type: Number, reflect: true })
     public get size(): AvatarSize {

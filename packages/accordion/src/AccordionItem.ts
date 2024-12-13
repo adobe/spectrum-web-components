@@ -67,8 +67,11 @@ const chevronIcon: Record<string, () => TemplateResult> = {
 
 /**
  * @element sp-accordion-item
+ *
  * @slot - The content of the item that is hidden when the item is not open
+ *
  * @fires sp-accordion-item-toggle - Announce that an accordion item has been toggled while allowing the event to be cancelled.
+ *
  */
 export class AccordionItem extends SizedMixin(Focusable, {
     noDefaultSize: true,

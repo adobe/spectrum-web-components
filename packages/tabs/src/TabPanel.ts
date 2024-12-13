@@ -22,10 +22,12 @@ import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 import panelStyles from './tab-panel.css.js';
 
 /**
+ * This component creates a tabpanel container for Tabs.
+ *
  * @element sp-tab-panel
  *
- * This component creates a tabpanel container for Tabs.
  * @slot - content of the Tab Panel
+ *
  */
 export class TabPanel extends SpectrumElement {
     /**

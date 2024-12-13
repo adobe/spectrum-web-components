@@ -46,11 +46,14 @@ const PAGEUPDOWN_KEY_CHANGE_VALUE = 50;
 const COLLAPSE_THREASHOLD = 50;
 
 /**
+ * This component represents a split view layout.
+ *
  * @element sp-split-view
  *
- * This component represents a split view layout.
  * @slot - Two sibling elements to be sized by the element attributes
+ *
  * @fires change - Announces the new position of the splitter
+ *
  */
 export class SplitView extends SpectrumElement {
     /**
@@ -99,6 +102,7 @@ export class SplitView extends SpectrumElement {
     /**
      * The start size of the primary pane, can be a real pixel number|string, percentage or "auto"
      * For example: "100", "120px", "75%" or "auto" are valid values
+     *
      * @attribute
      */
     @property({ type: String, attribute: 'primary-size' })
@@ -133,7 +137,7 @@ export class SplitView extends SpectrumElement {
     private enoughChildren = false;
 
     /**
-     * The view size of the split view.
+     * The total size of the split view container, either its width or height depending on the orientation.
      */
     @property({ type: Number })
     private viewSize = 0;
@@ -217,7 +221,7 @@ export class SplitView extends SpectrumElement {
      * Gets the size of the splitter.
      * Calculates the size based on the computed style of the splitter element.
      * Falls back to a default size if the splitter element is not available.
-     **/
+     */
     public get splitterSize(): number {
         if (!this._splitterSize) {
             this._splitterSize =

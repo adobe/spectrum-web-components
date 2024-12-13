@@ -56,8 +56,10 @@ export type LongpressEvent = {
 
 /**
  * @element sp-action-button
+ *
  * @slot - The text label of the Action Button.
  * @slot icon - The icon to use for the Action Button.
+ *
  * @fires change - Announces a change in the `selected` property of an action button.
  * @fires longpress - Synthesizes a "longpress" interaction that signifies a
  * `pointerdown` event that is >=300ms or a keyboard event where code is `Space` or code is `ArrowDown`

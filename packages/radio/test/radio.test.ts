@@ -23,9 +23,6 @@ import {
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { sendKeys } from '@web/test-runner-commands';
 
-/**
- *
- */
 function labelNodeForRadio(radio: Radio): Node {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');
 

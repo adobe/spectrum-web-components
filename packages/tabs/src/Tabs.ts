@@ -121,14 +121,17 @@ export function calculateScrollTargetForLeftSide(
 }
 
 /**
+ * The `Tabs` component is a custom web component that manages a group of tab elements.
+ *
  * @element sp-tabs
  *
- * The `Tabs` component is a custom web component that manages a group of tab elements.
  * @slot - Tab elements to manage as a group
  * @slot tab-panel - Tab Panel elements related to the listed Tab elements
- * @csspart tablist - Container element for the slotted sp-tab elements
+ *
  * @fires change - The selected Tab child has changed.
  * @fires sp-tabs-scroll - The tabs have been scrolled.
+ *
+ * @csspart tablist - Container element for the slotted sp-tab elements
  */
 export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     /**
@@ -353,6 +356,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     /**
      * Scrolls through the tabs component, on the X-axis, by a given amount of pixels/delta.
      * The given delta is limited to the scrollable area of the tabs component.
+     *
      * @param delta - The amount of pixels to scroll by. If the value is positive, the tabs will scroll to the right. If the value is negative, the tabs will scroll to the left.
      * @param behavior - The scroll behavior to use. Defaults to 'smooth'.
      */

@@ -30,9 +30,6 @@ import { alertDestructive } from '../stories/dialog.stories.js';
 import { Button } from '@spectrum-web-components/button/src/Button.js';
 import { DialogBase } from '@spectrum-web-components/dialog';
 
-/**
- *
- */
 async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {

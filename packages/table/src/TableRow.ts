@@ -24,10 +24,12 @@ import styles from './table-row.css.js';
 import { TableCheckboxCell } from './TableCheckboxCell.js';
 
 /**
+ * This component represents a table row.
+ *
  * @element sp-table-row
  *
- * This component represents a table row.
  * @fires sorted - Announces that `selected` of the table row has changed
+ *
  */
 export class TableRow extends SpectrumElement {
     /**

@@ -24,18 +24,12 @@ import '@spectrum-web-components/shared/src/focus-visible.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 
-/**
- *
- */
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
 
     return checkbox.shadowRoot.querySelector('#input') as HTMLInputElement;
 }
 
-/**
- *
- */
 function labelForCheckbox(checkbox: Checkbox): HTMLLabelElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
 
@@ -48,9 +42,6 @@ function labelForCheckbox(checkbox: Checkbox): HTMLLabelElement {
     return labelEl;
 }
 
-/**
- *
- */
 function labelNodeForCheckbox(checkbox: Checkbox): Node {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
 

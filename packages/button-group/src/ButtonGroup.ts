@@ -24,7 +24,9 @@ import styles from './button-group.css.js';
 
 /**
  * @element sp-button-group
+ *
  * @slot - the sp-button elements that make up the group
+ *
  */
 export class ButtonGroup extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,

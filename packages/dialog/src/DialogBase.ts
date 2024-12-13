@@ -33,8 +33,11 @@ import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focu
 
 /**
  * @element sp-dialog-base
+ *
  * @slot - A Dialog element to display.
+ *
  * @fires close - Announces that the dialog has been closed.
+ *
  */
 export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {

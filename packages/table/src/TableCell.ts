@@ -20,10 +20,12 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import styles from './table-cell.css.js';
 
 /**
+ * This component represents a cell within a table row.
+ *
  * @element sp-table-cell
  *
- * This component represents a cell within a table row.
  * @slot Cell content
+ *
  */
 export class TableCell extends SpectrumElement {
     /**

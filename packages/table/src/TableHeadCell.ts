@@ -39,10 +39,12 @@ const ariaSortValue = (sortDirection?: 'asc' | 'desc'): string => {
 };
 
 /**
+ * This component represents a table cell in the table head row.
+ *
  * @element sp-table-head-cell
  *
- * This component represents a table cell in the table head row.
  * @fires sorted - Announces that the table head has been sorted and handles the sorted event
+ *
  */
 export class TableHeadCell extends SpectrumElement {
     /**
@@ -71,13 +73,14 @@ export class TableHeadCell extends SpectrumElement {
     public sortable = false;
 
     /**
-     * The sort direction of the table head cell.
+     * Indicates the current sort direction of the table head cell.
+     * Can be `asc` for ascending or `desc` for descending.
      */
     @property({ reflect: true, attribute: 'sort-direction' })
     public sortDirection: 'asc' | 'desc' | undefined;
 
     /**
-     * The sort key of the table head cell.
+     * A unique key used to identify the column for sorting purposes.
      */
     @property({ attribute: 'sort-key' })
     public sortKey = '';

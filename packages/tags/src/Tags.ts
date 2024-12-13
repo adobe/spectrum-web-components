@@ -26,9 +26,10 @@ import styles from './tags.css.js';
 
 /**
  * @element sp-tags
- *
  * The `Tags` component is a custom web component that manages a group of tag elements.
+ *
  * @slot - Tag elements to manage as a group.
+ *
  */
 export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**

@@ -39,7 +39,7 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
 
 /**
  * @element sp-card
- * @fires change - Announces a change in the `selected` property of a card
+ *
  * @slot preview - This is the preview image for Gallery Cards
  * @slot cover-photo - This is the cover photo for Default and Quiet Cards
  * @slot heading - HTML content to be listed as the heading
@@ -47,6 +47,8 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  * @slot description - A description of the card
  * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
  * @slot footer - Footer text
+ *
+ * @fires change - Announces a change in the `selected` property of a card
  */
 export class Card extends LikeAnchor(
     SizedMixin(

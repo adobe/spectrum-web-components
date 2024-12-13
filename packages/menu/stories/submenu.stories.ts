@@ -28,9 +28,6 @@ export default {
     title: 'Menu/Submenu',
 };
 
-/**
- *
- */
 function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }

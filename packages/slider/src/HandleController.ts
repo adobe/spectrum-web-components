@@ -59,6 +59,7 @@ export interface HandleValueDictionary {
 
 /**
  * Manages the handles of a slider component.
+ *
  * @fires change - An alteration to the value of the element has been committed by the user.
  * @fires input - Dispatched when the value of a handle changes.
  * @fires keydown - Trick :focus-visible polyfill into thinking keyboard based focus
@@ -158,7 +159,8 @@ export class HandleController {
      * It is possible for value attributes to be set programmatically. The `<input>`
      * for a particular slider needs to have an opportunity to validate any such
      * values
-     * @param handle Handle who's value needs validation
+     *
+     * @param handle - Handle who's value needs validation
      */
     public setValueFromHandle(handle: SliderHandle): void {
         const elements = this.getHandleElements(handle);
@@ -638,9 +640,12 @@ export class HandleController {
     /**
      *
      *
-     * @private
-     * @param event - KeyboardEvent on input
      * @memberof HandleController
+     *
+     * @param event - KeyboardEvent on input
+     *
+     * @private
+     *
      */
     private onInputKeydown = (event: KeyboardEvent): void => {
         if (event.key == 'Escape') {
@@ -686,6 +691,7 @@ export class HandleController {
 
     /**
      * Returns the value under the cursor
+     *
      * @param event - PointerEvent on slider
      * @returns Slider value that correlates to the position under the pointer
      */
@@ -788,6 +794,7 @@ export class HandleController {
     /**
      * Returns a list of track segment [start, end] tuples where the values are
      * normalized to be between 0 and 1.
+     *
      * @returns A list of track segment tuples [start, end]
      */
     public trackSegments(): [number, number][] {

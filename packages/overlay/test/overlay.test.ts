@@ -51,9 +51,6 @@ import {
 } from '../../../test/testing-helpers.js';
 import { Menu } from '@spectrum-web-components/menu';
 
-/**
- *
- */
 async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {

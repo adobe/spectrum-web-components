@@ -17,6 +17,7 @@ import {
 
 /**
  * A plugin that sets the size of an element to full size based on available space.
+ *
  * @property {number} padding - The padding to be applied to the element.
  */
 export const fullSize = (

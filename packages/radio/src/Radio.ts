@@ -25,12 +25,15 @@ import radioStyles from './radio.css.js';
 
 /**
  * @element sp-radio
+ *
  * @slot - text label of the Radio button
+ *
+ * @fires change - When the input is interacted with and its state is changed
+ *
  * @attribute invalid - Uses the invalid style
  * @attribute disabled - Uses the disabled style
  * @attribute checked - Represents when the input is checked
  * @attribute value - Identifies this radio button within its radio group
- * @fires change - When the input is interacted with and its state is changed
  */
 export class Radio extends SizedMixin(
     FocusVisiblePolyfillMixin(SpectrumElement),
@@ -42,6 +45,7 @@ export class Radio extends SizedMixin(
 
     /**
      * When this control is rendered, focus it automatically
+     *
      * @private
      */
     @property({ type: Boolean })
@@ -77,6 +81,7 @@ export class Radio extends SizedMixin(
         if (this.autofocus) {
             /**
              * Trick :focus-visible polyfill into thinking keyboard based focus
+             *
              * @private
              */
             this.dispatchEvent(

@@ -138,7 +138,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
+     *
      * @attribute
+     *
      */
 
     @property()
@@ -878,10 +880,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
 /**
  * @element sp-picker
+ *
  * @slot label - The placeholder content for the Picker
  * @slot description - The description content for the Picker
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  * @slot - menu items to be listed in the Picker
+ *
  * @fires change - Announces that the `value` of the element has changed
  * @fires sp-opened - Announces that the overlay has been opened
  * @fires sp-closed - Announces that the overlay has been closed

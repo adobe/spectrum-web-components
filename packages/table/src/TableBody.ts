@@ -20,10 +20,12 @@ import styles from './table-body.css.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 /**
+ * This component represents the body of a table.
+ *
  * @element sp-table-body
  *
- * This component represents the body of a table.
  * @slot - The rows of the table.
+ *
  */
 export class TableBody extends SpectrumElement {
     /**
@@ -61,7 +63,8 @@ export class TableBody extends SpectrumElement {
 
     /**
      * The ARIA role of the table body.
-     * @property {string}
+     *
+     * @property {string} role - The ARIA role of the table body.
      */
     @property({ reflect: true })
     public override role = 'rowgroup';

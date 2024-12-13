@@ -40,7 +40,8 @@ export abstract class IconsetSVG extends Iconset {
     }
     /**
      * Applies the requested icon from this iconset instance to the given element.
-     * @param el - the element to apply the icon to
+     *
+     * @param el - the HTML element to which the icon will be applied
      * @param icon - the name of the icon within this set to apply.
      */
     public async applyIconToElement(

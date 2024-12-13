@@ -36,7 +36,9 @@ export type MeterVariants = (typeof meterVariants)[number];
 
 /**
  * @element sp-meter
+ *
  * @slot - text labeling the Meter
+ *
  */
 export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
     noDefaultSize: true,
@@ -51,7 +53,8 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
     /**
      * The variant applies specific styling when set to `negative`, `positive`, `notice`
      * `variant` attribute is removed when not matching one of the above.
-     * @param variant
+     *
+     * @param variant - The variant applies specific styling when set to `negative`, `positive`, or `notice`.
      */
     @property({ type: String })
     public set variant(variant: MeterVariants) {

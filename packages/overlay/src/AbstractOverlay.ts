@@ -36,9 +36,10 @@ export const noop = (): void => {
 /**
  * Apply a "transitionend" listener to an element that may not transition but
  * guarantee the callback will be fired either way.
- * @param el {HTMLElement} - Target of the "transition" listeners.
- * @param action {Function} - Method to trigger the "transition".
- * @param cb {Function} - Callback to trigger when the "transition" has ended.
+ *
+ * @param el - {HTMLElement} - Target of the "transition" listeners.
+ * @param action - {Function} - Method to trigger the "transition".
+ * @param cb - {Function} - Callback to trigger when the "transition" has ended.
  */
 export const guaranteedAllTransitionend = (
     el: HTMLElement,

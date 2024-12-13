@@ -72,9 +72,6 @@ const isMenuActiveElement = function (el: Picker): boolean {
     return el.shadowRoot.activeElement?.localName === 'sp-menu';
 };
 
-/**
- *
- */
 export function runPickerTests(): void {
     let el: Picker;
     const pickerFixture = async (): Promise<Picker> => {

@@ -49,9 +49,6 @@ const OVERLAY_TYPES = ['modal', 'page', 'hint', 'auto', 'manual'] as const;
 
 type OverlayTypes = (typeof OVERLAY_TYPES)[number];
 
-/**
- *
- */
 async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {
@@ -65,9 +62,6 @@ async function styledFixture<T extends Element>(
 }
 
 describe('sp-overlay', () => {
-    /**
-     *
-     */
     function opensDeclaratively(overlayType: OverlayTypes): void {
         it(`as [type="'${overlayType}'"]`, async () => {
             const el = await styledFixture<Overlay>(html`

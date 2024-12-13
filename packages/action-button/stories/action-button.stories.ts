@@ -22,9 +22,6 @@ export default {
     title: 'Action Button',
 };
 
-/**
- *
- */
 function renderButtonsSelected(args: Properties): TemplateResult {
     const disabled = Object.assign({}, args, { disabled: true });
     const selected = Object.assign({}, args, { selected: true });

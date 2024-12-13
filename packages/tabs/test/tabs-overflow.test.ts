@@ -463,9 +463,6 @@ describe('calculateScrollTargetForLeftSide', () => {
     });
 });
 
-/**
- *
- */
 async function repeatScroll(
     options: {
         times: number;
@@ -499,9 +496,6 @@ async function repeatScroll(
     return await repeatScroll(options, iteration + 1);
 }
 
-/**
- *
- */
 async function scrollToEnd(
     tabsContainer: HTMLDivElement,
     buttonSelector: string,
@@ -548,9 +542,6 @@ async function scrollToEnd(
     });
 }
 
-/**
- *
- */
 function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }

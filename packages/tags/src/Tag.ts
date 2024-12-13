@@ -26,12 +26,14 @@ import '@spectrum-web-components/button/sp-clear-button.js';
 import styles from './tag.css.js';
 
 /**
+ * The `Tag` component is a custom web component that represents a tag element.
+ *
  * @element sp-tag
  *
- * The `Tag` component is a custom web component that represents a tag element.
  * @slot - Text content for labeling the tag.
  * @slot avatar - An avatar element to display within the tag.
  * @slot icon - An icon element to display within the tag.
+ *
  * @fires delete - Dispatched when the tag is deleted.
  */
 export class Tag extends SizedMixin(SpectrumElement, {

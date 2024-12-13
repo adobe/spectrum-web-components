@@ -29,9 +29,6 @@ describe('Tooltip Directive', () => {
         Tip me!
     `;
 
-    /**
-     *
-     */
     function renderButton(
         ...directiveParams: Parameters<typeof tooltip>
     ): TemplateResult {
@@ -41,9 +38,6 @@ describe('Tooltip Directive', () => {
             </sp-button>
         `;
     }
-    /**
-     *
-     */
     function opensTooltip(): void {
         it('opens tooltip not previously on DOM', async function () {
             await elementUpdated(this.el);
@@ -69,9 +63,6 @@ describe('Tooltip Directive', () => {
             expect(this.overlays.length).to.equal(1);
         });
     }
-    /**
-     *
-     */
     function closesTooltip(): void {
         it('closes a tooltip and removes it from the DOM', async function () {
             // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup

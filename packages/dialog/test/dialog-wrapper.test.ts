@@ -46,9 +46,6 @@ import { Divider } from '@spectrum-web-components/divider/src/Divider.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 
-/**
- *
- */
 async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {

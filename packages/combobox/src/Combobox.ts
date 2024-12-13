@@ -50,6 +50,7 @@ export type ComboboxOption = {
 
 /**
  * @element sp-combobox
+ *
  * @slot - Supply Menu Item elements to the default slot in order to populate the available options
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  */

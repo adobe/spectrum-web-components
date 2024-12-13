@@ -15,9 +15,6 @@ import '@spectrum-web-components/icons/sp-icons-medium.js';
 import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
-/**
- *
- */
 async function test(): Promise<void> {
     const iconset = document.createElement('sp-icons-medium');
 

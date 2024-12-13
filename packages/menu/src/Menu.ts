@@ -51,15 +51,20 @@ function elementIsOrContains(
 
 /**
  * Spectrum Menu Component
+ *
  * @element sp-menu
+ *
  * @slot - menu items to be listed in the menu
+ *
  * @fires change - Announces that the `value` of the element has changed
+ *
  * @attribute selects - whether the element has a specific selection algorithm that it applies
  *   to its item descendants. `single` allows only one descendent to be selected at a time.
  *   `multiple` allows many descendants to be selected. `inherit` will be applied dynamically
  *   when an ancestor of this element is actively managing the selection of its descendents.
  *   When the `selects` attribute is not present a `value` will not be maintained and the Menu
  *   Item children of this Menu will not have their `selected` state managed.
+ *
  */
 export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {
@@ -183,6 +188,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * Hide this getter from web-component-analyzer until
      * https://github.com/runem/web-component-analyzer/issues/131
      * has been addressed.
+     *
      * @private
      */
     public get childRole(): string {
@@ -212,7 +218,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * this event to announce its presence in the DOM. During the CAPTURE phase the first
      * Menu based element that the event encounters will manage the focus state of the
      * dispatching `<sp-menu-item>` element.
-     * @param event
+     *
+     * @param event - The event dispatched when a descendant <sp-menu-item> element is added or updated
      */
     private onFocusableItemAddedOrUpdated(
         event: MenuItemAddedOrUpdatedEvent
@@ -234,7 +241,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * this event to announce its presence in the DOM. During the BUBBLE phase the first
      * Menu based element that the event encounters that does not inherit selection will
      * manage the selection state of the dispatching `<sp-menu-item>` element.
-     * @param event
+     *
+     * @param event - The event dispatched when a descendant <sp-menu-item> element is added or updated
      */
     private onSelectableItemAddedOrUpdated(
         event: MenuItemAddedOrUpdatedEvent

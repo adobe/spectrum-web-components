@@ -38,11 +38,14 @@ export type SwatchGroupSizes = Exclude<ElementSize, 'xxs' | 'xl' | 'xxl'>;
 export type SwatchSelects = 'single' | 'multiple' | undefined;
 
 /**
+ * This component represents a group of swatches.
+ *
  * @element sp-swatch-group
  *
- * This component represents a group of swatches.
  * @slot - Swatch elements to manage as a group
+ *
  * @fires change - Dispatched when the selected swatch changes
+ *
  */
 export class SwatchGroup extends SizedMixin(SpectrumElement, {
     validSizes: ['xs', 's', 'm', 'l'],

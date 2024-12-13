@@ -27,10 +27,12 @@ import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/f
 export const actionBarVariants = ['sticky', 'fixed'];
 
 /**
+ * The ActionBar component provides a container for actions that can be performed on selected items.
+ *
  * @element sp-action-bar
+ *
  * @slot - Content to display with the Action Bar
  *
- * The ActionBar component provides a container for actions that can be performed on selected items.
  */
 export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
@@ -92,6 +94,7 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
      * Handles the click event on the close button.
      * Toggles the open state of the action bar and dispatches a 'close' event.
      * If the event is canceled, the open state is reverted.
+     *
      * @fires close - Announces that the action bar is closing.
      */
     private handleClick(): void {

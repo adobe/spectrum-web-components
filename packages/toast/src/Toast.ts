@@ -43,13 +43,15 @@ export type ToastVariants =
     | '';
 
 /**
- * @element sp-toast
- *
  * The `Toast` component is a custom web component that displays a brief message to the user.
  * It extends the `FocusVisiblePolyfillMixin` and `SpectrumElement` to provide focus management
  * and styling capabilities.
+ *
+ * @element sp-toast
+ *
  * @slot - The toast content
  * @slot action - button element surfacing an action in the Toast
+ *
  * @fires close - Announces that the Toast has been closed by the user or by its timeout.
  */
 

@@ -31,9 +31,6 @@ export interface Item extends TableItem {
     date: number;
 }
 
-/**
- *
- */
 export function makeItems(count: number): Item[] {
     const total = count;
     const items: Item[] = [];

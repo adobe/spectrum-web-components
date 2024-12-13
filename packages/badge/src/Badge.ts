@@ -72,6 +72,7 @@ export type FixedValues = (typeof FIXED_VALUES)[number];
 
 /**
  * @element sp-badge
+ *
  * @slot - Text label of the badge
  * @slot icon - Optional icon that appears to the left of the label
  */

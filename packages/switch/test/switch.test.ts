@@ -15,18 +15,12 @@ import { Switch } from '@spectrum-web-components/switch';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
-/**
- *
- */
 function inputForSwitch(checkbox: Switch): HTMLInputElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
 
     return checkbox.shadowRoot.querySelector('#input') as HTMLInputElement;
 }
 
-/**
- *
- */
 function labelForSwitch(checkbox: Switch): HTMLLabelElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
 

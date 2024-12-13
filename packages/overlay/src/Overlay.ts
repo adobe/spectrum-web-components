@@ -69,6 +69,7 @@ if (browserSupportsPopover) {
 
 /**
  * @element sp-overlay
+ *
  * @fires sp-opened - announces that an overlay has completed any entry animations
  * @fires sp-closed - announce that an overlay has compelted any exit animations
  * @fires slottable-request - requests to add or remove slottable content

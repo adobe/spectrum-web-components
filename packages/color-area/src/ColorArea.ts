@@ -43,7 +43,9 @@ import styles from './color-area.css.js';
 
 /**
  * @element sp-color-area
+ *
  * @slot gradient - a custom gradient visually outlining the available color values
+ *
  * @fires input - The value of the Color Area has changed.
  * @fires change - An alteration to the value of the Color Area has been committed by the user.
  */
@@ -388,7 +390,8 @@ export class ColorArea extends SpectrumElement {
 
     /**
      * Returns the value under the cursor
-     * @param event on slider
+     *
+     * @param event - on slider
      * @returns Slider value that correlates to the position under the pointer
      */
     private calculateHandlePosition(event: PointerEvent): [number, number] {

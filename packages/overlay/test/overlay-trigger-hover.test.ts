@@ -41,9 +41,6 @@ import {
 
 ignoreResizeObserverLoopError(before, after);
 
-/**
- *
- */
 async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {

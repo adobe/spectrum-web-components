@@ -29,12 +29,14 @@ import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
 import styles from './tray.css.js';
 
 /**
- * @element sp-tray
- *
  * The `Tray` component is a custom web component that provides a tray element
  * which can be opened and closed. It includes various properties and methods
  * to manage its state, focus, and transitions.
+ *
+ * @element sp-tray
+ *
  * @fires close - Dispatched when the tray is closed.
+ *
  */
 export class Tray extends SpectrumElement {
     /**

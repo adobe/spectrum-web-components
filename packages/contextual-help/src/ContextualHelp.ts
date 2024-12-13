@@ -36,7 +36,9 @@ import styles from './contextual-help.css.js';
 /**
  * Spectrum Contextual help provides additional information about
  * the state of either an adjacent component or an entire view.
+ *
  * @element sp-contextual-help
+ *
  * @slot heading - content to display as the heading of the popover
  * @slot Text content to display in the popover
  * @slot link - link to additional informations
@@ -50,6 +52,7 @@ export class ContextualHelp extends SpectrumElement {
 
     /**
      * Provides an accessible name for the action button trigger.
+     *
      * @param {string} label
      */
     @property()
@@ -57,6 +60,7 @@ export class ContextualHelp extends SpectrumElement {
 
     /**
      * The `variant` property applies specific styling on the action button trigger.
+     *
      * @param {string} variant
      */
     @property()
@@ -64,7 +68,9 @@ export class ContextualHelp extends SpectrumElement {
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
+     *
      * @attribute
+     *
      */
     @property({ reflect: true })
     public placement?: Placement = 'bottom-start';

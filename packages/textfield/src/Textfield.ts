@@ -50,6 +50,7 @@ export type TextfieldType = (typeof textfieldTypes)[number];
 /**
  * The `TextfieldBase` component is a custom web component that provides a base class for textfield elements.
  * It includes properties and methods to manage the state and behavior of the textfield.
+ *
  * @fires input - The value of the element has changed.
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
@@ -290,11 +291,12 @@ export class TextfieldBase extends ManageHelpText(
 
     /**
      * Sets the start and end positions of the current selection.
-     * @param selectionStart — The 0-based index of the first selected character. An index greater than the length of the
+     *
+     * @param selectionStart - — The 0-based index of the first selected character. An index greater than the length of the
      *  element's value is treated as pointing to the end of the value.
-     * @param selectionEnd — The 0-based index of the character after the last selected character. An index greater than
+     * @param selectionEnd - — The 0-based index of the character after the last selected character. An index greater than
      *  the length of the element's value is treated as pointing to the end of the value.
-     * @param selectionDirection — A string indicating the direction in which the selection is considered to
+     * @param selectionDirection - — A string indicating the direction in which the selection is considered to
      *  have been performed.
      */
     public setSelectionRange(
@@ -572,9 +574,10 @@ export class TextfieldBase extends ManageHelpText(
 }
 
 /**
+ * The `Textfield` component is a custom web component that provides a text input field.
+ *
  * @element sp-textfield
  *
- * The `Textfield` component is a custom web component that provides a text input field.
  * @slot help-text - Default or non-negative help text to associate with your form element.
  * @slot negative-help-text - Negative help text to associate with your form element when `invalid`.
  */

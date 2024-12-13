@@ -158,10 +158,11 @@ if (!customElements.get('sp-tooltip-openable')) {
 }
 
 /**
- * @element sp-tooltip
- *
  * The `Tooltip` component is a custom web component that provides a tooltip element.
  * It includes slots for an icon and text label, and manages its state and interactions.
+ *
+ * @element sp-tooltip
+ *
  * @slot icon - The icon element appearing at the start of the label.
  * @slot - The text label of the Tooltip.
  */

@@ -64,10 +64,12 @@ const dashIcon: Record<string, () => TemplateResult> = {
 };
 
 /**
+ * This component represents a color swatch.
+ *
  * @element sp-swatch
  *
- * This component represents a color swatch.
  * @fires change - Dispatched when the swatch is clicked.
+ *
  */
 export class Swatch extends SizedMixin(Focusable, {
     validSizes: ['xs', 's', 'm', 'l'],

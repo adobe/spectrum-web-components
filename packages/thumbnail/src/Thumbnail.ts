@@ -51,11 +51,13 @@ export type ThumbnailSize = (typeof validSizes)[number];
 const defaultSize = validSizes[6];
 
 /**
- * @element sp-thumbnail
- *
  * The `Thumbnail` component is a custom web component that displays an image thumbnail.
  * It includes a slot for the image element to be presented within the thumbnail.
+ *
+ * @element sp-thumbnail
+ *
  * @slot image - The image element to present in the Thumbnail.
+ *
  */
 export class Thumbnail extends SpectrumElement {
     /**

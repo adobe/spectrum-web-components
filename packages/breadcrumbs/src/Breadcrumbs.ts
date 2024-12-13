@@ -50,9 +50,11 @@ type BreadcrumbItem = {
 
 /**
  * @element sp-breadcrumbs
+ *
  * @slot icon - change the default icon of the action menu
  * @slot root - Breadcrumb item to always display
  * @slot - Breadcrumb items
+ *
  * @fires change - Announces the selected breadcrumb item
  */
 export class Breadcrumbs extends SpectrumElement {
