@@ -150,7 +150,6 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                     activeElement.matches(':focus-visible') ||
                     activeElement.matches('.focus-visible')
                 );
-                /* c8 ignore next 3 */
             } catch (error) {
                 return activeElement.matches('.focus-visible');
             }
@@ -184,7 +183,6 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                         localName.search('-') > -1 &&
                         !customElements.get(localName)
                     ) {
-                        /* c8 ignore next 5 */
                         customElements.whenDefined(localName).then(() => {
                             (
                                 dirParent as ThemeRoot
@@ -249,17 +247,14 @@ if (window.__swc.DEBUG) {
     window.__swc = {
         ...window.__swc,
         ignoreWarningLocalNames: {
-            /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningLocalNames || {}),
         },
         ignoreWarningTypes: {
             ...ignoreWarningTypes,
-            /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningTypes || {}),
         },
         ignoreWarningLevels: {
             ...ignoreWarningLevels,
-            /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningLevels || {}),
         },
         issuedWarnings: new Set(),
@@ -275,7 +270,6 @@ if (window.__swc.DEBUG) {
             if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id))
                 return;
 
-            /* c8 ignore next 3 */
             if (window.__swc.ignoreWarningLocalNames[localName]) return;
 
             if (window.__swc.ignoreWarningTypes[type]) return;

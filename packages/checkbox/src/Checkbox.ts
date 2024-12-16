@@ -115,26 +115,43 @@ const dashIcon = {
 export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
     noDefaultSize: true,
 }) {
+    /**
+     * Options used when calling `attachShadow`. Set this property to customize
+     * the options for the shadowRoot; for example, to create a closed
+     * shadowRoot: `{mode: 'closed'}`.
+     */
     static override shadowRootOptions = {
         ...SpectrumElement.shadowRootOptions,
         delegatesFocus: true,
     };
 
     /**
-     * Disable this control. It will not receive focus or events
+     * This property will render the component without the ability to focus and provide no events.
      */
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
+    /**
+     * This property will render the component in an indeterminate state.
+     */
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;
 
+    /**
+     * This property will render the component in an invalid state.
+     */
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
+    /**
+     * This property will render the component in a visually emphasized state.
+     */
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    /**
+     * This property allows you to override the tab index of the component.     *
+     */
     @property({ reflect: true, type: Number, attribute: 'tabindex' })
     public override tabIndex = 0;
 

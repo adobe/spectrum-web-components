@@ -42,20 +42,47 @@ export interface CheckboxElement {
  *
  * @param constructor - The class to be extended.
  * @returns - The extended class with checkbox functionality.
+ *
+ * @fires change - Dispatched when the checkbox is changed.
  */
 export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<CheckboxElement> {
+    /**
+     * A mixin class that extends a base class to add checkbox functionality.
+     *
+     * @template T - The type of the base class.
+     * @function handleChange - Handles the change event for the checkbox input element.
+     * @function render - Renders the checkbox input element.
+     */
     class MixedElement extends constructor {
+        /**
+         * Indicates whether the checkbox is checked.
+         *
+         * @public
+         */
         @property({ type: Boolean, reflect: true })
         public checked = false;
 
+        /**
+         * The name attribute of the checkbox input element.
+         *
+         * @public
+         */
         @property({ type: String, reflect: true })
         public name: string | undefined;
 
+        /**
+         * Indicates whether the checkbox is readonly.
+         *
+         * @public
+         */
         @property({ type: Boolean, reflect: true })
         public readonly = false;
 
+        /**
+         * The checkbox input element.
+         */
         @query('#input')
         inputElement!: HTMLInputElement;
 

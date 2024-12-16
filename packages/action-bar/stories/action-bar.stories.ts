@@ -32,6 +32,7 @@ export default {
             url: 'https://www.figma.com/file/MPtRIVRzPp2VHiEplwXL2X/S-%2F-Manual?node-id=465%3A3127&t=xbooxCWItOFgG2xM-1',
         },
     },
+    tags: ['autodocs'],
 };
 
 export const Default = (): TemplateResult =>
@@ -39,9 +40,6 @@ export const Default = (): TemplateResult =>
         open: true,
     });
 
-/**
- * The action bar can be emphasized to draw attention to it.
- */
 export const emphasized = (): TemplateResult => {
     return html`
         <sp-action-bar open emphasized>

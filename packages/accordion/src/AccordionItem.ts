@@ -112,7 +112,6 @@ export class AccordionItem extends SizedMixin(Focusable, {
      * Toggles the open state of the accordion item if it is not disabled.
      */
     private onClick(): void {
-        /* c8 ignore next 3 */
         if (this.disabled) {
             return;
         }

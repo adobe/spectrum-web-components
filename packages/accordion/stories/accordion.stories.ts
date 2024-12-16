@@ -20,6 +20,7 @@ import '@spectrum-web-components/link/sp-link.js';
 export default {
     title: 'Accordion',
     component: 'sp-accordion',
+    subcomponents: { AccordionItem: 'sp-accordion-item' },
     args: {
         open: false,
         size: 'm',

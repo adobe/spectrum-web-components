@@ -14,10 +14,17 @@ module.exports = {
         'prevent-argument-names': {
             create: function (context) {
                 const argumentNames = context.options[0];
+
+                /**
+                 * Prevents the use of specified argument names.
+                 *
+                 * @param node - The AST node to check.
+                 */
                 function preventArgumentNames(node) {
                     if (!argumentNames) {
                         return;
                     }
+
                     argumentNames.forEach((name) => {
                         if (node.name === name) {
                             context.report({
@@ -38,6 +45,11 @@ module.exports = {
         },
         'document-active-element': {
             create: function (context) {
+                /**
+                 * Prevents the use of document.activeElement.
+                 *
+                 * @param node - The AST node to check.
+                 */
                 function preventDocumentActiveElement(node) {
                     if (
                         node.object.name === 'document' &&
@@ -52,6 +64,7 @@ module.exports = {
                         });
                     }
                 }
+
                 return {
                     MemberExpression: preventDocumentActiveElement,
                 };

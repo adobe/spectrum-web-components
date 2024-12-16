@@ -31,7 +31,7 @@ export type AlertBannerVariants = (typeof VALID_VARIANTS)[number];
 /**
  * @element sp-alert-banner
  *
- * @slot - The alert banner text context
+ * @slot default - The alert banner text context
  * @slot action - Slot for the button element that surfaces the contextual action a user can take
  *
  * @fires close - Announces the alert banner has been closed

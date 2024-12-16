@@ -19,6 +19,7 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 export default {
     component: 'sp-action-button',
     title: 'Action Button',
+    tags: ['autodocs'],
 };
 
 function renderButtonsSelected(args: Properties): TemplateResult {

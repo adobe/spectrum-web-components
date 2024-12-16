@@ -37,6 +37,9 @@ import headingStyles from '@spectrum-web-components/styles/heading.js';
 import detailStyles from '@spectrum-web-components/styles/detail.js';
 
 /**
+ * An `<sp-card>` represents a rectangular card that contains a variety of text and image layouts. Cards
+ * are typically used to encapsulate units of a data set, such as a gallery of image/caption pairs.
+ *
  * @element sp-card
  *
  * @slot preview - This is the preview image for Gallery Cards
@@ -44,7 +47,7 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  * @slot heading - HTML content to be listed as the heading
  * @slot subheading - HTML content to be listed as the subheading
  * @slot description - A description of the card
- * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
+ * @slot actions - an `sp-action-menu` element outlining actions to take on the represented object
  * @slot footer - Footer text
  *
  * @fires change - Announces a change in the `selected` property of a card
@@ -65,12 +68,23 @@ export class Card extends LikeAnchor(
         return [headingStyles, detailStyles, cardStyles];
     }
 
+    /**
+     * The type of asset displayed in the card.
+     * Can be either `file` or `folder`.
+     */
     @property()
     public asset?: 'file' | 'folder';
 
+    /**
+     * The variant of the card.
+     * Can be `standard`, `gallery`, or `quiet`.
+     */
     @property({ reflect: true })
     public variant: 'standard' | 'gallery' | 'quiet' = 'standard';
 
+    /**
+     * Indicates whether the card is selected.
+     */
     @property({ type: Boolean, reflect: true })
     get selected(): boolean {
         return this._selected;
@@ -84,24 +98,42 @@ export class Card extends LikeAnchor(
 
     private _selected = false;
 
+    /**
+     * The heading text of the card.
+     */
     @property()
     public heading = '';
 
+    /**
+     * Indicates whether the card is displayed horizontally.
+     */
     @property({ type: Boolean, reflect: true })
     public horizontal = false;
 
     @query('#like-anchor')
     private likeAnchor?: HTMLAnchorElement;
 
+    /**
+     * Indicates whether the card is focused.
+     */
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    /**
+     * Indicates whether the card has a toggleable selection state.
+     */
     @property({ type: Boolean, reflect: true })
     public toggles = false;
 
+    /**
+     * The value associated with the card.
+     */
     @property()
     public value = '';
 
+    /**
+     * The subheading text of the card.
+     */
     @property()
     public subheading = '';
 
@@ -117,6 +149,9 @@ export class Card extends LikeAnchor(
         this.likeAnchor?.click();
     }
 
+    /**
+     * Handle focusin event to manage focus state and keydown event listener.
+     */
     private handleFocusin = (event: Event): void => {
         this.focused = true;
         const target = event.composedPath()[0];
@@ -130,6 +165,9 @@ export class Card extends LikeAnchor(
         this.addEventListener('keydown', this.handleKeydown);
     };
 
+    /**
+     * Handle focusout event to manage focus state and keydown event listener.
+     */
     private handleFocusout(event: Event): void {
         this.focused = false;
         const target = event.composedPath()[0];
@@ -139,6 +177,9 @@ export class Card extends LikeAnchor(
         }
     }
 
+    /**
+     * Handle keydown event to manage selection and click actions.
+     */
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
 
@@ -156,12 +197,18 @@ export class Card extends LikeAnchor(
         }
     }
 
+    /**
+     * Handle change event from the checkbox to update the selected state.
+     */
     private handleSelectedChange(event: Event & { target: Checkbox }): void {
         event.stopPropagation();
         this.selected = event.target.checked;
         this.announceChange();
     }
 
+    /**
+     * Toggle the selected state of the card.
+     */
     public toggleSelected(): void {
         if (!this.toggles) {
             this.dispatchEvent(
@@ -178,6 +225,9 @@ export class Card extends LikeAnchor(
         this.announceChange();
     }
 
+    /**
+     * Announce a change in the selected state of the card.
+     */
     private announceChange(): void {
         const applyDefault = this.dispatchEvent(
             new Event('change', {
@@ -192,12 +242,18 @@ export class Card extends LikeAnchor(
         }
     }
 
+    /**
+     * Stop event propagation if the card has an href attribute.
+     */
     private stopPropagationOnHref(event: Event): void {
         if (this.href) {
             event.stopPropagation();
         }
     }
 
+    /**
+     * Handle pointerdown event to manage click actions.
+     */
     private handlePointerdown(event: Event): void {
         const path = event.composedPath();
         const hasAnchor = path.some(
@@ -222,6 +278,9 @@ export class Card extends LikeAnchor(
         this.addEventListener('pointercancel', handleEnd);
     }
 
+    /**
+     * Render the heading section of the card, including the slot for custom heading content.
+     */
     protected get renderHeading(): TemplateResult {
         return html`
             <div
@@ -233,6 +292,9 @@ export class Card extends LikeAnchor(
         `;
     }
 
+    /**
+     * Render the preview image of the card, which is displayed in the preview slot.
+     */
     protected get renderPreviewImage(): TemplateResult {
         return html`
             <sp-asset id="preview" variant=${ifDefined(this.asset)}>
@@ -246,6 +308,9 @@ export class Card extends LikeAnchor(
         `;
     }
 
+    /**
+     * Render the cover image of the card, which is displayed in the cover-photo slot.
+     */
     protected get renderCoverImage(): TemplateResult {
         return html`
             <sp-asset id="cover-photo" variant=${ifDefined(this.asset)}>
@@ -259,6 +324,9 @@ export class Card extends LikeAnchor(
         `;
     }
 
+    /**
+     * Get the images to be rendered in the card.
+     */
     protected get images(): TemplateResult[] {
         const images: TemplateResult[] = [];
 
@@ -269,6 +337,9 @@ export class Card extends LikeAnchor(
         return images;
     }
 
+    /**
+     * Render the images in the card based on its layout.
+     */
     private renderImage(): TemplateResult[] {
         if (this.horizontal) {
             return this.images;
@@ -281,6 +352,9 @@ export class Card extends LikeAnchor(
         return this.images;
     }
 
+    /**
+     * Render the subtitle and description slots of the card, including the subheading and description content.
+     */
     private get renderSubtitleAndDescription(): TemplateResult {
         return html`
             <div class="subtitle spectrum-Detail spectrum-Detail--sizeS">
@@ -290,6 +364,9 @@ export class Card extends LikeAnchor(
         `;
     }
 
+    /**
+     * Render the card's layout and content based on its properties and slots.
+     */
     protected override render(): TemplateResult {
         return html`
             ${this.renderImage()}
@@ -357,6 +434,9 @@ export class Card extends LikeAnchor(
         `;
     }
 
+    /**
+     * Perform initial setup after the first update.
+     */
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('pointerdown', this.handlePointerdown);

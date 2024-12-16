@@ -110,6 +110,7 @@ export default {
             },
         },
     },
+    tags: ['autodocs'],
 };
 
 interface Properties {

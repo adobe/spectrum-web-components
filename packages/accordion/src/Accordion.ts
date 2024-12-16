@@ -32,8 +32,6 @@ import styles from './accordion.css.js';
  * or more than one item expanded at a time, depending on the configuration. This list of items is defined by child
  * `<sp-accordion-item>` elements that are targeted to the default slot of their `<sp-accordion>` parent.
  *
- * [Explore Engineering Guidance]{@link https://opensource.adobe.com/spectrum-web-components/components/accordion/}
- *
  * @element sp-accordion
  *
  * @slot - The sp-accordion-item children to display within the accordion.
@@ -111,7 +109,6 @@ export class Accordion extends SizedMixin(SpectrumElement, {
 
         const items = [...this.items] as AccordionItem[];
 
-        /* c8 ignore next 3 */
         if (items && !items.length) {
             // No toggling when there aren't items.
             return;

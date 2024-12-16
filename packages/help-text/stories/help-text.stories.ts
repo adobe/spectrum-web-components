@@ -18,54 +18,20 @@ export default {
     component: 'sp-help-text',
     argTypes: {
         icon: {
-            name: 'icon',
-            type: { name: 'boolean', required: false },
-            discription: 'Whether the Help Text is delivered with an icon.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: {
                 type: 'boolean',
             },
         },
         disabled: {
-            name: 'disabled',
-            type: { name: 'boolean', required: false },
-            description: 'Help Text for disabled form elements.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: {
                 type: 'boolean',
             },
         },
         variant: {
-            name: 'variant',
-            type: { name: 'string', required: false },
-            description: 'The visual variant to apply to the Help Text.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'cta' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['neutral', 'negative'],
-            },
+            options: ['neutral', 'negative'],
         },
         size: {
-            name: 'size',
-            type: { name: 'string', required: false },
-            description: 'The visual variant to apply to the Help Text.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'cta' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['s', 'm', 'l', 'xl'],
-            },
+            options: ['s', 'm', 'l', 'xl'],
         },
     },
     args: {

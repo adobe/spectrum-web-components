@@ -32,13 +32,13 @@ function nextFrame(): Promise<void> {
  */
 export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**
-     * Disable this control. It will not receive focus or events
+     * This property will render the component without the ability to focus and provide no events.
      */
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
     /**
-     * When this control is rendered, focus it automatically
+     * This property will render the component with focus applied automatically on first render.
      *
      * @private
      */
@@ -191,6 +191,8 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     /**
+     * The `selfManageFocusElement` getter indicates whether the component should manage its focus element's `tabindex`.
+     *
      * @returns whether the component should manage its focusElement tab-index or not
      * Needed for action-menu to be supported in action-group in an accessible way
      *
