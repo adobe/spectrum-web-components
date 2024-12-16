@@ -67,7 +67,7 @@ export const DAYS_PER_WEEK = 7;
  * @slot prev-icon - The icon used in the "Previous Month" button
  * @slot next-icon - The icon used in the "Next Month" button
  *
- * @event change - Announces when a day is selected by emitting a `Date` object
+ * @event change - Announces when a day is selected
  */
 export class Calendar extends SpectrumElement {
     public static override get styles(): CSSResultArray {
@@ -78,20 +78,20 @@ export class Calendar extends SpectrumElement {
      * The selected date in the calendar. If defined, this also indicates where the calendar opens.
      * If not, the calendar opens at the current month.
      */
-    @property({ attribute: false })
-    value?: CalendarValue;
+    @property({ type: Object })
+    public value?: CalendarValue;
 
     /**
      * The minimum allowed date a user can select
      */
-    @property({ attribute: false })
-    min?: DateValue;
+    @property({ type: Object })
+    public min?: DateValue;
 
     /**
      * The maximum allowed date a user can select
      */
-    @property({ attribute: false })
-    max?: DateValue;
+    @property({ type: Object })
+    public max?: DateValue;
 
     /**
      * Indicates when the calendar should be disabled entirely
@@ -103,8 +103,8 @@ export class Calendar extends SpectrumElement {
      * Labels read by screen readers. The default values are in English
      * and can be overridden to localize the content.
      */
-    @property({ attribute: false })
-    labels: CalendarLabels = {
+    @property({ type: Object })
+    public labels: CalendarLabels = {
         previous: 'Previous',
         next: 'Next',
         today: 'Today',
