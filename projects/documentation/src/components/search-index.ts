@@ -31,19 +31,31 @@ export interface ResultGroup {
     maxScore: number;
 }
 
+/**
+ * Converts a string to a label format by capitalizing the first letter of each word.
+ *
+ * @param name - The string to be converted.
+ * @returns - The formatted label string.
+ */
 function label(name: string): string {
     return name.replace(/(?:^|-)\w/g, (match) =>
         match.toUpperCase().replace('-', ' ')
     );
 }
 
+/**
+ * Searches for the given value in the index and returns the results grouped by category.
+ *
+ * @param value - The term or phrase to search for in the index.
+ * @returns - A promise that resolves to an array of result groups.
+ */
 export async function search(value: string): Promise<ResultGroup[]> {
     if (!index) {
         const searchIndexURL = new URL('./searchIndex.json', import.meta.url)
             .href;
         const searchIndex = await (await fetch(searchIndexURL)).json();
 
-        index = lunr.Index.load(searchIndex);
+        index = Index.load(searchIndex);
     }
 
     const collatedResults = new Map<

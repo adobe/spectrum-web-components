@@ -25,6 +25,13 @@ export interface SlotPresenceObservingInterface {
     managePresenceObservedSlot(): void;
 }
 
+/**
+ * A mixin function to observe the presence of slot content in a web component.
+ *
+ * @param constructor - The constructor of the web component.
+ * @param lightDomSelector - A string or array of strings representing the slot selectors to observe.
+ * @returns A class that extends the provided constructor with slot presence observing capabilities.
+ */
 export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
     constructor: T,
     lightDomSelector: string | string[]

@@ -20,12 +20,27 @@ type Constructor<T = Record<string, unknown>> = {
 };
 
 export interface HelpTextElementInterface {
+    /**
+     * Render the help text.
+     *
+     * @param negative - Whether the help text should be rendered in a negative style.
+     * @returns The rendered help text as a TemplateResult.
+     */
     renderHelpText(negative?: boolean): TemplateResult;
+
+    /**
+     * The ID of the help text.
+     */
     helpTextId: string;
 }
 
 /**
+ * A mixin function to manage help text for a ReactiveElement.
  *
+ * @param constructor - The constructor of the ReactiveElement.
+ * @param options - Options for managing the help text.
+ * @param options.mode - The mode of the help text, either 'internal' or 'external'.
+ * @returns A constructor that extends the ReactiveElement with help text management.
  */
 export function ManageHelpText<T extends Constructor<ReactiveElement>>(
     constructor: T,
@@ -33,9 +48,22 @@ export function ManageHelpText<T extends Constructor<ReactiveElement>>(
 ): T & Constructor<HelpTextElementInterface> {
     class HelpTextElement extends constructor {
         helpTextManager = new HelpTextManager(this, { mode });
+
+        /**
+         * Get the ID of the help text.
+         *
+         * @returns The unique identifier for the help text element.
+         */
         get helpTextId(): string {
             return this.helpTextManager.id;
         }
+
+        /**
+         * Initiate manager to render the help text.
+         *
+         * @param negative - Whether the help text should be rendered in a negative style.
+         * @returns The rendered help text as a TemplateResult.
+         */
         renderHelpText(negative?: boolean): TemplateResult {
             return this.helpTextManager.render(negative);
         }

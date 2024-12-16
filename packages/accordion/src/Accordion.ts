@@ -27,7 +27,12 @@ import { AccordionItem } from './AccordionItem.js';
 import styles from './accordion.css.js';
 
 /**
- * An accordion is a vertically stacked set of interactive headings that each contain a title, content panel, or both.
+ * The `<sp-accordion>` element contains a list of items that can be expanded or collapsed to reveal additional
+ * content or information associated with each item. There can be zero expanded items, exactly one expanded item,
+ * or more than one item expanded at a time, depending on the configuration. This list of items is defined by child
+ * `<sp-accordion-item>` elements that are targeted to the default slot of their `<sp-accordion>` parent.
+ *
+ * [Explore Engineering Guidance]{@link https://opensource.adobe.com/spectrum-web-components/components/accordion/}
  *
  * @element sp-accordion
  *

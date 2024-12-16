@@ -39,7 +39,11 @@ type SelectsType = 'none' | 'ignore' | 'inherit' | 'multiple' | 'single';
 type RoleType = 'group' | 'menu' | 'listbox' | 'none';
 
 /**
+ * Check if an element is or contains another element.
  *
+ * @param el - The element to check.
+ * @param isOrContains - The element to check against.
+ * @returns True if the element is or contains the other element, false otherwise.
  */
 function elementIsOrContains(
     el: Node,
@@ -53,15 +57,15 @@ function elementIsOrContains(
  *
  * @element sp-menu
  *
- * @slot - menu items to be listed in the menu
+ * @slot - Menu items to be listed in the menu.
  *
- * @fires change - Announces that the `value` of the element has changed
+ * @fires change - Announces that the `value` of the element has changed.
  *
- * @attribute selects - whether the element has a specific selection algorithm that it applies
- *   to its item descendants. `single` allows only one descendent to be selected at a time.
+ * @attribute selects - Whether the element has a specific selection algorithm that it applies
+ *   to its item descendants. `single` allows only one descendant to be selected at a time.
  *   `multiple` allows many descendants to be selected. `inherit` will be applied dynamically
- *   when an ancestor of this element is actively managing the selection of its descendents.
- *   When the `selects` attribute is not present a `value` will not be maintained and the Menu
+ *   when an ancestor of this element is actively managing the selection of its descendants.
+ *   When the `selects` attribute is not present, a `value` will not be maintained and the Menu
  *   Item children of this Menu will not have their `selected` state managed.
  */
 export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
@@ -86,11 +90,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public value = '';
 
     // For the multiple select case, we'll join the value strings together
-    // for the value property with this separator
+    // for the value property with this separator.
     @property({ type: String, attribute: 'value-separator' })
     public valueSeparator = ',';
 
-    // TODO: which of these to keep?
     @property({ attribute: false })
     public get selected(): string[] {
         return this._selected;
@@ -159,7 +162,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         // Recursively flatten <slot> and non-<sp-menu-item> elements assigned to the menu into a single array.
         for (const [i, slottedElement] of slottedElements.entries()) {
             if (this.childItemSet.has(slottedElement as MenuItem)) {
-                // Assign <sp-menu-item> members of the array that are in this.childItemSet to this.chachedChildItems.
+                // Assign <sp-menu-item> members of the array that are in this.childItemSet to this.cachedChildItems.
                 this.cachedChildItems.push(slottedElement as MenuItem);
                 continue;
             }
@@ -217,7 +220,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * Menu based element that the event encounters will manage the focus state of the
      * dispatching `<sp-menu-item>` element.
      *
-     * @param event - The event dispatched when a descendant <sp-menu-item> element is added or updated
+     * @param event - The event dispatched when a descendant <sp-menu-item> element is added or updated.
      */
     private onFocusableItemAddedOrUpdated(
         event: MenuItemAddedOrUpdatedEvent
@@ -240,20 +243,19 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * Menu based element that the event encounters that does not inherit selection will
      * manage the selection state of the dispatching `<sp-menu-item>` element.
      *
-     * @param event - The event dispatched when a descendant <sp-menu-item> element is added or updated
+     * @param event - The event dispatched when a descendant <sp-menu-item> element is added or updated.
      */
     private onSelectableItemAddedOrUpdated(
         event: MenuItemAddedOrUpdatedEvent
     ): void {
         const cascadeData = event.menuCascade.get(this);
 
-        /* c8 ignore next 1 */
         if (!cascadeData) return;
 
         event.item.menuData.parentMenu = event.item.menuData.parentMenu || this;
 
         if (cascadeData.hadFocusRoot && !this.ignore) {
-            // Only have one tab stop per Menu tree
+            // Only have one tab stop per Menu tree.
             this.tabIndex = -1;
         }
 
@@ -372,7 +374,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
     }
 
-    // if the click and pointerup events are on the same target, we should not
+    // If the click and pointerup events are on the same target, we should not
     // handle the click event.
     private pointerUpTarget = null as EventTarget | null;
 
@@ -392,14 +394,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private handlePointerBasedSelection(event: Event): void {
-        // Only handle left clicks
+        // Only handle left clicks.
         if (event instanceof MouseEvent && event.button !== 0) {
             return;
         }
 
         const path = event.composedPath();
         const target = path.find((el) => {
-            /* c8 ignore next 3 */
             if (!(el instanceof Element)) {
                 return false;
             }
@@ -418,8 +419,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
 
         if (target?.href && target.href.length) {
-            // This event will NOT ALLOW CANCELATION as link action
-            // cancelation should occur on the `<sp-menu-item>` itself.
+            // This event will NOT ALLOW CANCELLATION as link action
+            // cancellation should occur on the `<sp-menu-item>` itself.
             this.dispatchEvent(
                 new Event('change', {
                     bubbles: true,
@@ -500,7 +501,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     protected handleDescendentOverlayOpened(event: Event): void {
         const target = event.composedPath()[0] as MenuItem;
 
-        /* c8 ignore next 1 */
         if (!target.overlayElement) return;
 
         this.descendentOverlays.set(
@@ -512,7 +512,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     protected handleDescendentOverlayClosed(event: Event): void {
         const target = event.composedPath()[0] as MenuItem;
 
-        /* c8 ignore next 1 */
         if (!target.overlayElement) return;
 
         this.descendentOverlays.delete(target.overlayElement);
@@ -550,7 +549,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             .composedPath()
             .find((el) => this.childItemSet.has(el as MenuItem));
 
-        /* c8 ignore next 1 */
         if (!openedItem) return;
 
         const openedItemIndex = this.childItems.indexOf(openedItem as MenuItem);
@@ -616,7 +614,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         );
 
         if (!applyDefault) {
-            // Cancel the event & don't apply the selection
+            // Cancel the event & don't apply the selection.
             this._selected = oldSelected;
             this.selectedItems = oldSelectedItems;
             this.selectedItemsMap = oldSelectedItemsMap;
@@ -625,7 +623,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             return;
         }
 
-        // Apply the selection changes to the menu items
+        // Apply the selection changes to the menu items.
         if (resolvedSelects === 'single') {
             for (const oldItem of oldSelectedItemsMap.keys()) {
                 if (oldItem !== targetItem) {
@@ -777,7 +775,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         let itemToFocus = this.childItems[this.focusedItemIndex];
         let availableItems = this.childItems.length;
 
-        // cycle through the available items in the directions of the offset to find the next non-disabled item
+        // Cycle through the available items in the directions of the offset to find the next non-disabled item.
         while (itemToFocus?.disabled && availableItems) {
             availableItems -= 1;
             this.focusedItemIndex =
@@ -786,7 +784,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             itemToFocus = this.childItems[this.focusedItemIndex];
         }
 
-        // if there are no non-disabled items, skip the work to focus a child
+        // If there are no non-disabled items, skip the work to focus a child.
         if (!itemToFocus?.disabled) {
             this.forwardFocusVisibleToItem(itemToFocus);
         }
@@ -837,7 +835,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 }
 
                 // Remove "focused" from non-"selected" items ONLY
-                // Preserve "focused" on index===0 when no selection
+                // Preserve "focused" on index===0 when no selection.
                 if (itemIndex !== firstOrFirstSelectedIndex) {
                     childItem.focused = false;
                 }
@@ -845,7 +843,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
         selectedItems.map((item, i) => {
             // When there is more than one "selected" item,
-            // ensure only the first one can be "focused"
+            // ensure only the first one can be "focused".
             if (i > 0) {
                 item.focused = false;
             }
@@ -1006,7 +1004,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         ) {
             if (this.label) {
                 this.setAttribute('aria-label', this.label);
-                /* c8 ignore next 3 */
             } else {
                 this.removeAttribute('aria-label');
             }
@@ -1045,7 +1042,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     protected childItemsUpdated!: Promise<unknown[]>;
     protected cacheUpdated = Promise.resolve();
-    /* c8 ignore next 3 */
     protected resolveCacheUpdated = (): void => {
         return;
     };

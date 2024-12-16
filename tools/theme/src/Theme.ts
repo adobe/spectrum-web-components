@@ -29,13 +29,30 @@ import {
     ThemeFragmentMap,
     ThemeKindProvider,
 } from './theme-interfaces.js';
+
 export type { ProvideLang, ThemeFragmentMap, Color, Scale, SystemVariant };
+
 /**
+ * The `Theme` class is a custom HTML element that provides theming capabilities for web components.
+ * It allows for the application of Spectrum design system themes, including color, scale, and system variants.
+ *
  * @element sp-theme
  *
+ * @property {string} lang - The language of the content scoped to this `sp-theme` element.
+ * @property {string} color - The Spectrum color stops to apply to content scoped by this `sp-theme` element.
+ * @property {string} scale - The Spectrum platform scale to apply to content scoped by this `sp-theme` element.
+ * @property {string} system - The Spectrum system that is applied to the content scoped to this `sp-theme` element.
+ * @property {string} dir - The reading direction of the content scoped to this `sp-theme` element.
  * @slot - Content on which to apply the CSS Custom Properties defined by the current theme configuration
  *
+ * @fires sp-language-context - Dispatched when the language context is provided.
+ * @fires sp-system-context - Dispatched when the system context is provided.
+ *
  * @attribute {string} [lang=""] - The language of the content scoped to this `sp-theme` element, see: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang" target="_blank">MDN reference</a>.
+ * @attribute {string} [color=""] - The Spectrum color stops to apply to content scoped by this `sp-theme` element. Possible values are "lightest", "light", "dark", "darkest".
+ * @attribute {string} [scale=""] - The Spectrum platform scale to apply to content scoped by this `sp-theme` element. Possible values are "medium", "large".
+ * @attribute {string} [system=""] - The Spectrum system that is applied to the content scoped to this `sp-theme` element. Possible values are "spectrum", "express".
+ * @attribute {string} [dir=""] - The reading direction of the content scoped to this `sp-theme` element. Possible values are "ltr", "rtl".
  */
 export class Theme extends HTMLElement implements ThemeKindProvider {
     private static themeFragmentsByKind: ThemeFragmentMap = new Map();
@@ -57,7 +74,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         this._dir = dir;
         const targetDir = dir === 'rtl' ? dir : 'ltr';
 
-        /* c8 ignore next 3 */
         this.trackedChildren.forEach((el) => {
             el.setAttribute('dir', targetDir);
         });
@@ -137,7 +153,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
         if (system) {
             this.setAttribute('system', system);
-            /* c8 ignore next 3 */
         } else {
             this.removeAttribute('system');
         }
@@ -148,7 +163,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     /**
      * The Spectrum color stops to apply to content scoped by this `sp-theme` element.
      *
-     * A value is requried.
+     * A value is required.
      *
      * @type {"lightest" | "light" | "dark" | "darkest" | ""}
      *
@@ -187,7 +202,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     /**
      * The Spectrum platform scale to apply to content scoped by this `sp-theme` element.
      *
-     * A value is requried.
+     * A value is required.
      *
      * @type {"medium" | "large" | ""}
      *
@@ -216,7 +231,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
         if (scale) {
             this.setAttribute('scale', scale);
-            /* c8 ignore next 3 */
         } else {
             this.removeAttribute('scale');
         }
@@ -342,7 +356,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     public updateComplete!: Promise<boolean>;
-    private __resolve!: (compelted: boolean) => void;
+    private __resolve!: (completed: boolean) => void;
 
     private __createDeferredPromise(): Promise<boolean> {
         return new Promise((resolve) => {
@@ -437,7 +451,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         [ProvideLang['callback'], () => void]
     >();
 
-    /* c8 ignore next 5 */
     private _provideContext(): void {
         this._contextConsumers.forEach(([callback, unsubscribe]) =>
             callback(this.lang, unsubscribe)
@@ -454,7 +467,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         event.stopPropagation();
         const target = event.composedPath()[0] as HTMLElement;
 
-        /* c8 ignore next 3 */
         if (this._contextConsumers.has(target)) {
             return;
         }
@@ -477,6 +489,12 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 }
 
+/**
+ * Warns the user if they are using the beta version of the Spectrum Two system.
+ *
+ * @param instance - The instance of the Theme class.
+ * @param value - The system variant value.
+ */
 function warnBetaSystem(instance: Theme, value: SystemVariant): void {
     if (window.__swc.DEBUG && value === 'spectrum-two') {
         window.__swc.warn(
@@ -488,6 +506,15 @@ function warnBetaSystem(instance: Theme, value: SystemVariant): void {
     }
 }
 
+/**
+ * Checks for issues in the theme configuration and logs warnings if any issues are found.
+ *
+ * @param instance - The instance of the Theme class.
+ * @param system - The system variant value.
+ * @param color - The color value.
+ * @param scale - The scale value.
+ * @param themeFragmentsByKind - The map of theme fragments by kind.
+ */
 function checkForIssues(
     instance: Theme,
     system: SystemVariant | '',

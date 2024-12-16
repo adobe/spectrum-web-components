@@ -34,6 +34,16 @@ export interface SizedElementInterface {
     size: ElementSize;
 }
 
+/**
+ * A mixin to add size property to an element.
+ *
+ * @param constructor - The base class to extend.
+ * @param options - Options to configure the mixin.
+ * @param options.validSizes - Array of valid sizes.
+ * @param options.noDefaultSize - Flag to disable default size.
+ * @param options.defaultSize - The size to use when no size is specified.
+ * @returns A class that extends the base class with size property.
+ */
 export function SizedMixin<T extends Constructor<ReactiveElement>>(
     constructor: T,
     {
@@ -46,7 +56,31 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
         defaultSize?: ElementSize;
     } = {}
 ): T & Constructor<SizedElementInterface> {
+    /**
+     * A mixin class that adds size-related properties and methods to a base class.
+     *
+     * This class provides a `size` property that can be used to get or set the size of an element.
+     * The size is validated against a list of valid sizes, and if the provided size is not valid,
+     * a default size is used instead. The size is also reflected as an attribute on the element.
+     *
+     * @template T - The type of the base class.
+     * @function update - Called when the element's properties change. Ensures the `size` attribute is set.
+     *
+     * @param constructor - The base class to extend.
+     * @property {ElementSize} size - The size of the element. This property is reflected as an attribute.
+     *
+     * @private
+     */
     class SizedElement extends constructor {
+        /**
+         * The size of the element, which determines its visual appearance.
+         * Valid values are `xxs`, `xs`, `s`, `m`, `l`, `xl`, and `xxl`.
+         * The size is reflected as an attribute on the element.
+         *
+         * @type {ElementSize}
+         *
+         * @public
+         */
         @property({ type: String })
         public get size(): ElementSize {
             return this._size || defaultSize;

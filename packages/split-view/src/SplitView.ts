@@ -213,11 +213,11 @@ export class SplitView extends SpectrumElement {
     }
 
     /**
-     * @private
-     *
      * Gets the size of the splitter.
      * Calculates the size based on the computed style of the splitter element.
      * Falls back to a default size if the splitter element is not available.
+     *
+     * @private
      */
     public get splitterSize(): number {
         if (!this._splitterSize) {

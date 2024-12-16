@@ -29,6 +29,16 @@ export interface SlotTextObservingInterface {
     manageTextObservedSlot(): void;
 }
 
+/**
+ * A mixin to observe slot text content changes.
+ *
+ * @template T - The type of the constructor.
+ *
+ * @param constructor - The constructor of the element.
+ * @param slotName - The name of the slot to observe.
+ * @param excludedSelectors - The selectors to exclude from observation.
+ * @returns - The extended constructor.
+ */
 export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
     constructor: T,
     slotName?: string,

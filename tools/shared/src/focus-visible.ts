@@ -126,16 +126,17 @@ export const FocusVisiblePolyfillMixin = <
      * with the focus-visible polyfill. It ensures that the polyfill is properly coordinated
      * when the element is connected to or disconnected from the document.
      *
-     * @extends SuperClass
+     * @function connectedCallback
+     * @function disconnectedCallback
      *
-     * @private
+     * @description Overrides the `connectedCallback` method to coordinate with the polyfill when the element is connected to the document.
+     * @description Overrides the `disconnectedCallback` method to remove the polyfill event listener when the element is disconnected from the document to prevent memory leaks.
+     *
      * @property {EndPolyfillCoordinationCallback | null} [$endPolyfillCoordination] - A callback function for ending the polyfill coordination.
      *
-     * @method connectedCallback
-     * @description Overrides the `connectedCallback` method to coordinate with the polyfill when the element is connected to the document.
+     * @augments SuperClass
      *
-     * @method disconnectedCallback
-     * @description Overrides the `disconnectedCallback` method to remove the polyfill event listener when the element is disconnected from the document to prevent memory leaks.
+     * @private
      */
     class FocusVisibleCoordinator extends SuperClass {
         /**

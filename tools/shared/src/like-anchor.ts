@@ -41,6 +41,14 @@ export interface LikeAnchorInterface {
     renderAnchor(options: RenderAnchorOptions): TemplateResult;
 }
 
+/**
+ * A mixin function that adds anchor-like properties and methods to a class.
+ *
+ * @template T - The type of the constructor.
+ *
+ * @param constructor - The constructor of the class to extend.
+ * @returns - The extended class with anchor-like properties and methods.
+ */
 export function LikeAnchor<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<LikeAnchorInterface> {

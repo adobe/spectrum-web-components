@@ -10,6 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/**
+ * Remove specific IDs from an attribute of an element.
+ *
+ * @param el - The element to modify.
+ * @param attribute - The attribute to modify.
+ * @param ids - The IDs to remove from the attribute.
+ */
 export function conditionAttributeWithoutId(
     el: HTMLElement,
     attribute: string,
@@ -29,6 +36,14 @@ export function conditionAttributeWithoutId(
     }
 }
 
+/**
+ * Add specific IDs to an attribute of an element and return a function to remove them.
+ *
+ * @param el - The element to modify.
+ * @param attribute - The attribute to modify.
+ * @param id - The ID or IDs to add to the attribute.
+ * @returns A function to remove the added IDs from the attribute.
+ */
 export function conditionAttributeWithId(
     el: HTMLElement,
     attribute: string,
@@ -40,7 +55,6 @@ export function conditionAttributeWithId(
     const hadIds = ids.every((id) => descriptors.indexOf(id) > -1);
 
     if (hadIds)
-        /* c8 ignore next 3 */
         return (): void => {
             return;
         };

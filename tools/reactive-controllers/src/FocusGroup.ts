@@ -21,6 +21,17 @@ export type FocusGroupConfig<T> = {
     listenerScope?: HTMLElement | (() => HTMLElement);
 };
 
+/**
+ * Ensures that the provided value is a method of the specified type.
+ * If the value is not of the specified type, it returns the fallback method.
+ *
+ * @template T, RT
+ *
+ * @param value - The value to ensure as a method.
+ * @param type - The type to check against.
+ * @param fallback - The fallback method to return if the value is not of the specified type.
+ * @returns - The ensured method.
+ */
 function ensureMethod<T, RT>(
     value: T | RT | undefined,
     type: string,
@@ -80,7 +91,6 @@ export class FocusGroupController<T extends HTMLElement>
     private _elements!: () => T[];
 
     protected set focused(focused: boolean) {
-        /* c8 ignore next 1 */
         if (focused === this.focused) return;
 
         this._focused = focused;
@@ -157,9 +167,11 @@ export class FocusGroupController<T extends HTMLElement>
             this._listenerScope
         );
     }
-    /*  In  handleItemMutation() method the first if condition is checking if the element is not focused or if the element's children's length is not decreasing then it means no element has been deleted and we must return.
-        Then we are checking if the deleted element was the focused one before the deletion if so then we need to proceed else we casn return;
-    */
+
+    /**
+     * Handles mutations to the elements within the focus group.
+     * If an element is removed, it adjusts the focus to the next or previous element.
+     */
     handleItemMutation(): void {
         if (
             this._currentIndex == -1 ||
@@ -191,6 +203,11 @@ export class FocusGroupController<T extends HTMLElement>
         this.manage();
     }
 
+    /**
+     * Sets focus to the current element in the focus group.
+     *
+     * @param [options] - Options for focusing the element.
+     */
     focus(options?: FocusOptions): void {
         const elements = this.elements;
 
@@ -210,6 +227,11 @@ export class FocusGroupController<T extends HTMLElement>
         }
     }
 
+    /**
+     * Clears the cache of elements and resets the offset.
+     *
+     * @param [offset] - The offset to set after clearing the cache.
+     */
     clearElementCache(offset = 0): void {
         this.mutationObserver.disconnect();
         delete this.cachedElements;
@@ -223,6 +245,11 @@ export class FocusGroupController<T extends HTMLElement>
         });
     }
 
+    /**
+     * Sets the current index circularly based on the provided difference.
+     *
+     * @param diff - The difference to adjust the current index by.
+     */
     setCurrentIndexCircularly(diff: number): void {
         const { length } = this.elements;
         let steps = length;
@@ -243,12 +270,18 @@ export class FocusGroupController<T extends HTMLElement>
         this.currentIndex = nextIndex;
     }
 
+    /**
+     * Adds event listeners to handle focus and keydown events.
+     */
     hostContainsFocus(): void {
         this.host.addEventListener('focusout', this.handleFocusout);
         this.host.addEventListener('keydown', this.handleKeydown);
         this.focused = true;
     }
 
+    /**
+     * Removes event listeners for focus and keydown events.
+     */
     hostNoLongerContainsFocus(): void {
         this.host.addEventListener('focusin', this.handleFocusin);
         this.host.removeEventListener('focusout', this.handleFocusout);
@@ -256,6 +289,12 @@ export class FocusGroupController<T extends HTMLElement>
         this.focused = false;
     }
 
+    /**
+     * Checks if the related target of the focus event is within the elements.
+     *
+     * @param event - The focus event to check.
+     * @returns - True if the related target is within the elements, false otherwise.
+     */
     isRelatedTargetOrContainAnElement(event: FocusEvent): boolean {
         const relatedTarget = event.relatedTarget as null | Element;
 
@@ -271,6 +310,11 @@ export class FocusGroupController<T extends HTMLElement>
         );
     }
 
+    /**
+     * Handles the focusin event and updates the current index based on the target element.
+     *
+     * @param event - The event triggered when an element within the focus group gains focus.
+     */
     handleFocusin = (event: FocusEvent): void => {
         if (!this.isEventWithinListenerScope(event)) return;
 
@@ -291,9 +335,7 @@ export class FocusGroupController<T extends HTMLElement>
     };
 
     /**
-     * handleClick - Finds the element that was clicked and sets the tabindex to 0
-     *
-     * @returns void
+     * Handles the click event and sets the tabindex to 0 for the clicked element.
      */
     handleClick = (): void => {
         // Manually set the tabindex to 0 for the current element on receiving focus (from keyboard or mouse)
@@ -318,12 +360,23 @@ export class FocusGroupController<T extends HTMLElement>
         }
     };
 
+    /**
+     * Handles the focusout event and updates the focus state.
+     *
+     * @param event - The event triggered when an element within the focus group loses focus.
+     */
     handleFocusout = (event: FocusEvent): void => {
         if (this.isRelatedTargetOrContainAnElement(event)) {
             this.hostNoLongerContainsFocus();
         }
     };
 
+    /**
+     * Checks if the provided event code is accepted based on the direction.
+     *
+     * @param code - The event code to check.
+     * @returns - True if the event code is accepted, false otherwise.
+     */
     acceptsEventCode(code: string): boolean {
         if (code === 'End' || code === 'Home') {
             return true;
@@ -340,6 +393,11 @@ export class FocusGroupController<T extends HTMLElement>
         }
     }
 
+    /**
+     * Handles the keydown event and updates the current index based on the key pressed.
+     *
+     * @param event - The event triggered when a key is pressed down.
+     */
     handleKeydown = (event: KeyboardEvent): void => {
         if (!this.acceptsEventCode(event.code) || event.defaultPrevented) {
             return;
@@ -391,19 +449,31 @@ export class FocusGroupController<T extends HTMLElement>
         this.focus();
     };
 
+    /**
+     * Adds event listeners to the host element.
+     */
     manage(): void {
         this.addEventListeners();
     }
 
+    /**
+     * Removes event listeners from the host element.
+     */
     unmanage(): void {
         this.removeEventListeners();
     }
 
+    /**
+     * Adds event listeners for focusin and click events.
+     */
     addEventListeners(): void {
         this.host.addEventListener('focusin', this.handleFocusin);
         this.host.addEventListener('click', this.handleClick);
     }
 
+    /**
+     * Removes event listeners for focusin, focusout, keydown, and click events.
+     */
     removeEventListeners(): void {
         this.host.removeEventListener('focusin', this.handleFocusin);
         this.host.removeEventListener('focusout', this.handleFocusout);
@@ -411,16 +481,25 @@ export class FocusGroupController<T extends HTMLElement>
         this.host.removeEventListener('click', this.handleClick);
     }
 
+    /**
+     * Called when the host element is connected to the DOM.
+     */
     hostConnected(): void {
         this.recentlyConnected = true;
         this.addEventListeners();
     }
 
+    /**
+     * Called when the host element is disconnected from the DOM.
+     */
     hostDisconnected(): void {
         this.mutationObserver.disconnect();
         this.removeEventListeners();
     }
 
+    /**
+     * Called when the host element is updated.
+     */
     hostUpdated(): void {
         if (this.recentlyConnected) {
             this.recentlyConnected = false;

@@ -15,6 +15,11 @@ import { FocusVisiblePolyfillMixin } from './focus-visible.js';
 
 type DisableableElement = HTMLElement & { disabled?: boolean };
 
+/**
+ * Returns a promise that resolves on the next animation frame.
+ *
+ * @returns A promise that resolves on the next animation frame.
+ */
 function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }
@@ -332,11 +337,11 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 // If at connect time the [autofocus] content is placed within
                 // content that needs to be "hidden" by default, it would need to wait
                 // two rAFs for animations to be triggered on that content in
-                // order for the [autofocus] to become "visisble" and have its
+                // order for the [autofocus] to become "visible" and have its
                 // focus() capabilities enabled.
                 //
                 // Await this with `getUpdateComplete` so that the element cannot
-                // become "ready" until `manageFocus` has occured.
+                // become "ready" until `manageFocus` has occurred.
                 await nextFrame();
                 await nextFrame();
                 res();

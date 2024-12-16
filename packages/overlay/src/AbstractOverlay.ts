@@ -112,14 +112,14 @@ export const guaranteedAllTransitionend = (
 };
 
 /**
- *
+ * Returns a promise that resolves on the next animation frame.
  */
 export function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }
 
 /**
- * Abstract Overlay base class so that property tyings and imperative API
+ * Abstract Overlay base class so that property typings and imperative API
  * interfaces can be held separate from the actual class definition.
  */
 export class AbstractOverlay extends SpectrumElement {
@@ -129,7 +129,6 @@ export class AbstractOverlay extends SpectrumElement {
     ): Promise<void> {
         return;
     }
-    /* c8 ignore next 6 */
     get delayed(): boolean {
         return false;
     }
@@ -140,7 +139,6 @@ export class AbstractOverlay extends SpectrumElement {
         showPopover(): void;
         hidePopover(): void;
     };
-    /* c8 ignore next 6 */
     get disabled(): boolean {
         return false;
     }
@@ -155,12 +153,10 @@ export class AbstractOverlay extends SpectrumElement {
         this._elementResolver = controller;
     }
     protected _elementResolver!: ElementResolutionController;
-    /* c8 ignore next 3 */
     protected async ensureOnDOM(_targetOpenState: boolean): Promise<void> {
         return;
     }
     elements!: OpenableElement[];
-    /* c8 ignore next 5 */
     protected async makeTransition(
         _targetOpenState: boolean
     ): Promise<HTMLElement | null> {
@@ -169,20 +165,16 @@ export class AbstractOverlay extends SpectrumElement {
     protected async manageDelay(_targetOpenState: boolean): Promise<void> {
         return;
     }
-    /* c8 ignore next 3 */
     protected async manageDialogOpen(): Promise<void> {
         return;
     }
-    /* c8 ignore next 3 */
     protected async managePopoverOpen(): Promise<void> {
         return;
     }
-    /* c8 ignore next 3 */
     protected managePosition(): void {
         return;
     }
     protected offset: number | [number, number] = 0;
-    /* c8 ignore next 6 */
     get open(): boolean {
         return false;
     }
@@ -202,7 +194,6 @@ export class AbstractOverlay extends SpectrumElement {
     protected returnFocus(): void {
         return;
     }
-    /* c8 ignore next 6 */
     get state(): OverlayState {
         return 'closed';
     }
@@ -213,7 +204,6 @@ export class AbstractOverlay extends SpectrumElement {
     triggerElement!: HTMLElement | VirtualTrigger | null;
     type!: OverlayTypes;
     willPreventClose = false;
-    /* c8 ignore next 3 */
     public manuallyKeepOpen(): void {
         return;
     }
@@ -278,12 +268,12 @@ export class AbstractOverlay extends SpectrumElement {
         /**
          * Since content must exist in an <sp-overlay>, we need a way to get it there.
          * The best & most-direct way is to declaratively use an <sp-overlay> element,
-         * but for imperative users, we'll reparent content into an overlay that we've created for them.
+         * but for imperative users, we'll re-parent content into an overlay that we've created for them.
          */
         const restoreContent = reparentChildren([overlayContent], overlay, {
             position: 'beforeend',
             prepareCallback: (el) => {
-                // Ensure that content to be overlaid is no longer targetted to a specific `slot`.
+                // Ensure that content to be overlaid is no longer targeted to a specific `slot`.
                 // This allow for it to be visible in the overlaid context.
                 const slot = el.slot;
 
