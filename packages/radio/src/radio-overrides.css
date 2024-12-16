@@ -79,21 +79,21 @@
     --spectrum-radio-button-checked-border-color-focus: var(
         --system-radio-button-checked-border-color-focus
     );
+    --spectrum-radio-text-to-control: var(--system-radio-text-to-control);
+    --spectrum-radio-label-top-to-text: var(--system-radio-label-top-to-text);
+    --spectrum-radio-label-bottom-to-text: var(
+        --system-radio-label-bottom-to-text
+    );
+    --spectrum-radio-font-size: var(--system-radio-font-size);
     --spectrum-radio-line-height: var(--system-radio-line-height);
     --spectrum-radio-animation-duration: var(--system-radio-animation-duration);
     --spectrum-radio-height: var(--system-radio-height);
     --spectrum-radio-button-control-size: var(
         --system-radio-button-control-size
     );
-    --spectrum-radio-text-to-control: var(--system-radio-text-to-control);
-    --spectrum-radio-label-top-to-text: var(--system-radio-label-top-to-text);
-    --spectrum-radio-label-bottom-to-text: var(
-        --system-radio-label-bottom-to-text
-    );
     --spectrum-radio-button-top-to-control: var(
         --system-radio-button-top-to-control
     );
-    --spectrum-radio-font-size: var(--system-radio-font-size);
 }
 
 :host(:lang(ja)) {
@@ -114,26 +114,6 @@
     );
 }
 
-:host {
-    --spectrum-radio-height: var(--system-radio-size-m-height);
-    --spectrum-radio-button-control-size: var(
-        --system-radio-size-m-button-control-size
-    );
-    --spectrum-radio-text-to-control: var(
-        --system-radio-size-m-text-to-control
-    );
-    --spectrum-radio-label-top-to-text: var(
-        --system-radio-size-m-label-top-to-text
-    );
-    --spectrum-radio-label-bottom-to-text: var(
-        --system-radio-size-m-label-bottom-to-text
-    );
-    --spectrum-radio-button-top-to-control: var(
-        --system-radio-size-m-button-top-to-control
-    );
-    --spectrum-radio-font-size: var(--system-radio-size-m-font-size);
-}
-
 :host([size='s']) {
     --spectrum-radio-height: var(--system-radio-size-s-height);
     --spectrum-radio-button-control-size: var(
@@ -152,6 +132,26 @@
         --system-radio-size-s-button-top-to-control
     );
     --spectrum-radio-font-size: var(--system-radio-size-s-font-size);
+}
+
+:host {
+    --spectrum-radio-height: var(--system-radio-size-m-height);
+    --spectrum-radio-button-control-size: var(
+        --system-radio-size-m-button-control-size
+    );
+    --spectrum-radio-text-to-control: var(
+        --system-radio-size-m-text-to-control
+    );
+    --spectrum-radio-label-top-to-text: var(
+        --system-radio-size-m-label-top-to-text
+    );
+    --spectrum-radio-label-bottom-to-text: var(
+        --system-radio-size-m-label-bottom-to-text
+    );
+    --spectrum-radio-button-top-to-control: var(
+        --system-radio-size-m-button-top-to-control
+    );
+    --spectrum-radio-font-size: var(--system-radio-size-m-font-size);
 }
 
 :host([size='l']) {
