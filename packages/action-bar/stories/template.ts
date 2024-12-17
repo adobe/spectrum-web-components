@@ -21,18 +21,21 @@ export interface Properties {
     emphasized?: boolean;
     open?: boolean;
     variant?: 'sticky' | 'fixed' | undefined;
+    flexible?: boolean;
 }
 
 export const Template = ({
     emphasized,
     open,
     variant = undefined,
+    flexible = false,
 }: Properties): TemplateResult => {
     return html`
         <sp-action-bar
             ?open=${open}
             ?emphasized=${emphasized}
             variant=${ifDefined(variant)}
+            ?flexible=${flexible}
         >
             2 selected
             <sp-action-button slot="buttons" label="Edit">

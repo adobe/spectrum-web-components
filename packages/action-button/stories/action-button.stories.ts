@@ -36,14 +36,14 @@ function renderButtonsSelected(args: Properties): TemplateResult {
         </sp-action-group>
     `;
 }
-export const Default = (args: Properties): TemplateResult => renderButton(args);
-Default.args = {
-    label: 'Edit',
-    icon: html`
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    `,
-    ...Default.args,
-};
+export const Default = (args: Properties): TemplateResult =>
+    renderButton({
+        label: 'Edit',
+        icon: html`
+            <sp-icon-edit slot="icon"></sp-icon-edit>
+        `,
+        ...args,
+    });
 
 export const toggles = (args: Properties): TemplateResult =>
     renderButtonsSelected(args);

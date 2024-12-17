@@ -20,11 +20,10 @@ import '@spectrum-web-components/link/sp-link.js';
 export default {
     title: 'Accordion',
     component: 'sp-accordion',
-    subcomponents: { AccordionItem: 'sp-accordion-item' },
     args: {
         open: false,
         size: 'm',
-        density: undefined,
+        density: '',
     },
     argTypes,
     tags: ['autodocs'],
@@ -34,7 +33,7 @@ type Properties = {
     allowMultiple?: boolean;
     disabled?: boolean;
     open?: boolean;
-    density?: 'compact' | 'spacious' | undefined;
+    density?: 'compact' | 'spacious';
     size?: 's' | 'm' | 'l' | 'xl';
 };
 

@@ -21,7 +21,6 @@ import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { Template } from './template.js';
-import { argTypes } from './args.js';
 
 export default {
     title: 'Action Bar',
@@ -33,14 +32,12 @@ export default {
             url: 'https://www.figma.com/file/MPtRIVRzPp2VHiEplwXL2X/S-%2F-Manual?node-id=465%3A3127&t=xbooxCWItOFgG2xM-1',
         },
     },
-    argTypes,
     tags: ['autodocs'],
 };
 
-export const Default = (args): TemplateResult =>
+export const Default = (): TemplateResult =>
     Template({
         open: true,
-        ...args,
     });
 
 export const emphasized = (): TemplateResult => {

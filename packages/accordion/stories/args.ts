@@ -31,9 +31,9 @@ export const argTypes = {
     },
     density: {
         table: {
-            defaultValue: { summary: 'default' },
+            defaultValue: { summary: 'undefined' },
         },
-        options: ['compact', 'spacious', 'default'],
+        options: ['compact', 'spacious', 'undefined'],
     },
     size: {
         table: {
