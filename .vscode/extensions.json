@@ -1,8 +1,7 @@
 {
   "recommendations": [
     "runem.lit-plugin",
-    "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint",
+    "rvest.vs-code-prettier-eslint",
     "stylelint.vscode-stylelint",
     "formulahendry.auto-close-tag",
     "formulahendry.auto-rename-tag",
