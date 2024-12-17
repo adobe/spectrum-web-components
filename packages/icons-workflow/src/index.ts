@@ -15,4 +15,5 @@ import { setCustomTemplateLiteralTag } from './custom-tag.js';
 
 setCustomTemplateLiteralTag(html);
 
+export { setCustomTemplateLiteralTag };
 export * from './icons.js';
