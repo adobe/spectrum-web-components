@@ -26,7 +26,7 @@ import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slo
 import buttonStyles from './button-base.css.js';
 
 /**
- * @slot - text content to be displayed in the Button element
+ * @slot label - text content to be displayed in the Button element
  * @slot icon - icon element(s) to display at the start of the button
  */
 export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
@@ -36,8 +36,9 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         return [buttonStyles];
     }
 
-    // TODO we need to document this property for consumers,
-    // as it's not a 1:1 equivalent to active
+    /**
+     * @todo we need to document this property for consumers, as it's not a 1:1 equivalent to active
+     */
     @property({ type: Boolean, reflect: true })
     public active = false;
 

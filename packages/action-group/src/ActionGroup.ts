@@ -30,9 +30,15 @@ import styles from './action-group.css.js';
 const EMPTY_SELECTION: string[] = [];
 
 /**
+ * `sp-action-group` delivers a set of action buttons in horizontal or vertical orientation while ensuring the
+ * appropriate spacing between those buttons.
+ *
+ * The `compact` attribute merges these buttons so that they are visually joined to clarify their relationship
+ * to each other and their distance from other buttons/groups.
+ *
  * @element sp-action-group
  *
- * @slot - The sp-action-button elements that make up the group.
+ * @slot default - The sp-action-button elements that make up the group.
  *
  * @fires change - Announces that the selection state has been changed by the user.
  */

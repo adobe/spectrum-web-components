@@ -68,18 +68,12 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
      *
      * @param constructor - The base class to extend.
      * @property {ElementSize} size - The size of the element. This property is reflected as an attribute.
-     *
-     * @private
      */
     class SizedElement extends constructor {
         /**
          * The size of the element, which determines its visual appearance.
-         * Valid values are `xxs`, `xs`, `s`, `m`, `l`, `xl`, and `xxl`.
+         *
          * The size is reflected as an attribute on the element.
-         *
-         * @type {ElementSize}
-         *
-         * @public
          */
         @property({ type: String })
         public get size(): ElementSize {

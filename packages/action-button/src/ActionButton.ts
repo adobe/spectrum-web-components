@@ -55,9 +55,11 @@ export type LongpressEvent = {
 };
 
 /**
+ * An `<sp-action-button>` represents an action a user can take.
+ *
  * @element sp-action-button
  *
- * @slot - The text label of the Action Button.
+ * @slot label - The text label of the Action Button.
  * @slot icon - The icon to use for the Action Button.
  *
  * @fires change - Announces a change in the `selected` property of an action button.

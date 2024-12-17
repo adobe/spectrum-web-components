@@ -37,68 +37,31 @@ export default {
     },
     argTypes: {
         compact: {
-            name: 'compact',
-            description:
-                'Visually joins the buttons together to clarify their relationship to one another.',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: {
                 type: 'boolean',
             },
         },
         emphasized: {
-            name: 'emphasized',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: {
                 type: 'boolean',
             },
         },
         justified: {
-            name: 'justified',
-            description:
-                'Aligns the action group items to use all the available space on that line.',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: {
                 type: 'boolean',
             },
         },
         quiet: {
-            name: 'quiet',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: {
                 type: 'boolean',
             },
         },
         vertical: {
-            name: 'vertical',
-            description: 'Changes the orientation of the action group.',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: {
                 type: 'boolean',
             },
         },
         size: {
-            name: 'size',
-            description: 'The size at which to display the action group.',
             type: { name: 'string', required: true },
             table: {
                 type: { summary: '"s" | "m" | "l" | "xl"' },
@@ -106,8 +69,8 @@ export default {
             },
             control: {
                 type: 'select',
-                options: ['s', 'm', 'l', 'xl'],
             },
+            options: ['s', 'm', 'l', 'xl'],
         },
     },
     tags: ['autodocs'],

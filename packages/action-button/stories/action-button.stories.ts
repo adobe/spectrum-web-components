@@ -36,9 +36,18 @@ function renderButtonsSelected(args: Properties): TemplateResult {
         </sp-action-group>
     `;
 }
+export const Default = (args: Properties): TemplateResult => renderButton(args);
+Default.args = {
+    label: 'Edit',
+    icon: html`
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+    `,
+    ...Default.args,
+};
 
 export const toggles = (args: Properties): TemplateResult =>
     renderButtonsSelected(args);
+
 toggles.args = {
     toggles: true,
     icon: html`
@@ -48,6 +57,7 @@ toggles.args = {
 
 export const href = (args: Properties): TemplateResult =>
     renderButtonsSelected(args);
+
 href.args = {
     href: 'https://github.com/adobe/spectrum-web-components',
     icon: html`
