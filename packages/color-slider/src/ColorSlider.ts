@@ -72,7 +72,6 @@ export class ColorSlider extends Focusable {
     private languageResolver = new LanguageResolutionController(this);
 
     private colorController = new ColorController(this, {
-        /* c8 ignore next 3 */
         applyColorToState: () => {
             this.sliderHandlePosition = 100 * (this.colorController.hue / 360);
         },
@@ -286,7 +285,6 @@ export class ColorSlider extends Focusable {
      * @returns Slider value that correlates to the position under the pointer
      */
     private calculateHandlePosition(event: PointerEvent): number {
-        /* c8 ignore next 3 */
         if (!this.boundingClientRect) {
             return this.sliderHandlePosition;
         }

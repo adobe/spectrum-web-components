@@ -44,7 +44,6 @@ export class GridController<T extends HTMLElement>
         return this._itemSize();
     }
 
-    /* c8 ignore next 6 */
     private _itemSize(): ItemSize {
         return {
             width: 100,
@@ -59,7 +58,6 @@ export class GridController<T extends HTMLElement>
         return this._gap();
     }
 
-    /* c8 ignore next 3 */
     private _gap(): string | undefined {
         return undefined;
     }
@@ -68,7 +66,6 @@ export class GridController<T extends HTMLElement>
         return this._padding();
     }
 
-    /* c8 ignore next 3 */
     private _padding(): string | undefined {
         return undefined;
     }
@@ -124,7 +121,6 @@ export class GridController<T extends HTMLElement>
         gap?: string | (() => string),
         padding?: string | (() => string)
     ): void {
-        /* c8 ignore next 2 */
         if (typeof itemSize === 'object') {
             this._itemSize = () => itemSize;
         } else if (
@@ -134,14 +130,12 @@ export class GridController<T extends HTMLElement>
             this._itemSize = itemSize;
         }
 
-        /* c8 ignore next 2 */
         if (typeof gap === 'string') {
             this._gap = () => gap;
         } else if (typeof gap === 'function') {
             this._gap = gap;
         }
 
-        /* c8 ignore next 2 */
         if (typeof padding === 'string') {
             this._padding = () => padding;
         } else if (typeof padding === 'function') {

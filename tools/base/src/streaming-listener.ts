@@ -22,7 +22,6 @@ type ListenerConfigGroup = {
     streamOutside?: ListenerConfig;
 };
 
-/* c8 ignore next 6 */
 const defaultListener: ListenerConfig = [
     '',
     (): void => {
@@ -50,7 +49,6 @@ class StreamingListenerDirective extends AsyncDirective {
     // Animation frame that will unlock the next "stream" event if/when it is dispatched.
     stream?: number;
 
-    /* c8 ignore next 4 */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     render(_configGroup: ListenerConfigGroup): typeof nothing {
         return nothing;
@@ -149,7 +147,6 @@ class StreamingListenerDirective extends AsyncDirective {
         this.addListeners('off');
     };
 
-    /* c8 ignore next 3 */
     handleOutside = (event: Event): void => {
         this.handleStream(this.streamOutside[1], event);
     };
@@ -185,7 +182,6 @@ class StreamingListenerDirective extends AsyncDirective {
         this.removeListeners();
     }
 
-    /* c8 ignore next 3 */
     override reconnected(): void {
         this.addListeners();
     }

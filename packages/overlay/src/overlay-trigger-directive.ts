@@ -59,7 +59,6 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
     };
     protected insertionOptions?: InsertionOptions;
 
-    /* c8 ignore next 9 */
     override render(
         _template: () => TemplateResult,
         _options?: Partial<OverlayTriggerOptions>
@@ -109,7 +108,6 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
     }
 
     override handleSlottableRequest(event: SlottableRequestEvent): void {
-        /* c8 ignore next 1 */
         if (event.target !== event.currentTarget) return;
 
         const willRemoveSlottable = event.data === removeSlottableRequest;

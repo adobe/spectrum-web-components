@@ -68,7 +68,6 @@ export class ColorWheel extends Focusable {
     private languageResolver = new LanguageResolutionController(this);
 
     private colorController = new ColorController(this, {
-        /* c8 ignore next 3 */
         applyColorToState: () => {
             return;
         },
@@ -268,7 +267,6 @@ export class ColorWheel extends Focusable {
      * @returns Slider value that correlates to the position under the pointer
      */
     private calculateHandlePosition(event: PointerEvent): number {
-        /* c8 ignore next 3 */
         if (!this.boundingClientRect) {
             return this.value;
         }

@@ -895,7 +895,6 @@ export class NumberField extends TextfieldBase {
 
             let inputMode = 'numeric';
 
-            /* c8 ignore next 5 */
             // iPhone doesn't have a minus sign in either numeric or decimal.
             if (isIPhone() && !hasOnlyPositives) inputMode = 'text';
             else if (isIOS() && hasDecimals) inputMode = 'decimal';

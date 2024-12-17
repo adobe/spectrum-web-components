@@ -153,7 +153,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
      * Retrieves the text content of the action button.
      */
     public get itemText(): string {
-        return (this.textContent || /* c8 ignore next */ '').trim();
+        return (this.textContent || '').trim();
     }
 
     constructor() {

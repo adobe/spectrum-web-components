@@ -96,7 +96,6 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
             } else {
                 this.dialog.focus();
             }
-            /* c8 ignore next 3 */
         } else {
             super.focus();
         }

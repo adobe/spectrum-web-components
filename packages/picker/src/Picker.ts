@@ -362,8 +362,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     protected get containerStyles(): StyleInfo {
-        // @todo: test in mobile
-        /* c8 ignore next 5 */
+        /** @todo: test in mobile */
         if (this.isMobile.matches) {
             return {
                 '--swc-menu-width': '100%',
@@ -659,8 +658,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             ${this.dismissHelper} ${menu} ${this.dismissHelper}
         `;
 
-        // @todo: test in mobile
-        /* c8 ignore next 11 */
+        /** @todo: test in mobile */
         if (this.isMobile.matches) {
             this.dependencyManager.add('sp-tray');
             import('@spectrum-web-components/tray/sp-tray.js');

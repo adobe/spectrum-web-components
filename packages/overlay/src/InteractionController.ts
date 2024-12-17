@@ -121,12 +121,10 @@ export class InteractionController implements ReactiveController {
 
     shouldCompleteOpen(): void {}
 
-    /* c8 ignore next 3 */
     init(): void {
         // Abstract init() method.
     }
 
-    /* c8 ignore next 3 */
     initOverlay(): void {
         // Abstract initOverlay() method.
     }

@@ -15,7 +15,7 @@ const supportsPopover = 'showPopover' in document.createElement('div');
 
 class OverlayStack {
     private get document(): Document {
-        return this.root.ownerDocument /* c8 ignore next */ || document;
+        return this.root.ownerDocument || document;
     }
 
     private pointerdownPath?: EventTarget[];

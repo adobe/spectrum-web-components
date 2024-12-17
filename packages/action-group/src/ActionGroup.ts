@@ -54,7 +54,6 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
      * Clears the element cache in the roving tabindex controller.
      */
     public set buttons(buttons: ActionButton[]) {
-        /* c8 ignore next 1 */
         if (buttons === this.buttons) return;
 
         this._buttons = buttons;
@@ -230,7 +229,6 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
      * If announce is true, a 'change' event is dispatched.
      */
     private setSelected(selected: string[], announce?: boolean): void {
-        /* c8 ignore next 1 */
         if (selected === this.selected) return;
 
         const old = this.selected;
@@ -261,7 +259,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             button.selected = false;
             button.tabIndex = -1;
             button.setAttribute(
-                this.selects ? 'aria-checked' : /* c8 ignore */ 'aria-pressed',
+                this.selects ? 'aria-checked' : 'aria-pressed',
                 'false'
             );
         });

@@ -141,7 +141,6 @@ export class OverlayTrigger extends SpectrumElement {
             type = 'longpress';
         } else if (target === this.hoverOverlayElement) {
             type = 'hover';
-            /* c8 ignore next 3 */
         } else {
             return;
         }

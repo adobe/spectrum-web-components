@@ -167,7 +167,6 @@ export class InteractionController implements ReactiveController {
 
     public handleActivate(_event: Event): void {}
 
-    /* c8 ignore next 3 */
     init(): void {}
 
     abort(): void {

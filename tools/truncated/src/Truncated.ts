@@ -161,7 +161,6 @@ export class Truncated extends SpectrumElement {
         this.mutationObserver.disconnect();
 
         if (!this.hasCustomOverflow) {
-            /* c8 ignore next 5 */
             this.mutationObserver.observe(this.content, {
                 subtree: true,
                 childList: true,
@@ -180,7 +179,6 @@ export class Truncated extends SpectrumElement {
 
         navigator.clipboard.writeText(textToCopy);
         this.hasCopied = true;
-        /* c8 ignore next 3 */
         setTimeout(() => {
             this.hasCopied = false;
         }, 6000);

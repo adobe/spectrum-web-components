@@ -269,7 +269,6 @@ export class ColorController {
         hex6: getHexValue,
     };
 
-    /* c8 ignore next 3 */
     public get value(): ColorValue {
         return this.color;
     }
@@ -282,7 +281,6 @@ export class ColorController {
     }
 
     public set color(color: ColorValue) {
-        /* c8 ignore next 3 */
         if (color === this.color) {
             return;
         }

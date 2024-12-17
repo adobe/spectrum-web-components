@@ -154,7 +154,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
         }
 
         const labelText = assignedNodes.map((node) =>
-            (node.textContent || /* c8 ignore next */ '').trim()
+            (node.textContent || '').trim()
         );
 
         return labelText.join(' ');

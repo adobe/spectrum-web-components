@@ -65,7 +65,6 @@ export class Grid extends LitVirtualizer {
     gridController = new GridController<HTMLElement>(this, {
         elements: () => [],
         itemSize: () => this.itemSize,
-        /* c8 ignore next 2 */
         gap: () => this.gap,
         padding: () => this.padding || this.gap,
     });
