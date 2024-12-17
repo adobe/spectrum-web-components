@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-  CSSResultArray,
-  html,
-  SpectrumElement,
-  TemplateResult,
+    CSSResultArray,
+    html,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { TableHeadCell } from './TableHeadCell.js';
@@ -26,59 +26,60 @@ import styles from './table-head.css.js';
  * This component represents the table head row.
  */
 export class TableHead extends SpectrumElement {
-  /**
-   * Returns the styles to be applied to the component
-   */
-  public static override get styles(): CSSResultArray {
-    return [styles];
-  }
+    /**
+     * Returns the styles to be applied to the component
+     */
+    public static override get styles(): CSSResultArray {
+        return [styles];
+    }
 
-  /**
-   * The ARIA role of the table row.
-   */
-  @property({ reflect: true })
-  public override role = 'row';
+    /**
+     * The ARIA role of the table row.
+     */
+    @property({ reflect: true })
+    public override role = 'row';
 
-  /**
-   * Indicates whether the table head row is selected.
-   */
-  @property({ type: Boolean, reflect: true })
-  public selected?: boolean;
+    /**
+     * Indicates whether the table head row is selected.
+     */
+    @property({ type: Boolean, reflect: true })
+    public selected?: boolean;
 
-  /**
-   * Handles the sorted event for the table head cells.
-   * Resets the sort direction of all other cells except the target cell.
-   */
-  private handleSorted({ target }: Event): void {
-    const childCells = [...this.children] as TableHeadCell[];
+    /**
+     * Handles the sorted event for the table head cells.
+     * Resets the sort direction of all other cells except the target cell.
+     */
+    private handleSorted({ target }: Event): void {
+        const childCells = [...this.children] as TableHeadCell[];
 
-    childCells.forEach((cell) => {
-      if (cell !== target) {
-        cell.sortDirection = undefined;
-      }
-    });
-  }
+        childCells.forEach((cell) => {
+            if (cell !== target) {
+                cell.sortDirection = undefined;
+            }
+        });
+    }
 
-  /**
-   * Handles the change event for the table head checkbox cell.
-   * Updates the selected state based on the checkbox state.
-   */
-  protected handleChange({
-    target: checkboxCell,
-  }: Event & { target: TableCheckboxCell }): void {
-    this.selected =
-      checkboxCell.checkbox.checked || checkboxCell.checkbox.indeterminate;
-  }
+    /**
+     * Handles the change event for the table head checkbox cell.
+     * Updates the selected state based on the checkbox state.
+     */
+    protected handleChange({
+        target: checkboxCell,
+    }: Event & { target: TableCheckboxCell }): void {
+        this.selected =
+            checkboxCell.checkbox.checked ||
+            checkboxCell.checkbox.indeterminate;
+    }
 
-  /**
-   * Renders the component template.
-   */
-  protected override render(): TemplateResult {
-    return html`
-      <slot
-        @sorted="${this.handleSorted}"
-        @change="${this.handleChange}"
-      ></slot>
-    `;
-  }
+    /**
+     * Renders the component template.
+     */
+    protected override render(): TemplateResult {
+        return html`
+            <slot
+                @sorted=${this.handleSorted}
+                @change=${this.handleChange}
+            ></slot>
+        `;
+    }
 }

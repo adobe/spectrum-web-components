@@ -12,41 +12,44 @@ governing permissions and limitations under the License.
 import { expect, Page, test } from '@playwright/test';
 
 test.describe('search and go', () => {
-  const startURL = 'https://opensource.adobe.com/spectrum-web-components/';
-  const menuSelector =
-    '#search-container sp-overlay[open] > sp-popover > sp-menu > sp-menu-group:nth-child(1)';
-  const searchFor = async (searchString: string, page: Page): Promise<void> => {
-    await page.keyboard.type(searchString, { delay: 100 });
-    const menu = await page.locator(menuSelector);
+    const startURL = 'https://opensource.adobe.com/spectrum-web-components/';
+    const menuSelector =
+        '#search-container sp-overlay[open] > sp-popover > sp-menu > sp-menu-group:nth-child(1)';
+    const searchFor = async (
+        searchString: string,
+        page: Page
+    ): Promise<void> => {
+        await page.keyboard.type(searchString, { delay: 100 });
+        const menu = await page.locator(menuSelector);
 
-    await page.keyboard.press('ArrowDown');
-    await expect(menu).toBeFocused();
-    await page.keyboard.press('Enter');
-  };
+        await page.keyboard.press('ArrowDown');
+        await expect(menu).toBeFocused();
+        await page.keyboard.press('Enter');
+    };
 
-  test.beforeEach(async ({ page }) => {
-    await page.goto(startURL);
+    test.beforeEach(async ({ page }) => {
+        await page.goto(startURL);
 
-    // Click the get started link.
-    const searchField = await page.getByRole('searchbox', {
-      name: 'Search',
+        // Click the get started link.
+        const searchField = await page.getByRole('searchbox', {
+            name: 'Search',
+        });
+
+        await searchField.focus();
     });
 
-    await searchField.focus();
-  });
+    test('component: accordion', async ({ page }) => {
+        await searchFor('accordion', page);
+        await expect(page).toHaveURL(/accordion/);
+    });
 
-  test('component: accordion', async ({ page }) => {
-    await searchFor('accordion', page);
-    await expect(page).toHaveURL(/accordion/);
-  });
+    test('tool: base', async ({ page }) => {
+        await searchFor('base', page);
+        await expect(page).toHaveURL(/base/);
+    });
 
-  test('tool: base', async ({ page }) => {
-    await searchFor('base', page);
-    await expect(page).toHaveURL(/base/);
-  });
-
-  test('guide: getting-started', async ({ page }) => {
-    await searchFor('getting started', page);
-    await expect(page).toHaveURL(/getting-started/);
-  });
+    test('guide: getting-started', async ({ page }) => {
+        await searchFor('getting started', page);
+        await expect(page).toHaveURL(/getting-started/);
+    });
 });

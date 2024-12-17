@@ -11,20 +11,20 @@ governing permissions and limitations under the License.
 */
 
 import {
-  CSSResultArray,
-  html,
-  nothing,
-  PropertyValues,
-  TemplateResult,
+    CSSResultArray,
+    html,
+    nothing,
+    PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-  ObserveSlotPresence,
-  ObserveSlotText,
-  randomID,
+    ObserveSlotPresence,
+    ObserveSlotText,
+    randomID,
 } from '@spectrum-web-components/shared';
 import {
-  property,
-  query,
+    property,
+    query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
@@ -48,35 +48,35 @@ import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slot
 const POINTERLEAVE_TIMEOUT = 100;
 
 type MenuCascadeItem = {
-  hadFocusRoot: boolean;
-  ancestorWithSelects?: HTMLElement;
+    hadFocusRoot: boolean;
+    ancestorWithSelects?: HTMLElement;
 };
 
 export class MenuItemAddedOrUpdatedEvent extends Event {
-  constructor(item: MenuItem) {
-    super('sp-menu-item-added-or-updated', {
-      bubbles: true,
-      composed: true,
-    });
-    this.clear(item);
-  }
-  clear(item: MenuItem): void {
-    this._item = item;
-    this.currentAncestorWithSelects = undefined;
-    item.menuData = {
-      cleanupSteps: [],
-      focusRoot: undefined,
-      selectionRoot: undefined,
-      parentMenu: undefined,
-    };
-    this.menuCascade = new WeakMap<HTMLElement, MenuCascadeItem>();
-  }
-  menuCascade = new WeakMap<HTMLElement, MenuCascadeItem>();
-  get item(): MenuItem {
-    return this._item;
-  }
-  private _item!: MenuItem;
-  currentAncestorWithSelects?: Menu;
+    constructor(item: MenuItem) {
+        super('sp-menu-item-added-or-updated', {
+            bubbles: true,
+            composed: true,
+        });
+        this.clear(item);
+    }
+    clear(item: MenuItem): void {
+        this._item = item;
+        this.currentAncestorWithSelects = undefined;
+        item.menuData = {
+            cleanupSteps: [],
+            focusRoot: undefined,
+            selectionRoot: undefined,
+            parentMenu: undefined,
+        };
+        this.menuCascade = new WeakMap<HTMLElement, MenuCascadeItem>();
+    }
+    menuCascade = new WeakMap<HTMLElement, MenuCascadeItem>();
+    get item(): MenuItem {
+        return this._item;
+    }
+    private _item!: MenuItem;
+    currentAncestorWithSelects?: Menu;
 }
 
 export type MenuItemChildren = { icon: Element[]; content: Node[] };
@@ -93,548 +93,571 @@ export type MenuItemChildren = { icon: Element[]; content: Node[] };
  * @fires sp-menu-item-added - announces the item has been added so a parent menu can take ownerships
  */
 export class MenuItem extends LikeAnchor(
-  ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
+    ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
 ) {
-  public static override get styles(): CSSResultArray {
-    return [
-      menuItemStyles,
-      checkmarkStyles,
-      checkmarkSmallOverrides,
-      chevronStyles,
-      chevronIconOverrides,
-    ];
-  }
-
-  abortControllerSubmenu!: AbortController;
-
-  @property({ type: Boolean, reflect: true })
-  public active = false;
-
-  private dependencyManager = new DependencyManagerController(this);
-
-  @property({ type: Boolean, reflect: true })
-  public focused = false;
-
-  @property({ type: Boolean, reflect: true })
-  public selected = false;
-
-  @property({ type: String })
-  public get value(): string {
-    return this._value || this.itemText;
-  }
-
-  public set value(value: string) {
-    if (value === this._value) {
-      return;
+    public static override get styles(): CSSResultArray {
+        return [
+            menuItemStyles,
+            checkmarkStyles,
+            checkmarkSmallOverrides,
+            chevronStyles,
+            chevronIconOverrides,
+        ];
     }
 
-    this._value = value || '';
+    abortControllerSubmenu!: AbortController;
 
-    if (this._value) {
-      this.setAttribute('value', this._value);
-    } else {
-      this.removeAttribute('value');
-    }
-  }
+    @property({ type: Boolean, reflect: true })
+    public active = false;
 
-  private _value = '';
+    private dependencyManager = new DependencyManagerController(this);
 
-  /**
-   * @private
-   */
-  public get itemText(): string {
-    return this.itemChildren.content.reduce(
-      (acc, node) => acc + (node.textContent || '').trim(),
-      ''
-    );
-  }
+    @property({ type: Boolean, reflect: true })
+    public focused = false;
 
-  @property({ type: Boolean, reflect: true, attribute: 'has-submenu' })
-  public hasSubmenu = false;
+    @property({ type: Boolean, reflect: true })
+    public selected = false;
 
-  @query('slot:not([name])')
-  contentSlot!: HTMLSlotElement;
-
-  @query('slot[name="icon"]')
-  iconSlot!: HTMLSlotElement;
-
-  @property({
-    type: Boolean,
-    reflect: true,
-    attribute: 'no-wrap',
-    hasChanged() {
-      return false;
-    },
-  })
-  public noWrap = false;
-
-  @query('.anchor')
-  private anchorElement!: HTMLAnchorElement;
-
-  @query('sp-overlay')
-  public overlayElement!: Overlay;
-
-  private submenuElement?: HTMLElement;
-
-  public override get focusElement(): HTMLElement {
-    return this;
-  }
-
-  protected get hasIcon(): boolean {
-    return this.slotContentIsPresent;
-  }
-
-  public get itemChildren(): MenuItemChildren {
-    if (!this.iconSlot || !this.contentSlot) {
-      return {
-        icon: [],
-        content: [],
-      };
+    @property({ type: String })
+    public get value(): string {
+        return this._value || this.itemText;
     }
 
-    if (this._itemChildren) {
-      return this._itemChildren;
-    }
-
-    const icon = this.iconSlot.assignedElements().map((element) => {
-      const newElement = element.cloneNode(true) as HTMLElement;
-
-      newElement.removeAttribute('slot');
-      newElement.classList.toggle('icon');
-
-      return newElement;
-    });
-    const content = this.contentSlot
-      .assignedNodes()
-      .map((node) => node.cloneNode(true));
-
-    this._itemChildren = { icon, content };
-
-    return this._itemChildren;
-  }
-
-  private _itemChildren?: MenuItemChildren;
-
-  constructor() {
-    super();
-    this.addEventListener('click', this.handleClickCapture, {
-      capture: true,
-    });
-
-    new MutationController(this, {
-      config: {
-        characterData: true,
-        childList: true,
-        subtree: true,
-      },
-      callback: (mutations) => {
-        const isSubmenu = mutations.every(
-          (mutation) => (mutation.target as HTMLElement).slot === 'submenu'
-        );
-
-        if (isSubmenu) {
-          return;
+    public set value(value: string) {
+        if (value === this._value) {
+            return;
         }
 
-        this.breakItemChildrenCache();
-      },
-    });
-  }
+        this._value = value || '';
 
-  @property({ type: Boolean, reflect: true })
-  public open = false;
-
-  public override click(): void {
-    if (this.disabled) {
-      return;
+        if (this._value) {
+            this.setAttribute('value', this._value);
+        } else {
+            this.removeAttribute('value');
+        }
     }
 
-    if (this.shouldProxyClick()) {
-      return;
+    private _value = '';
+
+    /**
+     * @private
+     */
+    public get itemText(): string {
+        return this.itemChildren.content.reduce(
+            (acc, node) => acc + (node.textContent || '').trim(),
+            ''
+        );
     }
 
-    super.click();
-  }
+    @property({ type: Boolean, reflect: true, attribute: 'has-submenu' })
+    public hasSubmenu = false;
 
-  private handleClickCapture(event: Event): void | boolean {
-    if (this.disabled) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      event.stopPropagation();
+    @query('slot:not([name])')
+    contentSlot!: HTMLSlotElement;
 
-      return false;
-    }
-  }
+    @query('slot[name="icon"]')
+    iconSlot!: HTMLSlotElement;
 
-  private handleSlottableRequest = (event: SlottableRequestEvent): void => {
-    this.submenuElement?.dispatchEvent(
-      new SlottableRequestEvent(event.name, event.data)
-    );
-  };
+    @property({
+        type: Boolean,
+        reflect: true,
+        attribute: 'no-wrap',
+        hasChanged() {
+            return false;
+        },
+    })
+    public noWrap = false;
 
-  private proxyFocus = (): void => {
-    this.focus();
-  };
+    @query('.anchor')
+    private anchorElement!: HTMLAnchorElement;
 
-  private shouldProxyClick(): boolean {
-    let handled = false;
+    @query('sp-overlay')
+    public overlayElement!: Overlay;
 
-    if (this.anchorElement) {
-      this.anchorElement.click();
-      handled = true;
-    }
+    private submenuElement?: HTMLElement;
 
-    return handled;
-  }
-
-  protected breakItemChildrenCache(): void {
-    this._itemChildren = undefined;
-    this.triggerUpdate();
-  }
-
-  protected renderSubmenu(): TemplateResult {
-    const slot = html`
-      <slot
-        name="submenu"
-        @slotchange="${this.manageSubmenu}"
-        @sp-menu-item-added-or-updated="${{
-          handleEvent: (event: MenuItemAddedOrUpdatedEvent) => {
-            event.clear(event.item);
-          },
-          capture: true,
-        }}"
-        @focusin="${(event: Event) => event.stopPropagation()}"
-      ></slot>
-    `;
-
-    if (!this.hasSubmenu) {
-      return slot;
+    public override get focusElement(): HTMLElement {
+        return this;
     }
 
-    this.dependencyManager.add('sp-overlay');
-    this.dependencyManager.add('sp-popover');
-    import('@spectrum-web-components/overlay/sp-overlay.js');
-    import('@spectrum-web-components/popover/sp-popover.js');
+    protected get hasIcon(): boolean {
+        return this.slotContentIsPresent;
+    }
 
-    return html`
-      <sp-overlay
-        .triggerElement="${this as HTMLElement}"
-        ?disabled="${!this.hasSubmenu}"
-        ?open="${this.hasSubmenu && this.open && this.dependencyManager.loaded}"
-        .placement="${this.isLTR ? 'right-start' : 'left-start'}"
-        .offset="${[-10, -5] as [number, number]}"
-        .type="${'auto'}"
-        @close="${(event: Event) => event.stopPropagation()}"
-        @slottable-request="${this.handleSlottableRequest}"
-      >
-        <sp-popover
-          @change="${(event: Event) => {
-            this.handleSubmenuChange(event);
-            this.open = false;
-          }}"
-          @pointerenter="${this.handleSubmenuPointerenter}"
-          @pointerleave="${this.handleSubmenuPointerleave}"
-          @sp-menu-item-added-or-updated="${(event: Event) =>
-            event.stopPropagation()}"
-        >
-          ${slot}
-        </sp-popover>
-      </sp-overlay>
-      <sp-icon-chevron100
-        class="spectrum-UIIcon-ChevronRight100 chevron icon"
-      ></sp-icon-chevron100>
-    `;
-  }
+    public get itemChildren(): MenuItemChildren {
+        if (!this.iconSlot || !this.contentSlot) {
+            return {
+                icon: [],
+                content: [],
+            };
+        }
 
-  protected override render(): TemplateResult {
-    return html`
-      ${this.selected
-        ? html`
-            <sp-icon-checkmark100
-              id="selected"
-              class="spectrum-UIIcon-Checkmark100 
+        if (this._itemChildren) {
+            return this._itemChildren;
+        }
+
+        const icon = this.iconSlot.assignedElements().map((element) => {
+            const newElement = element.cloneNode(true) as HTMLElement;
+
+            newElement.removeAttribute('slot');
+            newElement.classList.toggle('icon');
+
+            return newElement;
+        });
+        const content = this.contentSlot
+            .assignedNodes()
+            .map((node) => node.cloneNode(true));
+
+        this._itemChildren = { icon, content };
+
+        return this._itemChildren;
+    }
+
+    private _itemChildren?: MenuItemChildren;
+
+    constructor() {
+        super();
+        this.addEventListener('click', this.handleClickCapture, {
+            capture: true,
+        });
+
+        new MutationController(this, {
+            config: {
+                characterData: true,
+                childList: true,
+                subtree: true,
+            },
+            callback: (mutations) => {
+                const isSubmenu = mutations.every(
+                    (mutation) =>
+                        (mutation.target as HTMLElement).slot === 'submenu'
+                );
+
+                if (isSubmenu) {
+                    return;
+                }
+
+                this.breakItemChildrenCache();
+            },
+        });
+    }
+
+    @property({ type: Boolean, reflect: true })
+    public open = false;
+
+    public override click(): void {
+        if (this.disabled) {
+            return;
+        }
+
+        if (this.shouldProxyClick()) {
+            return;
+        }
+
+        super.click();
+    }
+
+    private handleClickCapture(event: Event): void | boolean {
+        if (this.disabled) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            event.stopPropagation();
+
+            return false;
+        }
+    }
+
+    private handleSlottableRequest = (event: SlottableRequestEvent): void => {
+        this.submenuElement?.dispatchEvent(
+            new SlottableRequestEvent(event.name, event.data)
+        );
+    };
+
+    private proxyFocus = (): void => {
+        this.focus();
+    };
+
+    private shouldProxyClick(): boolean {
+        let handled = false;
+
+        if (this.anchorElement) {
+            this.anchorElement.click();
+            handled = true;
+        }
+
+        return handled;
+    }
+
+    protected breakItemChildrenCache(): void {
+        this._itemChildren = undefined;
+        this.triggerUpdate();
+    }
+
+    protected renderSubmenu(): TemplateResult {
+        const slot = html`
+            <slot
+                name="submenu"
+                @slotchange=${this.manageSubmenu}
+                @sp-menu-item-added-or-updated=${{
+                    handleEvent: (event: MenuItemAddedOrUpdatedEvent) => {
+                        event.clear(event.item);
+                    },
+                    capture: true,
+                }}
+                @focusin=${(event: Event) => event.stopPropagation()}
+            ></slot>
+        `;
+
+        if (!this.hasSubmenu) {
+            return slot;
+        }
+
+        this.dependencyManager.add('sp-overlay');
+        this.dependencyManager.add('sp-popover');
+        import('@spectrum-web-components/overlay/sp-overlay.js');
+        import('@spectrum-web-components/popover/sp-popover.js');
+
+        return html`
+            <sp-overlay
+                .triggerElement=${this as HTMLElement}
+                ?disabled=${!this.hasSubmenu}
+                ?open=${this.hasSubmenu &&
+                this.open &&
+                this.dependencyManager.loaded}
+                .placement=${this.isLTR ? 'right-start' : 'left-start'}
+                .offset=${[-10, -5] as [number, number]}
+                .type=${'auto'}
+                @close=${(event: Event) => event.stopPropagation()}
+                @slottable-request=${this.handleSlottableRequest}
+            >
+                <sp-popover
+                    @change=${(event: Event) => {
+                        this.handleSubmenuChange(event);
+                        this.open = false;
+                    }}
+                    @pointerenter=${this.handleSubmenuPointerenter}
+                    @pointerleave=${this.handleSubmenuPointerleave}
+                    @sp-menu-item-added-or-updated=${(event: Event) =>
+                        event.stopPropagation()}
+                >
+                    ${slot}
+                </sp-popover>
+            </sp-overlay>
+            <sp-icon-chevron100
+                class="spectrum-UIIcon-ChevronRight100 chevron icon"
+            ></sp-icon-chevron100>
+        `;
+    }
+
+    protected override render(): TemplateResult {
+        return html`
+            ${this.selected
+                ? html`
+                      <sp-icon-checkmark100
+                          id="selected"
+                          class="spectrum-UIIcon-Checkmark100 
                             icon 
                             checkmark
                             ${this.hasIcon
-                ? 'checkmark--withAdjacentIcon'
-                : ''}"
-            ></sp-icon-checkmark100>
-          `
-        : nothing}
-      <slot name="icon"></slot>
-      <div id="label">
-        <slot id="slot"></slot>
-      </div>
-      <slot name="description"></slot>
-      <slot name="value"></slot>
-      ${this.href && this.href.length > 0
-        ? super.renderAnchor({
-            id: 'button',
-            ariaHidden: true,
-            className: 'button anchor hidden',
-          })
-        : nothing}
-      ${this.renderSubmenu()}
-    `;
-  }
-
-  protected manageSubmenu(event: Event & { target: HTMLSlotElement }): void {
-    this.submenuElement = event.target.assignedElements({
-      flatten: true,
-    })[0] as HTMLElement;
-    this.hasSubmenu = !!this.submenuElement;
-
-    if (this.hasSubmenu) {
-      this.setAttribute('aria-haspopup', 'true');
-    }
-  }
-
-  private handlePointerdown(event: PointerEvent): void {
-    if (event.target === this && this.hasSubmenu && this.open) {
-      this.addEventListener('focus', this.handleSubmenuFocus, {
-        once: true,
-      });
-      this.overlayElement.addEventListener(
-        'beforetoggle',
-        this.handleBeforetoggle
-      );
-    }
-  }
-
-  protected override firstUpdated(changes: PropertyValues): void {
-    super.firstUpdated(changes);
-    this.setAttribute('tabindex', '-1');
-    this.addEventListener('pointerdown', this.handlePointerdown);
-    this.addEventListener('pointerenter', this.closeOverlaysForRoot);
-
-    if (!this.hasAttribute('id')) {
-      this.id = `sp-menu-item-${randomID()}`;
-    }
-  }
-
-  protected closeOverlaysForRoot(): void {
-    if (this.open) return;
-
-    this.menuData.parentMenu?.closeDescendentOverlays();
-  }
-
-  protected handleSubmenuClick(event: Event): void {
-    if (event.composedPath().includes(this.overlayElement)) {
-      return;
+                              ? 'checkmark--withAdjacentIcon'
+                              : ''}"
+                      ></sp-icon-checkmark100>
+                  `
+                : nothing}
+            <slot name="icon"></slot>
+            <div id="label">
+                <slot id="slot"></slot>
+            </div>
+            <slot name="description"></slot>
+            <slot name="value"></slot>
+            ${this.href && this.href.length > 0
+                ? super.renderAnchor({
+                      id: 'button',
+                      ariaHidden: true,
+                      className: 'button anchor hidden',
+                  })
+                : nothing}
+            ${this.renderSubmenu()}
+        `;
     }
 
-    this.openOverlay();
-  }
+    protected manageSubmenu(event: Event & { target: HTMLSlotElement }): void {
+        this.submenuElement = event.target.assignedElements({
+            flatten: true,
+        })[0] as HTMLElement;
+        this.hasSubmenu = !!this.submenuElement;
 
-  protected handleSubmenuFocus(): void {
-    requestAnimationFrame(() => {
-      // Wait till after `closeDescendentOverlays` has happened in Menu
-      // to reopen (keep open) the direct descendent of this Menu Item
-      this.overlayElement.open = this.open;
-    });
-  }
-
-  protected handleBeforetoggle = (event: Event): void => {
-    if ((event as Event & { newState: string }).newState === 'closed') {
-      this.open = true;
-      this.overlayElement.manuallyKeepOpen();
-      this.overlayElement.removeEventListener(
-        'beforetoggle',
-        this.handleBeforetoggle
-      );
-    }
-  };
-
-  protected handlePointerenter(): void {
-    if (this.leaveTimeout) {
-      clearTimeout(this.leaveTimeout);
-      delete this.leaveTimeout;
-
-      return;
+        if (this.hasSubmenu) {
+            this.setAttribute('aria-haspopup', 'true');
+        }
     }
 
-    this.openOverlay();
-  }
-
-  protected leaveTimeout?: ReturnType<typeof setTimeout>;
-  protected recentlyLeftChild = false;
-
-  protected handlePointerleave(): void {
-    if (this.open && !this.recentlyLeftChild) {
-      this.leaveTimeout = setTimeout(() => {
-        delete this.leaveTimeout;
-        this.open = false;
-      }, POINTERLEAVE_TIMEOUT);
-    }
-  }
-
-  /**
-   * When there is a `change` event in the submenu for this item
-   * then we "click" this item to cascade the selection up the
-   * menu tree allowing all submenus between the initial selection
-   * and the root of the tree to have their selection changes and
-   * be closed.
-   */
-  protected handleSubmenuChange(event: Event): void {
-    event.stopPropagation();
-    this.menuData.selectionRoot?.selectOrToggleItem(this);
-  }
-
-  protected handleSubmenuPointerenter(): void {
-    this.recentlyLeftChild = true;
-  }
-
-  protected async handleSubmenuPointerleave(): Promise<void> {
-    requestAnimationFrame(() => {
-      this.recentlyLeftChild = false;
-    });
-  }
-
-  protected handleSubmenuOpen(event: Event): void {
-    this.focused = false;
-    const parentOverlay = event.composedPath().find((el) => {
-      return (
-        el !== this.overlayElement &&
-        (el as HTMLElement).localName === 'sp-overlay'
-      );
-    }) as Overlay;
-
-    this.overlayElement.parentOverlayToForceClose = parentOverlay;
-  }
-
-  protected cleanup(): void {
-    this.open = false;
-    this.active = false;
-  }
-
-  public async openOverlay(): Promise<void> {
-    if (!this.hasSubmenu || this.open || this.disabled) {
-      return;
+    private handlePointerdown(event: PointerEvent): void {
+        if (event.target === this && this.hasSubmenu && this.open) {
+            this.addEventListener('focus', this.handleSubmenuFocus, {
+                once: true,
+            });
+            this.overlayElement.addEventListener(
+                'beforetoggle',
+                this.handleBeforetoggle
+            );
+        }
     }
 
-    this.open = true;
-    this.active = true;
-    this.setAttribute('aria-expanded', 'true');
-    this.addEventListener('sp-closed', this.cleanup, {
-      once: true,
-    });
-  }
+    protected override firstUpdated(changes: PropertyValues): void {
+        super.firstUpdated(changes);
+        this.setAttribute('tabindex', '-1');
+        this.addEventListener('pointerdown', this.handlePointerdown);
+        this.addEventListener('pointerenter', this.closeOverlaysForRoot);
 
-  updateAriaSelected(): void {
-    const role = this.getAttribute('role');
-
-    if (role === 'option') {
-      this.setAttribute('aria-selected', this.selected ? 'true' : 'false');
-    } else if (role === 'menuitemcheckbox' || role === 'menuitemradio') {
-      this.setAttribute('aria-checked', this.selected ? 'true' : 'false');
-    }
-  }
-
-  public setRole(role: string): void {
-    this.setAttribute('role', role);
-    this.updateAriaSelected();
-  }
-
-  protected override updated(changes: PropertyValues<this>): void {
-    super.updated(changes);
-
-    if (
-      changes.has('label') &&
-      (this.label || typeof changes.get('label') !== 'undefined')
-    ) {
-      this.setAttribute('aria-label', this.label || '');
+        if (!this.hasAttribute('id')) {
+            this.id = `sp-menu-item-${randomID()}`;
+        }
     }
 
-    if (
-      changes.has('active') &&
-      (this.active || typeof changes.get('active') !== 'undefined')
-    ) {
-      if (this.active) {
-        this.menuData.selectionRoot?.closeDescendentOverlays();
-      }
+    protected closeOverlaysForRoot(): void {
+        if (this.open) return;
+
+        this.menuData.parentMenu?.closeDescendentOverlays();
     }
 
-    if (this.anchorElement) {
-      this.anchorElement.addEventListener('focus', this.proxyFocus);
-      this.anchorElement.tabIndex = -1;
+    protected handleSubmenuClick(event: Event): void {
+        if (event.composedPath().includes(this.overlayElement)) {
+            return;
+        }
+
+        this.openOverlay();
     }
 
-    if (changes.has('selected')) {
-      this.updateAriaSelected();
+    protected handleSubmenuFocus(): void {
+        requestAnimationFrame(() => {
+            // Wait till after `closeDescendentOverlays` has happened in Menu
+            // to reopen (keep open) the direct descendent of this Menu Item
+            this.overlayElement.open = this.open;
+        });
     }
 
-    if (
-      changes.has('hasSubmenu') &&
-      (this.hasSubmenu || typeof changes.get('hasSubmenu') !== 'undefined')
-    ) {
-      if (this.hasSubmenu) {
-        this.abortControllerSubmenu = new AbortController();
-        const options = { signal: this.abortControllerSubmenu.signal };
-
-        this.addEventListener('click', this.handleSubmenuClick, options);
-        this.addEventListener('pointerenter', this.handlePointerenter, options);
-        this.addEventListener('pointerleave', this.handlePointerleave, options);
-        this.addEventListener('sp-opened', this.handleSubmenuOpen, options);
-      } else {
-        this.abortControllerSubmenu?.abort();
-      }
-    }
-  }
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.triggerUpdate();
-  }
-
-  _parentElement!: HTMLElement;
-
-  public override disconnectedCallback(): void {
-    this.menuData.cleanupSteps.forEach((removal) => removal(this));
-    this.menuData = {
-      focusRoot: undefined,
-      parentMenu: undefined,
-      selectionRoot: undefined,
-      cleanupSteps: [],
+    protected handleBeforetoggle = (event: Event): void => {
+        if ((event as Event & { newState: string }).newState === 'closed') {
+            this.open = true;
+            this.overlayElement.manuallyKeepOpen();
+            this.overlayElement.removeEventListener(
+                'beforetoggle',
+                this.handleBeforetoggle
+            );
+        }
     };
-    super.disconnectedCallback();
-  }
 
-  private willDispatchUpdate = false;
+    protected handlePointerenter(): void {
+        if (this.leaveTimeout) {
+            clearTimeout(this.leaveTimeout);
+            delete this.leaveTimeout;
 
-  public async triggerUpdate(): Promise<void> {
-    if (this.willDispatchUpdate) {
-      return;
+            return;
+        }
+
+        this.openOverlay();
     }
 
-    this.willDispatchUpdate = true;
-    await new Promise((ready) => requestAnimationFrame(ready));
-    this.dispatchUpdate();
-  }
+    protected leaveTimeout?: ReturnType<typeof setTimeout>;
+    protected recentlyLeftChild = false;
 
-  public dispatchUpdate(): void {
-    if (!this.isConnected) {
-      return;
+    protected handlePointerleave(): void {
+        if (this.open && !this.recentlyLeftChild) {
+            this.leaveTimeout = setTimeout(() => {
+                delete this.leaveTimeout;
+                this.open = false;
+            }, POINTERLEAVE_TIMEOUT);
+        }
     }
 
-    this.dispatchEvent(new MenuItemAddedOrUpdatedEvent(this));
-    this.willDispatchUpdate = false;
-  }
+    /**
+     * When there is a `change` event in the submenu for this item
+     * then we "click" this item to cascade the selection up the
+     * menu tree allowing all submenus between the initial selection
+     * and the root of the tree to have their selection changes and
+     * be closed.
+     */
+    protected handleSubmenuChange(event: Event): void {
+        event.stopPropagation();
+        this.menuData.selectionRoot?.selectOrToggleItem(this);
+    }
 
-  public menuData: {
-    focusRoot?: Menu;
-    parentMenu?: Menu;
-    selectionRoot?: Menu;
-    cleanupSteps: ((item: MenuItem) => void)[];
-  } = {
-    focusRoot: undefined,
-    parentMenu: undefined,
-    selectionRoot: undefined,
-    cleanupSteps: [],
-  };
+    protected handleSubmenuPointerenter(): void {
+        this.recentlyLeftChild = true;
+    }
+
+    protected async handleSubmenuPointerleave(): Promise<void> {
+        requestAnimationFrame(() => {
+            this.recentlyLeftChild = false;
+        });
+    }
+
+    protected handleSubmenuOpen(event: Event): void {
+        this.focused = false;
+        const parentOverlay = event.composedPath().find((el) => {
+            return (
+                el !== this.overlayElement &&
+                (el as HTMLElement).localName === 'sp-overlay'
+            );
+        }) as Overlay;
+
+        this.overlayElement.parentOverlayToForceClose = parentOverlay;
+    }
+
+    protected cleanup(): void {
+        this.open = false;
+        this.active = false;
+    }
+
+    public async openOverlay(): Promise<void> {
+        if (!this.hasSubmenu || this.open || this.disabled) {
+            return;
+        }
+
+        this.open = true;
+        this.active = true;
+        this.setAttribute('aria-expanded', 'true');
+        this.addEventListener('sp-closed', this.cleanup, {
+            once: true,
+        });
+    }
+
+    updateAriaSelected(): void {
+        const role = this.getAttribute('role');
+
+        if (role === 'option') {
+            this.setAttribute(
+                'aria-selected',
+                this.selected ? 'true' : 'false'
+            );
+        } else if (role === 'menuitemcheckbox' || role === 'menuitemradio') {
+            this.setAttribute('aria-checked', this.selected ? 'true' : 'false');
+        }
+    }
+
+    public setRole(role: string): void {
+        this.setAttribute('role', role);
+        this.updateAriaSelected();
+    }
+
+    protected override updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
+
+        if (
+            changes.has('label') &&
+            (this.label || typeof changes.get('label') !== 'undefined')
+        ) {
+            this.setAttribute('aria-label', this.label || '');
+        }
+
+        if (
+            changes.has('active') &&
+            (this.active || typeof changes.get('active') !== 'undefined')
+        ) {
+            if (this.active) {
+                this.menuData.selectionRoot?.closeDescendentOverlays();
+            }
+        }
+
+        if (this.anchorElement) {
+            this.anchorElement.addEventListener('focus', this.proxyFocus);
+            this.anchorElement.tabIndex = -1;
+        }
+
+        if (changes.has('selected')) {
+            this.updateAriaSelected();
+        }
+
+        if (
+            changes.has('hasSubmenu') &&
+            (this.hasSubmenu ||
+                typeof changes.get('hasSubmenu') !== 'undefined')
+        ) {
+            if (this.hasSubmenu) {
+                this.abortControllerSubmenu = new AbortController();
+                const options = { signal: this.abortControllerSubmenu.signal };
+
+                this.addEventListener(
+                    'click',
+                    this.handleSubmenuClick,
+                    options
+                );
+                this.addEventListener(
+                    'pointerenter',
+                    this.handlePointerenter,
+                    options
+                );
+                this.addEventListener(
+                    'pointerleave',
+                    this.handlePointerleave,
+                    options
+                );
+                this.addEventListener(
+                    'sp-opened',
+                    this.handleSubmenuOpen,
+                    options
+                );
+            } else {
+                this.abortControllerSubmenu?.abort();
+            }
+        }
+    }
+
+    public override connectedCallback(): void {
+        super.connectedCallback();
+        this.triggerUpdate();
+    }
+
+    _parentElement!: HTMLElement;
+
+    public override disconnectedCallback(): void {
+        this.menuData.cleanupSteps.forEach((removal) => removal(this));
+        this.menuData = {
+            focusRoot: undefined,
+            parentMenu: undefined,
+            selectionRoot: undefined,
+            cleanupSteps: [],
+        };
+        super.disconnectedCallback();
+    }
+
+    private willDispatchUpdate = false;
+
+    public async triggerUpdate(): Promise<void> {
+        if (this.willDispatchUpdate) {
+            return;
+        }
+
+        this.willDispatchUpdate = true;
+        await new Promise((ready) => requestAnimationFrame(ready));
+        this.dispatchUpdate();
+    }
+
+    public dispatchUpdate(): void {
+        if (!this.isConnected) {
+            return;
+        }
+
+        this.dispatchEvent(new MenuItemAddedOrUpdatedEvent(this));
+        this.willDispatchUpdate = false;
+    }
+
+    public menuData: {
+        focusRoot?: Menu;
+        parentMenu?: Menu;
+        selectionRoot?: Menu;
+        cleanupSteps: ((item: MenuItem) => void)[];
+    } = {
+        focusRoot: undefined,
+        parentMenu: undefined,
+        selectionRoot: undefined,
+        cleanupSteps: [],
+    };
 }
 
 declare global {
-  interface GlobalEventHandlersEventMap {
-    'sp-menu-item-added-or-updated': MenuItemAddedOrUpdatedEvent;
-  }
+    interface GlobalEventHandlersEventMap {
+        'sp-menu-item-added-or-updated': MenuItemAddedOrUpdatedEvent;
+    }
 }

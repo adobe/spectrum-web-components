@@ -14,190 +14,191 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/swatch/sp-swatch-group.js';
 import '@spectrum-web-components/swatch/sp-swatch.js';
 import type {
-  SwatchBorder,
-  SwatchRounding,
-  SwatchShape,
+    SwatchBorder,
+    SwatchRounding,
+    SwatchShape,
 } from '../src/Swatch.js';
 import { SwatchGroup } from '../src/SwatchGroup.js';
 
 type Properties = {
-  border: SwatchBorder | 'normal';
-  density?: 'normal' | 'spacious' | 'compact';
-  rounding?: SwatchRounding | 'normal';
-  selected?: string[];
-  selects?: 'none' | 'single' | 'multiple';
-  shape?: SwatchShape | 'normal';
+    border: SwatchBorder | 'normal';
+    density?: 'normal' | 'spacious' | 'compact';
+    rounding?: SwatchRounding | 'normal';
+    selected?: string[];
+    selects?: 'none' | 'single' | 'multiple';
+    shape?: SwatchShape | 'normal';
 };
 
 export default {
-  title: 'Swatch group',
-  component: 'sp-swatch-group',
-  args: {},
-  argTypes: {
-    border: {
-      table: {
-        defaultValue: { summary: '' },
-      },
-      options: ['normal', 'light', 'none'],
+    title: 'Swatch group',
+    component: 'sp-swatch-group',
+    args: {},
+    argTypes: {
+        border: {
+            table: {
+                defaultValue: { summary: '' },
+            },
+            options: ['normal', 'light', 'none'],
+        },
+        density: {
+            table: {
+                defaultValue: { summary: '' },
+            },
+            options: ['normal', 'compact', 'spacious'],
+        },
+        rounding: {
+            table: {
+                defaultValue: { summary: '' },
+            },
+            options: ['normal', 'none', 'full'],
+        },
+        selects: {
+            table: {
+                defaultValue: { summary: '' },
+            },
+            options: ['none', 'single', 'multiple'],
+        },
+        shape: {
+            table: {
+                defaultValue: { summary: '' },
+            },
+            options: ['normal', 'rectangle'],
+        },
     },
-    density: {
-      table: {
-        defaultValue: { summary: '' },
-      },
-      options: ['normal', 'compact', 'spacious'],
-    },
-    rounding: {
-      table: {
-        defaultValue: { summary: '' },
-      },
-      options: ['normal', 'none', 'full'],
-    },
-    selects: {
-      table: {
-        defaultValue: { summary: '' },
-      },
-      options: ['none', 'single', 'multiple'],
-    },
-    shape: {
-      table: {
-        defaultValue: { summary: '' },
-      },
-      options: ['normal', 'rectangle'],
-    },
-  },
-  decorators: [
-    (
-      story: () => TemplateResult,
-      {
-        args: { selected = [] },
-      }: {
-        args: {
-          selected: string[];
-        };
-      }
-    ): TemplateResult => html`
-      <div
-        @change="${async (event: Event & { target: SwatchGroup }) => {
-          await 0;
+    decorators: [
+        (
+            story: () => TemplateResult,
+            {
+                args: { selected = [] },
+            }: {
+                args: {
+                    selected: string[];
+                };
+            }
+        ): TemplateResult => html`
+            <div
+                @change=${async (event: Event & { target: SwatchGroup }) => {
+                    await 0;
 
-          if (event.defaultPrevented) return;
+                    if (event.defaultPrevented) return;
 
-          const next = event.target.nextElementSibling as HTMLDivElement;
+                    const next = event.target
+                        .nextElementSibling as HTMLDivElement;
 
-          next.textContent = `Selected: ${JSON.stringify(
-            event.target.selected
-          )}`;
-        }}"
-      >
-        ${story()}
-        <div>Selected: ${JSON.stringify(selected)}</div>
-      </div>
-    `,
-  ],
+                    next.textContent = `Selected: ${JSON.stringify(
+                        event.target.selected
+                    )}`;
+                }}
+            >
+                ${story()}
+                <div>Selected: ${JSON.stringify(selected)}</div>
+            </div>
+        `,
+    ],
 };
 
 const colors = [
-  '--spectrum-gray-700',
-  '--spectrum-red-700',
-  '--spectrum-orange-700',
-  '--spectrum-yellow-700',
-  '--spectrum-chartreuse-700',
-  '--spectrum-celery-700',
-  '--spectrum-green-700',
-  '--spectrum-seafoam-700',
-  '--spectrum-blue-700',
-  '--spectrum-indigo-700',
-  '--spectrum-purple-700',
-  '--spectrum-fuchsia-700',
-  '--spectrum-magenta-700',
+    '--spectrum-gray-700',
+    '--spectrum-red-700',
+    '--spectrum-orange-700',
+    '--spectrum-yellow-700',
+    '--spectrum-chartreuse-700',
+    '--spectrum-celery-700',
+    '--spectrum-green-700',
+    '--spectrum-seafoam-700',
+    '--spectrum-blue-700',
+    '--spectrum-indigo-700',
+    '--spectrum-purple-700',
+    '--spectrum-fuchsia-700',
+    '--spectrum-magenta-700',
 ];
 
 const template = ({
-  border,
-  density,
-  rounding,
-  selects,
-  selected = [],
-  shape,
+    border,
+    density,
+    rounding,
+    selects,
+    selected = [],
+    shape,
 }: Properties): TemplateResult => {
-  const groupLabel = !!selects
-    ? selects === 'single'
-      ? 'Select a color'
-      : 'Selects color(s)'
-    : undefined;
+    const groupLabel = !!selects
+        ? selects === 'single'
+            ? 'Select a color'
+            : 'Selects color(s)'
+        : undefined;
 
-  return html`
-    <sp-swatch-group
-      border="${ifDefined(border === 'normal' ? undefined : border)}"
-      density="${ifDefined(density === 'normal' ? undefined : density)}"
-      rounding="${ifDefined(rounding === 'normal' ? undefined : rounding)}"
-      selects="${ifDefined(selects === 'none' ? undefined : selects)}"
-      .selected="${selected}"
-      shape="${ifDefined(shape === 'normal' ? undefined : shape)}"
-      aria-label="${ifDefined(groupLabel)}"
-    >
-      ${colors.map(
-        (color) => html`
-          <sp-swatch
-            color="var(${color})"
-            label="${color}"
-            value="${color}"
-          ></sp-swatch>
-        `
-      )}
-    </sp-swatch-group>
-  `;
+    return html`
+        <sp-swatch-group
+            border=${ifDefined(border === 'normal' ? undefined : border)}
+            density=${ifDefined(density === 'normal' ? undefined : density)}
+            rounding=${ifDefined(rounding === 'normal' ? undefined : rounding)}
+            selects=${ifDefined(selects === 'none' ? undefined : selects)}
+            .selected=${selected}
+            shape=${ifDefined(shape === 'normal' ? undefined : shape)}
+            aria-label=${ifDefined(groupLabel)}
+        >
+            ${colors.map(
+                (color) => html`
+                    <sp-swatch
+                        color="var(${color})"
+                        label=${color}
+                        value=${color}
+                    ></sp-swatch>
+                `
+            )}
+        </sp-swatch-group>
+    `;
 };
 
 export const Default = (args: Properties): TemplateResult => template(args);
 Default.args = {} as Properties;
 export const densityCompact = (args: Properties): TemplateResult =>
-  template(args);
+    template(args);
 densityCompact.args = {
-  density: 'compact',
+    density: 'compact',
 } as Properties;
 export const densitySpacious = (args: Properties): TemplateResult =>
-  template(args);
+    template(args);
 densitySpacious.args = {
-  density: 'spacious',
+    density: 'spacious',
 } as Properties;
 export const selectsSingle = (args: Properties): TemplateResult =>
-  template(args);
+    template(args);
 selectsSingle.args = {
-  selects: 'single',
-  selected: ['--spectrum-yellow-500'],
+    selects: 'single',
+    selected: ['--spectrum-yellow-500'],
 } as Properties;
 export const selectsMultiple = (args: Properties): TemplateResult =>
-  template(args);
+    template(args);
 selectsMultiple.args = {
-  selects: 'multiple',
-  selected: [
-    '--spectrum-celery-500',
-    '--spectrum-red-500',
-    '--spectrum-purple-500',
-    '--spectrum-blue-500',
-  ],
+    selects: 'multiple',
+    selected: [
+        '--spectrum-celery-500',
+        '--spectrum-red-500',
+        '--spectrum-purple-500',
+        '--spectrum-blue-500',
+    ],
 } as Properties;
 export const borderLight = (args: Properties): TemplateResult => template(args);
 borderLight.args = {
-  border: 'light',
+    border: 'light',
 } as Properties;
 export const borderNone = (args: Properties): TemplateResult => template(args);
 borderNone.args = {
-  border: 'none',
+    border: 'none',
 } as Properties;
 export const roundingNone = (args: Properties): TemplateResult =>
-  template(args);
+    template(args);
 roundingNone.args = {
-  rounding: 'none',
+    rounding: 'none',
 } as Properties;
 export const roundingFull = (args: Properties): TemplateResult =>
-  template(args);
+    template(args);
 roundingFull.args = {
-  rounding: 'full',
+    rounding: 'full',
 } as Properties;
 export const shapeRectangle = (args: Properties): TemplateResult =>
-  template(args);
+    template(args);
 shapeRectangle.args = {
-  shape: 'rectangle',
+    shape: 'rectangle',
 } as Properties;

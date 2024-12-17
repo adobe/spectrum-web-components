@@ -11,19 +11,19 @@ governing permissions and limitations under the License.
 */
 
 declare module '*.css' {
-  const content: CSSResultArray;
+    const content: CSSResultArray;
 
-  export default content;
+    export default content;
 }
 
 declare module '@open-wc/polyfills-loader' {
-  function loadPolyfills(): Promise<void>;
-  export default loadPolyfills;
+    function loadPolyfills(): Promise<void>;
+    export default loadPolyfills;
 }
 
 declare module 'element-closest' {
-  function polyfill(window: Window): void;
-  export default polyfill;
+    function polyfill(window: Window): void;
+    export default polyfill;
 }
 
 // W3C Spec Draft http://wicg.github.io/netinfo/
@@ -35,20 +35,20 @@ declare interface WorkerNavigator extends NavigatorNetworkInformation {}
 
 // http://wicg.github.io/netinfo/#navigatornetworkinformation-interface
 declare interface NavigatorNetworkInformation {
-  readonly connection?: NetworkInformation;
+    readonly connection?: NetworkInformation;
 }
 
 // http://wicg.github.io/netinfo/#connection-types
 type ConnectionType =
-  | 'bluetooth'
-  | 'cellular'
-  | 'ethernet'
-  | 'mixed'
-  | 'none'
-  | 'other'
-  | 'unknown'
-  | 'wifi'
-  | 'wimax';
+    | 'bluetooth'
+    | 'cellular'
+    | 'ethernet'
+    | 'mixed'
+    | 'none'
+    | 'other'
+    | 'unknown'
+    | 'wifi'
+    | 'wimax';
 
 // http://wicg.github.io/netinfo/#effectiveconnectiontype-enum
 type EffectiveConnectionType = '2g' | '3g' | '4g' | 'slow-2g';
@@ -60,18 +60,18 @@ type Millisecond = number;
 
 // http://wicg.github.io/netinfo/#networkinformation-interface
 interface NetworkInformation extends EventTarget {
-  // http://wicg.github.io/netinfo/#type-attribute
-  readonly type?: ConnectionType;
-  // http://wicg.github.io/netinfo/#effectivetype-attribute
-  readonly effectiveType?: EffectiveConnectionType;
-  // http://wicg.github.io/netinfo/#downlinkmax-attribute
-  readonly downlinkMax?: Megabit;
-  // http://wicg.github.io/netinfo/#downlink-attribute
-  readonly downlink?: Megabit;
-  // http://wicg.github.io/netinfo/#rtt-attribute
-  readonly rtt?: Millisecond;
-  // http://wicg.github.io/netinfo/#savedata-attribute
-  readonly saveData?: boolean;
-  // http://wicg.github.io/netinfo/#handling-changes-to-the-underlying-connection
-  onchange?: EventListener;
+    // http://wicg.github.io/netinfo/#type-attribute
+    readonly type?: ConnectionType;
+    // http://wicg.github.io/netinfo/#effectivetype-attribute
+    readonly effectiveType?: EffectiveConnectionType;
+    // http://wicg.github.io/netinfo/#downlinkmax-attribute
+    readonly downlinkMax?: Megabit;
+    // http://wicg.github.io/netinfo/#downlink-attribute
+    readonly downlink?: Megabit;
+    // http://wicg.github.io/netinfo/#rtt-attribute
+    readonly rtt?: Millisecond;
+    // http://wicg.github.io/netinfo/#savedata-attribute
+    readonly saveData?: boolean;
+    // http://wicg.github.io/netinfo/#handling-changes-to-the-underlying-connection
+    onchange?: EventListener;
 }

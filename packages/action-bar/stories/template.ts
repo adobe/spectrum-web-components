@@ -18,29 +18,29 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-share.js';
 
 export interface Properties {
-  emphasized?: boolean;
-  open?: boolean;
-  variant?: 'sticky' | 'fixed' | undefined;
+    emphasized?: boolean;
+    open?: boolean;
+    variant?: 'sticky' | 'fixed' | undefined;
 }
 
 export const Template = ({
-  emphasized,
-  open,
-  variant = undefined,
+    emphasized,
+    open,
+    variant = undefined,
 }: Properties): TemplateResult => {
-  return html`
-    <sp-action-bar
-      ?open="${open}"
-      ?emphasized="${emphasized}"
-      variant="${ifDefined(variant)}"
-    >
-      2 selected
-      <sp-action-button slot="buttons" label="Edit">
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-      </sp-action-button>
-      <sp-action-button slot="buttons" label="Share">
-        <sp-icon-share slot="icon"></sp-icon-share>
-      </sp-action-button>
-    </sp-action-bar>
-  `;
+    return html`
+        <sp-action-bar
+            ?open=${open}
+            ?emphasized=${emphasized}
+            variant=${ifDefined(variant)}
+        >
+            2 selected
+            <sp-action-button slot="buttons" label="Edit">
+                <sp-icon-edit slot="icon"></sp-icon-edit>
+            </sp-action-button>
+            <sp-action-button slot="buttons" label="Share">
+                <sp-icon-share slot="icon"></sp-icon-share>
+            </sp-action-button>
+        </sp-action-bar>
+    `;
 };

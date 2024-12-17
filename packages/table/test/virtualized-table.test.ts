@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-  elementUpdated,
-  expect,
-  fixture,
-  html,
-  nextFrame,
-  oneEvent,
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    nextFrame,
+    oneEvent,
 } from '@open-wc/testing';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -26,10 +26,10 @@ import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
 import type {
-  Table,
-  TableCheckboxCell,
-  TableHeadCell,
-  TableRow,
+    Table,
+    TableCheckboxCell,
+    TableHeadCell,
+    TableRow,
 } from '@spectrum-web-components/table';
 import { virtualized } from '../stories/table-virtualized.stories.js';
 import { makeItems, renderItem } from '../stories/index.js';
@@ -41,348 +41,350 @@ import { styledFixture, tableLayoutComplete } from './helpers.js';
 ignoreResizeObserverLoopError(before, after);
 
 describe('Virtualized Table', () => {
-  const virtualItems = makeItems(50);
+    const virtualItems = makeItems(50);
 
-  it('loads virtualized table accessibly', async () => {
-    const el = await styledFixture<Table>(virtualized());
+    it('loads virtualized table accessibly', async () => {
+        const el = await styledFixture<Table>(virtualized());
 
-    await nextFrame();
-    await nextFrame();
-    await nextFrame();
-    await nextFrame();
-    await nextFrame();
-    await nextFrame();
-    await expect(el).to.be.accessible();
-  });
-
-  it('can be size `s`', async () => {
-    const el = await fixture<Table>(html`
-      <sp-table
-        size="s"
-        style="height: 120px"
-        .items="${virtualItems}"
-        .renderItem="${renderItem}"
-        scroller?="true"
-      >
-        <sp-table-head>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-        </sp-table-head>
-      </sp-table>
-    `);
-
-    await oneEvent(el, 'rangeChanged');
-    await elementUpdated(el);
-
-    expect(el.size).to.equal('s');
-  });
-
-  it('creates tab stops for `<sp-table-head-cell sortable>`', async () => {
-    const input = document.createElement('input');
-    const test = await fixture<HTMLElement>(virtualized());
-    const el = test.shadowRoot?.querySelector('sp-table') as Table;
-
-    test.insertAdjacentElement('beforebegin', input);
-
-    input.focus();
-    expect(input === document.activeElement).to.be.true;
-
-    const firstSortable = el.querySelector(
-      '[sortable]:nth-of-type(1)'
-    ) as TableHeadCell;
-    const secondSortable = el.querySelector(
-      '[sortable]:nth-of-type(2)'
-    ) as TableHeadCell;
-
-    await sendKeys({
-      press: 'Tab',
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await expect(el).to.be.accessible();
     });
-    expect(firstSortable === test.shadowRoot?.activeElement).to.be.true;
 
-    await sendKeys({
-      press: 'Tab',
+    it('can be size `s`', async () => {
+        const el = await fixture<Table>(html`
+            <sp-table
+                size="s"
+                style="height: 120px"
+                .items=${virtualItems}
+                .renderItem=${renderItem}
+                scroller?="true"
+            >
+                <sp-table-head>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                </sp-table-head>
+            </sp-table>
+        `);
+
+        await oneEvent(el, 'rangeChanged');
+        await elementUpdated(el);
+
+        expect(el.size).to.equal('s');
     });
-    expect(secondSortable === test.shadowRoot?.activeElement).to.be.true;
-  });
 
-  it('does not tab stop on non-sortable `<sp-table-head-cell>`s', async () => {
-    const input = document.createElement('input');
-    const test = await fixture<HTMLElement>(virtualized());
-    const el = test.shadowRoot?.querySelector('sp-table') as Table;
+    it('creates tab stops for `<sp-table-head-cell sortable>`', async () => {
+        const input = document.createElement('input');
+        const test = await fixture<HTMLElement>(virtualized());
+        const el = test.shadowRoot?.querySelector('sp-table') as Table;
 
-    test.insertAdjacentElement('beforebegin', input);
+        test.insertAdjacentElement('beforebegin', input);
 
-    input.focus();
-    expect(input === document.activeElement).to.be.true;
+        input.focus();
+        expect(input === document.activeElement).to.be.true;
 
-    const firstHeadCell = el.querySelector(
-      'sp-table-head-cell:nth-of-type(1)'
-    ) as TableHeadCell;
-    const secondHeadCell = el.querySelector(
-      'sp-table-head-cell:nth-of-type(2)'
-    ) as TableHeadCell;
-    const thirdHeadCell = el.querySelector(
-      'sp-table-head-cell:nth-of-type(3)'
-    ) as TableHeadCell;
+        const firstSortable = el.querySelector(
+            '[sortable]:nth-of-type(1)'
+        ) as TableHeadCell;
+        const secondSortable = el.querySelector(
+            '[sortable]:nth-of-type(2)'
+        ) as TableHeadCell;
 
-    await sendKeys({
-      press: 'Tab',
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(firstSortable === test.shadowRoot?.activeElement).to.be.true;
+
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(secondSortable === test.shadowRoot?.activeElement).to.be.true;
     });
-    expect(firstHeadCell === test.shadowRoot?.activeElement).to.be.true;
 
-    await sendKeys({
-      press: 'Tab',
+    it('does not tab stop on non-sortable `<sp-table-head-cell>`s', async () => {
+        const input = document.createElement('input');
+        const test = await fixture<HTMLElement>(virtualized());
+        const el = test.shadowRoot?.querySelector('sp-table') as Table;
+
+        test.insertAdjacentElement('beforebegin', input);
+
+        input.focus();
+        expect(input === document.activeElement).to.be.true;
+
+        const firstHeadCell = el.querySelector(
+            'sp-table-head-cell:nth-of-type(1)'
+        ) as TableHeadCell;
+        const secondHeadCell = el.querySelector(
+            'sp-table-head-cell:nth-of-type(2)'
+        ) as TableHeadCell;
+        const thirdHeadCell = el.querySelector(
+            'sp-table-head-cell:nth-of-type(3)'
+        ) as TableHeadCell;
+
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(firstHeadCell === test.shadowRoot?.activeElement).to.be.true;
+
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(secondHeadCell === test.shadowRoot?.activeElement).to.be.true;
+
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(thirdHeadCell === test.shadowRoot?.activeElement).to.be.false;
     });
-    expect(secondHeadCell === test.shadowRoot?.activeElement).to.be.true;
 
-    await sendKeys({
-      press: 'Tab',
+    it('can be focus()ed from the `<sp-table>`', async () => {
+        const test = await fixture<HTMLElement>(virtualized());
+        const el = test.shadowRoot?.querySelector('sp-table') as Table;
+
+        el.focus();
+
+        const firstSortable = el.querySelector(
+            '[sortable]:nth-of-type(1)'
+        ) as TableHeadCell;
+
+        expect(firstSortable === test.shadowRoot?.activeElement).to.be.true;
     });
-    expect(thirdHeadCell === test.shadowRoot?.activeElement).to.be.false;
-  });
 
-  it('can be focus()ed from the `<sp-table>`', async () => {
-    const test = await fixture<HTMLElement>(virtualized());
-    const el = test.shadowRoot?.querySelector('sp-table') as Table;
+    it('dispatches `sorted` events', async () => {
+        const test = await fixture<Table>(virtualized());
+        const el = test.shadowRoot?.querySelector('sp-table') as Table;
 
-    el.focus();
+        const tableHeadCell1 = el.querySelector(
+            '[sortable][sort-direction]'
+        ) as TableHeadCell;
+        const tableHeadCell2 = el.querySelector(
+            '[sortable]:not([sort-direction])'
+        ) as TableHeadCell;
 
-    const firstSortable = el.querySelector(
-      '[sortable]:nth-of-type(1)'
-    ) as TableHeadCell;
+        tableHeadCell2.click();
+        await nextFrame();
 
-    expect(firstSortable === test.shadowRoot?.activeElement).to.be.true;
-  });
+        expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.false;
+        expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.true;
+        expect(tableHeadCell2.getAttribute('sort-direction')).to.equal('asc');
 
-  it('dispatches `sorted` events', async () => {
-    const test = await fixture<Table>(virtualized());
-    const el = test.shadowRoot?.querySelector('sp-table') as Table;
+        tableHeadCell2.click();
+        await nextFrame();
 
-    const tableHeadCell1 = el.querySelector(
-      '[sortable][sort-direction]'
-    ) as TableHeadCell;
-    const tableHeadCell2 = el.querySelector(
-      '[sortable]:not([sort-direction])'
-    ) as TableHeadCell;
+        expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.false;
+        expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.true;
+        expect(tableHeadCell2.getAttribute('sort-direction')).to.equal('desc');
 
-    tableHeadCell2.click();
-    await nextFrame();
+        tableHeadCell1.click();
+        await nextFrame();
 
-    expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.false;
-    expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.true;
-    expect(tableHeadCell2.getAttribute('sort-direction')).to.equal('asc');
-
-    tableHeadCell2.click();
-    await nextFrame();
-
-    expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.false;
-    expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.true;
-    expect(tableHeadCell2.getAttribute('sort-direction')).to.equal('desc');
-
-    tableHeadCell1.click();
-    await nextFrame();
-
-    expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.false;
-    expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.true;
-    expect(tableHeadCell1.getAttribute('sort-direction')).to.equal('asc');
-  });
-
-  it('dispatches `sorted` events using the keyboard', async () => {
-    const test = await fixture<Table>(virtualized());
-    const el = test.shadowRoot?.querySelector('sp-table') as Table;
-
-    const tableHeadCell1 = el.querySelector(
-      '[sortable][sort-direction]'
-    ) as TableHeadCell;
-    const tableHeadCell2 = el.querySelector(
-      '[sortable]:not([sort-direction])'
-    ) as TableHeadCell;
-
-    tableHeadCell2.focus();
-    await nextFrame();
-    await sendKeys({
-      press: 'Enter',
+        expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.false;
+        expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.true;
+        expect(tableHeadCell1.getAttribute('sort-direction')).to.equal('asc');
     });
-    await nextFrame();
 
-    expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.false;
-    expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.true;
-    expect(tableHeadCell2.getAttribute('sort-direction')).to.equal('asc');
+    it('dispatches `sorted` events using the keyboard', async () => {
+        const test = await fixture<Table>(virtualized());
+        const el = test.shadowRoot?.querySelector('sp-table') as Table;
 
-    tableHeadCell2.focus();
-    await nextFrame();
-    await sendKeys({
-      press: 'Space',
+        const tableHeadCell1 = el.querySelector(
+            '[sortable][sort-direction]'
+        ) as TableHeadCell;
+        const tableHeadCell2 = el.querySelector(
+            '[sortable]:not([sort-direction])'
+        ) as TableHeadCell;
+
+        tableHeadCell2.focus();
+        await nextFrame();
+        await sendKeys({
+            press: 'Enter',
+        });
+        await nextFrame();
+
+        expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.false;
+        expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.true;
+        expect(tableHeadCell2.getAttribute('sort-direction')).to.equal('asc');
+
+        tableHeadCell2.focus();
+        await nextFrame();
+        await sendKeys({
+            press: 'Space',
+        });
+        await nextFrame();
+
+        expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.false;
+        expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.true;
+        expect(tableHeadCell2.getAttribute('sort-direction')).to.equal('desc');
+
+        tableHeadCell1.focus();
+        await nextFrame();
+        await sendKeys({
+            press: 'Enter',
+        });
+        await nextFrame();
+
+        expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.false;
+        expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.true;
+        expect(tableHeadCell1.getAttribute('sort-direction')).to.equal('asc');
     });
-    await nextFrame();
 
-    expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.false;
-    expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.true;
-    expect(tableHeadCell2.getAttribute('sort-direction')).to.equal('desc');
+    it('dispatches `change` events', async () => {
+        const changeSpy = spy();
+        const el = await fixture<Table>(html`
+            <sp-table
+                .selected=${['0', '22']}
+                selects="multiple"
+                style="height: 120px"
+                .items=${virtualItems}
+                .renderItem=${renderItem}
+                scroller?="true"
+                @change=${({ target }: Event & { target: Table }) => {
+                    changeSpy(target);
+                }}
+            >
+                <sp-table-head>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                </sp-table-head>
+            </sp-table>
+        `);
 
-    tableHeadCell1.focus();
-    await nextFrame();
-    await sendKeys({
-      press: 'Enter',
+        await oneEvent(el, 'rangeChanged');
+        await elementUpdated(el);
+
+        expect(el.selected).to.deep.equal(['0', '22']);
+
+        await nextFrame;
+
+        const rowTwo = el.querySelector('[value="3"]') as TableRow;
+        const rowTwoCheckboxCell = rowTwo.querySelector(
+            'sp-table-checkbox-cell'
+        ) as TableCheckboxCell;
+
+        rowTwoCheckboxCell.checkbox.click();
+
+        expect(el.selected).to.deep.equal(['0', '22', '3']);
     });
-    await nextFrame();
+    it('accepts change events dispatched from TableHead `<sp-table-checkbox-cell>`', async () => {
+        const changeSpy = spy();
+        const el = await fixture<Table>(html`
+            <sp-table
+                .selected=${['0', '22']}
+                selects="multiple"
+                style="height: 120px"
+                .items=${virtualItems}
+                .renderItem=${renderItem}
+                scroller?="true"
+                @change=${({ target }: Event & { target: Table }) => {
+                    changeSpy(target);
+                }}
+            >
+                <sp-table-head>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                </sp-table-head>
+            </sp-table>
+        `);
 
-    expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.false;
-    expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.true;
-    expect(tableHeadCell1.getAttribute('sort-direction')).to.equal('asc');
-  });
+        await oneEvent(el, 'rangeChanged');
+        await elementUpdated(el);
 
-  it('dispatches `change` events', async () => {
-    const changeSpy = spy();
-    const el = await fixture<Table>(html`
-      <sp-table
-        .selected="${['0', '22']}"
-        selects="multiple"
-        style="height: 120px"
-        .items="${virtualItems}"
-        .renderItem="${renderItem}"
-        scroller?="true"
-        @change="${({ target }: Event & { target: Table }) => {
-          changeSpy(target);
-        }}"
-      >
-        <sp-table-head>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-        </sp-table-head>
-      </sp-table>
-    `);
+        const tableHeadCheckboxCell = el.querySelector(
+            'sp-table-head sp-table-checkbox-cell'
+        ) as TableCheckboxCell;
 
-    await oneEvent(el, 'rangeChanged');
-    await elementUpdated(el);
+        expect(el.selected).to.deep.equal(['0', '22']);
 
-    expect(el.selected).to.deep.equal(['0', '22']);
+        tableHeadCheckboxCell.checkbox.click();
 
-    await nextFrame;
+        expect(changeSpy.calledOnce).to.be.true;
+        expect(changeSpy.calledWithExactly(el)).to.be.true;
 
-    const rowTwo = el.querySelector('[value="3"]') as TableRow;
-    const rowTwoCheckboxCell = rowTwo.querySelector(
-      'sp-table-checkbox-cell'
-    ) as TableCheckboxCell;
+        expect(el.selected.length).to.equal(50);
+        expect(tableHeadCheckboxCell.checkbox.checked).to.be.true;
+    });
 
-    rowTwoCheckboxCell.checkbox.click();
+    it('dispatches `rangeChanged` events on Virtualized Table', async () => {
+        const el = await fixture<Table>(html`
+            <sp-table
+                selects="multiple"
+                .selected=${['1', '47']}
+                style="height: 120px"
+                .items=${makeItems(50)}
+                .renderItem=${renderItem}
+                scroller?="true"
+            >
+                <sp-table-head>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                </sp-table-head>
+            </sp-table>
+        `);
 
-    expect(el.selected).to.deep.equal(['0', '22', '3']);
-  });
-  it('accepts change events dispatched from TableHead `<sp-table-checkbox-cell>`', async () => {
-    const changeSpy = spy();
-    const el = await fixture<Table>(html`
-      <sp-table
-        .selected="${['0', '22']}"
-        selects="multiple"
-        style="height: 120px"
-        .items="${virtualItems}"
-        .renderItem="${renderItem}"
-        scroller?="true"
-        @change="${({ target }: Event & { target: Table }) => {
-          changeSpy(target);
-        }}"
-      >
-        <sp-table-head>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-        </sp-table-head>
-      </sp-table>
-    `);
+        await oneEvent(el, 'rangeChanged');
+        await elementUpdated(el);
 
-    await oneEvent(el, 'rangeChanged');
-    await elementUpdated(el);
+        expect(el.selected).to.deep.equal(['1', '47']);
 
-    const tableHeadCheckboxCell = el.querySelector(
-      'sp-table-head sp-table-checkbox-cell'
-    ) as TableCheckboxCell;
+        const rangeChanged = oneEvent(el, 'rangeChanged');
+        let tableRow = el.querySelector('sp-table-row') as TableRow;
+        const initialValue = tableRow.value;
 
-    expect(el.selected).to.deep.equal(['0', '22']);
+        el.scrollToIndex(47);
 
-    tableHeadCheckboxCell.checkbox.click();
+        await rangeChanged;
 
-    expect(changeSpy.calledOnce).to.be.true;
-    expect(changeSpy.calledWithExactly(el)).to.be.true;
+        tableRow = el.querySelector('sp-table-row') as TableRow;
+        const newValue = tableRow.value;
 
-    expect(el.selected.length).to.equal(50);
-    expect(tableHeadCheckboxCell.checkbox.checked).to.be.true;
-  });
+        expect(newValue).to.not.equal(initialValue);
+    });
 
-  it('dispatches `rangeChanged` events on Virtualized Table', async () => {
-    const el = await fixture<Table>(html`
-      <sp-table
-        selects="multiple"
-        .selected="${['1', '47']}"
-        style="height: 120px"
-        .items="${makeItems(50)}"
-        .renderItem="${renderItem}"
-        scroller?="true"
-      >
-        <sp-table-head>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-        </sp-table-head>
-      </sp-table>
-    `);
+    it('dispatches `visibilityChanged` events on Virtualized Table', async () => {
+        const visibilityChangedSpy = spy();
 
-    await oneEvent(el, 'rangeChanged');
-    await elementUpdated(el);
+        const el = await fixture<Table>(html`
+            <sp-table
+                selects="multiple"
+                .selected=${['1', '47']}
+                style="height: 120px"
+                .items=${virtualItems}
+                .renderItem=${renderItem}
+                scroller?="true"
+                @visibilityChanged=${({
+                    target,
+                }: Event & { target: Table }) => {
+                    visibilityChangedSpy(target);
+                }}
+            >
+                <sp-table-head>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                </sp-table-head>
+            </sp-table>
+        `);
 
-    expect(el.selected).to.deep.equal(['1', '47']);
+        await tableLayoutComplete(el);
 
-    const rangeChanged = oneEvent(el, 'rangeChanged');
-    let tableRow = el.querySelector('sp-table-row') as TableRow;
-    const initialValue = tableRow.value;
+        expect(el.selected).to.deep.equal(['1', '47']);
 
-    el.scrollToIndex(47);
+        el.scrollToIndex(47);
 
-    await rangeChanged;
+        // waiting for table body
+        await nextFrame();
+        // waiting for virtualizer
+        await nextFrame();
+        await elementUpdated(el);
 
-    tableRow = el.querySelector('sp-table-row') as TableRow;
-    const newValue = tableRow.value;
-
-    expect(newValue).to.not.equal(initialValue);
-  });
-
-  it('dispatches `visibilityChanged` events on Virtualized Table', async () => {
-    const visibilityChangedSpy = spy();
-
-    const el = await fixture<Table>(html`
-      <sp-table
-        selects="multiple"
-        .selected="${['1', '47']}"
-        style="height: 120px"
-        .items="${virtualItems}"
-        .renderItem="${renderItem}"
-        scroller?="true"
-        @visibilityChanged="${({ target }: Event & { target: Table }) => {
-          visibilityChangedSpy(target);
-        }}"
-      >
-        <sp-table-head>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-          <sp-table-head-cell>Column Title</sp-table-head-cell>
-        </sp-table-head>
-      </sp-table>
-    `);
-
-    await tableLayoutComplete(el);
-
-    expect(el.selected).to.deep.equal(['1', '47']);
-
-    el.scrollToIndex(47);
-
-    // waiting for table body
-    await nextFrame();
-    // waiting for virtualizer
-    await nextFrame();
-    await elementUpdated(el);
-
-    expect(visibilityChangedSpy.called).to.be.true;
-  });
+        expect(visibilityChangedSpy.called).to.be.true;
+    });
 });

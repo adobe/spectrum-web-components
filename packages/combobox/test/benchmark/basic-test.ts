@@ -17,10 +17,10 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 import { benchmarkOptions } from '../index.js';
 
 measureFixtureCreation(
-  html`
-    <sp-combobox .options="${benchmarkOptions}"></sp-combobox>
-  `,
-  {
-    numRenders: 10,
-  }
+    html`
+        <sp-combobox .options=${benchmarkOptions}></sp-combobox>
+    `,
+    {
+        numRenders: 10,
+    }
 );

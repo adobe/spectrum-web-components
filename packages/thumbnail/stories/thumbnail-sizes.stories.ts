@@ -15,32 +15,32 @@ import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 import { thumbnail as image } from './images.js';
 
 export default {
-  title: 'Thumbnail/Sizes',
-  component: 'sp-thumbnail',
+    title: 'Thumbnail/Sizes',
+    component: 'sp-thumbnail',
 };
 
 const thumbnail = ({
-  size,
+    size,
 }: {
-  size:
-    | '50'
-    | '75'
-    | '100'
-    | '200'
-    | '300'
-    | '400'
-    | '500'
-    | '600'
-    | '700'
-    | '800'
-    | '900'
-    | '1000';
+    size:
+        | '50'
+        | '75'
+        | '100'
+        | '200'
+        | '300'
+        | '400'
+        | '500'
+        | '600'
+        | '700'
+        | '800'
+        | '900'
+        | '1000';
 }): TemplateResult => {
-  return html`
-    <sp-thumbnail size="${size}">
-      <img src="${image}" alt="Woman crouching" />
-    </sp-thumbnail>
-  `;
+    return html`
+        <sp-thumbnail size=${size}>
+            <img src=${image} alt="Woman crouching" />
+        </sp-thumbnail>
+    `;
 };
 
 export const size50 = (): TemplateResult => thumbnail({ size: '50' });

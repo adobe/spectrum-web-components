@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
-  CSSResultArray,
-  html,
-  nothing,
-  SizedMixin,
-  SpectrumElement,
-  TemplateResult,
+    CSSResultArray,
+    html,
+    nothing,
+    SizedMixin,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
@@ -30,46 +30,46 @@ type HelpTextVariants = 'neutral' | 'negative';
  * @slot - The default slot for the help text content.
  */
 export class HelpText extends SizedMixin(SpectrumElement, {
-  noDefaultSize: true,
+    noDefaultSize: true,
 }) {
-  /**
-   * Returns the styles to be applied to the component.
-   *
-   * @returns The styles array.
-   */
-  public static override get styles(): CSSResultArray {
-    return [styles];
-  }
+    /**
+     * Returns the styles to be applied to the component.
+     *
+     * @returns The styles array.
+     */
+    public static override get styles(): CSSResultArray {
+        return [styles];
+    }
 
-  /**
-   * Indicates whether to show an icon.
-   *
-   * @type {boolean}
-   */
-  @property({ type: Boolean, reflect: true })
-  public icon = false;
+    /**
+     * Indicates whether to show an icon.
+     *
+     * @type {boolean}
+     */
+    @property({ type: Boolean, reflect: true })
+    public icon = false;
 
-  /**
-   * The visual variant to apply to this help text.
-   *
-   * @type {HelpTextVariants}
-   */
-  @property({ reflect: true })
-  public variant: HelpTextVariants = 'neutral';
+    /**
+     * The visual variant to apply to this help text.
+     *
+     * @type {HelpTextVariants}
+     */
+    @property({ reflect: true })
+    public variant: HelpTextVariants = 'neutral';
 
-  /**
-   * Renders the component template.
-   *
-   * @returns The rendered template.
-   */
-  protected override render(): TemplateResult {
-    return html`
-      ${this.variant === 'negative' && this.icon
-        ? html`
-            <sp-icon-alert class="icon"></sp-icon-alert>
-          `
-        : nothing}
-      <div class="text"><slot></slot></div>
-    `;
-  }
+    /**
+     * Renders the component template.
+     *
+     * @returns The rendered template.
+     */
+    protected override render(): TemplateResult {
+        return html`
+            ${this.variant === 'negative' && this.icon
+                ? html`
+                      <sp-icon-alert class="icon"></sp-icon-alert>
+                  `
+                : nothing}
+            <div class="text"><slot></slot></div>
+        `;
+    }
 }

@@ -13,109 +13,108 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/swatch/sp-swatch.js';
 import type {
-  SwatchBorder,
-  SwatchRounding,
-  SwatchShape,
+    SwatchBorder,
+    SwatchRounding,
+    SwatchShape,
 } from '../src/Swatch.js';
 
 type Properties = {
-  color: string;
-  border: SwatchBorder | 'normal';
-  rounding: SwatchRounding | 'normal';
-  shape: SwatchShape | 'normal';
-  mixedValue?: boolean;
-  nothing?: boolean;
+    color: string;
+    border: SwatchBorder | 'normal';
+    rounding: SwatchRounding | 'normal';
+    shape: SwatchShape | 'normal';
+    mixedValue?: boolean;
+    nothing?: boolean;
 };
 
 export default {
-  title: 'Swatch',
-  component: 'sp-swatch',
-  args: {
-    color: '#ff0000',
-  },
-  argTypes: {
-    color: { control: 'color' },
-    border: {
-      table: {
-        defaultValue: { summary: '' },
-      },
-      options: ['default', 'light', 'none'],
+    title: 'Swatch',
+    component: 'sp-swatch',
+    args: {
+        color: '#ff0000',
     },
-    rounding: {
-      table: {
-        defaultValue: { summary: '' },
-      },
-      options: ['normal', 'none', 'full'],
+    argTypes: {
+        color: { control: 'color' },
+        border: {
+            table: {
+                defaultValue: { summary: '' },
+            },
+            options: ['default', 'light', 'none'],
+        },
+        rounding: {
+            table: {
+                defaultValue: { summary: '' },
+            },
+            options: ['normal', 'none', 'full'],
+        },
+        shape: {
+            table: {
+                defaultValue: { summary: '' },
+            },
+            options: ['normal', 'rectangle'],
+        },
     },
-    shape: {
-      table: {
-        defaultValue: { summary: '' },
-      },
-      options: ['normal', 'rectangle'],
-    },
-  },
 };
 
 const template = ({
-  color,
-  border,
-  rounding,
-  shape,
-  mixedValue,
-  nothing,
+    color,
+    border,
+    rounding,
+    shape,
+    mixedValue,
+    nothing,
 }: Properties): TemplateResult => {
-  return html`
-    <sp-swatch
-      border="${ifDefined(border === 'normal' ? undefined : border)}"
-      rounding="${ifDefined(rounding === 'normal' ? undefined : rounding)}"
-      shape="${ifDefined(shape === 'normal' ? undefined : shape)}"
-      color="${color}"
-      ?mixed-value="${mixedValue}"
-      ?nothing="${nothing}"
-    ></sp-swatch>
-  `;
+    return html`
+        <sp-swatch
+            border=${ifDefined(border === 'normal' ? undefined : border)}
+            rounding=${ifDefined(rounding === 'normal' ? undefined : rounding)}
+            shape=${ifDefined(shape === 'normal' ? undefined : shape)}
+            color=${color}
+            ?mixed-value=${mixedValue}
+            ?nothing=${nothing}
+        ></sp-swatch>
+    `;
 };
 
 export const Default = (args: Properties): TemplateResult => template(args);
 export const gradient = (args: Properties): TemplateResult => template(args);
 gradient.args = {
-  color:
-    'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)',
+    color: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)',
 };
 export const opacity = (args: Properties): TemplateResult => template(args);
 opacity.args = {
-  color: 'rgba(255, 0, 0, 0.3)',
+    color: 'rgba(255, 0, 0, 0.3)',
 };
 export const mixedValue = (args: Properties): TemplateResult => template(args);
 mixedValue.args = {
-  mixedValue: true,
-  color: '',
+    mixedValue: true,
+    color: '',
 };
 export const nothing = (args: Properties): TemplateResult => template(args);
 nothing.args = {
-  nothing: true,
-  color: '',
+    nothing: true,
+    color: '',
 };
 export const borderLight = (args: Properties): TemplateResult => template(args);
 borderLight.args = {
-  border: 'light',
+    border: 'light',
 };
 export const borderNone = (args: Properties): TemplateResult => template(args);
 borderNone.args = {
-  border: 'none',
+    border: 'none',
 };
 export const roundingNone = (args: Properties): TemplateResult =>
-  template(args);
+    template(args);
 roundingNone.args = {
-  rounding: 'none',
+    rounding: 'none',
 };
 export const roundingFull = (args: Properties): TemplateResult =>
-  template(args);
+    template(args);
 roundingFull.args = {
-  rounding: 'full',
+    rounding: 'full',
 };
 export const shapeRectangle = (args: Properties): TemplateResult =>
-  template(args);
+    template(args);
 shapeRectangle.args = {
-  shape: 'rectangle',
+    shape: 'rectangle',
 };

@@ -20,89 +20,89 @@ import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 export default {
-  component: 'sp-tabs',
-  title: 'Tabs/Sizes/Vertical',
-  argTypes: {
-    direction: {
-      name: 'direction',
-      type: { name: 'string', required: false },
-      table: {
-        type: {
-          summary: '"vertical" | "vertical-right" | "horizontal"',
+    component: 'sp-tabs',
+    title: 'Tabs/Sizes/Vertical',
+    argTypes: {
+        direction: {
+            name: 'direction',
+            type: { name: 'string', required: false },
+            table: {
+                type: {
+                    summary: '"vertical" | "vertical-right" | "horizontal"',
+                },
+                defaultValue: { summary: 'horizontal' },
+            },
+            control: {
+                type: 'text',
+            },
         },
-        defaultValue: { summary: 'horizontal' },
-      },
-      control: {
-        type: 'text',
-      },
+        auto: { control: 'boolean' },
+        size: {
+            name: 'size',
+            type: { name: 'string', required: false },
+            table: {
+                type: { summary: '"s" | "m" | "l" | "xl"' },
+                defaultValue: { summary: 'm' },
+            },
+            control: {
+                type: 'text',
+            },
+        },
     },
-    auto: { control: 'boolean' },
-    size: {
-      name: 'size',
-      type: { name: 'string', required: false },
-      table: {
-        type: { summary: '"s" | "m" | "l" | "xl"' },
-        defaultValue: { summary: 'm' },
-      },
-      control: {
-        type: 'text',
-      },
+    args: {
+        direction: 'vertical',
+        auto: false,
+        size: 'm',
     },
-  },
-  args: {
-    direction: 'vertical',
-    auto: false,
-    size: 'm',
-  },
 };
 
 interface Properties {
-  direction?: 'vertical' | 'vertical-right' | 'horizontal';
-  auto?: boolean;
-  size?: 's' | 'm' | 'l' | 'xl';
+    direction?: 'vertical' | 'vertical-right' | 'horizontal';
+    auto?: boolean;
+    size?: 's' | 'm' | 'l' | 'xl';
 }
 
 const panels = (): TemplateResult => html`
-  <sp-tab-panel value="1">Content for "Really Long Name"</sp-tab-panel>
-  <sp-tab-panel value="2">Content for tab 2</sp-tab-panel>
-  <sp-tab-panel value="3">Content for tab 3</sp-tab-panel>
-  <sp-tab-panel value="4">Content for tab 4</sp-tab-panel>
+    <sp-tab-panel value="1">Content for "Really Long Name"</sp-tab-panel>
+    <sp-tab-panel value="2">Content for tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for tab 4</sp-tab-panel>
 `;
 
 const template = (args: Properties): TemplateResult => {
-  return html`
-    <sp-tabs
-      selected="1"
-      size="${args.size}"
-      ?auto="${args.auto}"
-      label="Demo Tabs"
-      direction="${args.direction}"
-    >
-      <sp-tab label="Tab 1" value="1"></sp-tab>
-      <sp-tab label="Tab 2" value="2"></sp-tab>
-      <sp-tab label="Tab 3" value="3"></sp-tab>
-      <sp-tab label="Tab 4" value="4"></sp-tab>
-      ${panels()}
-    </sp-tabs>
-  `;
+    return html`
+        <sp-tabs
+            selected="1"
+            size=${args.size}
+            ?auto=${args.auto}
+            label="Demo Tabs"
+            direction=${args.direction}
+        >
+            <sp-tab label="Tab 1" value="1"></sp-tab>
+            <sp-tab label="Tab 2" value="2"></sp-tab>
+            <sp-tab label="Tab 3" value="3"></sp-tab>
+            <sp-tab label="Tab 4" value="4"></sp-tab>
+            ${panels()}
+        </sp-tabs>
+    `;
 };
 
 export const s = (args: Properties): TemplateResult => template(args);
 s.args = {
-  size: 's',
+    size: 's',
 };
 
 export const m = (args: Properties): TemplateResult => template(args);
 m.args = {
-  size: 'm',
+    size: 'm',
 };
 
 export const l = (args: Properties): TemplateResult => template(args);
 l.args = {
-  size: 'l',
+    size: 'l',
 };
 
 export const XL = (args: Properties): TemplateResult => template(args);
 XL.args = {
-  size: 'XL',
+    size: 'XL',
 };

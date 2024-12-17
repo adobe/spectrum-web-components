@@ -11,10 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import {
-  CSSResultArray,
-  html,
-  PropertyValues,
-  TemplateResult,
+    CSSResultArray,
+    html,
+    PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -26,109 +26,111 @@ import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron
 import styles from './breadcrumb-item.css.js';
 
 export interface BreadcrumbSelectDetail {
-  value: string;
+    value: string;
 }
 
 export class BreadcrumbItem extends LikeAnchor(Focusable) {
-  public static override get styles(): CSSResultArray {
-    return [styles, chevronStyles, chevronIconOverrides];
-  }
-
-  @property()
-  public value: string | undefined = undefined;
-
-  /**
-   * Marks this breadcrumb item as the current route.
-   *
-   * @private
-   */
-  @property({ type: Boolean })
-  public isLastOfType = false;
-
-  public override get focusElement(): HTMLElement {
-    return this.shadowRoot.querySelector('#item-link') as HTMLElement;
-  }
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    if (!this.hasAttribute('role')) {
-      this.setAttribute('role', 'listitem');
-    }
-  }
-
-  private announceSelected(value: string): void {
-    const selectDetail: BreadcrumbSelectDetail = {
-      value,
-    };
-
-    const selectionEvent = new CustomEvent('breadcrumb-select', {
-      bubbles: true,
-      composed: true,
-      detail: selectDetail,
-    });
-
-    this.dispatchEvent(selectionEvent);
-  }
-
-  protected handleClick(event?: Event): void {
-    if (!this.href && event) {
-      event.preventDefault();
+    public static override get styles(): CSSResultArray {
+        return [styles, chevronStyles, chevronIconOverrides];
     }
 
-    if (!this.href || event?.defaultPrevented) {
-      if (this.value && !this.isLastOfType) {
-        this.announceSelected(this.value);
-      }
+    @property()
+    public value: string | undefined = undefined;
+
+    /**
+     * Marks this breadcrumb item as the current route.
+     *
+     * @private
+     */
+    @property({ type: Boolean })
+    public isLastOfType = false;
+
+    public override get focusElement(): HTMLElement {
+        return this.shadowRoot.querySelector('#item-link') as HTMLElement;
     }
-  }
 
-  protected handleKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'Enter' || event.keyCode === 13) {
-      this.handleClick(event);
+    override connectedCallback(): void {
+        super.connectedCallback();
+
+        if (!this.hasAttribute('role')) {
+            this.setAttribute('role', 'listitem');
+        }
     }
-  }
 
-  protected renderLink(): TemplateResult {
-    return html`
-      <a
-        id="item-link"
-        href="${ifDefined(!this.isLastOfType ? this.href : undefined)}"
-        tabindex="${0}"
-        aria-current="${ifDefined(this.isLastOfType ? 'page' : undefined)}"
-        @keydown="${this.handleKeyDown}"
-        @click="${this.handleClick}"
-      >
-        <slot></slot>
-      </a>
-    `;
-  }
+    private announceSelected(value: string): void {
+        const selectDetail: BreadcrumbSelectDetail = {
+            value,
+        };
 
-  private renderSeparator(): TemplateResult {
-    return html`
-      <sp-icon-chevron100
-        id="separator"
-        size="xs"
-        class="spectrum-UIIcon-ChevronRight100"
-      ></sp-icon-chevron100>
-    `;
-  }
+        const selectionEvent = new CustomEvent('breadcrumb-select', {
+            bubbles: true,
+            composed: true,
+            detail: selectDetail,
+        });
 
-  protected override render(): TemplateResult {
-    return html`
-      ${this.renderLink()}
-      <slot name="menu"></slot>
-      ${this.renderSeparator()}
-    `;
-  }
-
-  protected override updated(changes: PropertyValues): void {
-    if (changes.has('disabled')) {
-      if (this.disabled) {
-        this.setAttribute('aria-disabled', 'true');
-      } else {
-        this.removeAttribute('aria-disabled');
-      }
+        this.dispatchEvent(selectionEvent);
     }
-  }
+
+    protected handleClick(event?: Event): void {
+        if (!this.href && event) {
+            event.preventDefault();
+        }
+
+        if (!this.href || event?.defaultPrevented) {
+            if (this.value && !this.isLastOfType) {
+                this.announceSelected(this.value);
+            }
+        }
+    }
+
+    protected handleKeyDown(event: KeyboardEvent): void {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            this.handleClick(event);
+        }
+    }
+
+    protected renderLink(): TemplateResult {
+        return html`
+            <a
+                id="item-link"
+                href=${ifDefined(!this.isLastOfType ? this.href : undefined)}
+                tabindex=${0}
+                aria-current=${ifDefined(
+                    this.isLastOfType ? 'page' : undefined
+                )}
+                @keydown=${this.handleKeyDown}
+                @click=${this.handleClick}
+            >
+                <slot></slot>
+            </a>
+        `;
+    }
+
+    private renderSeparator(): TemplateResult {
+        return html`
+            <sp-icon-chevron100
+                id="separator"
+                size="xs"
+                class="spectrum-UIIcon-ChevronRight100"
+            ></sp-icon-chevron100>
+        `;
+    }
+
+    protected override render(): TemplateResult {
+        return html`
+            ${this.renderLink()}
+            <slot name="menu"></slot>
+            ${this.renderSeparator()}
+        `;
+    }
+
+    protected override updated(changes: PropertyValues): void {
+        if (changes.has('disabled')) {
+            if (this.disabled) {
+                this.setAttribute('aria-disabled', 'true');
+            } else {
+                this.removeAttribute('aria-disabled');
+            }
+        }
+    }
 }

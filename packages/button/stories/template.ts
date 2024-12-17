@@ -13,38 +13,38 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
-  ButtonTreatments,
-  ButtonVariants,
+    ButtonTreatments,
+    ButtonVariants,
 } from '@spectrum-web-components/button/src/Button.js';
 
 export interface Properties {
-  variant?: ButtonVariants;
-  treatment?: ButtonTreatments;
-  quiet?: boolean;
-  pending?: boolean;
-  content?: TemplateResult;
-  disabled?: boolean;
-  size?: 's' | 'm' | 'l' | 'xl';
-  href?: string;
-  target?: '_blank' | '_parent' | '_self' | '_top';
-  noWrap?: boolean;
-  iconOnly?: boolean;
+    variant?: ButtonVariants;
+    treatment?: ButtonTreatments;
+    quiet?: boolean;
+    pending?: boolean;
+    content?: TemplateResult;
+    disabled?: boolean;
+    size?: 's' | 'm' | 'l' | 'xl';
+    href?: string;
+    target?: '_blank' | '_parent' | '_self' | '_top';
+    noWrap?: boolean;
+    iconOnly?: boolean;
 }
 
 export const Template = ({
-  disabled,
-  pending,
-  size,
-  treatment,
-  variant,
+    disabled,
+    pending,
+    size,
+    treatment,
+    variant,
 }: Properties): TemplateResult => html`
-  <sp-button
-    ?disabled="${disabled}"
-    ?pending="${pending}"
-    size="${ifDefined(size)}"
-    treatment="${ifDefined(treatment)}"
-    variant="${ifDefined(variant)}"
-  >
-    Test Button
-  </sp-button>
+    <sp-button
+        ?disabled=${disabled}
+        ?pending=${pending}
+        size=${ifDefined(size)}
+        treatment=${ifDefined(treatment)}
+        variant=${ifDefined(variant)}
+    >
+        Test Button
+    </sp-button>
 `;
