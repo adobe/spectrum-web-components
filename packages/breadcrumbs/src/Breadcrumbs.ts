@@ -33,12 +33,11 @@ import {
 } from './BreadcrumbItem.js';
 import {
     createRef,
-    Ref,
+    ifDefined,
     ref,
+    Ref,
 } from '@spectrum-web-components/base/src/directives.js';
-
 import styles from './breadcrumbs.css.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 type BreadcrumbItem = {
     label?: string;

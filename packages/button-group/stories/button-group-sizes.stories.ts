@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-
 import {
     buttons,
     buttonsVertical,

@@ -27,7 +27,6 @@ import {
     LanguageResolutionController,
     languageResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
-
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
@@ -896,7 +895,6 @@ export class NumberField extends TextfieldBase {
 
             let inputMode = 'numeric';
 
-            /* c8 ignore next 5 */
             // iPhone doesn't have a minus sign in either numeric or decimal.
             if (isIPhone() && !hasOnlyPositives) inputMode = 'text';
             else if (isIOS() && hasDecimals) inputMode = 'decimal';

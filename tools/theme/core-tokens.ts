@@ -11,6 +11,5 @@ governing permissions and limitations under the License.
 */
 
 import { Theme } from './src/Theme.js';
-
 import coreStyles from './src/theme-core-tokens.css.js';
 Theme.registerThemeFragment('spectrum', 'system', coreStyles);

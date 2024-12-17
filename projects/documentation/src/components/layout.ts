@@ -40,12 +40,10 @@ import {
     type OverlayTriggerOptions,
     trigger,
 } from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
-
 import './adobe-logo.js';
 import type { CodeExample } from './code-example.js';
 import './code-example.js';
 import { copyText } from './copy-to-clipboard.js';
-
 import layoutStyles from './layout.css';
 import {
     DARK_MODE,
@@ -91,6 +89,7 @@ const lazyStyleFragment = (
     system: SystemVariant
 ): void => {
     const fragmentName = `${name}-${system}`;
+
     switch (fragmentName) {
         case 'dark-spectrum' || 'darkest-spectrum':
             import('@spectrum-web-components/theme/theme-dark.js');
@@ -229,17 +228,20 @@ export class LayoutElement extends LitElement {
 
     private updateDirection(event: Event) {
         const dir = (event.target as Picker).value;
+
         this.dir = dir === 'rtl' ? dir : 'ltr';
         document.documentElement.dir = this.dir;
     }
 
     private handleTrackTheme(event: CustomEvent<TrackTheme>): void {
         const target = event.composedPath()[0] as HTMLElement;
+
         if (this._themeTrackers.has(target)) {
             this._themeTrackers.delete(target);
         } else {
             this._themeTrackers.set(target, event.detail.callback);
             const callback = this._themeTrackers.get(target);
+
             if (callback) {
                 callback(this.color);
             }
@@ -255,12 +257,14 @@ export class LayoutElement extends LitElement {
 
     private addAlert(event: CustomEvent<{ message: string }>): void {
         const target = event.composedPath()[0] as HTMLElement;
+
         if (!this.alerts.has(target)) {
             const close = () => {
                 this.alerts.delete(target);
                 target.focus();
                 this.requestUpdate();
             };
+
             this.alerts.set(target, {
                 count: 0,
                 message: '',
@@ -286,7 +290,9 @@ export class LayoutElement extends LitElement {
                 },
             });
         }
+
         const alert = this.alerts.get(target);
+
         this.alerts.set(target, {
             element: alert!.element,
             count: alert!.count + 1,
@@ -309,6 +315,7 @@ export class LayoutElement extends LitElement {
             </slot>
             <slot name="side-nav"></slot>
         `;
+
         import('./side-nav.js');
 
         return html`
@@ -485,16 +492,20 @@ export class LayoutElement extends LitElement {
 
     override updated(changes: PropertyValues) {
         let loadStyleFragments = false;
+
         if (changes.has('color')) {
             if (window.localStorage) {
                 localStorage.setItem(SWC_THEME_COLOR_KEY, this.color);
             }
+
             if (changes.get('color')) {
                 loadStyleFragments = true;
             }
+
             const examples = [
                 ...this.querySelectorAll('code-example'),
             ] as CodeExample[];
+
             examples.forEach((example) => {
                 example.codeTheme = this.color;
             });
@@ -502,25 +513,31 @@ export class LayoutElement extends LitElement {
                 document.querySelector('html') as HTMLHtmlElement
             ).style.colorScheme = this.color;
         }
+
         if (changes.has('scale')) {
             if (window.localStorage) {
                 localStorage.setItem(SWC_THEME_SCALE_KEY, this.scale);
             }
+
             if (changes.get('scale')) {
                 loadStyleFragments = true;
             }
         }
+
         if (changes.has('system')) {
             if (window.localStorage) {
                 localStorage.setItem(SWC_THEME_SYSTEM_KEY, this.system);
             }
+
             if (changes.get('system')) {
                 loadStyleFragments = true;
             }
         }
+
         if (changes.has('dir') && window.localStorage) {
             localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
         }
+
         if (loadStyleFragments) {
             lazyStyleFragment(this.color, this.system);
             lazyStyleFragment(this.scale, this.system);

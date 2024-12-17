@@ -11,11 +11,9 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
-
 import type { Properties } from './template.js';
 export type { Properties };
 

@@ -16,7 +16,6 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/grid/sp-grid.js';
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import '@spectrum-web-components/card/sp-card.js';
@@ -42,10 +41,12 @@ interface Item extends Record<string, unknown> {
 
 function generateItems(count: number): Item[] {
     const items: Item[] = [];
+
     while (count) {
         count -= 1;
         items.unshift({ id: count });
     }
+
     return items;
 }
 
@@ -100,6 +101,7 @@ const handleChange = (event: Event & { currentTarget: Grid }): void => {
     const actionbar = document.querySelector('sp-action-bar') as ActionBar;
     const selected = document.querySelector('.selected') as HTMLElement;
     const ids = document.querySelector('.ids') as HTMLElement;
+
     actionbar.open = !!event.currentTarget.selected.length;
     actionbar.style.setProperty(
         'display',
@@ -117,6 +119,7 @@ const handleActionBarChange = (event: Event): void => {
     event.preventDefault();
     const grid = document.querySelector('sp-grid') as Grid;
     const actionbar = document.querySelector('sp-action-bar') as ActionBar;
+
     actionbar.open = false;
     grid.selected = [];
 };
@@ -170,11 +173,13 @@ export const sized = (
     function handleMediaChange(): void {
         let width = document.body.offsetWidth * 0.4;
         const height = 300;
+
         if (matchMedium.matches) {
             width = 300;
         } else if (matchLarge.matches) {
             width = 400;
         }
+
         (document.querySelector('sp-grid') as Grid).itemSize = {
             width,
             height,

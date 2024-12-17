@@ -16,7 +16,6 @@ import {
 } from '@spectrum-web-components/base';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 import { state } from '@spectrum-web-components/base/src/decorators.js';
-
 import '@spectrum-web-components/dropzone/sp-dropzone.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { illustration } from '../test/test-svg';

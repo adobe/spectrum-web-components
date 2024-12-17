@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/search/sp-search.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';

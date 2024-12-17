@@ -2,22 +2,44 @@
     "root": true,
     "env": {
         "browser": true,
-        "node": false,
+        "node": true,
         "es6": true
     },
     "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
     "plugins": [
         "@typescript-eslint",
         "notice",
         "@spectrum-web-components",
-        "require-extensions"
+        "import",
+        "@stylistic",
+        "jsdoc",
+        "lit-a11y"
     ],
     "extends": [
         "plugin:@typescript-eslint/recommended",
         "prettier",
         "plugin:lit-a11y/recommended",
-        "plugin:require-extensions/recommended"
+        "plugin:jsdoc/recommended-typescript",
+        "plugin:import/recommended",
+        "plugin:import/typescript"
     ],
+    "settings": {
+        "jsdoc": {
+            "tagNamePreference": {
+                "attr": "attribute"
+            }
+        },
+        "import/resolver": {
+            // You will also need to install and configure the TypeScript resolver
+            // See also https://github.com/import-js/eslint-import-resolver-typescript#configuration
+            "typescript": true,
+            "node": true
+        }
+    },
     "rules": {
         "no-debugger": 2,
         "no-console": [
@@ -26,6 +48,221 @@
                 "allow": ["warn", "error"]
             }
         ],
+        "jsdoc/check-tag-names": [
+            "warn",
+            {
+                "definedTags": ["element", "slot", "attribute", "csspart"]
+            }
+        ],
+        "jsdoc/require-param": 0,
+        "jsdoc/require-returns": 0,
+        "jsdoc/informative-docs": 1,
+        "jsdoc/no-bad-blocks": 1,
+        "jsdoc/sort-tags": [
+            "warn",
+            {
+                "tagSequence": [
+                    {
+                        "tags": [
+                            // Brief descriptions
+                            "summary",
+                            "typeSummary"
+                        ]
+                    },
+                    {
+                        "tags": [
+                            // Module/file-level
+                            "element",
+                            "module",
+                            "exports",
+                            "file",
+                            "fileoverview",
+                            "overview",
+                            "import"
+                        ]
+                    },
+                    {
+                        "tags": [
+                            // Identifying (name, type)
+                            "typedef",
+                            "interface",
+                            "record",
+                            "template",
+                            "name",
+                            "kind",
+                            "type",
+                            "alias",
+                            "external",
+                            "host",
+                            "callback",
+                            "func",
+                            "function",
+                            "method",
+                            "class",
+                            "constructor"
+                        ]
+                    },
+                    {
+                        "tags": [
+                            // Relationships
+                            "modifies",
+                            "mixes",
+                            "mixin",
+                            "mixinClass",
+                            "mixinFunction",
+                            "namespace",
+                            "borrows",
+                            "constructs",
+                            "lends",
+                            "implements",
+                            "requires"
+                        ]
+                    },
+                    {
+                        "tags": [
+                            // Long descriptions
+                            "desc",
+                            "description",
+                            "classdesc",
+                            "tutorial",
+                            "copyright",
+                            "license"
+                        ]
+                    },
+                    {
+                        "tags": [
+                            // Simple annotations
+                            "const",
+                            "constant",
+                            "final",
+                            "global",
+                            "readonly",
+                            "abstract",
+                            "virtual",
+                            "var",
+                            "member",
+                            "memberof",
+                            "memberof!",
+                            "inner",
+                            "instance",
+                            "inheritdoc",
+                            "inheritDoc",
+                            "override",
+                            "hideconstructor"
+                        ]
+                    },
+                    {
+                        "tags": [
+                            // Core function/object info
+                            "param",
+                            "arg",
+                            "argument",
+                            "prop",
+                            "property",
+                            "slot",
+                            "return",
+                            "returns"
+                        ]
+                    },
+                    {
+                        "tags": [
+                            // Important behavior details
+                            "async",
+                            "generator",
+                            "default",
+                            "defaultvalue",
+                            "enum",
+                            "augments",
+                            "extends",
+                            "throws",
+                            "exception",
+                            "yield",
+                            "yields",
+                            "event",
+                            "fires",
+                            "emits",
+                            "listens",
+                            "this"
+                        ]
+                    },
+                    {
+                        "tags": [
+                            // Access
+                            "static",
+                            "private",
+                            "protected",
+                            "public",
+                            "access",
+                            "package"
+                        ]
+                    },
+                    { "tags": ["-other"] },
+                    {
+                        "tags": [
+                            // Supplementary descriptions
+                            "see",
+                            "example"
+                        ]
+                    },
+                    {
+                        "tags": [
+                            // Other Closure (undocumented) metadata
+                            "closurePrimitive",
+                            "customElement",
+                            "expose",
+                            "hidden",
+                            "idGenerator",
+                            "meaning",
+                            "ngInject",
+                            "owner",
+                            "wizaction"
+                        ]
+                    },
+                    {
+                        "tags": [
+                            // Other Closure (documented) metadata
+                            "define",
+                            "dict",
+                            "export",
+                            "externs",
+                            "implicitCast",
+                            "noalias",
+                            "nocollapse",
+                            "nocompile",
+                            "noinline",
+                            "nosideeffects",
+                            "polymer",
+                            "polymerBehavior",
+                            "preserve",
+                            "struct",
+                            "suppress",
+                            "unrestricted"
+                        ]
+                    },
+                    {
+                        "tags": [
+                            // Non-Closure metadata
+                            "ignore",
+                            "author",
+                            "version",
+                            "variation",
+                            "since",
+                            "deprecated",
+                            "todo"
+                        ]
+                    }
+                ],
+                "alphabetizeExtras": true
+            }
+        ],
+        "jsdoc/tag-lines": ["warn", "any", { "startLines": 1 }],
+        "jsdoc/no-blank-blocks": [
+            "warn",
+            {
+                "enableFixer": true
+            }
+        ],
+        "jsdoc/require-hyphen-before-param-description": 1,
         "@spectrum-web-components/prevent-argument-names": [
             "error",
             ["e", "ev", "evt", "err"]
@@ -48,9 +285,7 @@
             "error",
             {
                 "ignoreCase": true,
-                "ignoreDeclarationSort": true,
-                "ignoreMemberSort": false,
-                "allowSeparatedGroups": false
+                "ignoreDeclarationSort": true
             }
         ],
         "lit-a11y/click-events-have-key-events": [
@@ -73,6 +308,29 @@
             {
                 "argsIgnorePattern": "^_"
             }
+        ],
+        "@stylistic/padding-line-between-statements": [
+            "error",
+            {
+                "blankLine": "always",
+                "prev": "*",
+                "next": ["return", "if", "try", "switch"]
+            },
+            {
+                "blankLine": "always",
+                "prev": ["const", "let", "var", "if", "try", "switch"],
+                "next": "*"
+            },
+            {
+                "blankLine": "any",
+                "prev": ["const", "let", "var"],
+                "next": ["const", "let", "var"]
+            },
+            {
+                "blankLine": "never",
+                "prev": ["import"],
+                "next": ["import"]
+            }
         ]
     },
     "overrides": [
@@ -81,13 +339,21 @@
             "rules": {
                 "@spectrum-web-components/document-active-element": ["off"],
                 "lit-a11y/no-autofocus": ["off"],
-                "lit-a11y/tabindex-no-positive": ["off"]
+                "lit-a11y/tabindex-no-positive": ["off"],
+                "jsdoc/require-jsdoc": 0
             }
         },
         {
             "files": ["**/icons/*.ts", "**/src/elements/*.ts"],
             "rules": {
-                "sort-imports": ["off"]
+                "sort-imports": ["off"],
+                "@stylistic/padding-line-between-statements": 0
+            }
+        },
+        {
+            "files": ["**/stories/*"],
+            "rules": {
+                "jsdoc/require-jsdoc": 0
             }
         },
         {

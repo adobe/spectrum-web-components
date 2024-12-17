@@ -16,7 +16,6 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { query } from '@spectrum-web-components/base/src/decorators.js';
-
 import { Iconset } from './iconset.js';
 
 export abstract class IconsetSVG extends Iconset {

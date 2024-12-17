@@ -20,7 +20,6 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-
 import {
     Overlay,
     OverlayTrigger,

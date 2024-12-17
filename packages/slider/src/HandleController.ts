@@ -621,7 +621,6 @@ export class HandleController {
             isFocusVisible =
                 input.matches(':focus-visible') ||
                 this.host.matches('.focus-visible');
-            /* c8 ignore next 3 */
         } catch (error) {
             isFocusVisible = this.host.matches('.focus-visible');
         }
@@ -645,7 +644,6 @@ export class HandleController {
      * @param event - KeyboardEvent on input
      *
      * @private
-     *
      */
     private onInputKeydown = (event: KeyboardEvent): void => {
         if (event.key == 'Escape') {

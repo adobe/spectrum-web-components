@@ -16,6 +16,7 @@ import { AccordionMarkup } from './';
 export default {
     title: 'Accordion/Densities/Compact',
     component: 'sp-accordion',
+    tags: ['!autodocs'],
 };
 
 export const s = (): TemplateResult =>

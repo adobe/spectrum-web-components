@@ -12,10 +12,13 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/search/sp-search.js';
 import { Search } from '@spectrum-web-components/search';
 import { elementUpdated, expect, html, litFixture } from '@open-wc/testing';
-import { escapeEvent, spaceEvent } from '../../../test/testing-helpers.js';
+import {
+    escapeEvent,
+    spaceEvent,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import { spy } from 'sinon';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Search', () => {
     testForLitDevWarnings(

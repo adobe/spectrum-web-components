@@ -15,6 +15,7 @@ export const getLabelFromSlot = (
     slotEl: HTMLSlotElement
 ): string | null => {
     if (label) return null;
+
     const textContent = slotEl
         .assignedNodes()
         .reduce((accumulator: string, node: Node) => {
@@ -24,6 +25,7 @@ export const getLabelFromSlot = (
                 return accumulator;
             }
         }, '');
+
     if (textContent) {
         return textContent.trim();
     } else {

@@ -11,9 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { fixture } from '@open-wc/testing';
-
 import { Accordion } from '@spectrum-web-components/accordion';
-
 import { Default } from '../stories/accordion.stories.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 

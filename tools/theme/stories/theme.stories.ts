@@ -144,6 +144,7 @@ export const nestedTheme = ({
     colorStop: Color;
 }): TemplateResult => {
     const inner = outer === 'light' ? 'dark' : 'light';
+
     return html`
         ${storyStyles}
         <sp-theme
@@ -206,6 +207,7 @@ export const reverseColorNestedTheme = ({
     colorStop: Color;
 }): TemplateResult => {
     const inner = outer === 'light' ? 'dark' : 'light';
+
     return html`
         <style type="text/css">
             #outer {

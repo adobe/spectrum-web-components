@@ -14,7 +14,6 @@ import {
     html,
     TemplateResult,
 } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/swatch/sp-swatch.js';
 
 export default {

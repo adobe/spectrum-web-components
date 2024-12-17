@@ -24,7 +24,6 @@ import {
 import '@spectrum-web-components/underlay/sp-underlay.js';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-
 import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
 import styles from './tray.css.js';
 
@@ -36,7 +35,6 @@ import styles from './tray.css.js';
  * @element sp-tray
  *
  * @fires close - Dispatched when the tray is closed.
- *
  */
 export class Tray extends SpectrumElement {
     /**

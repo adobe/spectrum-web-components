@@ -51,12 +51,13 @@ try {
  * NOTE(cdata): The code here was adapted from an example proposed with the
  * introduction of ShadowDOM support in the :focus-visible polyfill.
  *
- * @see https://github.com/WICG/focus-visible/pull/196
- * @param {Function} SuperClass The base class implementation to decorate with
+ * @param SuperClass - The base class implementation to decorate with
  * implementation that coordinates with the :focus-visible polyfill
+ *
+ * @see https://github.com/WICG/focus-visible/pull/196
  */
 export const FocusVisiblePolyfillMixin = <
-    T extends Constructor<MixableBaseClass>
+    T extends Constructor<MixableBaseClass>,
 >(
     SuperClass: T
 ): T => {
@@ -92,6 +93,7 @@ export const FocusVisiblePolyfillMixin = <
                     instance.manageAutoFocus();
                 }
             };
+
             // Otherwise, wait for the polyfill to be loaded lazily. It might
             // never be loaded, but if it is then we can apply it to the
             // shadow root at the appropriate time by waiting for the ready
@@ -119,7 +121,29 @@ export const FocusVisiblePolyfillMixin = <
     // IE11 doesn't natively support custom elements or JavaScript class
     // syntax The mixin implementation assumes that the user will take the
     // appropriate steps to support both:
+    /**
+     * The `FocusVisibleCoordinator` class extends `SuperClass` and manages the coordination
+     * with the focus-visible polyfill. It ensures that the polyfill is properly coordinated
+     * when the element is connected to or disconnected from the document.
+     *
+     * @function connectedCallback
+     * @function disconnectedCallback
+     *
+     * @description Overrides the `connectedCallback` method to coordinate with the polyfill when the element is connected to the document.
+     * @description Overrides the `disconnectedCallback` method to remove the polyfill event listener when the element is disconnected from the document to prevent memory leaks.
+     *
+     * @property {EndPolyfillCoordinationCallback | null} [$endPolyfillCoordination] - A callback function for ending the polyfill coordination.
+     *
+     * @augments SuperClass
+     *
+     * @private
+     */
     class FocusVisibleCoordinator extends SuperClass {
+        /**
+         * A callback function for ending the polyfill coordination.
+         *
+         * @private
+         */
         private [$endPolyfillCoordination]: EndPolyfillCoordinationCallback | null =
             null;
 
@@ -127,6 +151,7 @@ export const FocusVisiblePolyfillMixin = <
         // document:
         override connectedCallback(): void {
             super.connectedCallback && super.connectedCallback();
+
             if (!hasFocusVisible) {
                 requestAnimationFrame(() => {
                     if (this[$endPolyfillCoordination] == null) {
@@ -139,6 +164,7 @@ export const FocusVisiblePolyfillMixin = <
 
         override disconnectedCallback(): void {
             super.disconnectedCallback && super.disconnectedCallback();
+
             // It's important to remove the polyfill event listener when we
             // disconnect, otherwise we will leak the whole element via window:
             if (!hasFocusVisible) {

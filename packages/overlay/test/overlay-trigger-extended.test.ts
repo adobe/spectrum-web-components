@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { expect, html, nextFrame, oneEvent, waitUntil } from '@open-wc/testing';
-
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/button/sp-button.js';

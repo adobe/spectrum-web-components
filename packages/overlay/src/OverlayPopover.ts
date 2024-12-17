@@ -32,7 +32,10 @@ import { userFocusableSelector } from '@spectrum-web-components/shared';
 const supportsOverlayAuto = CSS.supports('(overlay: auto)');
 
 /**
+ * Check if the given element is open.
  *
+ * @param el - The element to check.
+ * @returns - True if the element is open, false otherwise.
  */
 function isOpen(el: HTMLElement): boolean {
     let popoverOpen = false;
@@ -53,12 +56,23 @@ function isOpen(el: HTMLElement): boolean {
 }
 
 /**
+ * Mixin function to add popover functionality to an overlay.
  *
+ * @template T
+ *
+ * @param constructor - The constructor function of the overlay to which popover functionality will be added.
+ * @returns - The constructor with popover functionality.
  */
 export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
     constructor: T
 ): T & Constructor<SpectrumElement> {
     class OverlayWithPopover extends constructor {
+        /**
+         * Manage the delay before opening or closing the overlay.
+         *
+         * @param targetOpenState - The desired open state.
+         * @returns - A promise that resolves when the delay management is complete.
+         */
         protected override async manageDelay(
             targetOpenState: boolean
         ): Promise<void> {
@@ -78,8 +92,10 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
         }
 
         /**
-         * A popover should be hidden _after_ it is no longer on top-layer because
-         * the position metrics will have changed from when it was originally positioned.
+         * Hide the popover if it should be hidden.
+         *
+         * @param targetOpenState - The desired open state.
+         * @returns - A promise that resolves when the popover should be hidden.
          */
         private async shouldHidePopover(
             targetOpenState: boolean
@@ -115,6 +131,11 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             });
         }
 
+        /**
+         * Show the popover if it should be shown.
+         *
+         * @param targetOpenState - The desired open state.
+         */
         private shouldShowPopover(targetOpenState: boolean): void {
             let popoverOpen = false;
 
@@ -142,6 +163,12 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             }
         }
 
+        /**
+         * Ensure the overlay is on the DOM.
+         *
+         * @param targetOpenState - The desired open state.
+         * @returns - A promise that resolves when the overlay is ensured to be on the DOM.
+         */
         protected override async ensureOnDOM(
             targetOpenState: boolean
         ): Promise<void> {
@@ -155,6 +182,12 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             await nextFrame();
         }
 
+        /**
+         * Make the transition to the desired open state.
+         *
+         * @param targetOpenState - The desired open state.
+         * @returns - A promise that resolves to the focused element or null.
+         */
         protected override async makeTransition(
             targetOpenState: boolean
         ): Promise<HTMLElement | null> {

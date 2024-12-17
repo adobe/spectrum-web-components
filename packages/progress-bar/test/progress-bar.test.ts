@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-
 import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
 import { ProgressBar } from '@spectrum-web-components/progress-bar';
 import { stub } from 'sinon';

@@ -2,10 +2,14 @@
     "root": true,
     "env": {
         "browser": true,
-        "node": false,
+        "node": true,
         "es6": true
     },
     "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
     "plugins": [
         "@typescript-eslint",
         "notice",
@@ -243,7 +247,7 @@
                 "alphabetizeExtras": true
             }
         ],
-        "jsdoc/tag-lines": ["warn", "any", { "startLines": 1, "endLines": 1 }],
+        "jsdoc/tag-lines": ["warn", "any", { "startLines": 1 }],
         "jsdoc/no-blank-blocks": [
             "warn",
             {
@@ -273,9 +277,7 @@
             "error",
             {
                 "ignoreCase": true,
-                "ignoreDeclarationSort": true,
-                "ignoreMemberSort": false,
-                "allowSeparatedGroups": false
+                "ignoreDeclarationSort": true
             }
         ],
         "lit-a11y/click-events-have-key-events": [
@@ -315,6 +317,11 @@
                 "blankLine": "any",
                 "prev": ["const", "let", "var"],
                 "next": ["const", "let", "var"]
+            },
+            {
+                "blankLine": "never",
+                "prev": ["import"],
+                "next": ["import"]
             }
         ]
     },
@@ -334,7 +341,12 @@
             }
         },
         {
-            "files": ["**/icons/*.ts", "**/src/elements/*.ts"],
+            "files": [
+                "**/icons/*.ts",
+                "**/src/elements/*.ts",
+                "packages/icons-workflow/stories/icon-manifest.ts",
+                "packages/icons-ui/stories/icon-manifest.ts:"
+            ],
             "rules": {
                 "sort-imports": ["off"],
                 "@stylistic/padding-line-between-statements": 0

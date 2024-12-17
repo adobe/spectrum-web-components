@@ -17,7 +17,6 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-
 import messageStyles from './illustrated-message.css.js';
 import headingStyles from '@spectrum-web-components/styles/heading.js';
 import bodyStyles from '@spectrum-web-components/styles/body.js';

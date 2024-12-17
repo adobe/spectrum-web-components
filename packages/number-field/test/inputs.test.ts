@@ -15,7 +15,6 @@ import { elementUpdated, expect, nextFrame } from '@open-wc/testing';
 import { getElFrom } from './helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
-
 import '@spectrum-web-components/number-field/sp-number-field.js';
 import { remapMultiByteCharacters } from '@spectrum-web-components/number-field';
 import {

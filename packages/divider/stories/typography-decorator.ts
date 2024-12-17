@@ -19,7 +19,6 @@ import {
     customElement,
     property,
 } from '@spectrum-web-components/base/src/decorators.js';
-
 import styles from '@spectrum-web-components/theme/src/typography.css.js';
 
 /**

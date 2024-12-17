@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../../spectrum-two/theme-light.js';
-import '../../spectrum-two/theme-dark.js';
-import '../../spectrum-two/scale-medium.js';
-import '../../spectrum-two/scale-large.js';
+import '../../theme/spectrum-two/theme-light.js';
+import '../../theme/spectrum-two/theme-dark.js';
+import '../../theme/spectrum-two/scale-medium.js';
+import '../../theme/spectrum-two/scale-large.js';

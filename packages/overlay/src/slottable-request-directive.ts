@@ -31,7 +31,6 @@ export class SlottableRequestDirective extends AsyncDirective {
     protected listenerHost!: HTMLElement;
     protected listeners!: AbortController;
 
-    /* c8 ignore next 9 */
     render(_template: () => TemplateResult): unknown {
         // render function here just defines the interface to the update call later
         // we don't have anything to render since this is intended to be an ElementPart directive
@@ -55,7 +54,6 @@ export class SlottableRequestDirective extends AsyncDirective {
     }
 
     handleSlottableRequest(event: SlottableRequestEvent): void {
-        /* c8 ignore next 1 */
         if (event.target !== event.currentTarget) return;
 
         const willRemoveSlottable = event.data === removeSlottableRequest;
@@ -94,7 +92,6 @@ export class SlottableRequestDirective extends AsyncDirective {
         this.listeners?.abort();
     }
 
-    /* c8 ignore next 3 */
     override reconnected(): void {
         this.init();
     }

@@ -18,10 +18,8 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-
 import '@spectrum-web-components/underlay/sp-underlay.js';
 import '@spectrum-web-components/button/sp-button.js';
-
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import { DialogBase } from './DialogBase.js';

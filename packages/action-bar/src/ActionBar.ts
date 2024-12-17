@@ -27,21 +27,33 @@ import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/f
 export const actionBarVariants = ['sticky', 'fixed'];
 
 /**
- * The ActionBar component provides a container for actions that can be performed on selected items.
+ * A `<sp-action-bar>` delivers a floating action bar that is a convenient way to deliver stateful actions
+ * in cases like selection mode. `<sp-action-bar>` can be deployed in two variants beyond the default:
+ * `[varient="fixed"]` to position the element in relation to the page, and `[variant=sticky]` to position
+ * the content in relation to content that may scroll.
  *
  * @element sp-action-bar
  *
  * @slot - Content to display with the Action Bar
  *
+ * @fires close - Announces that the action bar is closing
  */
 export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
+    /**
+     * Retrieves the styles for the ActionBar component.
+     *
+     * @returns The styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
         return [actionBarStyles];
     }
 
     /**
      * Deliver the Action Bar with additional visual emphasis.
-     * When true, the action bar is styled with emphasis.
+     *
+     * When `true`, the action bar is styled with emphasis.
+     *
+     * @type {boolean}
      */
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
@@ -49,6 +61,8 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**
      * When `flexible`, the action bar sizes itself to its content
      * rather than a specific width.
+     *
+     * @type {boolean}
      */
     @property({ type: Boolean, reflect: true })
     public flexible = false;
@@ -56,13 +70,18 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**
      * Indicates whether the action bar is open.
      * When true, the action bar is visible; otherwise, it is hidden.
+     *
+     * @type {boolean}
      */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
     /**
      * Applies specific styling when set to `sticky` or `fixed`.
+     *
      * The `variant` attribute is removed when not matching one of the above.
+     *
+     * @type {'sticky' | 'fixed' | ''}
      */
     @property({ type: String })
     public set variant(variant: string) {
@@ -81,13 +100,17 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
         this._variant = '';
     }
 
-    /**
-     * Gets the current variant of the action bar.
-     */
     public get variant(): string {
         return this._variant;
     }
 
+    /**
+     * Internal property to store the current variant of the action bar.
+     *
+     * @type {string}
+     *
+     * @private
+     */
     private _variant = '';
 
     /**
@@ -116,6 +139,8 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**
      * Renders the action bar template.
      * Includes a popover with a close button, field label, and action group.
+     *
+     * @returns The rendered template for the action bar.
      */
     public override render(): TemplateResult {
         return html`

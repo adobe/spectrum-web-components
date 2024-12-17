@@ -19,9 +19,7 @@ import {
 import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
-
 import { Tag } from './Tag.js';
-
 import styles from './tags.css.js';
 
 /**
@@ -29,7 +27,6 @@ import styles from './tags.css.js';
  * The `Tags` component is a custom web component that manages a group of tag elements.
  *
  * @slot - Tag elements to manage as a group.
- *
  */
 export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**

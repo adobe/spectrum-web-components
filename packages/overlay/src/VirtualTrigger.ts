@@ -36,7 +36,6 @@ export class VirtualTrigger {
             x: this.x,
             bottom: this.y,
             left: this.x,
-            /* c8 ignore next 3 */
             toJSON() {
                 return;
             },

@@ -16,7 +16,6 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-
 import styles from './table-cell.css.js';
 
 /**
@@ -25,7 +24,6 @@ import styles from './table-cell.css.js';
  * @element sp-table-cell
  *
  * @slot Cell content
- *
  */
 export class TableCell extends SpectrumElement {
     /**

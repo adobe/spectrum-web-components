@@ -18,11 +18,9 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers';
 describe('Clear Button', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<ClearButton>(
-                html`
-                    <sp-clear-button size="m" label="Clear"></sp-clear-button>
-                `
-            )
+            await fixture<ClearButton>(html`
+                <sp-clear-button size="m" label="Clear"></sp-clear-button>
+            `)
     );
     (
         ['s', 'm', 'l', 'xl'] as (
@@ -36,14 +34,9 @@ describe('Clear Button', () => {
         )[]
     ).map((size) => {
         it(`loads - ${size}`, async () => {
-            const el = await fixture<ClearButton>(
-                html`
-                    <sp-clear-button
-                        size=${size}
-                        label="Clear"
-                    ></sp-clear-button>
-                `
-            );
+            const el = await fixture<ClearButton>(html`
+                <sp-clear-button size=${size} label="Clear"></sp-clear-button>
+            `);
 
             await expect(el).to.be.accessible();
         });

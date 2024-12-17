@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
 import { spy, stub } from 'sinon';
-
 import '@spectrum-web-components/tags/sp-tag.js';
 import '@spectrum-web-components/tags/sp-tags.js';
 import { Tag } from '@spectrum-web-components/tags';

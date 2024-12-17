@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import { ActionBar } from '@spectrum-web-components/action-bar';
 import { Default, emphasized } from '../stories/action-bar.stories.js';

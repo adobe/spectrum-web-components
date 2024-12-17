@@ -17,7 +17,6 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-
 import styles from './underlay.css.js';
 
 /**
@@ -28,7 +27,6 @@ import styles from './underlay.css.js';
  * @element sp-underlay
  *
  * @fires close - Dispatched when the underlay is clicked, allowing the consuming pattern to decide whether to close based on that interaction.
- *
  */
 export class Underlay extends SpectrumElement {
     /**

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
-
 import { TopNav, TopNavItem } from '@spectrum-web-components/top-nav';
 import { Default, Selected } from '../stories/top-nav.stories.js';
 import { spy } from 'sinon';

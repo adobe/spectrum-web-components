@@ -17,7 +17,6 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-
 import dropzoneStyles from './dropzone.css.js';
 
 export type DropzoneEventDetail = DragEvent;
@@ -49,7 +48,6 @@ export class Dropzone extends SpectrumElement {
      * @type {'copy' | 'move' | 'link' | 'none'}
      *
      * @attribute
-     *
      */
     public get dropEffect(): DropEffects {
         return this._dropEffect;

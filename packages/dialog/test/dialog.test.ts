@@ -18,7 +18,6 @@ import {
     nextFrame,
 } from '@open-wc/testing';
 import { TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import { Dialog } from '@spectrum-web-components/dialog';
 import {

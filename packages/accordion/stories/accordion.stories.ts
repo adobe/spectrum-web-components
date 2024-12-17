@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import { TemplateResult } from '@spectrum-web-components/base';
 import { AccordionMarkup } from './';
 import { argTypes } from './args.js';
-
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '@spectrum-web-components/link/sp-link.js';
@@ -24,16 +23,17 @@ export default {
     args: {
         open: false,
         size: 'm',
-        density: undefined,
+        density: '',
     },
     argTypes,
+    tags: ['autodocs'],
 };
 
 type Properties = {
     allowMultiple?: boolean;
     disabled?: boolean;
     open?: boolean;
-    density?: 'compact' | 'spacious' | undefined;
+    density?: 'compact' | 'spacious';
     size?: 's' | 'm' | 'l' | 'xl';
 };
 

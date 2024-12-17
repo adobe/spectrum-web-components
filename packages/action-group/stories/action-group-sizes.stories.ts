@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { spreadProps } from '../../../test/lit-helpers.js';
-
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';

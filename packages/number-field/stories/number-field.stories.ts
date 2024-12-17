@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-
 import '@spectrum-web-components/number-field/sp-number-field.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';

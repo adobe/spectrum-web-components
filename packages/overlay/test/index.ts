@@ -19,7 +19,6 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-
 import {
     OverlayTrigger,
     TriggerInteractions,

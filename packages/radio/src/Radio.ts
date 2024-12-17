@@ -20,7 +20,6 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
-
 import radioStyles from './radio.css.js';
 
 /**

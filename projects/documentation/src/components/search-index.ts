@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import lunr from 'lunr';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
+import { Index } from 'lunr';
 
-let index: lunr.Index | undefined;
+let index: Index | undefined;
 
 export interface Result {
     name: string;
@@ -31,18 +31,31 @@ export interface ResultGroup {
     maxScore: number;
 }
 
+/**
+ * Converts a string to a label format by capitalizing the first letter of each word.
+ *
+ * @param name - The string to be converted.
+ * @returns - The formatted label string.
+ */
 function label(name: string): string {
     return name.replace(/(?:^|-)\w/g, (match) =>
         match.toUpperCase().replace('-', ' ')
     );
 }
 
+/**
+ * Searches for the given value in the index and returns the results grouped by category.
+ *
+ * @param value - The term or phrase to search for in the index.
+ * @returns - A promise that resolves to an array of result groups.
+ */
 export async function search(value: string): Promise<ResultGroup[]> {
     if (!index) {
         const searchIndexURL = new URL('./searchIndex.json', import.meta.url)
             .href;
         const searchIndex = await (await fetch(searchIndexURL)).json();
-        index = lunr.Index.load(searchIndex);
+
+        index = Index.load(searchIndex);
     }
 
     const collatedResults = new Map<
@@ -54,6 +67,7 @@ export async function search(value: string): Promise<ResultGroup[]> {
     >();
 
     const search = index.search(value);
+
     for (const item of search) {
         const { category, name, url } = JSON.parse(item.ref);
 
@@ -63,7 +77,9 @@ export async function search(value: string): Promise<ResultGroup[]> {
                 results: [],
             });
         }
+
         const catagoryData = collatedResults.get(category);
+
         if (catagoryData) {
             catagoryData.maxScore = Math.max(catagoryData.maxScore, item.score);
             catagoryData.results.push({
@@ -75,6 +91,7 @@ export async function search(value: string): Promise<ResultGroup[]> {
     }
 
     const result: ResultGroup[] = [];
+
     for (const [name, { results, maxScore }] of collatedResults) {
         result.push({ name, results, maxScore });
     }
@@ -82,6 +99,7 @@ export async function search(value: string): Promise<ResultGroup[]> {
         if (a.maxScore < b.maxScore) {
             return 1;
         }
+
         if (a.maxScore > b.maxScore) {
             return -1;
         }

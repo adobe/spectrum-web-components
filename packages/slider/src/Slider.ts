@@ -28,7 +28,6 @@ import {
     repeat,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
-
 import sliderStyles from './slider.css.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { StyleInfo } from 'lit-html/directives/style-map';

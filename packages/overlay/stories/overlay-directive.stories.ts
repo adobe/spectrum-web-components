@@ -31,7 +31,6 @@ import {
     InsertionOptions,
     trigger,
 } from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
-
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -47,7 +46,6 @@ import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '../../../projects/story-decorator/src/types.js';
-
 import './overlay-story-components.js';
 import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';

@@ -63,7 +63,6 @@ export class OverlayTimer {
             return this.promise;
         } else if (this.promise) {
             return this.promise;
-            /* c8 ignore next 4 */
         } else {
             // This should never happen
             throw new Error('Inconsistent state');

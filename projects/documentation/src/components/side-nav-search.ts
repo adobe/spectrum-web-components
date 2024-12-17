@@ -68,6 +68,7 @@ export class SearchComponent extends LitElement {
             this.overlayEl.manuallyKeepOpen();
         };
         const cleanup = () => abortController.abort();
+
         this.searchField.addEventListener('pointerup', handlePointerup, {
             signal,
         });
@@ -83,11 +84,13 @@ export class SearchComponent extends LitElement {
         const { code } = event;
         const shouldFocusResultsList =
             code === 'ArrowDown' || code === 'ArrowUp';
+
         if (!shouldFocusResultsList) {
             return;
         } else {
             event.preventDefault();
         }
+
         this.focusResults({ shouldFocusResultsList });
     }
 
@@ -124,14 +127,17 @@ export class SearchComponent extends LitElement {
 
     handleSubmit(event: Event): void {
         event.preventDefault();
+
         if (this.results.length < 0) {
             return;
         }
+
         this.menuEl.focus();
     }
 
     private async updateSearchResults(): Promise<boolean> {
         const { value } = this.searchField;
+
         if (value.length < 3 || !this.searchField.focused) {
             this.closePopover();
 
@@ -142,6 +148,7 @@ export class SearchComponent extends LitElement {
         const search = await import('./search-index.js').then(
             ({ search }) => search
         );
+
         this.results = await search(searchParam);
 
         this.openPopover();

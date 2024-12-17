@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
+import { Parameters, Renderer, StoryContext } from '@storybook/csf';
 import './sp-story-decorator.js';
 
 export const themeStyles = html`
@@ -32,10 +33,7 @@ export const swcThemeDecoratorWithConfig =
     ({ bundled } = { bundled: true }) =>
     (
         story: () => TemplateResult,
-        context: import('@storybook/csf').StoryContext<
-            import('@storybook/csf').Renderer,
-            import('@storybook/csf').Parameters
-        >
+        context: StoryContext<Renderer, Parameters>
     ) => {
         if (!bundled) {
             requestAnimationFrame(() => {
@@ -43,11 +41,13 @@ export const swcThemeDecoratorWithConfig =
                 const decorator = document.querySelector(
                     'sp-story-decorator'
                 ) as HTMLElement;
+
                 render(story(), decorator);
             });
         }
 
         let hideNavStyles;
+
         // If the global settings exist, hide the bottom toolbar
         if (
             context?.globals?.system ||

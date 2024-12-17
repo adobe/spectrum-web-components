@@ -15,7 +15,6 @@ import {
     LitElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';

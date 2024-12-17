@@ -97,7 +97,7 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
         },
     });
 
-    public _variant: AlertDialogVariants = '';
+    private _variant: AlertDialogVariants = '';
 
     /**
      * The variant applies specific styling when set to a valid variant.
@@ -163,7 +163,7 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     // Static instance count for generating unique IDs
-    static instanceCount = 0;
+    private static instanceCount = 0;
 
     // ID for the labelledby attribute
     private labelledbyId = `sp-dialog-label-${AlertDialog.instanceCount++}`;
@@ -216,7 +216,7 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     };
 
-    // ID for the describedby attribute
+    // ID for the aria-describedby attribute
     private describedbyId = `sp-dialog-description-${AlertDialog.instanceCount++}`;
 
     /**

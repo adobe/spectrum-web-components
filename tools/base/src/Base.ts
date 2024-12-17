@@ -23,6 +23,9 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
+/**
+ * Interface representing the base properties and methods for Spectrum components.
+ */
 export interface SpectrumInterface {
     shadowRoot: ShadowRoot;
     isLTR: boolean;
@@ -37,6 +40,7 @@ const updateRTL = (): void => {
         document.documentElement.dir === 'rtl'
             ? document.documentElement.dir
             : 'ltr';
+
     observedForElements.forEach((el) => {
         el.setAttribute('dir', dir);
     });
@@ -57,32 +61,52 @@ const canManageContentDirection = (el: ContentDirectionManager): boolean =>
     typeof el.startManagingContentDirection !== 'undefined' ||
     el.tagName === 'SP-THEME';
 
+/**
+ * A mixin function that adds Spectrum-specific properties and methods to a given LitElement-based class.
+ * This mixin provides support for text direction (LTR/RTL) and focus visibility within the component tree.
+ *
+ * @template T - The type of the base class that extends ReactiveElement.
+ *
+ * @param constructor - The constructor of the base class to which the mixin will be applied.
+ * @returns A new class that extends the base class with Spectrum-specific properties and methods.
+ */
 export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<SpectrumInterface> {
     class SpectrumMixinElement extends constructor {
         /**
-         * @private
+         * The shadow root of the component.
          */
         public override shadowRoot!: ShadowRoot;
+
         private _dirParent?: HTMLElement;
 
         /**
+         * The text direction of the component, either `ltr` (left-to-right) or `rtl` (right-to-left).
+         *
          * @private
          */
         public override dir!: 'ltr' | 'rtl';
 
         /**
+         * Indicates whether the component is in a left-to-right (LTR) layout.
+         *
          * @private
          */
         public get isLTR(): boolean {
             return this.dir === 'ltr';
         }
 
+        /**
+         * Determines if the component or any of its descendants have visible focus.
+         *
+         * @returns True if the component or any of its descendants have visible focus, otherwise false.
+         */
         public hasVisibleFocusInTree(): boolean {
             const getAncestors = (root: Document = document): HTMLElement[] => {
                 // eslint-disable-next-line @spectrum-web-components/document-active-element
                 let currentNode = root.activeElement as HTMLElement;
+
                 while (
                     currentNode?.shadowRoot &&
                     currentNode.shadowRoot.activeElement
@@ -93,24 +117,30 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 const ancestors: HTMLElement[] = currentNode
                     ? [currentNode]
                     : [];
+
                 while (currentNode) {
                     const ancestor =
                         currentNode.assignedSlot ||
                         currentNode.parentElement ||
                         (currentNode.getRootNode() as ShadowRoot)?.host;
+
                     if (ancestor) {
                         ancestors.push(ancestor as HTMLElement);
                     }
+
                     currentNode = ancestor as HTMLElement;
                 }
+
                 return ancestors;
             };
             const activeElement = getAncestors(
                 this.getRootNode() as Document
             )[0];
+
             if (!activeElement) {
                 return false;
             }
+
             // Browsers without support for the `:focus-visible`
             // selector will throw on the following test (Safari, older things).
             // Some won't throw, but will be focusing item rather than the menu and
@@ -120,7 +150,6 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                     activeElement.matches(':focus-visible') ||
                     activeElement.matches('.focus-visible')
                 );
-                /* c8 ignore next 3 */
             } catch (error) {
                 return activeElement.matches('.focus-visible');
             }
@@ -130,6 +159,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             if (!this.hasAttribute('dir')) {
                 let dirParent = ((this as HTMLElement).assignedSlot ||
                     this.parentNode) as HTMLElement;
+
                 while (
                     dirParent !== document.documentElement &&
                     !canManageContentDirection(
@@ -143,15 +173,16 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 }
                 this.dir =
                     dirParent.dir === 'rtl' ? dirParent.dir : this.dir || 'ltr';
+
                 if (dirParent === document.documentElement) {
                     observedForElements.add(this);
                 } else {
                     const { localName } = dirParent;
+
                     if (
                         localName.search('-') > -1 &&
                         !customElements.get(localName)
                     ) {
-                        /* c8 ignore next 5 */
                         customElements.whenDefined(localName).then(() => {
                             (
                                 dirParent as ThemeRoot
@@ -163,13 +194,16 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                         );
                     }
                 }
+
                 this._dirParent = dirParent as HTMLElement;
             }
+
             super.connectedCallback();
         }
 
         public override disconnectedCallback(): void {
             super.disconnectedCallback();
+
             if (this._dirParent) {
                 if (this._dirParent === document.documentElement) {
                     observedForElements.delete(this);
@@ -178,14 +212,21 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                         this
                     );
                 }
+
                 this.removeAttribute('dir');
             }
         }
     }
+
     return SpectrumMixinElement;
 }
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {
+    /**
+     * The version of the custom element
+     *
+     * @static
+     */
     static VERSION = version;
 }
 
@@ -202,20 +243,18 @@ if (window.__swc.DEBUG) {
         high: false,
         deprecation: false,
     };
+
     window.__swc = {
         ...window.__swc,
         ignoreWarningLocalNames: {
-            /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningLocalNames || {}),
         },
         ignoreWarningTypes: {
             ...ignoreWarningTypes,
-            /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningTypes || {}),
         },
         ignoreWarningLevels: {
             ...ignoreWarningLevels,
-            /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningLevels || {}),
         },
         issuedWarnings: new Set(),
@@ -227,30 +266,39 @@ if (window.__swc.DEBUG) {
         ): void => {
             const { localName = 'base' } = element || {};
             const id = `${localName}:${type}:${level}` as BrandedSWCWarningID;
+
             if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id))
                 return;
-            /* c8 ignore next 3 */
+
             if (window.__swc.ignoreWarningLocalNames[localName]) return;
+
             if (window.__swc.ignoreWarningTypes[type]) return;
+
             if (window.__swc.ignoreWarningLevels[level]) return;
+
             window.__swc.issuedWarnings.add(id);
             let listedIssues = '';
+
             if (issues && issues.length) {
                 issues.unshift('');
                 listedIssues = issues.join('\n    - ') + '\n';
             }
+
             const intro = level === 'deprecation' ? 'DEPRECATION NOTICE: ' : '';
             const inspectElement = element
                 ? '\nInspect this issue in the follow element:'
                 : '';
             const displayURL = (element ? '\n\n' : '\n') + url + '\n';
             const messages: unknown[] = [];
+
             messages.push(
                 intro + message + '\n' + listedIssues + inspectElement
             );
+
             if (element) {
                 messages.push(element);
             }
+
             messages.push(displayURL, {
                 data: {
                     localName,

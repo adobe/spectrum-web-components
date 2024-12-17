@@ -38,7 +38,6 @@ import {
     isAndroid,
     isIOS,
 } from '@spectrum-web-components/shared/src/platform.js';
-
 import styles from './color-area.css.js';
 
 /**
@@ -261,7 +260,6 @@ export class ColorArea extends SpectrumElement {
                 case 'End':
                     deltaX = step * (this.isLTR ? 10 : -10);
                     break;
-                /* c8 ignore next 2 */
                 default:
                     break;
             }
@@ -395,7 +393,6 @@ export class ColorArea extends SpectrumElement {
      * @returns Slider value that correlates to the position under the pointer
      */
     private calculateHandlePosition(event: PointerEvent): [number, number] {
-        /* c8 ignore next 3 */
         if (!this.boundingClientRect) {
             return [this.x, this.y];
         }

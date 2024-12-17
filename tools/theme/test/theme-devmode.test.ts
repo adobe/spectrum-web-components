@@ -48,6 +48,7 @@ describe('Theme', () => {
 
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
+
             expect(
                 (spyCall.args.at(0) as string).includes('theme delivery'),
                 'confirm "theme delivery"-centric message'
@@ -74,6 +75,7 @@ describe('Theme', () => {
 
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
+
             expect(
                 (spyCall.args.at(0) as string).includes('beta version'),
                 'confirm "beta-theme"-centric message'

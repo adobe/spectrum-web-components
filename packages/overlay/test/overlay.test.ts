@@ -17,14 +17,13 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { Dialog } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
-import { setViewport } from '@web/test-runner-commands';
+import { sendKeys, setViewport } from '@web/test-runner-commands';
 import {
     Overlay,
     OverlayTrigger,
     Placement,
     VirtualTrigger,
 } from '@spectrum-web-components/overlay';
-
 import {
     elementUpdated,
     expect,
@@ -32,7 +31,6 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { sendKeys } from '@web/test-runner-commands';
 import {
     definedOverlayElement,
     virtualElement,

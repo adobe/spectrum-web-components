@@ -20,30 +20,48 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-
 import styles from './help-text.css.js';
 
 type HelpTextVariants = 'neutral' | 'negative';
 
 /**
  * @element sp-help-text
+ *
+ * @slot - The default slot for the help text content.
  */
 export class HelpText extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
 }) {
+    /**
+     * Returns the styles to be applied to the component.
+     *
+     * @returns The styles array.
+     */
     public static override get styles(): CSSResultArray {
         return [styles];
     }
 
+    /**
+     * Indicates whether to show an icon.
+     *
+     * @type {boolean}
+     */
     @property({ type: Boolean, reflect: true })
     public icon = false;
 
     /**
      * The visual variant to apply to this help text.
+     *
+     * @type {HelpTextVariants}
      */
     @property({ reflect: true })
     public variant: HelpTextVariants = 'neutral';
 
+    /**
+     * Renders the component template.
+     *
+     * @returns The rendered template.
+     */
     protected override render(): TemplateResult {
         return html`
             ${this.variant === 'negative' && this.icon

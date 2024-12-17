@@ -18,7 +18,6 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
-
 import panelStyles from './tab-panel.css.js';
 
 /**
@@ -27,7 +26,6 @@ import panelStyles from './tab-panel.css.js';
  * @element sp-tab-panel
  *
  * @slot - content of the Tab Panel
- *
  */
 export class TabPanel extends SpectrumElement {
     /**

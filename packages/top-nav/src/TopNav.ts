@@ -26,7 +26,6 @@ import {
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { TopNavItem } from './TopNavItem.js';
-
 import tabsSizes from '@spectrum-web-components/tabs/src/tabs-sizes.css.js';
 import tabStyles from '@spectrum-web-components/tabs/src/tabs.css.js';
 import { ScaledIndicator } from '@spectrum-web-components/tabs/src/Tabs.js';
@@ -40,7 +39,6 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
  * @element sp-top-nav
  *
  * @slot - Nav Items to display as a group
- *
  */
 export class TopNav extends SizedMixin(SpectrumElement) {
     /**

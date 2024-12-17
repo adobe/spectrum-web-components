@@ -26,12 +26,26 @@ import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
 
 /**
+ * A mixin function that adds dialog management functionality to an overlay.
  *
+ * @template T
+ *
+ * @param constructor - The constructor function for the overlay component.
+ * @returns - The constructor with dialog management functionality.
  */
 export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
     constructor: T
 ): T & Constructor<SpectrumElement> {
     class OverlayWithDialog extends constructor {
+        /**
+         * Manages the opening of the dialog.
+         *
+         * @override
+         *
+         * @returns A promise that resolves when the dialog is managed.
+         *
+         * @protected
+         */
         protected override async manageDialogOpen(): Promise<void> {
             const targetOpenState = this.open;
 
@@ -51,6 +65,14 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             await this.dialogApplyFocus(targetOpenState, focusEl);
         }
 
+        /**
+         * Handles the transition of the dialog.
+         *
+         * @param targetOpenState - A boolean indicating whether the dialog should be opened (true) or closed (false).
+         * @returns A promise that resolves to the focusable element or null.
+         *
+         * @protected
+         */
         protected async dialogMakeTransition(
             targetOpenState: boolean
         ): Promise<HTMLElement | null> {
@@ -198,6 +220,15 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             return focusEl;
         }
 
+        /**
+         * Applies focus to the dialog.
+         *
+         * @param targetOpenState - A boolean indicating whether the dialog should be opened (true) or closed (false).
+         * @param focusEl - The element to focus.
+         * @returns A promise that resolves when the focus is applied.
+         *
+         * @protected
+         */
         protected async dialogApplyFocus(
             targetOpenState: boolean,
             focusEl: HTMLElement | null

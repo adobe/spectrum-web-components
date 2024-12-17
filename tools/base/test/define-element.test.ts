@@ -16,7 +16,6 @@ import {
     isFirefox,
     isWebKit,
 } from '@spectrum-web-components/shared/src/platform.js';
-
 // for window.__swc
 import '@spectrum-web-components/base';
 
@@ -182,6 +181,7 @@ describe('define-element', function () {
             if (customElements.get(name)) {
                 this.skip();
             }
+
             const error = {
                 webkit: 'Cannot define multiple custom elements with the same tag name',
                 firefox: `'${name}' has already been defined`,
@@ -190,6 +190,7 @@ describe('define-element', function () {
             let caughtError: Error | undefined;
 
             customElements.define(name, class extends HTMLElement {});
+
             try {
                 await register();
             } catch (error) {
@@ -199,6 +200,7 @@ describe('define-element', function () {
             expect(caughtError?.message ?? '').to.include(error);
             expect(this.warn.called, 'should call console.warn()').to.be.true;
             const spyCall = this.warn.getCall(0);
+
             expect(
                 (spyCall.args.at(0) as string).includes('redefine'),
                 `message should warn about redefining an element, instead got "${spyCall.args.at(

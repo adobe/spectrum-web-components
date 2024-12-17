@@ -43,6 +43,7 @@ export class MatchMediaController implements ReactiveController {
 
     protected onChange(event: MediaQueryListEvent): void {
         if (this.matches === event.matches) return;
+
         this.matches = event.matches;
         this.host.requestUpdate(this.key, !this.matches);
     }

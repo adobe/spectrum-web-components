@@ -120,7 +120,9 @@ describe('Reparent Children', () => {
             position: 'beforeend',
             prepareCallback: (el: Element) => {
                 const slotName = el.slot;
+
                 el.removeAttribute('slot');
+
                 return (el: Element) => {
                     el.slot = slotName;
                 };
@@ -165,6 +167,7 @@ describe('Reparent Children', () => {
         expect(destination.children.length).to.equal(5 + 1);
 
         const marker = context.querySelector('.marker') as HTMLDivElement;
+
         expect(marker.previousElementSibling).to.be.null;
         expect(marker.nextElementSibling?.textContent).to.equal('1');
         expect(destination.lastElementChild?.textContent).to.equal('5');
@@ -209,6 +212,7 @@ describe('Reparent Children', () => {
         expect(destination.children.length).to.equal(5 + 1);
 
         const marker = context.querySelector('.marker') as HTMLDivElement;
+
         expect(marker.nextElementSibling).to.be.null;
         expect(marker.previousElementSibling?.textContent).to.equal('5');
         expect(destination.firstElementChild?.textContent).to.equal('1');
@@ -251,6 +255,7 @@ describe('Reparent Children', () => {
         expect(destination.children.length).to.equal(0);
 
         const marker = context.querySelector('.marker') as HTMLDivElement;
+
         expect(marker.previousElementSibling).to.not.be.null;
         expect(marker.nextElementSibling?.textContent).to.equal('1');
         expect(destination.previousElementSibling?.textContent).to.equal('5');
@@ -287,6 +292,7 @@ describe('Reparent Children', () => {
         expect(source.children.length).to.equal(5);
 
         const marker = context.querySelector('.marker') as HTMLDivElement;
+
         expect(marker.previousElementSibling).to.equal(destination);
         expect(marker.nextElementSibling).to.be.null;
 

@@ -25,18 +25,22 @@ import {
 import type { ActionButton } from '@spectrum-web-components/action-button';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
-
 import styles from './action-group.css.js';
 
 const EMPTY_SELECTION: string[] = [];
 
 /**
+ * `sp-action-group` delivers a set of action buttons in horizontal or vertical orientation while ensuring the
+ * appropriate spacing between those buttons.
+ *
+ * The `compact` attribute merges these buttons so that they are visually joined to clarify their relationship
+ * to each other and their distance from other buttons/groups.
+ *
  * @element sp-action-group
  *
  * @slot - The sp-action-button elements that make up the group.
  *
  * @fires change - Announces that the selection state has been changed by the user.
- *
  */
 export class ActionGroup extends SizedMixin(SpectrumElement, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],
@@ -50,7 +54,6 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
      * Clears the element cache in the roving tabindex controller.
      */
     public set buttons(buttons: ActionButton[]) {
-        /* c8 ignore next 1 */
         if (buttons === this.buttons) return;
 
         this._buttons = buttons;
@@ -226,7 +229,6 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
      * If announce is true, a 'change' event is dispatched.
      */
     private setSelected(selected: string[], announce?: boolean): void {
-        /* c8 ignore next 1 */
         if (selected === this.selected) return;
 
         const old = this.selected;
@@ -257,7 +259,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             button.selected = false;
             button.tabIndex = -1;
             button.setAttribute(
-                this.selects ? 'aria-checked' : /* c8 ignore */ 'aria-pressed',
+                this.selects ? 'aria-checked' : 'aria-pressed',
                 'false'
             );
         });

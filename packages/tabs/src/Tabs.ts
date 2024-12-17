@@ -33,7 +33,6 @@ import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { Tab } from './Tab.js';
 import { Focusable } from '@spectrum-web-components/shared';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
-
 import tabStyles from './tabs.css.js';
 import tabSizes from './tabs-sizes.css.js';
 import { TabPanel } from './TabPanel.js';

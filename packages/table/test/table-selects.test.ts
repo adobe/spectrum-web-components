@@ -16,7 +16,6 @@ import {
     html,
     nextFrame,
 } from '@open-wc/testing';
-
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-head.js';
 import '@spectrum-web-components/table/sp-table-head-cell.js';

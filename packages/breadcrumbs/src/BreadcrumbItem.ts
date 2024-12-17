@@ -23,7 +23,6 @@ import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
-
 import styles from './breadcrumb-item.css.js';
 
 export interface BreadcrumbSelectDetail {
@@ -39,8 +38,9 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
     public value: string | undefined = undefined;
 
     /**
-     * @private
      * Marks this breadcrumb item as the current route.
+     *
+     * @private
      */
     @property({ type: Boolean })
     public isLastOfType = false;

@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import { html } from '@spectrum-web-components/base';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { spy } from 'sinon';
-
 import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';

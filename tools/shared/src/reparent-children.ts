@@ -9,6 +9,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+/**
+ * Restore the children elements from their placeholder comments.
+ *
+ * @template T - The type of the elements.
+ *
+ * @param placeholderItems - The placeholder comments.
+ * @param srcElements - The source elements to restore.
+ * @param cleanupCallbacks - The cleanup callbacks for each element.
+ * @returns The restored elements.
+ */
 function restoreChildren<T extends Element>(
     placeholderItems: Comment[],
     srcElements: T[],
@@ -19,14 +29,18 @@ function restoreChildren<T extends Element>(
         const placeholderItem = placeholderItems[index];
         const parentElement =
             placeholderItem.parentElement || placeholderItem.getRootNode();
+
         if (cleanupCallbacks[index]) {
             cleanupCallbacks[index](srcElement);
         }
+
         if (parentElement && parentElement !== placeholderItem) {
             parentElement.replaceChild(srcElement, placeholderItem);
         }
+
         delete placeholderItems[index];
     }
+
     return srcElements;
 }
 
@@ -42,6 +56,7 @@ export const reparentChildren = <T extends Element>(
     } = { position: 'beforeend' }
 ): (() => T[]) => {
     let { length } = srcElements;
+
     if (length === 0) {
         return () => srcElements;
     }
@@ -57,23 +72,27 @@ export const reparentChildren = <T extends Element>(
     const placeholderItems = new Array<Comment>(length);
     const cleanupCallbacks = new Array<(el: T) => void>(length);
     const placeholderTemplate: Comment = document.createComment(
-        'placeholder for reparented element'
+        'placeholder for re-parented element'
     );
 
     do {
         const srcElement = srcElements[index];
+
         if (prepareCallback) {
             cleanupCallbacks[index] = prepareCallback(srcElement) as (
                 el: T
             ) => void;
         }
+
         placeholderItems[index] = placeholderTemplate.cloneNode() as Comment;
 
         const parentElement =
             srcElement.parentElement || srcElement.getRootNode();
+
         if (parentElement && parentElement !== srcElement) {
             parentElement.replaceChild(placeholderItems[index], srcElement);
         }
+
         destination.insertAdjacentElement(position, srcElement);
 
         index += step;

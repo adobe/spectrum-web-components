@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
-
 import '@spectrum-web-components/tags/sp-tag.js';
 import '@spectrum-web-components/tags/sp-tags.js';
 import { Tag, Tags } from '@spectrum-web-components/tags';

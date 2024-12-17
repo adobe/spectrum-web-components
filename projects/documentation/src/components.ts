@@ -25,7 +25,6 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-star.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-down.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
@@ -94,6 +93,7 @@ document
                 (el as Element).localName === 'sp-table-row' &&
                 (el as Element).id
         ) as HTMLElement;
+
         if (row) {
             location.hash = row.id;
             (event.target as HTMLElement).dispatchEvent(

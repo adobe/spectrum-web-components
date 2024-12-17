@@ -25,7 +25,6 @@ import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/theme/scale-medium.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/theme-light.js';
-
 import { elementUpdated, expect, fixture, waitUntil } from '@open-wc/testing';
 import {
     ElementSize,

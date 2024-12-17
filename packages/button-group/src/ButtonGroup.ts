@@ -19,14 +19,12 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { Button } from '@spectrum-web-components/button';
-
 import styles from './button-group.css.js';
 
 /**
  * @element sp-button-group
  *
  * @slot - the sp-button elements that make up the group
- *
  */
 export class ButtonGroup extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,

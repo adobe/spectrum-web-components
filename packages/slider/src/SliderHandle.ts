@@ -81,7 +81,6 @@ export class SliderHandle extends Focusable {
     }
 
     public override get focusElement(): HTMLElement {
-        /* c8 ignore next */
         return this.handleController?.inputForHandle(this) ?? this;
     }
 
@@ -191,7 +190,6 @@ export class SliderHandle extends Focusable {
         | { numberFormat: NumberFormatter; language: string }
         | undefined;
     protected getNumberFormat(): NumberFormatter {
-        /* c8 ignore next */
         if (
             !this._numberFormatCache ||
             this.languageResolver.language !== this._numberFormatCache.language
@@ -230,7 +228,6 @@ export class SliderHandle extends Focusable {
             };
         }
 
-        /* c8 ignore next */
         return this._numberFormatCache?.numberFormat;
     }
 

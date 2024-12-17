@@ -16,7 +16,6 @@ import {
     html,
     nextFrame,
 } from '@open-wc/testing';
-
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/table/sp-table.js';

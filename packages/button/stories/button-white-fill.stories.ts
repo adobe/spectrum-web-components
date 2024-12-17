@@ -11,6 +11,8 @@ governing permissions and limitations under the License.
 */
 import { TemplateResult } from '@spectrum-web-components/base';
 import {
+    args,
+    argTypes,
     makeOverBackground,
     renderButtonSet,
     renderLink,
@@ -21,7 +23,6 @@ import {
 } from './index.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 import type { Properties } from './index.js';
-import { args, argTypes } from './index.js';
 
 const variant = 'white';
 const treatment = 'fill';

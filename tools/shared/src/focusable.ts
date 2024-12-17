@@ -11,11 +11,15 @@ governing permissions and limitations under the License.
 */
 import { PropertyValues, SpectrumElement } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-
 import { FocusVisiblePolyfillMixin } from './focus-visible.js';
 
 type DisableableElement = HTMLElement & { disabled?: boolean };
 
+/**
+ * Returns a promise that resolves on the next animation frame.
+ *
+ * @returns A promise that resolves on the next animation frame.
+ */
 function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }
@@ -28,13 +32,14 @@ function nextFrame(): Promise<void> {
  */
 export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**
-     * Disable this control. It will not receive focus or events
+     * This property will render the component without the ability to focus and provide no events.
      */
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
     /**
-     * When this control is rendered, focus it automatically
+     * This property will render the component with focus applied automatically on first render.
+     *
      * @private
      */
     @property({ type: Boolean })
@@ -52,23 +57,28 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             const tabindex = this.hasAttribute('tabindex')
                 ? Number(this.getAttribute('tabindex'))
                 : NaN;
+
             return !isNaN(tabindex) ? tabindex : -1;
         }
+
         const tabIndexAttribute = parseFloat(
             this.hasAttribute('tabindex')
                 ? (this.getAttribute('tabindex') as string) || '0'
                 : '0'
         );
+
         // When `disabled` tabindex is -1.
         // When host tabindex -1, use that as the cache.
         if (this.disabled || tabIndexAttribute < 0) {
             return -1;
         }
+
         // When `focusElement` isn't available yet,
         // use host tabindex as the cache.
         if (!this.focusElement) {
             return tabIndexAttribute;
         }
+
         // All other times, use the tabindex of `focusElement`
         // as the cache for this value.
         // return this.focusElement.tabIndex;
@@ -79,6 +89,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         // allows for that change NOT to effect the cached value of tabindex
         if (this.manipulatingTabindex) {
             this.manipulatingTabindex = false;
+
             return;
         }
 
@@ -88,9 +99,11 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             } else if (tabIndex !== this._tabIndex) {
                 this._tabIndex = tabIndex;
                 const tabindex = '' + tabIndex;
+
                 this.manipulatingTabindex = true;
                 this.setAttribute('tabindex', tabindex);
             }
+
             return;
         }
 
@@ -123,10 +136,12 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             } else {
                 this.focusElement?.removeAttribute('tabindex');
             }
+
             return;
         }
 
         this.setAttribute('focusable', '');
+
         if (this.hasAttribute('tabindex')) {
             this.removeAttribute('tabindex');
         } else {
@@ -156,6 +171,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             // allow setting these values to be async when needed.
             await this.updateComplete;
         }
+
         if (tabIndex === null) {
             this.focusElement.removeAttribute('tabindex');
         } else {
@@ -175,9 +191,12 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     /**
-     * @public
-     * @returns {boolean} whether the component should manage its focusElement tab-index or not
+     * The `selfManageFocusElement` getter indicates whether the component should manage its focus element's `tabindex`.
+     *
+     * @returns whether the component should manage its focusElement tab-index or not
      * Needed for action-menu to be supported in action-group in an accessible way
+     *
+     * @public
      */
     public get selfManageFocusElement(): boolean {
         return false;
@@ -197,6 +216,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     public override blur(): void {
         const focusElement = this.focusElement || this;
+
         if (focusElement !== this) {
             focusElement.blur();
         } else {
@@ -210,6 +230,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
 
         const focusElement = this.focusElement || this;
+
         if (focusElement !== this) {
             focusElement.click();
         } else {
@@ -223,7 +244,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
              * Trick :focus-visible polyfill into thinking keyboard based focus
              *
              * @private
-             **/
+             */
             this.dispatchEvent(
                 new KeyboardEvent('keydown', {
                     code: 'Tab',
@@ -235,6 +256,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
+
         if (
             !this.hasAttribute('tabindex') ||
             this.getAttribute('tabindex') !== '-1'
@@ -269,10 +291,12 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         const canSetDisabled = (): boolean =>
             this.focusElement !== this &&
             typeof this.focusElement.disabled !== 'undefined';
+
         if (disabled) {
             this.manipulatingTabindex = true;
             this.setAttribute('tabindex', '-1');
             await this.updateComplete;
+
             if (canSetDisabled()) {
                 this.focusElement.disabled = true;
             } else {
@@ -280,12 +304,15 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             }
         } else if (oldDisabled) {
             this.manipulatingTabindex = true;
+
             if (this.focusElement === this) {
                 this.setAttribute('tabindex', '' + this._tabIndex);
             } else {
                 this.removeAttribute('tabindex');
             }
+
             await this.updateComplete;
+
             if (canSetDisabled()) {
                 this.focusElement.disabled = false;
             } else {
@@ -296,7 +323,9 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
+
         await this.autofocusReady;
+
         return complete;
     }
 
@@ -304,16 +333,17 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     public override connectedCallback(): void {
         super.connectedCallback();
+
         if (this.autofocus) {
             this.autofocusReady = new Promise(async (res) => {
                 // If at connect time the [autofocus] content is placed within
                 // content that needs to be "hidden" by default, it would need to wait
                 // two rAFs for animations to be triggered on that content in
-                // order for the [autofocus] to become "visisble" and have its
+                // order for the [autofocus] to become "visible" and have its
                 // focus() capabilities enabled.
                 //
                 // Await this with `getUpdateComplete` so that the element cannot
-                // become "ready" until `manageFocus` has occured.
+                // become "ready" until `manageFocus` has occurred.
                 await nextFrame();
                 await nextFrame();
                 res();

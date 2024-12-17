@@ -17,15 +17,29 @@ import {
     type TemplateResult,
 } from '@spectrum-web-components/base';
 
+/**
+ * Converts a string of code into an HTML template string.
+ *
+ * @param code - The code to be converted into an HTML template string.
+ * @returns - The resulting HTML template string.
+ */
 export function toHtmlTemplateString(code: string): TemplateResult {
     const stringArray = [`${code}`] as string[] & { raw: string[] };
+
     stringArray.raw = [`${code}`];
 
     return html(stringArray as TemplateStringsArray);
 }
 
+/**
+ * Converts a string of code into a CSS template string.
+ *
+ * @param code - The code to be converted into a CSS template string.
+ * @returns - The resulting CSS template string.
+ */
 export function toCssTemplateString(code: string): CSSResultGroup {
     const stringArray = [`${code}`] as string[] & { raw: string[] };
+
     stringArray.raw = [`${code}`];
 
     return css(stringArray as TemplateStringsArray);

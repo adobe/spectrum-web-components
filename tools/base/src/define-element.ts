@@ -14,6 +14,12 @@ interface CustomElementConstructor {
     new (...params: unknown[]): HTMLElement;
 }
 
+/**
+ * Defines a custom element with the given name and constructor.
+ *
+ * @param name - The name of the custom element.
+ * @param constructor - The constructor of the custom element.
+ */
 export function defineElement(
     name: string,
     constructor: CustomElementConstructor
@@ -27,5 +33,6 @@ export function defineElement(
             );
         }
     }
+
     customElements.define(name, constructor);
 }

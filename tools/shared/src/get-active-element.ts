@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* c8 ignore next 3 */
 export const getActiveElement = (el: Node): Element | null => {
     return (el.getRootNode() as Document).activeElement;
 };

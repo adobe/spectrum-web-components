@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 import { Thumbnail } from '..';
 import { thumbnail } from '../stories/images.js';

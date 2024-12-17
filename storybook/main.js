@@ -33,11 +33,15 @@ const config = {
         // https://geometricpanda.github.io/storybook-addon-badges/
         '@geometricpanda/storybook-addon-badges',
     ],
+    docs: {
+        autodocs: true,
+    },
     framework: {
         name: '@web/storybook-framework-web-components',
     },
     wdsFinal(config) {
         const json = fromRollup(rollupJson);
+
         return mergeConfigs(config, {
             nodeResolve: {
                 exportConditions: ['browser', 'development'],
@@ -72,6 +76,7 @@ const config = {
                 ],
             })
         );
+
         return config;
     },
 };

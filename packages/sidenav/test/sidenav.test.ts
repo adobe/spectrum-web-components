@@ -19,6 +19,7 @@ import {
     arrowDownEvent,
     arrowUpEvent,
     shiftTabEvent,
+    testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 import {
     elementUpdated,
@@ -31,7 +32,6 @@ import {
 import { LitElement, TemplateResult } from '@spectrum-web-components/base';
 import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Sidenav', () => {
     testForLitDevWarnings(

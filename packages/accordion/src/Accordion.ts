@@ -23,16 +23,18 @@ import {
     queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
-
 import { AccordionItem } from './AccordionItem.js';
-
 import styles from './accordion.css.js';
 
 /**
+ * The `<sp-accordion>` element contains a list of items that can be expanded or collapsed to reveal additional
+ * content or information associated with each item. There can be zero expanded items, exactly one expanded item,
+ * or more than one item expanded at a time, depending on the configuration. This list of items is defined by child
+ * `<sp-accordion-item>` elements that are targeted to the default slot of their `<sp-accordion>` parent.
+ *
  * @element sp-accordion
  *
  * @slot - The sp-accordion-item children to display within the accordion.
- *
  */
 export class Accordion extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
@@ -107,7 +109,6 @@ export class Accordion extends SizedMixin(SpectrumElement, {
 
         const items = [...this.items] as AccordionItem[];
 
-        /* c8 ignore next 3 */
         if (items && !items.length) {
             // No toggling when there aren't items.
             return;

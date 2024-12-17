@@ -70,7 +70,6 @@ export class ContextualHelp extends SpectrumElement {
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
      *
      * @attribute
-     *
      */
     @property({ reflect: true })
     public placement?: Placement = 'bottom-start';
@@ -145,7 +144,6 @@ export class ContextualHelp extends SpectrumElement {
     }
 
     protected override render(): TemplateResult {
-        /* c8 ignore next 3 */
         const actualPlacement = this.isMobile.matches
             ? undefined
             : this.placement;

@@ -11,9 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
-
 import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
-
 import { Default } from '../stories/accordion.stories.js';
 
 describe('Accordion - controlled', () => {

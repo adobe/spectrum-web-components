@@ -18,16 +18,14 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
-
-import { spy } from 'sinon';
-
-import { ActionMenu } from '@spectrum-web-components/action-menu';
-import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
     fixture,
     ignoreResizeObserverLoopError,
-} from '../../../test/testing-helpers.js';
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers';
+import { spy } from 'sinon';
+import { ActionMenu } from '@spectrum-web-components/action-menu';
+import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import {
     iconOnly,

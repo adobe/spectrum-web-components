@@ -38,6 +38,7 @@ export class PendingStateController<T extends HostWithPendingState>
 
     /**
      * Creates an instance of PendingStateController.
+     *
      * @param host - The host element that this controller is attached to.
      */
     constructor(host: T) {
@@ -48,10 +49,12 @@ export class PendingStateController<T extends HostWithPendingState>
     public cachedAriaLabel: string | null = null;
     /**
      * Renders the pending state UI.
+     *
      * @returns A TemplateResult representing the pending state UI.
      */
     public renderPendingState(): TemplateResult {
         const pendingLabel = this.host.pendingLabel || 'Pending';
+
         return this.host.pending
             ? html`
                   <sp-progress-circle
@@ -92,6 +95,7 @@ export class PendingStateController<T extends HostWithPendingState>
     hostConnected(): void {
         if (!this.cachedAriaLabel)
             this.cachedAriaLabel = this.host.getAttribute('aria-label');
+
         this.updateAriaLabel();
     }
 

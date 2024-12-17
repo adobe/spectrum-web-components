@@ -9,7 +9,6 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */ import { html, TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';

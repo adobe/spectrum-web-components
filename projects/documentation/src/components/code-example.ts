@@ -120,6 +120,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
             const demo =
                 this.querySelector('[slot="demo"]') ||
                 document.createElement('div');
+
             demo.slot = 'demo';
             demo.innerHTML = this.liveHTML;
             this.append(demo);
@@ -133,6 +134,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
         if (this.preprocessed || this.prismjsLoaded) {
             return true;
         }
+
         if (!this.preprocessed) {
             import('prismjs').then(() => {
                 this.prismjsLoaded = true;
@@ -186,7 +188,9 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
             if (!el) {
                 return;
             }
+
             const { offsetWidth, scrollWidth } = el;
+
             if (offsetWidth < scrollWidth) {
                 el.tabIndex = 0;
             } else {
@@ -212,6 +216,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
             },
             cancelable: true,
         });
+
         this.dispatchEvent(queryThemeEvent);
     }
 

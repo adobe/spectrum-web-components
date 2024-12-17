@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import type { ReactiveController } from 'lit';
-
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import {
@@ -45,7 +44,6 @@ export class GridController<T extends HTMLElement>
         return this._itemSize();
     }
 
-    /* c8 ignore next 6 */
     private _itemSize(): ItemSize {
         return {
             width: 100,
@@ -60,7 +58,6 @@ export class GridController<T extends HTMLElement>
         return this._gap();
     }
 
-    /* c8 ignore next 3 */
     private _gap(): string | undefined {
         return undefined;
     }
@@ -69,7 +66,6 @@ export class GridController<T extends HTMLElement>
         return this._padding();
     }
 
-    /* c8 ignore next 3 */
     private _padding(): string | undefined {
         return undefined;
     }
@@ -109,6 +105,7 @@ export class GridController<T extends HTMLElement>
                 focusInIndex: () => {
                     const activeElement = (this.host.getRootNode() as Document)
                         .activeElement as HTMLElement;
+
                     return activeElement === this.host ? 0 : -1;
                 },
             }
@@ -124,7 +121,6 @@ export class GridController<T extends HTMLElement>
         gap?: string | (() => string),
         padding?: string | (() => string)
     ): void {
-        /* c8 ignore next 2 */
         if (typeof itemSize === 'object') {
             this._itemSize = () => itemSize;
         } else if (
@@ -133,13 +129,13 @@ export class GridController<T extends HTMLElement>
         ) {
             this._itemSize = itemSize;
         }
-        /* c8 ignore next 2 */
+
         if (typeof gap === 'string') {
             this._gap = () => gap;
         } else if (typeof gap === 'function') {
             this._gap = gap;
         }
-        /* c8 ignore next 2 */
+
         if (typeof padding === 'string') {
             this._padding = () => padding;
         } else if (typeof padding === 'function') {
@@ -161,6 +157,7 @@ export class GridController<T extends HTMLElement>
         this.rovingTabindexController.update({ elements });
         this.applyLayout(itemSize, gap, padding);
         const contentRect = this.host.getBoundingClientRect();
+
         this.measureDirectionLength(contentRect);
     }
 
@@ -174,6 +171,7 @@ export class GridController<T extends HTMLElement>
                 (contentBoxWidth - this.itemSize.width) /
                     (gap + this.itemSize.width)
             ) + 1;
+
         this.rovingTabindexController.directionLength =
             Math.floor(directionLength);
     }
@@ -184,6 +182,7 @@ export class GridController<T extends HTMLElement>
             this.focus();
             this.host.tabIndex = -1;
         };
+
         if ((event.target as HTMLElement) === this.host) {
             if (this._first > 0) {
                 doCallbackAfterPaint(() => {

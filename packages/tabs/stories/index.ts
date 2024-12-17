@@ -13,7 +13,6 @@ import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tabs-overflow.js';
-
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import { repeat } from '@spectrum-web-components/base/src/directives.js';
 
@@ -47,25 +46,23 @@ export const renderTabsOverflowExample = ({
                     ${repeat(
                         new Array(count),
                         (item) => item,
-                        (_item, index) =>
-                            html`
-                                <sp-tab
-                                    label=${`Tab Item ${index + 1}`}
-                                    value=${index + 1}
-                                ></sp-tab>
-                            `
+                        (_item, index) => html`
+                            <sp-tab
+                                label=${`Tab Item ${index + 1}`}
+                                value=${index + 1}
+                            ></sp-tab>
+                        `
                     )}
                     ${includeTabPanel
                         ? html`
                               ${repeat(
                                   new Array(count),
                                   (item) => item,
-                                  (_item, index) =>
-                                      html`
-                                          <sp-tab-panel value=${index + 1}>
-                                              Content for Tab Item ${index + 1}
-                                          </sp-tab-panel>
-                                      `
+                                  (_item, index) => html`
+                                      <sp-tab-panel value=${index + 1}>
+                                          Content for Tab Item ${index + 1}
+                                      </sp-tab-panel>
+                                  `
                               )}
                           `
                         : nothing}

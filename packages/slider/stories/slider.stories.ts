@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/slider/sp-slider-handle.js';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -481,7 +480,6 @@ export const editable = (args: StoryArgs = {}): TemplateResult => {
 
 editable.decorators = [editableDecorator];
 
-import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/tray/sp-tray.js';

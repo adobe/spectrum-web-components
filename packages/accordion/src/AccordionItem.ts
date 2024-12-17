@@ -23,7 +23,6 @@ import { when } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
-
 import styles from './accordion-item.css.js';
 
 /**
@@ -66,12 +65,14 @@ const chevronIcon: Record<string, () => TemplateResult> = {
 };
 
 /**
+ * The `<sp-accordion-item>` element represents a single item in an `<sp-accordion>` parent element. Its label attribute and default
+ * slot content make up the "headline" and "body" of the toggleable content item.
+ *
  * @element sp-accordion-item
  *
  * @slot - The content of the item that is hidden when the item is not open
  *
  * @fires sp-accordion-item-toggle - Announce that an accordion item has been toggled while allowing the event to be cancelled.
- *
  */
 export class AccordionItem extends SizedMixin(Focusable, {
     noDefaultSize: true,
@@ -114,7 +115,6 @@ export class AccordionItem extends SizedMixin(Focusable, {
      * Toggles the open state of the accordion item if it is not disabled.
      */
     private onClick(): void {
-        /* c8 ignore next 3 */
         if (this.disabled) {
             return;
         }

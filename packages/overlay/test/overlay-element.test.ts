@@ -28,7 +28,6 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/button/sp-button.js';
-
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { Button } from '@spectrum-web-components/button';
 import { sendKeys } from '@web/test-runner-commands';

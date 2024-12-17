@@ -30,9 +30,7 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import bodyStyles from '@spectrum-web-components/styles/body.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
-
 import iconsList from './iconsList.json' assert { type: 'json' };
-
 import {
     SystemResolutionController,
     systemResolverUpdatedSymbol,

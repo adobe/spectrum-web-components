@@ -17,7 +17,6 @@ import {
     html,
     nextFrame,
 } from '@open-wc/testing';
-
 import '@spectrum-web-components/split-view/sp-split-view.js';
 import { SplitView } from '@spectrum-web-components/split-view';
 import {

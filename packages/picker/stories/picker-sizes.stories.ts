@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/picker/sp-picker.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -23,23 +22,11 @@ export default {
     argTypes: {
         onChange: { action: 'change' },
         invalid: {
-            name: 'invalid',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: {
                 type: 'boolean',
             },
         },
         pending: {
-            name: 'pending',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: {
                 type: 'boolean',
             },

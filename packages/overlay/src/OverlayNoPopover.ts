@@ -30,16 +30,40 @@ import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
 
 /**
+ * A mixin function to create an overlay without a popover.
  *
+ * @template T
+ *
+ * @param constructor - The constructor of the base class.
+ * @returns - The extended class with no popover functionality.
  */
 export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
     constructor: T
 ): T & Constructor<SpectrumElement> {
     class OverlayWithNoPopover extends constructor {
+        /**
+         * Manages the opening of the popover.
+         *
+         * @override
+         *
+         * @returns A promise that resolves when the popover is managed.
+         *
+         * @protected
+         */
         protected override async managePopoverOpen(): Promise<void> {
             await this.managePosition();
         }
 
+        /**
+         * Manages the delay for opening or closing the overlay.
+         *
+         * @override
+         *
+         * @param targetOpenState - A boolean indicating whether the overlay should be opened or closed.
+         * @returns A promise that resolves when the delay is managed.
+         *
+         * @protected
+         */
         protected override async manageDelay(
             targetOpenState: boolean
         ): Promise<void> {
@@ -58,6 +82,16 @@ export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
             }
         }
 
+        /**
+         * Ensures the overlay is on the DOM.
+         *
+         * @override
+         *
+         * @param _targetOpenState - The target open state.
+         * @returns A promise that resolves when the transition is managed.
+         *
+         * @protected
+         */
         protected override async ensureOnDOM(
             _targetOpenState: boolean
         ): Promise<void> {
@@ -65,6 +99,16 @@ export function OverlayNoPopover<T extends Constructor<AbstractOverlay>>(
             document.body.offsetHeight;
         }
 
+        /**
+         * Manages the transition for opening or closing the overlay.
+         *
+         * @override
+         *
+         * @param targetOpenState - A boolean indicating whether the overlay should be opened (true) or closed (false).
+         * @returns A promise that resolves to the focusable element or null.
+         *
+         * @protected
+         */
         protected override async makeTransition(
             targetOpenState: boolean
         ): Promise<HTMLElement | null> {

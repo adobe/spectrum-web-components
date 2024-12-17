@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
-
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import { ButtonGroup } from '..';
 import { buttons, buttonsVertical } from '../stories/button-group.stories.js';
