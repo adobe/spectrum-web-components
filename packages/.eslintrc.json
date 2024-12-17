@@ -341,7 +341,12 @@
             }
         },
         {
-            "files": ["**/icons/*.ts", "**/src/elements/*.ts"],
+            "files": [
+                "**/icons/*.ts",
+                "**/src/elements/*.ts",
+                "packages/icons-workflow/stories/icon-manifest.ts",
+                "packages/icons-ui/stories/icon-manifest.ts:"
+            ],
             "rules": {
                 "sort-imports": ["off"],
                 "@stylistic/padding-line-between-statements": 0
