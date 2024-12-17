@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-table-body.css');
+@import url('./table-body-overrides.css');
 
 :host {
     display: block;
