@@ -12,30 +12,24 @@ governing permissions and limitations under the License.
 
 export const argTypes = {
     open: {
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: true },
-        },
         control: {
             type: 'boolean',
         },
     },
     emphasized: {
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
         control: {
             type: 'boolean',
         },
     },
-    tools: {
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: true },
-        },
+    flexible: {
         control: {
             type: 'boolean',
         },
+    },
+    variant: {
+        control: {
+            type: 'select',
+        },
+        options: ['sticky', 'fixed', 'undefined'],
     },
 };

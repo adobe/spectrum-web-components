@@ -34,7 +34,7 @@ export const actionBarVariants = ['sticky', 'fixed'];
  *
  * @element sp-action-bar
  *
- * @slot - Content to display with the Action Bar
+ * @slot default slot - Content to display with the Action Bar
  *
  * @fires close - Announces that the action bar is closing
  */
@@ -78,9 +78,10 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     /**
      * Applies specific styling when set to `sticky` or `fixed`.
+     *
      * The `variant` attribute is removed when not matching one of the above.
      *
-     * @type {string}
+     * @type {'sticky' | 'fixed' | ''}
      */
     @property({ type: String })
     public set variant(variant: string) {
@@ -99,11 +100,6 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
         this._variant = '';
     }
 
-    /**
-     * Gets the current variant of the action bar.
-     *
-     * @returns The current variant of the action bar.
-     */
     public get variant(): string {
         return this._variant;
     }

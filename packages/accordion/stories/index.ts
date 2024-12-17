@@ -20,7 +20,7 @@ export const AccordionMarkup = ({
     disabled = false,
     open = false,
     size = 'm',
-    density = undefined as unknown,
+    density = undefined,
 } = {}): TemplateResult => {
     return html`
         <sp-accordion

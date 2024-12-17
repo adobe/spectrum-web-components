@@ -65,9 +65,12 @@ const chevronIcon: Record<string, () => TemplateResult> = {
 };
 
 /**
+ * The `<sp-accordion-item>` element represents a single item in an `<sp-accordion>` parent element. Its label attribute and default
+ * slot content make up the "headline" and "body" of the toggleable content item.
+ *
  * @element sp-accordion-item
  *
- * @slot - The content of the item that is hidden when the item is not open
+ * @slot default - The content of the item that is hidden when the item is not open
  *
  * @fires sp-accordion-item-toggle - Announce that an accordion item has been toggled while allowing the event to be cancelled.
  */

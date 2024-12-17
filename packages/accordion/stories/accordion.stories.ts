@@ -27,6 +27,7 @@ export default {
         density: undefined,
     },
     argTypes,
+    tags: ['autodocs'],
 };
 
 type Properties = {
