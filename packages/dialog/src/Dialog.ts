@@ -11,15 +11,15 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    nothing,
-    PropertyValues,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  nothing,
+  PropertyValues,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    property,
-    query,
+  property,
+  query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/button/sp-close-button.js';
@@ -43,150 +43,150 @@ import { classMap } from '@spectrum-web-components/base/src/directives.js';
  * @fires close - Announces that the dialog has been closed.
  */
 export class Dialog extends ObserveSlotPresence(AlertDialog, [
-    '[slot="hero"]',
-    '[slot="footer"]',
-    '[slot="button"]',
+  '[slot="hero"]',
+  '[slot="footer"]',
+  '[slot="button"]',
 ]) {
-    public static override get styles(): CSSResultArray {
-        return [styles];
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
+
+  @query('.close-button')
+  closeButton?: CloseButton;
+
+  /**
+   * @deprecated Use the Alert Dialog component with `variant="error"` instead.
+   */
+  @property({ type: Boolean, reflect: true })
+  public error = false;
+
+  @property({ type: Boolean, reflect: true })
+  public dismissable = false;
+
+  @property({ type: String, reflect: true, attribute: 'dismiss-label' })
+  public dismissLabel = 'Close';
+
+  protected get hasFooter(): boolean {
+    return this.getSlotContentPresence('[slot="footer"]');
+  }
+
+  protected get hasButtons(): boolean {
+    return this.getSlotContentPresence('[slot="button"]');
+  }
+
+  protected get hasHero(): boolean {
+    return this.getSlotContentPresence('[slot="hero"]');
+  }
+
+  @property({ type: Boolean, reflect: true, attribute: 'no-divider' })
+  public noDivider = false;
+
+  @property({ type: String, reflect: true })
+  public mode?: 'fullscreen' | 'fullscreenTakeover';
+
+  @property({ type: String, reflect: true })
+  public size?: 's' | 'm' | 'l';
+
+  public close(): void {
+    this.dispatchEvent(
+      new Event('close', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      })
+    );
+  }
+
+  protected renderHero(): TemplateResult {
+    return html`
+      <slot name="hero"></slot>
+    `;
+  }
+
+  protected renderFooter(): TemplateResult {
+    return html`
+      <div class="footer">
+        <slot name="footer"></slot>
+      </div>
+    `;
+  }
+
+  protected override renderButtons(): TemplateResult {
+    const classes = {
+      'button-group': true,
+      'button-group--noFooter': !this.hasFooter,
+    };
+
+    return html`
+      <sp-button-group class="${classMap(classes)}">
+        <slot name="button"></slot>
+      </sp-button-group>
+    `;
+  }
+
+  protected renderDismiss(): TemplateResult {
+    return html`
+      <sp-close-button
+        class="close-button"
+        label="${this.dismissLabel}"
+        quiet
+        size="m"
+        @click="${this.close}"
+      ></sp-close-button>
+    `;
+  }
+
+  protected override render(): TemplateResult {
+    return html`
+      <div class="grid">
+        ${this.renderHero()} ${this.renderHeading()}
+        ${this.error
+          ? html`
+              <sp-icon-alert class="type-icon"></sp-icon-alert>
+            `
+          : nothing}
+        ${this.noDivider
+          ? nothing
+          : html`
+              <sp-divider size="m" class="divider"></sp-divider>
+            `}
+        ${this.renderContent()}
+        ${this.hasFooter ? this.renderFooter() : nothing}
+        ${this.hasButtons ? this.renderButtons() : nothing}
+        ${this.dismissable ? this.renderDismiss() : nothing}
+      </div>
+    `;
+  }
+
+  protected override shouldUpdate(changes: PropertyValues): boolean {
+    if (changes.has('mode') && !!this.mode) {
+      this.dismissable = false;
     }
 
-    @query('.close-button')
-    closeButton?: CloseButton;
-
-    /**
-     * @deprecated Use the Alert Dialog component with `variant="error"` instead.
-     */
-    @property({ type: Boolean, reflect: true })
-    public error = false;
-
-    @property({ type: Boolean, reflect: true })
-    public dismissable = false;
-
-    @property({ type: String, reflect: true, attribute: 'dismiss-label' })
-    public dismissLabel = 'Close';
-
-    protected get hasFooter(): boolean {
-        return this.getSlotContentPresence('[slot="footer"]');
+    if (changes.has('dismissable') && this.dismissable) {
+      this.dismissable = !this.mode;
     }
 
-    protected get hasButtons(): boolean {
-        return this.getSlotContentPresence('[slot="button"]');
-    }
+    return super.shouldUpdate(changes);
+  }
 
-    protected get hasHero(): boolean {
-        return this.getSlotContentPresence('[slot="hero"]');
-    }
+  protected override firstUpdated(changes: PropertyValues): void {
+    super.firstUpdated(changes);
+    this.setAttribute('role', 'dialog');
+  }
 
-    @property({ type: Boolean, reflect: true, attribute: 'no-divider' })
-    public noDivider = false;
+  protected override updated(changes: PropertyValues): void {
+    super.updated(changes);
 
-    @property({ type: String, reflect: true })
-    public mode?: 'fullscreen' | 'fullscreenTakeover';
-
-    @property({ type: String, reflect: true })
-    public size?: 's' | 'm' | 'l';
-
-    public close(): void {
-        this.dispatchEvent(
-            new Event('close', {
-                bubbles: true,
-                composed: true,
-                cancelable: true,
-            })
+    if (changes.has('error') && this.error) {
+      if (window.__swc.DEBUG) {
+        window.__swc.warn(
+          this,
+          `The "error" attribute of <${this.localName}> has been deprecated. Use the Alert Dialog component with the "variant='error'" instead. "error" will be removed in a future release.`,
+          'https://opensource.adobe.com/spectrum-web-components/components/alert-dialog/#error',
+          { level: 'deprecation' }
         );
+      }
     }
-
-    protected renderHero(): TemplateResult {
-        return html`
-            <slot name="hero"></slot>
-        `;
-    }
-
-    protected renderFooter(): TemplateResult {
-        return html`
-            <div class="footer">
-                <slot name="footer"></slot>
-            </div>
-        `;
-    }
-
-    protected override renderButtons(): TemplateResult {
-        const classes = {
-            'button-group': true,
-            'button-group--noFooter': !this.hasFooter,
-        };
-
-        return html`
-            <sp-button-group class=${classMap(classes)}>
-                <slot name="button"></slot>
-            </sp-button-group>
-        `;
-    }
-
-    protected renderDismiss(): TemplateResult {
-        return html`
-            <sp-close-button
-                class="close-button"
-                label=${this.dismissLabel}
-                quiet
-                size="m"
-                @click=${this.close}
-            ></sp-close-button>
-        `;
-    }
-
-    protected override render(): TemplateResult {
-        return html`
-            <div class="grid">
-                ${this.renderHero()} ${this.renderHeading()}
-                ${this.error
-                    ? html`
-                          <sp-icon-alert class="type-icon"></sp-icon-alert>
-                      `
-                    : nothing}
-                ${this.noDivider
-                    ? nothing
-                    : html`
-                          <sp-divider size="m" class="divider"></sp-divider>
-                      `}
-                ${this.renderContent()}
-                ${this.hasFooter ? this.renderFooter() : nothing}
-                ${this.hasButtons ? this.renderButtons() : nothing}
-                ${this.dismissable ? this.renderDismiss() : nothing}
-            </div>
-        `;
-    }
-
-    protected override shouldUpdate(changes: PropertyValues): boolean {
-        if (changes.has('mode') && !!this.mode) {
-            this.dismissable = false;
-        }
-
-        if (changes.has('dismissable') && this.dismissable) {
-            this.dismissable = !this.mode;
-        }
-
-        return super.shouldUpdate(changes);
-    }
-
-    protected override firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
-        this.setAttribute('role', 'dialog');
-    }
-
-    protected override updated(changes: PropertyValues): void {
-        super.updated(changes);
-
-        if (changes.has('error') && this.error) {
-            if (window.__swc.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `The "error" attribute of <${this.localName}> has been deprecated. Use the Alert Dialog component with the "variant='error'" instead. "error" will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/alert-dialog/#error',
-                    { level: 'deprecation' }
-                );
-            }
-        }
-    }
+  }
 }

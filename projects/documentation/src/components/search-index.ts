@@ -20,15 +20,15 @@ import { Index } from 'lunr';
 let index: Index | undefined;
 
 export interface Result {
-    name: string;
-    label: string;
-    url: string;
+  name: string;
+  label: string;
+  url: string;
 }
 
 export interface ResultGroup {
-    name: string;
-    results: Result[];
-    maxScore: number;
+  name: string;
+  results: Result[];
+  maxScore: number;
 }
 
 /**
@@ -38,9 +38,9 @@ export interface ResultGroup {
  * @returns - The formatted label string.
  */
 function label(name: string): string {
-    return name.replace(/(?:^|-)\w/g, (match) =>
-        match.toUpperCase().replace('-', ' ')
-    );
+  return name.replace(/(?:^|-)\w/g, (match) =>
+    match.toUpperCase().replace('-', ' ')
+  );
 }
 
 /**
@@ -50,62 +50,61 @@ function label(name: string): string {
  * @returns - A promise that resolves to an array of result groups.
  */
 export async function search(value: string): Promise<ResultGroup[]> {
-    if (!index) {
-        const searchIndexURL = new URL('./searchIndex.json', import.meta.url)
-            .href;
-        const searchIndex = await (await fetch(searchIndexURL)).json();
+  if (!index) {
+    const searchIndexURL = new URL('./searchIndex.json', import.meta.url).href;
+    const searchIndex = await (await fetch(searchIndexURL)).json();
 
-        index = Index.load(searchIndex);
+    index = Index.load(searchIndex);
+  }
+
+  const collatedResults = new Map<
+    string,
+    {
+      maxScore: number;
+      results: Result[];
+    }
+  >();
+
+  const search = index.search(value);
+
+  for (const item of search) {
+    const { category, name, url } = JSON.parse(item.ref);
+
+    if (!collatedResults.has(category)) {
+      collatedResults.set(category, {
+        maxScore: 0,
+        results: [],
+      });
     }
 
-    const collatedResults = new Map<
-        string,
-        {
-            maxScore: number;
-            results: Result[];
-        }
-    >();
+    const catagoryData = collatedResults.get(category);
 
-    const search = index.search(value);
+    if (catagoryData) {
+      catagoryData.maxScore = Math.max(catagoryData.maxScore, item.score);
+      catagoryData.results.push({
+        name,
+        label: label(name),
+        url,
+      });
+    }
+  }
 
-    for (const item of search) {
-        const { category, name, url } = JSON.parse(item.ref);
+  const result: ResultGroup[] = [];
 
-        if (!collatedResults.has(category)) {
-            collatedResults.set(category, {
-                maxScore: 0,
-                results: [],
-            });
-        }
-
-        const catagoryData = collatedResults.get(category);
-
-        if (catagoryData) {
-            catagoryData.maxScore = Math.max(catagoryData.maxScore, item.score);
-            catagoryData.results.push({
-                name,
-                label: label(name),
-                url,
-            });
-        }
+  for (const [name, { results, maxScore }] of collatedResults) {
+    result.push({ name, results, maxScore });
+  }
+  result.sort((a, b) => {
+    if (a.maxScore < b.maxScore) {
+      return 1;
     }
 
-    const result: ResultGroup[] = [];
-
-    for (const [name, { results, maxScore }] of collatedResults) {
-        result.push({ name, results, maxScore });
+    if (a.maxScore > b.maxScore) {
+      return -1;
     }
-    result.sort((a, b) => {
-        if (a.maxScore < b.maxScore) {
-            return 1;
-        }
 
-        if (a.maxScore > b.maxScore) {
-            return -1;
-        }
+    return 0;
+  });
 
-        return 0;
-    });
-
-    return result;
+  return result;
 }

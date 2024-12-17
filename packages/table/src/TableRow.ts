@@ -10,15 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    SpectrumElement,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  PropertyValues,
+  SpectrumElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    property,
-    queryAssignedElements,
+  property,
+  queryAssignedElements,
 } from '@spectrum-web-components/base/src/decorators.js';
 import styles from './table-row.css.js';
 import { TableCheckboxCell } from './TableCheckboxCell.js';
@@ -31,156 +31,151 @@ import { TableCheckboxCell } from './TableCheckboxCell.js';
  * @fires sorted - Announces that `selected` of the table row has changed
  */
 export class TableRow extends SpectrumElement {
-    /**
-     * Returns the styles to be applied to the component.
-     */
-    public static override get styles(): CSSResultArray {
-        return [styles];
+  /**
+   * Returns the styles to be applied to the component.
+   */
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
+
+  /**
+   * The list of checkbox cells assigned to the row.
+   */
+  @queryAssignedElements({
+    selector: 'sp-table-checkbox-cell',
+    flatten: true,
+  })
+  checkboxCells!: TableCheckboxCell[];
+
+  /**
+   * The ARIA role of the table row.
+   */
+  @property({ reflect: true })
+  public override role = 'row';
+
+  /**
+   * Indicates if the row is selectable.
+   */
+  @property({ type: Boolean })
+  public selectable = false;
+
+  /**
+   * Indicates if the row is selected.
+   */
+  @property({ type: Boolean, reflect: true })
+  public selected = false;
+
+  /**
+   * The value associated with the row.
+   */
+  @property({ type: String })
+  public value = '';
+
+  /**
+   * Handles the change event for the checkbox cell.
+   * Updates the selected state based on the checkbox state.
+   */
+  protected async handleChange(
+    event: Event & { target: TableCheckboxCell }
+  ): Promise<void> {
+    if (!event.target.checkbox) {
+      return;
     }
 
-    /**
-     * The list of checkbox cells assigned to the row.
-     */
-    @queryAssignedElements({
-        selector: 'sp-table-checkbox-cell',
-        flatten: true,
-    })
-    checkboxCells!: TableCheckboxCell[];
+    this.selected = event.target.checkbox.checked;
 
-    /**
-     * The ARIA role of the table row.
-     */
-    @property({ reflect: true })
-    public override role = 'row';
+    await 0;
 
-    /**
-     * Indicates if the row is selectable.
-     */
-    @property({ type: Boolean })
-    public selectable = false;
+    if (event.defaultPrevented) {
+      this.selected = !this.selected;
+    }
+  }
 
-    /**
-     * Indicates if the row is selected.
-     */
-    @property({ type: Boolean, reflect: true })
-    public selected = false;
+  /**
+   * Handles the slotchange event for the row.
+   * Updates the selectable state based on the presence of checkbox cells.
+   */
+  protected handleSlotchange({
+    target,
+  }: Event & { target: HTMLSlotElement }): void {
+    const assignedElements = target.assignedElements();
 
-    /**
-     * The value associated with the row.
-     */
-    @property({ type: String })
-    public value = '';
+    this.selectable = !!assignedElements.find(
+      (el) => el.localName === 'sp-table-checkbox-cell'
+    );
+  }
 
-    /**
-     * Handles the change event for the checkbox cell.
-     * Updates the selected state based on the checkbox state.
-     */
-    protected async handleChange(
-        event: Event & { target: TableCheckboxCell }
-    ): Promise<void> {
-        if (!event.target.checkbox) {
-            return;
-        }
+  /**
+   * Manages the selected state of the row.
+   * Updates the aria-selected attribute and the checkbox state based on the selected property.
+   */
+  protected async manageSelected(): Promise<void> {
+    await this.updateComplete;
 
-        this.selected = event.target.checkbox.checked;
-
-        await 0;
-
-        if (event.defaultPrevented) {
-            this.selected = !this.selected;
-        }
+    // Manage differently when parent table does not have `role="grid"`.
+    // See: https://github.com/adobe/spectrum-web-components/issues/3397 and https://github.com/adobe/spectrum-web-components/issues/3395
+    if (this.selectable) {
+      this.setAttribute('aria-selected', this.selected ? 'true' : 'false');
+    } else {
+      this.removeAttribute('aria-selected');
     }
 
-    /**
-     * Handles the slotchange event for the row.
-     * Updates the selectable state based on the presence of checkbox cells.
-     */
-    protected handleSlotchange({
-        target,
-    }: Event & { target: HTMLSlotElement }): void {
-        const assignedElements = target.assignedElements();
+    const [checkboxCell] = this.checkboxCells;
 
-        this.selectable = !!assignedElements.find(
-            (el) => el.localName === 'sp-table-checkbox-cell'
-        );
+    if (!checkboxCell) return;
+
+    checkboxCell.checked = this.selected;
+  }
+
+  /**
+   * Handles the click event on the row.
+   * Simulates a click on the checkbox cell if the click did not originate from a checkbox cell.
+   */
+  protected handleClick(event: Event): void {
+    if (
+      event
+        .composedPath()
+        .find(
+          (node) => (node as HTMLElement).localName === 'sp-table-checkbox-cell'
+        )
+    ) {
+      return;
     }
 
-    /**
-     * Manages the selected state of the row.
-     * Updates the aria-selected attribute and the checkbox state based on the selected property.
-     */
-    protected async manageSelected(): Promise<void> {
-        await this.updateComplete;
+    const [checkboxCell] = this.checkboxCells;
 
-        // Manage differently when parent table does not have `role="grid"`.
-        // See: https://github.com/adobe/spectrum-web-components/issues/3397 and https://github.com/adobe/spectrum-web-components/issues/3395
-        if (this.selectable) {
-            this.setAttribute(
-                'aria-selected',
-                this.selected ? 'true' : 'false'
-            );
-        } else {
-            this.removeAttribute('aria-selected');
-        }
+    if (!checkboxCell) return;
 
-        const [checkboxCell] = this.checkboxCells;
+    checkboxCell.click();
+  }
 
-        if (!checkboxCell) return;
+  /**
+   * Renders the component template.
+   */
+  protected override render(): TemplateResult {
+    return html`
+      <slot
+        @change="${this.handleChange}"
+        @slotchange="${this.handleSlotchange}"
+      ></slot>
+    `;
+  }
 
-        checkboxCell.checked = this.selected;
+  /**
+   * Called before the element updates.
+   * Manages the selected and selectable states based on property changes.
+   */
+  protected override willUpdate(changed: PropertyValues<this>): void {
+    if (changed.has('selected')) {
+      this.manageSelected();
     }
 
-    /**
-     * Handles the click event on the row.
-     * Simulates a click on the checkbox cell if the click did not originate from a checkbox cell.
-     */
-    protected handleClick(event: Event): void {
-        if (
-            event
-                .composedPath()
-                .find(
-                    (node) =>
-                        (node as HTMLElement).localName ===
-                        'sp-table-checkbox-cell'
-                )
-        ) {
-            return;
-        }
-
-        const [checkboxCell] = this.checkboxCells;
-
-        if (!checkboxCell) return;
-
-        checkboxCell.click();
+    if (changed.has('selectable')) {
+      if (this.selectable) {
+        this.addEventListener('click', this.handleClick);
+      } else {
+        this.removeEventListener('click', this.handleClick);
+      }
     }
-
-    /**
-     * Renders the component template.
-     */
-    protected override render(): TemplateResult {
-        return html`
-            <slot
-                @change=${this.handleChange}
-                @slotchange=${this.handleSlotchange}
-            ></slot>
-        `;
-    }
-
-    /**
-     * Called before the element updates.
-     * Manages the selected and selectable states based on property changes.
-     */
-    protected override willUpdate(changed: PropertyValues<this>): void {
-        if (changed.has('selected')) {
-            this.manageSelected();
-        }
-
-        if (changed.has('selectable')) {
-            if (this.selectable) {
-                this.addEventListener('click', this.handleClick);
-            } else {
-                this.removeEventListener('click', this.handleClick);
-            }
-        }
-    }
+  }
 }

@@ -12,36 +12,36 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
-    OverlayTriggerOptions,
-    trigger,
+  OverlayTriggerOptions,
+  trigger,
 } from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
 
 /**
  * Creates a tooltip directive that displays a tooltip with the specified content and options.
  */
 export const tooltip = function tooltip(
-    tooltipContent: () => TemplateResult,
-    options?: Partial<OverlayTriggerOptions & { variant: string }>
+  tooltipContent: () => TemplateResult,
+  options?: Partial<OverlayTriggerOptions & { variant: string }>
 ): ReturnType<typeof trigger> {
-    return trigger(
-        () => {
-            // Dynamically import the tooltip component.
-            import('@spectrum-web-components/tooltip/sp-tooltip.js');
+  return trigger(
+    () => {
+      // Dynamically import the tooltip component.
+      import('@spectrum-web-components/tooltip/sp-tooltip.js');
 
-            return html`
-                <sp-tooltip variant=${ifDefined(options?.variant)}>
-                    ${tooltipContent()}
-                </sp-tooltip>
-            `;
-        },
-        {
-            // Merge the provided options with default options.
-            ...options,
-            triggerInteraction: 'hover',
-            overlayOptions: {
-                type: 'hint',
-                ...options?.overlayOptions,
-            },
-        }
-    );
+      return html`
+        <sp-tooltip variant="${ifDefined(options?.variant)}">
+          ${tooltipContent()}
+        </sp-tooltip>
+      `;
+    },
+    {
+      // Merge the provided options with default options.
+      ...options,
+      triggerInteraction: 'hover',
+      overlayOptions: {
+        type: 'hint',
+        ...options?.overlayOptions,
+      },
+    }
+  );
 };

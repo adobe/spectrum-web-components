@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    nothing,
-    SizedMixin,
-    SpectrumElement,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  nothing,
+  SizedMixin,
+  SpectrumElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
@@ -27,26 +27,26 @@ import styles from './badge.css.js';
  * List of valid badge variants.
  */
 export const BADGE_VARIANTS = [
-    'accent',
-    'neutral',
-    'informative',
-    'positive',
-    'negative',
-    'notice',
-    'fuchsia',
-    'indigo',
-    'magenta',
-    'purple',
-    'seafoam',
-    'yellow',
-    'gray',
-    'red',
-    'orange',
-    'chartreuse',
-    'celery',
-    'green',
-    'cyan',
-    'blue',
+  'accent',
+  'neutral',
+  'informative',
+  'positive',
+  'negative',
+  'notice',
+  'fuchsia',
+  'indigo',
+  'magenta',
+  'purple',
+  'seafoam',
+  'yellow',
+  'gray',
+  'red',
+  'orange',
+  'chartreuse',
+  'celery',
+  'green',
+  'cyan',
+  'blue',
 ] as const;
 
 /**
@@ -58,10 +58,10 @@ export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
  * List of valid fixed values.
  */
 export const FIXED_VALUES = [
-    'inline-start',
-    'inline-end',
-    'block-start',
-    'block-end',
+  'inline-start',
+  'inline-end',
+  'block-start',
+  'block-end',
 ] as const;
 
 /**
@@ -76,86 +76,83 @@ export type FixedValues = (typeof FIXED_VALUES)[number];
  * @slot icon - Optional icon that appears to the left of the label
  */
 export class Badge extends SizedMixin(
-    ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
-    {
-        noDefaultSize: true,
-    }
+  ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
+  {
+    noDefaultSize: true,
+  }
 ) {
-    public static override get styles(): CSSResultArray {
-        return [styles];
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
+
+  /**
+   * The fixed position of the badge.
+   * Can be one of the values defined in `FixedValues`.
+   */
+  @property({ reflect: true })
+  public get fixed(): FixedValues | undefined {
+    return this._fixed;
+  }
+
+  public set fixed(fixed: FixedValues | undefined) {
+    if (fixed === this.fixed) return;
+
+    const oldValue = this.fixed;
+
+    this._fixed = fixed;
+
+    if (fixed) {
+      this.setAttribute('fixed', fixed);
+    } else {
+      this.removeAttribute('fixed');
     }
 
-    /**
-     * The fixed position of the badge.
-     * Can be one of the values defined in `FixedValues`.
-     */
-    @property({ reflect: true })
-    public get fixed(): FixedValues | undefined {
-        return this._fixed;
+    this.requestUpdate('fixed', oldValue);
+  }
+
+  private _fixed?: FixedValues;
+
+  /**
+   * The variant of the badge.
+   * Can be one of the values defined in `BadgeVariant`.
+   */
+  @property({ type: String, reflect: true })
+  public variant: BadgeVariant = 'informative';
+
+  /**
+   * Checks if the icon slot has content.
+   */
+  protected get hasIcon(): boolean {
+    return this.slotContentIsPresent;
+  }
+
+  /**
+   * Renders the badge template.
+   * Includes the icon slot and the label slot.
+   */
+  protected override render(): TemplateResult {
+    if (window.__swc.DEBUG) {
+      if (!BADGE_VARIANTS.includes(this.variant)) {
+        window.__swc.warn(
+          this,
+          `<${this.localName}> element expect the "variant" attribute to be one of the following:`,
+          'https://opensource.adobe.com/spectrum-web-components/components/badge/#variants',
+          {
+            issues: [...BADGE_VARIANTS],
+          }
+        );
+      }
     }
 
-    public set fixed(fixed: FixedValues | undefined) {
-        if (fixed === this.fixed) return;
-
-        const oldValue = this.fixed;
-
-        this._fixed = fixed;
-
-        if (fixed) {
-            this.setAttribute('fixed', fixed);
-        } else {
-            this.removeAttribute('fixed');
-        }
-
-        this.requestUpdate('fixed', oldValue);
-    }
-
-    private _fixed?: FixedValues;
-
-    /**
-     * The variant of the badge.
-     * Can be one of the values defined in `BadgeVariant`.
-     */
-    @property({ type: String, reflect: true })
-    public variant: BadgeVariant = 'informative';
-
-    /**
-     * Checks if the icon slot has content.
-     */
-    protected get hasIcon(): boolean {
-        return this.slotContentIsPresent;
-    }
-
-    /**
-     * Renders the badge template.
-     * Includes the icon slot and the label slot.
-     */
-    protected override render(): TemplateResult {
-        if (window.__swc.DEBUG) {
-            if (!BADGE_VARIANTS.includes(this.variant)) {
-                window.__swc.warn(
-                    this,
-                    `<${this.localName}> element expect the "variant" attribute to be one of the following:`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/badge/#variants',
-                    {
-                        issues: [...BADGE_VARIANTS],
-                    }
-                );
-            }
-        }
-
-        return html`
-            ${this.hasIcon
-                ? html`
-                      <slot
-                          name="icon"
-                          ?icon-only=${!this.slotHasContent}
-                      ></slot>
-                  `
-                : nothing}
-            <div class="label">
-                <slot></slot>
-            </div>
-        `;
-    }
+    return html`
+      ${this.hasIcon
+        ? html`
+            <slot name="icon" ?icon-only="${!this.slotHasContent}"></slot>
+          `
+        : nothing}
+      <div class="label">
+        <slot></slot>
+      </div>
+    `;
+  }
 }

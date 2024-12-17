@@ -24,277 +24,274 @@ import { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 
 const iconOptions: {
-    [key: string]: ({
-        width,
-        height,
-        hidden,
-        title,
-    }?: {
-        width?: number;
-        height?: number;
-        hidden?: boolean;
-        title?: string;
-    }) => TemplateResult | string;
+  [key: string]: ({
+    width,
+    height,
+    hidden,
+    title,
+  }?: {
+    width?: number;
+    height?: number;
+    hidden?: boolean;
+    title?: string;
+  }) => TemplateResult | string;
 } = {
-    '': () => html``,
-    negative: () => html`
-        <sp-icon-alert slot="icon"></sp-icon-alert>
-    `,
-    positive: () => html`
-        <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
-    `,
-    info: () => html`
-        <sp-icon-info slot="icon"></sp-icon-info>
-    `,
+  '': () => html``,
+  negative: () => html`
+    <sp-icon-alert slot="icon"></sp-icon-alert>
+  `,
+  positive: () => html`
+    <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+  `,
+  info: () => html`
+    <sp-icon-info slot="icon"></sp-icon-info>
+  `,
 };
 
 export default {
-    component: 'sp-tooltip',
-    title: 'Tooltip',
+  component: 'sp-tooltip',
+  title: 'Tooltip',
 };
 
 interface Properties {
-    delayed?: boolean;
-    disabled?: boolean;
-    open?: boolean;
-    placement?: Placement;
-    variant?: string;
-    text?: string;
-    offset?: number;
+  delayed?: boolean;
+  disabled?: boolean;
+  open?: boolean;
+  placement?: Placement;
+  variant?: string;
+  text?: string;
+  offset?: number;
 }
 
 export const Default = ({
-    open,
-    placement,
-    variant,
-    text,
+  open,
+  placement,
+  variant,
+  text,
 }: Properties): TemplateResult => {
-    return html`
-        <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
-            ${text}
-        </sp-tooltip>
-    `;
+  return html`
+    <sp-tooltip ?open="${open}" placement="${placement}" variant="${variant}">
+      ${text}
+    </sp-tooltip>
+  `;
 };
 Default.args = {
-    open: true,
-    placement: 'top',
-    variant: '',
-    text: 'Tooltip',
+  open: true,
+  placement: 'top',
+  variant: '',
+  text: 'Tooltip',
 };
 Default.argTypes = {
-    open: {
-        name: 'open',
-        type: { name: 'boolean', required: false },
-        description: 'Whether the tooltip is open.',
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+  open: {
+    name: 'open',
+    type: { name: 'boolean', required: false },
+    description: 'Whether the tooltip is open.',
+    table: {
+      type: { summary: 'boolean' },
+      defaultValue: { summary: false },
     },
-    placement: {
-        name: 'placement',
-        type: { name: 'string', required: false },
-        description: 'The placement of the tooltip in relation to its parent',
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: 'top' },
-        },
-        control: {
-            type: 'inline-radio',
-            options: [
-                'auto',
-                'auto-start',
-                'auto-end',
-                'top',
-                'bottom',
-                'right',
-                'left',
-                'top-start',
-                'top-end',
-                'bottom-start',
-                'bottom-end',
-                'right-start',
-                'right-end',
-                'left-start',
-                'left-end',
-                'none',
-            ],
-        },
+    control: {
+      type: 'boolean',
     },
-    text: {
-        name: 'text',
-        type: { name: 'string', required: false },
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: '' },
-        },
-        control: 'text',
+  },
+  placement: {
+    name: 'placement',
+    type: { name: 'string', required: false },
+    description: 'The placement of the tooltip in relation to its parent',
+    table: {
+      type: { summary: 'string' },
+      defaultValue: { summary: 'top' },
     },
-    variant: {
-        name: 'variant',
-        type: { name: 'string', required: false },
-        description: 'The style of the tooltip.',
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: '' },
-        },
-        control: {
-            type: 'inline-radio',
-            options: ['info', 'positive', 'negative', ''],
-        },
+    control: {
+      type: 'inline-radio',
+      options: [
+        'auto',
+        'auto-start',
+        'auto-end',
+        'top',
+        'bottom',
+        'right',
+        'left',
+        'top-start',
+        'top-end',
+        'bottom-start',
+        'bottom-end',
+        'right-start',
+        'right-end',
+        'left-start',
+        'left-end',
+        'none',
+      ],
     },
+  },
+  text: {
+    name: 'text',
+    type: { name: 'string', required: false },
+    table: {
+      type: { summary: 'string' },
+      defaultValue: { summary: '' },
+    },
+    control: 'text',
+  },
+  variant: {
+    name: 'variant',
+    type: { name: 'string', required: false },
+    description: 'The style of the tooltip.',
+    table: {
+      type: { summary: 'string' },
+      defaultValue: { summary: '' },
+    },
+    control: {
+      type: 'inline-radio',
+      options: ['info', 'positive', 'negative', ''],
+    },
+  },
 };
 
 export const wIcon = ({
-    open,
-    placement,
-    variant,
-    text,
+  open,
+  placement,
+  variant,
+  text,
 }: Properties): TemplateResult => {
-    return html`
-        <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
-            ${!!variant ? iconOptions[variant]() : nothing} ${text}
-        </sp-tooltip>
-    `;
+  return html`
+    <sp-tooltip ?open="${open}" placement="${placement}" variant="${variant}">
+      ${!!variant ? iconOptions[variant]() : nothing} ${text}
+    </sp-tooltip>
+  `;
 };
 wIcon.args = {
-    open: true,
-    placement: 'top',
-    text: 'Tooltip',
-    variant: 'negative',
+  open: true,
+  placement: 'top',
+  text: 'Tooltip',
+  variant: 'negative',
 };
 wIcon.argTypes = {
-    open: {
-        name: 'open',
-        type: { name: 'boolean', required: false },
-        description: 'Whether the tooltip is open.',
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+  open: {
+    name: 'open',
+    type: { name: 'boolean', required: false },
+    description: 'Whether the tooltip is open.',
+    table: {
+      type: { summary: 'boolean' },
+      defaultValue: { summary: false },
     },
-    placement: {
-        name: 'placement',
-        type: { name: 'string', required: false },
-        description: 'The placement of the tooltip in relation to its parent',
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: 'top' },
-        },
-        control: {
-            type: 'inline-radio',
-            options: [
-                'auto',
-                'auto-start',
-                'auto-end',
-                'top',
-                'bottom',
-                'right',
-                'left',
-                'top-start',
-                'top-end',
-                'bottom-start',
-                'bottom-end',
-                'right-start',
-                'right-end',
-                'left-start',
-                'left-end',
-                'none',
-            ],
-        },
+    control: {
+      type: 'boolean',
     },
-    text: {
-        name: 'text',
-        type: { name: 'string', required: false },
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: '' },
-        },
-        control: 'text',
+  },
+  placement: {
+    name: 'placement',
+    type: { name: 'string', required: false },
+    description: 'The placement of the tooltip in relation to its parent',
+    table: {
+      type: { summary: 'string' },
+      defaultValue: { summary: 'top' },
     },
-    variant: {
-        name: 'variant',
-        type: { name: 'string', required: false },
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: '' },
-        },
-        control: {
-            type: 'inline-radio',
-            options: ['info', 'positive', 'negative', ''],
-        },
+    control: {
+      type: 'inline-radio',
+      options: [
+        'auto',
+        'auto-start',
+        'auto-end',
+        'top',
+        'bottom',
+        'right',
+        'left',
+        'top-start',
+        'top-end',
+        'bottom-start',
+        'bottom-end',
+        'right-start',
+        'right-end',
+        'left-start',
+        'left-end',
+        'none',
+      ],
     },
+  },
+  text: {
+    name: 'text',
+    type: { name: 'string', required: false },
+    table: {
+      type: { summary: 'string' },
+      defaultValue: { summary: '' },
+    },
+    control: 'text',
+  },
+  variant: {
+    name: 'variant',
+    type: { name: 'string', required: false },
+    table: {
+      type: { summary: 'string' },
+      defaultValue: { summary: '' },
+    },
+    control: {
+      type: 'inline-radio',
+      options: ['info', 'positive', 'negative', ''],
+    },
+  },
 };
 
 const overlayStyles = html`
-    <style>
-        html,
-        body,
-        #root,
-        #root-inner,
-        sp-story-decorator {
-            height: 100%;
-            margin: 0;
-        }
+  <style>
+    html,
+    body,
+    #root,
+    #root-inner,
+    sp-story-decorator {
+      height: 100%;
+      margin: 0;
+    }
 
-        sp-story-decorator > div {
-            display: contents;
-        }
+    sp-story-decorator > div {
+      display: contents;
+    }
 
-        sp-story-decorator::part(container) {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-            gap: 24px;
-        }
+    sp-story-decorator::part(container) {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
 
-        sp-button:nth-of-type(1) {
-            margin-top: 24px;
-        }
-    </style>
+    sp-button:nth-of-type(1) {
+      margin-top: 24px;
+    }
+  </style>
 `;
 
 const overlaid = (openPlacement: Placement): TemplateResult => {
-    return html`
-        ${overlayStyles}
-        ${(
-            [
-                ['bottom', ''],
-                ['left', 'negative'],
-                ['right', 'positive'],
-                ['top', 'info'],
-                ['top-start', ''],
-            ] as [Placement, string][]
-        ).map(([placement, variant]) => {
-            return html`
-                <sp-button id="trigger-${placement}" label="${placement} test">
-                    Hover for ${variant ? variant : 'tooltip'} on the
-                    ${placement}
-                </sp-button>
-                <sp-overlay
-                    trigger="trigger-${placement}@hover"
-                    type="hint"
-                    placement=${placement}
-                    open=${ifDefined(
-                        openPlacement === placement ? 'hover' : undefined
-                    )}
-                >
-                    <sp-tooltip variant=${variant} placement=${placement}>
-                        ${placement}
-                    </sp-tooltip>
-                </sp-overlay>
-            `;
-        })}
-    `;
+  return html`
+    ${overlayStyles}
+    ${(
+      [
+        ['bottom', ''],
+        ['left', 'negative'],
+        ['right', 'positive'],
+        ['top', 'info'],
+        ['top-start', ''],
+      ] as [Placement, string][]
+    ).map(([placement, variant]) => {
+      return html`
+        <sp-button id="trigger-${placement}" label="${placement} test">
+          Hover for ${variant ? variant : 'tooltip'} on the ${placement}
+        </sp-button>
+        <sp-overlay
+          trigger="trigger-${placement}@hover"
+          type="hint"
+          placement="${placement}"
+          open="${ifDefined(openPlacement === placement ? 'hover' : undefined)}"
+        >
+          <sp-tooltip variant="${variant}" placement="${placement}">
+            ${placement}
+          </sp-tooltip>
+        </sp-overlay>
+      `;
+    })}
+  `;
 };
 
 export const overlaidTop = (): TemplateResult => overlaid('top');
@@ -304,154 +301,152 @@ export const overlaidLeft = (): TemplateResult => overlaid('left');
 export const overlaidTopStart = (): TemplateResult => overlaid('top-start');
 
 export const selfManaged = ({
-    placement,
-    open,
-    offset,
-    delayed,
-    disabled,
+  placement,
+  open,
+  offset,
+  delayed,
+  disabled,
 }: Properties): TemplateResult => html`
-    ${overlayStyles}
-    <sp-action-button class="self-managed">
-        This is a button.
-        <sp-tooltip
-            self-managed
-            placement=${placement}
-            offset=${offset}
-            ?delayed=${delayed}
-            ?disabled=${disabled}
-            ?open=${open}
-        >
-            Add paragraph text by dragging the Text tool on the canvas to use
-            this feature
-        </sp-tooltip>
-    </sp-action-button>
+  ${overlayStyles}
+  <sp-action-button class="self-managed">
+    This is a button.
+    <sp-tooltip
+      self-managed
+      placement="${placement}"
+      offset="${offset}"
+      ?delayed="${delayed}"
+      ?disabled="${disabled}"
+      ?open="${open}"
+    >
+      Add paragraph text by dragging the Text tool on the canvas to use this
+      feature
+    </sp-tooltip>
+  </sp-action-button>
 `;
 selfManaged.args = {
-    placement: 'top',
-    open: true,
-    offset: 6,
-    delayed: false,
-    disabled: false,
+  placement: 'top',
+  open: true,
+  offset: 6,
+  delayed: false,
+  disabled: false,
 };
 selfManaged.argTypes = {
-    delayed: {
-        name: 'delayed',
-        type: { name: 'boolean', required: false },
-        description: 'Whether to manage the tooltip with the warmup timer',
+  delayed: {
+    name: 'delayed',
+    type: { name: 'boolean', required: false },
+    description: 'Whether to manage the tooltip with the warmup timer',
+  },
+  disabled: {
+    name: 'disabled',
+    type: { name: 'boolean', required: false },
+    description: 'Whether the Tooltip is active and can be displayed',
+  },
+  offset: {
+    name: 'offset',
+    type: { name: 'number', required: false },
+    description:
+      'The pixel distance from the parent element to place the tooltip',
+  },
+  open: {
+    name: 'open',
+    type: { name: 'boolean', required: false },
+    description: 'Whether the tooltip is open.',
+    table: {
+      type: { summary: 'boolean' },
+      defaultValue: { summary: false },
     },
-    disabled: {
-        name: 'disabled',
-        type: { name: 'boolean', required: false },
-        description: 'Whether the Tooltip is active and can be displayed',
+    control: {
+      type: 'boolean',
     },
-    offset: {
-        name: 'offset',
-        type: { name: 'number', required: false },
-        description:
-            'The pixel distance from the parent element to place the tooltip',
+  },
+  placement: {
+    name: 'placement',
+    type: { name: 'string', required: false },
+    description: 'The placement of the tooltip in relation to its parent',
+    table: {
+      type: { summary: 'string' },
+      defaultValue: { summary: 'top' },
     },
-    open: {
-        name: 'open',
-        type: { name: 'boolean', required: false },
-        description: 'Whether the tooltip is open.',
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+    control: {
+      type: 'inline-radio',
+      options: [
+        'auto',
+        'auto-start',
+        'auto-end',
+        'top',
+        'bottom',
+        'right',
+        'left',
+        'top-start',
+        'top-end',
+        'bottom-start',
+        'bottom-end',
+        'right-start',
+        'right-end',
+        'left-start',
+        'left-end',
+        'none',
+      ],
     },
-    placement: {
-        name: 'placement',
-        type: { name: 'string', required: false },
-        description: 'The placement of the tooltip in relation to its parent',
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: 'top' },
-        },
-        control: {
-            type: 'inline-radio',
-            options: [
-                'auto',
-                'auto-start',
-                'auto-end',
-                'top',
-                'bottom',
-                'right',
-                'left',
-                'top-start',
-                'top-end',
-                'bottom-start',
-                'bottom-end',
-                'right-start',
-                'right-end',
-                'left-start',
-                'left-end',
-                'none',
-            ],
-        },
-    },
+  },
 };
 
 export const selfManagedIconOnly = (): TemplateResult => html`
-    ${overlayStyles}
-    <sp-action-button class="self-managed">
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-        <sp-tooltip self-managed>This is a tooltip.</sp-tooltip>
-    </sp-action-button>
-    <hr />
+  ${overlayStyles}
+  <sp-action-button class="self-managed">
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+    <sp-tooltip self-managed>This is a tooltip.</sp-tooltip>
+  </sp-action-button>
+  <hr />
 
-    <sp-action-button class="self-managed">
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    </sp-action-button>
+  <sp-action-button class="self-managed">
+    <sp-icon-edit slot="icon"></sp-icon-edit>
+  </sp-action-button>
 `;
 
 export const selfManagedFieldLabel = (): TemplateResult => html`
-    <div style="display: inline-flex; flex-direction: column;">
-        <sp-field-label for="input">
-            <sp-icon-edit></sp-icon-edit>
-            <sp-tooltip self-managed>Edit</sp-tooltip>
-        </sp-field-label>
-        <sp-textfield id="input"></sp-textfield>
-    </div>
+  <div style="display: inline-flex; flex-direction: column;">
+    <sp-field-label for="input">
+      <sp-icon-edit></sp-icon-edit>
+      <sp-tooltip self-managed>Edit</sp-tooltip>
+    </sp-field-label>
+    <sp-textfield id="input"></sp-textfield>
+  </div>
 `;
 
 export const draggable = (): TemplateResult => {
-    const handleDragStart = (event: DragEvent): void => {
-        event.dataTransfer?.setDragImage(
-            event.target as HTMLElement,
-            event.offsetX,
-            event.offsetY
-        );
-    };
+  const handleDragStart = (event: DragEvent): void => {
+    event.dataTransfer?.setDragImage(
+      event.target as HTMLElement,
+      event.offsetX,
+      event.offsetY
+    );
+  };
 
-    return html`
-        <sp-button>
-            A simple button that should not be included in the DragImage
-        </sp-button>
-        <div
-            draggable="true"
-            id="draggableElement"
-            @dragstart=${handleDragStart}
-            style="margin-top: 16px; cursor: move; padding: 24px; border: red 1px solid;"
-        >
-            <p>Click and drag me to show DragImage</p>
-            <sp-action-button>
-                Action Button with self managed tooltip
-                <sp-tooltip self-managed placement="bottom">
-                    My Tooltip
-                </sp-tooltip>
-            </sp-action-button>
-        </div>
-    `;
+  return html`
+    <sp-button>
+      A simple button that should not be included in the DragImage
+    </sp-button>
+    <div
+      draggable="true"
+      id="draggableElement"
+      @dragstart="${handleDragStart}"
+      style="margin-top: 16px; cursor: move; padding: 24px; border: red 1px solid;"
+    >
+      <p>Click and drag me to show DragImage</p>
+      <sp-action-button>
+        Action Button with self managed tooltip
+        <sp-tooltip self-managed placement="bottom">My Tooltip</sp-tooltip>
+      </sp-action-button>
+    </div>
+  `;
 };
 
 draggable.swc_vrt = {
-    skip: true,
+  skip: true,
 };
 
 draggable.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+  // Disables Chromatic's snapshotting on a global level
+  chromatic: { disableSnapshot: true },
 };

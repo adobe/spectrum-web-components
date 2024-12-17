@@ -1,3 +1,15 @@
 {
-    "recommendations": ["runem.lit-plugin"]
+  "recommendations": [
+    "runem.lit-plugin",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "streetsidesoftware.code-spell-checker",
+    "vunguyentuan.vscode-css-variables",
+    "github.copilot",
+    "github.copilot-chat",
+    "rajdeepchandra.spectrum-design-tokens-for-vscode"
+  ]
 }

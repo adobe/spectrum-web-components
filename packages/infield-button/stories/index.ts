@@ -18,122 +18,120 @@ import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevr
 import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 
 document.adoptedStyleSheets = [
-    ...document.adoptedStyleSheets,
-    chevronStyles.styleSheet as CSSStyleSheet,
-    chevronIconOverrides.styleSheet as CSSStyleSheet,
+  ...document.adoptedStyleSheets,
+  chevronStyles.styleSheet as CSSStyleSheet,
+  chevronIconOverrides.styleSheet as CSSStyleSheet,
 ];
 
 export type StoryArgs = {
-    block?: 'start' | 'end';
-    content?: () => TemplateResult;
-    disabled?: boolean;
-    inline?: 'start' | 'end';
-    label?: string;
-    size?: 's' | 'm' | 'l' | 'xl';
-    quiet?: boolean;
+  block?: 'start' | 'end';
+  content?: () => TemplateResult;
+  disabled?: boolean;
+  inline?: 'start' | 'end';
+  label?: string;
+  size?: 's' | 'm' | 'l' | 'xl';
+  quiet?: boolean;
 };
 
 export const args = {
-    block: undefined,
-    disabled: false,
-    inline: undefined,
-    label: 'Add',
-    size: undefined,
-    quiet: false,
+  block: undefined,
+  disabled: false,
+  inline: undefined,
+  label: 'Add',
+  size: undefined,
+  quiet: false,
 } as StoryArgs;
 
 export const argTypes = {
-    block: {
-        name: 'block',
-        type: { name: 'text', required: false },
-        description: 'Where to place the button along the block axis.',
-        table: {
-            type: { summary: '"start" | "end"' },
-            defaultValue: { summary: '' },
-        },
-        control: 'select',
-        options: ['none', 'start', 'end'],
+  block: {
+    name: 'block',
+    type: { name: 'text', required: false },
+    description: 'Where to place the button along the block axis.',
+    table: {
+      type: { summary: '"start" | "end"' },
+      defaultValue: { summary: '' },
     },
-    disabled: {
-        name: 'disabled',
-        type: { name: 'boolean', required: false },
-        description: 'Whether the button is disabled or not.',
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+    control: 'select',
+    options: ['none', 'start', 'end'],
+  },
+  disabled: {
+    name: 'disabled',
+    type: { name: 'boolean', required: false },
+    description: 'Whether the button is disabled or not.',
+    table: {
+      type: { summary: 'boolean' },
+      defaultValue: { summary: false },
     },
-    inline: {
-        name: 'inline',
-        type: { name: 'text', required: false },
-        description: 'Where to place the button along the inline axis.',
-        table: {
-            type: { summary: '"start" | "end"' },
-            defaultValue: { summary: '' },
-        },
-        control: 'select',
-        options: ['none', 'start', 'end'],
+    control: {
+      type: 'boolean',
     },
-    size: {
-        name: 'size',
-        type: { name: 'text', required: false },
-        description: 'The t-shit size of the button.',
-        table: {
-            type: { summary: '"s" | "m" | "l" | "xl"' },
-            defaultValue: { summary: '' },
-        },
-        control: 'select',
-        options: ['s', 'm', 'l', 'xl'],
+  },
+  inline: {
+    name: 'inline',
+    type: { name: 'text', required: false },
+    description: 'Where to place the button along the inline axis.',
+    table: {
+      type: { summary: '"start" | "end"' },
+      defaultValue: { summary: '' },
     },
-    quiet: {
-        name: 'quiet',
-        type: { name: 'boolean', required: false },
-        description: 'Whether the button is quiet or not.',
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+    control: 'select',
+    options: ['none', 'start', 'end'],
+  },
+  size: {
+    name: 'size',
+    type: { name: 'text', required: false },
+    description: 'The t-shit size of the button.',
+    table: {
+      type: { summary: '"s" | "m" | "l" | "xl"' },
+      defaultValue: { summary: '' },
     },
+    control: 'select',
+    options: ['s', 'm', 'l', 'xl'],
+  },
+  quiet: {
+    name: 'quiet',
+    type: { name: 'boolean', required: false },
+    description: 'Whether the button is quiet or not.',
+    table: {
+      type: { summary: 'boolean' },
+      defaultValue: { summary: false },
+    },
+    control: {
+      type: 'boolean',
+    },
+  },
 };
 
 export const Template = ({
-    block,
-    content,
-    disabled,
-    inline,
-    label,
-    size,
-    quiet,
+  block,
+  content,
+  disabled,
+  inline,
+  label,
+  size,
+  quiet,
 }: StoryArgs): TemplateResult => {
-    return html`
-        <sp-infield-button
-            block=${ifDefined(block)}
-            ?disabled=${disabled}
-            inline=${ifDefined(inline)}
-            label=${ifDefined(label)}
-            size=${ifDefined(size)}
-            ?quiet=${quiet}
-        >
-            ${content
-                ? content()
-                : html`
-                      <sp-icon-add></sp-icon-add>
-                  `}
-        </sp-infield-button>
-    `;
+  return html`
+    <sp-infield-button
+      block="${ifDefined(block)}"
+      ?disabled="${disabled}"
+      inline="${ifDefined(inline)}"
+      label="${ifDefined(label)}"
+      size="${ifDefined(size)}"
+      ?quiet="${quiet}"
+    >
+      ${content
+        ? content()
+        : html`
+            <sp-icon-add></sp-icon-add>
+          `}
+    </sp-infield-button>
+  `;
 };
 
 export const chevronUp = (): TemplateResult => html`
-    <sp-icon-chevron75 class="spectrum-UIIcon-ChevronUp75"></sp-icon-chevron75>
+  <sp-icon-chevron75 class="spectrum-UIIcon-ChevronUp75"></sp-icon-chevron75>
 `;
 export const chevronDown = (): TemplateResult => html`
-    <sp-icon-chevron75
-        class="spectrum-UIIcon-ChevronDown75"
-    ></sp-icon-chevron75>
+  <sp-icon-chevron75 class="spectrum-UIIcon-ChevronDown75"></sp-icon-chevron75>
 `;

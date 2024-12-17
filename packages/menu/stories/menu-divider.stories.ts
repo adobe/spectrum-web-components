@@ -15,27 +15,27 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 
 export default {
-    component: 'sp-menu-divider',
-    title: 'Menu Divider',
+  component: 'sp-menu-divider',
+  title: 'Menu Divider',
 };
 
 const Template = (size: string): TemplateResult => {
-    return html`
-        <sp-popover open>
-            <sp-menu>
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item>Select Inverse</sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-divider size=${size}></sp-menu-divider>
-                <sp-menu-item>Select and Mask...</sp-menu-item>
-                <sp-menu-item>Make Work Path</sp-menu-item>
-                <sp-menu-divider size=${size}></sp-menu-divider>
-                <sp-menu-item>Save Selection</sp-menu-item>
-                <sp-menu-divider size=${size}></sp-menu-divider>
-                <sp-menu-item>Create group</sp-menu-item>
-            </sp-menu>
-        </sp-popover>
-    `;
+  return html`
+    <sp-popover open>
+      <sp-menu>
+        <sp-menu-item>Deselect</sp-menu-item>
+        <sp-menu-item>Select Inverse</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-divider size="${size}"></sp-menu-divider>
+        <sp-menu-item>Select and Mask...</sp-menu-item>
+        <sp-menu-item>Make Work Path</sp-menu-item>
+        <sp-menu-divider size="${size}"></sp-menu-divider>
+        <sp-menu-item>Save Selection</sp-menu-item>
+        <sp-menu-divider size="${size}"></sp-menu-divider>
+        <sp-menu-item>Create group</sp-menu-item>
+      </sp-menu>
+    </sp-popover>
+  `;
 };
 
 export const sizeS = (): TemplateResult => Template('s');

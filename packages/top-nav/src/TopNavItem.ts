@@ -11,15 +11,15 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  PropertyValues,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
-    property,
-    query,
+  property,
+  query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable, LikeAnchor } from '@spectrum-web-components/shared';
 import itemStyles from '@spectrum-web-components/tabs/src/tab.css.js';
@@ -34,78 +34,78 @@ import topNavItemStyles from './top-nav-item.css.js';
  * @slot - The text label of the Top Nav Item.
  */
 export class TopNavItem extends LikeAnchor(Focusable) {
-    /**
-     * Returns the styles to be applied to the component.
-     */
-    public static override get styles(): CSSResultArray {
-        return [itemStyles, topNavItemStyles];
-    }
+  /**
+   * Returns the styles to be applied to the component.
+   */
+  public static override get styles(): CSSResultArray {
+    return [itemStyles, topNavItemStyles];
+  }
 
-    /**
-     * Query to select the anchor element within the component.
-     */
-    @query('a')
-    private anchor!: HTMLAnchorElement;
+  /**
+   * Query to select the anchor element within the component.
+   */
+  @query('a')
+  private anchor!: HTMLAnchorElement;
 
-    /**
-     * Indicates whether the top nav item is selected.
-     *
-     * This property is reflected as an attribute, meaning changes to the property
-     * will be mirrored in the corresponding HTML attribute.
-     */
-    @property({ type: Boolean, reflect: true })
-    public selected = false;
+  /**
+   * Indicates whether the top nav item is selected.
+   *
+   * This property is reflected as an attribute, meaning changes to the property
+   * will be mirrored in the corresponding HTML attribute.
+   */
+  @property({ type: Boolean, reflect: true })
+  public selected = false;
 
-    /**
-     * The value of the top nav item, representing the href of the anchor element.
-     */
-    public value = '';
+  /**
+   * The value of the top nav item, representing the href of the anchor element.
+   */
+  public value = '';
 
-    /**
-     * Returns the focusable element within the component.
-     */
-    public override get focusElement(): HTMLAnchorElement {
-        return this.anchor;
-    }
+  /**
+   * Returns the focusable element within the component.
+   */
+  public override get focusElement(): HTMLAnchorElement {
+    return this.anchor;
+  }
 
-    /**
-     * Simulates a click on the anchor element.
-     */
-    public override click(): void {
-        this.anchor.click();
-    }
+  /**
+   * Simulates a click on the anchor element.
+   */
+  public override click(): void {
+    this.anchor.click();
+  }
 
-    /**
-     * Renders the content of the top nav item component.
-     *
-     * This method returns a template result containing an anchor element with various attributes
-     * and a slot for the text label.
-     */
-    protected override render(): TemplateResult {
-        return html`
-            <a
-                id="item-label"
-                href=${ifDefined(this.href)}
-                download=${ifDefined(this.download)}
-                target=${ifDefined(this.target)}
-                aria-label=${ifDefined(this.label)}
-                aria-current=${ifDefined(
-                    this.selected && this.href ? 'page' : undefined
-                )}
-                rel=${ifDefined(this.rel)}
-            >
-                <slot></slot>
-            </a>
-        `;
-    }
+  /**
+   * Renders the content of the top nav item component.
+   *
+   * This method returns a template result containing an anchor element with various attributes
+   * and a slot for the text label.
+   */
+  protected override render(): TemplateResult {
+    return html`
+      <a
+        id="item-label"
+        href="${ifDefined(this.href)}"
+        download="${ifDefined(this.download)}"
+        target="${ifDefined(this.target)}"
+        aria-label="${ifDefined(this.label)}"
+        aria-current="${ifDefined(
+          this.selected && this.href ? 'page' : undefined
+        )}"
+        rel="${ifDefined(this.rel)}"
+      >
+        <slot></slot>
+      </a>
+    `;
+  }
 
-    /**
-     * Lifecycle method called when the component updates.
-     *
-     * This method updates the value property to reflect the href of the anchor element.
-     */
-    protected override updated(changes: PropertyValues): void {
-        super.updated(changes);
-        this.value = this.anchor.href;
-    }
+  /**
+   * Lifecycle method called when the component updates.
+   *
+   * This method updates the value property to reflect the href of the anchor element.
+   */
+  protected override updated(changes: PropertyValues): void {
+    super.updated(changes);
+    this.value = this.anchor.href;
+  }
 }

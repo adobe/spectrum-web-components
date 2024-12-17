@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    LitElement,
-    TemplateResult,
+  html,
+  LitElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -29,207 +29,203 @@ import { Template } from './template.js';
 import { argTypes } from './args.js';
 
 export default {
-    title: 'Combobox',
-    component: 'sp-combobox',
-    args: {
-        open: false,
-        disabled: false,
-        invalid: false,
-        pending: false,
-        readonly: false,
-        quiet: false,
-    },
-    argTypes,
+  title: 'Combobox',
+  component: 'sp-combobox',
+  args: {
+    open: false,
+    disabled: false,
+    invalid: false,
+    pending: false,
+    readonly: false,
+    quiet: false,
+  },
+  argTypes,
 };
 
 export const Default = (args: StoryArgs): TemplateResult => Template(args);
 
 export const disabled = (args: StoryArgs): TemplateResult => Template(args);
 disabled.args = {
-    disabled: true,
-    value: 'Azerbaijan',
+  disabled: true,
+  value: 'Azerbaijan',
 };
 
 export const invalid = (args: StoryArgs): TemplateResult => Template(args);
 invalid.args = {
-    invalid: true,
+  invalid: true,
 };
 
 export const pending = (args: StoryArgs): TemplateResult => Template(args);
 pending.args = {
-    pending: true,
+  pending: true,
 };
 
 export const quiet = (args: StoryArgs): TemplateResult => Template(args);
 quiet.args = {
-    quiet: true,
+  quiet: true,
 };
 
 export const readonly = (args: StoryArgs): TemplateResult => Template(args);
 readonly.args = {
-    readonly: true,
-    value: 'Solomon Islands',
+  readonly: true,
+  value: 'Solomon Islands',
 };
 
 export const listAutocomplete = (args: StoryArgs): TemplateResult =>
-    Template(args);
+  Template(args);
 listAutocomplete.args = {
-    autocomplete: 'list',
+  autocomplete: 'list',
 };
 
 export const noAutocomplete = (): TemplateResult => {
-    return html`
-        <sp-field-label side-aligned="start" for="combobox-3">
-            Fruit
-        </sp-field-label>
-        <sp-combobox
-            id="combobox-3"
-            .options=${fruits}
-            style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-        ></sp-combobox>
-        <sp-field-label side-aligned="start" for="combobox-4">
-            Countries
-        </sp-field-label>
-        <sp-combobox
-            id="combobox-4"
-            .options=${countries}
-            style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-        ></sp-combobox>
-    `;
+  return html`
+    <sp-field-label side-aligned="start" for="combobox-3">Fruit</sp-field-label>
+    <sp-combobox
+      id="combobox-3"
+      .options="${fruits}"
+      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+    ></sp-combobox>
+    <sp-field-label side-aligned="start" for="combobox-4">
+      Countries
+    </sp-field-label>
+    <sp-combobox
+      id="combobox-4"
+      .options="${countries}"
+      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+    ></sp-combobox>
+  `;
 };
 
 export const lightDOM = (): TemplateResult => {
-    return html`
-        <sp-field-label side-aligned="start" for="combobox-5">
-            Fruit
-        </sp-field-label>
-        <sp-combobox
-            id="combobox-5"
-            style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-        >
-            ${fruits.map(
-                (fruit) => html`
-                    <sp-menu-item id=${fruit.value} value=${fruit.value}>
-                        ${fruit.itemText}
-                    </sp-menu-item>
-                `
-            )}
-        </sp-combobox>
-        <sp-field-label side-aligned="start" for="combobox-6">
-            Countries
-        </sp-field-label>
-        <sp-combobox
-            id="combobox-6"
-            style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-        >
-            ${countries.map(
-                (country) => html`
-                    <sp-menu-item id=${country.value} value=${country.value}>
-                        ${country.itemText}
-                    </sp-menu-item>
-                `
-            )}
-        </sp-combobox>
-    `;
+  return html`
+    <sp-field-label side-aligned="start" for="combobox-5">Fruit</sp-field-label>
+    <sp-combobox
+      id="combobox-5"
+      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+    >
+      ${fruits.map(
+        (fruit) => html`
+          <sp-menu-item id="${fruit.value}" value="${fruit.value}">
+            ${fruit.itemText}
+          </sp-menu-item>
+        `
+      )}
+    </sp-combobox>
+    <sp-field-label side-aligned="start" for="combobox-6">
+      Countries
+    </sp-field-label>
+    <sp-combobox
+      id="combobox-6"
+      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+    >
+      ${countries.map(
+        (country) => html`
+          <sp-menu-item id="${country.value}" value="${country.value}">
+            ${country.itemText}
+          </sp-menu-item>
+        `
+      )}
+    </sp-combobox>
+  `;
 };
 
 export const withTooltip = (): TemplateResult => {
-    return html`
-        <sp-combobox
-            id="combobox-6"
-            label="Combobox with tooltip"
-            style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
-        >
-            ${countries.map(
-                (option) => html`
-                    <sp-menu-item id=${option.value} value=${option.value}>
-                        ${option.itemText}
-                    </sp-menu-item>
-                `
-            )}
-            <sp-tooltip slot="tooltip" self-managed placement="right" open>
-                This combobox has a tooltip.
-            </sp-tooltip>
-        </sp-combobox>
-    `;
+  return html`
+    <sp-combobox
+      id="combobox-6"
+      label="Combobox with tooltip"
+      style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
+    >
+      ${countries.map(
+        (option) => html`
+          <sp-menu-item id="${option.value}" value="${option.value}">
+            ${option.itemText}
+          </sp-menu-item>
+        `
+      )}
+      <sp-tooltip slot="tooltip" self-managed placement="right" open>
+        This combobox has a tooltip.
+      </sp-tooltip>
+    </sp-combobox>
+  `;
 };
 
 export const withFieldLabel = (): TemplateResult => {
-    return html`
-        <sp-field-label for="combobox-7">Pick something</sp-field-label>
-        <sp-combobox id="combobox-7" .options=${fruits}></sp-combobox>
-    `;
+  return html`
+    <sp-field-label for="combobox-7">Pick something</sp-field-label>
+    <sp-combobox id="combobox-7" .options="${fruits}"></sp-combobox>
+  `;
 };
 
 export const withLabelAttribute = (): TemplateResult => {
-    return html`
-        <sp-combobox
-            id="combobox-7"
-            label="Pick something"
-            .options=${fruits}
-        ></sp-combobox>
-    `;
+  return html`
+    <sp-combobox
+      id="combobox-7"
+      label="Pick something"
+      .options="${fruits}"
+    ></sp-combobox>
+  `;
 };
 
 export const withHelpText = (): TemplateResult => {
-    return html`
-        <sp-combobox id="combobox-7" label="Pick something" .options=${fruits}>
-            <sp-help-text slot="help-text">
-                These are fruits found in the game "Animal Crossing: New Leaf".
-            </sp-help-text>
-        </sp-combobox>
-    `;
+  return html`
+    <sp-combobox id="combobox-7" label="Pick something" .options="${fruits}">
+      <sp-help-text slot="help-text">
+        These are fruits found in the game "Animal Crossing: New Leaf".
+      </sp-help-text>
+    </sp-combobox>
+  `;
 };
 
 class ControlledCombo extends LitElement {
-    static ages: ComboboxOption[] = Array.from({ length: 76 - 55 }, (_, n) => {
-        const age = `${n + 55}`;
+  static ages: ComboboxOption[] = Array.from({ length: 76 - 55 }, (_, n) => {
+    const age = `${n + 55}`;
 
-        return { value: age, itemText: age };
-    });
+    return { value: age, itemText: age };
+  });
 
-    @state()
-    private value = {
-        raw: '',
-        validated: `${ControlledCombo.ages[0].itemText}`,
+  @state()
+  private value = {
+    raw: '',
+    validated: `${ControlledCombo.ages[0].itemText}`,
+  };
+
+  @query('#age')
+  private combobox!: Combobox;
+
+  override render(): TemplateResult {
+    return html`
+      <sp-field-label for="age">
+        Retirement age (try entering a non-number)
+      </sp-field-label>
+      <sp-combobox
+        id="age"
+        .options="${ControlledCombo.ages}"
+        .value="${live(this.value.validated)}"
+        @change="${this.onChange}"
+      ></sp-combobox>
+    `;
+  }
+
+  private onChange(): void {
+    this.value = {
+      raw: this.combobox.value,
+      validated: this.combobox.value.replace(/\D/g, '') || '55',
     };
-
-    @query('#age')
-    private combobox!: Combobox;
-
-    override render(): TemplateResult {
-        return html`
-            <sp-field-label for="age">
-                Retirement age (try entering a non-number)
-            </sp-field-label>
-            <sp-combobox
-                id="age"
-                .options=${ControlledCombo.ages}
-                .value=${live(this.value.validated)}
-                @change=${this.onChange}
-            ></sp-combobox>
-        `;
-    }
-
-    private onChange(): void {
-        this.value = {
-            raw: this.combobox.value,
-            validated: this.combobox.value.replace(/\D/g, '') || '55',
-        };
-    }
+  }
 }
 defineElement('controlled-combo', ControlledCombo);
 
 export const controlled = (): TemplateResult => {
-    return html`
-        <controlled-combo></controlled-combo>
-    `;
+  return html`
+    <controlled-combo></controlled-combo>
+  `;
 };
 controlled.swc_vrt = {
-    skip: true,
+  skip: true,
 };
 
 controlled.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+  // Disables Chromatic's snapshotting on a global level
+  chromatic: { disableSnapshot: true },
 };

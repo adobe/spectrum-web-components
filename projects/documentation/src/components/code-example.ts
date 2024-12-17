@@ -11,15 +11,15 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    LitElement,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  LitElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    customElement,
-    property,
-    query,
+  customElement,
+  property,
+  query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { toHtmlTemplateString } from '../utils/templates.js';
 import Styles from './code-example.css';
@@ -34,207 +34,194 @@ import { Color } from '@spectrum-web-components/theme';
 
 @customElement('code-example')
 export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
-    @query('#markup')
-    private markup?: HTMLDivElement;
+  @query('#markup')
+  private markup?: HTMLDivElement;
 
-    @query('.demo-example')
-    private demo?: HTMLDivElement;
+  @query('.demo-example')
+  private demo?: HTMLDivElement;
 
-    @property()
-    public codeTheme: 'dark' | 'light' = 'light';
+  @property()
+  public codeTheme: 'dark' | 'light' = 'light';
 
-    @property({ type: Boolean })
-    public preprocessed = false;
+  @property({ type: Boolean })
+  public preprocessed = false;
 
-    @property({ type: Boolean, attribute: 'no-demo' })
-    public noDemo = false;
+  @property({ type: Boolean, attribute: 'no-demo' })
+  public noDemo = false;
 
-    private prismjsLoaded = false;
+  private prismjsLoaded = false;
 
-    public static override get styles(): CSSResultArray {
-        return [Styles];
+  public static override get styles(): CSSResultArray {
+    return [Styles];
+  }
+
+  private get codeSlot(): Element | this {
+    const code = [...(this.children || [])].find(
+      (child) => child.slot === 'code'
+    );
+
+    return code || this;
+  }
+
+  public get highlightedHTML(): string {
+    const el = this.codeSlot;
+
+    return el.innerHTML || '';
+  }
+
+  public get liveHTML(): string {
+    const el = this.codeSlot;
+
+    return el.textContent || '';
+  }
+
+  public get language(): 'markup' | 'javascript' {
+    if (this.classList.contains('language-javascript')) {
+      return 'javascript';
     }
 
-    private get codeSlot(): Element | this {
-        const code = [...(this.children || [])].find(
-            (child) => child.slot === 'code'
+    return 'markup';
+  }
+
+  public get showDemo() {
+    if (this.noDemo) {
+      return false;
+    }
+
+    return (
+      this.classList.contains('language-html') ||
+      this.classList.contains('language-html-live')
+    );
+  }
+
+  private get highlightedCode(): TemplateResult {
+    const highlightedHTML = this.preprocessed
+      ? this.highlightedHTML
+      : window.Prism.highlight(
+          this.liveHTML,
+          window.Prism.languages[this.language],
+          this.language
         );
 
-        return code || this;
+    const code = toHtmlTemplateString(highlightedHTML);
+
+    return html`
+      <pre><code>${code}</code></pre>
+    `;
+  }
+
+  private liveHTMLTransferred = false;
+
+  private get renderedCode(): TemplateResult {
+    if (
+      this.classList.contains('language-html-live') &&
+      !this.liveHTMLTransferred
+    ) {
+      const demo =
+        this.querySelector('[slot="demo"]') || document.createElement('div');
+
+      demo.slot = 'demo';
+      demo.innerHTML = this.liveHTML;
+      this.append(demo);
+      this.liveHTMLTransferred = true;
     }
 
-    public get highlightedHTML(): string {
-        const el = this.codeSlot;
+    return toHtmlTemplateString(this.liveHTML);
+  }
 
-        return el.innerHTML || '';
+  protected override shouldUpdate(): boolean {
+    if (this.preprocessed || this.prismjsLoaded) {
+      return true;
     }
 
-    public get liveHTML(): string {
-        const el = this.codeSlot;
-
-        return el.textContent || '';
+    if (!this.preprocessed) {
+      import('prismjs').then(() => {
+        this.prismjsLoaded = true;
+        this.requestUpdate();
+      });
     }
 
-    public get language(): 'markup' | 'javascript' {
-        if (this.classList.contains('language-javascript')) {
-            return 'javascript';
-        }
+    return false;
+  }
 
-        return 'markup';
-    }
+  protected override render(): TemplateResult {
+    // highlighedCode needs to happen first in case the HTML is live and
+    // needs to be placed into the light DOM
+    const { highlightedCode, renderedCode } = this;
 
-    public get showDemo() {
-        if (this.noDemo) {
-            return false;
-        }
+    return html`
+      ${this.showDemo
+        ? html`
+            <div class="demo-example">
+              <slot name="demo">${renderedCode}</slot>
+            </div>
+          `
+        : undefined}
+      <bdo class="markup" dir="ltr">
+        ${highlightedCode}
+        <div class="copy-holder">
+          <sp-action-button class="copy" @click=${this.copyToClipboard} quiet>
+            <sp-icon-copy slot="icon"></sp-icon-copy>
+            Copy to Clipboard
+          </sp-action-button>
+        </div>
+      </bdo>
+      <style>
+        ${this.codeTheme === 'light'
+          ? StylesLight.toString()
+          : StylesDark.toString()}
+      </style>
+    `;
+  }
 
-        return (
-            this.classList.contains('language-html') ||
-            this.classList.contains('language-html-live')
-        );
-    }
+  private copyToClipboard(): void {
+    copyNode(this);
+  }
 
-    private get highlightedCode(): TemplateResult {
-        const highlightedHTML = this.preprocessed
-            ? this.highlightedHTML
-            : window.Prism.highlight(
-                  this.liveHTML,
-                  window.Prism.languages[this.language],
-                  this.language
-              );
+  private shouldManageTabOrderForScrolling = (): void => {
+    [this.markup, this.demo].map((el) => {
+      if (!el) {
+        return;
+      }
 
-        const code = toHtmlTemplateString(highlightedHTML);
+      const { offsetWidth, scrollWidth } = el;
 
-        return html`
-            <pre><code>${code}</code></pre>
-        `;
-    }
+      if (offsetWidth < scrollWidth) {
+        el.tabIndex = 0;
+      } else {
+        el.removeAttribute('tabindex');
+      }
+    });
+  };
 
-    private liveHTMLTransferred = false;
+  protected override updated(): void {
+    setTimeout(this.shouldManageTabOrderForScrolling);
+  }
 
-    private get renderedCode(): TemplateResult {
-        if (
-            this.classList.contains('language-html-live') &&
-            !this.liveHTMLTransferred
-        ) {
-            const demo =
-                this.querySelector('[slot="demo"]') ||
-                document.createElement('div');
+  private trackTheme(): void {
+    const queryThemeEvent = new CustomEvent<TrackTheme>('sp-track-theme', {
+      bubbles: true,
+      composed: true,
+      detail: {
+        callback: (color: Color) => {
+          this.codeTheme = color.startsWith('light') ? 'light' : 'dark';
+        },
+      },
+      cancelable: true,
+    });
 
-            demo.slot = 'demo';
-            demo.innerHTML = this.liveHTML;
-            this.append(demo);
-            this.liveHTMLTransferred = true;
-        }
+    this.dispatchEvent(queryThemeEvent);
+  }
 
-        return toHtmlTemplateString(this.liveHTML);
-    }
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener('resize', this.shouldManageTabOrderForScrolling);
+    this.trackTheme();
+  }
 
-    protected override shouldUpdate(): boolean {
-        if (this.preprocessed || this.prismjsLoaded) {
-            return true;
-        }
-
-        if (!this.preprocessed) {
-            import('prismjs').then(() => {
-                this.prismjsLoaded = true;
-                this.requestUpdate();
-            });
-        }
-
-        return false;
-    }
-
-    protected override render(): TemplateResult {
-        // highlighedCode needs to happen first in case the HTML is live and
-        // needs to be placed into the light DOM
-        const { highlightedCode, renderedCode } = this;
-
-        return html`
-            ${this.showDemo
-                ? html`
-                      <div class="demo-example">
-                          <slot name="demo">${renderedCode}</slot>
-                      </div>
-                  `
-                : undefined}
-            <bdo class="markup" dir="ltr">
-                ${highlightedCode}
-                <div class="copy-holder">
-                    <sp-action-button
-                        class="copy"
-                        @click=${this.copyToClipboard}
-                        quiet
-                    >
-                        <sp-icon-copy slot="icon"></sp-icon-copy>
-                        Copy to Clipboard
-                    </sp-action-button>
-                </div>
-            </bdo>
-            <style>
-                ${this.codeTheme === 'light'
-                    ? StylesLight.toString()
-                    : StylesDark.toString()}
-            </style>
-        `;
-    }
-
-    private copyToClipboard(): void {
-        copyNode(this);
-    }
-
-    private shouldManageTabOrderForScrolling = (): void => {
-        [this.markup, this.demo].map((el) => {
-            if (!el) {
-                return;
-            }
-
-            const { offsetWidth, scrollWidth } = el;
-
-            if (offsetWidth < scrollWidth) {
-                el.tabIndex = 0;
-            } else {
-                el.removeAttribute('tabindex');
-            }
-        });
-    };
-
-    protected override updated(): void {
-        setTimeout(this.shouldManageTabOrderForScrolling);
-    }
-
-    private trackTheme(): void {
-        const queryThemeEvent = new CustomEvent<TrackTheme>('sp-track-theme', {
-            bubbles: true,
-            composed: true,
-            detail: {
-                callback: (color: Color) => {
-                    this.codeTheme = color.startsWith('light')
-                        ? 'light'
-                        : 'dark';
-                },
-            },
-            cancelable: true,
-        });
-
-        this.dispatchEvent(queryThemeEvent);
-    }
-
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        window.addEventListener(
-            'resize',
-            this.shouldManageTabOrderForScrolling
-        );
-        this.trackTheme();
-    }
-
-    public override disconnectedCallback(): void {
-        window.removeEventListener(
-            'resize',
-            this.shouldManageTabOrderForScrolling
-        );
-        this.trackTheme();
-        super.disconnectedCallback();
-    }
+  public override disconnectedCallback(): void {
+    window.removeEventListener('resize', this.shouldManageTabOrderForScrolling);
+    this.trackTheme();
+    super.disconnectedCallback();
+  }
 }

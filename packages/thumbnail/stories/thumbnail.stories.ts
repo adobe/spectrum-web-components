@@ -13,98 +13,92 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 import {
-    landscape as landscapeImage,
-    portrait as portraitImage,
-    thumbnail,
+  landscape as landscapeImage,
+  portrait as portraitImage,
+  thumbnail,
 } from './images.js';
 
 export default {
-    title: 'Thumbnail',
-    component: 'sp-thumbnail',
+  title: 'Thumbnail',
+  component: 'sp-thumbnail',
 };
 
 export const Default = (): TemplateResult => {
-    return html`
-        <sp-thumbnail>
-            <img src=${thumbnail} alt="Woman crouching" />
-        </sp-thumbnail>
-    `;
+  return html`
+    <sp-thumbnail>
+      <img src="${thumbnail}" alt="Woman crouching" />
+    </sp-thumbnail>
+  `;
 };
 
 export const focused = (): TemplateResult => {
-    return html`
-        <sp-thumbnail focused>
-            <img src=${thumbnail} alt="Woman crouching" />
-        </sp-thumbnail>
-    `;
+  return html`
+    <sp-thumbnail focused>
+      <img src="${thumbnail}" alt="Woman crouching" />
+    </sp-thumbnail>
+  `;
 };
 
 export const disabled = (): TemplateResult => {
-    return html`
-        <sp-thumbnail disabled>
-            <img src=${thumbnail} alt="Woman crouching" />
-        </sp-thumbnail>
-    `;
+  return html`
+    <sp-thumbnail disabled>
+      <img src="${thumbnail}" alt="Woman crouching" />
+    </sp-thumbnail>
+  `;
 };
 
 export const portrait = (): TemplateResult => {
-    return html`
-        <sp-thumbnail>
-            <img src=${portraitImage} alt="Eiffel Tower at night" />
-        </sp-thumbnail>
-    `;
+  return html`
+    <sp-thumbnail>
+      <img src="${portraitImage}" alt="Eiffel Tower at night" />
+    </sp-thumbnail>
+  `;
 };
 
 export const landscape = (): TemplateResult => {
-    return html`
-        <sp-thumbnail>
-            <img
-                src=${landscapeImage}
-                alt="Landscape with mountains and lake"
-            />
-        </sp-thumbnail>
-    `;
+  return html`
+    <sp-thumbnail>
+      <img src="${landscapeImage}" alt="Landscape with mountains and lake" />
+    </sp-thumbnail>
+  `;
 };
 
 export const layerSelected = (): TemplateResult => {
-    return html`
-        <sp-thumbnail layer selected>
-            <img src=${thumbnail} alt="Woman crouching" />
-        </sp-thumbnail>
-    `;
+  return html`
+    <sp-thumbnail layer selected>
+      <img src="${thumbnail}" alt="Woman crouching" />
+    </sp-thumbnail>
+  `;
 };
 
 export const layer = (): TemplateResult => {
-    return html`
-        <sp-thumbnail layer>
-            <img src=${thumbnail} alt="Woman crouching" />
-        </sp-thumbnail>
-    `;
+  return html`
+    <sp-thumbnail layer>
+      <img src="${thumbnail}" alt="Woman crouching" />
+    </sp-thumbnail>
+  `;
 };
 
 export const portraitCover = (): TemplateResult => {
-    return html`
-        <sp-thumbnail cover>
-            <img src=${portraitImage} alt="Eiffel Tower at night" />
-        </sp-thumbnail>
-    `;
+  return html`
+    <sp-thumbnail cover>
+      <img src="${portraitImage}" alt="Eiffel Tower at night" />
+    </sp-thumbnail>
+  `;
 };
 
 export const landscapeCover = (): TemplateResult => {
-    return html`
-        <sp-thumbnail cover>
-            <img
-                src=${landscapeImage}
-                alt="Landscape with mountains and lake"
-            />
-        </sp-thumbnail>
-    `;
+  return html`
+    <sp-thumbnail cover>
+      <img src="${landscapeImage}" alt="Landscape with mountains and lake" />
+    </sp-thumbnail>
+  `;
 };
 
 export const background = (): TemplateResult => {
-    return html`
-        <sp-thumbnail background="orange">
-            <img src=${thumbnail} alt="Woman crouching" />
-        </sp-thumbnail>
-    `;
+  return html`
+    <sp-thumbnail background="orange">
+      <img src="${thumbnail}" alt="Woman crouching" />
+    </sp-thumbnail>
+  `;
 };

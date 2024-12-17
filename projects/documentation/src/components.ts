@@ -52,22 +52,22 @@ import '@spectrum-web-components/card/sp-card.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 
 if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => {
-        import('@spectrum-web-components/bundle/elements.js');
-        import('@spectrum-web-components/grid/sp-grid.js');
-    });
+  requestIdleCallback(() => {
+    import('@spectrum-web-components/bundle/elements.js');
+    import('@spectrum-web-components/grid/sp-grid.js');
+  });
 } else {
-    requestAnimationFrame(() => {
-        import('@spectrum-web-components/bundle/elements.js');
-        import('@spectrum-web-components/grid/sp-grid.js');
-    });
+  requestAnimationFrame(() => {
+    import('@spectrum-web-components/bundle/elements.js');
+    import('@spectrum-web-components/grid/sp-grid.js');
+  });
 }
 
 class StyledElement extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        (this.shadowRoot as ShadowRoot).innerHTML = `
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    (this.shadowRoot as ShadowRoot).innerHTML = `
             <style>
                 :host {
                     display: block;
@@ -79,32 +79,30 @@ class StyledElement extends HTMLElement {
             </style>
             <slot></slot>
         `;
-    }
+  }
 }
 
 customElements.define('styled-element', StyledElement);
 
 document
-    .querySelector('sp-tab-panel[value="api"]')
-    ?.addEventListener('click', (event: Event) => {
-        const path = event.composedPath();
-        const row = path.find(
-            (el) =>
-                (el as Element).localName === 'sp-table-row' &&
-                (el as Element).id
-        ) as HTMLElement;
+  .querySelector('sp-tab-panel[value="api"]')
+  ?.addEventListener('click', (event: Event) => {
+    const path = event.composedPath();
+    const row = path.find(
+      (el) => (el as Element).localName === 'sp-table-row' && (el as Element).id
+    ) as HTMLElement;
 
-        if (row) {
-            location.hash = row.id;
-            (event.target as HTMLElement).dispatchEvent(
-                new CustomEvent('copy-text', {
-                    bubbles: true,
-                    composed: true,
-                    detail: {
-                        text: row.dataset.value,
-                        message: `${row.dataset.name} copied to clipboard!`,
-                    },
-                })
-            );
-        }
-    });
+    if (row) {
+      location.hash = row.id;
+      (event.target as HTMLElement).dispatchEvent(
+        new CustomEvent('copy-text', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            text: row.dataset.value,
+            message: `${row.dataset.name} copied to clipboard!`,
+          },
+        })
+      );
+    }
+  });

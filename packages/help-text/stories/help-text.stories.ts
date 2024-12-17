@@ -14,84 +14,84 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 
 export default {
-    title: 'Help Text',
-    component: 'sp-help-text',
-    argTypes: {
-        icon: {
-            control: {
-                type: 'boolean',
-            },
-        },
-        disabled: {
-            control: {
-                type: 'boolean',
-            },
-        },
-        variant: {
-            options: ['neutral', 'negative'],
-        },
-        size: {
-            options: ['s', 'm', 'l', 'xl'],
-        },
+  title: 'Help Text',
+  component: 'sp-help-text',
+  argTypes: {
+    icon: {
+      control: {
+        type: 'boolean',
+      },
     },
-    args: {
-        size: 'm',
+    disabled: {
+      control: {
+        type: 'boolean',
+      },
     },
+    variant: {
+      options: ['neutral', 'negative'],
+    },
+    size: {
+      options: ['s', 'm', 'l', 'xl'],
+    },
+  },
+  args: {
+    size: 'm',
+  },
 };
 
 interface Properties {
-    content?: string;
-    disabled?: boolean;
-    icon?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    variant?: 'neutral' | 'negative';
+  content?: string;
+  disabled?: boolean;
+  icon?: boolean;
+  size?: 's' | 'm' | 'l' | 'xl';
+  variant?: 'neutral' | 'negative';
 }
 
 const Template = (args: Properties): TemplateResult => html`
-    <sp-help-text
-        ?disabled=${args.disabled}
-        ?icon=${args.icon}
-        variant=${args.variant}
-        size=${args.size}
-    >
-        ${args.content}
-    </sp-help-text>
+  <sp-help-text
+    ?disabled="${args.disabled}"
+    ?icon="${args.icon}"
+    variant="${args.variant}"
+    size="${args.size}"
+  >
+    ${args.content}
+  </sp-help-text>
 `;
 
 export const neutral = (args: Properties = {}): TemplateResult =>
-    Template({
-        ...args,
-        content: 'Passwords must be at least 8 characters.',
-    });
+  Template({
+    ...args,
+    content: 'Passwords must be at least 8 characters.',
+  });
 neutral.args = {
-    variant: 'neutral',
+  variant: 'neutral',
 };
 
 export const negative = (args: Properties = {}): TemplateResult =>
-    Template({
-        ...args,
-        content: 'Create a password with at least 8 characters.',
-    });
+  Template({
+    ...args,
+    content: 'Create a password with at least 8 characters.',
+  });
 negative.args = {
-    variant: 'negative',
+  variant: 'negative',
 };
 
 export const negativeIcon = (args: Properties = {}): TemplateResult =>
-    Template({
-        ...args,
-        content: 'Create a password with at least 8 characters.',
-    });
+  Template({
+    ...args,
+    content: 'Create a password with at least 8 characters.',
+  });
 negativeIcon.args = {
-    icon: true,
-    variant: 'negative',
+  icon: true,
+  variant: 'negative',
 };
 
 export const disabled = (args: Properties = {}): TemplateResult =>
-    Template({
-        ...args,
-        content: 'Passwords must be at least 8 characters.',
-    });
+  Template({
+    ...args,
+    content: 'Passwords must be at least 8 characters.',
+  });
 disabled.args = {
-    disabled: true,
-    variant: 'neutral',
+  disabled: true,
+  variant: 'neutral',
 };

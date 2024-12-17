@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    ElementSize,
-    html,
-    TemplateResult,
+  ElementSize,
+  html,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/tags/sp-tag.js';
 import '@spectrum-web-components/tags/sp-tags.js';
@@ -21,25 +21,25 @@ import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 
 export default {
-    title: 'Tags/Sizes',
-    component: 'sp-tags',
+  title: 'Tags/Sizes',
+  component: 'sp-tags',
 };
 
 const template = ({ size }: { size: ElementSize }): TemplateResult => html`
-    <sp-tags>
-        <sp-tag deletable size=${size}>
-            Tag 1
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
-        </sp-tag>
-        <sp-tag invalid deletable size=${size}>
-            Tag 2
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
-        </sp-tag>
-        <sp-tag disabled deletable size=${size}>
-            Tag 3
-            <sp-icon-magnify slot="icon"></sp-icon-magnify>
-        </sp-tag>
-    </sp-tags>
+  <sp-tags>
+    <sp-tag deletable size="${size}">
+      Tag 1
+      <sp-icon-magnify slot="icon"></sp-icon-magnify>
+    </sp-tag>
+    <sp-tag invalid deletable size="${size}">
+      Tag 2
+      <sp-icon-magnify slot="icon"></sp-icon-magnify>
+    </sp-tag>
+    <sp-tag disabled deletable size="${size}">
+      Tag 3
+      <sp-icon-magnify slot="icon"></sp-icon-magnify>
+    </sp-tag>
+  </sp-tags>
 `;
 
 export const s = (): TemplateResult => template({ size: 's' });

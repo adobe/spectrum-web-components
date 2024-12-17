@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    elementUpdated,
-    expect,
-    html,
-    nextFrame,
-    oneEvent,
-    waitUntil,
+  elementUpdated,
+  expect,
+  html,
+  nextFrame,
+  oneEvent,
+  waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -35,348 +35,342 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import { Theme } from '@spectrum-web-components/theme';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 import {
-    fixture,
-    ignoreResizeObserverLoopError,
+  fixture,
+  ignoreResizeObserverLoopError,
 } from '../../../test/testing-helpers.js';
 
 ignoreResizeObserverLoopError(before, after);
 
 async function styledFixture<T extends Element>(
-    story: TemplateResult
+  story: TemplateResult
 ): Promise<T> {
-    const test = await fixture<Theme>(html`
-        <sp-theme system="spectrum" scale="medium" color="light">
-            ${story}
-        </sp-theme>
-    `);
+  const test = await fixture<Theme>(html`
+    <sp-theme system="spectrum" scale="medium" color="light">${story}</sp-theme>
+  `);
 
-    return test.children[0] as T;
+  return test.children[0] as T;
 }
 
 describe('Overlay Trigger - Hover', () => {
-    it('displays `hover` declaratively', async () => {
-        const openedSpy = spy();
-        const closedSpy = spy();
-        const el = await fixture<OverlayTrigger>(
-            (() => html`
-                <overlay-trigger
-                    placement="right-start"
-                    open="hover"
-                    @sp-opened=${() => openedSpy()}
-                    @sp-closed=${() => closedSpy()}
-                >
-                    <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                    </sp-action-button>
-                    <sp-popover slot="hover-content" tip></sp-popover>
-                </overlay-trigger>
-            `)()
-        );
+  it('displays `hover` declaratively', async () => {
+    const openedSpy = spy();
+    const closedSpy = spy();
+    const el = await fixture<OverlayTrigger>(
+      (() => html`
+        <overlay-trigger
+          placement="right-start"
+          open="hover"
+          @sp-opened="${() => openedSpy()}"
+          @sp-closed="${() => closedSpy()}"
+        >
+          <sp-action-button slot="trigger">
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+          </sp-action-button>
+          <sp-popover slot="hover-content" tip></sp-popover>
+        </overlay-trigger>
+      `)()
+    );
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        await waitUntil(
-            () => openedSpy.calledOnce,
-            'hover content projected to overlay',
-            { timeout: 2000 }
-        );
+    await waitUntil(
+      () => openedSpy.calledOnce,
+      'hover content projected to overlay',
+      { timeout: 2000 }
+    );
 
-        el.removeAttribute('open');
-        await elementUpdated(el);
+    el.removeAttribute('open');
+    await elementUpdated(el);
 
-        await waitUntil(() => closedSpy.calledOnce, 'hover content returned', {
-            timeout: 2000,
-        });
+    await waitUntil(() => closedSpy.calledOnce, 'hover content returned', {
+      timeout: 2000,
     });
-    describe('"tooltip" mouse interactions', () => {
-        let el: OverlayTrigger;
-        let button: ActionButton;
-        let tooltip: Tooltip;
+  });
+  describe('"tooltip" mouse interactions', () => {
+    let el: OverlayTrigger;
+    let button: ActionButton;
+    let tooltip: Tooltip;
 
-        beforeEach(async () => {
-            el = await fixture<OverlayTrigger>(
-                (() => html`
-                    <overlay-trigger placement="right-start">
-                        <sp-action-button slot="trigger">
-                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                        </sp-action-button>
-                        <sp-tooltip slot="hover-content" tip>
-                            Magnify
-                        </sp-tooltip>
-                    </overlay-trigger>
-                `)()
-            );
-            await elementUpdated(el);
-            button = el.querySelector('sp-action-button') as ActionButton;
-            tooltip = el.querySelector('sp-tooltip') as Tooltip;
-        });
-        it('allows pointer to enter the "tooltip" without closing the "tooltip"', async () => {
-            const opened = oneEvent(button, 'sp-opened');
-
-            button.dispatchEvent(
-                new MouseEvent('pointerenter', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
-            expect(tooltip.open).to.be.true;
-
-            button.dispatchEvent(
-                new MouseEvent('pointerleave', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-            await nextFrame();
-
-            button.dispatchEvent(
-                new MouseEvent('pointerenter', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-            await nextFrame();
-
-            tooltip.dispatchEvent(
-                new MouseEvent('pointerleave', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-            await nextFrame();
-
-            button.dispatchEvent(
-                new MouseEvent('pointerenter', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-            await opened;
-
-            expect(el.open).to.equal('hover');
-
-            const closed = oneEvent(button, 'sp-closed');
-
-            button.dispatchEvent(
-                new MouseEvent('pointerleave', {
-                    relatedTarget: null,
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-            await closed;
-
-            expect(el.open).to.be.undefined;
-        });
-        it('closes the "tooltip" when leaving the "tooltip"', async () => {
-            const opened = oneEvent(button, 'sp-opened');
-
-            button.dispatchEvent(
-                new MouseEvent('pointerenter', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-            await nextFrame();
-            button.dispatchEvent(
-                new MouseEvent('pointerleave', {
-                    relatedTarget: tooltip,
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-            await opened;
-
-            expect(el.open).to.equal('hover');
-
-            const closed = oneEvent(button, 'sp-closed');
-
-            tooltip.dispatchEvent(
-                new MouseEvent('pointerleave', {
-                    relatedTarget: null,
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-            await closed;
-
-            expect(el.open).to.be.undefined;
-        });
+    beforeEach(async () => {
+      el = await fixture<OverlayTrigger>(
+        (() => html`
+          <overlay-trigger placement="right-start">
+            <sp-action-button slot="trigger">
+              <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            </sp-action-button>
+            <sp-tooltip slot="hover-content" tip>Magnify</sp-tooltip>
+          </overlay-trigger>
+        `)()
+      );
+      await elementUpdated(el);
+      button = el.querySelector('sp-action-button') as ActionButton;
+      tooltip = el.querySelector('sp-tooltip') as Tooltip;
     });
-    it('persists hover content', async () => {
-        const el = await fixture<OverlayTrigger>(
-            (() => html`
-                <overlay-trigger placement="right-start">
-                    <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                    </sp-action-button>
-                    <sp-popover slot="hover-content" tip></sp-popover>
-                </overlay-trigger>
-            `)()
-        );
+    it('allows pointer to enter the "tooltip" without closing the "tooltip"', async () => {
+      const opened = oneEvent(button, 'sp-opened');
 
-        await elementUpdated(el);
+      button.dispatchEvent(
+        new MouseEvent('pointerenter', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+      await nextFrame();
+      await nextFrame();
+      await nextFrame();
+      await nextFrame();
+      expect(tooltip.open).to.be.true;
 
-        expect(el.open).to.be.undefined;
+      button.dispatchEvent(
+        new MouseEvent('pointerleave', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+      await nextFrame();
 
-        const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
-        const opened = oneEvent(trigger, 'sp-opened');
+      button.dispatchEvent(
+        new MouseEvent('pointerenter', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+      await nextFrame();
 
-        trigger.dispatchEvent(
-            new Event('pointerenter', {
-                bubbles: true,
-                composed: true,
-            })
-        );
-        await opened;
+      tooltip.dispatchEvent(
+        new MouseEvent('pointerleave', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+      await nextFrame();
 
-        expect(el.open).to.equal('hover');
+      button.dispatchEvent(
+        new MouseEvent('pointerenter', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+      await opened;
 
-        trigger.click();
+      expect(el.open).to.equal('hover');
 
-        await elementUpdated(el);
+      const closed = oneEvent(button, 'sp-closed');
 
-        expect(el.open).to.equal('hover');
+      button.dispatchEvent(
+        new MouseEvent('pointerleave', {
+          relatedTarget: null,
+          bubbles: true,
+          composed: true,
+        })
+      );
+      await closed;
+
+      expect(el.open).to.be.undefined;
     });
-    it('closes persistent hover content on `longpress`', async () => {
-        const el = await fixture<OverlayTrigger>(
-            (() => html`
-                <overlay-trigger placement="right-start">
-                    <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                    </sp-action-button>
-                    <sp-popover slot="hover-content" tip></sp-popover>
-                    <sp-popover slot="longpress-content" tip></sp-popover>
-                </overlay-trigger>
-            `)()
-        );
+    it('closes the "tooltip" when leaving the "tooltip"', async () => {
+      const opened = oneEvent(button, 'sp-opened');
 
-        await elementUpdated(el);
+      button.dispatchEvent(
+        new MouseEvent('pointerenter', {
+          bubbles: true,
+          composed: true,
+        })
+      );
+      await nextFrame();
+      button.dispatchEvent(
+        new MouseEvent('pointerleave', {
+          relatedTarget: tooltip,
+          bubbles: true,
+          composed: true,
+        })
+      );
+      await opened;
 
-        expect(el.open).to.be.undefined;
+      expect(el.open).to.equal('hover');
 
-        const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
-        let opened = oneEvent(trigger, 'sp-opened');
+      const closed = oneEvent(button, 'sp-closed');
 
-        trigger.dispatchEvent(
-            new Event('pointerenter', {
-                bubbles: true,
-            })
-        );
-        await opened;
+      tooltip.dispatchEvent(
+        new MouseEvent('pointerleave', {
+          relatedTarget: null,
+          bubbles: true,
+          composed: true,
+        })
+      );
+      await closed;
 
-        expect(el.open).to.equal('hover');
-
-        opened = oneEvent(trigger, 'sp-opened');
-        trigger.dispatchEvent(
-            new Event('longpress', {
-                bubbles: true,
-            })
-        );
-        await opened;
-
-        expect(el.open).to.equal('longpress');
+      expect(el.open).to.be.undefined;
     });
-    it('closes `hover` overlay when [type="modal"]', async () => {
-        const el = await fixture<OverlayTrigger>(
-            (() => html`
-                <overlay-trigger placement="right-start" type="modal">
-                    <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                    </sp-action-button>
-                    <sp-popover slot="hover-content" tip></sp-popover>
-                </overlay-trigger>
-            `)()
-        );
+  });
+  it('persists hover content', async () => {
+    const el = await fixture<OverlayTrigger>(
+      (() => html`
+        <overlay-trigger placement="right-start">
+          <sp-action-button slot="trigger">
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+          </sp-action-button>
+          <sp-popover slot="hover-content" tip></sp-popover>
+        </overlay-trigger>
+      `)()
+    );
 
-        await elementUpdated(el);
-        const input = document.createElement('input');
+    await elementUpdated(el);
 
-        el.insertAdjacentElement('beforebegin', input);
+    expect(el.open).to.be.undefined;
 
-        expect(el.open).to.be.undefined;
+    const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
+    const opened = oneEvent(trigger, 'sp-opened');
 
-        const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
-        const opened = oneEvent(el, 'sp-opened');
+    trigger.dispatchEvent(
+      new Event('pointerenter', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+    await opened;
 
-        input.focus();
-        await sendKeys({
-            press: 'Tab',
-        });
-        await opened;
+    expect(el.open).to.equal('hover');
 
-        expect(el.open).to.equal('hover');
+    trigger.click();
 
-        const closed = oneEvent(el, 'sp-closed');
+    await elementUpdated(el);
 
-        trigger.blur();
-        await closed;
+    expect(el.open).to.equal('hover');
+  });
+  it('closes persistent hover content on `longpress`', async () => {
+    const el = await fixture<OverlayTrigger>(
+      (() => html`
+        <overlay-trigger placement="right-start">
+          <sp-action-button slot="trigger">
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+          </sp-action-button>
+          <sp-popover slot="hover-content" tip></sp-popover>
+          <sp-popover slot="longpress-content" tip></sp-popover>
+        </overlay-trigger>
+      `)()
+    );
 
-        expect(el.open).to.be.undefined;
+    await elementUpdated(el);
+
+    expect(el.open).to.be.undefined;
+
+    const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
+    let opened = oneEvent(trigger, 'sp-opened');
+
+    trigger.dispatchEvent(
+      new Event('pointerenter', {
+        bubbles: true,
+      })
+    );
+    await opened;
+
+    expect(el.open).to.equal('hover');
+
+    opened = oneEvent(trigger, 'sp-opened');
+    trigger.dispatchEvent(
+      new Event('longpress', {
+        bubbles: true,
+      })
+    );
+    await opened;
+
+    expect(el.open).to.equal('longpress');
+  });
+  it('closes `hover` overlay when [type="modal"]', async () => {
+    const el = await fixture<OverlayTrigger>(
+      (() => html`
+        <overlay-trigger placement="right-start" type="modal">
+          <sp-action-button slot="trigger">
+            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+          </sp-action-button>
+          <sp-popover slot="hover-content" tip></sp-popover>
+        </overlay-trigger>
+      `)()
+    );
+
+    await elementUpdated(el);
+    const input = document.createElement('input');
+
+    el.insertAdjacentElement('beforebegin', input);
+
+    expect(el.open).to.be.undefined;
+
+    const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
+    const opened = oneEvent(el, 'sp-opened');
+
+    input.focus();
+    await sendKeys({
+      press: 'Tab',
     });
-    it('will not return focus to a "modal" parent', async () => {
-        const el = await styledFixture<OverlayTrigger>(html`
-            <overlay-trigger type="modal">
-                <sp-button slot="trigger">Toggle Dialog</sp-button>
-                <sp-dialog-wrapper
-                    slot="click-content"
-                    headline="Dialog title"
-                    size="s"
-                >
-                    ${[1, 2, 3, 4].map(
-                        (index) => html`
-                            <overlay-trigger>
-                                <sp-button slot="trigger" id="button-${index}">
-                                    Button with Tooltip ${index}
-                                </sp-button>
-                                <sp-tooltip slot="hover-content">
-                                    Tooltip ${index}
-                                </sp-tooltip>
-                            </overlay-trigger>
-                        `
-                    )}
-                </sp-dialog-wrapper>
-            </overlay-trigger>
-        `);
+    await opened;
 
-        await elementUpdated(el);
+    expect(el.open).to.equal('hover');
 
-        const button = el.querySelector('sp-button') as Button;
-        const dialog = el.querySelector('sp-dialog-wrapper') as HTMLElement;
-        const button1 = dialog.querySelector('#button-1') as Button;
-        const button2 = dialog.querySelector('#button-2') as Button;
-        const button3 = dialog.querySelector('#button-3') as Button;
+    const closed = oneEvent(el, 'sp-closed');
 
-        await elementUpdated(button);
-        await elementUpdated(dialog);
+    trigger.blur();
+    await closed;
 
-        let opened = oneEvent(button, 'sp-opened');
-        const openedHint = oneEvent(button1, 'sp-opened');
+    expect(el.open).to.be.undefined;
+  });
+  it('will not return focus to a "modal" parent', async () => {
+    const el = await styledFixture<OverlayTrigger>(html`
+      <overlay-trigger type="modal">
+        <sp-button slot="trigger">Toggle Dialog</sp-button>
+        <sp-dialog-wrapper
+          slot="click-content"
+          headline="Dialog title"
+          size="s"
+        >
+          ${[1, 2, 3, 4].map(
+            (index) => html`
+              <overlay-trigger>
+                <sp-button slot="trigger" id="button-${index}">
+                  Button with Tooltip ${index}
+                </sp-button>
+                <sp-tooltip slot="hover-content">Tooltip ${index}</sp-tooltip>
+              </overlay-trigger>
+            `
+          )}
+        </sp-dialog-wrapper>
+      </overlay-trigger>
+    `);
 
-        button.dispatchEvent(new Event('click', { bubbles: true }));
-        await opened;
-        await openedHint;
+    await elementUpdated(el);
 
-        expect(button1 === document.activeElement).to.be.true;
+    const button = el.querySelector('sp-button') as Button;
+    const dialog = el.querySelector('sp-dialog-wrapper') as HTMLElement;
+    const button1 = dialog.querySelector('#button-1') as Button;
+    const button2 = dialog.querySelector('#button-2') as Button;
+    const button3 = dialog.querySelector('#button-3') as Button;
 
-        opened = oneEvent(button2, 'sp-opened');
-        sendKeys({
-            press: 'Tab',
-        });
-        await opened;
+    await elementUpdated(button);
+    await elementUpdated(dialog);
 
-        expect(button2 === document.activeElement).to.be.true;
+    let opened = oneEvent(button, 'sp-opened');
+    const openedHint = oneEvent(button1, 'sp-opened');
 
-        opened = oneEvent(button3, 'sp-opened');
-        sendKeys({
-            press: 'Tab',
-        });
-        await opened;
+    button.dispatchEvent(new Event('click', { bubbles: true }));
+    await opened;
+    await openedHint;
 
-        expect(button3 === document.activeElement).to.be.true;
+    expect(button1 === document.activeElement).to.be.true;
+
+    opened = oneEvent(button2, 'sp-opened');
+    sendKeys({
+      press: 'Tab',
     });
+    await opened;
+
+    expect(button2 === document.activeElement).to.be.true;
+
+    opened = oneEvent(button3, 'sp-opened');
+    sendKeys({
+      press: 'Tab',
+    });
+    await opened;
+
+    expect(button3 === document.activeElement).to.be.true;
+  });
 });

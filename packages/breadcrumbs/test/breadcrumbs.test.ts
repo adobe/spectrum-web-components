@@ -10,17 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    elementUpdated,
-    expect,
-    fixture,
-    html,
-    oneEvent,
+  elementUpdated,
+  expect,
+  fixture,
+  html,
+  oneEvent,
 } from '@open-wc/testing';
 import { spy } from 'sinon';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import {
-    Breadcrumbs,
-    BreadcrumbSelectDetail,
+  Breadcrumbs,
+  BreadcrumbSelectDetail,
 } from '@spectrum-web-components/breadcrumbs';
 import { getBreadcrumbs } from '../stories/template.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
@@ -29,177 +29,165 @@ import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 import { sendKeys } from '@web/test-runner-commands';
 
 describe('Breadcrumbs', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<Breadcrumbs>(html`
-                <sp-breadcrumbs>${getBreadcrumbs(4)}</sp-breadcrumbs>
-            `)
-    );
-    it('should render accessibly', async () => {
-        const el = await fixture<Breadcrumbs>(html`
-            <sp-breadcrumbs>${getBreadcrumbs(4)}</sp-breadcrumbs>
-        `);
+  testForLitDevWarnings(
+    async () =>
+      await fixture<Breadcrumbs>(html`
+        <sp-breadcrumbs>${getBreadcrumbs(4)}</sp-breadcrumbs>
+      `)
+  );
+  it('should render accessibly', async () => {
+    const el = await fixture<Breadcrumbs>(html`
+      <sp-breadcrumbs>${getBreadcrumbs(4)}</sp-breadcrumbs>
+    `);
 
-        await elementUpdated(el);
-        await expect(el).to.be.accessible();
+    await elementUpdated(el);
+    await expect(el).to.be.accessible();
 
-        // Default role and aria-label.
-        expect(el.getAttribute('role')).to.equal('navigation');
-        expect(el.getAttribute('aria-label')).to.equal('Breadcrumbs');
+    // Default role and aria-label.
+    expect(el.getAttribute('role')).to.equal('navigation');
+    expect(el.getAttribute('aria-label')).to.equal('Breadcrumbs');
 
-        // Reacts to changes of `label` attribute.
-        el.label = 'My breadcrumbs';
-        await elementUpdated(el);
-        expect(el.getAttribute('aria-label')).to.equal('My breadcrumbs');
+    // Reacts to changes of `label` attribute.
+    el.label = 'My breadcrumbs';
+    await elementUpdated(el);
+    expect(el.getAttribute('aria-label')).to.equal('My breadcrumbs');
+  });
+  it('should display all breadcrumbs if max-visible-items >= nr. or slotted breadcrumb items', async () => {
+    const el = await fixture<Breadcrumbs>(html`
+      <sp-breadcrumbs>${getBreadcrumbs(4)}</sp-breadcrumbs>
+    `);
+
+    await elementUpdated(el);
+
+    const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
+
+    breadcrumbs.forEach((breadcrumb) => {
+      expect(breadcrumb).to.be.displayed;
     });
-    it('should display all breadcrumbs if max-visible-items >= nr. or slotted breadcrumb items', async () => {
-        const el = await fixture<Breadcrumbs>(html`
-            <sp-breadcrumbs>${getBreadcrumbs(4)}</sp-breadcrumbs>
-        `);
+  });
+  it('should collapse breadcrumbs if max-visible-items < nr. or slotted breadcrumb items', async () => {
+    const el = await fixture<Breadcrumbs>(html`
+      <sp-breadcrumbs max-visible-items="${3}">
+        ${getBreadcrumbs(4)}
+      </sp-breadcrumbs>
+    `);
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
+    const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
 
-        breadcrumbs.forEach((breadcrumb) => {
-            expect(breadcrumb).to.be.displayed;
-        });
-    });
-    it('should collapse breadcrumbs if max-visible-items < nr. or slotted breadcrumb items', async () => {
-        const el = await fixture<Breadcrumbs>(html`
-            <sp-breadcrumbs max-visible-items=${3}>
-                ${getBreadcrumbs(4)}
-            </sp-breadcrumbs>
-        `);
+    expect(breadcrumbs[0]).not.to.be.displayed;
+    expect(breadcrumbs[1]).to.be.displayed;
+    expect(breadcrumbs[2]).to.be.displayed;
+    expect(breadcrumbs[3]).to.be.displayed;
 
-        await elementUpdated(el);
+    const menu = el.shadowRoot.querySelector('sp-action-menu') as ActionMenu;
 
-        const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
+    expect(menu).to.exist;
 
-        expect(breadcrumbs[0]).not.to.be.displayed;
-        expect(breadcrumbs[1]).to.be.displayed;
-        expect(breadcrumbs[2]).to.be.displayed;
-        expect(breadcrumbs[3]).to.be.displayed;
+    menu.click();
+    await elementUpdated(menu);
+    expect(menu.open).to.be.true;
 
-        const menu = el.shadowRoot.querySelector(
-            'sp-action-menu'
-        ) as ActionMenu;
+    const menuitems = menu.querySelectorAll('sp-menu-item');
 
-        expect(menu).to.exist;
+    expect(menuitems.length).to.equal(4);
+    expect(menu.getAttribute('value')).to.equal('3');
+  });
+  it('should always show the first breadcrumb if slot="root" is populated', async () => {
+    const el = await fixture<Breadcrumbs>(html`
+      <sp-breadcrumbs max-visible-items="${3}">
+        <sp-breadcrumb-item value="Home" slot="root">Home</sp-breadcrumb-item>
+        ${getBreadcrumbs(4)}
+      </sp-breadcrumbs>
+    `);
 
-        menu.click();
-        await elementUpdated(menu);
-        expect(menu.open).to.be.true;
+    await elementUpdated(el);
 
-        const menuitems = menu.querySelectorAll('sp-menu-item');
+    const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
 
-        expect(menuitems.length).to.equal(4);
-        expect(menu.getAttribute('value')).to.equal('3');
-    });
-    it('should always show the first breadcrumb if slot="root" is populated', async () => {
-        const el = await fixture<Breadcrumbs>(html`
-            <sp-breadcrumbs max-visible-items=${3}>
-                <sp-breadcrumb-item value="Home" slot="root">
-                    Home
-                </sp-breadcrumb-item>
-                ${getBreadcrumbs(4)}
-            </sp-breadcrumbs>
-        `);
+    expect(breadcrumbs[0]).to.be.displayed;
+    expect(breadcrumbs[1]).not.to.be.displayed;
+    expect(breadcrumbs[2]).to.be.displayed;
+    expect(breadcrumbs[3]).to.be.displayed;
+    expect(breadcrumbs[4]).to.be.displayed;
 
-        await elementUpdated(el);
+    const menu = el.shadowRoot.querySelector('sp-action-menu') as ActionMenu;
 
-        const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
+    expect(menu).to.exist;
+  });
+  it('should emit a change event on breadcrumb click if no href is provided', async () => {
+    const changeSpy = spy();
 
-        expect(breadcrumbs[0]).to.be.displayed;
-        expect(breadcrumbs[1]).not.to.be.displayed;
-        expect(breadcrumbs[2]).to.be.displayed;
-        expect(breadcrumbs[3]).to.be.displayed;
-        expect(breadcrumbs[4]).to.be.displayed;
+    const el = await fixture<Breadcrumbs>(html`
+      <sp-breadcrumbs
+        max-visible-items="${3}"
+        @change="${(event: Event & { detail: BreadcrumbSelectDetail }) => {
+          changeSpy(event.detail.value);
+        }}"
+      >
+        ${getBreadcrumbs(4)}
+      </sp-breadcrumbs>
+    `);
 
-        const menu = el.shadowRoot.querySelector(
-            'sp-action-menu'
-        ) as ActionMenu;
+    await elementUpdated(el);
 
-        expect(menu).to.exist;
-    });
-    it('should emit a change event on breadcrumb click if no href is provided', async () => {
-        const changeSpy = spy();
+    // Simulate a click from the visible breadcrumb.
+    const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
 
-        const el = await fixture<Breadcrumbs>(html`
-            <sp-breadcrumbs
-                max-visible-items=${3}
-                @change=${(
-                    event: Event & { detail: BreadcrumbSelectDetail }
-                ) => {
-                    changeSpy(event.detail.value);
-                }}
-            >
-                ${getBreadcrumbs(4)}
-            </sp-breadcrumbs>
-        `);
+    breadcrumbs[1].click();
 
-        await elementUpdated(el);
+    expect(changeSpy).to.have.been.calledOnce;
+    expect(changeSpy).to.have.been.calledWith('1');
 
-        // Simulate a click from the visible breadcrumb.
-        const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
+    changeSpy.resetHistory();
 
-        breadcrumbs[1].click();
+    // Simulate a click from the menu dropdown.
+    const menu = el.shadowRoot.querySelector('sp-action-menu') as ActionMenu;
 
-        expect(changeSpy).to.have.been.calledOnce;
-        expect(changeSpy).to.have.been.calledWith('1');
+    expect(menu).to.exist;
 
-        changeSpy.resetHistory();
+    const opened = oneEvent(el, 'sp-opened');
 
-        // Simulate a click from the menu dropdown.
-        const menu = el.shadowRoot.querySelector(
-            'sp-action-menu'
-        ) as ActionMenu;
+    menu.click();
+    await elementUpdated(menu);
+    await opened;
 
-        expect(menu).to.exist;
+    const closed = oneEvent(el, 'sp-closed');
+    const menuitems = menu.querySelectorAll('sp-menu-item');
 
-        const opened = oneEvent(el, 'sp-opened');
+    menuitems[0].click();
+    await closed;
 
-        menu.click();
-        await elementUpdated(menu);
-        await opened;
+    expect(menu.open).to.be.false;
 
-        const closed = oneEvent(el, 'sp-closed');
-        const menuitems = menu.querySelectorAll('sp-menu-item');
+    await elementUpdated(el);
+    expect(changeSpy).to.have.been.calledOnce;
+    expect(changeSpy).to.have.been.calledWith('0');
+  });
 
-        menuitems[0].click();
-        await closed;
+  it('should emit a change event on Enter keypress', async () => {
+    const changeSpy = spy();
 
-        expect(menu.open).to.be.false;
+    const el = await fixture<Breadcrumbs>(html`
+      <sp-breadcrumbs
+        @change="${(event: Event & { detail: BreadcrumbSelectDetail }) => {
+          changeSpy(event.detail.value);
+        }}"
+      >
+        ${getBreadcrumbs(4)}
+      </sp-breadcrumbs>
+    `);
 
-        await elementUpdated(el);
-        expect(changeSpy).to.have.been.calledOnce;
-        expect(changeSpy).to.have.been.calledWith('0');
-    });
+    await elementUpdated(el);
 
-    it('should emit a change event on Enter keypress', async () => {
-        const changeSpy = spy();
+    // Simulate a click from the visible breadcrumb.
+    const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
 
-        const el = await fixture<Breadcrumbs>(html`
-            <sp-breadcrumbs
-                @change=${(
-                    event: Event & { detail: BreadcrumbSelectDetail }
-                ) => {
-                    changeSpy(event.detail.value);
-                }}
-            >
-                ${getBreadcrumbs(4)}
-            </sp-breadcrumbs>
-        `);
+    breadcrumbs[1].focus();
+    await sendKeys({ press: 'Enter' });
 
-        await elementUpdated(el);
-
-        // Simulate a click from the visible breadcrumb.
-        const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
-
-        breadcrumbs[1].focus();
-        await sendKeys({ press: 'Enter' });
-
-        expect(changeSpy).to.have.been.calledOnce;
-        expect(changeSpy).to.have.been.calledWith('1');
-    });
+    expect(changeSpy).to.have.been.calledOnce;
+    expect(changeSpy).to.have.been.calledWith('1');
+  });
 });

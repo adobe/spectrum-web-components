@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    SpectrumElement,
-    TemplateResult,
+  CSSResultArray,
+  html,
+  PropertyValues,
+  SpectrumElement,
+  TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
@@ -26,49 +26,49 @@ import styles from './color-handle.css.js';
  * @element sp-color-handle
  */
 export class ColorHandle extends SpectrumElement {
-    public static override get styles(): CSSResultArray {
-        return [opacityCheckerboardStyles, styles];
+  public static override get styles(): CSSResultArray {
+    return [opacityCheckerboardStyles, styles];
+  }
+
+  @property({ type: Boolean, reflect: true })
+  public disabled = false;
+
+  @property({ type: Boolean, reflect: true })
+  public focused = false;
+
+  @property({ type: Boolean, reflect: true })
+  public open = false;
+
+  @property({ type: String })
+  public color = 'rgba(255, 0, 0, 0.5)';
+
+  private handlePointerdown(event: PointerEvent): void {
+    if (event.pointerType === 'touch') {
+      this.open = true;
     }
 
-    @property({ type: Boolean, reflect: true })
-    public disabled = false;
+    this.setPointerCapture(event.pointerId);
+  }
 
-    @property({ type: Boolean, reflect: true })
-    public focused = false;
+  private handlePointerup(event: PointerEvent): void {
+    this.open = false;
+    this.releasePointerCapture(event.pointerId);
+  }
 
-    @property({ type: Boolean, reflect: true })
-    public open = false;
+  protected override render(): TemplateResult {
+    return html`
+      <div class="inner" style="background-color: ${this.color}"></div>
+      <sp-color-loupe
+        color="${this.color}"
+        ?open="${this.open && !this.disabled}"
+      ></sp-color-loupe>
+    `;
+  }
 
-    @property({ type: String })
-    public color = 'rgba(255, 0, 0, 0.5)';
-
-    private handlePointerdown(event: PointerEvent): void {
-        if (event.pointerType === 'touch') {
-            this.open = true;
-        }
-
-        this.setPointerCapture(event.pointerId);
-    }
-
-    private handlePointerup(event: PointerEvent): void {
-        this.open = false;
-        this.releasePointerCapture(event.pointerId);
-    }
-
-    protected override render(): TemplateResult {
-        return html`
-            <div class="inner" style="background-color: ${this.color}"></div>
-            <sp-color-loupe
-                color=${this.color}
-                ?open=${this.open && !this.disabled}
-            ></sp-color-loupe>
-        `;
-    }
-
-    protected override firstUpdated(changed: PropertyValues): void {
-        super.firstUpdated(changed);
-        this.addEventListener('pointerdown', this.handlePointerdown);
-        this.addEventListener('pointerup', this.handlePointerup);
-        this.addEventListener('pointercancel', this.handlePointerup);
-    }
+  protected override firstUpdated(changed: PropertyValues): void {
+    super.firstUpdated(changed);
+    this.addEventListener('pointerdown', this.handlePointerdown);
+    this.addEventListener('pointerup', this.handlePointerup);
+    this.addEventListener('pointercancel', this.handlePointerup);
+  }
 }

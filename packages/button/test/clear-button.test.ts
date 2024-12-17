@@ -16,36 +16,21 @@ import { expect, fixture, html } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
 describe('Clear Button', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<ClearButton>(
-                html`
-                    <sp-clear-button size="m" label="Clear"></sp-clear-button>
-                `
-            )
-    );
-    (
-        ['s', 'm', 'l', 'xl'] as (
-            | 'xxs'
-            | 'xs'
-            | 's'
-            | 'm'
-            | 'l'
-            | 'xl'
-            | 'xxl'
-        )[]
-    ).map((size) => {
-        it(`loads - ${size}`, async () => {
-            const el = await fixture<ClearButton>(
-                html`
-                    <sp-clear-button
-                        size=${size}
-                        label="Clear"
-                    ></sp-clear-button>
-                `
-            );
+  testForLitDevWarnings(
+    async () =>
+      await fixture<ClearButton>(html`
+        <sp-clear-button size="m" label="Clear"></sp-clear-button>
+      `)
+  );
+  (
+    ['s', 'm', 'l', 'xl'] as ('xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl')[]
+  ).map((size) => {
+    it(`loads - ${size}`, async () => {
+      const el = await fixture<ClearButton>(html`
+        <sp-clear-button size="${size}" label="Clear"></sp-clear-button>
+      `);
 
-            await expect(el).to.be.accessible();
-        });
+      await expect(el).to.be.accessible();
     });
+  });
 });
