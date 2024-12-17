@@ -30,18 +30,38 @@ export class Divider extends SizedMixin(SpectrumElement, {
 }) {
     public static override styles: CSSResultArray = [styles];
 
+    /**
+     * Indicates whether the divider is vertical.
+     *
+     * @type {boolean}
+     */
     @property({ type: Boolean, reflect: true })
     public vertical = false;
 
+    /**
+     * Renders the template for the divider.
+     *
+     * @returns An empty template result.
+     */
     protected override render(): TemplateResult {
         return html``;
     }
 
+    /**
+     * Called when the element is first updated.
+     *
+     * @param changed - The changed properties.
+     */
     protected override firstUpdated(changed: PropertyValues<this>): void {
         super.firstUpdated(changed);
         this.setAttribute('role', 'separator');
     }
 
+    /**
+     * Called when the element is updated.
+     *
+     * @param changed - The changed properties.
+     */
     protected override updated(changed: PropertyValues<this>): void {
         super.updated(changed);
 

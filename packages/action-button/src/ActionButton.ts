@@ -59,7 +59,7 @@ export type LongpressEvent = {
  *
  * @element sp-action-button
  *
- * @slot label - The text label of the Action Button.
+ * @slot - The content of the Action Button.
  * @slot icon - The icon to use for the Action Button.
  *
  * @fires change - Announces a change in the `selected` property of an action button.

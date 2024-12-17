@@ -34,7 +34,7 @@ export const actionBarVariants = ['sticky', 'fixed'];
  *
  * @element sp-action-bar
  *
- * @slot default - Content to display with the Action Bar
+ * @slot - Content to display with the Action Bar
  *
  * @fires close - Announces that the action bar is closing
  */

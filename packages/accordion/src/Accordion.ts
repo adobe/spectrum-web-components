@@ -34,7 +34,7 @@ import styles from './accordion.css.js';
  *
  * @element sp-accordion
  *
- * @slot default - The sp-accordion-item children to display within the accordion.
+ * @slot - The sp-accordion-item children to display within the accordion.
  */
 export class Accordion extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,

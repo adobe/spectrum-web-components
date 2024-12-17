@@ -38,7 +38,7 @@ const EMPTY_SELECTION: string[] = [];
  *
  * @element sp-action-group
  *
- * @slot default - The sp-action-button elements that make up the group.
+ * @slot - The sp-action-button elements that make up the group.
  *
  * @fires change - Announces that the selection state has been changed by the user.
  */
