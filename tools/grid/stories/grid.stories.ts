@@ -68,7 +68,7 @@ const renderItem = (
         >
             <img
                 alt=""
-                slot="preview"
+                slot="image"
                 src="https://picsum.photos/id/${item.id}/200/300"
                 decoding="async"
             />
