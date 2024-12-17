@@ -30,16 +30,20 @@ import actionMenuStyles from './action-menu.css.js';
 import { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 
 /**
+ * An `<sp-action-menu>` is an action button that triggers an overlay with `<sp-menu-items>` for activation.
+ * Use an `<sp-menu>` element to outline the items that will be made available to the user when interacting with
+ * the `<sp-action-menu>` element.
+ *
+ * By default `<sp-action-menu>` does not manage a selection. If you'd like for a selection to be held by the
+ * `<sp-menu>` that is presented in its overlay, use `selects="single"` to activate this functionality.
+ *
  * @element sp-action-menu
  *
- * @slot - Menu items to be listed in the Action Menu.
+ * @slot default - Menu items to be listed in the Action Menu.
  * @slot icon - The icon to use for the Action Menu.
  * @slot label - The label to use for the Action Menu.
  * @slot label-only - The label to use for the Action Menu (no icon space reserved).
  * @slot tooltip - Tooltip to be applied to the Action Button.
- *
- * @attribute selects - By default, the Action Menu does not manage a selection.
- *                      Use `selects="single"` to activate selection functionality in the menu.
  */
 export class ActionMenu extends ObserveSlotPresence(
     ObserveSlotText(PickerBase, 'label'),

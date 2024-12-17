@@ -30,17 +30,18 @@ import type { ActionMenu } from '@spectrum-web-components/action-menu';
 export default {
     component: 'sp-action-menu',
     title: 'Action menu',
+    tags: ['autodocs'],
     argTypes: {
         onChange: { action: 'change' },
         disabled: {
-            name: 'disabled',
-            type: { name: 'boolean', required: false },
-            description:
-                'Disable this control. It will not receive focus or events.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
+            // name: 'disabled',
+            // type: { name: 'boolean', required: false },
+            // description:
+            //     'Disable this control. It will not receive focus or events.',
+            // table: {
+            //     type: { summary: 'boolean' },
+            //     defaultValue: { summary: false },
+            // },
             control: {
                 type: 'boolean',
             },

@@ -40,22 +40,9 @@ export default {
         ...argTypes,
         onChange: { action: 'change' },
         open: {
-            name: 'open',
-            type: { name: 'boolean', required: false },
-            description: 'Whether the menu is open or not.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: 'boolean',
         },
         pending: {
-            name: 'pending',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: {
                 type: 'boolean',
             },

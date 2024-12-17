@@ -27,6 +27,7 @@ import { ActionGroup } from '@spectrum-web-components/action-group/src/ActionGro
 export default {
     title: 'Action Group',
     component: 'sp-action-group',
+    tags: ['autodocs'],
     args: {
         compact: false,
         emphasized: false,
@@ -73,7 +74,6 @@ export default {
             options: ['s', 'm', 'l', 'xl'],
         },
     },
-    tags: ['autodocs'],
 };
 
 interface Properties {

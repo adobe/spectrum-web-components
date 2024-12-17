@@ -22,23 +22,11 @@ export default {
     argTypes: {
         onChange: { action: 'change' },
         invalid: {
-            name: 'invalid',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: {
                 type: 'boolean',
             },
         },
         pending: {
-            name: 'pending',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
             control: {
                 type: 'boolean',
             },

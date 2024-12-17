@@ -66,102 +66,265 @@ const chevronClass = {
 };
 
 export const DESCRIPTION_ID = 'option-picker';
+
+/**
+ * The `PickerBase` class extends the `SizedMixin` and `Focusable` classes to provide a customizable picker component.
+ * It includes various properties and methods to handle the picker's behavior, appearance, and state.
+ *
+ * @function constructor - Initializes the `PendingStateController` for the Picker component.
+ * @function set selectedItem - Sets the selected item of the picker.
+ * @function forceFocusVisible - Forces the picker to be focused.
+ * @function click - Toggles the picker when clicked.
+ * @function handleButtonBlur - Handles the blur event on the button.
+ * @function focus - Focuses the picker.
+ * @function handleHelperFocus - Handles the focus event on the helper element.
+ * @function handleChange - Handles the change event on the menu.
+ * @function handleButtonFocus - Handles the focus event on the button.
+ * @function handleKeydown - Handles the keydown event on the picker.
+ * @function setValueFromItem - Sets the value from the selected item.
+ * @function setMenuItemSelected - Sets the selected state of a menu item.
+ * @function toggle - Toggles the open state of the picker.
+ * @function close - Closes the picker.
+ * @function get containerStyles - Gets the styles for the container.
+ * @function handleTooltipSlotchange - Handles the slotchange event on the tooltip.
+ * @function handleSlottableRequest - Handles the slottable request event.
+ * @function renderLabelContent - Renders the label content.
+ * @function get buttonContent - Gets the content for the button.
+ * @function applyFocusElementLabel - Applies the focus element label.
+ * @function renderOverlay - Renders the overlay.
+ * @function get renderDescriptionSlot - Gets the description slot.
+ * @function render - Renders the picker.
+ * @function update - Updates the picker.
+ * @function bindButtonKeydownListener - Binds the keydown listener to the button.
+ * @function updated - Called when the picker is updated.
+ * @function firstUpdated - Called when the picker is first updated.
+ * @function get dismissHelper - Gets the dismiss helper.
+ * @function renderContainer - Renders the container.
+ * @function onScroll - Handles the scroll event.
+ * @function get renderMenu - Gets the menu.
+ * @function shouldScheduleManageSelection - Schedules the management of the selection.
+ * @function shouldManageSelection - Manages the selection.
+ * @function manageSelection - Manages the selection.
+ * @function getUpdateComplete - Gets the update complete promise.
+ * @function handleEnterKeydown - Handles the enter keydown event.
+ * @function bindEvents - Binds events to the picker.
+ * @function connectedCallback - Called when the picker is connected to the DOM.
+ * @function disconnectedCallback - Called when the picker is disconnected from the DOM.
+ *
+ * @property {MatchMediaController} isMobile - Indicates if the component is being viewed on a mobile device.
+ * @property {DesktopController | MobileController} strategy - The strategy used for handling the Picker's behavior on different devices.
+ * @property {string} [appliedLabel] - The applied label for the picker.
+ * @property {HTMLButtonElement} button - The button element associated with the picker.
+ * @property {DependencyManagerController} dependencyManager - Manages dependencies for the picker.
+ * @property {Menu | null} deprecatedMenu - A deprecated menu element.
+ * @property {boolean} disabled - Indicates if the picker is disabled.
+ * @property {boolean} focused - Indicates if the picker is focused.
+ * @property {'only' | 'none'} [icons] - Defines the icon display mode for the picker.
+ * @property {boolean} invalid - Indicates if the picker is in an invalid state.
+ * @property {boolean} pending - Indicates if the items are currently loading.
+ * @property {string} pendingLabel - Defines a string value that labels the picker while it is in pending state.
+ * @property {string} [label] - The label for the picker.
+ * @property {boolean} open - Indicates if the picker is open.
+ * @property {boolean} readonly - Indicates if the picker is in a read-only state.
+ * @property {'single'} [selects] - Defines the selection mode for the picker.
+ * @property {'inline'} [labelAlignment] - Specifies the alignment of the label, with 'inline' aligning the label next to the picker.
+ * @property {MenuItem[]} menuItems - An array of menu items that are available for selection in the picker.
+ * @property {Menu} optionsMenu - The options menu element.
+ * @property {boolean} _selfManageFocusElement - Indicates if the picker manages its own focus element.
+ * @property {boolean} selfManageFocusElement - Gets the value of `_selfManageFocusElement`.
+ * @property {Overlay} overlayElement - The overlay element for the picker.
+ * @property {Tooltip} [tooltipEl] - The tooltip element for the picker.
+ * @property {Placement} placement - Defines the placement of the picker's overlay.
+ * @property {boolean} quiet - Indicates if the picker should be rendered in a quiet style.
+ * @property {string} value - The currently selected value of the picker.
+ * @property {MenuItem | undefined} selectedItem - Gets the selected item of the picker.
+ * @property {PendingStateController<this>} pendingStateController - Manages the pending state of the picker.
+ * @property {MenuItem | undefined} _selectedItem - The selected item of the picker.
+ * @property {'listbox' | 'menu'} listRole - Specifies the role attribute for the list element, which can be either 'listbox' or 'menu'.
+ * @property {'option'} itemRole - Specifies the role attribute for the item element, which can be 'option'.
+ * @property {HTMLElement} focusElement - Gets the focus element of the picker.
+ * @property {MenuItemChildren} selectedItemContent - Gets the content of the selected item.
+ * @property {MenuItemChildren | undefined} _selectedItemContent - The content of the selected item.
+ * @property {boolean} hasRenderedOverlay - Indicates if the overlay has been rendered.
+ * @property {boolean} willManageSelection - Indicates if the selection will be managed.
+ * @property {Promise<void>} selectionPromise - A promise that resolves when the selection is managed.
+ * @property {() => void} selectionResolver - A resolver function for the selection promise.
+ * @property {boolean} recentlyConnected - Indicates if the picker was recently connected.
+ * @property {EventTarget | null} enterKeydownOn - The target of the enter keydown event.
+ *
+ * @fires change - Dispatched when the value of the picker changes.
+ * @fires scroll - Dispatched when the picker is scrolled.
+ * @fires keydown - Dispatched when a keydown event occurs on the picker.
+ */
 export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
+    /**
+     * Indicates if the component is being viewed on a mobile device.
+     */
     public isMobile = new MatchMediaController(this, IS_MOBILE);
 
+    /**
+     * The strategy used for handling the components's behavior on different devices.
+     */
     public strategy!: DesktopController | MobileController;
 
+    /**
+     * The label that is applied to the component.
+     */
     @state()
     appliedLabel?: string;
 
+    /**
+     * The button element associated with the component.
+     */
     @query('#button')
     public button!: HTMLButtonElement;
 
+    /**
+     * Manages dependencies for the component.
+     */
     public dependencyManager = new DependencyManagerController(this);
 
+    /**
+     * The deprecated menu element.
+     */
     private deprecatedMenu: Menu | null = null;
 
+    /**
+     * Indicates if the component is disabled.
+     */
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
+    /**
+     * Indicates if the component is focused.
+     */
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    /**
+     * Defines the icon display mode for the component.
+     * - `only`: Only icons are displayed.
+     * - `none`: No icons are displayed.
+     */
     @property({ type: String, reflect: true })
     public icons?: 'only' | 'none';
 
+    /**
+     * Indicates if the component is in an invalid state.
+     */
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
-    /** Whether the items are currently loading. */
+    /**
+     * Whether the items are currently loading.
+     */
     @property({ type: Boolean, reflect: true })
     public pending = false;
 
-    /** Defines a string value that labels the Picker while it is in pending state. */
+    /**
+     * Defines a string value that labels the component while it is in pending state.
+     */
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
 
+    /**
+     * The `aria-label` for the component.
+     */
     @property()
     public label?: string;
 
+    /**
+     * Indicates if the component is open.
+     */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    /**
+     * Indicates if the component is in a read-only state.
+     */
     @property({ type: Boolean, reflect: true })
     public readonly = false;
 
+    /**
+     * Defines the selection mode for the component.
+     */
+    @property({ type: String })
     public selects: undefined | 'single' = 'single';
 
+    /**
+     * Specifies the alignment of the label, with 'inline' aligning the label next to the component.
+     */
     @state()
     public labelAlignment?: 'inline';
 
+    /**
+     * An array of menu items that are available for selection in the component.
+     */
     protected get menuItems(): MenuItem[] {
         return this.optionsMenu.childItems;
     }
 
+    /**
+     * The options menu element.
+     */
     @query('sp-menu')
     public optionsMenu!: Menu;
 
     private _selfManageFocusElement = false;
 
+    /**
+     * Indicates if the component manages its own focus element.
+     */
     public override get selfManageFocusElement(): boolean {
         return this._selfManageFocusElement;
     }
 
+    /**
+     * The overlay element for the component.
+     */
     @query('sp-overlay')
     public overlayElement!: Overlay;
 
     protected tooltipEl?: Tooltip;
 
     /**
-     * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
-     *
-     * @attribute
+     * Defines the placement of the Picker's overlay.
+     * Possible values: "top", "top-start", "top-end", "right", "right-start", "right-end", "bottom", "bottom-start", "bottom-end", "left", "left-start", "left-end".
      */
-
     @property()
     public placement: Placement = 'bottom-start';
 
+    /**
+     * Indicates if the Picker should be rendered in a quiet style.
+     */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
+    /**
+     * The currently selected value of the component.
+     */
     @property({ type: String })
     public value = '';
 
-    @property({ attribute: false })
-    public get selectedItem(): MenuItem | undefined {
-        return this._selectedItem;
-    }
-
+    /**
+     * The `PendingStateController` manages the pending state of the component.
+     */
     public pendingStateController: PendingStateController<this>;
 
     /**
-     * Initializes the `PendingStateController` for the Picker component.
-     * The `PendingStateController` manages the pending state of the Picker.
+     * Initializes the `PendingStateController` for the component.
      */
     constructor() {
         super();
         this.pendingStateController = new PendingStateController(this);
+    }
+
+    /**
+     * The selected item of the component.
+     */
+    @property({ attribute: false })
+    public get selectedItem(): MenuItem | undefined {
+        return this._selectedItem;
     }
 
     public set selectedItem(selectedItem: MenuItem | undefined) {
@@ -177,9 +340,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.requestUpdate('selectedItem', oldSelectedItem);
     }
 
+    /**
+     * @private
+     */
     _selectedItem?: MenuItem;
 
     protected listRole: 'listbox' | 'menu' = 'listbox';
+
     protected itemRole = 'option';
 
     public override get focusElement(): HTMLElement {
@@ -332,6 +499,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         item.selected = value;
     }
 
+    /**
+     * Toggles the open state of the component.
+     */
     public toggle(target?: boolean): void {
         if (this.readonly || this.pending) {
             return;
@@ -350,6 +520,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     }
 
+    /**
+     * Closes the component.
+     */
     public close(): void {
         if (this.readonly) {
             return;
@@ -388,6 +561,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.requestUpdate('selectedItemContent', oldContent);
     }
 
+    /**
+     * @private
+     */
     _selectedItemContent?: MenuItemChildren;
 
     protected handleTooltipSlotchange(
@@ -691,6 +867,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected hasRenderedOverlay = false;
 
+    /**
+     * Dispatches the the scroll event.
+     */
     private onScroll(): void {
         this.dispatchEvent(
             new Event('scroll', {
@@ -878,7 +1057,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
  * @slot label - The placeholder content for the Picker
  * @slot description - The description content for the Picker
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
- * @slot - menu items to be listed in the Picker
+ * @slot default - menu items to be listed in the Picker
  *
  * @fires change - Announces that the `value` of the element has changed
  * @fires sp-opened - Announces that the overlay has been opened
