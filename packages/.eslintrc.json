@@ -49,6 +49,7 @@
                 "allow": ["warn", "error"]
             }
         ],
+        "import/no-unresolved": 0,
         "jsdoc/check-tag-names": [
             "warn",
             {
