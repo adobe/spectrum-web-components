@@ -45,7 +45,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.0.1-color-testing"
+        "@spectrum-web-components/base": "^1.0.1"
     },
     "devDependencies": {
         "@spectrum-css/opacitycheckerboard": "^3.0.0-s2-foundations.13"

@@ -5592,7 +5592,7 @@
   integrity sha512-rGfd7jqXOdR69bEjrRP58ynuIeJU0czPfwQvzhtCzg7jKVukV+efNHqrs086sC6xutB3W4TF71K/dZMr3oyTyg==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
-  version "1.0.1-color-testing"
+  version "1.0.1"
 
 "@storybook/addon-a11y@^7.5.0":
   version "7.6.20"
