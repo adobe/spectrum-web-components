@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
 import './sp-story-decorator.js';
+import { Parameters, Renderer, StoryContext } from '@storybook/csf';
 
 export const themeStyles = html`
     <style>
@@ -32,8 +33,7 @@ export const swcThemeDecoratorWithConfig =
     ({ bundled } = { bundled: true }) =>
     (
         story: () => TemplateResult,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        context: import('@storybook/csf').StoryContext<any, any>
+        context: StoryContext<Renderer, Parameters>
     ) => {
         if (!bundled) {
             requestAnimationFrame(() => {
