@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-slider",
-    "version": "1.0.1-color-testing",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -62,11 +62,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.0.1-color-testing",
-        "@spectrum-web-components/color-handle": "^1.0.1-color-testing",
-        "@spectrum-web-components/opacity-checkerboard": "^1.0.1-color-testing",
-        "@spectrum-web-components/reactive-controllers": "^1.0.1-color-testing",
-        "@spectrum-web-components/shared": "^1.0.1-color-testing"
+        "@ctrl/tinycolor": "^4.0.3",
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/color-handle": "^1.0.1",
+        "@spectrum-web-components/opacity-checkerboard": "^1.0.1",
+        "@spectrum-web-components/reactive-controllers": "^1.0.3",
+        "@spectrum-web-components/shared": "^1.0.1"
     },
     "devDependencies": {
         "@spectrum-css/colorslider": "^7.0.0-s2-foundations.16"

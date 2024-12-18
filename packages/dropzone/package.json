@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/dropzone",
-    "version": "1.0.1-color-testing",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },

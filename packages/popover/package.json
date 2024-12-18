@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/popover",
-    "version": "1.0.1-color-testing",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -58,8 +58,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.0.1-color-testing",
-        "@spectrum-web-components/overlay": "^1.0.1-color-testing"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/overlay": "^1.0.3"
     },
     "devDependencies": {
         "@spectrum-css/popover": "^8.0.0-s2-foundations.16"

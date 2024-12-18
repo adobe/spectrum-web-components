@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/eslint-plugin",
-    "version": "1.0.1-color-testing",
+    "version": "1.0.3",
     "private": true,
     "main": "index.js"
 }
