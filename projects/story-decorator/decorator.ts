@@ -28,16 +28,54 @@ export const themeStyles = html`
     </style>
 `;
 
-export const swcThemeDecorator = (story: () => TemplateResult) => {
-    requestAnimationFrame(() => {
-        const decorator = document.querySelector(
-            'sp-story-decorator'
-        ) as HTMLElement;
-        render(story(), decorator);
-    });
+export const swcThemeDecoratorWithConfig =
+    ({ bundled } = { bundled: true }) =>
+    (
+        story: () => TemplateResult,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        context: import('@storybook/csf').StoryContext<any, any>
+    ) => {
+        if (!bundled) {
+            requestAnimationFrame(() => {
+                document.documentElement.setAttribute('lang', 'en');
+                const decorator = document.querySelector(
+                    'sp-story-decorator'
+                ) as HTMLElement;
+                render(story(), decorator);
+            });
+        }
 
-    return html`
-        ${themeStyles}
-        <sp-story-decorator role="main"></sp-story-decorator>
-    `;
-};
+        let hideNavStyles;
+        // If the global settings exist, hide the bottom toolbar
+        if (
+            context?.globals?.system ||
+            context?.globals?.color ||
+            context?.globals?.scale ||
+            context?.globals?.textDirection ||
+            context?.globals?.reduceMotion
+        ) {
+            hideNavStyles = html`
+                <style>
+                    sp-story-decorator::part(controls) {
+                        display: none;
+                    }
+                </style>
+            `;
+        }
+
+        return html`
+            ${themeStyles} ${hideNavStyles}
+            <sp-story-decorator
+                role="main"
+                system=${context?.globals?.system}
+                color=${context?.globals?.color}
+                scale=${context?.globals?.scale}
+                .direction=${context?.globals?.textDirection}
+                ?reduce-motion=${context?.globals?.reduceMotion}
+            >
+                ${bundled ? story() : html``}
+            </sp-story-decorator>
+        `;
+    };
+
+export const swcThemeDecorator = swcThemeDecoratorWithConfig();
