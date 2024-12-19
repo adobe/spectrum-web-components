@@ -53,6 +53,7 @@
         "./src/menu-item-overrides.css.js": "./src/menu-item-overrides.css.js",
         "./src/menu-item.css.js": "./src/menu-item.css.js",
         "./src/menu-overrides.css.js": "./src/menu-overrides.css.js",
+        "./src/menu-sectionHeading-overrides.css.js": "./src/menu-sectionHeading-overrides.css.js",
         "./src/menu.css.js": "./src/menu.css.js",
         "./sp-menu.js": {
             "development": "./sp-menu.dev.js",

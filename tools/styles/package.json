@@ -70,6 +70,7 @@
         "./src/detail-overrides.css.js": "./src/detail-overrides.css.js",
         "./src/heading-overrides.css.js": "./src/heading-overrides.css.js",
         "./src/lang-overrides.css.js": "./src/lang-overrides.css.js",
+        "./src/typography-overrides.css.js": "./src/typography-overrides.css.js",
         "./src/spectrum-base.css": "./src/spectrum-base.css",
         "./src/spectrum-body.css": "./src/spectrum-body.css",
         "./src/body-overrides.css": "./src/body-overrides.css",
