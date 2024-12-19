@@ -9,10 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import rollupCommonjs from '@rollup/plugin-commonjs';
 import rollupJson from '@rollup/plugin-json';
 import { mergeConfigs } from '@web/dev-server';
 import { fromRollup } from '@web/dev-server-rollup';
-import rollupCommonjs from '@rollup/plugin-commonjs';
 import { watchSWC } from '../web-test-runner.utils.js';
 
 /** @type { import('storybook-builder-wds').StorybookConfigWds } */
@@ -33,11 +33,15 @@ const config = {
         // https://geometricpanda.github.io/storybook-addon-badges/
         '@geometricpanda/storybook-addon-badges',
     ],
+    docs: {
+        autodocs: true,
+    },
     framework: {
         name: '@web/storybook-framework-web-components',
     },
     wdsFinal(config) {
         const json = fromRollup(rollupJson);
+
         return mergeConfigs(config, {
             nodeResolve: {
                 exportConditions: ['browser', 'development'],
@@ -72,6 +76,7 @@ const config = {
                 ],
             })
         );
+
         return config;
     },
 };

@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { setCustomElementsManifest } from '@storybook/web-components';
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
 import cem from './custom-elements.json';
+import { setCustomElementsManifestWithOptions } from './utils/setCustomElementsManifestWithOptions.js';
 
-setCustomElementsManifest(cem);
+setCustomElementsManifestWithOptions(cem, { privateFields: false });
 
 export const globalTypes = {
     system: {
@@ -92,10 +92,12 @@ export const globalTypes = {
 };
 
 export const parameters = {
-    docs: { hidden: true },
     controls: {
         expanded: true,
         sort: 'requiredFirst',
+    },
+    docs: {
+        toc: true, // 👈 Enables the table of contents
     },
     layout: 'fullscreen',
     badgesConfig: {
