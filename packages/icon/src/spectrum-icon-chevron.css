@@ -18,7 +18,7 @@ governing permissions and limitations under the License.
 .spectrum-UIIcon-ChevronDown50,
 .spectrum-UIIcon-ChevronDown500,
 .spectrum-UIIcon-ChevronDown75 {
-    --spectrum-icon-transform: rotate(90deg);
+	--spectrum-icon-transform: rotate(90deg);
 }
 
 .spectrum-UIIcon-ChevronLeft100,
@@ -28,7 +28,7 @@ governing permissions and limitations under the License.
 .spectrum-UIIcon-ChevronLeft50,
 .spectrum-UIIcon-ChevronLeft500,
 .spectrum-UIIcon-ChevronLeft75 {
-    --spectrum-icon-transform: rotate(180deg);
+	--spectrum-icon-transform: rotate(180deg);
 }
 
 .spectrum-UIIcon-ChevronUp100,
@@ -38,5 +38,5 @@ governing permissions and limitations under the License.
 .spectrum-UIIcon-ChevronUp50,
 .spectrum-UIIcon-ChevronUp500,
 .spectrum-UIIcon-ChevronUp75 {
-    --spectrum-icon-transform: rotate(270deg);
+	--spectrum-icon-transform: rotate(270deg);
 }

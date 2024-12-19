@@ -12,240 +12,240 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-combobox-border-color-default: var(
-        --system-combobox-border-color-default
-    );
-    --spectrum-combobox-border-color-hover: var(
-        --system-combobox-border-color-hover
-    );
-    --spectrum-combobox-border-color-focus: var(
-        --system-combobox-border-color-focus
-    );
-    --spectrum-combobox-border-color-focus-hover: var(
-        --system-combobox-border-color-focus-hover
-    );
-    --spectrum-combobox-border-color-key-focus: var(
-        --system-combobox-border-color-key-focus
-    );
-    --spectrum-combobox-inline-size: var(--system-combobox-inline-size);
-    --spectrum-combobox-minimum-width-multiplier: var(
-        --system-combobox-minimum-width-multiplier
-    );
-    --spectrum-combobox-focus-indicator-thickness: var(
-        --system-combobox-focus-indicator-thickness
-    );
-    --spectrum-combobox-focus-indicator-gap: var(
-        --system-combobox-focus-indicator-gap
-    );
-    --spectrum-combobox-focus-indicator-color: var(
-        --system-combobox-focus-indicator-color
-    );
-    --spectrum-combobox-border-radius: var(--system-combobox-border-radius);
-    --spectrum-combobox-border-width: var(--system-combobox-border-width);
-    --spectrum-combobox-spacing-label-to-combobox: var(
-        --system-combobox-spacing-label-to
-    );
-    --spectrum-combobox-font-style: var(--system-combobox-font-style);
-    --spectrum-combobox-line-height: var(--system-combobox-line-height);
-    --spectrum-combobox-border-color-invalid-default: var(
-        --system-combobox-border-color-invalid-default
-    );
-    --spectrum-combobox-border-color-invalid-hover: var(
-        --system-combobox-border-color-invalid-hover
-    );
-    --spectrum-combobox-border-color-invalid-focus: var(
-        --system-combobox-border-color-invalid-focus
-    );
-    --spectrum-combobox-border-color-invalid-focus-hover: var(
-        --system-combobox-border-color-invalid-focus-hover
-    );
-    --spectrum-combobox-border-color-invalid-key-focus: var(
-        --system-combobox-border-color-invalid-key-focus
-    );
-    --spectrum-combobox-block-size: var(--system-combobox-block-size);
-    --spectrum-combobox-icon-size: var(--system-combobox-icon-size);
-    --spectrum-combobox-font-size: var(--system-combobox-font-size);
-    --spectrum-combobox-spacing-inline-icon-to-button: var(
-        --system-combobox-spacing-inline-icon-to-button
-    );
-    --spectrum-combobox-block-spacing-edge-to-progress-circle: var(
-        --system-combobox-block-spacing-edge-to-progress-circle
-    );
-    --spectrum-combobox-block-spacing-edge-to-alert: var(
-        --system-combobox-block-spacing-edge-to-alert
-    );
-    --spectrum-combobox-spacing-edge-to-menu: var(
-        --system-combobox-spacing-edge-to-menu
-    );
-    --spectrum-combobox-spacing-block-start-edge-to-text: var(
-        --system-combobox-spacing-block-start-edge-to-text
-    );
-    --spectrum-combobox-spacing-block-end-edge-to-text: var(
-        --system-combobox-spacing-block-end-edge-to-text
-    );
-    --spectrum-combobox-spacing-inline-start-edge-to-text: var(
-        --system-combobox-spacing-inline-start-edge-to-text
-    );
-    --spectrum-combobox-spacing-inline-end-edge-to-text: var(
-        --system-combobox-spacing-inline-end-edge-to-text
-    );
+	--spectrum-combobox-border-color-default: var(
+		--system-combobox-border-color-default
+	);
+	--spectrum-combobox-border-color-hover: var(
+		--system-combobox-border-color-hover
+	);
+	--spectrum-combobox-border-color-focus: var(
+		--system-combobox-border-color-focus
+	);
+	--spectrum-combobox-border-color-focus-hover: var(
+		--system-combobox-border-color-focus-hover
+	);
+	--spectrum-combobox-border-color-key-focus: var(
+		--system-combobox-border-color-key-focus
+	);
+	--spectrum-combobox-inline-size: var(--system-combobox-inline-size);
+	--spectrum-combobox-minimum-width-multiplier: var(
+		--system-combobox-minimum-width-multiplier
+	);
+	--spectrum-combobox-focus-indicator-thickness: var(
+		--system-combobox-focus-indicator-thickness
+	);
+	--spectrum-combobox-focus-indicator-gap: var(
+		--system-combobox-focus-indicator-gap
+	);
+	--spectrum-combobox-focus-indicator-color: var(
+		--system-combobox-focus-indicator-color
+	);
+	--spectrum-combobox-border-radius: var(--system-combobox-border-radius);
+	--spectrum-combobox-border-width: var(--system-combobox-border-width);
+	--spectrum-combobox-spacing-label-to-combobox: var(
+		--system-combobox-spacing-label-to
+	);
+	--spectrum-combobox-font-style: var(--system-combobox-font-style);
+	--spectrum-combobox-line-height: var(--system-combobox-line-height);
+	--spectrum-combobox-border-color-invalid-default: var(
+		--system-combobox-border-color-invalid-default
+	);
+	--spectrum-combobox-border-color-invalid-hover: var(
+		--system-combobox-border-color-invalid-hover
+	);
+	--spectrum-combobox-border-color-invalid-focus: var(
+		--system-combobox-border-color-invalid-focus
+	);
+	--spectrum-combobox-border-color-invalid-focus-hover: var(
+		--system-combobox-border-color-invalid-focus-hover
+	);
+	--spectrum-combobox-border-color-invalid-key-focus: var(
+		--system-combobox-border-color-invalid-key-focus
+	);
+	--spectrum-combobox-block-size: var(--system-combobox-block-size);
+	--spectrum-combobox-icon-size: var(--system-combobox-icon-size);
+	--spectrum-combobox-font-size: var(--system-combobox-font-size);
+	--spectrum-combobox-spacing-inline-icon-to-button: var(
+		--system-combobox-spacing-inline-icon-to-button
+	);
+	--spectrum-combobox-block-spacing-edge-to-progress-circle: var(
+		--system-combobox-block-spacing-edge-to-progress-circle
+	);
+	--spectrum-combobox-block-spacing-edge-to-alert: var(
+		--system-combobox-block-spacing-edge-to-alert
+	);
+	--spectrum-combobox-spacing-edge-to-menu: var(
+		--system-combobox-spacing-edge-to-menu
+	);
+	--spectrum-combobox-spacing-block-start-edge-to-text: var(
+		--system-combobox-spacing-block-start-edge-to-text
+	);
+	--spectrum-combobox-spacing-block-end-edge-to-text: var(
+		--system-combobox-spacing-block-end-edge-to-text
+	);
+	--spectrum-combobox-spacing-inline-start-edge-to-text: var(
+		--system-combobox-spacing-inline-start-edge-to-text
+	);
+	--spectrum-combobox-spacing-inline-end-edge-to-text: var(
+		--system-combobox-spacing-inline-end-edge-to-text
+	);
 }
 
-:host([size='s']) {
-    --spectrum-combobox-block-size: var(--system-combobox-size-s-block-size);
-    --spectrum-combobox-icon-size: var(--system-combobox-size-s-icon-size);
-    --spectrum-combobox-font-size: var(--system-combobox-size-s-font-size);
-    --spectrum-combobox-spacing-inline-icon-to-button: var(
-        --system-combobox-size-s-spacing-inline-icon-to-button
-    );
-    --spectrum-combobox-block-spacing-edge-to-progress-circle: var(
-        --system-combobox-size-s-block-spacing-edge-to-progress-circle
-    );
-    --spectrum-combobox-block-spacing-edge-to-alert: var(
-        --system-combobox-size-s-block-spacing-edge-to-alert
-    );
-    --spectrum-combobox-spacing-edge-to-menu: var(
-        --system-combobox-size-s-spacing-edge-to-menu
-    );
-    --spectrum-combobox-spacing-block-start-edge-to-text: var(
-        --system-combobox-size-s-spacing-block-start-edge-to-text
-    );
-    --spectrum-combobox-spacing-block-end-edge-to-text: var(
-        --system-combobox-size-s-spacing-block-end-edge-to-text
-    );
-    --spectrum-combobox-spacing-inline-start-edge-to-text: var(
-        --system-combobox-size-s-spacing-inline-start-edge-to-text
-    );
-    --spectrum-combobox-spacing-inline-end-edge-to-text: var(
-        --system-combobox-size-s-spacing-inline-end-edge-to-text
-    );
+:host([size="s"]) {
+	--spectrum-combobox-block-size: var(--system-combobox-size-s-block-size);
+	--spectrum-combobox-icon-size: var(--system-combobox-size-s-icon-size);
+	--spectrum-combobox-font-size: var(--system-combobox-size-s-font-size);
+	--spectrum-combobox-spacing-inline-icon-to-button: var(
+		--system-combobox-size-s-spacing-inline-icon-to-button
+	);
+	--spectrum-combobox-block-spacing-edge-to-progress-circle: var(
+		--system-combobox-size-s-block-spacing-edge-to-progress-circle
+	);
+	--spectrum-combobox-block-spacing-edge-to-alert: var(
+		--system-combobox-size-s-block-spacing-edge-to-alert
+	);
+	--spectrum-combobox-spacing-edge-to-menu: var(
+		--system-combobox-size-s-spacing-edge-to-menu
+	);
+	--spectrum-combobox-spacing-block-start-edge-to-text: var(
+		--system-combobox-size-s-spacing-block-start-edge-to-text
+	);
+	--spectrum-combobox-spacing-block-end-edge-to-text: var(
+		--system-combobox-size-s-spacing-block-end-edge-to-text
+	);
+	--spectrum-combobox-spacing-inline-start-edge-to-text: var(
+		--system-combobox-size-s-spacing-inline-start-edge-to-text
+	);
+	--spectrum-combobox-spacing-inline-end-edge-to-text: var(
+		--system-combobox-size-s-spacing-inline-end-edge-to-text
+	);
 }
 
 :host {
-    --spectrum-combobox-block-size: var(--system-combobox-size-m-block-size);
-    --spectrum-combobox-icon-size: var(--system-combobox-size-m-icon-size);
-    --spectrum-combobox-font-size: var(--system-combobox-size-m-font-size);
-    --spectrum-combobox-spacing-inline-icon-to-button: var(
-        --system-combobox-size-m-spacing-inline-icon-to-button
-    );
-    --spectrum-combobox-block-spacing-edge-to-progress-circle: var(
-        --system-combobox-size-m-block-spacing-edge-to-progress-circle
-    );
-    --spectrum-combobox-block-spacing-edge-to-alert: var(
-        --system-combobox-size-m-block-spacing-edge-to-alert
-    );
-    --spectrum-combobox-spacing-edge-to-menu: var(
-        --system-combobox-size-m-spacing-edge-to-menu
-    );
-    --spectrum-combobox-spacing-block-start-edge-to-text: var(
-        --system-combobox-size-m-spacing-block-start-edge-to-text
-    );
-    --spectrum-combobox-spacing-block-end-edge-to-text: var(
-        --system-combobox-size-m-spacing-block-end-edge-to-text
-    );
-    --spectrum-combobox-spacing-inline-start-edge-to-text: var(
-        --system-combobox-size-m-spacing-inline-start-edge-to-text
-    );
-    --spectrum-combobox-spacing-inline-end-edge-to-text: var(
-        --system-combobox-size-m-spacing-inline-end-edge-to-text
-    );
+	--spectrum-combobox-block-size: var(--system-combobox-size-m-block-size);
+	--spectrum-combobox-icon-size: var(--system-combobox-size-m-icon-size);
+	--spectrum-combobox-font-size: var(--system-combobox-size-m-font-size);
+	--spectrum-combobox-spacing-inline-icon-to-button: var(
+		--system-combobox-size-m-spacing-inline-icon-to-button
+	);
+	--spectrum-combobox-block-spacing-edge-to-progress-circle: var(
+		--system-combobox-size-m-block-spacing-edge-to-progress-circle
+	);
+	--spectrum-combobox-block-spacing-edge-to-alert: var(
+		--system-combobox-size-m-block-spacing-edge-to-alert
+	);
+	--spectrum-combobox-spacing-edge-to-menu: var(
+		--system-combobox-size-m-spacing-edge-to-menu
+	);
+	--spectrum-combobox-spacing-block-start-edge-to-text: var(
+		--system-combobox-size-m-spacing-block-start-edge-to-text
+	);
+	--spectrum-combobox-spacing-block-end-edge-to-text: var(
+		--system-combobox-size-m-spacing-block-end-edge-to-text
+	);
+	--spectrum-combobox-spacing-inline-start-edge-to-text: var(
+		--system-combobox-size-m-spacing-inline-start-edge-to-text
+	);
+	--spectrum-combobox-spacing-inline-end-edge-to-text: var(
+		--system-combobox-size-m-spacing-inline-end-edge-to-text
+	);
 }
 
-:host([size='l']) {
-    --spectrum-combobox-block-size: var(--system-combobox-size-l-block-size);
-    --spectrum-combobox-icon-size: var(--system-combobox-size-l-icon-size);
-    --spectrum-combobox-font-size: var(--system-combobox-size-l-font-size);
-    --spectrum-combobox-spacing-inline-icon-to-button: var(
-        --system-combobox-size-l-spacing-inline-icon-to-button
-    );
-    --spectrum-combobox-block-spacing-edge-to-progress-circle: var(
-        --system-combobox-size-l-block-spacing-edge-to-progress-circle
-    );
-    --spectrum-combobox-block-spacing-edge-to-alert: var(
-        --system-combobox-size-l-block-spacing-edge-to-alert
-    );
-    --spectrum-combobox-spacing-edge-to-menu: var(
-        --system-combobox-size-l-spacing-edge-to-menu
-    );
-    --spectrum-combobox-spacing-block-start-edge-to-text: var(
-        --system-combobox-size-l-spacing-block-start-edge-to-text
-    );
-    --spectrum-combobox-spacing-block-end-edge-to-text: var(
-        --system-combobox-size-l-spacing-block-end-edge-to-text
-    );
-    --spectrum-combobox-spacing-inline-start-edge-to-text: var(
-        --system-combobox-size-l-spacing-inline-start-edge-to-text
-    );
-    --spectrum-combobox-spacing-inline-end-edge-to-text: var(
-        --system-combobox-size-l-spacing-inline-end-edge-to-text
-    );
+:host([size="l"]) {
+	--spectrum-combobox-block-size: var(--system-combobox-size-l-block-size);
+	--spectrum-combobox-icon-size: var(--system-combobox-size-l-icon-size);
+	--spectrum-combobox-font-size: var(--system-combobox-size-l-font-size);
+	--spectrum-combobox-spacing-inline-icon-to-button: var(
+		--system-combobox-size-l-spacing-inline-icon-to-button
+	);
+	--spectrum-combobox-block-spacing-edge-to-progress-circle: var(
+		--system-combobox-size-l-block-spacing-edge-to-progress-circle
+	);
+	--spectrum-combobox-block-spacing-edge-to-alert: var(
+		--system-combobox-size-l-block-spacing-edge-to-alert
+	);
+	--spectrum-combobox-spacing-edge-to-menu: var(
+		--system-combobox-size-l-spacing-edge-to-menu
+	);
+	--spectrum-combobox-spacing-block-start-edge-to-text: var(
+		--system-combobox-size-l-spacing-block-start-edge-to-text
+	);
+	--spectrum-combobox-spacing-block-end-edge-to-text: var(
+		--system-combobox-size-l-spacing-block-end-edge-to-text
+	);
+	--spectrum-combobox-spacing-inline-start-edge-to-text: var(
+		--system-combobox-size-l-spacing-inline-start-edge-to-text
+	);
+	--spectrum-combobox-spacing-inline-end-edge-to-text: var(
+		--system-combobox-size-l-spacing-inline-end-edge-to-text
+	);
 }
 
-:host([size='xl']) {
-    --spectrum-combobox-block-size: var(--system-combobox-size-xl-block-size);
-    --spectrum-combobox-icon-size: var(--system-combobox-size-xl-icon-size);
-    --spectrum-combobox-font-size: var(--system-combobox-size-xl-font-size);
-    --spectrum-combobox-spacing-inline-icon-to-button: var(
-        --system-combobox-size-xl-spacing-inline-icon-to-button
-    );
-    --spectrum-combobox-block-spacing-edge-to-progress-circle: var(
-        --system-combobox-size-xl-block-spacing-edge-to-progress-circle
-    );
-    --spectrum-combobox-block-spacing-edge-to-alert: var(
-        --system-combobox-size-xl-block-spacing-edge-to-alert
-    );
-    --spectrum-combobox-spacing-edge-to-menu: var(
-        --system-combobox-size-xl-spacing-edge-to-menu
-    );
-    --spectrum-combobox-spacing-block-start-edge-to-text: var(
-        --system-combobox-size-xl-spacing-block-start-edge-to-text
-    );
-    --spectrum-combobox-spacing-block-end-edge-to-text: var(
-        --system-combobox-size-xl-spacing-block-end-edge-to-text
-    );
-    --spectrum-combobox-spacing-inline-start-edge-to-text: var(
-        --system-combobox-size-xl-spacing-inline-start-edge-to-text
-    );
-    --spectrum-combobox-spacing-inline-end-edge-to-text: var(
-        --system-combobox-size-xl-spacing-inline-end-edge-to-text
-    );
-}
-
-:host([quiet]) {
-    --spectrum-combobox-minimum-width-multiplier: var(
-        --system-combobox-quiet-minimum-width-multiplier
-    );
-    --spectrum-combobox-spacing-inline-icon-to-button: var(
-        --system-combobox-quiet-spacing-inline-icon-to-button
-    );
-    --spectrum-combobox-spacing-inline-start-edge-to-text: var(
-        --system-combobox-quiet-spacing-inline-start-edge-to-text
-    );
-    --spectrum-combobox-spacing-label-to-combobox: var(
-        --system-combobox-quiet-spacing-label-to
-    );
-}
-
-:host([quiet][size='s']) {
-    --spectrum-combobox-spacing-label-to-combobox: var(
-        --system-combobox-quiet-size-s-spacing-label-to
-    );
+:host([size="xl"]) {
+	--spectrum-combobox-block-size: var(--system-combobox-size-xl-block-size);
+	--spectrum-combobox-icon-size: var(--system-combobox-size-xl-icon-size);
+	--spectrum-combobox-font-size: var(--system-combobox-size-xl-font-size);
+	--spectrum-combobox-spacing-inline-icon-to-button: var(
+		--system-combobox-size-xl-spacing-inline-icon-to-button
+	);
+	--spectrum-combobox-block-spacing-edge-to-progress-circle: var(
+		--system-combobox-size-xl-block-spacing-edge-to-progress-circle
+	);
+	--spectrum-combobox-block-spacing-edge-to-alert: var(
+		--system-combobox-size-xl-block-spacing-edge-to-alert
+	);
+	--spectrum-combobox-spacing-edge-to-menu: var(
+		--system-combobox-size-xl-spacing-edge-to-menu
+	);
+	--spectrum-combobox-spacing-block-start-edge-to-text: var(
+		--system-combobox-size-xl-spacing-block-start-edge-to-text
+	);
+	--spectrum-combobox-spacing-block-end-edge-to-text: var(
+		--system-combobox-size-xl-spacing-block-end-edge-to-text
+	);
+	--spectrum-combobox-spacing-inline-start-edge-to-text: var(
+		--system-combobox-size-xl-spacing-inline-start-edge-to-text
+	);
+	--spectrum-combobox-spacing-inline-end-edge-to-text: var(
+		--system-combobox-size-xl-spacing-inline-end-edge-to-text
+	);
 }
 
 :host([quiet]) {
-    --spectrum-combobox-spacing-label-to-combobox: var(
-        --system-combobox-quiet-size-m-spacing-label-to
-    );
+	--spectrum-combobox-minimum-width-multiplier: var(
+		--system-combobox-quiet-minimum-width-multiplier
+	);
+	--spectrum-combobox-spacing-inline-icon-to-button: var(
+		--system-combobox-quiet-spacing-inline-icon-to-button
+	);
+	--spectrum-combobox-spacing-inline-start-edge-to-text: var(
+		--system-combobox-quiet-spacing-inline-start-edge-to-text
+	);
+	--spectrum-combobox-spacing-label-to-combobox: var(
+		--system-combobox-quiet-spacing-label-to
+	);
 }
 
-:host([quiet][size='l']) {
-    --spectrum-combobox-spacing-label-to-combobox: var(
-        --system-combobox-quiet-size-l-spacing-label-to
-    );
+:host([quiet][size="s"]) {
+	--spectrum-combobox-spacing-label-to-combobox: var(
+		--system-combobox-quiet-size-s-spacing-label-to
+	);
 }
 
-:host([quiet][size='xl']) {
-    --spectrum-combobox-spacing-label-to-combobox: var(
-        --system-combobox-quiet-size-xl-spacing-label-to
-    );
+:host([quiet]) {
+	--spectrum-combobox-spacing-label-to-combobox: var(
+		--system-combobox-quiet-size-m-spacing-label-to
+	);
+}
+
+:host([quiet][size="l"]) {
+	--spectrum-combobox-spacing-label-to-combobox: var(
+		--system-combobox-quiet-size-l-spacing-label-to
+	);
+}
+
+:host([quiet][size="xl"]) {
+	--spectrum-combobox-spacing-label-to-combobox: var(
+		--system-combobox-quiet-size-xl-spacing-label-to
+	);
 }

@@ -9,30 +9,27 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { setCustomElementsManifest } from '@storybook/web-components';
+import { setCustomElementsManifest } from "@storybook/web-components";
 
 export const setCustomElementsManifestWithOptions = (
-    customElements,
-    options
+	customElements,
+	options,
 ) => {
-    const { privateFields = true } = options;
+	const { privateFields = true } = options;
 
-    if (!privateFields) {
-        customElements?.modules?.forEach((module) => {
-            module?.declarations?.forEach((declaration) => {
-                Object.keys(declaration).forEach((key) => {
-                    if (Array.isArray(declaration[key])) {
-                        declaration[key] = declaration[key].filter((member) => {
-                            return (
-                                !member.privacy?.includes('private') &&
-                                !member.privacy?.includes('protected')
-                            );
-                        });
-                    }
-                });
-            });
-        });
-    }
+	if (!privateFields) {
+		customElements?.modules?.forEach((module) => {
+			module?.declarations?.forEach((declaration) => {
+				Object.keys(declaration).forEach((key) => {
+					if (Array.isArray(declaration[key])) {
+						declaration[key] = declaration[key].filter((member) => {
+							return !member.privacy?.includes("private");
+						});
+					}
+				});
+			});
+		});
+	}
 
-    return setCustomElementsManifest(customElements);
+	return setCustomElementsManifest(customElements);
 };

@@ -12,65 +12,65 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    pointer-events: none;
-    transform: none;
-    transform: var(--spectrum-icon-transform, none);
-    inline-size: var(
-        --mod-icon-inline-size,
-        var(--mod-icon-size, var(--spectrum-icon-size))
-    );
-    block-size: var(
-        --mod-icon-block-size,
-        var(--mod-icon-size, var(--spectrum-icon-size))
-    );
-    color: inherit;
-    color: var(--mod-icon-color, inherit);
-    fill: currentColor;
-    display: inline-block;
+	pointer-events: none;
+	transform: none;
+	transform: var(--spectrum-icon-transform, none);
+	inline-size: var(
+		--mod-icon-inline-size,
+		var(--mod-icon-size, var(--spectrum-icon-size))
+	);
+	block-size: var(
+		--mod-icon-block-size,
+		var(--mod-icon-size, var(--spectrum-icon-size))
+	);
+	color: inherit;
+	color: var(--mod-icon-color, inherit);
+	fill: currentColor;
+	display: inline-block;
 }
 
-:host([size='xxs']),
-:host([size='xxs']) .spectrum-UIIcon {
-    --spectrum-icon-size: var(--spectrum-icon-size-xxs);
+:host([size="xxs"]),
+:host([size="xxs"]) .spectrum-UIIcon {
+	--spectrum-icon-size: var(--spectrum-icon-size-xxs);
 }
 
-:host([size='xs']),
-:host([size='xs']) .spectrum-UIIcon {
-    --spectrum-icon-size: var(--spectrum-icon-size-xs);
+:host([size="xs"]),
+:host([size="xs"]) .spectrum-UIIcon {
+	--spectrum-icon-size: var(--spectrum-icon-size-xs);
 }
 
-:host([size='s']),
-:host([size='s']) .spectrum-UIIcon {
-    --spectrum-icon-size: var(--spectrum-icon-size-s);
+:host([size="s"]),
+:host([size="s"]) .spectrum-UIIcon {
+	--spectrum-icon-size: var(--spectrum-icon-size-s);
 }
 
 :host,
-:host([size='m']),
-:host([size='m']) .spectrum-UIIcon {
-    --spectrum-icon-size: var(--spectrum-icon-size-m);
+:host([size="m"]),
+:host([size="m"]) .spectrum-UIIcon {
+	--spectrum-icon-size: var(--spectrum-icon-size-m);
 }
 
-:host([size='l']),
-:host([size='l']) .spectrum-UIIcon {
-    --spectrum-icon-size: var(--spectrum-icon-size-l);
+:host([size="l"]),
+:host([size="l"]) .spectrum-UIIcon {
+	--spectrum-icon-size: var(--spectrum-icon-size-l);
 }
 
-:host([size='xl']),
-:host([size='xl']) .spectrum-UIIcon {
-    --spectrum-icon-size: var(--spectrum-icon-size-xl);
+:host([size="xl"]),
+:host([size="xl"]) .spectrum-UIIcon {
+	--spectrum-icon-size: var(--spectrum-icon-size-xl);
 }
 
-:host([size='xxl']),
-:host([size='xxl']) .spectrum-UIIcon {
-    --spectrum-icon-size: var(--spectrum-icon-size-xxl);
+:host([size="xxl"]),
+:host([size="xxl"]) .spectrum-UIIcon {
+	--spectrum-icon-size: var(--spectrum-icon-size-xxl);
 }
 
 :host(:not(:root)) {
-    overflow: hidden;
+	overflow: hidden;
 }
 
 @media (forced-colors: active) {
-    :host {
-        forced-color-adjust: auto;
-    }
+	:host {
+		forced-color-adjust: auto;
+	}
 }

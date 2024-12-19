@@ -12,518 +12,516 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    cursor: pointer;
-    -webkit-user-select: none;
-    user-select: none;
-    box-sizing: border-box;
-    font-family: var(
-        --mod-button-font-family,
-        var(
-            --mod-sans-font-family-stack,
-            var(--spectrum-sans-font-family-stack)
-        )
-    );
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    line-height: var(
-        --mod-button-line-height,
-        var(--mod-line-height-100, var(--spectrum-line-height-100))
-    );
-    text-transform: none;
-    vertical-align: top;
-    -webkit-appearance: button;
-    transition:
-        background
-            var(
-                --mod-button-animation-duration,
-                var(
-                    --mod-animation-duration-100,
-                    var(--spectrum-animation-duration-100)
-                )
-            )
-            ease-out,
-        border-color
-            var(
-                --mod-button-animation-duration,
-                var(
-                    --mod-animation-duration-100,
-                    var(--spectrum-animation-duration-100)
-                )
-            )
-            ease-out,
-        color
-            var(
-                --mod-button-animation-duration,
-                var(
-                    --mod-animation-duration-100,
-                    var(--spectrum-animation-duration-100)
-                )
-            )
-            ease-out,
-        box-shadow
-            var(
-                --mod-button-animation-duration,
-                var(
-                    --mod-animation-duration-100,
-                    var(--spectrum-animation-duration-100)
-                )
-            )
-            ease-out;
-    border-style: solid;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    -webkit-text-decoration: none;
-    text-decoration: none;
-    display: inline-flex;
-    overflow: visible;
+	cursor: pointer;
+	-webkit-user-select: none;
+	user-select: none;
+	box-sizing: border-box;
+	font-family: var(
+		--mod-button-font-family,
+		var(--mod-sans-font-family-stack, var(--spectrum-sans-font-family-stack))
+	);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	line-height: var(
+		--mod-button-line-height,
+		var(--mod-line-height-100, var(--spectrum-line-height-100))
+	);
+	text-transform: none;
+	vertical-align: top;
+	-webkit-appearance: button;
+	transition:
+		background
+			var(
+				--mod-button-animation-duration,
+				var(
+					--mod-animation-duration-100,
+					var(--spectrum-animation-duration-100)
+				)
+			)
+			ease-out,
+		border-color
+			var(
+				--mod-button-animation-duration,
+				var(
+					--mod-animation-duration-100,
+					var(--spectrum-animation-duration-100)
+				)
+			)
+			ease-out,
+		color
+			var(
+				--mod-button-animation-duration,
+				var(
+					--mod-animation-duration-100,
+					var(--spectrum-animation-duration-100)
+				)
+			)
+			ease-out,
+		box-shadow
+			var(
+				--mod-button-animation-duration,
+				var(
+					--mod-animation-duration-100,
+					var(--spectrum-animation-duration-100)
+				)
+			)
+			ease-out;
+	border-style: solid;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	-webkit-text-decoration: none;
+	text-decoration: none;
+	display: inline-flex;
+	overflow: visible;
 }
 
 :host(:focus) {
-    outline: none;
+	outline: none;
 }
 
 :host([disabled]),
 :host([disabled]) {
-    cursor: default;
+	cursor: default;
 }
 
-::slotted([slot='icon']) {
-    max-block-size: 100%;
-    flex-shrink: 0;
+::slotted([slot="icon"]) {
+	max-block-size: 100%;
+	flex-shrink: 0;
 }
 
 #label {
-    text-align: center;
-    place-self: center;
+	text-align: center;
+	place-self: center;
 }
 
 #label:empty {
-    display: none;
+	display: none;
 }
 
 @media (forced-colors: active) {
-    :host {
-        --highcontrast-actionbutton-focus-indicator-color: ButtonText;
-    }
+	:host {
+		--highcontrast-actionbutton-focus-indicator-color: ButtonText;
+	}
 
-    :host:after {
-        forced-color-adjust: none;
-    }
+	:host:after {
+		forced-color-adjust: none;
+	}
 
-    :host([selected]) {
-        --highcontrast-actionbutton-background-color-default: Highlight;
-        --highcontrast-actionbutton-background-color-hover: Highlight;
-        --highcontrast-actionbutton-background-color-focus: Highlight;
-        --highcontrast-actionbutton-background-color-down: Highlight;
-        --highcontrast-actionbutton-background-color-disabled: ButtonFace;
-        --highcontrast-actionbutton-border-color-default: HighlightText;
-        --highcontrast-actionbutton-border-color-hover: HighlightText;
-        --highcontrast-actionbutton-border-color-focus: HighlightText;
-        --highcontrast-actionbutton-border-color-down: HighlightText;
-        --highcontrast-actionbutton-border-color-disabled: GrayText;
-        --highcontrast-actionbutton-content-color-default: HighlightText;
-        --highcontrast-actionbutton-content-color-hover: HighlightText;
-        --highcontrast-actionbutton-content-color-focus: HighlightText;
-        --highcontrast-actionbutton-content-color-down: HighlightText;
-        --highcontrast-actionbutton-content-color-disabled: GrayText;
-    }
+	:host([selected]) {
+		--highcontrast-actionbutton-background-color-default: Highlight;
+		--highcontrast-actionbutton-background-color-hover: Highlight;
+		--highcontrast-actionbutton-background-color-focus: Highlight;
+		--highcontrast-actionbutton-background-color-down: Highlight;
+		--highcontrast-actionbutton-background-color-disabled: ButtonFace;
+		--highcontrast-actionbutton-border-color-default: HighlightText;
+		--highcontrast-actionbutton-border-color-hover: HighlightText;
+		--highcontrast-actionbutton-border-color-focus: HighlightText;
+		--highcontrast-actionbutton-border-color-down: HighlightText;
+		--highcontrast-actionbutton-border-color-disabled: GrayText;
+		--highcontrast-actionbutton-content-color-default: HighlightText;
+		--highcontrast-actionbutton-content-color-hover: HighlightText;
+		--highcontrast-actionbutton-content-color-focus: HighlightText;
+		--highcontrast-actionbutton-content-color-down: HighlightText;
+		--highcontrast-actionbutton-content-color-disabled: GrayText;
+	}
 
-    :host([selected]) .hold-affordance,
-    :host([selected]) ::slotted([slot='icon']),
-    :host([selected]) #label {
-        forced-color-adjust: none;
-    }
+	:host([selected]) .hold-affordance,
+	:host([selected]) ::slotted([slot="icon"]),
+	:host([selected]) #label {
+		forced-color-adjust: none;
+	}
 }
 
 :host {
-    --spectrum-actionbutton-focus-indicator-border-radius: calc(
-        var(--spectrum-actionbutton-border-radius) +
-            var(--spectrum-actionbutton-focus-indicator-gap)
-    );
-    --spectrum-actionbutton-edge-to-visual: calc(
-        var(--spectrum-actionbutton-edge-to-visual-size) -
-            var(--spectrum-actionbutton-border-width)
-    );
-    --spectrum-actionbutton-edge-to-text: calc(
-        var(--spectrum-actionbutton-edge-to-text-size) -
-            var(--spectrum-actionbutton-border-width)
-    );
-    --spectrum-actionbutton-edge-to-visual-only: calc(
-        var(--spectrum-actionbutton-edge-to-visual-only-size) -
-            var(--spectrum-actionbutton-border-width)
-    );
-    min-inline-size: var(
-        --mod-actionbutton-min-width,
-        var(--spectrum-actionbutton-min-width)
-    );
-    block-size: var(
-        --mod-actionbutton-height,
-        var(--spectrum-actionbutton-height)
-    );
-    border-radius: var(
-        --mod-actionbutton-border-radius,
-        var(--spectrum-actionbutton-border-radius)
-    );
-    border-width: var(
-        --mod-actionbutton-border-width,
-        var(--spectrum-actionbutton-border-width)
-    );
-    gap: calc(
-        var(
-                --mod-actionbutton-text-to-visual,
-                var(--spectrum-actionbutton-text-to-visual)
-            ) +
-            var(
-                --mod-actionbutton-edge-to-text,
-                var(--spectrum-actionbutton-edge-to-text)
-            ) -
-            var(
-                --mod-actionbutton-edge-to-visual-only,
-                var(--spectrum-actionbutton-edge-to-visual-only)
-            )
-    );
-    padding-inline: var(
-        --mod-actionbutton-edge-to-text,
-        var(--spectrum-actionbutton-edge-to-text)
-    );
-    background-color: var(
-        --highcontrast-actionbutton-background-color-default,
-        var(
-            --mod-actionbutton-background-color-default,
-            var(--spectrum-actionbutton-background-color-default)
-        )
-    );
-    border-color: var(
-        --highcontrast-actionbutton-border-color-default,
-        var(
-            --mod-actionbutton-border-color-default,
-            var(--spectrum-actionbutton-border-color-default)
-        )
-    );
-    color: var(
-        --highcontrast-actionbutton-content-color-default,
-        var(
-            --mod-actionbutton-content-color-default,
-            var(--spectrum-actionbutton-content-color-default)
-        )
-    );
-    position: relative;
+	--spectrum-actionbutton-focus-indicator-border-radius: calc(
+		var(--spectrum-actionbutton-border-radius) +
+			var(--spectrum-actionbutton-focus-indicator-gap)
+	);
+	--spectrum-actionbutton-edge-to-visual: calc(
+		var(--spectrum-actionbutton-edge-to-visual-size) -
+			var(--spectrum-actionbutton-border-width)
+	);
+	--spectrum-actionbutton-edge-to-text: calc(
+		var(--spectrum-actionbutton-edge-to-text-size) -
+			var(--spectrum-actionbutton-border-width)
+	);
+	--spectrum-actionbutton-edge-to-visual-only: calc(
+		var(--spectrum-actionbutton-edge-to-visual-only-size) -
+			var(--spectrum-actionbutton-border-width)
+	);
+	min-inline-size: var(
+		--mod-actionbutton-min-width,
+		var(--spectrum-actionbutton-min-width)
+	);
+	block-size: var(
+		--mod-actionbutton-height,
+		var(--spectrum-actionbutton-height)
+	);
+	border-radius: var(
+		--mod-actionbutton-border-radius,
+		var(--spectrum-actionbutton-border-radius)
+	);
+	border-width: var(
+		--mod-actionbutton-border-width,
+		var(--spectrum-actionbutton-border-width)
+	);
+	gap: calc(
+		var(
+				--mod-actionbutton-text-to-visual,
+				var(--spectrum-actionbutton-text-to-visual)
+			) +
+			var(
+				--mod-actionbutton-edge-to-text,
+				var(--spectrum-actionbutton-edge-to-text)
+			) -
+			var(
+				--mod-actionbutton-edge-to-visual-only,
+				var(--spectrum-actionbutton-edge-to-visual-only)
+			)
+	);
+	padding-inline: var(
+		--mod-actionbutton-edge-to-text,
+		var(--spectrum-actionbutton-edge-to-text)
+	);
+	background-color: var(
+		--highcontrast-actionbutton-background-color-default,
+		var(
+			--mod-actionbutton-background-color-default,
+			var(--spectrum-actionbutton-background-color-default)
+		)
+	);
+	border-color: var(
+		--highcontrast-actionbutton-border-color-default,
+		var(
+			--mod-actionbutton-border-color-default,
+			var(--spectrum-actionbutton-border-color-default)
+		)
+	);
+	color: var(
+		--highcontrast-actionbutton-content-color-default,
+		var(
+			--mod-actionbutton-content-color-default,
+			var(--spectrum-actionbutton-content-color-default)
+		)
+	);
+	position: relative;
 }
 
 :host:dir(rtl),
-:host([dir='rtl']) {
-    --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
+:host([dir="rtl"]) {
+	--spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
 @media (hover: hover) {
-    :host(:hover) {
-        background-color: var(
-            --highcontrast-actionbutton-background-color-hover,
-            var(
-                --mod-actionbutton-background-color-hover,
-                var(--spectrum-actionbutton-background-color-hover)
-            )
-        );
-        border-color: var(
-            --highcontrast-actionbutton-border-color-hover,
-            var(
-                --mod-actionbutton-border-color-hover,
-                var(--spectrum-actionbutton-border-color-hover)
-            )
-        );
-        color: var(
-            --highcontrast-actionbutton-content-color-hover,
-            var(
-                --mod-actionbutton-content-color-hover,
-                var(--spectrum-actionbutton-content-color-hover)
-            )
-        );
-    }
+	:host(:hover) {
+		background-color: var(
+			--highcontrast-actionbutton-background-color-hover,
+			var(
+				--mod-actionbutton-background-color-hover,
+				var(--spectrum-actionbutton-background-color-hover)
+			)
+		);
+		border-color: var(
+			--highcontrast-actionbutton-border-color-hover,
+			var(
+				--mod-actionbutton-border-color-hover,
+				var(--spectrum-actionbutton-border-color-hover)
+			)
+		);
+		color: var(
+			--highcontrast-actionbutton-content-color-hover,
+			var(
+				--mod-actionbutton-content-color-hover,
+				var(--spectrum-actionbutton-content-color-hover)
+			)
+		);
+	}
 }
 
 :host(:focus-visible) {
-    background-color: var(
-        --highcontrast-actionbutton-background-color-focus,
-        var(
-            --mod-actionbutton-background-color-focus,
-            var(--spectrum-actionbutton-background-color-focus)
-        )
-    );
-    border-color: var(
-        --highcontrast-actionbutton-border-color-focus,
-        var(
-            --mod-actionbutton-border-color-focus,
-            var(--spectrum-actionbutton-border-color-focus)
-        )
-    );
-    color: var(
-        --highcontrast-actionbutton-content-color-focus,
-        var(
-            --mod-actionbutton-content-color-focus,
-            var(--spectrum-actionbutton-content-color-focus)
-        )
-    );
+	background-color: var(
+		--highcontrast-actionbutton-background-color-focus,
+		var(
+			--mod-actionbutton-background-color-focus,
+			var(--spectrum-actionbutton-background-color-focus)
+		)
+	);
+	border-color: var(
+		--highcontrast-actionbutton-border-color-focus,
+		var(
+			--mod-actionbutton-border-color-focus,
+			var(--spectrum-actionbutton-border-color-focus)
+		)
+	);
+	color: var(
+		--highcontrast-actionbutton-content-color-focus,
+		var(
+			--mod-actionbutton-content-color-focus,
+			var(--spectrum-actionbutton-content-color-focus)
+		)
+	);
 }
 
 :host(:is(:active, [active])) {
-    background-color: var(
-        --highcontrast-actionbutton-background-color-down,
-        var(
-            --mod-actionbutton-background-color-down,
-            var(--spectrum-actionbutton-background-color-down)
-        )
-    );
-    border-color: var(
-        --highcontrast-actionbutton-border-color-down,
-        var(
-            --mod-actionbutton-border-color-down,
-            var(--spectrum-actionbutton-border-color-down)
-        )
-    );
-    color: var(
-        --highcontrast-actionbutton-content-color-down,
-        var(
-            --mod-actionbutton-content-color-down,
-            var(--spectrum-actionbutton-content-color-down)
-        )
-    );
+	background-color: var(
+		--highcontrast-actionbutton-background-color-down,
+		var(
+			--mod-actionbutton-background-color-down,
+			var(--spectrum-actionbutton-background-color-down)
+		)
+	);
+	border-color: var(
+		--highcontrast-actionbutton-border-color-down,
+		var(
+			--mod-actionbutton-border-color-down,
+			var(--spectrum-actionbutton-border-color-down)
+		)
+	);
+	color: var(
+		--highcontrast-actionbutton-content-color-down,
+		var(
+			--mod-actionbutton-content-color-down,
+			var(--spectrum-actionbutton-content-color-down)
+		)
+	);
 }
 
 :host([disabled]),
 :host([disabled]) {
-    background-color: var(
-        --highcontrast-actionbutton-background-color-disabled,
-        var(
-            --mod-actionbutton-background-color-disabled,
-            var(--spectrum-actionbutton-background-color-disabled)
-        )
-    );
-    border-color: var(
-        --highcontrast-actionbutton-border-color-disabled,
-        var(
-            --mod-actionbutton-border-color-disabled,
-            var(--spectrum-actionbutton-border-color-disabled)
-        )
-    );
-    color: var(
-        --highcontrast-actionbutton-content-color-disabled,
-        var(
-            --mod-actionbutton-content-color-disabled,
-            var(--spectrum-actionbutton-content-color-disabled)
-        )
-    );
+	background-color: var(
+		--highcontrast-actionbutton-background-color-disabled,
+		var(
+			--mod-actionbutton-background-color-disabled,
+			var(--spectrum-actionbutton-background-color-disabled)
+		)
+	);
+	border-color: var(
+		--highcontrast-actionbutton-border-color-disabled,
+		var(
+			--mod-actionbutton-border-color-disabled,
+			var(--spectrum-actionbutton-border-color-disabled)
+		)
+	);
+	color: var(
+		--highcontrast-actionbutton-content-color-disabled,
+		var(
+			--mod-actionbutton-content-color-disabled,
+			var(--spectrum-actionbutton-content-color-disabled)
+		)
+	);
 }
 
 :host([selected]) {
-    --mod-actionbutton-background-color-default: var(
-        --mod-actionbutton-background-color-default-selected
-    );
-    --mod-actionbutton-background-color-hover: var(
-        --mod-actionbutton-background-color-hover-selected
-    );
-    --mod-actionbutton-background-color-down: var(
-        --mod-actionbutton-background-color-down-selected
-    );
-    --mod-actionbutton-background-color-focus: var(
-        --mod-actionbutton-background-color-focus-selected
-    );
-    --mod-actionbutton-content-color-default: var(
-        --mod-actionbutton-content-color-default-selected
-    );
-    --mod-actionbutton-content-color-hover: var(
-        --mod-actionbutton-content-color-hover-selected
-    );
-    --mod-actionbutton-content-color-down: var(
-        --mod-actionbutton-content-color-down-selected
-    );
-    --mod-actionbutton-content-color-focus: var(
-        --mod-actionbutton-content-color-focus-selected
-    );
+	--mod-actionbutton-background-color-default: var(
+		--mod-actionbutton-background-color-default-selected
+	);
+	--mod-actionbutton-background-color-hover: var(
+		--mod-actionbutton-background-color-hover-selected
+	);
+	--mod-actionbutton-background-color-down: var(
+		--mod-actionbutton-background-color-down-selected
+	);
+	--mod-actionbutton-background-color-focus: var(
+		--mod-actionbutton-background-color-focus-selected
+	);
+	--mod-actionbutton-content-color-default: var(
+		--mod-actionbutton-content-color-default-selected
+	);
+	--mod-actionbutton-content-color-hover: var(
+		--mod-actionbutton-content-color-hover-selected
+	);
+	--mod-actionbutton-content-color-down: var(
+		--mod-actionbutton-content-color-down-selected
+	);
+	--mod-actionbutton-content-color-focus: var(
+		--mod-actionbutton-content-color-focus-selected
+	);
 }
 
 :host([selected][emphasized]) {
-    --mod-actionbutton-background-color-default: var(
-        --mod-actionbutton-background-color-default-selected-emphasized
-    );
-    --mod-actionbutton-background-color-hover: var(
-        --mod-actionbutton-background-color-hover-selected-emphasized
-    );
-    --mod-actionbutton-background-color-down: var(
-        --mod-actionbutton-background-color-down-selected-emphasized
-    );
-    --mod-actionbutton-background-color-focus: var(
-        --mod-actionbutton-background-color-focus-selected-emphasized
-    );
-    --mod-actionbutton-content-color-default: var(
-        --mod-actionbutton-content-color-default-selected-emphasized
-    );
-    --mod-actionbutton-content-color-hover: var(
-        --mod-actionbutton-content-color-hover-selected-emphasized
-    );
-    --mod-actionbutton-content-color-down: var(
-        --mod-actionbutton-content-color-down-selected-emphasized
-    );
-    --mod-actionbutton-content-color-focus: var(
-        --mod-actionbutton-content-color-focus-selected-emphasized
-    );
+	--mod-actionbutton-background-color-default: var(
+		--mod-actionbutton-background-color-default-selected-emphasized
+	);
+	--mod-actionbutton-background-color-hover: var(
+		--mod-actionbutton-background-color-hover-selected-emphasized
+	);
+	--mod-actionbutton-background-color-down: var(
+		--mod-actionbutton-background-color-down-selected-emphasized
+	);
+	--mod-actionbutton-background-color-focus: var(
+		--mod-actionbutton-background-color-focus-selected-emphasized
+	);
+	--mod-actionbutton-content-color-default: var(
+		--mod-actionbutton-content-color-default-selected-emphasized
+	);
+	--mod-actionbutton-content-color-hover: var(
+		--mod-actionbutton-content-color-hover-selected-emphasized
+	);
+	--mod-actionbutton-content-color-down: var(
+		--mod-actionbutton-content-color-down-selected-emphasized
+	);
+	--mod-actionbutton-content-color-focus: var(
+		--mod-actionbutton-content-color-focus-selected-emphasized
+	);
 }
 
-:host([selected][static-color='black']),
-:host([selected][static-color='white']) {
-    --mod-actionbutton-content-color-default: var(
-        --mod-actionbutton-static-content-color
-    );
-    --mod-actionbutton-content-color-hover: var(
-        --mod-actionbutton-static-content-color
-    );
-    --mod-actionbutton-content-color-down: var(
-        --mod-actionbutton-static-content-color
-    );
-    --mod-actionbutton-content-color-focus: var(
-        --mod-actionbutton-static-content-color
-    );
+:host([selected][static-color="black"]),
+:host([selected][static-color="white"]) {
+	--mod-actionbutton-content-color-default: var(
+		--mod-actionbutton-static-content-color
+	);
+	--mod-actionbutton-content-color-hover: var(
+		--mod-actionbutton-static-content-color
+	);
+	--mod-actionbutton-content-color-down: var(
+		--mod-actionbutton-static-content-color
+	);
+	--mod-actionbutton-content-color-focus: var(
+		--mod-actionbutton-static-content-color
+	);
 }
 
-::slotted([slot='icon']) {
-    inline-size: var(
-        --mod-actionbutton-icon-size,
-        var(--spectrum-actionbutton-icon-size)
-    );
-    block-size: var(
-        --mod-actionbutton-icon-size,
-        var(--spectrum-actionbutton-icon-size)
-    );
-    color: inherit;
-    margin-inline-start: calc(
-        var(
-                --mod-actionbutton-edge-to-visual,
-                var(--spectrum-actionbutton-edge-to-visual)
-            ) -
-            var(
-                --mod-actionbutton-edge-to-text,
-                var(--spectrum-actionbutton-edge-to-text)
-            )
-    );
-    margin-inline-end: calc(
-        var(
-                --mod-actionbutton-edge-to-visual-only,
-                var(--spectrum-actionbutton-edge-to-visual-only)
-            ) -
-            var(
-                --mod-actionbutton-edge-to-text,
-                var(--spectrum-actionbutton-edge-to-text)
-            )
-    );
+::slotted([slot="icon"]) {
+	inline-size: var(
+		--mod-actionbutton-icon-size,
+		var(--spectrum-actionbutton-icon-size)
+	);
+	block-size: var(
+		--mod-actionbutton-icon-size,
+		var(--spectrum-actionbutton-icon-size)
+	);
+	color: inherit;
+	margin-inline-start: calc(
+		var(
+				--mod-actionbutton-edge-to-visual,
+				var(--spectrum-actionbutton-edge-to-visual)
+			) -
+			var(
+				--mod-actionbutton-edge-to-text,
+				var(--spectrum-actionbutton-edge-to-text)
+			)
+	);
+	margin-inline-end: calc(
+		var(
+				--mod-actionbutton-edge-to-visual-only,
+				var(--spectrum-actionbutton-edge-to-visual-only)
+			) -
+			var(
+				--mod-actionbutton-edge-to-text,
+				var(--spectrum-actionbutton-edge-to-text)
+			)
+	);
 }
 
-.hold-affordance + ::slotted([slot='icon']),
-[icon-only]::slotted([slot='icon']) {
-    margin-inline-start: calc(
-        var(
-                --mod-actionbutton-edge-to-visual-only,
-                var(--spectrum-actionbutton-edge-to-visual-only)
-            ) -
-            var(
-                --mod-actionbutton-edge-to-text,
-                var(--spectrum-actionbutton-edge-to-text)
-            )
-    );
+.hold-affordance + ::slotted([slot="icon"]),
+[icon-only]::slotted([slot="icon"]) {
+	margin-inline-start: calc(
+		var(
+				--mod-actionbutton-edge-to-visual-only,
+				var(--spectrum-actionbutton-edge-to-visual-only)
+			) -
+			var(
+				--mod-actionbutton-edge-to-text,
+				var(--spectrum-actionbutton-edge-to-text)
+			)
+	);
 }
 
 #label {
-    pointer-events: none;
-    font-size: var(
-        --mod-actionbutton-font-size,
-        var(--spectrum-actionbutton-font-size)
-    );
-    white-space: nowrap;
-    color: inherit;
-    color: var(--mod-actionbutton-label-color, inherit);
-    text-overflow: ellipsis;
-    overflow: hidden;
+	pointer-events: none;
+	font-size: var(
+		--mod-actionbutton-font-size,
+		var(--spectrum-actionbutton-font-size)
+	);
+	white-space: nowrap;
+	color: inherit;
+	color: var(--mod-actionbutton-label-color, inherit);
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .hold-affordance {
-    color: inherit;
-    transform: var(--spectrum-logical-rotation);
-    position: absolute;
-    inset-block-end: calc(
-        var(
-                --mod-actionbutton-edge-to-hold-icon,
-                var(--spectrum-actionbutton-edge-to-hold-icon)
-            ) -
-            var(
-                --mod-actionbutton-border-width,
-                var(--spectrum-actionbutton-border-width)
-            )
-    );
-    inset-inline-end: calc(
-        var(
-                --mod-actionbutton-edge-to-hold-icon,
-                var(--spectrum-actionbutton-edge-to-hold-icon)
-            ) -
-            var(
-                --mod-actionbutton-border-width,
-                var(--spectrum-actionbutton-border-width)
-            )
-    );
+	color: inherit;
+	transform: var(--spectrum-logical-rotation);
+	position: absolute;
+	inset-block-end: calc(
+		var(
+				--mod-actionbutton-edge-to-hold-icon,
+				var(--spectrum-actionbutton-edge-to-hold-icon)
+			) -
+			var(
+				--mod-actionbutton-border-width,
+				var(--spectrum-actionbutton-border-width)
+			)
+	);
+	inset-inline-end: calc(
+		var(
+				--mod-actionbutton-edge-to-hold-icon,
+				var(--spectrum-actionbutton-edge-to-hold-icon)
+			) -
+			var(
+				--mod-actionbutton-border-width,
+				var(--spectrum-actionbutton-border-width)
+			)
+	);
 }
 
 :host {
-    transition: border-color
-        var(
-            --mod-actionbutton-animation-duration,
-            var(--spectrum-actionbutton-animation-duration)
-        )
-        ease-in-out;
+	transition: border-color
+		var(
+			--mod-actionbutton-animation-duration,
+			var(--spectrum-actionbutton-animation-duration)
+		)
+		ease-in-out;
 }
 
 :host:after {
-    margin: calc(
-        (
-                var(
-                        --mod-actionbutton-focus-indicator-gap,
-                        var(--spectrum-actionbutton-focus-indicator-gap)
-                    ) +
-                    var(
-                        --mod-actionbutton-border-width,
-                        var(--spectrum-actionbutton-border-width)
-                    )
-            ) * -1
-    );
-    border-radius: var(
-        --mod-actionbutton-focus-indicator-border-radius,
-        var(--spectrum-actionbutton-focus-indicator-border-radius)
-    );
-    transition: box-shadow
-        var(
-            --mod-actionbutton-animation-duration,
-            var(--spectrum-actionbutton-animation-duration)
-        )
-        ease-in-out;
-    pointer-events: none;
-    content: '';
-    position: absolute;
-    inset: 0;
+	margin: calc(
+		(
+				var(
+						--mod-actionbutton-focus-indicator-gap,
+						var(--spectrum-actionbutton-focus-indicator-gap)
+					) +
+					var(
+						--mod-actionbutton-border-width,
+						var(--spectrum-actionbutton-border-width)
+					)
+			) *
+			-1
+	);
+	border-radius: var(
+		--mod-actionbutton-focus-indicator-border-radius,
+		var(--spectrum-actionbutton-focus-indicator-border-radius)
+	);
+	transition: box-shadow
+		var(
+			--mod-actionbutton-animation-duration,
+			var(--spectrum-actionbutton-animation-duration)
+		)
+		ease-in-out;
+	pointer-events: none;
+	content: "";
+	position: absolute;
+	inset: 0;
 }
 
 :host(:focus-visible) {
-    box-shadow: none;
-    outline: none;
+	box-shadow: none;
+	outline: none;
 }
 
 :host(:focus-visible):after {
-    box-shadow: 0 0 0
-        var(
-            --mod-actionbutton-focus-indicator-thickness,
-            var(--spectrum-actionbutton-focus-indicator-thickness)
-        )
-        var(
-            --highcontrast-actionbutton-focus-indicator-color,
-            var(
-                --mod-actionbutton-focus-indicator-color,
-                var(--spectrum-actionbutton-focus-indicator-color)
-            )
-        );
+	box-shadow: 0 0 0
+		var(
+			--mod-actionbutton-focus-indicator-thickness,
+			var(--spectrum-actionbutton-focus-indicator-thickness)
+		)
+		var(
+			--highcontrast-actionbutton-focus-indicator-color,
+			var(
+				--mod-actionbutton-focus-indicator-color,
+				var(--spectrum-actionbutton-focus-indicator-color)
+			)
+		);
 }

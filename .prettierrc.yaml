@@ -1,8 +1,9 @@
 printWidth: 80
-tabWidth: 4
-semi: true
-singleQuote: true
-trailingComma: es5
+tabWidth: 2
+useTabs: true
+# semi: true
+singleQuote: false
+# trailingComma: es5
 bracketSpacing: true
 arrowParens: always
-htmlWhitespaceSensitivity: ignore
+# htmlWhitespaceSensitivity: ignore
