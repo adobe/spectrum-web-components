@@ -57,6 +57,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/table-body-overrides.css.js": "./src/table-body-overrides.css.js",
         "./src/table-body.css.js": "./src/table-body.css.js",
         "./src/table-cell-overrides.css.js": "./src/table-cell-overrides.css.js",
         "./src/table-cell.css.js": "./src/table-cell.css.js",

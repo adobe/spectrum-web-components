@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-tray-wrapper.css');
+@import url('./tray-wrapper-overrides.css');
 @import url('./spectrum-tray.css');
 @import url('./tray-overrides.css');
 

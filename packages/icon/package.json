@@ -40,6 +40,7 @@
         "./src/icon-corner-triangle-overrides.css.js": "./src/icon-corner-triangle-overrides.css.js",
         "./src/icon-cross-overrides.css.js": "./src/icon-cross-overrides.css.js",
         "./src/icon-dash-overrides.css.js": "./src/icon-dash-overrides.css.js",
+        "./src/icon-double-gripper-overrides.css.js": "./src/icon-double-gripper-overrides.css.js",
         "./src/icon-overrides.css.js": "./src/icon-overrides.css.js",
         "./src/icon-single-gripper-overrides.css.js": "./src/icon-single-gripper-overrides.css.js",
         "./src/icon-triple-gripper-overrides.css.js": "./src/icon-triple-gripper-overrides.css.js",

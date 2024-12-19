@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-breadcrumbs-item.css');
+@import url('./breadcrumbs-item-overrides.css');
 
 :host([hidden]) {
     display: none;

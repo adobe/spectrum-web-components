@@ -34,6 +34,7 @@
             "default": "./src/Breadcrumbs.js"
         },
         "./src/breadcrumb-item.css.js": "./src/breadcrumb-item.css.js",
+        "./src/breadcrumbs-item-overrides.css.js": "./src/breadcrumbs-item-overrides.css.js",
         "./src/breadcrumbs-overrides.css.js": "./src/breadcrumbs-overrides.css.js",
         "./src/breadcrumbs.css.js": "./src/breadcrumbs.css.js",
         "./src/index.js": {
