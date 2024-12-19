@@ -10,22 +10,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import './components/layout.js';
+import "./components/layout.js";
 
 declare global {
-    interface Window {
-        spAlert(el: HTMLElement, message: string): void;
-    }
+	interface Window {
+		spAlert(el: HTMLElement, message: string): void;
+	}
 }
 
 window.spAlert = (el: HTMLElement, message: string): void => {
-    el.dispatchEvent(
-        new CustomEvent('alert', {
-            composed: true,
-            bubbles: true,
-            detail: {
-                message,
-            },
-        })
-    );
+	el.dispatchEvent(
+		new CustomEvent("alert", {
+			composed: true,
+			bubbles: true,
+			detail: {
+				message,
+			},
+		}),
+	);
 };

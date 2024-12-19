@@ -11,50 +11,50 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    SpectrumElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
+	CSSResultArray,
+	html,
+	SpectrumElement,
+	TemplateResult,
+} from "@spectrum-web-components/base";
 import {
-    customElement,
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
-import { ResizeController } from '@lit-labs/observers/resize-controller.js';
+	customElement,
+	property,
+	query,
+} from "@spectrum-web-components/base/src/decorators.js";
+import { ResizeController } from "@lit-labs/observers/resize-controller.js";
 
-import styles from './demo-container.css';
+import styles from "./demo-container.css";
 
-@customElement('demo-container')
+@customElement("demo-container")
 export class DemoContainer extends SpectrumElement {
-    public static override get styles(): CSSResultArray {
-        return [styles];
-    }
+	public static override get styles(): CSSResultArray {
+		return [styles];
+	}
 
-    @property({ type: Boolean, reflect: true })
-    scrollable = false;
+	@property({ type: Boolean, reflect: true })
+	scrollable = false;
 
-    @query('.wrapper')
-    wrapper!: HTMLDivElement;
+	@query(".wrapper")
+	wrapper!: HTMLDivElement;
 
-    resizeController = new ResizeController(this, {
-        callback: () => this.shouldUpdateScrollableState(),
-    });
+	resizeController = new ResizeController(this, {
+		callback: () => this.shouldUpdateScrollableState(),
+	});
 
-    public shouldUpdateScrollableState = (): void => {
-        const { offsetHeight, scrollHeight } = this;
-        this.scrollable = offsetHeight < scrollHeight;
-    };
+	public shouldUpdateScrollableState = (): void => {
+		const { offsetHeight, scrollHeight } = this;
+		this.scrollable = offsetHeight < scrollHeight;
+	};
 
-    public override render(): TemplateResult {
-        return html`
-            <div class="wrapper">
-                <slot></slot>
-            </div>
-        `;
-    }
+	public override render(): TemplateResult {
+		return html`
+			<div class="wrapper">
+				<slot></slot>
+			</div>
+		`;
+	}
 
-    public override firstUpdated(): void {
-        this.resizeController.observe(this.wrapper);
-    }
+	public override firstUpdated(): void {
+		this.resizeController.observe(this.wrapper);
+	}
 }

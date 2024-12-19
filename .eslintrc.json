@@ -5,7 +5,7 @@
 		"node": true
 	},
 	"extends": [
-		"plugin:prettier/recommended",
+		// "plugin:prettier/recommended",
 		"plugin:lit-a11y/recommended",
 		"plugin:require-extensions/recommended",
 		"eslint:recommended",
@@ -148,7 +148,6 @@
 			"error",
 			{ "blankLine": "always", "next": "return", "prev": "*" }
 		],
-		"brace-style": ["warn", "stroustrup", { "allowSingleLine": true }],
 		"curly": ["error", "all"],
 		"func-call-spacing": ["warn", "never"],
 		"import/extensions": [
@@ -189,13 +188,6 @@
 				"templateFile": "config/license.js"
 			}
 		],
-		// "prettier/prettier": [
-		// 	"error",
-		// 	{
-		// 		"parser": "flow",
-		// 		"singleQuote": true
-		// 	}
-		// ],
 		"quotes": ["warn", "double"],
 		"semi": ["warn", "always"],
 		"sort-imports": [

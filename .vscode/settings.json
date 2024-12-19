@@ -13,7 +13,7 @@
 		"**/*.test-vrt.ts": true
 	},
 	"editor.tabSize": 2,
-	"editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 	"editor.formatOnType": false,
 	"editor.formatOnPaste": true,
 	"editor.formatOnSave": true,
@@ -34,14 +34,14 @@
 			"source.organizeImports": "explicit"
 		},
 		"editor.colorDecorators": true,
-		"editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
 	},
 	"[javascript]": {
 		"editor.codeActionsOnSave": {
 			"source.organizeImports": "explicit"
 		},
 		"editor.colorDecorators": true,
-		"editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
 	},
 	"[markdown]": {
 		"editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
@@ -162,7 +162,7 @@
 	],
 	"js/ts.implicitProjectConfig.experimentalDecorators": true,
 	"postcss.validate": false,
-	"prettier.configPath": ".prettierrc",
+	"prettier.configPath": ".prettierrc.yaml",
 	"prettier.ignorePath": ".prettierignore",
 	"prettier.prettierPath": "node_modules/prettier",
 	"stylelint.enable": true,
