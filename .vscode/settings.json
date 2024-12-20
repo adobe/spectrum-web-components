@@ -33,7 +33,7 @@
 	"editor.formatOnSave": true,
 	"editor.formatOnSaveMode": "file",
 	"editor.insertSpaces": false,
-	"editor.detectIndentation": false,
+	"editor.detectIndentation": true,
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"lit-plugin.strict": true,
 	"[css]": {
@@ -109,12 +109,6 @@
 			"selector": "yaml"
 		}
 	],
-	// "cssVariables.lookupFiles": [
-	// 	"${workspaceFolder}/tokens/dist/index.css",
-	// 	"${workspaceFolder}/tokens/**/*.css",
-	// 	"${workspaceFolder}/components/*/index.css",
-	// 	"${workspaceFolder}/components/*/themes/*.css"
-	// ],
 	"docthis.includeDescriptionTag": true,
 	"docthis.inferTypesFromNames": true,
 	"docthis.returnsTag": true,
@@ -122,8 +116,6 @@
 	"editor.renderControlCharacters": true,
 	"eslint.format.enable": true,
 	"eslint.useESLintClass": true,
-	// "eslint.nodePath": "node_modules/eslint",
-	// "eslint.workingDirectories": ["./packages", "./tools"],
 	"eslint.validate": [
 		"javascript",
 		"javascriptreact",

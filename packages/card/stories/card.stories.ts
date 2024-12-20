@@ -9,10 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from "@spectrum-web-components/base";
-import { ifDefined } from "lit-html/directives/if-defined.js";
-
 import "@spectrum-web-components/action-menu/sp-action-menu.js";
+import { html, TemplateResult } from "@spectrum-web-components/base";
 import "@spectrum-web-components/card/sp-card.js";
 import "@spectrum-web-components/icons-workflow/icons/sp-icon-file-txt.js";
 import "@spectrum-web-components/link/sp-link.js";
@@ -20,6 +18,7 @@ import "@spectrum-web-components/menu/sp-menu-divider.js";
 import "@spectrum-web-components/menu/sp-menu-item.js";
 import "@spectrum-web-components/menu/sp-menu.js";
 import "@spectrum-web-components/textfield/sp-textfield.js";
+import { ifDefined } from "lit-html/directives/if-defined.js";
 import { landscape, portrait } from "./images.js";
 
 export default {
@@ -348,8 +347,8 @@ horizontalWithHREF.args = {
 export const smallQuiet = (args: StoryArgs): TemplateResult => {
 	return html`
 		<div>
+			<sp-card
 				size=${ifDefined(args.size)}
-				size=${args.size}
 				?horizontal=${args.horizontal}
 				heading="Card Heading"
 				subheading="JPG"
