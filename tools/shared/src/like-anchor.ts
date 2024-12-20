@@ -98,21 +98,21 @@ export function LikeAnchor<T extends Constructor<ReactiveElement>>(
       tabindex,
       anchorContent = html`<slot></slot>`,
     }: RenderAnchorOptions): TemplateResult {
-      return html` <a
-        id=${id}
-        class=${ifDefined(className)}
-        href=${ifDefined(this.href)}
-        download=${ifDefined(this.download)}
-        target=${ifDefined(this.target)}
-        aria-label=${ifDefined(this.label)}
-        aria-labelledby=${ifDefined(labelledby)}
-        aria-hidden=${ifDefined(ariaHidden ? "true" : undefined)}
-        tabindex=${ifDefined(tabindex)}
-        referrerpolicy=${ifDefined(this.referrerpolicy)}
-        rel=${ifDefined(this.rel)}
-      >
-        ${anchorContent}
-      </a>`;
+      // prettier-ignore
+      return html`
+        <a
+          id=${id}
+          class=${ifDefined(className)}
+          href=${ifDefined(this.href)}
+          download=${ifDefined(this.download)}
+          target=${ifDefined(this.target)}
+          aria-label=${ifDefined(this.label)}
+          aria-labelledby=${ifDefined(labelledby)}
+          aria-hidden=${ifDefined(ariaHidden ? "true" : undefined)}
+          tabindex=${ifDefined(tabindex)}
+          referrerpolicy=${ifDefined(this.referrerpolicy)}
+          rel=${ifDefined(this.rel)}
+        >${anchorContent}</a>`;
     }
   }
 
