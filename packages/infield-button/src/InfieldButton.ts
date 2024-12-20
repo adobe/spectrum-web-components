@@ -10,53 +10,53 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    CSSResultArray,
-    html,
-    SizedMixin,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { ButtonBase } from '@spectrum-web-components/button/src/ButtonBase.js';
+  CSSResultArray,
+  html,
+  SizedMixin,
+  TemplateResult,
+} from "@spectrum-web-components/base";
+import { property } from "@spectrum-web-components/base/src/decorators.js";
+import { ButtonBase } from "@spectrum-web-components/button/src/ButtonBase.js";
 
-import styles from './infield-button.css.js';
+import styles from "./infield-button.css.js";
 
 /**
  * @element sp-infield-button
  */
 export class InfieldButton extends SizedMixin(ButtonBase, {
-    noDefaultSize: true,
-    validSizes: ['s', 'm', 'l', 'xl'],
+  noDefaultSize: true,
+  validSizes: ["s", "m", "l", "xl"],
 }) {
-    public static override get styles(): CSSResultArray {
-        return [...super.styles, styles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [...super.styles, styles];
+  }
 
-    /**
-     * Whether to style the button as if it is at the start or end of a vertical stack
-     *
-     * @type {'start' | 'end'}
-     */
-    @property()
-    block?: 'start' | 'end';
+  /**
+   * Whether to style the button as if it is at the start or end of a vertical stack
+   *
+   * @type {'start' | 'end'}
+   */
+  @property()
+  block?: "start" | "end";
 
-    /**
-     * Whether to style the button as if it is at the start or end of a horizontal group
-     *
-     * @type {'start' | 'end'}
-     */
-    @property()
-    inline?: 'start' | 'end';
+  /**
+   * Whether to style the button as if it is at the start or end of a horizontal group
+   *
+   * @type {'start' | 'end'}
+   */
+  @property()
+  inline?: "start" | "end";
 
-    @property({ type: Boolean, reflect: true })
-    quiet = false;
+  @property({ type: Boolean, reflect: true })
+  quiet = false;
 
-    protected override get buttonContent(): TemplateResult[] {
-        const buttonContent = html`
-            <div class="fill">
-                <slot></slot>
-            </div>
-        `;
+  protected override get buttonContent(): TemplateResult[] {
+    const buttonContent = html`
+      <div class="fill">
+        <slot></slot>
+      </div>
+    `;
 
-        return [buttonContent];
-    }
+    return [buttonContent];
+  }
 }

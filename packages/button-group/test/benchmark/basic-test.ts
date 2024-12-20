@@ -10,15 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/button-group/sp-button-group.js';
-import '@spectrum-web-components/button/sp-button.js';
-import { html } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/button-group/sp-button-group.js";
+import "@spectrum-web-components/button/sp-button.js";
+import { html } from "lit";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
 measureFixtureCreation(html`
-    <sp-button-group>
-        <sp-button>Button 1</sp-button>
-        <sp-button>Longer Button 2</sp-button>
-        <sp-button>Short 3</sp-button>
-    </sp-button-group>
+  <sp-button-group>
+    <sp-button>Button 1</sp-button>
+    <sp-button>Longer Button 2</sp-button>
+    <sp-button>Short 3</sp-button>
+  </sp-button-group>
 `);

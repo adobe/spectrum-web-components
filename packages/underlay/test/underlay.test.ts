@@ -10,44 +10,37 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from "@open-wc/testing";
 
-import '@spectrum-web-components/underlay/sp-underlay.js';
-import { Underlay } from '@spectrum-web-components/underlay';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { spy } from 'sinon';
+import "@spectrum-web-components/underlay/sp-underlay.js";
+import { Underlay } from "@spectrum-web-components/underlay";
+import { testForLitDevWarnings } from "../../../test/testing-helpers.js";
+import { spy } from "sinon";
 
-describe('Underlay', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<Underlay>(html`
-                <sp-underlay></sp-underlay>
-            `)
-    );
-    it('loads default underlay accessibly', async () => {
-        const el = await fixture<Underlay>(html`
-            <sp-underlay></sp-underlay>
-        `);
+describe("Underlay", () => {
+  testForLitDevWarnings(
+    async () => await fixture<Underlay>(html` <sp-underlay></sp-underlay> `),
+  );
+  it("loads default underlay accessibly", async () => {
+    const el = await fixture<Underlay>(html` <sp-underlay></sp-underlay> `);
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
+    await expect(el).to.be.accessible();
+  });
 
-    it('fires a close event when clicked', async () => {
-        const el = await fixture<Underlay>(html`
-            <sp-underlay></sp-underlay>
-        `);
+  it("fires a close event when clicked", async () => {
+    const el = await fixture<Underlay>(html` <sp-underlay></sp-underlay> `);
 
-        await elementUpdated(el);
-        const closeSpy = spy();
+    await elementUpdated(el);
+    const closeSpy = spy();
 
-        el.addEventListener('close', () => closeSpy());
-        expect(closeSpy.callCount).to.equal(0);
+    el.addEventListener("close", () => closeSpy());
+    expect(closeSpy.callCount).to.equal(0);
 
-        el.dispatchEvent(new PointerEvent('pointerdown', { button: 0 }));
-        el.dispatchEvent(new PointerEvent('pointerup'));
+    el.dispatchEvent(new PointerEvent("pointerdown", { button: 0 }));
+    el.dispatchEvent(new PointerEvent("pointerup"));
 
-        expect(closeSpy.callCount).to.equal(1);
-    });
+    expect(closeSpy.callCount).to.equal(1);
+  });
 });

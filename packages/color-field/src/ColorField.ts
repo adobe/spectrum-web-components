@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    CSSResultArray,
-    html,
-    TemplateResult,
-} from '@spectrum-web-components/base';
+  CSSResultArray,
+  html,
+  TemplateResult,
+} from "@spectrum-web-components/base";
 
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { TinyColor } from '@ctrl/tinycolor';
-import { TextfieldBase } from '@spectrum-web-components/textfield';
+import { property } from "@spectrum-web-components/base/src/decorators.js";
+import { TinyColor } from "@ctrl/tinycolor";
+import { TextfieldBase } from "@spectrum-web-components/textfield";
 
 /**
  * @element sp-color-field
@@ -26,84 +26,82 @@ import { TextfieldBase } from '@spectrum-web-components/textfield';
  * @fires change - An alteration to the value of the color-field has been committed by the user.
  */
 export class ColorField extends TextfieldBase {
-    public static override get styles(): CSSResultArray {
-        return [...super.styles];
+  public static override get styles(): CSSResultArray {
+    return [...super.styles];
+  }
+
+  @property({ type: Boolean, attribute: "view-color" })
+  public viewColor = false;
+
+  public override set value(value: string) {
+    if (value === this.value) {
+      return;
     }
 
-    @property({ type: Boolean, attribute: 'view-color' })
-    public viewColor = false;
+    const oldValue = this._value;
 
-    public override set value(value: string) {
-        if (value === this.value) {
-            return;
-        }
+    this._value = value;
+    this.requestUpdate("value", oldValue);
+  }
 
-        const oldValue = this._value;
+  public override get value(): string {
+    return this._value;
+  }
 
-        this._value = value;
-        this.requestUpdate('value', oldValue);
+  protected override _value = "";
+
+  private cachedColor: string | null = null;
+
+  public getColorValue(): string {
+    if (!this.value) {
+      return "";
     }
 
-    public override get value(): string {
-        return this._value;
+    if (!this.cachedColor || this.cachedColor !== this.value) {
+      const tinyColor = new TinyColor(this.value);
+
+      this.cachedColor = tinyColor.isValid ? tinyColor.toRgbString() : "";
     }
 
-    protected override _value = '';
+    return this.cachedColor;
+  }
 
-    private cachedColor: string | null = null;
+  private renderColorHandle(): TemplateResult {
+    return this.viewColor
+      ? html`
+          <sp-color-handle
+            size="m"
+            color="${this.getColorValue()}"
+          ></sp-color-handle>
+        `
+      : html``;
+  }
 
-    public getColorValue(): string {
-        if (!this.value) {
-            return '';
-        }
-
-        if (!this.cachedColor || this.cachedColor !== this.value) {
-            const tinyColor = new TinyColor(this.value);
-
-            this.cachedColor = tinyColor.isValid ? tinyColor.toRgbString() : '';
-        }
-
-        return this.cachedColor;
+  protected override render(): TemplateResult {
+    if (this.viewColor) {
+      import("@spectrum-web-components/color-handle/sp-color-handle.js");
     }
 
-    private renderColorHandle(): TemplateResult {
-        return this.viewColor
-            ? html`
-                  <sp-color-handle
-                      size="m"
-                      color="${this.getColorValue()}"
-                  ></sp-color-handle>
-              `
-            : html``;
+    return html` ${super.render()} ${this.renderColorHandle()} `;
+  }
+
+  private cachedTinyColor: TinyColor | null = null;
+
+  public override checkValidity(): boolean {
+    let validity = super.checkValidity();
+
+    if (this.value) {
+      if (
+        !this.cachedTinyColor ||
+        this.cachedTinyColor.originalInput !== this.value
+      ) {
+        this.cachedTinyColor = new TinyColor(this.value);
+      }
+
+      this.valid = validity = this.cachedTinyColor.isValid;
+      this.invalid = !validity;
     }
 
-    protected override render(): TemplateResult {
-        if (this.viewColor) {
-            import('@spectrum-web-components/color-handle/sp-color-handle.js');
-        }
-
-        return html`
-            ${super.render()} ${this.renderColorHandle()}
-        `;
-    }
-
-    private cachedTinyColor: TinyColor | null = null;
-
-    public override checkValidity(): boolean {
-        let validity = super.checkValidity();
-
-        if (this.value) {
-            if (
-                !this.cachedTinyColor ||
-                this.cachedTinyColor.originalInput !== this.value
-            ) {
-                this.cachedTinyColor = new TinyColor(this.value);
-            }
-
-            this.valid = validity = this.cachedTinyColor.isValid;
-            this.invalid = !validity;
-        }
-
-        return validity;
-    }
+    return validity;
+  }
 }

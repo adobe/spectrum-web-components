@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import darkStyles from './src/theme-darkest.css.js';
-import { Theme } from './src/Theme.js';
-import './core.js';
+import darkStyles from "./src/theme-darkest.css.js";
+import { Theme } from "./src/Theme.js";
+import "./core.js";
 
-Theme.registerThemeFragment('darkest', 'color', darkStyles);
+Theme.registerThemeFragment("darkest", "color", darkStyles);

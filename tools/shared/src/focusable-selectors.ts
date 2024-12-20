@@ -11,19 +11,19 @@ governing permissions and limitations under the License.
 */
 
 const focusables = [
-    'button',
-    '[focusable]',
-    '[href]',
-    'input',
-    'label',
-    'select',
-    'textarea',
-    '[tabindex]',
+  "button",
+  "[focusable]",
+  "[href]",
+  "input",
+  "label",
+  "select",
+  "textarea",
+  "[tabindex]",
 ];
 
 const userFocuable = ':not([tabindex="-1"])';
 
 export const userFocusableSelector =
-    focusables.join(`${userFocuable}, `) + userFocuable;
+  focusables.join(`${userFocuable}, `) + userFocuable;
 
-export const focusableSelector = focusables.join(', ');
+export const focusableSelector = focusables.join(", ");

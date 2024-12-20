@@ -11,163 +11,158 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect, fixture, html } from '@open-wc/testing';
+import { expect, fixture, html } from "@open-wc/testing";
 import {
-    HostWithPendingState,
-    PendingStateController,
-} from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
+  HostWithPendingState,
+  PendingStateController,
+} from "@spectrum-web-components/reactive-controllers/src/PendingState.js";
 
-import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
-import '@spectrum-web-components/picker/sp-picker.js';
+import "@spectrum-web-components/progress-circle/sp-progress-circle.js";
+import "@spectrum-web-components/picker/sp-picker.js";
 
-describe('PendingStateController', () => {
-    let host: HostWithPendingState;
-    let controller: PendingStateController<HostWithPendingState>;
+describe("PendingStateController", () => {
+  let host: HostWithPendingState;
+  let controller: PendingStateController<HostWithPendingState>;
 
-    beforeEach(async () => {
-        host = await fixture<HostWithPendingState>(html`
-            <sp-picker aria-label="clickable" pending></sp-picker>
-        `);
-        controller = host.pendingStateController;
+  beforeEach(async () => {
+    host = await fixture<HostWithPendingState>(html`
+      <sp-picker aria-label="clickable" pending></sp-picker>
+    `);
+    controller = host.pendingStateController;
+  });
+
+  describe("renderPendingState", () => {
+    it("should change aria-label of host when pending and when not pending", async () => {
+      host = await fixture<HostWithPendingState>(html`
+        <sp-picker></sp-picker>
+      `);
+      controller = host.pendingStateController;
+
+      host.setAttribute("pending", "true");
+      await host.updateComplete;
+
+      let ariaLabel = host.getAttribute("aria-label");
+
+      expect(ariaLabel).to.equal("Pending");
+
+      host.removeAttribute("pending");
+      await host.updateComplete;
+
+      ariaLabel = host.getAttribute("aria-label");
+      expect(ariaLabel).to.equal(null);
+
+      host.setAttribute("aria-label", "clickable");
+      await host.updateComplete;
+      ariaLabel = host.getAttribute("aria-label");
+      expect(ariaLabel).to.equal("clickable");
+      host.setAttribute("pending", "true");
+
+      await host.updateComplete;
+      ariaLabel = host.getAttribute("aria-label");
+      expect(ariaLabel).to.equal("Pending");
+
+      host.removeAttribute("pending");
+      await host.updateComplete;
+      ariaLabel = host.getAttribute("aria-label");
+      expect(ariaLabel).to.equal("clickable");
+
+      host.setAttribute("pending", "true");
+      await host.updateComplete;
+      ariaLabel = host.getAttribute("aria-label");
+      expect(ariaLabel).to.equal("Pending");
     });
 
-    describe('renderPendingState', () => {
-        it('should change aria-label of host when pending and when not pending', async () => {
-            host = await fixture<HostWithPendingState>(html`
-                <sp-picker></sp-picker>
-            `);
-            controller = host.pendingStateController;
+    it("should render the pending state UI", async () => {
+      const pendingLabel = "Custom Pending Label";
 
-            host.setAttribute('pending', 'true');
-            await host.updateComplete;
+      host.pendingLabel = pendingLabel;
+      const templateResult = controller.renderPendingState();
 
-            let ariaLabel = host.getAttribute('aria-label');
-            expect(ariaLabel).to.equal('Pending');
+      const renderedElement = await fixture(html` ${templateResult} `);
+      const expectedElement = await fixture(html`
+        <sp-progress-circle
+          id="loader"
+          size="s"
+          indeterminate
+          aria-valuetext=${pendingLabel}
+          class="progress-circle"
+        ></sp-progress-circle>
+      `);
 
-            host.removeAttribute('pending');
-            await host.updateComplete;
-
-            ariaLabel = host.getAttribute('aria-label');
-            expect(ariaLabel).to.equal(null);
-
-            host.setAttribute('aria-label', 'clickable');
-            await host.updateComplete;
-            ariaLabel = host.getAttribute('aria-label');
-            expect(ariaLabel).to.equal('clickable');
-            host.setAttribute('pending', 'true');
-
-            await host.updateComplete;
-            ariaLabel = host.getAttribute('aria-label');
-            expect(ariaLabel).to.equal('Pending');
-
-            host.removeAttribute('pending');
-            await host.updateComplete;
-            ariaLabel = host.getAttribute('aria-label');
-            expect(ariaLabel).to.equal('clickable');
-
-            host.setAttribute('pending', 'true');
-            await host.updateComplete;
-            ariaLabel = host.getAttribute('aria-label');
-            expect(ariaLabel).to.equal('Pending');
-        });
-
-        it('should render the pending state UI', async () => {
-            const pendingLabel = 'Custom Pending Label';
-            host.pendingLabel = pendingLabel;
-            const templateResult = controller.renderPendingState();
-
-            const renderedElement = await fixture(html`
-                ${templateResult}
-            `);
-            const expectedElement = await fixture(html`
-                <sp-progress-circle
-                    id="loader"
-                    size="s"
-                    indeterminate
-                    aria-valuetext=${pendingLabel}
-                    class="progress-circle"
-                ></sp-progress-circle>
-            `);
-
-            expect(renderedElement.outerHTML === expectedElement.outerHTML).to
-                .be.true;
-        });
-
-        it('should render the default pending state UI if no label is provided', async () => {
-            host.pendingLabel = undefined;
-            const templateResult = controller.renderPendingState();
-            const renderedElement = await fixture(html`
-                ${templateResult}
-            `);
-            const expectedElement = await fixture(html`
-                <sp-progress-circle
-                    id="loader"
-                    size="s"
-                    indeterminate
-                    aria-valuetext="Pending"
-                    class="progress-circle"
-                ></sp-progress-circle>
-            `);
-
-            const renderedAttributes = renderedElement.attributes;
-            const expectedAttributes = expectedElement.attributes;
-
-            expect(renderedAttributes.length === expectedAttributes.length).to
-                .be.true;
-
-            for (let i = 0; i < renderedAttributes.length; i++) {
-                const renderedAttr = renderedAttributes[i];
-                const expectedAttr = expectedAttributes.getNamedItem(
-                    renderedAttr.name
-                );
-
-                expect(renderedAttr.value === expectedAttr?.value).to.be.true;
-            }
-            expect(host.pending).to.be.true;
-        });
-
-        it('should toggle the pending state on and off and preserve the component state correctly', async () => {
-            // Set initial pending state to true
-            host.setAttribute('pending', 'true');
-            await host.updateComplete;
-            let progressCircle =
-                host.shadowRoot?.querySelector('sp-progress-circle');
-            expect(progressCircle).to.not.be.null;
-            host.removeAttribute('pending');
-            await host.updateComplete;
-            progressCircle =
-                host.shadowRoot?.querySelector('sp-progress-circle');
-            expect(progressCircle).to.be.null;
-            host.setAttribute('pending', 'true');
-            await host.updateComplete;
-            progressCircle =
-                host.shadowRoot?.querySelector('sp-progress-circle');
-            expect(progressCircle).to.not.be.null;
-            const expectedElement = await fixture(html`
-                <sp-progress-circle
-                    id="loader"
-                    size="s"
-                    indeterminate
-                    aria-valuetext="Pending"
-                    class="progress-circle"
-                ></sp-progress-circle>
-            `);
-
-            const renderedAttributes = progressCircle?.attributes;
-            const expectedAttributes = expectedElement.attributes;
-            expect(renderedAttributes?.length === expectedAttributes.length).to
-                .be.true;
-            if (renderedAttributes) {
-                for (let i = 0; i < renderedAttributes.length; i++) {
-                    const renderedAttr = renderedAttributes[i];
-                    const expectedAttr = expectedAttributes.getNamedItem(
-                        renderedAttr.name
-                    );
-
-                    expect(renderedAttr.value === expectedAttr?.value).to.be
-                        .true;
-                }
-            }
-        });
+      expect(renderedElement.outerHTML === expectedElement.outerHTML).to.be
+        .true;
     });
+
+    it("should render the default pending state UI if no label is provided", async () => {
+      host.pendingLabel = undefined;
+      const templateResult = controller.renderPendingState();
+      const renderedElement = await fixture(html` ${templateResult} `);
+      const expectedElement = await fixture(html`
+        <sp-progress-circle
+          id="loader"
+          size="s"
+          indeterminate
+          aria-valuetext="Pending"
+          class="progress-circle"
+        ></sp-progress-circle>
+      `);
+
+      const renderedAttributes = renderedElement.attributes;
+      const expectedAttributes = expectedElement.attributes;
+
+      expect(renderedAttributes.length === expectedAttributes.length).to.be
+        .true;
+
+      for (let i = 0; i < renderedAttributes.length; i++) {
+        const renderedAttr = renderedAttributes[i];
+        const expectedAttr = expectedAttributes.getNamedItem(renderedAttr.name);
+
+        expect(renderedAttr.value === expectedAttr?.value).to.be.true;
+      }
+      expect(host.pending).to.be.true;
+    });
+
+    it("should toggle the pending state on and off and preserve the component state correctly", async () => {
+      // Set initial pending state to true
+      host.setAttribute("pending", "true");
+      await host.updateComplete;
+      let progressCircle = host.shadowRoot?.querySelector("sp-progress-circle");
+
+      expect(progressCircle).to.not.be.null;
+      host.removeAttribute("pending");
+      await host.updateComplete;
+      progressCircle = host.shadowRoot?.querySelector("sp-progress-circle");
+      expect(progressCircle).to.be.null;
+      host.setAttribute("pending", "true");
+      await host.updateComplete;
+      progressCircle = host.shadowRoot?.querySelector("sp-progress-circle");
+      expect(progressCircle).to.not.be.null;
+      const expectedElement = await fixture(html`
+        <sp-progress-circle
+          id="loader"
+          size="s"
+          indeterminate
+          aria-valuetext="Pending"
+          class="progress-circle"
+        ></sp-progress-circle>
+      `);
+
+      const renderedAttributes = progressCircle?.attributes;
+      const expectedAttributes = expectedElement.attributes;
+
+      expect(renderedAttributes?.length === expectedAttributes.length).to.be
+        .true;
+
+      if (renderedAttributes) {
+        for (let i = 0; i < renderedAttributes.length; i++) {
+          const renderedAttr = renderedAttributes[i];
+          const expectedAttr = expectedAttributes.getNamedItem(
+            renderedAttr.name,
+          );
+
+          expect(renderedAttr.value === expectedAttr?.value).to.be.true;
+        }
+      }
+    });
+  });
 });

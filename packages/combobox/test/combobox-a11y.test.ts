@@ -11,377 +11,355 @@ governing permissions and limitations under the License.
 */
 
 import {
-    elementUpdated,
-    expect,
-    html,
-    nextFrame,
-    oneEvent,
-} from '@open-wc/testing';
+  elementUpdated,
+  expect,
+  html,
+  nextFrame,
+  oneEvent,
+} from "@open-wc/testing";
 
-import '@spectrum-web-components/combobox/sp-combobox.js';
-import { Combobox } from '@spectrum-web-components/combobox';
-import { detectOS, fixture } from '../../../test/testing-helpers.js';
-import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
+import "@spectrum-web-components/combobox/sp-combobox.js";
+import { Combobox } from "@spectrum-web-components/combobox";
+import { detectOS, fixture } from "../../../test/testing-helpers.js";
+import { findDescribedNode } from "../../../test/testing-helpers-a11y.js";
 import {
-    a11ySnapshot,
-    findAccessibilityNode,
-    sendKeys,
-} from '@web/test-runner-commands';
-import type { AccessibleNamedNode } from './helpers.js';
-import { comboboxFixture } from './helpers.js';
-import { isWebKit } from '@spectrum-web-components/shared';
+  a11ySnapshot,
+  findAccessibilityNode,
+  sendKeys,
+} from "@web/test-runner-commands";
+import type { AccessibleNamedNode } from "./helpers.js";
+import { comboboxFixture } from "./helpers.js";
+import { isWebKit } from "@spectrum-web-components/shared";
 import {
-    withFieldLabel,
-    withHelpText,
-    withTooltip,
-} from '../stories/combobox.stories.js';
-import { MenuItem } from '@spectrum-web-components/menu';
+  withFieldLabel,
+  withHelpText,
+  withTooltip,
+} from "../stories/combobox.stories.js";
+import { MenuItem } from "@spectrum-web-components/menu";
 
-describe('Combobox accessibility', () => {
-    it('renders accessibly with `label` attribute', async () => {
-        const el = await comboboxFixture();
-        const opened = oneEvent(el, 'sp-opened');
+describe("Combobox accessibility", () => {
+  it("renders accessibly with `label` attribute", async () => {
+    const el = await comboboxFixture();
+    const opened = oneEvent(el, "sp-opened");
 
-        el.open = true;
-        await opened;
+    el.open = true;
+    await opened;
 
-        await elementUpdated(el);
-        await expect(el).to.be.accessible();
+    await elementUpdated(el);
+    await expect(el).to.be.accessible();
+  });
+  it("renders accessibly with <sp-field-label>", async () => {
+    const test = await fixture<HTMLDivElement>(html`
+      <div>${withFieldLabel()}</div>
+    `);
+    const el = test.querySelector("sp-combobox") as unknown as Combobox;
+
+    await elementUpdated(el);
+
+    await expect(el).to.be.accessible();
+  });
+  it("renders accessibly with <sp-help-text>", async () => {
+    const test = await fixture<HTMLDivElement>(html`
+      <div>${withHelpText()}</div>
+    `);
+    const el = test.querySelector("sp-combobox") as unknown as Combobox;
+
+    await elementUpdated(el);
+
+    await expect(el).to.be.accessible();
+  });
+  it('manages its "name" value with <sp-field-label>', async () => {
+    const test = await fixture<HTMLDivElement>(html`
+      <div>${withFieldLabel()}</div>
+    `);
+    const el = test.querySelector("sp-combobox") as unknown as Combobox;
+    const name = "Pick something";
+    const webkitName = "Pick something Banana";
+    const isWebKitMacOS = isWebKit() && detectOS() === "Mac OS";
+
+    await elementUpdated(el);
+    await nextFrame();
+    await nextFrame();
+
+    let snapshot = (await a11ySnapshot(
+      {},
+    )) as unknown as AccessibleNamedNode & {
+      children: AccessibleNamedNode[];
+    };
+
+    const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
+      snapshot,
+      (node) => node.name === name && !node.value && node.role === "combobox",
+    );
+
+    // by default, is there a combobox that has `name` as the label?
+    expect(a11yNode, "`name` is the label text").to.not.be.null;
+
+    el.value = "Banana";
+    await elementUpdated(el);
+
+    snapshot = (await a11ySnapshot({})) as unknown as AccessibleNamedNode & {
+      children: AccessibleNamedNode[];
+    };
+
+    // WebKit doesn't currently associate the `name` via the accessibility tree.
+    // Instead if lists this data in the description 🤷🏻‍♂️
+    // Give it an escape hatch for now.
+    const node = findAccessibilityNode<AccessibleNamedNode>(
+      snapshot,
+      (node) =>
+        (node.name === name || (isWebKitMacOS && node.name === webkitName)) &&
+        node.value === "Banana" &&
+        node.role === "combobox",
+    );
+
+    expect(
+      node,
+      `pre escape hatch node not available: ${JSON.stringify(
+        snapshot,
+        null,
+        "  ",
+      )}`,
+    ).to.not.be.null;
+
+    if (isWebKitMacOS) {
+      // Retest WebKit without the escape hatch, expecting it to fail.
+      // This way we get notified when the results are as expected, again.
+      const iOSNode = findAccessibilityNode<AccessibleNamedNode>(
+        snapshot,
+        (node) =>
+          node.name === name &&
+          node.value === "Banana" &&
+          node.role === "combobox",
+      );
+
+      expect(
+        iOSNode,
+        `post escape hatch node available: ${JSON.stringify(
+          snapshot,
+          null,
+          "  ",
+        )}`,
+      ).to.be.null;
+    }
+  });
+  it('manages its "name" value in the accessibility tree', async () => {
+    const el = await comboboxFixture();
+
+    const name = "Combobox";
+    const webkitName = "Combobox Banana";
+    const isWebKitMacOS = isWebKit() && detectOS() === "Mac OS";
+
+    await elementUpdated(el);
+    await nextFrame();
+    await nextFrame();
+
+    let snapshot = (await a11ySnapshot(
+      {},
+    )) as unknown as AccessibleNamedNode & {
+      children: AccessibleNamedNode[];
+    };
+
+    const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
+      snapshot,
+      (node) => node.name === name && !node.value && node.role === "combobox",
+    );
+
+    // by default, is there a combobox that has `name` as the label?
+    expect(a11yNode, "`name` is the label text").to.not.be.null;
+
+    el.value = "Banana";
+    await elementUpdated(el);
+
+    snapshot = (await a11ySnapshot({})) as unknown as AccessibleNamedNode & {
+      children: AccessibleNamedNode[];
+    };
+
+    // WebKit doesn't currently associate the `name` via the accessibility tree.
+    // Instead if lists this data in the description 🤷🏻‍♂️
+    // Give it an escape hatch for now.
+    const node = findAccessibilityNode<AccessibleNamedNode>(
+      snapshot,
+      (node) =>
+        (node.name === name || (isWebKitMacOS && node.name === webkitName)) &&
+        node.value === "Banana" &&
+        node.role === "combobox",
+    );
+
+    expect(
+      node,
+      `pre escape hatch node not available: ${JSON.stringify(
+        snapshot,
+        null,
+        "  ",
+      )}`,
+    ).to.not.be.null;
+
+    if (isWebKitMacOS) {
+      // Retest WebKit without the escape hatch, expecting it to fail.
+      // This way we get notified when the results are as expected, again.
+      const iOSNode = findAccessibilityNode<AccessibleNamedNode>(
+        snapshot,
+        (node) =>
+          node.name === name &&
+          node.value === "Banana" &&
+          node.role === "combobox",
+      );
+
+      expect(
+        iOSNode,
+        `post escape hatch node available: ${JSON.stringify(
+          snapshot,
+          null,
+          "  ",
+        )}`,
+      ).to.be.null;
+    }
+  });
+  it('manages its "description" value with slotted <sp-tooltip>', async () => {
+    const test = await fixture<HTMLDivElement>(html`
+      <div>${withTooltip()}</div>
+    `);
+    const el = test.querySelector("sp-combobox") as unknown as Combobox;
+    const tooltipText = "This combobox has a tooltip.";
+
+    await elementUpdated(el);
+    await findDescribedNode(el.label, tooltipText);
+  });
+  it("renders open", async () => {
+    const el = await comboboxFixture();
+
+    const opened = oneEvent(el, "sp-opened");
+
+    el.open = true;
+    await opened;
+
+    await elementUpdated(el);
+    await expect(el).to.be.accessible();
+  });
+  it("manages aria-activedescendant", async () => {
+    // a11ySnapshot does not track the aria-activedescendant, hence querySelecting
+    const el = await comboboxFixture();
+
+    await elementUpdated(el);
+
+    expect(el.activeDescendant).to.be.undefined;
+
+    el.focus();
+    await elementUpdated(el);
+
+    await sendKeys({
+      press: "ArrowDown",
     });
-    it('renders accessibly with <sp-field-label>', async () => {
-        const test = await fixture<HTMLDivElement>(html`
-            <div>${withFieldLabel()}</div>
-        `);
-        const el = test.querySelector('sp-combobox') as unknown as Combobox;
+    await elementUpdated(el);
 
-        await elementUpdated(el);
+    expect(el.activeDescendant).to.not.be.undefined;
+    expect(el.activeDescendant.value).to.equal("apple");
 
-        await expect(el).to.be.accessible();
+    // aria-activedescendant should keep the combobox focused even when navigating the menu
+    const activeDescendant = el.shadowRoot.querySelector("#apple") as MenuItem;
+
+    await elementUpdated(activeDescendant);
+    // Menu Item association with a Menu happens outside of the update lifecycle
+    await nextFrame();
+    await nextFrame();
+
+    expect(activeDescendant.focused).to.be.true;
+    expect(el.focused).to.be.true;
+    await expect(el).to.be.accessible();
+  });
+  it("manages aria-selected", async () => {
+    const el = await comboboxFixture();
+
+    await elementUpdated(el);
+
+    type SelectedNode = { selected?: boolean };
+    let snapshot = (await a11ySnapshot({})) as unknown as SelectedNode & {
+      children: SelectedNode[];
+    };
+
+    expect(
+      findAccessibilityNode<SelectedNode>(snapshot, (node) => !!node.selected),
+    ).to.be.null;
+
+    const opened = oneEvent(el, "sp-opened");
+
+    el.click();
+    await opened;
+    await elementUpdated(el);
+    expect(el.open).to.be.true;
+
+    el.focus();
+    await elementUpdated(el);
+
+    await sendKeys({
+      press: "ArrowDown",
     });
-    it('renders accessibly with <sp-help-text>', async () => {
-        const test = await fixture<HTMLDivElement>(html`
-            <div>${withHelpText()}</div>
-        `);
-        const el = test.querySelector('sp-combobox') as unknown as Combobox;
+    await elementUpdated(el);
 
-        await elementUpdated(el);
+    expect(el.activeDescendant.value).to.equal("apple");
+    snapshot = (await a11ySnapshot({})) as unknown as SelectedNode & {
+      children: SelectedNode[];
+    };
+    expect(
+      findAccessibilityNode<SelectedNode>(snapshot, (node) => !!node.selected),
+      JSON.stringify(snapshot, null, "  "),
+    ).to.not.be.null;
+  });
+  it("manages aria-expanded", async () => {
+    const el = await comboboxFixture();
 
-        await expect(el).to.be.accessible();
-    });
-    it('manages its "name" value with <sp-field-label>', async () => {
-        const test = await fixture<HTMLDivElement>(html`
-            <div>${withFieldLabel()}</div>
-        `);
-        const el = test.querySelector('sp-combobox') as unknown as Combobox;
-        const name = 'Pick something';
-        const webkitName = 'Pick something Banana';
-        const isWebKitMacOS = isWebKit() && detectOS() === 'Mac OS';
+    await elementUpdated(el);
 
-        await elementUpdated(el);
-        await nextFrame();
-        await nextFrame();
+    type ExpandedNode = { expanded?: boolean };
+    let snapshot = (await a11ySnapshot({})) as unknown as ExpandedNode & {
+      children: ExpandedNode[];
+    };
 
-        let snapshot = (await a11ySnapshot(
-            {}
-        )) as unknown as AccessibleNamedNode & {
-            children: AccessibleNamedNode[];
-        };
+    expect(
+      findAccessibilityNode<ExpandedNode>(snapshot, (node) => !!node.expanded),
+    ).to.be.null;
 
-        const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
-            snapshot,
-            (node) =>
-                node.name === name && !node.value && node.role === 'combobox'
-        );
+    el.click();
+    await elementUpdated(el);
+    expect(el.open).to.be.true;
 
-        // by default, is there a combobox that has `name` as the label?
-        expect(a11yNode, '`name` is the label text').to.not.be.null;
+    snapshot = (await a11ySnapshot({})) as unknown as ExpandedNode & {
+      children: ExpandedNode[];
+    };
+    expect(
+      findAccessibilityNode<ExpandedNode>(snapshot, (node) => !!node.expanded),
+    ).to.not.be.null;
+  });
+  it("loads with list closed", async () => {
+    const el = await comboboxFixture();
 
-        el.value = 'Banana';
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        snapshot = (await a11ySnapshot(
-            {}
-        )) as unknown as AccessibleNamedNode & {
-            children: AccessibleNamedNode[];
-        };
+    expect(el.open).to.be.false;
+  });
+  it("renders accessibly with `pending` attribute", async () => {
+    const el = await comboboxFixture();
 
-        // WebKit doesn't currently associate the `name` via the accessibility tree.
-        // Instead if lists this data in the description 🤷🏻‍♂️
-        // Give it an escape hatch for now.
-        const node = findAccessibilityNode<AccessibleNamedNode>(
-            snapshot,
-            (node) =>
-                (node.name === name ||
-                    (isWebKitMacOS && node.name === webkitName)) &&
-                node.value === 'Banana' &&
-                node.role === 'combobox'
-        );
+    el.value = "Banana";
+    el.pending = true;
 
-        expect(
-            node,
-            `pre escape hatch node not available: ${JSON.stringify(
-                snapshot,
-                null,
-                '  '
-            )}`
-        ).to.not.be.null;
+    await elementUpdated(el);
+    await nextFrame();
 
-        if (isWebKitMacOS) {
-            // Retest WebKit without the escape hatch, expecting it to fail.
-            // This way we get notified when the results are as expected, again.
-            const iOSNode = findAccessibilityNode<AccessibleNamedNode>(
-                snapshot,
-                (node) =>
-                    node.name === name &&
-                    node.value === 'Banana' &&
-                    node.role === 'combobox'
-            );
+    const name = "Pending Combobox";
 
-            expect(
-                iOSNode,
-                `post escape hatch node available: ${JSON.stringify(
-                    snapshot,
-                    null,
-                    '  '
-                )}`
-            ).to.be.null;
-        }
-    });
-    it('manages its "name" value in the accessibility tree', async () => {
-        const el = await comboboxFixture();
+    const snapshot = (await a11ySnapshot(
+      {},
+    )) as unknown as AccessibleNamedNode & {
+      children: AccessibleNamedNode[];
+    };
 
-        const name = 'Combobox';
-        const webkitName = 'Combobox Banana';
-        const isWebKitMacOS = isWebKit() && detectOS() === 'Mac OS';
+    const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
+      snapshot,
+      (node) => node.name === name && node.role === "combobox",
+    );
 
-        await elementUpdated(el);
-        await nextFrame();
-        await nextFrame();
-
-        let snapshot = (await a11ySnapshot(
-            {}
-        )) as unknown as AccessibleNamedNode & {
-            children: AccessibleNamedNode[];
-        };
-
-        const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
-            snapshot,
-            (node) =>
-                node.name === name && !node.value && node.role === 'combobox'
-        );
-
-        // by default, is there a combobox that has `name` as the label?
-        expect(a11yNode, '`name` is the label text').to.not.be.null;
-
-        el.value = 'Banana';
-        await elementUpdated(el);
-
-        snapshot = (await a11ySnapshot(
-            {}
-        )) as unknown as AccessibleNamedNode & {
-            children: AccessibleNamedNode[];
-        };
-
-        // WebKit doesn't currently associate the `name` via the accessibility tree.
-        // Instead if lists this data in the description 🤷🏻‍♂️
-        // Give it an escape hatch for now.
-        const node = findAccessibilityNode<AccessibleNamedNode>(
-            snapshot,
-            (node) =>
-                (node.name === name ||
-                    (isWebKitMacOS && node.name === webkitName)) &&
-                node.value === 'Banana' &&
-                node.role === 'combobox'
-        );
-
-        expect(
-            node,
-            `pre escape hatch node not available: ${JSON.stringify(
-                snapshot,
-                null,
-                '  '
-            )}`
-        ).to.not.be.null;
-
-        if (isWebKitMacOS) {
-            // Retest WebKit without the escape hatch, expecting it to fail.
-            // This way we get notified when the results are as expected, again.
-            const iOSNode = findAccessibilityNode<AccessibleNamedNode>(
-                snapshot,
-                (node) =>
-                    node.name === name &&
-                    node.value === 'Banana' &&
-                    node.role === 'combobox'
-            );
-
-            expect(
-                iOSNode,
-                `post escape hatch node available: ${JSON.stringify(
-                    snapshot,
-                    null,
-                    '  '
-                )}`
-            ).to.be.null;
-        }
-    });
-    it('manages its "description" value with slotted <sp-tooltip>', async () => {
-        const test = await fixture<HTMLDivElement>(html`
-            <div>${withTooltip()}</div>
-        `);
-        const el = test.querySelector('sp-combobox') as unknown as Combobox;
-        const tooltipText = 'This combobox has a tooltip.';
-
-        await elementUpdated(el);
-        await findDescribedNode(el.label, tooltipText);
-    });
-    it('renders open', async () => {
-        const el = await comboboxFixture();
-
-        const opened = oneEvent(el, 'sp-opened');
-
-        el.open = true;
-        await opened;
-
-        await elementUpdated(el);
-        await expect(el).to.be.accessible();
-    });
-    it('manages aria-activedescendant', async () => {
-        // a11ySnapshot does not track the aria-activedescendant, hence querySelecting
-        const el = await comboboxFixture();
-
-        await elementUpdated(el);
-
-        expect(el.activeDescendant).to.be.undefined;
-
-        el.focus();
-        await elementUpdated(el);
-
-        await sendKeys({
-            press: 'ArrowDown',
-        });
-        await elementUpdated(el);
-
-        expect(el.activeDescendant).to.not.be.undefined;
-        expect(el.activeDescendant.value).to.equal('apple');
-
-        // aria-activedescendant should keep the combobox focused even when navigating the menu
-        const activeDescendant = el.shadowRoot.querySelector(
-            '#apple'
-        ) as MenuItem;
-
-        await elementUpdated(activeDescendant);
-        // Menu Item association with a Menu happens outside of the update lifecycle
-        await nextFrame();
-        await nextFrame();
-
-        expect(activeDescendant.focused).to.be.true;
-        expect(el.focused).to.be.true;
-        await expect(el).to.be.accessible();
-    });
-    it('manages aria-selected', async () => {
-        const el = await comboboxFixture();
-
-        await elementUpdated(el);
-
-        type SelectedNode = { selected?: boolean };
-        let snapshot = (await a11ySnapshot({})) as unknown as SelectedNode & {
-            children: SelectedNode[];
-        };
-
-        expect(
-            findAccessibilityNode<SelectedNode>(
-                snapshot,
-                (node) => !!node.selected
-            )
-        ).to.be.null;
-
-        const opened = oneEvent(el, 'sp-opened');
-
-        el.click();
-        await opened;
-        await elementUpdated(el);
-        expect(el.open).to.be.true;
-
-        el.focus();
-        await elementUpdated(el);
-
-        await sendKeys({
-            press: 'ArrowDown',
-        });
-        await elementUpdated(el);
-
-        expect(el.activeDescendant.value).to.equal('apple');
-        snapshot = (await a11ySnapshot({})) as unknown as SelectedNode & {
-            children: SelectedNode[];
-        };
-        expect(
-            findAccessibilityNode<SelectedNode>(
-                snapshot,
-                (node) => !!node.selected
-            ),
-            JSON.stringify(snapshot, null, '  ')
-        ).to.not.be.null;
-    });
-    it('manages aria-expanded', async () => {
-        const el = await comboboxFixture();
-
-        await elementUpdated(el);
-
-        type ExpandedNode = { expanded?: boolean };
-        let snapshot = (await a11ySnapshot({})) as unknown as ExpandedNode & {
-            children: ExpandedNode[];
-        };
-
-        expect(
-            findAccessibilityNode<ExpandedNode>(
-                snapshot,
-                (node) => !!node.expanded
-            )
-        ).to.be.null;
-
-        el.click();
-        await elementUpdated(el);
-        expect(el.open).to.be.true;
-
-        snapshot = (await a11ySnapshot({})) as unknown as ExpandedNode & {
-            children: ExpandedNode[];
-        };
-        expect(
-            findAccessibilityNode<ExpandedNode>(
-                snapshot,
-                (node) => !!node.expanded
-            )
-        ).to.not.be.null;
-    });
-    it('loads with list closed', async () => {
-        const el = await comboboxFixture();
-
-        await elementUpdated(el);
-
-        expect(el.open).to.be.false;
-    });
-    it('renders accessibly with `pending` attribute', async () => {
-        const el = await comboboxFixture();
-
-        el.value = 'Banana';
-        el.pending = true;
-
-        await elementUpdated(el);
-        await nextFrame();
-
-        const name = 'Pending Combobox';
-
-        const snapshot = (await a11ySnapshot(
-            {}
-        )) as unknown as AccessibleNamedNode & {
-            children: AccessibleNamedNode[];
-        };
-
-        const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
-            snapshot,
-            (node) => node.name === name && node.role === 'combobox'
-        );
-
-        expect(a11yNode).to.not.be.null;
-    });
+    expect(a11yNode).to.not.be.null;
+  });
 });

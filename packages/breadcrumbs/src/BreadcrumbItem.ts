@@ -11,126 +11,124 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
+  CSSResultArray,
+  html,
+  PropertyValues,
+  TemplateResult,
+} from "@spectrum-web-components/base";
+import { ifDefined } from "@spectrum-web-components/base/src/directives.js";
+import { property } from "@spectrum-web-components/base/src/decorators.js";
+import { Focusable } from "@spectrum-web-components/shared/src/focusable.js";
+import { LikeAnchor } from "@spectrum-web-components/shared/src/like-anchor.js";
+import chevronStyles from "@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js";
+import "@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js";
+import chevronIconOverrides from "@spectrum-web-components/icon/src/icon-chevron-overrides.css.js";
 
-import styles from './breadcrumb-item.css.js';
+import styles from "./breadcrumb-item.css.js";
 
 export interface BreadcrumbSelectDetail {
-    value: string;
+  value: string;
 }
 
 export class BreadcrumbItem extends LikeAnchor(Focusable) {
-    public static override get styles(): CSSResultArray {
-        return [styles, chevronStyles, chevronIconOverrides];
+  public static override get styles(): CSSResultArray {
+    return [styles, chevronStyles, chevronIconOverrides];
+  }
+
+  @property()
+  public value: string | undefined = undefined;
+
+  /**
+   * @private
+   * Marks this breadcrumb item as the current route.
+   */
+  @property({ type: Boolean })
+  public isLastOfType = false;
+
+  public override get focusElement(): HTMLElement {
+    return this.shadowRoot.querySelector("#item-link") as HTMLElement;
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    if (!this.hasAttribute("role")) {
+      this.setAttribute("role", "listitem");
+    }
+  }
+
+  private announceSelected(value: string): void {
+    const selectDetail: BreadcrumbSelectDetail = {
+      value,
+    };
+
+    const selectionEvent = new CustomEvent("breadcrumb-select", {
+      bubbles: true,
+      composed: true,
+      detail: selectDetail,
+    });
+
+    this.dispatchEvent(selectionEvent);
+  }
+
+  protected handleClick(event?: Event): void {
+    if (!this.href && event) {
+      event.preventDefault();
     }
 
-    @property()
-    public value: string | undefined = undefined;
-
-    /**
-     * @private
-     * Marks this breadcrumb item as the current route.
-     */
-    @property({ type: Boolean })
-    public isLastOfType = false;
-
-    public override get focusElement(): HTMLElement {
-        return this.shadowRoot.querySelector('#item-link') as HTMLElement;
+    if (!this.href || event?.defaultPrevented) {
+      if (this.value && !this.isLastOfType) {
+        this.announceSelected(this.value);
+      }
     }
+  }
 
-    override connectedCallback(): void {
-        super.connectedCallback();
-
-        if (!this.hasAttribute('role')) {
-            this.setAttribute('role', 'listitem');
-        }
+  protected handleKeyDown(event: KeyboardEvent): void {
+    if (event.key === "Enter" || event.keyCode === 13) {
+      this.handleClick(event);
     }
+  }
 
-    private announceSelected(value: string): void {
-        const selectDetail: BreadcrumbSelectDetail = {
-            value,
-        };
+  protected renderLink(): TemplateResult {
+    return html`
+      <a
+        id="item-link"
+        href=${ifDefined(!this.isLastOfType ? this.href : undefined)}
+        tabindex=${0}
+        aria-current=${ifDefined(this.isLastOfType ? "page" : undefined)}
+        @keydown=${this.handleKeyDown}
+        @click=${this.handleClick}
+      >
+        <slot></slot>
+      </a>
+    `;
+  }
 
-        const selectionEvent = new CustomEvent('breadcrumb-select', {
-            bubbles: true,
-            composed: true,
-            detail: selectDetail,
-        });
+  private renderSeparator(): TemplateResult {
+    return html`
+      <sp-icon-chevron100
+        id="separator"
+        size="xs"
+        class="spectrum-UIIcon-ChevronRight100"
+      ></sp-icon-chevron100>
+    `;
+  }
 
-        this.dispatchEvent(selectionEvent);
+  protected override render(): TemplateResult {
+    return html`
+      ${this.renderLink()}
+      <slot name="menu"></slot>
+      ${this.renderSeparator()}
+    `;
+  }
+
+  protected override updated(changes: PropertyValues): void {
+    if (changes.has("disabled")) {
+      if (this.disabled) {
+        this.setAttribute("aria-disabled", "true");
+      } else {
+        this.removeAttribute("aria-disabled");
+      }
     }
-
-    protected handleClick(event?: Event): void {
-        if (!this.href && event) {
-            event.preventDefault();
-        }
-
-        if (!this.href || event?.defaultPrevented) {
-            if (this.value && !this.isLastOfType) {
-                this.announceSelected(this.value);
-            }
-        }
-    }
-
-    protected handleKeyDown(event: KeyboardEvent): void {
-        if (event.key === 'Enter' || event.keyCode === 13) {
-            this.handleClick(event);
-        }
-    }
-
-    protected renderLink(): TemplateResult {
-        return html`
-            <a
-                id="item-link"
-                href=${ifDefined(!this.isLastOfType ? this.href : undefined)}
-                tabindex=${0}
-                aria-current=${ifDefined(
-                    this.isLastOfType ? 'page' : undefined
-                )}
-                @keydown=${this.handleKeyDown}
-                @click=${this.handleClick}
-            >
-                <slot></slot>
-            </a>
-        `;
-    }
-
-    private renderSeparator(): TemplateResult {
-        return html`
-            <sp-icon-chevron100
-                id="separator"
-                size="xs"
-                class="spectrum-UIIcon-ChevronRight100"
-            ></sp-icon-chevron100>
-        `;
-    }
-
-    protected override render(): TemplateResult {
-        return html`
-            ${this.renderLink()}
-            <slot name="menu"></slot>
-            ${this.renderSeparator()}
-        `;
-    }
-
-    protected override updated(changes: PropertyValues): void {
-        if (changes.has('disabled')) {
-            if (this.disabled) {
-                this.setAttribute('aria-disabled', 'true');
-            } else {
-                this.removeAttribute('aria-disabled');
-            }
-        }
-    }
+  }
 }

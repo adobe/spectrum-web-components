@@ -10,107 +10,105 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
-import { fixture } from '../../../test/testing-helpers.js';
-import { sendKeys } from '@web/test-runner-commands';
+import { elementUpdated, expect, oneEvent } from "@open-wc/testing";
+import { fixture } from "../../../test/testing-helpers.js";
+import { sendKeys } from "@web/test-runner-commands";
 
-import { groupsWithSelects } from '../stories/action-menu.stories.js';
-import { ActionMenu } from '@spectrum-web-components/action-menu';
-import { MenuItem } from '@spectrum-web-components/menu';
+import { groupsWithSelects } from "../stories/action-menu.stories.js";
+import { ActionMenu } from "@spectrum-web-components/action-menu";
+import { MenuItem } from "@spectrum-web-components/menu";
 
-describe('Action Menu - Groups', () => {
-    it('throws focus into the Menu when opened', async function () {
-        const el = await fixture<ActionMenu>(
-            groupsWithSelects({ onChange: () => {} })
-        );
+describe("Action Menu - Groups", () => {
+  it("throws focus into the Menu when opened", async function () {
+    const el = await fixture<ActionMenu>(
+      groupsWithSelects({ onChange: () => {} }),
+    );
 
-        const firstGroup = el.querySelector('sp-menu-group') as HTMLElement;
-        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+    const firstGroup = el.querySelector("sp-menu-group") as HTMLElement;
+    const firstItem = el.querySelector("sp-menu-item") as MenuItem;
 
-        expect(firstItem.focused).to.be.false;
-        expect(document.activeElement === firstGroup).to.be.false;
+    expect(firstItem.focused).to.be.false;
+    expect(document.activeElement === firstGroup).to.be.false;
 
-        const opened = oneEvent(el, 'sp-opened');
+    const opened = oneEvent(el, "sp-opened");
 
-        el.focus();
-        await sendKeys({
-            press: 'ArrowDown',
-        });
-        await opened;
-
-        expect(firstItem.focused).to.be.true;
-        expect(
-            document.activeElement === firstGroup,
-            document.activeElement?.localName
-        ).to.be.true;
+    el.focus();
+    await sendKeys({
+      press: "ArrowDown",
     });
+    await opened;
 
-    it('toggles child group with `selects="multiple"`', async function () {
-        this.retries(0);
-        const el = await fixture<ActionMenu>(
-            groupsWithSelects({ onChange: () => {} })
-        );
+    expect(firstItem.focused).to.be.true;
+    expect(
+      document.activeElement === firstGroup,
+      document.activeElement?.localName,
+    ).to.be.true;
+  });
 
-        const multipleGroup = el.querySelector(
-            '[selects="multiple"]'
-        ) as HTMLElement;
-        const firstItem = multipleGroup.querySelector(
-            'sp-menu-item'
-        ) as MenuItem;
+  it('toggles child group with `selects="multiple"`', async function () {
+    this.retries(0);
+    const el = await fixture<ActionMenu>(
+      groupsWithSelects({ onChange: () => {} }),
+    );
 
-        expect(firstItem.selected).to.be.false;
+    const multipleGroup = el.querySelector(
+      '[selects="multiple"]',
+    ) as HTMLElement;
+    const firstItem = multipleGroup.querySelector("sp-menu-item") as MenuItem;
 
-        let opened = oneEvent(el, 'sp-opened');
+    expect(firstItem.selected).to.be.false;
 
-        el.focus();
-        await sendKeys({
-            press: 'ArrowDown',
-        });
-        await opened;
-        expect(el.open).to.be.true;
+    let opened = oneEvent(el, "sp-opened");
 
-        await sendKeys({
-            press: 'ArrowUp',
-        });
-        await elementUpdated(el);
-
-        let closed = oneEvent(el, 'sp-closed');
-
-        await sendKeys({
-            press: 'Enter',
-        });
-        await closed;
-
-        await elementUpdated(el);
-        await elementUpdated(firstItem);
-
-        expect(el.open).to.be.false;
-        expect(firstItem.selected).to.be.true;
-        expect(document.activeElement === el, document.activeElement?.localName)
-            .to.be.true;
-
-        opened = oneEvent(el, 'sp-opened');
-        await sendKeys({
-            press: 'ArrowDown',
-        });
-        await opened;
-        expect(el.open).to.be.true;
-
-        await sendKeys({
-            press: 'ArrowUp',
-        });
-        await elementUpdated(el);
-
-        closed = oneEvent(el, 'sp-closed');
-        await sendKeys({
-            press: 'Enter',
-        });
-        await closed;
-
-        await elementUpdated(el);
-        await elementUpdated(firstItem);
-
-        expect(el.open).to.be.false;
-        expect(firstItem.selected).to.be.false;
+    el.focus();
+    await sendKeys({
+      press: "ArrowDown",
     });
+    await opened;
+    expect(el.open).to.be.true;
+
+    await sendKeys({
+      press: "ArrowUp",
+    });
+    await elementUpdated(el);
+
+    let closed = oneEvent(el, "sp-closed");
+
+    await sendKeys({
+      press: "Enter",
+    });
+    await closed;
+
+    await elementUpdated(el);
+    await elementUpdated(firstItem);
+
+    expect(el.open).to.be.false;
+    expect(firstItem.selected).to.be.true;
+    expect(document.activeElement === el, document.activeElement?.localName).to
+      .be.true;
+
+    opened = oneEvent(el, "sp-opened");
+    await sendKeys({
+      press: "ArrowDown",
+    });
+    await opened;
+    expect(el.open).to.be.true;
+
+    await sendKeys({
+      press: "ArrowUp",
+    });
+    await elementUpdated(el);
+
+    closed = oneEvent(el, "sp-closed");
+    await sendKeys({
+      press: "Enter",
+    });
+    await closed;
+
+    await elementUpdated(el);
+    await elementUpdated(firstItem);
+
+    expect(el.open).to.be.false;
+    expect(firstItem.selected).to.be.false;
+  });
 });

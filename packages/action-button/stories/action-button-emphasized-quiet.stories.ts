@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
-import type { Properties } from './index.js';
-import { renderButtons } from './index.js';
+import { TemplateResult } from "@spectrum-web-components/base";
+import type { Properties } from "./index.js";
+import { renderButtons } from "./index.js";
 
 export default {
-    component: 'sp-action-button',
-    title: 'Action Button/Emphasized Quiet',
+  component: "sp-action-button",
+  title: "Action Button/Emphasized Quiet",
 };
 
 const emphasized = true;
@@ -23,35 +23,35 @@ const quiet = true;
 
 export const XS = (args: Properties): TemplateResult => renderButtons(args);
 XS.args = {
-    emphasized,
-    size: 'xs',
-    quiet,
+  emphasized,
+  size: "xs",
+  quiet,
 };
 
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
-    emphasized,
-    size: 's',
-    quiet,
+  emphasized,
+  size: "s",
+  quiet,
 };
 
 export const m = (args: Properties): TemplateResult => renderButtons(args);
 m.args = {
-    emphasized,
-    size: 'm',
-    quiet,
+  emphasized,
+  size: "m",
+  quiet,
 };
 
 export const l = (args: Properties): TemplateResult => renderButtons(args);
 l.args = {
-    emphasized,
-    size: 'l',
-    quiet,
+  emphasized,
+  size: "l",
+  quiet,
 };
 
 export const XL = (args: Properties): TemplateResult => renderButtons(args);
 XL.args = {
-    emphasized,
-    size: 'xl',
-    quiet,
+  emphasized,
+  size: "xl",
+  quiet,
 };

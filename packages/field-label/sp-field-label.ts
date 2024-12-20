@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { FieldLabel } from './src/FieldLabel.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { FieldLabel } from "./src/FieldLabel.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-field-label', FieldLabel);
+defineElement("sp-field-label", FieldLabel);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-field-label': FieldLabel;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-field-label": FieldLabel;
+  }
 }

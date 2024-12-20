@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
+import "@spectrum-web-components/action-menu/sp-action-menu.js";
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js";
+import "@spectrum-web-components/menu/sp-menu.js";
+import "@spectrum-web-components/menu/sp-menu-item.js";
+import "@spectrum-web-components/menu/sp-menu-divider.js";
 
-import { testActionMenu } from './';
+import { testActionMenu } from ".//index.js";
 
-testActionMenu('async');
+testActionMenu("async");

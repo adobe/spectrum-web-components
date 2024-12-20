@@ -10,51 +10,50 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ReactiveController, ReactiveElement } from 'lit';
-import { ProvideLang } from '@spectrum-web-components/theme';
+import type { ReactiveController, ReactiveElement } from "lit";
+import { ProvideLang } from "@spectrum-web-components/theme";
 
 export const languageResolverUpdatedSymbol = Symbol(
-    'language resolver updated'
+  "language resolver updated",
 );
 
 export class LanguageResolutionController implements ReactiveController {
-    private host: ReactiveElement;
-    language = document.documentElement.lang || navigator.language;
-    private unsubscribe?: () => void;
+  private host: ReactiveElement;
+  language = document.documentElement.lang || navigator.language;
+  private unsubscribe?: () => void;
 
-    constructor(host: ReactiveElement) {
-        this.host = host;
-        this.host.addController(this);
-    }
+  constructor(host: ReactiveElement) {
+    this.host = host;
+    this.host.addController(this);
+  }
 
-    public hostConnected(): void {
-        this.resolveLanguage();
-    }
+  public hostConnected(): void {
+    this.resolveLanguage();
+  }
 
-    public hostDisconnected(): void {
-        this.unsubscribe?.();
-    }
+  public hostDisconnected(): void {
+    this.unsubscribe?.();
+  }
 
-    private resolveLanguage(): void {
-        const queryThemeEvent = new CustomEvent<ProvideLang>(
-            'sp-language-context',
-            {
-                bubbles: true,
-                composed: true,
-                detail: {
-                    callback: (lang: string, unsubscribe: () => void) => {
-                        const previous = this.language;
-                        this.language = lang;
-                        this.unsubscribe = unsubscribe;
-                        this.host.requestUpdate(
-                            languageResolverUpdatedSymbol,
-                            previous
-                        );
-                    },
-                },
-                cancelable: true,
-            }
-        );
-        this.host.dispatchEvent(queryThemeEvent);
-    }
+  private resolveLanguage(): void {
+    const queryThemeEvent = new CustomEvent<ProvideLang>(
+      "sp-language-context",
+      {
+        bubbles: true,
+        composed: true,
+        detail: {
+          callback: (lang: string, unsubscribe: () => void) => {
+            const previous = this.language;
+
+            this.language = lang;
+            this.unsubscribe = unsubscribe;
+            this.host.requestUpdate(languageResolverUpdatedSymbol, previous);
+          },
+        },
+        cancelable: true,
+      },
+    );
+
+    this.host.dispatchEvent(queryThemeEvent);
+  }
 }

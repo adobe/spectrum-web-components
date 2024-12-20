@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    CSSResultArray,
-    html,
-    SpectrumElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+  CSSResultArray,
+  html,
+  SpectrumElement,
+  TemplateResult,
+} from "@spectrum-web-components/base";
+import { property } from "@spectrum-web-components/base/src/decorators.js";
 
-import styles from './table-cell.css.js';
+import styles from "./table-cell.css.js";
 
 /**
  * This component represents a cell within a table row.
@@ -28,25 +28,23 @@ import styles from './table-cell.css.js';
  *
  */
 export class TableCell extends SpectrumElement {
-    /**
-     * Returns the styles to be applied to the component.
-     */
-    public static override get styles(): CSSResultArray {
-        return [styles];
-    }
+  /**
+   * Returns the styles to be applied to the component.
+   */
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
 
-    /**
-     * Indicates the ARIA role of the cell.
-     */
-    @property({ reflect: true })
-    public override role = 'gridcell';
+  /**
+   * Indicates the ARIA role of the cell.
+   */
+  @property({ reflect: true })
+  public override role = "gridcell";
 
-    /**
-     * Renders the component template.
-     */
-    protected override render(): TemplateResult {
-        return html`
-            <slot></slot>
-        `;
-    }
+  /**
+   * Renders the component template.
+   */
+  protected override render(): TemplateResult {
+    return html` <slot></slot> `;
+  }
 }

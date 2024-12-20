@@ -10,26 +10,26 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { makeOverBackground } from '../../button/stories/index.js';
-import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
+import { html, TemplateResult } from "@spectrum-web-components/base";
+import { makeOverBackground } from "../../button/stories/index.js";
+import "@spectrum-web-components/coachmark/sp-coach-indicator.js";
 
 export default {
-    title: 'CoachIndicator',
-    component: 'sp-coach-indicator',
-    decorators: [makeOverBackground()],
+  title: "CoachIndicator",
+  component: "sp-coach-indicator",
+  decorators: [makeOverBackground()],
 };
 
 export const staticWhite = (): TemplateResult => {
-    return html`
-        <sp-coach-indicator static-color="white"></sp-coach-indicator>
-        <sp-coach-indicator quiet static-color="white"></sp-coach-indicator>
-    `;
+  return html`
+    <sp-coach-indicator static-color="white"></sp-coach-indicator>
+    <sp-coach-indicator quiet static-color="white"></sp-coach-indicator>
+  `;
 };
 
 export const staticBlack = (): TemplateResult => {
-    return html`
-        <sp-coach-indicator static-color="black"></sp-coach-indicator>
-        <sp-coach-indicator quiet static-color="black"></sp-coach-indicator>
-    `;
+  return html`
+    <sp-coach-indicator static-color="black"></sp-coach-indicator>
+    <sp-coach-indicator quiet static-color="black"></sp-coach-indicator>
+  `;
 };

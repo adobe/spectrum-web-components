@@ -10,10 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
-import { html } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/color-handle/sp-color-handle.js";
+import { html } from "lit";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
-measureFixtureCreation(html`
-    <sp-color-handle open></sp-color-handle>
-`);
+measureFixtureCreation(html` <sp-color-handle open></sp-color-handle> `);

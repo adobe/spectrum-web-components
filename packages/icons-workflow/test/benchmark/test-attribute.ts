@@ -10,50 +10,50 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
-import { html } from '@spectrum-web-components/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/icon/sp-icon.js";
+import "@spectrum-web-components/icons/sp-icons-medium.js";
+import { html } from "@spectrum-web-components/base";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
-const iconset = document.createElement('sp-icons-medium');
+const iconset = document.createElement("sp-icons-medium");
 
 document.body.append(iconset);
 
 measureFixtureCreation(html`
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
-    <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
+  <sp-icon name="ui:Arrow100"></sp-icon>
 `);

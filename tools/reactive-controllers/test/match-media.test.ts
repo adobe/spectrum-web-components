@@ -10,34 +10,33 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement } from 'lit';
-import { expect, fixture, nextFrame } from '@open-wc/testing';
-import { setViewport } from '@web/test-runner-commands';
-import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
+import { html, LitElement } from "lit";
+import { expect, fixture, nextFrame } from "@open-wc/testing";
+import { setViewport } from "@web/test-runner-commands";
+import { MatchMediaController } from "@spectrum-web-components/reactive-controllers/src/MatchMedia.js";
 
 class TestEl extends LitElement {}
-customElements.define('test-match-media-el', TestEl);
+customElements.define("test-match-media-el", TestEl);
 
-describe('Match Media', () => {
-    it('responds to media changes', async () => {
-        const el = await fixture(
-            html`
-                <test-match-media-el></test-match-media-el>
-            `
-        );
-        const controller = new MatchMediaController(
-            el as LitElement & { shadowRoot: ShadowRoot },
-            '(min-width: 500px)'
-        );
-        // Allow Controller to initialize
-        await nextFrame();
-        await nextFrame();
-        expect(controller.matches).to.be.true;
+describe("Match Media", () => {
+  it("responds to media changes", async () => {
+    const el = await fixture(html`
+      <test-match-media-el></test-match-media-el>
+    `);
+    const controller = new MatchMediaController(
+      el as LitElement & { shadowRoot: ShadowRoot },
+      "(min-width: 500px)",
+    );
 
-        await setViewport({ width: 360, height: 640 });
-        // Allow viewport update to propagate.
-        await nextFrame();
-        await nextFrame();
-        expect(controller.matches).to.be.false;
-    });
+    // Allow Controller to initialize
+    await nextFrame();
+    await nextFrame();
+    expect(controller.matches).to.be.true;
+
+    await setViewport({ width: 360, height: 640 });
+    // Allow viewport update to propagate.
+    await nextFrame();
+    await nextFrame();
+    expect(controller.matches).to.be.false;
+  });
 });

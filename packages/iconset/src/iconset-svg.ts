@@ -11,151 +11,148 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    PropertyValues,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { query } from '@spectrum-web-components/base/src/decorators.js';
+  html,
+  PropertyValues,
+  TemplateResult,
+} from "@spectrum-web-components/base";
+import { query } from "@spectrum-web-components/base/src/decorators.js";
 
-import { Iconset } from './iconset.js';
+import { Iconset } from "./iconset.js";
 
 export abstract class IconsetSVG extends Iconset {
-    private iconMap: Map<string, SVGSymbolElement> = new Map();
+  private iconMap: Map<string, SVGSymbolElement> = new Map();
 
-    @query('slot')
-    private slotContainer?: HTMLSlotElement;
+  @query("slot")
+  private slotContainer?: HTMLSlotElement;
 
-    /**
-     * First updated handler just ensures we've processed any slotted symbols
-     */
-    public override updated(changedProperties: PropertyValues): void {
-        if (!this.slotContainer) {
-            return;
-        }
-
-        const currentSVGNodes = this.getSVGNodes(this.slotContainer);
-
-        this.updateSVG(currentSVGNodes);
-        super.updated(changedProperties);
-    }
-    /**
-     * Applies the requested icon from this iconset instance to the given element.
-     *
-     * @param el - the HTML element to which the icon will be applied
-     * @param icon - the name of the icon within this set to apply.
-     */
-    public async applyIconToElement(
-        el: HTMLElement,
-        icon: string,
-        _size: string,
-        label: string
-    ): Promise<void> {
-        await this.updateComplete;
-        const iconSymbol = this.iconMap.get(icon);
-
-        if (!iconSymbol) {
-            throw new Error(`Unable to find icon ${icon}`);
-        }
-
-        // we cannot share a single SVG globally across shadowroot boundaries
-        // so copy the template node so we can inject it where we need it
-        const clonedNode = this.prepareSvgClone(iconSymbol);
-
-        clonedNode.setAttribute('role', 'img');
-
-        if (label) {
-            clonedNode.setAttribute('aria-label', label);
-        } else {
-            clonedNode.setAttribute('aria-hidden', 'true');
-        }
-
-        // append the svg to the node either in its shadowroot or directly into its dom
-        if (el.shadowRoot) {
-            el.shadowRoot.appendChild(clonedNode);
-        } else {
-            el.appendChild(clonedNode);
-        }
+  /**
+   * First updated handler just ensures we've processed any slotted symbols
+   */
+  public override updated(changedProperties: PropertyValues): void {
+    if (!this.slotContainer) {
+      return;
     }
 
-    /**
-     * Returns a list of all icons in this iconset.
-     */
-    public getIconList(): string[] {
-        return [...this.iconMap.keys()];
+    const currentSVGNodes = this.getSVGNodes(this.slotContainer);
+
+    this.updateSVG(currentSVGNodes);
+    super.updated(changedProperties);
+  }
+  /**
+   * Applies the requested icon from this iconset instance to the given element.
+   *
+   * @param el - the HTML element to which the icon will be applied
+   * @param icon - the name of the icon within this set to apply.
+   */
+  public async applyIconToElement(
+    el: HTMLElement,
+    icon: string,
+    _size: string,
+    label: string,
+  ): Promise<void> {
+    await this.updateComplete;
+    const iconSymbol = this.iconMap.get(icon);
+
+    if (!iconSymbol) {
+      throw new Error(`Unable to find icon ${icon}`);
     }
 
-    protected prepareSvgClone(sourceSvg: SVGSymbolElement): SVGSVGElement {
-        const content = sourceSvg.cloneNode(true) as SVGSymbolElement;
-        // we're going to create a new svg element that will have our symbol geometry inside
-        const svg = document.createElementNS(
-            'http://www.w3.org/2000/svg',
-            'svg'
-        );
-        const viewBox = content.getAttribute('viewBox') || '';
-        // inline style isn't ideal but will work in all cases and means our icons don't need to know
-        // if they are svg or spritesheet provided
-        const cssText =
-            'pointer-events: none; display: block; width: 100%; height: 100%;';
+    // we cannot share a single SVG globally across shadowroot boundaries
+    // so copy the template node so we can inject it where we need it
+    const clonedNode = this.prepareSvgClone(iconSymbol);
 
-        svg.style.cssText = cssText;
-        // copy the viewbox and other properties into the svg
-        svg.setAttribute('viewBox', viewBox);
-        svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-        svg.setAttribute('focusable', 'false');
-        // move all the child nodes over to the svg
-        while (content.childNodes.length > 0) {
-            svg.appendChild(content.childNodes[0]);
-        }
+    clonedNode.setAttribute("role", "img");
 
-        return svg;
-    }
-    protected getSVGIconName(icon: string): string {
-        return icon;
-    }
-    protected getSanitizedIconName(icon: string): string {
-        return icon;
-    }
-    protected renderDefaultContent(): TemplateResult {
-        return html``;
+    if (label) {
+      clonedNode.setAttribute("aria-label", label);
+    } else {
+      clonedNode.setAttribute("aria-hidden", "true");
     }
 
-    protected override render(): TemplateResult {
-        return html`
-            <slot @slotchange=${this.onSlotChange}>
-                ${this.renderDefaultContent()}
-            </slot>
-        `;
+    // append the svg to the node either in its shadowroot or directly into its dom
+    if (el.shadowRoot) {
+      el.shadowRoot.appendChild(clonedNode);
+    } else {
+      el.appendChild(clonedNode);
+    }
+  }
+
+  /**
+   * Returns a list of all icons in this iconset.
+   */
+  public getIconList(): string[] {
+    return [...this.iconMap.keys()];
+  }
+
+  protected prepareSvgClone(sourceSvg: SVGSymbolElement): SVGSVGElement {
+    const content = sourceSvg.cloneNode(true) as SVGSymbolElement;
+    // we're going to create a new svg element that will have our symbol geometry inside
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    const viewBox = content.getAttribute("viewBox") || "";
+    // inline style isn't ideal but will work in all cases and means our icons don't need to know
+    // if they are svg or spritesheet provided
+    const cssText =
+      "pointer-events: none; display: block; width: 100%; height: 100%;";
+
+    svg.style.cssText = cssText;
+    // copy the viewbox and other properties into the svg
+    svg.setAttribute("viewBox", viewBox);
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    svg.setAttribute("focusable", "false");
+    // move all the child nodes over to the svg
+    while (content.childNodes.length > 0) {
+      svg.appendChild(content.childNodes[0]);
     }
 
-    protected updateSVG(nodes: SVGElement[]): void {
-        // iterate over the nodes that were passed in, and find all the top level symbols
-        const symbols = nodes.reduce((prev, svgNode) => {
-            const containedSymbols = svgNode.querySelectorAll('symbol');
+    return svg;
+  }
+  protected getSVGIconName(icon: string): string {
+    return icon;
+  }
+  protected getSanitizedIconName(icon: string): string {
+    return icon;
+  }
+  protected renderDefaultContent(): TemplateResult {
+    return html``;
+  }
 
-            prev.push(...containedSymbols);
+  protected override render(): TemplateResult {
+    return html`
+      <slot @slotchange=${this.onSlotChange}>
+        ${this.renderDefaultContent()}
+      </slot>
+    `;
+  }
 
-            return prev;
-        }, [] as SVGSymbolElement[]);
+  protected updateSVG(nodes: SVGElement[]): void {
+    // iterate over the nodes that were passed in, and find all the top level symbols
+    const symbols = nodes.reduce((prev, svgNode) => {
+      const containedSymbols = svgNode.querySelectorAll("symbol");
 
-        symbols.forEach((symbol) => {
-            this.iconMap.set(this.getSanitizedIconName(symbol.id), symbol);
-        });
-    }
+      prev.push(...containedSymbols);
 
-    protected getSVGNodes(slotTarget: HTMLSlotElement): SVGElement[] {
-        const nodes = slotTarget.assignedNodes({ flatten: true });
-        // find all the svg nodes
-        const svgNodes = nodes.filter((node) => {
-            return node.nodeName === 'svg';
-        }) as SVGElement[];
+      return prev;
+    }, [] as SVGSymbolElement[]);
 
-        return svgNodes;
-    }
+    symbols.forEach((symbol) => {
+      this.iconMap.set(this.getSanitizedIconName(symbol.id), symbol);
+    });
+  }
 
-    private onSlotChange(event: Event): void {
-        const slotTarget = event.target as HTMLSlotElement;
-        const svgNodes = this.getSVGNodes(slotTarget);
+  protected getSVGNodes(slotTarget: HTMLSlotElement): SVGElement[] {
+    const nodes = slotTarget.assignedNodes({ flatten: true });
+    // find all the svg nodes
+    const svgNodes = nodes.filter((node) => {
+      return node.nodeName === "svg";
+    }) as SVGElement[];
 
-        this.updateSVG(svgNodes);
-    }
+    return svgNodes;
+  }
+
+  private onSlotChange(event: Event): void {
+    const slotTarget = event.target as HTMLSlotElement;
+    const svgNodes = this.getSVGNodes(slotTarget);
+
+    this.updateSVG(svgNodes);
+  }
 }

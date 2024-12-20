@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Popover } from './src/Popover.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Popover } from "./src/Popover.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-popover', Popover);
+defineElement("sp-popover", Popover);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-popover': Popover;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-popover": Popover;
+  }
 }

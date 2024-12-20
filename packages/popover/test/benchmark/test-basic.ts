@@ -10,18 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
-import { html } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/popover/sp-popover.js";
+import "@spectrum-web-components/dialog/sp-dialog.js";
+import { html } from "lit";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
 measureFixtureCreation(html`
-    <sp-popover direction="top" open>
-        <sp-dialog>
-            <h3 slot="heading">Popover title</h3>
-            Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
-            Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake
-            sweet roll cake danish candy biscuit halvah
-        </sp-dialog>
-    </sp-popover>
+  <sp-popover direction="top" open>
+    <sp-dialog>
+      <h3 slot="heading">Popover title</h3>
+      Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels. Icing
+      soufflé chupa chups donut cheesecake. Jelly-o chocolate cake sweet roll
+      cake danish candy biscuit halvah
+    </sp-dialog>
+  </sp-popover>
 `);

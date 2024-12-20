@@ -9,35 +9,35 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
-import { OverflowProperties, renderTabsOverflowExample } from './index.js';
+import { TemplateResult } from "@spectrum-web-components/base";
+import { OverflowProperties, renderTabsOverflowExample } from "./index.js";
 
 export default {
-    title: 'Tabs Overflow/Sizes',
-    component: 'sp-tabs-overflow',
+  title: "Tabs Overflow/Sizes",
+  component: "sp-tabs-overflow",
 };
 
 export const s = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
+  return renderTabsOverflowExample(args);
 };
 s.args = {
-    size: 's',
+  size: "s",
 };
 export const m = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
+  return renderTabsOverflowExample(args);
 };
 m.args = {
-    size: 'm',
+  size: "m",
 };
 export const l = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
+  return renderTabsOverflowExample(args);
 };
 l.args = {
-    size: 'l',
+  size: "l",
 };
 export const XL = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
+  return renderTabsOverflowExample(args);
 };
 XL.args = {
-    size: 'xl',
+  size: "xl",
 };

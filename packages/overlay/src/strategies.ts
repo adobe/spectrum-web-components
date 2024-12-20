@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ClickController } from './ClickController.js';
-import { HoverController } from './HoverController.js';
-import { LongpressController } from './LongpressController.js';
+import { ClickController } from "./ClickController.js";
+import { HoverController } from "./HoverController.js";
+import { LongpressController } from "./LongpressController.js";
 
 export const strategies = {
-    click: ClickController,
-    longpress: LongpressController,
-    hover: HoverController,
+  click: ClickController,
+  longpress: LongpressController,
+  hover: HoverController,
 };

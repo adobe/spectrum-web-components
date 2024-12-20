@@ -9,100 +9,100 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
+import type { Placement } from "@spectrum-web-components/overlay/src/overlay-types.js";
 
 export interface StoryArgs {
-    label?: string;
-    variant?: 'info' | 'help';
-    placement?: Placement;
-    open?: boolean;
-    [key: string]: unknown;
+  label?: string;
+  variant?: "info" | "help";
+  placement?: Placement;
+  open?: boolean;
+  [key: string]: unknown;
 }
 
 export const argTypes = {
-    open: {
-        name: 'open',
-        type: { name: 'boolean', required: false },
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+  open: {
+    name: "open",
+    type: { name: "boolean", required: false },
+    table: {
+      type: { summary: "boolean" },
+      defaultValue: { summary: false },
     },
-    variant: {
-        name: 'variant',
-        type: { name: 'string', required: false },
-        table: {
-            defaultValue: { summary: 'info' },
-        },
-        control: {
-            labels: {
-                info: 'Info',
-                help: 'Help',
-            },
-            type: 'select',
-        },
-        options: ['info', 'help'],
+    control: {
+      type: "boolean",
     },
-    label: {
-        name: 'label',
-        type: { name: 'string', required: false },
-        table: {
-            type: { summary: 'label' },
-            defaultValue: { summary: 'Informations' },
-        },
-        control: 'text',
+  },
+  variant: {
+    name: "variant",
+    type: { name: "string", required: false },
+    table: {
+      defaultValue: { summary: "info" },
     },
-    offset: {
-        name: 'offset',
-        type: { name: 'number', required: false },
-        table: {
-            type: { summary: 'offset' },
-            defaultValue: { summary: 0 },
-        },
-        control: 'number',
+    control: {
+      labels: {
+        info: "Info",
+        help: "Help",
+      },
+      type: "select",
     },
-    placement: {
-        name: 'placement',
-        type: { name: 'string', required: false },
-        description:
-            'The placement of the popover content in relation to the button',
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: 'bottom-start' },
-        },
-        control: {
-            type: 'select',
-            labels: {
-                top: 'top',
-                'top-start': 'top-start',
-                'top-end': 'top-end',
-                right: 'right',
-                'right-start': 'right-start',
-                'right-end': 'right-end',
-                bottom: 'bottom',
-                'bottom-start': 'bottom-start',
-                'bottom-end': 'bottom-end',
-                left: 'left',
-                'left-start': 'left-start',
-                'left-end': 'left-end',
-            },
-        },
-        options: [
-            'top',
-            'top-start',
-            'top-end',
-            'right',
-            'right-start',
-            'right-end',
-            'bottom',
-            'bottom-start',
-            'bottom-end',
-            'left',
-            'left-start',
-            'left-end',
-        ],
+    options: ["info", "help"],
+  },
+  label: {
+    name: "label",
+    type: { name: "string", required: false },
+    table: {
+      type: { summary: "label" },
+      defaultValue: { summary: "Informations" },
     },
+    control: "text",
+  },
+  offset: {
+    name: "offset",
+    type: { name: "number", required: false },
+    table: {
+      type: { summary: "offset" },
+      defaultValue: { summary: 0 },
+    },
+    control: "number",
+  },
+  placement: {
+    name: "placement",
+    type: { name: "string", required: false },
+    description:
+      "The placement of the popover content in relation to the button",
+    table: {
+      type: { summary: "string" },
+      defaultValue: { summary: "bottom-start" },
+    },
+    control: {
+      type: "select",
+      labels: {
+        top: "top",
+        "top-start": "top-start",
+        "top-end": "top-end",
+        right: "right",
+        "right-start": "right-start",
+        "right-end": "right-end",
+        bottom: "bottom",
+        "bottom-start": "bottom-start",
+        "bottom-end": "bottom-end",
+        left: "left",
+        "left-start": "left-start",
+        "left-end": "left-end",
+      },
+    },
+    options: [
+      "top",
+      "top-start",
+      "top-end",
+      "right",
+      "right-start",
+      "right-end",
+      "bottom",
+      "bottom-start",
+      "bottom-end",
+      "left",
+      "left-start",
+      "left-end",
+    ],
+  },
 };

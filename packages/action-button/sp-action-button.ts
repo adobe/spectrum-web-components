@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ActionButton } from './src/ActionButton.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { ActionButton } from "./src/ActionButton.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-action-button', ActionButton);
+defineElement("sp-action-button", ActionButton);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-action-button': ActionButton;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-action-button": ActionButton;
+  }
 }

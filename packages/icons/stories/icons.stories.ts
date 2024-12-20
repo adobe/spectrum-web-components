@@ -9,37 +9,37 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/icons/sp-icons-large.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
-import '../../iconset/stories/icons-demo.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import "@spectrum-web-components/icons/sp-icons-large.js";
+import "@spectrum-web-components/icons/sp-icons-medium.js";
+import "../../iconset/stories/icons-demo.js";
+import { html, TemplateResult } from "@spectrum-web-components/base";
 
 export default {
-    title: 'Icons',
-    argTypes: {
-        color: { control: 'color' },
-    },
-    args: {
-        color: '#000000',
-    },
+  title: "Icons",
+  argTypes: {
+    color: { control: "color" },
+  },
+  args: {
+    color: "#000000",
+  },
 };
 
 interface Properties {
-    color: string;
+  color: string;
 }
 
 export const listMedium = ({ color }: Properties): TemplateResult => html`
-    <icons-demo style="color: ${color}">
-        <sp-icons-medium></sp-icons-medium>
-    </icons-demo>
+  <icons-demo style="color: ${color}">
+    <sp-icons-medium></sp-icons-medium>
+  </icons-demo>
 `;
 
-listMedium.storyName = 'UI Icons - Medium';
+listMedium.storyName = "UI Icons - Medium";
 
 export const listLarge = ({ color }: Properties): TemplateResult => html`
-    <icons-demo style="color: ${color}">
-        <sp-icons-large></sp-icons-large>
-    </icons-demo>
+  <icons-demo style="color: ${color}">
+    <sp-icons-large></sp-icons-large>
+  </icons-demo>
 `;
 
-listLarge.storyName = 'UI Icons - Large';
+listLarge.storyName = "UI Icons - Large";

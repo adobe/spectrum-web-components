@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { RadioGroup } from './src/RadioGroup.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { RadioGroup } from "./src/RadioGroup.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-radio-group', RadioGroup);
+defineElement("sp-radio-group", RadioGroup);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-radio-group': RadioGroup;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-radio-group": RadioGroup;
+  }
 }

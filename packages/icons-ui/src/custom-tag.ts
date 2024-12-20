@@ -10,33 +10,32 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from "@spectrum-web-components/base";
 export type { TemplateResult };
 
 export type GenericTemplateLiteralTagType = (
-    strings: TemplateStringsArray,
-    ...values: unknown[]
+  strings: TemplateStringsArray,
+  ...values: unknown[]
 ) => string;
 type TemplateLiteralTagType = GenericTemplateLiteralTagType | typeof html;
 let customTemplateLiteralTag: TemplateLiteralTagType;
 
 export const tag = function (
-    strings: TemplateStringsArray,
-    ...values: unknown[]
+  strings: TemplateStringsArray,
+  ...values: unknown[]
 ): string | TemplateResult {
-    if (customTemplateLiteralTag) {
-        return customTemplateLiteralTag(strings, ...values);
-    }
+  if (customTemplateLiteralTag) {
+    return customTemplateLiteralTag(strings, ...values);
+  }
 
-    return values.reduce(
-        (acc: string, v, idx) =>
-            (acc as string) + (v as string) + strings[idx + 1],
-        strings[0]
-    );
+  return values.reduce(
+    (acc: string, v, idx) => (acc as string) + (v as string) + strings[idx + 1],
+    strings[0],
+  );
 };
 
 export const setCustomTemplateLiteralTag = (
-    tag: TemplateLiteralTagType
+  tag: TemplateLiteralTagType,
 ): void => {
-    customTemplateLiteralTag = tag;
+  customTemplateLiteralTag = tag;
 };

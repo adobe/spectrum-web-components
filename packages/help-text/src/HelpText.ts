@@ -11,47 +11,45 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    nothing,
-    SizedMixin,
-    SpectrumElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+  CSSResultArray,
+  html,
+  nothing,
+  SizedMixin,
+  SpectrumElement,
+  TemplateResult,
+} from "@spectrum-web-components/base";
+import { property } from "@spectrum-web-components/base/src/decorators.js";
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js";
 
-import styles from './help-text.css.js';
+import styles from "./help-text.css.js";
 
-type HelpTextVariants = 'neutral' | 'negative';
+type HelpTextVariants = "neutral" | "negative";
 
 /**
  * @element sp-help-text
  */
 export class HelpText extends SizedMixin(SpectrumElement, {
-    noDefaultSize: true,
+  noDefaultSize: true,
 }) {
-    public static override get styles(): CSSResultArray {
-        return [styles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [styles];
+  }
 
-    @property({ type: Boolean, reflect: true })
-    public icon = false;
+  @property({ type: Boolean, reflect: true })
+  public icon = false;
 
-    /**
-     * The visual variant to apply to this help text.
-     */
-    @property({ reflect: true })
-    public variant: HelpTextVariants = 'neutral';
+  /**
+   * The visual variant to apply to this help text.
+   */
+  @property({ reflect: true })
+  public variant: HelpTextVariants = "neutral";
 
-    protected override render(): TemplateResult {
-        return html`
-            ${this.variant === 'negative' && this.icon
-                ? html`
-                      <sp-icon-alert class="icon"></sp-icon-alert>
-                  `
-                : nothing}
-            <div class="text"><slot></slot></div>
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html`
+      ${this.variant === "negative" && this.icon
+        ? html` <sp-icon-alert class="icon"></sp-icon-alert> `
+        : nothing}
+      <div class="text"><slot></slot></div>
+    `;
+  }
 }

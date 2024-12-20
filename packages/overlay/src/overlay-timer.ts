@@ -18,95 +18,93 @@ const DEFAULT_COOLDOWN = 1000;
  * https://spectrum.adobe.com/page/tooltip/#Immediate-or-delayed-appearance
  */
 export class OverlayTimer {
-    private warmUpDelay = DEFAULT_WARMUP;
-    private coolDownDelay = DEFAULT_COOLDOWN;
+  private warmUpDelay = DEFAULT_WARMUP;
+  private coolDownDelay = DEFAULT_COOLDOWN;
 
-    private isWarm = false;
-    private cooldownTimeout?: number;
+  private isWarm = false;
+  private cooldownTimeout?: number;
 
-    private component?: HTMLElement;
-    private timeout = 0;
-    private promise?: Promise<boolean>;
-    private resolve?: (cancelled: boolean) => void;
+  private component?: HTMLElement;
+  private timeout = 0;
+  private promise?: Promise<boolean>;
+  private resolve?: (cancelled: boolean) => void;
 
-    constructor(
-        options: { warmUpDelay?: number; coolDownDelay?: number } = {}
-    ) {
-        Object.assign(this, options);
-    }
+  constructor(options: { warmUpDelay?: number; coolDownDelay?: number } = {}) {
+    Object.assign(this, options);
+  }
 
-    public async openTimer(component: HTMLElement): Promise<boolean> {
+  public async openTimer(component: HTMLElement): Promise<boolean> {
+    this.cancelCooldownTimer();
+
+    if (!this.component || component !== this.component) {
+      if (this.component) {
+        this.close(this.component);
         this.cancelCooldownTimer();
+      }
 
-        if (!this.component || component !== this.component) {
-            if (this.component) {
-                this.close(this.component);
-                this.cancelCooldownTimer();
-            }
+      this.component = component;
 
-            this.component = component;
+      if (this.isWarm) {
+        return false;
+      }
 
-            if (this.isWarm) {
-                return false;
-            }
+      this.promise = new Promise((resolve) => {
+        this.resolve = resolve;
+        this.timeout = window.setTimeout(() => {
+          if (this.resolve) {
+            this.resolve(false);
+            this.isWarm = true;
+          }
+        }, this.warmUpDelay);
+      });
 
-            this.promise = new Promise((resolve) => {
-                this.resolve = resolve;
-                this.timeout = window.setTimeout(() => {
-                    if (this.resolve) {
-                        this.resolve(false);
-                        this.isWarm = true;
-                    }
-                }, this.warmUpDelay);
-            });
-
-            return this.promise;
-        } else if (this.promise) {
-            return this.promise;
-            /* c8 ignore next 4 */
-        } else {
-            // This should never happen
-            throw new Error('Inconsistent state');
-        }
+      return this.promise;
+    } else if (this.promise) {
+      return this.promise;
+      /* c8 ignore next 4 */
+    } else {
+      // This should never happen
+      throw new Error("Inconsistent state");
     }
+  }
 
-    public close(component: HTMLElement): void {
-        if (this.component && this.component === component) {
-            this.resetCooldownTimer();
+  public close(component: HTMLElement): void {
+    if (this.component && this.component === component) {
+      this.resetCooldownTimer();
 
-            if (this.timeout > 0) {
-                clearTimeout(this.timeout);
-                this.timeout = 0;
-            }
+      if (this.timeout > 0) {
+        clearTimeout(this.timeout);
+        this.timeout = 0;
+      }
 
-            if (this.resolve) {
-                this.resolve(true);
-                delete this.resolve;
-            }
+      if (this.resolve) {
+        this.resolve(true);
+        delete this.resolve;
+      }
 
-            delete this.promise;
-            delete this.component;
-        }
+      delete this.promise;
+      delete this.component;
     }
+  }
 
-    private resetCooldownTimer(): void {
-        if (this.isWarm) {
-            if (this.cooldownTimeout) {
-                window.clearTimeout(this.cooldownTimeout);
-            }
+  private resetCooldownTimer(): void {
+    if (this.isWarm) {
+      if (this.cooldownTimeout) {
+        window.clearTimeout(this.cooldownTimeout);
+      }
 
-            this.cooldownTimeout = window.setTimeout(() => {
-                this.isWarm = false;
-                delete this.cooldownTimeout;
-            }, this.coolDownDelay);
-        }
-    }
-
-    private cancelCooldownTimer(): void {
-        if (this.cooldownTimeout) {
-            window.clearTimeout(this.cooldownTimeout);
-        }
-
+      this.cooldownTimeout = window.setTimeout(() => {
+        this.isWarm = false;
         delete this.cooldownTimeout;
+      }, this.coolDownDelay);
     }
+  }
+
+  private cancelCooldownTimer(): void {
+    if (this.cooldownTimeout) {
+      window.clearTimeout(this.cooldownTimeout);
+    }
+
+    delete this.cooldownTimeout;
+  }
 }

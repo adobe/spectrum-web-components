@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Textfield } from './src/Textfield.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Textfield } from "./src/Textfield.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-textfield', Textfield);
+defineElement("sp-textfield", Textfield);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-textfield': Textfield;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-textfield": Textfield;
+  }
 }

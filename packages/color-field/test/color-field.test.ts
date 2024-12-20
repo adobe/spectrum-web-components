@@ -9,129 +9,129 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
-import { ColorField } from '@spectrum-web-components/color-field';
+import { elementUpdated, expect, fixture } from "@open-wc/testing";
+import { ColorField } from "@spectrum-web-components/color-field";
 
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { Template } from '../stories/template.js';
+import { testForLitDevWarnings } from "../../../test/testing-helpers.js";
+import { Template } from "../stories/template.js";
 
-describe('ColorField', () => {
-    testForLitDevWarnings(async () => await fixture<ColorField>(Template({})));
-    it('loads default color-field accessibly', async () => {
-        const el = await fixture<ColorField>(
-            Template({ label: 'Enter color value' })
-        );
+describe("ColorField", () => {
+  testForLitDevWarnings(async () => await fixture<ColorField>(Template({})));
+  it("loads default color-field accessibly", async () => {
+    const el = await fixture<ColorField>(
+      Template({ label: "Enter color value" }),
+    );
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
+    await expect(el).to.be.accessible();
+  });
 
-    it('validates rgba color values', async () => {
-        const el = await fixture<ColorField>(Template({}));
+  it("validates rgba color values", async () => {
+    const el = await fixture<ColorField>(Template({}));
 
-        el.value = 'rgba(255, 0, 0, 1)';
-        expect(el.checkValidity()).to.be.true;
+    el.value = "rgba(255, 0, 0, 1)";
+    expect(el.checkValidity()).to.be.true;
 
-        el.value = 'rgba(255, 0, 0, 0.5)';
-        expect(el.checkValidity()).to.be.true;
+    el.value = "rgba(255, 0, 0, 0.5)";
+    expect(el.checkValidity()).to.be.true;
 
-        el.value = 'rgba(255, 0, 0)';
+    el.value = "rgba(255, 0, 0)";
 
-        expect(el.checkValidity()).to.be.false;
-    });
+    expect(el.checkValidity()).to.be.false;
+  });
 
-    it('updates cachedColor when value changes', async () => {
-        const el = await fixture<ColorField>(Template({}));
+  it("updates cachedColor when value changes", async () => {
+    const el = await fixture<ColorField>(Template({}));
 
-        // Initial value
-        el.value = '#ff0000';
-        await elementUpdated(el);
-        expect(el.getColorValue()).to.equal('rgb(255, 0, 0)');
+    // Initial value
+    el.value = "#ff0000";
+    await elementUpdated(el);
+    expect(el.getColorValue()).to.equal("rgb(255, 0, 0)");
 
-        // Change to a different valid color
-        el.value = '#00ff00';
-        await elementUpdated(el);
-        expect(el.getColorValue()).to.equal('rgb(0, 255, 0)');
+    // Change to a different valid color
+    el.value = "#00ff00";
+    await elementUpdated(el);
+    expect(el.getColorValue()).to.equal("rgb(0, 255, 0)");
 
-        // Change to an invalid color
-        el.value = 'invalid-color';
-        await elementUpdated(el);
-        expect(el.getColorValue()).to.equal('');
+    // Change to an invalid color
+    el.value = "invalid-color";
+    await elementUpdated(el);
+    expect(el.getColorValue()).to.equal("");
 
-        // Change back to a valid color
-        el.value = '#0000ff';
-        await elementUpdated(el);
-        expect(el.getColorValue()).to.equal('rgb(0, 0, 255)');
-    });
+    // Change back to a valid color
+    el.value = "#0000ff";
+    await elementUpdated(el);
+    expect(el.getColorValue()).to.equal("rgb(0, 0, 255)");
+  });
 
-    it('validates hex color values', async () => {
-        const el = await fixture<ColorField>(Template({}));
+  it("validates hex color values", async () => {
+    const el = await fixture<ColorField>(Template({}));
 
-        el.value = '#ff0000';
-        expect(el.checkValidity()).to.be.true;
+    el.value = "#ff0000";
+    expect(el.checkValidity()).to.be.true;
 
-        el.value = '#f00';
-        expect(el.checkValidity()).to.be.true;
+    el.value = "#f00";
+    expect(el.checkValidity()).to.be.true;
 
-        el.value = '##F00000000000';
-        expect(el.checkValidity()).to.be.false;
-    });
+    el.value = "##F00000000000";
+    expect(el.checkValidity()).to.be.false;
+  });
 
-    it('validates hsl color values', async () => {
-        const el = await fixture<ColorField>(Template({}));
+  it("validates hsl color values", async () => {
+    const el = await fixture<ColorField>(Template({}));
 
-        el.value = 'hsl(120, 100%, 50%)';
-        expect(el.checkValidity()).to.be.true;
+    el.value = "hsl(120, 100%, 50%)";
+    expect(el.checkValidity()).to.be.true;
 
-        el.value = 'hsl(120, 50%, 50%)';
-        expect(el.checkValidity()).to.be.true;
+    el.value = "hsl(120, 50%, 50%)";
+    expect(el.checkValidity()).to.be.true;
 
-        el.value = 'hsl(120, 50%)';
-        expect(el.checkValidity()).to.be.false;
-    });
+    el.value = "hsl(120, 50%)";
+    expect(el.checkValidity()).to.be.false;
+  });
 
-    it('validates hsv color values', async () => {
-        const el = await fixture<ColorField>(Template({}));
+  it("validates hsv color values", async () => {
+    const el = await fixture<ColorField>(Template({}));
 
-        el.value = 'hsv(120, 100%, 50%)';
-        expect(el.checkValidity()).to.be.true;
+    el.value = "hsv(120, 100%, 50%)";
+    expect(el.checkValidity()).to.be.true;
 
-        el.value = 'hsv(120, 50%, 50%)';
-        expect(el.checkValidity()).to.be.true;
+    el.value = "hsv(120, 50%, 50%)";
+    expect(el.checkValidity()).to.be.true;
 
-        el.value = 'hsv(120, 50%)';
-        expect(el.checkValidity()).to.be.false;
-    });
+    el.value = "hsv(120, 50%)";
+    expect(el.checkValidity()).to.be.false;
+  });
 
-    it('handles invalid color values', async () => {
-        const el = await fixture<ColorField>(Template({}));
+  it("handles invalid color values", async () => {
+    const el = await fixture<ColorField>(Template({}));
 
-        el.value = 'not a color';
-        await elementUpdated(el);
+    el.value = "not a color";
+    await elementUpdated(el);
 
-        expect(el.checkValidity()).to.be.false;
-    });
+    expect(el.checkValidity()).to.be.false;
+  });
 
-    it('renders color handle when viewColor is true', async () => {
-        const el = await fixture<ColorField>(Template({}));
+  it("renders color handle when viewColor is true", async () => {
+    const el = await fixture<ColorField>(Template({}));
 
-        el.viewColor = true;
-        await elementUpdated(el);
+    el.viewColor = true;
+    await elementUpdated(el);
 
-        const colorHandle = el.shadowRoot.querySelector('sp-color-handle');
+    const colorHandle = el.shadowRoot.querySelector("sp-color-handle");
 
-        expect(colorHandle).to.not.be.null;
-    });
+    expect(colorHandle).to.not.be.null;
+  });
 
-    it('does not render color handle when viewColor is false', async () => {
-        const el = await fixture<ColorField>(Template({}));
+  it("does not render color handle when viewColor is false", async () => {
+    const el = await fixture<ColorField>(Template({}));
 
-        el.viewColor = false;
-        await elementUpdated(el);
+    el.viewColor = false;
+    await elementUpdated(el);
 
-        const colorHandle = el.shadowRoot.querySelector('sp-color-handle');
+    const colorHandle = el.shadowRoot.querySelector("sp-color-handle");
 
-        expect(colorHandle).to.be.null;
-    });
+    expect(colorHandle).to.be.null;
+  });
 });

@@ -9,37 +9,34 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
-import { LitElement, TemplateResult } from '@spectrum-web-components/base';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { ObserveSlotPresence } from "@spectrum-web-components/shared/src/observe-slot-presence.js";
+import { LitElement, TemplateResult } from "@spectrum-web-components/base";
+import { elementUpdated, expect, fixture, html } from "@open-wc/testing";
 
 class ObserverTest extends ObserveSlotPresence(
-    LitElement,
-    '[slot="test-slot"]'
+  LitElement,
+  '[slot="test-slot"]',
 ) {
-    protected override render(): TemplateResult {
-        return html`
-            Test Element
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html` Test Element `;
+  }
 }
 
-customElements.define('observe-presence-test', ObserverTest);
+customElements.define("observe-presence-test", ObserverTest);
 
-describe('ObserveSlotPresence', () => {
-    it('does no management when slot unavailable', async () => {
-        const el = await fixture<ObserverTest>(
-            html`
-                <observe-presence-test></observe-presence-test>
-            `
-        );
-        await elementUpdated(el);
+describe("ObserveSlotPresence", () => {
+  it("does no management when slot unavailable", async () => {
+    const el = await fixture<ObserverTest>(html`
+      <observe-presence-test></observe-presence-test>
+    `);
 
-        expect(el.slotContentIsPresent).to.be.false;
+    await elementUpdated(el);
 
-        el.innerHTML = '<div slot="test-slot"></div>';
-        await elementUpdated(el);
+    expect(el.slotContentIsPresent).to.be.false;
 
-        expect(el.slotContentIsPresent).to.be.true;
-    });
+    el.innerHTML = '<div slot="test-slot"></div>';
+    await elementUpdated(el);
+
+    expect(el.slotContentIsPresent).to.be.true;
+  });
 });

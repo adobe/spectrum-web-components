@@ -10,15 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/tags/sp-tag.js';
-import '@spectrum-web-components/tags/sp-tags.js';
-import { html } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/tags/sp-tag.js";
+import "@spectrum-web-components/tags/sp-tags.js";
+import { html } from "lit";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
 measureFixtureCreation(html`
-    <sp-tags>
-        <sp-tags-item>Tag 1</sp-tags-item>
-        <sp-tags-item invalid>Tag 2</sp-tags-item>
-        <sp-tags-item disabled>Tag 3</sp-tags-item>
-    </sp-tags>
+  <sp-tags>
+    <sp-tags-item>Tag 1</sp-tags-item>
+    <sp-tags-item invalid>Tag 2</sp-tags-item>
+    <sp-tags-item disabled>Tag 3</sp-tags-item>
+  </sp-tags>
 `);

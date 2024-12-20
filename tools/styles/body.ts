@@ -10,24 +10,24 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import baseStyles from './src/spectrum-base.css.js';
-import langBaseStyles from './src/spectrum-lang.css.js';
-import langOverrides from './src/lang-overrides.css.js';
-import bodyBaseStyles from './src/spectrum-body.css.js';
-import bodyOverrides from './src/body-overrides.css.js';
+import baseStyles from "./src/spectrum-base.css.js";
+import langBaseStyles from "./src/spectrum-lang.css.js";
+import langOverrides from "./src/lang-overrides.css.js";
+import bodyBaseStyles from "./src/spectrum-body.css.js";
+import bodyOverrides from "./src/body-overrides.css.js";
 
-import { css } from 'lit';
+import { css } from "lit";
 
 // bodyStyles is a combination of bodyBaseStyles and bodyOverrides
 const bodyStyles = css`
-    ${bodyBaseStyles}
-    ${bodyOverrides}
+  ${bodyBaseStyles}
+  ${bodyOverrides}
 `;
 
 // langStyles is a combination of langBaseStyles and langOverrides
 const langStyles = css`
-    ${langBaseStyles}
-    ${langOverrides}
+  ${langBaseStyles}
+  ${langOverrides}
 `;
 
 export default [baseStyles, langStyles, bodyStyles];

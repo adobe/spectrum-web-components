@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Dialog } from './src/Dialog.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Dialog } from "./src/Dialog.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-dialog', Dialog);
+defineElement("sp-dialog", Dialog);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-dialog': Dialog;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-dialog": Dialog;
+  }
 }

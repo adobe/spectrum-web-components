@@ -10,33 +10,33 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@spectrum-web-components/base';
+import { TemplateResult } from "@spectrum-web-components/base";
 
-import { IconsetSVG } from '@spectrum-web-components/iconset/src/iconset-svg.js';
+import { IconsetSVG } from "@spectrum-web-components/iconset/src/iconset-svg.js";
 
-import iconsSVG from './icons-medium.svg.js';
+import iconsSVG from "./icons-medium.svg.js";
 
 /**
  * @element sp-icons-medium
  */
 export class IconsMedium extends IconsetSVG {
-    public constructor() {
-        super();
-        this.name = 'ui'; // default iconset name for these icons
-    }
+  public constructor() {
+    super();
+    this.name = "ui"; // default iconset name for these icons
+  }
 
-    protected override renderDefaultContent(): TemplateResult {
-        return iconsSVG;
-    }
-    /**
-     * Overrides createIconName to make icon strings compatible with spectrum-icon id format
-     *
-     * @param icon - The name of the icon to be used in the SVG element
-     */
-    protected override getSVGIconName(icon: string): string {
-        return `spectrum-icon-${icon}`;
-    }
-    protected override getSanitizedIconName(icon: string): string {
-        return icon.replace('spectrum-icon-', '');
-    }
+  protected override renderDefaultContent(): TemplateResult {
+    return iconsSVG;
+  }
+  /**
+   * Overrides createIconName to make icon strings compatible with spectrum-icon id format
+   *
+   * @param icon - The name of the icon to be used in the SVG element
+   */
+  protected override getSVGIconName(icon: string): string {
+    return `spectrum-icon-${icon}`;
+  }
+  protected override getSanitizedIconName(icon: string): string {
+    return icon.replace("spectrum-icon-", "");
+  }
 }

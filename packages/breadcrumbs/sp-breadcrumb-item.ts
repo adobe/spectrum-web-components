@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { BreadcrumbItem } from './src/BreadcrumbItem.js';
+import { BreadcrumbItem } from "./src/BreadcrumbItem.js";
 
-customElements.define('sp-breadcrumb-item', BreadcrumbItem);
+customElements.define("sp-breadcrumb-item", BreadcrumbItem);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-breadcrumb-item': BreadcrumbItem;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-breadcrumb-item": BreadcrumbItem;
+  }
 }

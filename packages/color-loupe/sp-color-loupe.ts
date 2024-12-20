@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ColorLoupe } from './src/ColorLoupe.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { ColorLoupe } from "./src/ColorLoupe.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-color-loupe', ColorLoupe);
+defineElement("sp-color-loupe", ColorLoupe);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-color-loupe': ColorLoupe;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-color-loupe": ColorLoupe;
+  }
 }

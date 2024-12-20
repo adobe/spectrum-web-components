@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ProgressBar } from './src/ProgressBar.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { ProgressBar } from "./src/ProgressBar.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-progress-bar', ProgressBar);
+defineElement("sp-progress-bar", ProgressBar);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-progress-bar': ProgressBar;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-progress-bar": ProgressBar;
+  }
 }

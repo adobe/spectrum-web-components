@@ -9,25 +9,25 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from "@open-wc/testing";
 
-import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
-import { CoachIndicator } from '@spectrum-web-components/coachmark';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import "@spectrum-web-components/coachmark/sp-coach-indicator.js";
+import { CoachIndicator } from "@spectrum-web-components/coachmark";
+import { testForLitDevWarnings } from "../../../test/testing-helpers.js";
 
-describe('CoachIndicator', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<CoachIndicator>(html`
-                <sp-coach-indicator></sp-coach-indicator>
-            `)
-    );
-    it('loads default coach-indicator accessibly', async () => {
-        const el = await fixture<CoachIndicator>(html`
-            <sp-coach-indicator></sp-coach-indicator>
-        `);
+describe("CoachIndicator", () => {
+  testForLitDevWarnings(
+    async () =>
+      await fixture<CoachIndicator>(html`
+        <sp-coach-indicator></sp-coach-indicator>
+      `),
+  );
+  it("loads default coach-indicator accessibly", async () => {
+    const el = await fixture<CoachIndicator>(html`
+      <sp-coach-indicator></sp-coach-indicator>
+    `);
 
-        await elementUpdated(el);
-        await expect(el).to.be.accessible();
-    });
+    await elementUpdated(el);
+    await expect(el).to.be.accessible();
+  });
 });

@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CloseButton } from './src/CloseButton.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { CloseButton } from "./src/CloseButton.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-close-button', CloseButton);
+defineElement("sp-close-button", CloseButton);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-close-button': CloseButton;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-close-button": CloseButton;
+  }
 }

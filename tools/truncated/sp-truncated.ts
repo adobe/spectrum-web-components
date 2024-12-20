@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Truncated } from './src/Truncated.js';
+import { Truncated } from "./src/Truncated.js";
 
-customElements.define('sp-truncated', Truncated);
+customElements.define("sp-truncated", Truncated);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-truncated': Truncated;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-truncated": Truncated;
+  }
 }

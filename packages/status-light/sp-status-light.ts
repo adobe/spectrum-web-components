@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { StatusLight } from './src/StatusLight.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { StatusLight } from "./src/StatusLight.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-status-light', StatusLight);
+defineElement("sp-status-light", StatusLight);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-status-light': StatusLight;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-status-light": StatusLight;
+  }
 }

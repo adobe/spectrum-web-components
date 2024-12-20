@@ -9,84 +9,83 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
-import { Default, StoryArgs } from './radio.stories.js';
+import { TemplateResult } from "@spectrum-web-components/base";
+import { Default, StoryArgs } from "./radio.stories.js";
 
 export default {
-    component: 'sp-radio',
-    title: 'Radio/Sizes',
-    argTypes: {
-        checked: {
-            name: 'checked',
-            type: { name: 'boolean', required: false },
-            description: 'Represents when the input is checked',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: 'boolean',
-        },
-        disabled: {
-            name: 'disabled',
-            type: { name: 'boolean', required: false },
-            description:
-                'Disable this control. It will not receive focus or events.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        emphasized: {
-            name: 'emphasized',
-            type: { name: 'boolean', required: false },
-            description: "Set the button's state to emphasized.",
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        invalid: {
-            name: 'invalid',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
+  component: "sp-radio",
+  title: "Radio/Sizes",
+  argTypes: {
+    checked: {
+      name: "checked",
+      type: { name: "boolean", required: false },
+      description: "Represents when the input is checked",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: false },
+      },
+      control: "boolean",
     },
-    args: {
-        checked: false,
-        disabled: false,
-        emphasized: false,
-        invalid: false,
+    disabled: {
+      name: "disabled",
+      type: { name: "boolean", required: false },
+      description: "Disable this control. It will not receive focus or events.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: false },
+      },
+      control: {
+        type: "boolean",
+      },
     },
+    emphasized: {
+      name: "emphasized",
+      type: { name: "boolean", required: false },
+      description: "Set the button's state to emphasized.",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: false },
+      },
+      control: {
+        type: "boolean",
+      },
+    },
+    invalid: {
+      name: "invalid",
+      type: { name: "boolean", required: false },
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: false },
+      },
+      control: {
+        type: "boolean",
+      },
+    },
+  },
+  args: {
+    checked: false,
+    disabled: false,
+    emphasized: false,
+    invalid: false,
+  },
 };
 
 export const s = (args: StoryArgs): TemplateResult => Default(args);
 s.args = {
-    size: 's',
+  size: "s",
 };
 
 export const m = (args: StoryArgs): TemplateResult => Default(args);
 m.args = {
-    size: 'm',
+  size: "m",
 };
 
 export const l = (args: StoryArgs): TemplateResult => Default(args);
 l.args = {
-    size: 'l',
+  size: "l",
 };
 
 export const XL = (args: StoryArgs): TemplateResult => Default(args);
 XL.args = {
-    size: 'xl',
+  size: "xl",
 };

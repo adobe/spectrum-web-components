@@ -11,16 +11,16 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    SpectrumElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+  CSSResultArray,
+  html,
+  SpectrumElement,
+  TemplateResult,
+} from "@spectrum-web-components/base";
+import { property } from "@spectrum-web-components/base/src/decorators.js";
 
-import messageStyles from './illustrated-message.css.js';
-import headingStyles from '@spectrum-web-components/styles/heading.js';
-import bodyStyles from '@spectrum-web-components/styles/body.js';
+import messageStyles from "./illustrated-message.css.js";
+import headingStyles from "@spectrum-web-components/styles/heading.js";
+import bodyStyles from "@spectrum-web-components/styles/body.js";
 
 /**
  * @element sp-illustrated-message
@@ -30,30 +30,30 @@ import bodyStyles from '@spectrum-web-components/styles/body.js';
  * @slot description - Description text for the illustration
  */
 export class IllustratedMessage extends SpectrumElement {
-    public static readonly is = 'sp-illustrated-message';
+  public static readonly is = "sp-illustrated-message";
 
-    public static override get styles(): CSSResultArray {
-        return [headingStyles, bodyStyles, messageStyles];
-    }
+  public static override get styles(): CSSResultArray {
+    return [headingStyles, bodyStyles, messageStyles];
+  }
 
-    @property()
-    public heading = '';
+  @property()
+  public heading = "";
 
-    @property()
-    public description = '';
+  @property()
+  public description = "";
 
-    protected override render(): TemplateResult {
-        return html`
-            <div id="illustration"><slot></slot></div>
-            <h2
-                id="heading"
-                class="spectrum-Heading spectrum-Heading--sizeL spectrum-Heading--light"
-            >
-                <slot name="heading">${this.heading}</slot>
-            </h2>
-            <div id="description" class="spectrum-Body spectrum-Body--sizeS">
-                <slot name="description">${this.description}</slot>
-            </div>
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html`
+      <div id="illustration"><slot></slot></div>
+      <h2
+        id="heading"
+        class="spectrum-Heading spectrum-Heading--sizeL spectrum-Heading--light"
+      >
+        <slot name="heading">${this.heading}</slot>
+      </h2>
+      <div id="description" class="spectrum-Body spectrum-Body--sizeS">
+        <slot name="description">${this.description}</slot>
+      </div>
+    `;
+  }
 }

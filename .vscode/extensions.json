@@ -1,3 +1,24 @@
 {
-    "recommendations": ["runem.lit-plugin"]
+	"recommendations": [
+		"runem.lit-plugin",
+		"bierner.color-info",
+		"bierner.lit-html",
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"figma.figma-vscode-extension",
+		"github.copilot",
+		"github.copilot-chat",
+		"github.vscode-github-actions",
+		"github.vscode-pull-request-github",
+		"gruntfuggly.todo-tree",
+		"joshbolduc.story-explorer",
+		"kisstkondoros.csstriggers",
+		"mariusschulz.yarn-lock-syntax",
+		"me-dutour-mathieu.vscode-github-actions",
+		"oouo-diogo-perdigao.docthis",
+		"rajdeepchandra.spectrum-design-tokens-for-vscode",
+		"stylelint.vscode-stylelint",
+		"vunguyentuan.vscode-css-variables",
+		"vunguyentuan.vscode-postcss"
+	]
 }

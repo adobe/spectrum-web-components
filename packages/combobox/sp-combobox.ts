@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Combobox } from './src/Combobox.js';
+import { Combobox } from "./src/Combobox.js";
 
-customElements.define('sp-combobox', Combobox);
+customElements.define("sp-combobox", Combobox);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-combobox': Combobox;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-combobox": Combobox;
+  }
 }

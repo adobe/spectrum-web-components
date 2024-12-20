@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture } from '@open-wc/testing';
+import { fixture } from "@open-wc/testing";
 
-import { Accordion } from '@spectrum-web-components/accordion';
+import { Accordion } from "@spectrum-web-components/accordion";
 
-import { Default } from '../stories/accordion.stories.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { Default } from "../stories/accordion.stories.js";
+import { testForLitDevWarnings } from "../../../test/testing-helpers.js";
 
-describe('Accordion - dev mode', () => {
-    testForLitDevWarnings(async () => await fixture<Accordion>(Default()));
+describe("Accordion - dev mode", () => {
+  testForLitDevWarnings(async () => await fixture<Accordion>(Default()));
 });

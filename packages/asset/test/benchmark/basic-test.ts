@@ -10,10 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/asset/sp-asset.js';
-import { html } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/asset/sp-asset.js";
+import { html } from "lit";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
-measureFixtureCreation(html`
-    <sp-asset open></sp-asset>
-`);
+measureFixtureCreation(html` <sp-asset open></sp-asset> `);

@@ -10,17 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from "@spectrum-web-components/base";
 
-import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
+import "@spectrum-web-components/color-loupe/sp-color-loupe.js";
 
 export default {
-    title: 'Color/Loupe',
-    component: 'sp-color-loupe',
+  title: "Color/Loupe",
+  component: "sp-color-loupe",
 };
 
 export const open = (): TemplateResult => {
-    return html`
-        <sp-color-loupe open style="inset-block-start:25%;"></sp-color-loupe>
-    `;
+  return html`
+    <sp-color-loupe open style="inset-block-start:25%;"></sp-color-loupe>
+  `;
 };

@@ -10,77 +10,77 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { html, nothing, TemplateResult } from "@spectrum-web-components/base";
+import { ifDefined } from "@spectrum-web-components/base/src/directives.js";
 
 export type StoryArgs = {
-    active: boolean;
-    icon: TemplateResult;
-    invalid: boolean;
-    label: boolean | string;
-    open: boolean;
-    position?: 'right' | 'left';
-    quiet: boolean;
-    rounded: boolean;
-    size: 's' | 'm' | 'l' | 'xl';
+  active: boolean;
+  icon: TemplateResult;
+  invalid: boolean;
+  label: boolean | string;
+  open: boolean;
+  position?: "right" | "left";
+  quiet: boolean;
+  rounded: boolean;
+  size: "s" | "m" | "l" | "xl";
 };
 
 export const Template = ({
-    active,
-    icon,
-    invalid,
-    label,
-    open,
-    position,
-    quiet,
-    rounded,
-    size,
+  active,
+  icon,
+  invalid,
+  label,
+  open,
+  position,
+  quiet,
+  rounded,
+  size,
 }: StoryArgs): TemplateResult => {
-    return html`
-        <sp-picker-button
-            ?active=${active}
-            ?invalid=${invalid}
-            ?open=${open}
-            position=${ifDefined(position)}
-            ?quiet=${quiet}
-            ?rounded=${rounded}
-            size=${size}
-        >
-            ${icon ? icon : nothing}
-            ${label
-                ? html`
-                      <span slot="label">
-                          ${typeof label === 'string' ? label : 'All'}
-                      </span>
-                  `
-                : nothing}
-        </sp-picker-button>
-    `;
+  return html`
+    <sp-picker-button
+      ?active=${active}
+      ?invalid=${invalid}
+      ?open=${open}
+      position=${ifDefined(position)}
+      ?quiet=${quiet}
+      ?rounded=${rounded}
+      size=${size}
+    >
+      ${icon ? icon : nothing}
+      ${label
+        ? html`
+            <span slot="label">
+              ${typeof label === "string" ? label : "All"}
+            </span>
+          `
+        : nothing}
+    </sp-picker-button>
+  `;
 };
 
 export const argTypes = {
-    argTypes: {
-        open: {
-            control: {
-                type: 'boolean',
-            },
-        },
-        position: {
-            control: {
-                type: 'inline-radio',
-                options: ['right', 'left'],
-            },
-        },
-        quiet: {
-            control: {
-                type: 'boolean',
-            },
-        },
-        size: {
-            control: {
-                type: 'inline-radio',
-                options: ['s', 'm', 'l', 'xl'],
-            },
-        },
+  argTypes: {
+    open: {
+      control: {
+        type: "boolean",
+      },
     },
+    position: {
+      control: {
+        type: "inline-radio",
+        options: ["right", "left"],
+      },
+    },
+    quiet: {
+      control: {
+        type: "boolean",
+      },
+    },
+    size: {
+      control: {
+        type: "inline-radio",
+        options: ["s", "m", "l", "xl"],
+      },
+    },
+  },
 };

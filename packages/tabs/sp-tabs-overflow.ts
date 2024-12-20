@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TabsOverflow } from './src/TabsOverflow.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { TabsOverflow } from "./src/TabsOverflow.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-tabs-overflow', TabsOverflow);
+defineElement("sp-tabs-overflow", TabsOverflow);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-tabs-overflow': TabsOverflow;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-tabs-overflow": TabsOverflow;
+  }
 }

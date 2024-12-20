@@ -9,39 +9,37 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
-import { AccordionItem } from '@spectrum-web-components/accordion/src/AccordionItem.js';
-import { OverlayTrigger } from '../src/OverlayTrigger.js';
-import { accordion } from '../stories/overlay.stories.js';
+import { elementUpdated, expect, oneEvent } from "@open-wc/testing";
+import { AccordionItem } from "@spectrum-web-components/accordion/src/AccordionItem.js";
+import { OverlayTrigger } from "../src/OverlayTrigger.js";
+import { accordion } from "../stories/overlay.stories.js";
 import {
-    fixture,
-    ignoreResizeObserverLoopError,
-} from '../../../test/testing-helpers.js';
+  fixture,
+  ignoreResizeObserverLoopError,
+} from "../../../test/testing-helpers.js";
 
-describe('sp-update-overlays event', () => {
-    ignoreResizeObserverLoopError(before, after);
-    it('updates overlay height', async () => {
-        const el = await fixture<OverlayTrigger>(accordion());
-        const container = el.querySelector('sp-popover') as HTMLElement;
-        const item = el.querySelector(
-            '[label="Other things"]'
-        ) as AccordionItem;
+describe("sp-update-overlays event", () => {
+  ignoreResizeObserverLoopError(before, after);
+  it("updates overlay height", async () => {
+    const el = await fixture<OverlayTrigger>(accordion());
+    const container = el.querySelector("sp-popover") as HTMLElement;
+    const item = el.querySelector('[label="Other things"]') as AccordionItem;
 
-        el.content = 'click';
-        await elementUpdated(item);
+    el.content = "click";
+    await elementUpdated(item);
 
-        const opened = oneEvent(el, 'sp-opened');
+    const opened = oneEvent(el, "sp-opened");
 
-        el.open = 'click';
-        await opened;
+    el.open = "click";
+    await opened;
 
-        const height1 = container.getBoundingClientRect().height;
+    const height1 = container.getBoundingClientRect().height;
 
-        item.click();
-        await elementUpdated(item);
+    item.click();
+    await elementUpdated(item);
 
-        const height2 = container.getBoundingClientRect().height;
+    const height2 = container.getBoundingClientRect().height;
 
-        expect(height1).to.be.lessThan(height2);
-    });
+    expect(height1).to.be.lessThan(height2);
+  });
 });

@@ -9,12 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { ContextualHelp } from './src/ContextualHelp.js';
+import { ContextualHelp } from "./src/ContextualHelp.js";
 
-customElements.define('sp-contextual-help', ContextualHelp);
+customElements.define("sp-contextual-help", ContextualHelp);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-contextual-help': ContextualHelp;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-contextual-help": ContextualHelp;
+  }
 }

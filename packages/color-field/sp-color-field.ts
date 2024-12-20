@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ColorField } from './src/ColorField.js';
+import { ColorField } from "./src/ColorField.js";
 
-customElements.define('sp-color-field', ColorField);
+customElements.define("sp-color-field", ColorField);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-color-field': ColorField;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-color-field": ColorField;
+  }
 }

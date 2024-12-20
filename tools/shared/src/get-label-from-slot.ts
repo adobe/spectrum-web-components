@@ -11,22 +11,26 @@ governing permissions and limitations under the License.
 */
 
 export const getLabelFromSlot = (
-    label: string,
-    slotEl: HTMLSlotElement
+  label: string,
+  slotEl: HTMLSlotElement,
 ): string | null => {
-    if (label) return null;
-    const textContent = slotEl
-        .assignedNodes()
-        .reduce((accumulator: string, node: Node) => {
-            if (node.textContent) {
-                return accumulator + node.textContent;
-            } else {
-                return accumulator;
-            }
-        }, '');
-    if (textContent) {
-        return textContent.trim();
-    } else {
-        return null;
-    }
+  if (label) {
+    return null;
+  }
+
+  const textContent = slotEl
+    .assignedNodes()
+    .reduce((accumulator: string, node: Node) => {
+      if (node.textContent) {
+        return accumulator + node.textContent;
+      } else {
+        return accumulator;
+      }
+    }, "");
+
+  if (textContent) {
+    return textContent.trim();
+  } else {
+    return null;
+  }
 };

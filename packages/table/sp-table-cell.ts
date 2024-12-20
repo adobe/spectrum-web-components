@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TableCell } from './src/TableCell.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { TableCell } from "./src/TableCell.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-table-cell', TableCell);
+defineElement("sp-table-cell", TableCell);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-table-cell': TableCell;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-table-cell": TableCell;
+  }
 }

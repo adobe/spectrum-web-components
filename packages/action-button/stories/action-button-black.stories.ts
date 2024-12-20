@@ -9,45 +9,45 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
-import { makeOverBackground } from '../../button/stories/index.js';
-import type { Properties } from './index.js';
-import { renderButtons } from './index.js';
+import { TemplateResult } from "@spectrum-web-components/base";
+import { makeOverBackground } from "../../button/stories/index.js";
+import type { Properties } from "./index.js";
+import { renderButtons } from "./index.js";
 
 export default {
-    component: 'sp-action-button',
-    title: 'Action Button/Static Black',
-    decorators: [makeOverBackground('black')],
+  component: "sp-action-button",
+  title: "Action Button/Static Black",
+  decorators: [makeOverBackground("black")],
 };
 
-const staticColor = 'black';
+const staticColor = "black";
 
 export const XS = (args: Properties): TemplateResult => renderButtons(args);
 XS.args = {
-    size: 'xs',
-    staticColor,
+  size: "xs",
+  staticColor,
 };
 
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
-    size: 's',
-    staticColor,
+  size: "s",
+  staticColor,
 };
 
 export const m = (args: Properties): TemplateResult => renderButtons(args);
 m.args = {
-    size: 'm',
-    staticColor,
+  size: "m",
+  staticColor,
 } as Properties;
 
 export const l = (args: Properties): TemplateResult => renderButtons(args);
 l.args = {
-    size: 'l',
-    staticColor,
+  size: "l",
+  staticColor,
 };
 
 export const XL = (args: Properties): TemplateResult => renderButtons(args);
 XL.args = {
-    size: 'xl',
-    staticColor,
+  size: "xl",
+  staticColor,
 };

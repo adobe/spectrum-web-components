@@ -10,139 +10,143 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ReactiveController } from '@spectrum-web-components/base';
-import { AbstractOverlay } from './AbstractOverlay.js';
+import type { ReactiveController } from "@spectrum-web-components/base";
+import { AbstractOverlay } from "./AbstractOverlay.js";
 
 export enum InteractionTypes {
-    'click',
-    'hover',
-    'longpress',
+  "click",
+  "hover",
+  "longpress",
 }
 
 export type ControllerOptions = {
-    overlay?: AbstractOverlay;
-    handleOverlayReady?: (overlay: AbstractOverlay) => void;
-    isPersistent?: boolean;
+  overlay?: AbstractOverlay;
+  handleOverlayReady?: (overlay: AbstractOverlay) => void;
+  isPersistent?: boolean;
 };
 
 export class InteractionController implements ReactiveController {
-    abortController!: AbortController;
+  abortController!: AbortController;
 
-    get activelyOpening(): boolean {
-        return false;
+  get activelyOpening(): boolean {
+    return false;
+  }
+
+  private handleOverlayReady?: (overlay: AbstractOverlay) => void;
+
+  // Holds optimistic open state when an Overlay is not yet present
+  private isLazilyOpen = false;
+
+  public get open(): boolean {
+    return this.overlay?.open ?? this.isLazilyOpen;
+  }
+
+  /**
+   * Set `open` against the associated Overlay lazily.
+   */
+  public set open(open: boolean) {
+    if (open === this.open) {
+      return;
     }
 
-    private handleOverlayReady?: (overlay: AbstractOverlay) => void;
+    this.isLazilyOpen = open;
 
-    // Holds optimistic open state when an Overlay is not yet present
-    private isLazilyOpen = false;
+    if (this.overlay) {
+      // If there already is an Overlay, apply the value of `open` directly.
+      this.overlay.open = open;
 
-    public get open(): boolean {
-        return this.overlay?.open ?? this.isLazilyOpen;
+      return;
     }
 
-    /**
-     * Set `open` against the associated Overlay lazily.
-     */
-    public set open(open: boolean) {
-        if (open === this.open) return;
-
-        this.isLazilyOpen = open;
-
-        if (this.overlay) {
-            // If there already is an Overlay, apply the value of `open` directly.
-            this.overlay.open = open;
-
-            return;
-        }
-
-        if (!open) {
-            // When `open` moves to `false` and there is not yet an Overlay,
-            // assume that no Overlay and a closed Overlay are the same and return early.
-            return;
-        }
-
-        // When there is no Overlay and `open` is moving to `true`, lazily import/create
-        // an Overlay and apply that state to it.
-        customElements
-            .whenDefined('sp-overlay')
-            .then(async (): Promise<void> => {
-                const { Overlay } = await import('./Overlay.js');
-
-                this.overlay = new Overlay();
-                this.overlay.open = true;
-            });
-        import('@spectrum-web-components/overlay/sp-overlay.js');
+    if (!open) {
+      // When `open` moves to `false` and there is not yet an Overlay,
+      // assume that no Overlay and a closed Overlay are the same and return early.
+      return;
     }
 
-    public get overlay(): AbstractOverlay {
-        return this._overlay;
+    // When there is no Overlay and `open` is moving to `true`, lazily import/create
+    // an Overlay and apply that state to it.
+    customElements.whenDefined("sp-overlay").then(async (): Promise<void> => {
+      const { Overlay } = await import("./Overlay.js");
+
+      this.overlay = new Overlay();
+      this.overlay.open = true;
+    });
+    import("@spectrum-web-components/overlay/sp-overlay.js");
+  }
+
+  public get overlay(): AbstractOverlay {
+    return this._overlay;
+  }
+
+  public set overlay(overlay: AbstractOverlay | undefined) {
+    if (!overlay) {
+      return;
     }
 
-    public set overlay(overlay: AbstractOverlay | undefined) {
-        if (!overlay) return;
-
-        if (this.overlay === overlay) return;
-
-        if (this.overlay) {
-            this.overlay.removeController(this);
-        }
-
-        this._overlay = overlay;
-        this.overlay.addController(this);
-        this.initOverlay();
-        this.prepareDescription(this.target);
-        this.handleOverlayReady?.(this.overlay);
+    if (this.overlay === overlay) {
+      return;
     }
 
-    private _overlay!: AbstractOverlay;
-
-    protected isPersistent = false;
-
-    type!: InteractionTypes;
-
-    constructor(
-        public target: HTMLElement,
-        { overlay, isPersistent, handleOverlayReady }: ControllerOptions
-    ) {
-        this.isPersistent = !!isPersistent;
-        this.handleOverlayReady = handleOverlayReady;
-
-        if (this.isPersistent) {
-            this.init();
-        }
-
-        this.overlay = overlay;
+    if (this.overlay) {
+      this.overlay.removeController(this);
     }
 
-    prepareDescription(_: HTMLElement): void {}
+    this._overlay = overlay;
+    this.overlay.addController(this);
+    this.initOverlay();
+    this.prepareDescription(this.target);
+    this.handleOverlayReady?.(this.overlay);
+  }
 
-    releaseDescription(): void {}
+  private _overlay!: AbstractOverlay;
 
-    shouldCompleteOpen(): void {}
+  protected isPersistent = false;
 
-    /* c8 ignore next 3 */
-    init(): void {
-        // Abstract init() method.
+  type!: InteractionTypes;
+
+  constructor(
+    public target: HTMLElement,
+    { overlay, isPersistent, handleOverlayReady }: ControllerOptions,
+  ) {
+    this.isPersistent = !!isPersistent;
+    this.handleOverlayReady = handleOverlayReady;
+
+    if (this.isPersistent) {
+      this.init();
     }
 
-    /* c8 ignore next 3 */
-    initOverlay(): void {
-        // Abstract initOverlay() method.
-    }
+    this.overlay = overlay;
+  }
 
-    abort(): void {
-        this.releaseDescription();
-        this.abortController?.abort();
-    }
+  prepareDescription(_: HTMLElement): void {}
 
-    hostConnected(): void {
-        this.init();
-    }
+  releaseDescription(): void {}
 
-    hostDisconnected(): void {
-        if (!this.isPersistent) {
-            this.abort();
-        }
+  shouldCompleteOpen(): void {}
+
+  /* c8 ignore next 3 */
+  init(): void {
+    // Abstract init() method.
+  }
+
+  /* c8 ignore next 3 */
+  initOverlay(): void {
+    // Abstract initOverlay() method.
+  }
+
+  abort(): void {
+    this.releaseDescription();
+    this.abortController?.abort();
+  }
+
+  hostConnected(): void {
+    this.init();
+  }
+
+  hostDisconnected(): void {
+    if (!this.isPersistent) {
+      this.abort();
     }
+  }
 }

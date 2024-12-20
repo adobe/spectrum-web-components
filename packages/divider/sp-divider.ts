@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Divider } from './src/Divider.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Divider } from "./src/Divider.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-divider', Divider);
+defineElement("sp-divider", Divider);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-divider': Divider;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-divider": Divider;
+  }
 }

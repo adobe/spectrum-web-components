@@ -10,32 +10,32 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import "@spectrum-web-components/asset/sp-asset.js";
 import {
-    CSSResultArray,
-    html,
-    nothing,
-    PropertyValues,
-    SizedMixin,
-    SpectrumElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+  CSSResultArray,
+  html,
+  nothing,
+  PropertyValues,
+  SizedMixin,
+  SpectrumElement,
+  TemplateResult,
+} from "@spectrum-web-components/base";
 import {
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
-import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import '@spectrum-web-components/asset/sp-asset.js';
+  property,
+  query,
+} from "@spectrum-web-components/base/src/decorators.js";
+import { ifDefined } from "@spectrum-web-components/base/src/directives.js";
+import { FocusVisiblePolyfillMixin } from "@spectrum-web-components/shared/src/focus-visible.js";
+import { LikeAnchor } from "@spectrum-web-components/shared/src/like-anchor.js";
+import { ObserveSlotPresence } from "@spectrum-web-components/shared/src/observe-slot-presence.js";
 
-import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/divider/sp-divider.js';
-import cardStyles from './card.css.js';
-import headingStyles from '@spectrum-web-components/styles/heading.js';
-import detailStyles from '@spectrum-web-components/styles/detail.js';
+import "@spectrum-web-components/checkbox/sp-checkbox.js";
+import { Checkbox } from "@spectrum-web-components/checkbox/src/Checkbox";
+import "@spectrum-web-components/divider/sp-divider.js";
+import "@spectrum-web-components/popover/sp-popover.js";
+import detailStyles from "@spectrum-web-components/styles/detail.js";
+import headingStyles from "@spectrum-web-components/styles/heading.js";
+import cardStyles from "./card.css.js";
 
 /**
  * @element sp-card
@@ -51,318 +51,315 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  * @fires change - Announces a change in the `selected` property of a card
  */
 export class Card extends LikeAnchor(
-    SizedMixin(
-        ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
-            '[slot="cover-photo"]',
-            '[slot="preview"]',
-        ]),
-        {
-            validSizes: ['s', 'm'],
-            noDefaultSize: true,
-        }
-    )
+  SizedMixin(
+    ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
+      '[slot="cover-photo"]',
+      '[slot="preview"]',
+    ]),
+    {
+      validSizes: ["s", "m"],
+      noDefaultSize: true,
+    },
+  ),
 ) {
-    public static override get styles(): CSSResultArray {
-        return [headingStyles, detailStyles, cardStyles];
+  public static override get styles(): CSSResultArray {
+    return [headingStyles, detailStyles, cardStyles];
+  }
+
+  @property()
+  public asset?: "file" | "folder";
+
+  @property({ reflect: true })
+  public variant: "standard" | "gallery" | "quiet" = "standard";
+
+  @property({ type: Boolean, reflect: true })
+  get selected(): boolean {
+    return this._selected;
+  }
+  set selected(selected: boolean) {
+    if (selected === this.selected) {
+      return;
     }
 
-    @property()
-    public asset?: 'file' | 'folder';
+    this._selected = selected;
+    this.requestUpdate("selected", !this._selected);
+  }
 
-    @property({ reflect: true })
-    public variant: 'standard' | 'gallery' | 'quiet' = 'standard';
+  private _selected = false;
 
-    @property({ type: Boolean, reflect: true })
-    get selected(): boolean {
-        return this._selected;
-    }
-    set selected(selected: boolean) {
-        if (selected === this.selected) return;
+  @property()
+  public heading = "";
 
-        this._selected = selected;
-        this.requestUpdate('selected', !this._selected);
-    }
+  @property({ type: Boolean, reflect: true })
+  public horizontal = false;
 
-    private _selected = false;
+  @query("#like-anchor")
+  private likeAnchor?: HTMLAnchorElement;
 
-    @property()
-    public heading = '';
+  @property({ type: Boolean, reflect: true })
+  public focused = false;
 
-    @property({ type: Boolean, reflect: true })
-    public horizontal = false;
+  @property({ type: Boolean, reflect: true })
+  public toggles = false;
 
-    @query('#like-anchor')
-    private likeAnchor?: HTMLAnchorElement;
+  @property()
+  public value = "";
 
-    @property({ type: Boolean, reflect: true })
-    public focused = false;
+  @property()
+  public subheading = "";
 
-    @property({ type: Boolean, reflect: true })
-    public toggles = false;
+  protected get hasCoverPhoto(): boolean {
+    return this.getSlotContentPresence('[slot="cover-photo"]');
+  }
 
-    @property()
-    public value = '';
+  protected get hasPreview(): boolean {
+    return this.getSlotContentPresence('[slot="preview"]');
+  }
 
-    @property()
-    public subheading = '';
+  public override click(): void {
+    this.likeAnchor?.click();
+  }
 
-    protected get hasCoverPhoto(): boolean {
-        return this.getSlotContentPresence('[slot="cover-photo"]');
-    }
+  private handleFocusin = (event: Event): void => {
+    this.focused = true;
+    const target = event.composedPath()[0];
 
-    protected get hasPreview(): boolean {
-        return this.getSlotContentPresence('[slot="preview"]');
-    }
+    if (target !== this) {
+      this.removeEventListener("keydown", this.handleKeydown);
 
-    public override click(): void {
-        this.likeAnchor?.click();
+      return;
     }
 
-    private handleFocusin = (event: Event): void => {
-        this.focused = true;
-        const target = event.composedPath()[0];
+    this.addEventListener("keydown", this.handleKeydown);
+  };
 
-        if (target !== this) {
-            this.removeEventListener('keydown', this.handleKeydown);
+  private handleFocusout(event: Event): void {
+    this.focused = false;
+    const target = event.composedPath()[0];
 
-            return;
+    if (target === this) {
+      this.removeEventListener("keydown", this.handleKeydown);
+    }
+  }
+
+  private handleKeydown(event: KeyboardEvent): void {
+    const { code } = event;
+
+    switch (code) {
+      case "Space":
+        this.toggleSelected();
+
+        if (this.toggles) {
+          event.preventDefault();
+          break;
         }
 
-        this.addEventListener('keydown', this.handleKeydown);
+        break;
+      case "Enter":
+      case "NumpadEnter":
+        this.click();
+    }
+  }
+
+  private handleSelectedChange(event: Event & { target: Checkbox }): void {
+    event.stopPropagation();
+    this.selected = event.target.checked;
+    this.announceChange();
+  }
+
+  public toggleSelected(): void {
+    if (!this.toggles) {
+      this.dispatchEvent(
+        new Event("click", {
+          bubbles: true,
+          composed: true,
+        }),
+      );
+
+      return;
+    }
+
+    this.selected = !this.selected;
+    this.announceChange();
+  }
+
+  private announceChange(): void {
+    const applyDefault = this.dispatchEvent(
+      new Event("change", {
+        cancelable: true,
+        bubbles: true,
+        composed: true,
+      }),
+    );
+
+    if (!applyDefault) {
+      this.selected = !this.selected;
+    }
+  }
+
+  private stopPropagationOnHref(event: Event): void {
+    if (this.href) {
+      event.stopPropagation();
+    }
+  }
+
+  private handlePointerdown(event: Event): void {
+    const path = event.composedPath();
+    const hasAnchor = path.some((el) => (el as HTMLElement).localName === "a");
+
+    if (hasAnchor) {
+      return;
+    }
+
+    const start = +new Date();
+    const handleEnd = (): void => {
+      const end = +new Date();
+
+      if (end - start < 200) {
+        this.click();
+      }
+
+      this.removeEventListener("pointerup", handleEnd);
+      this.removeEventListener("pointercancel", handleEnd);
     };
 
-    private handleFocusout(event: Event): void {
-        this.focused = false;
-        const target = event.composedPath()[0];
+    this.addEventListener("pointerup", handleEnd);
+    this.addEventListener("pointercancel", handleEnd);
+  }
 
-        if (target === this) {
-            this.removeEventListener('keydown', this.handleKeydown);
-        }
+  protected get renderHeading(): TemplateResult {
+    return html`
+      <div class="title spectrum-Heading spectrum-Heading--sizeXS" id="heading">
+        <slot name="heading">${this.heading}</slot>
+      </div>
+    `;
+  }
+
+  protected get renderPreviewImage(): TemplateResult {
+    return html`
+      <sp-asset id="preview" variant=${ifDefined(this.asset)}>
+        <slot name="preview"></slot>
+      </sp-asset>
+      ${this.variant !== "quiet" && !this.horizontal
+        ? html` <sp-divider size="s"></sp-divider> `
+        : nothing}
+    `;
+  }
+
+  protected get renderCoverImage(): TemplateResult {
+    return html`
+      <sp-asset id="cover-photo" variant=${ifDefined(this.asset)}>
+        <slot name="cover-photo"></slot>
+      </sp-asset>
+      ${this.variant !== "quiet" && !this.horizontal
+        ? html` <sp-divider size="s"></sp-divider> `
+        : nothing}
+    `;
+  }
+
+  protected get images(): TemplateResult[] {
+    const images: TemplateResult[] = [];
+
+    if (this.hasPreview) {
+      images.push(this.renderPreviewImage);
     }
 
-    private handleKeydown(event: KeyboardEvent): void {
-        const { code } = event;
-
-        switch (code) {
-            case 'Space':
-                this.toggleSelected();
-
-                if (this.toggles) {
-                    event.preventDefault();
-                    break;
-                }
-            case 'Enter':
-            case 'NumpadEnter':
-                this.click();
-        }
+    if (this.hasCoverPhoto) {
+      images.push(this.renderCoverImage);
     }
 
-    private handleSelectedChange(event: Event & { target: Checkbox }): void {
-        event.stopPropagation();
-        this.selected = event.target.checked;
-        this.announceChange();
+    return images;
+  }
+
+  private renderImage(): TemplateResult[] {
+    if (this.horizontal) {
+      return this.images;
     }
 
-    public toggleSelected(): void {
-        if (!this.toggles) {
-            this.dispatchEvent(
-                new Event('click', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-
-            return;
-        }
-
-        this.selected = !this.selected;
-        this.announceChange();
+    if (this.variant !== "standard") {
+      return [this.renderPreviewImage];
     }
 
-    private announceChange(): void {
-        const applyDefault = this.dispatchEvent(
-            new Event('change', {
-                cancelable: true,
-                bubbles: true,
-                composed: true,
-            })
-        );
+    return this.images;
+  }
 
-        if (!applyDefault) {
-            this.selected = !this.selected;
-        }
-    }
+  private get renderSubtitleAndDescription(): TemplateResult {
+    return html`
+      <div class="subtitle spectrum-Detail spectrum-Detail--sizeS">
+        <slot name="subheading">${this.subheading}</slot>
+      </div>
+      <slot name="description"></slot>
+    `;
+  }
 
-    private stopPropagationOnHref(event: Event): void {
-        if (this.href) {
-            event.stopPropagation();
-        }
-    }
-
-    private handlePointerdown(event: Event): void {
-        const path = event.composedPath();
-        const hasAnchor = path.some(
-            (el) => (el as HTMLElement).localName === 'a'
-        );
-
-        if (hasAnchor) return;
-
-        const start = +new Date();
-        const handleEnd = (): void => {
-            const end = +new Date();
-
-            if (end - start < 200) {
-                this.click();
-            }
-
-            this.removeEventListener('pointerup', handleEnd);
-            this.removeEventListener('pointercancel', handleEnd);
-        };
-
-        this.addEventListener('pointerup', handleEnd);
-        this.addEventListener('pointercancel', handleEnd);
-    }
-
-    protected get renderHeading(): TemplateResult {
-        return html`
-            <div
-                class="title spectrum-Heading spectrum-Heading--sizeXS"
-                id="heading"
-            >
-                <slot name="heading">${this.heading}</slot>
-            </div>
-        `;
-    }
-
-    protected get renderPreviewImage(): TemplateResult {
-        return html`
-            <sp-asset id="preview" variant=${ifDefined(this.asset)}>
-                <slot name="preview"></slot>
-            </sp-asset>
-            ${this.variant !== 'quiet' && !this.horizontal
-                ? html`
-                      <sp-divider size="s"></sp-divider>
-                  `
-                : nothing}
-        `;
-    }
-
-    protected get renderCoverImage(): TemplateResult {
-        return html`
-            <sp-asset id="cover-photo" variant=${ifDefined(this.asset)}>
-                <slot name="cover-photo"></slot>
-            </sp-asset>
-            ${this.variant !== 'quiet' && !this.horizontal
-                ? html`
-                      <sp-divider size="s"></sp-divider>
-                  `
-                : nothing}
-        `;
-    }
-
-    protected get images(): TemplateResult[] {
-        const images: TemplateResult[] = [];
-
-        if (this.hasPreview) images.push(this.renderPreviewImage);
-
-        if (this.hasCoverPhoto) images.push(this.renderCoverImage);
-
-        return images;
-    }
-
-    private renderImage(): TemplateResult[] {
-        if (this.horizontal) {
-            return this.images;
-        }
-
-        if (this.variant !== 'standard') {
-            return [this.renderPreviewImage];
-        }
-
-        return this.images;
-    }
-
-    private get renderSubtitleAndDescription(): TemplateResult {
-        return html`
-            <div class="subtitle spectrum-Detail spectrum-Detail--sizeS">
-                <slot name="subheading">${this.subheading}</slot>
-            </div>
-            <slot name="description"></slot>
-        `;
-    }
-
-    protected override render(): TemplateResult {
-        return html`
-            ${this.renderImage()}
-            <div class="body">
-                <div class="header">
-                    ${this.renderHeading}
-                    ${this.variant === 'gallery'
-                        ? this.renderSubtitleAndDescription
-                        : nothing}
-                    ${this.variant !== 'quiet' || this.size !== 's'
-                        ? html`
-                              <div
-                                  class="action-button"
-                                  @pointerdown=${this.stopPropagationOnHref}
-                              >
-                                  <slot name="actions"></slot>
-                              </div>
-                          `
-                        : nothing}
+  protected override render(): TemplateResult {
+    return html`
+      ${this.renderImage()}
+      <div class="body">
+        <div class="header">
+          ${this.renderHeading}
+          ${this.variant === "gallery"
+            ? this.renderSubtitleAndDescription
+            : nothing}
+          ${this.variant !== "quiet" || this.size !== "s"
+            ? html`
+                <div
+                  class="action-button"
+                  @pointerdown=${this.stopPropagationOnHref}
+                >
+                  <slot name="actions"></slot>
                 </div>
-                ${this.variant !== 'gallery'
-                    ? html`
-                          <div class="content">
-                              ${this.renderSubtitleAndDescription}
-                          </div>
-                      `
-                    : nothing}
+              `
+            : nothing}
+        </div>
+        ${this.variant !== "gallery"
+          ? html`
+              <div class="content">${this.renderSubtitleAndDescription}</div>
+            `
+          : nothing}
+      </div>
+      ${this.href
+        ? this.renderAnchor({
+            id: "like-anchor",
+            labelledby: "heading",
+          })
+        : nothing}
+      ${this.variant === "standard"
+        ? html` <slot name="footer"></slot> `
+        : nothing}
+      ${this.toggles
+        ? html`
+            <sp-popover
+              class="checkbox-toggle"
+              @pointerdown=${this.stopPropagationOnHref}
+            >
+              <sp-checkbox
+                class="checkbox"
+                @change=${this.handleSelectedChange}
+                ?checked=${this.selected}
+                tabindex="-1"
+              ></sp-checkbox>
+            </sp-popover>
+          `
+        : nothing}
+      ${this.variant === "quiet" && this.size === "s"
+        ? html`
+            <div
+              class="spectrum-QuickActions actions"
+              @pointerdown=${this.stopPropagationOnHref}
+            >
+              <slot name="actions"></slot>
             </div>
-            ${this.href
-                ? this.renderAnchor({
-                      id: 'like-anchor',
-                      labelledby: 'heading',
-                  })
-                : nothing}
-            ${this.variant === 'standard'
-                ? html`
-                      <slot name="footer"></slot>
-                  `
-                : nothing}
-            ${this.toggles
-                ? html`
-                      <sp-popover
-                          class="checkbox-toggle"
-                          @pointerdown=${this.stopPropagationOnHref}
-                      >
-                          <sp-checkbox
-                              class="checkbox"
-                              @change=${this.handleSelectedChange}
-                              ?checked=${this.selected}
-                              tabindex="-1"
-                          ></sp-checkbox>
-                      </sp-popover>
-                  `
-                : nothing}
-            ${this.variant === 'quiet' && this.size === 's'
-                ? html`
-                      <div
-                          class="spectrum-QuickActions actions"
-                          @pointerdown=${this.stopPropagationOnHref}
-                      >
-                          <slot name="actions"></slot>
-                      </div>
-                  `
-                : nothing}
-        `;
-    }
+          `
+        : nothing}
+    `;
+  }
 
-    protected override firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
-        this.addEventListener('pointerdown', this.handlePointerdown);
-        this.addEventListener('focusin', this.handleFocusin);
-        this.shadowRoot.addEventListener('focusin', this.handleFocusin);
-        this.addEventListener('focusout', this.handleFocusout);
-    }
+  protected override firstUpdated(changes: PropertyValues): void {
+    super.firstUpdated(changes);
+    this.addEventListener("pointerdown", this.handlePointerdown);
+    this.addEventListener("focusin", this.handleFocusin);
+    this.shadowRoot.addEventListener("focusin", this.handleFocusin);
+    this.addEventListener("focusout", this.handleFocusout);
+  }
 }

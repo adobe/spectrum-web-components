@@ -10,52 +10,50 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import type { Table, TableItem } from '@spectrum-web-components/table';
+import { html, TemplateResult } from "@spectrum-web-components/base";
+import type { Table, TableItem } from "@spectrum-web-components/table";
 
 export type Properties = {
-    selected?: string[] | undefined;
-    selects?: undefined | 'single' | 'multiple';
-    onChange?: (
-        eventData: Event & {
-            target: Table;
-            first: number;
-            last: number;
-            type: string;
-        }
-    ) => void;
+  selected?: string[] | undefined;
+  selects?: undefined | "single" | "multiple";
+  onChange?: (
+    eventData: Event & {
+      target: Table;
+      first: number;
+      last: number;
+      type: string;
+    },
+  ) => void;
 };
 
 export interface Item extends TableItem {
-    name: string;
-    date: number;
+  name: string;
+  date: number;
 }
 
 export function makeItems(count: number): Item[] {
-    const total = count;
-    const items: Item[] = [];
+  const total = count;
+  const items: Item[] = [];
 
-    while (count) {
-        count--;
-        items.push({
-            name: String(total - count),
-            date: count,
-        });
-    }
+  while (count) {
+    count--;
+    items.push({
+      name: String(total - count),
+      date: count,
+    });
+  }
 
-    return items;
+  return items;
 }
 
 export const renderItem = (item: Item, index: number): TemplateResult => {
-    if (item._$rowType$ === 1) {
-        return html`
-            <sp-table-cell>This row has no checkbox!</sp-table-cell>
-        `;
-    }
+  if (item._$rowType$ === 1) {
+    return html` <sp-table-cell>This row has no checkbox!</sp-table-cell> `;
+  }
 
-    return html`
-        <sp-table-cell>Row Item ${item.name}</sp-table-cell>
-        <sp-table-cell>Row Item ${item.date}</sp-table-cell>
-        <sp-table-cell>Row Item ${index}</sp-table-cell>
-    `;
+  return html`
+    <sp-table-cell>Row Item ${item.name}</sp-table-cell>
+    <sp-table-cell>Row Item ${item.date}</sp-table-cell>
+    <sp-table-cell>Row Item ${index}</sp-table-cell>
+  `;
 };

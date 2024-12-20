@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { confirmation } from '../stories/alert-dialog.stories.js';
-import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { confirmation } from "../stories/alert-dialog.stories.js";
+import { testForMemoryLeaks } from "../../../test/testing-helpers.js";
 
 testForMemoryLeaks(confirmation());

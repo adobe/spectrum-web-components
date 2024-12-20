@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Swatch } from './src/Swatch.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Swatch } from "./src/Swatch.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-swatch', Swatch);
+defineElement("sp-swatch", Swatch);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-swatch': Swatch;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-swatch": Swatch;
+  }
 }

@@ -11,47 +11,47 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    SizedMixin,
-    SpectrumElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+  CSSResultArray,
+  html,
+  PropertyValues,
+  SizedMixin,
+  SpectrumElement,
+  TemplateResult,
+} from "@spectrum-web-components/base";
+import { property } from "@spectrum-web-components/base/src/decorators.js";
 
-import styles from './divider.css.js';
+import styles from "./divider.css.js";
 
 /**
  * @element sp-divider
  */
 export class Divider extends SizedMixin(SpectrumElement, {
-    validSizes: ['s', 'm', 'l'],
-    noDefaultSize: true,
+  validSizes: ["s", "m", "l"],
+  noDefaultSize: true,
 }) {
-    public static override styles: CSSResultArray = [styles];
+  public static override styles: CSSResultArray = [styles];
 
-    @property({ type: Boolean, reflect: true })
-    public vertical = false;
+  @property({ type: Boolean, reflect: true })
+  public vertical = false;
 
-    protected override render(): TemplateResult {
-        return html``;
+  protected override render(): TemplateResult {
+    return html``;
+  }
+
+  protected override firstUpdated(changed: PropertyValues<this>): void {
+    super.firstUpdated(changed);
+    this.setAttribute("role", "separator");
+  }
+
+  protected override updated(changed: PropertyValues<this>): void {
+    super.updated(changed);
+
+    if (changed.has("vertical")) {
+      if (this.vertical) {
+        this.setAttribute("aria-orientation", "vertical");
+      } else {
+        this.removeAttribute("aria-orientation");
+      }
     }
-
-    protected override firstUpdated(changed: PropertyValues<this>): void {
-        super.firstUpdated(changed);
-        this.setAttribute('role', 'separator');
-    }
-
-    protected override updated(changed: PropertyValues<this>): void {
-        super.updated(changed);
-
-        if (changed.has('vertical')) {
-            if (this.vertical) {
-                this.setAttribute('aria-orientation', 'vertical');
-            } else {
-                this.removeAttribute('aria-orientation');
-            }
-        }
-    }
+  }
 }

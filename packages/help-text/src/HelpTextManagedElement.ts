@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { SpectrumElement } from '@spectrum-web-components/base';
-import { ManageHelpText } from './manage-help-text.js';
+import { SpectrumElement } from "@spectrum-web-components/base";
+import { ManageHelpText } from "./manage-help-text.js";
 
 /**
  * @slot help-text - default or non-negative help text to associate to your form element

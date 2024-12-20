@@ -9,10 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/contextual-help/sp-contextual-help.js';
-import { html } from '@spectrum-web-components/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/contextual-help/sp-contextual-help.js";
+import { html } from "@spectrum-web-components/base";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
-measureFixtureCreation(html`
-    <sp-contextual-help></sp-contextual-help>
-`);
+measureFixtureCreation(html` <sp-contextual-help></sp-contextual-help> `);

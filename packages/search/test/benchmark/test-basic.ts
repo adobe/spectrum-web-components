@@ -10,16 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/search/sp-search.js';
-import { html } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/search/sp-search.js";
+import { html } from "lit";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
 measureFixtureCreation(html`
-    <sp-search
-        placeholder="Search millions of images"
-        label="Search for an image"
-        @submit=${(event: Event) => {
-            event.preventDefault();
-        }}
-    ></sp-search>
+  <sp-search
+    placeholder="Search millions of images"
+    label="Search for an image"
+    @submit=${(event: Event) => {
+      event.preventDefault();
+    }}
+  ></sp-search>
 `);

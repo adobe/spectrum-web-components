@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { DesktopController } from './DesktopController.js';
-import { MobileController } from './MobileController.js';
+import { DesktopController } from "./DesktopController.js";
+import { MobileController } from "./MobileController.js";
 
 export const strategies = {
-    desktop: DesktopController,
-    mobile: MobileController,
+  desktop: DesktopController,
+  mobile: MobileController,
 };

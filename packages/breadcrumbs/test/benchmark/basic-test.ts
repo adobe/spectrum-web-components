@@ -9,30 +9,30 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js';
-import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
-import { html } from '@spectrum-web-components/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js";
+import "@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js";
+import { html } from "@spectrum-web-components/base";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
 measureFixtureCreation(html`
-    <sp-breadcrumbs>
-        <sp-breadcrumb-item href=${window.location.href}>
-            Breadcrumb 1
-        </sp-breadcrumb-item>
-        <sp-breadcrumb-item href=${window.location.href}>
-            Breadcrumb 2
-        </sp-breadcrumb-item>
-        <sp-breadcrumb-item href=${window.location.href}>
-            Breadcrumb 3
-        </sp-breadcrumb-item>
-        <sp-breadcrumb-item href=${window.location.href}>
-            Breadcrumb 4
-        </sp-breadcrumb-item>
-        <sp-breadcrumb-item href=${window.location.href}>
-            Breadcrumb 5
-        </sp-breadcrumb-item>
-        <sp-breadcrumb-item href=${window.location.href}>
-            Breadcrumb 6
-        </sp-breadcrumb-item>
-    </sp-breadcrumbs>
+  <sp-breadcrumbs>
+    <sp-breadcrumb-item href=${window.location.href}>
+      Breadcrumb 1
+    </sp-breadcrumb-item>
+    <sp-breadcrumb-item href=${window.location.href}>
+      Breadcrumb 2
+    </sp-breadcrumb-item>
+    <sp-breadcrumb-item href=${window.location.href}>
+      Breadcrumb 3
+    </sp-breadcrumb-item>
+    <sp-breadcrumb-item href=${window.location.href}>
+      Breadcrumb 4
+    </sp-breadcrumb-item>
+    <sp-breadcrumb-item href=${window.location.href}>
+      Breadcrumb 5
+    </sp-breadcrumb-item>
+    <sp-breadcrumb-item href=${window.location.href}>
+      Breadcrumb 6
+    </sp-breadcrumb-item>
+  </sp-breadcrumbs>
 `);

@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { AlertBanner } from './src/AlertBanner.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { AlertBanner } from "./src/AlertBanner.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-alert-banner', AlertBanner);
+defineElement("sp-alert-banner", AlertBanner);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-alert-banner': AlertBanner;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-alert-banner": AlertBanner;
+  }
 }

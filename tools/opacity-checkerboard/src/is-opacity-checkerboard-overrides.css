@@ -12,16 +12,12 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-opacity-checkerboard-dark: var(
-        --system-opacity-checkerboard-dark
-    );
-    --spectrum-opacity-checkerboard-light: var(
-        --system-opacity-checkerboard-light
-    );
-    --spectrum-opacity-checkerboard-size: var(
-        --system-opacity-checkerboard-size
-    );
-    --spectrum-opacity-checkerboard-position: var(
-        --system-opacity-checkerboard-position
-    );
+	--spectrum-opacity-checkerboard-dark: var(--system-opacity-checkerboard-dark);
+	--spectrum-opacity-checkerboard-light: var(
+		--system-opacity-checkerboard-light
+	);
+	--spectrum-opacity-checkerboard-size: var(--system-opacity-checkerboard-size);
+	--spectrum-opacity-checkerboard-position: var(
+		--system-opacity-checkerboard-position
+	);
 }

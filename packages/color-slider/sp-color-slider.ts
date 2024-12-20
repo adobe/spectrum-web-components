@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ColorSlider } from './src/ColorSlider.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { ColorSlider } from "./src/ColorSlider.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-color-slider', ColorSlider);
+defineElement("sp-color-slider", ColorSlider);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-color-slider': ColorSlider;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-color-slider": ColorSlider;
+  }
 }

@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import lightestStyles from './src/theme-lightest-core-tokens.css.js';
-import { Theme } from './src/Theme.js';
-import './core-tokens.js';
+import lightestStyles from "./src/theme-lightest-core-tokens.css.js";
+import { Theme } from "./src/Theme.js";
+import "./core-tokens.js";
 
-Theme.registerThemeFragment('lightest', 'color', lightestStyles);
+Theme.registerThemeFragment("lightest", "color", lightestStyles);
