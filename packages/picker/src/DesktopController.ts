@@ -11,83 +11,83 @@ governing permissions and limitations under the License.
 */
 
 import {
-    InteractionController,
-    InteractionTypes,
-} from './InteractionController.js';
+  InteractionController,
+  InteractionTypes,
+} from "./InteractionController.js";
 
 export class DesktopController extends InteractionController {
-    override type = InteractionTypes.desktop;
+  override type = InteractionTypes.desktop;
 
-    public override handlePointerdown(event: PointerEvent): void {
-        if (event.button !== 0 || event.pointerType === 'touch') {
-            return;
-        }
-
-        this.pointerdownState = this.open;
-        this.preventNextToggle = 'maybe';
-        let cleanupAction = 0;
-        const cleanup = (): void => {
-            cancelAnimationFrame(cleanupAction);
-            cleanupAction = requestAnimationFrame(async () => {
-                document.removeEventListener('pointerup', cleanup);
-                document.removeEventListener('pointercancel', cleanup);
-                this.target.removeEventListener('click', cleanup);
-                requestAnimationFrame(() => {
-                    // Complete cleanup on the second animation frame so that `click` can go first.
-                    this.preventNextToggle = 'no';
-                });
-            });
-        };
-
-        // Ensure that however the pointer goes up we do `cleanup()`.
-        document.addEventListener('pointerup', cleanup);
-        document.addEventListener('pointercancel', cleanup);
-        this.target.addEventListener('click', cleanup);
-        this.handleActivate();
+  public override handlePointerdown(event: PointerEvent): void {
+    if (event.button !== 0 || event.pointerType === "touch") {
+      return;
     }
 
-    public override handleActivate(event?: Event): void {
-        if (this.enterKeydownOn && this.enterKeydownOn !== this.target) {
-            return;
-        }
+    this.pointerdownState = this.open;
+    this.preventNextToggle = "maybe";
+    let cleanupAction = 0;
+    const cleanup = (): void => {
+      cancelAnimationFrame(cleanupAction);
+      cleanupAction = requestAnimationFrame(async () => {
+        document.removeEventListener("pointerup", cleanup);
+        document.removeEventListener("pointercancel", cleanup);
+        this.target.removeEventListener("click", cleanup);
+        requestAnimationFrame(() => {
+          // Complete cleanup on the second animation frame so that `click` can go first.
+          this.preventNextToggle = "no";
+        });
+      });
+    };
 
-        if (this.preventNextToggle === 'yes') {
-            return;
-        }
+    // Ensure that however the pointer goes up we do `cleanup()`.
+    document.addEventListener("pointerup", cleanup);
+    document.addEventListener("pointercancel", cleanup);
+    this.target.addEventListener("click", cleanup);
+    this.handleActivate();
+  }
 
-        if (event?.type === 'click' && this.open !== this.pointerdownState) {
-            // When activation comes from a `click` event ensure that the `pointerup`
-            // event didn't already toggle the Picker state before doing so.
-            return;
-        }
-
-        this.host.toggle();
+  public override handleActivate(event?: Event): void {
+    if (this.enterKeydownOn && this.enterKeydownOn !== this.target) {
+      return;
     }
 
-    override init(): void {
-        // Clean up listeners if they've already been bound
-        this.abortController?.abort();
-        this.abortController = new AbortController();
-        const { signal } = this.abortController;
-
-        this.target.addEventListener(
-            'click',
-            (event: Event) => this.handleActivate(event),
-            {
-                signal,
-            }
-        );
-        this.target.addEventListener(
-            'pointerdown',
-            (event: PointerEvent) => this.handlePointerdown(event),
-            { signal }
-        );
-        this.target.addEventListener(
-            'focus',
-            (event: FocusEvent) => this.handleButtonFocus(event),
-            {
-                signal,
-            }
-        );
+    if (this.preventNextToggle === "yes") {
+      return;
     }
+
+    if (event?.type === "click" && this.open !== this.pointerdownState) {
+      // When activation comes from a `click` event ensure that the `pointerup`
+      // event didn't already toggle the Picker state before doing so.
+      return;
+    }
+
+    this.host.toggle();
+  }
+
+  override init(): void {
+    // Clean up listeners if they've already been bound
+    this.abortController?.abort();
+    this.abortController = new AbortController();
+    const { signal } = this.abortController;
+
+    this.target.addEventListener(
+      "click",
+      (event: Event) => this.handleActivate(event),
+      {
+        signal,
+      },
+    );
+    this.target.addEventListener(
+      "pointerdown",
+      (event: PointerEvent) => this.handlePointerdown(event),
+      { signal },
+    );
+    this.target.addEventListener(
+      "focus",
+      (event: FocusEvent) => this.handleButtonFocus(event),
+      {
+        signal,
+      },
+    );
+  }
 }

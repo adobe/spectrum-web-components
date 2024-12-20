@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/picker/sp-picker.js';
-import { runPickerTests } from './index.js';
+import "@spectrum-web-components/picker/sp-picker.js";
+import { runPickerTests } from "./index.js";
 
-describe('Picker, async', () => {
-    runPickerTests();
+describe("Picker, async", () => {
+  runPickerTests();
 });

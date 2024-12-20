@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
-import { Overlay } from './src/Overlay.js';
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
+import { Overlay } from "./src/Overlay.js";
 
-defineElement('sp-overlay', Overlay);
+defineElement("sp-overlay", Overlay);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-overlay': Overlay;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-overlay": Overlay;
+  }
 }

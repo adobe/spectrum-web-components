@@ -10,69 +10,61 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect, fixture } from '@open-wc/testing';
-import { html } from '@open-wc/testing';
-import { ComboboxOption } from '@spectrum-web-components/combobox';
-import '@spectrum-web-components/combobox/sp-combobox.js';
-import { MenuItem } from '@spectrum-web-components/menu';
-import { countries, fruits } from '../stories/index.js';
+import { expect, fixture } from "@open-wc/testing";
+import { html } from "@open-wc/testing";
+import { ComboboxOption } from "@spectrum-web-components/combobox";
+import "@spectrum-web-components/combobox/sp-combobox.js";
+import { MenuItem } from "@spectrum-web-components/menu";
+import { countries, fruits } from "../stories/index.js";
 
 export type TestableCombobox = HTMLElement & {
-    activeDescendant: ComboboxOption;
-    autocomplete: 'none' | 'list';
-    availableOptions: ComboboxOption[];
-    focused: boolean;
-    focusElement: HTMLInputElement;
-    open: boolean;
-    optionEls: MenuItem[];
-    options: ComboboxOption[];
-    shadowRoot: ShadowRoot;
-    value: string;
-    pending: boolean;
+  activeDescendant: ComboboxOption;
+  autocomplete: "none" | "list";
+  availableOptions: ComboboxOption[];
+  focused: boolean;
+  focusElement: HTMLInputElement;
+  open: boolean;
+  optionEls: MenuItem[];
+  options: ComboboxOption[];
+  shadowRoot: ShadowRoot;
+  value: string;
+  pending: boolean;
 };
 
 export type AccessibleNamedNode = {
-    description: string;
-    name: string;
-    role: string;
-    value?: string;
+  description: string;
+  name: string;
+  role: string;
+  value?: string;
 };
 
 export const comboboxFixture = async (): Promise<TestableCombobox> => {
-    const el = await fixture<TestableCombobox>(html`
-        <sp-combobox
-            .autocomplete=${'list'}
-            label="Combobox"
-            .options=${fruits}
-        >
-            Combobox
-        </sp-combobox>
-    `);
+  const el = await fixture<TestableCombobox>(html`
+    <sp-combobox .autocomplete=${"list"} label="Combobox" .options=${fruits}>
+      Combobox
+    </sp-combobox>
+  `);
 
-    return el;
+  return el;
 };
 export const longComboboxFixture = async (): Promise<TestableCombobox> => {
-    const el = await fixture<TestableCombobox>(html`
-        <sp-combobox
-            .autocomplete=${'list'}
-            label="Combobox"
-            .options=${countries}
-        >
-            Combobox
-        </sp-combobox>
-    `);
+  const el = await fixture<TestableCombobox>(html`
+    <sp-combobox .autocomplete=${"list"} label="Combobox" .options=${countries}>
+      Combobox
+    </sp-combobox>
+  `);
 
-    return el;
+  return el;
 };
 
 export const testActiveElement = (
-    el: TestableCombobox,
-    testId: string
+  el: TestableCombobox,
+  testId: string,
 ): void => {
-    expect(el.activeDescendant?.value).to.equal(testId);
-    const activeElement = el.shadowRoot.querySelector(
-        `#${el.activeDescendant.value}`
-    ) as HTMLElement;
+  expect(el.activeDescendant?.value).to.equal(testId);
+  const activeElement = el.shadowRoot.querySelector(
+    `#${el.activeDescendant.value}`,
+  ) as HTMLElement;
 
-    expect(activeElement.getAttribute('aria-selected')).to.equal('true');
+  expect(activeElement.getAttribute("aria-selected")).to.equal("true");
 };

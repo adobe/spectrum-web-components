@@ -10,6 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import typographyStyles from './src/spectrum-typography.css.js';
+import typographyStyles from "./src/spectrum-typography.css.js";
 
 export default [typographyStyles];

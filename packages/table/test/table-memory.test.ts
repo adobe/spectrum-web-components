@@ -9,8 +9,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/table/sp-table.js';
-import { elements } from '../stories/table-elements.stories.js';
-import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import "@spectrum-web-components/table/sp-table.js";
+import { elements } from "../stories/table-elements.stories.js";
+import { testForMemoryLeaks } from "../../../test/testing-helpers.js";
 
 testForMemoryLeaks(elements());

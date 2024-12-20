@@ -10,10 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/icons/sp-icons-medium.js';
-import { html } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/icons/sp-icons-medium.js";
+import { html } from "lit";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
-measureFixtureCreation(html`
-    <sp-icons-medium></sp-icons-medium>
-`);
+measureFixtureCreation(html` <sp-icons-medium></sp-icons-medium> `);

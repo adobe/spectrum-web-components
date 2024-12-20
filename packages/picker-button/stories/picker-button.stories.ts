@@ -10,17 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from "@spectrum-web-components/base";
 
-import { argTypes, StoryArgs, Template } from './index.js';
-import '@spectrum-web-components/picker-button/sp-picker-button.js';
+import { argTypes, StoryArgs, Template } from "./index.js";
+import "@spectrum-web-components/picker-button/sp-picker-button.js";
 
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-add.js';
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-add.js";
 
 export default {
-    title: 'Picker Button',
-    component: 'sp-picker-button',
-    ...argTypes,
+  title: "Picker Button",
+  component: "sp-picker-button",
+  ...argTypes,
 };
 
 export const active = (args: StoryArgs): TemplateResult => Template(args);
@@ -28,12 +28,12 @@ active.args = { active: true };
 
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
 customIcon.args = {
-    icon: html`
-        <sp-icon-add
-            slot="icon"
-            class="spectrum-PickerButton-icon spectrum-Icon"
-        ></sp-icon-add>
-    `,
+  icon: html`
+    <sp-icon-add
+      slot="icon"
+      class="spectrum-PickerButton-icon spectrum-Icon"
+    ></sp-icon-add>
+  `,
 };
 
 export const invalid = (args: StoryArgs): TemplateResult => Template(args);
@@ -46,23 +46,23 @@ export const label = (args: StoryArgs): TemplateResult => Template(args);
 label.args = { label: true };
 
 export const labelCustom = (args: StoryArgs): TemplateResult => Template(args);
-labelCustom.args = { label: 'Some' };
+labelCustom.args = { label: "Some" };
 
 export const open = (args: StoryArgs): TemplateResult => Template(args);
 open.args = { open: true };
 
 export const positionLeft = (args: StoryArgs): TemplateResult => Template(args);
-positionLeft.args = { position: 'left' };
+positionLeft.args = { position: "left" };
 
 export const positionRight = (args: StoryArgs): TemplateResult =>
-    Template(args);
-positionRight.args = { position: 'right' };
+  Template(args);
+positionRight.args = { position: "right" };
 
 export const rounded = (args: StoryArgs): TemplateResult => Template(args);
 rounded.args = { rounded: true };
 
 export const roundedLabel = (args: StoryArgs): TemplateResult => Template(args);
 roundedLabel.args = {
-    label: true,
-    rounded: true,
+  label: true,
+  rounded: true,
 };

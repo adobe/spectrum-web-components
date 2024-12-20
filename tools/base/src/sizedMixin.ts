@@ -13,71 +13,76 @@ import { PropertyValues, ReactiveElement } from "lit";
 import { property } from "lit/decorators.js";
 
 type Constructor<T = Record<string, unknown>> = {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	new (...args: any[]): T;
-	prototype: T;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  new (...args: any[]): T;
+  prototype: T;
 };
 
 export type ElementSize = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
 export const ElementSizes: Record<string, ElementSize> = {
-	xxs: "xxs",
-	xs: "xs",
-	s: "s",
-	m: "m",
-	l: "l",
-	xl: "xl",
-	xxl: "xxl",
+  xxs: "xxs",
+  xs: "xs",
+  s: "s",
+  m: "m",
+  l: "l",
+  xl: "xl",
+  xxl: "xxl",
 };
 export type DefaultElementSize = Exclude<ElementSize, "xxs" | "xs" | "xxl">;
 
 export interface SizedElementInterface {
-	size: ElementSize;
+  size: ElementSize;
 }
 
 export function SizedMixin<T extends Constructor<ReactiveElement>>(
-	constructor: T,
-	{
-		validSizes = ["s", "m", "l", "xl"],
-		noDefaultSize,
-		defaultSize = "m",
-	}: {
-		validSizes?: ElementSize[];
-		noDefaultSize?: boolean;
-		defaultSize?: ElementSize;
-	} = {},
+  constructor: T,
+  {
+    validSizes = ["s", "m", "l", "xl"],
+    noDefaultSize,
+    defaultSize = "m",
+  }: {
+    validSizes?: ElementSize[];
+    noDefaultSize?: boolean;
+    defaultSize?: ElementSize;
+  } = {},
 ): T & Constructor<SizedElementInterface> {
-	class SizedElement extends constructor {
-		@property({ type: String })
-		public get size(): ElementSize {
-			return this._size || defaultSize;
-		}
+  class SizedElement extends constructor {
+    @property({ type: String })
+    public get size(): ElementSize {
+      return this._size || defaultSize;
+    }
 
-		public set size(value: ElementSize) {
-			const fallbackSize = noDefaultSize ? null : defaultSize;
-			const size = (value ? value.toLocaleLowerCase() : value) as ElementSize;
-			const validSize = (
-				validSizes.includes(size) ? size : fallbackSize
-			) as ElementSize;
-			if (validSize) {
-				this.setAttribute("size", validSize);
-			}
-			if (this._size === validSize) {
-				return;
-			}
-			const oldSize = this._size;
-			this._size = validSize;
-			this.requestUpdate("size", oldSize);
-		}
+    public set size(value: ElementSize) {
+      const fallbackSize = noDefaultSize ? null : defaultSize;
+      const size = (value ? value.toLocaleLowerCase() : value) as ElementSize;
+      const validSize = (
+        validSizes.includes(size) ? size : fallbackSize
+      ) as ElementSize;
 
-		private _size: ElementSize | null = defaultSize;
+      if (validSize) {
+        this.setAttribute("size", validSize);
+      }
 
-		protected override update(changes: PropertyValues): void {
-			if (!this.hasAttribute("size") && !noDefaultSize) {
-				this.setAttribute("size", this.size);
-			}
-			super.update(changes);
-		}
-	}
+      if (this._size === validSize) {
+        return;
+      }
 
-	return SizedElement;
+      const oldSize = this._size;
+
+      this._size = validSize;
+      this.requestUpdate("size", oldSize);
+    }
+
+    private _size: ElementSize | null = defaultSize;
+
+    protected override update(changes: PropertyValues): void {
+      if (!this.hasAttribute("size") && !noDefaultSize) {
+        this.setAttribute("size", this.size);
+      }
+
+      super.update(changes);
+    }
+  }
+
+  return SizedElement;
 }

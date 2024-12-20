@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Grid } from './src/Grid.js';
+import { Grid } from "./src/Grid.js";
 
-customElements.define('sp-grid', Grid);
+customElements.define("sp-grid", Grid);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-grid': Grid;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-grid": Grid;
+  }
 }

@@ -9,12 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Breadcrumbs } from './src/Breadcrumbs.js';
+import { Breadcrumbs } from "./src/Breadcrumbs.js";
 
-customElements.define('sp-breadcrumbs', Breadcrumbs);
+customElements.define("sp-breadcrumbs", Breadcrumbs);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-breadcrumbs': Breadcrumbs;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-breadcrumbs": Breadcrumbs;
+  }
 }

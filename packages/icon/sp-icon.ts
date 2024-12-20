@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Icon } from './src/Icon.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Icon } from "./src/Icon.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-icon', Icon);
+defineElement("sp-icon", Icon);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-icon': Icon;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-icon": Icon;
+  }
 }

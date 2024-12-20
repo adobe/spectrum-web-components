@@ -11,21 +11,22 @@ governing permissions and limitations under the License.
 */
 
 interface CustomElementConstructor {
-    new (...params: unknown[]): HTMLElement;
+  new (...params: unknown[]): HTMLElement;
 }
 
 export function defineElement(
-    name: string,
-    constructor: CustomElementConstructor
+  name: string,
+  constructor: CustomElementConstructor,
 ): void {
-    if (window.__swc && window.__swc.DEBUG) {
-        if (customElements.get(name)) {
-            window.__swc.warn(
-                undefined,
-                `Attempted to redefine <${name}>. This usually indicates that multiple versions of the same web component were loaded onto a single page.`,
-                'https://opensource.adobe.com/spectrum-web-components/registry-conflicts'
-            );
-        }
+  if (window.__swc && window.__swc.DEBUG) {
+    if (customElements.get(name)) {
+      window.__swc.warn(
+        undefined,
+        `Attempted to redefine <${name}>. This usually indicates that multiple versions of the same web component were loaded onto a single page.`,
+        "https://opensource.adobe.com/spectrum-web-components/registry-conflicts",
+      );
     }
-    customElements.define(name, constructor);
+  }
+
+  customElements.define(name, constructor);
 }

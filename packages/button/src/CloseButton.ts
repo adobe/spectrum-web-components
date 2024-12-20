@@ -11,47 +11,47 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    SizedMixin,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { StyledButton } from './StyledButton.js';
-import buttonStyles from '@spectrum-web-components/close-button/src/close-button.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross300.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross400.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
-import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
-import crossMediumOverrides from '@spectrum-web-components/icon/src/icon-cross-overrides.css.js';
-import type { ButtonStaticColors } from './Button.js';
+  CSSResultArray,
+  html,
+  SizedMixin,
+  TemplateResult,
+} from "@spectrum-web-components/base";
+import { property } from "@spectrum-web-components/base/src/decorators.js";
+import { StyledButton } from "./StyledButton.js";
+import buttonStyles from "@spectrum-web-components/close-button/src/close-button.css.js";
+import "@spectrum-web-components/icons-ui/icons/sp-icon-cross200.js";
+import "@spectrum-web-components/icons-ui/icons/sp-icon-cross300.js";
+import "@spectrum-web-components/icons-ui/icons/sp-icon-cross400.js";
+import "@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js";
+import crossMediumStyles from "@spectrum-web-components/icon/src/spectrum-icon-cross.css.js";
+import crossMediumOverrides from "@spectrum-web-components/icon/src/icon-cross-overrides.css.js";
+import type { ButtonStaticColors } from "./Button.js";
 
 const crossIcon: Record<string, () => TemplateResult> = {
-    s: () => html`
-        <sp-icon-cross200
-            slot="icon"
-            class="icon spectrum-UIIcon-Cross200"
-        ></sp-icon-cross200>
-    `,
-    m: () => html`
-        <sp-icon-cross300
-            slot="icon"
-            class="icon spectrum-UIIcon-Cross300"
-        ></sp-icon-cross300>
-    `,
-    l: () => html`
-        <sp-icon-cross400
-            slot="icon"
-            class="icon spectrum-UIIcon-Cross400"
-        ></sp-icon-cross400>
-    `,
-    xl: () => html`
-        <sp-icon-cross500
-            slot="icon"
-            class="icon spectrum-UIIcon-Cross500"
-        ></sp-icon-cross500>
-    `,
+  s: () => html`
+    <sp-icon-cross200
+      slot="icon"
+      class="icon spectrum-UIIcon-Cross200"
+    ></sp-icon-cross200>
+  `,
+  m: () => html`
+    <sp-icon-cross300
+      slot="icon"
+      class="icon spectrum-UIIcon-Cross300"
+    ></sp-icon-cross300>
+  `,
+  l: () => html`
+    <sp-icon-cross400
+      slot="icon"
+      class="icon spectrum-UIIcon-Cross400"
+    ></sp-icon-cross400>
+  `,
+  xl: () => html`
+    <sp-icon-cross500
+      slot="icon"
+      class="icon spectrum-UIIcon-Cross500"
+    ></sp-icon-cross500>
+  `,
 };
 
 /**
@@ -61,27 +61,27 @@ const crossIcon: Record<string, () => TemplateResult> = {
  * @slot icon - The icon to use for Close Button
  */
 export class CloseButton extends SizedMixin(StyledButton, {
-    noDefaultSize: true,
+  noDefaultSize: true,
 }) {
-    public static override get styles(): CSSResultArray {
-        return [
-            ...super.styles,
-            buttonStyles,
-            crossMediumStyles,
-            crossMediumOverrides,
-        ];
-    }
+  public static override get styles(): CSSResultArray {
+    return [
+      ...super.styles,
+      buttonStyles,
+      crossMediumStyles,
+      crossMediumOverrides,
+    ];
+  }
 
-    /**
-     * The visual variant to apply to this button.
-     */
-    @property({ reflect: true })
-    public variant: ButtonStaticColors | '' = '';
+  /**
+   * The visual variant to apply to this button.
+   */
+  @property({ reflect: true })
+  public variant: ButtonStaticColors | "" = "";
 
-    @property({ reflect: true, attribute: 'static-color' })
-    public staticColor?: 'black' | 'white';
+  @property({ reflect: true, attribute: "static-color" })
+  public staticColor?: "black" | "white";
 
-    protected override get buttonContent(): TemplateResult[] {
-        return [crossIcon[this.size]()];
-    }
+  protected override get buttonContent(): TemplateResult[] {
+    return [crossIcon[this.size]()];
+  }
 }

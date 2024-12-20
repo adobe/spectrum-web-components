@@ -10,68 +10,68 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import type { Overlay } from '@spectrum-web-components/overlay';
+import { html, TemplateResult } from "@spectrum-web-components/base";
+import type { Overlay } from "@spectrum-web-components/overlay";
 
 function nextFrame(): Promise<void> {
-    return new Promise((res) => requestAnimationFrame(() => res()));
+  return new Promise((res) => requestAnimationFrame(() => res()));
 }
 
 class IsOverlayOpen extends HTMLElement {
-    ready!: (value: boolean | PromiseLike<boolean>) => void;
+  ready!: (value: boolean | PromiseLike<boolean>) => void;
 
-    constructor() {
-        super();
-        this.readyPromise = new Promise((res) => {
-            this.ready = res;
-            this.setup();
-        });
-    }
+  constructor() {
+    super();
+    this.readyPromise = new Promise((res) => {
+      this.ready = res;
+      this.setup();
+    });
+  }
 
-    async setup(): Promise<void> {
-        await nextFrame();
-        document.addEventListener('sp-opened', this.handleOpened);
-    }
+  async setup(): Promise<void> {
+    await nextFrame();
+    document.addEventListener("sp-opened", this.handleOpened);
+  }
 
-    private sendFocus = async (): Promise<void> => {
-        const selectedItem = document
-            .querySelector('[focusable]')
-            ?.querySelector('[selected]') as HTMLElement & {
-            focused?: boolean;
-        };
-
-        if (selectedItem) {
-            selectedItem.focus();
-            selectedItem.focused = true;
-        }
+  private sendFocus = async (): Promise<void> => {
+    const selectedItem = document
+      .querySelector("[focusable]")
+      ?.querySelector("[selected]") as HTMLElement & {
+      focused?: boolean;
     };
 
-    handleOpened = async (event: Event): Promise<void> => {
-        const overlay = event.target as Overlay;
-        const actions = [nextFrame(), overlay.updateComplete, this.sendFocus()];
-
-        await Promise.all(actions);
-        // Focus happens _after_ `sp-opened` by at least two frames.
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
-
-        this.ready(true);
-    };
-
-    private readyPromise: Promise<boolean> = Promise.resolve(false);
-
-    get updateComplete(): Promise<boolean> {
-        return this.readyPromise;
+    if (selectedItem) {
+      selectedItem.focus();
+      selectedItem.focused = true;
     }
+  };
+
+  handleOpened = async (event: Event): Promise<void> => {
+    const overlay = event.target as Overlay;
+    const actions = [nextFrame(), overlay.updateComplete, this.sendFocus()];
+
+    await Promise.all(actions);
+    // Focus happens _after_ `sp-opened` by at least two frames.
+    await nextFrame();
+    await nextFrame();
+    await nextFrame();
+    await nextFrame();
+
+    this.ready(true);
+  };
+
+  private readyPromise: Promise<boolean> = Promise.resolve(false);
+
+  get updateComplete(): Promise<boolean> {
+    return this.readyPromise;
+  }
 }
 
-customElements.define('is-overlay-open', IsOverlayOpen);
+customElements.define("is-overlay-open", IsOverlayOpen);
 
 export const isOverlayOpen = (story: () => TemplateResult): TemplateResult => {
-    return html`
-        ${story()}
-        <is-overlay-open></is-overlay-open>
-    `;
+  return html`
+    ${story()}
+    <is-overlay-open></is-overlay-open>
+  `;
 };

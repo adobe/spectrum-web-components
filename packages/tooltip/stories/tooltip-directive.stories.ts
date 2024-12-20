@@ -9,131 +9,126 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import { Placement } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import { tooltip } from "@spectrum-web-components/tooltip/src/tooltip-directive.js";
+import { html, TemplateResult } from "@spectrum-web-components/base";
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js";
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js";
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-info.js";
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js";
+import "@spectrum-web-components/button/sp-button.js";
+import "@spectrum-web-components/action-button/sp-action-button.js";
+import { Placement } from "@spectrum-web-components/overlay";
+import "@spectrum-web-components/overlay/overlay-trigger.js";
 
 export default {
-    component: 'sp-tooltip',
-    title: 'Tooltip Directive',
+  component: "sp-tooltip",
+  title: "Tooltip Directive",
 };
 
 interface Properties {
-    open?: boolean;
-    placement?: Placement;
-    text?: string;
-    variant?: string;
-    offset?: number;
-    delayed?: boolean;
+  open?: boolean;
+  placement?: Placement;
+  text?: string;
+  variant?: string;
+  offset?: number;
+  delayed?: boolean;
 }
 
 export const Default = ({
-    open,
-    placement,
-    text,
-    variant,
+  open,
+  placement,
+  text,
+  variant,
 }: Properties): TemplateResult => {
-    return html`
-        <sp-button
-            ${tooltip(
-                () => html`
-                    ${text || 'Tooltip'}
-                `,
-                {
-                    open,
-                    overlayOptions: { placement },
-                    variant,
-                }
-            )}
-        >
-            Hover me
-        </sp-button>
-    `;
+  return html`
+    <sp-button
+      ${tooltip(() => html` ${text || "Tooltip"} `, {
+        open,
+        overlayOptions: { placement },
+        variant,
+      })}
+    >
+      Hover me
+    </sp-button>
+  `;
 };
 Default.args = {
-    open: true,
-    placement: 'top',
-    variant: '',
-    text: 'Tooltip',
+  open: true,
+  placement: "top",
+  variant: "",
+  text: "Tooltip",
 };
 Default.argTypes = {
-    open: {
-        name: 'open',
-        type: { name: 'boolean', required: false },
-        description: 'Whether the tooltip is open.',
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+  open: {
+    name: "open",
+    type: { name: "boolean", required: false },
+    description: "Whether the tooltip is open.",
+    table: {
+      type: { summary: "boolean" },
+      defaultValue: { summary: false },
     },
-    placement: {
-        name: 'placement',
-        type: { name: 'string', required: false },
-        description: 'The placement of the tooltip in relation to its parent',
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: 'top' },
-        },
-        control: {
-            type: 'inline-radio',
-            options: [
-                'auto',
-                'auto-start',
-                'auto-end',
-                'top',
-                'bottom',
-                'right',
-                'left',
-                'top-start',
-                'top-end',
-                'bottom-start',
-                'bottom-end',
-                'right-start',
-                'right-end',
-                'left-start',
-                'left-end',
-                'none',
-            ],
-        },
+    control: {
+      type: "boolean",
     },
-    text: {
-        name: 'text',
-        type: { name: 'string', required: false },
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: '' },
-        },
-        control: 'text',
+  },
+  placement: {
+    name: "placement",
+    type: { name: "string", required: false },
+    description: "The placement of the tooltip in relation to its parent",
+    table: {
+      type: { summary: "string" },
+      defaultValue: { summary: "top" },
     },
-    variant: {
-        name: 'variant',
-        type: { name: 'string', required: false },
-        description: 'The style of the tooltip.',
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: '' },
-        },
-        control: {
-            type: 'inline-radio',
-            options: ['info', 'positive', 'negative', ''],
-        },
+    control: {
+      type: "inline-radio",
+      options: [
+        "auto",
+        "auto-start",
+        "auto-end",
+        "top",
+        "bottom",
+        "right",
+        "left",
+        "top-start",
+        "top-end",
+        "bottom-start",
+        "bottom-end",
+        "right-start",
+        "right-end",
+        "left-start",
+        "left-end",
+        "none",
+      ],
     },
+  },
+  text: {
+    name: "text",
+    type: { name: "string", required: false },
+    table: {
+      type: { summary: "string" },
+      defaultValue: { summary: "" },
+    },
+    control: "text",
+  },
+  variant: {
+    name: "variant",
+    type: { name: "string", required: false },
+    description: "The style of the tooltip.",
+    table: {
+      type: { summary: "string" },
+      defaultValue: { summary: "" },
+    },
+    control: {
+      type: "inline-radio",
+      options: ["info", "positive", "negative", ""],
+    },
+  },
 };
 Default.swc_vrt = {
-    skip: true,
+  skip: true,
 };
 
 Default.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+  // Disables Chromatic's snapshotting on a global level
+  chromatic: { disableSnapshot: true },
 };

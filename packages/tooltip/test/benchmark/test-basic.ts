@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import { html } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/tooltip/sp-tooltip.js";
+import "@spectrum-web-components/action-button/sp-action-button.js";
+import { html } from "lit";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
 measureFixtureCreation(html`
-    <sp-action-button>
-        I'm a button...
-        <sp-tooltip self-managed>Tip me!</sp-tooltip>
-    </sp-action-button>
+  <sp-action-button>
+    I'm a button...
+    <sp-tooltip self-managed>Tip me!</sp-tooltip>
+  </sp-action-button>
 `);

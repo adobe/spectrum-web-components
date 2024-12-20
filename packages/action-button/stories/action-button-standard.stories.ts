@@ -9,36 +9,36 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
-import type { Properties } from './index.js';
-import { renderButtons } from './index.js';
+import { TemplateResult } from "@spectrum-web-components/base";
+import type { Properties } from "./index.js";
+import { renderButtons } from "./index.js";
 
 export default {
-    component: 'sp-action-button',
-    title: 'Action Button/Standard',
+  component: "sp-action-button",
+  title: "Action Button/Standard",
 };
 
 export const XS = (args: Properties): TemplateResult => renderButtons(args);
 XS.args = {
-    size: 'xs',
+  size: "xs",
 };
 
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
-    size: 's',
+  size: "s",
 };
 
 export const m = (args: Properties): TemplateResult => renderButtons(args);
 m.args = {
-    size: 'm',
+  size: "m",
 };
 
 export const l = (args: Properties): TemplateResult => renderButtons(args);
 l.args = {
-    size: 'l',
+  size: "l",
 };
 
 export const XL = (args: Properties): TemplateResult => renderButtons(args);
 XL.args = {
-    size: 'xl',
+  size: "xl",
 };

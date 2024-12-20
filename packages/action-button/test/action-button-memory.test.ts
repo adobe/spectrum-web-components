@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { m as BlackActionButton } from '../stories/action-button-black.stories.js';
-import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { m as BlackActionButton } from "../stories/action-button-black.stories.js";
+import { testForMemoryLeaks } from "../../../test/testing-helpers.js";
 
 testForMemoryLeaks(BlackActionButton(BlackActionButton.args));

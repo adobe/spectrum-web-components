@@ -17,114 +17,120 @@ import { randomID } from "@spectrum-web-components/shared/src/random-id.js";
 import type { HelpText } from "./HelpText.js";
 
 export class HelpTextManager {
-	private conditionId?: () => void;
-	private host!: HTMLElement;
-	public id!: string;
-	private mode: "internal" | "external" = "internal";
-	private previousTabindex?: -1 | 0 | undefined;
-	private helpTextElement!: Element;
-	private get isInternal(): boolean {
-		return this.mode === "internal";
-	}
+  private conditionId?: () => void;
+  private host!: HTMLElement;
+  public id!: string;
+  private mode: "internal" | "external" = "internal";
+  private previousTabindex?: -1 | 0 | undefined;
+  private helpTextElement!: Element;
+  private get isInternal(): boolean {
+    return this.mode === "internal";
+  }
 
-	constructor(
-		host: HTMLElement,
-		{ mode }: { mode: "internal" | "external" } = { mode: "internal" },
-	) {
-		this.host = host;
-		this.id = `sp-help-text-${randomID()}`;
-		this.mode = mode;
-	}
+  constructor(
+    host: HTMLElement,
+    { mode }: { mode: "internal" | "external" } = { mode: "internal" },
+  ) {
+    this.host = host;
+    this.id = `sp-help-text-${randomID()}`;
+    this.mode = mode;
+  }
 
-	public render(negative?: boolean): TemplateResult {
-		// `pass-through-help-text-${this.instanceCount}` makes the slot effectively unreachable from
-		// the outside allowing the `help-text` slot to be preferred while `negative === false`.
-		return html`
-			<div
-				id=${ifDefined(this.isInternal ? this.id : undefined)}
-				aria-live="assertive"
-			>
-				<slot
-					name=${negative
-						? "negative-help-text"
-						: `pass-through-help-text-${randomID()}`}
-					@slotchange=${this.handleSlotchange}
-				>
-					<slot name="help-text"></slot>
-				</slot>
-			</div>
-		`;
-	}
+  public render(negative?: boolean): TemplateResult {
+    // `pass-through-help-text-${this.instanceCount}` makes the slot effectively unreachable from
+    // the outside allowing the `help-text` slot to be preferred while `negative === false`.
+    return html`
+      <div
+        id=${ifDefined(this.isInternal ? this.id : undefined)}
+        aria-live="assertive"
+      >
+        <slot
+          name=${negative
+            ? "negative-help-text"
+            : `pass-through-help-text-${randomID()}`}
+          @slotchange=${this.handleSlotchange}
+        >
+          <slot name="help-text"></slot>
+        </slot>
+      </div>
+    `;
+  }
 
-	private addId(): void {
-		const id = this.helpTextElement ? this.helpTextElement.id : this.id;
+  private addId(): void {
+    const id = this.helpTextElement ? this.helpTextElement.id : this.id;
 
-		this.conditionId = conditionAttributeWithId(
-			this.host,
-			"aria-describedby",
-			id,
-		);
+    this.conditionId = conditionAttributeWithId(
+      this.host,
+      "aria-describedby",
+      id,
+    );
 
-		if (this.host.hasAttribute("tabindex")) {
-			this.previousTabindex = parseFloat(
-				this.host.getAttribute("tabindex") as string,
-			) as -1 | 0;
-		}
+    if (this.host.hasAttribute("tabindex")) {
+      this.previousTabindex = parseFloat(
+        this.host.getAttribute("tabindex") as string,
+      ) as -1 | 0;
+    }
 
-		this.host.tabIndex = 0;
-	}
+    this.host.tabIndex = 0;
+  }
 
-	private removeId(): void {
-		if (this.conditionId) {
-			this.conditionId();
-			delete this.conditionId;
-		}
+  private removeId(): void {
+    if (this.conditionId) {
+      this.conditionId();
+      delete this.conditionId;
+    }
 
-		if (this.helpTextElement) return;
+    if (this.helpTextElement) {
+      return;
+    }
 
-		if (this.previousTabindex) {
-			this.host.tabIndex = this.previousTabindex;
-		} else {
-			this.host.removeAttribute("tabindex");
-		}
-	}
+    if (this.previousTabindex) {
+      this.host.tabIndex = this.previousTabindex;
+    } else {
+      this.host.removeAttribute("tabindex");
+    }
+  }
 
-	private handleSlotchange = ({
-		target,
-	}: Event & { target: HTMLSlotElement }): void => {
-		this.handleHelpText(target);
-		this.handleNegativeHelpText(target);
-	};
+  private handleSlotchange = ({
+    target,
+  }: Event & { target: HTMLSlotElement }): void => {
+    this.handleHelpText(target);
+    this.handleNegativeHelpText(target);
+  };
 
-	private handleHelpText(target: HTMLSlotElement): void {
-		if (this.isInternal) return;
+  private handleHelpText(target: HTMLSlotElement): void {
+    if (this.isInternal) {
+      return;
+    }
 
-		if (this.helpTextElement && this.helpTextElement.id === this.id) {
-			this.helpTextElement.removeAttribute("id");
-		}
+    if (this.helpTextElement && this.helpTextElement.id === this.id) {
+      this.helpTextElement.removeAttribute("id");
+    }
 
-		this.removeId();
-		const assignedElements = target.assignedElements();
-		const nextHelpTextElement = assignedElements[0];
+    this.removeId();
+    const assignedElements = target.assignedElements();
+    const nextHelpTextElement = assignedElements[0];
 
-		this.helpTextElement = nextHelpTextElement;
+    this.helpTextElement = nextHelpTextElement;
 
-		if (nextHelpTextElement) {
-			if (!nextHelpTextElement.id) {
-				nextHelpTextElement.id = this.id;
-			}
+    if (nextHelpTextElement) {
+      if (!nextHelpTextElement.id) {
+        nextHelpTextElement.id = this.id;
+      }
 
-			this.addId();
-		}
-	}
+      this.addId();
+    }
+  }
 
-	private handleNegativeHelpText(target: HTMLSlotElement): void {
-		if (target.name !== "negative-help-text") return;
+  private handleNegativeHelpText(target: HTMLSlotElement): void {
+    if (target.name !== "negative-help-text") {
+      return;
+    }
 
-		const assignedElements = target.assignedElements();
+    const assignedElements = target.assignedElements();
 
-		assignedElements.forEach(
-			(el) => ((el as unknown as HelpText).variant = "negative"),
-		);
-	}
+    assignedElements.forEach(
+      (el) => ((el as unknown as HelpText).variant = "negative"),
+    );
+  }
 }

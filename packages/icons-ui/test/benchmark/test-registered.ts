@@ -10,56 +10,56 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow100.js';
-import { html } from '@spectrum-web-components/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/icons-ui/icons/sp-icon-arrow100.js";
+import { html } from "@spectrum-web-components/base";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
 measureFixtureCreation(html`
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
-    <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
+  <sp-icon-arrow100></sp-icon-arrow100>
 `);

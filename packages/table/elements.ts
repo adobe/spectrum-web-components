@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import './sp-table-body.js';
-import './sp-table-cell.js';
-import './sp-table-checkbox-cell.js';
-import './sp-table-head-cell.js';
-import './sp-table-head.js';
-import './sp-table-row.js';
-import './sp-table.js';
+import "./sp-table-body.js";
+import "./sp-table-cell.js";
+import "./sp-table-checkbox-cell.js";
+import "./sp-table-head-cell.js";
+import "./sp-table-head.js";
+import "./sp-table-row.js";
+import "./sp-table.js";

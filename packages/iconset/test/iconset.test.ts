@@ -10,148 +10,146 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { waitForPredicate } from '../../../test/testing-helpers.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import { IconsMedium } from '@spectrum-web-components/icons';
-import { Icon } from '@spectrum-web-components/icon';
-import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { stub } from 'sinon';
+import { waitForPredicate } from "../../../test/testing-helpers.js";
+import "@spectrum-web-components/icons/sp-icons-medium.js";
+import "@spectrum-web-components/icon/sp-icon.js";
+import { IconsMedium } from "@spectrum-web-components/icons";
+import { Icon } from "@spectrum-web-components/icon";
+import { IconsetRegistry } from "@spectrum-web-components/iconset/src/iconset-registry.js";
+import { elementUpdated, expect, fixture, html } from "@open-wc/testing";
+import { stub } from "sinon";
 
-describe('Iconset', () => {
-    after(() => {
-        const sets = [...document.querySelectorAll('sp-icons-medium')];
+describe("Iconset", () => {
+  after(() => {
+    const sets = [...document.querySelectorAll("sp-icons-medium")];
 
-        sets.map((set) => set.remove());
+    sets.map((set) => set.remove());
+  });
+  it("warns in Dev Mode of deprecation", async () => {
+    const consoleWarnStub = stub(console, "warn");
+    const el = document.createElement("sp-icons-medium");
+
+    document.body.append(el);
+
+    await elementUpdated(el);
+
+    expect(consoleWarnStub.called).to.be.true;
+    const spyCall = consoleWarnStub.getCall(0);
+
+    expect(
+      spyCall.args.at(0).includes("deprecated"),
+      "confirm deprecation message",
+    ).to.be.true;
+    expect(spyCall.args.at(-1), "confirm `data` shape").to.deep.equal({
+      data: {
+        localName: "sp-icons-medium",
+        type: "api",
+        level: "deprecation",
+      },
     });
-    it('warns in Dev Mode of deprecation', async () => {
-        const consoleWarnStub = stub(console, 'warn');
-        const el = document.createElement('sp-icons-medium');
+    consoleWarnStub.restore();
+  });
 
-        document.body.append(el);
+  it("will re-register with new name", async () => {
+    const icons = document.createElement("sp-icons-medium");
 
-        await elementUpdated(el);
+    document.body.append(icons);
+    icons.name = "first-name";
 
-        expect(consoleWarnStub.called).to.be.true;
-        const spyCall = consoleWarnStub.getCall(0);
+    const registry = IconsetRegistry.getInstance();
 
-        expect(
-            spyCall.args.at(0).includes('deprecated'),
-            'confirm deprecation message'
-        ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-            data: {
-                localName: 'sp-icons-medium',
-                type: 'api',
-                level: 'deprecation',
-            },
-        });
-        consoleWarnStub.restore();
-    });
+    expect(registry.getIconset("first-name")).to.not.be.undefined;
+    expect(registry.getIconset("")).to.be.undefined;
+    expect(registry.getIconset("second-name")).to.be.undefined;
+    expect(registry.getIconset("ui")).to.be.undefined;
 
-    it('will re-register with new name', async () => {
-        const icons = document.createElement('sp-icons-medium');
+    icons.name = "";
 
-        document.body.append(icons);
-        icons.name = 'first-name';
+    expect(registry.getIconset("first-name")).to.be.undefined;
+    expect(registry.getIconset("")).to.be.undefined;
+    expect(registry.getIconset("second-name")).to.be.undefined;
+    expect(registry.getIconset("ui")).to.be.undefined;
 
-        const registry = IconsetRegistry.getInstance();
+    icons.name = "second-name";
 
-        expect(registry.getIconset('first-name')).to.not.be.undefined;
-        expect(registry.getIconset('')).to.be.undefined;
-        expect(registry.getIconset('second-name')).to.be.undefined;
-        expect(registry.getIconset('ui')).to.be.undefined;
+    expect(registry.getIconset("first-name")).to.be.undefined;
+    expect(registry.getIconset("")).to.be.undefined;
+    expect(registry.getIconset("second-name")).to.not.be.undefined;
+    expect(registry.getIconset("ui")).to.be.undefined;
+  });
+  it("will not re-register on (dis)connect without a name", async () => {
+    const icons = document.createElement("sp-icons-medium");
 
-        icons.name = '';
+    document.body.append(icons);
 
-        expect(registry.getIconset('first-name')).to.be.undefined;
-        expect(registry.getIconset('')).to.be.undefined;
-        expect(registry.getIconset('second-name')).to.be.undefined;
-        expect(registry.getIconset('ui')).to.be.undefined;
+    const registry = IconsetRegistry.getInstance();
 
-        icons.name = 'second-name';
+    expect(registry.getIconset("ui")).to.not.be.undefined;
 
-        expect(registry.getIconset('first-name')).to.be.undefined;
-        expect(registry.getIconset('')).to.be.undefined;
-        expect(registry.getIconset('second-name')).to.not.be.undefined;
-        expect(registry.getIconset('ui')).to.be.undefined;
-    });
-    it('will not re-register on (dis)connect without a name', async () => {
-        const icons = document.createElement('sp-icons-medium');
+    icons.name = "";
 
-        document.body.append(icons);
+    expect(registry.getIconset("ui")).to.be.undefined;
 
-        const registry = IconsetRegistry.getInstance();
+    icons.remove();
 
-        expect(registry.getIconset('ui')).to.not.be.undefined;
+    document.body.append(icons);
 
-        icons.name = '';
+    expect(registry.getIconset("ui")).to.be.undefined;
+  });
+  it("renders after adding and removing a second iconset of same name", async () => {
+    const icons = document.createElement("sp-icons-medium");
 
-        expect(registry.getIconset('ui')).to.be.undefined;
+    document.body.append(icons);
 
-        icons.remove();
+    const icons2 = document.createElement("sp-icons-medium");
 
-        document.body.append(icons);
+    document.body.append(icons2);
 
-        expect(registry.getIconset('ui')).to.be.undefined;
-    });
-    it('renders after adding and removing a second iconset of same name', async () => {
-        const icons = document.createElement('sp-icons-medium');
+    icons2.remove();
 
-        document.body.append(icons);
+    window.dispatchEvent(
+      new CustomEvent("sp-iconset-removed", {
+        detail: { name: "Other Set" },
+      }),
+    );
 
-        const icons2 = document.createElement('sp-icons-medium');
+    const el = await fixture<Icon>(html`
+      <sp-icon name="ui:Chevron200"></sp-icon>
+    `);
 
-        document.body.append(icons2);
+    let svg = el.shadowRoot
+      ? el.shadowRoot.querySelector('[role="img"]')
+      : null;
 
-        icons2.remove();
+    function getSVG(): boolean {
+      svg = el.shadowRoot ? el.shadowRoot.querySelector('[role="img"]') : null;
 
-        window.dispatchEvent(
-            new CustomEvent('sp-iconset-removed', {
-                detail: { name: 'Other Set' },
-            })
-        );
+      return svg !== null;
+    }
 
-        const el = await fixture<Icon>(html`
-            <sp-icon name="ui:Chevron200"></sp-icon>
-        `);
+    await waitForPredicate(getSVG);
 
-        let svg = el.shadowRoot
-            ? el.shadowRoot.querySelector('[role="img"]')
-            : null;
+    expect(svg).to.not.be.null;
+  });
 
-        function getSVG(): boolean {
-            svg = el.shadowRoot
-                ? el.shadowRoot.querySelector('[role="img"]')
-                : null;
+  it("can be after `<sp-icon/>` in the DOM order", async () => {
+    const el = await fixture<HTMLDivElement>(html`
+      <div>
+        <sp-icon name="ui:Chevron200"></sp-icon>
+        <sp-icons-medium></sp-icons-medium>
+      </div>
+    `);
 
-            return svg !== null;
-        }
+    const icon = el.querySelector("sp-icon") as Icon;
+    const iconSet = el.querySelector("sp-icons-medium") as IconsMedium;
 
-        await waitForPredicate(getSVG);
+    await elementUpdated(iconSet);
+    await elementUpdated(icon);
 
-        expect(svg).to.not.be.null;
-    });
+    const svg = icon.shadowRoot
+      ? icon.shadowRoot.querySelector('[role="img"]')
+      : null;
 
-    it('can be after `<sp-icon/>` in the DOM order', async () => {
-        const el = await fixture<HTMLDivElement>(html`
-            <div>
-                <sp-icon name="ui:Chevron200"></sp-icon>
-                <sp-icons-medium></sp-icons-medium>
-            </div>
-        `);
-
-        const icon = el.querySelector('sp-icon') as Icon;
-        const iconSet = el.querySelector('sp-icons-medium') as IconsMedium;
-
-        await elementUpdated(iconSet);
-        await elementUpdated(icon);
-
-        const svg = icon.shadowRoot
-            ? icon.shadowRoot.querySelector('[role="img"]')
-            : null;
-
-        expect(svg).to.not.be.null;
-    });
+    expect(svg).to.not.be.null;
+  });
 });

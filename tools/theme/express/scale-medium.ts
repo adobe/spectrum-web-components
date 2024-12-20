@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import mediumStyles from '../src/express/scale-medium.css.js';
-import { Theme } from '../src/Theme.js';
-import '../src/express/core.js';
+import mediumStyles from "../src/express/scale-medium.css.js";
+import { Theme } from "../src/Theme.js";
+import "../src/express/core.js";
 
-Theme.registerThemeFragment('medium-express', 'scale', mediumStyles);
+Theme.registerThemeFragment("medium-express", "scale", mediumStyles);

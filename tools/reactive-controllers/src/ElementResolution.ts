@@ -14,124 +14,140 @@ import type { ReactiveController, ReactiveElement } from "lit";
 export const elementResolverUpdatedSymbol = Symbol("element resolver updated");
 
 export class ElementResolutionController implements ReactiveController {
-	get element(): HTMLElement | null {
-		return this._element;
-	}
+  get element(): HTMLElement | null {
+    return this._element;
+  }
 
-	set element(element: HTMLElement | null) {
-		if (element === this.element) return;
-		const previous = this.element;
-		this._element = element;
-		// requestUpdate leveraging the exported Symbol() so that the
-		// changes can be easily tracked in the host element.
-		this.host.requestUpdate(elementResolverUpdatedSymbol, previous);
-	}
+  set element(element: HTMLElement | null) {
+    if (element === this.element) {
+      return;
+    }
 
-	private _element: HTMLElement | null = null;
+    const previous = this.element;
 
-	private host!: ReactiveElement;
+    this._element = element;
+    // requestUpdate leveraging the exported Symbol() so that the
+    // changes can be easily tracked in the host element.
+    this.host.requestUpdate(elementResolverUpdatedSymbol, previous);
+  }
 
-	private observer!: MutationObserver;
+  private _element: HTMLElement | null = null;
 
-	get selector(): string {
-		return this._selector;
-	}
+  private host!: ReactiveElement;
 
-	set selector(selector: string) {
-		if (selector === this.selector) return;
-		this.releaseElement();
-		this._selector = selector;
-		this.resolveElement();
-	}
+  private observer!: MutationObserver;
 
-	private _selector = "";
+  get selector(): string {
+    return this._selector;
+  }
 
-	get selectorAsId(): string {
-		return this.selector.slice(1);
-	}
+  set selector(selector: string) {
+    if (selector === this.selector) {
+      return;
+    }
 
-	get selectorIsId(): boolean {
-		return !!this.selector && this.selector.startsWith("#");
-	}
+    this.releaseElement();
+    this._selector = selector;
+    this.resolveElement();
+  }
 
-	constructor(
-		host: ReactiveElement,
-		{ selector }: { selector: string } = { selector: "" },
-	) {
-		this.host = host;
-		this.selector = selector;
-		this.observer = new MutationObserver(this.mutationCallback);
-		// Add the controller after the MutationObserver has been created in preparation
-		// for the `hostConnected`/`hostDisconnected` callbacks to be run.
-		this.host.addController(this);
-	}
+  private _selector = "";
 
-	protected mutationCallback: MutationCallback = (mutationList) => {
-		let needsResolution = false;
-		mutationList.forEach((mutation) => {
-			if (needsResolution) return;
-			if (mutation.type === "childList") {
-				const currentElementRemoved =
-					this.element && [...mutation.removedNodes].includes(this.element);
-				const matchingElementAdded =
-					!!this.selector &&
-					([...mutation.addedNodes] as HTMLElement[]).some(
-						this.elementIsSelected,
-					);
-				needsResolution =
-					needsResolution || currentElementRemoved || matchingElementAdded;
-			}
-			if (mutation.type === "attributes") {
-				const attributeChangedOnCurrentElement =
-					mutation.target === this.element;
-				const attributeChangedOnMatchingElement =
-					!!this.selector &&
-					this.elementIsSelected(mutation.target as HTMLElement);
-				needsResolution =
-					needsResolution ||
-					attributeChangedOnCurrentElement ||
-					attributeChangedOnMatchingElement;
-			}
-		});
-		if (needsResolution) {
-			this.resolveElement();
-		}
-	};
+  get selectorAsId(): string {
+    return this.selector.slice(1);
+  }
 
-	public hostConnected(): void {
-		this.resolveElement();
-		this.observer.observe(this.host.getRootNode(), {
-			subtree: true,
-			childList: true,
-			attributes: true,
-		});
-	}
+  get selectorIsId(): boolean {
+    return !!this.selector && this.selector.startsWith("#");
+  }
 
-	public hostDisconnected(): void {
-		this.releaseElement();
-		this.observer.disconnect();
-	}
+  constructor(
+    host: ReactiveElement,
+    { selector }: { selector: string } = { selector: "" },
+  ) {
+    this.host = host;
+    this.selector = selector;
+    this.observer = new MutationObserver(this.mutationCallback);
+    // Add the controller after the MutationObserver has been created in preparation
+    // for the `hostConnected`/`hostDisconnected` callbacks to be run.
+    this.host.addController(this);
+  }
 
-	private resolveElement(): void {
-		if (!this.selector) {
-			this.releaseElement();
+  protected mutationCallback: MutationCallback = (mutationList) => {
+    let needsResolution = false;
 
-			return;
-		}
+    mutationList.forEach((mutation) => {
+      if (needsResolution) {
+        return;
+      }
 
-		const parent = this.host.getRootNode() as ShadowRoot;
-		this.element = this.selectorIsId
-			? (parent.getElementById(this.selectorAsId) as HTMLElement)
-			: (parent.querySelector(this.selector) as HTMLElement);
-	}
+      if (mutation.type === "childList") {
+        const currentElementRemoved =
+          this.element && [...mutation.removedNodes].includes(this.element);
+        const matchingElementAdded =
+          !!this.selector &&
+          ([...mutation.addedNodes] as HTMLElement[]).some(
+            this.elementIsSelected,
+          );
 
-	private releaseElement(): void {
-		this.element = null;
-	}
+        needsResolution =
+          needsResolution || currentElementRemoved || matchingElementAdded;
+      }
 
-	private elementIsSelected = (el: HTMLElement): boolean => {
-		return this.selectorIsId
-			? el?.id === this.selectorAsId
-			: el?.matches?.(this.selector);
-	};
+      if (mutation.type === "attributes") {
+        const attributeChangedOnCurrentElement =
+          mutation.target === this.element;
+        const attributeChangedOnMatchingElement =
+          !!this.selector &&
+          this.elementIsSelected(mutation.target as HTMLElement);
+
+        needsResolution =
+          needsResolution ||
+          attributeChangedOnCurrentElement ||
+          attributeChangedOnMatchingElement;
+      }
+    });
+
+    if (needsResolution) {
+      this.resolveElement();
+    }
+  };
+
+  public hostConnected(): void {
+    this.resolveElement();
+    this.observer.observe(this.host.getRootNode(), {
+      subtree: true,
+      childList: true,
+      attributes: true,
+    });
+  }
+
+  public hostDisconnected(): void {
+    this.releaseElement();
+    this.observer.disconnect();
+  }
+
+  private resolveElement(): void {
+    if (!this.selector) {
+      this.releaseElement();
+
+      return;
+    }
+
+    const parent = this.host.getRootNode() as ShadowRoot;
+
+    this.element = this.selectorIsId
+      ? (parent.getElementById(this.selectorAsId) as HTMLElement)
+      : (parent.querySelector(this.selector) as HTMLElement);
+  }
+
+  private releaseElement(): void {
+    this.element = null;
+  }
+
+  private elementIsSelected = (el: HTMLElement): boolean => {
+    return this.selectorIsId
+      ? el?.id === this.selectorAsId
+      : el?.matches?.(this.selector);
+  };
 }

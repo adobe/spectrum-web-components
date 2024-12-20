@@ -10,53 +10,53 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
+import { html, TemplateResult } from "@spectrum-web-components/base";
+import "@spectrum-web-components/button/sp-button.js";
+import "@spectrum-web-components/overlay/sp-overlay.js";
 
 class CountdownWatcher extends HTMLElement {
-    ready!: (value: boolean | PromiseLike<boolean>) => void;
+  ready!: (value: boolean | PromiseLike<boolean>) => void;
 
-    connectedCallback(): void {
-        (this.previousElementSibling as HTMLElement).addEventListener(
-            'countdown-complete',
-            () => {
-                this.ready(true);
-            }
-        );
-        this.readyPromise = new Promise((res) => {
-            this.ready = res;
-        });
-    }
-    private readyPromise: Promise<boolean> = Promise.resolve(false);
+  connectedCallback(): void {
+    (this.previousElementSibling as HTMLElement).addEventListener(
+      "countdown-complete",
+      () => {
+        this.ready(true);
+      },
+    );
+    this.readyPromise = new Promise((res) => {
+      this.ready = res;
+    });
+  }
+  private readyPromise: Promise<boolean> = Promise.resolve(false);
 
-    get updateComplete(): Promise<boolean> {
-        return this.readyPromise;
-    }
+  get updateComplete(): Promise<boolean> {
+    return this.readyPromise;
+  }
 }
 
-customElements.define('countdown-complete-watcher', CountdownWatcher);
+customElements.define("countdown-complete-watcher", CountdownWatcher);
 
 export const disabledButtonDecorator = (
-    story: () => TemplateResult
+  story: () => TemplateResult,
 ): TemplateResult => {
-    return html`
-        ${story()}
-        <countdown-complete-watcher></countdown-complete-watcher>
-    `;
+  return html`
+    ${story()}
+    <countdown-complete-watcher></countdown-complete-watcher>
+  `;
 };
 
 export const withOverlayDecorator = (
-    story: () => TemplateResult
+  story: () => TemplateResult,
 ): TemplateResult => {
-    return html`
-        <sp-button variant="primary" id="trigger">Toggle Dialog</sp-button>
-        <sp-overlay type="modal" trigger="trigger@click" open>
-            ${story()}
-        </sp-overlay>
-    `;
+  return html`
+    <sp-button variant="primary" id="trigger">Toggle Dialog</sp-button>
+    <sp-overlay type="modal" trigger="trigger@click" open>
+      ${story()}
+    </sp-overlay>
+  `;
 };
 
 export const disabledButtonWithOverlayDecorator = (
-    story: () => TemplateResult
+  story: () => TemplateResult,
 ): TemplateResult => withOverlayDecorator(() => disabledButtonDecorator(story));

@@ -10,35 +10,32 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import { LitElement, TemplateResult } from '@spectrum-web-components/base';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { ObserveSlotText } from "@spectrum-web-components/shared/src/observe-slot-text.js";
+import { LitElement, TemplateResult } from "@spectrum-web-components/base";
+import { elementUpdated, expect, fixture, html } from "@open-wc/testing";
 
 class ObserverTest extends ObserveSlotText(LitElement) {
-    protected override render(): TemplateResult {
-        return html`
-            <slot @slotchange=${this.manageTextObservedSlot}></slot>
-        `;
-    }
+  protected override render(): TemplateResult {
+    return html` <slot @slotchange=${this.manageTextObservedSlot}></slot> `;
+  }
 }
 
-customElements.define('observe-slot-test', ObserverTest);
+customElements.define("observe-slot-test", ObserverTest);
 
-describe('ObserveSlotText', () => {
-    it('does no management when slot unavailable', async () => {
-        const el = await fixture<ObserverTest>(
-            html`
-                <observe-slot-test></observe-slot-test>
-            `
-        );
-        await elementUpdated(el);
+describe("ObserveSlotText", () => {
+  it("does no management when slot unavailable", async () => {
+    const el = await fixture<ObserverTest>(html`
+      <observe-slot-test></observe-slot-test>
+    `);
 
-        expect(el.slotHasContent).to.be.false;
+    await elementUpdated(el);
 
-        el.textContent = `hi, i'm some text`;
+    expect(el.slotHasContent).to.be.false;
 
-        await elementUpdated(el);
+    el.textContent = "hi, i'm some text";
 
-        expect(el.slotHasContent).to.be.true;
-    });
+    await elementUpdated(el);
+
+    expect(el.slotHasContent).to.be.true;
+  });
 });

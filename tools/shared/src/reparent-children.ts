@@ -10,74 +10,82 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 function restoreChildren<T extends Element>(
-	placeholderItems: Comment[],
-	srcElements: T[],
-	cleanupCallbacks: ((el: T) => void)[] = [],
+  placeholderItems: Comment[],
+  srcElements: T[],
+  cleanupCallbacks: ((el: T) => void)[] = [],
 ): T[] {
-	for (let index = 0; index < srcElements.length; ++index) {
-		const srcElement = srcElements[index];
-		const placeholderItem = placeholderItems[index];
-		const parentElement =
-			placeholderItem.parentElement || placeholderItem.getRootNode();
-		if (cleanupCallbacks[index]) {
-			cleanupCallbacks[index](srcElement);
-		}
-		if (parentElement && parentElement !== placeholderItem) {
-			parentElement.replaceChild(srcElement, placeholderItem);
-		}
-		delete placeholderItems[index];
-	}
+  for (let index = 0; index < srcElements.length; ++index) {
+    const srcElement = srcElements[index];
+    const placeholderItem = placeholderItems[index];
+    const parentElement =
+      placeholderItem.parentElement || placeholderItem.getRootNode();
 
-	return srcElements;
+    if (cleanupCallbacks[index]) {
+      cleanupCallbacks[index](srcElement);
+    }
+
+    if (parentElement && parentElement !== placeholderItem) {
+      parentElement.replaceChild(srcElement, placeholderItem);
+    }
+
+    delete placeholderItems[index];
+  }
+
+  return srcElements;
 }
 
 export const reparentChildren = <T extends Element>(
-	srcElements: T[],
-	destination: Element,
-	{
-		position,
-		prepareCallback,
-	}: {
-		position: InsertPosition;
-		prepareCallback?: (el: T) => ((el: T) => void) | void;
-	} = { position: "beforeend" },
+  srcElements: T[],
+  destination: Element,
+  {
+    position,
+    prepareCallback,
+  }: {
+    position: InsertPosition;
+    prepareCallback?: (el: T) => ((el: T) => void) | void;
+  } = { position: "beforeend" },
 ): (() => T[]) => {
-	let { length } = srcElements;
-	if (length === 0) {
-		return () => srcElements;
-	}
+  let { length } = srcElements;
 
-	let step = 1;
-	let index = 0;
+  if (length === 0) {
+    return () => srcElements;
+  }
 
-	if (position === "afterbegin" || position === "afterend") {
-		step = -1;
-		index = length - 1;
-	}
+  let step = 1;
+  let index = 0;
 
-	const placeholderItems = new Array<Comment>(length);
-	const cleanupCallbacks = new Array<(el: T) => void>(length);
-	const placeholderTemplate: Comment = document.createComment(
-		"placeholder for reparented element",
-	);
+  if (position === "afterbegin" || position === "afterend") {
+    step = -1;
+    index = length - 1;
+  }
 
-	do {
-		const srcElement = srcElements[index];
-		if (prepareCallback) {
-			cleanupCallbacks[index] = prepareCallback(srcElement) as (el: T) => void;
-		}
-		placeholderItems[index] = placeholderTemplate.cloneNode() as Comment;
+  const placeholderItems = new Array<Comment>(length);
+  const cleanupCallbacks = new Array<(el: T) => void>(length);
+  const placeholderTemplate: Comment = document.createComment(
+    "placeholder for reparented element",
+  );
 
-		const parentElement = srcElement.parentElement || srcElement.getRootNode();
-		if (parentElement && parentElement !== srcElement) {
-			parentElement.replaceChild(placeholderItems[index], srcElement);
-		}
-		destination.insertAdjacentElement(position, srcElement);
+  do {
+    const srcElement = srcElements[index];
 
-		index += step;
-	} while (--length > 0);
+    if (prepareCallback) {
+      cleanupCallbacks[index] = prepareCallback(srcElement) as (el: T) => void;
+    }
 
-	return function (): T[] {
-		return restoreChildren<T>(placeholderItems, srcElements, cleanupCallbacks);
-	};
+    placeholderItems[index] = placeholderTemplate.cloneNode() as Comment;
+
+    const parentElement = srcElement.parentElement || srcElement.getRootNode();
+
+    if (parentElement && parentElement !== srcElement) {
+      parentElement.replaceChild(placeholderItems[index], srcElement);
+    }
+
+    destination.insertAdjacentElement(position, srcElement);
+
+    index += step;
+  } while (--length > 0);
+
+  return function (): T[] {
+    return restoreChildren<T>(placeholderItems, srcElements, cleanupCallbacks);
+  };
 };

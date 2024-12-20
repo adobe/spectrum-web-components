@@ -11,15 +11,15 @@ governing permissions and limitations under the License.
 */
 
 export class OverlayCloseEvent extends Event {
-    root?: HTMLElement;
-    constructor({ root }: { root?: HTMLElement }) {
-        super('sp-overlay-close', { bubbles: true, composed: true });
-        this.root = root;
-    }
+  root?: HTMLElement;
+  constructor({ root }: { root?: HTMLElement }) {
+    super("sp-overlay-close", { bubbles: true, composed: true });
+    this.root = root;
+  }
 }
 
 declare global {
-    interface GlobalEventHandlersEventMap {
-        'sp-overlay-close': CustomEvent<OverlayCloseEvent>;
-    }
+  interface GlobalEventHandlersEventMap {
+    "sp-overlay-close": CustomEvent<OverlayCloseEvent>;
+  }
 }

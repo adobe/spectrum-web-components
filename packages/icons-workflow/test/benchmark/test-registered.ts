@@ -10,45 +10,45 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
-import { html } from '@spectrum-web-components/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js";
+import { html } from "@spectrum-web-components/base";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
 measureFixtureCreation(html`
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
-    <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
+  <sp-icon-checkmark></sp-icon-checkmark>
 `);

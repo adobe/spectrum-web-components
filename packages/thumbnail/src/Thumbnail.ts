@@ -11,33 +11,33 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    SpectrumElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
+  CSSResultArray,
+  html,
+  PropertyValues,
+  SpectrumElement,
+  TemplateResult,
+} from "@spectrum-web-components/base";
+import { property } from "@spectrum-web-components/base/src/decorators.js";
+import opacityCheckerboardStyles from "@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js";
 
-import styles from './thumbnail.css.js';
+import styles from "./thumbnail.css.js";
 
 /**
  * Array of valid sizes for the thumbnail component.
  */
 const validSizes = [
-    '50',
-    '75',
-    '100',
-    '200',
-    '300',
-    '400',
-    '500',
-    '600',
-    '700',
-    '800',
-    '900',
-    '1000',
+  "50",
+  "75",
+  "100",
+  "200",
+  "300",
+  "400",
+  "500",
+  "600",
+  "700",
+  "800",
+  "900",
+  "1000",
 ];
 
 /**
@@ -60,124 +60,124 @@ const defaultSize = validSizes[6];
  *
  */
 export class Thumbnail extends SpectrumElement {
-    /**
-     * Returns the styles to be applied to the component.
-     */
-    public static override get styles(): CSSResultArray {
-        return [opacityCheckerboardStyles, styles];
+  /**
+   * Returns the styles to be applied to the component.
+   */
+  public static override get styles(): CSSResultArray {
+    return [opacityCheckerboardStyles, styles];
+  }
+
+  /**
+   * The background color of the thumbnail.
+   *
+   * This property is reflected as an attribute, meaning changes to the property
+   * will be mirrored in the corresponding HTML attribute.
+   */
+  @property({ type: String, reflect: true })
+  public background?: string;
+
+  /**
+   * Indicates whether the image should cover the thumbnail area.
+   *
+   * This property is reflected as an attribute, meaning changes to the property
+   * will be mirrored in the corresponding HTML attribute.
+   */
+  @property({ type: Boolean, reflect: true })
+  public cover = false;
+
+  /**
+   * Indicates whether the thumbnail should display a layer effect.
+   *
+   * This property is reflected as an attribute, meaning changes to the property
+   * will be mirrored in the corresponding HTML attribute.
+   */
+  @property({ type: Boolean, reflect: true })
+  public layer = false;
+
+  /**
+   * The size of the thumbnail.
+   *
+   * This property is reflected as an attribute, meaning changes to the property
+   * will be mirrored in the corresponding HTML attribute.
+   */
+  @property({ type: String, reflect: true })
+  public get size(): ThumbnailSize {
+    return this._size;
+  }
+
+  /**
+   * Sets the size of the thumbnail.
+   *
+   * Validates the size to ensure it is one of the allowed values.
+   * If the size is valid, it sets the attribute and updates the internal property.
+   */
+  public set size(value: ThumbnailSize) {
+    const size = (
+      validSizes.includes(value) ? value : defaultSize
+    ) as ThumbnailSize;
+
+    if (size) {
+      this.setAttribute("size", `${size}`);
     }
 
-    /**
-     * The background color of the thumbnail.
-     *
-     * This property is reflected as an attribute, meaning changes to the property
-     * will be mirrored in the corresponding HTML attribute.
-     */
-    @property({ type: String, reflect: true })
-    public background?: string;
-
-    /**
-     * Indicates whether the image should cover the thumbnail area.
-     *
-     * This property is reflected as an attribute, meaning changes to the property
-     * will be mirrored in the corresponding HTML attribute.
-     */
-    @property({ type: Boolean, reflect: true })
-    public cover = false;
-
-    /**
-     * Indicates whether the thumbnail should display a layer effect.
-     *
-     * This property is reflected as an attribute, meaning changes to the property
-     * will be mirrored in the corresponding HTML attribute.
-     */
-    @property({ type: Boolean, reflect: true })
-    public layer = false;
-
-    /**
-     * The size of the thumbnail.
-     *
-     * This property is reflected as an attribute, meaning changes to the property
-     * will be mirrored in the corresponding HTML attribute.
-     */
-    @property({ type: String, reflect: true })
-    public get size(): ThumbnailSize {
-        return this._size;
+    if (this._size === size) {
+      return;
     }
 
-    /**
-     * Sets the size of the thumbnail.
-     *
-     * Validates the size to ensure it is one of the allowed values.
-     * If the size is valid, it sets the attribute and updates the internal property.
-     */
-    public set size(value: ThumbnailSize) {
-        const size = (
-            validSizes.includes(value) ? value : defaultSize
-        ) as ThumbnailSize;
+    const oldSize = this._size;
 
-        if (size) {
-            this.setAttribute('size', `${size}`);
-        }
+    this._size = size;
+    this.requestUpdate("size", oldSize);
+  }
 
-        if (this._size === size) {
-            return;
-        }
+  /**
+   * Internal property to store the size value.
+   */
+  private _size = defaultSize;
 
-        const oldSize = this._size;
-
-        this._size = size;
-        this.requestUpdate('size', oldSize);
+  /**
+   * Lifecycle method called when the component updates.
+   *
+   * This method ensures the size attribute is set if it is not already present.
+   */
+  protected override update(changes: PropertyValues): void {
+    if (!this.hasAttribute("size")) {
+      this.setAttribute("size", this.size);
     }
 
-    /**
-     * Internal property to store the size value.
-     */
-    private _size = defaultSize;
+    super.update(changes);
+  }
 
-    /**
-     * Lifecycle method called when the component updates.
-     *
-     * This method ensures the size attribute is set if it is not already present.
-     */
-    protected override update(changes: PropertyValues): void {
-        if (!this.hasAttribute('size')) {
-            this.setAttribute('size', this.size);
-        }
-
-        super.update(changes);
+  /**
+   * Renders the content of the thumbnail component.
+   *
+   * This method returns a template result containing the appropriate wrapper
+   * based on the background and layer properties.
+   */
+  protected override render(): TemplateResult {
+    if (this.background) {
+      return html`
+        <div
+          class="opacity-checkerboard background"
+          style="background: ${this.background}"
+        >
+          <div class="image-wrapper">
+            <slot></slot>
+          </div>
+        </div>
+      `;
+    } else if (this.layer) {
+      return html`
+        <div class="opacity-checkerboard layer-inner">
+          <slot></slot>
+        </div>
+      `;
+    } else {
+      return html`
+        <div class="opacity-checkerboard image-wrapper">
+          <slot></slot>
+        </div>
+      `;
     }
-
-    /**
-     * Renders the content of the thumbnail component.
-     *
-     * This method returns a template result containing the appropriate wrapper
-     * based on the background and layer properties.
-     */
-    protected override render(): TemplateResult {
-        if (this.background) {
-            return html`
-                <div
-                    class="opacity-checkerboard background"
-                    style="background: ${this.background}"
-                >
-                    <div class="image-wrapper">
-                        <slot></slot>
-                    </div>
-                </div>
-            `;
-        } else if (this.layer) {
-            return html`
-                <div class="opacity-checkerboard layer-inner">
-                    <slot></slot>
-                </div>
-            `;
-        } else {
-            return html`
-                <div class="opacity-checkerboard image-wrapper">
-                    <slot></slot>
-                </div>
-            `;
-        }
-    }
+  }
 }

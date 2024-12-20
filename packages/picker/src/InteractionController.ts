@@ -11,186 +11,190 @@ governing permissions and limitations under the License.
 */
 
 import {
-    ReactiveController,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { AbstractOverlay } from '@spectrum-web-components/overlay/src/AbstractOverlay';
-import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
-import { PickerBase } from './Picker.js';
+  ReactiveController,
+  TemplateResult,
+} from "@spectrum-web-components/base";
+import { AbstractOverlay } from "@spectrum-web-components/overlay/src/AbstractOverlay";
+import { Overlay } from "@spectrum-web-components/overlay/src/Overlay.js";
+import { PickerBase } from "./Picker.js";
 
 export enum InteractionTypes {
-    'desktop',
-    'mobile',
+  "desktop",
+  "mobile",
 }
 
 export class InteractionController implements ReactiveController {
-    abortController!: AbortController;
+  abortController!: AbortController;
 
-    public preventNextToggle: 'no' | 'maybe' | 'yes' = 'no';
-    public pointerdownState = false;
-    public enterKeydownOn: EventTarget | null = null;
+  public preventNextToggle: "no" | "maybe" | "yes" = "no";
+  public pointerdownState = false;
+  public enterKeydownOn: EventTarget | null = null;
 
-    public container!: TemplateResult;
+  public container!: TemplateResult;
 
-    get activelyOpening(): boolean {
-        return false;
+  get activelyOpening(): boolean {
+    return false;
+  }
+
+  private _open = false;
+
+  public get open(): boolean {
+    return this._open;
+  }
+
+  /**
+   * Set `open`
+   */
+  public set open(open: boolean) {
+    if (this._open === open) {
+      return;
     }
 
-    private _open = false;
+    this._open = open;
 
-    public get open(): boolean {
-        return this._open;
+    if (this.overlay) {
+      this.host.open = open;
+
+      return;
     }
 
-    /**
-     * Set `open`
-     */
-    public set open(open: boolean) {
-        if (this._open === open) return;
+    // When there is no Overlay and `open` is moving to `true`, lazily import/create
+    // an Overlay and apply that state to it.
+    customElements.whenDefined("sp-overlay").then(async (): Promise<void> => {
+      const { Overlay } = await import(
+        "@spectrum-web-components/overlay/src/Overlay.js"
+      );
 
-        this._open = open;
+      this.overlay = new Overlay();
+      this.host.open = true;
+      this.host.requestUpdate();
+    });
+    import("@spectrum-web-components/overlay/sp-overlay.js");
+  }
 
-        if (this.overlay) {
-            this.host.open = open;
+  private _overlay!: AbstractOverlay;
 
-            return;
-        }
+  public get overlay(): AbstractOverlay {
+    return this._overlay;
+  }
 
-        // When there is no Overlay and `open` is moving to `true`, lazily import/create
-        // an Overlay and apply that state to it.
-        customElements
-            .whenDefined('sp-overlay')
-            .then(async (): Promise<void> => {
-                const { Overlay } = await import(
-                    '@spectrum-web-components/overlay/src/Overlay.js'
-                );
-
-                this.overlay = new Overlay();
-                this.host.open = true;
-                this.host.requestUpdate();
-            });
-        import('@spectrum-web-components/overlay/sp-overlay.js');
+  public set overlay(overlay: AbstractOverlay | undefined) {
+    if (!overlay) {
+      return;
     }
 
-    private _overlay!: AbstractOverlay;
-
-    public get overlay(): AbstractOverlay {
-        return this._overlay;
+    if (this.overlay === overlay) {
+      return;
     }
 
-    public set overlay(overlay: AbstractOverlay | undefined) {
-        if (!overlay) return;
+    this._overlay = overlay;
+    this.initOverlay();
+  }
 
-        if (this.overlay === overlay) return;
+  type!: InteractionTypes;
 
-        this._overlay = overlay;
-        this.initOverlay();
+  constructor(
+    public target: HTMLElement,
+    public host: PickerBase,
+  ) {
+    this.target = target;
+    this.host = host;
+    this.host.addController(this);
+    this.init();
+  }
+
+  releaseDescription(): void {}
+
+  protected handleBeforetoggle(
+    event: Event & {
+      target: Overlay;
+      newState: "open" | "closed";
+    },
+  ): void {
+    if (event.composedPath()[0] !== event.target) {
+      return;
     }
 
-    type!: InteractionTypes;
-
-    constructor(
-        public target: HTMLElement,
-        public host: PickerBase
-    ) {
-        this.target = target;
-        this.host = host;
-        this.host.addController(this);
-        this.init();
+    if (event.newState === "closed") {
+      if (this.preventNextToggle === "no") {
+        this.open = false;
+      } else if (!this.pointerdownState) {
+        // Prevent browser driven closure while opening the Picker
+        // and the expected event series has not completed.
+        this.overlay?.manuallyKeepOpen();
+      }
     }
 
-    releaseDescription(): void {}
+    if (!this.open) {
+      this.host.optionsMenu.updateSelectedItemIndex();
+      this.host.optionsMenu.closeDescendentOverlays();
+    }
+  }
 
-    protected handleBeforetoggle(
-        event: Event & {
+  initOverlay(): void {
+    if (this.overlay) {
+      this.overlay.addEventListener("beforetoggle", (event: Event) => {
+        this.handleBeforetoggle(
+          event as Event & {
             target: Overlay;
-            newState: 'open' | 'closed';
-        }
-    ): void {
-        if (event.composedPath()[0] !== event.target) {
-            return;
-        }
-
-        if (event.newState === 'closed') {
-            if (this.preventNextToggle === 'no') {
-                this.open = false;
-            } else if (!this.pointerdownState) {
-                // Prevent browser driven closure while opening the Picker
-                // and the expected event series has not completed.
-                this.overlay?.manuallyKeepOpen();
-            }
-        }
-
-        if (!this.open) {
-            this.host.optionsMenu.updateSelectedItemIndex();
-            this.host.optionsMenu.closeDescendentOverlays();
-        }
+            newState: "open" | "closed";
+          },
+        );
+      });
+      this.overlay.type = this.host.isMobile.matches ? "modal" : "auto";
+      this.overlay.triggerElement = this.host as HTMLElement;
+      this.overlay.placement = this.host.isMobile.matches
+        ? undefined
+        : this.host.placement;
+      this.overlay.receivesFocus = "true";
+      this.overlay.willPreventClose =
+        this.preventNextToggle !== "no" && this.open;
+      this.overlay.addEventListener(
+        "slottable-request",
+        this.host.handleSlottableRequest,
+      );
     }
+  }
 
-    initOverlay(): void {
-        if (this.overlay) {
-            this.overlay.addEventListener('beforetoggle', (event: Event) => {
-                this.handleBeforetoggle(
-                    event as Event & {
-                        target: Overlay;
-                        newState: 'open' | 'closed';
-                    }
-                );
-            });
-            this.overlay.type = this.host.isMobile.matches ? 'modal' : 'auto';
-            this.overlay.triggerElement = this.host as HTMLElement;
-            this.overlay.placement = this.host.isMobile.matches
-                ? undefined
-                : this.host.placement;
-            this.overlay.receivesFocus = 'true';
-            this.overlay.willPreventClose =
-                this.preventNextToggle !== 'no' && this.open;
-            this.overlay.addEventListener(
-                'slottable-request',
-                this.host.handleSlottableRequest
-            );
-        }
+  public handlePointerdown(_event: PointerEvent): void {}
+
+  public handleButtonFocus(event: FocusEvent): void {
+    // When focus comes from a pointer event, and the related target is the Menu,
+    // we don't want to reopen the Menu.
+    if (
+      this.preventNextToggle === "maybe" &&
+      event.relatedTarget === this.host.optionsMenu
+    ) {
+      this.preventNextToggle = "yes";
     }
+  }
 
-    public handlePointerdown(_event: PointerEvent): void {}
+  public handleActivate(_event: Event): void {}
 
-    public handleButtonFocus(event: FocusEvent): void {
-        // When focus comes from a pointer event, and the related target is the Menu,
-        // we don't want to reopen the Menu.
-        if (
-            this.preventNextToggle === 'maybe' &&
-            event.relatedTarget === this.host.optionsMenu
-        ) {
-            this.preventNextToggle = 'yes';
-        }
+  /* c8 ignore next 3 */
+  init(): void {}
+
+  abort(): void {
+    this.releaseDescription();
+    this.abortController?.abort();
+  }
+
+  hostConnected(): void {
+    this.init();
+  }
+
+  hostDisconnected(): void {
+    this.abortController?.abort();
+  }
+
+  public hostUpdated(): void {
+    if (
+      this.overlay &&
+      this.host.dependencyManager.loaded &&
+      this.host.open !== this.overlay.open
+    ) {
+      this.overlay.willPreventClose = this.preventNextToggle !== "no";
+      this.overlay.open = this.host.open;
     }
-
-    public handleActivate(_event: Event): void {}
-
-    /* c8 ignore next 3 */
-    init(): void {}
-
-    abort(): void {
-        this.releaseDescription();
-        this.abortController?.abort();
-    }
-
-    hostConnected(): void {
-        this.init();
-    }
-
-    hostDisconnected(): void {
-        this.abortController?.abort();
-    }
-
-    public hostUpdated(): void {
-        if (
-            this.overlay &&
-            this.host.dependencyManager.loaded &&
-            this.host.open !== this.overlay.open
-        ) {
-            this.overlay.willPreventClose = this.preventNextToggle !== 'no';
-            this.overlay.open = this.host.open;
-        }
-    }
+  }
 }

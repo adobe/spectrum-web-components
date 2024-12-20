@@ -13,393 +13,432 @@ import type { ReactiveController, ReactiveElement } from "lit";
 
 type DirectionTypes = "horizontal" | "vertical" | "both" | "grid";
 export type FocusGroupConfig<T> = {
-	focusInIndex?: (_elements: T[]) => number;
-	direction?: DirectionTypes | (() => DirectionTypes);
-	elementEnterAction?: (el: T) => void;
-	elements: () => T[];
-	isFocusableElement?: (el: T) => boolean;
-	listenerScope?: HTMLElement | (() => HTMLElement);
+  focusInIndex?: (_elements: T[]) => number;
+  direction?: DirectionTypes | (() => DirectionTypes);
+  elementEnterAction?: (el: T) => void;
+  elements: () => T[];
+  isFocusableElement?: (el: T) => boolean;
+  listenerScope?: HTMLElement | (() => HTMLElement);
 };
 
 function ensureMethod<T, RT>(
-	value: T | RT | undefined,
-	type: string,
-	fallback: T,
+  value: T | RT | undefined,
+  type: string,
+  fallback: T,
 ): T {
-	if (typeof value === type) {
-		return (() => value) as T;
-	} else if (typeof value === "function") {
-		return value as T;
-	}
+  if (typeof value === type) {
+    return (() => value) as T;
+  } else if (typeof value === "function") {
+    return value as T;
+  }
 
-	return fallback;
+  return fallback;
 }
 
 export class FocusGroupController<T extends HTMLElement>
-	implements ReactiveController
+  implements ReactiveController
 {
-	protected cachedElements?: T[];
-	private mutationObserver: MutationObserver;
+  protected cachedElements?: T[];
+  private mutationObserver: MutationObserver;
 
-	get currentIndex(): number {
-		if (this._currentIndex === -1) {
-			this._currentIndex = this.focusInIndex;
-		}
+  get currentIndex(): number {
+    if (this._currentIndex === -1) {
+      this._currentIndex = this.focusInIndex;
+    }
 
-		return this._currentIndex - this.offset;
-	}
+    return this._currentIndex - this.offset;
+  }
 
-	set currentIndex(currentIndex) {
-		this._currentIndex = currentIndex + this.offset;
-	}
+  set currentIndex(currentIndex) {
+    this._currentIndex = currentIndex + this.offset;
+  }
 
-	private _currentIndex = -1;
+  private _currentIndex = -1;
 
-	private prevIndex = -1;
+  private prevIndex = -1;
 
-	get direction(): DirectionTypes {
-		return this._direction();
-	}
+  get direction(): DirectionTypes {
+    return this._direction();
+  }
 
-	_direction = (): DirectionTypes => "both";
+  _direction = (): DirectionTypes => "both";
 
-	public directionLength = 5;
+  public directionLength = 5;
 
-	elementEnterAction = (_el: T): void => {
-		return;
-	};
+  elementEnterAction = (_el: T): void => {
+    return;
+  };
 
-	get elements(): T[] {
-		if (!this.cachedElements) {
-			this.cachedElements = this._elements();
-		}
+  get elements(): T[] {
+    if (!this.cachedElements) {
+      this.cachedElements = this._elements();
+    }
 
-		return this.cachedElements;
-	}
+    return this.cachedElements;
+  }
 
-	private _elements!: () => T[];
+  private _elements!: () => T[];
 
-	protected set focused(focused: boolean) {
-		/* c8 ignore next 1 */
-		if (focused === this.focused) return;
-		this._focused = focused;
-	}
+  protected set focused(focused: boolean) {
+    /* c8 ignore next 1 */
+    if (focused === this.focused) {
+      return;
+    }
 
-	protected get focused(): boolean {
-		return this._focused;
-	}
+    this._focused = focused;
+  }
 
-	private _focused = false;
+  protected get focused(): boolean {
+    return this._focused;
+  }
 
-	get focusInElement(): T {
-		return this.elements[this.focusInIndex];
-	}
+  private _focused = false;
 
-	get focusInIndex(): number {
-		return this._focusInIndex(this.elements);
-	}
+  get focusInElement(): T {
+    return this.elements[this.focusInIndex];
+  }
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	_focusInIndex = (_elements: T[]): number => 0;
+  get focusInIndex(): number {
+    return this._focusInIndex(this.elements);
+  }
 
-	host: ReactiveElement;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _focusInIndex = (_elements: T[]): number => 0;
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	isFocusableElement = (_el: T): boolean => true;
+  host: ReactiveElement;
 
-	isEventWithinListenerScope(event: Event): boolean {
-		if (this._listenerScope() === this.host) return true;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  isFocusableElement = (_el: T): boolean => true;
 
-		return event.composedPath().includes(this._listenerScope());
-	}
+  isEventWithinListenerScope(event: Event): boolean {
+    if (this._listenerScope() === this.host) {
+      return true;
+    }
 
-	_listenerScope = (): HTMLElement => this.host;
+    return event.composedPath().includes(this._listenerScope());
+  }
 
-	// When elements are virtualized, the delta between the first element
-	// and the first rendered element.
-	offset = 0;
+  _listenerScope = (): HTMLElement => this.host;
 
-	recentlyConnected = false;
+  // When elements are virtualized, the delta between the first element
+  // and the first rendered element.
+  offset = 0;
 
-	constructor(
-		host: ReactiveElement,
-		{
-			direction,
-			elementEnterAction,
-			elements,
-			focusInIndex,
-			isFocusableElement,
-			listenerScope,
-		}: FocusGroupConfig<T> = { elements: () => [] },
-	) {
-		this.mutationObserver = new MutationObserver(() => {
-			this.handleItemMutation();
-		});
-		this.host = host;
-		this.host.addController(this);
-		this._elements = elements;
-		this.isFocusableElement = isFocusableElement || this.isFocusableElement;
-		this._direction = ensureMethod<() => DirectionTypes, DirectionTypes>(
-			direction,
-			"string",
-			this._direction,
-		);
-		this.elementEnterAction = elementEnterAction || this.elementEnterAction;
-		this._focusInIndex = ensureMethod<(_elements: T[]) => number, number>(
-			focusInIndex,
-			"number",
-			this._focusInIndex,
-		);
-		this._listenerScope = ensureMethod<() => HTMLElement, HTMLElement>(
-			listenerScope,
-			"object",
-			this._listenerScope,
-		);
-	}
-	/*  In  handleItemMutation() method the first if condition is checking if the element is not focused or if the element's children's length is not decreasing then it means no element has been deleted and we must return.
+  recentlyConnected = false;
+
+  constructor(
+    host: ReactiveElement,
+    {
+      direction,
+      elementEnterAction,
+      elements,
+      focusInIndex,
+      isFocusableElement,
+      listenerScope,
+    }: FocusGroupConfig<T> = { elements: () => [] },
+  ) {
+    this.mutationObserver = new MutationObserver(() => {
+      this.handleItemMutation();
+    });
+    this.host = host;
+    this.host.addController(this);
+    this._elements = elements;
+    this.isFocusableElement = isFocusableElement || this.isFocusableElement;
+    this._direction = ensureMethod<() => DirectionTypes, DirectionTypes>(
+      direction,
+      "string",
+      this._direction,
+    );
+    this.elementEnterAction = elementEnterAction || this.elementEnterAction;
+    this._focusInIndex = ensureMethod<(_elements: T[]) => number, number>(
+      focusInIndex,
+      "number",
+      this._focusInIndex,
+    );
+    this._listenerScope = ensureMethod<() => HTMLElement, HTMLElement>(
+      listenerScope,
+      "object",
+      this._listenerScope,
+    );
+  }
+  /*  In  handleItemMutation() method the first if condition is checking if the element is not focused or if the element's children's length is not decreasing then it means no element has been deleted and we must return.
         Then we are checking if the deleted element was the focused one before the deletion if so then we need to proceed else we casn return;
     */
-	handleItemMutation(): void {
-		if (
-			this._currentIndex == -1 ||
-			this.elements.length <= this._elements().length
-		)
-			return;
-		const focusedElement = this.elements[this.currentIndex];
-		this.clearElementCache();
-		if (this.elements.includes(focusedElement)) return;
-		const moveToNextElement = this.currentIndex !== this.elements.length;
-		const diff = moveToNextElement ? 1 : -1;
-		if (moveToNextElement) {
-			this.setCurrentIndexCircularly(-1);
-		}
-		this.setCurrentIndexCircularly(diff);
-		this.focus();
-	}
+  handleItemMutation(): void {
+    if (
+      this._currentIndex == -1 ||
+      this.elements.length <= this._elements().length
+    ) {
+      return;
+    }
 
-	update({ elements }: FocusGroupConfig<T> = { elements: () => [] }): void {
-		this.unmanage();
-		this._elements = elements;
-		this.clearElementCache();
-		this.manage();
-	}
+    const focusedElement = this.elements[this.currentIndex];
 
-	focus(options?: FocusOptions): void {
-		const elements = this.elements;
-		if (!elements.length) return;
-		let focusElement = elements[this.currentIndex];
-		if (!focusElement || !this.isFocusableElement(focusElement)) {
-			this.setCurrentIndexCircularly(1);
-			focusElement = elements[this.currentIndex];
-		}
-		if (focusElement && this.isFocusableElement(focusElement)) {
-			elements[this.prevIndex]?.setAttribute("tabindex", "-1");
-			focusElement.tabIndex = 0;
-			focusElement.focus(options);
-		}
-	}
+    this.clearElementCache();
 
-	clearElementCache(offset = 0): void {
-		this.mutationObserver.disconnect();
-		delete this.cachedElements;
-		this.offset = offset;
-		requestAnimationFrame(() => {
-			this.elements.forEach((element) => {
-				this.mutationObserver.observe(element, {
-					attributes: true,
-				});
-			});
-		});
-	}
+    if (this.elements.includes(focusedElement)) {
+      return;
+    }
 
-	setCurrentIndexCircularly(diff: number): void {
-		const { length } = this.elements;
-		let steps = length;
-		this.prevIndex = this.currentIndex;
-		// start at a possibly not 0 index
-		let nextIndex = (length + this.currentIndex + diff) % length;
-		while (
-			// don't cycle the elements more than once
-			steps &&
-			this.elements[nextIndex] &&
-			!this.isFocusableElement(this.elements[nextIndex])
-		) {
-			nextIndex = (length + nextIndex + diff) % length;
-			steps -= 1;
-		}
-		this.currentIndex = nextIndex;
-	}
+    const moveToNextElement = this.currentIndex !== this.elements.length;
+    const diff = moveToNextElement ? 1 : -1;
 
-	hostContainsFocus(): void {
-		this.host.addEventListener("focusout", this.handleFocusout);
-		this.host.addEventListener("keydown", this.handleKeydown);
-		this.focused = true;
-	}
+    if (moveToNextElement) {
+      this.setCurrentIndexCircularly(-1);
+    }
 
-	hostNoLongerContainsFocus(): void {
-		this.host.addEventListener("focusin", this.handleFocusin);
-		this.host.removeEventListener("focusout", this.handleFocusout);
-		this.host.removeEventListener("keydown", this.handleKeydown);
-		this.focused = false;
-	}
+    this.setCurrentIndexCircularly(diff);
+    this.focus();
+  }
 
-	isRelatedTargetOrContainAnElement(event: FocusEvent): boolean {
-		const relatedTarget = event.relatedTarget as null | Element;
+  update({ elements }: FocusGroupConfig<T> = { elements: () => [] }): void {
+    this.unmanage();
+    this._elements = elements;
+    this.clearElementCache();
+    this.manage();
+  }
 
-		const isRelatedTargetAnElement = this.elements.includes(relatedTarget as T);
-		const isRelatedTargetContainedWithinElements = this.elements.some((el) =>
-			el.contains(relatedTarget),
-		);
+  focus(options?: FocusOptions): void {
+    const elements = this.elements;
 
-		return !(
-			isRelatedTargetAnElement || isRelatedTargetContainedWithinElements
-		);
-	}
+    if (!elements.length) {
+      return;
+    }
 
-	handleFocusin = (event: FocusEvent): void => {
-		if (!this.isEventWithinListenerScope(event)) return;
+    let focusElement = elements[this.currentIndex];
 
-		const path = event.composedPath() as T[];
-		let targetIndex = -1;
-		path.find((el) => {
-			targetIndex = this.elements.indexOf(el);
+    if (!focusElement || !this.isFocusableElement(focusElement)) {
+      this.setCurrentIndexCircularly(1);
+      focusElement = elements[this.currentIndex];
+    }
 
-			return targetIndex !== -1;
-		});
-		this.prevIndex = this.currentIndex;
-		this.currentIndex = targetIndex > -1 ? targetIndex : this.currentIndex;
+    if (focusElement && this.isFocusableElement(focusElement)) {
+      elements[this.prevIndex]?.setAttribute("tabindex", "-1");
+      focusElement.tabIndex = 0;
+      focusElement.focus(options);
+    }
+  }
 
-		if (this.isRelatedTargetOrContainAnElement(event)) {
-			this.hostContainsFocus();
-		}
-	};
+  clearElementCache(offset = 0): void {
+    this.mutationObserver.disconnect();
+    delete this.cachedElements;
+    this.offset = offset;
+    requestAnimationFrame(() => {
+      this.elements.forEach((element) => {
+        this.mutationObserver.observe(element, {
+          attributes: true,
+        });
+      });
+    });
+  }
 
-	/**
-	 * handleClick - Finds the element that was clicked and sets the tabindex to 0
-	 * @returns void
-	 */
-	handleClick = (): void => {
-		// Manually set the tabindex to 0 for the current element on receiving focus (from keyboard or mouse)
-		const elements = this.elements;
-		if (!elements.length) return;
-		let focusElement = elements[this.currentIndex];
-		if (this.currentIndex < 0) {
-			return;
-		}
-		if (!focusElement || !this.isFocusableElement(focusElement)) {
-			this.setCurrentIndexCircularly(1);
-			focusElement = elements[this.currentIndex];
-		}
-		if (focusElement && this.isFocusableElement(focusElement)) {
-			elements[this.prevIndex]?.setAttribute("tabindex", "-1");
-			focusElement.setAttribute("tabindex", "0");
-		}
-	};
+  setCurrentIndexCircularly(diff: number): void {
+    const { length } = this.elements;
+    let steps = length;
 
-	handleFocusout = (event: FocusEvent): void => {
-		if (this.isRelatedTargetOrContainAnElement(event)) {
-			this.hostNoLongerContainsFocus();
-		}
-	};
+    this.prevIndex = this.currentIndex;
+    // start at a possibly not 0 index
+    let nextIndex = (length + this.currentIndex + diff) % length;
 
-	acceptsEventCode(code: string): boolean {
-		if (code === "End" || code === "Home") {
-			return true;
-		}
-		switch (this.direction) {
-			case "horizontal":
-				return code === "ArrowLeft" || code === "ArrowRight";
-			case "vertical":
-				return code === "ArrowUp" || code === "ArrowDown";
-			case "both":
-			case "grid":
-				return code.startsWith("Arrow");
-		}
-	}
+    while (
+      // don't cycle the elements more than once
+      steps &&
+      this.elements[nextIndex] &&
+      !this.isFocusableElement(this.elements[nextIndex])
+    ) {
+      nextIndex = (length + nextIndex + diff) % length;
+      steps -= 1;
+    }
+    this.currentIndex = nextIndex;
+  }
 
-	handleKeydown = (event: KeyboardEvent): void => {
-		if (!this.acceptsEventCode(event.code) || event.defaultPrevented) {
-			return;
-		}
-		let diff = 0;
-		this.prevIndex = this.currentIndex;
-		switch (event.code) {
-			case "ArrowRight":
-				diff += 1;
-				break;
-			case "ArrowDown":
-				diff += this.direction === "grid" ? this.directionLength : 1;
-				break;
-			case "ArrowLeft":
-				diff -= 1;
-				break;
-			case "ArrowUp":
-				diff -= this.direction === "grid" ? this.directionLength : 1;
-				break;
-			case "End":
-				this.currentIndex = 0;
-				diff -= 1;
-				break;
-			case "Home":
-				this.currentIndex = this.elements.length - 1;
-				diff += 1;
-				break;
-		}
-		event.preventDefault();
-		if (this.direction === "grid" && this.currentIndex + diff < 0) {
-			this.currentIndex = 0;
-		} else if (
-			this.direction === "grid" &&
-			this.currentIndex + diff > this.elements.length - 1
-		) {
-			this.currentIndex = this.elements.length - 1;
-		} else {
-			this.setCurrentIndexCircularly(diff);
-		}
-		// To allow the `focusInIndex` to be calculated with the "after" state of the keyboard interaction
-		// do `elementEnterAction` _before_ focusing the next element.
-		this.elementEnterAction(this.elements[this.currentIndex]);
-		this.focus();
-	};
+  hostContainsFocus(): void {
+    this.host.addEventListener("focusout", this.handleFocusout);
+    this.host.addEventListener("keydown", this.handleKeydown);
+    this.focused = true;
+  }
 
-	manage(): void {
-		this.addEventListeners();
-	}
+  hostNoLongerContainsFocus(): void {
+    this.host.addEventListener("focusin", this.handleFocusin);
+    this.host.removeEventListener("focusout", this.handleFocusout);
+    this.host.removeEventListener("keydown", this.handleKeydown);
+    this.focused = false;
+  }
 
-	unmanage(): void {
-		this.removeEventListeners();
-	}
+  isRelatedTargetOrContainAnElement(event: FocusEvent): boolean {
+    const relatedTarget = event.relatedTarget as null | Element;
 
-	addEventListeners(): void {
-		this.host.addEventListener("focusin", this.handleFocusin);
-		this.host.addEventListener("click", this.handleClick);
-	}
+    const isRelatedTargetAnElement = this.elements.includes(relatedTarget as T);
+    const isRelatedTargetContainedWithinElements = this.elements.some((el) =>
+      el.contains(relatedTarget),
+    );
 
-	removeEventListeners(): void {
-		this.host.removeEventListener("focusin", this.handleFocusin);
-		this.host.removeEventListener("focusout", this.handleFocusout);
-		this.host.removeEventListener("keydown", this.handleKeydown);
-		this.host.removeEventListener("click", this.handleClick);
-	}
+    return !(
+      isRelatedTargetAnElement || isRelatedTargetContainedWithinElements
+    );
+  }
 
-	hostConnected(): void {
-		this.recentlyConnected = true;
-		this.addEventListeners();
-	}
+  handleFocusin = (event: FocusEvent): void => {
+    if (!this.isEventWithinListenerScope(event)) {
+      return;
+    }
 
-	hostDisconnected(): void {
-		this.mutationObserver.disconnect();
-		this.removeEventListeners();
-	}
+    const path = event.composedPath() as T[];
+    let targetIndex = -1;
 
-	hostUpdated(): void {
-		if (this.recentlyConnected) {
-			this.recentlyConnected = false;
-			this.elements.forEach((element) => {
-				this.mutationObserver.observe(element, {
-					attributes: true,
-				});
-			});
-		}
-	}
+    path.find((el) => {
+      targetIndex = this.elements.indexOf(el);
+
+      return targetIndex !== -1;
+    });
+    this.prevIndex = this.currentIndex;
+    this.currentIndex = targetIndex > -1 ? targetIndex : this.currentIndex;
+
+    if (this.isRelatedTargetOrContainAnElement(event)) {
+      this.hostContainsFocus();
+    }
+  };
+
+  /**
+   * handleClick - Finds the element that was clicked and sets the tabindex to 0
+   * @returns void
+   */
+  handleClick = (): void => {
+    // Manually set the tabindex to 0 for the current element on receiving focus (from keyboard or mouse)
+    const elements = this.elements;
+
+    if (!elements.length) {
+      return;
+    }
+
+    let focusElement = elements[this.currentIndex];
+
+    if (this.currentIndex < 0) {
+      return;
+    }
+
+    if (!focusElement || !this.isFocusableElement(focusElement)) {
+      this.setCurrentIndexCircularly(1);
+      focusElement = elements[this.currentIndex];
+    }
+
+    if (focusElement && this.isFocusableElement(focusElement)) {
+      elements[this.prevIndex]?.setAttribute("tabindex", "-1");
+      focusElement.setAttribute("tabindex", "0");
+    }
+  };
+
+  handleFocusout = (event: FocusEvent): void => {
+    if (this.isRelatedTargetOrContainAnElement(event)) {
+      this.hostNoLongerContainsFocus();
+    }
+  };
+
+  acceptsEventCode(code: string): boolean {
+    if (code === "End" || code === "Home") {
+      return true;
+    }
+
+    switch (this.direction) {
+      case "horizontal":
+        return code === "ArrowLeft" || code === "ArrowRight";
+      case "vertical":
+        return code === "ArrowUp" || code === "ArrowDown";
+      case "both":
+      case "grid":
+        return code.startsWith("Arrow");
+    }
+  }
+
+  handleKeydown = (event: KeyboardEvent): void => {
+    if (!this.acceptsEventCode(event.code) || event.defaultPrevented) {
+      return;
+    }
+
+    let diff = 0;
+
+    this.prevIndex = this.currentIndex;
+
+    switch (event.code) {
+      case "ArrowRight":
+        diff += 1;
+        break;
+      case "ArrowDown":
+        diff += this.direction === "grid" ? this.directionLength : 1;
+        break;
+      case "ArrowLeft":
+        diff -= 1;
+        break;
+      case "ArrowUp":
+        diff -= this.direction === "grid" ? this.directionLength : 1;
+        break;
+      case "End":
+        this.currentIndex = 0;
+        diff -= 1;
+        break;
+      case "Home":
+        this.currentIndex = this.elements.length - 1;
+        diff += 1;
+        break;
+    }
+
+    event.preventDefault();
+
+    if (this.direction === "grid" && this.currentIndex + diff < 0) {
+      this.currentIndex = 0;
+    } else if (
+      this.direction === "grid" &&
+      this.currentIndex + diff > this.elements.length - 1
+    ) {
+      this.currentIndex = this.elements.length - 1;
+    } else {
+      this.setCurrentIndexCircularly(diff);
+    }
+
+    // To allow the `focusInIndex` to be calculated with the "after" state of the keyboard interaction
+    // do `elementEnterAction` _before_ focusing the next element.
+    this.elementEnterAction(this.elements[this.currentIndex]);
+    this.focus();
+  };
+
+  manage(): void {
+    this.addEventListeners();
+  }
+
+  unmanage(): void {
+    this.removeEventListeners();
+  }
+
+  addEventListeners(): void {
+    this.host.addEventListener("focusin", this.handleFocusin);
+    this.host.addEventListener("click", this.handleClick);
+  }
+
+  removeEventListeners(): void {
+    this.host.removeEventListener("focusin", this.handleFocusin);
+    this.host.removeEventListener("focusout", this.handleFocusout);
+    this.host.removeEventListener("keydown", this.handleKeydown);
+    this.host.removeEventListener("click", this.handleClick);
+  }
+
+  hostConnected(): void {
+    this.recentlyConnected = true;
+    this.addEventListeners();
+  }
+
+  hostDisconnected(): void {
+    this.mutationObserver.disconnect();
+    this.removeEventListeners();
+  }
+
+  hostUpdated(): void {
+    if (this.recentlyConnected) {
+      this.recentlyConnected = false;
+      this.elements.forEach((element) => {
+        this.mutationObserver.observe(element, {
+          attributes: true,
+        });
+      });
+    }
+  }
 }

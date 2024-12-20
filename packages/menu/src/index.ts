@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './Menu.js';
-export * from './MenuDivider.js';
-export * from './MenuGroup.js';
-export * from './MenuItem.js';
+export * from "./Menu.js";
+export * from "./MenuDivider.js";
+export * from "./MenuGroup.js";
+export * from "./MenuItem.js";

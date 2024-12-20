@@ -10,10 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/number-field/sp-number-field.js';
-import { html } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/number-field/sp-number-field.js";
+import { html } from "lit";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
-measureFixtureCreation(html`
-    <sp-number-field></sp-number-field>
-`);
+measureFixtureCreation(html` <sp-number-field></sp-number-field> `);

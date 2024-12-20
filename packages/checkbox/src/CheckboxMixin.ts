@@ -11,84 +11,84 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    ReactiveElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
+  html,
+  ReactiveElement,
+  TemplateResult,
+} from "@spectrum-web-components/base";
 import {
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+  property,
+  query,
+} from "@spectrum-web-components/base/src/decorators.js";
+import { ifDefined } from "@spectrum-web-components/base/src/directives.js";
 
 type Constructor<T = Record<string, unknown>> = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    new (...args: any[]): T;
-    prototype: T;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  new (...args: any[]): T;
+  prototype: T;
 };
 
 export interface CheckboxElement {
-    checked: boolean;
-    handleChange(): void;
-    inputElement: HTMLInputElement;
-    name?: string;
-    readonly?: boolean;
+  checked: boolean;
+  handleChange(): void;
+  inputElement: HTMLInputElement;
+  name?: string;
+  readonly?: boolean;
 }
 
 /**
  *
  */
 export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
-    constructor: T
+  constructor: T,
 ): T & Constructor<CheckboxElement> {
-    class MixedElement extends constructor {
-        @property({ type: Boolean, reflect: true })
-        public checked = false;
+  class MixedElement extends constructor {
+    @property({ type: Boolean, reflect: true })
+    public checked = false;
 
-        @property({ type: String, reflect: true })
-        public name: string | undefined;
+    @property({ type: String, reflect: true })
+    public name: string | undefined;
 
-        @property({ type: Boolean, reflect: true })
-        public readonly = false;
+    @property({ type: Boolean, reflect: true })
+    public readonly = false;
 
-        @query('#input')
-        inputElement!: HTMLInputElement;
+    @query("#input")
+    inputElement!: HTMLInputElement;
 
-        public handleChange(): void {
-            if (this.readonly) {
-                this.inputElement.checked = this.checked;
+    public handleChange(): void {
+      if (this.readonly) {
+        this.inputElement.checked = this.checked;
 
-                return;
-            }
+        return;
+      }
 
-            this.checked = this.inputElement.checked;
+      this.checked = this.inputElement.checked;
 
-            const changeEvent = new CustomEvent('change', {
-                bubbles: true,
-                cancelable: true,
-                composed: true,
-            });
-            const applyDefault = this.dispatchEvent(changeEvent);
+      const changeEvent = new CustomEvent("change", {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+      });
+      const applyDefault = this.dispatchEvent(changeEvent);
 
-            if (!applyDefault) {
-                this.checked = !this.inputElement.checked;
-                this.inputElement.checked = this.checked;
-            }
-        }
-
-        protected render(): TemplateResult {
-            return html`
-                <input
-                    id="input"
-                    name=${ifDefined(this.name || undefined)}
-                    type="checkbox"
-                    .checked=${this.checked}
-                    ?disabled=${this.readonly}
-                    @change=${this.handleChange}
-                />
-            `;
-        }
+      if (!applyDefault) {
+        this.checked = !this.inputElement.checked;
+        this.inputElement.checked = this.checked;
+      }
     }
 
-    return MixedElement;
+    protected render(): TemplateResult {
+      return html`
+        <input
+          id="input"
+          name=${ifDefined(this.name || undefined)}
+          type="checkbox"
+          .checked=${this.checked}
+          ?disabled=${this.readonly}
+          @change=${this.handleChange}
+        />
+      `;
+    }
+  }
+
+  return MixedElement;
 }

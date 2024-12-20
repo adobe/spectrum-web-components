@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Picker } from './src/Picker.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Picker } from "./src/Picker.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-picker', Picker);
+defineElement("sp-picker", Picker);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-picker': Picker;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-picker": Picker;
+  }
 }

@@ -10,100 +10,90 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from "@open-wc/testing";
 
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
-import { ColorHandle } from '@spectrum-web-components/color-handle';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import "@spectrum-web-components/color-handle/sp-color-handle.js";
+import { ColorHandle } from "@spectrum-web-components/color-handle";
+import { testForLitDevWarnings } from "../../../test/testing-helpers.js";
 
-describe('ColorHandle', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<ColorHandle>(
-                html`
-                    <sp-color-handle></sp-color-handle>
-                `
-            )
+describe("ColorHandle", () => {
+  testForLitDevWarnings(
+    async () =>
+      await fixture<ColorHandle>(html` <sp-color-handle></sp-color-handle> `),
+  );
+  it("loads default color-handle accessibly", async () => {
+    const el = await fixture<ColorHandle>(html`
+      <sp-color-handle></sp-color-handle>
+    `);
+
+    await elementUpdated(el);
+
+    await expect(el).to.be.accessible();
+  });
+  it("loads [open] color-handle accessibly", async () => {
+    const el = await fixture<ColorHandle>(html`
+      <sp-color-handle open></sp-color-handle>
+    `);
+
+    await elementUpdated(el);
+
+    await expect(el).to.be.accessible();
+  });
+  it("opens/closes on pointerdown/up/cancel", async () => {
+    const el = await fixture<ColorHandle>(html`
+      <sp-color-handle></sp-color-handle>
+    `);
+
+    await elementUpdated(el);
+    el.setPointerCapture = () => {
+      return;
+    };
+    el.releasePointerCapture = () => {
+      return;
+    };
+
+    el.dispatchEvent(
+      new PointerEvent("pointerdown", {
+        pointerId: 1,
+        pointerType: "touch",
+      }),
     );
-    it('loads default color-handle accessibly', async () => {
-        const el = await fixture<ColorHandle>(
-            html`
-                <sp-color-handle></sp-color-handle>
-            `
-        );
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
-    it('loads [open] color-handle accessibly', async () => {
-        const el = await fixture<ColorHandle>(
-            html`
-                <sp-color-handle open></sp-color-handle>
-            `
-        );
+    expect(el.open).to.be.true;
 
-        await elementUpdated(el);
+    el.dispatchEvent(
+      new PointerEvent("pointerup", {
+        pointerId: 1,
+        pointerType: "touch",
+      }),
+    );
 
-        await expect(el).to.be.accessible();
-    });
-    it('opens/closes on pointerdown/up/cancel', async () => {
-        const el = await fixture<ColorHandle>(
-            html`
-                <sp-color-handle></sp-color-handle>
-            `
-        );
+    await elementUpdated(el);
 
-        await elementUpdated(el);
-        el.setPointerCapture = () => {
-            return;
-        };
-        el.releasePointerCapture = () => {
-            return;
-        };
+    expect(el.open).to.be.false;
 
-        el.dispatchEvent(
-            new PointerEvent('pointerdown', {
-                pointerId: 1,
-                pointerType: 'touch',
-            })
-        );
+    el.dispatchEvent(
+      new PointerEvent("pointerdown", {
+        pointerId: 1,
+        pointerType: "touch",
+      }),
+    );
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        expect(el.open).to.be.true;
+    expect(el.open).to.be.true;
 
-        el.dispatchEvent(
-            new PointerEvent('pointerup', {
-                pointerId: 1,
-                pointerType: 'touch',
-            })
-        );
+    el.dispatchEvent(
+      new PointerEvent("pointercancel", {
+        pointerId: 1,
+        pointerType: "touch",
+      }),
+    );
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        expect(el.open).to.be.false;
-
-        el.dispatchEvent(
-            new PointerEvent('pointerdown', {
-                pointerId: 1,
-                pointerType: 'touch',
-            })
-        );
-
-        await elementUpdated(el);
-
-        expect(el.open).to.be.true;
-
-        el.dispatchEvent(
-            new PointerEvent('pointercancel', {
-                pointerId: 1,
-                pointerType: 'touch',
-            })
-        );
-
-        await elementUpdated(el);
-
-        expect(el.open).to.be.false;
-    });
+    expect(el.open).to.be.false;
+  });
 });

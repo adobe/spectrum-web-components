@@ -10,51 +10,35 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from "@spectrum-web-components/base";
 
-import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
+import "@spectrum-web-components/progress-bar/sp-progress-bar.js";
 
 export default {
-    title: 'Progress Bar/Sizes',
-    component: 'sp-progress-bar',
+  title: "Progress Bar/Sizes",
+  component: "sp-progress-bar",
 };
 
 export const s = (): TemplateResult => {
-    return html`
-        <sp-progress-bar
-            label="Loading"
-            progress="50"
-            size="s"
-        ></sp-progress-bar>
-    `;
+  return html`
+    <sp-progress-bar label="Loading" progress="50" size="s"></sp-progress-bar>
+  `;
 };
 
 export const m = (): TemplateResult => {
-    return html`
-        <sp-progress-bar
-            label="Loading"
-            progress="50"
-            size="m"
-        ></sp-progress-bar>
-    `;
+  return html`
+    <sp-progress-bar label="Loading" progress="50" size="m"></sp-progress-bar>
+  `;
 };
 
 export const l = (): TemplateResult => {
-    return html`
-        <sp-progress-bar
-            label="Loading"
-            progress="50"
-            size="l"
-        ></sp-progress-bar>
-    `;
+  return html`
+    <sp-progress-bar label="Loading" progress="50" size="l"></sp-progress-bar>
+  `;
 };
 
 export const XL = (): TemplateResult => {
-    return html`
-        <sp-progress-bar
-            label="Loading"
-            progress="50"
-            size="xl"
-        ></sp-progress-bar>
-    `;
+  return html`
+    <sp-progress-bar label="Loading" progress="50" size="xl"></sp-progress-bar>
+  `;
 };

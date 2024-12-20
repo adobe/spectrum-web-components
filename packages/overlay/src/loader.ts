@@ -11,25 +11,25 @@ governing permissions and limitations under the License.
 */
 
 import type {
-    OverlayOptions,
-    OverlayOptionsV1,
-    TriggerInteractionsV1,
-} from './overlay-types.js';
-import { Overlay } from './Overlay.js';
+  OverlayOptions,
+  OverlayOptionsV1,
+  TriggerInteractionsV1,
+} from "./overlay-types.js";
+import { Overlay } from "./Overlay.js";
 
 // Re-export Overlay.open and openOverlay to persist functionality from before 0.37.0.
 // Wrap it in a method (which needs duplicate argument typings) instead of exporting
 // the static member directly to ensure `this` is bound correctly therein.
 export async function openOverlay(
-    trigger: HTMLElement,
-    interaction: TriggerInteractionsV1,
-    content: HTMLElement,
-    optionsV1: OverlayOptionsV1
+  trigger: HTMLElement,
+  interaction: TriggerInteractionsV1,
+  content: HTMLElement,
+  optionsV1: OverlayOptionsV1,
 ): Promise<() => void>;
 
 export async function openOverlay(
-    content: HTMLElement,
-    options?: OverlayOptions
+  content: HTMLElement,
+  options?: OverlayOptions,
 ): Promise<Overlay>;
 
 /**
@@ -41,15 +41,15 @@ export async function openOverlay(
  * @property {OverlayOptionsV1} optionsV1 - The overlay options for version 1.
  */
 export async function openOverlay(
-    triggerOrContent: HTMLElement,
-    interactionOrOptions: TriggerInteractionsV1 | OverlayOptions | undefined,
-    content?: HTMLElement,
-    optionsV1?: OverlayOptionsV1
+  triggerOrContent: HTMLElement,
+  interactionOrOptions: TriggerInteractionsV1 | OverlayOptions | undefined,
+  content?: HTMLElement,
+  optionsV1?: OverlayOptionsV1,
 ): Promise<Overlay | (() => void)> {
-    return Overlay.open(
-        triggerOrContent,
-        interactionOrOptions as TriggerInteractionsV1,
-        content as HTMLElement,
-        optionsV1 as OverlayOptionsV1
-    );
+  return Overlay.open(
+    triggerOrContent,
+    interactionOrOptions as TriggerInteractionsV1,
+    content as HTMLElement,
+    optionsV1 as OverlayOptionsV1,
+  );
 }

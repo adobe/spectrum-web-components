@@ -10,56 +10,56 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { TriggerInteractions } from './overlay-types.js';
+import type { TriggerInteractions } from "./overlay-types.js";
 
 export class BeforetoggleClosedEvent extends Event {
-    currentState = 'open';
-    newState = 'closed';
-    constructor() {
-        super('beforetoggle', {
-            bubbles: false,
-            composed: false,
-        });
-    }
+  currentState = "open";
+  newState = "closed";
+  constructor() {
+    super("beforetoggle", {
+      bubbles: false,
+      composed: false,
+    });
+  }
 }
 
 export class BeforetoggleOpenEvent extends Event {
-    currentState = 'closed';
-    newState = 'open';
-    constructor() {
-        super('beforetoggle', {
-            bubbles: false,
-            composed: false,
-        });
-    }
+  currentState = "closed";
+  newState = "open";
+  constructor() {
+    super("beforetoggle", {
+      bubbles: false,
+      composed: false,
+    });
+  }
 }
 
 export class OverlayStateEvent extends Event {
-    detail!: {
-        interaction: string;
-        reason?: 'external-click';
-    };
+  detail!: {
+    interaction: string;
+    reason?: "external-click";
+  };
 
-    constructor(
-        type: string,
-        public overlay: HTMLElement,
-        {
-            publish,
-            interaction,
-            reason,
-        }: {
-            publish?: boolean;
-            interaction: TriggerInteractions;
-            reason?: 'external-click';
-        }
-    ) {
-        super(type, {
-            bubbles: publish,
-            composed: publish,
-        });
-        this.detail = {
-            interaction,
-            reason,
-        };
-    }
+  constructor(
+    type: string,
+    public overlay: HTMLElement,
+    {
+      publish,
+      interaction,
+      reason,
+    }: {
+      publish?: boolean;
+      interaction: TriggerInteractions;
+      reason?: "external-click";
+    },
+  ) {
+    super(type, {
+      bubbles: publish,
+      composed: publish,
+    });
+    this.detail = {
+      interaction,
+      reason,
+    };
+  }
 }

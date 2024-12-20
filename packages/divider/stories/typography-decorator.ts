@@ -10,33 +10,33 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    LitElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
+  CSSResultArray,
+  html,
+  LitElement,
+  TemplateResult,
+} from "@spectrum-web-components/base";
 import {
-    customElement,
-    property,
-} from '@spectrum-web-components/base/src/decorators.js';
+  customElement,
+  property,
+} from "@spectrum-web-components/base/src/decorators.js";
 
-import styles from '@spectrum-web-components/theme/src/typography.css.js';
+import styles from "@spectrum-web-components/theme/src/typography.css.js";
 
 /**
  * @element typography-decorator
  */
-@customElement('typography-decorator')
+@customElement("typography-decorator")
 export class Typography extends LitElement {
-    static override styles: CSSResultArray = [styles];
+  static override styles: CSSResultArray = [styles];
 
-    @property({ attribute: false })
-    public story?: TemplateResult;
+  @property({ attribute: false })
+  public story?: TemplateResult;
 
-    protected override render(): TemplateResult {
-        if (!this.story) return html``;
-
-        return html`
-            <div class="spectrum-Typography">${this.story}</div>
-        `;
+  protected override render(): TemplateResult {
+    if (!this.story) {
+      return html``;
     }
+
+    return html` <div class="spectrum-Typography">${this.story}</div> `;
+  }
 }

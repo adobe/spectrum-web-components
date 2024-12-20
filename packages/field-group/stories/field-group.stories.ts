@@ -10,37 +10,37 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from "@spectrum-web-components/base";
 
-import '@spectrum-web-components/field-group/sp-field-group.js';
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '@spectrum-web-components/radio/sp-radio.js';
+import "@spectrum-web-components/field-group/sp-field-group.js";
+import "@spectrum-web-components/checkbox/sp-checkbox.js";
+import "@spectrum-web-components/radio/sp-radio.js";
 
 export default {
-    title: 'Field Group',
-    component: 'sp-field-group',
+  title: "Field Group",
+  component: "sp-field-group",
 };
 
 export const horizontal = (): TemplateResult => {
-    return html`
-        <sp-field-group horizontal>
-            <sp-checkbox>Checkbox 1</sp-checkbox>
-            <sp-checkbox>Checkbox 2</sp-checkbox>
-            <sp-checkbox>Checkbox 3</sp-checkbox>
-            <sp-checkbox>Checkbox 4</sp-checkbox>
-            <sp-checkbox>Checkbox 5</sp-checkbox>
-        </sp-field-group>
-    `;
+  return html`
+    <sp-field-group horizontal>
+      <sp-checkbox>Checkbox 1</sp-checkbox>
+      <sp-checkbox>Checkbox 2</sp-checkbox>
+      <sp-checkbox>Checkbox 3</sp-checkbox>
+      <sp-checkbox>Checkbox 4</sp-checkbox>
+      <sp-checkbox>Checkbox 5</sp-checkbox>
+    </sp-field-group>
+  `;
 };
 
 export const vertical = (): TemplateResult => {
-    return html`
-        <sp-field-group vertical>
-            <sp-checkbox>Checkbox 1</sp-checkbox>
-            <sp-checkbox>Checkbox 2</sp-checkbox>
-            <sp-checkbox>Checkbox 3</sp-checkbox>
-            <sp-checkbox>Checkbox 4</sp-checkbox>
-            <sp-checkbox>Checkbox 5</sp-checkbox>
-        </sp-field-group>
-    `;
+  return html`
+    <sp-field-group vertical>
+      <sp-checkbox>Checkbox 1</sp-checkbox>
+      <sp-checkbox>Checkbox 2</sp-checkbox>
+      <sp-checkbox>Checkbox 3</sp-checkbox>
+      <sp-checkbox>Checkbox 4</sp-checkbox>
+      <sp-checkbox>Checkbox 5</sp-checkbox>
+    </sp-field-group>
+  `;
 };

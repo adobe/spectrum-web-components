@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Tooltip } from './src/Tooltip.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Tooltip } from "./src/Tooltip.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-tooltip', Tooltip);
+defineElement("sp-tooltip", Tooltip);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-tooltip': Tooltip;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-tooltip": Tooltip;
+  }
 }

@@ -14,86 +14,91 @@ import { ReactiveElement } from "@spectrum-web-components/base";
 const slotContentIsPresent = Symbol("slotContentIsPresent");
 
 type Constructor<T = Record<string, unknown>> = {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	new (...args: any[]): T;
-	prototype: T;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  new (...args: any[]): T;
+  prototype: T;
 };
 
 export interface SlotPresenceObservingInterface {
-	slotContentIsPresent: boolean;
-	getSlotContentPresence(selector: string): boolean;
-	managePresenceObservedSlot(): void;
+  slotContentIsPresent: boolean;
+  getSlotContentPresence(selector: string): boolean;
+  managePresenceObservedSlot(): void;
 }
 
 export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
-	constructor: T,
-	lightDomSelector: string | string[],
+  constructor: T,
+  lightDomSelector: string | string[],
 ): T & Constructor<SlotPresenceObservingInterface> {
-	const lightDomSelectors = Array.isArray(lightDomSelector)
-		? lightDomSelector
-		: [lightDomSelector];
-	class SlotPresenceObservingElement
-		extends constructor
-		implements SlotPresenceObservingInterface
-	{
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		constructor(...args: any[]) {
-			super(args);
+  const lightDomSelectors = Array.isArray(lightDomSelector)
+    ? lightDomSelector
+    : [lightDomSelector];
 
-			new MutationController(this, {
-				config: {
-					childList: true,
-					subtree: true,
-				},
-				callback: () => {
-					this.managePresenceObservedSlot();
-				},
-			});
+  class SlotPresenceObservingElement
+    extends constructor
+    implements SlotPresenceObservingInterface
+  {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    constructor(...args: any[]) {
+      super(args);
 
-			this.managePresenceObservedSlot();
-		}
+      new MutationController(this, {
+        config: {
+          childList: true,
+          subtree: true,
+        },
+        callback: () => {
+          this.managePresenceObservedSlot();
+        },
+      });
 
-		/**
-		 *  @private
-		 */
-		public get slotContentIsPresent(): boolean {
-			if (lightDomSelectors.length === 1) {
-				return this[slotContentIsPresent].get(lightDomSelectors[0]) || false;
-			} else {
-				throw new Error(
-					"Multiple selectors provided to `ObserveSlotPresence` use `getSlotContentPresence(selector: string)` instead.",
-				);
-			}
-		}
-		private [slotContentIsPresent]: Map<string, boolean> = new Map();
+      this.managePresenceObservedSlot();
+    }
 
-		public getSlotContentPresence(selector: string): boolean {
-			if (this[slotContentIsPresent].has(selector)) {
-				return this[slotContentIsPresent].get(selector) || false;
-			}
-			throw new Error(
-				`The provided selector \`${selector}\` is not being observed.`,
-			);
-		}
+    /**
+     *  @private
+     */
+    public get slotContentIsPresent(): boolean {
+      if (lightDomSelectors.length === 1) {
+        return this[slotContentIsPresent].get(lightDomSelectors[0]) || false;
+      } else {
+        throw new Error(
+          "Multiple selectors provided to `ObserveSlotPresence` use `getSlotContentPresence(selector: string)` instead.",
+        );
+      }
+    }
+    private [slotContentIsPresent]: Map<string, boolean> = new Map();
 
-		public managePresenceObservedSlot = (): void => {
-			let changes = false;
-			lightDomSelectors.forEach((selector) => {
-				const nextValue = !!this.querySelector(`:scope > ${selector}`);
-				const previousValue = this[slotContentIsPresent].get(selector) || false;
-				changes = changes || previousValue !== nextValue;
-				this[slotContentIsPresent].set(
-					selector,
-					!!this.querySelector(`:scope > ${selector}`),
-				);
-			});
-			if (changes) {
-				this.updateComplete.then(() => {
-					this.requestUpdate();
-				});
-			}
-		};
-	}
+    public getSlotContentPresence(selector: string): boolean {
+      if (this[slotContentIsPresent].has(selector)) {
+        return this[slotContentIsPresent].get(selector) || false;
+      }
 
-	return SlotPresenceObservingElement;
+      throw new Error(
+        `The provided selector \`${selector}\` is not being observed.`,
+      );
+    }
+
+    public managePresenceObservedSlot = (): void => {
+      let changes = false;
+
+      lightDomSelectors.forEach((selector) => {
+        const nextValue = !!this.querySelector(`:scope > ${selector}`);
+        const previousValue = this[slotContentIsPresent].get(selector) || false;
+
+        changes = changes || previousValue !== nextValue;
+        this[slotContentIsPresent].set(
+          selector,
+          !!this.querySelector(`:scope > ${selector}`),
+        );
+      });
+
+      if (changes) {
+        this.updateComplete.then(() => {
+          this.requestUpdate();
+        });
+      }
+    };
+  }
+
+  return SlotPresenceObservingElement;
 }

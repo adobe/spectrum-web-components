@@ -10,61 +10,58 @@ governing permissions and limitations under the License.
 */
 
 import {
-    InteractionController,
-    InteractionTypes,
-} from './InteractionController.js';
-import { isWebKit } from '@spectrum-web-components/shared';
+  InteractionController,
+  InteractionTypes,
+} from "./InteractionController.js";
+import { isWebKit } from "@spectrum-web-components/shared";
 
-export const SAFARI_FOCUS_RING_CLASS = 'remove-focus-ring-safari-hack';
+export const SAFARI_FOCUS_RING_CLASS = "remove-focus-ring-safari-hack";
 
 export class MobileController extends InteractionController {
-    override type = InteractionTypes.mobile;
+  override type = InteractionTypes.mobile;
 
-    handleClick(): void {
-        if (this.preventNextToggle == 'no') {
-            this.open = !this.open;
-        }
-
-        this.preventNextToggle = 'no';
+  handleClick(): void {
+    if (this.preventNextToggle == "no") {
+      this.open = !this.open;
     }
 
-    public override handlePointerdown(): void {
-        this.preventNextToggle = this.open ? 'yes' : 'no';
+    this.preventNextToggle = "no";
+  }
 
-        if (isWebKit()) {
-            this.target.classList.add(SAFARI_FOCUS_RING_CLASS);
-        }
+  public override handlePointerdown(): void {
+    this.preventNextToggle = this.open ? "yes" : "no";
+
+    if (isWebKit()) {
+      this.target.classList.add(SAFARI_FOCUS_RING_CLASS);
+    }
+  }
+
+  private handleFocusOut(): void {
+    if (this.host.open) {
+      return;
     }
 
-    private handleFocusOut(): void {
-        if (this.host.open) {
-            return;
-        }
-
-        if (
-            isWebKit() &&
-            this.target.classList.contains(SAFARI_FOCUS_RING_CLASS)
-        ) {
-            this.target.classList.remove(SAFARI_FOCUS_RING_CLASS);
-        }
+    if (isWebKit() && this.target.classList.contains(SAFARI_FOCUS_RING_CLASS)) {
+      this.target.classList.remove(SAFARI_FOCUS_RING_CLASS);
     }
+  }
 
-    override init(): void {
-        // Clean up listeners if they've already been bound
-        this.abortController?.abort();
-        this.abortController = new AbortController();
-        const { signal } = this.abortController;
+  override init(): void {
+    // Clean up listeners if they've already been bound
+    this.abortController?.abort();
+    this.abortController = new AbortController();
+    const { signal } = this.abortController;
 
-        this.target.addEventListener('click', () => this.handleClick(), {
-            signal,
-        });
-        this.target.addEventListener(
-            'pointerdown',
-            () => this.handlePointerdown(),
-            { signal }
-        );
-        this.target.addEventListener('focusout', () => this.handleFocusOut(), {
-            signal,
-        });
-    }
+    this.target.addEventListener("click", () => this.handleClick(), {
+      signal,
+    });
+    this.target.addEventListener(
+      "pointerdown",
+      () => this.handlePointerdown(),
+      { signal },
+    );
+    this.target.addEventListener("focusout", () => this.handleFocusOut(), {
+      signal,
+    });
+  }
 }

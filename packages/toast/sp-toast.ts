@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Toast } from './src/Toast.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Toast } from "./src/Toast.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-toast', Toast);
+defineElement("sp-toast", Toast);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-toast': Toast;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-toast": Toast;
+  }
 }

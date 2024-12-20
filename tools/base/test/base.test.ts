@@ -8,32 +8,28 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { SpectrumElement } from '@spectrum-web-components/base';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { version } from '@spectrum-web-components/base/src/version.js';
+import { SpectrumElement } from "@spectrum-web-components/base";
+import { elementUpdated, expect, fixture, html } from "@open-wc/testing";
+import { version } from "@spectrum-web-components/base/src/version.js";
 
 class DirElement extends SpectrumElement {}
 
-customElements.define('dir-element', DirElement);
+customElements.define("dir-element", DirElement);
 
-describe('Base', () => {
-    after(() => {
-        document.dir = '';
-    });
-    it('sets `dir` from `document`', async () => {
-        document.dir = 'rtl';
-        const el = await fixture<DirElement>(
-            html`
-                <dir-element></dir-element>
-            `
-        );
+describe("Base", () => {
+  after(() => {
+    document.dir = "";
+  });
+  it("sets `dir` from `document`", async () => {
+    document.dir = "rtl";
+    const el = await fixture<DirElement>(html` <dir-element></dir-element> `);
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        expect(el.dir).to.equal('rtl');
-        expect(el.isLTR).to.be.false;
-    });
-    it('has a static VERSION property', () => {
-        expect(DirElement.VERSION).to.equal(version);
-    });
+    expect(el.dir).to.equal("rtl");
+    expect(el.isLTR).to.be.false;
+  });
+  it("has a static VERSION property", () => {
+    expect(DirElement.VERSION).to.equal(version);
+  });
 });

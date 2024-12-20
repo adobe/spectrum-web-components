@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import darkStyles from '../src/spectrum-two/theme-dark-core-tokens.css.js';
-import { Theme } from '../src/Theme.js';
-import '../src/spectrum-two/core-tokens.js';
+import darkStyles from "../src/spectrum-two/theme-dark-core-tokens.css.js";
+import { Theme } from "../src/Theme.js";
+import "../src/spectrum-two/core-tokens.js";
 
-Theme.registerThemeFragment('darkest-spectrum-two', 'color', darkStyles);
+Theme.registerThemeFragment("darkest-spectrum-two", "color", darkStyles);

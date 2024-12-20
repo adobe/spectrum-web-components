@@ -9,10 +9,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html } from '@open-wc/testing';
-import '@spectrum-web-components/underlay/sp-underlay.js';
-import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { html } from "@open-wc/testing";
+import "@spectrum-web-components/underlay/sp-underlay.js";
+import { testForMemoryLeaks } from "../../../test/testing-helpers.js";
 
-testForMemoryLeaks(html`
-    <sp-underlay></sp-underlay>
-`);
+testForMemoryLeaks(html` <sp-underlay></sp-underlay> `);

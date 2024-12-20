@@ -10,297 +10,288 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/toast/sp-toast.js';
-import { Toast, toastVariants } from '@spectrum-web-components/toast';
+import "@spectrum-web-components/toast/sp-toast.js";
+import { Toast, toastVariants } from "@spectrum-web-components/toast";
 import {
-    elementUpdated,
-    expect,
-    fixture,
-    html,
-    nextFrame,
-    waitUntil,
-} from '@open-wc/testing';
-import { CloseButton } from '@spectrum-web-components/button';
+  elementUpdated,
+  expect,
+  fixture,
+  html,
+  nextFrame,
+  waitUntil,
+} from "@open-wc/testing";
+import { CloseButton } from "@spectrum-web-components/button";
 import {
-    testForLitDevWarnings,
-    waitForPredicate,
-} from '../../../test/testing-helpers.js';
-import { spy } from 'sinon';
+  testForLitDevWarnings,
+  waitForPredicate,
+} from "../../../test/testing-helpers.js";
+import { spy } from "sinon";
 
 interface TestableToast {
-    _timeout: number;
-    countdownStart: number;
+  _timeout: number;
+  countdownStart: number;
 }
 
-describe('Toast', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<Toast>(html`
-                <sp-toast open>Help text.</sp-toast>
-            `)
-    );
-    it('loads', async () => {
-        const el = await fixture<Toast>(html`
-            <sp-toast open>Help text.</sp-toast>
-        `);
+describe("Toast", () => {
+  testForLitDevWarnings(
+    async () =>
+      await fixture<Toast>(html` <sp-toast open>Help text.</sp-toast> `),
+  );
+  it("loads", async () => {
+    const el = await fixture<Toast>(html`
+      <sp-toast open>Help text.</sp-toast>
+    `);
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
+    await expect(el).to.be.accessible();
+  });
+  toastVariants.map((variant) => {
+    it(`loads - [variant="${variant}"]`, async () => {
+      const el = await fixture<Toast>(html`
+        <sp-toast variant=${variant} open>
+          This toast is of the \`${variant}\` variant.
+        </sp-toast>
+      `);
+
+      await elementUpdated(el);
+
+      await expect(el).to.be.accessible();
     });
-    toastVariants.map((variant) => {
-        it(`loads - [variant="${variant}"]`, async () => {
-            const el = await fixture<Toast>(html`
-                <sp-toast variant=${variant} open>
-                    This toast is of the \`${variant}\` variant.
-                </sp-toast>
-            `);
+  });
+  it("loads - timeout", async () => {
+    const el = await fixture<Toast>(html`
+      <sp-toast timeout="100">Help text.</sp-toast>
+    `);
 
-            await elementUpdated(el);
+    await elementUpdated(el);
+    expect(el.open).to.be.false;
 
-            await expect(el).to.be.accessible();
-        });
-    });
-    it('loads - timeout', async () => {
-        const el = await fixture<Toast>(html`
-            <sp-toast timeout="100">Help text.</sp-toast>
-        `);
+    (el as unknown as TestableToast)._timeout = 100;
+    el.open = true;
+    await elementUpdated(el);
 
-        await elementUpdated(el);
-        expect(el.open).to.be.false;
+    await waitForPredicate(() => el.open === false);
+    expect(el.open).to.be.false;
+  });
+  it("`timeout` updates `countdownStart`", async () => {
+    const el = await fixture<Toast>(html`
+      <sp-toast timeout="100">Help text.</sp-toast>
+    `);
 
-        (el as unknown as TestableToast)._timeout = 100;
-        el.open = true;
-        await elementUpdated(el);
+    await elementUpdated(el);
+    expect(el.open).to.be.false;
 
-        await waitForPredicate(() => el.open === false);
-        expect(el.open).to.be.false;
-    });
-    it('`timeout` updates `countdownStart`', async () => {
-        const el = await fixture<Toast>(html`
-            <sp-toast timeout="100">Help text.</sp-toast>
-        `);
+    const testableEl = el as unknown as TestableToast;
 
-        await elementUpdated(el);
-        expect(el.open).to.be.false;
+    testableEl._timeout = 100;
+    el.open = true;
+    await elementUpdated(el);
 
-        const testableEl = el as unknown as TestableToast;
+    const firstStart = testableEl.countdownStart;
 
-        testableEl._timeout = 100;
-        el.open = true;
-        await elementUpdated(el);
+    await nextFrame();
+    await nextFrame();
+    await nextFrame();
 
-        const firstStart = testableEl.countdownStart;
+    el.timeout = 400;
 
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
+    await elementUpdated(el);
+    const secondStart = testableEl.countdownStart;
 
-        el.timeout = 400;
+    expect(secondStart).to.not.equal(firstStart);
 
-        await elementUpdated(el);
-        const secondStart = testableEl.countdownStart;
+    await nextFrame();
+    await nextFrame();
 
-        expect(secondStart).to.not.equal(firstStart);
+    el.timeout = 0;
 
-        await nextFrame();
-        await nextFrame();
+    await elementUpdated(el);
+    const thirdStart = testableEl.countdownStart;
 
-        el.timeout = 0;
+    expect(thirdStart).to.equal(0);
+  });
+  it("stops timeout on `focusin`", async () => {
+    const el = await fixture<Toast>(html`
+      <sp-toast timeout="100">Help text.</sp-toast>
+    `);
 
-        await elementUpdated(el);
-        const thirdStart = testableEl.countdownStart;
+    await elementUpdated(el);
 
-        expect(thirdStart).to.equal(0);
-    });
-    it('stops timeout on `focusin`', async () => {
-        const el = await fixture<Toast>(html`
-            <sp-toast timeout="100">Help text.</sp-toast>
-        `);
+    const testableEl = el as unknown as TestableToast;
 
-        await elementUpdated(el);
+    expect(el.open, "not open to start").to.be.false;
 
-        const testableEl = el as unknown as TestableToast;
+    el.open = true;
+    await elementUpdated(el);
+    await nextFrame();
 
-        expect(el.open, 'not open to start').to.be.false;
+    expect(testableEl.countdownStart, "initially not 0").to.not.equal(0);
 
-        el.open = true;
-        await elementUpdated(el);
-        await nextFrame();
+    testableEl._timeout = 100;
 
-        expect(testableEl.countdownStart, 'initially not 0').to.not.equal(0);
+    el.dispatchEvent(new FocusEvent("focusin"));
 
-        testableEl._timeout = 100;
+    await elementUpdated(el);
+    expect(testableEl.countdownStart, "0 after focusin").to.equal(0);
+    el.dispatchEvent(new FocusEvent("focusout"));
 
-        el.dispatchEvent(new FocusEvent('focusin'));
+    await elementUpdated(el);
+    await nextFrame();
+    expect(testableEl.countdownStart, "not 0 after focusout").to.not.equal(0);
 
-        await elementUpdated(el);
-        expect(testableEl.countdownStart, '0 after focusin').to.equal(0);
-        el.dispatchEvent(new FocusEvent('focusout'));
+    await waitUntil(() => el.open === false, "closes");
+    expect(el.open, "not open to end").to.be.false;
+  });
+  it("closes", async () => {
+    const el = await fixture<Toast>(html`
+      <sp-toast open>Help text.</sp-toast>
+    `);
 
-        await elementUpdated(el);
-        await nextFrame();
-        expect(testableEl.countdownStart, 'not 0 after focusout').to.not.equal(
-            0
-        );
+    await elementUpdated(el);
+    expect(el.open).to.be.true;
 
-        await waitUntil(() => el.open === false, 'closes');
-        expect(el.open, 'not open to end').to.be.false;
-    });
-    it('closes', async () => {
-        const el = await fixture<Toast>(html`
-            <sp-toast open>Help text.</sp-toast>
-        `);
+    const renderRoot = el.shadowRoot ? el.shadowRoot : el;
+    const closeButton = renderRoot.querySelector(
+      "sp-close-button",
+    ) as CloseButton;
 
-        await elementUpdated(el);
-        expect(el.open).to.be.true;
+    closeButton.click();
 
-        const renderRoot = el.shadowRoot ? el.shadowRoot : el;
-        const closeButton = renderRoot.querySelector(
-            'sp-close-button'
-        ) as CloseButton;
+    await elementUpdated(el);
+    expect(el.open).to.be.false;
+  });
+  it("`close` can be prevented", async () => {
+    const handleClose = (event: CustomEvent): void => event.preventDefault();
+    const el = await fixture<Toast>(html`
+      <sp-toast open timeout="100" @close=${handleClose}> Help text. </sp-toast>
+    `);
 
-        closeButton.click();
+    await elementUpdated(el);
+    expect(el.open).to.be.true;
 
-        await elementUpdated(el);
-        expect(el.open).to.be.false;
-    });
-    it('`close` can be prevented', async () => {
-        const handleClose = (event: CustomEvent): void =>
-            event.preventDefault();
-        const el = await fixture<Toast>(html`
-            <sp-toast open timeout="100" @close=${handleClose}>
-                Help text.
-            </sp-toast>
-        `);
+    const renderRoot = el.shadowRoot ? el.shadowRoot : el;
+    const closeButton = renderRoot.querySelector(
+      "sp-close-button",
+    ) as CloseButton;
 
-        await elementUpdated(el);
-        expect(el.open).to.be.true;
+    closeButton.click();
 
-        const renderRoot = el.shadowRoot ? el.shadowRoot : el;
-        const closeButton = renderRoot.querySelector(
-            'sp-close-button'
-        ) as CloseButton;
+    await elementUpdated(el);
+    expect(el.open).to.be.true;
+  });
+  it("can be a controlled element", async () => {
+    const closeSpy = spy();
+    const handleClose = (event: CustomEvent): void => {
+      event.preventDefault();
+      closeSpy();
+    };
+    const el = await fixture<Toast>(html`
+      <sp-toast open timeout="100" @close=${handleClose}> Help text. </sp-toast>
+    `);
 
-        closeButton.click();
+    await elementUpdated(el);
+    expect(el.open).to.be.true;
+    expect(closeSpy.callCount).to.equal(0);
 
-        await elementUpdated(el);
-        expect(el.open).to.be.true;
-    });
-    it('can be a controlled element', async () => {
-        const closeSpy = spy();
-        const handleClose = (event: CustomEvent): void => {
-            event.preventDefault();
-            closeSpy();
-        };
-        const el = await fixture<Toast>(html`
-            <sp-toast open timeout="100" @close=${handleClose}>
-                Help text.
-            </sp-toast>
-        `);
+    const renderRoot = el.shadowRoot ? el.shadowRoot : el;
+    const closeButton = renderRoot.querySelector(
+      "sp-close-button",
+    ) as CloseButton;
 
-        await elementUpdated(el);
-        expect(el.open).to.be.true;
-        expect(closeSpy.callCount).to.equal(0);
+    closeButton.click();
 
-        const renderRoot = el.shadowRoot ? el.shadowRoot : el;
-        const closeButton = renderRoot.querySelector(
-            'sp-close-button'
-        ) as CloseButton;
+    await elementUpdated(el);
+    expect(el.open).to.be.true;
+    expect(closeSpy.callCount).to.equal(1);
 
-        closeButton.click();
+    el.open = false;
+    await elementUpdated(el);
+    expect(el.open).to.be.false;
+    expect(closeSpy.callCount).to.equal(1);
+  });
+  it("validates variants", async () => {
+    const el = await fixture<Toast>(html`
+      <sp-toast variant="invalid" open>
+        This toast validates variants.
+      </sp-toast>
+    `);
 
-        await elementUpdated(el);
-        expect(el.open).to.be.true;
-        expect(closeSpy.callCount).to.equal(1);
+    await elementUpdated(el);
+    expect(el.variant).to.equal("");
 
-        el.open = false;
-        await elementUpdated(el);
-        expect(el.open).to.be.false;
-        expect(closeSpy.callCount).to.equal(1);
-    });
-    it('validates variants', async () => {
-        const el = await fixture<Toast>(html`
-            <sp-toast variant="invalid" open>
-                This toast validates variants.
-            </sp-toast>
-        `);
+    el.variant = toastVariants[0];
 
-        await elementUpdated(el);
-        expect(el.variant).to.equal('');
+    await elementUpdated(el);
+    expect(el.variant).to.equal(toastVariants[0]);
 
-        el.variant = toastVariants[0];
+    el.variant = toastVariants[0];
 
-        await elementUpdated(el);
-        expect(el.variant).to.equal(toastVariants[0]);
+    await elementUpdated(el);
+    expect(el.variant).to.equal(toastVariants[0]);
+  });
+  it("maintains [variant] when disconnected/connected", async () => {
+    const el = await fixture<Toast>(html`
+      <sp-toast variant="positive" open>
+        This toast maintains variants.
+      </sp-toast>
+    `);
 
-        el.variant = toastVariants[0];
+    await elementUpdated(el);
+    expect(el.variant).to.equal("positive");
+    const parent = el.parentElement as HTMLElement;
 
-        await elementUpdated(el);
-        expect(el.variant).to.equal(toastVariants[0]);
-    });
-    it('maintains [variant] when disconnected/connected', async () => {
-        const el = await fixture<Toast>(html`
-            <sp-toast variant="positive" open>
-                This toast maintains variants.
-            </sp-toast>
-        `);
+    el.remove();
 
-        await elementUpdated(el);
-        expect(el.variant).to.equal('positive');
-        const parent = el.parentElement as HTMLElement;
+    expect(el.variant).to.equal("positive");
 
-        el.remove();
+    parent.append(el);
 
-        expect(el.variant).to.equal('positive');
+    expect(el.variant).to.equal("positive");
+  });
+  it("reopens", async () => {
+    const closeSpy = spy();
+    const el = await fixture<Toast>(html`
+      <sp-toast
+        variant="positive"
+        open
+        @close=${() => {
+          closeSpy();
+        }}
+      >
+        This toast maintains variants.
+      </sp-toast>
+    `);
 
-        parent.append(el);
+    await elementUpdated(el);
+    expect(el.open).to.be.true;
 
-        expect(el.variant).to.equal('positive');
-    });
-    it('reopens', async () => {
-        const closeSpy = spy();
-        const el = await fixture<Toast>(html`
-            <sp-toast
-                variant="positive"
-                open
-                @close=${() => {
-                    closeSpy();
-                }}
-            >
-                This toast maintains variants.
-            </sp-toast>
-        `);
+    const closeButton = el.shadowRoot.querySelector(
+      "sp-close-button",
+    ) as HTMLElement;
 
-        await elementUpdated(el);
-        expect(el.open).to.be.true;
+    closeButton.click();
 
-        const closeButton = el.shadowRoot.querySelector(
-            'sp-close-button'
-        ) as HTMLElement;
+    await elementUpdated(el);
+    expect(el.open).to.be.false;
 
-        closeButton.click();
+    el.open = true;
 
-        await elementUpdated(el);
-        expect(el.open).to.be.false;
+    await elementUpdated(el);
+    expect(el.open).to.be.true;
+    expect(closeSpy.callCount).to.equal(1);
+  });
+  it('sp close button renders with static-color="white"', async () => {
+    const el = await fixture<Toast>(html`
+      <sp-toast open>Help text.</sp-toast>
+    `);
+    const renderRoot = el.shadowRoot ? el.shadowRoot : el;
+    const closeButton = renderRoot.querySelector(
+      "sp-close-button",
+    ) as CloseButton;
 
-        el.open = true;
+    expect(closeButton).to.exist;
 
-        await elementUpdated(el);
-        expect(el.open).to.be.true;
-        expect(closeSpy.callCount).to.equal(1);
-    });
-    it('sp close button renders with static-color="white"', async () => {
-        const el = await fixture<Toast>(html`
-            <sp-toast open>Help text.</sp-toast>
-        `);
-        const renderRoot = el.shadowRoot ? el.shadowRoot : el;
-        const closeButton = renderRoot.querySelector(
-            'sp-close-button'
-        ) as CloseButton;
-
-        expect(closeButton).to.exist;
-
-        expect(closeButton.getAttribute('static-color')).to.equal('white');
-    });
+    expect(closeButton.getAttribute("static-color")).to.equal("white");
+  });
 });

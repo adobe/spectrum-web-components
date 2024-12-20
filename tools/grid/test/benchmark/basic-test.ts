@@ -10,10 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/grid/sp-grid.js';
-import { html } from '@spectrum-web-components/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/grid/sp-grid.js";
+import { html } from "@spectrum-web-components/base";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
-measureFixtureCreation(html`
-    <sp-grid></sp-grid>
-`);
+measureFixtureCreation(html` <sp-grid></sp-grid> `);

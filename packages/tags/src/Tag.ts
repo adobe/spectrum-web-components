@@ -41,9 +41,9 @@ export class Tag extends SizedMixin(SpectrumElement, {
   noDefaultSize: true,
 }) {
   /**
-	 * Returns the styles to be applied to the component.
+   * Returns the styles to be applied to the component.
 \
-	 */
+   */
   public static override get styles(): CSSResultArray {
     return [styles];
   }

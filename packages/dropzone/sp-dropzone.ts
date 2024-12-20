@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Dropzone } from './src/Dropzone.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Dropzone } from "./src/Dropzone.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-dropzone', Dropzone);
+defineElement("sp-dropzone", Dropzone);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-dropzone': Dropzone;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-dropzone": Dropzone;
+  }
 }

@@ -10,5 +10,5 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export * from './Tags.js';
-export * from './Tag.js';
+export * from "./Tags.js";
+export * from "./Tag.js";

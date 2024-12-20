@@ -10,40 +10,40 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect, oneEvent } from '@open-wc/testing';
-import { ActionMenu } from '@spectrum-web-components/action-menu';
-import { sendKeys } from '@web/test-runner-commands';
+import { expect, oneEvent } from "@open-wc/testing";
+import { ActionMenu } from "@spectrum-web-components/action-menu";
+import { sendKeys } from "@web/test-runner-commands";
 
-import { directive } from '../stories/action-menu.stories.js';
-import { fixture } from '../../../test/testing-helpers.js';
-import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
+import { directive } from "../stories/action-menu.stories.js";
+import { fixture } from "../../../test/testing-helpers.js";
+import { nextFrame } from "@spectrum-web-components/overlay/src/AbstractOverlay.js";
 
-describe('Slottable Request Directive', () => {
-    it('Action Menu requests for options rendering when opening and closing', async function () {
-        const el = await fixture<ActionMenu>(directive());
-        const initialNodeLength = el.children.length;
+describe("Slottable Request Directive", () => {
+  it("Action Menu requests for options rendering when opening and closing", async function () {
+    const el = await fixture<ActionMenu>(directive());
+    const initialNodeLength = el.children.length;
 
-        expect(el.open).to.be.false;
-        expect(el.children.length).to.equal(initialNodeLength);
+    expect(el.open).to.be.false;
+    expect(el.children.length).to.equal(initialNodeLength);
 
-        const opened = oneEvent(el, 'sp-opened');
+    const opened = oneEvent(el, "sp-opened");
 
-        el.click();
-        await opened;
+    el.click();
+    await opened;
 
-        expect(el.open).to.be.true;
-        expect(el.children.length).to.be.gt(initialNodeLength);
+    expect(el.open).to.be.true;
+    expect(el.children.length).to.be.gt(initialNodeLength);
 
-        const closed = oneEvent(el, 'sp-closed');
+    const closed = oneEvent(el, "sp-closed");
 
-        await sendKeys({
-            press: 'Escape',
-        });
-        await closed;
-        await nextFrame();
-        await nextFrame();
-
-        expect(el.open).to.be.false;
-        expect(el.children.length).to.equal(initialNodeLength);
+    await sendKeys({
+      press: "Escape",
     });
+    await closed;
+    await nextFrame();
+    await nextFrame();
+
+    expect(el.open).to.be.false;
+    expect(el.children.length).to.equal(initialNodeLength);
+  });
 });

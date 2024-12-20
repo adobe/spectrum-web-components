@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
-import { OverlayTrigger } from './src/OverlayTrigger.js';
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
+import { OverlayTrigger } from "./src/OverlayTrigger.js";
 
-defineElement('overlay-trigger', OverlayTrigger);
+defineElement("overlay-trigger", OverlayTrigger);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'overlay-trigger': OverlayTrigger;
-    }
+  interface HTMLElementTagNameMap {
+    "overlay-trigger": OverlayTrigger;
+  }
 }

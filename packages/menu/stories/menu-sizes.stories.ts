@@ -14,8 +14,8 @@ import { TemplateResult } from "@spectrum-web-components/base";
 import { MenuMarkup } from ".//index.js";
 
 export default {
-	component: "sp-menu",
-	title: "Menu/Sizes",
+  component: "sp-menu",
+  title: "Menu/Sizes",
 };
 
 export const S = (): TemplateResult => MenuMarkup({ size: "s" });

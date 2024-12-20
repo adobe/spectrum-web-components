@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/slider/sync/sp-slider.js';
-import { testEditableSlider } from './index.js';
+import "@spectrum-web-components/slider/sync/sp-slider.js";
+import { testEditableSlider } from "./index.js";
 
-testEditableSlider('sync');
+testEditableSlider("sync");

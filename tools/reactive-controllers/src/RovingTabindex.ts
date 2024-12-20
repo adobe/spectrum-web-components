@@ -13,89 +13,101 @@ import { FocusGroupConfig, FocusGroupController } from "./FocusGroup.js";
 
 export type RovingTabindexConfig<T> = FocusGroupConfig<T>;
 interface UpdateTabIndexes {
-	tabIndex: number;
-	removeTabIndex?: boolean;
+  tabIndex: number;
+  removeTabIndex?: boolean;
 }
 
 export class RovingTabindexController<
-	T extends HTMLElement,
+  T extends HTMLElement,
 > extends FocusGroupController<T> {
-	protected override set focused(focused: boolean) {
-		if (focused === this.focused) return;
-		super.focused = focused;
-		this.manageTabindexes();
-	}
+  protected override set focused(focused: boolean) {
+    if (focused === this.focused) {
+      return;
+    }
 
-	protected override get focused(): boolean {
-		return super.focused;
-	}
+    super.focused = focused;
+    this.manageTabindexes();
+  }
 
-	private managed = true;
+  protected override get focused(): boolean {
+    return super.focused;
+  }
 
-	private manageIndexesAnimationFrame = 0;
+  private managed = true;
 
-	override clearElementCache(offset = 0): void {
-		cancelAnimationFrame(this.manageIndexesAnimationFrame);
-		super.clearElementCache(offset);
-		if (!this.managed) return;
+  private manageIndexesAnimationFrame = 0;
 
-		this.manageIndexesAnimationFrame = requestAnimationFrame(() =>
-			this.manageTabindexes(),
-		);
-	}
+  override clearElementCache(offset = 0): void {
+    cancelAnimationFrame(this.manageIndexesAnimationFrame);
+    super.clearElementCache(offset);
 
-	manageTabindexes(): void {
-		if (this.focused) {
-			this.updateTabindexes(() => ({ tabIndex: -1 }));
-		} else {
-			this.updateTabindexes((el: HTMLElement): UpdateTabIndexes => {
-				return {
-					removeTabIndex:
-						el.contains(this.focusInElement) && el !== this.focusInElement,
-					tabIndex: el === this.focusInElement ? 0 : -1,
-				};
-			});
-		}
-	}
+    if (!this.managed) {
+      return;
+    }
 
-	updateTabindexes(getTabIndex: (el: HTMLElement) => UpdateTabIndexes): void {
-		this.elements.forEach((el) => {
-			const { tabIndex, removeTabIndex } = getTabIndex(el);
-			if (!removeTabIndex) {
-				if (this.focused) {
-					if (el !== this.elements[this.currentIndex]) {
-						el.tabIndex = tabIndex;
-					}
-				} else {
-					el.tabIndex = tabIndex;
-				}
+    this.manageIndexesAnimationFrame = requestAnimationFrame(() =>
+      this.manageTabindexes(),
+    );
+  }
 
-				return;
-			}
-			el.removeAttribute("tabindex");
-			const updatable = el as unknown as {
-				requestUpdate?: () => void;
-			};
-			if (updatable.requestUpdate) updatable.requestUpdate();
-		});
-	}
+  manageTabindexes(): void {
+    if (this.focused) {
+      this.updateTabindexes(() => ({ tabIndex: -1 }));
+    } else {
+      this.updateTabindexes((el: HTMLElement): UpdateTabIndexes => {
+        return {
+          removeTabIndex:
+            el.contains(this.focusInElement) && el !== this.focusInElement,
+          tabIndex: el === this.focusInElement ? 0 : -1,
+        };
+      });
+    }
+  }
 
-	override manage(): void {
-		this.managed = true;
-		this.manageTabindexes();
-		super.manage();
-	}
+  updateTabindexes(getTabIndex: (el: HTMLElement) => UpdateTabIndexes): void {
+    this.elements.forEach((el) => {
+      const { tabIndex, removeTabIndex } = getTabIndex(el);
 
-	override unmanage(): void {
-		this.managed = false;
-		this.updateTabindexes(() => ({ tabIndex: 0 }));
-		super.unmanage();
-	}
+      if (!removeTabIndex) {
+        if (this.focused) {
+          if (el !== this.elements[this.currentIndex]) {
+            el.tabIndex = tabIndex;
+          }
+        } else {
+          el.tabIndex = tabIndex;
+        }
 
-	override hostUpdated(): void {
-		super.hostUpdated();
-		if (!this.host.hasUpdated) {
-			this.manageTabindexes();
-		}
-	}
+        return;
+      }
+
+      el.removeAttribute("tabindex");
+      const updatable = el as unknown as {
+        requestUpdate?: () => void;
+      };
+
+      if (updatable.requestUpdate) {
+        updatable.requestUpdate();
+      }
+    });
+  }
+
+  override manage(): void {
+    this.managed = true;
+    this.manageTabindexes();
+    super.manage();
+  }
+
+  override unmanage(): void {
+    this.managed = false;
+    this.updateTabindexes(() => ({ tabIndex: 0 }));
+    super.unmanage();
+  }
+
+  override hostUpdated(): void {
+    super.hostUpdated();
+
+    if (!this.host.hasUpdated) {
+      this.manageTabindexes();
+    }
+  }
 }

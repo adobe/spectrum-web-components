@@ -11,20 +11,20 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    TemplateResult,
-} from '@spectrum-web-components/base';
+  CSSResultArray,
+  html,
+  TemplateResult,
+} from "@spectrum-web-components/base";
 import {
-    queryAssignedNodes,
-    state,
-} from '@spectrum-web-components/base/src/decorators.js';
-import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
+  queryAssignedNodes,
+  state,
+} from "@spectrum-web-components/base/src/decorators.js";
+import { randomID } from "@spectrum-web-components/shared/src/random-id.js";
 
-import { Menu } from './Menu.js';
+import { Menu } from "./Menu.js";
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
-import '@spectrum-web-components/menu/sp-menu.js';
-import menuGroupStyles from './menu-group.css.js';
+import "@spectrum-web-components/menu/sp-menu.js";
+import menuGroupStyles from "./menu-group.css.js";
 
 /**
  * @element sp-menu-group
@@ -33,66 +33,65 @@ import menuGroupStyles from './menu-group.css.js';
  * @slot - menu items to be listed in the group
  */
 export class MenuGroup extends Menu {
-    public static override get styles(): CSSResultArray {
-        return [...super.styles, menuGroupStyles];
+  public static override get styles(): CSSResultArray {
+    return [...super.styles, menuGroupStyles];
+  }
+
+  private headerId = "";
+
+  @queryAssignedNodes({
+    slot: "header",
+    flatten: true,
+  })
+  private headerElements!: NodeListOf<HTMLElement>;
+
+  @state()
+  private headerElement?: HTMLElement;
+
+  protected override get ownRole(): string {
+    switch (this.selects) {
+      case "multiple":
+      case "single":
+      case "inherit":
+        return "group";
+      default:
+        return "menu";
     }
+  }
 
-    private headerId = '';
+  protected updateLabel(): void {
+    const headerElement = this.headerElements.length
+      ? this.headerElements[0]
+      : undefined;
 
-    @queryAssignedNodes({
-        slot: 'header',
-        flatten: true,
-    })
-    private headerElements!: NodeListOf<HTMLElement>;
+    if (headerElement !== this.headerElement) {
+      if (this.headerElement && this.headerElement.id === this.headerId) {
+        this.headerElement.removeAttribute("id");
+      }
 
-    @state()
-    private headerElement?: HTMLElement;
+      if (headerElement) {
+        this.headerId = this.headerId || `sp-menu-group-label-${randomID()}`;
+        const headerId = headerElement.id || this.headerId;
 
-    protected override get ownRole(): string {
-        switch (this.selects) {
-            case 'multiple':
-            case 'single':
-            case 'inherit':
-                return 'group';
-            default:
-                return 'menu';
-        }
-    }
-
-    protected updateLabel(): void {
-        const headerElement = this.headerElements.length
-            ? this.headerElements[0]
-            : undefined;
-
-        if (headerElement !== this.headerElement) {
-            if (this.headerElement && this.headerElement.id === this.headerId) {
-                this.headerElement.removeAttribute('id');
-            }
-
-            if (headerElement) {
-                this.headerId =
-                    this.headerId || `sp-menu-group-label-${randomID()}`;
-                const headerId = headerElement.id || this.headerId;
-
-                if (!headerElement.id) {
-                    headerElement.id = headerId;
-                }
-
-                this.setAttribute('aria-labelledby', headerId);
-            } else {
-                this.removeAttribute('aria-labelledby');
-            }
+        if (!headerElement.id) {
+          headerElement.id = headerId;
         }
 
-        this.headerElement = headerElement;
+        this.setAttribute("aria-labelledby", headerId);
+      } else {
+        this.removeAttribute("aria-labelledby");
+      }
     }
 
-    public override render(): TemplateResult {
-        return html`
-            <span class="header" ?hidden=${!this.headerElement}>
-                <slot name="header" @slotchange=${this.updateLabel}></slot>
-            </span>
-            <sp-menu ignore>${this.renderMenuItemSlot()}</sp-menu>
-        `;
-    }
+    this.headerElement = headerElement;
+  }
+
+  public override render(): TemplateResult {
+    return html`
+      <span class="header" ?hidden=${!this.headerElement}>
+        <slot name="header" @slotchange=${this.updateLabel}></slot>
+      </span>
+      <sp-menu ignore>${this.renderMenuItemSlot()}</sp-menu>
+    `;
+  }
 }

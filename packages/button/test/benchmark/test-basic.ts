@@ -10,16 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
-import { html } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
+import "@spectrum-web-components/button/sp-button.js";
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-help.js";
+import { html } from "lit";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
 
 measureFixtureCreation(html`
-    <sp-button>Click Me</sp-button>
-    <sp-button disabled>Click Me</sp-button>
-    <sp-button>
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Click Me
-    </sp-button>
+  <sp-button>Click Me</sp-button>
+  <sp-button disabled>Click Me</sp-button>
+  <sp-button>
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Click Me
+  </sp-button>
 `);

@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import lightStyles from '../src/express/theme-light.css.js';
-import { Theme } from '../src/Theme.js';
-import '../src/express/core.js';
+import lightStyles from "../src/express/theme-light.css.js";
+import { Theme } from "../src/Theme.js";
+import "../src/express/core.js";
 
-Theme.registerThemeFragment('light-express', 'color', lightStyles);
+Theme.registerThemeFragment("light-express", "color", lightStyles);

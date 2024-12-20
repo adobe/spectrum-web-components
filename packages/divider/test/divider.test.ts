@@ -10,41 +10,30 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from "@open-wc/testing";
 
-import '@spectrum-web-components/divider/sp-divider.js';
-import { Divider } from '@spectrum-web-components/divider';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import "@spectrum-web-components/divider/sp-divider.js";
+import { Divider } from "@spectrum-web-components/divider";
+import { testForLitDevWarnings } from "../../../test/testing-helpers.js";
 
-describe('Divider', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<Divider>(
-                html`
-                    <sp-divider></sp-divider>
-                `
-            )
-    );
-    it('loads default divider accessibly', async () => {
-        const el = await fixture<Divider>(
-            html`
-                <sp-divider></sp-divider>
-            `
-        );
+describe("Divider", () => {
+  testForLitDevWarnings(
+    async () => await fixture<Divider>(html` <sp-divider></sp-divider> `),
+  );
+  it("loads default divider accessibly", async () => {
+    const el = await fixture<Divider>(html` <sp-divider></sp-divider> `);
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
-    it('loads [vertical] divider accessibly', async () => {
-        const el = await fixture<Divider>(
-            html`
-                <sp-divider vertical></sp-divider>
-            `
-        );
+    await expect(el).to.be.accessible();
+  });
+  it("loads [vertical] divider accessibly", async () => {
+    const el = await fixture<Divider>(html`
+      <sp-divider vertical></sp-divider>
+    `);
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
+    await expect(el).to.be.accessible();
+  });
 });

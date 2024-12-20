@@ -10,39 +10,39 @@ governing permissions and limitations under the License.
 */
 
 export class SlottableRequestEvent extends Event {
-    readonly data: unknown;
-    readonly name: string;
-    readonly slotName: string;
-    constructor(name: string, data: unknown, key?: string) {
-        super('slottable-request', {
-            bubbles: false,
-            cancelable: true,
-            composed: false,
-        });
-        this.name = name;
-        this.data = data;
-        this.slotName = key !== undefined ? `${name}.${key}` : name;
+  readonly data: unknown;
+  readonly name: string;
+  readonly slotName: string;
+  constructor(name: string, data: unknown, key?: string) {
+    super("slottable-request", {
+      bubbles: false,
+      cancelable: true,
+      composed: false,
+    });
+    this.name = name;
+    this.data = data;
+    this.slotName = key !== undefined ? `${name}.${key}` : name;
 
-        if (window.__swc.DEBUG) {
-            window.__swc.warn(
-                undefined,
-                `⚠️  WARNING ⚠️ : \`slottable-request\` events are experimental and there is no guarantees behind usage of them in an application!! Their shape and presence within the library could be changed at anytime.
+    if (window.__swc.DEBUG) {
+      window.__swc.warn(
+        undefined,
+        `⚠️  WARNING ⚠️ : \`slottable-request\` events are experimental and there is no guarantees behind usage of them in an application!! Their shape and presence within the library could be changed at anytime.
                 
 Learn more about the protocol these events are based on below:`,
-                'https://github.com/webcomponents-cg/community-protocols/pull/45',
-                {
-                    level: 'high',
-                    type: 'api',
-                }
-            );
-        }
+        "https://github.com/webcomponents-cg/community-protocols/pull/45",
+        {
+          level: "high",
+          type: "api",
+        },
+      );
     }
+  }
 }
 
-export const removeSlottableRequest = Symbol('remove-slottable-request');
+export const removeSlottableRequest = Symbol("remove-slottable-request");
 
 declare global {
-    interface GlobalEventHandlersEventMap {
-        'slottable-request': SlottableRequestEvent;
-    }
+  interface GlobalEventHandlersEventMap {
+    "slottable-request": SlottableRequestEvent;
+  }
 }

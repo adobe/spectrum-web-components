@@ -9,114 +9,110 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { IconsetRegistry } from './iconset-registry.js';
+import { IconsetRegistry } from "./iconset-registry.js";
 
-import { LitElement } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { LitElement } from "@spectrum-web-components/base";
+import { property } from "@spectrum-web-components/base/src/decorators.js";
 
 export abstract class Iconset extends LitElement {
-    protected registered = false;
+  protected registered = false;
 
-    private _name!: string;
+  private _name!: string;
 
-    protected override firstUpdated(): void {
-        // force no display for all iconsets
-        this.style.display = 'none';
+  protected override firstUpdated(): void {
+    // force no display for all iconsets
+    this.style.display = "none";
 
-        if (window.__swc.DEBUG) {
-            window.__swc.warn(
-                this,
-                'Iconsets have been deprecated and will be removed from the project in an upcoming version. For default Spectrum Icons, learn more about leveraging UI Icons (https://opensource.adobe.com/spectrum-web-components/components/icons-ui/) or Workflow Icons (https://opensource.adobe.com/spectrum-web-components/components/icons-workflow/) as an alternative.',
-                'https://opensource.adobe.com/spectrum-web-components/components/iconset/#deprecated',
-                { level: 'deprecation' }
-            );
-        }
+    if (window.__swc.DEBUG) {
+      window.__swc.warn(
+        this,
+        "Iconsets have been deprecated and will be removed from the project in an upcoming version. For default Spectrum Icons, learn more about leveraging UI Icons (https://opensource.adobe.com/spectrum-web-components/components/icons-ui/) or Workflow Icons (https://opensource.adobe.com/spectrum-web-components/components/icons-workflow/) as an alternative.",
+        "https://opensource.adobe.com/spectrum-web-components/components/iconset/#deprecated",
+        { level: "deprecation" },
+      );
+    }
+  }
+
+  /**
+   * Name of the iconset, used by the IconsetRegistry to serve this icon set
+   * to consuming icons.
+   */
+  @property()
+  public set name(value: string) {
+    // if we're already registered in the iconset registry
+    // we'll need to update our registration
+    if (this.registered) {
+      if (this._name) {
+        // remove from the iconset map using the old name
+        IconsetRegistry.getInstance().removeIconset(this._name);
+      }
+
+      if (value) {
+        // set in the map using the new name
+        IconsetRegistry.getInstance().addIconset(value, this);
+      }
     }
 
-    /**
-     * Name of the iconset, used by the IconsetRegistry to serve this icon set
-     * to consuming icons.
-     */
-    @property()
-    public set name(value: string) {
-        // if we're already registered in the iconset registry
-        // we'll need to update our registration
-        if (this.registered) {
-            if (this._name) {
-                // remove from the iconset map using the old name
-                IconsetRegistry.getInstance().removeIconset(this._name);
-            }
+    this._name = value;
+  }
+  public get name(): string {
+    return this._name;
+  }
 
-            if (value) {
-                // set in the map using the new name
-                IconsetRegistry.getInstance().addIconset(value, this);
-            }
-        }
+  /**
+   * Applies an icon to the given element
+   */
+  public abstract applyIconToElement(
+    el: HTMLElement,
+    icon: string,
+    size: string,
+    label: string,
+  ): void;
 
-        this._name = value;
+  /**
+   * Returns a list of all icons in this iconset.
+   */
+  public abstract getIconList(): string[];
+
+  private handleRemoved = ({ detail }: { detail: { name: string } }): void => {
+    if (detail.name === this.name) {
+      this.registered = false;
+      this.addIconset();
     }
-    public get name(): string {
-        return this._name;
-    }
+  };
 
-    /**
-     * Applies an icon to the given element
-     */
-    public abstract applyIconToElement(
-        el: HTMLElement,
-        icon: string,
-        size: string,
-        label: string
-    ): void;
+  /**
+   * On updated we register the iconset if we're not already registered
+   */
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.addIconset();
+    window.addEventListener("sp-iconset-removed", this.handleRemoved);
+  }
+  /**
+   * On disconnected we remove the iconset
+   */
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    window.removeEventListener("sp-iconset-removed", this.handleRemoved);
+    this.removeIconset();
+  }
 
-    /**
-     * Returns a list of all icons in this iconset.
-     */
-    public abstract getIconList(): string[];
-
-    private handleRemoved = ({
-        detail,
-    }: {
-        detail: { name: string };
-    }): void => {
-        if (detail.name === this.name) {
-            this.registered = false;
-            this.addIconset();
-        }
-    };
-
-    /**
-     * On updated we register the iconset if we're not already registered
-     */
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        this.addIconset();
-        window.addEventListener('sp-iconset-removed', this.handleRemoved);
-    }
-    /**
-     * On disconnected we remove the iconset
-     */
-    public override disconnectedCallback(): void {
-        super.disconnectedCallback();
-        window.removeEventListener('sp-iconset-removed', this.handleRemoved);
-        this.removeIconset();
+  private addIconset(): void {
+    if (!this.name || this.registered) {
+      return;
     }
 
-    private addIconset(): void {
-        if (!this.name || this.registered) {
-            return;
-        }
+    IconsetRegistry.getInstance().addIconset(this.name, this);
+    this.registered = true;
+  }
 
-        IconsetRegistry.getInstance().addIconset(this.name, this);
-        this.registered = true;
+  private removeIconset(): void {
+    if (!this.name) {
+      return;
     }
 
-    private removeIconset(): void {
-        if (!this.name) {
-            return;
-        }
-
-        IconsetRegistry.getInstance().removeIconset(this.name);
-        this.registered = false;
-    }
+    IconsetRegistry.getInstance().removeIconset(this.name);
+    this.registered = false;
+  }
 }

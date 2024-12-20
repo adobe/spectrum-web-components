@@ -11,16 +11,16 @@ governing permissions and limitations under the License.
 */
 
 import {
-	CSSResultArray,
-	html,
-	PropertyValues,
-	SpectrumElement,
-	TemplateResult,
+  CSSResultArray,
+  html,
+  PropertyValues,
+  SpectrumElement,
+  TemplateResult,
 } from "@spectrum-web-components/base";
 import {
-	property,
-	query,
-	state,
+  property,
+  query,
+  state,
 } from "@spectrum-web-components/base/src/decorators.js";
 import type { Placement } from "@floating-ui/dom";
 
@@ -44,255 +44,255 @@ export type OverlayContentTypes = "click" | "hover" | "longpress";
  * @fires sp-closed - Announces that the overlay has been closed
  */
 export class OverlayTrigger extends SpectrumElement {
-	public static override get styles(): CSSResultArray {
-		return [overlayTriggerStyles];
-	}
+  public static override get styles(): CSSResultArray {
+    return [overlayTriggerStyles];
+  }
 
-	@property()
-	content = "click hover longpress";
+  @property()
+  content = "click hover longpress";
 
-	/**
-	 * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
-	 *
-	 * @attribute
-	 *
-	 */
-	@property({ reflect: true })
-	public placement?: Placement;
+  /**
+   * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
+   *
+   * @attribute
+   *
+   */
+  @property({ reflect: true })
+  public placement?: Placement;
 
-	@property()
-	public type?: OverlayTriggerInteractions;
+  @property()
+  public type?: OverlayTriggerInteractions;
 
-	@property({ type: Number })
-	public offset = 6;
+  @property({ type: Number })
+  public offset = 6;
 
-	@property({ reflect: true })
-	public open?: OverlayContentTypes;
+  @property({ reflect: true })
+  public open?: OverlayContentTypes;
 
-	@property({ type: Boolean, reflect: true })
-	public disabled = false;
+  @property({ type: Boolean, reflect: true })
+  public disabled = false;
 
-	@property({ attribute: "receives-focus" })
-	public receivesFocus: "true" | "false" | "auto" = "auto";
+  @property({ attribute: "receives-focus" })
+  public receivesFocus: "true" | "false" | "auto" = "auto";
 
-	@state()
-	private clickContent: HTMLElement[] = [];
+  @state()
+  private clickContent: HTMLElement[] = [];
 
-	private clickPlacement?: Placement;
+  private clickPlacement?: Placement;
 
-	@state()
-	private longpressContent: HTMLElement[] = [];
+  @state()
+  private longpressContent: HTMLElement[] = [];
 
-	private longpressPlacement?: Placement;
+  private longpressPlacement?: Placement;
 
-	@state()
-	private hoverContent: HTMLElement[] = [];
+  @state()
+  private hoverContent: HTMLElement[] = [];
 
-	private hoverPlacement?: Placement;
+  private hoverPlacement?: Placement;
 
-	@state()
-	private targetContent: HTMLElement[] = [];
+  @state()
+  private targetContent: HTMLElement[] = [];
 
-	@query("#click-overlay", true)
-	clickOverlayElement!: Overlay;
+  @query("#click-overlay", true)
+  clickOverlayElement!: Overlay;
 
-	@query("#longpress-overlay", true)
-	longpressOverlayElement!: Overlay;
+  @query("#longpress-overlay", true)
+  longpressOverlayElement!: Overlay;
 
-	@query("#hover-overlay", true)
-	hoverOverlayElement!: Overlay;
+  @query("#hover-overlay", true)
+  hoverOverlayElement!: Overlay;
 
-	private getAssignedElementsFromSlot(slot: HTMLSlotElement): HTMLElement[] {
-		return slot.assignedElements({ flatten: true }) as HTMLElement[];
-	}
+  private getAssignedElementsFromSlot(slot: HTMLSlotElement): HTMLElement[] {
+    return slot.assignedElements({ flatten: true }) as HTMLElement[];
+  }
 
-	private handleTriggerContent(
-		event: Event & { target: HTMLSlotElement },
-	): void {
-		this.targetContent = this.getAssignedElementsFromSlot(event.target);
-	}
+  private handleTriggerContent(
+    event: Event & { target: HTMLSlotElement },
+  ): void {
+    this.targetContent = this.getAssignedElementsFromSlot(event.target);
+  }
 
-	private handleSlotContent(event: Event & { target: HTMLSlotElement }): void {
-		switch (event.target.name) {
-			case "click-content":
-				this.clickContent = this.getAssignedElementsFromSlot(event.target);
-				break;
-			case "longpress-content":
-				this.longpressContent = this.getAssignedElementsFromSlot(event.target);
-				break;
-			case "hover-content":
-				this.hoverContent = this.getAssignedElementsFromSlot(event.target);
-				break;
-		}
-	}
+  private handleSlotContent(event: Event & { target: HTMLSlotElement }): void {
+    switch (event.target.name) {
+      case "click-content":
+        this.clickContent = this.getAssignedElementsFromSlot(event.target);
+        break;
+      case "longpress-content":
+        this.longpressContent = this.getAssignedElementsFromSlot(event.target);
+        break;
+      case "hover-content":
+        this.hoverContent = this.getAssignedElementsFromSlot(event.target);
+        break;
+    }
+  }
 
-	private handleBeforetoggle(event: BeforetoggleOpenEvent): void {
-		const { target } = event;
-		let type: OverlayContentTypes;
+  private handleBeforetoggle(event: BeforetoggleOpenEvent): void {
+    const { target } = event;
+    let type: OverlayContentTypes;
 
-		if (target === this.clickOverlayElement) {
-			type = "click";
-		} else if (target === this.longpressOverlayElement) {
-			type = "longpress";
-		} else if (target === this.hoverOverlayElement) {
-			type = "hover";
-			/* c8 ignore next 3 */
-		} else {
-			return;
-		}
+    if (target === this.clickOverlayElement) {
+      type = "click";
+    } else if (target === this.longpressOverlayElement) {
+      type = "longpress";
+    } else if (target === this.hoverOverlayElement) {
+      type = "hover";
+      /* c8 ignore next 3 */
+    } else {
+      return;
+    }
 
-		if (event.newState === "open") {
-			this.open = type;
-		} else if (this.open === type) {
-			this.open = undefined;
-		}
-	}
+    if (event.newState === "open") {
+      this.open = type;
+    } else if (this.open === type) {
+      this.open = undefined;
+    }
+  }
 
-	protected override update(changes: PropertyValues): void {
-		if (changes.has("clickContent")) {
-			this.clickPlacement =
-				((this.clickContent[0]?.getAttribute("placement") ||
-					this.clickContent[0]?.getAttribute("direction")) as Placement) ||
-				undefined;
-		}
+  protected override update(changes: PropertyValues): void {
+    if (changes.has("clickContent")) {
+      this.clickPlacement =
+        ((this.clickContent[0]?.getAttribute("placement") ||
+          this.clickContent[0]?.getAttribute("direction")) as Placement) ||
+        undefined;
+    }
 
-		if (changes.has("hoverContent")) {
-			this.hoverPlacement =
-				((this.hoverContent[0]?.getAttribute("placement") ||
-					this.hoverContent[0]?.getAttribute("direction")) as Placement) ||
-				undefined;
-		}
+    if (changes.has("hoverContent")) {
+      this.hoverPlacement =
+        ((this.hoverContent[0]?.getAttribute("placement") ||
+          this.hoverContent[0]?.getAttribute("direction")) as Placement) ||
+        undefined;
+    }
 
-		if (changes.has("longpressContent")) {
-			this.longpressPlacement =
-				((this.longpressContent[0]?.getAttribute("placement") ||
-					this.longpressContent[0]?.getAttribute("direction")) as Placement) ||
-				undefined;
-		}
+    if (changes.has("longpressContent")) {
+      this.longpressPlacement =
+        ((this.longpressContent[0]?.getAttribute("placement") ||
+          this.longpressContent[0]?.getAttribute("direction")) as Placement) ||
+        undefined;
+    }
 
-		super.update(changes);
-	}
+    super.update(changes);
+  }
 
-	protected renderSlot(name: string): TemplateResult {
-		return html`
-			<slot name=${name} @slotchange=${this.handleSlotContent}></slot>
-		`;
-	}
+  protected renderSlot(name: string): TemplateResult {
+    return html`
+      <slot name=${name} @slotchange=${this.handleSlotContent}></slot>
+    `;
+  }
 
-	protected renderClickOverlay(): TemplateResult {
-		import("@spectrum-web-components/overlay/sp-overlay.js");
-		const slot = this.renderSlot("click-content");
+  protected renderClickOverlay(): TemplateResult {
+    import("@spectrum-web-components/overlay/sp-overlay.js");
+    const slot = this.renderSlot("click-content");
 
-		if (!this.clickContent.length) {
-			return slot;
-		}
+    if (!this.clickContent.length) {
+      return slot;
+    }
 
-		return html`
-			<sp-overlay
-				id="click-overlay"
-				?disabled=${this.disabled || !this.clickContent.length}
-				?open=${this.open === "click" && !!this.clickContent.length}
-				.offset=${this.offset}
-				.placement=${this.clickPlacement || this.placement}
-				.triggerElement=${this.targetContent[0]}
-				.triggerInteraction=${"click"}
-				.type=${this.type !== "modal" ? "auto" : "modal"}
-				@beforetoggle=${this.handleBeforetoggle}
-				.receivesFocus=${this.receivesFocus}
-			>
-				${slot}
-			</sp-overlay>
-		`;
-	}
+    return html`
+      <sp-overlay
+        id="click-overlay"
+        ?disabled=${this.disabled || !this.clickContent.length}
+        ?open=${this.open === "click" && !!this.clickContent.length}
+        .offset=${this.offset}
+        .placement=${this.clickPlacement || this.placement}
+        .triggerElement=${this.targetContent[0]}
+        .triggerInteraction=${"click"}
+        .type=${this.type !== "modal" ? "auto" : "modal"}
+        @beforetoggle=${this.handleBeforetoggle}
+        .receivesFocus=${this.receivesFocus}
+      >
+        ${slot}
+      </sp-overlay>
+    `;
+  }
 
-	protected renderHoverOverlay(): TemplateResult {
-		import("@spectrum-web-components/overlay/sp-overlay.js");
-		const slot = this.renderSlot("hover-content");
+  protected renderHoverOverlay(): TemplateResult {
+    import("@spectrum-web-components/overlay/sp-overlay.js");
+    const slot = this.renderSlot("hover-content");
 
-		if (!this.hoverContent.length) {
-			return slot;
-		}
+    if (!this.hoverContent.length) {
+      return slot;
+    }
 
-		return html`
-			<sp-overlay
-				id="hover-overlay"
-				?open=${this.open === "hover" && !!this.hoverContent.length}
-				?disabled=${this.disabled ||
-				!this.hoverContent.length ||
-				(!!this.open && this.open !== "hover")}
-				.offset=${this.offset}
-				.placement=${this.hoverPlacement || this.placement}
-				.triggerElement=${this.targetContent[0]}
-				.triggerInteraction=${"hover"}
-				.type=${"hint"}
-				@beforetoggle=${this.handleBeforetoggle}
-				.receivesFocus=${this.receivesFocus}
-			>
-				${slot}
-			</sp-overlay>
-		`;
-	}
+    return html`
+      <sp-overlay
+        id="hover-overlay"
+        ?open=${this.open === "hover" && !!this.hoverContent.length}
+        ?disabled=${this.disabled ||
+        !this.hoverContent.length ||
+        (!!this.open && this.open !== "hover")}
+        .offset=${this.offset}
+        .placement=${this.hoverPlacement || this.placement}
+        .triggerElement=${this.targetContent[0]}
+        .triggerInteraction=${"hover"}
+        .type=${"hint"}
+        @beforetoggle=${this.handleBeforetoggle}
+        .receivesFocus=${this.receivesFocus}
+      >
+        ${slot}
+      </sp-overlay>
+    `;
+  }
 
-	protected renderLongpressOverlay(): TemplateResult {
-		import("@spectrum-web-components/overlay/sp-overlay.js");
-		const slot = this.renderSlot("longpress-content");
+  protected renderLongpressOverlay(): TemplateResult {
+    import("@spectrum-web-components/overlay/sp-overlay.js");
+    const slot = this.renderSlot("longpress-content");
 
-		if (!this.longpressContent.length) {
-			return slot;
-		}
+    if (!this.longpressContent.length) {
+      return slot;
+    }
 
-		return html`
-			<sp-overlay
-				id="longpress-overlay"
-				?disabled=${this.disabled || !this.longpressContent.length}
-				?open=${this.open === "longpress" && !!this.longpressContent.length}
-				.offset=${this.offset}
-				.placement=${this.longpressPlacement || this.placement}
-				.triggerElement=${this.targetContent[0]}
-				.triggerInteraction=${"longpress"}
-				.type=${"auto"}
-				@beforetoggle=${this.handleBeforetoggle}
-				.receivesFocus=${this.receivesFocus}
-			>
-				${slot}
-			</sp-overlay>
-			<slot name="longpress-describedby-descriptor"></slot>
-		`;
-	}
+    return html`
+      <sp-overlay
+        id="longpress-overlay"
+        ?disabled=${this.disabled || !this.longpressContent.length}
+        ?open=${this.open === "longpress" && !!this.longpressContent.length}
+        .offset=${this.offset}
+        .placement=${this.longpressPlacement || this.placement}
+        .triggerElement=${this.targetContent[0]}
+        .triggerInteraction=${"longpress"}
+        .type=${"auto"}
+        @beforetoggle=${this.handleBeforetoggle}
+        .receivesFocus=${this.receivesFocus}
+      >
+        ${slot}
+      </sp-overlay>
+      <slot name="longpress-describedby-descriptor"></slot>
+    `;
+  }
 
-	protected override render(): TemplateResult {
-		const content = this.content.split(" ");
+  protected override render(): TemplateResult {
+    const content = this.content.split(" ");
 
-		// Keyboard event availability documented in README.md
-		/* eslint-disable lit-a11y/click-events-have-key-events */
-		return html`
-			<slot
-				id="trigger"
-				name="trigger"
-				@slotchange=${this.handleTriggerContent}
-			></slot>
-			${[
-				content.includes("click") ? this.renderClickOverlay() : html``,
-				content.includes("hover") ? this.renderHoverOverlay() : html``,
-				content.includes("longpress") ? this.renderLongpressOverlay() : html``,
-			]}
-		`;
-		/* eslint-enable lit-a11y/click-events-have-key-events */
-	}
+    // Keyboard event availability documented in README.md
+    /* eslint-disable lit-a11y/click-events-have-key-events */
+    return html`
+      <slot
+        id="trigger"
+        name="trigger"
+        @slotchange=${this.handleTriggerContent}
+      ></slot>
+      ${[
+        content.includes("click") ? this.renderClickOverlay() : html``,
+        content.includes("hover") ? this.renderHoverOverlay() : html``,
+        content.includes("longpress") ? this.renderLongpressOverlay() : html``,
+      ]}
+    `;
+    /* eslint-enable lit-a11y/click-events-have-key-events */
+  }
 
-	protected override updated(changes: PropertyValues): void {
-		super.updated(changes);
+  protected override updated(changes: PropertyValues): void {
+    super.updated(changes);
 
-		if (this.disabled && changes.has("disabled")) {
-			this.open = undefined;
+    if (this.disabled && changes.has("disabled")) {
+      this.open = undefined;
 
-			return;
-		}
-	}
+      return;
+    }
+  }
 
-	protected override async getUpdateComplete(): Promise<boolean> {
-		const complete = (await super.getUpdateComplete()) as boolean;
+  protected override async getUpdateComplete(): Promise<boolean> {
+    const complete = (await super.getUpdateComplete()) as boolean;
 
-		return complete;
-	}
+    return complete;
+  }
 }

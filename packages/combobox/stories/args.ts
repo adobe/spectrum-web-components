@@ -11,78 +11,77 @@ governing permissions and limitations under the License.
 */
 
 export const argTypes = {
-    size: {
-        name: 'size',
-        type: { name: 'string', required: false },
-        table: {
-            defaultValue: { summary: 'm' },
-        },
-        control: {
-            labels: {
-                s: 'Small',
-                m: 'Medium',
-                l: 'Large',
-                xl: 'Extra large',
-            },
-            type: 'select',
-        },
-        options: ['s', 'm', 'l', 'xl'],
+  size: {
+    name: "size",
+    type: { name: "string", required: false },
+    table: {
+      defaultValue: { summary: "m" },
     },
-    quiet: {
-        name: 'quiet',
-        type: { name: 'boolean', required: false },
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+    control: {
+      labels: {
+        s: "Small",
+        m: "Medium",
+        l: "Large",
+        xl: "Extra large",
+      },
+      type: "select",
     },
-    disabled: {
-        name: 'disabled',
-        type: { name: 'boolean', required: false },
-        description:
-            'Disable this control. It will not receive focus or events.',
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+    options: ["s", "m", "l", "xl"],
+  },
+  quiet: {
+    name: "quiet",
+    type: { name: "boolean", required: false },
+    table: {
+      type: { summary: "boolean" },
+      defaultValue: { summary: false },
     },
-    invalid: {
-        name: 'invalid',
-        type: { name: 'boolean', required: false },
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+    control: {
+      type: "boolean",
     },
-    pending: {
-        name: 'pending',
-        type: { name: 'boolean', required: false },
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+  },
+  disabled: {
+    name: "disabled",
+    type: { name: "boolean", required: false },
+    description: "Disable this control. It will not receive focus or events.",
+    table: {
+      type: { summary: "boolean" },
+      defaultValue: { summary: false },
     },
-    readonly: {
-        name: 'readonly',
-        type: { name: 'boolean', required: false },
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+    control: {
+      type: "boolean",
     },
+  },
+  invalid: {
+    name: "invalid",
+    type: { name: "boolean", required: false },
+    table: {
+      type: { summary: "boolean" },
+      defaultValue: { summary: false },
+    },
+    control: {
+      type: "boolean",
+    },
+  },
+  pending: {
+    name: "pending",
+    type: { name: "boolean", required: false },
+    table: {
+      type: { summary: "boolean" },
+      defaultValue: { summary: false },
+    },
+    control: {
+      type: "boolean",
+    },
+  },
+  readonly: {
+    name: "readonly",
+    type: { name: "boolean", required: false },
+    table: {
+      type: { summary: "boolean" },
+      defaultValue: { summary: false },
+    },
+    control: {
+      type: "boolean",
+    },
+  },
 };

@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Tabs } from './src/Tabs.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { Tabs } from "./src/Tabs.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-tabs', Tabs);
+defineElement("sp-tabs", Tabs);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-tabs': Tabs;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-tabs": Tabs;
+  }
 }

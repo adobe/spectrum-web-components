@@ -11,148 +11,140 @@ governing permissions and limitations under the License.
 */
 
 import {
-    aTimeout,
-    elementUpdated,
-    expect,
-    fixture,
-    html,
-    oneEvent,
-} from '@open-wc/testing';
-import { TemplateResult } from '@spectrum-web-components/base';
+  aTimeout,
+  elementUpdated,
+  expect,
+  fixture,
+  html,
+  oneEvent,
+} from "@open-wc/testing";
+import { TemplateResult } from "@spectrum-web-components/base";
 
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/dialog/sp-dialog-base.js';
-import { Theme } from '@spectrum-web-components/theme';
-import { OverlayTrigger } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { alertDestructive } from '../stories/dialog.stories.js';
-import { Button } from '@spectrum-web-components/button/src/Button.js';
-import { DialogBase } from '@spectrum-web-components/dialog';
+import "@spectrum-web-components/theme/sp-theme.js";
+import "@spectrum-web-components/theme/src/themes.js";
+import "@spectrum-web-components/dialog/sp-dialog-base.js";
+import { Theme } from "@spectrum-web-components/theme";
+import { OverlayTrigger } from "@spectrum-web-components/overlay";
+import "@spectrum-web-components/overlay/overlay-trigger.js";
+import { alertDestructive } from "../stories/dialog.stories.js";
+import { Button } from "@spectrum-web-components/button/src/Button.js";
+import { DialogBase } from "@spectrum-web-components/dialog";
 
 async function styledFixture<T extends Element>(
-    story: TemplateResult
+  story: TemplateResult,
 ): Promise<T> {
-    const test = await fixture<Theme>(html`
-        <sp-theme system="spectrum" scale="medium" color="dark">
-            ${story}
-        </sp-theme>
-    `);
+  const test = await fixture<Theme>(html`
+    <sp-theme system="spectrum" scale="medium" color="dark">
+      ${story}
+    </sp-theme>
+  `);
 
-    return test.children[0] as T;
+  return test.children[0] as T;
 }
 
 const overlayTrigger = (story: () => TemplateResult): TemplateResult => html`
-    <overlay-trigger type="modal">
-        <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
-        ${story()}
-    </overlay-trigger>
+  <overlay-trigger type="modal">
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+    ${story()}
+  </overlay-trigger>
 `;
 
-describe('dialog base', () => {
-    it('does not close by default when interacting with buttons', async () => {
-        const el = await styledFixture<OverlayTrigger>(
-            overlayTrigger(
-                () => html`
-                    <sp-dialog-base underlay slot="click-content">
-                        ${alertDestructive()}
-                    </sp-dialog-base>
-                `
-            )
-        );
+describe("dialog base", () => {
+  it("does not close by default when interacting with buttons", async () => {
+    const el = await styledFixture<OverlayTrigger>(
+      overlayTrigger(
+        () => html`
+          <sp-dialog-base underlay slot="click-content">
+            ${alertDestructive()}
+          </sp-dialog-base>
+        `,
+      ),
+    );
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        const dialog = el.querySelector('sp-dialog-base') as DialogBase;
+    const dialog = el.querySelector("sp-dialog-base") as DialogBase;
 
-        await elementUpdated(dialog);
-        const secondaryButton = el.querySelector(
-            '[variant="secondary"]'
-        ) as Button;
-        const negativeButton = el.querySelector(
-            '[variant="negative"]'
-        ) as Button;
+    await elementUpdated(dialog);
+    const secondaryButton = el.querySelector('[variant="secondary"]') as Button;
+    const negativeButton = el.querySelector('[variant="negative"]') as Button;
 
-        expect(el.open).to.be.undefined;
-        expect(dialog.open).to.be.false;
-        const opened = oneEvent(el, 'sp-opened');
+    expect(el.open).to.be.undefined;
+    expect(dialog.open).to.be.false;
+    const opened = oneEvent(el, "sp-opened");
 
-        el.open = 'click';
-        await opened;
+    el.open = "click";
+    await opened;
 
-        expect(dialog.open).to.be.true;
-        expect(el.open).to.be.equal('click');
+    expect(dialog.open).to.be.true;
+    expect(el.open).to.be.equal("click");
 
-        secondaryButton.click();
-        // Give time to ensure reactions DO NOT close the dialog.
-        await aTimeout(100);
+    secondaryButton.click();
+    // Give time to ensure reactions DO NOT close the dialog.
+    await aTimeout(100);
 
-        expect(el.open).to.be.equal('click');
+    expect(el.open).to.be.equal("click");
 
-        negativeButton.click();
-        // Give time to ensure reactions DO NOT close the dialog.
-        await aTimeout(100);
+    negativeButton.click();
+    // Give time to ensure reactions DO NOT close the dialog.
+    await aTimeout(100);
 
-        expect(el.open).to.be.equal('click');
+    expect(el.open).to.be.equal("click");
 
-        const closed = oneEvent(el, 'sp-closed');
+    const closed = oneEvent(el, "sp-closed");
 
-        dialog.open = false;
-        await closed;
+    dialog.open = false;
+    await closed;
 
-        expect(dialog.open).to.be.false;
-    });
-    it('does not close by default when interacting with buttons when recycled', async () => {
-        const el = await styledFixture<OverlayTrigger>(
-            overlayTrigger(
-                () => html`
-                    <sp-dialog-base underlay slot="click-content">
-                        ${alertDestructive()}
-                    </sp-dialog-base>
-                `
-            )
-        );
+    expect(dialog.open).to.be.false;
+  });
+  it("does not close by default when interacting with buttons when recycled", async () => {
+    const el = await styledFixture<OverlayTrigger>(
+      overlayTrigger(
+        () => html`
+          <sp-dialog-base underlay slot="click-content">
+            ${alertDestructive()}
+          </sp-dialog-base>
+        `,
+      ),
+    );
 
-        await elementUpdated(el);
+    await elementUpdated(el);
 
-        const dialog = el.querySelector('sp-dialog-base') as DialogBase;
+    const dialog = el.querySelector("sp-dialog-base") as DialogBase;
 
-        await elementUpdated(dialog);
-        const secondaryButton = el.querySelector(
-            '[variant="secondary"]'
-        ) as Button;
-        const negativeButton = el.querySelector(
-            '[variant="negative"]'
-        ) as Button;
+    await elementUpdated(dialog);
+    const secondaryButton = el.querySelector('[variant="secondary"]') as Button;
+    const negativeButton = el.querySelector('[variant="negative"]') as Button;
 
-        expect(el.open).to.be.undefined;
-        expect(dialog.open).to.be.false;
-        const opened = oneEvent(el, 'sp-opened');
+    expect(el.open).to.be.undefined;
+    expect(dialog.open).to.be.false;
+    const opened = oneEvent(el, "sp-opened");
 
-        el.open = 'click';
-        await opened;
+    el.open = "click";
+    await opened;
 
-        expect(dialog.open).to.be.true;
-        expect(el.open).to.be.equal('click');
+    expect(dialog.open).to.be.true;
+    expect(el.open).to.be.equal("click");
 
-        secondaryButton.click();
-        // Give time to ensure reactions DO NOT close the dialog.
-        await aTimeout(100);
+    secondaryButton.click();
+    // Give time to ensure reactions DO NOT close the dialog.
+    await aTimeout(100);
 
-        expect(el.open).to.be.equal('click');
+    expect(el.open).to.be.equal("click");
 
-        negativeButton.click();
-        // Give time to ensure reactions DO NOT close the dialog.
-        await aTimeout(100);
+    negativeButton.click();
+    // Give time to ensure reactions DO NOT close the dialog.
+    await aTimeout(100);
 
-        expect(el.open).to.be.equal('click');
+    expect(el.open).to.be.equal("click");
 
-        const closed = oneEvent(el, 'sp-closed');
+    const closed = oneEvent(el, "sp-closed");
 
-        dialog.open = false;
-        await closed;
-        await elementUpdated(el);
+    dialog.open = false;
+    await closed;
+    await elementUpdated(el);
 
-        expect(dialog.open).to.be.false;
-    });
+    expect(dialog.open).to.be.false;
+  });
 });

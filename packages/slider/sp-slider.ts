@@ -9,14 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import './sp-slider-handle.js'; // codify sp-slider's implicit dependency on sp-slider-handle
-import { Slider } from './src/Slider.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import "./sp-slider-handle.js"; // codify sp-slider's implicit dependency on sp-slider-handle
+import { Slider } from "./src/Slider.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-slider', Slider);
+defineElement("sp-slider", Slider);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-slider': Slider;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-slider": Slider;
+  }
 }

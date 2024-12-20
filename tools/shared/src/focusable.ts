@@ -17,7 +17,7 @@ import { FocusVisiblePolyfillMixin } from "./focus-visible.js";
 type DisableableElement = HTMLElement & { disabled?: boolean };
 
 function nextFrame(): Promise<void> {
-	return new Promise((res) => requestAnimationFrame(() => res()));
+  return new Promise((res) => requestAnimationFrame(() => res()));
 }
 
 /**
@@ -27,309 +27,326 @@ function nextFrame(): Promise<void> {
  * https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js
  */
 export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
-	/**
-	 * Disable this control. It will not receive focus or events
-	 */
-	@property({ type: Boolean, reflect: true })
-	public disabled = false;
+  /**
+   * Disable this control. It will not receive focus or events
+   */
+  @property({ type: Boolean, reflect: true })
+  public disabled = false;
 
-	/**
-	 * When this control is rendered, focus it automatically
-	 * @private
-	 */
-	@property({ type: Boolean })
-	public override autofocus = false;
+  /**
+   * When this control is rendered, focus it automatically
+   * @private
+   */
+  @property({ type: Boolean })
+  public override autofocus = false;
 
-	/**
-	 * The tab index to apply to this control. See general documentation about
-	 * the tabindex HTML property
-	 *
-	 * @private
-	 */
-	@property({ type: Number })
-	public override get tabIndex(): number {
-		if (this.focusElement === this) {
-			const tabindex = this.hasAttribute("tabindex")
-				? Number(this.getAttribute("tabindex"))
-				: NaN;
+  /**
+   * The tab index to apply to this control. See general documentation about
+   * the tabindex HTML property
+   *
+   * @private
+   */
+  @property({ type: Number })
+  public override get tabIndex(): number {
+    if (this.focusElement === this) {
+      const tabindex = this.hasAttribute("tabindex")
+        ? Number(this.getAttribute("tabindex"))
+        : NaN;
 
-			return !isNaN(tabindex) ? tabindex : -1;
-		}
-		const tabIndexAttribute = parseFloat(
-			this.hasAttribute("tabindex")
-				? (this.getAttribute("tabindex") as string) || "0"
-				: "0",
-		);
-		// When `disabled` tabindex is -1.
-		// When host tabindex -1, use that as the cache.
-		if (this.disabled || tabIndexAttribute < 0) {
-			return -1;
-		}
-		// When `focusElement` isn't available yet,
-		// use host tabindex as the cache.
-		if (!this.focusElement) {
-			return tabIndexAttribute;
-		}
+      return !isNaN(tabindex) ? tabindex : -1;
+    }
 
-		// All other times, use the tabindex of `focusElement`
-		// as the cache for this value.
-		// return this.focusElement.tabIndex;
-		return this._tabIndex;
-	}
-	public override set tabIndex(tabIndex: number) {
-		// Flipping `manipulatingTabindex` to true before a change
-		// allows for that change NOT to effect the cached value of tabindex
-		if (this.manipulatingTabindex) {
-			this.manipulatingTabindex = false;
+    const tabIndexAttribute = parseFloat(
+      this.hasAttribute("tabindex")
+        ? (this.getAttribute("tabindex") as string) || "0"
+        : "0",
+    );
 
-			return;
-		}
+    // When `disabled` tabindex is -1.
+    // When host tabindex -1, use that as the cache.
+    if (this.disabled || tabIndexAttribute < 0) {
+      return -1;
+    }
 
-		if (this.focusElement === this) {
-			if (this.disabled) {
-				this._tabIndex = tabIndex;
-			} else if (tabIndex !== this._tabIndex) {
-				this._tabIndex = tabIndex;
-				const tabindex = "" + tabIndex;
-				this.manipulatingTabindex = true;
-				this.setAttribute("tabindex", tabindex);
-			}
+    // When `focusElement` isn't available yet,
+    // use host tabindex as the cache.
+    if (!this.focusElement) {
+      return tabIndexAttribute;
+    }
 
-			return;
-		}
+    // All other times, use the tabindex of `focusElement`
+    // as the cache for this value.
+    // return this.focusElement.tabIndex;
+    return this._tabIndex;
+  }
+  public override set tabIndex(tabIndex: number) {
+    // Flipping `manipulatingTabindex` to true before a change
+    // allows for that change NOT to effect the cached value of tabindex
+    if (this.manipulatingTabindex) {
+      this.manipulatingTabindex = false;
 
-		if (tabIndex === -1) {
-			this.addEventListener(
-				"pointerdown",
-				this.onPointerdownManagementOfTabIndex,
-			);
-		} else {
-			// All code paths are about to address the host tabindex without side effect.
-			this.manipulatingTabindex = true;
-			this.removeEventListener(
-				"pointerdown",
-				this.onPointerdownManagementOfTabIndex,
-			);
-		}
+      return;
+    }
 
-		if (tabIndex === -1 || this.disabled) {
-			this.manipulatingTabindex = true;
-			this.setAttribute("tabindex", "-1");
-			this.removeAttribute("focusable");
+    if (this.focusElement === this) {
+      if (this.disabled) {
+        this._tabIndex = tabIndex;
+      } else if (tabIndex !== this._tabIndex) {
+        this._tabIndex = tabIndex;
+        const tabindex = "" + tabIndex;
 
-			if (this.selfManageFocusElement) {
-				return;
-			}
+        this.manipulatingTabindex = true;
+        this.setAttribute("tabindex", tabindex);
+      }
 
-			if (tabIndex !== -1) {
-				this._tabIndex = tabIndex;
-				this.manageFocusElementTabindex(tabIndex);
-			} else {
-				this.focusElement?.removeAttribute("tabindex");
-			}
+      return;
+    }
 
-			return;
-		}
+    if (tabIndex === -1) {
+      this.addEventListener(
+        "pointerdown",
+        this.onPointerdownManagementOfTabIndex,
+      );
+    } else {
+      // All code paths are about to address the host tabindex without side effect.
+      this.manipulatingTabindex = true;
+      this.removeEventListener(
+        "pointerdown",
+        this.onPointerdownManagementOfTabIndex,
+      );
+    }
 
-		this.setAttribute("focusable", "");
-		if (this.hasAttribute("tabindex")) {
-			this.removeAttribute("tabindex");
-		} else {
-			// You can't remove an attribute that isn't there,
-			// manually end the `manipulatingTabindex` guard.
-			this.manipulatingTabindex = false;
-		}
+    if (tabIndex === -1 || this.disabled) {
+      this.manipulatingTabindex = true;
+      this.setAttribute("tabindex", "-1");
+      this.removeAttribute("focusable");
 
-		this._tabIndex = tabIndex;
-		this.manageFocusElementTabindex(tabIndex);
-	}
-	private _tabIndex = 0;
+      if (this.selfManageFocusElement) {
+        return;
+      }
 
-	private onPointerdownManagementOfTabIndex(): void {
-		if (this.tabIndex === -1) {
-			setTimeout(() => {
-				// Ensure this happens _after_ WebKit attempts to focus the :host.
-				this.tabIndex = 0;
-				this.focus({ preventScroll: true });
-				this.tabIndex = -1;
-			});
-		}
-	}
+      if (tabIndex !== -1) {
+        this._tabIndex = tabIndex;
+        this.manageFocusElementTabindex(tabIndex);
+      } else {
+        this.focusElement?.removeAttribute("tabindex");
+      }
 
-	private async manageFocusElementTabindex(tabIndex: number): Promise<void> {
-		if (!this.focusElement) {
-			// allow setting these values to be async when needed.
-			await this.updateComplete;
-		}
-		if (tabIndex === null) {
-			this.focusElement.removeAttribute("tabindex");
-		} else {
-			if (this.focusElement !== this) {
-				this.focusElement.tabIndex = tabIndex;
-			}
-		}
-	}
+      return;
+    }
 
-	private manipulatingTabindex = false;
+    this.setAttribute("focusable", "");
 
-	/**
-	 * @private
-	 */
-	public get focusElement(): DisableableElement {
-		throw new Error("Must implement focusElement getter!");
-	}
+    if (this.hasAttribute("tabindex")) {
+      this.removeAttribute("tabindex");
+    } else {
+      // You can't remove an attribute that isn't there,
+      // manually end the `manipulatingTabindex` guard.
+      this.manipulatingTabindex = false;
+    }
 
-	/**
-	 * @public
-	 * @returns {boolean} whether the component should manage its focusElement tab-index or not
-	 * Needed for action-menu to be supported in action-group in an accessible way
-	 */
-	public get selfManageFocusElement(): boolean {
-		return false;
-	}
+    this._tabIndex = tabIndex;
+    this.manageFocusElementTabindex(tabIndex);
+  }
+  private _tabIndex = 0;
 
-	public override focus(options?: FocusOptions): void {
-		if (this.disabled || !this.focusElement) {
-			return;
-		}
+  private onPointerdownManagementOfTabIndex(): void {
+    if (this.tabIndex === -1) {
+      setTimeout(() => {
+        // Ensure this happens _after_ WebKit attempts to focus the :host.
+        this.tabIndex = 0;
+        this.focus({ preventScroll: true });
+        this.tabIndex = -1;
+      });
+    }
+  }
 
-		if (this.focusElement !== this) {
-			this.focusElement.focus(options);
-		} else {
-			HTMLElement.prototype.focus.apply(this, [options]);
-		}
-	}
+  private async manageFocusElementTabindex(tabIndex: number): Promise<void> {
+    if (!this.focusElement) {
+      // allow setting these values to be async when needed.
+      await this.updateComplete;
+    }
 
-	public override blur(): void {
-		const focusElement = this.focusElement || this;
-		if (focusElement !== this) {
-			focusElement.blur();
-		} else {
-			HTMLElement.prototype.blur.apply(this);
-		}
-	}
+    if (tabIndex === null) {
+      this.focusElement.removeAttribute("tabindex");
+    } else {
+      if (this.focusElement !== this) {
+        this.focusElement.tabIndex = tabIndex;
+      }
+    }
+  }
 
-	public override click(): void {
-		if (this.disabled) {
-			return;
-		}
+  private manipulatingTabindex = false;
 
-		const focusElement = this.focusElement || this;
-		if (focusElement !== this) {
-			focusElement.click();
-		} else {
-			HTMLElement.prototype.click.apply(this);
-		}
-	}
+  /**
+   * @private
+   */
+  public get focusElement(): DisableableElement {
+    throw new Error("Must implement focusElement getter!");
+  }
 
-	protected manageAutoFocus(): void {
-		if (this.autofocus) {
-			/**
-			 * Trick :focus-visible polyfill into thinking keyboard based focus
-			 *
-			 * @private
-			 **/
-			this.dispatchEvent(
-				new KeyboardEvent("keydown", {
-					code: "Tab",
-				}),
-			);
-			this.focusElement.focus();
-		}
-	}
+  /**
+   * @public
+   * @returns {boolean} whether the component should manage its focusElement tab-index or not
+   * Needed for action-menu to be supported in action-group in an accessible way
+   */
+  public get selfManageFocusElement(): boolean {
+    return false;
+  }
 
-	protected override firstUpdated(changes: PropertyValues): void {
-		super.firstUpdated(changes);
-		if (
-			!this.hasAttribute("tabindex") ||
-			this.getAttribute("tabindex") !== "-1"
-		) {
-			this.setAttribute("focusable", "");
-		}
-	}
+  public override focus(options?: FocusOptions): void {
+    if (this.disabled || !this.focusElement) {
+      return;
+    }
 
-	protected override update(changedProperties: PropertyValues): void {
-		if (changedProperties.has("disabled")) {
-			this.handleDisabledChanged(
-				this.disabled,
-				changedProperties.get("disabled") as boolean,
-			);
-		}
+    if (this.focusElement !== this) {
+      this.focusElement.focus(options);
+    } else {
+      HTMLElement.prototype.focus.apply(this, [options]);
+    }
+  }
 
-		super.update(changedProperties);
-	}
+  public override blur(): void {
+    const focusElement = this.focusElement || this;
 
-	protected override updated(changedProperties: PropertyValues): void {
-		super.updated(changedProperties);
+    if (focusElement !== this) {
+      focusElement.blur();
+    } else {
+      HTMLElement.prototype.blur.apply(this);
+    }
+  }
 
-		if (changedProperties.has("disabled") && this.disabled) {
-			this.blur();
-		}
-	}
+  public override click(): void {
+    if (this.disabled) {
+      return;
+    }
 
-	private async handleDisabledChanged(
-		disabled: boolean,
-		oldDisabled: boolean,
-	): Promise<void> {
-		const canSetDisabled = (): boolean =>
-			this.focusElement !== this &&
-			typeof this.focusElement.disabled !== "undefined";
-		if (disabled) {
-			this.manipulatingTabindex = true;
-			this.setAttribute("tabindex", "-1");
-			await this.updateComplete;
-			if (canSetDisabled()) {
-				this.focusElement.disabled = true;
-			} else {
-				this.setAttribute("aria-disabled", "true");
-			}
-		} else if (oldDisabled) {
-			this.manipulatingTabindex = true;
-			if (this.focusElement === this) {
-				this.setAttribute("tabindex", "" + this._tabIndex);
-			} else {
-				this.removeAttribute("tabindex");
-			}
-			await this.updateComplete;
-			if (canSetDisabled()) {
-				this.focusElement.disabled = false;
-			} else {
-				this.removeAttribute("aria-disabled");
-			}
-		}
-	}
+    const focusElement = this.focusElement || this;
 
-	protected override async getUpdateComplete(): Promise<boolean> {
-		const complete = (await super.getUpdateComplete()) as boolean;
-		await this.autofocusReady;
+    if (focusElement !== this) {
+      focusElement.click();
+    } else {
+      HTMLElement.prototype.click.apply(this);
+    }
+  }
 
-		return complete;
-	}
+  protected manageAutoFocus(): void {
+    if (this.autofocus) {
+      /**
+       * Trick :focus-visible polyfill into thinking keyboard based focus
+       *
+       * @private
+       **/
+      this.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          code: "Tab",
+        }),
+      );
+      this.focusElement.focus();
+    }
+  }
 
-	private autofocusReady = Promise.resolve();
+  protected override firstUpdated(changes: PropertyValues): void {
+    super.firstUpdated(changes);
 
-	public override connectedCallback(): void {
-		super.connectedCallback();
-		if (this.autofocus) {
-			this.autofocusReady = new Promise((res) => {
-				const asyncFunc = async (): Promise<void> => {
-					// If at connect time the [autofocus] content is placed within
-					// content that needs to be "hidden" by default, it would need to wait
-					// two rAFs for animations to be triggered on that content in
-					// order for the [autofocus] to become "visible" and have its
-					// focus() capabilities enabled.
-					//
-					// Await this with `getUpdateComplete` so that the element cannot
-					// become "ready" until `manageFocus` has occurred.
-					await nextFrame();
-					await nextFrame();
-					res();
-				};
-				asyncFunc();
-			});
-			this.updateComplete.then(() => {
-				this.manageAutoFocus();
-			});
-		}
-	}
+    if (
+      !this.hasAttribute("tabindex") ||
+      this.getAttribute("tabindex") !== "-1"
+    ) {
+      this.setAttribute("focusable", "");
+    }
+  }
+
+  protected override update(changedProperties: PropertyValues): void {
+    if (changedProperties.has("disabled")) {
+      this.handleDisabledChanged(
+        this.disabled,
+        changedProperties.get("disabled") as boolean,
+      );
+    }
+
+    super.update(changedProperties);
+  }
+
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+
+    if (changedProperties.has("disabled") && this.disabled) {
+      this.blur();
+    }
+  }
+
+  private async handleDisabledChanged(
+    disabled: boolean,
+    oldDisabled: boolean,
+  ): Promise<void> {
+    const canSetDisabled = (): boolean =>
+      this.focusElement !== this &&
+      typeof this.focusElement.disabled !== "undefined";
+
+    if (disabled) {
+      this.manipulatingTabindex = true;
+      this.setAttribute("tabindex", "-1");
+      await this.updateComplete;
+
+      if (canSetDisabled()) {
+        this.focusElement.disabled = true;
+      } else {
+        this.setAttribute("aria-disabled", "true");
+      }
+    } else if (oldDisabled) {
+      this.manipulatingTabindex = true;
+
+      if (this.focusElement === this) {
+        this.setAttribute("tabindex", "" + this._tabIndex);
+      } else {
+        this.removeAttribute("tabindex");
+      }
+
+      await this.updateComplete;
+
+      if (canSetDisabled()) {
+        this.focusElement.disabled = false;
+      } else {
+        this.removeAttribute("aria-disabled");
+      }
+    }
+  }
+
+  protected override async getUpdateComplete(): Promise<boolean> {
+    const complete = (await super.getUpdateComplete()) as boolean;
+
+    await this.autofocusReady;
+
+    return complete;
+  }
+
+  private autofocusReady = Promise.resolve();
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+
+    if (this.autofocus) {
+      this.autofocusReady = new Promise((res) => {
+        const asyncFunc = async (): Promise<void> => {
+          // If at connect time the [autofocus] content is placed within
+          // content that needs to be "hidden" by default, it would need to wait
+          // two rAFs for animations to be triggered on that content in
+          // order for the [autofocus] to become "visible" and have its
+          // focus() capabilities enabled.
+          //
+          // Await this with `getUpdateComplete` so that the element cannot
+          // become "ready" until `manageFocus` has occurred.
+          await nextFrame();
+          await nextFrame();
+          res();
+        };
+
+        asyncFunc();
+      });
+      this.updateComplete.then(() => {
+        this.manageAutoFocus();
+      });
+    }
+  }
 }

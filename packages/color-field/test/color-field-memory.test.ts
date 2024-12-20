@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Template } from '../stories/template.js';
-import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { Template } from "../stories/template.js";
+import { testForMemoryLeaks } from "../../../test/testing-helpers.js";
 
-testForMemoryLeaks(Template({ label: 'Enter color value' }));
+testForMemoryLeaks(Template({ label: "Enter color value" }));

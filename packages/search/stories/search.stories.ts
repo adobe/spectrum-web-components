@@ -9,34 +9,34 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/search/sp-search.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import "@spectrum-web-components/search/sp-search.js";
+import { html, TemplateResult } from "@spectrum-web-components/base";
 
 export default {
-    component: 'sp-search',
-    title: 'Search',
+  component: "sp-search",
+  title: "Search",
 };
 
 export const Default = (): TemplateResult => html`
-    <sp-search></sp-search>
-    <sp-search disabled></sp-search>
+  <sp-search></sp-search>
+  <sp-search disabled></sp-search>
 `;
 
 export const autofocus = (): TemplateResult => html`
-    <sp-search autofocus></sp-search>
+  <sp-search autofocus></sp-search>
 `;
 
 export const focusedOverflowing = (): TemplateResult => html`
-    <sp-search
-        value="this is a really long search term that overflows the available space"
-    ></sp-search>
+  <sp-search
+    value="this is a really long search term that overflows the available space"
+  ></sp-search>
 `;
 
 export const Quiet = (): TemplateResult => html`
-    <sp-search quiet></sp-search>
-    <sp-search quiet disabled></sp-search>
+  <sp-search quiet></sp-search>
+  <sp-search quiet disabled></sp-search>
 `;
 
 export const holdValueOnEscape = (): TemplateResult => html`
-    <sp-search holdValueOnEscape></sp-search>
+  <sp-search holdValueOnEscape></sp-search>
 `;

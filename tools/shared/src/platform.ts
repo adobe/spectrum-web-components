@@ -11,61 +11,61 @@ governing permissions and limitations under the License.
 */
 
 function testUserAgent(re: RegExp): boolean {
-    return typeof window !== 'undefined' && window.navigator != null
-        ? re.test(window.navigator.userAgent)
-        : false;
+  return typeof window !== "undefined" && window.navigator != null
+    ? re.test(window.navigator.userAgent)
+    : false;
 }
 
 function testPlatform(re: RegExp): boolean {
-    return typeof window !== 'undefined' && window.navigator != null
-        ? re.test(window.navigator.platform)
-        : false;
+  return typeof window !== "undefined" && window.navigator != null
+    ? re.test(window.navigator.platform)
+    : false;
 }
 
 /* c8 ignore next 3 */
 export function isMac(): boolean {
-    return testPlatform(/^Mac/);
+  return testPlatform(/^Mac/);
 }
 
 export function isIPhone(): boolean {
-    return testPlatform(/^iPhone/);
+  return testPlatform(/^iPhone/);
 }
 
 export function isIPad(): boolean {
-    return (
-        testPlatform(/^iPad/) ||
-        // iPadOS 13 lies and says it's a Mac, but we can distinguish by detecting touch support.
-        (isMac() && navigator.maxTouchPoints > 1)
-    );
+  return (
+    testPlatform(/^iPad/) ||
+    // iPadOS 13 lies and says it's a Mac, but we can distinguish by detecting touch support.
+    (isMac() && navigator.maxTouchPoints > 1)
+  );
 }
 
 export function isIOS(): boolean {
-    return isIPhone() || isIPad();
+  return isIPhone() || isIPad();
 }
 
 /* c8 ignore next 3 */
 export function isAppleDevice(): boolean {
-    return isMac() || isIOS();
+  return isMac() || isIOS();
 }
 
 /* c8 ignore next 3 */
 export function isWebKit(): boolean {
-    return testUserAgent(/AppleWebKit/) && !isChrome();
+  return testUserAgent(/AppleWebKit/) && !isChrome();
 }
 
 /* c8 ignore next 3 */
 export function isChrome(): boolean {
-    return testUserAgent(/Chrome/);
+  return testUserAgent(/Chrome/);
 }
 
 export function isFirefox(): boolean {
-    return testUserAgent(/Firefox/) && !isSeamonkey();
+  return testUserAgent(/Firefox/) && !isSeamonkey();
 }
 
 export function isSeamonkey(): boolean {
-    return testUserAgent(/Seamonkey/);
+  return testUserAgent(/Seamonkey/);
 }
 
 export function isAndroid(): boolean {
-    return testUserAgent(/Android/);
+  return testUserAgent(/Android/);
 }

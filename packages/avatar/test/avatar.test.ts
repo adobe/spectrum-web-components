@@ -14,112 +14,112 @@ import { elementUpdated, expect, fixture, html } from "@open-wc/testing";
 import { testForLitDevWarnings } from "../../../test/testing-helpers.js";
 
 describe("Avatar", () => {
-	testForLitDevWarnings(
-		async () =>
-			await fixture<Avatar>(html`
-				<sp-avatar
-					label="Shantanu Narayen"
-					src="https://picsum.photos/500/500"
-				></sp-avatar>
-			`),
-	);
-	it("loads accessibly", async () => {
-		const el = await fixture<Avatar>(html`
-			<sp-avatar
-				label="Shantanu Narayen"
-				src="https://picsum.photos/500/500"
-			></sp-avatar>
-		`);
+  testForLitDevWarnings(
+    async () =>
+      await fixture<Avatar>(html`
+        <sp-avatar
+          label="Shantanu Narayen"
+          src="https://picsum.photos/500/500"
+        ></sp-avatar>
+      `),
+  );
+  it("loads accessibly", async () => {
+    const el = await fixture<Avatar>(html`
+      <sp-avatar
+        label="Shantanu Narayen"
+        src="https://picsum.photos/500/500"
+      ></sp-avatar>
+    `);
 
-		await elementUpdated(el);
+    await elementUpdated(el);
 
-		await expect(el).to.be.accessible();
-	});
-	it("loads accessibly with [href]", async () => {
-		const el = await fixture<Avatar>(html`
-			<sp-avatar
-				label="Shantanu Narayen"
-				src="https://picsum.photos/500/500"
-				href="https://adobe.com"
-			></sp-avatar>
-		`);
+    await expect(el).to.be.accessible();
+  });
+  it("loads accessibly with [href]", async () => {
+    const el = await fixture<Avatar>(html`
+      <sp-avatar
+        label="Shantanu Narayen"
+        src="https://picsum.photos/500/500"
+        href="https://adobe.com"
+      ></sp-avatar>
+    `);
 
-		await elementUpdated(el);
+    await elementUpdated(el);
 
-		await expect(el).to.be.accessible();
-	});
-	it("validates `size`", async () => {
-		const el = await fixture<Avatar>(html`
-			<sp-avatar
-				label="Shantanu Narayen"
-				src="https://picsum.photos/500/500"
-			></sp-avatar>
-		`);
+    await expect(el).to.be.accessible();
+  });
+  it("validates `size`", async () => {
+    const el = await fixture<Avatar>(html`
+      <sp-avatar
+        label="Shantanu Narayen"
+        src="https://picsum.photos/500/500"
+      ></sp-avatar>
+    `);
 
-		await elementUpdated(el);
+    await elementUpdated(el);
 
-		expect(el.size).to.equal(100);
+    expect(el.size).to.equal(100);
 
-		el.setAttribute("size", "55");
+    el.setAttribute("size", "55");
 
-		await elementUpdated(el);
+    await elementUpdated(el);
 
-		expect(el.size).to.equal(100);
+    expect(el.size).to.equal(100);
 
-		el.setAttribute("size", "600");
+    el.setAttribute("size", "600");
 
-		await elementUpdated(el);
+    await elementUpdated(el);
 
-		expect(el.size).to.equal(600);
-	});
-	it("loads with everything set", async () => {
-		const el = await fixture<Avatar>(html`
-			<sp-avatar
-				label="Shantanu Narayen"
-				src="https://picsum.photos/500/500"
-			></sp-avatar>
-		`);
+    expect(el.size).to.equal(600);
+  });
+  it("loads with everything set", async () => {
+    const el = await fixture<Avatar>(html`
+      <sp-avatar
+        label="Shantanu Narayen"
+        src="https://picsum.photos/500/500"
+      ></sp-avatar>
+    `);
 
-		await elementUpdated(el);
-		expect(el).to.not.be.undefined;
-		const imageEl = el.shadowRoot
-			? (el.shadowRoot.querySelector("img") as HTMLImageElement)
-			: (el.querySelector("img") as HTMLImageElement);
+    await elementUpdated(el);
+    expect(el).to.not.be.undefined;
+    const imageEl = el.shadowRoot
+      ? (el.shadowRoot.querySelector("img") as HTMLImageElement)
+      : (el.querySelector("img") as HTMLImageElement);
 
-		expect(imageEl.hasAttribute("alt")).to.be.true;
-		expect(imageEl.getAttribute("alt")).to.equal("Shantanu Narayen");
-	});
-	it("loads with no label", async () => {
-		const el = await fixture<Avatar>(html`
-			<sp-avatar src="https://picsum.photos/500/500"></sp-avatar>
-		`);
+    expect(imageEl.hasAttribute("alt")).to.be.true;
+    expect(imageEl.getAttribute("alt")).to.equal("Shantanu Narayen");
+  });
+  it("loads with no label", async () => {
+    const el = await fixture<Avatar>(html`
+      <sp-avatar src="https://picsum.photos/500/500"></sp-avatar>
+    `);
 
-		await elementUpdated(el);
-		expect(el).to.not.be.undefined;
-		const imageEl = el.shadowRoot
-			? (el.shadowRoot.querySelector("img") as HTMLImageElement)
-			: (el.querySelector("img") as HTMLImageElement);
+    await elementUpdated(el);
+    expect(el).to.not.be.undefined;
+    const imageEl = el.shadowRoot
+      ? (el.shadowRoot.querySelector("img") as HTMLImageElement)
+      : (el.querySelector("img") as HTMLImageElement);
 
-		expect(imageEl.hasAttribute("alt")).to.be.false;
-	});
-	it("can receive a `tabindex` without an `href`", async () => {
-		try {
-			const el = await fixture<Avatar>(html`
-				<sp-avatar
-					label="Shantanu Narayen"
-					src="https://picsum.photos/500/500"
-					tabindex="0"
-				></sp-avatar>
-			`);
+    expect(imageEl.hasAttribute("alt")).to.be.false;
+  });
+  it("can receive a `tabindex` without an `href`", async () => {
+    try {
+      const el = await fixture<Avatar>(html`
+        <sp-avatar
+          label="Shantanu Narayen"
+          src="https://picsum.photos/500/500"
+          tabindex="0"
+        ></sp-avatar>
+      `);
 
-			await elementUpdated(el);
-			const focusEl = el.focusElement;
+      await elementUpdated(el);
+      const focusEl = el.focusElement;
 
-			expect(focusEl).to.exist;
-		} catch (error) {
-			expect(() => {
-				throw error;
-			}).to.throw("There should be no error.");
-		}
-	});
+      expect(focusEl).to.exist;
+    } catch (error) {
+      expect(() => {
+        throw error;
+      }).to.throw("There should be no error.");
+    }
+  });
 });

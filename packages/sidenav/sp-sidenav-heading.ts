@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { SideNavHeading } from './src/SidenavHeading.js';
-import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+import { SideNavHeading } from "./src/SidenavHeading.js";
+import { defineElement } from "@spectrum-web-components/base/src/define-element.js";
 
-defineElement('sp-sidenav-heading', SideNavHeading);
+defineElement("sp-sidenav-heading", SideNavHeading);
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'sp-sidenav-heading': SideNavHeading;
-    }
+  interface HTMLElementTagNameMap {
+    "sp-sidenav-heading": SideNavHeading;
+  }
 }

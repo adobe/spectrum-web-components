@@ -9,67 +9,67 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
-import '@spectrum-web-components/color-field/sp-color-field.js';
-import { ColorFieldMarkup } from './template.js';
-import { argTypes } from './args.js';
+import { TemplateResult } from "@spectrum-web-components/base";
+import "@spectrum-web-components/color-field/sp-color-field.js";
+import { ColorFieldMarkup } from "./template.js";
+import { argTypes } from "./args.js";
 
 export default {
-    component: 'sp-color-field',
-    title: 'Color Field',
-    args: {
-        label: '',
-        size: 'm',
-    },
-    argTypes,
+  component: "sp-color-field",
+  title: "Color Field",
+  args: {
+    label: "",
+    size: "m",
+  },
+  argTypes,
 };
 
 type Properties = {
-    quiet?: boolean;
-    readonly?: boolean;
-    disabled?: boolean;
-    viewColor?: boolean;
-    value?: string;
-    label?: string;
-    size?: 's' | 'm' | 'l' | 'xl';
+  quiet?: boolean;
+  readonly?: boolean;
+  disabled?: boolean;
+  viewColor?: boolean;
+  value?: string;
+  label?: string;
+  size?: "s" | "m" | "l" | "xl";
 };
 
 export const Default = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+  ColorFieldMarkup(args);
 
 export const Quiet = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+  ColorFieldMarkup(args);
 Quiet.args = {
-    quiet: true,
+  quiet: true,
 };
 
 export const ReadOnly = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+  ColorFieldMarkup(args);
 ReadOnly.args = {
-    readonly: true,
-    value: 'rgb(255,255,255)',
+  readonly: true,
+  value: "rgb(255,255,255)",
 };
 
 export const Disabled = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+  ColorFieldMarkup(args);
 Disabled.args = {
-    disabled: true,
+  disabled: true,
 };
 export const viewColor = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+  ColorFieldMarkup(args);
 viewColor.args = {
-    viewColor: true,
-    value: 'rgb(255,255,0)',
+  viewColor: true,
+  value: "rgb(255,255,0)",
 };
 
 export const WrongInput = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+  ColorFieldMarkup(args);
 
 WrongInput.args = {
-    value: 'apple',
+  value: "apple",
 };
 export const RightInput = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+  ColorFieldMarkup(args);
 RightInput.args = {
-    value: '#a8323a',
+  value: "#a8323a",
 };

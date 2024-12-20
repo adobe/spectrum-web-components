@@ -10,22 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
+import { html, TemplateResult } from "@spectrum-web-components/base";
+import "@spectrum-web-components/coachmark/sp-coach-indicator.js";
 
 export default {
-    title: 'CoachIndicator',
-    component: 'sp-coach-indicator',
+  title: "CoachIndicator",
+  component: "sp-coach-indicator",
 };
 
 export const Default = (): TemplateResult => {
-    return html`
-        <sp-coach-indicator></sp-coach-indicator>
-    `;
+  return html` <sp-coach-indicator></sp-coach-indicator> `;
 };
 
 export const quiet = (): TemplateResult => {
-    return html`
-        <sp-coach-indicator quiet></sp-coach-indicator>
-    `;
+  return html` <sp-coach-indicator quiet></sp-coach-indicator> `;
 };

@@ -10,204 +10,181 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html } from '@spectrum-web-components/base';
+import { html } from "@spectrum-web-components/base";
 import {
-    elementUpdated,
-    expect,
-    nextFrame,
-    oneEvent,
-    waitUntil,
-} from '@open-wc/testing';
-import { Button } from '@spectrum-web-components/button';
-import { Overlay } from '@spectrum-web-components/overlay';
+  elementUpdated,
+  expect,
+  nextFrame,
+  oneEvent,
+  waitUntil,
+} from "@open-wc/testing";
+import { Button } from "@spectrum-web-components/button";
+import { Overlay } from "@spectrum-web-components/overlay";
 import {
-    Default,
-    insertionOptions,
-} from '../stories/overlay-directive.stories.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { fixture } from '../../../test/testing-helpers.js';
+  Default,
+  insertionOptions,
+} from "../stories/overlay-directive.stories.js";
+import { sendMouse } from "../../../test/plugins/browser.js";
+import { fixture } from "../../../test/testing-helpers.js";
 
-describe('Overlay Directive', () => {
-    it('opens declaratively', async function () {
-        const test = await fixture<Button>(Default({ open: true }));
+describe("Overlay Directive", () => {
+  it("opens declaratively", async function () {
+    const test = await fixture<Button>(Default({ open: true }));
 
-        await oneEvent(test, 'sp-opened');
+    await oneEvent(test, "sp-opened");
 
-        const el = test.nextElementSibling as Overlay;
+    const el = test.nextElementSibling as Overlay;
 
-        expect(el.open).to.be.true;
+    expect(el.open).to.be.true;
+  });
+  it("opens without options", async function () {
+    const test = await fixture<Button>(Default());
+    const opened = oneEvent(test, "sp-opened");
+
+    test.click();
+    await opened;
+
+    const el = test.nextElementSibling as Overlay;
+
+    expect(el.open).to.be.true;
+  });
+  it("opens an Overlay after the trigger", async function () {
+    const test = await fixture<HTMLElement>(html`
+      <div
+        style="width: 100%; height: 100vh; display: grid; place-content: center;"
+      >
+        ${insertionOptions()}
+      </div>
+    `);
+
+    const el = test.querySelector("sp-button") as Button;
+
+    await elementUpdated(el);
+    let overlays = document.querySelectorAll("sp-overlay");
+
+    expect(overlays.length).to.equal(0);
+
+    const rect = el.getBoundingClientRect();
+    let opened = oneEvent(el, "sp-opened");
+
+    // Open the Tooltip via "hover"
+    await sendMouse({
+      steps: [
+        {
+          type: "move",
+          position: [rect.left + rect.width / 2, rect.top + rect.height / 2],
+        },
+      ],
     });
-    it('opens without options', async function () {
-        const test = await fixture<Button>(Default());
-        const opened = oneEvent(test, 'sp-opened');
+    await opened;
 
-        test.click();
-        await opened;
-
-        const el = test.nextElementSibling as Overlay;
-
-        expect(el.open).to.be.true;
+    opened = oneEvent(el, "sp-opened");
+    // Open the Popover via "click"
+    await sendMouse({
+      steps: [
+        {
+          type: "click",
+          position: [rect.left + rect.width / 2, rect.top + rect.height / 2],
+        },
+        {
+          type: "move",
+          position: [rect.left - rect.width / 2, rect.top - rect.height / 2],
+        },
+      ],
     });
-    it('opens an Overlay after the trigger', async function () {
-        const test = await fixture<HTMLElement>(html`
-            <div
-                style="width: 100%; height: 100vh; display: grid; place-content: center;"
-            >
-                ${insertionOptions()}
-            </div>
-        `);
+    await opened;
 
-        const el = test.querySelector('sp-button') as Button;
+    overlays = document.querySelectorAll("sp-overlay");
+    expect(overlays.length).to.be.gt(0);
+    expect(overlays[0].previousElementSibling).to.equal(el);
 
-        await elementUpdated(el);
-        let overlays = document.querySelectorAll('sp-overlay');
+    // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup
+    const closed = oneEvent(overlays[0], "slottable-request");
 
-        expect(overlays.length).to.equal(0);
-
-        const rect = el.getBoundingClientRect();
-        let opened = oneEvent(el, 'sp-opened');
-
-        // Open the Tooltip via "hover"
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                },
-            ],
-        });
-        await opened;
-
-        opened = oneEvent(el, 'sp-opened');
-        // Open the Popover via "click"
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                },
-                {
-                    type: 'move',
-                    position: [
-                        rect.left - rect.width / 2,
-                        rect.top - rect.height / 2,
-                    ],
-                },
-            ],
-        });
-        await opened;
-
-        overlays = document.querySelectorAll('sp-overlay');
-        expect(overlays.length).to.be.gt(0);
-        expect(overlays[0].previousElementSibling).to.equal(el);
-
-        // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup
-        const closed = oneEvent(overlays[0], 'slottable-request');
-
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        rect.left - rect.width / 2,
-                        rect.top - rect.height / 2,
-                    ],
-                },
-            ],
-        });
-        await closed;
-
-        await waitUntil(() => {
-            overlays = document.querySelectorAll('sp-overlay');
-
-            return overlays.length === 0;
-        }, 'not all overlays were cleaned up');
-
-        expect(overlays.length).to.equal(0);
+    await sendMouse({
+      steps: [
+        {
+          type: "click",
+          position: [rect.left - rect.width / 2, rect.top - rect.height / 2],
+        },
+      ],
     });
+    await closed;
 
-    it('opens an Overlay in a specific part of the DOM', async function () {
-        const test = await fixture<HTMLElement>(html`
-            <div
-                style="width: 100%; height: 100vh; display: grid; place-content: center;"
-            >
-                ${insertionOptions(insertionOptions.args)}
-            </div>
-        `);
+    await waitUntil(() => {
+      overlays = document.querySelectorAll("sp-overlay");
 
-        const el = test.querySelector('sp-button') as Button;
+      return overlays.length === 0;
+    }, "not all overlays were cleaned up");
 
-        await elementUpdated(el);
+    expect(overlays.length).to.equal(0);
+  });
 
-        const otherElement = test.querySelector(
-            '#other-element'
-        ) as HTMLElement;
-        let overlays = otherElement.querySelectorAll('sp-overlay');
+  it("opens an Overlay in a specific part of the DOM", async function () {
+    const test = await fixture<HTMLElement>(html`
+      <div
+        style="width: 100%; height: 100vh; display: grid; place-content: center;"
+      >
+        ${insertionOptions(insertionOptions.args)}
+      </div>
+    `);
 
-        expect(overlays.length).to.equal(0);
+    const el = test.querySelector("sp-button") as Button;
 
-        const rect = el.getBoundingClientRect();
-        let opened = oneEvent(el, 'sp-opened');
+    await elementUpdated(el);
 
-        // Open the Tooltip via "hover"
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                },
-            ],
-        });
-        await opened;
+    const otherElement = test.querySelector("#other-element") as HTMLElement;
+    let overlays = otherElement.querySelectorAll("sp-overlay");
 
-        opened = oneEvent(el, 'sp-opened');
-        // Open the Popover via "click"
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                },
-            ],
-        });
-        await opened;
+    expect(overlays.length).to.equal(0);
 
-        overlays = otherElement.querySelectorAll('sp-overlay');
-        expect(overlays.length).to.equal(1);
+    const rect = el.getBoundingClientRect();
+    let opened = oneEvent(el, "sp-opened");
 
-        // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup
-        const closed = oneEvent(overlays[0], 'slottable-request');
-
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        rect.left - rect.width / 2,
-                        rect.top - rect.height / 2,
-                    ],
-                },
-            ],
-        });
-        await closed;
-
-        // Wait for DOM clean up to complete
-        await nextFrame();
-        await nextFrame();
-
-        overlays = otherElement.querySelectorAll('sp-overlay');
-        expect(overlays.length).to.equal(0);
+    // Open the Tooltip via "hover"
+    await sendMouse({
+      steps: [
+        {
+          type: "move",
+          position: [rect.left + rect.width / 2, rect.top + rect.height / 2],
+        },
+      ],
     });
+    await opened;
+
+    opened = oneEvent(el, "sp-opened");
+    // Open the Popover via "click"
+    await sendMouse({
+      steps: [
+        {
+          type: "click",
+          position: [rect.left + rect.width / 2, rect.top + rect.height / 2],
+        },
+      ],
+    });
+    await opened;
+
+    overlays = otherElement.querySelectorAll("sp-overlay");
+    expect(overlays.length).to.equal(1);
+
+    // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup
+    const closed = oneEvent(overlays[0], "slottable-request");
+
+    await sendMouse({
+      steps: [
+        {
+          type: "click",
+          position: [rect.left - rect.width / 2, rect.top - rect.height / 2],
+        },
+      ],
+    });
+    await closed;
+
+    // Wait for DOM clean up to complete
+    await nextFrame();
+    await nextFrame();
+
+    overlays = otherElement.querySelectorAll("sp-overlay");
+    expect(overlays.length).to.equal(0);
+  });
 });

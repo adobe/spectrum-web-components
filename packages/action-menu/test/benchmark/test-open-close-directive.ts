@@ -10,85 +10,85 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import type { ActionMenu } from '@spectrum-web-components/action-menu';
-import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
-import { html, TemplateResult } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
-import { SpectrumElement } from '@spectrum-web-components/base';
+import "@spectrum-web-components/action-menu/sp-action-menu.js";
+import type { ActionMenu } from "@spectrum-web-components/action-menu";
+import { slottableRequest } from "@spectrum-web-components/overlay/src/slottable-request-directive.js";
+import { html, TemplateResult } from "lit";
+import { measureFixtureCreation } from "../../../../test/benchmark/helpers.js";
+import { SpectrumElement } from "@spectrum-web-components/base";
 
 const renderOptions = (): TemplateResult => {
-    import('@spectrum-web-components/menu/sp-menu-item.js');
-    import('@spectrum-web-components/menu/sp-menu-divider.js');
+  import("@spectrum-web-components/menu/sp-menu-item.js");
+  import("@spectrum-web-components/menu/sp-menu-divider.js");
 
-    return html`
-        <sp-menu-item>Deselect</sp-menu-item>
-        <sp-menu-item>Select Inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
-        <sp-menu-item>Select and Mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save Selection</sp-menu-item>
-        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-    `;
+  return html`
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select Inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and Mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save Selection</sp-menu-item>
+    <sp-menu-item disabled>Make Work Path</sp-menu-item>
+  `;
 };
 
 class ActionMenuWorkflow extends HTMLElement {
-    ready!: (value: boolean | PromiseLike<boolean>) => void;
-    target!: ActionMenu;
-    count = 0;
+  ready!: (value: boolean | PromiseLike<boolean>) => void;
+  target!: ActionMenu;
+  count = 0;
 
-    constructor() {
-        super();
-        this.readyPromise = new Promise((res) => {
-            this.ready = res;
-            this.setup();
-        });
-    }
+  constructor() {
+    super();
+    this.readyPromise = new Promise((res) => {
+      this.ready = res;
+      this.setup();
+    });
+  }
 
-    async setup(): Promise<void> {
-        this.target = this.nextElementSibling as ActionMenu;
-        const childPromises = [] as Promise<boolean>[];
+  async setup(): Promise<void> {
+    this.target = this.nextElementSibling as ActionMenu;
+    const childPromises = [] as Promise<boolean>[];
 
-        [...this.target.children].forEach((child) => {
-            if ('updateComplete' in child) {
-                childPromises.push((child as SpectrumElement).updateComplete);
-            }
-        });
-        await Promise.all([this.target.updateComplete, ...childPromises]);
-        this.target.addEventListener('sp-opened', () => {
-            requestAnimationFrame(() => (this.target.open = false));
-        });
-        this.target.addEventListener('sp-closed', () => {
-            this.count += 1;
+    [...this.target.children].forEach((child) => {
+      if ("updateComplete" in child) {
+        childPromises.push((child as SpectrumElement).updateComplete);
+      }
+    });
+    await Promise.all([this.target.updateComplete, ...childPromises]);
+    this.target.addEventListener("sp-opened", () => {
+      requestAnimationFrame(() => (this.target.open = false));
+    });
+    this.target.addEventListener("sp-closed", () => {
+      this.count += 1;
 
-            if (this.count >= 5) {
-                this.ready(true);
+      if (this.count >= 5) {
+        this.ready(true);
 
-                return;
-            }
+        return;
+      }
 
-            requestAnimationFrame(() => (this.target.open = true));
-        });
-        requestAnimationFrame(() => (this.target.open = true));
-    }
+      requestAnimationFrame(() => (this.target.open = true));
+    });
+    requestAnimationFrame(() => (this.target.open = true));
+  }
 
-    private readyPromise: Promise<boolean> = Promise.resolve(false);
+  private readyPromise: Promise<boolean> = Promise.resolve(false);
 
-    get updateComplete(): Promise<boolean> {
-        return this.readyPromise;
-    }
+  get updateComplete(): Promise<boolean> {
+    return this.readyPromise;
+  }
 }
 
-customElements.define('action-menu-workflow', ActionMenuWorkflow);
+customElements.define("action-menu-workflow", ActionMenuWorkflow);
 
 measureFixtureCreation(
-    html`
-        <action-menu-workflow></action-menu-workflow>
-        <sp-action-menu ${slottableRequest(renderOptions)}>
-            <span slot="label">
-                Select a Country with a very long label, too long in fact
-            </span>
-        </sp-action-menu>
-    `,
-    { numRenders: 1 }
+  html`
+    <action-menu-workflow></action-menu-workflow>
+    <sp-action-menu ${slottableRequest(renderOptions)}>
+      <span slot="label">
+        Select a Country with a very long label, too long in fact
+      </span>
+    </sp-action-menu>
+  `,
+  { numRenders: 1 },
 );
