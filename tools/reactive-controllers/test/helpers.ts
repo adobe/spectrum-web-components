@@ -10,28 +10,29 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ProvideLang } from '@spectrum-web-components/theme';
+import { ProvideLang } from "@spectrum-web-components/theme";
 
 export const createLanguageContext = (
-    lang: string
+	lang: string,
 ): [(event: CustomEvent<ProvideLang>) => void, (lang: string) => void] => {
-    let language = lang;
-    const updateLanguage = (lang: string): void => {
-        language = lang;
-        resolveLanguage();
-    };
-    const langResolvers: [ProvideLang['callback'], () => void][] = [];
-    const createLangResolver = (event: CustomEvent<ProvideLang>): void => {
-        langResolvers.push([
-            event.detail.callback,
-            () => langResolvers.splice(langResolvers.length, 1),
-        ]);
-        resolveLanguage();
-    };
-    const resolveLanguage = (): void => {
-        langResolvers.forEach(([resolver, unsubscribe]) =>
-            resolver(language, unsubscribe)
-        );
-    };
-    return [createLangResolver, updateLanguage];
+	let language = lang;
+	const updateLanguage = (lang: string): void => {
+		language = lang;
+		resolveLanguage();
+	};
+	const langResolvers: [ProvideLang["callback"], () => void][] = [];
+	const createLangResolver = (event: CustomEvent<ProvideLang>): void => {
+		langResolvers.push([
+			event.detail.callback,
+			() => langResolvers.splice(langResolvers.length, 1),
+		]);
+		resolveLanguage();
+	};
+	const resolveLanguage = (): void => {
+		langResolvers.forEach(([resolver, unsubscribe]) =>
+			resolver(language, unsubscribe),
+		);
+	};
+
+	return [createLangResolver, updateLanguage];
 };

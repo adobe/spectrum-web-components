@@ -8,47 +8,41 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/icons/sp-icons-large.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
-import { IconsLarge, IconsMedium } from '../';
-import IconsetSVG from '../src/icons-large.svg.js';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from "@open-wc/testing";
+import "@spectrum-web-components/icons/sp-icons-large.js";
+import "@spectrum-web-components/icons/sp-icons-medium.js";
+import { IconsLarge, IconsMedium } from "../";
+import IconsetSVG from "../src/icons-large.svg.js";
 
-describe('icons', () => {
-    it('large', async () => {
-        const el = await fixture<IconsLarge>(
-            html`
-                <sp-icons-large></sp-icons-large>
-            `
-        );
+describe("icons", () => {
+	it("large", async () => {
+		const el = await fixture<IconsLarge>(html`
+			<sp-icons-large></sp-icons-large>
+		`);
 
-        await elementUpdated(el);
+		await elementUpdated(el);
 
-        expect(el).to.not.equal(undefined);
-        expect(el.getIconList().length).to.be.above(0);
-    });
-    it('medium', async () => {
-        const el = await fixture<IconsMedium>(
-            html`
-                <sp-icons-medium></sp-icons-medium>
-            `
-        );
+		expect(el).to.not.equal(undefined);
+		expect(el.getIconList().length).to.be.above(0);
+	});
+	it("medium", async () => {
+		const el = await fixture<IconsMedium>(html`
+			<sp-icons-medium></sp-icons-medium>
+		`);
 
-        await elementUpdated(el);
+		await elementUpdated(el);
 
-        expect(el).to.not.equal(undefined);
-        expect(el.getIconList().length).to.be.above(0);
-    });
-    it('listens to slotchange events', async () => {
-        const el = await fixture<IconsMedium>(
-            html`
-                <sp-icons-medium>${IconsetSVG}</sp-icons-medium>
-            `
-        );
+		expect(el).to.not.equal(undefined);
+		expect(el.getIconList().length).to.be.above(0);
+	});
+	it("listens to slotchange events", async () => {
+		const el = await fixture<IconsMedium>(html`
+			<sp-icons-medium>${IconsetSVG}</sp-icons-medium>
+		`);
 
-        await elementUpdated(el);
+		await elementUpdated(el);
 
-        expect(el).to.not.equal(undefined);
-        expect(el.getIconList().length).to.equal(48);
-    });
+		expect(el).to.not.equal(undefined);
+		expect(el.getIconList().length).to.equal(48);
+	});
 });

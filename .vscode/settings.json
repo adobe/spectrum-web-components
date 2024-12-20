@@ -1,15 +1,29 @@
 {
 	"files.exclude": {
-		"**/*.css.ts": { "when": "$(basename)" },
+		"**/*.css.ts": {
+			"when": "$(basename)"
+		},
 		"packages/*/src/spectrum-vars.json": true,
 		"packages/**/*.js.map": true,
-		"packages/**/*.js": { "when": "$(basename).ts" },
-		"packages/**/*.dev.js": { "when": "$(basename).js" },
-		"packages/**/*.d.ts": { "when": "$(basename).ts" },
+		"packages/**/*.js": {
+			"when": "$(basename).ts"
+		},
+		"packages/**/*.dev.js": {
+			"when": "$(basename).js"
+		},
+		"packages/**/*.d.ts": {
+			"when": "$(basename).ts"
+		},
 		"tools/**/*.js.map": true,
-		"tools/**/*.js": { "when": "$(basename).ts" },
-		"tools/**/*.dev.js": { "when": "$(basename).js" },
-		"tools/**/*.d.ts": { "when": "$(basename).ts" },
+		"tools/**/*.js": {
+			"when": "$(basename).ts"
+		},
+		"tools/**/*.dev.js": {
+			"when": "$(basename).js"
+		},
+		"tools/**/*.d.ts": {
+			"when": "$(basename).ts"
+		},
 		"**/*.test-vrt.ts": true
 	},
 	"editor.tabSize": 2,
@@ -22,7 +36,6 @@
 	"editor.detectIndentation": false,
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"lit-plugin.strict": true,
-	"eslint.workingDirectories": ["./packages", "./tools"],
 	"[css]": {
 		"editor.codeActionsOnSave": {
 			"source.fixAll.stylelint": "explicit"
@@ -96,25 +109,27 @@
 			"selector": "yaml"
 		}
 	],
-	"cssVariables.lookupFiles": [
-		"${workspaceFolder}/tokens/dist/index.css",
-		"${workspaceFolder}/tokens/**/*.css",
-		"${workspaceFolder}/components/*/index.css",
-		"${workspaceFolder}/components/*/themes/*.css"
-	],
+	// "cssVariables.lookupFiles": [
+	// 	"${workspaceFolder}/tokens/dist/index.css",
+	// 	"${workspaceFolder}/tokens/**/*.css",
+	// 	"${workspaceFolder}/components/*/index.css",
+	// 	"${workspaceFolder}/components/*/themes/*.css"
+	// ],
 	"docthis.includeDescriptionTag": true,
 	"docthis.inferTypesFromNames": true,
 	"docthis.returnsTag": true,
 	"editor.largeFileOptimizations": true,
 	"editor.renderControlCharacters": true,
-	"emmet.includeLanguages": {
-		"postcss": "css"
-	},
-	"emmet.syntaxProfiles": {
-		"postcss": "css"
-	},
 	"eslint.format.enable": true,
 	"eslint.useESLintClass": true,
+	// "eslint.nodePath": "node_modules/eslint",
+	// "eslint.workingDirectories": ["./packages", "./tools"],
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact"
+	],
 	"files.associations": {
 		"*.css": "postcss"
 	},
@@ -172,8 +187,10 @@
 	"stylelint.reportNeedlessDisables": true,
 	"stylelint.validate": ["css", "postcss"],
 	"storyExplorer.storiesGlobs": [
-		"components/*/stories/*.stories.js",
-		"components/*/stories/*.mdx"
+		"packages/*/stories/*.stories.js",
+		"packages/*/stories/*.mdx",
+		"tools/*/stories/*.stories.js",
+		"tools/*/stories/*.mdx"
 	],
 	"workbench.editor.historyBasedLanguageDetection": false
 }

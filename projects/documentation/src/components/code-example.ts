@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import "@spectrum-web-components/action-button/sp-action-button.js";
+import "@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js";
 import {
 	CSSResultArray,
 	html,
@@ -22,14 +23,13 @@ import {
 	property,
 	query,
 } from "@spectrum-web-components/base/src/decorators.js";
-import "@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js";
-import { FocusVisiblePolyfillMixin } from "@spectrum-web-components/shared";
 import { Color } from "@spectrum-web-components/theme";
-import { toHtmlTemplateString } from "../utils/templates.js";
+import { copyNode } from "./copy-to-clipboard.js";
+import { FocusVisiblePolyfillMixin } from "@spectrum-web-components/shared";
+import Styles from "./code-example.css";
 import StylesDark from "./code-example-dark.css";
 import StylesLight from "./code-example-light.css";
-import Styles from "./code-example.css";
-import { copyNode } from "./copy-to-clipboard.js";
+import { toHtmlTemplateString } from "../utils/templates.js";
 import { TrackTheme } from "./layout.js";
 
 @customElement("code-example")

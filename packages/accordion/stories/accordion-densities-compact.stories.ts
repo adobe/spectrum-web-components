@@ -10,19 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@spectrum-web-components/base';
-import { AccordionMarkup } from './';
+import { TemplateResult } from "@spectrum-web-components/base";
+import { AccordionMarkup } from ".//index.js";
 
 export default {
-    title: 'Accordion/Densities/Compact',
-    component: 'sp-accordion',
+	title: "Accordion/Densities/Compact",
+	component: "sp-accordion",
 };
 
 export const s = (): TemplateResult =>
-    AccordionMarkup({ density: 'compact', size: 's' });
+	AccordionMarkup({ density: "compact", size: "s" });
 export const m = (): TemplateResult =>
-    AccordionMarkup({ density: 'compact', size: 'm' });
+	AccordionMarkup({ density: "compact", size: "m" });
 export const l = (): TemplateResult =>
-    AccordionMarkup({ density: 'compact', size: 'l' });
+	AccordionMarkup({ density: "compact", size: "l" });
 export const xl = (): TemplateResult =>
-    AccordionMarkup({ density: 'compact', size: 'xl' });
+	AccordionMarkup({ density: "compact", size: "xl" });

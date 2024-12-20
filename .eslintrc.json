@@ -5,7 +5,6 @@
 		"node": true
 	},
 	"extends": [
-		// "plugin:prettier/recommended",
 		"plugin:lit-a11y/recommended",
 		"plugin:require-extensions/recommended",
 		"eslint:recommended",
@@ -40,7 +39,9 @@
 						"pathPattern": ".*"
 					},
 					{
-						"order": { "type": "asc" },
+						"order": {
+							"type": "asc"
+						},
 						"pathPattern": ".*"
 					}
 				],
@@ -104,7 +105,9 @@
 						"pathPattern": "^repository$"
 					},
 					{
-						"order": { "type": "asc" },
+						"order": {
+							"type": "asc"
+						},
 						"pathPattern": ".*"
 					}
 				]
@@ -146,7 +149,11 @@
 		],
 		"@stylistic/padding-line-between-statements": [
 			"error",
-			{ "blankLine": "always", "next": "return", "prev": "*" }
+			{
+				"blankLine": "always",
+				"next": "return",
+				"prev": "*"
+			}
 		],
 		"curly": ["error", "all"],
 		"func-call-spacing": ["warn", "never"],
@@ -161,7 +168,10 @@
 		"indent": [
 			"warn",
 			"tab",
-			{ "SwitchCase": 1, "ignoredNodes": ["TemplateLiteral *"] }
+			{
+				"SwitchCase": 1,
+				"ignoredNodes": ["TemplateLiteral *"]
+			}
 		],
 		"linebreak-style": ["warn", "unix"],
 		"lit-a11y/click-events-have-key-events": [
@@ -179,7 +189,12 @@
 				]
 			}
 		],
-		"no-console": ["warn", { "allow": ["warn", "error"] }],
+		"no-console": [
+			"warn",
+			{
+				"allow": ["warn", "error"]
+			}
+		],
 		"no-debugger": 2,
 		"notice/notice": [
 			"error",
@@ -188,7 +203,13 @@
 				"templateFile": "config/license.js"
 			}
 		],
-		"quotes": ["warn", "double"],
+		"quotes": [
+			"warn",
+			"double",
+			{
+				"avoidEscape": true
+			}
+		],
 		"semi": ["warn", "always"],
 		"sort-imports": [
 			"error",

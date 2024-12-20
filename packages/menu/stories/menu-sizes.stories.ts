@@ -10,15 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@spectrum-web-components/base';
-import { MenuMarkup } from './';
+import { TemplateResult } from "@spectrum-web-components/base";
+import { MenuMarkup } from ".//index.js";
 
 export default {
-    component: 'sp-menu',
-    title: 'Menu/Sizes',
+	component: "sp-menu",
+	title: "Menu/Sizes",
 };
 
-export const S = (): TemplateResult => MenuMarkup({ size: 's' });
-export const M = (): TemplateResult => MenuMarkup({ size: 'm' });
-export const L = (): TemplateResult => MenuMarkup({ size: 'l' });
-export const XL = (): TemplateResult => MenuMarkup({ size: 'xl' });
+export const S = (): TemplateResult => MenuMarkup({ size: "s" });
+export const M = (): TemplateResult => MenuMarkup({ size: "m" });
+export const L = (): TemplateResult => MenuMarkup({ size: "l" });
+export const XL = (): TemplateResult => MenuMarkup({ size: "xl" });

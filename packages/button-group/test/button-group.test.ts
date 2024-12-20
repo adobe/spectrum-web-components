@@ -10,31 +10,31 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { elementUpdated, expect, fixture } from "@open-wc/testing";
 
-import '@spectrum-web-components/button-group/sp-button-group.js';
-import { ButtonGroup } from '..';
-import { buttons, buttonsVertical } from '../stories/button-group.stories.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import "@spectrum-web-components/button-group/sp-button-group.js";
+import { ButtonGroup } from "../";
+import { testForLitDevWarnings } from "../../../test/testing-helpers.js";
+import { buttons, buttonsVertical } from "../stories/button-group.stories.js";
 
-describe('Buttongroup', () => {
-    testForLitDevWarnings(
-        async () => await fixture<ButtonGroup>(buttons(buttons.args))
-    );
-    it('loads default button-group accessibly with sp-button', async () => {
-        const el = await fixture<ButtonGroup>(buttons(buttons.args));
+describe("Buttongroup", () => {
+	testForLitDevWarnings(
+		async () => await fixture<ButtonGroup>(buttons(buttons.args)),
+	);
+	it("loads default button-group accessibly with sp-button", async () => {
+		const el = await fixture<ButtonGroup>(buttons(buttons.args));
 
-        await elementUpdated(el);
+		await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
-    it('loads default button-group[vertial] accessibly with sp-button', async () => {
-        const el = await fixture<ButtonGroup>(
-            buttonsVertical(buttonsVertical.args)
-        );
+		await expect(el).to.be.accessible();
+	});
+	it("loads default button-group[vertial] accessibly with sp-button", async () => {
+		const el = await fixture<ButtonGroup>(
+			buttonsVertical(buttonsVertical.args),
+		);
 
-        await elementUpdated(el);
+		await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
+		await expect(el).to.be.accessible();
+	});
 });

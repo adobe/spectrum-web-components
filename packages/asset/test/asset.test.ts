@@ -10,33 +10,33 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { elementUpdated, expect, fixture } from "@open-wc/testing";
 
-import { Asset } from '@spectrum-web-components/asset';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
-import { Default, File, Folder } from '../stories/asset.stories.js';
+import { Asset } from "@spectrum-web-components/asset";
+import { testForLitDevWarnings } from "../../../test/testing-helpers.js";
+import { Default, File, Folder } from "../stories/asset.stories.js";
 
-describe('Asset', () => {
-    testForLitDevWarnings(async () => await fixture<Asset>(Default()));
-    it('loads default asset accessibly', async () => {
-        const el = await fixture<Asset>(Default());
+describe("Asset", () => {
+	testForLitDevWarnings(async () => await fixture<Asset>(Default()));
+	it("loads default asset accessibly", async () => {
+		const el = await fixture<Asset>(Default());
 
-        await elementUpdated(el);
+		await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
-    it('loads [variant="file"] accessibly', async () => {
-        const el = await fixture<Asset>(File());
+		await expect(el).to.be.accessible();
+	});
+	it('loads [variant="file"] accessibly', async () => {
+		const el = await fixture<Asset>(File());
 
-        await elementUpdated(el);
+		await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
-    it('loads [variant="folder"] accessibly', async () => {
-        const el = await fixture<Asset>(Folder());
+		await expect(el).to.be.accessible();
+	});
+	it('loads [variant="folder"] accessibly', async () => {
+		const el = await fixture<Asset>(Folder());
 
-        await elementUpdated(el);
+		await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
+		await expect(el).to.be.accessible();
+	});
 });
