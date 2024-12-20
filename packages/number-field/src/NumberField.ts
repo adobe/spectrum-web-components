@@ -168,7 +168,7 @@ export class NumberField extends TextfieldBase {
       return;
     }
 
-    this.lastCommitedValue = value;
+    this.lastCommittedValue = value;
     const oldValue = this._value;
 
     this._value = value;
@@ -185,11 +185,11 @@ export class NumberField extends TextfieldBase {
 
   public override _value = NaN;
   private _trackingValue = "";
-  private lastCommitedValue?: number;
+  private lastCommittedValue?: number;
 
   private setValue(newValue: number = this.value): void {
     // Capture previous value for accurate IME change detection
-    const previousValue = this.lastCommitedValue;
+    const previousValue = this.lastCommittedValue;
 
     this.value = newValue;
 
@@ -198,13 +198,13 @@ export class NumberField extends TextfieldBase {
       return;
     }
 
-    this.lastCommitedValue = this.value;
+    this.lastCommittedValue = this.value;
 
     this.dispatchEvent(new Event("change", { bubbles: true, composed: true }));
   }
 
   /**
-   * Retreive the value of the element parsed to a Number.
+   * Retrieve the value of the element parsed to a Number.
    */
   public get valueAsString(): string {
     return this._value.toString();
@@ -299,7 +299,7 @@ export class NumberField extends TextfieldBase {
   private changeCount = 0;
   private findChange!: (event: PointerEvent) => void;
   private change!: (event: PointerEvent) => void;
-  private safty!: number;
+  private safety!: number;
   private languageResolver = new LanguageResolutionController(this);
 
   private handlePointerdown(event: PointerEvent): void {
@@ -340,7 +340,7 @@ export class NumberField extends TextfieldBase {
   private startChange(event: PointerEvent): void {
     this.changeCount = 0;
     this.doChange(event);
-    this.safty = setTimeout(() => {
+    this.safety = setTimeout(() => {
       this.doNextChange(event);
     }, 400) as unknown as number;
   }
@@ -356,7 +356,7 @@ export class NumberField extends TextfieldBase {
   private handlePointerup(event: PointerEvent): void {
     this.buttons.releasePointerCapture(event.pointerId);
     cancelAnimationFrame(this.nextChange);
-    clearTimeout(this.safty);
+    clearTimeout(this.safety);
     this.managedInput = false;
     this.setValue();
   }
@@ -562,7 +562,7 @@ export class NumberField extends TextfieldBase {
 
     if (this.numberParser.isValidPartialNumber(value)) {
       // Use starting value as this.value is the `input` value.
-      this.lastCommitedValue = this.lastCommitedValue ?? this.value;
+      this.lastCommittedValue = this.lastCommittedValue ?? this.value;
       const valueAsNumber = this.convertValueToNumber(value);
 
       if (!value && this.indeterminateValue) {
