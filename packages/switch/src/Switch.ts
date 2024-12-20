@@ -11,16 +11,16 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultArray,
-    html,
-    PropertyValues,
-    SizedMixin,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { CheckboxBase } from '@spectrum-web-components/checkbox/src/CheckboxBase.js';
-import switchStyles from './switch.css.js';
-import legacyStyles from './switch-legacy.css.js';
+	CSSResultArray,
+	html,
+	PropertyValues,
+	SizedMixin,
+	TemplateResult,
+} from "@spectrum-web-components/base";
+import { property } from "@spectrum-web-components/base/src/decorators.js";
+import { CheckboxBase } from "@spectrum-web-components/checkbox/src/CheckboxBase.js";
+import legacyStyles from "./switch-legacy.css.js";
+import switchStyles from "./switch.css.js";
 
 /**
  * This component represents a toggle switch.
@@ -33,57 +33,57 @@ import legacyStyles from './switch-legacy.css.js';
  *
  */
 export class Switch extends SizedMixin(CheckboxBase) {
-    /**
-     * Returns the styles to be applied to the component.
-     */
-    public static override get styles(): CSSResultArray {
-        if (window.hasOwnProperty('ShadyDOM')) {
-            // Override some styles if we are using the web component polyfill
-            return [switchStyles, legacyStyles];
-        }
+	/**
+	 * Returns the styles to be applied to the component.
+	 */
+	public static override get styles(): CSSResultArray {
+		if (Object.prototype.hasOwnProperty.call(window, "ShadyDOM")) {
+			// Override some styles if we are using the web component polyfill
+			return [switchStyles, legacyStyles];
+		}
 
-        return [switchStyles];
-    }
+		return [switchStyles];
+	}
 
-    /**
-     * Indicates whether the switch is emphasized.
-     *
-     * This property is reflected as an attribute, meaning changes to the property
-     * will be mirrored in the corresponding HTML attribute.
-     */
-    @property({ type: Boolean, reflect: true })
-    public emphasized = false;
+	/**
+	 * Indicates whether the switch is emphasized.
+	 *
+	 * This property is reflected as an attribute, meaning changes to the property
+	 * will be mirrored in the corresponding HTML attribute.
+	 */
+	@property({ type: Boolean, reflect: true })
+	public emphasized = false;
 
-    /**
-     * Renders the component template.
-     */
-    protected override render(): TemplateResult {
-        return html`
-            ${super.render()}
-            <span id="switch"></span>
-            <label id="label" for="input"><slot></slot></label>
-        `;
-    }
+	/**
+	 * Renders the component template.
+	 */
+	protected override render(): TemplateResult {
+		return html`
+			${super.render()}
+			<span id="switch"></span>
+			<label id="label" for="input"><slot></slot></label>
+		`;
+	}
 
-    /**
-     * Called after the element's DOM has been updated the first time.
-     * Sets the role attribute of the input element to 'switch'.
-     */
-    protected override firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
-        this.inputElement.setAttribute('role', 'switch');
-    }
+	/**
+	 * Called after the element's DOM has been updated the first time.
+	 * Sets the role attribute of the input element to 'switch'.
+	 */
+	protected override firstUpdated(changes: PropertyValues): void {
+		super.firstUpdated(changes);
+		this.inputElement.setAttribute("role", "switch");
+	}
 
-    /**
-     * Called when the element is updated.
-     * Updates the aria-checked attribute of the input element based on the checked property.
-     */
-    protected override updated(changes: PropertyValues): void {
-        if (changes.has('checked')) {
-            this.inputElement.setAttribute(
-                'aria-checked',
-                this.checked ? 'true' : 'false'
-            );
-        }
-    }
+	/**
+	 * Called when the element is updated.
+	 * Updates the aria-checked attribute of the input element based on the checked property.
+	 */
+	protected override updated(changes: PropertyValues): void {
+		if (changes.has("checked")) {
+			this.inputElement.setAttribute(
+				"aria-checked",
+				this.checked ? "true" : "false",
+			);
+		}
+	}
 }

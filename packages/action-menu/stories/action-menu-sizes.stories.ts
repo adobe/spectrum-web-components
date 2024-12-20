@@ -9,35 +9,35 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
+import { TemplateResult } from "@spectrum-web-components/base";
 
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import { isOverlayOpen } from '../../overlay/stories/index.js';
-import '../../overlay/stories/index.js';
-import { ActionMenuMarkup } from './';
+import "@spectrum-web-components/menu/sp-menu.js";
+import "@spectrum-web-components/menu/sp-menu-item.js";
+import { isOverlayOpen } from "../../overlay/stories/index.js";
+import "../../overlay/stories/index.js";
+import { ActionMenuMarkup } from ".//index.js";
 
 export default {
-    title: 'Action menu/Sizes',
-    component: 'sp-action-menu',
+	title: "Action menu/Sizes",
+	component: "sp-action-menu",
 };
 
-export const s = (): TemplateResult => ActionMenuMarkup({ size: 's' });
+export const s = (): TemplateResult => ActionMenuMarkup({ size: "s" });
 export const sOpen = (): TemplateResult =>
-    ActionMenuMarkup({ size: 's', open: true });
+	ActionMenuMarkup({ size: "s", open: true });
 sOpen.decorators = [isOverlayOpen];
 
-export const m = (): TemplateResult => ActionMenuMarkup({ size: 'm' });
+export const m = (): TemplateResult => ActionMenuMarkup({ size: "m" });
 export const mOpen = (): TemplateResult =>
-    ActionMenuMarkup({ size: 'm', open: true });
+	ActionMenuMarkup({ size: "m", open: true });
 mOpen.decorators = [isOverlayOpen];
 
-export const l = (): TemplateResult => ActionMenuMarkup({ size: 'l' });
+export const l = (): TemplateResult => ActionMenuMarkup({ size: "l" });
 export const lOpen = (): TemplateResult =>
-    ActionMenuMarkup({ size: 'l', open: true });
+	ActionMenuMarkup({ size: "l", open: true });
 lOpen.decorators = [isOverlayOpen];
 
-export const XL = (): TemplateResult => ActionMenuMarkup({ size: 'xl' });
+export const XL = (): TemplateResult => ActionMenuMarkup({ size: "xl" });
 export const XLOpen = (): TemplateResult =>
-    ActionMenuMarkup({ size: 'xl', open: true });
+	ActionMenuMarkup({ size: "xl", open: true });
 XLOpen.decorators = [isOverlayOpen];

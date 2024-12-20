@@ -10,140 +10,140 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, nextFrame } from "@open-wc/testing";
 
-import { TopNav, TopNavItem } from '@spectrum-web-components/top-nav';
-import { Default, Selected } from '../stories/top-nav.stories.js';
-import { spy } from 'sinon';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
-import { sendMouse } from '../../../test/plugins/browser.js';
+import { TopNav, TopNavItem } from "@spectrum-web-components/top-nav";
+import { Default, Selected } from "../stories/top-nav.stories.js";
+import { spy } from "sinon";
+import { testForLitDevWarnings } from "../../../test/testing-helpers.js";
+import { sendMouse } from "../../../test/plugins/browser.js";
 
-describe('TopNav', () => {
-    testForLitDevWarnings(async () => await fixture<TopNav>(Default()));
-    it('loads default top-nav accessibly', async () => {
-        const el = await fixture<TopNav>(Default());
+describe("TopNav", () => {
+	testForLitDevWarnings(async () => await fixture<TopNav>(Default()));
+	it("loads default top-nav accessibly", async () => {
+		const el = await fixture<TopNav>(Default());
 
-        await elementUpdated(el);
+		await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
-    it('accepts and removes `label` accessibly', async () => {
-        const el = await fixture<TopNav>(Default());
+		await expect(el).to.be.accessible();
+	});
+	it("accepts and removes `label` accessibly", async () => {
+		const el = await fixture<TopNav>(Default());
 
-        await elementUpdated(el);
+		await elementUpdated(el);
 
-        el.label = 'Page';
-        await elementUpdated(el);
-        await expect(el).to.be.accessible();
+		el.label = "Page";
+		await elementUpdated(el);
+		await expect(el).to.be.accessible();
 
-        el.label = '';
-        await elementUpdated(el);
-        await expect(el).to.be.accessible();
-    });
-    it('loads with a selected item accessible', async () => {
-        const el = await fixture<TopNav>(Selected());
+		el.label = "";
+		await elementUpdated(el);
+		await expect(el).to.be.accessible();
+	});
+	it("loads with a selected item accessible", async () => {
+		const el = await fixture<TopNav>(Selected());
 
-        await elementUpdated(el);
+		await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-    });
-    it('updates indicator size when Nav Item content changes', async () => {
-        const el = await fixture<TopNav>(Selected());
+		await expect(el).to.be.accessible();
+	});
+	it("updates indicator size when Nav Item content changes", async () => {
+		const el = await fixture<TopNav>(Selected());
 
-        await elementUpdated(el);
+		await elementUpdated(el);
 
-        const items = [...el.querySelectorAll('sp-top-nav-item')];
+		const items = [...el.querySelectorAll("sp-top-nav-item")];
 
-        await Promise.all(items.map((item) => elementUpdated(item)));
+		await Promise.all(items.map((item) => elementUpdated(item)));
 
-        const indicator = el.shadowRoot.querySelector(
-            '#selection-indicator'
-        ) as HTMLDivElement;
-        const { width: widthStart } = indicator.getBoundingClientRect();
+		const indicator = el.shadowRoot.querySelector(
+			"#selection-indicator",
+		) as HTMLDivElement;
+		const { width: widthStart } = indicator.getBoundingClientRect();
 
-        const selectedItem = el.querySelector(
-            `[href="${el.selected}"]`
-        ) as TopNavItem;
+		const selectedItem = el.querySelector(
+			`[href="${el.selected}"]`,
+		) as TopNavItem;
 
-        selectedItem.innerHTML = '0';
+		selectedItem.innerHTML = "0";
 
-        // Wait for slotchange time before continuing the test.
-        await nextFrame();
-        await nextFrame();
+		// Wait for slotchange time before continuing the test.
+		await nextFrame();
+		await nextFrame();
 
-        const { width: widthEnd } = indicator.getBoundingClientRect();
+		const { width: widthEnd } = indicator.getBoundingClientRect();
 
-        expect(
-            widthStart,
-            `${widthStart} is not greater than ${widthEnd}`
-        ).to.be.greaterThan(widthEnd);
-    });
-    it('can have an item removed', async () => {
-        const el = await fixture<TopNav>(Selected());
-        const item = el.querySelector('.selected') as TopNavItem;
+		expect(
+			widthStart,
+			`${widthStart} is not greater than ${widthEnd}`,
+		).to.be.greaterThan(widthEnd);
+	});
+	it("can have an item removed", async () => {
+		const el = await fixture<TopNav>(Selected());
+		const item = el.querySelector(".selected") as TopNavItem;
 
-        await elementUpdated(el);
-        await elementUpdated(item);
+		await elementUpdated(el);
+		await elementUpdated(item);
 
-        expect(el.selected).to.equal(item.value);
+		expect(el.selected).to.equal(item.value);
 
-        item.remove();
-        await elementUpdated(el);
+		item.remove();
+		await elementUpdated(el);
 
-        expect(el.selected).to.not.equal(item.value);
-    });
+		expect(el.selected).to.not.equal(item.value);
+	});
 });
 
-describe('TopNavItem', () => {
-    it('passes click to `<a>`', async () => {
-        const clickSpy = spy();
-        const test = await fixture<TopNav>(Selected());
-        const el = test.querySelector(
-            'sp-top-nav-item:nth-of-type(4)'
-        ) as TopNavItem;
-        const anchor = el.focusElement;
+describe("TopNavItem", () => {
+	it("passes click to `<a>`", async () => {
+		const clickSpy = spy();
+		const test = await fixture<TopNav>(Selected());
+		const el = test.querySelector(
+			"sp-top-nav-item:nth-of-type(4)",
+		) as TopNavItem;
+		const anchor = el.focusElement;
 
-        test.addEventListener('click', (event: Event) => {
-            event.preventDefault();
-            const target = event.composedPath()[0];
+		test.addEventListener("click", (event: Event) => {
+			event.preventDefault();
+			const target = event.composedPath()[0];
 
-            clickSpy(target);
-        });
-        await elementUpdated(el);
+			clickSpy(target);
+		});
+		await elementUpdated(el);
 
-        el.click();
+		el.click();
 
-        expect(clickSpy.called).to.be.true;
-        expect(clickSpy.calledWith(anchor)).to.be.true;
-    });
-    it('`<a>` accepts click across full item area', async () => {
-        const clickSpy = spy();
-        const test = await fixture<TopNav>(Selected());
-        const el = test.querySelector(
-            'sp-top-nav-item:nth-of-type(4)'
-        ) as TopNavItem;
-        const anchor = el.focusElement;
+		expect(clickSpy.called).to.be.true;
+		expect(clickSpy.calledWith(anchor)).to.be.true;
+	});
+	it("`<a>` accepts click across full item area", async () => {
+		const clickSpy = spy();
+		const test = await fixture<TopNav>(Selected());
+		const el = test.querySelector(
+			"sp-top-nav-item:nth-of-type(4)",
+		) as TopNavItem;
+		const anchor = el.focusElement;
 
-        test.addEventListener('click', (event: Event) => {
-            event.preventDefault();
-            const target = event.composedPath()[0];
+		test.addEventListener("click", (event: Event) => {
+			event.preventDefault();
+			const target = event.composedPath()[0];
 
-            clickSpy(target);
-        });
-        await elementUpdated(el);
-        const rect = el.getBoundingClientRect();
+			clickSpy(target);
+		});
+		await elementUpdated(el);
+		const rect = el.getBoundingClientRect();
 
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [rect.left + rect.width / 2, rect.top + 1],
-                },
-            ],
-        });
-        await elementUpdated(test);
+		await sendMouse({
+			steps: [
+				{
+					type: "click",
+					position: [rect.left + rect.width / 2, rect.top + 1],
+				},
+			],
+		});
+		await elementUpdated(test);
 
-        expect(clickSpy.called).to.be.true;
-        expect(clickSpy.calledWith(anchor)).to.be.true;
-    });
+		expect(clickSpy.called).to.be.true;
+		expect(clickSpy.calledWith(anchor)).to.be.true;
+	});
 });

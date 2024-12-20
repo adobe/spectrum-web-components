@@ -10,32 +10,28 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from "@spectrum-web-components/base";
 
-import '@spectrum-web-components/asset/sp-asset.js';
-import { portrait } from '../../card/stories/images';
+import "@spectrum-web-components/asset/sp-asset.js";
+import { portrait } from "../../card/stories/images.js";
 
 export default {
-    title: 'Asset',
-    component: 'sp-asset',
+	title: "Asset",
+	component: "sp-asset",
 };
 
 export const Default = (): TemplateResult => {
-    return html`
-        <sp-asset style="height: 128px">
-            <img src=${portrait} alt="Demo Graphic" />
-        </sp-asset>
-    `;
+	return html`
+		<sp-asset style="height: 128px">
+			<img src=${portrait} alt="Demo Graphic" />
+		</sp-asset>
+	`;
 };
 
 export const File = (): TemplateResult => {
-    return html`
-        <sp-asset variant="file"></sp-asset>
-    `;
+	return html` <sp-asset variant="file"></sp-asset> `;
 };
 
 export const Folder = (): TemplateResult => {
-    return html`
-        <sp-asset variant="folder"></sp-asset>
-    `;
+	return html` <sp-asset variant="folder"></sp-asset> `;
 };

@@ -10,15 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@spectrum-web-components/base';
-import { AccordionMarkup } from './';
+import { TemplateResult } from "@spectrum-web-components/base";
+import { AccordionMarkup } from ".//index.js";
 
 export default {
-    title: 'Accordion/Sizes',
-    component: 'sp-accordion',
+	title: "Accordion/Sizes",
+	component: "sp-accordion",
 };
 
-export const s = (): TemplateResult => AccordionMarkup({ size: 's' });
-export const m = (): TemplateResult => AccordionMarkup({ size: 'm' });
-export const l = (): TemplateResult => AccordionMarkup({ size: 'l' });
-export const xl = (): TemplateResult => AccordionMarkup({ size: 'xl' });
+export const s = (): TemplateResult => AccordionMarkup({ size: "s" });
+export const m = (): TemplateResult => AccordionMarkup({ size: "m" });
+export const l = (): TemplateResult => AccordionMarkup({ size: "l" });
+export const xl = (): TemplateResult => AccordionMarkup({ size: "xl" });

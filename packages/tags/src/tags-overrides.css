@@ -12,10 +12,10 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-tag-group-item-margin-block: var(
-        --system-tag-group-item-margin-block
-    );
-    --spectrum-tag-group-item-margin-inline: var(
-        --system-tag-group-item-margin-inline
-    );
+	--spectrum-tag-group-item-margin-block: var(
+		--system-tag-group-item-margin-block
+	);
+	--spectrum-tag-group-item-margin-inline: var(
+		--system-tag-group-item-margin-inline
+	);
 }

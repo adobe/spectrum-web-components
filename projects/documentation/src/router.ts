@@ -10,40 +10,40 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Tabs } from '@spectrum-web-components/tabs';
+import { Tabs } from "@spectrum-web-components/tabs";
 
-const tabs = document.querySelector('sp-tabs') as Tabs;
-tabs.addEventListener('change', (event: Event) => {
-    const target = event.target as Tabs;
-    const { selected } = target;
-    const { pathname } = location;
-    const isAPI = pathname.search('api') > -1;
-    const isChangelog = pathname.search('changelog') > -1;
-    const parseURLRegex = /\/api\/?|\/changelog\/?/;
-    switch (selected) {
-        case 'api': {
-            if (isAPI) {
-                return;
-            }
-            const dest = pathname.replace(parseURLRegex, '/') + 'api/';
-            history.pushState({}, document.title, dest);
-            break;
-        }
-        case 'changelog': {
-            if (isChangelog) {
-                return;
-            }
-            const dest = pathname.replace(parseURLRegex, '/') + 'changelog/';
-            history.pushState({}, document.title, dest);
-            break;
-        }
-        case 'examples': {
-            if (!isAPI && !isChangelog) {
-                return;
-            }
-            const dest = pathname.replace(parseURLRegex, '/');
-            history.pushState({}, document.title, dest);
-            break;
-        }
-    }
+const tabs = document.querySelector("sp-tabs") as Tabs;
+tabs.addEventListener("change", (event: Event) => {
+	const target = event.target as Tabs;
+	const { selected } = target;
+	const { pathname } = location;
+	const isAPI = pathname.search("api") > -1;
+	const isChangelog = pathname.search("changelog") > -1;
+	const parseURLRegex = /\/api\/?|\/changelog\/?/;
+	switch (selected) {
+		case "api": {
+			if (isAPI) {
+				return;
+			}
+			const dest = pathname.replace(parseURLRegex, "/") + "api/";
+			history.pushState({}, document.title, dest);
+			break;
+		}
+		case "changelog": {
+			if (isChangelog) {
+				return;
+			}
+			const dest = pathname.replace(parseURLRegex, "/") + "changelog/";
+			history.pushState({}, document.title, dest);
+			break;
+		}
+		case "examples": {
+			if (!isAPI && !isChangelog) {
+				return;
+			}
+			const dest = pathname.replace(parseURLRegex, "/");
+			history.pushState({}, document.title, dest);
+			break;
+		}
+	}
 });

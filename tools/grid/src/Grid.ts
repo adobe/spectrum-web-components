@@ -10,21 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { grid } from "@lit-labs/virtualizer/layouts/grid.js";
+import { LitVirtualizer } from "@lit-labs/virtualizer/LitVirtualizer.js";
 import {
-    adoptStyles,
-    CSSResultArray,
-    html,
-    PropertyValues,
-    ReactiveElement,
-    render,
-    RootPart,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { LitVirtualizer } from '@lit-labs/virtualizer/LitVirtualizer.js';
-import { grid } from '@lit-labs/virtualizer/layouts/grid.js';
-import styles from './grid.css.js';
-import { GridController } from './GridController.js';
+	adoptStyles,
+	CSSResultArray,
+	html,
+	PropertyValues,
+	ReactiveElement,
+	render,
+	RootPart,
+	TemplateResult,
+} from "@spectrum-web-components/base";
+import { property } from "@spectrum-web-components/base/src/decorators.js";
+import styles from "./grid.css.js";
+import { GridController } from "./GridController.js";
 
 /**
  * @element sp-grid
@@ -32,140 +32,138 @@ import { GridController } from './GridController.js';
  * @fires change - Announces that the value of `selected` has changed
  */
 export class Grid extends LitVirtualizer {
-    public static override get styles(): CSSResultArray {
-        return [styles];
-    }
+	public static override get styles(): CSSResultArray {
+		return [styles];
+	}
 
-    private __gridPart: RootPart | undefined = undefined;
+	private __gridPart: RootPart | undefined = undefined;
 
-    @property({ type: String })
-    public focusableSelector!: string;
+	@property({ type: String })
+	public focusableSelector!: string;
 
-    @property({ type: String })
-    public gap: `${'0' | `${number}px`}` = '0';
+	@property({ type: String })
+	public gap: `${"0" | `${number}px`}` = "0";
 
-    @property({ type: String })
-    public padding: `${'0' | `${number}px`}` | undefined;
+	@property({ type: String })
+	public padding: `${"0" | `${number}px`}` | undefined;
 
-    @property({ type: Array })
-    public override items: Record<string, unknown>[] = [];
+	@property({ type: Array })
+	public override items: Record<string, unknown>[] = [];
 
-    @property({ type: Object })
-    public itemSize: {
-        width: number;
-        height: number;
-    } = {
-        width: 200,
-        height: 200,
-    };
+	@property({ type: Object })
+	public itemSize: {
+		width: number;
+		height: number;
+	} = {
+		width: 200,
+		height: 200,
+	};
 
-    @property({ type: Array })
-    public selected: Record<string, unknown>[] = [];
+	@property({ type: Array })
+	public selected: Record<string, unknown>[] = [];
 
-    gridController = new GridController<HTMLElement>(this, {
-        elements: () => [],
-        itemSize: () => this.itemSize,
-        /* c8 ignore next 2 */
-        gap: () => this.gap,
-        padding: () => this.padding || this.gap,
-    });
+	gridController = new GridController<HTMLElement>(this, {
+		elements: () => [],
+		itemSize: () => this.itemSize,
+		/* c8 ignore next 2 */
+		gap: () => this.gap,
+		padding: () => this.padding || this.gap,
+	});
 
-    protected handleChange(event: Event): void {
-        const target = event.target as HTMLElement;
-        const value = this.items[
-            parseFloat(target.getAttribute('key') || '')
-        ] as Record<string, unknown>;
-        const selected: Record<string, unknown>[] = [...this.selected];
-        if (!selected.includes(value)) {
-            selected.push(value);
-        } else {
-            const index = selected.indexOf(value);
-            if (index > -1) {
-                selected.splice(index, 1);
-            }
-        }
-        this.selected = selected;
-    }
+	protected handleChange(event: Event): void {
+		const target = event.target as HTMLElement;
+		const value = this.items[
+			parseFloat(target.getAttribute("key") || "")
+		] as Record<string, unknown>;
+		const selected: Record<string, unknown>[] = [...this.selected];
+		if (!selected.includes(value)) {
+			selected.push(value);
+		} else {
+			const index = selected.indexOf(value);
+			if (index > -1) {
+				selected.splice(index, 1);
+			}
+		}
+		this.selected = selected;
+	}
 
-    public override createRenderRoot(): this {
-        const renderRoot =
-            this.shadowRoot ??
-            this.attachShadow(
-                (this.constructor as typeof ReactiveElement).shadowRootOptions
-            );
-        adoptStyles(
-            renderRoot,
-            (this.constructor as typeof ReactiveElement).elementStyles
-        );
-        return renderRoot as unknown as this;
-    }
+	public override createRenderRoot(): this {
+		const renderRoot =
+			this.shadowRoot ??
+			this.attachShadow(
+				(this.constructor as typeof ReactiveElement).shadowRootOptions,
+			);
+		adoptStyles(
+			renderRoot,
+			(this.constructor as typeof ReactiveElement).elementStyles,
+		);
 
-    public override render(): TemplateResult<1> {
-        return html`
-            <slot></slot>
-        `;
-    }
+		return renderRoot as unknown as this;
+	}
 
-    protected override update(changes: PropertyValues<this>): void {
-        if (
-            changes.has('itemSize') ||
-            changes.has('gap') ||
-            changes.has('padding') ||
-            changes.has('focusableSelector')
-        ) {
-            this.updateComplete.then(() => {
-                this.gridController.update({
-                    elements: () => [
-                        ...this.querySelectorAll<HTMLElement>(
-                            this.focusableSelector
-                        ),
-                    ],
-                    itemSize: () => this.itemSize,
-                    gap: () => this.gap,
-                    padding: () => this.padding || this.gap,
-                });
-            });
+	public override render(): TemplateResult<1> {
+		return html` <slot></slot> `;
+	}
 
-            this.layout = grid({
-                itemSize: {
-                    width: `${this.itemSize.width}px`,
-                    height: `${this.itemSize.height}px`,
-                },
-                gap: this.gap,
-                padding: this.padding || this.gap,
-            });
-        }
-        if (changes.has('renderItem')) {
-            const fn = this.renderItem as unknown as (
-                item: unknown,
-                index: number,
-                selected: boolean
-            ) => TemplateResult;
-            this.renderItem = (item, index: number): TemplateResult => {
-                const selected = this.selected.includes(
-                    item as Record<string, unknown>
-                );
-                return fn(item, index, selected);
-            };
-        }
+	protected override update(changes: PropertyValues<this>): void {
+		if (
+			changes.has("itemSize") ||
+			changes.has("gap") ||
+			changes.has("padding") ||
+			changes.has("focusableSelector")
+		) {
+			this.updateComplete.then(() => {
+				this.gridController.update({
+					elements: () => [
+						...this.querySelectorAll<HTMLElement>(this.focusableSelector),
+					],
+					itemSize: () => this.itemSize,
+					gap: () => this.gap,
+					padding: () => this.padding || this.gap,
+				});
+			});
 
-        if (this.isConnected) {
-            this.__gridPart = render(super.render(), this);
-        }
-        super.update(changes);
-    }
+			this.layout = grid({
+				itemSize: {
+					width: `${this.itemSize.width}px`,
+					height: `${this.itemSize.height}px`,
+				},
+				gap: this.gap,
+				padding: this.padding || this.gap,
+			});
+		}
+		if (changes.has("renderItem")) {
+			const fn = this.renderItem as unknown as (
+				item: unknown,
+				index: number,
+				selected: boolean,
+			) => TemplateResult;
+			this.renderItem = (item, index: number): TemplateResult => {
+				const selected = this.selected.includes(
+					item as Record<string, unknown>,
+				);
 
-    override connectedCallback(): void {
-        super.connectedCallback();
-        this.__gridPart?.setConnected(true);
-        this.addEventListener('change', this.handleChange, { capture: true });
-    }
+				return fn(item, index, selected);
+			};
+		}
 
-    override disconnectedCallback(): void {
-        this.removeEventListener('change', this.handleChange, {
-            capture: true,
-        });
-        this.__gridPart?.setConnected(false);
-        super.disconnectedCallback();
-    }
+		if (this.isConnected) {
+			this.__gridPart = render(super.render(), this);
+		}
+		super.update(changes);
+	}
+
+	override connectedCallback(): void {
+		super.connectedCallback();
+		this.__gridPart?.setConnected(true);
+		this.addEventListener("change", this.handleChange, { capture: true });
+	}
+
+	override disconnectedCallback(): void {
+		this.removeEventListener("change", this.handleChange, {
+			capture: true,
+		});
+		this.__gridPart?.setConnected(false);
+		super.disconnectedCallback();
+	}
 }

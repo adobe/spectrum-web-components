@@ -10,52 +10,52 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@spectrum-web-components/base';
-import { AccordionMarkup } from './';
-import { argTypes } from './args.js';
+import { TemplateResult } from "@spectrum-web-components/base";
+import { AccordionMarkup } from ".//index.js";
+import { argTypes } from "./args.js";
 
-import '@spectrum-web-components/accordion/sp-accordion.js';
-import '@spectrum-web-components/accordion/sp-accordion-item.js';
-import '@spectrum-web-components/link/sp-link.js';
+import "@spectrum-web-components/accordion/sp-accordion.js";
+import "@spectrum-web-components/accordion/sp-accordion-item.js";
+import "@spectrum-web-components/link/sp-link.js";
 
 export default {
-    title: 'Accordion',
-    component: 'sp-accordion',
-    args: {
-        open: false,
-        size: 'm',
-        density: undefined,
-    },
-    argTypes,
+	title: "Accordion",
+	component: "sp-accordion",
+	args: {
+		open: false,
+		size: "m",
+		density: undefined,
+	},
+	argTypes,
 };
 
 type Properties = {
-    allowMultiple?: boolean;
-    disabled?: boolean;
-    open?: boolean;
-    density?: 'compact' | 'spacious' | undefined;
-    size?: 's' | 'm' | 'l' | 'xl';
+	allowMultiple?: boolean;
+	disabled?: boolean;
+	open?: boolean;
+	density?: "compact" | "spacious" | undefined;
+	size?: "s" | "m" | "l" | "xl";
 };
 
 export const Default = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
+	AccordionMarkup(args);
 
 export const Open = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
+	AccordionMarkup(args);
 Open.args = {
-    open: true,
-    allowMultiple: false,
-    disabled: false,
+	open: true,
+	allowMultiple: false,
+	disabled: false,
 };
 
 export const AllowMultiple = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
+	AccordionMarkup(args);
 AllowMultiple.args = {
-    allowMultiple: true,
+	allowMultiple: true,
 };
 
 export const Disabled = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
+	AccordionMarkup(args);
 Disabled.args = {
-    disabled: true,
+	disabled: true,
 };
