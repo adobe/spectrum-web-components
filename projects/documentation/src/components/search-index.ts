@@ -10,83 +10,89 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import lunr from "lunr";
-import "@spectrum-web-components/popover/sp-popover.js";
-import "@spectrum-web-components/menu/sp-menu.js";
+import "@spectrum-web-components/illustrated-message/sp-illustrated-message.js";
 import "@spectrum-web-components/menu/sp-menu-group.js";
 import "@spectrum-web-components/menu/sp-menu-item.js";
-import "@spectrum-web-components/illustrated-message/sp-illustrated-message.js";
+import "@spectrum-web-components/menu/sp-menu.js";
+import "@spectrum-web-components/popover/sp-popover.js";
+import { Index } from "lunr";
 
 let index: lunr.Index | undefined;
 
 export interface Result {
-	name: string;
-	label: string;
-	url: string;
+  name: string;
+  label: string;
+  url: string;
 }
 
 export interface ResultGroup {
-	name: string;
-	results: Result[];
-	maxScore: number;
+  name: string;
+  results: Result[];
+  maxScore: number;
 }
 
 function label(name: string): string {
-	return name.replace(/(?:^|-)\w/g, (match) =>
-		match.toUpperCase().replace("-", " "),
-	);
+  return name.replace(/(?:^|-)\w/g, (match) =>
+    match.toUpperCase().replace("-", " "),
+  );
 }
 
 export async function search(value: string): Promise<ResultGroup[]> {
-	if (!index) {
-		const searchIndexURL = new URL("./searchIndex.json", import.meta.url).href;
-		const searchIndex = await (await fetch(searchIndexURL)).json();
-		index = lunr.Index.load(searchIndex);
-	}
+  if (!index) {
+    const searchIndexURL = new URL("./searchIndex.json", import.meta.url).href;
+    const searchIndex = await (await fetch(searchIndexURL)).json();
 
-	const collatedResults = new Map<
-		string,
-		{
-			maxScore: number;
-			results: Result[];
-		}
-	>();
+    index = Index.load(searchIndex);
+  }
 
-	const search = index.search(value);
-	for (const item of search) {
-		const { category, name, url } = JSON.parse(item.ref);
+  const collatedResults = new Map<
+    string,
+    {
+      maxScore: number;
+      results: Result[];
+    }
+  >();
 
-		if (!collatedResults.has(category)) {
-			collatedResults.set(category, {
-				maxScore: 0,
-				results: [],
-			});
-		}
-		const catagoryData = collatedResults.get(category);
-		if (catagoryData) {
-			catagoryData.maxScore = Math.max(catagoryData.maxScore, item.score);
-			catagoryData.results.push({
-				name,
-				label: label(name),
-				url,
-			});
-		}
-	}
+  const search = index.search(value);
 
-	const result: ResultGroup[] = [];
-	for (const [name, { results, maxScore }] of collatedResults) {
-		result.push({ name, results, maxScore });
-	}
-	result.sort((a, b) => {
-		if (a.maxScore < b.maxScore) {
-			return 1;
-		}
-		if (a.maxScore > b.maxScore) {
-			return -1;
-		}
+  for (const item of search) {
+    const { category, name, url } = JSON.parse(item.ref);
 
-		return 0;
-	});
+    if (!collatedResults.has(category)) {
+      collatedResults.set(category, {
+        maxScore: 0,
+        results: [],
+      });
+    }
 
-	return result;
+    const catagoryData = collatedResults.get(category);
+
+    if (catagoryData) {
+      catagoryData.maxScore = Math.max(catagoryData.maxScore, item.score);
+      catagoryData.results.push({
+        name,
+        label: label(name),
+        url,
+      });
+    }
+  }
+
+  const result: ResultGroup[] = [];
+
+  for (const [name, { results, maxScore }] of collatedResults) {
+    result.push({ name, results, maxScore });
+  }
+  result.sort((a, b) => {
+    if (a.maxScore < b.maxScore) {
+      return 1;
+    }
+
+    if (a.maxScore > b.maxScore) {
+      return -1;
+    }
+
+    return 0;
+  });
+
+  return result;
 }

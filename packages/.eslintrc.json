@@ -1,377 +1,507 @@
 {
-	"root": true,
-	"env": {
-		"browser": true,
-		"node": true,
-		"es6": true
-	},
-	"parser": "@typescript-eslint/parser",
-	"plugins": [
-		"@typescript-eslint",
-		"notice",
-		"@spectrum-web-components",
-		"@stylistic",
-		"jsdoc",
-		"lit-a11y"
-	],
-	"extends": [
-		"plugin:lit-a11y/recommended",
-		"plugin:jsdoc/recommended-typescript",
-		"eslint:recommended",
-		"plugin:@typescript-eslint/recommended"
-	],
-	"ignorePatterns": ["packages/**/*.css.ts"],
-	"settings": {
-		"jsdoc": {
-			"tagNamePreference": {
-				"attr": "attribute"
-			}
-		}
-	},
-	"rules": {
-		"no-debugger": 2,
-		"no-console": [
-			"error",
-			{
-				"allow": ["warn", "error"]
-			}
-		],
-		"jsdoc/check-tag-names": [
-			"warn",
-			{
-				"definedTags": ["element", "slot", "attribute", "csspart"]
-			}
-		],
-		"jsdoc/require-param": 0,
-		"jsdoc/require-returns": 0,
-		"jsdoc/informative-docs": 1,
-		"jsdoc/no-bad-blocks": 1,
-		"jsdoc/sort-tags": [
-			"warn",
-			{
-				"tagSequence": [
-					{
-						"tags": [
-							// Brief descriptions
-							"summary",
-							"typeSummary"
-						]
-					},
-					{
-						"tags": [
-							// Module/file-level
-							"element",
-							"module",
-							"exports",
-							"file",
-							"fileoverview",
-							"overview",
-							"import"
-						]
-					},
-					{
-						"tags": [
-							// Identifying (name, type)
-							"typedef",
-							"interface",
-							"record",
-							"template",
-							"name",
-							"kind",
-							"type",
-							"alias",
-							"external",
-							"host",
-							"callback",
-							"func",
-							"function",
-							"method",
-							"class",
-							"constructor"
-						]
-					},
-					{
-						"tags": [
-							// Relationships
-							"modifies",
-							"mixes",
-							"mixin",
-							"mixinClass",
-							"mixinFunction",
-							"namespace",
-							"borrows",
-							"constructs",
-							"lends",
-							"implements",
-							"requires"
-						]
-					},
-					{
-						"tags": [
-							// Long descriptions
-							"desc",
-							"description",
-							"classdesc",
-							"tutorial",
-							"copyright",
-							"license"
-						]
-					},
-					{
-						"tags": [
-							// Simple annotations
-							"const",
-							"constant",
-							"final",
-							"global",
-							"readonly",
-							"abstract",
-							"virtual",
-							"var",
-							"member",
-							"memberof",
-							"memberof!",
-							"inner",
-							"instance",
-							"inheritdoc",
-							"inheritDoc",
-							"override",
-							"hideconstructor"
-						]
-					},
-					{
-						"tags": [
-							// Core function/object info
-							"param",
-							"arg",
-							"argument",
-							"prop",
-							"property",
-							"slot",
-							"return",
-							"returns"
-						]
-					},
-					{
-						"tags": [
-							// Important behavior details
-							"async",
-							"generator",
-							"default",
-							"defaultvalue",
-							"enum",
-							"augments",
-							"extends",
-							"throws",
-							"exception",
-							"yield",
-							"yields",
-							"event",
-							"fires",
-							"emits",
-							"listens",
-							"this"
-						]
-					},
-					{
-						"tags": [
-							// Access
-							"static",
-							"private",
-							"protected",
-							"public",
-							"access",
-							"package"
-						]
-					},
-					{ "tags": ["-other"] },
-					{
-						"tags": [
-							// Supplementary descriptions
-							"see",
-							"example"
-						]
-					},
-					{
-						"tags": [
-							// Other Closure (undocumented) metadata
-							"closurePrimitive",
-							"customElement",
-							"expose",
-							"hidden",
-							"idGenerator",
-							"meaning",
-							"ngInject",
-							"owner",
-							"wizaction"
-						]
-					},
-					{
-						"tags": [
-							// Other Closure (documented) metadata
-							"define",
-							"dict",
-							"export",
-							"externs",
-							"implicitCast",
-							"noalias",
-							"nocollapse",
-							"nocompile",
-							"noinline",
-							"nosideeffects",
-							"polymer",
-							"polymerBehavior",
-							"preserve",
-							"struct",
-							"suppress",
-							"unrestricted"
-						]
-					},
-					{
-						"tags": [
-							// Non-Closure metadata
-							"ignore",
-							"author",
-							"version",
-							"variation",
-							"since",
-							"deprecated",
-							"todo"
-						]
-					}
-				],
-				"alphabetizeExtras": true
-			}
-		],
-		"jsdoc/tag-lines": ["warn", "any", { "startLines": 1, "endLines": 1 }],
-		"jsdoc/no-blank-blocks": [
-			"warn",
-			{
-				"enableFixer": true
-			}
-		],
-		"jsdoc/require-hyphen-before-param-description": 1,
-		"@spectrum-web-components/prevent-argument-names": [
-			"error",
-			["e", "ev", "evt", "err"]
-		],
-		"@spectrum-web-components/document-active-element": ["error"],
-		"notice/notice": [
-			"error",
-			{
-				"mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
-				"templateFile": "config/license.js"
-			}
-		],
-		"@typescript-eslint/explicit-function-return-type": [
-			1,
-			{
-				"allowExpressions": true
-			}
-		],
-		"sort-imports": [
-			"error",
-			{
-				"ignoreCase": true,
-				"ignoreDeclarationSort": true
-				// "ignoreMemberSort": false,
-				// "allowSeparatedGroups": false
-			}
-		],
-		"lit-a11y/click-events-have-key-events": [
-			"error",
-			{
-				"allowList": [
-					"sp-button",
-					"sp-action-button",
-					"sp-checkbox",
-					"sp-radio",
-					"sp-switch",
-					"sp-menu-item",
-					"sp-clear-button",
-					"sp-underlay"
-				]
-			}
-		],
-		"@typescript-eslint/no-unused-vars": [
-			"error",
-			{
-				"argsIgnorePattern": "^_"
-			}
-		],
-		"@stylistic/padding-line-between-statements": [
-			"error",
-			{
-				"blankLine": "always",
-				"prev": "*",
-				"next": ["return", "if", "try", "switch"]
-			},
-			{
-				"blankLine": "always",
-				"prev": ["const", "let", "var", "if", "try", "switch"],
-				"next": "*"
-			},
-			{
-				"blankLine": "any",
-				"prev": ["const", "let", "var"],
-				"next": ["const", "let", "var"]
-			}
-		]
-	},
-	"overrides": [
-		{
-			"files": [
-				"*.test.ts",
-				"*.stories.ts",
-				"**/benchmark/*.ts",
-				"**/test/*.ts"
-			],
-			"rules": {
-				"@spectrum-web-components/document-active-element": ["off"],
-				"lit-a11y/no-autofocus": ["off"],
-				"lit-a11y/tabindex-no-positive": ["off"],
-				"jsdoc/require-jsdoc": 0
-			}
-		},
-		{
-			"files": ["**/icons/*.ts", "**/src/elements/*.ts"],
-			"rules": {
-				"sort-imports": ["off"],
-				"@stylistic/padding-line-between-statements": 0
-			}
-		},
-		{
-			"files": ["**/stories/*"],
-			"rules": {
-				"jsdoc/require-jsdoc": 0
-			}
-		},
-		{
-			"files": ["*.stories.ts"],
-			"rules": {
-				"no-console": ["off"]
-			}
-		},
-		{
-			"files": ["Picker.ts"],
-			"rules": {
-				"lit-a11y/click-events-have-key-events": [
-					"error",
-					{
-						"allowList": [
-							"sp-button",
-							"sp-action-button",
-							"sp-checkbox",
-							"sp-radio",
-							"sp-switch",
-							"sp-menu-item",
-							"sp-clear-button",
-							"sp-underlay",
-							"sp-popover"
-						]
-					}
-				]
-			}
-		}
-	]
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:lit-a11y/recommended",
+    "plugin:jsdoc/recommended-typescript",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "ignorePatterns": ["packages/**/*.css.ts"],
+  "overrides": [
+    {
+      "files": [
+        "*.test.ts",
+        "*.stories.ts",
+        "**/benchmark/*.ts",
+        "**/test/*.ts"
+      ],
+      "rules": {
+        "@spectrum-web-components/document-active-element": ["off"],
+        "jsdoc/require-jsdoc": 0,
+        "lit-a11y/no-autofocus": ["off"],
+        "lit-a11y/tabindex-no-positive": ["off"]
+      }
+    },
+    {
+      "files": ["**/icons/*.ts", "**/src/elements/*.ts"],
+      "rules": {
+        "@stylistic/padding-line-between-statements": 0,
+        "sort-imports": ["off"]
+      }
+    },
+    {
+      "files": ["**/stories/*"],
+      "rules": {
+        "jsdoc/require-jsdoc": 0
+      }
+    },
+    {
+      "files": ["*.stories.ts"],
+      "rules": {
+        "no-console": ["off"]
+      }
+    },
+    {
+      "files": ["Picker.ts"],
+      "rules": {
+        "lit-a11y/click-events-have-key-events": [
+          "error",
+          {
+            "allowList": [
+              "sp-button",
+              "sp-action-button",
+              "sp-checkbox",
+              "sp-radio",
+              "sp-switch",
+              "sp-menu-item",
+              "sp-clear-button",
+              "sp-underlay",
+              "sp-popover"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "extends": ["plugin:jsonc/recommended-with-jsonc"],
+      "files": ["*.json"],
+      "parser": "jsonc-eslint-parser",
+      "rules": {
+        "jsonc/sort-keys": [
+          "warn",
+          {
+            // Hits the all properties
+            "hasProperties": ["type"],
+            "order": [
+              "type",
+              "properties",
+              "items",
+              "required",
+              "minItems",
+              "additionalProperties",
+              "additionalItems"
+            ],
+            "pathPattern": ".*"
+          },
+          {
+            "order": {
+              "type": "asc"
+            },
+            "pathPattern": ".*"
+          }
+        ],
+        "notice/notice": 0
+      }
+    },
+    {
+      "files": ["package.json"],
+      "rules": {
+        "jsonc/sort-keys": [
+          "warn",
+          {
+            "order": [
+              "$schema",
+              "private",
+              "name",
+              "version",
+              "description",
+              "license",
+              "author",
+              "maintainers",
+              "contributors",
+              "homepage",
+              "repository",
+              "bugs",
+              "type",
+              "exports",
+              "main",
+              "module",
+              "browser",
+              "man",
+              "preferGlobal",
+              "bin",
+              "files",
+              "directories",
+              "scripts",
+              "config",
+              "sideEffects",
+              "types",
+              "typings",
+              "workspaces",
+              "resolutions",
+              "dependencies",
+              "bundleDependencies",
+              "bundledDependencies",
+              "peerDependencies",
+              "peerDependenciesMeta",
+              "optionalDependencies",
+              "devDependencies",
+              "keywords",
+              "engines",
+              "engineStrict",
+              "os",
+              "cpu",
+              "publishConfig"
+            ],
+            "pathPattern": "^$"
+          },
+          {
+            "order": ["type", "url", "directory"],
+            "pathPattern": "^repository$"
+          },
+          {
+            "order": {
+              "type": "asc"
+            },
+            "pathPattern": ".*"
+          }
+        ]
+      }
+    }
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "notice",
+    "import",
+    "@spectrum-web-components",
+    "@stylistic",
+    "jsdoc",
+    "lit-a11y"
+  ],
+  "root": true,
+  "rules": {
+    "@spectrum-web-components/document-active-element": ["error"],
+    "@spectrum-web-components/prevent-argument-names": [
+      "error",
+      ["e", "ev", "evt", "err"]
+    ],
+    "@stylistic/padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "next": ["return", "if", "try", "switch"],
+        "prev": "*"
+      },
+      {
+        "blankLine": "always",
+        "next": "*",
+        "prev": ["const", "let", "var", "if", "try", "switch"]
+      },
+      {
+        "blankLine": "any",
+        "next": ["const", "let", "var"],
+        "prev": ["const", "let", "var"]
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": [
+      1,
+      {
+        "allowExpressions": true
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "curly": ["error", "all"],
+    "func-call-spacing": ["warn", "never"],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never"
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "indent": [
+      "warn",
+      2,
+      {
+        "SwitchCase": 1,
+        "ignoredNodes": ["TemplateLiteral *"]
+      }
+    ],
+    "jsdoc/check-tag-names": [
+      "warn",
+      {
+        "definedTags": ["element", "slot", "attribute", "csspart"]
+      }
+    ],
+    "jsdoc/informative-docs": 1,
+    "jsdoc/no-bad-blocks": 1,
+    "jsdoc/no-blank-blocks": [
+      "warn",
+      {
+        "enableFixer": true
+      }
+    ],
+    "jsdoc/require-hyphen-before-param-description": 1,
+    "jsdoc/require-param": 0,
+    "jsdoc/require-returns": 0,
+    "jsdoc/sort-tags": [
+      "warn",
+      {
+        "alphabetizeExtras": true,
+        "tagSequence": [
+          {
+            "tags": [
+              // Brief descriptions
+              "summary",
+              "typeSummary"
+            ]
+          },
+          {
+            "tags": [
+              // Module/file-level
+              "element",
+              "module",
+              "exports",
+              "file",
+              "fileoverview",
+              "overview",
+              "import"
+            ]
+          },
+          {
+            "tags": [
+              // Identifying (name, type)
+              "typedef",
+              "interface",
+              "record",
+              "template",
+              "name",
+              "kind",
+              "type",
+              "alias",
+              "external",
+              "host",
+              "callback",
+              "func",
+              "function",
+              "method",
+              "class",
+              "constructor"
+            ]
+          },
+          {
+            "tags": [
+              // Relationships
+              "modifies",
+              "mixes",
+              "mixin",
+              "mixinClass",
+              "mixinFunction",
+              "namespace",
+              "borrows",
+              "constructs",
+              "lends",
+              "implements",
+              "requires"
+            ]
+          },
+          {
+            "tags": [
+              // Long descriptions
+              "desc",
+              "description",
+              "classdesc",
+              "tutorial",
+              "copyright",
+              "license"
+            ]
+          },
+          {
+            "tags": [
+              // Simple annotations
+              "const",
+              "constant",
+              "final",
+              "global",
+              "readonly",
+              "abstract",
+              "virtual",
+              "var",
+              "member",
+              "memberof",
+              "memberof!",
+              "inner",
+              "instance",
+              "inheritdoc",
+              "inheritDoc",
+              "override",
+              "hideconstructor"
+            ]
+          },
+          {
+            "tags": [
+              // Core function/object info
+              "param",
+              "arg",
+              "argument",
+              "prop",
+              "property",
+              "slot",
+              "return",
+              "returns"
+            ]
+          },
+          {
+            "tags": [
+              // Important behavior details
+              "async",
+              "generator",
+              "default",
+              "defaultvalue",
+              "enum",
+              "augments",
+              "extends",
+              "throws",
+              "exception",
+              "yield",
+              "yields",
+              "event",
+              "fires",
+              "emits",
+              "listens",
+              "this"
+            ]
+          },
+          {
+            "tags": [
+              // Access
+              "static",
+              "private",
+              "protected",
+              "public",
+              "access",
+              "package"
+            ]
+          },
+          { "tags": ["-other"] },
+          {
+            "tags": [
+              // Supplementary descriptions
+              "see",
+              "example"
+            ]
+          },
+          {
+            "tags": [
+              // Other Closure (undocumented) metadata
+              "closurePrimitive",
+              "customElement",
+              "expose",
+              "hidden",
+              "idGenerator",
+              "meaning",
+              "ngInject",
+              "owner",
+              "wizaction"
+            ]
+          },
+          {
+            "tags": [
+              // Other Closure (documented) metadata
+              "define",
+              "dict",
+              "export",
+              "externs",
+              "implicitCast",
+              "noalias",
+              "nocollapse",
+              "nocompile",
+              "noinline",
+              "nosideeffects",
+              "polymer",
+              "polymerBehavior",
+              "preserve",
+              "struct",
+              "suppress",
+              "unrestricted"
+            ]
+          },
+          {
+            "tags": [
+              // Non-Closure metadata
+              "ignore",
+              "author",
+              "version",
+              "variation",
+              "since",
+              "deprecated",
+              "todo"
+            ]
+          }
+        ]
+      }
+    ],
+    "jsdoc/tag-lines": ["warn", "any", { "endLines": 1, "startLines": 1 }],
+    "linebreak-style": ["warn", "unix"],
+    "lit-a11y/click-events-have-key-events": [
+      "error",
+      {
+        "allowList": [
+          "sp-button",
+          "sp-action-button",
+          "sp-checkbox",
+          "sp-radio",
+          "sp-switch",
+          "sp-menu-item",
+          "sp-clear-button",
+          "sp-underlay"
+        ]
+      }
+    ],
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    "no-debugger": 2,
+    "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+    "notice/notice": [
+      "error",
+      {
+        "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
+        "templateFile": "config/license.js"
+      }
+    ],
+    "quotes": [
+      "warn",
+      "double",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "semi": ["warn", "always"],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true
+        // "ignoreMemberSort": false,
+        // "allowSeparatedGroups": false
+      }
+    ],
+    "space-before-blocks": ["warn", "always"]
+  },
+  "settings": {
+    "jsdoc": {
+      "tagNamePreference": {
+        "attr": "attribute"
+      }
+    }
+  }
 }

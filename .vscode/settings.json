@@ -1,188 +1,188 @@
 {
-	"files.exclude": {
-		"**/*.css.ts": {
-			"when": "$(basename)"
-		},
-		"packages/*/src/spectrum-vars.json": true,
-		"packages/**/*.js.map": true,
-		"packages/**/*.js": {
-			"when": "$(basename).ts"
-		},
-		"packages/**/*.dev.js": {
-			"when": "$(basename).js"
-		},
-		"packages/**/*.d.ts": {
-			"when": "$(basename).ts"
-		},
-		"tools/**/*.js.map": true,
-		"tools/**/*.js": {
-			"when": "$(basename).ts"
-		},
-		"tools/**/*.dev.js": {
-			"when": "$(basename).js"
-		},
-		"tools/**/*.d.ts": {
-			"when": "$(basename).ts"
-		},
-		"**/*.test-vrt.ts": true
-	},
-	"editor.tabSize": 2,
-	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
-	"editor.formatOnType": false,
-	"editor.formatOnPaste": true,
-	"editor.formatOnSave": true,
-	"editor.formatOnSaveMode": "file",
-	"editor.insertSpaces": false,
-	"editor.detectIndentation": true,
-	"typescript.tsdk": "node_modules/typescript/lib",
-	"lit-plugin.strict": true,
-	"[css]": {
-		"editor.codeActionsOnSave": {
-			"source.fixAll.stylelint": "explicit"
-		},
-		"editor.defaultFormatter": "stylelint.vscode-stylelint"
-	},
-	"[typescript]": {
-		"editor.codeActionsOnSave": {
-			"source.organizeImports": "explicit"
-		},
-		"editor.colorDecorators": true,
-		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
-	},
-	"[javascript]": {
-		"editor.codeActionsOnSave": {
-			"source.organizeImports": "explicit"
-		},
-		"editor.colorDecorators": true,
-		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
-	},
-	"[markdown]": {
-		"editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
-	},
-	"colorInfo.languages": [
-		{
-			"colors": "css",
-			"selector": "css"
-		},
-		{
-			"colors": "css",
-			"selector": "postcss"
-		},
-		{
-			"colors": "css",
-			"selector": "javascript"
-		},
-		{
-			"colors": "css",
-			"selector": "js"
-		},
-		{
-			"colors": "css",
-			"selector": "jsx"
-		},
-		{
-			"colors": "css",
-			"selector": "json"
-		},
-		{
-			"colors": "css",
-			"selector": "svg"
-		},
-		{
-			"colors": "css",
-			"selector": "markdown"
-		},
-		{
-			"colors": "css",
-			"selector": "md"
-		},
-		{
-			"colors": "css",
-			"selector": "mdx"
-		},
-		{
-			"colors": "css",
-			"selector": "html"
-		},
-		{
-			"colors": "css",
-			"selector": "yaml"
-		}
-	],
-	"docthis.includeDescriptionTag": true,
-	"docthis.inferTypesFromNames": true,
-	"docthis.returnsTag": true,
-	"editor.largeFileOptimizations": true,
-	"editor.renderControlCharacters": true,
-	"eslint.format.enable": true,
-	"eslint.useESLintClass": true,
-	"eslint.validate": [
-		"javascript",
-		"javascriptreact",
-		"typescript",
-		"typescriptreact"
-	],
-	"files.associations": {
-		"*.css": "postcss"
-	},
-	"files.insertFinalNewline": true,
-	"files.trimFinalNewlines": true,
-	"files.trimTrailingWhitespace": true,
-	"github.copilot.enable": {
-		"*": true,
-		"plaintext": false,
-		"scminput": false
-	},
-	"githubIssues.createIssueTriggers": ["TODO", "todo", "FIXME", "ISSUE", "BUG"],
-	"githubIssues.issueBranchTitle": "${author}/${sanitizedIssueTitle}-gh-${issueNumber}",
-	"githubIssues.queries": [
-		{
-			"label": "My issues",
-			"query": "default"
-		},
-		{
-			"label": "Created issues",
-			"query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
-		},
-		{
-			"label": "Recent issues",
-			"query": "state:open repo:${owner}/${repository} sort:updated-desc"
-		}
-	],
-	"githubPullRequests.queries": [
-		{
-			"label": "Waiting for my review",
-			"query": "is:open review-requested:${user}"
-		},
-		{
-			"label": "Assigned to me",
-			"query": "is:open assignee:${user}"
-		},
-		{
-			"label": "Created by me",
-			"query": "is:open author:${user}"
-		},
-		{
-			"label": "Mentioned me",
-			"query": "is:open mentions:${user}"
-		}
-	],
-	"js/ts.implicitProjectConfig.experimentalDecorators": true,
-	"postcss.validate": false,
-	"prettier.configPath": ".prettierrc.yaml",
-	"prettier.ignorePath": ".prettierignore",
-	"prettier.prettierPath": "node_modules/prettier",
-	"stylelint.enable": true,
-	"stylelint.packageManager": "yarn",
-	"stylelint.reportDescriptionlessDisables": true,
-	"stylelint.reportInvalidScopeDisables": true,
-	"stylelint.reportNeedlessDisables": true,
-	"stylelint.validate": ["css", "postcss"],
-	"storyExplorer.storiesGlobs": [
-		"packages/*/stories/*.stories.js",
-		"packages/*/stories/*.mdx",
-		"tools/*/stories/*.stories.js",
-		"tools/*/stories/*.mdx"
-	],
-	"workbench.editor.historyBasedLanguageDetection": false
+  "files.exclude": {
+    "**/*.css.ts": {
+      "when": "$(basename)"
+    },
+    "packages/*/src/spectrum-vars.json": true,
+    "packages/**/*.js.map": true,
+    "packages/**/*.js": {
+      "when": "$(basename).ts"
+    },
+    "packages/**/*.dev.js": {
+      "when": "$(basename).js"
+    },
+    "packages/**/*.d.ts": {
+      "when": "$(basename).ts"
+    },
+    "tools/**/*.js.map": true,
+    "tools/**/*.js": {
+      "when": "$(basename).ts"
+    },
+    "tools/**/*.dev.js": {
+      "when": "$(basename).js"
+    },
+    "tools/**/*.d.ts": {
+      "when": "$(basename).ts"
+    },
+    "**/*.test-vrt.ts": true
+  },
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnType": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "lit-plugin.strict": true,
+  "[css]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": "explicit"
+    },
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.colorDecorators": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.colorDecorators": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  "colorInfo.languages": [
+    {
+      "colors": "css",
+      "selector": "css"
+    },
+    {
+      "colors": "css",
+      "selector": "postcss"
+    },
+    {
+      "colors": "css",
+      "selector": "javascript"
+    },
+    {
+      "colors": "css",
+      "selector": "js"
+    },
+    {
+      "colors": "css",
+      "selector": "jsx"
+    },
+    {
+      "colors": "css",
+      "selector": "json"
+    },
+    {
+      "colors": "css",
+      "selector": "svg"
+    },
+    {
+      "colors": "css",
+      "selector": "markdown"
+    },
+    {
+      "colors": "css",
+      "selector": "md"
+    },
+    {
+      "colors": "css",
+      "selector": "mdx"
+    },
+    {
+      "colors": "css",
+      "selector": "html"
+    },
+    {
+      "colors": "css",
+      "selector": "yaml"
+    }
+  ],
+  "docthis.includeDescriptionTag": true,
+  "docthis.inferTypesFromNames": true,
+  "docthis.returnsTag": true,
+  "editor.largeFileOptimizations": true,
+  "editor.renderControlCharacters": true,
+  "eslint.format.enable": true,
+  "eslint.useESLintClass": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "files.associations": {
+    "*.css": "postcss"
+  },
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "scminput": false
+  },
+  "githubIssues.createIssueTriggers": ["TODO", "todo", "FIXME", "ISSUE", "BUG"],
+  "githubIssues.issueBranchTitle": "${author}/${sanitizedIssueTitle}-gh-${issueNumber}",
+  "githubIssues.queries": [
+    {
+      "label": "My issues",
+      "query": "default"
+    },
+    {
+      "label": "Created issues",
+      "query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
+    },
+    {
+      "label": "Recent issues",
+      "query": "state:open repo:${owner}/${repository} sort:updated-desc"
+    }
+  ],
+  "githubPullRequests.queries": [
+    {
+      "label": "Waiting for my review",
+      "query": "is:open review-requested:${user}"
+    },
+    {
+      "label": "Assigned to me",
+      "query": "is:open assignee:${user}"
+    },
+    {
+      "label": "Created by me",
+      "query": "is:open author:${user}"
+    },
+    {
+      "label": "Mentioned me",
+      "query": "is:open mentions:${user}"
+    }
+  ],
+  "js/ts.implicitProjectConfig.experimentalDecorators": true,
+  "postcss.validate": false,
+  "prettier.configPath": ".prettierrc.yaml",
+  "prettier.ignorePath": ".prettierignore",
+  "prettier.prettierPath": "node_modules/prettier",
+  "stylelint.enable": true,
+  "stylelint.packageManager": "yarn",
+  "stylelint.reportDescriptionlessDisables": true,
+  "stylelint.reportInvalidScopeDisables": true,
+  "stylelint.reportNeedlessDisables": true,
+  "stylelint.validate": ["css", "postcss"],
+  "storyExplorer.storiesGlobs": [
+    "packages/*/stories/*.stories.js",
+    "packages/*/stories/*.mdx",
+    "tools/*/stories/*.stories.js",
+    "tools/*/stories/*.mdx"
+  ],
+  "workbench.editor.historyBasedLanguageDetection": false
 }
