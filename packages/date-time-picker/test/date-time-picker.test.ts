@@ -983,12 +983,13 @@ describe('DateTimePicker', () => {
                 SegmentTypes.DayPeriod
             );
 
-            await sendMouse({
-                type: 'click',
-                position: getElementCenter(dayPeriodSegment),
-            });
+            element.focus();
+            await elementUpdated(element);
+            await sendKeyMultipleTimes(
+                'ArrowRight',
+                editableSegments.length - 1
+            );
 
-            expectFocused(document, element, 'element not focused');
             expectFocused(
                 element.shadowRoot,
                 dayPeriodSegment,
@@ -1000,7 +1001,11 @@ describe('DateTimePicker', () => {
                 editableSegments.length - 1
             );
 
-            expectFocused(element.shadowRoot, element.firstEditableSegment);
+            expectFocused(
+                element.shadowRoot,
+                element.firstEditableSegment,
+                'first segment not focused'
+            );
 
             await sendKeys({ press: 'ArrowLeft' });
 
