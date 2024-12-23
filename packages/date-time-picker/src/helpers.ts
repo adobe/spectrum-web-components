@@ -13,9 +13,9 @@ governing permissions and limitations under the License.
 import {
     CalendarDate,
     CalendarDateTime,
+    DateValue,
     ZonedDateTime,
 } from '@internationalized/date';
-import { DateValue } from '@spectrum-web-components/calendar';
 import { AM, PM } from './types';
 
 export function isNumber(value: number | undefined): value is number {

@@ -277,7 +277,7 @@ export const customPrecision = (args: StoryArgs): TemplateResult => {
             this.precision = picker.value as Precision;
         }
 
-        public render(): TemplateResult {
+        public override render(): TemplateResult {
             return html`
                 <div>
                     <sp-field-label for="date-picker-precision">
@@ -412,7 +412,7 @@ export const clearSelected = (args: StoryArgs): TemplateResult => {
             picker.invalid = false;
         }
 
-        public render(): TemplateResult {
+        public override render(): TemplateResult {
             return html`
                 <sp-field-label for="clearable-date-time-picker">
                     Event date

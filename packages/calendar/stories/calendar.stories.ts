@@ -205,7 +205,7 @@ export const clearSelected = (args: StoryArgs): TemplateResult => {
             this.shadowRoot?.querySelector('sp-calendar')?.clear();
         }
 
-        public render(): TemplateResult {
+        public override render(): TemplateResult {
             return html`
                 <sp-calendar
                     ...=${spreadProps(computeProps(args))}

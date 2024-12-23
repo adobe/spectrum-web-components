@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { isSameDay } from '@internationalized/date';
+import { DateValue, isSameDay } from '@internationalized/date';
 import {
     elementUpdated,
     expect,
@@ -17,7 +17,7 @@ import {
     html,
     oneEvent,
 } from '@open-wc/testing';
-import { Calendar, DateValue } from '@spectrum-web-components/calendar';
+import { Calendar } from '@spectrum-web-components/calendar';
 import {
     DateTimePicker,
     EditableSegmentType,
