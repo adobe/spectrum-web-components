@@ -14,6 +14,7 @@ import {
     CalendarDate,
     CalendarDateTime,
     DateFormatter,
+    DateValue,
     getLocalTimeZone,
     now,
     Time,
@@ -45,7 +46,7 @@ import {
     styleMap,
     when,
 } from '@spectrum-web-components/base/src/directives.js';
-import { Calendar, type DateValue } from '@spectrum-web-components/calendar';
+import { Calendar } from '@spectrum-web-components/calendar';
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 import {
     LanguageResolutionController,

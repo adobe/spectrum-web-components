@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import {
     CalendarDate,
     DateFormatter,
+    DateValue,
     endOfMonth,
     getLocalTimeZone,
     getWeeksInMonth,
@@ -57,7 +58,6 @@ import {
     CalendarValue,
     CalendarWeekday,
     DateCellProperties,
-    DateValue,
 } from './types.js';
 
 export const DAYS_PER_WEEK = 7;
