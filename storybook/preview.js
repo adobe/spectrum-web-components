@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import { setCustomElementsManifest } from '@storybook/web-components';
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
+import { Locales } from '@spectrum-web-components/story-decorator/src/locales.js';
 import cem from './custom-elements.json';
 
 setCustomElementsManifest(cem);
@@ -60,6 +61,20 @@ export const globalTypes = {
                 },
                 { value: 'large', title: 'Large', icon: 'mobile' },
             ],
+            dynamicTitle: true,
+        },
+    },
+    locale: {
+        title: 'Locale',
+        description: 'The locale to use for the component',
+        defaultValue: 'en-US',
+        toolbar: {
+            icon: 'globe',
+            items: Object.keys(Locales).map((key) => ({
+                value: key,
+                title: Locales[key],
+            })),
+            showName: true,
             dynamicTitle: true,
         },
     },
