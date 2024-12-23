@@ -34,10 +34,11 @@ By default, the `<sp-calendar>` element will display the current month with emph
 ## Value
 
 A pre-selected date value can be provided to the `<sp-calendar>` element and it will dictate the displayed month of the element.
-The element's `value` property accepts dates of `DateValue` type (`CalendarDate | CalendarDateTime | ZonedDateTime`), but when read the property will always be of type `CalendarDate`.
+Setting the `value` property requires a `DateValue` type (`DateValue = CalendarDate | CalendarDateTime | ZonedDateTime`).
+When reading the value by `element.value`, the consumer will always receive a `CalendarDate` type value.
 More about these types and when to use each one can be found on the [`@internationalized/date` page](https://react-spectrum.adobe.com/internationalized/date/index.html).
 
-To clear the user-selected value, the public `clear` method can be used.
+To clear the element's value, the `clear` method can be used. (`element.clear()`)
 
 ```ts
 import {CalendarDate} from '@internationalized/date';
@@ -51,7 +52,7 @@ import {CalendarDate} from '@internationalized/date';
 
 The `min` and `max` properties can be used to limit the selected value to a specific range. Ranges can be open, by providing only one of the mentioned properties, or closed, when both `min` and `max` are provided. These properties are also of `DateValue` type, but will always be of `CalendarDate` type when read, similar to `value`.
 
-If the provided closed interval is not a valid one (e.g `min > max`), the assignment of those properties gets ignored. The same way, if a pre-selected value doesn't comply with the interval, it gets ignore and the element will behave as it wouldn't have a `value` provided.
+If the provided closed interval is not a valid one (e.g `min > max`), the assignment of those properties gets ignored. The same way, if a pre-selected value doesn't comply with the interval, it gets ignored and the element will behave as it wouldn't have a `value` provided.
 
 ```html-live
     <div id="calendar-with-min-max"></div>

@@ -41,7 +41,7 @@ By default, the `<sp-date-time-picker>` element will display a placeholder value
 A pre-selected date value can be provided to the `<sp-date-time-picker>` element and it will be displayed in the individual editable segments accordingly.
 More about these types and when to use each one can be found on the [`@internationalized/date` page](https://react-spectrum.adobe.com/internationalized/date/index.html). (When creating instances of `ZonedDateTime`, make sure to use the `toZoned` function if you're not sure about the timezone offset for your date object to correctly account for DTS)
 
-To clear the user-selected value, the public `clear` method can be used.
+To clear the element's value and all the segments, the `clear` method can be used. (`element.clear()`)
 
 ```ts
 import { CalendarDateTime } from '@internationalized/date';
@@ -203,7 +203,7 @@ The `precision` property of the `<sp-date-time-picker>` element represents the g
 
 ### Precision and property types mappings
 
-The `<sp-date-time-picker>` element's `value`, `min` and `max` properties are all of `DateValue` type (`CalendarDate | CalendarDateTime | ZonedDateTime`).
+The `<sp-date-time-picker>` element's `value`, `min` and `max` properties are all of `DateValue` type (`DateValue = CalendarDate | CalendarDateTime | ZonedDateTime`).
 
 If multiple mentioned properties are provided but with different date types, all of them will be converted to the most specific one, the order of precedence being: `ZonedDateTime`, `CalendarDateTime` and `CalendarDate`. After that, the default `precision` will change, being `day` for `CalendarDate`, and `minute` for the rest.
 
