@@ -32,6 +32,7 @@ import {
 } from '@spectrum-web-components/date-time-picker';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
+import { state } from 'lit/decorators.js';
 
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/date-time-picker/sp-date-time-picker.js';
@@ -39,6 +40,10 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/picker/sp-picker.js';
+
+import { Picker } from '@spectrum-web-components/picker';
 
 type ComponentArgs = {
     invalid?: boolean;
@@ -247,15 +252,71 @@ export const minAndMaxDates = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const secondPrecision = (args: StoryArgs): TemplateResult => {
+export const customPrecision = (args: StoryArgs): TemplateResult => {
+    const styles = css`
+        :host {
+            display: flex;
+            gap: 12px;
+        }
+
+        sp-field-label {
+            width: max-content;
+        }
+    `;
+
+    class CustomPrecisionDateTimePicker extends SpectrumElement {
+        public static override get styles(): CSSResultArray {
+            return [styles];
+        }
+
+        @state()
+        private precision: Precision = 'second';
+
+        private handlePrecisionChange(event: Event): void {
+            const picker = event.target as Picker;
+            this.precision = picker.value as Precision;
+        }
+
+        public render(): TemplateResult {
+            return html`
+                <div>
+                    <sp-field-label for="date-picker-precision">
+                        Event date
+                    </sp-field-label>
+                    <sp-date-time-picker
+                        id="date-picker-precision"
+                        .value=${new CalendarDate(2022, 4, 16)}
+                        ...=${spreadProps(computeProps(args))}
+                        precision=${this.precision}
+                    ></sp-date-time-picker>
+                </div>
+
+                <div>
+                    <sp-field-label for="picker-precision">
+                        Precision
+                    </sp-field-label>
+                    <sp-picker
+                        @change=${this.handlePrecisionChange}
+                        value=${this.precision}
+                    >
+                        ${Object.values(Precisions).map(
+                            (precision) => html`
+                                <sp-menu-item>${precision}</sp-menu-item>
+                            `
+                        )}
+                    </sp-picker>
+                </div>
+            `;
+        }
+    }
+
+    customElements.define(
+        'custom-precision-date-time-picker',
+        CustomPrecisionDateTimePicker
+    );
+
     return html`
-        <sp-field-label for="date-picker-precision">Event date</sp-field-label>
-        <sp-date-time-picker
-            id="date-picker-precision"
-            .value=${new CalendarDate(2022, 4, 16)}
-            precision="second"
-            ...=${spreadProps(computeProps(args))}
-        ></sp-date-time-picker>
+        <custom-precision-date-time-picker></custom-precision-date-time-picker>
     `;
 };
 
