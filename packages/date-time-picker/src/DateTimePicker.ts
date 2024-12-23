@@ -81,7 +81,6 @@ import { InputModifier } from './segments/modifiers/InputModifier';
 import { type SegmentsModifierParams } from './segments/modifiers/SegmentsModifier';
 import {
     DateTimePickerLabels,
-    DateTimePickerValue,
     EditableSegmentType,
     Precision,
     Precisions,
@@ -112,7 +111,7 @@ export class DateTimePicker extends ManageHelpText(
      * If not, the calendar opens at the current month, and placeholder values are shown.
      */
     @property({ type: Object })
-    public value?: DateTimePickerValue;
+    public value?: DateValue;
 
     /**
      * The minimum valid date a user can select
@@ -690,7 +689,7 @@ export class DateTimePicker extends ManageHelpText(
         }
     }
 
-    private previousCommitedValue: DateTimePickerValue | undefined;
+    private previousCommitedValue: DateValue | undefined;
     /**
      * Mark the user intent to commit the selected value. If the current value
      * is different from the previous commited value, dispatch a change event.

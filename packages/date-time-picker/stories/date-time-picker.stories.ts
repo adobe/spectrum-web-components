@@ -26,7 +26,6 @@ import {
 } from '@spectrum-web-components/base';
 import {
     DateTimePicker,
-    DateTimePickerValue,
     Precision,
     Precisions,
 } from '@spectrum-web-components/date-time-picker';
@@ -54,7 +53,7 @@ type ComponentArgs = {
     precision?: Precision;
     min?: DateValue;
     max?: DateValue;
-    value?: DateTimePickerValue;
+    value?: DateValue;
 };
 
 type StoryArgs = ComponentArgs & {

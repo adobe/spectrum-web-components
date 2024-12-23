@@ -55,7 +55,6 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-right.js';
 
 import {
     CalendarLabels,
-    CalendarValue,
     CalendarWeekday,
     DateCellProperties,
 } from './types.js';
@@ -79,7 +78,7 @@ export class Calendar extends SpectrumElement {
      * If not, the calendar opens at the current month.
      */
     @property({ type: Object })
-    public value?: CalendarValue;
+    public value?: DateValue;
 
     /**
      * The minimum allowed date a user can select

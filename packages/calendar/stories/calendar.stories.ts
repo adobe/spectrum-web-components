@@ -18,8 +18,6 @@ import {
     SpectrumElement,
     type TemplateResult,
 } from '@spectrum-web-components/base';
-import { CalendarValue } from '@spectrum-web-components/calendar';
-
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -28,7 +26,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 
 type ComponentArgs = {
-    value?: CalendarValue;
+    value?: DateValue;
     min?: DateValue;
     max?: DateValue;
     padded?: boolean;
@@ -36,7 +34,7 @@ type ComponentArgs = {
 };
 
 type StoryArgs = ComponentArgs & {
-    onChange?: (dateTime: CalendarValue) => void;
+    onChange?: (dateTime: DateValue) => void;
 };
 
 export default {
@@ -84,7 +82,7 @@ export default {
 };
 
 const computeProps = (args: StoryArgs): ComponentArgs => {
-    const timestampToValue = (timestamp: number): CalendarValue => {
+    const timestampToValue = (timestamp: number): DateValue => {
         const date = new Date();
         date.setTime(timestamp);
         return new CalendarDate(
