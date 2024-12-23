@@ -34,7 +34,7 @@ By default, the `<sp-calendar>` element will display the current month with emph
 ## Value
 
 A pre-selected date value can be provided to the `<sp-calendar>` element and it will dictate the displayed month of the element.
-The element's `value` property accepts multiple date types (`CalendarDate`, `CalendarDateTime` and `ZonedDateTime`), but when read the property will always be of type `CalendarDate`.
+The element's `value` property accepts dates of `DateValue` type (`CalendarDate | CalendarDateTime | ZonedDateTime`), but when read the property will always be of type `CalendarDate`.
 More about these types and when to use each one can be found on the [`@internationalized/date` page](https://react-spectrum.adobe.com/internationalized/date/index.html).
 
 To clear the user-selected value, the public `clear` method can be used.
@@ -49,7 +49,7 @@ import {CalendarDate} from '@internationalized/date';
 
 ## Minimum and maximum values
 
-The `min` and `max` properties can be used to limit the selected value to a specific range. Ranges can be open, by providing only one of the mentioned properties, or closed, when both `min` and `max` are provided. These properties also accept multiple date types, but will always be of `CalendarDate` type when read, , similar to `value`.
+The `min` and `max` properties can be used to limit the selected value to a specific range. Ranges can be open, by providing only one of the mentioned properties, or closed, when both `min` and `max` are provided. These properties are also of `DateValue` type, but will always be of `CalendarDate` type when read, similar to `value`.
 
 If the provided closed interval is not a valid one (e.g `min > max`), the assignment of those properties gets ignored. The same way, if a pre-selected value doesn't comply with the interval, it gets ignore and the element will behave as it wouldn't have a `value` provided.
 
@@ -75,9 +75,9 @@ If the provided closed interval is not a valid one (e.g `min > max`), the assign
         customElements.define("calendar-with-min-max", CalendarWithMinMax);
 
         onCodeExamplesLoaded(() => {
-            const appRoot = document.querySelector('#calendar-with-min-max');
-            appRoot.innerHTML = '';
-            render(html`<calendar-with-min-max></calendar-with-min-max>`, appRoot);
+            const root = document.querySelector('#calendar-with-min-max');
+            root.innerHTML = '';
+            render(html`<calendar-with-min-max></calendar-with-min-max>`, root);
         })
     </script>
 ```
@@ -109,9 +109,9 @@ If the provided closed interval is not a valid one (e.g `min > max`), the assign
     customElements.define("calendar-with-min-max", CalendarWithMinMax);
 
     onCodeExamplesLoaded(() => {
-        const appRoot = document.querySelector('#calendar-with-min-max');
-        appRoot.innerHTML = '';
-        render(html`<calendar-with-min-max></calendar-with-min-max>`, appRoot);
+        const root = document.querySelector('#calendar-with-min-max');
+        root.innerHTML = '';
+        render(html`<calendar-with-min-max></calendar-with-min-max>`, root);
     })
 </script>
 
@@ -121,6 +121,7 @@ In order to react to date selection changes, consumers can leverage the `change`
 
 ```ts
 import { CalendarDate } from '@internationalized/date';
+import { Calendar } from '@spectrum-web-components/calendar';
 
 const handleCalendarChange = (event: Event) => {
     const selectedDate = (event.target as Calendar).value as CalendarDate;
@@ -131,7 +132,7 @@ const handleCalendarChange = (event: Event) => {
 ## Internationalization
 
 The `<sp-calendar` element supports multiple locales and updates its content accordingly.
-`element.languageResolver.language` represents the language in which the `<sp-calendar>` element is currently being delivered. By default, the value will represent the language established by the `lang` attribute on the root `<html>` element, with a fallback to `navigator.language`. This can be customized via a language context provider by a parent element that listens for `sp-language-context` event and supplies update language settings to the `callback` function. Applications leveraging the [`<sp-theme>`](./components/theme) element to manage the visual delivery or text direction of their content will also be provided with a reactive context for supplying language information to its descendants.
+`element.locale` represents the language in which the `<sp-calendar>` element is currently being delivered. By default, the value will represent the language established by the `lang` attribute on the root `<html>` element, with a fallback to `navigator.language`. This can be customized via a language context provider by a parent element that listens for `sp-language-context` event and supplies update language settings to the `callback` function. Applications leveraging the [`<sp-theme>`](./components/theme) element to manage the visual delivery or text direction of their content will also be provided with a reactive context for supplying language information to its descendants.
 
 Currently the `<sp-calendar>` elements supports only the Gregorian calendar and the AD era.
 

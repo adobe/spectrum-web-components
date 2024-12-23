@@ -129,7 +129,7 @@ export class Calendar extends SpectrumElement {
      * The locale used to format the dates and weekdays.
      * The default value is the language of the document or the user's browser.
      */
-    private get locale(): string {
+    public get locale(): string {
         return this.languageResolver.language;
     }
 

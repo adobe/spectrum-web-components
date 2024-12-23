@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/date-time-picker",
-    "version": "0.0.1",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },

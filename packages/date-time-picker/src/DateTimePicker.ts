@@ -112,20 +112,20 @@ export class DateTimePicker extends ManageHelpText(
      * The selected date of the component. If defined, this also indicates where the calendar opens.
      * If not, the calendar opens at the current month, and placeholder values are shown.
      */
-    @property({ attribute: false })
-    value?: DateTimePickerValue;
+    @property({ type: Object })
+    public value?: DateTimePickerValue;
 
     /**
      * The minimum valid date a user can select
      */
-    @property({ attribute: false })
-    min?: DateValue;
+    @property({ type: Object })
+    public min?: DateValue;
 
     /**
      * The maximum valid date a user can select
      */
-    @property({ attribute: false })
-    max?: DateValue;
+    @property({ type: Object })
+    public max?: DateValue;
 
     /**
      * The granularity used to display the segments of the component's value
@@ -168,7 +168,7 @@ export class DateTimePicker extends ManageHelpText(
      * and can be overridden to localize the content.
      */
     @property({ attribute: false })
-    labels: DateTimePickerLabels = {
+    public labels: DateTimePickerLabels = {
         previous: 'Previous',
         next: 'Next',
         today: 'Today',
@@ -177,11 +177,8 @@ export class DateTimePicker extends ManageHelpText(
         calendar: 'Calendar',
     };
 
-    /**
-     * @private
-     */
     @property({ type: Boolean, reflect: true })
-    public focused = false;
+    focused = false;
 
     @state()
     private segments: DateTimeSegments = new DateTimeSegments([]);
@@ -196,7 +193,7 @@ export class DateTimePicker extends ManageHelpText(
     private input!: HTMLElement;
 
     private languageResolver = new LanguageResolutionController(this);
-    private get locale(): string {
+    public get locale(): string {
         return this.languageResolver.language;
     }
 
