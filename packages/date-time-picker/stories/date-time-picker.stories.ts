@@ -18,11 +18,14 @@ import {
 
 import {
     css,
+    CSSResultArray,
     html,
+    SpectrumElement,
     TemplateResult,
     unsafeCSS,
 } from '@spectrum-web-components/base';
 import {
+    DateTimePicker,
     DateTimePickerValue,
     Precision,
     Precisions,
@@ -30,10 +33,12 @@ import {
 
 import { spreadProps } from '../../../test/lit-helpers.js';
 
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/date-time-picker/sp-date-time-picker.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
 
 type ComponentArgs = {
     invalid?: boolean;
@@ -324,6 +329,58 @@ export const customWidth = (args: StoryArgs): TemplateResult[] => {
             </div>
         `;
     });
+};
+
+export const clearSelected = (args: StoryArgs): TemplateResult => {
+    const styles = css`
+        sp-action-button {
+            margin-inline-start: 24px;
+        }
+    `;
+
+    class ClearableDateTimePicker extends SpectrumElement {
+        public static override get styles(): CSSResultArray {
+            return [styles];
+        }
+
+        private handleClear(): void {
+            const picker = this.shadowRoot?.querySelector(
+                'sp-date-time-picker'
+            ) as DateTimePicker;
+            picker.clear();
+            picker.invalid = false;
+        }
+
+        public render(): TemplateResult {
+            return html`
+                <sp-field-label for="clearable-date-time-picker">
+                    Event date
+                </sp-field-label>
+                <sp-date-time-picker
+                    id="clearable-date-time-picker"
+                    ...=${spreadProps(computeProps(args))}
+                ></sp-date-time-picker>
+                <sp-action-button @click=${() => this.handleClear()}>
+                    <sp-icon-delete slot="icon"></sp-icon-delete>
+                    Clear
+                </sp-action-button>
+            `;
+        }
+    }
+
+    if (!customElements.get('clearable-date-time-picker'))
+        customElements.define(
+            'clearable-date-time-picker',
+            ClearableDateTimePicker
+        );
+
+    return html`
+        <clearable-date-time-picker></clearable-date-time-picker>
+    `;
+};
+
+clearSelected.swc_vrt = {
+    skip: true,
 };
 
 const ignoredArgTypes = {
