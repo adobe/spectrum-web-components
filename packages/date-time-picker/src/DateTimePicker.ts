@@ -56,9 +56,7 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import styles from './date-time-picker.css.js';
 
-// TODO: Load dependencies lazily when possible
 import '@spectrum-web-components/calendar/sp-calendar.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-calendar.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
@@ -353,7 +351,7 @@ export class DateTimePicker extends ManageHelpText(
                     window.__swc.warn(
                         this,
                         `<${this.localName}> expects the 'min' to be less than 'max'. Please ensure that 'min' property's date is earlier than 'max' property's date.`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
+                        'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker'
                     );
                 this.min = undefined;
                 this.max = undefined;
@@ -365,7 +363,7 @@ export class DateTimePicker extends ManageHelpText(
                 window.__swc.warn(
                     this,
                     `<${this.localName}> expects the preselected value to comply with the min and max constraints. Please ensure that 'value' property's date is in between the dates for the 'min' and 'max' properties.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker' // TODO: update link
+                    'https://opensource.adobe.com/spectrum-web-components/components/date-time-picker'
                 );
             this.value = undefined;
         }
