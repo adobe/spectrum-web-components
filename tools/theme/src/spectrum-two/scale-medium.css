@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 @import url('@spectrum-web-components/styles/spectrum-two/scale-medium.css');
 @import url('@spectrum-web-components/styles/tokens-v2/medium-vars.css');
-@import url('@spectrum-web-components/styles/tokens-v2/spectrum/custom-medium-vars.css');
 
 :root,
 :host {

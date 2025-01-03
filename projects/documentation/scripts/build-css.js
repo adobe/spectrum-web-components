@@ -32,7 +32,7 @@ const outDir = path.resolve(projectDir, '_site');
 const { files } = yargs(hideBin(process.argv)).argv;
 
 async function bundle(fileName) {
-    let { code, map } = await bundleAsync({
+    return bundleAsync({
         filename: fileName,
         minify: true,
         errorRecovery: true,
@@ -52,13 +52,12 @@ async function bundle(fileName) {
             },
         },
     });
-    return { code, map };
 }
 
 async function main() {
     for await (const cssSource of await fg(`${projectDir}/${files}`)) {
         const fileName = cssSource.split(path.sep).at(-1);
-        const { code, map } = await bundle(cssSource);
+        const { code } = await bundle(cssSource);
         await fs.writeFile(path.resolve(outDir, fileName), code);
     }
     process.exit(0);
