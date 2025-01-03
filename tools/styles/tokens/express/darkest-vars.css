@@ -2,7 +2,6 @@
 :root {
     --spectrum-drop-zone-background-color-rgb: var(--spectrum-indigo-900-rgb);
     --spectrum-well-border-color: rgba(var(--spectrum-white-rgb), 0.05);
-
     --spectrum-assetcard-border-color-selected: var(--spectrum-indigo-700);
     --spectrum-assetcard-border-color-selected-hover: var(
         --spectrum-indigo-700

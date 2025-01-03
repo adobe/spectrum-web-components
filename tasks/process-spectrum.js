@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 */
 
 import fg from 'fast-glob';
-import chalk from 'chalk';
+import 'colors';
 import { transform } from 'lightningcss';
 import path from 'path';
 import fs from 'fs';
@@ -65,12 +65,6 @@ const isCombinator = (component) => {
 
 const isDirAttr = (component) => {
     return component.type === 'attribute' && component.name === 'dir';
-};
-
-const isFocusVisible = (component) => {
-    return (
-        component.type === 'pseudo-class' && component.name === 'focus-visible'
-    );
 };
 
 const isFocusRing = (component) => {
@@ -181,13 +175,11 @@ async function processComponent(componentPath) {
             `spectrum-${conversion.fileName}.css`
         );
         const processSelectorV2 = (selector) => {
-            let log = false;
             const matches = Array(selector.length);
             let injected = 0;
             selector.forEach((component, selectorIndex) => {
                 let index = selectorIndex + injected;
                 const match = [...(matches[index] || [])];
-                let matched = false;
                 if (isDirAttr(component)) {
                     match.push({
                         hoist: true,
@@ -199,7 +191,6 @@ async function processComponent(componentPath) {
                             ...component,
                         },
                     });
-                    matched = true;
                 } else if (isFocusRing(component)) {
                     match.push({
                         hoist: true,
@@ -212,7 +203,6 @@ async function processComponent(componentPath) {
                             kind: 'focus-visible',
                         },
                     });
-                    matched = true;
                 }
                 conversion.components.forEach((componentConversion) => {
                     if (Array.isArray(componentConversion.find)) {
@@ -310,7 +300,6 @@ async function processComponent(componentPath) {
                             newMatch.replace = component;
                         }
                         match.push(newMatch);
-                        matched = true;
                     }
                 });
                 if (!match.length) {
@@ -331,7 +320,7 @@ async function processComponent(componentPath) {
                  * @type {import('./spectrum-css-converter').HostSelectorComponent}
                  */
                 let host;
-                selector.forEach((componentProcesses, index) => {
+                selector.forEach((componentProcesses) => {
                     const component = componentProcesses[0];
                     if (component.replace) {
                         const replacenentIsHost = isHost(component.replace);
@@ -385,7 +374,8 @@ async function processComponent(componentPath) {
                         }
                     }
                 });
-                // @ts-ignore
+
+                // @ts-expect-error - host is defined
                 if (host) {
                     if (
                         newSelector.length &&
@@ -419,6 +409,7 @@ async function processComponent(componentPath) {
                 }
                 selectors.push(conditionSelector(newSelector));
             });
+
             return selectors;
         };
 
@@ -445,7 +436,7 @@ async function processComponent(componentPath) {
                 const { code } = transform({
                     code: Buffer.from(bridgeCss),
                     visitor: {
-                        // @ts-ignore
+                        // @ts-expect-error - Rule is a valid visitor
                         Rule(rule) {
                             if (
                                 !conversion.allowThemeRules &&
@@ -639,16 +630,16 @@ async function processComponent(componentPath) {
     This file is licensed to you under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License. You may obtain a copy
     of the License at http://www.apache.org/licenses/LICENSE-2.0
-    
+
     Unless required by applicable law or agreed to in writing, software distributed under
     the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
     OF ANY KIND, either express or implied. See the License for the specific language
     governing permissions and limitations under the License.
     */
-    
+
     /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ${code}
-            `.replace(/\/\*\![\w|\W]*\*\//, '')
+            `.replace(/\/\*![\w|\W]*\*\//, '')
                     );
                 }
             }
@@ -657,7 +648,7 @@ async function processComponent(componentPath) {
         const { code } = transform({
             code: Buffer.from(sourceCSS),
             visitor: {
-                // @ts-ignore
+                // @ts-expect-error - Rule is a valid visitor
                 Rule(rule) {
                     if (!conversion.allowThemeRules && isThemeOnlyRule(rule)) {
                         return nullRuleFromRule(rule);
@@ -834,7 +825,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 ${code}
-`.replace(/\/\*\![\w|\W]*\*\//, '')
+`.replace(/\/\*![\w|\W]*\*\//, '')
         );
     }
 }
@@ -842,7 +833,7 @@ ${code}
 async function processComponents() {
     const promises = [];
     // eslint-disable-next-line no-console
-    console.log(chalk.bold.green('Processing Spectrum Components'));
+    console.log('Processing Spectrum Components'.green);
     for (const configPath of await fg(
         `${root}/{packages,tools}/*/src/spectrum-config.js`
     )) {
@@ -850,7 +841,7 @@ async function processComponents() {
     }
     await Promise.all(promises);
     // eslint-disable-next-line no-console
-    console.log(chalk.bold.green('Done'));
+    console.log('Done'.green);
 }
 
 async function main() {

@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 @import url('@spectrum-web-components/styles/tokens/global-vars.css');
 @import url('@spectrum-web-components/styles/tokens/spectrum/global-vars.css');
 @import url('@spectrum-web-components/styles/tokens/spectrum/custom-vars.css');
+@import url('@spectrum-web-components/styles/tokens/spectrum/component-bridge.css');
 @import url('@spectrum-web-components/styles/typography.css');
 
 :host {
