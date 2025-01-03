@@ -15,6 +15,7 @@ governing permissions and limitations under the License.
 @import url('@spectrum-web-components/styles/tokens/express/global-vars.css');
 @import url('@spectrum-web-components/styles/tokens/spectrum/custom-vars.css');
 @import url('@spectrum-web-components/styles/tokens/express/custom-vars.css');
+@import url('@spectrum-web-components/styles/tokens/express/component-bridge.css');
 @import url('@spectrum-web-components/styles/typography.css');
 
 :host {
