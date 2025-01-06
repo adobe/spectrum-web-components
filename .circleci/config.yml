@@ -142,7 +142,7 @@ jobs:
                       source $BASH_ENV
             - run:
                   name: Lint commit message
-                  command: echo "$COMMIT_MESSAGE" | npx commitlint --config commitlint.config.cjs
+                  command: echo "$COMMIT_MESSAGE" | yarn commitlint --config commitlint.config.cjs
 
     test-chromium:
         executor: node
@@ -220,7 +220,7 @@ jobs:
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
-                  branch=$(npx slugify-cli $branch)
+                  branch=$(yarn slugify-cli $branch)
                   yarn netlify deploy --alias=$branch --cwd projects/documentation
 
     beta-docs:
@@ -234,7 +234,7 @@ jobs:
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
-                  branch=$(npx slugify-cli $branch)
+                  branch=$(yarn slugify-cli $branch)
                   yarn netlify deploy --alias=beta --cwd projects/documentation
 
     hcm-visual:
