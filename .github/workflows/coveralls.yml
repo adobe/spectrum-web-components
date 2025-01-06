@@ -20,7 +20,7 @@ jobs:
               uses: ./.github/actions/setup-job
 
             - name: Install Playwright
-              run: yarn playwright install
+              run: yarn playwright install --with-deps
 
             - name: Run unit tests with coverage
               run: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
