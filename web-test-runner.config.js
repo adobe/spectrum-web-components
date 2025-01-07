@@ -20,6 +20,7 @@ import {
     chromiumWithMemoryTooling,
     chromiumWithMemoryToolingCI,
     configuredVisualRegressionPlugin,
+    coverallsChromium,
     firefox,
     packages,
     vrtGroups,
@@ -163,6 +164,14 @@ export default {
                 '{packages,tools}/**/*.test.js',
                 '!{packages,tools}/**/*-memory.test.js',
             ],
+        },
+        {
+            name: 'coveralls-ci',
+            files: [
+                '{packages,tools}/**/*.test.js',
+                '!{packages,tools}/**/*-memory.test.js',
+            ],
+            browsers: [coverallsChromium],
         },
     ],
     group: 'unit',
