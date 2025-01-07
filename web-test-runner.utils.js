@@ -24,6 +24,21 @@ export const chromium = playwrightLauncher({
         }),
 });
 
+export const coverallsChromium = playwrightLauncher({
+    product: 'chromium',
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+            permissions: ['clipboard-read', 'clipboard-write'],
+        }),
+    launchOptions: {
+        // TODO: Remove executablePath when we fix Playwright versions mismatch
+        executablePath:
+            '/home/runner/.cache/ms-playwright/chromium-1148/chrome-linux/chrome',
+        headless: true,
+    },
+});
+
 export const chromiumWithMemoryTooling = playwrightLauncher({
     product: 'chromium',
     createBrowserContext: ({ browser }) =>
