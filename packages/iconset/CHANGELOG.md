@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
+
+### Bug Fixes
+
+-   **icon:** remove size300 suffix from chevron and checkmark icons in Spectrum 2 ([#4904](https://github.com/adobe/spectrum-web-components/issues/4904)) ([a22f42b](https://github.com/adobe/spectrum-web-components/commit/a22f42bf508e1d0f2ddc9824b0f4d4e08eac659a))
+
+# [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
+
+**Note:** Version bump only for package @spectrum-web-components/iconset
+
+# [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
+
+**Note:** Version bump only for package @spectrum-web-components/iconset
+
+## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
+
+**Note:** Version bump only for package @spectrum-web-components/iconset
+
 # [0.48.0](https://github.com/adobe/spectrum-web-components/compare/v0.47.2...v0.48.0) (2024-09-17)
 
 **Note:** Version bump only for package @spectrum-web-components/iconset

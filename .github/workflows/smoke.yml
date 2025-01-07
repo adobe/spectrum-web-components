@@ -9,20 +9,20 @@ jobs:
         timeout-minutes: 60
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: 18
-                  cache: 'yarn'
-                  registry-url: 'https://registry.npmjs.org'
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
 
-            - name: Install dependencies
-              run: yarn --frozen-lockfile
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+
             - name: Install Playwright Browsers
-              run: npx playwright install --with-deps
+              run: yarn playwright install --with-deps
+
             - name: Run Playwright tests
-              run: npx playwright test projects/documentation/e2e/published.spec.ts
-            - uses: actions/upload-artifact@v4
+              run: yarn playwright test projects/documentation/e2e/published.spec.ts
+
+            - name: Upload Playwright Report
+              uses: actions/upload-artifact@v4
               if: always()
               with:
                   name: playwright-report

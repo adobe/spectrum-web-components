@@ -120,10 +120,11 @@ export default {
                 type: 'boolean',
             },
         },
-        staticValue: {
-            name: 'static',
+        staticColorValue: {
+            name: 'static-color',
             type: { name: 'string', required: false },
-            description: 'The visual static variant to apply to the button.',
+            description:
+                'The visual static color variant to apply to the button.',
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'none' },
@@ -432,6 +433,11 @@ groupsWithSelects.swc_vrt = {
     skip: true,
 };
 
+groupsWithSelects.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const directive = (): TemplateResult => {
     const renderSubmenu = (): TemplateResult => html`
         <sp-menu-item>Submenu Item 1</sp-menu-item>
@@ -467,6 +473,11 @@ directive.swc_vrt = {
     skip: true,
 };
 
+directive.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const withScrollEvent = (): TemplateResult => {
     function handleActionMenuScroll(): void {
         console.log('attached action menu scroll listener');
@@ -489,4 +500,8 @@ export const withScrollEvent = (): TemplateResult => {
             ${renderMenuItems()}
         </sp-action-menu>
     `;
+};
+
+withScrollEvent.parameters = {
+    chromatic: { disableSnapshot: true },
 };

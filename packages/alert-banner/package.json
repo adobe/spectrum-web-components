@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/alert-banner",
-    "version": "0.48.0",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -29,6 +29,7 @@
             "development": "./src/AlertBanner.dev.js",
             "default": "./src/AlertBanner.js"
         },
+        "./src/alert-banner-overrides.css.js": "./src/alert-banner-overrides.css.js",
         "./src/alert-banner.css.js": "./src/alert-banner.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -57,12 +58,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.48.0",
-        "@spectrum-web-components/button": "^0.48.0",
-        "@spectrum-web-components/icons-workflow": "^0.48.0"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/button": "^1.0.3",
+        "@spectrum-web-components/icons-workflow": "^1.0.3"
     },
     "devDependencies": {
-        "@spectrum-css/alertbanner": "^2.2.0"
+        "@spectrum-css/alertbanner": "^3.0.0-s2-foundations.16"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

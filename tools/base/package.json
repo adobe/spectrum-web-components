@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/base",
-    "version": "0.48.0",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },

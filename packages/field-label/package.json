@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/field-label",
-    "version": "0.48.0",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -29,6 +29,7 @@
             "development": "./src/FieldLabel.dev.js",
             "default": "./src/FieldLabel.js"
         },
+        "./src/field-label-overrides.css.js": "./src/field-label-overrides.css.js",
         "./src/field-label.css.js": "./src/field-label.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -57,14 +58,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.48.0",
-        "@spectrum-web-components/icon": "^0.48.0",
-        "@spectrum-web-components/icons-ui": "^0.48.0",
-        "@spectrum-web-components/reactive-controllers": "^0.48.0",
-        "@spectrum-web-components/shared": "^0.48.0"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/icon": "^1.0.3",
+        "@spectrum-web-components/icons-ui": "^1.0.3",
+        "@spectrum-web-components/reactive-controllers": "^1.0.3",
+        "@spectrum-web-components/shared": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/fieldlabel": "^8.1.0"
+        "@spectrum-css/fieldlabel": "^9.0.0-s2-foundations.16"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

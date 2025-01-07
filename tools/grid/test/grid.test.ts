@@ -51,7 +51,8 @@ describe('Grid', () => {
 
         expect(el.tabIndex).to.equal(0);
 
-        el.focus();
+        await sendKeys({ press: 'Tab' });
+        await sendKeys({ press: 'Tab' });
 
         await nextFrame();
         await nextFrame();
@@ -77,7 +78,8 @@ describe('Grid', () => {
 
         expect(el.tabIndex).to.equal(0);
 
-        el.focus();
+        await sendKeys({ press: 'Tab' });
+        await sendKeys({ press: 'Tab' });
 
         await nextFrame();
         await nextFrame();

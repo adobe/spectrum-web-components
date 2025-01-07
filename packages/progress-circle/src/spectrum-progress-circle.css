@@ -11,11 +11,161 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.fill-submask-2 {
-    animation: 1s linear infinite b;
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-progress-circle-fill-border-color: Highlight;
+        --highcontrast-progress-circle-fill-border-color-over-background: Highlight;
+    }
+
+    .track {
+        --spectrum-progress-circle-track-border-style: double;
+    }
 }
 
-@keyframes a {
+:host {
+    position: var(--mod-progress-circle-position, relative);
+    direction: ltr;
+    display: inline-block;
+    position: relative;
+    transform: translateZ(0);
+}
+
+:host,
+.track {
+    inline-size: var(
+        --mod-progress-circle-size,
+        var(--spectrum-progress-circle-size)
+    );
+    block-size: var(
+        --mod-progress-circle-size,
+        var(--spectrum-progress-circle-size)
+    );
+}
+
+.track {
+    box-sizing: border-box;
+    border-style: var(
+        --highcontrast-progress-circle-track-border-style,
+        var(
+            --mod-progress-circle-track-border-style,
+            var(--spectrum-progress-circle-track-border-style)
+        )
+    );
+    border-width: var(
+        --mod-progress-circle-thickness,
+        var(--spectrum-progress-circle-thickness)
+    );
+    border-radius: var(
+        --mod-progress-circle-size,
+        var(--spectrum-progress-circle-size)
+    );
+    border-color: var(
+        --mod-progress-circle-track-border-color,
+        var(--spectrum-progress-circle-track-border-color)
+    );
+}
+
+.fills {
+    inline-size: 100%;
+    block-size: 100%;
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+}
+
+.fill {
+    box-sizing: border-box;
+    inline-size: var(
+        --mod-progress-circle-size,
+        var(--spectrum-progress-circle-size)
+    );
+    block-size: var(
+        --mod-progress-circle-size,
+        var(--spectrum-progress-circle-size)
+    );
+    border-style: solid;
+    border-width: var(
+        --mod-progress-circle-thickness,
+        var(--spectrum-progress-circle-thickness)
+    );
+    border-radius: var(
+        --mod-progress-circle-size,
+        var(--spectrum-progress-circle-size)
+    );
+    border-color: var(
+        --highcontrast-progress-circle-fill-border-color,
+        var(
+            --mod-progress-circle-fill-border-color,
+            var(--spectrum-progress-circle-fill-border-color)
+        )
+    );
+}
+
+:host([static-color='white']) .track {
+    border-color: var(
+        --mod-progress-circle-track-border-color-over-background,
+        var(--spectrum-progress-circle-track-border-color-over-background)
+    );
+}
+
+:host([static-color='white']) .fill {
+    border-color: var(
+        --highcontrast-progress-circle-fill-border-color-over-background,
+        var(
+            --mod-progress-circle-fill-border-color-over-background,
+            var(--spectrum-progress-circle-fill-border-color-over-background)
+        )
+    );
+}
+
+.fillMask1,
+.fillMask2 {
+    inline-size: 50%;
+    block-size: 100%;
+    transform-origin: 100%;
+    position: absolute;
+    overflow: hidden;
+    transform: rotate(180deg);
+}
+
+.fillSubMask1,
+.fillSubMask2 {
+    inline-size: 100%;
+    block-size: 100%;
+    transform-origin: 100%;
+    overflow: hidden;
+    transform: rotate(-180deg);
+}
+
+.fillMask2 {
+    transform: rotate(0);
+}
+
+:host([indeterminate]) .fills {
+    will-change: transform;
+    transform-origin: center;
+    animation: 1s cubic-bezier(0.25, 0.78, 0.48, 0.89) infinite
+        spectrum-fills-rotate;
+    transform: translateZ(0);
+}
+
+:host([indeterminate]) .fillSubMask1 {
+    will-change: transform;
+    animation: 1s linear infinite spectrum-fill-mask-1;
+    transform: translateZ(0);
+}
+
+:host([indeterminate]) .fillSubMask2 {
+    will-change: transform;
+    animation: 1s linear infinite spectrum-fill-mask-2;
+    transform: translateZ(0);
+}
+
+.fill-submask-2 {
+    animation: 1s linear infinite spectrum-fill-mask-2;
+}
+
+@keyframes spectrum-fill-mask-1 {
     0% {
         transform: rotate(90deg);
     }
@@ -257,7 +407,7 @@ governing permissions and limitations under the License.
     }
 }
 
-@keyframes b {
+@keyframes spectrum-fill-mask-2 {
     0% {
         transform: rotate(180deg);
     }
@@ -499,7 +649,7 @@ governing permissions and limitations under the License.
     }
 }
 
-@keyframes c {
+@keyframes spectrum-fills-rotate {
     0% {
         transform: rotate(-90deg);
     }
@@ -507,186 +657,4 @@ governing permissions and limitations under the License.
     to {
         transform: rotate(270deg);
     }
-}
-
-:host {
-    --spectrum-progress-circle-track-border-color: var(--spectrum-gray-300);
-    --spectrum-progress-circle-fill-border-color: var(
-        --spectrum-accent-content-color-default
-    );
-    --spectrum-progress-circle-track-border-color-over-background: var(
-        --spectrum-transparent-white-300
-    );
-    --spectrum-progress-circle-fill-border-color-over-background: var(
-        --spectrum-transparent-white-900
-    );
-    --spectrum-progress-circle-size: var(
-        --spectrum-progress-circle-size-medium
-    );
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-medium
-    );
-    --spectrum-progress-circle-track-border-style: solid;
-}
-
-:host([size='s']) {
-    --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-small);
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-small
-    );
-}
-
-:host([size='l']) {
-    --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-large);
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-large
-    );
-}
-
-@media (forced-colors: active) {
-    :host {
-        --highcontrast-progress-circle-fill-border-color: Highlight;
-        --highcontrast-progress-circle-fill-border-color-over-background: Highlight;
-    }
-
-    .track {
-        --spectrum-progress-circle-track-border-style: double;
-    }
-}
-
-:host {
-    position: var(--mod-progress-circle-position, relative);
-    direction: ltr;
-    display: inline-block;
-    transform: translateZ(0);
-}
-
-:host,
-.track {
-    inline-size: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
-    block-size: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
-}
-
-.track {
-    box-sizing: border-box;
-    border-style: var(
-        --highcontrast-progress-circle-track-border-style,
-        var(
-            --mod-progress-circle-track-border-style,
-            var(--spectrum-progress-circle-track-border-style)
-        )
-    );
-    border-width: var(
-        --mod-progress-circle-thickness,
-        var(--spectrum-progress-circle-thickness)
-    );
-    border-radius: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
-    border-color: var(
-        --mod-progress-circle-track-border-color,
-        var(--spectrum-progress-circle-track-border-color)
-    );
-}
-
-.fills {
-    inline-size: 100%;
-    block-size: 100%;
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-}
-
-.fill {
-    box-sizing: border-box;
-    inline-size: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
-    block-size: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
-    border-style: solid;
-    border-width: var(
-        --mod-progress-circle-thickness,
-        var(--spectrum-progress-circle-thickness)
-    );
-    border-radius: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
-    border-color: var(
-        --highcontrast-progress-circle-fill-border-color,
-        var(
-            --mod-progress-circle-fill-border-color,
-            var(--spectrum-progress-circle-fill-border-color)
-        )
-    );
-}
-
-:host([static='white']) .track {
-    border-color: var(
-        --mod-progress-circle-track-border-color-over-background,
-        var(--spectrum-progress-circle-track-border-color-over-background)
-    );
-}
-
-:host([static='white']) .fill {
-    border-color: var(
-        --highcontrast-progress-circle-fill-border-color-over-background,
-        var(
-            --mod-progress-circle-fill-border-color-over-background,
-            var(--spectrum-progress-circle-fill-border-color-over-background)
-        )
-    );
-}
-
-.fillMask1,
-.fillMask2 {
-    inline-size: 50%;
-    block-size: 100%;
-    transform-origin: 100%;
-    position: absolute;
-    overflow: hidden;
-    transform: rotate(180deg);
-}
-
-.fillSubMask1,
-.fillSubMask2 {
-    inline-size: 100%;
-    block-size: 100%;
-    transform-origin: 100%;
-    overflow: hidden;
-    transform: rotate(-180deg);
-}
-
-.fillMask2 {
-    transform: rotate(0);
-}
-
-:host([indeterminate]) .fills {
-    will-change: transform;
-    transform-origin: center;
-    animation: 1s cubic-bezier(0.25, 0.78, 0.48, 0.89) infinite c;
-    transform: translateZ(0);
-}
-
-:host([indeterminate]) .fillSubMask1 {
-    will-change: transform;
-    animation: 1s linear infinite a;
-    transform: translateZ(0);
-}
-
-:host([indeterminate]) .fillSubMask2 {
-    will-change: transform;
-    animation: 1s linear infinite b;
-    transform: translateZ(0);
 }

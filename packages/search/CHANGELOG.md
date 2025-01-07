@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
+
+### Bug Fixes
+
+-   **search:** clear button ui in express ([#4910](https://github.com/adobe/spectrum-web-components/issues/4910)) ([f88e1e2](https://github.com/adobe/spectrum-web-components/commit/f88e1e2c03ed74f8d3f7924d395a34168afd244c))
+
+# [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+# [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
+## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
+
+**Note:** Version bump only for package @spectrum-web-components/search
+
 # [0.48.0](https://github.com/adobe/spectrum-web-components/compare/v0.47.2...v0.48.0) (2024-09-17)
 
 **Note:** Version bump only for package @spectrum-web-components/search

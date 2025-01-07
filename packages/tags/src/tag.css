@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-tag.css');
+@import url('./tag-overrides.css');
 
 :host([invalid]) .clear-button {
     --spectrum-clearbutton-medium-icon-color: var(

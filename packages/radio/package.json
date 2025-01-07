@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/radio",
-    "version": "0.48.0",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -37,6 +37,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/radio-overrides.css.js": "./src/radio-overrides.css.js",
         "./src/radio.css.js": "./src/radio.css.js",
         "./sp-radio.js": {
             "development": "./sp-radio.dev.js",
@@ -65,14 +66,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.48.0",
-        "@spectrum-web-components/field-group": "^0.48.0",
-        "@spectrum-web-components/help-text": "^0.48.0",
-        "@spectrum-web-components/reactive-controllers": "^0.48.0",
-        "@spectrum-web-components/shared": "^0.48.0"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/field-group": "^1.0.3",
+        "@spectrum-web-components/help-text": "^1.0.3",
+        "@spectrum-web-components/reactive-controllers": "^1.0.3",
+        "@spectrum-web-components/shared": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/radio": "^9.2.3"
+        "@spectrum-css/radio": "^10.0.0-s2-foundations.15"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

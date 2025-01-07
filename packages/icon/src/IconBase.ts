@@ -17,7 +17,15 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    SystemResolutionController,
+    systemResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
+
+import {
+    property,
+    state,
+} from '@spectrum-web-components/base/src/decorators.js';
 
 import iconStyles from './icon.css.js';
 
@@ -26,11 +34,30 @@ export class IconBase extends SpectrumElement {
         return [iconStyles];
     }
 
-    @property()
+    private unsubscribeSystemContext: (() => void) | null = null;
+
+    @state()
+    public spectrumVersion = 1;
+
+    @property({ reflect: true })
     public label = '';
 
     @property({ reflect: true })
     public size?: 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
+
+    public override connectedCallback(): void {
+        super.connectedCallback();
+    }
+
+    public override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        if (this.unsubscribeSystemContext) {
+            this.unsubscribeSystemContext();
+            this.unsubscribeSystemContext = null;
+        }
+    }
+
+    private systemResolver = new SystemResolutionController(this);
 
     protected override update(changes: PropertyValues): void {
         if (changes.has('label')) {
@@ -40,6 +67,12 @@ export class IconBase extends SpectrumElement {
                 this.setAttribute('aria-hidden', 'true');
             }
         }
+
+        if (changes.has(systemResolverUpdatedSymbol)) {
+            this.spectrumVersion =
+                this.systemResolver.system === 'spectrum-two' ? 2 : 1;
+        }
+
         super.update(changes);
     }
 

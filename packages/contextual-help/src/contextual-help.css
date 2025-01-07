@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-contextual-help.css');
+@import url('./contextual-help-overrides.css');
 
 :host {
     display: inline-block;

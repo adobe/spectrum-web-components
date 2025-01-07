@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
+
+### Bug Fixes
+
+-   **overlay:** overlay scroll in safari and firefox ([#4969](https://github.com/adobe/spectrum-web-components/issues/4969)) ([05d24ff](https://github.com/adobe/spectrum-web-components/commit/05d24ffc4dc8e9b0281b90c768b7f983fe890def))
+
+## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
+
+### Bug Fixes
+
+-   **overlay:** ensure smooth animation when opening modal overlays ([#4879](https://github.com/adobe/spectrum-web-components/issues/4879)) ([cd8dad7](https://github.com/adobe/spectrum-web-components/commit/cd8dad7b08c822a8224834b8775b0ab74bbaf3b6))
+-   **overlay:** overlay closing another overlay ([#4880](https://github.com/adobe/spectrum-web-components/issues/4880)) ([30434fa](https://github.com/adobe/spectrum-web-components/commit/30434fa52194884befd528ab88842092798859cc))
+-   **overlay:** remove flex display for dialog ([#4902](https://github.com/adobe/spectrum-web-components/issues/4902)) ([48448ea](https://github.com/adobe/spectrum-web-components/commit/48448ea75d7ffa61422947a18c3ea1ebf9ca25b7))
+
+# [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
+# [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
+## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
 # [0.48.0](https://github.com/adobe/spectrum-web-components/compare/v0.47.2...v0.48.0) (2024-09-17)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

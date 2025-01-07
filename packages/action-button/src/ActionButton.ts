@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -22,6 +22,7 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from '@spectrum-web-components/button';
 import buttonStyles from './action-button.css.js';
 import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
+import cornerTriangleOverrides from '@spectrum-web-components/icon/src/icon-corner-triangle-overrides.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
 
 const holdAffordanceClass = {
@@ -46,7 +47,7 @@ export type LongpressEvent = {
  * @slot icon - The icon to use for Action Button
  * @fires change - Announces a change in the `selected` property of an action button
  * @fires longpress - Synthesizes a "longpress" interaction that signifies a
- * `pointerdown` event that is >=300ms or a keyboard event wher code is `Space` or code is `ArrowDown`
+ * `pointerdown` event that is >=300ms or a keyboard event where code is `Space` or code is `ArrowDown`
  * while `altKey===true`.
  */
 export class ActionButton extends SizedMixin(ButtonBase, {
@@ -54,7 +55,12 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, buttonStyles, cornerTriangleStyles];
+        return [
+            ...super.styles,
+            buttonStyles,
+            cornerTriangleStyles,
+            cornerTriangleOverrides,
+        ];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -84,11 +90,11 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     @property({ type: Boolean, reflect: true })
     public toggles = false;
 
-    @property({ reflect: true })
-    public static?: 'white' | 'black';
-
-    @property({ reflect: true })
-    public variant?: 'white' | 'black';
+    /**
+     * The static color variant to use for the action button.
+     */
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white' | 'black';
 
     @property({ type: String })
     public get value(): string {
@@ -254,19 +260,6 @@ export class ActionButton extends SizedMixin(ButtonBase, {
                         this.selected ? 'true' : 'false'
                     );
                 }
-            }
-        }
-        if (
-            changes.has('variant') &&
-            (this.variant || typeof changes.get('variant'))
-        ) {
-            this.static = this.variant;
-            if (window.__swc.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `The "variant" attribute/property of <${this.localName}> have been deprecated. Use "static" with any of the same values instead. "variant" will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/badge/#fixed'
-                );
             }
         }
         if (changes.has('holdAffordance')) {

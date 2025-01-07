@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/toast",
-    "version": "0.48.0",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -33,6 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/toast-overrides.css.js": "./src/toast-overrides.css.js",
         "./src/toast.css.js": "./src/toast.css.js",
         "./sp-toast.js": {
             "development": "./sp-toast.dev.js",
@@ -57,14 +58,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.48.0",
-        "@spectrum-web-components/button": "^0.48.0",
-        "@spectrum-web-components/icon": "^0.48.0",
-        "@spectrum-web-components/icons-workflow": "^0.48.0",
-        "@spectrum-web-components/shared": "^0.48.0"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/button": "^1.0.3",
+        "@spectrum-web-components/icon": "^1.0.3",
+        "@spectrum-web-components/icons-workflow": "^1.0.3",
+        "@spectrum-web-components/shared": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/toast": "^10.2.0"
+        "@spectrum-css/toast": "^11.0.0-s2-foundations.15"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

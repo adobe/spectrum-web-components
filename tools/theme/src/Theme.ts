@@ -24,10 +24,11 @@ import {
     SettableFragmentTypes,
     ShadowRootWithAdoptedStyleSheets,
     SYSTEM_VARIANT_VALUES,
+    SystemContextCallback,
     SystemVariant,
     ThemeFragmentMap,
     ThemeKindProvider,
-} from './theme-interfaces';
+} from './theme-interfaces.js';
 export type { ProvideLang, ThemeFragmentMap, Color, Scale, SystemVariant };
 /**
  * @element sp-theme
@@ -43,15 +44,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     static VERSION = version;
 
     static get observedAttributes(): string[] {
-        return [
-            'color',
-            'scale',
-            'lang',
-            'dir',
-            'system',
-            /* deprecated attributes, but still observing */
-            'theme',
-        ];
+        return ['color', 'scale', 'lang', 'dir', 'system'];
     }
 
     _dir: 'ltr' | 'rtl' | '' = '';
@@ -88,15 +81,12 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.color = value as Color;
         } else if (attrName === 'scale') {
             this.scale = value as Scale;
-            /* c8 ignore next 3 */
         } else if (attrName === 'lang' && !!value) {
             this.lang = value;
             this._provideContext();
-        } else if (attrName === 'theme') {
-            this.theme = value as SystemVariant;
-            warnBetaSystem(this, value as SystemVariant);
         } else if (attrName === 'system') {
             this.system = value as SystemVariant;
+            this._provideSystemContext();
             warnBetaSystem(this, value as SystemVariant);
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
@@ -141,25 +131,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
     }
 
-    /*
-     * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
-     */
-    get theme(): SystemVariant | '' {
-        /* c8 ignore next 3 */
-        if (!this.system) {
-            this.removeAttribute('system');
-        }
-        return this.system;
-    }
-
-    /*
-     * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
-     */
-    set theme(newValue: SystemVariant | '') {
-        this.system = newValue;
-        this.requestUpdate();
-    }
-
     private _color: Color | '' = '';
 
     /**
@@ -188,7 +159,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         if (color) {
             this.setAttribute('color', color);
-            /* c8 ignore next 3 */
         } else {
             this.removeAttribute('color');
         }
@@ -238,14 +208,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             kind?: FragmentType
         ): CSSResultGroup | undefined => {
             const currentStyles =
-                kind &&
-                kind !== 'theme' &&
-                kind !== 'system' &&
-                this.theme !== 'spectrum' &&
-                this.system !== 'spectrum'
+                kind && kind !== 'system' && this.system !== 'spectrum'
                     ? fragments.get(`${name}-${this.system}`)
                     : fragments.get(name);
-            // theme="spectrum" is available by default and doesn't need to be applied.
+            // system="spectrum" is available by default and doesn't need to be applied.
             const isAppliedFragment =
                 name === 'spectrum' || !kind || this.hasAttribute(kind);
             if (currentStyles && isAppliedFragment) {
@@ -276,7 +242,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.system,
             this.color,
             this.scale,
-            this.hasAttribute('theme'),
             themeFragmentsByKind
         );
 
@@ -301,7 +266,46 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             'sp-language-context',
             this._handleContextPresence as EventListener
         );
+        this.addEventListener(
+            'sp-system-context',
+            this._handleSystemContext as EventListener
+        );
+
         this.updateComplete = this.__createDeferredPromise();
+    }
+
+    private _systemContextConsumers = new Map<
+        HTMLElement,
+        [SystemContextCallback, () => void]
+    >();
+
+    private _handleSystemContext(
+        event: CustomEvent<{ callback: SystemContextCallback }>
+    ): void {
+        event.stopPropagation();
+
+        const target = event.composedPath()[0] as HTMLElement;
+
+        // Avoid duplicate registrations
+        if (this._systemContextConsumers.has(target)) {
+            return;
+        }
+
+        // Create an unsubscribe function
+        const unsubscribe: () => void = () =>
+            this._systemContextConsumers.delete(target);
+
+        // Store the callback and unsubscribe function
+        this._systemContextConsumers.set(target, [
+            event.detail.callback,
+            unsubscribe,
+        ]);
+
+        // Provide the context data
+        const [callback] = this._systemContextConsumers.get(target) || [];
+        if (callback) {
+            callback(this.system, unsubscribe);
+        }
     }
 
     public updateComplete!: Promise<boolean>;
@@ -402,6 +406,12 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         );
     }
 
+    private _provideSystemContext(): void {
+        this._systemContextConsumers.forEach(([callback, unsubscribe]) =>
+            callback(this.system, unsubscribe)
+        );
+    }
+
     private _handleContextPresence(event: CustomEvent<ProvideLang>): void {
         event.stopPropagation();
         const target = event.composedPath()[0] as HTMLElement;
@@ -442,7 +452,6 @@ function checkForIssues(
     system: SystemVariant | '',
     color: Color | '',
     scale: Scale | '',
-    hasThemeAttribute: boolean,
     themeFragmentsByKind: ThemeFragmentMap
 ): void {
     if (window.__swc.DEBUG) {
@@ -476,11 +485,6 @@ function checkForIssues(
             }
         };
 
-        if (hasThemeAttribute) {
-            issues.push(
-                `DEPRECATION NOTICE: the "theme" attribute has been deprecated in favor of "system". For more information, see: https://opensource.adobe.com/spectrum-web-components/tools/theme/`
-            );
-        }
         if (['lightest', 'darkest'].includes(color || '')) {
             issues.push(
                 `DEPRECATION NOTICE: Color "lightest" and "darkest" are deprecated. For more information, see: https://opensource.adobe.com/spectrum-web-components/tools/theme/`

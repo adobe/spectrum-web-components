@@ -373,6 +373,38 @@ export const longContent = (
 
 longContent.decorators = [isOverlayOpen];
 
+export const longHeading = (
+    args: StoryArgs = {},
+    context: { viewMode?: string } = {}
+): TemplateResult => {
+    const open = context.viewMode === 'docs' ? undefined : 'click';
+    return html`
+        <overlay-trigger
+            type="modal"
+            @close=${handleClose(args)}
+            open=${ifDefined(open)}
+        >
+            <sp-dialog-wrapper
+                slot="click-content"
+                underlay
+                headline="Dialog long long long long long long long long long long long long title"
+                confirm-label="Keep Both"
+                secondary-label="Replace"
+                cancel-label="Cancel"
+                footer="Content for footer"
+                size="m"
+            >
+                Content of the dialog
+            </sp-dialog-wrapper>
+            <sp-button slot="trigger" variant="primary">
+                Toggle Dialog
+            </sp-button>
+        </overlay-trigger>
+    `;
+};
+
+longHeading.decorators = [isOverlayOpen];
+
 export const wrapperDismissableUnderlayError = (
     args: StoryArgs = {},
     context: { viewMode?: string } = {}
@@ -640,4 +672,9 @@ lazyHero.args = {
 
 lazyHero.swc_vrt = {
     skip: true,
+};
+
+lazyHero.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };

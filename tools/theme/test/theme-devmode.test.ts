@@ -14,7 +14,7 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import { Theme } from '@spectrum-web-components/theme';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { stub } from 'sinon';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Theme', () => {
     testForLitDevWarnings(
@@ -51,32 +51,6 @@ describe('Theme', () => {
             expect(
                 (spyCall.args.at(0) as string).includes('theme delivery'),
                 'confirm "theme delivery"-centric message'
-            ).to.be.true;
-            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-                data: {
-                    localName: 'sp-theme',
-                    type: 'api',
-                    level: 'default',
-                },
-            });
-        });
-
-        it('warns in Dev Mode when you pass a theme attribute', async () => {
-            const el = await fixture<Theme>(html`
-                <sp-theme
-                    theme="classic"
-                    color="dark"
-                    scale="medium"
-                ></sp-theme>
-            `);
-
-            await elementUpdated(el);
-
-            expect(consoleWarnStub.called).to.be.true;
-            const spyCall = consoleWarnStub.getCall(0);
-            expect(
-                (spyCall.args.at(0) as string).includes('deprecated'),
-                'confirm "theme-deprecation"-centric message'
             ).to.be.true;
             expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
                 data: {

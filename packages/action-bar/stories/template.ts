@@ -15,7 +15,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-share-light.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-share.js';
 
 export interface Properties {
     emphasized?: boolean;
@@ -37,9 +37,7 @@ export const Template = ({
                           <sp-icon-edit slot="icon"></sp-icon-edit>
                       </sp-action-button>
                       <sp-action-button slot="buttons" label="Share">
-                          <sp-icon-share-light
-                              slot="icon"
-                          ></sp-icon-share-light>
+                          <sp-icon-share slot="icon"></sp-icon-share>
                       </sp-action-button>
                   `
                 : html``}
