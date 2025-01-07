@@ -24,7 +24,8 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-cross300.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross400.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
 import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
-import type { ButtonStatics } from './Button.js';
+import crossMediumOverrides from '@spectrum-web-components/icon/src/icon-cross-overrides.css.js';
+import type { ButtonStaticColors } from './Button.js';
 
 const crossIcon: Record<string, () => TemplateResult> = {
     s: () => html`
@@ -63,17 +64,22 @@ export class CloseButton extends SizedMixin(StyledButton, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, buttonStyles, crossMediumStyles];
+        return [
+            ...super.styles,
+            buttonStyles,
+            crossMediumStyles,
+            crossMediumOverrides,
+        ];
     }
 
     /**
      * The visual variant to apply to this button.
      */
     @property({ reflect: true })
-    public variant: ButtonStatics | '' = '';
+    public variant: ButtonStaticColors | '' = '';
 
-    @property({ type: String, reflect: true })
-    public static: 'black' | 'white' | undefined;
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'black' | 'white';
 
     protected override get buttonContent(): TemplateResult[] {
         return [crossIcon[this.size]()];

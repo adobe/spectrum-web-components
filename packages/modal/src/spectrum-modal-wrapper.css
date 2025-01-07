@@ -11,9 +11,12 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     box-sizing: border-box;
+    inline-size: 100vw;
+    block-size: 100vh;
+    block-size: -webkit-fill-available;
+    block-size: stretch;
     visibility: hidden;
     pointer-events: none;
     z-index: 1;
@@ -24,8 +27,6 @@ governing permissions and limitations under the License.
         );
     justify-content: center;
     align-items: center;
-    block-size: stretch;
-    inline-size: 100vw;
     display: flex;
     position: fixed;
     inset-block-start: 0;
@@ -39,11 +40,11 @@ governing permissions and limitations under the License.
 @media only screen and (device-height <= 350px),
     only screen and (device-width <= 400px) {
     :host([responsive]) {
-        border-radius: 0;
-        block-size: 100%;
-        max-block-size: 100%;
         inline-size: 100%;
+        block-size: 100%;
         max-inline-size: 100%;
+        max-block-size: 100%;
+        border-radius: 0;
     }
 
     :host([responsive]) {

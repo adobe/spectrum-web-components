@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/truncated",
-    "version": "0.42.4",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -58,10 +58,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.42.4",
-        "@spectrum-web-components/overlay": "^0.42.4",
-        "@spectrum-web-components/styles": "^0.42.4",
-        "@spectrum-web-components/tooltip": "^0.42.4"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/overlay": "^1.0.3",
+        "@spectrum-web-components/styles": "^1.0.3",
+        "@spectrum-web-components/tooltip": "^1.0.3"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

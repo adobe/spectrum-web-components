@@ -30,7 +30,10 @@ export const themeStyles = html`
 
 export const swcThemeDecoratorWithConfig =
     ({ bundled } = { bundled: true }) =>
-    (story: () => TemplateResult) => {
+    (
+        story: () => TemplateResult,
+        context: import('@storybook/csf').StoryContext<any, any>
+    ) => {
         if (!bundled) {
             requestAnimationFrame(() => {
                 document.documentElement.setAttribute('lang', 'en');
@@ -40,9 +43,35 @@ export const swcThemeDecoratorWithConfig =
                 render(story(), decorator);
             });
         }
+
+        let hideNavStyles;
+        // If the global settings exist, hide the bottom toolbar
+        if (
+            context?.globals?.system ||
+            context?.globals?.color ||
+            context?.globals?.scale ||
+            context?.globals?.textDirection ||
+            context?.globals?.reduceMotion
+        ) {
+            hideNavStyles = html`
+                <style>
+                    sp-story-decorator::part(controls) {
+                        display: none;
+                    }
+                </style>
+            `;
+        }
+
         return html`
-            ${themeStyles}
-            <sp-story-decorator role="main">
+            ${themeStyles} ${hideNavStyles}
+            <sp-story-decorator
+                role="main"
+                system=${context?.globals?.system}
+                color=${context?.globals?.color}
+                scale=${context?.globals?.scale}
+                .direction=${context?.globals?.textDirection}
+                ?reduce-motion=${context?.globals?.reduceMotion}
+            >
                 ${bundled ? story() : html``}
             </sp-story-decorator>
         `;

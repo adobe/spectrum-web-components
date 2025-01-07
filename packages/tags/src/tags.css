@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-tags.css');
+@import url('./tags-overrides.css');
 
 :host {
     --mod-clear-button-width: fit-content;

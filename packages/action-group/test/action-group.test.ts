@@ -16,11 +16,19 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
+    oneEvent,
     waitUntil,
 } from '@open-wc/testing';
 
 import { ActionButton } from '@spectrum-web-components/action-button';
+import { MenuItem } from '@spectrum-web-components/menu';
+import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/picker/sp-picker.js';
 import {
     LitElement,
     SpectrumElement,
@@ -43,6 +51,10 @@ import '@spectrum-web-components/action-group/sp-action-group.js';
 import { controlled } from '../stories/action-group-tooltip.stories.js';
 import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
+import '../stories/action-group.stories.js';
+import { isWebKit } from '@spectrum-web-components/shared';
+import sinon from 'sinon';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
@@ -71,82 +83,291 @@ customElements.define('emphasized-action-group', EmphasizedActionGroup);
 async function singleSelectedActionGroup(
     selected: string[]
 ): Promise<ActionGroup> {
-    const el = await fixture<ActionGroup>(
-        html`
-            <sp-action-group
-                label="Selects User-Chosen Buttons"
-                selects="single"
-                .selected=${selected}
-            >
-                <sp-action-button value="first" class="first">
-                    First
-                </sp-action-button>
-                <sp-action-button value="second" class="second">
-                    <div slot="icon" style="width: 10px; height: 10px;"></div>
-                    Second
-                </sp-action-button>
-            </sp-action-group>
-        `
-    );
+    const el = await fixture<ActionGroup>(html`
+        <sp-action-group
+            label="Selects User-Chosen Buttons"
+            selects="single"
+            .selected=${selected}
+        >
+            <sp-action-button value="first" class="first">
+                First
+            </sp-action-button>
+            <sp-action-button value="second" class="second">
+                <div slot="icon" style="width: 10px; height: 10px;"></div>
+                Second
+            </sp-action-button>
+        </sp-action-group>
+    `);
     return el;
 }
 
 async function multipleSelectedActionGroup(
     selected: string[]
 ): Promise<ActionGroup> {
-    const el = await fixture<ActionGroup>(
-        html`
-            <sp-action-group
-                label="Selects User-Chosen Buttons"
-                selects="multiple"
-                .selected=${selected}
-            >
-                <sp-action-button value="first" class="first">
-                    First
-                </sp-action-button>
-                <sp-action-button value="second" class="second">
-                    Second
-                </sp-action-button>
-            </sp-action-group>
-        `
-    );
+    const el = await fixture<ActionGroup>(html`
+        <sp-action-group
+            label="Selects User-Chosen Buttons"
+            selects="multiple"
+            .selected=${selected}
+        >
+            <sp-action-button value="first" class="first">
+                First
+            </sp-action-button>
+            <sp-action-button value="second" class="second">
+                Second
+            </sp-action-button>
+        </sp-action-group>
+    `);
     return el;
 }
 
 describe('ActionGroup', () => {
+    it('does not throw an error if slotElement is null', async () => {
+        // To verify that this test is not evergreen, you can temporarily disable the safeguard
+        // clause in `manageButtons` by commenting out the following lines:
+        // if (!this.slotElement) { return; }
+
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group>
+                <sp-action-button value="first">First</sp-action-button>
+                <sp-action-button value="second">Second</sp-action-button>
+            </sp-action-group>
+        `);
+
+        // Stub the slotElement getter to return null
+        const slotElementStub = sinon.stub(el, 'slotElement').get(() => null);
+        await elementUpdated(el);
+
+        // trigger a slotchange event
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
+        await elementUpdated(el);
+        expect(el.children.length).to.equal(0);
+        slotElementStub.restore();
+    });
+
     it('loads empty action-group accessibly', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group></sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group></sp-action-group>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
+
+    it('loads action-group with action-menu accessibly', async () => {
+        const el = await fixture<ActionGroup>(
+            HasActionMenuAsChild({ label: 'Action Group' })
+        );
+
+        await elementUpdated(el);
+
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        await expect(el).to.be.accessible();
+    });
+
+    it('action-group with action-menu manages tabIndex correctly while using keyboard', async () => {
+        const el = await fixture<ActionGroup>(
+            HasActionMenuAsChild({ label: 'Action Group' })
+        );
+
+        await elementUpdated(el);
+
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        // press Tab to focus into the action-group
+        await sendKeys({ press: 'Tab' });
+
+        await elementUpdated(el);
+
+        // expect the first button to be focused
+        expect(document.activeElement?.id).to.equal('first');
+
+        // expect all the elements of the focus group to have a tabIndex of -1 except the first button because it is focused using Tab
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
+        expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
+
+        // navigate to the action-menu using the arrow keys
+        await sendKeys({ press: 'ArrowRight' });
+        await sendKeys({ press: 'ArrowRight' });
+        await sendKeys({ press: 'ArrowRight' });
+
+        await elementUpdated(el);
+
+        // expect the action-menu to be focused
+        expect((el.children[3] as ActionMenu)?.focused).to.be.true;
+
+        // press Enter to open the action-menu
+        await sendKeys({ press: 'Enter' });
+
+        const opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
+        await elementUpdated(el.children[3]);
+        await opened;
+
+        // expect the first menu item to be focused
+        const firstMenuItem = el.querySelector('#first-menu-item') as MenuItem;
+        expect(firstMenuItem?.focused).to.be.true;
+
+        // navigate to the fourth menu item using the arrow keys
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowDown' });
+
+        // press Enter to select the fourth menu item
+        await sendKeys({ press: 'Enter' });
+
+        await elementUpdated(el.children[3]);
+
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        // expect the second submenu item to be focused
+        const secondSubMenuItem = el.querySelector(
+            '#second-sub-menu-item'
+        ) as MenuItem;
+        expect(secondSubMenuItem?.focused).to.be.true;
+
+        // press Enter to select the second submenu item
+        await sendKeys({ press: 'Enter' });
+
+        const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
+        await elementUpdated(el.children[3]);
+
+        await closed;
+
+        // expect the action-menu to be focused
+        expect((el.children[3] as ActionMenu)?.focused).to.be.true;
+    });
+
+    it('action-group with action-menu manages tabIndex correctly while using mouse', async () => {
+        const el = await fixture<ActionGroup>(
+            HasActionMenuAsChild({ label: 'Action Group' })
+        );
+
+        await elementUpdated(el);
+
+        await aTimeout(500);
+
+        // get the bounding box of the first button
+        const firstButton = el.querySelector('#first') as ActionButton;
+        const rect = firstButton.getBoundingClientRect();
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+        await aTimeout(500);
+
+        // expect all the elements of the focus group to have a tabIndex of -1 except the first button because it is focused using mouse
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
+        expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
+
+        // click outside the action-group and it should loose focus and update the tabIndexes
+        sendMouse({
+            steps: [
+                {
+                    position: [0, 0],
+                    type: 'click',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+        await aTimeout(500);
+
+        // expect the first button to have a tabIndex of 0 and everything else to have a tabIndex of -1
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
+        expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
+
+        // get the bounding box of the action-menu
+        const actionMenu = el.querySelector('#action-menu') as ActionMenu;
+        const actionMenuRect = actionMenu.getBoundingClientRect();
+        sendMouse({
+            steps: [
+                {
+                    position: [
+                        actionMenuRect.left + actionMenuRect.width / 2,
+                        actionMenuRect.top + actionMenuRect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+
+        const opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
+        await opened;
+
+        // use keyboard to navigate to the second menu item and select it
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'Enter' });
+
+        const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
+        await closed;
+
+        if (!isWebKit()) {
+            sendMouse({
+                steps: [
+                    {
+                        position: [0, 0],
+                        type: 'click',
+                    },
+                ],
+            });
+        }
+
+        await aTimeout(500);
+
+        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
+        expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
+        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
+    });
+
     testForLitDevWarnings(
         async () =>
-            await fixture<ActionGroup>(
-                html`
-                    <sp-action-group aria-label="Default Group">
-                        <sp-action-button>First</sp-action-button>
-                        <sp-action-button>Second</sp-action-button>
-                        <sp-action-button>Third</sp-action-button>
-                    </sp-action-group>
-                `
-            )
-    );
-    it('loads default action-group accessibly', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
+            await fixture<ActionGroup>(html`
                 <sp-action-group aria-label="Default Group">
                     <sp-action-button>First</sp-action-button>
                     <sp-action-button>Second</sp-action-button>
                     <sp-action-button>Third</sp-action-button>
                 </sp-action-group>
-            `
-        );
+            `)
+    );
+    it('loads default action-group accessibly', async () => {
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group aria-label="Default Group">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button>Third</sp-action-button>
+            </sp-action-group>
+        `);
 
         await elementUpdated(el);
 
@@ -155,40 +376,36 @@ describe('ActionGroup', () => {
         expect(el.getAttribute('role')).to.equal('toolbar');
         expect(el.children[0].getAttribute('role')).to.equal('button');
     });
-    it('applies `static` attribute to its children', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group static="white">
-                    <sp-action-button id="first">First</sp-action-button>
-                    <sp-action-button id="second">Second</sp-action-button>
-                </sp-action-group>
-            `
-        );
+    it('applies `static-color` attribute to its children', async () => {
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group static-color="white">
+                <sp-action-button id="first">First</sp-action-button>
+                <sp-action-button id="second">Second</sp-action-button>
+            </sp-action-group>
+        `);
         const firstButton = el.querySelector('#first') as ActionButton;
         const secondButton = el.querySelector('#second') as ActionButton;
 
         await elementUpdated(el);
 
-        expect(firstButton.static).to.equal('white');
-        expect(secondButton.static).to.equal('white');
+        expect(firstButton.staticColor).to.equal('white');
+        expect(secondButton.staticColor).to.equal('white');
 
-        el.static = undefined;
+        el.staticColor = undefined;
 
         await elementUpdated(el);
 
-        expect(firstButton.static).to.be.undefined;
-        expect(secondButton.static).to.be.undefined;
+        expect(firstButton.staticColor).to.be.undefined;
+        expect(secondButton.staticColor).to.be.undefined;
     });
     it('manages "label"', async () => {
         const testLabel = 'Testable action group';
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group label=${testLabel}>
-                    <sp-action-button id="first">First</sp-action-button>
-                    <sp-action-button id="second">Second</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label=${testLabel}>
+                <sp-action-button id="first">First</sp-action-button>
+                <sp-action-button id="second">Second</sp-action-button>
+            </sp-action-group>
+        `);
 
         expect(el.getAttribute('aria-label')).to.equal(testLabel);
 
@@ -199,14 +416,12 @@ describe('ActionGroup', () => {
         expect(el.hasAttribute('aria-label')).to.be.false;
     });
     it('applies `quiet` attribute to its children', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group quiet>
-                    <sp-action-button id="first">First</sp-action-button>
-                    <sp-action-button id="second">Second</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group quiet>
+                <sp-action-button id="first">First</sp-action-button>
+                <sp-action-button id="second">Second</sp-action-button>
+            </sp-action-group>
+        `);
         const firstButton = el.querySelector('#first') as ActionButton;
         const secondButton = el.querySelector('#second') as ActionButton;
 
@@ -218,18 +433,16 @@ describe('ActionGroup', () => {
         expect(secondButton.quiet).to.be.true;
     });
     it('applies `quiet` attribute to its slotted children', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <quiet-action-group>
-                    <sp-action-button slot="first" id="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button slot="second" id="second">
-                        Second
-                    </sp-action-button>
-                </quiet-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <quiet-action-group>
+                <sp-action-button slot="first" id="first">
+                    First
+                </sp-action-button>
+                <sp-action-button slot="second" id="second">
+                    Second
+                </sp-action-button>
+            </quiet-action-group>
+        `);
         const firstButton = el.querySelector('#first') as ActionButton;
         const secondButton = el.querySelector('#second') as ActionButton;
 
@@ -241,18 +454,16 @@ describe('ActionGroup', () => {
         expect(secondButton.quiet).to.be.true;
     });
     it('applies `emphasized` attribute to its slotted children', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <emphasized-action-group>
-                    <sp-action-button slot="first" id="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button slot="second" id="second">
-                        Second
-                    </sp-action-button>
-                </emphasized-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <emphasized-action-group>
+                <sp-action-button slot="first" id="first">
+                    First
+                </sp-action-button>
+                <sp-action-button slot="second" id="second">
+                    Second
+                </sp-action-button>
+            </emphasized-action-group>
+        `);
         const firstButton = el.querySelector('#first') as ActionButton;
         const secondButton = el.querySelector('#second') as ActionButton;
 
@@ -264,22 +475,20 @@ describe('ActionGroup', () => {
         expect(secondButton.emphasized).to.be.true;
     });
     it('applies `quiet` attribute to slotted children with overlays', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <quiet-action-group>
-                    <overlay-trigger slot="first">
-                        <sp-action-button slot="trigger" id="first">
-                            First
-                        </sp-action-button>
-                    </overlay-trigger>
-                    <overlay-trigger slot="second">
-                        <sp-action-button slot="trigger" id="second">
-                            Second
-                        </sp-action-button>
-                    </overlay-trigger>
-                </quiet-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <quiet-action-group>
+                <overlay-trigger slot="first">
+                    <sp-action-button slot="trigger" id="first">
+                        First
+                    </sp-action-button>
+                </overlay-trigger>
+                <overlay-trigger slot="second">
+                    <sp-action-button slot="trigger" id="second">
+                        Second
+                    </sp-action-button>
+                </overlay-trigger>
+            </quiet-action-group>
+        `);
         const firstButton = el.querySelector('#first') as ActionButton;
         const secondButton = el.querySelector('#second') as ActionButton;
 
@@ -291,22 +500,20 @@ describe('ActionGroup', () => {
         expect(secondButton.quiet).to.be.true;
     });
     it('applies `emphasized` attribute to slotted children with overlays', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <emphasized-action-group>
-                    <overlay-trigger slot="first">
-                        <sp-action-button slot="trigger" id="first">
-                            First
-                        </sp-action-button>
-                    </overlay-trigger>
-                    <overlay-trigger slot="second">
-                        <sp-action-button slot="trigger" id="second">
-                            Second
-                        </sp-action-button>
-                    </overlay-trigger>
-                </emphasized-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <emphasized-action-group>
+                <overlay-trigger slot="first">
+                    <sp-action-button slot="trigger" id="first">
+                        First
+                    </sp-action-button>
+                </overlay-trigger>
+                <overlay-trigger slot="second">
+                    <sp-action-button slot="trigger" id="second">
+                        Second
+                    </sp-action-button>
+                </overlay-trigger>
+            </emphasized-action-group>
+        `);
         const firstButton = el.querySelector('#first') as ActionButton;
         const secondButton = el.querySelector('#second') as ActionButton;
 
@@ -318,15 +525,13 @@ describe('ActionGroup', () => {
         expect(secondButton.emphasized).to.be.true;
     });
     it('loads [selects="single"] action-group accessibly', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group label="Selects Single Group" selects="single">
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button>Second</sp-action-button>
-                    <sp-action-button>Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button>Third</sp-action-button>
+            </sp-action-group>
+        `);
 
         await elementUpdated(el);
 
@@ -336,33 +541,26 @@ describe('ActionGroup', () => {
         expect(el.children[0].getAttribute('role')).to.equal('radio');
     });
     it('loads [selects="single"] action-group w/ selection accessibly', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group label="Selects Single Group" selects="single">
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button>Second</sp-action-button>
-                    <sp-action-button selected>Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button selected>Third</sp-action-button>
+            </sp-action-group>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads [selects="multiple"] action-group accessibly', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Multiple Group"
-                    selects="multiple"
-                >
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button>Second</sp-action-button>
-                    <sp-action-button>Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="Selects Multiple Group" selects="multiple">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button>Third</sp-action-button>
+            </sp-action-group>
+        `);
 
         await elementUpdated(el);
 
@@ -374,33 +572,26 @@ describe('ActionGroup', () => {
         expect(el.children[0].getAttribute('role')).to.equal('checkbox');
     });
     it('loads [selects="multiple"] action-group w/ selection accessibly', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Multiple Group"
-                    selects="multiple"
-                >
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button selected>Second</sp-action-button>
-                    <sp-action-button selected>Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="Selects Multiple Group" selects="multiple">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button selected>Second</sp-action-button>
+                <sp-action-button selected>Third</sp-action-button>
+            </sp-action-group>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('sets tab stop when [selects="single"] and the initial button is [disabled]', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group label="Selects Single Group" selects="single">
-                    <sp-action-button disabled>First</sp-action-button>
-                    <sp-action-button class="second">Second</sp-action-button>
-                    <sp-action-button>Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button disabled>First</sp-action-button>
+                <sp-action-button class="second">Second</sp-action-button>
+                <sp-action-button>Third</sp-action-button>
+            </sp-action-group>
+        `);
         const secondButton = el.querySelector('.second') as ActionButton;
 
         await elementUpdated(el);
@@ -409,30 +600,26 @@ describe('ActionGroup', () => {
         expect(secondButton.getAttribute('tabindex')).to.equal('0');
     });
     it('surfaces [selects="single"] selection', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group label="Selects Single Group" selects="single">
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button>Second</sp-action-button>
-                    <sp-action-button selected>Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button selected>Third</sp-action-button>
+            </sp-action-group>
+        `);
 
         await elementUpdated(el);
 
         expect(el.selected, '"Third" selected').to.deep.equal(['Third']);
     });
     it('manages [selects="single"] selection through multiple slots', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button>Second</sp-action-button>
-                    <sp-action-button selected>Third</sp-action-button>
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button selected>Third</sp-action-button>
+            </div>
+        `);
 
         const firstItem = test.querySelector(
             'sp-action-button'
@@ -463,18 +650,13 @@ describe('ActionGroup', () => {
         expect(thirdItem.selected).to.be.false;
     });
     it('surfaces [selects="multiple"] selection', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Multiple Group"
-                    selects="multiple"
-                >
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button selected>Second</sp-action-button>
-                    <sp-action-button selected>Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="Selects Multiple Group" selects="multiple">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button selected>Second</sp-action-button>
+                <sp-action-button selected>Third</sp-action-button>
+            </sp-action-group>
+        `);
 
         await elementUpdated(el);
 
@@ -484,15 +666,13 @@ describe('ActionGroup', () => {
         ]);
     });
     it('does not select without [selects]', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group label="No Selects Group">
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button selected>Second</sp-action-button>
-                    <sp-action-button class="third">Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="No Selects Group">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button selected>Second</sp-action-button>
+                <sp-action-button class="third">Third</sp-action-button>
+            </sp-action-group>
+        `);
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);
@@ -505,19 +685,17 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(1);
     });
     it('selects via `click` while [selects="single"]', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group label="Selects Single Group" selects="single">
-                    <sp-action-button value="first">First</sp-action-button>
-                    <sp-action-button value="second" selected>
-                        Second
-                    </sp-action-button>
-                    <sp-action-button value="third" class="third">
-                        Third
-                    </sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button value="first">First</sp-action-button>
+                <sp-action-button value="second" selected>
+                    Second
+                </sp-action-button>
+                <sp-action-button value="third" class="third">
+                    Third
+                </sp-action-button>
+            </sp-action-group>
+        `);
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);
@@ -536,20 +714,15 @@ describe('ActionGroup', () => {
         );
     });
     it('selects via `click` while  [selects="multiple"] selection', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Multiple Group"
-                    selects="multiple"
-                >
-                    <sp-action-button selected class="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button class="second">Second</sp-action-button>
-                    <sp-action-button class="third">Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="Selects Multiple Group" selects="multiple">
+                <sp-action-button selected class="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second">Second</sp-action-button>
+                <sp-action-button class="third">Third</sp-action-button>
+            </sp-action-group>
+        `);
         const firstElement = el.querySelector('.first') as ActionButton;
         const secondElement = el.querySelector('.second') as ActionButton;
         const thirdElement = el.querySelector('.third') as ActionButton;
@@ -577,25 +750,21 @@ describe('ActionGroup', () => {
     });
     it('consumes descendant `change` events when `[selects]`', async () => {
         const changeSpy = spy();
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    @change=${() => changeSpy()}
-                    label="Selects Single Group"
-                    selects="single"
-                >
-                    <sp-action-button toggles value="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button toggles value="second" selected>
-                        Second
-                    </sp-action-button>
-                    <sp-action-button toggles value="third" class="third">
-                        Third
-                    </sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group
+                @change=${() => changeSpy()}
+                label="Selects Single Group"
+                selects="single"
+            >
+                <sp-action-button toggles value="first">First</sp-action-button>
+                <sp-action-button toggles value="second" selected>
+                    Second
+                </sp-action-button>
+                <sp-action-button toggles value="third" class="third">
+                    Third
+                </sp-action-button>
+            </sp-action-group>
+        `);
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);
@@ -616,15 +785,13 @@ describe('ActionGroup', () => {
         );
     });
     it('does not respond to clicks on itself', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group label="Selects Single Group" selects="single">
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button>Second</sp-action-button>
-                    <sp-action-button class="third">Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button class="third">Third</sp-action-button>
+            </sp-action-group>
+        `);
         await elementUpdated(el);
         expect(el.selected.length).to.equal(0);
 
@@ -635,21 +802,19 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(0);
     });
     it('selection can be prevented', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Single Group"
-                    selects="single"
-                    @change=${(event: Event): void => {
-                        event.preventDefault();
-                    }}
-                >
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button>Second</sp-action-button>
-                    <sp-action-button class="third">Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group
+                label="Selects Single Group"
+                selects="single"
+                @change=${(event: Event): void => {
+                    event.preventDefault();
+                }}
+            >
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button class="third">Third</sp-action-button>
+            </sp-action-group>
+        `);
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);
@@ -748,25 +913,23 @@ describe('ActionGroup', () => {
     });
 
     it('selects user-passed value while [selects="multiple"]', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Multiple Group"
-                    selects="multiple"
-                    .selected=${['first', 'second']}
-                >
-                    <sp-action-button class="first" value="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button class="second" value="second">
-                        Second
-                    </sp-action-button>
-                    <sp-action-button class="third " value="third">
-                        Third
-                    </sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group
+                label="Selects Multiple Group"
+                selects="multiple"
+                .selected=${['first', 'second']}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+                <sp-action-button class="third " value="third">
+                    Third
+                </sp-action-button>
+            </sp-action-group>
+        `);
 
         await elementUpdated(el);
 
@@ -799,25 +962,23 @@ describe('ActionGroup', () => {
     });
 
     it('selects can be updated while [selects="multiple"]', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Multiple Group"
-                    selects="multiple"
-                    .selected=${['first', 'second']}
-                >
-                    <sp-action-button class="first" value="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button class="second" value="second">
-                        Second
-                    </sp-action-button>
-                    <sp-action-button class="third " value="third">
-                        Third
-                    </sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group
+                label="Selects Multiple Group"
+                selects="multiple"
+                .selected=${['first', 'second']}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+                <sp-action-button class="third " value="third">
+                    Third
+                </sp-action-button>
+            </sp-action-group>
+        `);
 
         await elementUpdated(el);
 
@@ -868,22 +1029,20 @@ describe('ActionGroup', () => {
     });
 
     it('Clicking button event should bubble up from inner label to outer button element', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Multiple Group"
-                    selects="multiple"
-                    .selected=${['first', 'second']}
-                >
-                    <sp-action-button class="first" value="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button class="second" value="second">
-                        Second
-                    </sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group
+                label="Selects Multiple Group"
+                selects="multiple"
+                .selected=${['first', 'second']}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `);
 
         await elementUpdated(el);
         expect(el.selected.length).to.equal(2);
@@ -923,21 +1082,19 @@ describe('ActionGroup', () => {
     });
 
     it('selects user-passed values with no .selects value, but does not allow interaction afterwards', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects User-Chosen Buttons"
-                    .selected=${['first']}
-                >
-                    <sp-action-button value="first" class="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button value="second" class="second">
-                        Second
-                    </sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group
+                label="Selects User-Chosen Buttons"
+                .selected=${['first']}
+            >
+                <sp-action-button value="first" class="first">
+                    First
+                </sp-action-button>
+                <sp-action-button value="second" class="second">
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `);
 
         await elementUpdated(el);
         expect(el.selected.length).to.equal(1);
@@ -955,21 +1112,19 @@ describe('ActionGroup', () => {
     });
 
     it('selects multiple buttons if .selected is passed in, but does not allow further interaction afterwards', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects User-Chosen Buttons"
-                    .selected=${['first', 'second']}
-                >
-                    <sp-action-button class="first" value="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button class="second" value="second">
-                        Second
-                    </sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group
+                label="Selects User-Chosen Buttons"
+                .selected=${['first', 'second']}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `);
 
         await elementUpdated(el);
         expect(el.getAttribute('role')).to.equal('toolbar');
@@ -1023,28 +1178,26 @@ describe('ActionGroup', () => {
     });
 
     it('will not change .selected state if event is prevented while [selects="multiple"]', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Multiple Group"
-                    selects="multiple"
-                    .selected=${['first', 'second']}
-                    @change=${(event: Event): void => {
-                        event.preventDefault();
-                    }}
-                >
-                    <sp-action-button class="first" value="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button class="second" value="second">
-                        Second
-                    </sp-action-button>
-                    <sp-action-button class="third " value="third">
-                        Third
-                    </sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group
+                label="Selects Multiple Group"
+                selects="multiple"
+                .selected=${['first', 'second']}
+                @change=${(event: Event): void => {
+                    event.preventDefault();
+                }}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+                <sp-action-button class="third " value="third">
+                    Third
+                </sp-action-button>
+            </sp-action-group>
+        `);
         const firstElement = el.querySelector('.first') as ActionButton;
         const secondElement = el.querySelector('.second') as ActionButton;
         const thirdElement = el.querySelector('.third') as ActionButton;
@@ -1070,25 +1223,23 @@ describe('ActionGroup', () => {
     });
 
     it('will not change .selected state if event is prevented while [selects="single"]', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Single Group"
-                    selects="single"
-                    .selected=${['first']}
-                    @change=${(event: Event): void => {
-                        event.preventDefault();
-                    }}
-                >
-                    <sp-action-button class="first" value="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button class="second" value="second">
-                        Second
-                    </sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group
+                label="Selects Single Group"
+                selects="single"
+                .selected=${['first']}
+                @change=${(event: Event): void => {
+                    event.preventDefault();
+                }}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `);
         const firstElement = el.querySelector('.first') as ActionButton;
         const secondElement = el.querySelector('.second') as ActionButton;
 
@@ -1114,24 +1265,22 @@ describe('ActionGroup', () => {
     });
 
     it('will not change .selected state if event is prevented while selects is undefined', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Single Group"
-                    .selected=${['first']}
-                    @change=${(event: Event): void => {
-                        event.preventDefault();
-                    }}
-                >
-                    <sp-action-button class="first" value="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button class="second" value="second">
-                        Second
-                    </sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group
+                label="Selects Single Group"
+                .selected=${['first']}
+                @change=${(event: Event): void => {
+                    event.preventDefault();
+                }}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `);
         const firstElement = el.querySelector('.first') as ActionButton;
         const secondElement = el.querySelector('.second') as ActionButton;
 
@@ -1150,13 +1299,11 @@ describe('ActionGroup', () => {
     });
 
     it('manages a `size` attribute', async () => {
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-group size="xl">
-                    <sp-action-button>Button</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-group size="xl">
+                <sp-action-button>Button</sp-action-button>
+            </sp-action-group>
+        `);
 
         const button = el.querySelector('sp-action-button') as ActionButton;
 
@@ -1174,13 +1321,11 @@ describe('ActionGroup', () => {
     });
 
     it('does not apply a default `size` attribute', async () => {
-        const el = await fixture<ActionButton>(
-            html`
-                <sp-action-group>
-                    <sp-action-button>Button</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionButton>(html`
+            <sp-action-group>
+                <sp-action-button>Button</sp-action-button>
+            </sp-action-group>
+        `);
 
         const button = el.querySelector('sp-action-button') as ActionButton;
 
@@ -1192,22 +1337,20 @@ describe('ActionGroup', () => {
     });
 
     it('will accept selected as a JSON string', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Single Group"
-                    selects="single"
-                    selected='["first"]'
-                >
-                    <sp-action-button class="first" value="first">
-                        First
-                    </sp-action-button>
-                    <sp-action-button class="second" value="second">
-                        Second
-                    </sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group
+                label="Selects Single Group"
+                selects="single"
+                selected='["first"]'
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `);
         // checking if the first element is selected
         await elementUpdated(el);
         const firstElement = el.querySelector('.first') as ActionButton;
@@ -1219,13 +1362,11 @@ describe('ActionGroup', () => {
     });
 
     it('accepts role attribute override', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group role="group">
-                    <sp-action-button>Button</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group role="group">
+                <sp-action-button>Button</sp-action-button>
+            </sp-action-group>
+        `);
 
         // with a role of group, the role should not be overridden
         await elementUpdated(el);
@@ -1300,62 +1441,54 @@ describe('ActionGroup', () => {
         expect(el.selected[0]).to.equal('Second');
     };
     it('accepts keybord input', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group label="Selects Single Group" selects="single">
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button selected>Second</sp-action-button>
-                    <sp-action-button class="third">Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button selected>Second</sp-action-button>
+                <sp-action-button class="third">Third</sp-action-button>
+            </sp-action-group>
+        `);
         await acceptKeyboardInput(el);
     });
     it('accepts keybord input with tooltip', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group label="Selects Single Group" selects="single">
-                    <overlay-trigger>
-                        <sp-action-button slot="trigger">
-                            First
-                        </sp-action-button>
-                        <sp-tooltip slot="hover-content">
-                            Definitely the first one.
-                        </sp-tooltip>
-                    </overlay-trigger>
-                    <overlay-trigger>
-                        <sp-action-button slot="trigger" selected>
-                            Second
-                        </sp-action-button>
-                        <sp-tooltip slot="hover-content">
-                            Not the first, not the last.
-                        </sp-tooltip>
-                    </overlay-trigger>
-                    <overlay-trigger>
-                        <sp-action-button slot="trigger" class="third">
-                            Third
-                        </sp-action-button>
-                        <sp-tooltip slot="hover-content">Select me.</sp-tooltip>
-                    </overlay-trigger>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <overlay-trigger>
+                    <sp-action-button slot="trigger">First</sp-action-button>
+                    <sp-tooltip slot="hover-content">
+                        Definitely the first one.
+                    </sp-tooltip>
+                </overlay-trigger>
+                <overlay-trigger>
+                    <sp-action-button slot="trigger" selected>
+                        Second
+                    </sp-action-button>
+                    <sp-tooltip slot="hover-content">
+                        Not the first, not the last.
+                    </sp-tooltip>
+                </overlay-trigger>
+                <overlay-trigger>
+                    <sp-action-button slot="trigger" class="third">
+                        Third
+                    </sp-action-button>
+                    <sp-tooltip slot="hover-content">Select me.</sp-tooltip>
+                </overlay-trigger>
+            </sp-action-group>
+        `);
         await acceptKeyboardInput(el);
     });
     it('accepts keybord input when [dir="ltr"]', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <sp-action-group
-                    label="Selects Single Group"
-                    selects="single"
-                    dir="ltr"
-                >
-                    <sp-action-button>First</sp-action-button>
-                    <sp-action-button disabled>Second</sp-action-button>
-                    <sp-action-button class="third">Third</sp-action-button>
-                </sp-action-group>
-            `
-        );
+        const el = await fixture<ActionGroup>(html`
+            <sp-action-group
+                label="Selects Single Group"
+                selects="single"
+                dir="ltr"
+            >
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button disabled>Second</sp-action-button>
+                <sp-action-button class="third">Third</sp-action-button>
+            </sp-action-group>
+        `);
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);

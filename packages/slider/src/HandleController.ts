@@ -263,6 +263,11 @@ export class HandleController {
         this.handleOrder.push(name);
     }
 
+    public get activeHandleModel(): ModelValue {
+        const active = this.activeHandle;
+        return this.model.find((model) => model.name === active)!;
+    }
+
     private getActiveHandleElements(): HandleComponents {
         const name = this.activeHandle;
         const handleSlider = this.handles.get(name) as SliderHandle;

@@ -1,7 +1,7 @@
 name: Bug report
 description: Create a report to help us improve the project
 title: '[Bug]: '
-labels: [bug, triage]
+labels: [bug, triage, needs jira ticket]
 # assignees:
 body:
     - type: markdown
@@ -62,7 +62,18 @@ body:
     - type: textarea
       id: code
       attributes:
-          label: Sample code that illustrates the problem
+          label: Sample code or abstract reproduction which illustrates the problem
+    - type: dropdown
+      id: severity
+      attributes:
+          label: Severity
+          description: Please select the severity level of this issue. For more details, refer to our [documentation](https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md#issue-severity-classification)
+          options:
+              - SEV 1
+              - SEV 2
+              - SEV 3
+              - SEV 4
+              - SEV 5
     - type: textarea
       id: logs
       attributes:

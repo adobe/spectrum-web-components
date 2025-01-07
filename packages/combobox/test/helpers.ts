@@ -15,7 +15,7 @@ import { html } from '@open-wc/testing';
 import { ComboboxOption } from '@spectrum-web-components/combobox';
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import { MenuItem } from '@spectrum-web-components/menu';
-import { fruits } from '../stories/index.js';
+import { countries, fruits } from '../stories/index.js';
 
 export type TestableCombobox = HTMLElement & {
     activeDescendant: ComboboxOption;
@@ -28,20 +28,39 @@ export type TestableCombobox = HTMLElement & {
     options: ComboboxOption[];
     shadowRoot: ShadowRoot;
     value: string;
+    pending: boolean;
+};
+
+export type AccessibleNamedNode = {
+    description: string;
+    name: string;
+    role: string;
+    value?: string;
 };
 
 export const comboboxFixture = async (): Promise<TestableCombobox> => {
-    const el = await fixture<TestableCombobox>(
-        html`
-            <sp-combobox
-                .autocomplete=${'list'}
-                label="Combobox"
-                .options=${fruits}
-            >
-                Combobox
-            </sp-combobox>
-        `
-    );
+    const el = await fixture<TestableCombobox>(html`
+        <sp-combobox
+            .autocomplete=${'list'}
+            label="Combobox"
+            .options=${fruits}
+        >
+            Combobox
+        </sp-combobox>
+    `);
+
+    return el;
+};
+export const longComboboxFixture = async (): Promise<TestableCombobox> => {
+    const el = await fixture<TestableCombobox>(html`
+        <sp-combobox
+            .autocomplete=${'list'}
+            label="Combobox"
+            .options=${countries}
+        >
+            Combobox
+        </sp-combobox>
+    `);
 
     return el;
 };
@@ -56,7 +75,3 @@ export const testActiveElement = (
     ) as HTMLElement;
     expect(activeElement.getAttribute('aria-selected')).to.equal('true');
 };
-
-export const isWebKit =
-    /AppleWebKit/.test(window.navigator.userAgent) &&
-    !/Chrome/.test(window.navigator.userAgent);

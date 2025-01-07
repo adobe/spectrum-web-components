@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/avatar",
-    "version": "0.42.4",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -29,6 +29,7 @@
             "development": "./src/Avatar.dev.js",
             "default": "./src/Avatar.js"
         },
+        "./src/avatar-overrides.css.js": "./src/avatar-overrides.css.js",
         "./src/avatar.css.js": "./src/avatar.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -57,11 +58,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.42.4",
-        "@spectrum-web-components/shared": "^0.42.4"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/shared": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/avatar": "^7.1.0"
+        "@spectrum-css/avatar": "^8.0.0-s2-foundations.15"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

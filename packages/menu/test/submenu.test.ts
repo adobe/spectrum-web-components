@@ -609,53 +609,47 @@ describe('Submenu', () => {
         const rootChanged = spy();
         const submenuChanged = spy();
         const subSubmenuChanged = spy();
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu
-                    @change=${(event: Event & { target: Menu }) => {
-                        rootChanged(event.target.value);
-                    }}
-                >
-                    <sp-menu-item class="root">
-                        Has submenu
-                        <sp-menu
-                            slot="submenu"
-                            @change=${(event: Event & { target: Menu }) => {
-                                submenuChanged(event.target.value);
-                            }}
-                        >
-                            <sp-menu-item class="submenu-item-1">
-                                One
-                            </sp-menu-item>
-                            <sp-menu-item class="submenu-item-2">
-                                Two
-                                <sp-menu
-                                    slot="submenu"
-                                    @change=${(
-                                        event: Event & { target: Menu }
-                                    ) => {
-                                        subSubmenuChanged(event.target.value);
-                                    }}
-                                >
-                                    <sp-menu-item class="sub-submenu-item-1">
-                                        A
-                                    </sp-menu-item>
-                                    <sp-menu-item class="sub-submenu-item-2">
-                                        B
-                                    </sp-menu-item>
-                                    <sp-menu-item class="sub-submenu-item-3">
-                                        C
-                                    </sp-menu-item>
-                                </sp-menu>
-                            </sp-menu-item>
-                            <sp-menu-item class="submenu-item-3">
-                                Three
-                            </sp-menu-item>
-                        </sp-menu>
-                    </sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                @change=${(event: Event & { target: Menu }) => {
+                    rootChanged(event.target.value);
+                }}
+            >
+                <sp-menu-item class="root">
+                    Has submenu
+                    <sp-menu
+                        slot="submenu"
+                        @change=${(event: Event & { target: Menu }) => {
+                            submenuChanged(event.target.value);
+                        }}
+                    >
+                        <sp-menu-item class="submenu-item-1">One</sp-menu-item>
+                        <sp-menu-item class="submenu-item-2">
+                            Two
+                            <sp-menu
+                                slot="submenu"
+                                @change=${(event: Event & { target: Menu }) => {
+                                    subSubmenuChanged(event.target.value);
+                                }}
+                            >
+                                <sp-menu-item class="sub-submenu-item-1">
+                                    A
+                                </sp-menu-item>
+                                <sp-menu-item class="sub-submenu-item-2">
+                                    B
+                                </sp-menu-item>
+                                <sp-menu-item class="sub-submenu-item-3">
+                                    C
+                                </sp-menu-item>
+                            </sp-menu>
+                        </sp-menu-item>
+                        <sp-menu-item class="submenu-item-3">
+                            Three
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-menu-item>
+            </sp-menu>
+        `);
         const rootItem = el.querySelector('.root') as MenuItem;
         const rootItemBoundingRect = rootItem.getBoundingClientRect();
         const item2 = document.querySelector('.submenu-item-2') as MenuItem;
@@ -970,20 +964,18 @@ describe('Submenu', () => {
                 },
             ],
         });
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-item class="root-1">
-                        Has submenu
-                        <sp-menu slot="submenu">${renderSubmenu()}</sp-menu>
-                    </sp-menu-item>
-                    <sp-menu-item class="root-2">
-                        Has submenu
-                        <sp-menu slot="submenu">${renderSubmenu()}</sp-menu>
-                    </sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item class="root-1">
+                    Has submenu
+                    <sp-menu slot="submenu">${renderSubmenu()}</sp-menu>
+                </sp-menu-item>
+                <sp-menu-item class="root-2">
+                    Has submenu
+                    <sp-menu slot="submenu">${renderSubmenu()}</sp-menu>
+                </sp-menu-item>
+            </sp-menu>
+        `);
 
         await elementUpdated(el);
         const rootItem1 = el.querySelector('.root-1') as MenuItem;
@@ -1075,5 +1067,66 @@ describe('Submenu', () => {
 
         expect(rootItem1.open, 'finally closed 1').to.be.false;
         expect(rootItem2.open, 'finally closed 2').to.be.false;
+    });
+    it('allows using non-menu-item elements as the root of a submenu', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item class="root">
+                    Has submenu
+                    <div role="menuitem" slot="submenu">
+                        <sp-menu-item class="submenu-1">One</sp-menu-item>
+                        <sp-menu-item>Two</sp-menu-item>
+                        <sp-menu-item>Three</sp-menu-item>
+                    </div
+                ></div>
+                </sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+        const rootItem = el.querySelector('.root') as MenuItem;
+        const rootItemBoundingRect = rootItem.getBoundingClientRect();
+
+        // Open the first submenu
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        rootItemBoundingRect.left +
+                            rootItemBoundingRect.width / 2,
+                        rootItemBoundingRect.top +
+                            rootItemBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+
+        expect(rootItem.open).to.be.true;
+
+        const firstSubMenuItemRect = el
+            .querySelector('.submenu-1')
+            ?.getBoundingClientRect();
+
+        if (!firstSubMenuItemRect) {
+            throw new Error('Submenu item not found');
+        }
+
+        // click to select
+        await sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        firstSubMenuItemRect.left +
+                            firstSubMenuItemRect.width / 2,
+                        firstSubMenuItemRect.top +
+                            firstSubMenuItemRect.height / 2,
+                    ],
+                },
+            ],
+        });
+
+        // This test will fail if the click event throws an error
+        // because the submenu root is not a menu-item
     });
 });

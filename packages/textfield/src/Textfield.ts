@@ -35,9 +35,10 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
 import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import checkmarkSmallOverrides from '@spectrum-web-components/icon/src/icon-checkmark-overrides.css.js';
 
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
-export type TextfieldType = typeof textfieldTypes[number];
+export type TextfieldType = (typeof textfieldTypes)[number];
 
 /**
  * @fires input - The value of the element has changed.
@@ -49,7 +50,7 @@ export class TextfieldBase extends ManageHelpText(
     })
 ) {
     public static override get styles(): CSSResultArray {
-        return [textfieldStyles, checkmarkStyles];
+        return [textfieldStyles, checkmarkStyles, checkmarkSmallOverrides];
     }
 
     @state()
@@ -270,6 +271,8 @@ export class TextfieldBase extends ManageHelpText(
         this.focused = !this.readonly && false;
     }
 
+    protected handleInputElementPointerdown(): void {}
+
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
@@ -355,6 +358,7 @@ export class TextfieldBase extends ManageHelpText(
                 .value=${live(this.displayValue)}
                 @change=${this.handleChange}
                 @input=${this.handleInput}
+                @pointerdown=${this.handleInputElementPointerdown}
                 @focus=${this.onFocus}
                 @blur=${this.onBlur}
                 ?disabled=${this.disabled}

@@ -10,111 +10,26 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    CSSResult,
-    CSSResultGroup,
-    supportsAdoptingStyleSheets,
-} from '@spectrum-web-components/base';
+import { CSSResult, CSSResultGroup } from '@spectrum-web-components/base';
 import { version } from '@spectrum-web-components/base/src/version.js';
-
-declare global {
-    interface Window {
-        ShadyCSS: {
-            nativeShadow: boolean;
-            prepareTemplate(
-                template: HTMLTemplateElement,
-                elementName: string,
-                typeExtension?: string
-            ): void;
-            styleElement(host: HTMLElement): void;
-            ScopingShim: {
-                prepareAdoptedCssText(
-                    cssTextArray: string[],
-                    elementName: string
-                ): void;
-            };
-        };
-    }
-}
-
-type ShadowRootWithAdoptedStyleSheets = HTMLElement['shadowRoot'] & {
-    adoptedStyleSheets?: CSSStyleSheet[];
-};
-
-type FragmentType = 'color' | 'scale' | 'system' | 'theme' | 'core' | 'app';
-type SettableFragmentTypes = 'color' | 'scale' | 'system' | 'theme';
-type FragmentMap = Map<string, { name: string; styles: CSSResultGroup }>;
-export type ThemeFragmentMap = Map<FragmentType, FragmentMap>;
-export type Color =
-    | 'light'
-    | 'lightest'
-    | 'dark'
-    | 'darkest'
-    | 'light-express'
-    | 'lightest-express'
-    | 'dark-express'
-    | 'darkest-express'
-    | 'light-spectrum-two'
-    | 'dark-spectrum-two';
-export type ThemeVariant = 'spectrum' | 'express' | 'spectrum-two';
-export type SystemVariant = 'spectrum' | 'express' | 'spectrum-two';
-const SystemVariantValues = ['spectrum', 'express', 'spectrum-two'];
-export type Scale =
-    | 'medium'
-    | 'large'
-    | 'medium-express'
-    | 'large-express'
-    | 'medium-spectrum-two'
-    | 'large-spectrum-two';
-const ScaleValues = [
-    'medium',
-    'large',
-    'medium-express',
-    'large-express',
-    'medium-spectrum-two',
-    'large-spectrum-two',
-];
-const ColorValues = [
-    'light',
-    'lightest',
-    'dark',
-    'darkest',
-    'light-express',
-    'lightest-express',
-    'dark-express',
-    'darkest-express',
-    'light-spectrum-two',
-    'dark-spectrum-two',
-];
-type FragmentName =
-    | Color
-    | Scale
-    | ThemeVariant
-    | SystemVariant
-    | 'core'
-    | 'app';
-
-export interface ThemeData {
-    color?: Color;
-    scale?: Scale;
-    lang?: string;
-    theme?: SystemVariant;
-    system?: SystemVariant;
-}
-
-type ThemeKindProvider = {
-    [P in SettableFragmentTypes]:
-        | ThemeVariant
-        | SystemVariant
-        | Color
-        | Scale
-        | '';
-};
-
-export interface ProvideLang {
-    callback: (lang: string, unsubscribe: () => void) => void;
-}
-
+import {
+    Color,
+    COLOR_VALUES,
+    FragmentMap,
+    FragmentName,
+    FragmentType,
+    ProvideLang,
+    Scale,
+    SCALE_VALUES,
+    SettableFragmentTypes,
+    ShadowRootWithAdoptedStyleSheets,
+    SYSTEM_VARIANT_VALUES,
+    SystemContextCallback,
+    SystemVariant,
+    ThemeFragmentMap,
+    ThemeKindProvider,
+} from './theme-interfaces.js';
+export type { ProvideLang, ThemeFragmentMap, Color, Scale, SystemVariant };
 /**
  * @element sp-theme
  * @attr {string} [lang=""] - The language of the content scoped to this `sp-theme` element, see: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang" target="_blank">MDN reference</a>.
@@ -129,15 +44,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     static VERSION = version;
 
     static get observedAttributes(): string[] {
-        return [
-            'color',
-            'scale',
-            'lang',
-            'dir',
-            'system',
-            /* deprecated attributes, but still observing */
-            'theme',
-        ];
+        return ['color', 'scale', 'lang', 'dir', 'system'];
     }
 
     _dir: 'ltr' | 'rtl' | '' = '';
@@ -174,52 +81,19 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.color = value as Color;
         } else if (attrName === 'scale') {
             this.scale = value as Scale;
-            /* c8 ignore next 3 */
         } else if (attrName === 'lang' && !!value) {
             this.lang = value;
             this._provideContext();
-        } else if (attrName === 'theme') {
-            this.theme = value as SystemVariant;
-            if (window.__swc.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    'property theme in <sp-theme> has been deprecated. Please use system instead like this <sp-theme system="spectrum"/>',
-                    'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
-                    { level: 'deprecation' }
-                );
-                if (value === 'spectrum-two') {
-                    window.__swc.warn(
-                        this,
-                        'You are currently using the beta version of Spectrum Two theme. Consumption of this system may be subject to unexpected changes before the 1.0 release of SWC.',
-                        'https://s2.spectrum.adobe.com/',
-                        { level: 'high' }
-                    );
-                }
-            }
         } else if (attrName === 'system') {
             this.system = value as SystemVariant;
-            if (window.__swc.DEBUG) {
-                if (value === 'spectrum-two') {
-                    window.__swc.warn(
-                        this,
-                        'You are currently using the beta version of Spectrum Two theme. Consumption of this system may be subject to unexpected changes before the 1.0 release of SWC.',
-                        'https://s2.spectrum.adobe.com/',
-                        { level: 'high' }
-                    );
-                }
-            }
+            this._provideSystemContext();
+            warnBetaSystem(this, value as SystemVariant);
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
         }
     }
-
     private requestUpdate(): void {
-        /* c8 ignore next 3 */
-        if (window.ShadyCSS !== undefined && !window.ShadyCSS.nativeShadow) {
-            window.ShadyCSS.styleElement(this);
-        } else {
-            this.shouldAdoptStyles();
-        }
+        this.shouldAdoptStyles();
     }
 
     public override shadowRoot!: ShadowRootWithAdoptedStyleSheets;
@@ -242,7 +116,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     set system(newValue: SystemVariant | '') {
         if (newValue === this._system) return;
         const system =
-            !!newValue && SystemVariantValues.includes(newValue)
+            !!newValue && SYSTEM_VARIANT_VALUES.includes(newValue)
                 ? newValue
                 : this.system;
         if (system !== this._system) {
@@ -255,24 +129,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         } else {
             this.removeAttribute('system');
         }
-    }
-
-    /*
-     * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
-     */
-    get theme(): SystemVariant | '' {
-        if (!this.system) {
-            this.removeAttribute('system');
-        }
-        return this.system;
-    }
-
-    /*
-     * @deprecated The `theme` attribute has been deprecated in favor of the `system` attribute.
-     */
-    set theme(newValue: SystemVariant | '') {
-        this.system = newValue;
-        this.requestUpdate();
     }
 
     private _color: Color | '' = '';
@@ -294,7 +150,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     set color(newValue: Color | '') {
         if (newValue === this._color) return;
         const color =
-            !!newValue && ColorValues.includes(newValue)
+            !!newValue && COLOR_VALUES.includes(newValue)
                 ? newValue
                 : this.color;
         if (color !== this._color) {
@@ -303,7 +159,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         if (color) {
             this.setAttribute('color', color);
-            /* c8 ignore next 3 */
         } else {
             this.removeAttribute('color');
         }
@@ -328,7 +183,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     set scale(newValue: Scale | '') {
         if (newValue === this._scale) return;
         const scale =
-            !!newValue && ScaleValues.includes(newValue)
+            !!newValue && SCALE_VALUES.includes(newValue)
                 ? newValue
                 : this.scale;
         if (scale !== this._scale) {
@@ -353,14 +208,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             kind?: FragmentType
         ): CSSResultGroup | undefined => {
             const currentStyles =
-                kind &&
-                kind !== 'theme' &&
-                kind !== 'system' &&
-                this.theme !== 'spectrum' &&
-                this.system !== 'spectrum'
+                kind && kind !== 'system' && this.system !== 'spectrum'
                     ? fragments.get(`${name}-${this.system}`)
                     : fragments.get(name);
-            // theme="spectrum" is available by default and doesn't need to be applied.
+            // system="spectrum" is available by default and doesn't need to be applied.
             const isAppliedFragment =
                 name === 'spectrum' || !kind || this.hasAttribute(kind);
             if (currentStyles && isAppliedFragment) {
@@ -384,69 +235,16 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             }
             return acc;
         }, [] as CSSResultGroup[]);
-        if (window.__swc.DEBUG) {
-            const issues: string[] = [];
-            const checkForAttribute = (
-                name: FragmentType,
-                resolvedValue?: string,
-                actualValue?: string
-            ): void => {
-                const systemModifier =
-                    this.system && this.system !== 'spectrum'
-                        ? `-${this.system}`
-                        : '';
-                if (!resolvedValue) {
-                    issues.push(
-                        `You have not explicitly set the "${name}" attribute and there is no default value on which to fallback.`
-                    );
-                } else if (!actualValue) {
-                    issues.push(
-                        `You have not explicitly set the "${name}" attribute, the default value ("${resolvedValue}") is being used as a fallback.`
-                    );
-                } else if (
-                    !Theme.themeFragmentsByKind
-                        .get(name)
-                        ?.get(
-                            resolvedValue +
-                                (name === 'system' ? '' : systemModifier)
-                        )
-                ) {
-                    issues.push(
-                        `You have set "${name}='${resolvedValue}'" but the associated system fragment has not been loaded.`
-                    );
-                }
-            };
+        const themeFragmentsByKind = Theme.themeFragmentsByKind;
 
-            checkForAttribute('system', this.system, this._system);
-            checkForAttribute('color', this.color, this._color);
-            checkForAttribute('scale', this.scale, this._scale);
+        checkForIssues(
+            this,
+            this.system,
+            this.color,
+            this.scale,
+            themeFragmentsByKind
+        );
 
-            // Check for deprecated attributes
-            if (this.hasAttribute('theme')) {
-                issues.push(
-                    `The "theme" attribute has been deprecated in favor of "system".`
-                );
-            }
-
-            if (issues.length) {
-                window.__swc.warn(
-                    this,
-                    'You are leveraging an <sp-theme> element and the following issues may disrupt your theme delivery:',
-                    'https://opensource.adobe.com/spectrum-web-components/components/theme/#example',
-                    {
-                        issues,
-                    }
-                );
-            }
-            if (['lightest', 'darkest'].includes(this.color)) {
-                window.__swc.warn(
-                    this,
-                    `Color lightest and darkest are deprecated and will be removed in a future release`,
-                    'https://opensource.adobe.com/spectrum-web-components/tools/themes/#deprecation',
-                    { level: 'deprecation' }
-                );
-            }
-        }
         return [...styles];
     }
 
@@ -465,14 +263,49 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         this.shadowRoot.appendChild(node);
         this.shouldAdoptStyles();
         this.addEventListener(
-            'sp-query-theme',
-            this.onQueryTheme as EventListener
-        );
-        this.addEventListener(
             'sp-language-context',
             this._handleContextPresence as EventListener
         );
+        this.addEventListener(
+            'sp-system-context',
+            this._handleSystemContext as EventListener
+        );
+
         this.updateComplete = this.__createDeferredPromise();
+    }
+
+    private _systemContextConsumers = new Map<
+        HTMLElement,
+        [SystemContextCallback, () => void]
+    >();
+
+    private _handleSystemContext(
+        event: CustomEvent<{ callback: SystemContextCallback }>
+    ): void {
+        event.stopPropagation();
+
+        const target = event.composedPath()[0] as HTMLElement;
+
+        // Avoid duplicate registrations
+        if (this._systemContextConsumers.has(target)) {
+            return;
+        }
+
+        // Create an unsubscribe function
+        const unsubscribe: () => void = () =>
+            this._systemContextConsumers.delete(target);
+
+        // Store the callback and unsubscribe function
+        this._systemContextConsumers.set(target, [
+            event.detail.callback,
+            unsubscribe,
+        ]);
+
+        // Provide the context data
+        const [callback] = this._systemContextConsumers.get(target) || [];
+        if (callback) {
+            callback(this.system, unsubscribe);
+        }
     }
 
     public updateComplete!: Promise<boolean>;
@@ -484,30 +317,11 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         });
     }
 
-    /* c8 ignore next 12 */
-    private onQueryTheme(event: CustomEvent<ThemeData>): void {
-        if (event.defaultPrevented) {
-            return;
-        }
-        event.preventDefault();
-        const { detail: theme } = event;
-        theme.color = this.color || undefined;
-        theme.scale = this.scale || undefined;
-        theme.lang =
-            this.lang || document.documentElement.lang || navigator.language;
-        // `theme` is deprecated in favor of `system` but maintaining `theme` as a deprecated path.
-        theme.theme = this.system || undefined;
-        theme.system = this.system || undefined;
-    }
-
     protected connectedCallback(): void {
-        this.shouldAdoptStyles();
         // Note, first update/render handles styleElement so we only call this if
         // connected after first update.
-        /* c8 ignore next 3 */
-        if (window.ShadyCSS !== undefined) {
-            window.ShadyCSS.styleElement(this);
-        }
+        this.shouldAdoptStyles();
+
         // Add `this` to the instances array.
         Theme.instances.add(this);
         if (!this.hasAttribute('dir')) {
@@ -556,59 +370,12 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     protected adoptStyles(): void {
-        const styles = this.styles; // No test coverage on Edge
-
-        // There are three separate cases here based on Shadow DOM support.
-        // (1) shadowRoot polyfilled: use ShadyCSS
-        // (2) shadowRoot.adoptedStyleSheets available: use it.
-        // (3) shadowRoot.adoptedStyleSheets polyfilled: append styles after rendering
-        /* c8 ignore next 28 */
-        if (
-            window.ShadyCSS !== undefined &&
-            !window.ShadyCSS.nativeShadow &&
-            window.ShadyCSS.ScopingShim
-        ) {
-            // For browsers using the shim, there seems to be one set of
-            // processed styles per template, so it is hard to nest styles. So,
-            // for those, we load in all style fragments and then switch using a
-            // host selector (e.g. :host([color='dark']))
-            const fragmentCSS: string[] = [];
-            for (const [kind, fragments] of Theme.themeFragmentsByKind) {
-                for (const [name, { styles }] of fragments) {
-                    if (name === 'default') continue;
-                    let cssText = (styles as CSSResult).cssText;
-                    if (!Theme.defaultFragments.has(name as FragmentName)) {
-                        cssText = cssText.replace(
-                            ':host',
-                            `:host([${kind}='${name}'])`
-                        );
-                    }
-                    fragmentCSS.push(cssText);
-                }
-            }
-            window.ShadyCSS.ScopingShim.prepareAdoptedCssText(
-                fragmentCSS,
-                this.localName
-            );
-            window.ShadyCSS.prepareTemplate(Theme.template, this.localName);
-        } else if (supportsAdoptingStyleSheets) {
-            const styleSheets: CSSStyleSheet[] = [];
-            for (const style of styles) {
-                styleSheets.push(
-                    (style as CSSResult).styleSheet as CSSStyleSheet
-                );
-            }
-            this.shadowRoot.adoptedStyleSheets = styleSheets;
-            /* c8 ignore next 9 */
-        } else {
-            const styleNodes = this.shadowRoot.querySelectorAll('style');
-            styleNodes.forEach((element) => element.remove());
-            styles.forEach((s) => {
-                const style = document.createElement('style');
-                style.textContent = (s as CSSResult).cssText;
-                this.shadowRoot.appendChild(style);
-            });
+        const styles = this.styles;
+        const styleSheets: CSSStyleSheet[] = [];
+        for (const style of styles) {
+            styleSheets.push((style as CSSResult).styleSheet!);
         }
+        this.shadowRoot.adoptedStyleSheets = styleSheets;
     }
 
     static registerThemeFragment(
@@ -639,6 +406,12 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         );
     }
 
+    private _provideSystemContext(): void {
+        this._systemContextConsumers.forEach(([callback, unsubscribe]) =>
+            callback(this.system, unsubscribe)
+        );
+    }
+
     private _handleContextPresence(event: CustomEvent<ProvideLang>): void {
         event.stopPropagation();
         const target = event.composedPath()[0] as HTMLElement;
@@ -658,6 +431,75 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                     document.documentElement.lang ||
                     navigator.language,
                 unsubscribe
+            );
+        }
+    }
+}
+
+function warnBetaSystem(instance: Theme, value: SystemVariant): void {
+    if (window.__swc.DEBUG && value === 'spectrum-two') {
+        window.__swc.warn(
+            instance,
+            'You are currently using the beta version of the Spectrum Two system. Consumption of this system may be subject to unexpected changes before the 1.0 release of SWC.',
+            'https://s2.spectrum.adobe.com/',
+            { level: 'high' }
+        );
+    }
+}
+
+function checkForIssues(
+    instance: Theme,
+    system: SystemVariant | '',
+    color: Color | '',
+    scale: Scale | '',
+    themeFragmentsByKind: ThemeFragmentMap
+): void {
+    if (window.__swc.DEBUG) {
+        const issues: string[] = [];
+        const checkForAttribute = (
+            name: 'system' | 'color' | 'scale',
+            resolvedValue: string,
+            actualValue: string | null
+        ): void => {
+            const systemModifier =
+                system && system !== 'spectrum' ? `-${system}` : '';
+            if (!resolvedValue) {
+                issues.push(
+                    `You have not explicitly set the "${name}" attribute and there is no default value on which to fallback.`
+                );
+            } else if (!actualValue) {
+                issues.push(
+                    `You have not explicitly set the "${name}" attribute, the default value ("${resolvedValue}") is being used as a fallback.`
+                );
+            } else if (
+                !themeFragmentsByKind
+                    .get(name)
+                    ?.get(
+                        resolvedValue +
+                            (name === 'system' ? '' : systemModifier)
+                    )
+            ) {
+                issues.push(
+                    `You have set "${name}='${resolvedValue}'" but the associated system fragment has not been loaded.`
+                );
+            }
+        };
+
+        if (['lightest', 'darkest'].includes(color || '')) {
+            issues.push(
+                `DEPRECATION NOTICE: Color "lightest" and "darkest" are deprecated. For more information, see: https://opensource.adobe.com/spectrum-web-components/tools/theme/`
+            );
+        }
+        checkForAttribute('system', system, instance.getAttribute('system'));
+        checkForAttribute('color', color, instance.getAttribute('color'));
+        checkForAttribute('scale', scale, instance.getAttribute('scale'));
+
+        if (issues.length) {
+            window.__swc.warn(
+                instance,
+                'You are leveraging an <sp-theme> element and the following issues may disrupt your theme delivery:',
+                'https://opensource.adobe.com/spectrum-web-components/components/theme/#example',
+                { issues }
             );
         }
     }

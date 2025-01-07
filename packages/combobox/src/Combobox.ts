@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     type SpectrumElement,
     TemplateResult,
@@ -32,12 +33,14 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import { Textfield } from '@spectrum-web-components/textfield';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 
 import styles from './combobox.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 
 export type ComboboxOption = {
@@ -52,7 +55,7 @@ export type ComboboxOption = {
  */
 export class Combobox extends Textfield {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, styles, chevronStyles];
+        return [...super.styles, styles, chevronStyles, chevronIconOverrides];
     }
 
     /**
@@ -72,6 +75,25 @@ export class Combobox extends Textfield {
      **/
     @property({ type: Boolean, reflect: true })
     public open = false;
+
+    /** Whether the items are currently loading. */
+    @property({ type: Boolean, reflect: true })
+    public pending = false;
+
+    /** Defines a string value that labels the Combobox while it is in pending state. */
+    @property({ type: String, attribute: 'pending-label' })
+    public pendingLabel = 'Pending';
+
+    public pendingStateController: PendingStateController<this>;
+
+    /**
+     * Initializes the `PendingStateController` for the Combobox component.
+     * When the pending state changes to `true`, the `open` property of the Combobox is set to `false`.
+     */
+    constructor() {
+        super();
+        this.pendingStateController = new PendingStateController(this);
+    }
 
     @query('slot:not([name])')
     private optionSlot!: HTMLSlotElement;
@@ -120,7 +142,7 @@ export class Combobox extends Textfield {
     }
 
     public handleComboboxKeydown(event: KeyboardEvent): void {
-        if (this.readonly) {
+        if (this.readonly || this.pending) {
             return;
         }
         if (event.altKey && event.code === 'ArrowDown') {
@@ -223,7 +245,7 @@ export class Combobox extends Textfield {
     }
 
     public filterAvailableOptions(): void {
-        if (this.autocomplete === 'none') {
+        if (this.autocomplete === 'none' || this.pending) {
             return;
         }
         const valueLowerCase = this.value.toLowerCase();
@@ -237,8 +259,10 @@ export class Combobox extends Textfield {
 
     public override handleInput(event: Event): void {
         super.handleInput(event);
-        this.activeDescendant = undefined;
-        this.open = true;
+        if (!this.pending) {
+            this.activeDescendant = undefined;
+            this.open = true;
+        }
     }
 
     protected handleMenuChange(event: PointerEvent & { target: Menu }): void {
@@ -264,7 +288,7 @@ export class Combobox extends Textfield {
     }
 
     public toggleOpen(): void {
-        if (this.readonly) {
+        if (this.readonly || this.pending) {
             this.open = false;
             return;
         }
@@ -311,6 +335,17 @@ export class Combobox extends Textfield {
         const appliedLabel = this.label || this.appliedLabel;
 
         return html`
+            ${this.pending
+                ? html`
+                      <span
+                          aria-hidden="true"
+                          class="visually-hidden"
+                          id="pending-label"
+                      >
+                          ${this.pendingLabel}
+                      </span>
+                  `
+                : nothing}
             ${this.value
                 ? html`
                       <span
@@ -332,6 +367,20 @@ export class Combobox extends Textfield {
         `;
     }
 
+    protected renderLoader(): TemplateResult {
+        import(
+            '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+        );
+        return html`
+            <sp-progress-circle
+                size="s"
+                indeterminate
+                aria-hidden="true"
+                class="progress-circle"
+            ></sp-progress-circle>
+        `;
+    }
+
     protected override renderField(): TemplateResult {
         return html`
             ${this.renderStateIcons()}
@@ -350,7 +399,7 @@ export class Combobox extends Textfield {
                 aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded="${this.open ? 'true' : 'false'}"
                 aria-label=${ifDefined(this.label || this.appliedLabel)}
-                aria-labelledby="applied-label label"
+                aria-labelledby="pending-label applied-label label"
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 autocomplete="off"
                 @click=${this.toggleOpen}
@@ -378,6 +427,7 @@ export class Combobox extends Textfield {
                 ?required=${this.required}
                 ?readonly=${this.readonly}
             />
+            ${this.pendingStateController.renderPendingState()}
         `;
     }
 
@@ -402,6 +452,7 @@ export class Combobox extends Textfield {
                     : ''}"
                 ?disabled=${this.disabled}
                 ?focused=${this.focused}
+                ?quiet=${this.quiet}
                 size=${this.size}
             ></sp-picker-button>
             <sp-overlay
@@ -451,6 +502,8 @@ export class Combobox extends Textfield {
                                                   ? 'true'
                                                   : 'false'}
                                               .value=${option.value}
+                                              .selected=${option.value ===
+                                              this.itemValue}
                                           >
                                               ${option.itemText}
                                           </sp-menu-item>
@@ -509,10 +562,13 @@ export class Combobox extends Textfield {
             this & { optionEls: MenuItem[]; activeDescendant: MenuItem }
         >
     ): void {
-        if (changed.has('open')) {
+        if (changed.has('open') && !this.pending) {
             this.manageListOverlay();
         }
         if (!this.focused && this.open) {
+            this.open = false;
+        }
+        if (changed.has('pending') && this.pending) {
             this.open = false;
         }
         if (changed.has('activeDescendant')) {

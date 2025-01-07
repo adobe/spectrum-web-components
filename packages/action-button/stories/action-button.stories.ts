@@ -45,21 +45,11 @@ toggles.args = {
     `,
 };
 
-export const iconSizeOverridden = (args: Properties): TemplateResult => {
-    return html`
-        ${renderButton(args)}
-        <h1>For testing purposes only</h1>
-        <p>
-            This is a test to ensure that sizing the icon will still work when
-            it's in the scope of a parent element. You shouldn't normally do
-            this as it deviates from the Spectrum design specification.
-        </p>
-    `;
-};
-iconSizeOverridden.args = {
-    label: '',
-    size: 'xl',
+export const href = (args: Properties): TemplateResult =>
+    renderButtonsSelected(args);
+href.args = {
+    href: 'https://github.com/adobe/spectrum-web-components',
     icon: html`
-        <sp-icon-edit slot="icon" size="s"></sp-icon-edit>
+        <sp-icon-edit hidden slot="icon"></sp-icon-edit>
     `,
 };

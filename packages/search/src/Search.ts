@@ -25,7 +25,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import { Textfield } from '@spectrum-web-components/textfield';
 import '@spectrum-web-components/button/sp-clear-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-search.js';
 
 import searchStyles from './search.css.js';
 
@@ -55,6 +55,9 @@ export class Search extends Textfield {
     @property()
     public override placeholder = 'Search';
 
+    @property({ type: Boolean })
+    public holdValueOnEscape!: boolean;
+
     @query('#form')
     public form!: HTMLFormElement;
 
@@ -72,6 +75,9 @@ export class Search extends Textfield {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
+        if (code === 'Escape' && this.holdValueOnEscape) {
+            return;
+        }
         if (!this.value || code !== 'Escape') {
             return;
         }
@@ -108,9 +114,10 @@ export class Search extends Textfield {
                 @reset=${this.reset}
                 @keydown=${this.handleKeydown}
             >
-                <sp-icon-magnify
+                <sp-icon-search
+                    size=${this.size}
                     class="icon magnifier icon-workflow icon-search"
-                ></sp-icon-magnify>
+                ></sp-icon-search>
                 ${super.renderField()}
                 ${this.value
                     ? html`
@@ -130,7 +137,10 @@ export class Search extends Textfield {
 
     public override firstUpdated(changedProperties: PropertyValues): void {
         super.firstUpdated(changedProperties);
-        this.inputElement.setAttribute('type', 'search');
+        // if holdValueOnEscape is not set, default to search type
+        if (!this.hasAttribute('holdValueOnEscape')) {
+            this.inputElement.setAttribute('type', 'search');
+        }
     }
 
     public override willUpdate(): void {

@@ -14,7 +14,6 @@ import {
     CSSResultArray,
     html,
     LitElement,
-    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -91,7 +90,7 @@ const lazyStyleFragment = (
     name: Color | Scale,
     system: SystemVariant
 ): void => {
-    var fragmentName = `${name}-${system}`;
+    const fragmentName = `${name}-${system}`;
     switch (fragmentName) {
         case 'dark-spectrum' || 'darkest-spectrum':
             import('@spectrum-web-components/theme/theme-dark.js');

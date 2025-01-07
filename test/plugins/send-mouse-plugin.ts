@@ -14,7 +14,7 @@ import type { Page } from 'playwright';
 export type Step = {
     type: 'move' | 'down' | 'up' | 'click' | 'wheel';
     position?: [number, number];
-    options?: { button?: 'left' | 'right' | 'middle' };
+    options?: { button?: 'left' | 'right' | 'middle'; delay?: number };
 };
 
 export function sendMousePlugin() {
@@ -38,6 +38,9 @@ export function sendMousePlugin() {
                     const page = session.browser.getPage(session.id);
                     for (const step of payload.steps) {
                         step.options = step.options || {};
+                        // adding a delay to make sure the consecutive mouse events are not too fast
+                        // picker open/close tests were failing without this
+                        step.options.delay = 1;
                         if (step.position) {
                             await page.mouse[step.type](
                                 Math.round(step.position[0]),

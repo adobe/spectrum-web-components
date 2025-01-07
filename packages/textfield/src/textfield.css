@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-textfield.css');
+@import url('./textfield-overrides.css');
 
 :host {
     display: inline-flex;
@@ -62,10 +63,13 @@ textarea {
 
 :host([multiline]) #textfield {
     display: inline-grid;
+
+    --spectrum-textfield-input-line-height: normal;
 }
 
 :host([multiline]) textarea {
-    transition: box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+    transition:
+        box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
         border-color var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out;

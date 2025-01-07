@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/close-button",
-    "version": "0.42.4",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -22,6 +22,7 @@
     "exports": {
         ".": "./src/close-button.css.js",
         "./package.json": "./package.json",
+        "./src/close-button-overrides.css.js": "./src/close-button-overrides.css.js",
         "./src/close-button.css.js": "./src/close-button.css.js"
     },
     "scripts": {
@@ -42,10 +43,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.42.4"
+        "@spectrum-web-components/base": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/closebutton": "^5.1.0"
+        "@spectrum-css/closebutton": "^6.0.0-s2-foundations.16"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

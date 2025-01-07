@@ -124,7 +124,9 @@ export class SearchComponent extends LitElement {
 
     handleSubmit(event: Event): void {
         event.preventDefault();
-        if (this.results.length < 0) return;
+        if (this.results.length < 0) {
+            return;
+        }
         this.menuEl.focus();
     }
 

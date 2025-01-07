@@ -1,6 +1,12 @@
 {
     "root": true,
-    "plugins": ["notice", "@spectrum-web-components", "import"],
+    "plugins": [
+        "@typescript-eslint",
+        "notice",
+        "@spectrum-web-components",
+        "import",
+        "require-extensions"
+    ],
     "env": {
         "browser": true,
         "node": true,
@@ -8,13 +14,25 @@
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 8,
+        "ecmaVersion": 2020,
         "sourceType": "module"
     },
     "rules": {
+        "curly": ["error", "all"],
         "no-debugger": 2,
-        "no-console": ["error", { "allow": ["warn", "error"] }],
-        "import/extensions": ["error", "ignorePackages", { "ts": "never" }],
+        "no-console": [
+            "error",
+            {
+                "allow": ["warn", "error"]
+            }
+        ],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "ts": "never"
+            }
+        ],
         "import/prefer-default-export": "off",
         "@spectrum-web-components/prevent-argument-names": [
             "error",
@@ -52,7 +70,13 @@
             }
         ]
     },
-    "extends": ["plugin:prettier/recommended", "plugin:lit-a11y/recommended"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended",
+        "plugin:lit-a11y/recommended",
+        "plugin:require-extensions/recommended"
+    ],
     "overrides": [
         {
             "files": ["tasks/*", "scripts/*"],

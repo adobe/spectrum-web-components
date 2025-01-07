@@ -41,6 +41,30 @@ describe('ColorField', () => {
         expect(el.checkValidity()).to.be.false;
     });
 
+    it('updates cachedColor when value changes', async () => {
+        const el = await fixture<ColorField>(Template({}));
+
+        // Initial value
+        el.value = '#ff0000';
+        await elementUpdated(el);
+        expect(el.getColorValue()).to.equal('rgb(255, 0, 0)');
+
+        // Change to a different valid color
+        el.value = '#00ff00';
+        await elementUpdated(el);
+        expect(el.getColorValue()).to.equal('rgb(0, 255, 0)');
+
+        // Change to an invalid color
+        el.value = 'invalid-color';
+        await elementUpdated(el);
+        expect(el.getColorValue()).to.equal('');
+
+        // Change back to a valid color
+        el.value = '#0000ff';
+        await elementUpdated(el);
+        expect(el.getColorValue()).to.equal('rgb(0, 0, 255)');
+    });
+
     it('validates hex color values', async () => {
         const el = await fixture<ColorField>(Template({}));
 

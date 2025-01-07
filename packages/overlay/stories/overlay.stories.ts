@@ -46,6 +46,7 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
+import '@spectrum-web-components/button-group/sp-button-group.js';
 import '../../../projects/story-decorator/src/types.js';
 
 import './overlay-story-components.js';
@@ -296,6 +297,11 @@ accordion.swc_vrt = {
     skip: true,
 };
 
+accordion.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const clickAndHoverTargets = (): TemplateResult => {
     return html`
         <div>
@@ -331,6 +337,11 @@ export const clickAndHoverTargets = (): TemplateResult => {
 };
 clickAndHoverTargets.swc_vrt = {
     skip: true,
+};
+
+clickAndHoverTargets.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 class ScrollForcer extends HTMLElement {
@@ -591,6 +602,11 @@ export const deep = (): TemplateResult => html`
 `;
 deep.swc_vrt = {
     skip: true,
+};
+
+deep.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 export const deepChildTooltip = (): TemplateResult => html`
@@ -973,6 +989,51 @@ export const modalLoose = (): TemplateResult => {
     `;
 };
 
+export const modalNoFocus = (): TemplateResult => {
+    const closeEvent = new Event('close', { bubbles: true, composed: true });
+    return html`
+        <overlay-trigger type="modal" receives-focus="false">
+            <sp-button slot="trigger">Open</sp-button>
+            <sp-dialog-wrapper
+                underlay
+                slot="click-content"
+                headline="Wrapped Dialog w/ Hero Image"
+                size="s"
+            >
+                <p>
+                    The
+                    <code>sp-dialog-wrapper</code>
+                    element has been prepared for use in an
+                    <code>overlay-trigger</code>
+                    element by it's combination of modal, underlay, etc. styles
+                    and features.
+                </p>
+                <sp-button-group style="margin-inline-start: auto">
+                    <sp-button
+                        data-test-id="dialog-cancel-btn"
+                        variant="secondary"
+                        treatment="outline"
+                        size="l"
+                        @click=${(event: Event & { target: DialogWrapper }) =>
+                            event.target.dispatchEvent(closeEvent)}
+                    >
+                        ${'Cancel'}
+                    </sp-button>
+                    <sp-button
+                        data-test-id="dialog-override-btn"
+                        variant="negative"
+                        size="l"
+                        @click=${(event: Event & { target: DialogWrapper }) =>
+                            event.target.dispatchEvent(closeEvent)}
+                    >
+                        ${'Override'}
+                    </sp-button>
+                </sp-button-group>
+            </sp-dialog-wrapper>
+        </overlay-trigger>
+    `;
+};
+
 export const modalManaged = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`
@@ -1050,6 +1111,11 @@ export const noCloseOnResize = (args: Properties): TemplateResult => html`
 `;
 noCloseOnResize.swc_vrt = {
     skip: true,
+};
+
+noCloseOnResize.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 export const openClickContent = (args: Properties): TemplateResult =>
@@ -1243,6 +1309,11 @@ export const updating = (): TemplateResult => {
 
 updating.swc_vrt = {
     skip: true,
+};
+
+updating.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 class StartEndContextmenu extends HTMLElement {
@@ -1484,4 +1555,9 @@ virtualElementDeclaratively.args = {
 
 virtualElementDeclaratively.swc_vrt = {
     skip: true,
+};
+
+virtualElementDeclaratively.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };

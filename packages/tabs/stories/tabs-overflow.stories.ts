@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import { OverflowProperties, renderTabsOverflowExample } from './index.js';
 
 export default {
@@ -28,5 +28,26 @@ export const autoscroll = (args: OverflowProperties): TemplateResult => {
     return renderTabsOverflowExample(args);
 };
 autoscroll.args = {
+    selected: 15,
+};
+
+// https://github.com/adobe/spectrum-web-components/issues/4590
+export const autoscrollOnlyHorizontally = (
+    args: OverflowProperties
+): TemplateResult => {
+    return html`
+        <style>
+            .container {
+                height: 500px;
+                overflow-y: scroll;
+            }
+        </style>
+        <div class="container">
+            <div style="height: 500px">There are some tabs down here!</div>
+            ${renderTabsOverflowExample(args)}
+        </div>
+    `;
+};
+autoscrollOnlyHorizontally.args = {
     selected: 15,
 };

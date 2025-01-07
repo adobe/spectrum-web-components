@@ -60,8 +60,8 @@ export class ProgressBar extends SizedMixin(
     @property({ type: Number })
     public progress = 0;
 
-    @property({ type: String, reflect: true })
-    public static: 'white' | undefined;
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white';
 
     @query('slot')
     private slotEl!: HTMLSlotElement;
@@ -72,9 +72,8 @@ export class ProgressBar extends SizedMixin(
                 ? html`
                       <sp-field-label size=${this.size} class="label">
                           ${this.slotHasContent ? html`` : this.label}
-                          <slot @slotchange=${this.handleSlotchange}>
-                              ${this.label}
-                          </slot>
+
+                          <slot @slotchange=${this.handleSlotchange}></slot>
                       </sp-field-label>
                   `
                 : html``}

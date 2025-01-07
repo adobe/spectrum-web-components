@@ -30,6 +30,7 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
 
 import styles from './swatch.css.js';
 import dashStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
+import dashSmallOverrides from '@spectrum-web-components/icon/src/icon-dash-overrides.css.js';
 
 export type SwatchBorder = 'light' | 'none' | undefined;
 export type SwatchRounding = 'none' | 'full' | undefined;
@@ -70,7 +71,12 @@ export class Swatch extends SizedMixin(Focusable, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [opacityCheckerboardStyles, styles, dashStyles];
+        return [
+            opacityCheckerboardStyles,
+            styles,
+            dashStyles,
+            dashSmallOverrides,
+        ];
     }
 
     @property({ reflect: true })
@@ -234,18 +240,21 @@ export class Swatch extends SizedMixin(Focusable, {
                 this.selected ? 'true' : 'false'
             );
         }
-        if (changes.has('label')) {
+
+        // aria-label should be in sync with changes in label and color.
+        if (
+            changes.has('label') ||
+            changes.has('color') ||
+            changes.has('mixedValue')
+        ) {
             if (this.label !== this.color && this.label?.length) {
                 this.setAttribute('aria-label', this.label);
-            } else if (this.color !== '') {
+            } else if (this.color) {
                 this.setAttribute('aria-label', this.color);
+            } else if (this.mixedValue) {
+                this.setAttribute('aria-label', 'Mixed');
             } else {
                 this.removeAttribute('aria-label');
-            }
-        }
-        if (changes.has('mixedValue')) {
-            if (this.mixedValue) {
-                this.setAttribute('aria-checked', 'mixed');
             }
         }
     }

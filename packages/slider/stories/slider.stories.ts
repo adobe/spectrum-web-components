@@ -67,6 +67,10 @@ export default {
         variant: undefined,
         tickStep: 0.1,
         labelVisibility: undefined,
+        min: undefined,
+        max: undefined,
+        value: undefined,
+        step: undefined,
     },
 };
 
@@ -76,6 +80,10 @@ export interface StoryArgs {
     labelVisibility?: string;
     onInput?: (val: string) => void;
     onChange?: (val: string) => void;
+    min?: number;
+    max?: number;
+    value?: number;
+    step?: number;
     [prop: string]: unknown;
 }
 
@@ -224,6 +232,58 @@ export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
                 ...=${spreadProps(args)}
             >
                 Value Less than Fill Start
+            </sp-slider>
+        </div>
+    `;
+};
+
+export const FillStartWithNegativeMinRange = (
+    args: StoryArgs = {}
+): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="150"
+                min="-50"
+                value="25"
+                step="1"
+                fill-start="0"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'number' }}
+                ...=${spreadProps(args)}
+            >
+                Fill start with "0" and within range -50 to 150
+            </sp-slider>
+        </div>
+        <div style="width: 500px; margin-inline: 20px;">
+            <sp-slider
+                max="100"
+                min="-50"
+                value="-25"
+                step="1"
+                fill-start="0"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                .formatOptions=${{ style: 'number' }}
+                .normalization=${{
+                    toNormalized: (value: number): number => {
+                        if (value === 0) return 0.5;
+                        return value < 0
+                            ? 0.5 - (value / -50) * 0.5
+                            : 0.5 + (value / 100) * 0.5;
+                    },
+                    fromNormalized: (value: number): number => {
+                        if (value === 0.5) return 0;
+                        return value < 0.5
+                            ? (1 - value / 0.5) * -50
+                            : ((value - 0.5) / 0.5) * 100;
+                    },
+                }}
+                ...=${spreadProps(args)}
+            >
+                Fill start with "0" and normalization function within range -50
+                to 100
             </sp-slider>
         </div>
     `;
@@ -393,6 +453,11 @@ max20.swc_vrt = {
     skip: true,
 };
 
+max20.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const editable = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
@@ -418,6 +483,80 @@ export const editable = (args: StoryArgs = {}): TemplateResult => {
 };
 
 editable.decorators = [editableDecorator];
+
+import '@spectrum-web-components/slider/sp-slider.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/tray/sp-tray.js';
+
+export const Multiple = (args: StoryArgs): TemplateResult => {
+    const updateSliderConfig = (
+        min: number,
+        max: number,
+        value: number,
+        step: number
+    ): void => {
+        const slider = document.querySelector('sp-slider');
+        if (slider) {
+            slider.value = value;
+            slider.min = min;
+            slider.max = max;
+            slider.step = step;
+        }
+    };
+
+    return html`
+        <overlay-trigger type="modal">
+            <sp-button slot="trigger" variant="secondary">
+                Toggle menu
+            </sp-button>
+            <sp-tray slot="click-content">
+                <div style="padding: 8px; width: 100%">
+                    <sp-slider
+                        label="Slider Label"
+                        min=${args.min}
+                        max=${args.max}
+                        value=${args.value}
+                        step=${args.step}
+                        variant="filled"
+                        hide-stepper
+                        editable
+                    ></sp-slider>
+                    <div
+                        style="display: grid; gap: 8px; padding: 8px; width: 50%; margin: auto;"
+                    >
+                        <sp-button
+                            size="s"
+                            @click=${() =>
+                                updateSliderConfig(0.25, 4, 0.75, 0.01)}
+                        >
+                            Duration
+                        </sp-button>
+                        <sp-button
+                            size="s"
+                            @click=${() => updateSliderConfig(2, 100, 2, 1)}
+                        >
+                            Personality
+                        </sp-button>
+                        <sp-button
+                            size="s"
+                            @click=${() => updateSliderConfig(2, 25, 3, 1)}
+                        >
+                            Intensity
+                        </sp-button>
+                    </div>
+                </div>
+            </sp-tray>
+        </overlay-trigger>
+    `;
+};
+
+Multiple.args = {
+    min: 0.25,
+    max: 4,
+    value: 0.75,
+    step: 0.01,
+};
 
 export const editableWithDefaultValue = (
     args: StoryArgs = {}
@@ -450,6 +589,11 @@ editableWithDefaultValue.swc_vrt = {
     skip: true,
 };
 
+editableWithDefaultValue.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const editableWithFractionValue = (
     args: StoryArgs = {}
 ): TemplateResult => {
@@ -474,6 +618,11 @@ export const editableWithFractionValue = (
 
 editableWithFractionValue.swc_vrt = {
     skip: true,
+};
+
+editableWithFractionValue.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 export const editableDisabled = (args: StoryArgs = {}): TemplateResult => {

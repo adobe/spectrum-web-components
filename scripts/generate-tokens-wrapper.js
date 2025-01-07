@@ -36,27 +36,42 @@ const tokenPackages = [
     'actionbar',
     'actionbutton',
     'actiongroup',
+    'alertbanner',
     'alertdialog',
+    'asset',
     'avatar',
     'badge',
     'button',
     'buttongroup',
+    'breadcrumb',
     'checkbox',
+    'card',
+    'clearbutton',
     'closebutton',
+    'coachindicator',
+    'coachmark',
     'colorarea',
+    'colorfield',
     'colorhandle',
     'colorloupe',
+    'colorslider',
     'colorwheel',
     'combobox',
+    'contextualhelp',
+    'dialog',
     'divider',
     'dropzone',
     'fieldgroup',
     'fieldlabel',
     'helptext',
     'illustratedmessage',
+    'icon',
     'infieldbutton',
     'link',
     'menu',
+    'meter',
+    'modal',
+    'numberfield',
     'picker',
     'pickerbutton',
     'popover',
@@ -71,16 +86,20 @@ const tokenPackages = [
     'stepper',
     'swatch',
     'swatchgroup',
+    'opacitycheckerboard',
     'switch',
     'table',
     'tabs',
     'tag',
+    'taggroup',
     'textfield',
     'thumbnail',
     'toast',
     'tooltip',
+    'topnav',
     'tray',
     'underlay',
+    'typography',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
@@ -96,7 +115,7 @@ const packagePaths = tokenPackages.map((packageName) => {
 });
 
 const spectrumThemeSelectorRegExp =
-    /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large)?,?(\n|\s)*)?)+\s?\{/g;
+    /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large|legacy)?,?(\n|\s)*)?)+\s?\{/g;
 const importantCommentRegExp = /\/\*![^*]*\*+([^\/*][^*]*\*+)*\//g;
 
 const targetHost = (css) => {
@@ -116,7 +135,7 @@ const targetHost = (css) => {
     return css.replaceAll(spectrumThemeSelectorRegExp, ':host,\n:root {');
 };
 
-const removeImporantComments = (css) => {
+const removeImportantComments = (css) => {
     /**
      * Spectrum CSS uses /*! comments that are "not" removable.
      * These comments pile up in merged files, so we _need_ to remove them.
@@ -124,98 +143,78 @@ const removeImporantComments = (css) => {
     return css.replaceAll(importantCommentRegExp, '');
 };
 
+/**
+ * copies @spectrum-css/dist/css/*.css and @spectrum-css/dist/css/**\/*.css
+ * replaces classes with :root, :host, and pastes them into
+ * corresponding /tools/styles/*.css and /tools/styles/tokens/**\/*.css
+ * @param {string} srcPath @spectrum-css/dist/css path
+ * @param {*} tokensDir styles/tokens path
+ */
 const processTokens = (srcPath, tokensDir) => {
     let css = fs.readFileSync(srcPath, 'utf8');
     const fileName = srcPath.split(path.sep + 'css' + path.sep).at(-1);
-    css = removeImporantComments(targetHost(css));
 
-    // s2 doesn't need express tokens
-    if (tokensDir === 'tokens-v2' && fileName.startsWith('express')) {
-        return;
-    }
+    css = removeImportantComments(targetHost(css));
 
-    fs.writeFileSync(
-        path.join(__dirname, '..', 'tools', 'styles', tokensDir, fileName),
-        css
-    );
+    try {
+        fs.writeFileSync(
+            path.join(__dirname, '..', 'tools', 'styles', tokensDir, fileName),
+            css
+        );
+    } catch (er) {}
 };
+const processPackages = async (tokensDir, index) => {
+    const packagename = tokenPackages[index];
 
-const processPackages = async (srcPath, tokensDir, index) => {
-    const packageName = tokenPackages[index];
-    const spectrumPath = path.join(srcPath, 'spectrum.css');
-
-    // check if spectrumPath exists
-    if (fs.existsSync(spectrumPath)) {
-        let spectrum = fs.readFileSync(spectrumPath, 'utf8');
-        spectrum = removeImporantComments(targetHost(spectrum));
-        fs.appendFileSync(
-            path.join(
-                __dirname,
-                '..',
-                'tools',
-                'styles',
-                tokensDir,
-                'spectrum',
-                'global-vars.css'
-            ),
-            spectrum
-        );
-    }
-
-    // spectrum-2 doesn't need express package tokens
-    if (tokensDir === 'tokens-v2') {
-        return;
-    }
-
-    const expressPath = path.join(srcPath, 'express.css');
-
-    // check if expressPath exists
-    if (fs.existsSync(expressPath)) {
-        let express = fs.readFileSync(expressPath, 'utf8');
-        express = removeImporantComments(targetHost(express));
-        fs.appendFileSync(
-            path.join(
-                __dirname,
-                '..',
-                'tools',
-                'styles',
-                tokensDir,
-                'express',
-                'global-vars.css'
-            ),
-            express
-        );
-    }
-
-    const varsPaths = path.join(
+    let componentLevelTokensPath = path.join(
         __dirname,
         '..',
-        'tools',
-        'styles',
-        '**',
-        '*.css'
+        'node_modules',
+        '@spectrum-css',
+        tokensDir,
+        'dist',
+        'css',
+        'components'
     );
-    const varsRegExp = new RegExp(`\\s*--spectrum-${packageName}[^;}]*;*`, 'g');
-    const aliasRegExp = new RegExp(
-        `\\s*--spectrum-alias-${packageName}[^;}]*;*`,
-        'g'
+
+    return Promise.all(
+        ['spectrum', 'express', 'spectrum-two'].map((type) => {
+            const outputDir = type !== 'spectrum-two' ? 'tokens' : 'tokens-v2';
+            const outputType = outputDir === 'tokens-v2' ? 'spectrum' : type;
+            const cssFilePath = path.join(
+                componentLevelTokensPath,
+                type,
+                packagename + '.css'
+            );
+
+            // check if cssFilePath exists
+            if (fs.existsSync(cssFilePath)) {
+                let content = fs.readFileSync(cssFilePath, 'utf8');
+                content = removeImportantComments(targetHost(content));
+                fs.appendFileSync(
+                    path.join(
+                        __dirname,
+                        '..',
+                        'tools',
+                        'styles',
+                        outputDir,
+                        outputType,
+                        'global-vars.css'
+                    ),
+                    content
+                );
+            }
+        })
     );
-    const varsWithoutTokens = await fg([varsPaths], {
-        ignore: ['**/tokens/**/*.css'],
-    });
-    for (const varsPath of varsWithoutTokens) {
-        let css = fs.readFileSync(varsPath, 'utf8');
-        css = css.replaceAll(varsRegExp, '');
-        css = css.replaceAll(aliasRegExp, '');
-        fs.writeFileSync(varsPath, css);
-    }
 };
 
 /**
  * Core entry function
  */
 export async function generateTokensWrapper(spectrumVersion) {
-    const tokensDir = spectrumVersion === 'spectrum' ? 'tokens' : 'tokens-v2';
+    const isSpectrumOne = Boolean(spectrumVersion === 'spectrum');
+    const tokensDir = isSpectrumOne ? 'tokens' : 'tokens-v2';
+
     fs.mkdirSync(
         path.join(__dirname, '..', 'tools', 'styles', tokensDir, 'spectrum'),
         {
@@ -245,25 +244,15 @@ export async function generateTokensWrapper(spectrumVersion) {
         ''
     );
 
-    fs.writeFileSync(
-        path.join(
-            __dirname,
-            '..',
-            'tools',
-            'styles',
-            tokensDir,
-            'spectrum',
-            'global-vars.css'
-        ),
-        ''
-    );
-
     for (const tokensPath of await fg([`${tokensRoot(tokensDir)}`])) {
         processTokens(tokensPath, tokensDir);
     }
-
-    const processes = packagePaths.map((path, index) => {
-        return processPackages(path, tokensDir, index);
-    });
-    await Promise.all(processes);
+    if (isSpectrumOne) {
+        return;
+    }
+    return Promise.all(
+        packagePaths.map((_, index) => {
+            return processPackages(tokensDir, index);
+        })
+    );
 }

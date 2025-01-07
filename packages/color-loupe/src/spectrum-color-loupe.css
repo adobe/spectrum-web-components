@@ -11,42 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
-    --spectrum-colorloupe-width: var(--spectrum-color-loupe-width);
-    --spectrum-colorloupe-height: var(--spectrum-color-loupe-height);
-    --spectrum-colorloupe-offset: var(
-        --spectrum-color-loupe-bottom-to-color-handle
-    );
-    --spectrum-colorloupe-animation-distance: 8px;
-    --spectrum-colorloupe-drop-shadow-x: var(--spectrum-drop-shadow-x);
-    --spectrum-colorloupe-drop-shadow-y: var(
-        --spectrum-color-loupe-drop-shadow-y
-    );
-    --spectrum-colorloupe-drop-shadow-blur: var(
-        --spectrum-color-loupe-drop-shadow-blur
-    );
-    --spectrum-colorloupe-drop-shadow-color: var(
-        --spectrum-color-loupe-drop-shadow-color
-    );
-    --spectrum-colorloupe-outer-border-width: var(
-        --spectrum-color-loupe-outer-border-width
-    );
-    --spectrum-colorloupe-inner-border-width: var(
-        --spectrum-color-loupe-inner-border-width
-    );
-    --spectrum-colorloupe-outer-border-color: var(
-        --spectrum-color-loupe-outer-border
-    );
-    --spectrum-colorloupe-inner-border-color: var(
-        --spectrum-color-loupe-inner-border
-    );
-    --spectrum-colorloupe-checkerboard-dark-color: var(
-        --spectrum-opacity-checkerboard-square-dark
-    );
-    --spectrum-colorloupe-checkerboard-light-color: var(
-        --spectrum-opacity-checkerboard-square-light
-    );
     inline-size: var(--spectrum-colorloupe-width);
     block-size: var(--spectrum-colorloupe-height);
     transform: translateY(

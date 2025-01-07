@@ -27,6 +27,7 @@ const config = {
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('is-dragged', 'dragged'),
+                converter.classToAttribute('is-filled', 'filled'),
                 converter.classToSlotted(
                     'spectrum-IllustratedMessage-illustration'
                 ),

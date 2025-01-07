@@ -22,6 +22,7 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow100.js';
 
 import styles from './table-head-cell.css.js';
 import arrowStyles from '@spectrum-web-components/icon/src/spectrum-icon-arrow.css.js';
+import arrowOverrides from '@spectrum-web-components/icon/src/icon-arrow-overrides.css.js';
 
 export type SortedEventDetails = {
     sortDirection: 'asc' | 'desc';
@@ -43,8 +44,11 @@ const ariaSortValue = (sortDirection?: 'asc' | 'desc'): string => {
  */
 export class TableHeadCell extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles, arrowStyles];
+        return [styles, arrowStyles, arrowOverrides];
     }
+
+    @property({ type: Boolean, reflect: true })
+    public active = false;
 
     @property({ reflect: true })
     public override role = 'columnheader';
@@ -57,6 +61,47 @@ export class TableHeadCell extends SpectrumElement {
 
     @property({ attribute: 'sort-key' })
     public sortKey = '';
+
+    protected handleKeydown(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Space':
+                event.preventDefault();
+                this.addEventListener('keyup', this.handleKeyup);
+                this.active = true;
+                break;
+            /* c8 ignore next 2 */
+            default:
+                break;
+        }
+    }
+
+    private handleKeypress(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Enter':
+            case 'NumpadEnter':
+                this.click();
+                break;
+            /* c8 ignore next 2 */
+            default:
+                break;
+        }
+    }
+
+    protected handleKeyup(event: KeyboardEvent): void {
+        const { code } = event;
+        switch (code) {
+            case 'Space':
+                this.active = false;
+                this.removeEventListener('keyup', this.handleKeyup);
+                this.click();
+                break;
+            /* c8 ignore next 2 */
+            default:
+                break;
+        }
+    }
 
     protected handleClick(): void {
         if (!this.sortable) return;
@@ -93,6 +138,8 @@ export class TableHeadCell extends SpectrumElement {
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('click', this.handleClick);
+        this.addEventListener('keydown', this.handleKeydown);
+        this.addEventListener('keypress', this.handleKeypress);
     }
 
     protected override update(changes: PropertyValues): void {

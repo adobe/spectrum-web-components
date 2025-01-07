@@ -36,6 +36,7 @@ import {
     a11ySnapshot,
     findAccessibilityNode,
     sendKeys,
+    setViewport,
 } from '@web/test-runner-commands';
 import {
     Default,
@@ -60,6 +61,8 @@ import '@spectrum-web-components/theme/src/themes.js';
 import type { Menu } from '@spectrum-web-components/menu';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 import { FieldLabel } from '@spectrum-web-components/field-label/src/FieldLabel.js';
+import { isWebKit } from '@spectrum-web-components/shared';
+import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/MobileController.js';
 
 export type TestablePicker = { optionsMenu: Menu };
 
@@ -73,7 +76,7 @@ export function runPickerTests(): void {
     let el: Picker;
     const pickerFixture = async (): Promise<Picker> => {
         const test = await fixture<HTMLDivElement>(html`
-            <sp-theme scale="medium" color="light">
+            <sp-theme scale="medium" color="light" system="spectrum">
                 <sp-field-label for="picker">Where do you live?</sp-field-label>
                 <sp-picker
                     id="picker"
@@ -316,6 +319,7 @@ export function runPickerTests(): void {
             option2.innerHTML = 'Invert Selection';
             await itemUpdated;
             await elementUpdated(el);
+            await aTimeout(150);
             expect(el.value).to.equal('option-2');
             expect((el.button.textContent || '').trim()).to.include(
                 'Invert Selection'
@@ -619,6 +623,8 @@ export function runPickerTests(): void {
             expect(el.value).to.equal(thirdItem.value);
         });
         it('opens/closes multiple times', async () => {
+            await nextFrame();
+            await nextFrame();
             expect(el.open).to.be.false;
             const boundingRect = el.button.getBoundingClientRect();
             let opened = oneEvent(el, 'sp-opened');
@@ -1272,6 +1278,101 @@ export function runPickerTests(): void {
             await nextFrame();
             expect(getParentOffset(lastItem)).to.be.greaterThan(40);
             expect(getParentOffset(firstItem)).to.be.greaterThan(-1);
+        });
+        it('manages focus-ring styles', async () => {
+            if (!isWebKit()) {
+                return;
+            }
+            /**
+             * This is a hack to set the `isMobile` property to true so that we can test the MobileController
+             */
+            el.isMobile.matches = true;
+            el.bindEvents();
+
+            await setViewport({ width: 360, height: 640 });
+            // Allow viewport update to propagate.
+            await nextFrame();
+
+            let opened = oneEvent(el, 'sp-opened');
+
+            const boundingRect = el.button.getBoundingClientRect();
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            boundingRect.x + boundingRect.width / 2,
+                            boundingRect.y + boundingRect.height / 2,
+                        ],
+                    },
+                ],
+            });
+
+            await opened;
+
+            const tray = el.shadowRoot.querySelector('sp-tray');
+            expect(tray).to.not.be.null;
+
+            // Make a selection
+            let closed = oneEvent(el, 'sp-closed');
+
+            const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+            firstItem.click();
+
+            await elementUpdated(el);
+            await closed;
+
+            // expect the tray to be closed
+            expect(el.open).to.be.false;
+
+            const button = el.shadowRoot.querySelector(
+                '#button'
+            ) as HTMLButtonElement;
+            expect(button).to.not.be.null;
+
+            // we should have SAFARI_FOCUS_RING_CLASS in the classList
+            expect(button.classList.contains(SAFARI_FOCUS_RING_CLASS)).to.be
+                .true;
+
+            // picker should still have focus
+            expect(document.activeElement === el).to.be.true;
+
+            // click outside (0,0)
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [0, 0],
+                    },
+                ],
+            });
+
+            // picker should not have focus
+            expect(document.activeElement === el).to.be.false;
+
+            // Let's use keyboard to open the tray now
+            opened = oneEvent(el, 'sp-opened');
+            await sendKeys({
+                press: 'Tab',
+            });
+            await sendKeys({
+                press: 'Enter',
+            });
+            await elementUpdated(el);
+            await opened;
+
+            // Make a selection again
+            closed = oneEvent(el, 'sp-closed');
+            firstItem.click();
+            await elementUpdated(el);
+            await closed;
+
+            // expect the tray to be closed
+            expect(el.open).to.be.false;
+
+            // we should not have SAFARI_FOCUS_RING_CLASS in the classList
+            expect(button.classList.contains(SAFARI_FOCUS_RING_CLASS)).to.be
+                .false;
         });
     });
     describe('grouped', async () => {

@@ -21,21 +21,17 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('Swatch', () => {
     let el: Swatch;
     beforeEach(async () => {
-        el = await fixture<Swatch>(
-            html`
-                <sp-swatch color="red" label="Red"></sp-swatch>
-            `
-        );
+        el = await fixture<Swatch>(html`
+            <sp-swatch color="red" label="Red"></sp-swatch>
+        `);
 
         await elementUpdated(el);
     });
     testForLitDevWarnings(
         async () =>
-            await fixture<Swatch>(
-                html`
-                    <sp-swatch color="red" label="Red"></sp-swatch>
-                `
-            )
+            await fixture<Swatch>(html`
+                <sp-swatch color="red" label="Red"></sp-swatch>
+            `)
     );
     it(`loads default swatch accessibly`, async () => {
         await expect(el).to.be.accessible();
@@ -43,7 +39,21 @@ describe('Swatch', () => {
     it('loads [mixed-value] swatch accessibly', async () => {
         el.mixedValue = true;
         await expect(el).to.be.accessible();
-        expect(el.getAttribute('aria-checked')).to.equal('mixed');
+
+        // The provided label takes precedence over any default label.
+        expect(el.getAttribute('aria-label')).to.equal('Red');
+
+        el.removeAttribute('label');
+        await elementUpdated(el);
+
+        // The color takes precedence over the "mixed" label.
+        expect(el.getAttribute('aria-label')).to.equal('red');
+
+        el.removeAttribute('color');
+        await elementUpdated(el);
+
+        // No label + no color => the default label for the current state is used.
+        expect(el.getAttribute('aria-label')).to.equal('Mixed');
     });
     it('loads [nothing] swatch accessibly', async () => {
         el.nothing = true;

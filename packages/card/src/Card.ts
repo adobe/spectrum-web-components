@@ -31,7 +31,7 @@ import '@spectrum-web-components/asset/sp-asset.js';
 
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/divider/sp-divider.js';
 import cardStyles from './card.css.js';
 import headingStyles from '@spectrum-web-components/styles/heading.js';
@@ -311,8 +311,8 @@ export class Card extends LikeAnchor(
                 : nothing}
             ${this.toggles
                 ? html`
-                      <sp-quick-actions
-                          class="quick-actions"
+                      <sp-popover
+                          class="checkbox-toggle"
                           @pointerdown=${this.stopPropagationOnHref}
                       >
                           <sp-checkbox
@@ -321,17 +321,17 @@ export class Card extends LikeAnchor(
                               ?checked=${this.selected}
                               tabindex="-1"
                           ></sp-checkbox>
-                      </sp-quick-actions>
+                      </sp-popover>
                   `
                 : nothing}
             ${this.variant === 'quiet' && this.size === 's'
                 ? html`
-                      <sp-quick-actions
+                      <div
                           class="spectrum-QuickActions actions"
                           @pointerdown=${this.stopPropagationOnHref}
                       >
                           <slot name="actions"></slot>
-                      </sp-quick-actions>
+                      </div>
                   `
                 : nothing}
         `;

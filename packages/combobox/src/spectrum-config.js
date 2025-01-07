@@ -40,14 +40,46 @@ const config = {
                     'size'
                 ),
                 converter.classToAttribute('spectrum-Combobox--quiet'),
+                converter.classToClass('spectrum-Combobox-progress-circle'),
                 converter.classToClass('spectrum-Combobox-button'),
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-invalid', 'invalid'),
+                converter.classToAttribute('is-loading', 'pending'),
                 converter.classToAttribute(
                     'is-keyboardFocused',
                     'keyboard-focused'
                 ),
                 converter.classToAttribute('is-disabled', 'disabled'),
+                {
+                    find: [
+                        builder.class('spectrum-Combobox-button'),
+                        {
+                            type: 'pseudo-class',
+                            kind: 'not',
+                            selectors: [
+                                [builder.pseudoClass('disabled')],
+                                [builder.class('is-invalid')],
+                                [builder.class('spectrum-PickerButton--quiet')],
+                            ],
+                        },
+                    ],
+                    replace: [
+                        {
+                            replace: builder.class('button'),
+                        },
+                        {
+                            replace: {
+                                kind: 'not',
+                                type: 'pseudo-class',
+                                selectors: [
+                                    [builder.pseudoClass('disabled')],
+                                    [builder.class('is-invalid')],
+                                    [builder.attribute('quiet')],
+                                ],
+                            },
+                        },
+                    ],
+                },
                 {
                     find: {
                         type: 'pseudo-class',
@@ -102,6 +134,7 @@ const config = {
                 },
                 converter.classToId('spectrum-Combobox-input'),
                 converter.classToId('spectrum-Combobox-textfield'),
+                converter.classToId('spectrum-Textfield', 'textfield'),
                 converter.classToClass(
                     'spectrum-Textfield-validationIcon',
                     'icon'

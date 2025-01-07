@@ -27,7 +27,9 @@ import {
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
-import { comboboxFixture, isWebKit } from './helpers.js';
+import type { AccessibleNamedNode } from './helpers.js';
+import { comboboxFixture } from './helpers.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 import {
     withFieldLabel,
     withHelpText,
@@ -72,23 +74,19 @@ describe('Combobox accessibility', () => {
         const el = test.querySelector('sp-combobox') as unknown as Combobox;
         const name = 'Pick something';
         const webkitName = 'Pick something Banana';
-        const isWebKitMacOS = isWebKit && detectOS() === 'Mac OS';
-        type NamedNode = {
-            description: string;
-            name: string;
-            role: string;
-            value?: string;
-        };
+        const isWebKitMacOS = isWebKit() && detectOS() === 'Mac OS';
 
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
 
-        let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-            children: NamedNode[];
+        let snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as AccessibleNamedNode & {
+            children: AccessibleNamedNode[];
         };
 
-        const a11yNode = findAccessibilityNode<NamedNode>(
+        const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
                 node.name === name && !node.value && node.role === 'combobox'
@@ -99,14 +97,16 @@ describe('Combobox accessibility', () => {
         el.value = 'Banana';
         await elementUpdated(el);
 
-        snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-            children: NamedNode[];
+        snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as AccessibleNamedNode & {
+            children: AccessibleNamedNode[];
         };
 
         // WebKit doesn't currently associate the `name` via the accessibility tree.
         // Instead if lists this data in the description 🤷🏻‍♂️
         // Give it an escape hatch for now.
-        const node = findAccessibilityNode<NamedNode>(
+        const node = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
                 (node.name === name ||
@@ -127,7 +127,7 @@ describe('Combobox accessibility', () => {
         if (isWebKitMacOS) {
             // Retest WebKit without the escape hatch, expecting it to fail.
             // This way we get notified when the results are as expected, again.
-            const iOSNode = findAccessibilityNode<NamedNode>(
+            const iOSNode = findAccessibilityNode<AccessibleNamedNode>(
                 snapshot,
                 (node) =>
                     node.name === name &&
@@ -149,23 +149,19 @@ describe('Combobox accessibility', () => {
 
         const name = 'Combobox';
         const webkitName = 'Combobox Banana';
-        const isWebKitMacOS = isWebKit && detectOS() === 'Mac OS';
-        type NamedNode = {
-            description: string;
-            name: string;
-            role: string;
-            value?: string;
-        };
+        const isWebKitMacOS = isWebKit() && detectOS() === 'Mac OS';
 
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
 
-        let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-            children: NamedNode[];
+        let snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as AccessibleNamedNode & {
+            children: AccessibleNamedNode[];
         };
 
-        const a11yNode = findAccessibilityNode<NamedNode>(
+        const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
                 node.name === name && !node.value && node.role === 'combobox'
@@ -176,14 +172,16 @@ describe('Combobox accessibility', () => {
         el.value = 'Banana';
         await elementUpdated(el);
 
-        snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-            children: NamedNode[];
+        snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as AccessibleNamedNode & {
+            children: AccessibleNamedNode[];
         };
 
         // WebKit doesn't currently associate the `name` via the accessibility tree.
         // Instead if lists this data in the description 🤷🏻‍♂️
         // Give it an escape hatch for now.
-        const node = findAccessibilityNode<NamedNode>(
+        const node = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
                 (node.name === name ||
@@ -204,7 +202,7 @@ describe('Combobox accessibility', () => {
         if (isWebKitMacOS) {
             // Retest WebKit without the escape hatch, expecting it to fail.
             // This way we get notified when the results are as expected, again.
-            const iOSNode = findAccessibilityNode<NamedNode>(
+            const iOSNode = findAccessibilityNode<AccessibleNamedNode>(
                 snapshot,
                 (node) =>
                     node.name === name &&
@@ -353,5 +351,28 @@ describe('Combobox accessibility', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
+    });
+    it('renders accessibly with `pending` attribute', async () => {
+        const el = await comboboxFixture();
+        el.value = 'Banana';
+        el.pending = true;
+
+        await elementUpdated(el);
+        await nextFrame();
+
+        const name = 'Pending Combobox';
+
+        const snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as AccessibleNamedNode & {
+            children: AccessibleNamedNode[];
+        };
+
+        const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
+            snapshot,
+            (node) => node.name === name && node.role === 'combobox'
+        );
+
+        expect(a11yNode).to.not.be.null;
     });
 });

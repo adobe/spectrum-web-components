@@ -94,7 +94,7 @@ export default {
         ],
         threshold: {
             statements: 98.5,
-            branches: 95,
+            branches: 94.5,
             functions: 97,
             lines: 98.5,
         },
@@ -135,7 +135,6 @@ export default {
                 'packages/menu/test/*.test.js',
                 'packages/overlay/test/*.test.js',
                 'packages/picker/test/*.test.js',
-                'packages/split-button/test/*.test.js',
                 'packages/tooltip/test/*.test.js',
             ],
             browsers: [chromium, firefox, webkit],

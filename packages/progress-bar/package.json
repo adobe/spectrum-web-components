@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/progress-bar",
-    "version": "0.42.4",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -33,6 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/progress-bar-overrides.css.js": "./src/progress-bar-overrides.css.js",
         "./src/progress-bar.css.js": "./src/progress-bar.css.js",
         "./sp-progress-bar.js": {
             "development": "./sp-progress-bar.dev.js",
@@ -57,13 +58,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.42.4",
-        "@spectrum-web-components/field-label": "^0.42.4",
-        "@spectrum-web-components/reactive-controllers": "^0.42.4",
-        "@spectrum-web-components/shared": "^0.42.4"
+        "@spectrum-web-components/base": "^1.0.1",
+        "@spectrum-web-components/field-label": "^1.0.3",
+        "@spectrum-web-components/reactive-controllers": "^1.0.3",
+        "@spectrum-web-components/shared": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/progressbar": "^4.1.0"
+        "@spectrum-css/progressbar": "^5.0.0-s2-foundations.19"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-
 :host {
     z-index: inherit;
     min-block-size: var(
@@ -180,6 +179,7 @@ governing permissions and limitations under the License.
     );
     appearance: none;
     text-align: start;
+    inline-size: 100%;
     color: var(
         --mod-accordion-item-header-color-default,
         var(--spectrum-accordion-item-header-color-default)
@@ -191,7 +191,6 @@ governing permissions and limitations under the License.
     border: 0;
     justify-content: flex-start;
     align-items: center;
-    inline-size: 100%;
     padding-inline-start: calc(
         var(
                 --mod-accordion-disclosure-indicator-to-text-space,
@@ -272,16 +271,13 @@ governing permissions and limitations under the License.
 
 @media (hover: hover) {
     #header:hover {
-        color: var(
-            --mod-accordion-item-header-color-hover,
-            var(--spectrum-accordion-item-header-color-hover)
-        );
         background-color: var(
             --mod-accordion-background-color-hover,
             var(--spectrum-accordion-background-color-hover)
         );
     }
 
+    #header:hover,
     #header:hover + .iconContainer {
         color: var(
             --mod-accordion-item-header-color-hover,
@@ -319,17 +315,9 @@ governing permissions and limitations under the License.
     );
 }
 
-@media (forced-colors: active) {
-    #header:after {
-        forced-color-adjust: none;
-        content: '';
-        position: absolute;
-        inset-inline-start: 0;
-    }
-}
-
 :host([open]) > #heading > .iconContainer > .indicator,
 :host([open]) > .iconContainer > .indicator {
+    transform: rotate(90deg);
     transform: var(--spectrum-logical-rotation,) rotate(90deg);
 }
 
@@ -339,4 +327,13 @@ governing permissions and limitations under the License.
 
 :host([disabled]) #header {
     cursor: default;
+}
+
+@media (forced-colors: active) {
+    #header:after {
+        forced-color-adjust: none;
+        content: '';
+        position: absolute;
+        inset-inline-start: 0;
+    }
 }

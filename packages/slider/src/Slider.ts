@@ -102,11 +102,11 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             return;
         }
         if (variants.includes(variant) && this.fillStart === undefined) {
-            this.setAttribute('variant', variant);
             this._variant = variant;
+            this.setAttribute('variant', variant);
         } else {
-            this.removeAttribute('variant');
             this._variant = '';
+            this.removeAttribute('variant');
         }
         this.requestUpdate('variant', oldVariant);
     }
@@ -369,25 +369,26 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         currentValue: number
     ): number {
         const distance = Math.abs(currentValue - fillStartValue);
-        return (distance / (this.max - this.min)) * 100;
-    }
-
-    /**
-     * @description calculates the fill width starting point to fill width
-     * @param value
-     */
-    private getOffsetPosition(value: number): number {
-        return ((value - this.min) / (this.max - this.min)) * 100;
+        return distance * 100;
     }
 
     private fillStyles(centerPoint: number): StyleInfo {
+        const activeModel = this.handleController.activeHandleModel;
+        const centerPointNormalized = activeModel.normalization.toNormalized(
+            centerPoint,
+            this.min,
+            this.max
+        );
         const position = this.dir === 'rtl' ? 'right' : 'left';
         const offsetPosition =
-            this.value > centerPoint
-                ? this.getOffsetPosition(centerPoint)
-                : this.getOffsetPosition(this.value);
-        const offsetWidth = this.getOffsetWidth(centerPoint, this.value);
-        const styles: StyleInfo = {
+            (this.value > centerPoint
+                ? centerPointNormalized
+                : activeModel.normalizedValue) * 100;
+        const offsetWidth = this.getOffsetWidth(
+            centerPointNormalized,
+            activeModel.normalizedValue
+        );
+        const styles = {
             [position]: `${offsetPosition}%`,
             width: `${offsetWidth}%`,
         };
@@ -395,7 +396,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     }
 
     private renderFillOffset(): TemplateResult {
-        if (!this._cachedValue || !this.centerPoint) {
+        if (this._cachedValue === undefined || this.centerPoint === undefined) {
             return html``;
         }
         return html`
@@ -545,12 +546,13 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     protected override willUpdate(changed: PropertyValues): void {
         if (changed.has('value') && changed.has('fillStart')) {
             this._cachedValue = Number(this.value);
-            if (this.fillStart) {
-                this.centerPoint = Number(this.fillStart);
-            } else {
+            // Test if fill-start is set without a value
+            if (this.getAttribute('fill-start') === '') {
                 this.centerPoint =
                     (Number(this.max) - Number(this.min)) / 2 +
                     Number(this.min);
+            } else if (!Number.isNaN(Number(this.fillStart))) {
+                this.centerPoint = Number(this.fillStart);
             }
         }
     }

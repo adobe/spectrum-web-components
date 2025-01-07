@@ -1,0 +1,293 @@
+:root,
+:host {
+    --spectrum-global-color-status: Verified;
+    --spectrum-global-color-version: 5.1;
+    --spectrum-global-color-opacity-100: 1;
+    --spectrum-global-color-opacity-90: 0.9;
+    --spectrum-global-color-opacity-80: 0.8;
+    --spectrum-global-color-opacity-70: 0.7;
+    --spectrum-global-color-opacity-60: 0.6;
+    --spectrum-global-color-opacity-55: 0.55;
+    --spectrum-global-color-opacity-50: 0.5;
+    --spectrum-global-color-opacity-42: 0.42;
+    --spectrum-global-color-opacity-40: 0.4;
+    --spectrum-global-color-opacity-30: 0.3;
+    --spectrum-global-color-opacity-25: 0.25;
+    --spectrum-global-color-opacity-20: 0.2;
+    --spectrum-global-color-opacity-15: 0.15;
+    --spectrum-global-color-opacity-10: 0.1;
+    --spectrum-global-color-opacity-8: 0.08;
+    --spectrum-global-color-opacity-7: 0.07;
+    --spectrum-global-color-opacity-6: 0.06;
+    --spectrum-global-color-opacity-5: 0.05;
+    --spectrum-global-color-opacity-4: 0.04;
+    --spectrum-global-color-opacity-0: 0;
+    --spectrum-global-color-celery-400-rgb: 39, 187, 54;
+    --spectrum-global-color-celery-400: rgb(
+        var(--spectrum-global-color-celery-400-rgb)
+    );
+    --spectrum-global-color-celery-500-rgb: 7, 167, 33;
+    --spectrum-global-color-celery-500: rgb(
+        var(--spectrum-global-color-celery-500-rgb)
+    );
+    --spectrum-global-color-celery-600-rgb: 0, 145, 18;
+    --spectrum-global-color-celery-600: rgb(
+        var(--spectrum-global-color-celery-600-rgb)
+    );
+    --spectrum-global-color-celery-700-rgb: 0, 124, 15;
+    --spectrum-global-color-celery-700: rgb(
+        var(--spectrum-global-color-celery-700-rgb)
+    );
+    --spectrum-global-color-chartreuse-400-rgb: 152, 197, 10;
+    --spectrum-global-color-chartreuse-400: rgb(
+        var(--spectrum-global-color-chartreuse-400-rgb)
+    );
+    --spectrum-global-color-chartreuse-500-rgb: 135, 177, 3;
+    --spectrum-global-color-chartreuse-500: rgb(
+        var(--spectrum-global-color-chartreuse-500-rgb)
+    );
+    --spectrum-global-color-chartreuse-600-rgb: 118, 156, 0;
+    --spectrum-global-color-chartreuse-600: rgb(
+        var(--spectrum-global-color-chartreuse-600-rgb)
+    );
+    --spectrum-global-color-chartreuse-700-rgb: 103, 136, 0;
+    --spectrum-global-color-chartreuse-700: rgb(
+        var(--spectrum-global-color-chartreuse-700-rgb)
+    );
+    --spectrum-global-color-yellow-400-rgb: 232, 198, 0;
+    --spectrum-global-color-yellow-400: rgb(
+        var(--spectrum-global-color-yellow-400-rgb)
+    );
+    --spectrum-global-color-yellow-500-rgb: 215, 179, 0;
+    --spectrum-global-color-yellow-500: rgb(
+        var(--spectrum-global-color-yellow-500-rgb)
+    );
+    --spectrum-global-color-yellow-600-rgb: 196, 159, 0;
+    --spectrum-global-color-yellow-600: rgb(
+        var(--spectrum-global-color-yellow-600-rgb)
+    );
+    --spectrum-global-color-yellow-700-rgb: 176, 140, 0;
+    --spectrum-global-color-yellow-700: rgb(
+        var(--spectrum-global-color-yellow-700-rgb)
+    );
+    --spectrum-global-color-magenta-400-rgb: 222, 61, 130;
+    --spectrum-global-color-magenta-400: rgb(
+        var(--spectrum-global-color-magenta-400-rgb)
+    );
+    --spectrum-global-color-magenta-500-rgb: 200, 34, 105;
+    --spectrum-global-color-magenta-500: rgb(
+        var(--spectrum-global-color-magenta-500-rgb)
+    );
+    --spectrum-global-color-magenta-600-rgb: 173, 9, 85;
+    --spectrum-global-color-magenta-600: rgb(
+        var(--spectrum-global-color-magenta-600-rgb)
+    );
+    --spectrum-global-color-magenta-700-rgb: 142, 0, 69;
+    --spectrum-global-color-magenta-700: rgb(
+        var(--spectrum-global-color-magenta-700-rgb)
+    );
+    --spectrum-global-color-fuchsia-400-rgb: 205, 58, 206;
+    --spectrum-global-color-fuchsia-400: rgb(
+        var(--spectrum-global-color-fuchsia-400-rgb)
+    );
+    --spectrum-global-color-fuchsia-500-rgb: 182, 34, 183;
+    --spectrum-global-color-fuchsia-500: rgb(
+        var(--spectrum-global-color-fuchsia-500-rgb)
+    );
+    --spectrum-global-color-fuchsia-600-rgb: 157, 3, 158;
+    --spectrum-global-color-fuchsia-600: rgb(
+        var(--spectrum-global-color-fuchsia-600-rgb)
+    );
+    --spectrum-global-color-fuchsia-700-rgb: 128, 0, 129;
+    --spectrum-global-color-fuchsia-700: rgb(
+        var(--spectrum-global-color-fuchsia-700-rgb)
+    );
+    --spectrum-global-color-purple-400-rgb: 157, 87, 244;
+    --spectrum-global-color-purple-400: rgb(
+        var(--spectrum-global-color-purple-400-rgb)
+    );
+    --spectrum-global-color-purple-500-rgb: 137, 61, 231;
+    --spectrum-global-color-purple-500: rgb(
+        var(--spectrum-global-color-purple-500-rgb)
+    );
+    --spectrum-global-color-purple-600-rgb: 115, 38, 211;
+    --spectrum-global-color-purple-600: rgb(
+        var(--spectrum-global-color-purple-600-rgb)
+    );
+    --spectrum-global-color-purple-700-rgb: 93, 19, 183;
+    --spectrum-global-color-purple-700: rgb(
+        var(--spectrum-global-color-purple-700-rgb)
+    );
+    --spectrum-global-color-indigo-400-rgb: 104, 109, 244;
+    --spectrum-global-color-indigo-400: rgb(
+        var(--spectrum-global-color-indigo-400-rgb)
+    );
+    --spectrum-global-color-indigo-500-rgb: 82, 88, 228;
+    --spectrum-global-color-indigo-500: rgb(
+        var(--spectrum-global-color-indigo-500-rgb)
+    );
+    --spectrum-global-color-indigo-600-rgb: 64, 70, 202;
+    --spectrum-global-color-indigo-600: rgb(
+        var(--spectrum-global-color-indigo-600-rgb)
+    );
+    --spectrum-global-color-indigo-700-rgb: 50, 54, 168;
+    --spectrum-global-color-indigo-700: rgb(
+        var(--spectrum-global-color-indigo-700-rgb)
+    );
+    --spectrum-global-color-seafoam-400-rgb: 0, 161, 154;
+    --spectrum-global-color-seafoam-400: rgb(
+        var(--spectrum-global-color-seafoam-400-rgb)
+    );
+    --spectrum-global-color-seafoam-500-rgb: 0, 140, 135;
+    --spectrum-global-color-seafoam-500: rgb(
+        var(--spectrum-global-color-seafoam-500-rgb)
+    );
+    --spectrum-global-color-seafoam-600-rgb: 0, 119, 114;
+    --spectrum-global-color-seafoam-600: rgb(
+        var(--spectrum-global-color-seafoam-600-rgb)
+    );
+    --spectrum-global-color-seafoam-700-rgb: 0, 99, 95;
+    --spectrum-global-color-seafoam-700: rgb(
+        var(--spectrum-global-color-seafoam-700-rgb)
+    );
+    --spectrum-global-color-red-400-rgb: 234, 56, 41;
+    --spectrum-global-color-red-400: rgb(
+        var(--spectrum-global-color-red-400-rgb)
+    );
+    --spectrum-global-color-red-500-rgb: 211, 21, 16;
+    --spectrum-global-color-red-500: rgb(
+        var(--spectrum-global-color-red-500-rgb)
+    );
+    --spectrum-global-color-red-600-rgb: 180, 0, 0;
+    --spectrum-global-color-red-600: rgb(
+        var(--spectrum-global-color-red-600-rgb)
+    );
+    --spectrum-global-color-red-700-rgb: 147, 0, 0;
+    --spectrum-global-color-red-700: rgb(
+        var(--spectrum-global-color-red-700-rgb)
+    );
+    --spectrum-global-color-orange-400-rgb: 246, 133, 17;
+    --spectrum-global-color-orange-400: rgb(
+        var(--spectrum-global-color-orange-400-rgb)
+    );
+    --spectrum-global-color-orange-500-rgb: 228, 111, 0;
+    --spectrum-global-color-orange-500: rgb(
+        var(--spectrum-global-color-orange-500-rgb)
+    );
+    --spectrum-global-color-orange-600-rgb: 203, 93, 0;
+    --spectrum-global-color-orange-600: rgb(
+        var(--spectrum-global-color-orange-600-rgb)
+    );
+    --spectrum-global-color-orange-700-rgb: 177, 76, 0;
+    --spectrum-global-color-orange-700: rgb(
+        var(--spectrum-global-color-orange-700-rgb)
+    );
+    --spectrum-global-color-green-400-rgb: 0, 143, 93;
+    --spectrum-global-color-green-400: rgb(
+        var(--spectrum-global-color-green-400-rgb)
+    );
+    --spectrum-global-color-green-500-rgb: 0, 122, 77;
+    --spectrum-global-color-green-500: rgb(
+        var(--spectrum-global-color-green-500-rgb)
+    );
+    --spectrum-global-color-green-600-rgb: 0, 101, 62;
+    --spectrum-global-color-green-600: rgb(
+        var(--spectrum-global-color-green-600-rgb)
+    );
+    --spectrum-global-color-green-700-rgb: 0, 81, 50;
+    --spectrum-global-color-green-700: rgb(
+        var(--spectrum-global-color-green-700-rgb)
+    );
+    --spectrum-global-color-blue-400-rgb: 20, 122, 243;
+    --spectrum-global-color-blue-400: rgb(
+        var(--spectrum-global-color-blue-400-rgb)
+    );
+    --spectrum-global-color-blue-500-rgb: 2, 101, 220;
+    --spectrum-global-color-blue-500: rgb(
+        var(--spectrum-global-color-blue-500-rgb)
+    );
+    --spectrum-global-color-blue-600-rgb: 0, 84, 182;
+    --spectrum-global-color-blue-600: rgb(
+        var(--spectrum-global-color-blue-600-rgb)
+    );
+    --spectrum-global-color-blue-700-rgb: 0, 68, 145;
+    --spectrum-global-color-blue-700: rgb(
+        var(--spectrum-global-color-blue-700-rgb)
+    );
+    --spectrum-global-color-gray-50-rgb: 255, 255, 255;
+    --spectrum-global-color-gray-50: rgb(
+        var(--spectrum-global-color-gray-50-rgb)
+    );
+    --spectrum-global-color-gray-75-rgb: 253, 253, 253;
+    --spectrum-global-color-gray-75: rgb(
+        var(--spectrum-global-color-gray-75-rgb)
+    );
+    --spectrum-global-color-gray-100-rgb: 248, 248, 248;
+    --spectrum-global-color-gray-100: rgb(
+        var(--spectrum-global-color-gray-100-rgb)
+    );
+    --spectrum-global-color-gray-200-rgb: 230, 230, 230;
+    --spectrum-global-color-gray-200: rgb(
+        var(--spectrum-global-color-gray-200-rgb)
+    );
+    --spectrum-global-color-gray-300-rgb: 213, 213, 213;
+    --spectrum-global-color-gray-300: rgb(
+        var(--spectrum-global-color-gray-300-rgb)
+    );
+    --spectrum-global-color-gray-400-rgb: 177, 177, 177;
+    --spectrum-global-color-gray-400: rgb(
+        var(--spectrum-global-color-gray-400-rgb)
+    );
+    --spectrum-global-color-gray-500-rgb: 144, 144, 144;
+    --spectrum-global-color-gray-500: rgb(
+        var(--spectrum-global-color-gray-500-rgb)
+    );
+    --spectrum-global-color-gray-600-rgb: 109, 109, 109;
+    --spectrum-global-color-gray-600: rgb(
+        var(--spectrum-global-color-gray-600-rgb)
+    );
+    --spectrum-global-color-gray-700-rgb: 70, 70, 70;
+    --spectrum-global-color-gray-700: rgb(
+        var(--spectrum-global-color-gray-700-rgb)
+    );
+    --spectrum-global-color-gray-800-rgb: 34, 34, 34;
+    --spectrum-global-color-gray-800: rgb(
+        var(--spectrum-global-color-gray-800-rgb)
+    );
+    --spectrum-global-color-gray-900-rgb: 0, 0, 0;
+    --spectrum-global-color-gray-900: rgb(
+        var(--spectrum-global-color-gray-900-rgb)
+    );
+    --spectrum-alias-background-color-primary: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-background-color-secondary: var(
+        --spectrum-global-color-gray-100
+    );
+    --spectrum-alias-background-color-tertiary: var(
+        --spectrum-global-color-gray-300
+    );
+    --spectrum-alias-background-color-modal-overlay: #0006;
+    --spectrum-alias-dropshadow-color: #00000026;
+    --spectrum-alias-background-color-hover-overlay: #0000000a;
+    --spectrum-alias-highlight-hover: #0000000f;
+    --spectrum-alias-highlight-down: #0000001a;
+    --spectrum-alias-highlight-selected: #0265dc1a;
+    --spectrum-alias-highlight-selected-hover: #0265dc33;
+    --spectrum-alias-text-highlight-color: #0265dc33;
+    --spectrum-alias-background-color-quickactions: #f8f8f8e6;
+    --spectrum-alias-border-color-selected: var(
+        --spectrum-global-color-blue-500
+    );
+    --spectrum-alias-border-color-translucent: #0000001a;
+    --spectrum-alias-radial-reaction-color-default: #2229;
+    --spectrum-alias-pasteboard-background-color: var(
+        --spectrum-global-color-gray-300
+    );
+    --spectrum-alias-appframe-border-color: var(
+        --spectrum-global-color-gray-300
+    );
+    --spectrum-alias-appframe-separator-color: var(
+        --spectrum-global-color-gray-300
+    );
+}

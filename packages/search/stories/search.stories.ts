@@ -36,3 +36,7 @@ export const Quiet = (): TemplateResult => html`
     <sp-search quiet></sp-search>
     <sp-search quiet disabled></sp-search>
 `;
+
+export const holdValueOnEscape = (): TemplateResult => html`
+    <sp-search holdValueOnEscape></sp-search>
+`;

@@ -2,27 +2,45 @@
 {% if componentName %}
   {% set value = componentName %}
 {% endif %}
-<sp-sidenav manage-tab-index slot="side-nav" value="{{ value }}" label="Spectrum Web Components">
+<sp-sidenav manage-tab-index variant="multilevel" slot="side-nav" value="{{ value }}" label="Spectrum Web Components">
     <sp-sidenav-item
-        label="Getting started"
-        href="/getting-started"
-        value="getting-started"
+        label="Introduction"
+        value="introduction"
+        expanded
     >
-        <a href="/getting-started" slot="no-js">Getting started</a>
-    </sp-sidenav-item>
-    <sp-sidenav-item
-        label="Dev mode"
-        href="/dev-mode"
-        value="dev-mode"
-    >
-        <a href="/dev-mode" slot="no-js">Dev mode</a>
-    </sp-sidenav-item>
-    <sp-sidenav-item
-        label="Registry conflicts"
-        href="/registry-conflicts"
-        value="registry-conflicts"
-    >
+        <sp-sidenav-item
+            label="Getting started"
+            href="/getting-started"
+            value="getting-started"
+        >
+            <a href="/getting-started" slot="no-js">Getting started</a>
+        </sp-sidenav-item>
+        <sp-sidenav-item
+            label="Migrating to Spectrum 2"
+            href="/migrating-to-spectrum2"
+            value="migrating-to-spectrum2"
+        >
+        </sp-sidenav-item>
+        <sp-sidenav-item
+            label="Dev mode"
+            href="/dev-mode"
+            value="dev-mode"
+        >
+            <a href="/dev-mode" slot="no-js">Dev mode</a>
+        </sp-sidenav-item>
+        <sp-sidenav-item
+            label="Registry conflicts"
+            href="/registry-conflicts"
+            value="registry-conflicts"
+        >
         <a href="/registry-conflicts" slot="no-js">Registry conflicts</a>
+    </sp-sidenav-item>
+     <sp-sidenav-item
+            label="What is a theme"
+            href="/what-is-a-theme"
+            value="what-is-a-theme"
+        >
+    </sp-sidenav-item>
     </sp-sidenav-item>
     <sp-sidenav-item
         label="Components"
@@ -97,6 +115,17 @@
         {% endfor %}
     </sp-sidenav-item>
     <sp-sidenav-item
+        label="Guides and policies"
+        expanded
+        multiLevel
+    >
+     <sp-sidenav-item
+        label="Support and compatibility"
+        href="/support-and-compatibility"
+        value="/support-and-compatibility"
+    >
+    </sp-sidenav-item>
+    <sp-sidenav-item
         label="Migration Guides"
         multiLevel
     >
@@ -125,15 +154,21 @@
     >
         <a href="/using-swc-react" slot="no-js">Using swc-react</a>
     </sp-sidenav-item>
+    </sp-sidenav-item>
     <sp-sidenav-item
-        label="Storybook"
-        href="/storybook/index.html"
-        multilevel
+        class="spectrum-web"
+        label="GitHub"
+        href="https://github.com/adobe/spectrum-web-components"
     >
         <a href="storybook/index.html" slot="no-js">Storybook</a>
     </sp-sidenav-item>
     <sp-sidenav-item
-        class="spectrum-web"
+        label="Storybook"
+        href="/storybook/index.html"
+    >
+        <a href="storybook/index.html" slot="no-js">Storybook</a>
+    </sp-sidenav-item>
+    <sp-sidenav-item
         label="Spectrum"
         href="https://spectrum.adobe.com/"
     >
