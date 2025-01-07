@@ -26,6 +26,7 @@ describe('CoachIndicator', () => {
         const el = await fixture<CoachIndicator>(html`
             <sp-coach-indicator></sp-coach-indicator>
         `);
+
         await elementUpdated(el);
         await expect(el).to.be.accessible();
     });

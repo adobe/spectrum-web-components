@@ -20,9 +20,17 @@ import styles from './table-body.css.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 /**
+ * This component represents the body of a table.
+ *
  * @element sp-table-body
+ *
+ * @slot - The rows of the table.
+ *
  */
 export class TableBody extends SpectrumElement {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -42,6 +50,9 @@ export class TableBody extends SpectrumElement {
         });
     }
 
+    /**
+     * Determines if the table body should have a tabindex attribute based on its scroll height.
+     */
     protected shouldHaveTabIndex(): void {
         if (this.offsetHeight < this.scrollHeight) {
             this.tabIndex = 0;
@@ -50,9 +61,17 @@ export class TableBody extends SpectrumElement {
         }
     }
 
+    /**
+     * The ARIA role of the table body.
+     *
+     * @property {string} role - The ARIA role of the table body.
+     */
     @property({ reflect: true })
     public override role = 'rowgroup';
 
+    /**
+     * Renders the component template.
+     */
     protected override render(): TemplateResult {
         return html`
             <slot></slot>

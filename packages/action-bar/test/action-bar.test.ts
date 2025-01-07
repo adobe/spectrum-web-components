@@ -31,11 +31,9 @@ describe('ActionBar', () => {
     });
 
     it('accepts variants', async () => {
-        const el = await fixture<ActionBar>(
-            html`
-                <sp-action-bar variant="sticky">Help text.</sp-action-bar>
-            `
-        );
+        const el = await fixture<ActionBar>(html`
+            <sp-action-bar variant="sticky">Help text.</sp-action-bar>
+        `);
 
         await elementUpdated(el);
 
@@ -64,11 +62,9 @@ describe('ActionBar', () => {
         expect(el.hasAttribute('variant')).to.be.false;
     });
     it('validates variants', async () => {
-        const el = await fixture<ActionBar>(
-            html`
-                <sp-action-bar variant="other">Help text.</sp-action-bar>
-            `
-        );
+        const el = await fixture<ActionBar>(html`
+            <sp-action-bar variant="other">Help text.</sp-action-bar>
+        `);
 
         await elementUpdated(el);
 
@@ -92,10 +88,12 @@ describe('ActionBar', () => {
     it('dispatches close event', async () => {
         const el = await fixture<ActionBar>(emphasized());
         const closeSpy = spy();
+
         el.addEventListener('close', () => closeSpy());
         expect(closeSpy.callCount).to.equal(0);
         expect(el.open).to.be.true;
         const closeButton = el.shadowRoot.querySelector('sp-close-button');
+
         closeButton?.click();
         expect(closeSpy.callCount).to.equal(1);
         expect(el.open).to.be.false;
@@ -103,6 +101,7 @@ describe('ActionBar', () => {
     it('can have close event prevented', async () => {
         const el = await fixture<ActionBar>(emphasized());
         const closeSpy = spy();
+
         el.addEventListener('close', (event: Event) => {
             event.preventDefault();
             closeSpy();
@@ -110,6 +109,7 @@ describe('ActionBar', () => {
         expect(closeSpy.callCount).to.equal(0);
         expect(el.open).to.be.true;
         const closeButton = el.shadowRoot.querySelector('sp-close-button');
+
         closeButton?.click();
         expect(closeSpy.callCount).to.equal(1);
         expect(el.open).to.be.true;

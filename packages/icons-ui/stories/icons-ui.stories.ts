@@ -53,6 +53,7 @@ export const elements = ({ color, size }: Properties): TemplateResult => {
             ></icons-demo>
         `
     );
+
     return html`
         <style>
             .icon {
@@ -82,14 +83,17 @@ export const Icons = ({ color, size }: Properties): TemplateResult => {
             template: () => TemplateResult;
             name: string;
         }[] = [];
+
         for (const icon in icons) {
             if (icon === 'setCustomTemplateLiteralTag') continue;
+
             iconTemplates.push({
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 template: (icons as any)[icon],
                 name: icon,
             });
         }
+
         return html`
             <icons-demo style="color: ${color}">
                 ${iconTemplates.map(
@@ -103,6 +107,7 @@ export const Icons = ({ color, size }: Properties): TemplateResult => {
             </icons-demo>
         `;
     });
+
     return html`
         <style>
             .icon {

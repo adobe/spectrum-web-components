@@ -5,7 +5,8 @@
         "notice",
         "@spectrum-web-components",
         "import",
-        "require-extensions"
+        "require-extensions",
+        "@stylistic"
     ],
     "env": {
         "browser": true,
@@ -68,6 +69,10 @@
                     "sp-underlay"
                 ]
             }
+        ],
+        "@stylistic/padding-line-between-statements": [
+            "error",
+            { "blankLine": "always", "prev": "*", "next": "return" }
         ]
     },
     "extends": [

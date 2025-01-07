@@ -38,6 +38,7 @@ export type MeterVariants = (typeof meterVariants)[number];
  * @element sp-meter
  *
  * @slot - text labeling the Meter
+ *
  */
 export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
     noDefaultSize: true,
@@ -53,14 +54,16 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
      * The variant applies specific styling when set to `negative`, `positive`, `notice`
      * `variant` attribute is removed when not matching one of the above.
      *
-     * @param {String} variant
+     * @param variant - The variant applies specific styling when set to `negative`, `positive`, or `notice`.
      */
     @property({ type: String })
     public set variant(variant: MeterVariants) {
         if (variant === this.variant) {
             return;
         }
+
         const oldValue = this.variant;
+
         if (meterVariants.includes(variant)) {
             this.setAttribute('variant', variant);
             this._variant = variant;
@@ -68,6 +71,7 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
             this.removeAttribute('variant');
             this._variant = '';
         }
+
         this.requestUpdate('variant', oldValue);
     }
 
@@ -115,6 +119,7 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
 
     protected handleSlotchange(): void {
         const labelFromSlot = getLabelFromSlot(this.label, this.slotEl);
+
         if (labelFromSlot) {
             this.label = labelFromSlot;
         }
@@ -127,9 +132,11 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, ''), {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);
         }
+
         if (changes.has('label')) {
             if (this.label.length) {
                 this.setAttribute('aria-label', this.label);

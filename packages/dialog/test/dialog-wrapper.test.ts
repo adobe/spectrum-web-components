@@ -54,6 +54,7 @@ async function styledFixture<T extends Element>(
             ${story}
         </sp-theme>
     `);
+
     return test.children[0] as T;
 }
 
@@ -84,6 +85,7 @@ describe('Dialog Wrapper', () => {
     });
     xit('loads with underlay and no headline accessibly', async () => {
         const el = await styledFixture<DialogWrapper>(wrapperButtonsUnderlay());
+
         await elementUpdated(el);
         el.headline = '';
         await elementUpdated(el);
@@ -99,6 +101,7 @@ describe('Dialog Wrapper', () => {
             'overlay-trigger'
         ) as OverlayTrigger;
         const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
+
         el.addEventListener('close', () => closeSpy());
         await waitUntil(
             () => openedSpy.calledOnce,
@@ -108,6 +111,7 @@ describe('Dialog Wrapper', () => {
 
         expect(el.open).to.be.true;
         const closed = oneEvent(overlayTrigger, 'sp-closed');
+
         overlayTrigger.open = undefined;
         await closed;
 
@@ -124,6 +128,7 @@ describe('Dialog Wrapper', () => {
             'overlay-trigger'
         ) as OverlayTrigger;
         const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
+
         el.addEventListener('close', () => closeSpy());
 
         await waitUntil(
@@ -134,6 +139,7 @@ describe('Dialog Wrapper', () => {
 
         expect(el.open).to.be.true;
         const closed = oneEvent(overlayTrigger, 'sp-closed');
+
         overlayTrigger.open = undefined;
         await closed;
 
@@ -144,6 +150,7 @@ describe('Dialog Wrapper', () => {
         const wrapper = await styledFixture<DialogWrapper>(
             wrapperWithHeadline()
         );
+
         await elementUpdated(wrapper);
 
         const dialog = wrapper.shadowRoot.querySelector('sp-dialog') as Dialog;
@@ -157,6 +164,7 @@ describe('Dialog Wrapper', () => {
         const wrapper = await styledFixture<DialogWrapper>(
             wrapperWithHeadlineNoDivider()
         );
+
         await elementUpdated(wrapper);
 
         await expect(wrapper).to.be.accessible();
@@ -172,6 +180,7 @@ describe('Dialog Wrapper', () => {
         const wrapper = await styledFixture<DialogWrapper>(
             wrapperHeadlineVisibilityNone()
         );
+
         await elementUpdated(wrapper);
 
         await expect(wrapper).to.be.accessible();
@@ -188,19 +197,23 @@ describe('Dialog Wrapper', () => {
             wrapperDismissableUnderlayError()
         );
         const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
+
         await elementUpdated(el);
         expect(el.open).to.be.true;
         el.dismissable = true;
         const underlay = el.shadowRoot.querySelector('sp-underlay') as Underlay;
+
         underlay.click();
         await elementUpdated(el);
         expect(el.open).to.be.false;
     });
     it('does not dismiss via clicking the underlay :not([dismissable])', async () => {
         const el = await styledFixture<DialogWrapper>(wrapperButtonsUnderlay());
+
         await elementUpdated(el);
         expect(el.open).to.be.true;
         const underlay = el.shadowRoot.querySelector('sp-underlay') as Underlay;
+
         underlay.click();
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -217,6 +230,7 @@ describe('Dialog Wrapper', () => {
         const dismissButton = dialogRoot.querySelector(
             '.close-button'
         ) as HTMLButtonElement;
+
         expect(dismissButton.ariaLabel).to.be.equals('Close');
         dismissButton.click();
 
@@ -253,6 +267,7 @@ describe('Dialog Wrapper', () => {
         const handleCancel = (): void => cancelSpy();
         const handleSecondary = (): void => secondarySpy();
         const el = await styledFixture<DialogWrapper>(wrapperButtons());
+
         el.addEventListener('confirm', handleConfirm);
         el.addEventListener('cancel', handleCancel);
         el.addEventListener('secondary', handleSecondary);
@@ -296,6 +311,7 @@ describe('Dialog Wrapper', () => {
 
     describe('dev mode', () => {
         let consoleWarnStub!: SinonStub;
+
         before(() => {
             consoleWarnStub = stub(console, 'warn');
         });
@@ -314,6 +330,7 @@ describe('Dialog Wrapper', () => {
 
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
+
             expect(
                 spyCall.args.at(0).includes('accessible'),
                 'confirm accessibility-centric message'
@@ -331,6 +348,7 @@ describe('Dialog Wrapper', () => {
     it('manages content element tabindex on resize observer time', async () => {
         const imgReadyPromise = new Promise((res) => {
             const img = document.createElement('img');
+
             img.onload = res;
             img.src = lazyHero.args.src;
         });
@@ -345,9 +363,11 @@ describe('Dialog Wrapper', () => {
                 contentElement: HTMLElement;
             }
         ).contentElement;
+
         expect(contentElement.hasAttribute('tabindex')).to.be.false;
         await elementUpdated(dialog);
         const opened = oneEvent(test, 'sp-opened');
+
         await sendMouse({
             steps: [
                 {
@@ -371,6 +391,7 @@ describe('Dialog Wrapper', () => {
 
 describe('dev mode', () => {
     let consoleWarnStub!: ReturnType<typeof stub>;
+
     before(() => {
         window.__swc.verbose = true;
         consoleWarnStub = stub(console, 'warn');

@@ -31,20 +31,30 @@ import { userFocusableSelector } from '@spectrum-web-components/shared';
 
 const supportsOverlayAuto = CSS.supports('(overlay: auto)');
 
+/**
+ *
+ */
 function isOpen(el: HTMLElement): boolean {
     let popoverOpen = false;
+
     try {
         popoverOpen = el.matches(':popover-open');
         // eslint-disable-next-line no-empty
     } catch (error) {}
+
     let open = false;
+
     try {
         open = el.matches(':open');
         // eslint-disable-next-line no-empty
     } catch (error) {}
+
     return popoverOpen || open;
 }
 
+/**
+ *
+ */
 export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
     constructor: T
 ): T & Constructor<SpectrumElement> {
@@ -54,10 +64,13 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
         ): Promise<void> {
             if (targetOpenState === false || targetOpenState !== this.open) {
                 overlayTimer.close(this);
+
                 return;
             }
+
             if (this.delayed) {
                 const cancelled = await overlayTimer.openTimer(this);
+
                 if (cancelled) {
                     this.open = !targetOpenState;
                 }
@@ -74,23 +87,28 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             if (targetOpenState && this.open !== targetOpenState) {
                 return;
             }
+
             const update = async ({
                 newState,
             }: { newState?: string } = {}): Promise<void> => {
                 if (newState === 'open') {
                     return;
                 }
+
                 // When in a parent Overlay, this Overlay may need to position itself
                 // while closing in due to the parent _also_ closing which means the
                 // location can no longer rely on "top layer over transform" math.
                 await this.placementController.resetOverlayPosition();
             };
+
             if (!isOpen(this.dialogEl)) {
                 // The means the Overlay was closed from the outside, it is already off of top-layer
                 // so we need to position it in regards to this new state.
                 update();
+
                 return;
             }
+
             // `toggle` is an async event, so it's possible for this handler to run a frame late
             this.dialogEl.addEventListener('toggle', update as EventListener, {
                 once: true,
@@ -99,15 +117,19 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
 
         private shouldShowPopover(targetOpenState: boolean): void {
             let popoverOpen = false;
+
             try {
                 popoverOpen = this.dialogEl.matches(':popover-open');
                 // eslint-disable-next-line no-empty
             } catch (error) {}
+
             let open = false;
+
             try {
                 open = this.dialogEl.matches(':open');
                 // eslint-disable-next-line no-empty
             } catch (error) {}
+
             if (
                 targetOpenState &&
                 this.open === targetOpenState &&
@@ -124,9 +146,11 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             targetOpenState: boolean
         ): Promise<void> {
             await nextFrame();
+
             if (!supportsOverlayAuto) {
                 await this.shouldHidePopover(targetOpenState);
             }
+
             this.shouldShowPopover(targetOpenState);
             await nextFrame();
         }
@@ -137,26 +161,35 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
             if (this.open !== targetOpenState) {
                 return null;
             }
+
             let focusEl = null as HTMLElement | null;
             const start = (el: OpenableElement, index: number) => (): void => {
                 el.open = targetOpenState;
+
                 if (index === 0) {
                     const event = targetOpenState
                         ? BeforetoggleOpenEvent
                         : BeforetoggleClosedEvent;
+
                     this.dispatchEvent(new event());
                 }
+
                 if (!targetOpenState) {
                     return;
                 }
+
                 if (el.matches(userFocusableSelector)) {
                     focusEl = el;
                 }
+
                 focusEl = focusEl || firstFocusableIn(el);
+
                 if (focusEl) {
                     return;
                 }
+
                 const childSlots = el.querySelectorAll('slot');
+
                 childSlots.forEach((slot) => {
                     if (!focusEl) {
                         focusEl = firstFocusableSlottedIn(slot);
@@ -169,9 +202,11 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                     if (this.open !== targetOpenState) {
                         return;
                     }
+
                     const eventName = targetOpenState
                         ? 'sp-opened'
                         : 'sp-closed';
+
                     if (index > 0) {
                         el.dispatchEvent(
                             new OverlayStateEvent(eventName, this, {
@@ -179,15 +214,19 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                                 publish: false,
                             })
                         );
+
                         return;
                     }
+
                     const reportChange = async (): Promise<void> => {
                         if (this.open !== targetOpenState) {
                             return;
                         }
+
                         await nextFrame();
                         const hasVirtualTrigger =
                             this.triggerElement instanceof VirtualTrigger;
+
                         this.dispatchEvent(
                             new OverlayStateEvent(eventName, this, {
                                 interaction: this.type,
@@ -200,6 +239,7 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                                 publish: false,
                             })
                         );
+
                         if (this.triggerElement && !hasVirtualTrigger) {
                             (this.triggerElement as HTMLElement).dispatchEvent(
                                 new OverlayStateEvent(eventName, this, {
@@ -208,11 +248,13 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                                 })
                             );
                         }
+
                         this.state = targetOpenState ? 'opened' : 'closed';
                         this.returnFocus();
                         // Ensure layout and paint are done and the Overlay is still closed before removing the slottable request.
                         await nextFrame();
                         await nextFrame();
+
                         if (
                             targetOpenState === this.open &&
                             targetOpenState === false
@@ -220,10 +262,13 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                             this.requestSlottable();
                         }
                     };
+
                     if (this.open !== targetOpenState) {
                         return;
                     }
+
                     const open = isOpen(this.dialogEl);
+
                     if (targetOpenState !== true && open && this.isConnected) {
                         this.dialogEl.addEventListener(
                             'beforetoggle',
@@ -237,6 +282,7 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                         reportChange();
                     }
                 };
+
             this.elements.forEach((el, index) => {
                 guaranteedAllTransitionend(
                     el,
@@ -244,8 +290,10 @@ export function OverlayPopover<T extends Constructor<AbstractOverlay>>(
                     finish(el, index)
                 );
             });
+
             return focusEl;
         }
     }
+
     return OverlayWithPopover;
 }

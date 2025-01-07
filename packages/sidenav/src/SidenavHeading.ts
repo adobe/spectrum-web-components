@@ -26,6 +26,7 @@ import sidenavHeadingStyles from './sidenav-heading.css.js';
  * @element sp-sidenav-heading
  *
  * @slot - the Sidenav Items to display in association with the heading
+ *
  */
 export class SideNavHeading extends SpectrumElement {
     @property({ reflect: true })
@@ -39,6 +40,7 @@ export class SideNavHeading extends SpectrumElement {
         if (!this.hasAttribute('slot')) {
             this.slot = 'descendant';
         }
+
         super.update(changes);
     }
 

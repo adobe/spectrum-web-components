@@ -16,6 +16,7 @@ import { html } from '@spectrum-web-components/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 const iconset = document.createElement('sp-icons-medium');
+
 document.body.append(iconset);
 
 measureFixtureCreation(html`

@@ -40,6 +40,7 @@ ignoreResizeObserverLoopError(before, after);
 describe('Table', () => {
     it('loads default table accessibly', async () => {
         const el = await styledFixture<Table>(elements());
+
         await nextFrame();
         await nextFrame();
         await nextFrame();
@@ -86,6 +87,7 @@ describe('Table', () => {
                 </sp-table-body>
             </sp-table>
         `);
+
         await elementUpdated(el);
 
         expect(el.size).to.equal('s');
@@ -276,11 +278,14 @@ describe('Table', () => {
                 </sp-table-body>
             </sp-table>
         `);
+
         await elementUpdated(el);
         expect(el.size).to.equal('m');
         const tableHead = el.querySelector('sp-table-head') as TableHead;
+
         expect(tableHead).to.not.exist;
         const tableRows = el.querySelectorAll('sp-table-row');
+
         expect(tableRows.length).to.equal(5);
     });
 });

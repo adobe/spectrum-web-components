@@ -29,17 +29,21 @@ import {
 describe('AlertDialog', () => {
     it('renders confirmation variant accessible', async () => {
         const el = await fixture<AlertDialog>(confirmation());
+
         await elementUpdated(el);
         await expect(el).to.be.accessible();
     });
     it('warning variant renders with an alert icon', async () => {
         const el = await fixture<AlertDialog>(warning());
+
         await elementUpdated(el);
         const alertIcon = el.shadowRoot.querySelector('sp-icon-alert');
+
         expect(alertIcon).to.be.not.null;
     });
     it('secondary variant renders with `confirm`, `cancel` and `secondary` buttons', async () => {
         const el = await fixture<AlertDialog>(secondary());
+
         await elementUpdated(el);
         const confirmButton = el.querySelector('#confirmButton') as Button;
         const cancelButton = el.querySelector('#cancelButton') as Button;
@@ -50,13 +54,11 @@ describe('AlertDialog', () => {
         expect(secondaryButton).to.be.not.null;
     });
     it('validates variants', async () => {
-        const el = await fixture<AlertDialog>(
-            html`
-                <sp-alert-dialog variant="invalid">
-                    This Alert Dialog validates variants.
-                </sp-alert-dialog>
-            `
-        );
+        const el = await fixture<AlertDialog>(html`
+            <sp-alert-dialog variant="invalid">
+                This Alert Dialog validates variants.
+            </sp-alert-dialog>
+        `);
 
         await elementUpdated(el);
         expect(el.variant).to.equal('');
@@ -78,14 +80,17 @@ describe('AlertDialog', () => {
                 <p>Initial paragraph.</p>
             </sp-alert-dialog>
         `);
+
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
 
         const paragraph = document.createElement('p');
+
         paragraph.textContent = 'Added paragraph.';
 
         const target = el.querySelector('p') as HTMLParagraphElement;
+
         target.insertAdjacentElement('beforebegin', paragraph);
 
         await nextFrame();

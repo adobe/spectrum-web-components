@@ -23,24 +23,40 @@ import switchStyles from './switch.css.js';
 import legacyStyles from './switch-legacy.css.js';
 
 /**
+ * This component represents a toggle switch.
+ *
  * @element sp-switch
  *
  * @slot - text label of the Switch
+ *
  * @fires change - Announces a change in the `checked` property of a Switch
+ *
  */
 export class Switch extends SizedMixin(CheckboxBase) {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
-        /* c8 ignore next 4 */
         if (window.hasOwnProperty('ShadyDOM')) {
             // Override some styles if we are using the web component polyfill
             return [switchStyles, legacyStyles];
         }
+
         return [switchStyles];
     }
 
+    /**
+     * Indicates whether the switch is emphasized.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    /**
+     * Renders the component template.
+     */
     protected override render(): TemplateResult {
         return html`
             ${super.render()}
@@ -49,11 +65,19 @@ export class Switch extends SizedMixin(CheckboxBase) {
         `;
     }
 
+    /**
+     * Called after the element's DOM has been updated the first time.
+     * Sets the role attribute of the input element to 'switch'.
+     */
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.inputElement.setAttribute('role', 'switch');
     }
 
+    /**
+     * Called when the element is updated.
+     * Updates the aria-checked attribute of the input element based on the checked property.
+     */
     protected override updated(changes: PropertyValues): void {
         if (changes.has('checked')) {
             this.inputElement.setAttribute(

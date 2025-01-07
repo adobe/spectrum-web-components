@@ -32,14 +32,16 @@ export abstract class IconsetSVG extends Iconset {
         if (!this.slotContainer) {
             return;
         }
+
         const currentSVGNodes = this.getSVGNodes(this.slotContainer);
+
         this.updateSVG(currentSVGNodes);
         super.updated(changedProperties);
     }
     /**
      * Applies the requested icon from this iconset instance to the given element.
      *
-     * @param el - the element to apply the icon to
+     * @param el - the HTML element to which the icon will be applied
      * @param icon - the name of the icon within this set to apply.
      */
     public async applyIconToElement(
@@ -50,18 +52,23 @@ export abstract class IconsetSVG extends Iconset {
     ): Promise<void> {
         await this.updateComplete;
         const iconSymbol = this.iconMap.get(icon);
+
         if (!iconSymbol) {
             throw new Error(`Unable to find icon ${icon}`);
         }
+
         // we cannot share a single SVG globally across shadowroot boundaries
         // so copy the template node so we can inject it where we need it
         const clonedNode = this.prepareSvgClone(iconSymbol);
+
         clonedNode.setAttribute('role', 'img');
+
         if (label) {
             clonedNode.setAttribute('aria-label', label);
         } else {
             clonedNode.setAttribute('aria-hidden', 'true');
         }
+
         // append the svg to the node either in its shadowroot or directly into its dom
         if (el.shadowRoot) {
             el.shadowRoot.appendChild(clonedNode);
@@ -89,6 +96,7 @@ export abstract class IconsetSVG extends Iconset {
         // if they are svg or spritesheet provided
         const cssText =
             'pointer-events: none; display: block; width: 100%; height: 100%;';
+
         svg.style.cssText = cssText;
         // copy the viewbox and other properties into the svg
         svg.setAttribute('viewBox', viewBox);
@@ -98,6 +106,7 @@ export abstract class IconsetSVG extends Iconset {
         while (content.childNodes.length > 0) {
             svg.appendChild(content.childNodes[0]);
         }
+
         return svg;
     }
     protected getSVGIconName(icon: string): string {
@@ -122,9 +131,12 @@ export abstract class IconsetSVG extends Iconset {
         // iterate over the nodes that were passed in, and find all the top level symbols
         const symbols = nodes.reduce((prev, svgNode) => {
             const containedSymbols = svgNode.querySelectorAll('symbol');
+
             prev.push(...containedSymbols);
+
             return prev;
         }, [] as SVGSymbolElement[]);
+
         symbols.forEach((symbol) => {
             this.iconMap.set(this.getSanitizedIconName(symbol.id), symbol);
         });
@@ -136,12 +148,14 @@ export abstract class IconsetSVG extends Iconset {
         const svgNodes = nodes.filter((node) => {
             return node.nodeName === 'svg';
         }) as SVGElement[];
+
         return svgNodes;
     }
 
     private onSlotChange(event: Event): void {
         const slotTarget = event.target as HTMLSlotElement;
         const svgNodes = this.getSVGNodes(slotTarget);
+
         this.updateSVG(svgNodes);
     }
 }

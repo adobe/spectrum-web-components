@@ -39,6 +39,7 @@ export const handleChange =
     ({ onChange }: StoryArgs) =>
     (event: Event): void => {
         const picker = event.target as Picker;
+
         if (onChange) onChange(picker.value);
     };
 

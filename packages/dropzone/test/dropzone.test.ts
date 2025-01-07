@@ -44,10 +44,15 @@ describe('Dropzone', () => {
                 </div>
             </sp-dropzone>
         `);
+
         expect(el).to.not.equal(undefined);
+
         if (!el.shadowRoot) throw new Error('No shadowRoot');
+
         const slot = el.shadowRoot.querySelector('slot') as HTMLSlotElement;
+
         expect(slot).to.not.equal(undefined);
+
         return true;
     });
     it('manages `dropEffects`', async () => {
@@ -79,10 +84,12 @@ describe('Dropzone', () => {
         expect(el.isDragged).to.be.false;
 
         let dataTransfer: DataTransfer | boolean = false;
+
         try {
             // Safari doesn't like this...
             dataTransfer = new DataTransfer();
         } catch (error) {}
+
         if (dataTransfer) {
             const dragOverEvent = new DragEvent('dragover', {
                 dataTransfer,
@@ -112,10 +119,12 @@ describe('Dropzone', () => {
         expect(el.isDragged).to.be.false;
 
         let dataTransfer: DataTransfer | boolean = false;
+
         try {
             // Safari doesn't like this...
             dataTransfer = new DataTransfer();
         } catch (error) {}
+
         if (dataTransfer) {
             const dragOverEvent = new DragEvent('dragover', {
                 dataTransfer,

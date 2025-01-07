@@ -24,11 +24,13 @@ export class MobileController extends InteractionController {
         if (this.preventNextToggle == 'no') {
             this.open = !this.open;
         }
+
         this.preventNextToggle = 'no';
     }
 
     public override handlePointerdown(): void {
         this.preventNextToggle = this.open ? 'yes' : 'no';
+
         if (isWebKit()) {
             this.target.classList.add(SAFARI_FOCUS_RING_CLASS);
         }
@@ -38,6 +40,7 @@ export class MobileController extends InteractionController {
         if (this.host.open) {
             return;
         }
+
         if (
             isWebKit() &&
             this.target.classList.contains(SAFARI_FOCUS_RING_CLASS)
@@ -51,6 +54,7 @@ export class MobileController extends InteractionController {
         this.abortController?.abort();
         this.abortController = new AbortController();
         const { signal } = this.abortController;
+
         this.target.addEventListener('click', () => this.handleClick(), {
             signal,
         });

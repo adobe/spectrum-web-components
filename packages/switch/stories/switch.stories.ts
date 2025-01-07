@@ -21,7 +21,6 @@ export default {
         size: {
             name: 'size',
             type: { name: 'string', required: false },
-            description: 'The size at which to display the Switch element',
             table: {
                 type: { summary: '"s" | "m" | "l" | "xl"' },
                 defaultValue: { summary: 'm' },

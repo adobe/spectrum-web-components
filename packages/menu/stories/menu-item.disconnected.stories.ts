@@ -87,6 +87,7 @@ class MyView1 extends XElement {
                 subtitle: 'Brighten highlights with contrast and details',
             },
         ];
+
         return html`
             View 1
             <my-picker
@@ -119,6 +120,7 @@ class MyView2 extends XElement {
                 subtitle: 'Brighten highlights with contrast and details',
             },
         ];
+
         return html`
             View 2
             <my-picker

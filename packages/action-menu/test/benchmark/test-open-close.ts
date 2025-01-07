@@ -34,6 +34,7 @@ class ActionMenuWorkflow extends HTMLElement {
     async setup(): Promise<void> {
         this.target = this.nextElementSibling as ActionMenu;
         const childPromises = [] as Promise<boolean>[];
+
         [...this.target.children].forEach((child) => {
             if ('updateComplete' in child) {
                 childPromises.push((child as SpectrumElement).updateComplete);
@@ -45,10 +46,13 @@ class ActionMenuWorkflow extends HTMLElement {
         });
         this.target.addEventListener('sp-closed', () => {
             this.count += 1;
+
             if (this.count >= 5) {
                 this.ready(true);
+
                 return;
             }
+
             requestAnimationFrame(() => (this.target.open = true));
         });
         requestAnimationFrame(() => (this.target.open = true));

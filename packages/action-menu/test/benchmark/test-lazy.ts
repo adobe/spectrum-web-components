@@ -38,6 +38,7 @@ const handleSlottableRequest = (event: SlottableRequestEvent): void => {
                   <sp-menu-item>Save Selection</sp-menu-item>
                   <sp-menu-item disabled>Make Work Path</sp-menu-item>
               `;
+
     render(template, event.target as HTMLElement);
 };
 

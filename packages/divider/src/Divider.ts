@@ -45,6 +45,7 @@ export class Divider extends SizedMixin(SpectrumElement, {
 
     protected override updated(changed: PropertyValues<this>): void {
         super.updated(changed);
+
         if (changed.has('vertical')) {
             if (this.vertical) {
                 this.setAttribute('aria-orientation', 'vertical');

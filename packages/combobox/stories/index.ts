@@ -36,6 +36,7 @@ const handleChange =
     ({ onChange }: StoryArgs) =>
     (event: Event): void => {
         const picker = event.target as Combobox;
+
         if (onChange) onChange(picker.value);
     };
 
@@ -43,6 +44,7 @@ const handleInput =
     ({ onInput }: StoryArgs) =>
     (event: Event): void => {
         const picker = event.target as Combobox;
+
         if (onInput) onInput(picker.value);
     };
 

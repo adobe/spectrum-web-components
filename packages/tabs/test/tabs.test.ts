@@ -34,19 +34,19 @@ import {
 import { sendKeys } from '@web/test-runner-commands';
 
 const createTabs = async (): Promise<Tabs> => {
-    const tabs = await fixture<Tabs>(
-        html`
-            <sp-tabs selected="first">
-                <sp-tab label="Tab 1" value="first"></sp-tab>
-                <sp-tab label="Tab 2" value="second"></sp-tab>
-                <sp-tab label="Tab 3" value="third"></sp-tab>
-                <sp-tab-panel value="first">First tab content</sp-tab-panel>
-                <sp-tab-panel value="second">Second tab content</sp-tab-panel>
-                <sp-tab-panel value="third">Third tab content</sp-tab-panel>
-            </sp-tabs>
-        `
-    );
+    const tabs = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+            <sp-tab label="Tab 1" value="first"></sp-tab>
+            <sp-tab label="Tab 2" value="second"></sp-tab>
+            <sp-tab label="Tab 3" value="third"></sp-tab>
+            <sp-tab-panel value="first">First tab content</sp-tab-panel>
+            <sp-tab-panel value="second">Second tab content</sp-tab-panel>
+            <sp-tab-panel value="third">Third tab content</sp-tab-panel>
+        </sp-tabs>
+    `);
+
     await elementUpdated(tabs);
+
     return tabs;
 };
 
@@ -63,15 +63,13 @@ describe('Tabs', () => {
     });
 
     it('loads accessibly w/o panels', async () => {
-        const tabs = await fixture<Tabs>(
-            html`
-                <sp-tabs selected="first">
-                    <sp-tab value="first">Tab 1</sp-tab>
-                    <sp-tab value="second">Tab 2</sp-tab>
-                    <sp-tab value="third">Tab 3</sp-tab>
-                </sp-tabs>
-            `
-        );
+        const tabs = await fixture<Tabs>(html`
+            <sp-tabs selected="first">
+                <sp-tab value="first">Tab 1</sp-tab>
+                <sp-tab value="second">Tab 2</sp-tab>
+                <sp-tab value="third">Tab 3</sp-tab>
+            </sp-tabs>
+        `);
 
         const tabList = tabs.querySelectorAll('sp-tab');
 
@@ -84,6 +82,7 @@ describe('Tabs', () => {
     it('can be disabled', async () => {
         const tabs = await createTabs();
         const tab = tabs.querySelector('[label="Tab 3"]') as Tab;
+
         tabs.disabled = true;
         await elementUpdated(tabs);
         expect(tabs.selected).to.equal('first');
@@ -96,6 +95,7 @@ describe('Tabs', () => {
         const tabs = await createTabs();
         const tab2 = tabs.querySelector('[label="Tab 2"]') as Tab;
         const tab3 = tabs.querySelector('[label="Tab 3"]') as Tab;
+
         tab3.disabled = true;
         await elementUpdated(tab3);
         expect(tabs.selected).to.equal('first');
@@ -157,15 +157,13 @@ describe('Tabs', () => {
     });
 
     it('autofocuses', async () => {
-        const tabs = await fixture<Tabs>(
-            html`
-                <sp-tabs selected="second" autofocus>
-                    <sp-tab label="Tab 1" value="first"></sp-tab>
-                    <sp-tab label="Tab 2" value="second"></sp-tab>
-                    <sp-tab label="Tab 3" value="third"></sp-tab>
-                </sp-tabs>
-            `
-        );
+        const tabs = await fixture<Tabs>(html`
+            <sp-tabs selected="second" autofocus>
+                <sp-tab label="Tab 1" value="first"></sp-tab>
+                <sp-tab label="Tab 2" value="second"></sp-tab>
+                <sp-tab label="Tab 3" value="third"></sp-tab>
+            </sp-tabs>
+        `);
 
         await elementUpdated(tabs);
 
@@ -178,15 +176,13 @@ describe('Tabs', () => {
     });
 
     it('auto', async () => {
-        const el = await fixture<Tabs>(
-            html`
-                <sp-tabs selected="second" auto>
-                    <sp-tab label="Tab 1" value="first"></sp-tab>
-                    <sp-tab label="Tab 2" value="second"></sp-tab>
-                    <sp-tab label="Tab 3" value="third"></sp-tab>
-                </sp-tabs>
-            `
-        );
+        const el = await fixture<Tabs>(html`
+            <sp-tabs selected="second" auto>
+                <sp-tab label="Tab 1" value="first"></sp-tab>
+                <sp-tab label="Tab 2" value="second"></sp-tab>
+                <sp-tab label="Tab 3" value="third"></sp-tab>
+            </sp-tabs>
+        `);
 
         await elementUpdated(el);
 
@@ -220,7 +216,9 @@ describe('Tabs', () => {
 
         const tab1 = tabs.querySelector('sp-tab[value=first]') as Tab;
         const tab2 = tabs.querySelector('sp-tab[value=second]') as Tab;
+
         if (!(tab1 instanceof Tab)) throw new Error('tab1 not of type Tab');
+
         if (!(tab2 instanceof Tab)) throw new Error('tab2 not of type Tab');
 
         expect(tabs.selected).to.equal('first');
@@ -236,7 +234,9 @@ describe('Tabs', () => {
         const tab3 = tabs.querySelector('sp-tab[value=third]') as Tab;
 
         if (!(tab1 instanceof Tab)) throw new Error('tab1 not of type Tab');
+
         if (!(tab2 instanceof Tab)) throw new Error('tab2 not of type Tab');
+
         if (!(tab3 instanceof Tab)) throw new Error('tab3 not of type Tab');
 
         expect(tabs.selected).to.equal('first');
@@ -269,7 +269,9 @@ describe('Tabs', () => {
         const tab3 = tabs.querySelector('sp-tab[value=third]') as Tab;
 
         if (!(tab1 instanceof Tab)) throw new Error('tab1 not of type Tab');
+
         if (!(tab2 instanceof Tab)) throw new Error('tab2 not of type Tab');
+
         if (!(tab3 instanceof Tab)) throw new Error('tab3 not of type Tab');
 
         tab2.click();
@@ -332,6 +334,7 @@ describe('Tabs', () => {
         expect(el.selected).to.be.equal('first');
 
         const otherThing = el.querySelector('#other') as HTMLDivElement;
+
         otherThing.click();
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
@@ -349,6 +352,7 @@ describe('Tabs', () => {
         expect(el.selected).to.be.equal('first');
 
         const secondTab = el.querySelector('[value="second"]') as Tab;
+
         secondTab.click();
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
@@ -406,11 +410,13 @@ describe('Tabs', () => {
                 </sp-tab>
             </sp-tabs>
         `);
+
         await elementUpdated(el);
         expect(el.selected).to.be.equal('');
 
         const firstTab = el.querySelector('[value="first"]') as Tab;
         const secondTab = el.querySelector('[value="second"]') as Tab;
+
         firstTab.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
         firstTab.focus();
 
@@ -469,11 +475,9 @@ describe('Tabs', () => {
             }
         }
         customElements.define('tab-test-el', TabTestEl);
-        const el = await fixture<TabTestEl>(
-            html`
-                <tab-test-el></tab-test-el>
-            `
-        );
+        const el = await fixture<TabTestEl>(html`
+            <tab-test-el></tab-test-el>
+        `);
 
         await elementUpdated(el);
         const rootNode = el.shadowRoot as ShadowRoot;
@@ -484,11 +488,13 @@ describe('Tabs', () => {
 
         const firstTab = tabsEl.querySelector('[value="first"]') as Tab;
         const secondTab = tabsEl.querySelector('[value="second"]') as Tab;
+
         firstTab.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
         firstTab.focus();
 
         await elementUpdated(el);
         let activeElement = rootNode.activeElement as Tab;
+
         expect(activeElement === firstTab, 'Focus first tab').to.be.true;
 
         firstTab.dispatchEvent(arrowLeftEvent());
@@ -530,6 +536,7 @@ describe('Tabs', () => {
 
         const firstTab = el.querySelector('[value="first"]') as Tab;
         const secondTab = el.querySelector('[value="second"]') as Tab;
+
         firstTab.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
         firstTab.focus();
 
@@ -570,15 +577,14 @@ describe('Tabs', () => {
             .true;
     });
     it('selects through slotted DOM', async () => {
-        const el = await fixture<Tabs>(
-            html`
-                <sp-tabs selected="first">
-                    <sp-tab value="first">Tab 1</sp-tab>
-                    <sp-tab value="second"><span>Tab 2</span></sp-tab>
-                </sp-tabs>
-            `
-        );
+        const el = await fixture<Tabs>(html`
+            <sp-tabs selected="first">
+                <sp-tab value="first">Tab 1</sp-tab>
+                <sp-tab value="second"><span>Tab 2</span></sp-tab>
+            </sp-tabs>
+        `);
         const span = el.querySelector('span') as HTMLSpanElement;
+
         await elementUpdated(el);
 
         expect(el.selected).to.equal('first');
@@ -589,15 +595,14 @@ describe('Tabs', () => {
         expect(el.selected).to.equal('second');
     });
     it('updates selection indicator in response to tab updates', async () => {
-        const el = await fixture<Tabs>(
-            html`
-                <sp-tabs selected="first">
-                    <sp-tab value="first">Tab 1</sp-tab>
-                    <sp-tab value="second">Tab 2</sp-tab>
-                </sp-tabs>
-            `
-        );
+        const el = await fixture<Tabs>(html`
+            <sp-tabs selected="first">
+                <sp-tab value="first">Tab 1</sp-tab>
+                <sp-tab value="second">Tab 2</sp-tab>
+            </sp-tabs>
+        `);
         const selected = el.querySelector('[value="first"]') as Tab;
+
         await elementUpdated(el);
 
         const extractScaleX = /scaleX\((.+)\)/;
@@ -605,6 +610,7 @@ describe('Tabs', () => {
             el.selectionIndicatorStyle
         ) as unknown as [string, string];
         const initialWidth = parseFloat(initialExec[1]);
+
         selected.textContent = 'WWWWWWWWWWWWWWWWWWWWWWWWW';
         await nextFrame();
         await nextFrame();
@@ -613,6 +619,7 @@ describe('Tabs', () => {
             el.selectionIndicatorStyle
         ) as unknown as [string, string];
         const longerWidth = parseFloat(longerExec[1]);
+
         expect(initialWidth).to.be.lessThan(longerWidth);
         selected.textContent = 'W';
         await nextFrame();
@@ -621,6 +628,7 @@ describe('Tabs', () => {
             el.selectionIndicatorStyle
         ) as unknown as [string, string];
         const shorterWidth = parseFloat(shorterExec[1]);
+
         expect(initialWidth).to.be.greaterThan(shorterWidth);
         expect(longerWidth).to.be.greaterThan(shorterWidth);
     });
@@ -633,6 +641,7 @@ describe('Tabs', () => {
         // we must catch them with window.onerror
         let hasError = false;
         const oldOnerror = window.onerror;
+
         window.onerror = () => {
             hasError = true;
         };

@@ -58,6 +58,7 @@ export const disabledButton = (): TemplateResult => {
                 let count = 5;
                 const timer = setInterval(() => {
                     count -= 1;
+
                     if (!count) {
                         (
                             document.querySelector(
@@ -73,6 +74,7 @@ export const disabledButton = (): TemplateResult => {
                         clearInterval(timer);
                         target.dispatchEvent(new Event('countdown-complete'));
                     }
+
                     (
                         document.querySelector('.time') as HTMLElement
                     ).textContent = count.toString();

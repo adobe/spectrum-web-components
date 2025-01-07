@@ -54,6 +54,7 @@ type BreadcrumbItem = {
  * @slot icon - change the default icon of the action menu
  * @slot root - Breadcrumb item to always display
  * @slot - Breadcrumb items
+ *
  * @fires change - Announces the selected breadcrumb item
  */
 export class Breadcrumbs extends SpectrumElement {
@@ -80,7 +81,7 @@ export class Breadcrumbs extends SpectrumElement {
     public menuLabel = 'More items';
 
     /**
-     *  compact option is useful for reducing the height of the breadcrumbs
+     * Compact option is useful for reducing the height of the breadcrumbs
      */
     @property({ type: Boolean })
     public compact = false;
@@ -105,6 +106,9 @@ export class Breadcrumbs extends SpectrumElement {
 
     private menuRef: Ref<ActionMenu> = createRef();
 
+    /**
+     * Checks if the menu is needed based on the number of visible items.
+     */
     private get hasMenu(): boolean {
         return this.visibleItems < (this.breadcrumbsElements?.length ?? 0);
     }
@@ -118,10 +122,12 @@ export class Breadcrumbs extends SpectrumElement {
 
         this.resizeObserver = new ResizeObserver(() => {
             if (this.firstRender) {
-                // Don't adjust overflow on first render, it is adjused in slotChangeHandler
+                // Don't adjust overflow on first render, it is adjusted in slotChangeHandler
                 this.firstRender = false;
+
                 return;
             }
+
             this.adjustOverflow();
         });
 
@@ -211,8 +217,10 @@ export class Breadcrumbs extends SpectrumElement {
         }
 
         const start = 0;
+
         for (let i = this.items.length - 1; i >= start; i--) {
             occupiedSpace += this.items[i].offsetWidth;
+
             if (
                 occupiedSpace < availableSpace &&
                 newVisibleItems < Math.max(this.maxVisibleItems, 1)
@@ -241,6 +249,9 @@ export class Breadcrumbs extends SpectrumElement {
         }
     }
 
+    /**
+     * Announces a change in the selected breadcrumb.
+     */
     private announceChange(value: string): void {
         const selectDetail: BreadcrumbSelectDetail = {
             value,
@@ -255,6 +266,10 @@ export class Breadcrumbs extends SpectrumElement {
         this.dispatchEvent(selectionEvent);
     }
 
+    /**
+     * Handles the selection of a breadcrumb item.
+     * Stops the event propagation and announces the change.
+     */
     private handleSelect(
         event: CustomEvent<BreadcrumbSelectDetail> & { target: BreadcrumbItem }
     ): void {
@@ -262,6 +277,10 @@ export class Breadcrumbs extends SpectrumElement {
         this.announceChange(event.detail.value);
     }
 
+    /**
+     * Handles the change event from the action menu.
+     * Stops the event propagation and announces the change.
+     */
     private handleMenuChange(event: Event & { target: ActionMenu }): void {
         event.stopPropagation();
         this.announceChange(event.target.value);
@@ -312,6 +331,7 @@ export class Breadcrumbs extends SpectrumElement {
         if (this.breadcrumbsElements.length === 0) {
             this.items = [];
             this.visibleItems = 0;
+
             return;
         }
 
@@ -323,6 +343,10 @@ export class Breadcrumbs extends SpectrumElement {
         this.adjustOverflow();
     }
 
+    /**
+     * Renders the breadcrumbs component.
+     * Includes the root slot, the truncation menu, and the breadcrumb items.
+     */
     protected override render(): TemplateResult {
         return html`
             <ul @breadcrumb-select=${this.handleSelect} id="list">

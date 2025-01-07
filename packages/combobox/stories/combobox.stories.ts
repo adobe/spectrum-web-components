@@ -185,6 +185,7 @@ export const withHelpText = (): TemplateResult => {
 class ControlledCombo extends LitElement {
     static ages: ComboboxOption[] = Array.from({ length: 76 - 55 }, (_, n) => {
         const age = `${n + 55}`;
+
         return { value: age, itemText: age };
     });
 

@@ -85,6 +85,7 @@ describe('Toast', () => {
         expect(el.open).to.be.false;
 
         const testableEl = el as unknown as TestableToast;
+
         testableEl._timeout = 100;
         el.open = true;
         await elementUpdated(el);
@@ -120,6 +121,7 @@ describe('Toast', () => {
         await elementUpdated(el);
 
         const testableEl = el as unknown as TestableToast;
+
         expect(el.open, 'not open to start').to.be.false;
 
         el.open = true;
@@ -157,6 +159,7 @@ describe('Toast', () => {
         const closeButton = renderRoot.querySelector(
             'sp-close-button'
         ) as CloseButton;
+
         closeButton.click();
 
         await elementUpdated(el);
@@ -178,6 +181,7 @@ describe('Toast', () => {
         const closeButton = renderRoot.querySelector(
             'sp-close-button'
         ) as CloseButton;
+
         closeButton.click();
 
         await elementUpdated(el);
@@ -203,6 +207,7 @@ describe('Toast', () => {
         const closeButton = renderRoot.querySelector(
             'sp-close-button'
         ) as CloseButton;
+
         closeButton.click();
 
         await elementUpdated(el);
@@ -273,6 +278,7 @@ describe('Toast', () => {
         const closeButton = el.shadowRoot.querySelector(
             'sp-close-button'
         ) as HTMLElement;
+
         closeButton.click();
 
         await elementUpdated(el);

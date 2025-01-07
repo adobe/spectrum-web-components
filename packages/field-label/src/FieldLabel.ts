@@ -51,6 +51,7 @@ type Labelable = Focusable & {
  * @element sp-field-label
  *
  * @slot - text content of the label
+ *
  */
 export class FieldLabel extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
@@ -81,11 +82,13 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
 
     private handleClick(event: Event): void {
         if (!this.target || this.disabled || event.defaultPrevented) return;
+
         this.target.focus();
         const parent = this.getRootNode() as ShadowRoot;
         const target = this.target as AcceptsFocusVisisble;
         const targetParent = target.getRootNode() as ShadowRoot;
         const targetHost = targetParent.host as AcceptsFocusVisisble;
+
         if (targetParent === parent && target.forceFocusVisible) {
             target.forceFocusVisible();
         } else if (targetHost && targetHost.forceFocusVisible) {
@@ -98,18 +101,21 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
     private applyTargetLabel(target?: Labelable): void {
         // Apply new target when provided
         this.target = target || this.target;
+
         if (this.target) {
             // When target is available add or remove label information
             // depending on the value of `apply`.
             const applyLabel = this.target.applyFocusElementLabel;
             const focusable = this.target.focusElement || this.target;
             const targetParent = focusable.getRootNode() as HTMLElement;
+
             if (typeof applyLabel !== 'undefined') {
                 applyLabel(this.labelText, this);
             } else if (targetParent === (this.getRootNode() as HTMLElement)) {
                 const conditionAttribute = target
                     ? conditionAttributeWithId
                     : conditionAttributeWithoutId;
+
                 conditionAttribute(focusable, 'aria-labelledby', [this.id]);
             } else {
                 if (target) {
@@ -124,27 +130,35 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
     private async manageTarget(): Promise<void> {
         this.applyTargetLabel();
         const target = this.resolvedElement.element as Focusable;
+
         if (!target) {
             this.target = target;
+
             return;
         }
+
         if (target.localName.search('-') > 0) {
             await customElements.whenDefined(target.localName);
         }
+
         if (typeof target.updateComplete !== 'undefined') {
             await target.updateComplete;
         }
+
         this.applyTargetLabel(target);
     }
 
     private get labelText(): string {
         const assignedNodes = this.slotEl.assignedNodes({ flatten: true });
+
         if (!assignedNodes.length) {
             return '';
         }
+
         const labelText = assignedNodes.map((node) =>
             (node.textContent || /* c8 ignore next */ '').trim()
         );
+
         return labelText.join(' ');
     }
 
@@ -175,9 +189,11 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
                 `${this.tagName.toLowerCase()}-${randomID()}`
             );
         }
+
         if (changes.has('for')) {
             this.resolvedElement.selector = this.for ? `#${this.for}` : '';
         }
+
         if (changes.has('id') || changes.has(elementResolverUpdatedSymbol)) {
             this.manageTarget();
         }

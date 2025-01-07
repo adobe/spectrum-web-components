@@ -76,6 +76,7 @@ const manifestPath = path.join(
     'stories',
     'icon-manifest.ts'
 );
+
 fs.writeFileSync(manifestPath, disclaimer, 'utf-8');
 let manifestImports = `import {
     html,
@@ -99,12 +100,20 @@ export const getComponentName = (i) => {
         .basename(i, '.svg')
         .replace(/^(S2_Icon_|S_)/, '')
         .replace(/(_20_N|_22x20_N|_18_N@2x)$/, '');
+
     if (i.startsWith('Ad')) {
         id = i.replace(/^Ad/, '') + 'Advert';
     }
+
     return Case.pascal(replacements[id] || id);
 };
 
+/**
+ * Builds the icons based on the provided parameters.
+ * @property {Array} icons - The list of icons to be built.
+ * @property {string} tag - The tag to be used for the icons.
+ * @property {Array} iconsNameList - The list of icon names.
+ */
 async function buildIcons(icons, tag, iconsNameList) {
     icons.forEach((i) => {
         const svg = fs.readFileSync(i, 'utf-8');
@@ -113,6 +122,7 @@ async function buildIcons(icons, tag, iconsNameList) {
             .replace('S2_Icon_', '')
             .replace('_20_N', '')
             .replace('_22x20_N', '');
+
         if (id.search(/^Ad[A-Z]/) !== -1) {
             id = id.replace(/^Ad/, '');
             id += 'Advert';
@@ -143,24 +153,30 @@ async function buildIcons(icons, tag, iconsNameList) {
             if (el.name === 'svg') {
                 $(el).attr('aria-hidden', '...');
                 $(el).attr('role', 'img');
+
                 if (keepColors !== 'keep') {
                     $(el).attr('fill', 'currentColor');
                 }
+
                 $(el).attr('aria-label', '...');
                 $(el).removeAttr('id');
                 $(el).attr('width', '...');
                 $(el).attr('height', '...');
             }
+
             if (el.name === 'defs') {
                 $(el).remove();
             }
+
             Object.keys(el.attribs).forEach((x) => {
                 if (x === 'class') {
                     $(el).removeAttr(x);
                 }
+
                 if (keepColors !== 'keep' && x === 'stroke') {
                     $(el).attr(x, 'currentColor');
                 }
+
                 if (keepColors !== 'keep' && x === 'fill') {
                     $(el).attr(x, 'currentColor');
                 }
@@ -209,6 +225,7 @@ async function buildIcons(icons, tag, iconsNameList) {
             });
 
         const exportString = `export {${ComponentName}Icon} from './${tag}/${id}.js';\r\n`;
+
         fs.appendFileSync(
             path.join(
                 rootDir,
@@ -229,6 +246,7 @@ async function buildIcons(icons, tag, iconsNameList) {
         let otherVersionIconImport = defaultIconImport;
 
         const alternateTag = tag === 'icons' ? 'icons-s2' : 'icons';
+
         // if there is a mapping icon found from the above iconset update otherVersionIconImport
         if (systemsIconMapping[ComponentName]) {
             otherVersionIconImport = `import { ${systemsIconMapping[ComponentName]}Icon as AlternateIcon } from '../${alternateTag}/${systemsIconMapping[ComponentName]}.js';\r\n`;
@@ -266,6 +284,7 @@ async function buildIcons(icons, tag, iconsNameList) {
                 if(this.spectrumVersion === ${spectrumVersion}){
                     return CurrentIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
                 }
+
                 return AlternateIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
     
             }
@@ -346,6 +365,7 @@ async function buildIcons(icons, tag, iconsNameList) {
         const metadata = `{name: '${Case.sentence(
             ComponentName
         )}', tag: '<${iconElementName}>', story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`},\r\n`;
+
         manifestImports += importStatement;
         manifestListings += metadata;
     });
@@ -370,6 +390,7 @@ await buildIcons(iconsV1, 'icons', iconsV2NameList);
 await buildIcons(iconsV2, 'icons-s2', iconsV1NameList);
 
 const exportString = `\r\nexport { setCustomTemplateLiteralTag } from './custom-tag.js';\r\n`;
+
 fs.appendFileSync(
     path.join(rootDir, 'packages', 'icons-workflow', 'src', 'icons.ts'),
     exportString,

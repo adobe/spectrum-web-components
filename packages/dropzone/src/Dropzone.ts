@@ -45,8 +45,11 @@ export class Dropzone extends SpectrumElement {
 
     /**
      * Controls the feedback (typically visual) the user is given during a drag and drop operation
-     * @attr
+     *
      * @type {'copy' | 'move' | 'link' | 'none'}
+     *
+     * @attribute
+     *
      */
     public get dropEffect(): DropEffects {
         return this._dropEffect;
@@ -96,11 +99,14 @@ export class Dropzone extends SpectrumElement {
             detail: event,
         });
         const shouldAccept = this.dispatchEvent(shouldAcceptEvent);
+
         if (!event.dataTransfer) {
             return;
         }
+
         if (!shouldAccept) {
             event.dataTransfer.dropEffect = 'none';
+
             return;
         }
 
@@ -116,6 +122,7 @@ export class Dropzone extends SpectrumElement {
             composed: true,
             detail: event,
         });
+
         this.dispatchEvent(dragOverEvent);
     }
 
@@ -130,6 +137,7 @@ export class Dropzone extends SpectrumElement {
                 composed: true,
                 detail: event,
             });
+
             this.dispatchEvent(dragLeave);
         }, 100);
     }
@@ -145,6 +153,7 @@ export class Dropzone extends SpectrumElement {
             composed: true,
             detail: event,
         });
+
         this.dispatchEvent(dropEvent);
     }
 

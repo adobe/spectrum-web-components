@@ -58,10 +58,12 @@ describe('Overlay Trigger - Longpress', () => {
 
             // For `:focus-visible` heuristic.
             const input = document.createElement('input');
+
             this.el.insertAdjacentElement('beforebegin', input);
             input.focus();
 
             const open = oneEvent(this.el, 'sp-opened');
+
             await sendKeys({
                 press: 'Tab',
             });
@@ -69,6 +71,7 @@ describe('Overlay Trigger - Longpress', () => {
         });
         it('opens/closes for `Space`', async function () {
             const open = oneEvent(this.el, 'sp-opened');
+
             await sendKeys({
                 press: 'Space',
             });
@@ -77,6 +80,7 @@ describe('Overlay Trigger - Longpress', () => {
             expect(await isOnTopLayer(this.content)).to.be.true;
 
             const closed = oneEvent(this.el, 'sp-closed');
+
             sendMouse({
                 steps: [
                     {
@@ -96,6 +100,7 @@ describe('Overlay Trigger - Longpress', () => {
         });
         it('opens/closes for `Alt+ArrowDown`', async function () {
             const open = oneEvent(this.el, 'sp-opened');
+
             sendKeys({
                 press: 'Alt+ArrowDown',
             });
@@ -105,6 +110,7 @@ describe('Overlay Trigger - Longpress', () => {
             expect(this.content.open, 'opens for `Alt+ArrowDown`').to.be.true;
             expect(await isOnTopLayer(this.content)).to.be.true;
             const closed = oneEvent(this.el, 'sp-closed');
+
             await sendKeys({
                 press: 'Escape',
             });
@@ -116,6 +122,7 @@ describe('Overlay Trigger - Longpress', () => {
         });
         it('opens/closes for `Alt+ArrowDown` with Button', async function () {
             const button = document.createElement('sp-button');
+
             button.slot = 'trigger';
             this.trigger.replaceWith(button);
             await elementUpdated(button);
@@ -123,6 +130,7 @@ describe('Overlay Trigger - Longpress', () => {
             await elementUpdated(button);
 
             const open = oneEvent(this.el, 'sp-opened');
+
             sendKeys({
                 press: 'Alt+ArrowDown',
             });
@@ -132,6 +140,7 @@ describe('Overlay Trigger - Longpress', () => {
             expect(await isOnTopLayer(this.content)).to.be.true;
             expect(this.content.open, 'opens for `Alt+ArrowDown`').to.be.true;
             const closed = oneEvent(this.el, 'sp-closed');
+
             await sendKeys({
                 press: 'Escape',
             });
@@ -145,6 +154,7 @@ describe('Overlay Trigger - Longpress', () => {
             expect(this.trigger.holdAffordance).to.be.true;
             const open = oneEvent(this.el, 'sp-opened');
             const rect = this.trigger.getBoundingClientRect();
+
             await sendMouse({
                 steps: [
                     {
@@ -182,6 +192,7 @@ describe('Overlay Trigger - Longpress', () => {
             expect(this.content.open, 'stays open for `pointerup`').to.be.true;
             expect(await isOnTopLayer(this.content)).to.be.true;
             const closed = oneEvent(this.trigger, 'sp-closed');
+
             await sendKeys({
                 press: 'Escape',
             });
@@ -210,6 +221,7 @@ describe('Overlay Trigger - Longpress', () => {
         it('opens/closes for `longpress` with Button', async function () {
             await elementUpdated(this.tooltip);
             const button = document.createElement('sp-button');
+
             button.slot = 'trigger';
             button.textContent = 'Longpress button';
             this.trigger.replaceWith(button);
@@ -220,11 +232,13 @@ describe('Overlay Trigger - Longpress', () => {
                 const localName = (
                     this.el as unknown as { targetContent: HTMLElement[] }
                 ).targetContent[0].localName;
+
                 return localName === 'sp-button';
             });
 
             let open = oneEvent(this.el, 'sp-opened');
             const rect = button.getBoundingClientRect();
+
             await sendMouse({
                 steps: [
                     {
@@ -270,6 +284,7 @@ describe('Overlay Trigger - Longpress', () => {
             expect(this.content.open, 'stays open for `pointerup`').to.be.true;
             expect(await isOnTopLayer(this.content)).to.be.true;
             const closed = oneEvent(button, 'sp-closed');
+
             await sendKeys({
                 press: 'Escape',
             });
@@ -296,6 +311,7 @@ describe('Overlay Trigger - Longpress', () => {
                 </overlay-trigger>
             `)()
         );
+
         await elementUpdated(el);
 
         await waitUntil(
@@ -305,38 +321,38 @@ describe('Overlay Trigger - Longpress', () => {
         );
 
         const closed = oneEvent(el, 'sp-closed');
+
         el.removeAttribute('open');
         await closed;
 
         expect(closedSpy.calledOnce, 'longpress content returned').to.be.true;
     });
     it('describes longpress interaction accessibly', async () => {
-        const el = await fixture<OverlayTrigger>(
-            html`
-                <overlay-trigger placement="right-start">
-                    <sp-action-button slot="trigger" hold-affordance>
-                        Trigger with hold affordance
-                    </sp-action-button>
-                    <sp-popover slot="longpress-content" tip>
-                        <sp-action-group
-                            selects="single"
-                            vertical
-                            style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
-                        >
-                            <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                            </sp-action-button>
-                            <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                            </sp-action-button>
-                            <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                            </sp-action-button>
-                        </sp-action-group>
-                    </sp-popover>
-                </overlay-trigger>
-            `
-        );
+        const el = await fixture<OverlayTrigger>(html`
+            <overlay-trigger placement="right-start">
+                <sp-action-button slot="trigger" hold-affordance>
+                    Trigger with hold affordance
+                </sp-action-button>
+                <sp-popover slot="longpress-content" tip>
+                    <sp-action-group
+                        selects="single"
+                        vertical
+                        style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                    >
+                        <sp-action-button>
+                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        </sp-action-button>
+                        <sp-action-button>
+                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        </sp-action-button>
+                        <sp-action-button>
+                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        </sp-action-button>
+                    </sp-action-group>
+                </sp-popover>
+            </overlay-trigger>
+        `);
+
         await nextFrame();
         await nextFrame();
         const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
@@ -348,6 +364,7 @@ describe('Overlay Trigger - Longpress', () => {
         let longpressHelper = el.querySelector(
             '[slot="longpress-describedby-descriptor"]'
         ) as HTMLElement;
+
         expect(longpressHelper).to.not.be.null;
         await findDescribedNode(
             'Trigger with hold affordance',
@@ -355,6 +372,7 @@ describe('Overlay Trigger - Longpress', () => {
         );
 
         const opened = oneEvent(el, 'sp-opened');
+
         trigger.dispatchEvent(
             new Event('longpress', { bubbles: true, composed: true })
         );
@@ -372,6 +390,7 @@ describe('Overlay Trigger - Longpress', () => {
         );
 
         const closed = oneEvent(el, 'sp-closed');
+
         sendKeys({
             press: 'Escape',
         });
@@ -390,36 +409,35 @@ describe('Overlay Trigger - Longpress', () => {
         );
     });
     it('removes longpress `aria-describedby` description element when longpress content is removed', async () => {
-        const el = await fixture<OverlayTrigger>(
-            html`
-                <overlay-trigger placement="right-start">
-                    <sp-action-button slot="trigger" hold-affordance>
-                        Trigger with hold affordance
-                    </sp-action-button>
-                    <sp-popover slot="longpress-content" tip>
-                        <sp-action-group
-                            selects="single"
-                            vertical
-                            style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
-                        >
-                            <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                            </sp-action-button>
-                            <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                            </sp-action-button>
-                            <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                            </sp-action-button>
-                        </sp-action-group>
-                    </sp-popover>
-                </overlay-trigger>
-            `
-        );
+        const el = await fixture<OverlayTrigger>(html`
+            <overlay-trigger placement="right-start">
+                <sp-action-button slot="trigger" hold-affordance>
+                    Trigger with hold affordance
+                </sp-action-button>
+                <sp-popover slot="longpress-content" tip>
+                    <sp-action-group
+                        selects="single"
+                        vertical
+                        style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                    >
+                        <sp-action-button>
+                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        </sp-action-button>
+                        <sp-action-button>
+                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        </sp-action-button>
+                        <sp-action-button>
+                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        </sp-action-button>
+                    </sp-action-group>
+                </sp-popover>
+            </overlay-trigger>
+        `);
         const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
         const content = el.querySelector(
             '[slot="longpress-content"]'
         ) as Popover;
+
         await elementUpdated(el);
 
         expect(
@@ -430,6 +448,7 @@ describe('Overlay Trigger - Longpress', () => {
         const longpressHelper = el.querySelector(
             '[slot="longpress-describedby-descriptor"]'
         ) as HTMLElement;
+
         expect(longpressHelper).to.not.be.null;
 
         el.removeAttribute('hold-affordance');
@@ -460,48 +479,43 @@ describe('Overlay Trigger - Longpress', () => {
         expect(el.childNodes.length, 'always').to.equal(6);
     });
     it('recognises multiple overlay triggers in a11y tree', async () => {
-        const el = await fixture<OverlayTrigger>(
-            html`
-                <div id="container">
-                    <overlay-trigger id="first-trigger" placement="right-start">
-                        <sp-action-button slot="trigger" hold-affordance>
-                            First button
-                        </sp-action-button>
-                        <sp-popover slot="longpress-content" tip>
-                            <sp-action-group
-                                selects="single"
-                                vertical
-                                style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
-                            >
-                                <sp-action-button>
-                                    <sp-icon-magnify
-                                        slot="icon"
-                                    ></sp-icon-magnify>
-                                </sp-action-button>
-                            </sp-action-group>
-                        </sp-popover>
-                    </overlay-trigger>
-                    <overlay-trigger id="second-trigger" placement="left-start">
-                        <sp-action-button slot="trigger" hold-affordance>
-                            Second button
-                        </sp-action-button>
-                        <sp-popover slot="longpress-content" tip>
-                            <sp-action-group
-                                selects="single"
-                                vertical
-                                style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
-                            >
-                                <sp-action-button>
-                                    <sp-icon-magnify
-                                        slot="icon"
-                                    ></sp-icon-magnify>
-                                </sp-action-button>
-                            </sp-action-group>
-                        </sp-popover>
-                    </overlay-trigger>
-                </div>
-            `
-        );
+        const el = await fixture<OverlayTrigger>(html`
+            <div id="container">
+                <overlay-trigger id="first-trigger" placement="right-start">
+                    <sp-action-button slot="trigger" hold-affordance>
+                        First button
+                    </sp-action-button>
+                    <sp-popover slot="longpress-content" tip>
+                        <sp-action-group
+                            selects="single"
+                            vertical
+                            style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                        >
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                        </sp-action-group>
+                    </sp-popover>
+                </overlay-trigger>
+                <overlay-trigger id="second-trigger" placement="left-start">
+                    <sp-action-button slot="trigger" hold-affordance>
+                        Second button
+                    </sp-action-button>
+                    <sp-popover slot="longpress-content" tip>
+                        <sp-action-group
+                            selects="single"
+                            vertical
+                            style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                        >
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                        </sp-action-group>
+                    </sp-popover>
+                </overlay-trigger>
+            </div>
+        `);
+
         await elementUpdated(el);
 
         const div = document.getElementById('container') as HTMLElement;
@@ -518,42 +532,34 @@ describe('Overlay Trigger - Longpress', () => {
         );
     });
     it('describes interactions differently to the user', async () => {
-        const test = await fixture<OverlayTrigger>(
-            html`
-                <div>
-                    <input id="first" />
-                    <overlay-trigger placement="right-start">
-                        <sp-action-button slot="trigger" hold-affordance>
-                            Trigger with hold affordance
-                        </sp-action-button>
-                        <sp-popover slot="longpress-content" tip>
-                            <sp-action-group
-                                selects="single"
-                                vertical
-                                style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
-                            >
-                                <sp-action-button>
-                                    <sp-icon-magnify
-                                        slot="icon"
-                                    ></sp-icon-magnify>
-                                </sp-action-button>
-                                <sp-action-button>
-                                    <sp-icon-magnify
-                                        slot="icon"
-                                    ></sp-icon-magnify>
-                                </sp-action-button>
-                                <sp-action-button>
-                                    <sp-icon-magnify
-                                        slot="icon"
-                                    ></sp-icon-magnify>
-                                </sp-action-button>
-                            </sp-action-group>
-                        </sp-popover>
-                    </overlay-trigger>
-                    <input id="last" />
-                </div>
-            `
-        );
+        const test = await fixture<OverlayTrigger>(html`
+            <div>
+                <input id="first" />
+                <overlay-trigger placement="right-start">
+                    <sp-action-button slot="trigger" hold-affordance>
+                        Trigger with hold affordance
+                    </sp-action-button>
+                    <sp-popover slot="longpress-content" tip>
+                        <sp-action-group
+                            selects="single"
+                            vertical
+                            style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                        >
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                        </sp-action-group>
+                    </sp-popover>
+                </overlay-trigger>
+                <input id="last" />
+            </div>
+        `);
         const el = test.querySelector('overlay-trigger') as OverlayTrigger;
         const first = test.querySelector('#first') as HTMLElement;
         const firstRect = first.getBoundingClientRect();

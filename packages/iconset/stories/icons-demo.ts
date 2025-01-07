@@ -57,7 +57,9 @@ export class DelayedReady extends SpectrumElement {
 
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
+
         await this._delayedReady;
+
         return complete;
     }
 
@@ -118,6 +120,7 @@ export class IconsDemo extends SpectrumElement {
     public override disconnectedCallback(): void {
         window.removeEventListener('sp-iconset-added', this.handleIconSetAdded);
         super.disconnectedCallback();
+
         if (this.unsubscribeSystemContext) {
             this.unsubscribeSystemContext();
             this.unsubscribeSystemContext = null;
@@ -127,21 +130,26 @@ export class IconsDemo extends SpectrumElement {
     private filterIconsBySpectrumVersion(): void {
         const iconVersion = this.spectrumVersion === 2 ? 's2' : 's1';
         let filteredIcons = this.icons;
+
         // Filter out icons that are not in the current version for workflow icons
         if (this.name === 'workflow') {
             filteredIcons = filteredIcons.filter((icon) => {
                 const iconName = icon.name.replace(/\s/g, '').toLowerCase();
+
                 return iconsList[iconVersion].includes(iconName);
             });
         }
 
         // Use a Set to remove duplicates that may get added because of the same icon name in both versions
         const iconSet = new Set();
+
         filteredIcons = filteredIcons.filter((icon) => {
             if (iconSet.has(icon.name)) {
                 return false;
             }
+
             iconSet.add(icon.name);
+
             return true;
         });
 
@@ -166,6 +174,7 @@ export class IconsDemo extends SpectrumElement {
 
     public handleIconSetAdded(event: CustomEvent<IconsetAddedDetail>): void {
         const { iconset } = event.detail;
+
         this.iconset = iconset.getIconList();
         this.requestUpdate();
     }
@@ -217,17 +226,21 @@ export class IconsDemo extends SpectrumElement {
     }
     private handleKeydown(event: KeyboardEvent, tag: string): void {
         const { code } = event;
+
         if (code !== 'Enter' && code !== 'NumpadEnter' && code !== 'Space') {
             return;
         }
+
         event.preventDefault();
         this.shouldCopy(tag);
     }
 
     private shouldCopy(tag: string): void {
         if (!this.package) return;
+
         const conditionedTag = tag.slice(1, tag.length - 1);
         const importURL = `import '@spectrum-web-components/${this.package}/icons/${conditionedTag}.js';`;
+
         this.dispatchEvent(
             new CustomEvent('copy-text', {
                 bubbles: true,

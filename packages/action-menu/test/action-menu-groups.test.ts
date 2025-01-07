@@ -31,6 +31,7 @@ describe('Action Menu - Groups', () => {
         expect(document.activeElement === firstGroup).to.be.false;
 
         const opened = oneEvent(el, 'sp-opened');
+
         el.focus();
         await sendKeys({
             press: 'ArrowDown',
@@ -60,6 +61,7 @@ describe('Action Menu - Groups', () => {
         expect(firstItem.selected).to.be.false;
 
         let opened = oneEvent(el, 'sp-opened');
+
         el.focus();
         await sendKeys({
             press: 'ArrowDown',
@@ -73,6 +75,7 @@ describe('Action Menu - Groups', () => {
         await elementUpdated(el);
 
         let closed = oneEvent(el, 'sp-closed');
+
         await sendKeys({
             press: 'Enter',
         });

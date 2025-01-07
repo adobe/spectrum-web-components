@@ -16,6 +16,7 @@ function createNode(text: string): Element {
     node.style.position = 'fixed';
     node.style.top = '5px';
     node.textContent = text;
+
     return node;
 }
 
@@ -48,6 +49,7 @@ export function copyNode(node: Element): Promise<void> {
 
     document.execCommand('copy');
     selection.removeAllRanges();
+
     return Promise.resolve();
 }
 
@@ -63,6 +65,7 @@ function extractNodeCustomElements(text: string): Set<string> {
     while ((match = regex.exec(text)) !== null) {
         customElements.add(match[0].substring(1)); // Remove the '<' character
     }
+
     return customElements;
 }
 
@@ -81,6 +84,7 @@ function generateImportStatements(elements: Set<string>): string {
             imports += `import '@spectrum-web-components/${elementName}/${element}.js';\n`;
         }
     });
+
     return imports;
 }
 
@@ -98,5 +102,6 @@ export function copyText(text: string): Promise<void> {
     body.appendChild(node);
     copyNode(node);
     body.removeChild(node);
+
     return Promise.resolve();
 }

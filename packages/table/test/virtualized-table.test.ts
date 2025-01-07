@@ -46,6 +46,7 @@ describe('Virtualized Table', () => {
 
     it('loads virtualized table accessibly', async () => {
         const el = await styledFixture<Table>(virtualized());
+
         await nextFrame();
         await nextFrame();
         await nextFrame();
@@ -71,6 +72,7 @@ describe('Virtualized Table', () => {
                 </sp-table-head>
             </sp-table>
         `);
+
         await oneEvent(el, 'rangeChanged');
         await elementUpdated(el);
 
@@ -253,6 +255,7 @@ describe('Virtualized Table', () => {
                 </sp-table-head>
             </sp-table>
         `);
+
         await oneEvent(el, 'rangeChanged');
         await elementUpdated(el);
 
@@ -290,6 +293,7 @@ describe('Virtualized Table', () => {
                 </sp-table-head>
             </sp-table>
         `);
+
         await oneEvent(el, 'rangeChanged');
         await elementUpdated(el);
 
@@ -325,6 +329,7 @@ describe('Virtualized Table', () => {
                 </sp-table-head>
             </sp-table>
         `);
+
         await oneEvent(el, 'rangeChanged');
         await elementUpdated(el);
 

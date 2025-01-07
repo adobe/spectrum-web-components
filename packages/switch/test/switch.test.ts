@@ -17,33 +17,33 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 function inputForSwitch(checkbox: Switch): HTMLInputElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
+
     return checkbox.shadowRoot.querySelector('#input') as HTMLInputElement;
 }
 
 function labelForSwitch(checkbox: Switch): HTMLLabelElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
+
     const labelEl = checkbox.shadowRoot.querySelector('label');
+
     if (!labelEl) {
         throw new Error('Failed to find label in shadowRoot');
     }
+
     return labelEl;
 }
 
 describe('Switch', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Switch>(
-                html`
-                    <sp-switch>Not Checked</sp-switch>
-                `
-            )
+            await fixture<Switch>(html`
+                <sp-switch>Not Checked</sp-switch>
+            `)
     );
     it('loads default switch accessibly', async () => {
-        const el = await fixture<Switch>(
-            html`
-                <sp-switch>Not Checked</sp-switch>
-            `
-        );
+        const el = await fixture<Switch>(html`
+            <sp-switch>Not Checked</sp-switch>
+        `);
 
         await elementUpdated(el);
 
@@ -55,22 +55,18 @@ describe('Switch', () => {
         expect(labelEl.getAttribute('for')).to.equal(inputEl.id);
     });
     it('has name attribute', async () => {
-        const el = await fixture<Switch>(
-            html`
-                <sp-switch>Not Checked</sp-switch>
-            `
-        );
+        const el = await fixture<Switch>(html`
+            <sp-switch>Not Checked</sp-switch>
+        `);
 
         await elementUpdated(el);
 
         await expect(el.hasAttribute('name'));
     });
     it('loads `checked` switch accessibly', async () => {
-        const el = await fixture<Switch>(
-            html`
-                <sp-switch checked>Checked</sp-switch>
-            `
-        );
+        const el = await fixture<Switch>(html`
+            <sp-switch checked>Checked</sp-switch>
+        `);
 
         await elementUpdated(el);
 
@@ -86,6 +82,7 @@ describe('Switch', () => {
         const el = await fixture<Switch>(html`
             <sp-switch checked readonly>Component</sp-switch>
         `);
+
         expect(el.checked).to.be.true;
 
         el.click();

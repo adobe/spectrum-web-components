@@ -59,6 +59,7 @@ function renderGroup(properties: Properties): TemplateResult {
     const icon = html`
         <sp-icon-edit slot="icon"></sp-icon-edit>
     `;
+
     return html`
         <sp-action-group
             ?quiet="${!!properties.quiet}"
@@ -91,6 +92,7 @@ function renderGroup(properties: Properties): TemplateResult {
 export function renderButtons(properties: Properties): TemplateResult {
     const selected = true;
     const disabled = true;
+
     return html`
         <div
             style="display: flex; flex-direction: column; gap: calc(var(--spectrum-spacing-100) * var(--swc-scale-factor));"

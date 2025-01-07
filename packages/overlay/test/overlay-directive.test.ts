@@ -30,6 +30,7 @@ import { fixture } from '../../../test/testing-helpers.js';
 describe('Overlay Directive', () => {
     it('opens declaratively', async function () {
         const test = await fixture<Button>(Default({ open: true }));
+
         await oneEvent(test, 'sp-opened');
 
         const el = test.nextElementSibling as Overlay;
@@ -39,6 +40,7 @@ describe('Overlay Directive', () => {
     it('opens without options', async function () {
         const test = await fixture<Button>(Default());
         const opened = oneEvent(test, 'sp-opened');
+
         test.click();
         await opened;
 
@@ -59,10 +61,12 @@ describe('Overlay Directive', () => {
 
         await elementUpdated(el);
         let overlays = document.querySelectorAll('sp-overlay');
+
         expect(overlays.length).to.equal(0);
 
         const rect = el.getBoundingClientRect();
         let opened = oneEvent(el, 'sp-opened');
+
         // Open the Tooltip via "hover"
         await sendMouse({
             steps: [
@@ -105,6 +109,7 @@ describe('Overlay Directive', () => {
 
         // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup
         const closed = oneEvent(overlays[0], 'slottable-request');
+
         await sendMouse({
             steps: [
                 {
@@ -120,6 +125,7 @@ describe('Overlay Directive', () => {
 
         await waitUntil(() => {
             overlays = document.querySelectorAll('sp-overlay');
+
             return overlays.length === 0;
         }, 'not all overlays were cleaned up');
 
@@ -143,10 +149,12 @@ describe('Overlay Directive', () => {
             '#other-element'
         ) as HTMLElement;
         let overlays = otherElement.querySelectorAll('sp-overlay');
+
         expect(overlays.length).to.equal(0);
 
         const rect = el.getBoundingClientRect();
         let opened = oneEvent(el, 'sp-opened');
+
         // Open the Tooltip via "hover"
         await sendMouse({
             steps: [
@@ -181,6 +189,7 @@ describe('Overlay Directive', () => {
 
         // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup
         const closed = oneEvent(overlays[0], 'slottable-request');
+
         await sendMouse({
             steps: [
                 {

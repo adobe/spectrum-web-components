@@ -24,6 +24,7 @@ const renderPopover = (): TemplateResult => {
     import('@spectrum-web-components/dialog/sp-dialog.js');
     import('@spectrum-web-components/slider/sp-slider.js');
     import('@spectrum-web-components/tooltip/sp-tooltip.js');
+
     return html`
         <sp-popover>
             <sp-dialog no-divider>
@@ -48,8 +49,6 @@ const renderPopover = (): TemplateResult => {
     `;
 };
 
-measureFixtureCreation(
-    html`
-        <sp-button ${trigger(renderPopover)}>Trigger</sp-button>
-    `
-);
+measureFixtureCreation(html`
+    <sp-button ${trigger(renderPopover)}>Trigger</sp-button>
+`);

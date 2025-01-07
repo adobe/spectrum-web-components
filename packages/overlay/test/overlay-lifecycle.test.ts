@@ -54,6 +54,7 @@ describe('Overlay Trigger - accessible hover content management', () => {
         )) as unknown as DescribedNode & {
             children: DescribedNode[];
         };
+
         expect(
             findAccessibilityNode<DescribedNode>(
                 snapshot,
@@ -164,10 +165,12 @@ describe('Overlay Trigger - accessible hover content management', () => {
 
         // For `:focus-visible` heuristic.
         const input = document.createElement('input');
+
         el.insertAdjacentElement('afterbegin', input);
         input.focus();
 
         const opened = oneEvent(el, 'sp-opened');
+
         await sendKeys({
             press: 'Tab',
         });
@@ -176,6 +179,7 @@ describe('Overlay Trigger - accessible hover content management', () => {
         expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
 
         const closed = oneEvent(el, 'sp-closed');
+
         trigger.dispatchEvent(
             new FocusEvent('focusout', { bubbles: true, composed: true })
         );

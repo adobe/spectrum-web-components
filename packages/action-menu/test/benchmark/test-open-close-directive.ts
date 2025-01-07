@@ -20,6 +20,7 @@ import { SpectrumElement } from '@spectrum-web-components/base';
 const renderOptions = (): TemplateResult => {
     import('@spectrum-web-components/menu/sp-menu-item.js');
     import('@spectrum-web-components/menu/sp-menu-divider.js');
+
     return html`
         <sp-menu-item>Deselect</sp-menu-item>
         <sp-menu-item>Select Inverse</sp-menu-item>
@@ -47,6 +48,7 @@ class ActionMenuWorkflow extends HTMLElement {
     async setup(): Promise<void> {
         this.target = this.nextElementSibling as ActionMenu;
         const childPromises = [] as Promise<boolean>[];
+
         [...this.target.children].forEach((child) => {
             if ('updateComplete' in child) {
                 childPromises.push((child as SpectrumElement).updateComplete);
@@ -58,10 +60,13 @@ class ActionMenuWorkflow extends HTMLElement {
         });
         this.target.addEventListener('sp-closed', () => {
             this.count += 1;
+
             if (this.count >= 5) {
                 this.ready(true);
+
                 return;
             }
+
             requestAnimationFrame(() => (this.target.open = true));
         });
         requestAnimationFrame(() => (this.target.open = true));

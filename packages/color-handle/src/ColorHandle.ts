@@ -47,6 +47,7 @@ export class ColorHandle extends SpectrumElement {
         if (event.pointerType === 'touch') {
             this.open = true;
         }
+
         this.setPointerCapture(event.pointerId);
     }
 

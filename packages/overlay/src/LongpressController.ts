@@ -24,6 +24,7 @@ import {
 } from './InteractionController.js';
 
 const LONGPRESS_DURATION = 300;
+
 export const LONGPRESS_INSTRUCTIONS = {
     touch: 'Double tap and long press for additional options',
     keyboard: 'Press Space or Alt+Down Arrow for additional options',
@@ -58,15 +59,20 @@ export class LongpressController extends InteractionController {
 
     handlePointerdown(event: PointerEvent): void {
         if (!this.target) return;
+
         if (event.button !== 0) return;
+
         this.longpressState = 'potential';
         document.addEventListener('pointerup', this.handlePointerup);
         document.addEventListener('pointercancel', this.handlePointerup);
         // Only dispatch longpress event if the trigger element isn't doing it for us.
         const triggerHandlesLongpress = 'holdAffordance' in this.target;
+
         if (triggerHandlesLongpress) return;
+
         this.timeout = setTimeout(() => {
             if (!this.target) return;
+
             this.target.dispatchEvent(
                 new CustomEvent<LongpressEvent>('longpress', {
                     bubbles: true,
@@ -81,7 +87,9 @@ export class LongpressController extends InteractionController {
 
     private handlePointerup = (): void => {
         clearTimeout(this.timeout);
+
         if (!this.target) return;
+
         // When triggered by the pointer, the last of `opened`
         // or `pointerup` should move the `longpressState` to
         // `null` so that the earlier event can void the "light
@@ -94,6 +102,7 @@ export class LongpressController extends InteractionController {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { code, altKey } = event;
+
         if (altKey && code === 'ArrowDown') {
             event.stopPropagation();
             event.stopImmediatePropagation();
@@ -102,10 +111,12 @@ export class LongpressController extends InteractionController {
 
     private handleKeyup(event: KeyboardEvent): void {
         const { code, altKey } = event;
+
         if (code === 'Space' || (altKey && code === 'ArrowDown')) {
             if (!this.target) {
                 return;
             }
+
             event.stopPropagation();
             this.target.dispatchEvent(
                 new CustomEvent<LongpressEvent>('longpress', {
@@ -133,12 +144,15 @@ export class LongpressController extends InteractionController {
         }
 
         const longpressDescription = document.createElement('div');
+
         longpressDescription.id = `longpress-describedby-descriptor-${randomID()}`;
         const messageType = isIOS() || isAndroid() ? 'touch' : 'keyboard';
+
         longpressDescription.textContent = LONGPRESS_INSTRUCTIONS[messageType];
         longpressDescription.slot = 'longpress-describedby-descriptor';
         const triggerParent = trigger.getRootNode() as HTMLElement;
         const overlayParent = this.overlay.getRootNode() as HTMLElement;
+
         // Manage the placement of the helper element in an accessible place with
         // the lowest chance of negatively affecting the layout of the page.
         if (triggerParent === overlayParent) {
@@ -158,6 +172,7 @@ export class LongpressController extends InteractionController {
             'aria-describedby',
             [longpressDescription.id]
         );
+
         this.releaseDescription = () => {
             releaseDescription();
             longpressDescription.remove();
@@ -179,6 +194,7 @@ export class LongpressController extends InteractionController {
         this.abortController?.abort();
         this.abortController = new AbortController();
         const { signal } = this.abortController;
+
         this.target.addEventListener(
             'longpress',
             () => this.handleLongpress(),
@@ -191,6 +207,7 @@ export class LongpressController extends InteractionController {
         );
 
         this.prepareDescription(this.target);
+
         if (
             (this.target as HTMLElement & { holdAffordance: boolean })
                 .holdAffordance
@@ -198,6 +215,7 @@ export class LongpressController extends InteractionController {
             // Only bind keyboard events when the trigger element isn't doing it for us.
             return;
         }
+
         this.target.addEventListener(
             'keydown',
             (event: KeyboardEvent) => this.handleKeydown(event),

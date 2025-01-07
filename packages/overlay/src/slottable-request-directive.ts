@@ -44,10 +44,12 @@ export class SlottableRequestDirective extends AsyncDirective {
         [template]: Parameters<this['render']>
     ): void {
         this.template = template;
+
         if (this.target !== part.element) {
             this.target = part.element as HTMLElement;
             this.renderBefore = this.target.children[0] as HTMLElement;
         }
+
         this.listenerHost = this.target;
         this.init();
     }
@@ -67,6 +69,7 @@ export class SlottableRequestDirective extends AsyncDirective {
         this.listeners?.abort();
         this.listeners = new AbortController();
         const { signal } = this.listeners;
+
         this.listenerHost.addEventListener(
             'slottable-request',
             (event: Event) =>

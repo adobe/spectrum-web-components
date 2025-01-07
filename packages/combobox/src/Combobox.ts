@@ -50,6 +50,7 @@ export type ComboboxOption = {
 
 /**
  * @element sp-combobox
+ *
  * @slot - Supply Menu Item elements to the default slot in order to populate the available options
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  */
@@ -72,7 +73,7 @@ export class Combobox extends Textfield {
 
     /**
      * Whether the listbox is visible.
-     **/
+     */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
@@ -114,7 +115,7 @@ export class Combobox extends Textfield {
 
     /**
      * The array of the children of the combobox, ie ComboboxItems.
-     **/
+     */
     @state()
     protected optionEls: MenuItem[] = [];
 
@@ -133,9 +134,11 @@ export class Combobox extends Textfield {
         if (!this.activeDescendant) {
             return;
         }
+
         const activeEl = this.shadowRoot.getElementById(
             this.activeDescendant.value
         );
+
         if (activeEl) {
             activeEl.scrollIntoView({ block: 'nearest' });
         }
@@ -145,6 +148,7 @@ export class Combobox extends Textfield {
         if (this.readonly || this.pending) {
             return;
         }
+
         if (event.altKey && event.code === 'ArrowDown') {
             this.open = true;
         } else if (event.code === 'ArrowDown') {
@@ -161,6 +165,7 @@ export class Combobox extends Textfield {
             if (!this.open) {
                 this.value = '';
             }
+
             this.open = false;
         } else if (event.code === 'Enter') {
             this.selectDescendant();
@@ -170,6 +175,7 @@ export class Combobox extends Textfield {
             this.activeDescendant = undefined;
         } else if (event.code === 'End') {
             const { length } = this.value;
+
             this.focusElement.setSelectionRange(length, length);
             this.activeDescendant = undefined;
         } else if (event.code === 'ArrowLeft') {
@@ -182,7 +188,7 @@ export class Combobox extends Textfield {
     /**
      * Convert the flattened array of assigned elements of `slot[name='option']` to
      * an array of `ComboboxOptions` for use in rendering options in the shadow DOM.s
-     **/
+     */
     public handleSlotchange(): void {
         this.setOptionsFromSlottedItems();
         this.itemObserver.disconnect();
@@ -207,6 +213,7 @@ export class Combobox extends Textfield {
         const elements = this.optionSlot.assignedElements({
             flatten: true,
         }) as MenuItem[];
+
         // Element data
         this.optionEls = elements;
     }
@@ -218,6 +225,7 @@ export class Combobox extends Textfield {
         const nextActiveIndex =
             (this.availableOptions.length + activeIndex + 1) %
             this.availableOptions.length;
+
         this.activeDescendant = this.availableOptions[nextActiveIndex];
     }
 
@@ -228,6 +236,7 @@ export class Combobox extends Textfield {
         const previousActiveIndex =
             (this.availableOptions.length + activeIndex - 1) %
             this.availableOptions.length;
+
         this.activeDescendant = this.availableOptions[previousActiveIndex];
     }
 
@@ -239,6 +248,7 @@ export class Combobox extends Textfield {
         const activeEl = this.shadowRoot.getElementById(
             this.activeDescendant.value
         );
+
         if (activeEl) {
             activeEl.click();
         }
@@ -248,10 +258,13 @@ export class Combobox extends Textfield {
         if (this.autocomplete === 'none' || this.pending) {
             return;
         }
+
         const valueLowerCase = this.value.toLowerCase();
+
         this.availableOptions = (this.options || this.optionEls).filter(
             (descendant) => {
                 const itemTextLowerCase = descendant.itemText.toLowerCase();
+
                 return itemTextLowerCase.startsWith(valueLowerCase);
             }
         );
@@ -259,6 +272,7 @@ export class Combobox extends Textfield {
 
     public override handleInput(event: Event): void {
         super.handleInput(event);
+
         if (!this.pending) {
             this.activeDescendant = undefined;
             this.open = true;
@@ -271,6 +285,7 @@ export class Combobox extends Textfield {
         const selected = (this.options || this.optionEls).find(
             (item) => item.value === value
         );
+
         this.value = selected?.itemText || '';
         event.preventDefault();
         this.open = false;
@@ -290,8 +305,10 @@ export class Combobox extends Textfield {
     public toggleOpen(): void {
         if (this.readonly || this.pending) {
             this.open = false;
+
             return;
         }
+
         this.open = !this.open;
         this.inputElement.focus();
     }
@@ -306,6 +323,7 @@ export class Combobox extends Textfield {
                 this.overlayOpen = true;
             }
         }
+
         if (changed.has('value')) {
             this.filterAvailableOptions();
             this.itemValue =
@@ -313,6 +331,7 @@ export class Combobox extends Textfield {
                     (option) => option.itemText === this.value
                 )?.value ?? '';
         }
+
         return super.shouldUpdate(changed);
     }
 
@@ -324,6 +343,7 @@ export class Combobox extends Textfield {
         ) {
             return;
         }
+
         super.onBlur(event);
     }
 
@@ -331,7 +351,7 @@ export class Combobox extends Textfield {
         /**
          * appliedLabel corresponds to `<label for="...">`, which is overriden
          * if user adds the `label` attribute manually to `<sp-combobox>`.
-         **/
+         */
         const appliedLabel = this.label || this.appliedLabel;
 
         return html`
@@ -371,6 +391,7 @@ export class Combobox extends Textfield {
         import(
             '@spectrum-web-components/progress-circle/sp-progress-circle.js'
         );
+
         return html`
             <sp-progress-circle
                 size="s"
@@ -433,6 +454,7 @@ export class Combobox extends Textfield {
 
     protected override render(): TemplateResult {
         const width = (this.input || this).offsetWidth;
+
         if (this.tooltipEl) {
             this.tooltipEl.disabled = this.open;
         }
@@ -540,6 +562,7 @@ export class Combobox extends Textfield {
             const isMenuItem =
                 event.relatedTarget &&
                 this.contains(event.relatedTarget as Node);
+
             if (event.target === this && !isMenuItem) {
                 this.focused = false;
             }
@@ -565,19 +588,24 @@ export class Combobox extends Textfield {
         if (changed.has('open') && !this.pending) {
             this.manageListOverlay();
         }
+
         if (!this.focused && this.open) {
             this.open = false;
         }
+
         if (changed.has('pending') && this.pending) {
             this.open = false;
         }
+
         if (changed.has('activeDescendant')) {
             const previouslyActiveDescendant = changed.get(
                 'activeDescendant'
             ) as unknown as MenuItem;
+
             if (previouslyActiveDescendant) {
                 previouslyActiveDescendant.focused = false;
             }
+
             if (
                 this.activeDescendant &&
                 typeof (this.activeDescendant as MenuItem).focused !==
@@ -586,6 +614,7 @@ export class Combobox extends Textfield {
                 (this.activeDescendant as MenuItem).focused = true;
             }
         }
+
         if (changed.has('options') || changed.has('optionEls')) {
             this.availableOptions = this.options || this.optionEls;
         }
@@ -596,17 +625,21 @@ export class Combobox extends Textfield {
         const list = this.shadowRoot.querySelector(
             '#listbox'
         ) as HTMLUListElement;
+
         if (list) {
             const descendants = [...list.children] as SpectrumElement[];
+
             await Promise.all(
                 descendants.map((descendant) => descendant.updateComplete)
             );
         }
+
         return complete;
     }
 
     public override connectedCallback(): void {
         super.connectedCallback();
+
         if (!this.itemObserver) {
             this.itemObserver = new MutationObserver(
                 this.setOptionsFromSlottedItems.bind(this)

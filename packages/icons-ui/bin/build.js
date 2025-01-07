@@ -25,7 +25,7 @@ const rootDir = path.join(__dirname, '../../../');
 
 const disclaimer = `
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -43,18 +43,23 @@ const keepColors = '';
 if (!fs.existsSync(`${rootDir}packages/icons-ui/src`)) {
     fs.mkdirSync(`${rootDir}packages/icons-ui/src`);
 }
+
 if (!fs.existsSync(`${rootDir}packages/icons-ui/src/icons`)) {
     fs.mkdirSync(`${rootDir}packages/icons-ui/src/icons`);
 }
+
 if (!fs.existsSync(`${rootDir}packages/icons-ui/src/icons-s2`)) {
     fs.mkdirSync(`${rootDir}packages/icons-ui/src/icons-s2`);
 }
+
 if (!fs.existsSync(`${rootDir}packages/icons-ui/src/elements`)) {
     fs.mkdirSync(`${rootDir}packages/icons-ui/src/elements`);
 }
+
 if (!fs.existsSync(`${rootDir}packages/icons-ui/icons`)) {
     fs.mkdirSync(`${rootDir}packages/icons-ui/icons`);
 }
+
 fs.writeFileSync(
     path.join(rootDir, 'packages', 'icons-ui', 'src', 'icons.ts'),
     disclaimer,
@@ -72,6 +77,7 @@ const manifestPath = path.join(
     'stories',
     'icon-manifest.ts'
 );
+
 fs.writeFileSync(manifestPath, disclaimer, 'utf-8');
 let manifestImports = `import {
     html,
@@ -81,6 +87,9 @@ let manifestListings = `\r\nexport const iconManifest = [\r\n`;
 
 const defaultIconImport = `import { DefaultIcon as AlternateIcon } from '../DefaultIcon.js';\r\n`;
 
+/**
+ *
+ */
 async function buildIcons(icons, tag, iconsNameList) {
     icons.forEach((i) => {
         const svg = fs.readFileSync(i, 'utf-8');
@@ -89,6 +98,7 @@ async function buildIcons(icons, tag, iconsNameList) {
             .replace('S2_Icon_', '')
             .replace('_20_N', '')
             .replace('_22x20_N', '');
+
         if (id.search(/^Ad[A-Z]/) !== -1) {
             id = id.replace(/^Ad/, '');
             id += 'Advert';
@@ -97,6 +107,7 @@ async function buildIcons(icons, tag, iconsNameList) {
         if (id === 'UnLink') {
             id = 'Unlink';
         }
+
         if (id === 'TextStrikeThrough') {
             id = 'TextStrikethrough';
         }
@@ -106,6 +117,7 @@ async function buildIcons(icons, tag, iconsNameList) {
         if (ComponentName === 'TextStrikeThrough') {
             ComponentName = 'TextStrikethrough';
         }
+
         if (ComponentName === 'UnLink') {
             ComponentName = 'Unlink';
         }
@@ -130,24 +142,30 @@ async function buildIcons(icons, tag, iconsNameList) {
             if (el.name === 'svg') {
                 $(el).attr('aria-hidden', '...');
                 $(el).attr('role', 'img');
+
                 if (keepColors !== 'keep') {
                     $(el).attr('fill', 'currentColor');
                 }
+
                 $(el).attr('aria-label', '...');
                 $(el).removeAttr('id');
                 $(el).attr('width', '...');
                 $(el).attr('height', '...');
             }
+
             if (el.name === 'defs') {
                 $(el).remove();
             }
+
             Object.keys(el.attribs).forEach((x) => {
                 if (x === 'class') {
                     $(el).removeAttr(x);
                 }
+
                 if (keepColors !== 'keep' && x === 'stroke') {
                     $(el).attr(x, 'currentColor');
                 }
+
                 if (keepColors !== 'keep' && x === 'fill') {
                     $(el).attr(x, 'currentColor');
                 }
@@ -196,6 +214,7 @@ async function buildIcons(icons, tag, iconsNameList) {
             });
 
         const exportString = `export {${ComponentName}Icon} from './${tag}/${id}.js';\r\n`;
+
         fs.appendFileSync(
             path.join(rootDir, 'packages', 'icons-ui', 'src', tag + '.ts'),
             exportString,
@@ -211,6 +230,7 @@ async function buildIcons(icons, tag, iconsNameList) {
 
         if (iconsNameList.includes(ComponentName)) {
             const alternateTag = tag === 'icons' ? 'icons-s2' : 'icons';
+
             otherVersionIconImport = `import { ${ComponentName}Icon as AlternateIcon } from '../${alternateTag}/${id}.js';\r\n`;
         }
 
@@ -243,6 +263,7 @@ async function buildIcons(icons, tag, iconsNameList) {
                 if(this.spectrumVersion === ${spectrumVersion}){
                     return CurrentIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
                 }
+
                 return AlternateIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
     
             }
@@ -323,6 +344,7 @@ async function buildIcons(icons, tag, iconsNameList) {
         const metadata = `{name: '${Case.sentence(
             ComponentName
         )}', tag: '<${iconElementName}>', story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`},\r\n`;
+
         manifestImports += importStatement;
         manifestListings += metadata;
     });
@@ -351,6 +373,7 @@ const iconsV1NameList = iconsV1.map((i) => {
     if (id === 'UnLink') {
         id = 'Unlink';
     }
+
     if (id === 'TextStrikeThrough') {
         id = 'TextStrikethrough';
     }
@@ -360,6 +383,7 @@ const iconsV1NameList = iconsV1.map((i) => {
     if (ComponentName === 'TextStrikeThrough') {
         ComponentName = 'TextStrikethrough';
     }
+
     if (ComponentName === 'UnLink') {
         ComponentName = 'Unlink';
     }
@@ -381,6 +405,7 @@ const iconsV2NameList = iconsV2.map((i) => {
     if (id === 'UnLink') {
         id = 'Unlink';
     }
+
     if (id === 'TextStrikeThrough') {
         id = 'TextStrikethrough';
     }
@@ -390,6 +415,7 @@ const iconsV2NameList = iconsV2.map((i) => {
     if (ComponentName === 'TextStrikeThrough') {
         ComponentName = 'TextStrikethrough';
     }
+
     if (ComponentName === 'UnLink') {
         ComponentName = 'Unlink';
     }
@@ -401,6 +427,7 @@ await buildIcons(iconsV1, 'icons', iconsV2NameList);
 await buildIcons(iconsV2, 'icons-s2', iconsV1NameList);
 
 const exportString = `\r\nexport { setCustomTemplateLiteralTag } from './custom-tag.js';\r\n`;
+
 fs.appendFileSync(
     path.join(rootDir, 'packages', 'icons-ui', 'src', 'icons.ts'),
     exportString,

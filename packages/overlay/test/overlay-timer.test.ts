@@ -32,9 +32,11 @@ describe('Overlays timer', () => {
         });
         const element = document.createElement('div');
         const promise = timer.openTimer(element);
+
         clock.next();
         expect(clock.now).to.equal(500);
         const cancelled = await promise;
+
         expect(cancelled).to.be.false;
     });
 
@@ -45,10 +47,12 @@ describe('Overlays timer', () => {
         });
         const element = document.createElement('div');
         const promise = timer.openTimer(element);
+
         clock.tick(10);
         timer.close(element);
         clock.next();
         const cancelled = await promise;
+
         expect(cancelled).to.be.true;
     });
 
@@ -60,10 +64,13 @@ describe('Overlays timer', () => {
         const element1 = document.createElement('div');
         const element2 = document.createElement('div');
         const promise1 = timer.openTimer(element1);
+
         clock.tick(10);
         const promise2 = timer.openTimer(element2);
+
         clock.tick(10);
         let cancelled = await promise1;
+
         expect(cancelled).to.be.true;
         clock.next();
         cancelled = await promise2;
@@ -78,6 +85,7 @@ describe('Overlays timer', () => {
         });
         const element = document.createElement('div');
         let promise = timer.openTimer(element);
+
         clock.next();
         timer.close(element);
         clock.next();
@@ -85,6 +93,7 @@ describe('Overlays timer', () => {
         promise = timer.openTimer(element);
         clock.next();
         const cancelled = await promise;
+
         expect(cancelled).to.be.false;
         expect(clock.now).to.equal(1500);
     });
@@ -96,12 +105,14 @@ describe('Overlays timer', () => {
         });
         const element = document.createElement('div');
         let promise = timer.openTimer(element);
+
         clock.next();
         timer.close(element);
         clock.tick(1);
         promise = timer.openTimer(element);
         clock.next();
         const cancelled = await promise;
+
         expect(cancelled).to.be.false;
         expect(clock.now).to.equal(501);
     });
@@ -113,6 +124,7 @@ describe('Overlays timer', () => {
         });
         const element = document.createElement('div');
         let promise = timer.openTimer(element);
+
         clock.next();
         expect(clock.now).to.equal(500);
         timer.close(element);
@@ -120,9 +132,11 @@ describe('Overlays timer', () => {
 
         for (let i = 0; i < 10; i++) {
             const element = document.createElement('div');
+
             promise = timer.openTimer(element);
             clock.next();
             const cancelled = await promise;
+
             expect(cancelled).to.be.false;
             timer.close(element);
             clock.tick(1);
@@ -134,6 +148,7 @@ describe('Overlays timer', () => {
         promise = timer.openTimer(element);
         clock.next();
         const cancelled = await promise;
+
         expect(cancelled).to.be.false;
         expect(clock.now).to.equal(1510);
     });

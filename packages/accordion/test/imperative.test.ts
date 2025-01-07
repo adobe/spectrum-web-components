@@ -24,6 +24,7 @@ describe('Accordion - imperative interactions', () => {
             })
         );
         const item = el.querySelector('sp-accordion-item') as AccordionItem;
+
         expect(el.size).to.equal('l');
         expect(item.size).to.equal('l');
 
@@ -35,6 +36,7 @@ describe('Accordion - imperative interactions', () => {
     });
     it('only allows one open item by default', async () => {
         const el = await fixture<Accordion>(Default());
+
         await elementUpdated(el);
         const firstItem = el.querySelector(
             'sp-accordion-item:nth-of-type(1)'
@@ -49,6 +51,7 @@ describe('Accordion - imperative interactions', () => {
         firstButton.click();
         await elementUpdated(el);
         let openItems = el.querySelectorAll('sp-accordion-item[open]');
+
         expect(openItems.length).to.equal(1);
 
         secondButton.click();
@@ -58,6 +61,7 @@ describe('Accordion - imperative interactions', () => {
     });
     it('allows more than one open item when `[allow-multiple]`', async () => {
         const el = await fixture<Accordion>(Default());
+
         el.allowMultiple = true;
         await elementUpdated(el);
 
@@ -114,6 +118,7 @@ describe('Accordion - imperative interactions', () => {
     });
     it('ensures that the correct item is open and that items can be closed when [allow-multiple]', async () => {
         const el = await fixture<Accordion>(Default());
+
         el.allowMultiple = true;
         await elementUpdated(el);
 

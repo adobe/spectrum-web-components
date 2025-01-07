@@ -36,18 +36,14 @@ ignoreResizeObserverLoopError(before, after);
 describe('ColorWheel', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<ColorWheel>(
-                html`
-                    <sp-color-wheel></sp-color-wheel>
-                `
-            )
+            await fixture<ColorWheel>(html`
+                <sp-color-wheel></sp-color-wheel>
+            `)
     );
     it('loads default color-wheel accessibly', async () => {
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
 
@@ -55,15 +51,13 @@ describe('ColorWheel', () => {
     });
 
     it('manages a single tab stop', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <input type="text" id="test-input-1" />
-                    <sp-color-wheel></sp-color-wheel>
-                    <input type="text" id="test-input-2" />
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <input type="text" id="test-input-1" />
+                <sp-color-wheel></sp-color-wheel>
+                <input type="text" id="test-input-2" />
+            </div>
+        `);
         const el = test.querySelector('sp-color-wheel') as ColorWheel;
         const input1 = test.querySelector(
             'input:nth-of-type(1)'
@@ -85,6 +79,7 @@ describe('ColorWheel', () => {
         expect(document.activeElement).to.equal(el);
 
         let value = el.value;
+
         await sendKeys({
             press: 'ArrowRight',
         });
@@ -113,11 +108,9 @@ describe('ColorWheel', () => {
         expect(document.activeElement).to.equal(input1);
     });
     it('manages [focused]', async () => {
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
 
@@ -146,14 +139,12 @@ describe('ColorWheel', () => {
     it('dispatches input and change events in response to "Arrow*" keypresses', async () => {
         const inputSpy = spy();
         const changeSpy = spy();
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel
-                    @change=${() => changeSpy()}
-                    @input=${() => inputSpy()}
-                ></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel
+                @change=${() => changeSpy()}
+                @input=${() => inputSpy()}
+            ></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
         el.focus();
@@ -178,14 +169,12 @@ describe('ColorWheel', () => {
         // screen reader interactions dispatch events as found in the following test
         const inputSpy = spy();
         const changeSpy = spy();
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel
-                    @change=${() => changeSpy()}
-                    @input=${() => inputSpy()}
-                ></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel
+                @change=${() => changeSpy()}
+                @input=${() => inputSpy()}
+            ></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
 
@@ -210,11 +199,9 @@ describe('ColorWheel', () => {
         expect(changeSpy.callCount).to.equal(1);
     });
     it('accepts "Arrow*" keypresses', async () => {
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
 
@@ -259,11 +246,9 @@ describe('ColorWheel', () => {
         expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses in dir="rtl"', async () => {
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel dir="rtl"></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel dir="rtl"></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
 
@@ -308,11 +293,9 @@ describe('ColorWheel', () => {
         expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses with alteration', async () => {
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
         el.focus();
@@ -370,14 +353,12 @@ describe('ColorWheel', () => {
     });
     it('accepts pointer events', async () => {
         const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel
-                    .color=${color}
-                    style="--mod-colorwheel-width: 160px; --mod-colorwheel-height: 160px;"
-                ></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel
+                .color=${color}
+                style="--mod-colorwheel-width: 160px; --mod-colorwheel-height: 160px;"
+            ></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
 
@@ -414,6 +395,7 @@ describe('ColorWheel', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const gradient = root.querySelector('[name="gradient"]') as HTMLElement;
+
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
                 button: 1,
@@ -478,17 +460,15 @@ describe('ColorWheel', () => {
     });
     it('can have `change` events prevented', async () => {
         const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel
-                    .color=${color}
-                    @change=${(event: Event) => {
-                        event?.preventDefault();
-                    }}
-                    style="--spectrum-global-dimension-size-125: 10px;"
-                ></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel
+                .color=${color}
+                @change=${(event: Event) => {
+                    event?.preventDefault();
+                }}
+                style="--spectrum-global-dimension-size-125: 10px;"
+            ></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
 
@@ -557,87 +537,91 @@ describe('ColorWheel', () => {
         { name: 'HSV String', color: 'hsv(300, 75%, 100%)' },
         { name: 'HSV', color: { h: 300, s: 0.75, v: 1, a: 1 } },
     ];
+
     colorFormats.map((format) => {
         it(`maintains \`color\` format as ${format.name}`, async () => {
-            const el = await fixture<ColorWheel>(
-                html`
-                    <sp-color-wheel></sp-color-wheel>
-                `
-            );
+            const el = await fixture<ColorWheel>(html`
+                <sp-color-wheel></sp-color-wheel>
+            `);
 
             el.color = format.color;
+
             if (format.name.startsWith('Hex')) {
                 expect(el.color).to.equal(format.color);
             } else expect(el.color).to.deep.equal(format.color);
         });
     });
     it(`maintains \`color\` format as TinyColor`, async () => {
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
         const color = new TinyColor('rgb(204, 51, 204)');
+
         el.color = color;
         expect(color.equals(el.color));
     });
     it(`maintains hue value`, async () => {
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
         const hue = 300;
         const hsl = `hsl(${hue}, 60%, 100%)`;
+
         el.color = hsl;
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsl);
 
         const hsla = `hsla(${hue}, 60%, 100%, 0.9)`;
+
         el.color = hsla;
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsla);
 
         const hsv = `hsv(${hue}, 60%, 100%)`;
+
         el.color = hsv;
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsv);
 
         const hsva = `hsva(${hue}, 60%, 100%, 0.9)`;
+
         el.color = hsva;
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsva);
 
         const tinyHSV = new TinyColor({ h: hue, s: 60, v: 100 });
+
         el.color = tinyHSV;
         expect(el.value).to.equal(hue);
         expect(tinyHSV.equals(el.color)).to.be.true;
 
         const tinyHSVA = new TinyColor({ h: hue, s: 60, v: 100, a: 1 });
+
         el.color = tinyHSVA;
         expect(el.value).to.equal(hue);
         expect(tinyHSVA.equals(el.color)).to.be.true;
 
         const tinyHSL = new TinyColor({ h: hue, s: 60, l: 100 });
+
         el.color = tinyHSL;
         expect(el.value).to.equal(hue);
         expect(tinyHSL.equals(el.color)).to.be.true;
 
         const tinyHSLA = new TinyColor({ h: hue, s: 60, l: 100, a: 1 });
+
         el.color = tinyHSLA;
         expect(el.value).to.equal(hue);
         expect(tinyHSLA.equals(el.color)).to.be.true;
     });
     it('should flip orientation with dir="rtl"', async () => {
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
 
         const root = el.shadowRoot ? el.shadowRoot : el;
+
         expect(
             getComputedStyle(root.querySelector('.wheel') as HTMLElement)
                 .transform

@@ -64,12 +64,20 @@ const dashIcon: Record<string, () => TemplateResult> = {
 };
 
 /**
+ * This component represents a color swatch.
+ *
  * @element sp-swatch
+ *
+ * @fires change - Dispatched when the swatch is clicked.
+ *
  */
 export class Swatch extends SizedMixin(Focusable, {
     validSizes: ['xs', 's', 'm', 'l'],
     noDefaultSize: true,
 }) {
+    /**
+     * Returns the styles to be applied to the component.
+     */
     public static override get styles(): CSSResultArray {
         return [
             opacityCheckerboardStyles,
@@ -79,33 +87,103 @@ export class Swatch extends SizedMixin(Focusable, {
         ];
     }
 
+    /**
+     * The border style of the swatch.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     *
+     * The border style can be set to `light` or `none`.
+     */
     @property({ reflect: true })
     public border: SwatchBorder;
 
+    /**
+     * The color value of the swatch.
+     *
+     * Is used as the `aria-label` if no `label` is provided.
+     */
     @property()
     public color = '';
 
+    /**
+     * The label associated with the swatch.
+     *
+     * Is used as the `aria-label` if no `color` is provided.
+     */
     @property()
     public label = '';
 
+    /**
+     * Indicates if the swatch has a mixed value.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     *
+     * If the swatch has a `mixedValue`, the swatch will display a dash icon
+     * and the `aria-label` will be set to "Mixed".
+     *
+     * Swatch can only leverage the `mixedValue` attribute when their
+     * `<sp-swatch-group>` parent element is also leveraging
+     * `selects="multiple"`
+     */
     @property({ type: Boolean, reflect: true, attribute: 'mixed-value' })
     public mixedValue = false;
 
+    /**
+     * If true, the swatch will display a red slash.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ type: Boolean, reflect: true })
     public nothing = false;
 
+    /**
+     * The role of the swatch.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ reflect: true })
     public override role = 'button';
 
+    /**
+     * The rounding of the swatch.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     *
+     * The rounding can be set to `none` or `full`.
+     */
     @property({ reflect: true })
     public rounding: SwatchRounding;
 
+    /**
+     * Indicates whether the swatch is selected.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     */
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
+    /**
+     * The shape of the swatch.
+     *
+     * This property is reflected as an attribute, meaning changes to the property
+     * will be mirrored in the corresponding HTML attribute.
+     *
+     * The shape can be set to `rectangle`.
+     */
     @property({ reflect: true })
     public shape: SwatchShape;
 
+    /**
+     * The value of the swatch.
+     *
+     * If not set, it falls back to the color or label property.
+     */
     @property()
     get value(): string {
         return this._value || this.color || this.label;
@@ -113,23 +191,36 @@ export class Swatch extends SizedMixin(Focusable, {
 
     set value(value: string) {
         if (value === this._value) return;
+
         const oldValue = this.value;
+
         this._value = value;
         this.requestUpdate('value', oldValue);
     }
 
     private _value?: string;
 
+    /**
+     * The element that receives focus when the swatch is focused.
+     */
     public override get focusElement(): HTMLElement {
         return this;
     }
 
+    /**
+     * Toggles the selected state of the swatch.
+     */
     public toggle(force?: boolean): void {
         this.selected = force ?? !this.selected;
     }
 
+    /**
+     * Handles the click event on the swatch.
+     * Toggles the selected state and dispatches a 'change' event.
+     */
     private handleClick(): void {
         if (this.disabled || this.mixedValue) return;
+
         this.toggle();
         const applyDefault = this.dispatchEvent(
             new Event('change', {
@@ -137,50 +228,66 @@ export class Swatch extends SizedMixin(Focusable, {
                 bubbles: true,
             })
         );
+
         if (!applyDefault) {
             this.toggle();
         }
     }
 
+    /**
+     * Handles the keydown event on the swatch.
+     * Activates the swatch on Space key press.
+     */
     protected handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
+
         switch (code) {
             case 'Space':
                 event.preventDefault();
                 this.addEventListener('keyup', this.handleKeyup);
                 break;
-            /* c8 ignore next 2 */
             default:
                 break;
         }
     }
 
+    /**
+     * Handles the keypress event on the swatch.
+     * Simulates a click on Enter or NumpadEnter key press.
+     */
     private handleKeypress(event: KeyboardEvent): void {
         const { code } = event;
+
         switch (code) {
             case 'Enter':
             case 'NumpadEnter':
                 this.click();
                 break;
-            /* c8 ignore next 2 */
             default:
                 break;
         }
     }
 
+    /**
+     * Handles the keyup event on the swatch.
+     * Simulates a click on Space key release.
+     */
     protected handleKeyup(event: KeyboardEvent): void {
         const { code } = event;
+
         switch (code) {
             case 'Space':
                 this.removeEventListener('keyup', this.handleKeyup);
                 this.click();
                 break;
-            /* c8 ignore next 2 */
             default:
                 break;
         }
     }
 
+    /**
+     * Renders the disabled state of the swatch.
+     */
     protected renderDisabled = (): TemplateResult => {
         return html`
             <svg
@@ -202,10 +309,16 @@ export class Swatch extends SizedMixin(Focusable, {
         `;
     };
 
+    /**
+     * Renders the mixed value icon.
+     */
     protected renderMixedValue = (): TemplateResult => {
         return dashIcon[this.size]();
     };
 
+    /**
+     * Renders the component template.
+     */
     protected override render(): TemplateResult {
         return html`
             <div
@@ -223,18 +336,28 @@ export class Swatch extends SizedMixin(Focusable, {
         `;
     }
 
+    /**
+     * Called before the element updates.
+     * Sets the role attribute and updates ARIA attributes based on property changes.
+     */
     protected override willUpdate(changes: PropertyValues): void {
         if (!this.getAttribute('role')) {
             this.setAttribute('role', 'button');
         }
+
         if (changes.has('selected') || changes.has('role')) {
+            // Determine the appropriate ARIA attribute based on the role
             const selectedAttribute =
                 this.role === 'button' ? 'aria-pressed' : 'aria-checked';
             const removedSelectedAttribute =
                 this.role === 'button' ? 'aria-checked' : 'aria-pressed';
+
+            // Remove the old ARIA attribute if the role has changed
             if (changes.has('role')) {
                 this.removeAttribute(removedSelectedAttribute);
             }
+
+            // Set the new ARIA attribute based on the selected state
             this.setAttribute(
                 selectedAttribute,
                 this.selected ? 'true' : 'false'
@@ -259,11 +382,16 @@ export class Swatch extends SizedMixin(Focusable, {
         }
     }
 
+    /**
+     * Called after the element's DOM has been updated the first time.
+     * Sets up initial event listeners and attributes.
+     */
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('click', this.handleClick);
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('keypress', this.handleKeypress);
+
         if (!this.hasAttribute('tabindex')) {
             this.setAttribute('tabindex', '0');
         }

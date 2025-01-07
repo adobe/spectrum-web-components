@@ -199,6 +199,7 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
         (() => {
             return;
         });
+
     return html`
         <sp-field-label for="default">Enter a number</sp-field-label>
         <sp-number-field
@@ -461,6 +462,7 @@ export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
         (() => {
             return;
         });
+
     return html`
         <style>
             .scroller {

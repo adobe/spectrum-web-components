@@ -30,6 +30,7 @@ import sidenavItemStyles from './sidenav-item.css.js';
  * @element sp-sidenav-item
  *
  * @slot - the Sidenav Items to display as children of this item
+ *
  */
 export class SideNavItem extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
@@ -51,6 +52,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                 | SideNav
                 | undefined;
         }
+
         return this._parentSidenav;
     }
 
@@ -63,10 +65,12 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     protected get depth(): number {
         let depth = 0;
         let element = this.parentElement;
+
         while (element instanceof SideNavItem) {
             depth++;
             element = element.parentElement;
         }
+
         return depth;
     }
 
@@ -78,6 +82,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
         if (!this.href && event) {
             event.preventDefault();
         }
+
         // With an `href` this click will change the page contents, not toggle its children or become "selected".
         if (!this.disabled && (!this.href || event?.defaultPrevented)) {
             if (this.hasChildren) {
@@ -114,6 +119,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
         if (!this.hasAttribute('slot')) {
             this.slot = 'descendant';
         }
+
         super.update(changes);
     }
 
@@ -164,6 +170,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
         } else {
             this.focusElement.removeAttribute('tabindex');
         }
+
         super.updated(changes);
     }
 
@@ -179,16 +186,19 @@ export class SideNavItem extends LikeAnchor(Focusable) {
 
     private async startTrackingSelection(): Promise<void> {
         const parentSideNav = this.parentSideNav;
+
         if (parentSideNav) {
             await parentSideNav.updateComplete;
             parentSideNav.startTrackingSelectionForItem(this);
             this.selected =
                 this.value != null && this.value === parentSideNav.value;
+
             if (
                 this.selected === true &&
                 parentSideNav.variant === 'multilevel'
             ) {
                 let element = this.parentElement;
+
                 while (element instanceof SideNavItem) {
                     element.expanded = true;
                     element = element.parentElement;
@@ -199,9 +209,11 @@ export class SideNavItem extends LikeAnchor(Focusable) {
 
     private stopTrackingSelection(): void {
         const parentSideNav = this.parentSideNav;
+
         if (parentSideNav) {
             parentSideNav.stopTrackingSelectionForItem(this);
         }
+
         this._parentSidenav = undefined;
     }
 

@@ -58,16 +58,19 @@ export class HelpTextManager {
 
     private addId(): void {
         const id = this.helpTextElement ? this.helpTextElement.id : this.id;
+
         this.conditionId = conditionAttributeWithId(
             this.host,
             'aria-describedby',
             id
         );
+
         if (this.host.hasAttribute('tabindex')) {
             this.previousTabindex = parseFloat(
                 this.host.getAttribute('tabindex') as string
             ) as -1 | 0;
         }
+
         this.host.tabIndex = 0;
     }
 
@@ -76,7 +79,9 @@ export class HelpTextManager {
             this.conditionId();
             delete this.conditionId;
         }
+
         if (this.helpTextElement) return;
+
         if (this.previousTabindex) {
             this.host.tabIndex = this.previousTabindex;
         } else {
@@ -97,14 +102,18 @@ export class HelpTextManager {
         if (this.helpTextElement && this.helpTextElement.id === this.id) {
             this.helpTextElement.removeAttribute('id');
         }
+
         this.removeId();
         const assignedElements = target.assignedElements();
         const nextHelpTextElement = assignedElements[0];
+
         this.helpTextElement = nextHelpTextElement;
+
         if (nextHelpTextElement) {
             if (!nextHelpTextElement.id) {
                 nextHelpTextElement.id = this.id;
             }
+
             this.addId();
         }
     }
@@ -113,6 +122,7 @@ export class HelpTextManager {
         if (target.name !== 'negative-help-text') return;
 
         const assignedElements = target.assignedElements();
+
         assignedElements.forEach(
             (el) => ((el as unknown as HelpText).variant = 'negative')
         );

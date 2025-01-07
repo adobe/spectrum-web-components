@@ -71,6 +71,7 @@ class SubmenuReady extends HTMLElement {
         await (event.target as ActionMenu).updateComplete;
 
         this.submenu = document.querySelector('#submenu-item-1') as MenuItem;
+
         if (!this.submenu) {
             return;
         }
@@ -87,9 +88,11 @@ class SubmenuReady extends HTMLElement {
         this.submenuChild = document.querySelector(
             '#submenu-item-2'
         ) as MenuItem;
+
         if (!this.submenuChild) {
             return;
         }
+
         this.submenuChild.addEventListener(
             'sp-opened',
             this.handleSubmenuChildOpened
@@ -138,26 +141,31 @@ export const submenu = (): TemplateResult => {
     };
     const clearValues = (): void => {
         const valueEls = getValueEls();
+
         valueEls.root.textContent = '';
         valueEls.first.textContent = '';
         valueEls.second.textContent = '';
     };
     const handleRootChange = (event: Event & { target: ActionMenu }): void => {
         const valueEls = getValueEls();
+
         valueEls.root.textContent = event.target.value;
     };
     const handleFirstDescendantChange = (
         event: Event & { target: Menu }
     ): void => {
         const valueEls = getValueEls();
+
         valueEls.first.textContent = event.target.selected[0] || '';
     };
     const handleSecondDescendantChange = (
         event: Event & { target: Menu }
     ): void => {
         const valueEls = getValueEls();
+
         valueEls.second.textContent = event.target.selected[0] || '';
     };
+
     return html`
         <sp-action-menu
             label="More Actions"
@@ -246,6 +254,7 @@ export const contextMenu = (): TemplateResult => {
         event.preventDefault();
         const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
         const overlay = document.querySelector('sp-overlay') as Overlay;
+
         clearValues();
         overlay.triggerElement = virtualTrigger;
         overlay.willPreventClose = true;
@@ -261,11 +270,13 @@ export const contextMenu = (): TemplateResult => {
     };
     const clearValues = (): void => {
         const valueEls = getValueEls();
+
         valueEls.root.textContent = '';
         valueEls.first.textContent = '';
     };
     const handleRootChange = (event: Event & { target: ActionMenu }): void => {
         const valueEls = getValueEls();
+
         valueEls.root.textContent = event.target.value;
         event.target.parentElement?.dispatchEvent(
             new Event('close', { bubbles: true })
@@ -275,8 +286,10 @@ export const contextMenu = (): TemplateResult => {
         event: Event & { target: Menu }
     ): void => {
         const valueEls = getValueEls();
+
         valueEls.first.textContent = event.target.selected[0] || '';
     };
+
     return html`
         <style>
             .app-root {
@@ -381,6 +394,34 @@ export const customRootSubmenu = (): TemplateResult => {
                         alt="Kitten"
                         style="width: 100%; height: auto; border-radius: 4px"
                     />
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
+                    <p>I am an arbitrary content in submenu</p>
                     <p>I am an arbitrary content in submenu</p>
                 </div>
             </sp-menu-item>

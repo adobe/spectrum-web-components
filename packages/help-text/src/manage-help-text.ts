@@ -24,6 +24,9 @@ export interface HelpTextElementInterface {
     helpTextId: string;
 }
 
+/**
+ *
+ */
 export function ManageHelpText<T extends Constructor<ReactiveElement>>(
     constructor: T,
     { mode }: { mode: 'internal' | 'external' } = { mode: 'internal' }
@@ -37,5 +40,6 @@ export function ManageHelpText<T extends Constructor<ReactiveElement>>(
             return this.helpTextManager.render(negative);
         }
     }
+
     return HelpTextElement;
 }

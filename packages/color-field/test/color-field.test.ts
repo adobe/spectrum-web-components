@@ -120,6 +120,7 @@ describe('ColorField', () => {
         await elementUpdated(el);
 
         const colorHandle = el.shadowRoot.querySelector('sp-color-handle');
+
         expect(colorHandle).to.not.be.null;
     });
 
@@ -130,6 +131,7 @@ describe('ColorField', () => {
         await elementUpdated(el);
 
         const colorHandle = el.shadowRoot.querySelector('sp-color-handle');
+
         expect(colorHandle).to.be.null;
     });
 });

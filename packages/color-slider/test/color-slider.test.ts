@@ -35,18 +35,14 @@ import { ColorHandle } from '@spectrum-web-components/color-handle';
 describe('ColorSlider', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<ColorSlider>(
-                html`
-                    <sp-color-slider></sp-color-slider>
-                `
-            )
+            await fixture<ColorSlider>(html`
+                <sp-color-slider></sp-color-slider>
+            `)
     );
     it('loads default color-slider accessibly', async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -54,15 +50,13 @@ describe('ColorSlider', () => {
     });
 
     it('manages a single tab stop', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <input type="text" id="test-input-1" />
-                    <sp-color-slider></sp-color-slider>
-                    <input type="text" id="test-input-2" />
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <input type="text" id="test-input-1" />
+                <sp-color-slider></sp-color-slider>
+                <input type="text" id="test-input-2" />
+            </div>
+        `);
         const el = test.querySelector('sp-color-slider') as ColorSlider;
         const input1 = test.querySelector(
             'input:nth-of-type(1)'
@@ -84,6 +78,7 @@ describe('ColorSlider', () => {
         expect(document.activeElement).to.equal(el);
 
         let value = el.value;
+
         await sendKeys({
             press: 'ArrowRight',
         });
@@ -113,11 +108,9 @@ describe('ColorSlider', () => {
         expect(document.activeElement).to.equal(input1);
     });
     it('manages [focused]', async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -146,14 +139,12 @@ describe('ColorSlider', () => {
     it('dispatches input and change events in response to "Arrow*" keypresses', async () => {
         const inputSpy = spy();
         const changeSpy = spy();
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    @change=${() => changeSpy()}
-                    @input=${() => inputSpy()}
-                ></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                @change=${() => changeSpy()}
+                @input=${() => inputSpy()}
+            ></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -180,14 +171,13 @@ describe('ColorSlider', () => {
         // screen reader interactions dispatch events as found in the following test
         const inputSpy = spy();
         const changeSpy = spy();
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    @change=${() => changeSpy()}
-                    @input=${() => inputSpy()}
-                ></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                @change=${() => changeSpy()}
+                @input=${() => inputSpy()}
+            ></sp-color-slider>
+        `);
+
         await elementUpdated(el);
 
         el.focus();
@@ -208,13 +198,11 @@ describe('ColorSlider', () => {
         expect(changeSpy.callCount).to.equal(1);
     });
     it('manages value on "Arrow*" keypresses', async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-default-height: 24px;"
-                ></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-default-height: 24px;"
+            ></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -273,11 +261,9 @@ describe('ColorSlider', () => {
         expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses in dir="rtl"', async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider dir="rtl"></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider dir="rtl"></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -332,11 +318,9 @@ describe('ColorSlider', () => {
         expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses with alteration', async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider></sp-color-slider>
+        `);
 
         await elementUpdated(el);
         el.focus();
@@ -408,14 +392,12 @@ describe('ColorSlider', () => {
     });
     it('accepts pointer events', async () => {
         const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    .color=${color}
-                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-height: 24px;"
-                ></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                .color=${color}
+                style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-height: 24px;"
+            ></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -451,6 +433,7 @@ describe('ColorSlider', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const gradient = root.querySelector('.gradient') as HTMLElement;
+
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
                 button: 1,
@@ -514,21 +497,19 @@ describe('ColorSlider', () => {
     });
     it('can have `change` events prevented', async () => {
         const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    .color=${color}
-                    @change=${(event: Event) => {
-                        event.preventDefault();
-                    }}
-                    style="
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                .color=${color}
+                @change=${(event: Event) => {
+                    event.preventDefault();
+                }}
+                style="
                         --spectrum-colorslider-default-length: 192px;
                         --spectrum-colorslider-height: 24px;
                         --spectrum-colorhandle-size: 5px;
                     "
-                ></sp-color-slider>
-            `
-        );
+            ></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -579,14 +560,12 @@ describe('ColorSlider', () => {
         expect(el.value).to.equal(0);
     });
     it('accepts pointer events while [vertical]', async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    vertical
-                    style="--spectrum-colorslider-vertical-default-length: 192px; --spectrum-colorslider-vertical-width: 24px;"
-                ></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                vertical
+                style="--spectrum-colorslider-vertical-default-length: 192px; --spectrum-colorslider-vertical-width: 24px;"
+            ></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -603,6 +582,7 @@ describe('ColorSlider', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const gradient = root.querySelector('.gradient') as HTMLElement;
+
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
                 pointerId: 1,
@@ -645,14 +625,13 @@ describe('ColorSlider', () => {
     });
     it('accepts pointer events in dir="rtl"', async () => {
         document.documentElement.dir = 'rtl';
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    dir="rtl"
-                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-height: 24px;"
-                ></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                dir="rtl"
+                style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-height: 24px;"
+            ></sp-color-slider>
+        `);
+
         await elementUpdated(el);
 
         const { handle } = el as unknown as { handle: HTMLElement };
@@ -670,6 +649,7 @@ describe('ColorSlider', () => {
         const gradient = el.shadowRoot.querySelector(
             '.gradient'
         ) as HTMLElement;
+
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
                 pointerId: 1,
@@ -744,36 +724,34 @@ describe('ColorSlider', () => {
         { name: 'HSV String', color: 'hsv(300, 75%, 100%)' },
         { name: 'HSV', color: { h: 300, s: 0.75, v: 1, a: 1 } },
     ];
+
     colorFormats.map((format) => {
         it(`maintains \`color\` format as ${format.name}`, async () => {
-            const el = await fixture<ColorSlider>(
-                html`
-                    <sp-color-slider></sp-color-slider>
-                `
-            );
+            const el = await fixture<ColorSlider>(html`
+                <sp-color-slider></sp-color-slider>
+            `);
 
             el.color = format.color;
+
             if (format.name.startsWith('Hex')) {
                 expect(el.color).to.equal(format.color);
             } else expect(el.color).to.deep.equal(format.color);
         });
     });
     it(`maintains \`color\` format as TinyColor`, async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider></sp-color-slider>
+        `);
         const color = new TinyColor('rgb(204, 51, 204)');
+
         el.color = color;
         expect(color.equals(el.color));
     });
     it(`resolves Hex3 format to Hex6 format`, async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider></sp-color-slider>
+        `);
+
         el.color = '0f0';
         expect(el.color).to.equal('00ff00');
 
@@ -781,11 +759,10 @@ describe('ColorSlider', () => {
         expect(el.color).to.equal('#11ee00');
     });
     it(`resolves Hex4 format to Hex8 format`, async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider></sp-color-slider>
+        `);
+
         el.color = 'f3af';
         expect(el.color).to.equal('ff33aaff');
 
@@ -793,48 +770,54 @@ describe('ColorSlider', () => {
         expect(el.color).to.equal('#ff33aaff');
     });
     it(`maintains hue value`, async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider></sp-color-slider>
+        `);
         const hue = 300;
         const hsl = `hsl(${hue}, 60%, 100%)`;
+
         el.color = hsl;
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsl);
 
         const hsla = `hsla(${hue}, 60%, 100%, 0.9)`;
+
         el.color = hsla;
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsla);
 
         const hsv = `hsv(${hue}, 60%, 100%)`;
+
         el.color = hsv;
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsv);
 
         const hsva = `hsva(${hue}, 60%, 100%, 0.9)`;
+
         el.color = hsva;
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsva);
 
         const tinyHSV = new TinyColor({ h: hue, s: 60, v: 100 });
+
         el.color = tinyHSV;
         expect(el.value).to.equal(hue);
         expect(tinyHSV.equals(el.color)).to.be.true;
 
         const tinyHSVA = new TinyColor({ h: hue, s: 60, v: 100, a: 1 });
+
         el.color = tinyHSVA;
         expect(el.value).to.equal(hue);
         expect(tinyHSVA.equals(el.color)).to.be.true;
 
         const tinyHSL = new TinyColor({ h: hue, s: 60, l: 100 });
+
         el.color = tinyHSL;
         expect(el.value).to.equal(hue);
         expect(tinyHSL.equals(el.color)).to.be.true;
 
         const tinyHSLA = new TinyColor({ h: hue, s: 60, l: 100, a: 1 });
+
         el.color = tinyHSLA;
         expect(el.value).to.equal(hue);
         expect(tinyHSLA.equals(el.color)).to.be.true;

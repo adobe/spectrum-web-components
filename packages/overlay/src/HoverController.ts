@@ -36,13 +36,16 @@ export class HoverController extends InteractionController {
         if (!this.target.matches(':focus-visible')) {
             return;
         }
+
         this.open = true;
         this.focusedin = true;
     }
 
     handleTargetFocusout(): void {
         this.focusedin = false;
+
         if (this.pointerentered) return;
+
         this.open = false;
     }
 
@@ -51,7 +54,9 @@ export class HoverController extends InteractionController {
             clearTimeout(this.hoverTimeout);
             this.hoverTimeout = undefined;
         }
+
         if (this.overlay?.disabled) return;
+
         this.open = true;
         this.pointerentered = true;
     }
@@ -80,6 +85,7 @@ export class HoverController extends InteractionController {
         const triggerRoot = this.target.getRootNode();
         const contentRoot = this.overlay.elements[0].getRootNode();
         const overlayRoot = this.overlay.getRootNode();
+
         if (triggerRoot === overlayRoot) {
             this.prepareOverlayRelativeDescription();
         } else if (triggerRoot === contentRoot) {
@@ -93,6 +99,7 @@ export class HoverController extends InteractionController {
             'aria-describedby',
             [this.overlay.id]
         );
+
         this.releaseDescription = () => {
             releaseDescription();
             this.releaseDescription = noop;
@@ -103,17 +110,21 @@ export class HoverController extends InteractionController {
         const elementIds: string[] = [];
         const appliedIds = this.overlay.elements.map((el) => {
             elementIds.push(el.id);
+
             if (!el.id) {
                 el.id = `${this.overlay.tagName.toLowerCase()}-helper-${randomID()}`;
             }
+
             return el.id;
         });
+
         this.elementIds = elementIds;
         const releaseDescription = conditionAttributeWithId(
             this.target,
             'aria-describedby',
             appliedIds
         );
+
         this.releaseDescription = () => {
             releaseDescription();
             this.overlay.elements.map((el, index) => {
@@ -126,6 +137,7 @@ export class HoverController extends InteractionController {
     protected doPointerleave(): void {
         this.pointerentered = false;
         const triggerElement = this.target as HTMLElement;
+
         if (this.focusedin && triggerElement.matches(':focus-visible')) return;
 
         this.hoverTimeout = setTimeout(() => {
@@ -138,6 +150,7 @@ export class HoverController extends InteractionController {
         this.abortController?.abort();
         this.abortController = new AbortController();
         const { signal } = this.abortController;
+
         this.target.addEventListener(
             'focusin',
             () => this.handleTargetFocusin(),
@@ -158,6 +171,7 @@ export class HoverController extends InteractionController {
             () => this.handleTargetPointerleave(),
             { signal }
         );
+
         if (this.overlay) {
             this.initOverlay();
         }
@@ -167,7 +181,9 @@ export class HoverController extends InteractionController {
         if (!this.abortController) {
             return;
         }
+
         const { signal } = this.abortController;
+
         this.overlay.addEventListener(
             'pointerenter',
             () => this.handleHostPointerenter(),

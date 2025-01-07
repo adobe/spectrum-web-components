@@ -31,6 +31,7 @@ describe('ContextualHelp', () => {
         const button = document
             .querySelector('sp-contextual-help')
             ?.shadowRoot?.querySelector('sp-action-button');
+
         expect(button).to.have.attribute('aria-label', 'Informations');
 
         el.variant = 'help';
@@ -45,9 +46,11 @@ describe('ContextualHelp', () => {
         const trigger = el.shadowRoot?.querySelector('#trigger') as HTMLElement;
 
         let popover = el.shadowRoot?.querySelector('sp-popover');
+
         expect(popover).not.to.exist;
 
         const opened = oneEvent(el, 'sp-opened');
+
         trigger.click();
         await opened;
 
@@ -57,9 +60,11 @@ describe('ContextualHelp', () => {
             'slot[name="heading"]'
         ) as HTMLSlotElement;
         const heading = headingSlot.assignedElements()[0].textContent;
+
         expect(heading).to.equal('Permission required');
 
         const closed = oneEvent(el, 'sp-closed');
+
         await sendKeys({
             press: 'Escape',
         });
@@ -72,18 +77,21 @@ describe('ContextualHelp', () => {
     });
     it('returns the label if set', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+
         el.label = 'Custom Label';
         expect(el.buttonAriaLabel).to.equal('Custom Label');
     });
 
     it('returns "Help" if variant is "help" and label is not set', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+
         el.variant = 'help';
         expect(el.buttonAriaLabel).to.equal('Help');
     });
 
     it('returns "Informations" if variant is not "help" and label is not set', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+
         expect(el.buttonAriaLabel).to.equal('Informations');
     });
     it('renders correctly when actualPlacement is undefined', async () => {
@@ -94,12 +102,14 @@ describe('ContextualHelp', () => {
         await elementUpdated(el);
 
         const trigger = el.shadowRoot?.querySelector('#trigger') as HTMLElement;
+
         expect(trigger).to.exist;
         expect(trigger).to.have.attribute('aria-label', 'Informations');
 
         const overlay = el.shadowRoot?.querySelector(
             'sp-overlay'
         ) as HTMLElement;
+
         expect(overlay).to.exist;
         expect(overlay).to.have.attribute('trigger', 'trigger@click');
         expect(overlay).to.have.attribute('receives-focus', 'true');
@@ -116,6 +126,7 @@ describe('ContextualHelp', () => {
         const template: TemplateResult = el['renderOverlayContent']();
 
         const container = document.createElement('div');
+
         render(template, container);
 
         const dialogBase = container.querySelector('sp-dialog-base');

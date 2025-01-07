@@ -25,21 +25,29 @@ import {
 import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
 
+/**
+ *
+ */
 export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
     constructor: T
 ): T & Constructor<SpectrumElement> {
     class OverlayWithDialog extends constructor {
         protected override async manageDialogOpen(): Promise<void> {
             const targetOpenState = this.open;
+
             await nextFrame();
             await this.managePosition();
+
             if (this.open !== targetOpenState) {
                 return;
             }
+
             const focusEl = await this.dialogMakeTransition(targetOpenState);
+
             if (this.open !== targetOpenState) {
                 return;
             }
+
             await this.dialogApplyFocus(targetOpenState, focusEl);
         }
 
@@ -51,49 +59,63 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                 (el: OpenableElement, index: number) =>
                 async (): Promise<void> => {
                     el.open = targetOpenState;
+
                     if (!targetOpenState) {
                         const close = (): void => {
                             el.removeEventListener('close', close);
                             finish(el, index);
                         };
+
                         el.addEventListener('close', close);
                     }
+
                     if (index > 0) {
                         // Announce workflow on the first element _only_.
                         return;
                     }
+
                     const event = targetOpenState
                         ? BeforetoggleOpenEvent
                         : BeforetoggleClosedEvent;
+
                     this.dispatchEvent(new event());
+
                     if (!targetOpenState) {
                         // Show/focus workflow when opening _only_.
                         return;
                     }
+
                     if (el.matches(userFocusableSelector)) {
                         focusEl = el;
                     }
+
                     focusEl = focusEl || firstFocusableIn(el);
+
                     if (!focusEl) {
                         const childSlots = el.querySelectorAll('slot');
+
                         childSlots.forEach((slot) => {
                             if (!focusEl) {
                                 focusEl = firstFocusableSlottedIn(slot);
                             }
                         });
                     }
+
                     if (!this.isConnected || this.dialogEl.open) {
                         // In both of these cases the browser will error.
                         // You can neither "reopen" a <dialog> or open one that is not on the DOM.
                         return;
                     }
+
                     this.dialogEl.showModal();
                 };
             const finish = (el: OpenableElement, index: number) => (): void => {
                 if (this.open !== targetOpenState) {
                     return;
                 }
+
                 const eventName = targetOpenState ? 'sp-opened' : 'sp-closed';
+
                 if (index > 0) {
                     el.dispatchEvent(
                         new OverlayStateEvent(eventName, this, {
@@ -101,16 +123,20 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                             publish: false,
                         })
                     );
+
                     return;
                 }
+
                 if (!this.isConnected || targetOpenState !== this.open) {
                     // Don't lead into the `.close()` workflow if not connected to the DOM.
                     // The browser will error in this case.
                     return;
                 }
+
                 const reportChange = async (): Promise<void> => {
                     const hasVirtualTrigger =
                         this.triggerElement instanceof VirtualTrigger;
+
                     this.dispatchEvent(
                         new OverlayStateEvent(eventName, this, {
                             interaction: this.type,
@@ -123,6 +149,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                             publish: false,
                         })
                     );
+
                     if (this.triggerElement && !hasVirtualTrigger) {
                         (this.triggerElement as HTMLElement).dispatchEvent(
                             new OverlayStateEvent(eventName, this, {
@@ -131,11 +158,13 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                             })
                         );
                     }
+
                     this.state = targetOpenState ? 'opened' : 'closed';
                     this.returnFocus();
                     // Ensure layout and paint are done and the Overlay is still closed before removing the slottable request.
                     await nextFrame();
                     await nextFrame();
+
                     if (
                         targetOpenState === this.open &&
                         targetOpenState === false
@@ -143,6 +172,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         this.requestSlottable();
                     }
                 };
+
                 if (!targetOpenState && this.dialogEl.open) {
                     this.dialogEl.addEventListener(
                         'close',
@@ -156,6 +186,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     reportChange();
                 }
             };
+
             this.elements.forEach((el, index) => {
                 guaranteedAllTransitionend(
                     el,
@@ -163,6 +194,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     finish(el, index)
                 );
             });
+
             return focusEl;
         }
 
@@ -174,9 +206,10 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
              * Focus should be handled natively in `<dialog>` elements when leveraging `.showModal()`, but it's NOT.
              * - webkit bug: https://bugs.webkit.org/show_bug.cgi?id=255507
              * - firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1828398
-             **/
+             */
             this.applyFocus(targetOpenState, focusEl);
         }
     }
+
     return OverlayWithDialog;
 }

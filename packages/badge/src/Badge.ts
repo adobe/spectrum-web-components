@@ -24,6 +24,9 @@ import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slo
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import styles from './badge.css.js';
 
+/**
+ * List of valid badge variants.
+ */
 export const BADGE_VARIANTS = [
     'accent',
     'neutral',
@@ -46,13 +49,25 @@ export const BADGE_VARIANTS = [
     'cyan',
     'blue',
 ] as const;
+
+/**
+ * Type definition for badge variants.
+ */
 export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
+
+/**
+ * List of valid fixed values.
+ */
 export const FIXED_VALUES = [
     'inline-start',
     'inline-end',
     'block-start',
     'block-end',
 ] as const;
+
+/**
+ * Type definition for fixed values.
+ */
 export type FixedValues = (typeof FIXED_VALUES)[number];
 
 /**
@@ -71,6 +86,10 @@ export class Badge extends SizedMixin(
         return [styles];
     }
 
+    /**
+     * The fixed position of the badge.
+     * Can be one of the values defined in `FixedValues`.
+     */
     @property({ reflect: true })
     public get fixed(): FixedValues | undefined {
         return this._fixed;
@@ -78,25 +97,40 @@ export class Badge extends SizedMixin(
 
     public set fixed(fixed: FixedValues | undefined) {
         if (fixed === this.fixed) return;
+
         const oldValue = this.fixed;
+
         this._fixed = fixed;
+
         if (fixed) {
             this.setAttribute('fixed', fixed);
         } else {
             this.removeAttribute('fixed');
         }
+
         this.requestUpdate('fixed', oldValue);
     }
 
     private _fixed?: FixedValues;
 
+    /**
+     * The variant of the badge.
+     * Can be one of the values defined in `BadgeVariant`.
+     */
     @property({ type: String, reflect: true })
     public variant: BadgeVariant = 'informative';
 
+    /**
+     * Checks if the icon slot has content.
+     */
     protected get hasIcon(): boolean {
         return this.slotContentIsPresent;
     }
 
+    /**
+     * Renders the badge template.
+     * Includes the icon slot and the label slot.
+     */
     protected override render(): TemplateResult {
         if (window.__swc.DEBUG) {
             if (!BADGE_VARIANTS.includes(this.variant)) {
@@ -110,6 +144,7 @@ export class Badge extends SizedMixin(
                 );
             }
         }
+
         return html`
             ${this.hasIcon
                 ? html`

@@ -303,12 +303,14 @@ describe('Table Selects', () => {
 
         rows.forEach((row) => {
             const checkbox = row.querySelector('sp-table-checkbox-cell');
+
             expect(checkbox).to.be.null;
         });
     });
 
     it('allows .selected values to be changed by the application when [selects="multiple"]', async () => {
         const el = await fixture<Table>(selectsMultiple());
+
         await elementUpdated(el);
 
         const rowThreeCheckboxCell = el.querySelector(

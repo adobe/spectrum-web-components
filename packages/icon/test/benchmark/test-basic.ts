@@ -17,6 +17,7 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 async function test(): Promise<void> {
     const iconset = document.createElement('sp-icons-medium');
+
     document.body.append(iconset);
     await iconset.updateComplete;
 

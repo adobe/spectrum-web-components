@@ -22,9 +22,6 @@ export default {
     },
     argTypes: {
         primarySize: {
-            name: 'primarySize',
-            type: { name: 'number', required: false },
-            description: 'Size of the primary panel.',
             table: {
                 type: { summary: 'number' },
                 defaultValue: { summary: undefined },

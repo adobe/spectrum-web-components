@@ -73,5 +73,6 @@ export const testActiveElement = (
     const activeElement = el.shadowRoot.querySelector(
         `#${el.activeDescendant.value}`
     ) as HTMLElement;
+
     expect(activeElement.getAttribute('aria-selected')).to.equal('true');
 };

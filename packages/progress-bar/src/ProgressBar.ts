@@ -108,6 +108,7 @@ export class ProgressBar extends SizedMixin(
 
     protected handleSlotchange(): void {
         const labelFromSlot = getLabelFromSlot(this.label, this.slotEl);
+
         if (labelFromSlot) {
             this.label = labelFromSlot;
         }
@@ -115,6 +116,7 @@ export class ProgressBar extends SizedMixin(
 
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
+
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'progressbar');
         }
@@ -122,6 +124,7 @@ export class ProgressBar extends SizedMixin(
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (changes.has('indeterminate')) {
             if (this.indeterminate) {
                 this.removeAttribute('aria-valuemin');
@@ -132,9 +135,11 @@ export class ProgressBar extends SizedMixin(
                 this.setAttribute('aria-valuemax', '100');
             }
         }
+
         if (!this.indeterminate && changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);
         }
+
         if (changes.has('label')) {
             if (this.label.length) {
                 this.setAttribute('aria-label', this.label);

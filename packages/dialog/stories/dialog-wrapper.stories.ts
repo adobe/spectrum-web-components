@@ -73,6 +73,7 @@ export const wrapperLabeledHero = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
+
     return html`
         <style>
             sp-story-decorator {
@@ -111,6 +112,7 @@ export const wrapperDismissable = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
+
     return html`
         <sp-dialog-wrapper
             ?open=${open}
@@ -142,6 +144,7 @@ export const wrapperDismissableUnderlay = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
+
     return html`
         <sp-dialog-wrapper
             ?open=${open}
@@ -173,6 +176,7 @@ export const form = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
+
     return html`
         <overlay-trigger
             type="modal"
@@ -257,6 +261,7 @@ export const longContent = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
+
     return html`
         <overlay-trigger
             type="modal"
@@ -378,6 +383,7 @@ export const longHeading = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
+
     return html`
         <overlay-trigger
             type="modal"
@@ -410,6 +416,7 @@ export const wrapperDismissableUnderlayError = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
+
     return html`
         <div>
             <sp-dialog-wrapper
@@ -444,6 +451,7 @@ export const wrapperButtons = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
+
     return html`
         <sp-dialog-wrapper
             ?open=${open}
@@ -468,6 +476,7 @@ export const wrapperButtonsUnderlay = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
+
     return html`
         <sp-dialog-wrapper
             ?open=${open}
@@ -493,6 +502,7 @@ export const wrapperFullscreen = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
+
     return html`
         <sp-dialog-wrapper
             ?open=${open}
@@ -516,6 +526,7 @@ export const wrapperWithHeadline = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
+
     return html`
         <sp-dialog-wrapper
             ?open=${open}
@@ -532,6 +543,7 @@ export const wrapperWithHeadlineNoDivider = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
+
     return html`
         <sp-dialog-wrapper
             ?open=${open}
@@ -549,6 +561,7 @@ export const wrapperHeadlineVisibilityNone = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
+
     return html`
         <sp-dialog-wrapper
             headline="Accessible headline"
@@ -566,6 +579,7 @@ export const tooltips = (
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
+
     return html`
         <overlay-trigger
             type="modal"
@@ -606,6 +620,7 @@ export const lazyHero = ({ src }: { src: string }): TemplateResult => {
         (document.querySelector('sp-dialog-wrapper') as DialogWrapper).hero =
             src;
     };
+
     return html`
         <overlay-trigger content="click" @sp-opened=${handleOpened}>
             <sp-button slot="trigger">Toggle Dialog</sp-button>

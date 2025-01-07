@@ -65,7 +65,9 @@ export const Default = (): TemplateResult => {
 
 export const Selected = (): TemplateResult => {
     let { href } = location;
+
     href = href.replace(location.search, '');
+
     /**
      * The location's `href` is leveraged as the value of "Page 3" here
      * so that within the default Storybook UI there can be a `href` attribute

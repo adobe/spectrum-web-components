@@ -76,9 +76,11 @@ describe('AlertBanner', () => {
                 </sp-button>
             </sp-alert-banner>
         `);
+
         await elementUpdated(el);
 
         const buttonEl = el.querySelector('sp-button');
+
         expect(buttonEl).to.exist;
 
         buttonEl?.focus();
@@ -151,6 +153,7 @@ describe('AlertBanner', () => {
             await elementUpdated(el);
 
             const closeButton = el.shadowRoot.querySelector('sp-close-button');
+
             expect(el.open).to.be.true;
 
             closeButton?.click();
@@ -180,6 +183,7 @@ describe('AlertBanner', () => {
 
     describe('dev mode', () => {
         let consoleStub: SinonStub;
+
         before(() => {
             window.__swc.verbose = true;
             consoleStub = stub(console, 'warn');

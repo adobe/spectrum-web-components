@@ -100,17 +100,20 @@ class OverlayDrag extends LitElement {
 
     private onSlotChange(event: Event & { target: HTMLSlotElement }): void {
         const slot = event.target as HTMLSlotElement;
+
         this.targetElement = undefined;
 
         const nodes = slot.assignedNodes();
         const slotElement = nodes.find(
             (node) => node instanceof HTMLElement
         ) as HTMLElement;
+
         if (!slotElement) return;
 
         this.targetElement = slotElement.querySelector(
             '[slot="trigger"]'
         ) as HTMLElement;
+
         if (!this.targetElement) return;
 
         this.targetElement.addEventListener(
@@ -124,7 +127,9 @@ class OverlayDrag extends LitElement {
     private onMouseDown(event: PointerEvent): void {
         const target = event.target as HTMLElement;
         const parent = target.parentElement;
+
         if (!parent) return;
+
         target.setPointerCapture(event.pointerId);
 
         const max = {
@@ -149,6 +154,7 @@ class OverlayDrag extends LitElement {
                 x: dragDelta.x + originalPos.x,
                 y: dragDelta.y + originalPos.y,
             };
+
             this.left = Math.min(Math.max(newPosition.x, 0), max.x);
             this.top = Math.min(Math.max(newPosition.y, 0), max.y);
             Overlay.update();
@@ -166,8 +172,10 @@ class OverlayDrag extends LitElement {
 
     public resetTargetPosition(): void {
         if (!this.targetElement) return;
+
         const target = this.targetElement as HTMLElement;
         const parent = target.parentElement;
+
         if (!parent) return;
 
         this.left = (parent.offsetWidth - target.offsetWidth) / 2;
@@ -224,6 +232,7 @@ class RecursivePopover extends LitElement {
         this.depth = 0;
         this.addEventListener('keydown', (event: KeyboardEvent) => {
             const { code } = event;
+
             if (code === 'Enter') {
                 this.trigger.click();
             }
@@ -239,9 +248,11 @@ class RecursivePopover extends LitElement {
         if (this.shadowRoot.activeElement !== null) {
             return;
         }
+
         const firstFocusable = this.shadowRoot.querySelector(
             'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         ) as LitElement;
+
         if (firstFocusable) {
             if (firstFocusable.updateComplete) {
                 firstFocusable.updateComplete.then(() =>
@@ -250,18 +261,22 @@ class RecursivePopover extends LitElement {
             } else {
                 firstFocusable.focus();
             }
+
             return;
         }
+
         super.focus();
     }
 
     public onRadioChange(event: Event): void {
         const target = event.target as RadioGroup;
+
         this.placement = target.selected as Placement;
     }
 
     private captureEnter(event: KeyboardEvent): void {
         const { code } = event;
+
         if (code === 'Enter') {
             event.stopPropagation();
         }

@@ -46,23 +46,29 @@ export class InteractionController implements ReactiveController {
      */
     public set open(open: boolean) {
         if (open === this.open) return;
+
         this.isLazilyOpen = open;
+
         if (this.overlay) {
             // If there already is an Overlay, apply the value of `open` directly.
             this.overlay.open = open;
+
             return;
         }
+
         if (!open) {
             // When `open` moves to `false` and there is not yet an Overlay,
             // assume that no Overlay and a closed Overlay are the same and return early.
             return;
         }
+
         // When there is no Overlay and `open` is moving to `true`, lazily import/create
         // an Overlay and apply that state to it.
         customElements
             .whenDefined('sp-overlay')
             .then(async (): Promise<void> => {
                 const { Overlay } = await import('./Overlay.js');
+
                 this.overlay = new Overlay();
                 this.overlay.open = true;
             });
@@ -75,10 +81,13 @@ export class InteractionController implements ReactiveController {
 
     public set overlay(overlay: AbstractOverlay | undefined) {
         if (!overlay) return;
+
         if (this.overlay === overlay) return;
+
         if (this.overlay) {
             this.overlay.removeController(this);
         }
+
         this._overlay = overlay;
         this.overlay.addController(this);
         this.initOverlay();
@@ -98,9 +107,11 @@ export class InteractionController implements ReactiveController {
     ) {
         this.isPersistent = !!isPersistent;
         this.handleOverlayReady = handleOverlayReady;
+
         if (this.isPersistent) {
             this.init();
         }
+
         this.overlay = overlay;
     }
 

@@ -73,6 +73,7 @@ export const InTour = (
         currentStep = 2,
         totalSteps = 8,
     } = props;
+
     return html`
         <sp-coachmark
             ?open=${open}
@@ -200,6 +201,7 @@ export const TriggerOnHover = (props: Properties): TemplateResult => {
 
 export const withImage = (props: Properties): TemplateResult => {
     const { open = true, currentStep = 2, totalSteps = 8 } = props;
+
     return html`
         <sp-coachmark
             ?open=${open}
@@ -278,6 +280,7 @@ export const withKeys = (props: Properties): TemplateResult => {
         currentStep = 2,
         totalSteps = 8,
     } = props;
+
     return html`
         <sp-coachmark
             open
@@ -307,6 +310,7 @@ export const withKeys = (props: Properties): TemplateResult => {
 
 export const withShortCut = (props: Properties): TemplateResult => {
     const { currentStep = 2, totalSteps = 8 } = props;
+
     return html`
         <sp-coachmark
             open

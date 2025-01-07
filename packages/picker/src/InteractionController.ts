@@ -47,10 +47,12 @@ export class InteractionController implements ReactiveController {
      */
     public set open(open: boolean) {
         if (this._open === open) return;
+
         this._open = open;
 
         if (this.overlay) {
             this.host.open = open;
+
             return;
         }
 
@@ -62,6 +64,7 @@ export class InteractionController implements ReactiveController {
                 const { Overlay } = await import(
                     '@spectrum-web-components/overlay/src/Overlay.js'
                 );
+
                 this.overlay = new Overlay();
                 this.host.open = true;
                 this.host.requestUpdate();
@@ -77,7 +80,9 @@ export class InteractionController implements ReactiveController {
 
     public set overlay(overlay: AbstractOverlay | undefined) {
         if (!overlay) return;
+
         if (this.overlay === overlay) return;
+
         this._overlay = overlay;
         this.initOverlay();
     }
@@ -105,6 +110,7 @@ export class InteractionController implements ReactiveController {
         if (event.composedPath()[0] !== event.target) {
             return;
         }
+
         if (event.newState === 'closed') {
             if (this.preventNextToggle === 'no') {
                 this.open = false;
@@ -114,6 +120,7 @@ export class InteractionController implements ReactiveController {
                 this.overlay?.manuallyKeepOpen();
             }
         }
+
         if (!this.open) {
             this.host.optionsMenu.updateSelectedItemIndex();
             this.host.optionsMenu.closeDescendentOverlays();

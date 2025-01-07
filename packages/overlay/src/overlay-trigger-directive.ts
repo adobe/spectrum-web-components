@@ -86,10 +86,12 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
             this.defaultOptions.triggerInteraction) as TriggerInteraction;
         const newStrategy =
             InteractionTypes[this.strategy?.type] !== triggerInteraction;
+
         if (this.target !== part.element) {
             this.target = part.element as HTMLElement;
             newTarget = true;
         }
+
         if (newTarget || newStrategy) {
             this.strategy?.abort();
             this.strategy = new strategies[
@@ -102,6 +104,7 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
                 },
             });
         }
+
         this.strategy.open = options?.open ?? false;
     }
 
@@ -111,9 +114,11 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
 
         const willRemoveSlottable = event.data === removeSlottableRequest;
         const options = {} as RenderOptions;
+
         if (this.host) {
             options.host = this.host;
         }
+
         render(
             willRemoveSlottable ? undefined : this.template(),
             this.overlay,
@@ -132,6 +137,7 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
                     ? this.insertionOptions.el()
                     : this.insertionOptions?.el || this.target;
             const { where = 'afterend' } = this.insertionOptions || {};
+
             insertionEl.insertAdjacentElement(where, this.overlay);
         }
     }

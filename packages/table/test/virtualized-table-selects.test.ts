@@ -154,6 +154,7 @@ describe('Virtualized Table Selects', () => {
         await elementUpdated(body);
 
         const lastRow = el.querySelector('[value="49"]') as TableRow;
+
         expect(lastRow).to.not.be.null;
 
         const lastRowCheckboxCell = lastRow.querySelector(
@@ -170,6 +171,7 @@ describe('Virtualized Table Selects', () => {
             </sp-theme>
         `);
         const el = test.querySelector('sp-table') as Table;
+
         el.selected = [];
 
         await tableLayoutComplete(el);
@@ -220,6 +222,7 @@ describe('Virtualized Table Selects', () => {
         await tableLayoutComplete(el);
 
         const unseenRow = el.querySelector('[value="48"]') as TableRow;
+
         expect(unseenRow).to.not.be.null;
         const unseenRowCheckboxCell = unseenRow.querySelector(
             'sp-table-checkbox-cell'
@@ -235,6 +238,7 @@ describe('Virtualized Table Selects', () => {
             </div>
         `);
         const el = test.querySelector('sp-table') as Table;
+
         el.selected = [];
 
         await tableLayoutComplete(el);
@@ -269,6 +273,7 @@ describe('Virtualized Table Selects', () => {
             </div>
         `);
         const el = test.querySelector('sp-table') as Table;
+
         el.selected = ['1'];
         await tableLayoutComplete(el);
 
@@ -499,6 +504,7 @@ it('renders custom content at a particular row and does not select it', async ()
     const tableHeadCheckboxCell = el.querySelector(
         'sp-table-head sp-table-checkbox-cell'
     ) as TableCheckboxCell;
+
     tableHeadCheckboxCell.checkbox.click();
     await elementUpdated(el);
 

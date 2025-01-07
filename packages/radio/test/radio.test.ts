@@ -25,6 +25,7 @@ import { sendKeys } from '@web/test-runner-commands';
 
 function labelNodeForRadio(radio: Radio): Node {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');
+
     const slotEl = radio.shadowRoot.querySelector('slot') as HTMLSlotElement;
 
     return slotEl.assignedNodes()[0];
@@ -34,16 +35,14 @@ describe('Radio', () => {
     let testDiv!: HTMLDivElement;
 
     beforeEach(async () => {
-        testDiv = await fixture<HTMLDivElement>(
-            html`
-                <div id="test-radio">
-                    <sp-radio value="first" checked>Option 1</sp-radio>
-                    <sp-radio value="second">Option 2</sp-radio>
-                    <sp-radio value="third" autofocus>Option 3</sp-radio>
-                    <sp-radio value="fourth" disabled>Option 4</sp-radio>
-                </div>
-            `
-        );
+        testDiv = await fixture<HTMLDivElement>(html`
+            <div id="test-radio">
+                <sp-radio value="first" checked>Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+                <sp-radio value="third" autofocus>Option 3</sp-radio>
+                <sp-radio value="fourth" disabled>Option 4</sp-radio>
+            </div>
+        `);
     });
     it('loads', async () => {
         const el = testDiv.querySelector('sp-radio[value=first]') as Radio;
@@ -70,8 +69,10 @@ describe('Radio', () => {
         let value = '';
         let checked = false;
         const el = testDiv.querySelector('[value=third]') as Radio;
+
         el.addEventListener('change', (event) => {
             const target = event.target as Radio;
+
             value = target.value;
             checked = target.checked;
         });
@@ -125,6 +126,7 @@ describe('Radio', () => {
 
     describe('accepts "clicks"', () => {
         let el!: Radio;
+
         beforeEach(async () => {
             el = await fixture<Radio>(html`
                 <sp-radio>Component</sp-radio>
@@ -158,6 +160,7 @@ describe('Radio', () => {
                 boundingClientRecrt.x + boundingClientRecrt.width / 2,
                 boundingClientRecrt.y + boundingClientRecrt.height / 2,
             ];
+
             await sendMouse({
                 steps: [
                     {
@@ -182,6 +185,7 @@ describe('Radio', () => {
         const el = await fixture<Radio>(html`
             <sp-radio checked readonly>Component</sp-radio>
         `);
+
         expect(el.checked).to.be.true;
 
         el.click();

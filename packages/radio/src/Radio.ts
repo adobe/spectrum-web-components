@@ -27,12 +27,13 @@ import radioStyles from './radio.css.js';
  * @element sp-radio
  *
  * @slot - text label of the Radio button
- * @attr invalid - Uses the invalid style
- * @attr disabled - Uses the disabled style
- * @attr checked - Represents when the input is checked
- * @attr value - Identifies this radio button within its radio group
  *
  * @fires change - When the input is interacted with and its state is changed
+ *
+ * @attribute invalid - Uses the invalid style
+ * @attribute disabled - Uses the disabled style
+ * @attribute checked - Represents when the input is checked
+ * @attribute value - Identifies this radio button within its radio group
  */
 export class Radio extends SizedMixin(
     FocusVisiblePolyfillMixin(SpectrumElement),
@@ -44,6 +45,7 @@ export class Radio extends SizedMixin(
 
     /**
      * When this control is rendered, focus it automatically
+     *
      * @private
      */
     @property({ type: Boolean })
@@ -71,6 +73,7 @@ export class Radio extends SizedMixin(
         if (this.disabled) {
             return;
         }
+
         this.activate();
     }
 
@@ -80,7 +83,7 @@ export class Radio extends SizedMixin(
              * Trick :focus-visible polyfill into thinking keyboard based focus
              *
              * @private
-             **/
+             */
             this.dispatchEvent(
                 new KeyboardEvent('keydown', {
                     code: 'Tab',
@@ -94,6 +97,7 @@ export class Radio extends SizedMixin(
         if (this.checked) {
             return;
         }
+
         this.checked = true;
         this.dispatchEvent(
             new Event('change', {
@@ -120,9 +124,11 @@ export class Radio extends SizedMixin(
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('role', 'radio');
+
         if (!this.hasAttribute('tabindex')) {
             this.tabIndex = 0;
         }
+
         this.manageAutoFocus();
         this.addEventListener('click', this.activate);
         this.addEventListener('keyup', this.handleKeyup);
@@ -130,6 +136,7 @@ export class Radio extends SizedMixin(
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
+
         if (changes.has('invalid')) {
             if (this.invalid) {
                 this.setAttribute('aria-invalid', 'true');
@@ -137,6 +144,7 @@ export class Radio extends SizedMixin(
                 this.removeAttribute('aria-invalid');
             }
         }
+
         if (changes.has('checked')) {
             if (this.checked) {
                 this.setAttribute('aria-checked', 'true');
@@ -144,6 +152,7 @@ export class Radio extends SizedMixin(
                 this.setAttribute('aria-checked', 'false');
             }
         }
+
         if (changes.has('disabled')) {
             if (this.disabled) {
                 this.setAttribute('aria-disabled', 'true');

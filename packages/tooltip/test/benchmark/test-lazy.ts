@@ -27,6 +27,7 @@ const handleSlottableRequest = (event: SlottableRequestEvent): void => {
             : html`
                   <sp-tooltip>Tip me!</sp-tooltip>
               `;
+
     render(template, event.target as HTMLElement);
 };
 

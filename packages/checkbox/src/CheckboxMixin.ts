@@ -35,6 +35,9 @@ export interface CheckboxElement {
     readonly?: boolean;
 }
 
+/**
+ *
+ */
 export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<CheckboxElement> {
@@ -54,8 +57,10 @@ export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
         public handleChange(): void {
             if (this.readonly) {
                 this.inputElement.checked = this.checked;
+
                 return;
             }
+
             this.checked = this.inputElement.checked;
 
             const changeEvent = new CustomEvent('change', {
@@ -84,5 +89,6 @@ export function CheckboxMixin<T extends Constructor<ReactiveElement>>(
             `;
         }
     }
+
     return MixedElement;
 }

@@ -48,6 +48,7 @@ export const defaultNormalization: SliderNormalization = {
 const MinConverter = {
     fromAttribute: (value: string): number | 'previous' => {
         if (value === 'previous') return value;
+
         return parseFloat(value);
     },
     toAttribute: (value: 'previous' | number): string => {
@@ -58,6 +59,7 @@ const MinConverter = {
 const MaxConverter = {
     fromAttribute: (value: string): number | 'next' => {
         if (value === 'next') return value;
+
         return parseFloat(value);
     },
     toAttribute: (value: 'next' | number): string => {
@@ -136,6 +138,7 @@ export class SliderHandle extends Focusable {
     protected override update(changes: PropertyValues): void {
         if (!this.hasUpdated) {
             const { max, min } = this as { max: number; min: number };
+
             if (this.value == null) {
                 if (!isNaN(max) && !isNaN(min)) {
                     this.value = max < min ? min : min + (max - min) / 2;
@@ -150,14 +153,17 @@ export class SliderHandle extends Focusable {
         ) {
             delete this._numberFormatCache;
         }
+
         if (changes.has('value')) {
             const oldValue = changes.get('value');
+
             if (oldValue != null) {
                 this.updateComplete.then(() => {
                     this.handleController?.setValueFromHandle(this);
                 });
             }
         }
+
         this.handleController?.handleHasChanged(this);
         super.update(changes);
     }
@@ -191,6 +197,7 @@ export class SliderHandle extends Focusable {
             this.languageResolver.language !== this._numberFormatCache.language
         ) {
             let numberFormatter: NumberFormatter;
+
             try {
                 numberFormatter = new NumberFormatter(
                     this.languageResolver.language,
@@ -206,25 +213,30 @@ export class SliderHandle extends Focusable {
                     unitDisplay,
                     ...formatOptionsNoUnit
                 } = this.formatOptions || {};
+
                 if (style === 'unit') {
                     this._forcedUnit = unit as string;
                 }
+
                 numberFormatter = new NumberFormatter(
                     this.languageResolver.language,
                     formatOptionsNoUnit
                 );
             }
+
             this._numberFormatCache = {
                 language: this.languageResolver.language,
                 numberFormat: numberFormatter,
             };
         }
+
         /* c8 ignore next */
         return this._numberFormatCache?.numberFormat;
     }
 
     public get numberFormat(): NumberFormatter | undefined {
         if (!this.formatOptions) return;
+
         return this.getNumberFormat();
     }
 }

@@ -46,6 +46,7 @@ export const Default = ({ onChange, onInput }: StoryArgs): TemplateResult => {
         <sp-color-area
             @input=${({ target }: Event & { target: ColorArea }) => {
                 const next = target.nextElementSibling as HTMLElement;
+
                 next.textContent = target.color as string;
                 next.style.color = target.color as string;
                 onInput(target.value as string);
@@ -66,6 +67,7 @@ export const joint = (): TemplateResult => {
                 @input=${({ target }: Event & { target: ColorArea }) => {
                     const next = target.nextElementSibling as ColorSlider;
                     const display = next.nextElementSibling as HTMLElement;
+
                     display.textContent = target.color as string;
                     display.style.color = target.color as string;
                     next.color = target.color;
@@ -118,6 +120,7 @@ export const canvas = (): TemplateResult => {
 class CanvasWriter extends HTMLElement {
     writeToCanvas(): void {
         const { previousElementSibling } = this;
+
         if (previousElementSibling) {
             const canvas = previousElementSibling.querySelector(
                 'canvas[slot="gradient"]'
@@ -127,6 +130,7 @@ class CanvasWriter extends HTMLElement {
                 canvas.width = canvas.offsetWidth;
                 canvas.height = canvas.offsetHeight;
                 const context = canvas.getContext('2d');
+
                 if (context) {
                     context.rect(0, 0, canvas.width, canvas.height);
 
@@ -136,6 +140,7 @@ class CanvasWriter extends HTMLElement {
                         0,
                         canvas.height
                     );
+
                     gradB.addColorStop(0, 'white');
                     gradB.addColorStop(1, 'black');
                     const gradC = context.createLinearGradient(
@@ -144,6 +149,7 @@ class CanvasWriter extends HTMLElement {
                         canvas.width,
                         0
                     );
+
                     gradC.addColorStop(0, 'hsla(0,100%,50%,0)');
                     gradC.addColorStop(1, 'hsla(0,100%,50%,1)');
 

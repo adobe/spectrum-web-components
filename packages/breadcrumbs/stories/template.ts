@@ -38,6 +38,7 @@ const dummyOrganizer = [
 
 export const getBreadcrumbsWithLinks = (count: number): TemplateResult[] => {
     const breadcrumbs: TemplateResult[] = [];
+
     for (let i = 0; i < count; i++) {
         breadcrumbs.push(html`
             <sp-breadcrumb-item href=${window.location.href}>
@@ -45,11 +46,13 @@ export const getBreadcrumbsWithLinks = (count: number): TemplateResult[] => {
             </sp-breadcrumb-item>
         `);
     }
+
     return breadcrumbs;
 };
 
 export const getBreadcrumbs = (count: number): TemplateResult[] => {
     const breadcrumbs: TemplateResult[] = [];
+
     for (let i = 0; i < count; i++) {
         breadcrumbs.push(html`
             <sp-breadcrumb-item value=${i}>
@@ -57,6 +60,7 @@ export const getBreadcrumbs = (count: number): TemplateResult[] => {
             </sp-breadcrumb-item>
         `);
     }
+
     return breadcrumbs;
 };
 

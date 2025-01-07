@@ -73,6 +73,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
                 </span>
             `,
         ];
+
         return content;
     }
 
@@ -90,6 +91,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             event.preventDefault();
             event.stopImmediatePropagation();
             event.stopPropagation();
+
             return false;
         }
 
@@ -104,6 +106,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
 
     private shouldProxyClick(): boolean {
         let handled = false;
+
         if (this.anchorElement) {
             // click HTML anchor element by proxy
             this.anchorElement.click();
@@ -112,12 +115,14 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         } else if (this.type !== 'button') {
             // create an HTML Button Element by proxy, click it, and remove it
             const proxy = document.createElement('button');
+
             proxy.type = this.type;
             this.insertAdjacentElement('afterend', proxy);
             proxy.click();
             proxy.remove();
             handled = true;
         }
+
         return handled;
     }
 
@@ -146,14 +151,17 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
 
     protected handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
+
         switch (code) {
             case 'Space':
                 event.preventDefault();
+
                 // allows button to activate when `Space` is pressed
                 if (typeof this.href === 'undefined') {
                     this.addEventListener('keyup', this.handleKeyup);
                     this.active = true;
                 }
+
                 break;
             default:
                 break;
@@ -162,6 +170,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
 
     private handleKeypress(event: KeyboardEvent): void {
         const { code } = event;
+
         switch (code) {
             case 'Enter':
             case 'NumpadEnter':
@@ -175,6 +184,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
 
     protected handleKeyup(event: KeyboardEvent): void {
         const { code } = event;
+
         switch (code) {
             case 'Space':
                 this.removeEventListener('keyup', this.handleKeyup);
@@ -212,9 +222,11 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
 
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
+
         if (!this.hasAttribute('tabindex')) {
             this.setAttribute('tabindex', '0');
         }
+
         if (changed.has('label')) {
             if (this.label) {
                 this.setAttribute('aria-label', this.label);
@@ -222,6 +234,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
                 this.removeAttribute('aria-label');
             }
         }
+
         this.manageAnchor();
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('keypress', this.handleKeypress);
@@ -229,6 +242,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
 
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
+
         if (changed.has('href')) {
             this.manageAnchor();
         }
@@ -240,6 +254,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     }
     protected override update(changes: PropertyValues): void {
         super.update(changes);
+
         if (changes.has('label')) {
             if (this.label) {
                 this.setAttribute('aria-label', this.label);

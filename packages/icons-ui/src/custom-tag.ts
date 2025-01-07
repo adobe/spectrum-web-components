@@ -27,6 +27,7 @@ export const tag = function (
     if (customTemplateLiteralTag) {
         return customTemplateLiteralTag(strings, ...values);
     }
+
     return values.reduce(
         (acc: string, v, idx) =>
             (acc as string) + (v as string) + strings[idx + 1],

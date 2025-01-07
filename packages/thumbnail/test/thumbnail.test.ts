@@ -57,6 +57,7 @@ describe('Thumbnail', () => {
         `);
 
         const background = el.shadowRoot.querySelector('.background');
+
         expect(background).to.not.be.null;
     });
     it('renders the opacity checkerboard and slot', async () => {
@@ -72,13 +73,16 @@ describe('Thumbnail', () => {
         const checkerboard = el.shadowRoot.querySelector(
             '.opacity-checkerboard.layer-inner'
         );
+
         expect(checkerboard).to.not.be.null;
 
         const slot = checkerboard?.querySelector('slot');
+
         expect(slot).to.not.be.null;
     });
     describe('dev mode', () => {
         let consoleWarnStub!: ReturnType<typeof stub>;
+
         before(() => {
             window.__swc.verbose = true;
             consoleWarnStub = stub(console, 'warn');

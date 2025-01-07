@@ -425,6 +425,7 @@ export const draggable = (): TemplateResult => {
             event.offsetY
         );
     };
+
     return html`
         <sp-button>
             A simple button that should not be included in the DragImage

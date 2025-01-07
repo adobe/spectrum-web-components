@@ -30,8 +30,8 @@ export class IconsMedium extends IconsetSVG {
     }
     /**
      * Overrides createIconName to make icon strings compatible with spectrum-icon id format
-     * @param icon
-     * @param size
+     *
+     * @param icon - The name of the icon to be used in the SVG element
      */
     protected override getSVGIconName(icon: string): string {
         return `spectrum-icon-${icon}`;

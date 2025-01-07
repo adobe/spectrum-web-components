@@ -59,6 +59,7 @@ describe('Badge', () => {
     });
     describe('dev mode', () => {
         let consoleWarnStub!: ReturnType<typeof stub>;
+
         before(() => {
             window.__swc.verbose = true;
             consoleWarnStub = stub(console, 'warn');
@@ -100,6 +101,7 @@ describe('Badge', () => {
 
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
+
             expect(
                 (spyCall.args.at(0) as string).includes('"variant"'),
                 'confirm variant-centric message'

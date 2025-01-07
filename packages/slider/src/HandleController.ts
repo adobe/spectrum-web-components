@@ -57,12 +57,43 @@ export interface HandleValueDictionary {
     [key: string]: number;
 }
 
+/**
+ * Manages the handles of a slider component.
+ *
+ * @fires change - An alteration to the value of the element has been committed by the user.
+ * @fires input - Dispatched when the value of a handle changes.
+ * @fires keydown - Trick :focus-visible polyfill into thinking keyboard based focus
+ * @fires sp-slider-handle-ready - Dispatched when a handle is upgraded.
+ */
 export class HandleController {
+    /**
+     * The host slider element.
+     */
     private host!: Slider;
+
+    /**
+     * A map of handle IDs to slider handles.
+     */
     private handles: Map<string, SliderHandle> = new Map();
+
+    /**
+     * The model values of the slider.
+     */
     private model: ModelValue[] = [];
+
+    /**
+     * The order of the handles.
+     */
     private handleOrder: string[] = [];
+
+    /**
+     * The handle currently being dragged.
+     */
     private draggingHandle?: SliderHandle;
+
+    /**
+     * A weak map of slider handles to handle references.
+     */
     private handleRefMap?: WeakMap<SliderHandle, HandleReference>;
 
     constructor(host: Slider) {
@@ -81,27 +112,43 @@ export class HandleController {
         this.extractModelFromLightDom();
     }
 
+    /**
+     * Gets the values of the handles.
+     */
     public get values(): HandleValueDictionary {
         const result: HandleValueDictionary = {};
+
         for (const model of this.handles.values()) {
             result[model.handleName] = model.value;
         }
+
         return result;
     }
 
+    /**
+     * Gets the number of handles.
+     */
     public get size(): number {
         return this.handles.size;
     }
 
+    /**
+     * Gets the input element for a given handle.
+     * Throws an error if the handle does not exist.
+     */
     public inputForHandle(handle: SliderHandle): HTMLInputElement | undefined {
         if (this.handles.has(handle.handleName)) {
             const { input } = this.getHandleElements(handle) || {};
+
             return input;
         }
-        /* c8 ignore next 2 */
+
         throw new Error(`No input for handle "${handle.name}"`);
     }
 
+    /**
+     * Requests an update for the host slider element.
+     */
     public requestUpdate(): void {
         if (this.host.hasUpdated) {
             this.host.requestUpdate();
@@ -109,18 +156,19 @@ export class HandleController {
     }
 
     /**
-     * It is possible for value attributes to be set programmatically. The <input>
+     * It is possible for value attributes to be set programmatically. The `<input>`
      * for a particular slider needs to have an opportunity to validate any such
      * values
      *
-     * @param handle Handle who's value needs validation
+     * @param handle - Handle who's value needs validation
      */
     public setValueFromHandle(handle: SliderHandle): void {
         const elements = this.getHandleElements(handle);
-        /* c8 ignore next */
+
         if (!elements) return;
 
         const { input } = elements;
+
         if (input.valueAsNumber === handle.value) {
             if (handle.dragging) {
                 handle.dispatchInputEvent();
@@ -129,15 +177,25 @@ export class HandleController {
             input.valueAsNumber = handle.value;
             this.requestUpdate();
         }
+
         handle.value = input.valueAsNumber;
     }
 
+    /**
+     * Handles changes to a slider handle.
+     * Requests an update for the host slider element if the handle has changed.
+     */
     public handleHasChanged(handle: SliderHandle): void {
         if (handle !== this.host) {
             this.requestUpdate();
         }
     }
 
+    /**
+     * Gets the formatted value for a given handle.
+     * Formats the value using the handle's number format or the host's number format.
+     * Appends the forced unit to the formatted value.
+     */
     public formattedValueForHandle(model: ModelValue): string {
         const { handle } = model;
         const numberFormat = handle.numberFormat ?? this.host.numberFormat;
@@ -145,21 +203,32 @@ export class HandleController {
             handle._forcedUnit === ''
                 ? this.host._forcedUnit
                 : handle._forcedUnit;
+
         return (
             handle.getAriaHandleText(model.value, numberFormat) + _forcedUnit
         );
     }
 
+    /**
+     * Gets the formatted values for all handles.
+     */
     public get formattedValues(): Map<string, string> {
         const result = new Map<string, string>();
+
         for (const model of this.model) {
             result.set(model.name, this.formattedValueForHandle(model));
         }
+
         return result;
     }
 
+    /**
+     * Gets the focus element for the slider.
+     * Returns the input element for the active handle or the number field if the input is not available.
+     */
     public get focusElement(): HTMLElement {
         const { input } = this.getActiveHandleElements();
+
         if (
             !input ||
             (this.host.editable &&
@@ -167,13 +236,22 @@ export class HandleController {
         ) {
             return this.host.numberField;
         }
+
         return input;
     }
 
+    /**
+     * Handles orientation changes.
+     * Updates the bounding rectangle of the slider.
+     */
     protected handleOrientation = (): void => {
         this.updateBoundingRect();
     };
 
+    /**
+     * Called when the host slider element is connected to the DOM.
+     * Adds event listeners for orientation changes.
+     */
     public hostConnected(): void {
         if ('orientation' in screen) {
             screen.orientation.addEventListener(
@@ -188,6 +266,10 @@ export class HandleController {
         }
     }
 
+    /**
+     * Called when the host slider element is disconnected from the DOM.
+     * Removes event listeners for orientation changes.
+     */
     public hostDisconnected(): void {
         if ('orientation' in screen) {
             screen.orientation.removeEventListener(
@@ -202,93 +284,140 @@ export class HandleController {
         }
     }
 
+    /**
+     * Called when the host slider element is updated.
+     * Updates the model and requests an update.
+     */
     public hostUpdate(): void {
         this.updateModel();
     }
 
-    // Since extractModelFromLightDom bails on the first un-upgraded handle,
-    // a maximum of one listener will be set up per extraction attempt.
+    /**
+     * Waits for a handle to be upgraded.
+     * Adds an event listener for the 'sp-slider-handle-ready' event if the handle is not upgraded.
+     *
+     * Since extractModelFromLightDom bails on the first un-upgraded handle,
+     * a maximum of one listener will be set up per extraction attempt.
+     */
     private waitForUpgrade(handle: HTMLElement): boolean {
         if (handle instanceof SliderHandle) {
             return false;
         }
+
         handle.addEventListener(
             'sp-slider-handle-ready',
             () => this.extractModelFromLightDom(),
             { once: true, passive: true }
         );
+
         return true;
     }
 
+    /**
+     * Extracts the model from the light DOM.
+     * Updates the handles and handle order based on the slotted handles.
+     */
     private extractModelFromLightDom = (): void => {
         let handles = [
             ...this.host.querySelectorAll('[slot="handle"]'),
         ] as SliderHandle[];
+
         if (handles.length === 0) {
             handles = [this.host as SliderHandle];
         }
+
         // extractModelFromLightDom depends on slotted handles already having been upgraded
         if (handles.some((h) => this.waitForUpgrade(h))) {
             return;
         }
+
         this.handles = new Map();
+
         this.handleOrder = [];
+
         handles.forEach((handle, index) => {
-            /* c8 ignore next */
             if (!handle.handleName?.length) {
                 handle.name = `handle${index + 1}`;
             }
+
             this.handles.set(handle.handleName, handle);
             this.handleOrder.push(handle.handleName);
             handle.handleController = this;
         });
+
         this.requestUpdate();
     };
 
+    /**
+     * Gets the name of the active handle.
+     */
     public get activeHandle(): string {
         return this.handleOrder[this.handleOrder.length - 1];
     }
 
+    /**
+     * Gets the ID of the input element for the active handle.
+     */
     public get activeHandleInputId(): string {
         const active = this.activeHandle;
         const index = this.model.findIndex((model) => model.name === active);
+
         return `input-${index}`;
     }
 
+    /**
+     * Activates the specified handle.
+     * Moves the handle to the end of the handle order.
+     */
     public activateHandle(name: string): void {
         const index = this.handleOrder.findIndex((item) => item === name);
+
         if (index >= 0) {
             this.handleOrder.splice(index, 1);
         }
+
         this.handleOrder.push(name);
     }
 
+    /**
+     * Gets the model value for the active handle.
+     */
     public get activeHandleModel(): ModelValue {
         const active = this.activeHandle;
+
         return this.model.find((model) => model.name === active)!;
     }
 
+    /**
+     * Gets the elements associated with the active handle.
+     */
     private getActiveHandleElements(): HandleComponents {
         const name = this.activeHandle;
         const handleSlider = this.handles.get(name) as SliderHandle;
         const elements = this.getHandleElements(
             handleSlider
         ) as HandleReference;
+
         return { model: handleSlider, ...elements };
     }
 
+    /**
+     * Gets the elements associated with a given handle.
+     */
     private getHandleElements(sliderHandle: SliderHandle): HandleReference {
         if (!this.handleRefMap) {
             this.handleRefMap = new WeakMap();
 
             const inputNodes =
                 this.host.shadowRoot.querySelectorAll('.handle > input');
+
             for (const inputNode of inputNodes) {
                 const input = inputNode as HTMLInputElement;
                 const handle = input.parentElement as HTMLElement;
                 const model = this.handles.get(
                     handle.getAttribute('name') as string
                 );
+
                 if (model) {
                     this.handleRefMap.set(model, { input, handle });
                 }
@@ -298,27 +427,42 @@ export class HandleController {
         const components = this.handleRefMap.get(
             sliderHandle
         ) as HandleReference;
+
         return components;
     }
 
+    /**
+     * Clears the cache of handle components.
+     */
     private clearHandleComponentCache(): void {
         delete this.handleRefMap;
     }
 
+    /**
+     * The bounding client rectangle of the slider track.
+     */
     private _boundingClientRect?: DOMRect;
 
+    /**
+     * Gets the bounding client rectangle of the slider track.
+     */
     private get boundingClientRect(): DOMRect {
         if (!this._boundingClientRect) {
             this._boundingClientRect = this.host.track.getBoundingClientRect();
         }
+
         return this._boundingClientRect;
     }
 
+    /**
+     * Updates the bounding client rectangle of the slider track.
+     */
     private updateBoundingRect(): void {
         delete this._boundingClientRect;
     }
 
     /**
+     * Extracts data from a pointer event.
      * Return the `input` and `model` associated with the event and
      * whether the `input` is a `resolvedInput` meaning it was acquired
      * from the `model` rather than the event.
@@ -332,23 +476,29 @@ export class HandleController {
             const model = input
                 ? input.model
                 : this.model.find((item) => item.name === this.activeHandle);
+
             if (!input && !!model) {
                 input = model.handle.focusElement as InputWithModel;
             }
+
             this._activePointerEventData = {
                 input,
                 model,
                 resolvedInput,
             };
         }
+
         return this._activePointerEventData;
     }
 
+    /**
+     * The active pointer event data.
+     */
     private _activePointerEventData!: DataFromPointerEvent | undefined;
 
     /**
-     * @description check for defaultvalue(value) property in sp-slider and reset on double click on sliderHandle
-     * @param event
+     * Handles double-click events on the slider handle.
+     * Resets the handle value to its default value if defined.
      */
     public handleDoubleClick(event: PointerEvent): void {
         const input = (event.target as Element).querySelector(
@@ -363,59 +513,89 @@ export class HandleController {
         }
     }
 
+    /**
+     * Handles pointerdown events on the slider handle.
+     * Initiates dragging and updates the handle value based on the pointer position.
+     */
     public handlePointerdown(event: PointerEvent): void {
         const { resolvedInput, model } = this.extractDataFromEvent(event);
+
         if (!model || this.host.disabled || event.button !== 0) {
             event.preventDefault();
+
             return;
         }
+
         this.host.track.setPointerCapture(event.pointerId);
         this.updateBoundingRect();
+
         if (event.pointerType === 'mouse') {
             this.host.labelEl.click();
         }
+
         this.draggingHandle = model.handle;
         model.handle.dragging = true;
         this.activateHandle(model.name);
+
         if (resolvedInput) {
             // When the input is resolved forward the pointer event to
             // `handlePointermove` in order to update the value/UI becuase
             // the pointer event was on the track not a handle
             this.handlePointermove(event);
         }
+
         this.requestUpdate();
     }
 
+    /**
+     * Handles pointerup events on the slider handle.
+     * Ends dragging and updates the handle value based on the pointer position.
+     */
     public handlePointerup(event: PointerEvent): void {
         const { input, model } = this.extractDataFromEvent(event);
+
         delete this._activePointerEventData;
+
         if (!model) return;
+
         if (event.pointerType === 'mouse') {
             this.host.labelEl.click();
         }
+
         this.cancelDrag(model);
         this.requestUpdate();
         this.host.track.releasePointerCapture(event.pointerId);
         this.dispatchChangeEvent(input, model.handle);
     }
 
+    /**
+     * Handles pointermove events on the slider handle.
+     * Updates the handle value based on the pointer position.
+     */
     public handlePointermove(event: PointerEvent): void {
         const { input, model } = this.extractDataFromEvent(event);
+
         if (!model) return;
-        /* c8 ignore next 3 */
+
         if (!this.draggingHandle) {
             return;
         }
+
         input.value = this.calculateHandlePosition(event, model).toString();
         model.handle.value = parseFloat(input.value);
         this.host.indeterminate = false;
         this.requestUpdate();
     }
 
+    /**
+     * Cancels dragging for the specified handle model.
+     */
     public cancelDrag(model?: ModelValue): void {
         model =
             model || this.model.find((item) => item.name === this.activeHandle);
+
         if (!model) return;
+
         model.handle.highlight = false;
         delete this.draggingHandle;
         model.handle.dragging = false;
@@ -426,6 +606,7 @@ export class HandleController {
      */
     private onInputChange = (event: Event): void => {
         const input = event.target as InputWithModel;
+
         input.model.handle.value = input.valueAsNumber;
 
         this.requestUpdate();
@@ -435,6 +616,7 @@ export class HandleController {
     private onInputFocus = (event: Event): void => {
         const input = event.target as InputWithModel;
         let isFocusVisible;
+
         try {
             isFocusVisible =
                 input.matches(':focus-visible') ||
@@ -443,19 +625,32 @@ export class HandleController {
         } catch (error) {
             isFocusVisible = this.host.matches('.focus-visible');
         }
+
         input.model.handle.highlight = isFocusVisible;
         this.requestUpdate();
     };
 
     private onInputBlur = (event: Event): void => {
         const input = event.target as InputWithModel;
+
         input.model.handle.highlight = false;
         this.requestUpdate();
     };
 
+    /**
+     *
+     *
+     * @memberof HandleController
+     *
+     * @param event - KeyboardEvent on input
+     *
+     * @private
+     *
+     */
     private onInputKeydown = (event: KeyboardEvent): void => {
         if (event.key == 'Escape') {
             const input = event.target as InputWithModel;
+
             if (
                 input.model.handle?.defaultValue !== undefined &&
                 input.model.handle.value !== input.model.handle.defaultValue
@@ -467,13 +662,19 @@ export class HandleController {
                 event.preventDefault();
                 event.stopPropagation();
             }
+
             return;
         }
+
         const input = event.target as InputWithModel;
+
         input.model.handle.highlight = true;
         this.requestUpdate();
     };
 
+    /**
+     * Dispatches a change event for the slider handle.
+     */
     private dispatchChangeEvent(
         input: HTMLInputElement,
         handle: SliderHandle
@@ -490,8 +691,9 @@ export class HandleController {
 
     /**
      * Returns the value under the cursor
-     * @param: PointerEvent on slider
-     * @return: Slider value that correlates to the position under the pointer
+     *
+     * @param event - PointerEvent on slider
+     * @returns Slider value that correlates to the position under the pointer
      */
     private calculateHandlePosition(
         event: PointerEvent | MouseEvent,
@@ -536,6 +738,7 @@ export class HandleController {
             }),
         };
         const ariaLabelledBy = isMultiHandle ? `label input-${index}` : 'label';
+
         return html`
             <div
                 class=${classMap(classes)}
@@ -575,8 +778,10 @@ export class HandleController {
 
     public render(): TemplateResult[] {
         this.clearHandleComponentCache();
+
         return this.model.map((model, index) => {
             const zIndex = this.handleOrder.indexOf(model.name) + 2;
+
             return this.renderHandle(
                 model,
                 index,
@@ -589,14 +794,17 @@ export class HandleController {
     /**
      * Returns a list of track segment [start, end] tuples where the values are
      * normalized to be between 0 and 1.
+     *
      * @returns A list of track segment tuples [start, end]
      */
     public trackSegments(): [number, number][] {
         const values = this.model.map((model) => model.normalizedValue);
+
         values.sort((a, b) => a - b);
 
         // The first segment always starts at 0
         values.unshift(0);
+
         return values.map((value, index, array) => [
             value,
             array[index + 1] ?? 1,
@@ -629,6 +837,7 @@ export class HandleController {
                 if (previous) {
                     for (let j = index - 1; j >= 0; j--) {
                         const item = handles[j];
+
                         if (typeof item.min === 'number') {
                             result.range.min = item.min;
                             break;
@@ -639,6 +848,7 @@ export class HandleController {
                         result.range.min
                     );
                 }
+
                 if (window.__swc.DEBUG) {
                     if (!previous) {
                         window.__swc.warn(
@@ -649,10 +859,12 @@ export class HandleController {
                     }
                 }
             }
+
             if (handle.max === 'next') {
                 if (next) {
                     for (let j = index + 1; j < handles.length; j++) {
                         const item = handles[j];
+
                         if (typeof item.max === 'number') {
                             result.range.max = item.max;
                             break;
@@ -660,6 +872,7 @@ export class HandleController {
                     }
                     result.clamp.max = Math.min(next.value, result.range.max);
                 }
+
                 if (window.__swc.DEBUG) {
                     if (!next) {
                         window.__swc.warn(
@@ -670,6 +883,7 @@ export class HandleController {
                     }
                 }
             }
+
             return result;
         };
 
@@ -699,6 +913,7 @@ export class HandleController {
                         : undefined,
                 ...rangeAndClamp,
             };
+
             return model;
         });
 
@@ -709,6 +924,7 @@ export class HandleController {
         const updates = [...this.handles.values()]
             .filter((handle) => handle !== this.host)
             .map((handle) => handle.updateComplete);
+
         await Promise.all(updates);
     }
 }

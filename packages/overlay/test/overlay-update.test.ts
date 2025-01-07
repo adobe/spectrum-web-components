@@ -31,14 +31,17 @@ describe('sp-update-overlays event', () => {
         await elementUpdated(item);
 
         const opened = oneEvent(el, 'sp-opened');
+
         el.open = 'click';
         await opened;
 
         const height1 = container.getBoundingClientRect().height;
+
         item.click();
         await elementUpdated(item);
 
         const height2 = container.getBoundingClientRect().height;
+
         expect(height1).to.be.lessThan(height2);
     });
 });

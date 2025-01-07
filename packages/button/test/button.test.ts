@@ -42,6 +42,7 @@ describe('Button', () => {
     );
     describe('dev mode', () => {
         let consoleWarnStub!: ReturnType<typeof stub>;
+
         before(() => {
             window.__swc.verbose = true;
             consoleWarnStub = stub(console, 'warn');
@@ -63,6 +64,7 @@ describe('Button', () => {
             expect(consoleWarnStub.called).to.be.true;
 
             const spyCall = consoleWarnStub.getCall(0);
+
             expect(
                 (spyCall.args.at(0) as string).includes('deprecated'),
                 'confirm deprecated variant warning'
@@ -125,6 +127,7 @@ describe('Button', () => {
             let updateComplete2 = -1;
 
             const el = document.createElement('sp-button');
+
             el.autofocus = true;
             el.addEventListener('keydown', () => {
                 keydownTime = performance.now();
@@ -262,6 +265,7 @@ describe('Button', () => {
 
             await elementUpdated(el);
             const input = document.createElement('input');
+
             el.insertAdjacentElement('beforebegin', input);
             input.focus();
             expect(document.activeElement === input).to.be.true;
@@ -404,6 +408,7 @@ describe('Button', () => {
                     Click me
                 </sp-button>
             `);
+
             await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('Pending');
 
@@ -434,6 +439,7 @@ describe('Button', () => {
                     Click me
                 </sp-button>
             `);
+
             await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('test');
 
@@ -473,6 +479,7 @@ describe('Button', () => {
             let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
                 children: NamedNode[];
             };
+
             expect(
                 findAccessibilityNode<NamedNode>(
                     snapshot,
