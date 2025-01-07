@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-menu-sectionHeading.css');
+@import url('./menu-sectionHeading-overrides.css');
 
 :host {
     margin: 0;
