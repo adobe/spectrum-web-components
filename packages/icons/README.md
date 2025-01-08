@@ -23,3 +23,7 @@ When looking to leverage the `IconsMedium` or `IconsLarge` base classes as a typ
 ```
 import { IconsMedium, IconsLarge } from '@spectrum-web-components/icons';
 ```
+
+### Deprecated
+
+`Icons` package has been deprecated in favor of removing the `Iconset` package from the library and it will be removed in an upcoming release. Using a technique that ensures only the icons actually leveraged in your application are present in your build, like UI Icons (../icons-ui/) or Workflow Icons (../icons-workflow/), will ensure smaller bundles and higher performance for you visitor. For non-Spectrum icons, you can still slot SVG and image content into an [`sp-icon` element](../icon/) or sanitize the SVG to a template literal so that it can be returned from the `render()` method in an extension of `IconBase` to create your own named icon element.
