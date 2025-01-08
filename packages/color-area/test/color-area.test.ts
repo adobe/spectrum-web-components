@@ -846,6 +846,27 @@ describe('ColorArea', () => {
         expect(el.y, 'new y').to.equal(0.5);
         expect(el.color).to.equal('hsv(100, 0%, 50%)');
     });
+    it('updates gradient when hue value changes', async () => {
+        const el = await fixture<ColorArea>(html`
+            <sp-color-area hue="100"></sp-color-area>
+        `);
+
+        await elementUpdated(el);
+
+        const gradient = el.shadowRoot.querySelector(
+            '.gradient'
+        ) as HTMLElement;
+        const initialBackground = gradient.style.background;
+
+        // Change the hue value
+        el.hue = 200;
+        await elementUpdated(el);
+
+        const updatedBackground = gradient.style.background;
+
+        // Verify that the gradient background has been updated
+        expect(initialBackground).to.not.equal(updatedBackground);
+    });
     it('retains `hue` value when s = 0 in HSV object format', async () => {
         let inputColor = { h: 100, s: 0.5, v: 0.5 };
 
