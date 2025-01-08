@@ -17,10 +17,7 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import {
-    ifDefined,
-    styleMap,
-} from '@spectrum-web-components/base/src/directives.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
@@ -455,7 +452,7 @@ export class ColorArea extends SpectrumElement {
             <div
                 @pointerdown=${this.handleAreaPointerdown}
                 class="gradient"
-                style=${styleMap(style)}
+                style="background: ${style.background};"
             >
                 <slot name="gradient"></slot>
             </div>
