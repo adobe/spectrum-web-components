@@ -24,6 +24,25 @@ export const chromium = playwrightLauncher({
         }),
 });
 
+/**
+ * @todo Remove this configuration and its usage in the Coveralls CI workflow
+ * once the Playwright version mismatch between @web/test-runner-playwright
+ * and the installed Playwright version is resolved.
+ */
+export const coverallsChromium = playwrightLauncher({
+    product: 'chromium',
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+            permissions: ['clipboard-read', 'clipboard-write'],
+        }),
+    launchOptions: {
+        executablePath:
+            '/home/runner/.cache/ms-playwright/chromium-1148/chrome-linux/chrome',
+        headless: true,
+    },
+});
+
 export const chromiumWithMemoryTooling = playwrightLauncher({
     product: 'chromium',
     createBrowserContext: ({ browser }) =>
