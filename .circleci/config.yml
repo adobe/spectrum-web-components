@@ -142,7 +142,7 @@ jobs:
                       source $BASH_ENV
             - run:
                   name: Lint commit message
-                  command: echo "$COMMIT_MESSAGE" | npx commitlint --config commitlint.config.cjs
+                  command: echo "$COMMIT_MESSAGE" | yarn commitlint --config commitlint.config.cjs
 
     test-chromium:
         executor: node
