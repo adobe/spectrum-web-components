@@ -5613,10 +5613,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-8.0.0-s2-foundations.16.tgz#3391af0b7cf89b4b7e658621f7fa42d8fa4e3985"
   integrity sha512-ydz8joF4rNmbpJFhnNL2UrhmWKEo9vP3LAKQaTV7HPZGeLZVLsuIt7+ackynJIJDUsBcthxMTIKi1g1eSmXsWA==
 
-"@spectrum-css/thumbnail@6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/thumbnail/-/thumbnail-6.2.0.tgz#0fe5755de787b08070713ccb80975d340adcb916"
-  integrity sha512-7nZ284oMt1AuOFbxg90KCd9BbN/Jsu/gWpoLsdS6KTI4GLmlZq5dVfB3X/zuR9LWOXTK68PLYZ9wKQQzZ1N7nA==
+"@spectrum-css/thumbnail@7.0.0-s2-foundations.18":
+  version "7.0.0-s2-foundations.18"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/thumbnail/-/thumbnail-7.0.0-s2-foundations.18.tgz#652b4c846efef229505a4311b2015f0f2bf940d5"
+  integrity sha512-8l/WwT4VH532qpkHfGf6sTu1cTVOIWbZtBvnrxTA8CWX+3e2hnGkp4yqhSMg9RVZk3A279ImSHzUJ9xFb7sNEg==
 
 "@spectrum-css/toast@11.0.0-s2-foundations.15":
   version "11.0.0-s2-foundations.15"

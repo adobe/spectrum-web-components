@@ -6725,6 +6725,7 @@
     --system-textfield-size-xl-text-area-min-block-size-quiet: var(
         --spectrum-component-height-300
     );
+    --system-thumbnail-border-radius: var(--spectrum-corner-radius-75);
     --system-toast-background-color-default: var(
         --spectrum-neutral-subdued-background-color-default
     );
