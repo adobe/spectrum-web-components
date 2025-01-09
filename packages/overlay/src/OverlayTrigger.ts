@@ -177,9 +177,9 @@ export class OverlayTrigger extends SpectrumElement {
         super.update(changes);
     }
 
-    async performUpdate() {
+    override async performUpdate() {
         // Delay update to avoid infinite loop on render - https://github.com/adobe/spectrum-web-components/issues/4689
-        await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
         super.performUpdate();
     }
 
