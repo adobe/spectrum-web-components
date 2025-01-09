@@ -56,6 +56,9 @@
             "path": "packages/button-group"
         },
         {
+            "path": "packages/calendar"
+        },
+        {
             "path": "packages/card"
         },
         {
@@ -90,6 +93,9 @@
         },
         {
             "path": "packages/contextual-help"
+        },
+        {
+            "path": "packages/date-time-picker"
         },
         {
             "path": "packages/dialog"

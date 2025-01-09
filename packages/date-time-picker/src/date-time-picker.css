@@ -1,0 +1,166 @@
+/* 
+Copyright 2023 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+@import url('@spectrum-web-components/textfield/src/textfield.css');
+@import url('./spectrum-date-time-picker.css');
+
+:host {
+    --status-icon-size: var(
+        --mod-textfield-icon-size-invalid,
+        var(--spectrum-textfield-icon-size-invalid)
+    );
+    --picker-button-size: var(
+        --mod-textfield-height,
+        var(--spectrum-textfield-height)
+    );
+    --input-spacing: var(
+        --mod-textfield-spacing-inline,
+        var(--spectrum-textfield-spacing-inline)
+    );
+    --input-border-width: var(
+        --mod-textfield-border-width,
+        var(--spectrum-textfield-border-width)
+    );
+    --text-to-icon: var(
+        --mod-textfield-icon-spacing-inline-start-invalid,
+        var(--spectrum-textfield-icon-spacing-inline-start-invalid)
+    );
+    --spectrum-datepicker-input-width: var(--spectrum-textfield-width);
+    --mod-datepicker-min-width: calc(
+        var(--spectrum-datepicker-initial-width) * 2 + var(--text-to-icon)
+    );
+
+    flex-wrap: wrap;
+}
+
+:host #textfield {
+    display: inline-block;
+}
+
+:host .input,
+:host([quiet]) .input,
+:host([valid]) .input,
+:host([invalid]) .input {
+    inline-size: 100%;
+    padding-inline-end: calc(
+        var(--status-icon-size) + var(--picker-button-size) +
+            (var(--input-spacing) - var(--input-border-width)) +
+            var(--text-to-icon)
+    );
+}
+
+@media (hover: hover) {
+    :host([invalid]) #textfield:hover .input {
+        border-color: var(
+            --highcontrast-textfield-border-color-invalid-default,
+            var(
+                --mod-textfield-border-color-invalid-default,
+                var(--spectrum-textfield-border-color-invalid-default)
+            )
+        );
+    }
+}
+
+sp-picker-button:focus-visible {
+    border-color: var(
+        --highcontrast-textfield-focus-indicator-color,
+        var(
+            --mod-textfield-focus-indicator-color,
+            var(--spectrum-textfield-focus-indicator-color)
+        )
+    );
+    border-radius: var(
+        --mod-textfield-corner-radius,
+        var(--spectrum-textfield-corner-radius)
+    );
+}
+
+sp-popover {
+    overflow-y: auto;
+}
+
+sp-popover .popover-content {
+    padding: var(--spectrum-spacing-300);
+}
+
+.input-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    overflow: auto hidden;
+    scrollbar-width: none;
+    line-height: normal;
+}
+
+.input-content::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.literal-segment,
+.editable-segment {
+    display: inline-block;
+    height: 100%;
+    color: var(--spectrum-textfield-text-color-default);
+}
+
+.editable-segment {
+    padding: 0 0.15em;
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+    white-space: nowrap;
+    caret-color: transparent;
+    outline: none;
+}
+
+[dir='ltr'] .editable-segment {
+    text-align: start;
+}
+
+.literal-segment {
+    white-space: pre;
+    user-select: none;
+
+    /* Currently Safari needs this to work as intended.
+     * The literal segments should not be selectable.
+     */
+    -webkit-user-select: none; /* stylelint-disable-line */
+}
+
+.is-placeholder,
+.is-placeholder + .literal-segment {
+    color: var(--spectrum-gray-500);
+}
+
+.is-placeholder:not(:is(:lang(ja), :lang(ko), :lang(zh))) {
+    font-style: italic;
+}
+
+.editable-segment:focus-visible {
+    color: var(--spectrum-white);
+    background-color: var(
+        --highcontrast-textfield-focus-indicator-color,
+        var(
+            --mod-textfield-focus-indicator-color,
+            var(--spectrum-textfield-focus-indicator-color)
+        )
+    );
+}
+
+/**
+ * Hide selection because there is no way to avoid it entirely in Firefox
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1742153
+ */
+.editable-segment::selection {
+    background-color: transparent;
+}
