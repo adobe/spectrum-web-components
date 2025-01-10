@@ -92,6 +92,22 @@ governing permissions and limitations under the License.
         );
 }
 
+:host {
+    transition: background-color
+        var(
+            --highcontrast-table-transition-duration,
+            var(
+                --mod-table-transition-duration,
+                var(--spectrum-table-transition-duration)
+            )
+        )
+        ease-in-out;
+    cursor: pointer;
+    cursor: var(--mod-table-cursor-row-default, pointer);
+    border-block-start: none;
+    position: relative;
+}
+
 :host(:first-child) ::slotted(:first-child) {
     border-start-start-radius: var(
         --mod-table-border-radius,
@@ -118,22 +134,6 @@ governing permissions and limitations under the License.
         --mod-table-border-radius,
         var(--spectrum-table-border-radius)
     );
-}
-
-:host {
-    transition: background-color
-        var(
-            --highcontrast-table-transition-duration,
-            var(
-                --mod-table-transition-duration,
-                var(--spectrum-table-transition-duration)
-            )
-        )
-        ease-in-out;
-    cursor: pointer;
-    cursor: var(--mod-table-cursor-row-default, pointer);
-    border-block-start: none;
-    position: relative;
 }
 
 :host(:first-child) {
@@ -240,7 +240,7 @@ governing permissions and limitations under the License.
 }
 
 :host([drop-target]) {
-    --spectrum-table-border-color: var(
+    --mod-table-border-color: var(
         --highcontrast-table-focus-indicator-color,
         transparent
     );
@@ -520,11 +520,11 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Table-row--thumbnail {
-    --table-thumbnail-cell-block-spacing: var(
+    --spectrum-table-thumbnail-cell-block-spacing: var(
         --mod-table-thumbnail-block-spacing,
         var(--spectrum-table-thumbnail-block-spacing)
     );
-    --table-thumbnail-inner-content-block-spacing: max(
+    --spectrum-table-thumbnail-inner-content-block-spacing: max(
         0px,
         calc(
             (
@@ -549,8 +549,8 @@ governing permissions and limitations under the License.
 
 .spectrum-Table-row--thumbnail ::slotted(*) {
     padding-block: calc(
-        var(--table-thumbnail-cell-block-spacing) +
-            var(--table-thumbnail-inner-content-block-spacing)
+        var(--spectrum-table-thumbnail-cell-block-spacing) +
+            var(--spectrum-table-thumbnail-inner-content-block-spacing)
     );
 }
 
@@ -559,7 +559,7 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Table-row--thumbnail.spectrum-Table-row--collapsible {
-    --table-thumbnail-inner-minimum-block-spacing: max(
+    --spectrum-table-thumbnail-inner-minimum-block-spacing: max(
         0px,
         calc(
             (
@@ -574,11 +574,11 @@ governing permissions and limitations under the License.
                 ) / 2
         )
     );
-    --table-thumbnail-cell-block-spacing: max(
+    --spectrum-table-thumbnail-cell-block-spacing: max(
         var(
             --mod-table-thumbnail-block-spacing,
             var(--spectrum-table-thumbnail-block-spacing)
         ),
-        var(--table-thumbnail-inner-minimum-block-spacing)
+        var(--spectrum-table-thumbnail-inner-minimum-block-spacing)
     );
 }

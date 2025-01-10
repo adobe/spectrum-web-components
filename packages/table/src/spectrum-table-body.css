@@ -17,11 +17,12 @@ governing permissions and limitations under the License.
         var(--spectrum-table-border-radius)
     );
     border: none;
+    display: table-row-group;
     position: relative;
 }
 
 :host([drop-target]) {
-    --spectrum-table-border-color: transparent;
+    --mod-table-border-color: transparent;
     outline-width: var(
         --mod-table-focus-indicator-thickness,
         var(--spectrum-table-focus-indicator-thickness)
@@ -34,8 +35,4 @@ governing permissions and limitations under the License.
             var(--spectrum-table-drop-zone-outline-color)
         )
     );
-}
-
-:host {
-    display: table-row-group;
 }

@@ -25,27 +25,33 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    --spectrum-colorarea-border-color-rgb: 0, 0, 0;
+    --spectrum-colorarea-border-color-opacity: 0.1;
+    --spectrum-colorarea-border-color: rgba(
+        var(--spectrum-colorarea-border-color-rgb),
+        var(--spectrum-colorarea-border-color-opacity)
+    );
     cursor: default;
     -webkit-user-select: none;
     user-select: none;
     min-inline-size: var(
         --mod-colorarea-min-width,
-        var(--spectrum-colorarea-min-width)
+        var(--spectrum-color-area-minimum-width)
     );
     min-block-size: var(
         --mod-colorarea-min-height,
-        var(--spectrum-colorarea-min-height)
+        var(--spectrum-color-area-minimum-height)
     );
-    inline-size: var(--mod-colorarea-width, var(--spectrum-colorarea-width));
-    block-size: var(--mod-colorarea-height, var(--spectrum-colorarea-height));
+    inline-size: var(--mod-colorarea-width, var(--spectrum-color-area-width));
+    block-size: var(--mod-colorarea-height, var(--spectrum-color-area-height));
     box-sizing: border-box;
     border-radius: var(
         --mod-colorarea-border-radius,
-        var(--spectrum-colorarea-border-radius)
+        var(--spectrum-color-area-border-rounding)
     );
     border: var(
             --mod-colorarea-border-width,
-            var(--spectrum-colorarea-border-width)
+            var(--spectrum-color-area-border-width)
         )
         solid
         var(
@@ -69,12 +75,12 @@ governing permissions and limitations under the License.
         --highcontrast-colorarea-fill-color-disabled,
         var(
             --mod-colorarea-disabled-background-color,
-            var(--spectrum-colorarea-disabled-background-color)
+            var(--spectrum-disabled-background-color)
         )
     );
     border: var(
             --mod-colorarea-border-width,
-            var(--spectrum-colorarea-border-width)
+            var(--spectrum-color-area-border-width)
         )
         solid var(--highcontrast-colorarea-border-color-disabled);
 }
@@ -86,8 +92,8 @@ governing permissions and limitations under the License.
 .handle {
     transform: translate(
         calc(
-            var(--mod-colorarea-width, var(--spectrum-colorarea-width)) -
-                var(--spectrum-colorarea-border-width)
+            var(--mod-colorarea-width, var(--spectrum-color-area-width)) -
+                var(--spectrum-color-area-border-width)
         )
     );
     inset-block-start: 0;
@@ -103,7 +109,7 @@ governing permissions and limitations under the License.
     block-size: 100%;
     border-radius: var(
         --mod-colorarea-border-radius,
-        var(--spectrum-colorarea-border-radius)
+        var(--spectrum-color-area-border-rounding)
     );
 }
 
