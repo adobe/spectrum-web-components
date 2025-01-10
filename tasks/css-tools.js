@@ -14,7 +14,37 @@ import path from 'path';
 import fs from 'fs';
 import { bundleAsync } from 'lightningcss';
 import { fileURLToPath } from 'url';
+import { createRequire } from 'node:module';
 import { stripIndent } from 'common-tags';
+import 'colors';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
+
+const log = {
+    success: (message) => console.log(`${'✓'.green}  ${message}`),
+    fail: (message) => console.log(`${'✗'.red}  ${message}`),
+};
+
+const getPackagePath = (packageName) => {
+    let filepath;
+
+    // Escape hatch for local packages: @spectrum-web-components
+    if (packageName.startsWith('@spectrum-web-components')) {
+        return path.resolve(
+            path.join(__dirname, '..', 'node_modules', packageName)
+        );
+    }
+
+    try {
+        filepath = require.resolve(packageName);
+    } catch (er) {
+        log.fail(`Could not find ${packageName} installed as a dependency`);
+        return new Error(er);
+    }
+
+    return filepath;
+};
 
 const wrapCSSResult = (content) => {
     return stripIndent`
@@ -26,22 +56,15 @@ const wrapCSSResult = (content) => {
     `;
 };
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const nodeModulesDir = path.resolve(__dirname, '..', 'node_modules');
-const configPath = path.resolve(path.join(__dirname, '..', 'config'));
-let header;
-try {
-    header = fs.readFileSync(path.join(configPath, 'license.js'), 'utf8');
-} catch (error) {
-    throw new Error(error);
+const licensePath = path.resolve(__dirname, '..', 'config', 'license.js');
+let header = '';
+if (fs.existsSync(licensePath)) {
+    header = fs.readFileSync(licensePath, 'utf8');
+    header = header.replace('<%= YEAR %>', new Date().getFullYear());
 }
 
-header = header.replace('<%= YEAR %>', new Date().getFullYear());
-
 export const processCSS = async (cssPath) => {
-    let wrappedCSS = header;
-    console.log(cssPath);
-    let { code, map } = await bundleAsync({
+    return bundleAsync({
         filename: cssPath,
         minify: true,
         errorRecovery: true,
@@ -52,16 +75,24 @@ export const processCSS = async (cssPath) => {
             },
             resolve(specifier, from) {
                 if (specifier.startsWith('./')) {
-                    const resolution = path.resolve(from, '..', specifier);
-                    return resolution;
+                    return path.resolve(from, '..', specifier);
                 } else {
-                    const resolution = path.resolve(nodeModulesDir, specifier);
-                    return resolution;
+                    return getPackagePath(specifier);
                 }
             },
         },
-    });
-    console.log(cssPath);
-    wrappedCSS += wrapCSSResult(code);
-    fs.writeFileSync(cssPath + '.ts', wrappedCSS, 'utf-8');
+    })
+        .then(({ code }) => {
+            log.success(cssPath.yellow + ' bundled successfully');
+
+            fs.writeFileSync(
+                `${cssPath}.ts`,
+                header + wrapCSSResult(code),
+                'utf-8'
+            );
+        })
+        .catch((er) => {
+            log.fail(cssPath.yellow + ' failed to bundle');
+            console.error(er);
+        });
 };

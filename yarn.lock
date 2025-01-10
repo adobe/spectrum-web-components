@@ -245,9 +245,9 @@ __metadata:
     "@webcomponents/webcomponentsjs": "npm:^2.8.0"
     alex: "npm:^11.0.1"
     cem-plugin-module-file-extensions: "npm:^0.0.5"
-    chalk: "npm:^5.0.1"
     chromatic: "npm:^11.20.0"
     chromedriver: "npm:^130.0.1"
+    colors: "npm:^1.4.0"
     common-tags: "npm:^1.8.2"
     custom-elements-manifest: "npm:^2.0.0"
     debounce: "npm:^2.0.0"
@@ -7664,15 +7664,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/commons@npm:11.0.0-s2-foundations.15":
-  version: 11.0.0-s2-foundations.15
-  resolution: "@spectrum-css/commons@npm:11.0.0-s2-foundations.15"
-  peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/c3692f7abae101dc3e45785a9f8213a59d001b006beb6fb796da524c09c3c2ce7b9b76ccaffde9afff7785644be21f51d8aeab6203a0277eb5b87eb63206853a
-  languageName: node
-  linkType: hard
-
 "@spectrum-css/contextualhelp@npm:4.0.0-s2-foundations.16":
   version: 4.0.0-s2-foundations.16
   resolution: "@spectrum-css/contextualhelp@npm:4.0.0-s2-foundations.16"
@@ -8126,13 +8117,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/thumbnail@npm:7.0.0-s2-foundations.18":
-  version: 7.0.0-s2-foundations.18
-  resolution: "@spectrum-css/thumbnail@npm:7.0.0-s2-foundations.18"
+"@spectrum-css/thumbnail@npm:7.0.0-s2-foundations.17":
+  version: 7.0.0-s2-foundations.17
+  resolution: "@spectrum-css/thumbnail@npm:7.0.0-s2-foundations.17"
   peerDependencies:
     "@spectrum-css/opacitycheckerboard": ">=2"
     "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/b20a00f987dec6d8abcd9229b3aeaf596aa838ff5926e1a79ef3f41367477f36f3c6a52cfd1f79f8482c63cc35c25340dd95b85218987a326121a204e078b86b
+  checksum: 10c0/fd8b82fbd72e38ed76d4d7028b46630d21e8ca359616e55c5788d1bc602c66678b3c069693fc8255e5d85faaa92ad07d68eac15aa548fb378c40170fa2e5d434
   languageName: node
   linkType: hard
 
@@ -8155,10 +8146,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/tokens@npm:14.3.1":
-  version: 14.3.1
-  resolution: "@spectrum-css/tokens@npm:14.3.1"
-  checksum: 10c0/b98034c2b7a22f263b31ae1259b1bccf67b43f78c26cd30564a3da7cba84fb68b4fab81e87d4104d72fb3325db0bedc3099dfdf2889556df559995cd7f454b51
+"@spectrum-css/tokens@npm:15.0.0":
+  version: 15.0.0
+  resolution: "@spectrum-css/tokens@npm:15.0.0"
+  checksum: 10c0/8bf9832e18cf7edcf89904e3d4aa67e060c88633dc7db1432a198bd4de3c7b68eaf99c2c213402bb70cbd6e82c51f958abb8d48f98eb807894c5ebc23f0bcfbb
   languageName: node
   linkType: hard
 
@@ -9129,9 +9120,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/styles@workspace:tools/styles"
   dependencies:
-    "@spectrum-css/commons": "npm:11.0.0-s2-foundations.15"
     "@spectrum-css/expressvars": "npm:^3.0.9"
-    "@spectrum-css/tokens": "npm:14.3.1"
+    "@spectrum-css/tokens": "npm:15.0.0"
     "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.0.0-s2-foundations.27"
     "@spectrum-css/typography": "npm:7.0.0-s2-foundations.17"
     "@spectrum-css/vars": "npm:^9.0.8"
@@ -9234,7 +9224,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/thumbnail@workspace:packages/thumbnail"
   dependencies:
-    "@spectrum-css/thumbnail": "npm:7.0.0-s2-foundations.18"
+    "@spectrum-css/thumbnail": "npm:7.0.0-s2-foundations.17"
     "@spectrum-web-components/base": "npm:^1.0.1"
     "@spectrum-web-components/opacity-checkerboard": "npm:^1.0.1"
   languageName: unknown
@@ -15119,7 +15109,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"colors@npm:1.4.0":
+"colors@npm:1.4.0, colors@npm:^1.4.0":
   version: 1.4.0
   resolution: "colors@npm:1.4.0"
   checksum: 10c0/9af357c019da3c5a098a301cf64e3799d27549d8f185d86f79af23069e4f4303110d115da98483519331f6fb71c8568d5688fa1c6523600044fd4a54e97c4efb
