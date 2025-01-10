@@ -208,7 +208,9 @@ jobs:
             - downstream
             - run:
                   name: Build docs
-                  command: yarn docs:preview
+                  command: |
+                      export NODE_OPTIONS="--max_old_space_size=4096 --preserve-symlinks"
+                      yarn docs:preview
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
