@@ -95,7 +95,7 @@
         "@spectrum-web-components/shared": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/tabs": "^6.0.0-s2-foundations.16"
+        "@spectrum-css/tabs": "^6.0.0-s2-foundations.17"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

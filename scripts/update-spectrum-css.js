@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-inner-declarations */
 
 /*
 Copyright 2020 Adobe. All rights reserved.
@@ -30,6 +31,14 @@ async function update() {
             );
             async function updateDependency(packageName, depType) {
                 if (packageName.startsWith('@spectrum-css')) {
+                    // don't update the version if the package name includes -s2 or -v2
+                    if (
+                        packageName.includes('-s2') ||
+                        packageName.includes('-v2')
+                    ) {
+                        return;
+                    }
+
                     const currentVersion = packageJSON[depType][packageName];
                     const targetVersion = await latestVersion(packageName, {
                         version: useLatest ? 'latest' : currentVersion,
