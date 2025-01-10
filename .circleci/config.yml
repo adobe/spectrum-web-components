@@ -30,7 +30,10 @@ commands:
             #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
             - run:
                   name: Installing Dependencies
-                  command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+                  command: |
+                      corepack enable
+                      yarn --immutable
+
             - save_cache:
                   paths:
                       - ~/.cache/yarn
@@ -123,18 +126,7 @@ jobs:
         executor: node
 
         steps:
-            - checkout
-            - restore_cache:
-                  keys:
-                      - v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            - run:
-                  name: Installing Dependencies
-                  command: yarn --ignore-scripts --frozen-lockfile --cache-folder ~/.cache/yarn
-            - save_cache:
-                  paths:
-                      - ~/.cache/yarn
-                      - .wireit
-                  key: v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - downstream
             - run:
                   name: Define environment variable with lastest commit's message
                   command: |
@@ -215,7 +207,7 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Generate Docs
+                  name: Build docs
                   command: yarn docs:preview
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |

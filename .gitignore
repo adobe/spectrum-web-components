@@ -103,3 +103,12 @@ chromatic.log
 chromatic-build-*.xml
 chromatic-diagnostics*.json
 chromatic.config.json
+
+# yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
