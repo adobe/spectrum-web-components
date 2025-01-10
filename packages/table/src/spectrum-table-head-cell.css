@@ -152,6 +152,7 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    display: table-cell;
     position: relative;
 }
 
@@ -198,10 +199,6 @@ governing permissions and limitations under the License.
         --mod-table-header-checkbox-block-spacing,
         var(--spectrum-table-header-checkbox-block-spacing)
     );
-}
-
-:host {
-    display: table-cell;
 }
 
 :host .spectrum-Table-scroller {

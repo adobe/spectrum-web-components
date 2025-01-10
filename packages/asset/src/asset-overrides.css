@@ -12,9 +12,6 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-asset-transition-duration: var(
-        --system-asset-transition-duration
-    );
     --spectrum-asset-folder-background-color: var(
         --system-asset-folder-background-color
     );

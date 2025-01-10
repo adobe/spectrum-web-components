@@ -98,9 +98,6 @@ governing permissions and limitations under the License.
             --highcontrast-table-divider-color,
             var(--mod-table-divider-color, var(--spectrum-table-divider-color))
         );
-}
-
-:host(:not([head-cell])) {
     box-sizing: border-box;
     font-size: var(
         --mod-table-row-font-size,
@@ -146,6 +143,7 @@ governing permissions and limitations under the License.
 
 :host(:not([head-cell])),
 :host([head-cell]) {
+    display: table-cell;
     position: relative;
 }
 
@@ -228,9 +226,4 @@ governing permissions and limitations under the License.
         --mod-table-header-checkbox-block-spacing,
         var(--spectrum-table-header-checkbox-block-spacing)
     );
-}
-
-:host(:not([head-cell])),
-:host([head-cell]) {
-    display: table-cell;
 }

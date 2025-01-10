@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-inner-declarations */
 
 /*
 Copyright 2020 Adobe. All rights reserved.
@@ -16,7 +17,9 @@ import { readFileSync, writeFileSync } from 'fs';
 import latestVersion from 'latest-version';
 import fg from 'fast-glob';
 
-const useLatest = process.argv[2] === '--latest';
+// What tag to target, defaults to latest
+// Example: `node scripts/update-spectrum-css.js s2-foundations` will target the latest version of the s2-foundations tag
+const targetTag = process.argv[2];
 
 async function update() {
     let updated = false;
@@ -30,9 +33,17 @@ async function update() {
             );
             async function updateDependency(packageName, depType) {
                 if (packageName.startsWith('@spectrum-css')) {
+                    // don't update the version if the package name includes -s2 or -v2
+                    if (
+                        packageName.includes('-s2') ||
+                        packageName.includes('-v2')
+                    ) {
+                        return;
+                    }
+
                     const currentVersion = packageJSON[depType][packageName];
                     const targetVersion = await latestVersion(packageName, {
-                        version: useLatest ? 'latest' : currentVersion,
+                        version: targetTag ? targetTag : 'latest',
                     });
                     const targetRange = `^${targetVersion}`;
                     if (currentVersion.replace('^', '') !== targetVersion) {
