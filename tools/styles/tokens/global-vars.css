@@ -719,7 +719,7 @@
     --spectrum-heading-cjk-size-xxs: var(--spectrum-font-size-100);
     --spectrum-heading-line-height: var(--spectrum-line-height-100);
     --spectrum-heading-cjk-line-height: var(--spectrum-cjk-line-height-100);
-    --spectrum-heading-margin-top-multiplier: 0.88888889;
+    --spectrum-heading-margin-top-multiplier: 0.888889;
     --spectrum-heading-margin-bottom-multiplier: 0.25;
     --spectrum-heading-color: var(--spectrum-gray-900);
     --spectrum-body-sans-serif-font-family: var(
@@ -925,7 +925,7 @@
     --spectrum-detail-size-s: var(--spectrum-font-size-50);
     --spectrum-detail-line-height: var(--spectrum-line-height-100);
     --spectrum-detail-cjk-line-height: var(--spectrum-cjk-line-height-100);
-    --spectrum-detail-margin-top-multiplier: 0.88888889;
+    --spectrum-detail-margin-top-multiplier: 0.888889;
     --spectrum-detail-margin-bottom-multiplier: 0.25;
     --spectrum-detail-letter-spacing: 0.06em;
     --spectrum-detail-sans-serif-text-transform: uppercase;
