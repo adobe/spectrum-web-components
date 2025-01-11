@@ -38,7 +38,8 @@ try {
     document.body.querySelector(':focus-visible');
 } catch (error) {
     hasFocusVisible = false;
-    import('./focus-visible');
+    //@ts-expect-error: dynamic import for focus-visible polyfill
+    import('focus-visible');
 }
 
 /**

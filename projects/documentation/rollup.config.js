@@ -64,11 +64,13 @@ export default async () => {
 
     const mode =
         process.env.ROLLUP_WATCH !== 'true' ? 'production' : 'development';
+
     mpaConfig.plugins.unshift(
         nodeResolve({
             exportConditions: ['browser', 'import', mode],
         })
     );
+
     mpaConfig.plugins.push(
         html({
             transformHtml: [
