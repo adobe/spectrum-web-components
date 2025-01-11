@@ -18,8 +18,12 @@ import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
-import path from 'path';
+import path, { dirname } from 'path';
 import Terser from 'terser';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const stringReplaceHtml = (source) => {
     return source
@@ -223,7 +227,7 @@ export default async () => {
             entries: [
                 {
                     find: '@swc-packages-internal',
-                    replacement: '../../packages/',
+                    replacement: path.resolve(__dirname, '../../packages/'),
                 },
             ],
         })
