@@ -38,9 +38,7 @@ try {
     document.body.querySelector(':focus-visible');
 } catch (error) {
     hasFocusVisible = false;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    import('focus-visible');
+    import('./focus-visible');
 }
 
 /**
@@ -56,7 +54,7 @@ try {
  * implementation that coordinates with the :focus-visible polyfill
  */
 export const FocusVisiblePolyfillMixin = <
-    T extends Constructor<MixableBaseClass>
+    T extends Constructor<MixableBaseClass>,
 >(
     SuperClass: T
 ): T => {
