@@ -9,9 +9,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { setCustomElementsManifest } from '@storybook/web-components';
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
-import cem from './custom-elements.json';
+import { setCustomElementsManifest } from '@storybook/web-components';
+import cem from './custom-elements.json' with { type: 'json' };
 
 setCustomElementsManifest(cem);
 
