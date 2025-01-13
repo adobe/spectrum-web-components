@@ -1,5 +1,0 @@
-{
-    "./src/*": "./src/*",
-    "./sp-icons-large.js": "./sp-icons-large.js",
-    "./sp-icons-medium.js": "./sp-icons-medium.js"
-}

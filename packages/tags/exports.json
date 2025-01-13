@@ -1,5 +1,0 @@
-{
-    "./src/*": "./src/*",
-    "./sp-tags.js": "./sp-tags.js",
-    "./sp-tag.js": "./sp-tag.js"
-}

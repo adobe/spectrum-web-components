@@ -1,5 +1,0 @@
-{
-    "./src/*": "./src/*.js",
-    "./sp-breadcrumbs.js": "./sp-breadcrumbs.js",
-    "./sp-breadcrumb-item.js": "./sp-breadcrumb-item.js"
-}
