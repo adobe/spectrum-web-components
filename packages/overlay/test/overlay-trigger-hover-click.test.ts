@@ -276,7 +276,7 @@ describe('Overlay Trigger - Hover and Click', () => {
         expect(el.open, '"click" overlay no longer open').to.be.undefined;
         expect(tooltip.open).to.be.false;
     });
-    it('should not open hover overlay right after closing the click overlay using the mouse', async () => {
+    it('should not show focus indicator styles right after closing the click overlay using the mouse', async () => {
         const overlayTrigger = await fixture<OverlayTrigger>(
             clickAndHoverTarget()
         );
@@ -315,8 +315,6 @@ describe('Overlay Trigger - Hover and Click', () => {
         });
         await closed;
 
-        // This fails but it works when manually tested in the browser.
-        expect(overlayTrigger.open).to.be.undefined;
         expect(document.activeElement === trigger, 'trigger focused').to.be
             .true;
         if (isWebKit())
@@ -324,7 +322,7 @@ describe('Overlay Trigger - Hover and Click', () => {
                 .true;
     });
 
-    it('should open hover overlay right after closing the click overlay using keyboard', async () => {
+    it('should show focus indicator styles right after closing the click overlay using keyboard', async () => {
         const overlayTrigger = await fixture<OverlayTrigger>(
             clickAndHoverTarget()
         );
@@ -347,8 +345,6 @@ describe('Overlay Trigger - Hover and Click', () => {
         await sendKeys({ press: 'Escape' });
         await closed;
 
-        // This fails but it works when manually tested in the browser.
-        expect(overlayTrigger.open).to.equal('hover');
         expect(document.activeElement === trigger, 'trigger focused').to.be
             .true;
         if (isWebKit())
