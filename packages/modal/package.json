@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/modal",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -47,7 +47,7 @@
         "@spectrum-web-components/base": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/modal": "^6.0.0-s2-foundations.16"
+        "@spectrum-css/modal": "6.0.0-s2-foundations.16"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
