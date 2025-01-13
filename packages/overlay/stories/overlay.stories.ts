@@ -33,6 +33,7 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
@@ -290,6 +291,31 @@ export const accordion = (): TemplateResult => {
                 </sp-dialog>
             </sp-popover>
         </overlay-trigger>
+    `;
+};
+
+export const Testing = (): TemplateResult => {
+    return html`
+        <sp-button id="trigger">open modal</sp-button>
+        <sp-overlay trigger="trigger@click" type="modal">
+            <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+                <p>I am a modal type overlay.</p>
+                <sp-field-label>Enter your email</sp-field-label>
+                <sp-textfield placeholder="test@gmail.com"></sp-textfield>
+                <sp-action-button
+                    onClick="
+                    this.dispatchEvent(
+                        new Event('close', {
+                            bubbles: true,
+                            composed: true,
+                        })
+                    );
+                "
+                >
+                    Sign in
+                </sp-action-button>
+            </sp-dialog-wrapper>
+        </sp-overlay>
     `;
 };
 
