@@ -32,15 +32,15 @@ jobs:
               with:
                   fetch-depth: 0
 
-            - name: Setup Node 18
+            - name: Setup Node 20
               uses: actions/setup-node@v4
               with:
-                  node-version: '18'
+                  node-version: '20'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
             - name: Install dependencies
-              run: yarn --frozen-lockfile
+              run: yarn --immutable
 
             - name: Publish to Chromatic
               id: chromatic
