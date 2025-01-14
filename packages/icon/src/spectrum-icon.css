@@ -28,6 +28,7 @@ governing permissions and limitations under the License.
     fill: currentColor;
     display: inline-block;
 }
+//
 
 :host([size='xxs']),
 :host([size='xxs']) .spectrum-UIIcon {
