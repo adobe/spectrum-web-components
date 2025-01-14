@@ -17,6 +17,7 @@ import {
     html,
     nextFrame,
     oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
@@ -41,6 +42,11 @@ import type { Overlay } from '@spectrum-web-components/overlay';
 import { sendKeys, setViewport } from '@web/test-runner-commands';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { isWebKit } from '@spectrum-web-components/shared';
+import {
+    arrowDownEvent,
+    arrowUpEvent,
+    tEvent,
+} from '../../../test/testing-helpers.js';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/MobileController.js';
 
 ignoreResizeObserverLoopError(before, after);
@@ -818,6 +824,93 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 new Event('scroll', { cancelable: true, composed: true })
             );
             expect(handleActionMenuScroll).to.have.been.called;
+        });
+        it('handle focus and keyboard input', async () => {
+            const el = await fixture<Menu>(html`
+                <sp-action-menu>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                </sp-action-menu>
+            `);
+
+            await waitUntil(
+                () => el.childItems.length == 6,
+                'expected menu to manage 6 items'
+            );
+            await elementUpdated(el);
+
+            const firstItem = el.querySelector(
+                'sp-menu-item:nth-of-type(1)'
+            ) as MenuItem;
+            const thirdToLastItem = el.querySelector(
+                'sp-menu-item:nth-last-of-type(3)'
+            ) as MenuItem;
+            const secondToLastItem = el.querySelector(
+                'sp-menu-item:nth-last-of-type(2)'
+            ) as MenuItem;
+
+            el.focus();
+            await elementUpdated(el);
+            // Activate :focus-visible
+            await sendKeys({ press: 'ArrowDown' });
+            await sendKeys({ press: 'ArrowUp' });
+
+            expect(document.activeElement === el).to.be.true;
+            expect(firstItem.focused).to.be.true;
+
+            el.dispatchEvent(arrowUpEvent());
+            el.dispatchEvent(arrowUpEvent());
+            el.dispatchEvent(tEvent());
+
+            expect(document.activeElement === el).to.be.true;
+            expect(thirdToLastItem.focused).to.be.true;
+
+            el.dispatchEvent(arrowDownEvent());
+
+            expect(document.activeElement === el).to.be.true;
+            expect(secondToLastItem.focused).to.be.true;
+        });
+        it('accepts Numpad keys', async function () {
+            if (isWebKit()) {
+                this.skip();
+            }
+            const el = await fixture<Menu>(html`
+                <sp-action-menu
+                    selects="single"
+                    @change=${({
+                        target: { value },
+                    }: Event & { target: Menu }): void => {
+                        navigator.clipboard.writeText(value);
+                    }}
+                >
+                    <sp-menu-item>Not Selected</sp-menu-item>
+                    <sp-menu-item selected>Selected</sp-menu-item>
+                    <sp-menu-item id="other">Other</sp-menu-item>
+                </sp-action-menu>
+            `);
+
+            await elementUpdated(el);
+
+            const otherItem = el.querySelector('#other') as MenuItem;
+            otherItem.focus();
+            await elementUpdated(el);
+            await sendKeys({
+                press: 'ArrowDown',
+            });
+            await elementUpdated(el);
+            await sendKeys({
+                press: 'NumpadEnter',
+            });
+
+            await elementUpdated(el);
+
+            const clipboardText = await navigator.clipboard.readText();
+            expect(clipboardText).to.equal('Other');
         });
     });
 };
