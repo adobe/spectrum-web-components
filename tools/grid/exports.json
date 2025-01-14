@@ -1,5 +1,0 @@
-{
-    "./src/*": "./src/*.js",
-    "./sp-grid": "./sp-grid.js",
-    "./sp-grid.js": "./sp-grid.js"
-}
