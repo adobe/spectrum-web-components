@@ -88,14 +88,14 @@ commands:
                       if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             # build diff review site
             - run:
-                  when: on_fail
+                  when: always
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
-                  when: on_fail
+                  when: always
                   name: Publish review site
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
@@ -272,14 +272,14 @@ jobs:
                       if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             # build diff review site
             - run:
-                  when: on_fail
+                  when: always
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
-                  when: on_fail
+                  when: always
                   name: Publish review site
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
