@@ -6,7 +6,7 @@
     "type": "module",
     "engines": {
         "node": ">=20",
-        "yarn": ">=1.16.0"
+        "yarn": ">=4.6.0"
     },
     "scripts": {
         "analyze": "lit-analyzer \"{packages,tools}/*/src/**/!(*.css).ts\"",
@@ -433,5 +433,5 @@
         "tools/*",
         "react/*"
     ],
-    "packageManager": "yarn@1.22.22"
+    "packageManager": "yarn@4.6.0"
 }
