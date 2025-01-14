@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*
 Copyright 2022 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,9 @@ governing permissions and limitations under the License.
 import { setCustomElementsManifest } from '@storybook/web-components';
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
 import cem from './custom-elements.json';
+// Debug logging
+console.log('CEM content:', JSON.stringify(cem, null, 2));
+console.log('CEM location:', import.meta.url);
 
 setCustomElementsManifest(cem);
 
