@@ -219,10 +219,9 @@ jobs:
                   name: Prepare Storybook directory
                   command: |
                       echo "Creating Storybook directory..."
-                      mkdir -p projects/documentation/dist/storybook
-                      cp projects/documentation/custom-elements.json projects/documentation/dist/storybook/
+                      cp projects/documentation/custom-elements.json storybook/
                       echo "Storybook directory contents:"
-                      ls -la projects/documentation/dist/storybook/
+                      ls -la storybook/
             - run:
                   name: Build docs
                   command: yarn storybook:build

@@ -13,7 +13,7 @@ import { setCustomElementsManifest } from '@storybook/web-components';
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
 
 // eslint-disable-next-line require-extensions/require-extensions
-import cem from '../projects/documentation/dist/storybook/custom-elements.json';
+import cem from './custom-elements.json';
 
 setCustomElementsManifest(cem);
 
