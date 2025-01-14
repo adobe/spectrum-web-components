@@ -12,18 +12,9 @@ governing permissions and limitations under the License.
 */
 import { setCustomElementsManifest } from '@storybook/web-components';
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
-import { readFileSync } from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import cem from './custom-elements.json' assert { type: 'json' };
 
-let cem;
-const cemPath = path.resolve(__dirname, './custom-elements.json');
-cem = JSON.parse(readFileSync(cemPath, 'utf8'));
-console.log('Loaded CEM from:', cemPath);
-
-setCustomElementsManifest(cem);
 setCustomElementsManifest(cem);
 
 export const globalTypes = {
