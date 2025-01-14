@@ -41,12 +41,12 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  * @element sp-card
  *
  * @fires change - Announces a change in the `selected` property of a card
- * @slot preview - This is the preview image for Gallery Cards
- * @slot cover-photo - This is the cover photo for Default and Quiet Cards
+ * @slot preview - This is the preview image for Gallery Cards and Quiet Cards
+ * @slot cover-photo - This is the cover photo for Default
  * @slot heading - HTML content to be listed as the heading
  * @slot subheading - HTML content to be listed as the subheading
  * @slot description - A description of the card
- * @slot actions - an `sp-action-menu` element outlining actions to take on the represened object
+ * @slot actions - an `sp-action-menu` element outlining actions to take on the represented object
  * @slot footer - Footer text
  */
 export class Card extends LikeAnchor(
@@ -65,9 +65,18 @@ export class Card extends LikeAnchor(
         return [headingStyles, detailStyles, cardStyles];
     }
 
+    /**
+     * Applies imagery representing a `file` or a `folder`
+     */
     @property()
     public asset?: 'file' | 'folder';
 
+    /**
+     * Applies alternate styling:
+     * `standard` for default styling;
+     * `gallery` for a heading, a subheading, an image preview, a description, and a footer;
+     * `quiet` a heading, a subheading, a cover photo, a description, and a footer plus optional actions
+     */
     @property({ reflect: true })
     public variant: 'standard' | 'gallery' | 'quiet' = 'standard';
 

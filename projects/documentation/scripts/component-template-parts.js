@@ -15,7 +15,7 @@ function nameToTitle(name) {
     // accordion => Accordion
     // color-wheel => Color Wheel
     // icons-ui => Icons UI
-    let noDashes = name.replace(/((^|\-)(\w))/gm, (match, p1, p2, p3) => {
+    let noDashes = name.replace(/((^|-)(\w))/gm, (match, p1, p2, p3) => {
         let result = p3.toUpperCase();
         if (p2 === '-') {
             result = ` ${result}`;
@@ -37,7 +37,9 @@ const codeWrappedRegex = /<code>(.*)<\/code>/;
 
 function encodeCodeWrappedHTML(source) {
     const parts = codeWrappedRegex.exec(source);
-    if (!parts) return source;
+    if (!parts) {
+        return source;
+    }
     let html = parts[1];
     html = html.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     return source.replace(codeWrappedRegex, `<code>${html}</code>`);
@@ -252,7 +254,7 @@ ${
 }`;
 }
 
-export function exampleDestinationTemplate(
+export function overviewDestinationTemplate(
     componentName,
     componentHeading,
     tagType,
@@ -260,7 +262,7 @@ export function exampleDestinationTemplate(
     packageName
 ) {
     return `---
-layout: examples.njk
+layout: overview.njk
 title: '${nameToTitle(componentName)}: Spectrum Web Components'
 displayName: ${nameToTitle(componentName)}
 componentName: ${componentName}
@@ -272,13 +274,13 @@ tags:
 ---`;
 }
 
-export function examplePartialTemplate(componentName, componentHeading, body) {
+export function overviewPartialTemplate(componentName, componentHeading, body) {
     return `---
 layout: partial.njk
 title: '${nameToTitle(componentName)}: Spectrum Web Components'
 displayName: ${nameToTitle(componentName)}
 componentName: ${componentName}
-partType: examples
+partType: overview
 tags:
 - ${componentName}
 ---
