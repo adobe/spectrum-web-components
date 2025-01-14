@@ -207,21 +207,10 @@ jobs:
             - downstream
             - run:
                   name: Generate Custom Elements Manifest
-                  command: |
-                      yarn docs:analyze
-                      echo "Current directory structure:"
-                      ls -R projects/documentation/
-                      echo "Looking for custom-elements.json:"
-                      find . -name "custom-elements.json"
-                      echo "Current working directory:"
-                      pwd
+                  command: yarn docs:analyze
             - run:
-                  name: Prepare Storybook directory
-                  command: |
-                      echo "Creating Storybook directory..."
-                      cp projects/documentation/custom-elements.json storybook/
-                      echo "Storybook directory contents:"
-                      ls -la storybook/
+                  name: Move CEM to Storybook directory
+                  command: cp projects/documentation/custom-elements.json storybook/
             - run:
                   name: Build docs
                   command: yarn storybook:build
