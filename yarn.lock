@@ -7780,15 +7780,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/icon@npm:8.0.0-s2-foundations.16":
-  version: 8.0.0-s2-foundations.16
-  resolution: "@spectrum-css/icon@npm:8.0.0-s2-foundations.16"
-  peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/f3f76385a1cccbfb82af781321b44d3f1787f01fb4ae55bb0d46b74b2503749dfe3a95b9c66c93761741036bfbd48752f5e885e090141c393fe57c6eda7cb3eb
-  languageName: node
-  linkType: hard
-
 "@spectrum-css/icon@npm:8.0.0-s2-foundations.17":
   version: 8.0.0-s2-foundations.17
   resolution: "@spectrum-css/icon@npm:8.0.0-s2-foundations.17"
@@ -8823,7 +8814,7 @@ __metadata:
   dependencies:
     "@adobe/spectrum-css-workflow-icons": "npm:1.5.4"
     "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@^4.0.0"
-    "@spectrum-css/icon": "npm:8.0.0-s2-foundations.16"
+    "@spectrum-css/icon": "npm:8.0.0-s2-foundations.17"
     "@spectrum-web-components/base": "npm:^1.0.1"
     "@spectrum-web-components/icon": "npm:^1.0.3"
     case: "npm:^1.6.1"
