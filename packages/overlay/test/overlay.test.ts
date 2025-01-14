@@ -791,7 +791,7 @@ describe('Overlay - type="modal"', () => {
         expect(el.open).to.be.null;
     });
 
-    describe.only('maintains consistency of focus ring in different browsers', () => {
+    describe('maintains consistency of focus ring in different browsers', () => {
         it('should not open hover overlay right after closing the click overlay using the mouse', async () => {
             const overlayTrigger = await fixture<OverlayTrigger>(
                 clickAndHoverTarget()
