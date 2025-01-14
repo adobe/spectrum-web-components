@@ -1,4 +1,0 @@
-{
-    "./src/*": "./src/*",
-    "./sp-status-light.js": "./sp-status-light.js"
-}
