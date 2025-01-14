@@ -209,12 +209,19 @@ jobs:
                   name: Generate Custom Elements Manifest
                   command: |
                       yarn docs:analyze
-                      echo "export default $(cat projects/documentation/custom-elements.json);" > projects/documentation/custom-elements.js
+                      echo "Current directory structure:"
+                      ls -R projects/documentation/
+                      echo "Looking for custom-elements.json:"
+                      find . -name "custom-elements.json"
+                      echo "Current working directory:"
+                      pwd
             - run:
                   name: Prepare Storybook directory
                   command: |
+                      echo "Creating Storybook directory..."
                       mkdir -p projects/documentation/dist/storybook
-                      cp projects/documentation/custom-elements.js projects/documentation/dist/storybook/
+                      cp projects/documentation/custom-elements.json projects/documentation/dist/storybook/
+                      echo "Storybook directory contents:"
                       ls -la projects/documentation/dist/storybook/
             - run:
                   name: Build docs
