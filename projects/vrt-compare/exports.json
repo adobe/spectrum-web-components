@@ -1,5 +1,0 @@
-{
-    "./src/*": "./src/*.js",
-    "./vrt-compare": "./vrt-compare.js",
-    "./vrt-compare.js": "./vrt-compare.js"
-}
