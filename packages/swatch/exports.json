@@ -1,5 +1,0 @@
-{
-    "./src/*": "./src/*",
-    "./sp-swatch.js": "./sp-swatch.js",
-    "./sp-swatch-group.js": "./sp-swatch-group.js"
-}
