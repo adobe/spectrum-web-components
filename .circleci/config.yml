@@ -212,7 +212,10 @@ jobs:
                   name: Move CEM to Storybook directory
                   command: cp projects/documentation/custom-elements.json storybook/
             - run:
-                  name: Build docs
+                  name: Build documentation
+                  command: yarn docs:build
+            - run:
+                  name: Build Storybook
                   command: yarn storybook:build
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
