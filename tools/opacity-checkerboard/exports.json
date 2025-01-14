@@ -1,4 +1,0 @@
-{
-    ".": "./src/opacity-checkerboard.css.js",
-    "./src/*": "./src/*"
-}
