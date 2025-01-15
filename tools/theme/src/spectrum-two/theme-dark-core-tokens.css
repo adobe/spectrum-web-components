@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('@spectrum-web-components/styles/tokens-v2/dark-vars.css');
-@import url('@spectrum-web-components/styles/tokens-v2/spectrum/custom-dark-vars.css');
 
 :host,
 :root {
