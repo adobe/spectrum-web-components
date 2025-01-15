@@ -63,6 +63,14 @@ if (fs.existsSync(licensePath)) {
     header = header.replace('<%= YEAR %>', new Date().getFullYear());
 }
 
+/**
+ * Processes a CSS file using lightningcss, minifies it, and outputs a TypeScript module.
+ * The output module includes license headers and wraps the CSS in a template literal.
+ * 
+ * @param {string} cssPath - Path to the CSS file to process
+ * @returns {Promise<void>} A promise that resolves when processing is complete
+ * 
+ */
 export const processCSS = async (cssPath) => {
     return bundleAsync({
         filename: cssPath,

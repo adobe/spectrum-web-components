@@ -8117,13 +8117,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/thumbnail@npm:7.0.0-s2-foundations.17":
-  version: 7.0.0-s2-foundations.17
-  resolution: "@spectrum-css/thumbnail@npm:7.0.0-s2-foundations.17"
+"@spectrum-css/thumbnail@npm:7.0.0-s2-foundations.18":
+  version: 7.0.0-s2-foundations.18
+  resolution: "@spectrum-css/thumbnail@npm:7.0.0-s2-foundations.18"
   peerDependencies:
     "@spectrum-css/opacitycheckerboard": ">=2"
     "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/fd8b82fbd72e38ed76d4d7028b46630d21e8ca359616e55c5788d1bc602c66678b3c069693fc8255e5d85faaa92ad07d68eac15aa548fb378c40170fa2e5d434
+  checksum: 10c0/b20a00f987dec6d8abcd9229b3aeaf596aa838ff5926e1a79ef3f41367477f36f3c6a52cfd1f79f8482c63cc35c25340dd95b85218987a326121a204e078b86b
   languageName: node
   linkType: hard
 
@@ -9224,7 +9224,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/thumbnail@workspace:packages/thumbnail"
   dependencies:
-    "@spectrum-css/thumbnail": "npm:7.0.0-s2-foundations.17"
+    "@spectrum-css/thumbnail": "npm:7.0.0-s2-foundations.18"
     "@spectrum-web-components/base": "npm:^1.0.1"
     "@spectrum-web-components/opacity-checkerboard": "npm:^1.0.1"
   languageName: unknown
