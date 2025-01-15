@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --mod-illustrated-message-content-maximum-width: var(
         --mod-drop-zone-content-maximum-width,
@@ -191,10 +192,10 @@ governing permissions and limitations under the License.
         --mod-drop-zone-content-display,
         var(--spectrum-drop-zone-content-display, none)
     );
-    block-size: 100%;
     z-index: 1;
     justify-content: center;
     align-items: center;
+    block-size: 100%;
     position: relative;
 }
 

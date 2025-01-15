@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     box-sizing: border-box;
     inline-size: fit-content;
@@ -70,7 +71,10 @@ governing permissions and limitations under the License.
             --mod-dialog-confirm-padding-grid,
             var(--spectrum-dialog-confirm-padding-grid)
         )
-        auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
+        auto 1fr auto minmax(0, auto) var(
+            --mod-dialog-confirm-padding-grid,
+            var(--spectrum-dialog-confirm-padding-grid)
+        );
     grid-template-areas:
         'hero hero hero hero hero hero'
         '. . . . . .'
@@ -154,7 +158,8 @@ governing permissions and limitations under the License.
             var(
                 --mod-dialog-confirm-description-padding,
                 var(--spectrum-dialog-confirm-description-padding)
-            ) * 2
+            ) *
+            2
     );
 }
 
@@ -202,7 +207,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-dialog-confirm-description-padding,
                 var(--spectrum-dialog-confirm-description-padding)
-            ) * 2
+            ) *
+            2
     );
     margin: 0
         var(
@@ -310,14 +316,14 @@ governing permissions and limitations under the License.
 }
 
 :host([mode='fullscreen']) {
-    inline-size: 100%;
     block-size: 100%;
+    inline-size: 100%;
 }
 
 :host([mode='fullscreenTakeover']) {
-    inline-size: 100%;
-    block-size: 100%;
     border-radius: 0;
+    block-size: 100%;
+    inline-size: 100%;
 }
 
 :host([mode='fullscreen']),
@@ -393,7 +399,10 @@ governing permissions and limitations under the License.
                 --mod-dialog-confirm-padding-grid,
                 var(--spectrum-dialog-confirm-padding-grid)
             )
-            auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
+            auto 1fr auto minmax(0, auto) var(
+                --mod-dialog-confirm-padding-grid,
+                var(--spectrum-dialog-confirm-padding-grid)
+            );
         grid-template-areas:
             'hero hero hero hero hero hero'
             '. . . . . .'

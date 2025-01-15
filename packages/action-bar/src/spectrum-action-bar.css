@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     :host,
     :host([emphasized]) #popover {
@@ -27,8 +28,8 @@ governing permissions and limitations under the License.
     z-index: 1;
     box-sizing: border-box;
     pointer-events: none;
-    block-size: 0;
     opacity: 0;
+    block-size: 0;
     inset-block-end: 0;
 }
 
@@ -37,7 +38,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-actionbar-spacing-outer-edge,
                 var(--spectrum-actionbar-spacing-outer-edge)
-            ) + var(--mod-actionbar-height, var(--spectrum-actionbar-height))
+            ) +
+            var(--mod-actionbar-height, var(--spectrum-actionbar-height))
     );
     opacity: 1;
 }
@@ -45,7 +47,6 @@ governing permissions and limitations under the License.
 #popover {
     block-size: var(--mod-actionbar-height, var(--spectrum-actionbar-height));
     box-sizing: border-box;
-    inline-size: 100%;
     border-radius: var(
         --mod-actionbar-corner-radius,
         var(--spectrum-actionbar-corner-radius)
@@ -61,6 +62,7 @@ governing permissions and limitations under the License.
         --mod-actionbar-popover-background-color,
         var(--spectrum-actionbar-popover-background-color)
     );
+    inline-size: 100%;
     filter: drop-shadow(
         var(
                 --mod-actionbar-shadow-horizontal,

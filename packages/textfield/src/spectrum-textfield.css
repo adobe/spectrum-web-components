@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 #textfield {
     --spectrum-textfield-input-line-height: var(--spectrum-textfield-height);
     text-overflow: ellipsis;
@@ -42,7 +43,8 @@ governing permissions and limitations under the License.
                         --mod-textfield-focus-indicator-width,
                         var(--spectrum-textfield-focus-indicator-width)
                     )
-            ) * -1
+            ) *
+            -1
     );
     inset-inline-start: 0;
 }
@@ -228,7 +230,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-textfield-corner-radius,
                 var(--spectrum-textfield-corner-radius)
-            ) / 2
+            ) /
+            2
     );
     display: inline-flex;
 }

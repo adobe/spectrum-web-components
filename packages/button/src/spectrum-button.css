@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     cursor: pointer;
     -webkit-user-select: none;
@@ -89,7 +90,14 @@ governing permissions and limitations under the License.
 
 :host:after {
     margin: calc(
-        -1 * var(--mod-button-focus-indicator-gap, var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)))
+        -1 *
+            var(
+                --mod-button-focus-indicator-gap,
+                var(
+                    --mod-focus-indicator-gap,
+                    var(--spectrum-focus-indicator-gap)
+                )
+            )
     );
     transition:
         opacity
@@ -166,9 +174,11 @@ governing permissions and limitations under the License.
     color: inherit;
     margin-block: 0;
     margin-block: var(--mod-button-margin-block, 0);
+    margin-inline-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: var(--mod-button-margin-right, 0);
     border-style: solid;
     margin-inline-start: var(--mod-button-margin-left, 0);
-    margin-inline-end: var(--mod-button-margin-right, 0);
     position: relative;
 }
 
@@ -182,6 +192,18 @@ governing permissions and limitations under the License.
         var(--spectrum-button-intended-icon-size) -
             var(--spectrum-icon-size, var(--spectrum-button-intended-icon-size))
     );
+    margin-block-start: var(
+        --mod-button-icon-margin-block-start,
+        max(
+            0px,
+            var(--mod-button-top-to-icon, var(--spectrum-button-top-to-icon)) -
+                var(
+                    --mod-button-border-width,
+                    var(--spectrum-button-border-width)
+                ) +
+                (0px / 2)
+        )
+    );
     color: inherit;
     flex-shrink: 0;
     align-self: flex-start;
@@ -193,11 +215,15 @@ governing permissions and limitations under the License.
                 var(
                     --mod-button-border-width,
                     var(--spectrum-button-border-width)
-                ) + (var(--_icon-size-difference, 0px) / 2)
+                ) +
+                (var(--_icon-size-difference, 0px) / 2)
         )
     );
     margin-inline-start: calc(
-        var(--mod-button-edge-to-visual, var(--spectrum-button-edge-to-visual)) -
+        var(
+                --mod-button-edge-to-visual,
+                var(--spectrum-button-edge-to-visual)
+            ) -
             var(--mod-button-edge-to-text, var(--spectrum-button-edge-to-text))
     );
 }
@@ -237,7 +263,10 @@ governing permissions and limitations under the License.
             var(--mod-button-border-width, var(--spectrum-button-border-width))
     );
     padding-block-end: calc(
-        var(--mod-button-bottom-to-text, var(--spectrum-button-bottom-to-text)) -
+        var(
+                --mod-button-bottom-to-text,
+                var(--spectrum-button-bottom-to-text)
+            ) -
             var(--mod-button-border-width, var(--spectrum-button-border-width))
     );
 }
@@ -280,7 +309,8 @@ governing permissions and limitations under the License.
                         --mod-button-border-width,
                         var(--spectrum-button-border-width)
                     )
-            ) * -1
+            ) *
+            -1
     );
     border-radius: var(
         --mod-button-focus-ring-border-radius,

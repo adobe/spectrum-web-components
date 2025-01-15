@@ -11,6 +11,7 @@
     */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-field-label-color: var(--system-field-label-color);
     --spectrum-field-label-font-weight: var(--system-field-label-font-weight);
@@ -21,24 +22,6 @@
     --spectrum-field-label-disabled-content-color: var(
         --system-field-label-disabled-content-color
     );
-    --spectrum-field-label-min-height: var(--system-field-label-min-height);
-    --spectrum-field-label-top-to-text: var(--system-field-label-top-to-text);
-    --spectrum-field-label-bottom-to-text: var(
-        --system-field-label-bottom-to-text
-    );
-    --spectrum-field-label-font-size: var(--system-field-label-font-size);
-    --spectrum-field-label-side-margin-block-start: var(
-        --system-field-label-side-margin-block-start
-    );
-    --spectrum-field-label-side-padding-right: var(
-        --system-field-label-side-padding-right
-    );
-    --spectrum-field-label-text-to-asterisk: var(
-        --system-field-label-text-to-asterisk
-    );
-}
-
-:host {
     --spectrum-field-label-min-height: var(
         --system-field-label-size-m-min-height
     );

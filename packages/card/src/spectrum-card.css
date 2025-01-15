@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     box-sizing: border-box;
     min-inline-size: var(
@@ -58,13 +59,15 @@ governing permissions and limitations under the License.
         var(
                 --mod-card-focus-indicator-width,
                 var(--spectrum-card-focus-indicator-width)
-            ) * -1
+            ) *
+            -1
     );
     margin-inline-start: calc(
         var(
                 --mod-card-focus-indicator-width,
                 var(--spectrum-card-focus-indicator-width)
-            ) * -1
+            ) *
+            -1
     );
     inset-inline-end: 0;
 }
@@ -441,7 +444,8 @@ governing permissions and limitations under the License.
                             --mod-card-content-margin-bottom,
                             var(--spectrum-card-content-margin-bottom)
                         )
-                ) * -1
+                ) *
+                -1
         )
     );
     margin-inline-start: var(
@@ -564,8 +568,8 @@ governing permissions and limitations under the License.
         --mod-card-preview-minimum-height,
         var(--spectrum-card-preview-minimum-height)
     );
-    inline-size: 100%;
     box-sizing: border-box;
+    inline-size: 100%;
     transition: background-color
         var(
             --mod-card-animation-duration,
@@ -606,13 +610,15 @@ governing permissions and limitations under the License.
         var(
                 --mod-card-focus-indicator-width,
                 var(--spectrum-card-focus-indicator-width)
-            ) * -1
+            ) *
+            -1
     );
     margin-inline-start: calc(
         var(
                 --mod-card-focus-indicator-width,
                 var(--spectrum-card-focus-indicator-width)
-            ) * -1
+            ) *
+            -1
     );
     inset-inline-end: 0;
 }

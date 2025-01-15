@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     background: repeating-conic-gradient(
             var(
@@ -32,13 +33,15 @@ governing permissions and limitations under the License.
             var(
                     --mod-opacity-checkerboard-size,
                     var(--spectrum-opacity-checkerboard-size)
-                ) * 2
+                ) *
+                2
         )
         calc(
             var(
                     --mod-opacity-checkerboard-size,
                     var(--spectrum-opacity-checkerboard-size)
-                ) * 2
+                ) *
+                2
         );
 }
 

@@ -11,6 +11,7 @@
     */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-slider-track-color: var(--system-slider-track-color);
     --spectrum-slider-track-fill-color: var(--system-slider-track-fill-color);
@@ -98,25 +99,6 @@
         --system-slider-track-handleoffset
     );
     --spectrum-slider-range-track-reset: var(--system-slider-range-track-reset);
-    --spectrum-slider-font-size: var(--system-slider-font-size);
-    --spectrum-slider-handle-size: var(--system-slider-handle-size);
-    --spectrum-slider-control-height: var(--system-slider-control-height);
-    --spectrum-slider-handle-border-radius: var(
-        --system-slider-handle-border-radius
-    );
-    --spectrum-slider-handle-border-width-down: var(
-        --system-slider-handle-border-width-down
-    );
-    --spectrum-slider-label-top-to-text: var(--system-slider-label-top-to-text);
-    --spectrum-slider-control-to-field-label: var(
-        --system-slider-control-to-field-label
-    );
-    --spectrum-slider-value-side-padding-inline: var(
-        --system-slider-value-side-padding-inline
-    );
-}
-
-:host {
     --spectrum-slider-font-size: var(--system-slider-size-m-font-size);
     --spectrum-slider-handle-size: var(--system-slider-size-m-handle-size);
     --spectrum-slider-control-height: var(

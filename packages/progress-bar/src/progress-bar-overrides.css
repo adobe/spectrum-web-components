@@ -11,6 +11,7 @@
     */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-progressbar-animation-ease-in-out-indeterminate: var(
         --system-progress-bar-animation-ease-in-out-indeterminate
@@ -51,17 +52,6 @@
     --spectrum-progressbar-fill-color-white: var(
         --system-progress-bar-fill-color-white
     );
-    --spectrum-progressbar-size-default: var(
-        --system-progress-bar-size-default
-    );
-    --spectrum-progressbar-font-size: var(--system-progress-bar-font-size);
-    --spectrum-progressbar-thickness: var(--system-progress-bar-thickness);
-    --spectrum-progressbar-spacing-top-to-text: var(
-        --system-progress-bar-spacing-top-to-text
-    );
-}
-
-:host {
     --spectrum-progressbar-size-default: var(
         --system-progress-bar-size-m-size-default
     );

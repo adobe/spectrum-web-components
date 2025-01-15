@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     border-color: var(
         --highcontrast-tag-border-color,
@@ -32,9 +33,9 @@ governing permissions and limitations under the License.
     block-size: var(--mod-tag-height, var(--spectrum-tag-height));
     box-sizing: border-box;
     vertical-align: bottom;
-    max-inline-size: 100%;
     -webkit-user-select: none;
     user-select: none;
+    max-inline-size: 100%;
     transition:
         border-color
             var(
@@ -67,7 +68,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-tag-spacing-inline-start,
                 var(--spectrum-tag-spacing-inline-start)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+            ) -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
     );
     padding-inline-end: 0;
     display: inline-flex;
@@ -82,13 +84,15 @@ governing permissions and limitations under the License.
         var(
                 --mod-tag-icon-spacing-block-start,
                 var(--spectrum-tag-icon-spacing-block-start)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+            ) -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
     );
     margin-block-end: calc(
         var(
                 --mod-tag-icon-spacing-block-end,
                 var(--spectrum-tag-icon-spacing-block-end)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+            ) -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
     );
     margin-inline-end: var(
         --mod-tag-icon-spacing-inline-end,
@@ -101,13 +105,15 @@ governing permissions and limitations under the License.
         var(
                 --mod-tag-avatar-spacing-block-start,
                 var(--spectrum-tag-avatar-spacing-block-start)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+            ) -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
     );
     margin-block-end: calc(
         var(
                 --mod-tag-avatar-spacing-block-end,
                 var(--spectrum-tag-avatar-spacing-block-end)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+            ) -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
     );
     margin-inline-end: var(
         --mod-tag-avatar-spacing-inline-end,
@@ -129,25 +135,29 @@ governing permissions and limitations under the License.
             var(
                 --mod-tag-label-spacing-inline-end,
                 var(--spectrum-tag-label-spacing-inline-end)
-            ) * -1
+            ) *
+            -1
     );
     margin-inline-end: calc(
         var(
                 --mod-tag-clear-button-spacing-inline-end,
                 var(--spectrum-tag-clear-button-spacing-inline-end)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+            ) -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
     );
     padding-block-start: calc(
         var(
                 --mod-tag-clear-button-spacing-block,
                 var(--spectrum-tag-clear-button-spacing-block)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+            ) -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
     );
     padding-block-end: calc(
         var(
                 --mod-tag-clear-button-spacing-block,
                 var(--spectrum-tag-clear-button-spacing-block)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+            ) -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
     );
 }
 
@@ -167,8 +177,8 @@ governing permissions and limitations under the License.
 }
 
 .label {
-    block-size: 100%;
     box-sizing: border-box;
+    block-size: 100%;
     line-height: var(
         --mod-tag-label-line-height,
         var(--spectrum-tag-label-line-height)
@@ -186,13 +196,15 @@ governing permissions and limitations under the License.
         var(
                 --mod-tag-label-spacing-inline-end,
                 var(--spectrum-tag-label-spacing-inline-end)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+            ) -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
     );
     padding-block-start: calc(
         var(
                 --mod-tag-label-spacing-block,
                 var(--spectrum-tag-label-spacing-block)
-            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+            ) -
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
     );
     overflow: hidden;
 }

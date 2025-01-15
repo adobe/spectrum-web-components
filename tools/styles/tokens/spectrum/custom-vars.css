@@ -22,9 +22,9 @@
     --spectrum-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
 
     --spectrum-sans-font-family-stack: adobe-clean,
-        var(--spectrum-sans-serif-font-family), 'Source Sans Pro', -apple-system,
-        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
-        'Lucida Grande', sans-serif;
+        var(--spectrum-sans-serif-font-family), 'Source Sans Pro',
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+        'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-sans-serif-font: var(--spectrum-sans-font-family-stack);
 
     --spectrum-serif-font-family-stack: adobe-clean-serif,

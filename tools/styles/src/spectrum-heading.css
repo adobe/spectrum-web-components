@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 .spectrum-Typography .spectrum-Heading {
     --spectrum-heading-margin-start: calc(
         var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
@@ -50,10 +51,12 @@ governing permissions and limitations under the License.
         --mod-heading-line-height,
         var(--spectrum-heading-line-height)
     );
+    margin-block-start: 0;
     margin-block-start: var(
         --mod-heading-margin-start,
         var(--spectrum-heading-margin-start, 0)
     );
+    margin-block-end: 0;
     margin-block-end: var(
         --mod-heading-margin-end,
         var(--spectrum-heading-margin-end, 0)

@@ -402,9 +402,9 @@
     --spectrum-global-color-diverging-orange-yellow-seafoam: #580000, #79260b,
         #9c4511, #bd651a, #dd8629, #f5ad52, #fed693, #ffffe0, #bbe4d1, #76c7be,
         #3ea8a6, #208288, #076769, #00494b, #002c2d;
-    --spectrum-global-color-diverging-red-yellow-blue: #4a001e, #751232, #a52747,
-        #c65154, #e47961, #f0a882, #fad4ac, #ffffe0, #bce2cf, #89c0c4, #579eb9,
-        #397aa8, #1c5796, #163771, #10194d;
+    --spectrum-global-color-diverging-red-yellow-blue: #4a001e, #751232,
+        #a52747, #c65154, #e47961, #f0a882, #fad4ac, #ffffe0, #bce2cf, #89c0c4,
+        #579eb9, #397aa8, #1c5796, #163771, #10194d;
     --spectrum-global-color-diverging-red-blue: #4a001e, #731331, #9f2945,
         #cc415a, #e06e85, #ed9ab0, #f8c3d9, #faf0ff, #c6d0f2, #92b2de, #5d94cb,
         #2f74b3, #265191, #163670, #0b194c;
@@ -751,11 +751,11 @@
     --spectrum-global-font-multiplier-25: 0.25em;
     --spectrum-global-font-multiplier-75: 0.75em;
     --spectrum-global-font-font-family-ar: myriad-arabic, adobe-clean,
-        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
+        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-global-font-font-family-he: myriad-hebrew, adobe-clean,
-        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
+        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-global-font-font-family-zh: adobe-clean-han-traditional,
         source-han-traditional, 'MingLiu', 'Heiti TC Light', 'sans-serif';
     --spectrum-global-font-font-family-zhhans: adobe-clean-han-simplified-c,
@@ -768,8 +768,8 @@
         'sans-serif';
     --spectrum-global-font-font-family-condensed: adobe-clean-han-traditional,
         source-han-traditional, 'MingLiu', 'Heiti TC Light', adobe-clean,
-        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
+        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-alias-border-size-thin: var(
         --spectrum-global-dimension-static-size-10
     );
@@ -1057,10 +1057,6 @@
     --spectrum-alias-han-detail-text-font-weight-strong: var(
         --spectrum-global-font-weight-black
     );
-}
-
-:root,
-:host {
     --spectrum-alias-item-height-s: var(--spectrum-global-dimension-size-300);
     --spectrum-alias-item-height-m: var(--spectrum-global-dimension-size-400);
     --spectrum-alias-item-height-l: var(--spectrum-global-dimension-size-500);
@@ -1857,87 +1853,6 @@
     --spectrum-alias-grid-columns: 12;
     --spectrum-alias-grid-fluid-width: 100%;
     --spectrum-alias-grid-fixed-max-width: 1280px;
-    --spectrum-alias-border-size-thin: var(
-        --spectrum-global-dimension-static-size-10
-    );
-    --spectrum-alias-border-size-thick: var(
-        --spectrum-global-dimension-static-size-25
-    );
-    --spectrum-alias-border-size-thicker: var(
-        --spectrum-global-dimension-static-size-50
-    );
-    --spectrum-alias-border-size-thickest: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-alias-border-offset-thin: var(
-        --spectrum-global-dimension-static-size-25
-    );
-    --spectrum-alias-border-offset-thick: var(
-        --spectrum-global-dimension-static-size-50
-    );
-    --spectrum-alias-border-offset-thicker: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-alias-border-offset-thickest: var(
-        --spectrum-global-dimension-static-size-200
-    );
-    --spectrum-alias-grid-baseline: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-alias-grid-gutter-xsmall: var(
-        --spectrum-global-dimension-static-size-200
-    );
-    --spectrum-alias-grid-gutter-small: var(
-        --spectrum-global-dimension-static-size-300
-    );
-    --spectrum-alias-grid-gutter-medium: var(
-        --spectrum-global-dimension-static-size-400
-    );
-    --spectrum-alias-grid-gutter-large: var(
-        --spectrum-global-dimension-static-size-500
-    );
-    --spectrum-alias-grid-gutter-xlarge: var(
-        --spectrum-global-dimension-static-size-600
-    );
-    --spectrum-alias-grid-margin-xsmall: var(
-        --spectrum-global-dimension-static-size-200
-    );
-    --spectrum-alias-grid-margin-small: var(
-        --spectrum-global-dimension-static-size-300
-    );
-    --spectrum-alias-grid-margin-medium: var(
-        --spectrum-global-dimension-static-size-400
-    );
-    --spectrum-alias-grid-margin-large: var(
-        --spectrum-global-dimension-static-size-500
-    );
-    --spectrum-alias-grid-margin-xlarge: var(
-        --spectrum-global-dimension-static-size-600
-    );
-    --spectrum-alias-grid-layout-region-margin-bottom-xsmall: var(
-        --spectrum-global-dimension-static-size-200
-    );
-    --spectrum-alias-grid-layout-region-margin-bottom-small: var(
-        --spectrum-global-dimension-static-size-300
-    );
-    --spectrum-alias-grid-layout-region-margin-bottom-medium: var(
-        --spectrum-global-dimension-static-size-400
-    );
-    --spectrum-alias-grid-layout-region-margin-bottom-large: var(
-        --spectrum-global-dimension-static-size-500
-    );
-    --spectrum-alias-grid-layout-region-margin-bottom-xlarge: var(
-        --spectrum-global-dimension-static-size-600
-    );
-    --spectrum-alias-radial-reaction-size-default: var(
-        --spectrum-global-dimension-static-size-550
-    );
-    --spectrum-alias-focus-ring-gap: var(
-        --spectrum-global-dimension-static-size-25
-    );
-    --spectrum-alias-focus-ring-size: var(
-        --spectrum-global-dimension-static-size-25
-    );
     --spectrum-alias-dropshadow-blur: var(--spectrum-global-dimension-size-50);
     --spectrum-alias-dropshadow-offset-y: var(
         --spectrum-global-dimension-size-10
@@ -2026,10 +1941,6 @@
     --spectrum-alias-tag-focusring-gap-selected: var(
         --spectrum-global-dimension-size-25
     );
-}
-
-:root,
-:host {
     --spectrum-alias-colorhandle-outer-border-color: #0000006b;
     --spectrum-alias-component-text-color-selected-default: var(
         --spectrum-global-color-gray-50

@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 #button {
     cursor: pointer;
     -webkit-user-select: none;
@@ -192,8 +193,12 @@ governing permissions and limitations under the License.
             var(
                 --mod-picker-focus-indicator-gap,
                 var(--spectrum-picker-focus-indicator-gap)
-            ) * 2 +
-            var(--mod-picker-border-width, var(--spectrum-picker-border-width)) *
+            ) *
+            2 +
+            var(
+                --mod-picker-border-width,
+                var(--spectrum-picker-border-width)
+            ) *
             2
     );
     inline-size: calc(
@@ -201,8 +206,12 @@ governing permissions and limitations under the License.
             var(
                 --mod-picker-focus-indicator-gap,
                 var(--spectrum-picker-focus-indicator-gap)
-            ) * 2 +
-            var(--mod-picker-border-width, var(--spectrum-picker-border-width)) *
+            ) *
+            2 +
+            var(
+                --mod-picker-border-width,
+                var(--spectrum-picker-border-width)
+            ) *
             2
     );
     border-style: solid;
@@ -233,7 +242,8 @@ governing permissions and limitations under the License.
                         --mod-picker-border-width,
                         var(--spectrum-picker-border-width)
                     )
-            ) * -1
+            ) *
+            -1
     );
     margin-inline-start: calc(
         (
@@ -249,7 +259,8 @@ governing permissions and limitations under the License.
                         --mod-picker-border-width,
                         var(--spectrum-picker-border-width)
                     )
-            ) * -1
+            ) *
+            -1
     );
     position: absolute;
     inset-block: 0;
@@ -625,7 +636,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-picker-spacing-label-to-picker-quiet,
                 var(--spectrum-picker-spacing-label-to-picker-quiet)
-            ) + 1px
+            ) +
+            1px
     );
 }
 
@@ -641,9 +653,9 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet]) #button:after {
+    border: none;
     block-size: auto;
     inline-size: auto;
-    border: none;
 }
 
 @media (hover: hover) {
@@ -788,7 +800,8 @@ governing permissions and limitations under the License.
                             --mod-picker-border-width,
                             var(--spectrum-picker-border-width)
                         )
-                ) * -1
+                ) *
+                -1
         )
         0;
     border: none;

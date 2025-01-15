@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     cursor: pointer;
     -webkit-user-select: none;
@@ -169,7 +170,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-closebutton-focus-indicator-gap,
                 var(--spectrum-closebutton-focus-indicator-gap)
-            ) * -1
+            ) *
+            -1
     );
     border-radius: calc(
         var(--mod-closebutton-size, var(--spectrum-closebutton-size)) +
