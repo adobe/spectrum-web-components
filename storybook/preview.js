@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import { setCustomElementsManifest } from '@storybook/web-components';
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
+
 import cem from './custom-elements.json';
 
 setCustomElementsManifest(cem);
