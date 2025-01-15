@@ -151,19 +151,21 @@ export const measureFixtureCreation = async (
     const start = window.tachometerStart === 'page' ? 0 : performance.now();
     render(templates, renderContainer);
     const children = renderContainer.querySelectorAll('*');
-    let updates = [...children].filter((el) => 'updateComplete' in el);
+    let updates = Array.from(children).filter(
+        (el): el is LitElement => 'updateComplete' in el
+    );
 
     if (updates.length) {
         while (updates.length) {
             const results = await Promise.all(
-                updates.map((el) => (el as LitElement).updateComplete)
+                updates.map((el) => el.updateComplete)
             );
             updates = results.reduce((acc, result, index) => {
                 if (!result) {
                     acc.push(updates[index]);
                 }
                 return acc;
-            }, [] as Element[]);
+            }, [] as LitElement[]);
         }
     }
 
