@@ -247,7 +247,6 @@
                 "!tools/**/*.d.ts",
                 "tasks/esbuild-packages.js",
                 "tasks/ts-tools.js",
-                "tasks/hydrate-export-maps.js",
                 "packages/**/exports.json",
                 "tools/**/exports.json"
             ],

@@ -1,5 +1,0 @@
-{
-    "./src/*": "./src/*",
-    "./sp-radio.js": "./sp-radio.js",
-    "./sp-radio-group.js": "./sp-radio-group.js"
-}

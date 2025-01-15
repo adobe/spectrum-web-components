@@ -1,4 +1,0 @@
-{
-    "./src/*": "./src/*",
-    "./sp-popover.js": "./sp-popover.js"
-}
