@@ -122,6 +122,50 @@ describe('Menu item', () => {
 
         expect(clickTargetSpy.calledWith(anchorElement)).to.be.true;
     });
+    it('allows link click', async () => {
+        let clicked = false;
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                @click=${(event: Event) => {
+                    clickTargetSpy(
+                        event.composedPath()[0] as HTMLAnchorElement
+                    );
+                    event.stopPropagation();
+                    event.preventDefault();
+                }}
+            >
+                <sp-menu-item href="#top" target="_blank">
+                    With Target
+                </sp-menu-item>
+            </sp-menu>
+        `);
+
+        await elementUpdated(el);
+
+        // prevents browser from activating link but records the proxy click
+        el.shadowRoot
+            ?.querySelector('.anchor')
+            ?.addEventListener('click', (event: Event) => {
+                event.preventDefault();
+                clicked = true;
+            });
+        const rect = el.getBoundingClientRect();
+
+        // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
+        await sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
+        await elementUpdated(el);
+        expect(clicked).to.be.true;
+    });
     it('value attribute', async () => {
         const el = await fixture<MenuItem>(html`
             <sp-menu-item value="selected" selected>Selected Text</sp-menu-item>
@@ -193,7 +237,6 @@ describe('Menu item', () => {
 
         expect(el.hasSubmenu).to.be.false;
     });
-
     it('should not allow text-align to cascade when used inside an overlay', async () => {
         const element = await fixture<HTMLDivElement>(html`
             <div style="text-align: center">
