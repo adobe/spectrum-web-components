@@ -25,8 +25,12 @@ export const globalTypes = {
         showName: true,
         toolbar: {
             items: [
-                { value: 'spectrum', title: 'Spectrum 2', right: 'default' },
-                { value: 'legacy', title: 'Spectrum 1', right: 'legacy' },
+                {
+                    value: 'spectrum-two',
+                    title: 'Spectrum 2',
+                    right: 'default',
+                },
+                { value: 'spectrum', title: 'Spectrum 1', right: 'legacy' },
                 { value: 'express', title: 'Express' },
             ],
             dynamicTitle: true,
