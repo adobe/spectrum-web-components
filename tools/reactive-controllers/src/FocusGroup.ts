@@ -189,7 +189,9 @@ export class FocusGroupController<T extends HTMLElement>
             focusElement = elements[this.currentIndex];
         }
         if (focusElement && this.isFocusableElement(focusElement)) {
-            elements[this.prevIndex]?.setAttribute('tabindex', '-1');
+            if (elements[this.prevIndex] !== focusElement) {
+                elements[this.prevIndex]?.setAttribute('tabindex', '-1');
+            }
             focusElement.tabIndex = 0;
             focusElement.focus(options);
         }
@@ -298,28 +300,28 @@ export class FocusGroupController<T extends HTMLElement>
         }
     };
 
-    acceptsEventCode(code: string): boolean {
-        if (code === 'End' || code === 'Home') {
+    acceptsEventKey(key: string): boolean {
+        if (key === 'End' || key === 'Home') {
             return true;
         }
         switch (this.direction) {
             case 'horizontal':
-                return code === 'ArrowLeft' || code === 'ArrowRight';
+                return key === 'ArrowLeft' || key === 'ArrowRight';
             case 'vertical':
-                return code === 'ArrowUp' || code === 'ArrowDown';
+                return key === 'ArrowUp' || key === 'ArrowDown';
             case 'both':
             case 'grid':
-                return code.startsWith('Arrow');
+                return key.startsWith('Arrow');
         }
     }
 
     handleKeydown = (event: KeyboardEvent): void => {
-        if (!this.acceptsEventCode(event.code) || event.defaultPrevented) {
+        if (!this.acceptsEventKey(event.key) || event.defaultPrevented) {
             return;
         }
         let diff = 0;
         this.prevIndex = this.currentIndex;
-        switch (event.code) {
+        switch (event.key) {
             case 'ArrowRight':
                 diff += 1;
                 break;
