@@ -6,7 +6,7 @@
     "type": "module",
     "engines": {
         "node": ">=20",
-        "yarn": ">=1.16.0"
+        "yarn": ">=4.6.0"
     },
     "scripts": {
         "analyze": "lit-analyzer \"{packages,tools}/*/src/**/!(*.css).ts\"",
@@ -143,9 +143,9 @@
         "@webcomponents/webcomponentsjs": "^2.8.0",
         "alex": "^11.0.1",
         "cem-plugin-module-file-extensions": "^0.0.5",
-        "chalk": "^5.0.1",
         "chromatic": "^11.20.0",
         "chromedriver": "^130.0.1",
+        "colors": "^1.4.0",
         "common-tags": "^1.8.2",
         "custom-elements-manifest": "^2.0.0",
         "debounce": "^2.0.0",
@@ -433,5 +433,5 @@
         "tools/*",
         "react/*"
     ],
-    "packageManager": "yarn@1.22.22"
+    "packageManager": "yarn@4.6.0"
 }
