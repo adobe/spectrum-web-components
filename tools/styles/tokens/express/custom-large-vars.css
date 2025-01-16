@@ -1,3 +1,4 @@
+/* @deprecated these assets should not be used; the custom override values exist in express/large-vars.css */
 :host,
 :root {
     --spectrum-colorwheel-path: 'M 118 118 m -118 0 a 118 118 0 1 0 236 0 a 118 118 0 1 0 -236 0.2 M 118 118 m -92 0 a 92 92 0 1 0 184 0 a 92 92 0 1 0 -184 0';
