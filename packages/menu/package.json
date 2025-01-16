@@ -1,112 +1,112 @@
 {
-    "name": "@spectrum-web-components/menu",
-    "version": "1.0.3",
-    "publishConfig": {
-        "access": "public"
+  "name": "@spectrum-web-components/menu",
+  "version": "1.0.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git",
+    "directory": "packages/menu"
+  },
+  "author": "",
+  "homepage": "https://opensource.adobe.com/spectrum-web-components/components/menu",
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.dev.js",
+      "default": "./src/index.js"
     },
-    "description": "",
-    "license": "Apache-2.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/menu"
+    "./package.json": "./package.json",
+    "./src/Menu.js": {
+      "development": "./src/Menu.dev.js",
+      "default": "./src/Menu.js"
     },
-    "author": "",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/menu",
-    "bugs": {
-        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    "./src/MenuDivider.js": {
+      "development": "./src/MenuDivider.dev.js",
+      "default": "./src/MenuDivider.js"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
-    "type": "module",
-    "exports": {
-        ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
-        "./package.json": "./package.json",
-        "./src/Menu.js": {
-            "development": "./src/Menu.dev.js",
-            "default": "./src/Menu.js"
-        },
-        "./src/MenuDivider.js": {
-            "development": "./src/MenuDivider.dev.js",
-            "default": "./src/MenuDivider.js"
-        },
-        "./src/MenuGroup.js": {
-            "development": "./src/MenuGroup.dev.js",
-            "default": "./src/MenuGroup.js"
-        },
-        "./src/MenuItem.js": {
-            "development": "./src/MenuItem.dev.js",
-            "default": "./src/MenuItem.js"
-        },
-        "./src/checkmark-overrides.css.js": "./src/checkmark-overrides.css.js",
-        "./src/chevron-overrides.css.js": "./src/chevron-overrides.css.js",
-        "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
-        "./src/menu-divider-overrides.css.js": "./src/menu-divider-overrides.css.js",
-        "./src/menu-divider.css.js": "./src/menu-divider.css.js",
-        "./src/menu-group.css.js": "./src/menu-group.css.js",
-        "./src/menu-item-overrides.css.js": "./src/menu-item-overrides.css.js",
-        "./src/menu-item.css.js": "./src/menu-item.css.js",
-        "./src/menu-overrides.css.js": "./src/menu-overrides.css.js",
-        "./src/menu.css.js": "./src/menu.css.js",
-        "./sp-menu.js": {
-            "development": "./sp-menu.dev.js",
-            "default": "./sp-menu.js"
-        },
-        "./sp-menu-divider.js": {
-            "development": "./sp-menu-divider.dev.js",
-            "default": "./sp-menu-divider.js"
-        },
-        "./sp-menu-group.js": {
-            "development": "./sp-menu-group.dev.js",
-            "default": "./sp-menu-group.js"
-        },
-        "./sp-menu-item.js": {
-            "development": "./sp-menu-item.dev.js",
-            "default": "./sp-menu-item.js"
-        }
+    "./src/MenuGroup.js": {
+      "development": "./src/MenuGroup.dev.js",
+      "default": "./src/MenuGroup.js"
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    "./src/MenuItem.js": {
+      "development": "./src/MenuItem.dev.js",
+      "default": "./src/MenuItem.js"
     },
-    "files": [
-        "**/*.d.ts",
-        "**/*.js",
-        "**/*.js.map",
-        "custom-elements.json",
-        "!stories/",
-        "!test/"
-    ],
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "dependencies": {
-        "@lit-labs/observers": "^2.0.2",
-        "@spectrum-web-components/action-button": "^1.0.3",
-        "@spectrum-web-components/base": "^1.0.1",
-        "@spectrum-web-components/divider": "^1.0.1",
-        "@spectrum-web-components/icon": "^1.0.3",
-        "@spectrum-web-components/icons-ui": "^1.0.3",
-        "@spectrum-web-components/overlay": "^1.0.3",
-        "@spectrum-web-components/popover": "^1.0.3",
-        "@spectrum-web-components/reactive-controllers": "^1.0.3",
-        "@spectrum-web-components/shared": "^1.0.1"
+    "./src/checkmark-overrides.css.js": "./src/checkmark-overrides.css.js",
+    "./src/chevron-overrides.css.js": "./src/chevron-overrides.css.js",
+    "./src/index.js": {
+      "development": "./src/index.dev.js",
+      "default": "./src/index.js"
     },
-    "devDependencies": {
-        "@spectrum-css/menu": "8.0.0-s2-foundations.16"
+    "./src/menu-divider-overrides.css.js": "./src/menu-divider-overrides.css.js",
+    "./src/menu-divider.css.js": "./src/menu-divider.css.js",
+    "./src/menu-group.css.js": "./src/menu-group.css.js",
+    "./src/menu-item-overrides.css.js": "./src/menu-item-overrides.css.js",
+    "./src/menu-item.css.js": "./src/menu-item.css.js",
+    "./src/menu-overrides.css.js": "./src/menu-overrides.css.js",
+    "./src/menu.css.js": "./src/menu.css.js",
+    "./sp-menu.js": {
+      "development": "./sp-menu.dev.js",
+      "default": "./sp-menu.js"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./sp-*.js",
-        "./**/*.dev.js"
-    ]
+    "./sp-menu-divider.js": {
+      "development": "./sp-menu-divider.dev.js",
+      "default": "./sp-menu-divider.js"
+    },
+    "./sp-menu-group.js": {
+      "development": "./sp-menu-group.dev.js",
+      "default": "./sp-menu-group.js"
+    },
+    "./sp-menu-item.js": {
+      "development": "./sp-menu-item.dev.js",
+      "default": "./sp-menu-item.js"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+  },
+  "files": [
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "custom-elements.json",
+    "!stories/",
+    "!test/"
+  ],
+  "keywords": [
+    "spectrum css",
+    "web components",
+    "lit-element",
+    "lit-html"
+  ],
+  "dependencies": {
+    "@lit-labs/observers": "^2.0.2",
+    "@spectrum-web-components/action-button": "^1.0.3",
+    "@spectrum-web-components/base": "^1.0.1",
+    "@spectrum-web-components/divider": "^1.0.1",
+    "@spectrum-web-components/icon": "^1.0.3",
+    "@spectrum-web-components/icons-ui": "^1.0.3",
+    "@spectrum-web-components/overlay": "^1.0.3",
+    "@spectrum-web-components/popover": "^1.0.3",
+    "@spectrum-web-components/reactive-controllers": "^1.0.3",
+    "@spectrum-web-components/shared": "^1.0.1"
+  },
+  "devDependencies": {
+    "@spectrum-css/menu": "8.0.0-s2-foundations.17"
+  },
+  "types": "./src/index.d.ts",
+  "customElements": "custom-elements.json",
+  "sideEffects": [
+    "./sp-*.js",
+    "./**/*.dev.js"
+  ]
 }

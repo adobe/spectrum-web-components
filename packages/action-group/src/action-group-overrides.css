@@ -10,75 +10,11 @@
     governing permissions and limitations under the License.
     */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-actiongroup-gap-size-compact: var(
-        --system-action-group-gap-size-compact
-    );
-    --spectrum-actiongroup-horizontal-spacing-compact: var(
-        --system-action-group-horizontal-spacing-compact
-    );
-    --spectrum-actiongroup-vertical-spacing-compact: var(
-        --system-action-group-vertical-spacing-compact
-    );
-    --spectrum-actiongroup-button-spacing-reset: var(
-        --system-action-group-button-spacing-reset
-    );
-    --spectrum-actiongroup-border-radius-reset: var(
-        --system-action-group-border-radius-reset
-    );
-    --spectrum-actiongroup-border-radius: var(
-        --system-action-group-border-radius
-    );
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-vertical-spacing-regular
-    );
+    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+            :host {
+  --spectrum-actiongroup-gap-size-compact: var(--system-action-group-gap-size-compact);
+  --spectrum-actiongroup-horizontal-spacing-compact: var(--system-action-group-horizontal-spacing-compact);
+  --spectrum-actiongroup-vertical-spacing-compact: var(--system-action-group-vertical-spacing-compact);
 }
 
-:host([size='xs']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-xs-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-xs-vertical-spacing-regular
-    );
-}
-
-:host([size='s']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-s-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-s-vertical-spacing-regular
-    );
-}
-
-:host {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-m-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-m-vertical-spacing-regular
-    );
-}
-
-:host([size='l']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-l-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-l-vertical-spacing-regular
-    );
-}
-
-:host([size='xl']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-xl-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-xl-vertical-spacing-regular
-    );
-}
+            
