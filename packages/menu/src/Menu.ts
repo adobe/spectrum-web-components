@@ -27,6 +27,7 @@ import { MenuItem } from './MenuItem.js';
 import type { MenuItemAddedOrUpdatedEvent } from './MenuItem.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
 import menuStyles from './menu.css.js';
+import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 export interface MenuChildItem {
     menuItem: MenuItem;
@@ -67,6 +68,25 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private get isSubmenu(): boolean {
         return this.slot === 'submenu';
     }
+
+    rovingTabindexController = new RovingTabindexController<MenuItem>(this, {
+        focusInIndex: (elements: MenuItem[] | undefined) => {
+            let firstEnabledIndex = -1;
+            const firstSelectedIndex = elements?.findIndex((el, index) => {
+                if (!elements[firstEnabledIndex] && !el.disabled) {
+                    firstEnabledIndex = index;
+                }
+                return el.selected && !el.disabled;
+            });
+            return elements &&
+                firstSelectedIndex &&
+                elements[firstSelectedIndex]
+                ? firstSelectedIndex
+                : firstEnabledIndex;
+        },
+        elements: () => this.cachedChildItems || [],
+        isFocusableElement: (el: MenuItem) => !el.disabled,
+    });
 
     @property({ type: String, reflect: true })
     public label = '';
@@ -166,6 +186,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             );
         }
 
+        this.rovingTabindexController.clearElementCache();
         return this.cachedChildItems;
     }
 
@@ -335,7 +356,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             return;
         }
         this.focusMenuItemByOffset(0);
-        super.focus({ preventScroll });
+        this.rovingTabindexController.focus({ preventScroll });
         const selectedItem = this.selectedItems[0];
         if (selectedItem && !preventScroll) {
             selectedItem.scrollIntoView({ block: 'nearest' });
@@ -406,6 +427,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     public handleFocusin(event: FocusEvent): void {
+        // ignore if a child element has a different root menu
         if (
             this.childItems.some(
                 (childItem) => childItem.menuData.focusRoot !== this
@@ -416,9 +438,12 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         const activeElement = (this.getRootNode() as Document).activeElement as
             | MenuItem
             | Menu;
+
+        // selected child items root menu
         const selectionRoot =
             this.childItems[this.focusedItemIndex]?.menuData.selectionRoot ||
             this;
+
         if (activeElement !== selectionRoot || event.target !== this) {
             selectionRoot.focus({ preventScroll: true });
             if (activeElement && this.focusedItemIndex === 0) {
@@ -428,24 +453,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 this.focusMenuItemByOffset(Math.max(offset, 0));
             }
         }
-        this.startListeningToKeyboard();
-    }
-
-    public startListeningToKeyboard(): void {
-        this.addEventListener('keydown', this.handleKeydown);
     }
 
     public handleBlur(event: FocusEvent): void {
         if (elementIsOrContains(this, event.relatedTarget as Node)) {
             return;
         }
-        this.stopListeningToKeyboard();
         this.childItems.forEach((child) => (child.focused = false));
-        this.removeAttribute('aria-activedescendant');
-    }
-
-    public stopListeningToKeyboard(): void {
-        this.removeEventListener('keydown', this.handleKeydown);
     }
 
     private descendentOverlays = new Map<Overlay, Overlay>();
@@ -822,7 +836,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 return child.hasVisibleFocusInTree();
             });
         item.focused = focused;
-        this.setAttribute('aria-activedescendant', item.id);
         if (
             item.menuData.selectionRoot &&
             item.menuData.selectionRoot !== this

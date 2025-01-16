@@ -237,24 +237,16 @@ export class MenuItem extends LikeAnchor(
     @property({ type: Boolean, reflect: true })
     public open = false;
 
-    public override click(): void {
-        if (this.disabled) {
-            return;
-        }
-
-        if (this.shouldProxyClick()) {
-            return;
-        }
-
-        super.click();
-    }
-
     private handleClickCapture(event: Event): void | boolean {
         if (this.disabled) {
             event.preventDefault();
             event.stopImmediatePropagation();
             event.stopPropagation();
             return false;
+        }
+
+        if (this.shouldProxyClick()) {
+            return;
         }
     }
 
