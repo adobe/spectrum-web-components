@@ -413,8 +413,6 @@ describe('Menu', () => {
             })
         );
         await nextFrame();
-        // re-bind keyevents
-        el.startListeningToKeyboard();
         // focus management should start again from the first item.
         el.dispatchEvent(arrowDownEvent());
         expect(secondItem.focused, 'second').to.be.true;

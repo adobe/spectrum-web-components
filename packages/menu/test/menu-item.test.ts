@@ -125,15 +125,7 @@ describe('Menu item', () => {
     it('allows link click', async () => {
         let clicked = false;
         const el = await fixture<Menu>(html`
-            <sp-menu
-                @click=${(event: Event) => {
-                    clickTargetSpy(
-                        event.composedPath()[0] as HTMLAnchorElement
-                    );
-                    event.stopPropagation();
-                    event.preventDefault();
-                }}
-            >
+            <sp-menu>
                 <sp-menu-item href="#top" target="_blank">
                     With Target
                 </sp-menu-item>
