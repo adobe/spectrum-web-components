@@ -117,33 +117,45 @@ describe('Menu item', () => {
         ).anchorElement.dispatchEvent(new FocusEvent('focus'));
 
         await elementUpdated(item);
-        expect(el === document.activeElement).to.be.true;
+
+        expect(item === document.activeElement).to.be.true;
         item.click();
 
         expect(clickTargetSpy.calledWith(anchorElement)).to.be.true;
     });
     it('allows link click', async () => {
-        let clicked = false;
+        const clickTargetSpy = spy();
         const el = await fixture<Menu>(html`
-            <sp-menu>
-                <sp-menu-item href="#top" target="_blank">
-                    With Target
+            <sp-menu
+                @click=${(event: Event) => {
+                    clickTargetSpy(
+                        event.composedPath()[0] as HTMLAnchorElement
+                    );
+                    event.stopPropagation();
+                    event.preventDefault();
+                }}
+            >
+                <sp-menu-item
+                    href="https://opensource.adobe.com/spectrum-web-components"
+                >
+                    Selected Text
                 </sp-menu-item>
             </sp-menu>
         `);
 
-        await elementUpdated(el);
+        const item = el.querySelector('sp-menu-item') as MenuItem;
+        const { anchorElement } = item as unknown as {
+            anchorElement: HTMLAnchorElement;
+        };
+        (
+            item as unknown as { anchorElement: HTMLAnchorElement }
+        ).anchorElement.dispatchEvent(new FocusEvent('focus'));
 
-        // prevents browser from activating link but records the proxy click
-        el.shadowRoot
-            ?.querySelector('.anchor')
-            ?.addEventListener('click', (event: Event) => {
-                event.preventDefault();
-                clicked = true;
-            });
-        const rect = el.getBoundingClientRect();
+        await elementUpdated(item);
+        expect(item === document.activeElement).to.be.true;
 
         // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
+        const rect = el.getBoundingClientRect();
         await sendMouse({
             steps: [
                 {
@@ -155,8 +167,8 @@ describe('Menu item', () => {
                 },
             ],
         });
-        await elementUpdated(el);
-        expect(clicked).to.be.true;
+
+        expect(clickTargetSpy.calledWith(anchorElement)).to.be.true;
     });
     it('value attribute', async () => {
         const el = await fixture<MenuItem>(html`
