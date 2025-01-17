@@ -16,7 +16,37 @@ import { readFileSync, writeFileSync } from 'fs';
 import latestVersion from 'latest-version';
 import fg from 'fast-glob';
 
-const useLatest = process.argv[2] === '--latest';
+// What tag to target, defaults to `latest`
+// Example: `node scripts/update-spectrum-css.js s2-foundations` will target the latest version of the s2-foundations tag
+const targetTag = process.argv[2];
+
+async function updateDependency(packageName, depType, packageJSON, targetTag) {
+    if (packageName.startsWith('@spectrum-css')) {
+        // We are skipping these packages because we have two different versions of them (latest and s2-foundations)
+        // and targetting the s2-foundations tag will update the latest version of these packages
+        // We have to update the version in the package.json manually for these packages
+        if (
+            packageName.includes('tokens') ||
+            packageName.includes('ui-icons')
+        ) {
+            return false;
+        }
+
+        const currentVersion = packageJSON[depType][packageName];
+        const targetVersion = await latestVersion(packageName, {
+            version: targetTag || 'latest',
+        });
+        const targetRange = `${targetVersion}`;
+        if (currentVersion.replace('^', '') !== targetVersion) {
+            console.log(
+                `updating ${packageName} from ${currentVersion} to ${targetRange}`
+            );
+            packageJSON[depType][packageName] = targetRange;
+            return true;
+        }
+    }
+    return false;
+}
 
 async function update() {
     let updated = false;
@@ -28,27 +58,30 @@ async function update() {
             const packageJSON = JSON.parse(
                 readFileSync(packageJSONPath, 'utf-8')
             );
-            async function updateDependency(packageName, depType) {
-                if (packageName.startsWith('@spectrum-css')) {
-                    const currentVersion = packageJSON[depType][packageName];
-                    const targetVersion = await latestVersion(packageName, {
-                        version: useLatest ? 'latest' : currentVersion,
-                    });
-                    const targetRange = `^${targetVersion}`;
-                    if (currentVersion.replace('^', '') !== targetVersion) {
-                        console.log(
-                            `updating ${packageName} from ${currentVersion} to ${targetRange}`
-                        );
-                        packageJSON[depType][packageName] = targetRange;
-                        shouldUpdate = true;
-                    }
+
+            for (const packageName in packageJSON.dependencies) {
+                if (
+                    await updateDependency(
+                        packageName,
+                        'dependencies',
+                        packageJSON,
+                        targetTag
+                    )
+                ) {
+                    shouldUpdate = true;
                 }
             }
-            for (const packageName in packageJSON.dependencies) {
-                await updateDependency(packageName, 'dependencies');
-            }
             for (const packageName in packageJSON.devDependencies) {
-                await updateDependency(packageName, 'devDependencies');
+                if (
+                    await updateDependency(
+                        packageName,
+                        'devDependencies',
+                        packageJSON,
+                        targetTag
+                    )
+                ) {
+                    shouldUpdate = true;
+                }
             }
             if (shouldUpdate) {
                 writeFileSync(packageJSONPath, JSON.stringify(packageJSON));
