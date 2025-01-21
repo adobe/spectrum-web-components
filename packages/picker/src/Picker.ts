@@ -96,6 +96,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
+    @property({ type: Boolean, reflect: true })
+    public forcePopover = false;
+
     /** Whether the items are currently loading. */
     @property({ type: Boolean, reflect: true })
     public pending = false;
@@ -619,7 +622,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         `;
         // @todo: test in mobile
         /* c8 ignore next 11 */
-        if (this.isMobile.matches) {
+        if (this.isMobile.matches && !this.forcePopover) {
             this.dependencyManager.add('sp-tray');
             import('@spectrum-web-components/tray/sp-tray.js');
             return html`
