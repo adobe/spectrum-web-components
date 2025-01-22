@@ -1,3 +1,4 @@
+/* @deprecated these assets should not be used; the custom override values exist in ../global-vars.css */
 :host,
 :root {
     --system: spectrum;

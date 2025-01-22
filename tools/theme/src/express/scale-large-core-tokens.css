@@ -11,8 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('@spectrum-web-components/styles/tokens/large-vars.css');
-@import url('@spectrum-web-components/styles/tokens/spectrum/custom-large-vars.css');
-@import url('@spectrum-web-components/styles/tokens/express/custom-large-vars.css');
+@import url('@spectrum-web-components/styles/tokens/spectrum/large-vars.css');
 @import url('@spectrum-web-components/styles/tokens/express/large-vars.css');
 
 :root,
