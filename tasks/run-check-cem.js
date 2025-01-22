@@ -9,6 +9,23 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/**
+ * @fileoverview This task runs the check-cem.js validation script across all workspace 
+ * packages to verify their Custom Elements Manifest (CEM) files.
+ *
+ * @description
+ * This script:
+ * 1. Gets a list of all workspace packages excluding specified ignored packages
+ * 2. Locates the check-cem.js script for validation
+ * 3. Executes check-cem.js in each package's directory
+ * 4. Continues processing even if individual package checks fail
+ *
+ * @output
+ * - Info: "Running check-cem.js for [package-name]"
+ * - Warning: "check-cem.js not found for [package-name]"
+ * - Error: "Error running check-cem.js for [package-name]:" followed by error details
+ */
+
 import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
@@ -48,7 +65,7 @@ const ignoredPackages = [
     '@swc-react/*',
     'documentation',
     'example-project-rollup',
-    'example-project-webpack',
+'example-project-webpack',
     'swc-templates',
     '@types/swc',
 ];

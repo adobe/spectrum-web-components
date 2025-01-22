@@ -9,6 +9,25 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/**
+ * @fileoverview This task generates React wrapper components for Spectrum Web Components
+ * using the Custom Elements Manifest (CEM) analyzer.
+ *
+ * @description
+ * This script:
+ * 1. Removes any existing 'react' directory for clean generation
+ * 2. Analyzes all workspace packages (except ignored ones) using CEM
+ * 3. Generates React wrapper components using a custom configuration
+ * 4. Creates icon-specific React wrappers using a separate script
+ *
+ * @output
+ * - Info: "Removed react directory."
+ * - Info: "Generated React wrapper."
+ * - Error: "Error removing react directory:" followed by error details
+ * - Error: "Error generating React wrapper:" followed by error details
+ * - Error: "Error running command in [path]:" followed by error details
+ */
+
 import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';

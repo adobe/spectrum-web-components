@@ -9,6 +9,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/**
+ * @fileoverview This task removes custom-elements.json files from all workspace packages
+ * to ensure clean documentation generation.
+ *
+ * @description
+ * This script:
+ * 1. Gets a list of all workspace packages excluding specified ignored packages
+ * 2. Attempts to remove custom-elements.json from each package directory
+ * 3. Continues execution even if a file doesn't exist (using ||: shell operator)
+ * 4. Logs any errors encountered during removal but continues processing
+ *
+ * @output
+ * - Error: "Error while trying to remove custom-elements.json in package [package-name]:"
+ *   followed by error details (if any errors occur)
+ */
+
 import { execSync } from 'child_process';
 
 // Get a list of all packages except those you want to ignore

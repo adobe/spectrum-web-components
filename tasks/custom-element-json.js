@@ -8,6 +8,24 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+/**
+ * @fileoverview This task generates and updates custom elements manifest JSON files 
+ * for all workspace packages using the Custom Elements Manifest analyzer (CEM).
+ *
+ * @description
+ * This script:
+ * 1. Gets a list of all workspace packages excluding specified ignored packages
+ * 2. Uses the Custom Elements Manifest analyzer to generate JSON documentation
+ * 3. Processes each package using a custom configuration file
+ * 4. Includes package.json data in the generated manifest
+ *
+ * @output
+ * - Start: "Updating custom elements JSON files..."
+ * - Success: "All custom elements JSON files have been updated successfully."
+ * - Error: "Error executing custom-element-json command:" followed by error details
+ */
+
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
