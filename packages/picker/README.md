@@ -8,25 +8,25 @@ An `<sp-picker>` is an alternative to HTML's `<select>` element. Use `<sp-menu-i
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/picker?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/picker)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/guTpKeAjgecibF150Qbg/src/index.ts)
 
-```
+```bash
 yarn add @spectrum-web-components/picker
 ```
 
 Import the side effectful registration of `<sp-picker>` via:
 
-```
+```bash
 import '@spectrum-web-components/picker/sp-picker.js';
 ```
 
 The default of `<sp-picker>` will load dependencies in `@spectrum-web-components/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-picker>` as follows:
 
-```
+```bash
 import '@spectrum-web-components/picker/sync/sp-picker.js';
 ```
 
 When looking to leverage the `Picker` base class as a type and/or for extension purposes, do so via:
 
-```
+```bash
 import { Picker } from '@spectrum-web-components/picker';
 ```
 
@@ -456,6 +456,28 @@ When in pending state, `<sp-picker>` elements will not respond to click events a
     <sp-menu-item>Normal</sp-menu-item>
     <sp-menu-item>Multiply</sp-menu-item>
     <sp-menu-item>Screen</sp-menu-item>
+</sp-picker>
+```
+
+## Force Popover on Mobile Devices
+
+When on a mobile device, `<sp-picker>` elements will render an `<sp-tray>` to the bottom of the viewport by default. To override this functionality so that the picker remains an `<sp-popover>` in mobile, you can simply add the attribute `forcePopover` to the `<sp-picker>`. To see this functionality in action, load this page from your mobile device or use Chrome DevTools (or equivalent) and select a mobile device once the Device Toolbar (the phone/tablet icon) is active.
+
+```html
+<sp-field-label for="picker-tray">
+    Do you want to see a tray menu?
+</sp-field-label>
+<sp-picker id="picker-tray" label="Select an option">
+    <sp-menu-item value="option-1">Yes</sp-menu-item>
+    <sp-menu-item value="option-2">No</sp-menu-item>
+</sp-picker>
+<br />
+<sp-field-label for="picker-popover">
+    Do you want to see a popover menu?
+</sp-field-label>
+<sp-picker id="picker-popover" label="Select an option" forcePopover>
+    <sp-menu-item value="option-1">Yes</sp-menu-item>
+    <sp-menu-item value="option-2">No</sp-menu-item>
 </sp-picker>
 ```
 

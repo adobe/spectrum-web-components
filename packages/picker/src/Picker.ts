@@ -96,6 +96,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
+    /**
+     * Forces the Picker to render as a popover on mobile instead of a tray.
+     *
+     * @memberof PickerBase
+     */
     @property({ type: Boolean, reflect: true })
     public forcePopover = false;
 
@@ -520,8 +525,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected override update(changes: PropertyValues<this>): void {
         if (this.selects) {
-            // Always force `selects` to "single" when set.
-            // TODO: Add support functionally and visually for "multiple"
+            /**
+             * Always force `selects` to "single" when set.
+             *
+             * @todo: Add support functionally and visually for "multiple"
+             */
             this.selects = 'single';
         }
         if (changes.has('disabled') && this.disabled) {
@@ -621,7 +629,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             ${this.dismissHelper} ${menu} ${this.dismissHelper}
         `;
         // @todo: test in mobile
-        /* c8 ignore next 11 */
         if (this.isMobile.matches && !this.forcePopover) {
             this.dependencyManager.add('sp-tray');
             import('@spectrum-web-components/tray/sp-tray.js');
