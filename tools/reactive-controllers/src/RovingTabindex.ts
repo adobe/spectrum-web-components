@@ -45,18 +45,14 @@ export class RovingTabindexController<
     }
 
     manageTabindexes(): void {
-        if (this.focused) {
-            this.updateTabindexes(() => ({ tabIndex: -1 }));
-        } else {
-            this.updateTabindexes((el: HTMLElement): UpdateTabIndexes => {
-                return {
-                    removeTabIndex:
-                        el.contains(this.focusInElement) &&
-                        el !== this.focusInElement,
-                    tabIndex: el === this.focusInElement ? 0 : -1,
-                };
-            });
-        }
+        this.updateTabindexes((el: HTMLElement): UpdateTabIndexes => {
+            return {
+                removeTabIndex:
+                    el.contains(this.focusInElement) &&
+                    el !== this.focusInElement,
+                tabIndex: el === this.focusInElement ? 0 : -1,
+            };
+        });
     }
 
     updateTabindexes(getTabIndex: (el: HTMLElement) => UpdateTabIndexes): void {
