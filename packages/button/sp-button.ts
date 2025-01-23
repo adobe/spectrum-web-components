@@ -13,7 +13,6 @@ import { Button } from './src/Button.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 
 defineElement('sp-button', Button);
-// Butotn
 declare global {
     interface HTMLElementTagNameMap {
         'sp-button': Button;
