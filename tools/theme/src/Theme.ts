@@ -87,7 +87,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         } else if (attrName === 'system') {
             this.system = value as SystemVariant;
             this._provideSystemContext();
-            warnBetaSystem(this, value as SystemVariant);
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
         }
@@ -433,17 +432,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 unsubscribe
             );
         }
-    }
-}
-
-function warnBetaSystem(instance: Theme, value: SystemVariant): void {
-    if (window.__swc.DEBUG && value === 'spectrum-two') {
-        window.__swc.warn(
-            instance,
-            'You are currently using the beta version of the Spectrum Two system. Consumption of this system may be subject to unexpected changes before the 1.0 release of SWC.',
-            'https://s2.spectrum.adobe.com/',
-            { level: 'high' }
-        );
     }
 }
 
