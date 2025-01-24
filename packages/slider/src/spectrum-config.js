@@ -129,6 +129,52 @@ const config = {
                 converter.classToClass('is-dragged', 'dragging'),
                 {
                     find: [
+                        builder.class('spectrum-Slider-controls'),
+                        {
+                            type: 'pseudo-class',
+                            kind: 'not',
+                            selectors: [
+                                [
+                                    {
+                                        type: 'pseudo-class',
+                                        kind: 'has',
+                                        selectors: [
+                                            [
+                                                builder.class(
+                                                    'spectrum-Slider-ticks'
+                                                ),
+                                            ],
+                                        ],
+                                    },
+                                ],
+                            ],
+                        },
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('controls'),
+                        },
+                        {
+                            replace: {
+                                kind: 'not',
+                                type: 'pseudo-class',
+                                selectors: [
+                                    [
+                                        {
+                                            type: 'pseudo-class',
+                                            kind: 'has',
+                                            selectors: [
+                                                [builder.class('ticks')],
+                                            ],
+                                        },
+                                    ],
+                                ],
+                            },
+                        },
+                    ],
+                },
+                {
+                    find: [
                         // .spectrum-Slider-handle:before:dir(rtl)
                         builder.class('spectrum-Slider-handle'),
                         builder.pseudoElement('before'),

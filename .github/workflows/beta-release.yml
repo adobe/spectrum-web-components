@@ -10,16 +10,11 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
 
-            - name: Set up Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '20'
-
-            - name: Install dependencies
-              run: yarn install --frozen-lockfile
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
             - name: Set Git identity
               run: |
@@ -29,13 +24,13 @@ jobs:
             - name: Get Lerna current version
               id: get_lerna_version
               run: |
-                  CURRENT_VERSION=$(npx lerna ls --json | jq -r '.[0].version')
+                  CURRENT_VERSION=$(yarn lerna ls --json | jq -r '.[0].version')
                   echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
 
             - name: Calculate next minor version
               id: calculate_next_minor_version
               run: |
-                  NEXT_MINOR_VERSION=$(npx semver "${{ steps.get_lerna_version.outputs.version }}" -i minor)
+                  NEXT_MINOR_VERSION=$(yarn semver "${{ steps.get_lerna_version.outputs.version }}" -i minor)
                   echo "next_minor_version=$NEXT_MINOR_VERSION" >> $GITHUB_OUTPUT
 
             - name: Get latest published beta version
@@ -68,7 +63,7 @@ jobs:
 
             - name: Update package versions for beta release
               run: |
-                  npx lerna version "${{ steps.calculate_next_beta_version.outputs.beta_version }}" --no-git-tag-version --no-push --yes
+                  yarn lerna version "${{ steps.calculate_next_beta_version.outputs.beta_version }}" --no-git-tag-version --no-push --yes
 
             - name: Configure NPM for Lerna publish
               env:
@@ -81,4 +76,4 @@ jobs:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
                   git commit -am "chore: publish beta version ${{ steps.calculate_next_beta_version.outputs.beta_version }}"
-                  npx lerna publish from-package --dist-tag beta --no-git-tag-version --no-push --yes
+                  yarn lerna publish from-package --dist-tag beta --no-git-tag-version --no-push --yes

@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import fg from 'fast-glob';
 import { build } from 'esbuild';
 import fs from 'fs';
-import { execSync } from 'child_process';
 
 const relativeImportRegex = RegExp(
     'import([^;]+)["|\'](?![a-zA-Z@])(..+)(?<!.css).js["|\'];',
@@ -56,15 +55,6 @@ const makeDev = {
     },
 };
 
-const makeExports = {
-    name: 'make-exports',
-    setup(build) {
-        build.onEnd((data) => {
-            execSync('node ./tasks/hydrate-export-maps.js');
-        });
-    },
-};
-
 export const buildPackage = async (paths) => {
     const devPaths = paths.filter(
         (path) =>
@@ -80,7 +70,7 @@ export const buildPackage = async (paths) => {
         (path) => path.search('/test/') > -1 || path.search('/stories/') > -1
     );
     const devPlugins = [makeDev];
-    const prodPlugins = [makeExports];
+    const prodPlugins = [];
     const builds = [];
     const config = {
         bundle: false,

@@ -1,0 +1,5 @@
+README.md merge=ours
+
+# Treat yarn assets as binaries for diffing
+/.yarn/releases/** binary
+/.yarn/plugins/** binary

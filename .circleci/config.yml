@@ -8,9 +8,13 @@ executors:
         environment:
             NODE_ENV: development
 parameters:
+    # In order to update the VRT baseline images:
+    # 1. Copy the hash of the latest golden images cache from the left sidebar in the VRT preview link (not to be confused with the arbitrary hash in the URL).
+    # 2. Paste the hash in the current_golden_images_hash default parameter below.
+    # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: 5ab4db0cb7a707b3465bbcc85b02edaa5c8b96ae
+        default: 93ad92a2fc031db0277fee635434955e438e94a9
     wireit_cache_name:
         type: string
         default: wireit
@@ -26,7 +30,10 @@ commands:
                       - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
             - run:
                   name: Installing Dependencies
-                  command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+                  command: |
+                      corepack enable
+                      yarn --immutable
+
             - save_cache:
                   paths:
                       - ~/.cache/yarn
@@ -81,14 +88,14 @@ commands:
                       if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             # build diff review site
             - run:
-                  when: on_fail
+                  when: always
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
-                  when: on_fail
+                  when: always
                   name: Publish review site
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
@@ -119,18 +126,7 @@ jobs:
         executor: node
 
         steps:
-            - checkout
-            - restore_cache:
-                  keys:
-                      - v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            - run:
-                  name: Installing Dependencies
-                  command: yarn --ignore-scripts --frozen-lockfile --cache-folder ~/.cache/yarn
-            - save_cache:
-                  paths:
-                      - ~/.cache/yarn
-                      - .wireit
-                  key: v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - downstream
             - run:
                   name: Define environment variable with lastest commit's message
                   command: |
@@ -138,7 +134,7 @@ jobs:
                       source $BASH_ENV
             - run:
                   name: Lint commit message
-                  command: echo "$COMMIT_MESSAGE" | npx commitlint --config commitlint.config.cjs
+                  command: echo "$COMMIT_MESSAGE" | yarn commitlint --config commitlint.config.cjs
 
     test-chromium:
         executor: node
@@ -207,12 +203,20 @@ jobs:
 
     preview-docs:
         executor: node
-
         steps:
             - downstream
             - run:
-                  name: Generate Docs
-                  command: yarn docs:preview
+                  name: Generate Custom Elements Manifest
+                  command: yarn docs:analyze
+            - run:
+                  name: Move CEM to Storybook directory
+                  command: cp projects/documentation/custom-elements.json storybook/
+            - run:
+                  name: Build documentation
+                  command: yarn docs:build
+            - run:
+                  name: Build Storybook
+                  command: yarn storybook:build
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
@@ -268,14 +272,14 @@ jobs:
                       if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             # build diff review site
             - run:
-                  when: on_fail
+                  when: always
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
-                  when: on_fail
+                  when: always
                   name: Publish review site
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
@@ -351,10 +355,10 @@ workflows:
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
-                          system: [spectrum, express]
-                          color: [light, dark]
-                          scale: [medium, large]
-                          dir: [ltr, rtl]
+                          system: [spectrum, express, spectrum-two]
+                          color: [light]
+                          scale: [medium]
+                          dir: [ltr]
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
@@ -363,10 +367,10 @@ workflows:
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
-                          system: [spectrum-two]
-                          color: [light, dark]
-                          scale: [medium, large]
-                          dir: [ltr, rtl]
+                          system: [spectrum, express, spectrum-two]
+                          color: [dark]
+                          scale: [large]
+                          dir: [rtl]
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX

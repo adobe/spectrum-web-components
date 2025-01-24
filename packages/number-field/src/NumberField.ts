@@ -497,6 +497,20 @@ export class NumberField extends TextfieldBase {
 
     protected override handleInput(event: InputEvent): void {
         if (this.isComposing) {
+            // If user actually types a new character.
+            if (event.data) {
+                // Don't allow non-numeric characters even in composing mode.
+                const partialValue = this.convertValueToNumber(event.data);
+
+                if (Number.isNaN(partialValue)) {
+                    this.inputElement.value = this.indeterminate
+                        ? indeterminatePlaceholder
+                        : this._trackingValue;
+
+                    this.isComposing = false;
+                }
+            }
+
             event.stopPropagation();
             return;
         }
@@ -536,6 +550,9 @@ export class NumberField extends TextfieldBase {
             this.inputElement.value = this.indeterminate
                 ? indeterminatePlaceholder
                 : this._trackingValue;
+
+            // Don't emit input event when the character is invalid.
+            event.stopPropagation();
         }
         const currentLength = value.length;
         const previousLength = this._trackingValue.length;
@@ -730,7 +747,7 @@ export class NumberField extends TextfieldBase {
                               inline="end"
                               block="start"
                               class="button step-up"
-                              aria-describedby=${this.helpTextId}
+                              aria-hidden="true"
                               label=${'Increase ' + this.appliedLabel}
                               size=${this.size}
                               tabindex="-1"
@@ -747,7 +764,7 @@ export class NumberField extends TextfieldBase {
                               inline="end"
                               block="end"
                               class="button step-down"
-                              aria-describedby=${this.helpTextId}
+                              aria-hidden="true"
                               label=${'Decrease ' + this.appliedLabel}
                               size=${this.size}
                               tabindex="-1"
@@ -769,13 +786,16 @@ export class NumberField extends TextfieldBase {
         if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
             this.clearNumberFormatterCache();
         }
-        if (changes.has('value') || changes.has('max') || changes.has('min')) {
+        if (
+            changes.has('value') ||
+            changes.has('max') ||
+            changes.has('min') ||
+            changes.has('step')
+        ) {
             const value = this.numberParser.parse(
                 this.formattedValue.replace(this._forcedUnit, '')
             );
             this.value = value;
-        }
-        if (changes.has('step')) {
             this.clearValueFormatterCache();
         }
         super.update(changes);

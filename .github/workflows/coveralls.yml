@@ -13,24 +13,17 @@ jobs:
         name: Generate and upload coverage report
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout code
+            - name: Checkout PR branch
               uses: actions/checkout@v4
 
-            - name: Setup Node 20
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '20'
-                  cache: 'yarn'
-                  registry-url: 'https://registry.npmjs.org'
-
-            - name: Install dependencies
-              run: yarn --frozen-lockfile
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
             - name: Install Playwright
-              run: yarn playwright install
+              run: yarn playwright install --with-deps
 
             - name: Run unit tests with coverage
-              run: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
+              run: yarn test:ci --config web-test-runner.config.ci-chromium.js --group coveralls-ci --coverage
               continue-on-error: true
 
             - name: Upload coverage to Coveralls
