@@ -1,73 +1,73 @@
 {
-    "name": "@spectrum-web-components/avatar",
-    "version": "1.0.3",
-    "publishConfig": {
-        "access": "public"
+  "name": "@spectrum-web-components/avatar",
+  "version": "1.0.3",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git",
+    "directory": "packages/avatar"
+  },
+  "author": "",
+  "homepage": "https://opensource.adobe.com/spectrum-web-components/components/avatar",
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.dev.js",
+      "default": "./src/index.js"
     },
-    "description": "",
-    "license": "Apache-2.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/avatar"
+    "./package.json": "./package.json",
+    "./src/Avatar.js": {
+      "development": "./src/Avatar.dev.js",
+      "default": "./src/Avatar.js"
     },
-    "author": "",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/avatar",
-    "bugs": {
-        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    "./src/avatar-overrides.css.js": "./src/avatar-overrides.css.js",
+    "./src/avatar.css.js": "./src/avatar.css.js",
+    "./src/index.js": {
+      "development": "./src/index.dev.js",
+      "default": "./src/index.js"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
-    "type": "module",
-    "exports": {
-        ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
-        "./package.json": "./package.json",
-        "./src/Avatar.js": {
-            "development": "./src/Avatar.dev.js",
-            "default": "./src/Avatar.js"
-        },
-        "./src/avatar-overrides.css.js": "./src/avatar-overrides.css.js",
-        "./src/avatar.css.js": "./src/avatar.css.js",
-        "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
-        "./sp-avatar.js": {
-            "development": "./sp-avatar.dev.js",
-            "default": "./sp-avatar.js"
-        }
-    },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
-    "files": [
-        "**/*.d.ts",
-        "**/*.js",
-        "**/*.js.map",
-        "custom-elements.json",
-        "!stories/",
-        "!test/"
-    ],
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
-    ],
-    "dependencies": {
-        "@spectrum-web-components/base": "^1.0.1",
-        "@spectrum-web-components/shared": "^1.0.1"
-    },
-    "devDependencies": {
-        "@spectrum-css/avatar": "8.0.0-s2-foundations.15"
-    },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./sp-*.js",
-        "./**/*.dev.js"
-    ]
+    "./sp-avatar.js": {
+      "development": "./sp-avatar.dev.js",
+      "default": "./sp-avatar.js"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+  },
+  "files": [
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "custom-elements.json",
+    "!stories/",
+    "!test/"
+  ],
+  "keywords": [
+    "spectrum css",
+    "web components",
+    "lit-element",
+    "lit-html"
+  ],
+  "dependencies": {
+    "@spectrum-web-components/base": "^1.0.1",
+    "@spectrum-web-components/shared": "^1.0.1"
+  },
+  "devDependencies": {
+    "@spectrum-css/avatar": "8.0.0-s2-foundations.16"
+  },
+  "types": "./src/index.d.ts",
+  "customElements": "custom-elements.json",
+  "sideEffects": [
+    "./sp-*.js",
+    "./**/*.dev.js"
+  ]
 }
