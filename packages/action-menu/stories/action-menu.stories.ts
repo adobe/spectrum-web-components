@@ -206,11 +206,6 @@ quiet.args = {
     quiet: true,
 };
 
-// export const forcePopoverOnMobile = (args: StoryArgs = {}): TemplateResult => Template(args);
-// forcePopoverOnMobile.args = {
-//     forcePopover: true,
-// };
-
 export const forcePopoverOnMobile = (): TemplateResult => html`
     <h1>Force Popover on Mobile</h1>
     <p>

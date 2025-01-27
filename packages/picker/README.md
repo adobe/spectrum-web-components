@@ -461,7 +461,14 @@ When in pending state, `<sp-picker>` elements will not respond to click events a
 
 ## Force Popover on Mobile Devices
 
-When on a mobile device, `<sp-picker>` elements will render an `<sp-tray>` to the bottom of the viewport by default. To override this functionality so that the picker remains an `<sp-popover>` in mobile, you can simply add the attribute `forcePopover` to the `<sp-picker>`. To see this functionality in action, load this page from your mobile device or use Chrome DevTools (or equivalent) and select a mobile device once the Device Toolbar (the phone/tablet icon) is active.
+On mobile, the menu can be exposed in either a `sp-popover` or `sp-tray`. By default, `sp-picker` will render an `sp-tray`. If you would like to render `sp-popover` on mobile, add the attribute `forcePopover` to the `sp-picker`.
+
+Usage Guidance:
+
+-   Use a tray when a menu’s proximity to its trigger is considered to be less important to the experience, or for showing a volume of content that is too overwhelming for a popover.
+-   Use a popover when a menu’s proximity to its trigger is considered to be important to the experience, or for showing a volume of content that is manageable for a popover.
+
+To see this functionality in action, load this page from your mobile device or use Chrome DevTools (or equivalent) and select a mobile device once the Device Toolbar (the phone/tablet icon) is active.
 
 ```html
 <sp-field-label for="picker-tray">

@@ -90,8 +90,10 @@ describe('ActionMenu, responsive', () => {
             await opened;
 
             const tray = el.shadowRoot.querySelector('sp-tray');
+            const popover = el.shadowRoot.querySelector('sp-popover');
 
             expect(tray).to.not.be.null;
+            expect(popover).to.be.null;
         });
 
         it('is a Popover in desktop', async () => {
@@ -105,8 +107,10 @@ describe('ActionMenu, responsive', () => {
             await opened;
 
             const popover = el.shadowRoot.querySelector('sp-popover');
+            const tray = el.shadowRoot.querySelector('sp-tray');
 
             expect(popover).to.not.be.null;
+            expect(tray).to.be.null;
         });
     });
 
@@ -151,11 +155,9 @@ describe('ActionMenu, responsive', () => {
             await opened;
 
             const tray = el.shadowRoot.querySelector('sp-tray');
-
-            expect(tray).to.be.null;
-
             const popover = el.shadowRoot.querySelector('sp-popover');
 
+            expect(tray).to.be.null;
             expect(popover).to.not.be.null;
         });
 
@@ -170,8 +172,10 @@ describe('ActionMenu, responsive', () => {
             await opened;
 
             const popover = el.shadowRoot.querySelector('sp-popover');
+            const tray = el.shadowRoot.querySelector('sp-tray');
 
             expect(popover).to.not.be.null;
+            expect(tray).to.be.null;
         });
     });
 });
