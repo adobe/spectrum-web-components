@@ -22,6 +22,7 @@ export enum InteractionTypes {
     'desktop',
     'mobile',
 }
+export const SAFARI_FOCUS_RING_CLASS = 'remove-focus-ring-safari-hack';
 
 export class InteractionController implements ReactiveController {
     abortController!: AbortController;
