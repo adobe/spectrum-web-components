@@ -13,11 +13,15 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    PropertyValues,
     SizedMixin,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 import type { Button } from '@spectrum-web-components/button';
 
 import styles from './button-group.css.js';
@@ -36,9 +40,24 @@ export class ButtonGroup extends SizedMixin(SpectrumElement, {
     @property({ type: Boolean, reflect: true })
     public vertical = false;
 
+    @query('slot')
+    slotElement!: HTMLSlotElement;
+
+    protected override updated(changedProperties: PropertyValues): void {
+        super.updated(changedProperties);
+
+        if (changedProperties.has('size')) {
+            this.manageChildrenSize(this.slotElement);
+        }
+    }
+
     protected handleSlotchange({
         target: slot,
     }: Event & { target: HTMLSlotElement }): void {
+        this.manageChildrenSize(slot);
+    }
+
+    private manageChildrenSize(slot: HTMLSlotElement): void {
         const assignedElements = slot.assignedElements() as Button[];
         assignedElements.forEach((button) => {
             button.size = this.size;

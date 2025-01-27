@@ -1,3 +1,4 @@
+/* @deprecated these assets should not be used; the custom override values exist in spectrum/medium-vars.css */
 :host,
 :root {
     --spectrum-slider-tick-mark-height: 10px;
