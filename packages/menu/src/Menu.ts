@@ -40,13 +40,6 @@ export interface MenuChildItem {
 type SelectsType = 'none' | 'ignore' | 'inherit' | 'multiple' | 'single';
 type RoleType = 'group' | 'menu' | 'listbox' | 'none';
 
-function elementIsOrContains(
-    el: Node,
-    isOrContains: Node | undefined | null
-): boolean {
-    return !!isOrContains && (el === isOrContains || el.contains(isOrContains));
-}
-
 /**
  * Spectrum Menu Component
  * @element sp-menu
@@ -246,10 +239,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (!cascadeData) return;
 
         event.item.menuData.parentMenu = event.item.menuData.parentMenu || this;
-        if (cascadeData.hadFocusRoot && !this.ignore) {
-            // Only have one tab stop per Menu tree
-            //this.tabIndex = -1;
-        }
         this.addChildItem(event.item);
 
         if (this.selects === 'inherit') {
@@ -327,8 +316,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
         this.addEventListener('click', this.handleClick);
         this.addEventListener('pointerup', this.handlePointerup);
-        //this.addEventListener('focusin', this.handleFocusin);
-        //this.addEventListener('blur', this.handleBlur);
         this.addEventListener('sp-opened', this.handleSubmenuOpened);
         this.addEventListener('sp-closed', this.handleSubmenuClosed);
     }
@@ -419,42 +406,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             return;
         }
         this.prepareToCleanUp();
-    }
-
-    public handleFocusin(event: FocusEvent): void {
-        // ignore if a child element has a different root menu
-        if (
-            this.childItems.some(
-                (childItem) => childItem.menuData.focusRoot !== this
-            )
-        ) {
-            return;
-        }
-        const activeElement = (this.getRootNode() as Document).activeElement as
-            | MenuItem
-            | Menu;
-
-        // selected child item's root menu
-        const selectionRoot =
-            this.childItems[this.focusedItemIndex]?.menuData.selectionRoot ||
-            this;
-
-        if (activeElement !== selectionRoot || event.target !== this) {
-            selectionRoot.focus({ preventScroll: true });
-            if (activeElement && this.focusedItemIndex === 0) {
-                const offset = this.childItems.findIndex(
-                    (childItem) => childItem === activeElement
-                );
-                this.focusMenuItemByOffset(Math.max(offset, 0));
-            }
-        }
-    }
-
-    public handleBlur(event: FocusEvent): void {
-        if (elementIsOrContains(this, event.relatedTarget as Node)) {
-            return;
-        }
-        this.childItems.forEach((child) => (child.focused = false));
     }
 
     private descendentOverlays = new Map<Overlay, Overlay>();
@@ -657,7 +608,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             if (lastFocusedItem?.hasSubmenu) {
                 // Remove focus while opening overlay from keyboard or the visible focus
                 // will slip back to the first item in the menu.
-                // this.blur();
                 lastFocusedItem.openOverlay();
                 return;
             }
@@ -925,6 +875,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (!this.rovingTabindexController && this.controlsRovingTabindex) {
             this.rovingTabindexController =
                 new RovingTabindexController<MenuItem>(this, {
+                    direction: 'vertical',
                     focusInIndex: (elements: MenuItem[] | undefined) => {
                         let firstEnabledIndex = -1;
                         const firstSelectedIndex = elements?.findIndex(

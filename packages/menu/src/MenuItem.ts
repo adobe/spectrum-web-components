@@ -384,12 +384,63 @@ export class MenuItem extends LikeAnchor(
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('tabindex', '-1');
+        this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('pointerenter', this.closeOverlaysForRoot);
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${randomID()}`;
         }
     }
+
+    handleKeydown = (event: KeyboardEvent): void => {
+        if (event.defaultPrevented) {
+            return;
+        }
+        const isLTR = this.isLTR;
+        let action: 'open' | 'close' | 'none' = 'none';
+        switch (event.key) {
+            case 'Enter':
+                action = 'open';
+                break;
+            case 'Escape':
+                action = 'close';
+                break;
+            case 'ArrowLeft':
+                if (isLTR) {
+                    action = 'close';
+                } else {
+                    action = 'open';
+                }
+                break;
+            case 'ArrowRight':
+                if (isLTR) {
+                    action = 'open';
+                } else {
+                    action = 'close';
+                }
+                break;
+        }
+        if (action === 'none') {
+            return;
+        } else {
+            event.preventDefault();
+            event.stopPropagation();
+            if (action === 'open') {
+                const handleSubmenuOpen = (): void => {
+                    this.submenuElement?.focus();
+                };
+                this.addEventListener(
+                    'sp-menu-submenu-opened',
+                    handleSubmenuOpen,
+                    { once: true }
+                );
+                this.openOverlay();
+            } else if (action === 'close') {
+                this.menuData.parentMenu?.parentElement?.focus();
+                this.open = false;
+            }
+        }
+    };
 
     protected closeOverlaysForRoot(): void {
         if (this.open) return;
@@ -508,6 +559,19 @@ export class MenuItem extends LikeAnchor(
     public setRole(role: string): void {
         this.setAttribute('role', role);
         this.updateAriaSelected();
+    }
+
+    protected override willUpdate(changes: PropertyValues<this>): void {
+        super.updated(changes);
+
+        // make sure focus returns to the anchor element when submenu is closed
+        if (
+            changes.has('open') &&
+            !this.open &&
+            this.matches(':focus-within')
+        ) {
+            this.focus();
+        }
     }
 
     protected override updated(changes: PropertyValues<this>): void {
