@@ -46,13 +46,6 @@ function elementIsOrContains(
 ): boolean {
     return !!isOrContains && (el === isOrContains || el.contains(isOrContains));
 }
-export class MenuGroupConnectedEvent extends Event {
-    root?: SpectrumElement | undefined;
-    constructor({ root }: { root?: SpectrumElement | undefined }) {
-        super('sp-menu-group-connected', { bubbles: true, composed: true });
-        this.root = root;
-    }
-}
 
 /**
  * Spectrum Menu Component
@@ -71,6 +64,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {
         return [menuStyles];
     }
+
+    static override shadowRootOptions = {
+        ...SpectrumElement.shadowRootOptions,
+        delegatesFocus: true,
+    };
 
     private get isSubmenu(): boolean {
         return this.slot === 'submenu';
@@ -134,6 +132,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
+    protected get controlsRovingTabindex(): boolean {
+        return true;
+    }
+
     private selectedItemsMap = new Map<MenuItem, boolean>();
 
     public get childItems(): MenuItem[] {
@@ -177,6 +179,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
 
         this.rovingTabindexController?.clearElementCache();
+
         return this.cachedChildItems;
     }
 
@@ -245,7 +248,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         event.item.menuData.parentMenu = event.item.menuData.parentMenu || this;
         if (cascadeData.hadFocusRoot && !this.ignore) {
             // Only have one tab stop per Menu tree
-            this.tabIndex = -1;
+            //this.tabIndex = -1;
         }
         this.addChildItem(event.item);
 
@@ -324,39 +327,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
         this.addEventListener('click', this.handleClick);
         this.addEventListener('pointerup', this.handlePointerup);
-        this.addEventListener('focusin', this.handleFocusin);
-        this.addEventListener('blur', this.handleBlur);
+        //this.addEventListener('focusin', this.handleFocusin);
+        //this.addEventListener('blur', this.handleBlur);
         this.addEventListener('sp-opened', this.handleSubmenuOpened);
         this.addEventListener('sp-closed', this.handleSubmenuClosed);
-    }
-
-    private initRovingTabindexController(): void {
-        if (!this.rovingTabindexController) {
-            this.rovingTabindexController =
-                new RovingTabindexController<MenuItem>(this, {
-                    focusInIndex: (elements: MenuItem[] | undefined) => {
-                        let firstEnabledIndex = -1;
-                        const firstSelectedIndex = elements?.findIndex(
-                            (el, index) => {
-                                if (
-                                    !elements[firstEnabledIndex] &&
-                                    !el.disabled
-                                ) {
-                                    firstEnabledIndex = index;
-                                }
-                                return el.selected && !el.disabled;
-                            }
-                        );
-                        return elements &&
-                            firstSelectedIndex &&
-                            elements[firstSelectedIndex]
-                            ? firstSelectedIndex
-                            : firstEnabledIndex;
-                    },
-                    elements: () => this.cachedChildItems || [],
-                    isFocusableElement: (el: MenuItem) => !el.disabled,
-                });
-        }
     }
 
     public override focus({ preventScroll }: FocusOptions = {}): void {
@@ -375,8 +349,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             super.focus({ preventScroll });
             return;
         }
-        this.focusMenuItemByOffset(0);
+        //this.focusMenuItemByOffset(0);
         this.rovingTabindexController.focus({ preventScroll });
+        super.focus({ preventScroll });
         const selectedItem = this.selectedItems[0];
         if (selectedItem && !preventScroll) {
             selectedItem.scrollIntoView({ block: 'nearest' });
@@ -459,7 +434,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             | MenuItem
             | Menu;
 
-        // selected child items root menu
+        // selected child item's root menu
         const selectionRoot =
             this.childItems[this.focusedItemIndex]?.menuData.selectionRoot ||
             this;
@@ -666,7 +641,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                     !(event as KeyboardEvent).shiftKey &&
                     !this.hasAttribute('tabindex')
                 ) {
-                    this.tabIndex = 0;
+                    //this.tabIndex = 0;
                     document.removeEventListener('keyup', replaceTabindex);
                     this.removeEventListener('focusout', replaceTabindex);
                 }
@@ -812,10 +787,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this.updateSelectedItemIndex();
             this.updateItemFocus();
         }
+
         this._willUpdateItems = false;
     }
 
     private updateItemFocus(): void {
+        const focusInElement = this.rovingTabindexController?.focusInElement;
+        focusInElement?.setAttribute('tabindex', '0');
         if (this.childItems.length == 0) {
             return;
         }
@@ -891,14 +869,14 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
-        if (!this.hasAttribute('tabindex') && !this.ignore) {
+        /*if (!this.hasAttribute('tabindex') && !this.ignore) {
             const role = this.getAttribute('role');
             if (role === 'group') {
                 this.tabIndex = -1;
             } else {
                 this.tabIndex = 0;
             }
-        }
+        }*/
         const updates: Promise<unknown>[] = [
             new Promise((res) => requestAnimationFrame(() => res(true))),
         ];
@@ -943,7 +921,33 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (!this.hasAttribute('role') && !this.ignore) {
             this.setAttribute('role', this.ownRole);
         }
-        this.initRovingTabindexController();
+
+        if (!this.rovingTabindexController && this.controlsRovingTabindex) {
+            this.rovingTabindexController =
+                new RovingTabindexController<MenuItem>(this, {
+                    focusInIndex: (elements: MenuItem[] | undefined) => {
+                        let firstEnabledIndex = -1;
+                        const firstSelectedIndex = elements?.findIndex(
+                            (el, index) => {
+                                if (
+                                    !elements[firstEnabledIndex] &&
+                                    !el.disabled
+                                ) {
+                                    firstEnabledIndex = index;
+                                }
+                                return el.selected && !el.disabled;
+                            }
+                        );
+                        return elements &&
+                            firstSelectedIndex &&
+                            elements[firstSelectedIndex]
+                            ? firstSelectedIndex
+                            : firstEnabledIndex;
+                    },
+                    elements: () => this.cachedChildItems || [],
+                    isFocusableElement: (el: MenuItem) => !el.disabled,
+                });
+        }
         this.updateComplete.then(() => this.updateItemFocus());
     }
 

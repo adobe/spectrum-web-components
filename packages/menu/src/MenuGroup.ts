@@ -21,7 +21,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
-import { Menu, MenuGroupConnectedEvent } from './Menu.js';
+import { Menu } from './Menu.js';
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
 import '@spectrum-web-components/menu/sp-menu.js';
 import menuGroupStyles from './menu-group.css.js';
@@ -48,11 +48,17 @@ export class MenuGroup extends Menu {
     @state()
     private headerElement?: HTMLElement;
 
+    /**
+     * a menu group must have the role `group`
+     * and should never function as a menu
+     */
     protected override get ownRole(): string {
         return 'menu';
     }
 
-    protected override rovingTabindexController = undefined;
+    protected override get controlsRovingTabindex(): boolean {
+        return false;
+    }
 
     protected updateLabel(): void {
         const headerElement = this.headerElements.length
@@ -84,12 +90,5 @@ export class MenuGroup extends Menu {
             </span>
             ${this.renderMenuItemSlot()}
         `;
-    }
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        this.dispatchEvent(new MenuGroupConnectedEvent({ root: this }));
-    }
-    private override initRovingTabindexController(): void {
-        return;
     }
 }
