@@ -8,8 +8,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import '@spectrum-web-components/button/sp-button.js';
+import { DialogWrapper } from '@spectrum-web-components/dialog';
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import {
     openOverlay,
     Overlay,
@@ -19,40 +28,31 @@ import {
     TriggerInteractions,
     VirtualTrigger,
 } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
-import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
-import { DialogWrapper } from '@spectrum-web-components/dialog';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 
+import '@spectrum-web-components/accordion/sp-accordion-item.js';
+import '@spectrum-web-components/accordion/sp-accordion.js';
+import '@spectrum-web-components/button-group/sp-button-group.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-group.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/slider/sp-slider.js';
-import '@spectrum-web-components/radio/sp-radio.js';
 import '@spectrum-web-components/radio/sp-radio-group.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/radio/sp-radio.js';
+import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/accordion/sp-accordion.js';
-import '@spectrum-web-components/accordion/sp-accordion-item.js';
-import '@spectrum-web-components/button-group/sp-button-group.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '../../../projects/story-decorator/src/types.js';
 
-import './overlay-story-components.js';
-import { render } from 'lit-html';
-import { Popover } from '@spectrum-web-components/popover';
 import { Button } from '@spectrum-web-components/button';
+import { Popover } from '@spectrum-web-components/popover';
+import { render } from 'lit-html';
+import './overlay-story-components.js';
 import { PopoverContent } from './overlay-story-components.js';
 
 const storyStyles = html`
@@ -296,6 +296,31 @@ export const accordion = (): TemplateResult => {
 accordion.swc_vrt = {
     skip: true,
 };
+accordion.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
+export const clickAndHoverTarget = (): TemplateResult => {
+    return html`
+        <overlay-trigger type="modal">
+            <sp-button variant="primary" slot="trigger">Button</sp-button>
+            <sp-popover slot="click-content" placement="bottom" tip>
+                Popover content
+            </sp-popover>
+            <sp-tooltip slot="hover-content" placement="right">
+                Tooltip content
+            </sp-tooltip>
+        </overlay-trigger>
+    `;
+};
+clickAndHoverTarget.swc_vrt = {
+    skip: true,
+};
+clickAndHoverTarget.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
 
 export const clickAndHoverTargets = (): TemplateResult => {
     return html`
@@ -332,6 +357,11 @@ export const clickAndHoverTargets = (): TemplateResult => {
 };
 clickAndHoverTargets.swc_vrt = {
     skip: true,
+};
+
+clickAndHoverTargets.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 class ScrollForcer extends HTMLElement {
@@ -563,6 +593,11 @@ export const deep = (): TemplateResult => html`
 `;
 deep.swc_vrt = {
     skip: true,
+};
+
+deep.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 export const deepChildTooltip = (): TemplateResult => html`
@@ -1069,6 +1104,11 @@ noCloseOnResize.swc_vrt = {
     skip: true,
 };
 
+noCloseOnResize.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const openClickContent = (args: Properties): TemplateResult =>
     template({
         ...args,
@@ -1260,6 +1300,11 @@ export const updating = (): TemplateResult => {
 
 updating.swc_vrt = {
     skip: true,
+};
+
+updating.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 class StartEndContextmenu extends HTMLElement {
@@ -1501,4 +1546,9 @@ virtualElementDeclaratively.args = {
 
 virtualElementDeclaratively.swc_vrt = {
     skip: true,
+};
+
+virtualElementDeclaratively.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };

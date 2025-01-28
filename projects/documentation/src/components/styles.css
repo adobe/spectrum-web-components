@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 @import '@spectrum-web-components/styles/tokens/global-vars.css';
 @import '@spectrum-web-components/styles/tokens/spectrum/global-vars.css';
 @import '@spectrum-web-components/styles/tokens/spectrum/custom-vars.css';
+@import '@spectrum-web-components/styles/tokens/spectrum/system-theme-bridge.css';
 @import '@spectrum-web-components/styles/src/spectrum-heading.css';
 @import '@spectrum-web-components/styles/src/heading-overrides.css';
 @import '@spectrum-web-components/styles/src/spectrum-body.css';

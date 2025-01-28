@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/status-light",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "publishConfig": {
         "access": "public"
     },
@@ -61,7 +61,7 @@
         "@spectrum-web-components/base": "^1.0.1"
     },
     "devDependencies": {
-        "@spectrum-css/statuslight": "^8.0.0-s2-foundations.15"
+        "@spectrum-css/statuslight": "8.0.0-s2-foundations.15"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
