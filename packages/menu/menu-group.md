@@ -30,22 +30,13 @@ An `<sp-menu-group>` can be used to organize `<sp-menu-item>`s in an `<sp-memu>`
 
 <!-- prettier-ignore -->
 ```html
-<p>
-    Your favorite park in New York is: <span id="group-1-value"></span>
-    <br><br>
-    Your favorite park in San Fransisco is: <span id="group-2-value"></span>
-</p>
 <sp-popover open style="position: relative">
     <sp-menu
         label="What are your favorite parks?"
         style="width: 200px"
-        onchange="this.parentElement
-                    .previousElementSibling
-                    .querySelector(`#${arguments[0].target.id}-value`)
-                    .textContent = arguments[0].target.value">
+        selects="single">
         <sp-menu-group
             id="group-1"
-            selects="single"
         >
             <span slot="header">New York</span>
             <sp-menu-item>
@@ -60,9 +51,8 @@ An `<sp-menu-group>` can be used to organize `<sp-menu-item>`s in an `<sp-memu>`
         </sp-menu-group>
         <sp-menu-group
             id="group-2"
-            selects="single"
         >
-            <span slot="header">San Fransisco</span>
+            <span slot="header">San Francisco</span>
             <sp-menu-item>
                 Golden Gate Park
             </sp-menu-item>
