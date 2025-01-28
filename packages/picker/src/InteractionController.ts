@@ -133,9 +133,10 @@ export class InteractionController implements ReactiveController {
             });
             this.overlay.type = this.host.isMobile.matches ? 'modal' : 'auto';
             this.overlay.triggerElement = this.host as HTMLElement;
-            this.overlay.placement = this.host.isMobile.matches
-                ? undefined
-                : this.host.placement;
+            this.overlay.placement =
+                this.host.isMobile.matches && !this.host.forcePopover
+                    ? undefined
+                    : 'bottom';
             this.overlay.receivesFocus = 'true';
             this.overlay.willPreventClose =
                 this.preventNextToggle !== 'no' && this.open;

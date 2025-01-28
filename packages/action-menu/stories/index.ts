@@ -10,16 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
+import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
-import type { ActionMenu } from '@spectrum-web-components/action-menu';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
 export const ActionMenuMarkup = ({
     align = 'start',
@@ -27,6 +27,7 @@ export const ActionMenuMarkup = ({
     onChange = (() => undefined) as (value: string) => void,
     changeHandler = (() => undefined) as (value: string) => void,
     disabled = false,
+    forcePopover = false,
     open = false,
     quiet = false,
     staticValue = '',
@@ -44,6 +45,7 @@ export const ActionMenuMarkup = ({
             ?disabled=${disabled}
             ?open=${open}
             ?quiet=${quiet}
+            ?forcePopover=${forcePopover}
             static-color=${ifDefined(
                 staticValue === 'none'
                     ? undefined
