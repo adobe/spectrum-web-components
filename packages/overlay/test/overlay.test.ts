@@ -850,7 +850,6 @@ describe('Overlay - type="modal"', () => {
         expect(document.activeElement === trigger, 'trigger focused').to.be
             .true;
     });
-
 });
 describe('Overlay - timing', () => {
     it('manages multiple modals in a row without preventing them from closing', async () => {
@@ -972,8 +971,7 @@ describe('Overlay - timing', () => {
 
 describe('maintains focus consistency in webkit', () => {
     it('should apply remove-focus-ring class in webkit when focus happens after click', async () => {
-
-        if (!isWebKit()){
+        if (!isWebKit()) {
             return;
         }
 
