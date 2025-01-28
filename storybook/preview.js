@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import { setCustomElementsManifest } from '@storybook/web-components';
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
+
 import cem from './custom-elements.json';
 
 setCustomElementsManifest(cem);
@@ -24,8 +25,12 @@ export const globalTypes = {
         showName: true,
         toolbar: {
             items: [
-                { value: 'spectrum', title: 'Spectrum 2', right: 'default' },
-                { value: 'legacy', title: 'Spectrum 1', right: 'legacy' },
+                {
+                    value: 'spectrum-two',
+                    title: 'Spectrum 2',
+                    right: 'default',
+                },
+                { value: 'spectrum', title: 'Spectrum 1', right: 'legacy' },
                 { value: 'express', title: 'Express' },
             ],
             dynamicTitle: true,

@@ -948,7 +948,6 @@
     );
     --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-800-rgb);
     --spectrum-dropindicator-color: var(--spectrum-blue-800);
-
     --spectrum-calendar-day-background-color-selected: rgba(
         var(--spectrum-blue-900-rgb),
         0.1
@@ -977,15 +976,11 @@
         0.06
     );
     --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-800);
-
     --spectrum-badge-label-icon-color-primary: var(--spectrum-white);
-
     --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-800);
-
     --spectrum-steplist-current-marker-color-key-focus: var(
         --spectrum-blue-800
     );
-
     --spectrum-treeview-item-background-color-quiet-selected: rgba(
         var(--spectrum-gray-900-rgb),
         0.06
@@ -994,21 +989,18 @@
         var(--spectrum-blue-900-rgb),
         0.1
     );
-
     --spectrum-logic-button-and-background-color: var(--spectrum-blue-900);
     --spectrum-logic-button-and-border-color: var(--spectrum-blue-900);
     --spectrum-logic-button-and-background-color-hover: var(
         --spectrum-blue-1100
     );
     --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1100);
-
     --spectrum-logic-button-or-background-color: var(--spectrum-magenta-900);
     --spectrum-logic-button-or-border-color: var(--spectrum-magenta-900);
     --spectrum-logic-button-or-background-color-hover: var(
         --spectrum-magenta-1100
     );
     --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-1100);
-
     --spectrum-assetcard-border-color-selected: var(--spectrum-blue-900);
     --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-900);
     --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-1000);
@@ -1016,7 +1008,6 @@
         --spectrum-blue-900
     );
     --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-800);
-
     --spectrum-assetlist-item-background-color-selected-hover: rgba(
         var(--spectrum-blue-900-rgb),
         0.2
@@ -1026,6 +1017,5 @@
         0.1
     );
     --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-800);
-
     --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-900-rgb);
 }

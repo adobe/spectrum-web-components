@@ -1,5 +1,0 @@
-{
-    "./src/*": "./src/*",
-    "./sp-action-menu.js": "./sp-action-menu.js",
-    "./sync/sp-action-menu.js": "./sync/sp-action-menu.js"
-}

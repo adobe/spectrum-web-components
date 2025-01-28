@@ -1,5 +1,0 @@
-{
-    "./src/*": "./src/*",
-    "./sp-top-nav.js": "./sp-top-nav.js",
-    "./sp-top-nav-item.js": "./sp-top-nav-item.js"
-}
