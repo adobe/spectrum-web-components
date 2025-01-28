@@ -62,7 +62,7 @@ import type { Menu } from '@spectrum-web-components/menu';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 import { FieldLabel } from '@spectrum-web-components/field-label/src/FieldLabel.js';
 import { isWebKit } from '@spectrum-web-components/shared';
-import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/MobileController.js';
+import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
 
 export type TestablePicker = { optionsMenu: Menu };
 
