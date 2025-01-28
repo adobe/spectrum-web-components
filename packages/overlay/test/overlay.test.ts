@@ -34,6 +34,7 @@ import {
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import {
+    clickAndHoverTarget,
     definedOverlayElement,
     virtualElement,
 } from '../stories/overlay.stories';
@@ -50,6 +51,9 @@ import {
     isOnTopLayer,
 } from '../../../test/testing-helpers.js';
 import { Menu } from '@spectrum-web-components/menu';
+import { Button } from '@spectrum-web-components/button';
+import { isWebKit } from '@spectrum-web-components/shared';
+import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/overlay/src/InteractionController.js';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -786,6 +790,66 @@ describe('Overlay - type="modal"', () => {
         await close;
         expect(el.open).to.be.null;
     });
+
+    it('should not open hover overlay right after closing the click overlay using the mouse', async () => {
+        const overlayTrigger = await fixture<OverlayTrigger>(
+            clickAndHoverTarget()
+        );
+
+        await elementUpdated(overlayTrigger);
+        expect(overlayTrigger.open).to.be.undefined;
+
+        const trigger = overlayTrigger.querySelector(
+            'sp-button[slot="trigger"]'
+        ) as Button;
+
+        const opened = oneEvent(trigger, 'sp-opened');
+        trigger.click();
+        await opened;
+
+        expect(overlayTrigger.open).to.equal('click');
+
+        const closed = oneEvent(trigger, 'sp-closed');
+        sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [1, 1],
+                },
+            ],
+        });
+        await closed;
+
+        expect(overlayTrigger.open).to.be.undefined;
+        expect(document.activeElement === trigger, 'trigger focused').to.be
+            .true;
+    });
+
+    it('should not open hover overlay right after closing the click overlay using the keyboard', async () => {
+        const overlayTrigger = await fixture<OverlayTrigger>(
+            clickAndHoverTarget()
+        );
+
+        const trigger = overlayTrigger.querySelector(
+            'sp-button[slot="trigger"]'
+        ) as Button;
+
+        const opened = oneEvent(trigger, 'sp-opened');
+        trigger.click();
+        await opened;
+
+        expect(overlayTrigger.open).to.equal('click');
+
+        const closed = oneEvent(trigger, 'sp-closed');
+        sendKeys({
+            press: 'Escape',
+        });
+        await closed;
+
+        expect(overlayTrigger.open).to.be.undefined;
+        expect(document.activeElement === trigger, 'trigger focused').to.be
+            .true;
+    });
 });
 describe('Overlay - timing', () => {
     it('manages multiple modals in a row without preventing them from closing', async () => {
@@ -902,5 +966,53 @@ describe('Overlay - timing', () => {
         // Neither trigger received "focus" because the pointer "clicked" away, redirecting focus to <body>
         expect(overlayTrigger1.hasAttribute('open')).to.be.false;
         expect(overlayTrigger2.hasAttribute('open')).to.be.false;
+    });
+});
+
+describe('maintains focus consistency in webkit', () => {
+    it('should apply remove-focus-ring class in webkit when focus happens after click', async () => {
+        if (!isWebKit()) {
+            return;
+        }
+
+        const overlayTrigger = await fixture<OverlayTrigger>(
+            clickAndHoverTarget()
+        );
+        await elementUpdated(overlayTrigger);
+        expect(overlayTrigger.open).to.be.undefined;
+        const trigger = overlayTrigger.querySelector(
+            'sp-button[slot="trigger"]'
+        ) as Button;
+
+        const boundingRect = trigger.getBoundingClientRect();
+
+        const opened = oneEvent(trigger, 'sp-opened');
+        await sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        boundingRect.left + boundingRect.width / 2,
+                        boundingRect.top + boundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+        await opened;
+
+        expect(overlayTrigger.open).to.equal('click');
+
+        const closed = oneEvent(trigger, 'sp-closed');
+        await sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [0, 0],
+                },
+            ],
+        });
+        await closed;
+
+        expect(trigger.classList.contains(SAFARI_FOCUS_RING_CLASS)).to.be.true;
     });
 });

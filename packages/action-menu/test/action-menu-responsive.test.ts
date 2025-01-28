@@ -18,45 +18,40 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import '@spectrum-web-components/field-label/sp-field-label.js';
+import { ActionMenu } from '@spectrum-web-components/action-menu';
+import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import { Picker } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/picker/sync/sp-picker.js';
 import { setViewport } from '@web/test-runner-commands';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
-describe('Picker, responsive', () => {
-    let el: Picker;
-    const pickerFixture = async (args?: {
+describe('ActionMenu, responsive', () => {
+    let el: ActionMenu;
+    const actionMenuFixture = async (args?: {
         forcePopover: boolean;
-    }): Promise<Picker> => {
+    }): Promise<ActionMenu> => {
         const test = await fixture<HTMLDivElement>(html`
             <div>
-                <sp-field-label for="picker">Where do you live?</sp-field-label>
-                <sp-picker
-                    id="picker"
-                    style="width: 200px; --spectrum-alias-ui-icon-chevron-size-100: 10px;"
-                    ${spreadProps(args || {})}
-                >
+                <sp-action-menu id="action-menu" ${spreadProps(args || {})}>
+                    <span slot="label">Action Menu</span>
                     <sp-menu-item>Deselect</sp-menu-item>
-                    <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
                     <sp-menu-item>Feather...</sp-menu-item>
                     <sp-menu-item>Select and Mask...</sp-menu-item>
                     <sp-menu-divider></sp-menu-divider>
                     <sp-menu-item>Save Selection</sp-menu-item>
                     <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                </sp-picker>
+                </sp-action-menu>
             </div>
         `);
 
-        return test.querySelector('sp-picker') as Picker;
+        return test.querySelector('sp-action-menu') as ActionMenu;
     };
 
     describe('container', () => {
         beforeEach(async () => {
-            el = await pickerFixture();
+            el = await actionMenuFixture();
             await elementUpdated(el);
         });
 
@@ -121,7 +116,7 @@ describe('Picker, responsive', () => {
 
     describe('forcePopover', () => {
         beforeEach(async () => {
-            el = await pickerFixture({ forcePopover: true });
+            el = await actionMenuFixture({ forcePopover: true });
             await elementUpdated(el);
         });
 
@@ -162,8 +157,8 @@ describe('Picker, responsive', () => {
             const tray = el.shadowRoot.querySelector('sp-tray');
             const popover = el.shadowRoot.querySelector('sp-popover');
 
-            expect(popover).to.not.be.null;
             expect(tray).to.be.null;
+            expect(popover).to.not.be.null;
         });
 
         it('is a Popover in desktop', async () => {
@@ -179,8 +174,8 @@ describe('Picker, responsive', () => {
             const popover = el.shadowRoot.querySelector('sp-popover');
             const tray = el.shadowRoot.querySelector('sp-tray');
 
-            expect(tray).to.be.null;
             expect(popover).to.not.be.null;
+            expect(tray).to.be.null;
         });
     });
 });
