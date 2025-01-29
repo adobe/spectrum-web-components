@@ -552,7 +552,7 @@ describe('Submenu', () => {
             this.rootItem = this.el.querySelector('.root') as MenuItem;
             await elementUpdated(this.rootItem);
         });
-        describe.skip('selects', () => {
+        describe('selects', () => {
             selectWithPointer();
             selectsWithKeyboardData.map((testData) => {
                 selectsWithKeyboard(testData);
