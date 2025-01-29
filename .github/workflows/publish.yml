@@ -31,6 +31,9 @@ jobs:
             - name: Build Storybook
               run: yarn storybook:build
 
+            - name: Add redirects to documentation
+              run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
+
             - name: Deploy to GitHub Pages
               run: |
                   git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
