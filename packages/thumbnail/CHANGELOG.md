@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/adobe/spectrum-web-components/compare/v1.0.3...v1.1.0) (2025-01-29)
+
+### Features
+
+-   **thumbnail:** bump thumbnail to use foundations release ([7490324](https://github.com/adobe/spectrum-web-components/commit/74903245d8dd8e3d39653a7f5296fa91e4562877))
+
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
 **Note:** Version bump only for package @spectrum-web-components/thumbnail
