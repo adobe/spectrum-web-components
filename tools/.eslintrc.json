@@ -6,15 +6,26 @@
         "es6": true
     },
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "notice", "@spectrum-web-components"],
+    "plugins": [
+        "@typescript-eslint",
+        "notice",
+        "@spectrum-web-components",
+        "require-extensions"
+    ],
     "extends": [
         "plugin:@typescript-eslint/recommended",
         "prettier",
-        "plugin:lit-a11y/recommended"
+        "plugin:lit-a11y/recommended",
+        "plugin:require-extensions/recommended"
     ],
     "rules": {
         "no-debugger": 2,
-        "no-console": ["error", { "allow": ["warn", "error"] }],
+        "no-console": [
+            "error",
+            {
+                "allow": ["warn", "error"]
+            }
+        ],
         "@spectrum-web-components/prevent-argument-names": [
             "error",
             ["e", "ev", "evt", "err"]
@@ -86,7 +97,7 @@
             }
         },
         {
-            "files": ["Picker.ts", "SplitButton.ts"],
+            "files": ["Picker.ts"],
             "rules": {
                 "lit-a11y/click-events-have-key-events": [
                     "error",

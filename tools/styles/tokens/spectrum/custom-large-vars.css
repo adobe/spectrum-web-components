@@ -1,3 +1,4 @@
+/* @deprecated these assets should not be used; the custom override values exist in spectrum/large-vars.css */
 :host,
 :root {
     --spectrum-slider-tick-mark-height: 13px;
@@ -58,8 +59,6 @@
     --spectrum-well-margin-top: 5px;
     --spectrum-well-min-width: 300px;
     --spectrum-well-border-radius: 5px;
-
-    /* XXL and XXS icon sizes are not within the design spec and are planned to be deprecated in Spectrum 2. */
     --spectrum-workflow-icon-size-xxl: 40px;
     --spectrum-workflow-icon-size-xxs: 15px;
 

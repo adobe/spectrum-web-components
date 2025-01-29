@@ -10,13 +10,24 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+@import url('@spectrum-web-components/styles/spectrum-two/core-global.css');
 @import url('@spectrum-web-components/styles/tokens-v2/global-vars.css');
-@import url('@spectrum-web-components/styles/tokens-v2/spectrum/global-vars.css');
-@import url('@spectrum-web-components/styles/tokens-v2/spectrum/custom-vars.css');
+@import url('@spectrum-web-components/styles/tokens-v2/system-theme-bridge.css');
 @import url('@spectrum-web-components/styles/typography.css');
 
 :host {
     display: block;
+    font-family: var(--spectrum-font-family);
+    font-size: var(--spectrum-font-size);
+    font-style: var(--spectrum-font-style);
+
+    &:lang(ar) {
+        font-family: var(--spectrum-font-family-ar);
+    }
+
+    &:lang(he) {
+        font-family: var(--spectrum-font-family-he);
+    }
 }
 
 #scale,

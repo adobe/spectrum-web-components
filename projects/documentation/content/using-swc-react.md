@@ -87,7 +87,7 @@ import { Theme } from "@swc-react/theme";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <Theme theme="spectrum" scale="medium" color="light">
+    <Theme system="spectrum" scale="medium" color="light">
       <App />
     </Theme>
   </React.StrictMode>

@@ -1,11 +1,8 @@
+/* @deprecated these assets should not be used; the custom override values exist in express/dark-vars.css */
 :host,
 :root {
-    /* Drop Zone background color rgb */
-    --spectrum-drop-zone-background-color-rgb: var(
-        --spectrum-indigo-900-rgb
-    ); /* var(--spectrum-accent-color-900);*/
+    --spectrum-drop-zone-background-color-rgb: var(--spectrum-indigo-900-rgb);
     --spectrum-well-border-color: rgba(var(--spectrum-white-rgb), 0.05);
-
     --spectrum-assetcard-border-color-selected: var(--spectrum-indigo-700);
     --spectrum-assetcard-border-color-selected-hover: var(
         --spectrum-indigo-700

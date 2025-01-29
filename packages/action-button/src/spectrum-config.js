@@ -27,6 +27,7 @@ const config = {
             inPackage: '@spectrum-css/actionbutton',
             outPackage: 'action-button',
             fileName: 'action-button',
+            systemOverrides: true,
             excludeByComponents: [
                 {
                     type: 'type',
@@ -76,7 +77,7 @@ const config = {
                         ['spectrum-ActionButton--staticWhite', 'white'],
                         ['spectrum-ActionButton--staticBlack', 'black'],
                     ],
-                    'static'
+                    'static-color'
                 ),
                 // Default to `size='m'` without needing the attribute
                 converter.classToHost('spectrum-ActionButton--sizeM'),
@@ -186,6 +187,33 @@ const config = {
                             replace: builder.class('hold-affordance'),
                         },
                     ],
+                },
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'disabled',
+                                },
+                            ],
+                        ],
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'pseudo-class',
+                                    kind: 'disabled',
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
                 },
             ],
         },

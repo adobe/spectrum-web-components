@@ -29,7 +29,7 @@ export const AlertBannerMarkup = ({
         ?open=${open}
     >
         ${text}
-        <sp-button treatment="outline" static="white" slot="action">
+        <sp-button treatment="outline" static-color="white" slot="action">
             ${actionLabel}
         </sp-button>
     </sp-alert-banner>

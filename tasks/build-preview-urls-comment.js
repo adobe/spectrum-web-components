@@ -12,93 +12,86 @@ governing permissions and limitations under the License.
 */
 
 import slugify from '@sindresorhus/slugify';
-import { execSync } from 'child_process';
 import crypto from 'crypto';
 
-// Duplicated from `tasks/test-changes.js` because GitHub Actions and CJS. 🤦
-const getChangedPackages = () => {
-    let command;
-    try {
-        command = execSync(
-            'yarn --silent lerna ls --since origin/main --json --loglevel silent'
-        );
-    } catch (error) {
-        console.log(error.message);
-        console.log(error.stdout.toString());
-        return [];
-    }
-    let packageList;
-    packageList = JSON.parse(command.toString()).reduce((acc, item) => {
-        const name = item.name.replace('@spectrum-web-components/', '');
-        if (
-            // There are no benchmarks available in this directory.
-            item.location.search('projects') === -1 &&
-            // The icons-* tests are particular and long, exclude in CI.
-            !name.startsWith('icons-')
-        ) {
-            acc.push(name);
-        }
-        return acc;
-    }, []);
-    return packageList;
-};
-
-const getHash = (context) => {
+const createHash = (context) => {
     const md5 = crypto.createHash('md5');
     md5.update(context);
     return md5.digest('hex');
 };
 
 export const buildPreviewURLComment = (ref) => {
-    const packages = getChangedPackages();
+    // Extract the branch name from the ref and slugify it for URL usage
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
+
     const previewLinks = [];
-    const themes = ['Spectrum', 'Express', 'Spectrum-two'];
-    const scales = ['Medium', 'Large'];
-    const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
-    const directions = ['LTR', 'RTL'];
+
+    const previewCombinations = [
+        {
+            system: 'Spectrum',
+            color: 'Light',
+            scale: 'Medium',
+            direction: 'LTR',
+        },
+        { system: 'Spectrum', color: 'Dark', scale: 'Large', direction: 'RTL' },
+        {
+            system: 'Express',
+            color: 'Light',
+            scale: 'Medium',
+            direction: 'LTR',
+        },
+        { system: 'Express', color: 'Dark', scale: 'Large', direction: 'RTL' },
+        {
+            system: 'Spectrum-two',
+            color: 'Light',
+            scale: 'Medium',
+            direction: 'LTR',
+        },
+        {
+            system: 'Spectrum-two',
+            color: 'Dark',
+            scale: 'Large',
+            direction: 'RTL',
+        },
+    ];
+
+    // Generate preview links for each combination of system, color, scale, and direction
+    previewCombinations.forEach(({ system, color, scale, direction }) => {
+        // Create a unique context string for each combination
+        const context = `${branch}-${system.toLowerCase()}-${color.toLowerCase()}-${scale.toLowerCase()}-${direction.toLowerCase()}`;
+
+        // Add the generated preview link to the array
+        previewLinks.push(`
+- [${system} | ${color} | ${scale} | ${direction}](https://${createHash(
+            context
+        )}--spectrum-web-components.netlify.app/review/)`);
+    });
+
+    // Add a high contrast mode preview link
     previewLinks.push(
-        `- [High Contrast Mode | Medium | LTR](https://${getHash(
+        `
+- [High Contrast Mode | Medium | LTR](https://${createHash(
             `${branch}-hcm`
         )}--spectrum-web-components.netlify.app/review/)`
     );
-    themes.map((theme) =>
-        colors.map((color) => {
-            if (
-                theme === 'Spectrum-two' &&
-                (color === 'Lightest' || color === 'Darkest')
-            ) {
-                return;
-            }
-            scales.map((scale) =>
-                directions.map((direction) => {
-                    const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
-                    previewLinks.push(`
-- [${theme} | ${color} | ${scale} | ${direction}](https://${getHash(
-                        context
-                    )}--spectrum-web-components.netlify.app/review/)`);
-                })
-            );
-        })
-    );
+
     let comment = `## Branch preview
 
 - [Documentation Site](https://${branchSlug}--spectrum-web-components.netlify.app/)
-- [Storybook](https://${branchSlug}--spectrum-web-components.netlify.app/storybook/)`;
-    if (packages.length > 0) {
-        comment += `
+- [Storybook](https://${branchSlug}--spectrum-web-components.netlify.app/storybook/)
 
-<details>
-    <summary><strong>Visual regression test results</strong></summary>
+
+
+<h3><strong>Review the following VRT differences</strong></h3>
 
 When a visual regression test fails (or has previously failed while working on this branch), its results can be found in the following URLs:
 
 ${previewLinks.join('')}
 
-</details>`;
-    }
-
+If the changes are expected, update the <code>current_golden_images_cache</code> hash in the circleci config to accept the new images. Instructions are included in that file. 
+If the changes are unexpected, you can investigate the cause of the differences and update the code accordingly.
+`;
     return comment;
 };
 

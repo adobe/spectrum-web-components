@@ -55,6 +55,9 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
     @query('.close-button')
     closeButton?: CloseButton;
 
+    /**
+     * @deprecated Use the Alert Dialog component with `variant="error"` instead.
+     */
     @property({ type: Boolean, reflect: true })
     public error = false;
 
@@ -169,5 +172,19 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('role', 'dialog');
+    }
+
+    protected override updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (changes.has('error') && this.error) {
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `The "error" attribute of <${this.localName}> has been deprecated. Use the Alert Dialog component with the "variant='error'" instead. "error" will be removed in a future release.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/alert-dialog/#error',
+                    { level: 'deprecation' }
+                );
+            }
+        }
     }
 }

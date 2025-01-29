@@ -10,9 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
     elementUpdated,
     expect,
@@ -20,18 +17,20 @@ import {
     html,
     waitUntil,
 } from '@open-wc/testing';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import { Menu, MenuItem } from '@spectrum-web-components/menu';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu.js';
 import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Menu item', () => {
     it('renders', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-item selected>Selected</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item selected>Selected</sp-menu-item>
+            </sp-menu>
+        `);
         await waitUntil(
             () => el.childItems.length == 1,
             'expected menu group to manage 1 child'
@@ -41,16 +40,14 @@ describe('Menu item', () => {
         await expect(el).to.be.accessible();
     });
     it('can be disabled', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu selects="single">
-                    <sp-menu-item selected label="This is not disabled">
-                        Selected
-                    </sp-menu-item>
-                    <sp-menu-item disabled>Disabled</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item selected label="This is not disabled">
+                    Selected
+                </sp-menu-item>
+                <sp-menu-item disabled>Disabled</sp-menu-item>
+            </sp-menu>
+        `);
         await elementUpdated(el);
         expect(el.value).to.equal('Selected');
 
@@ -91,25 +88,23 @@ describe('Menu item', () => {
     });
     it('proxies `click()`', async () => {
         const clickTargetSpy = spy();
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu
-                    @click=${(event: Event) => {
-                        clickTargetSpy(
-                            event.composedPath()[0] as HTMLAnchorElement
-                        );
-                        event.stopPropagation();
-                        event.preventDefault();
-                    }}
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                @click=${(event: Event) => {
+                    clickTargetSpy(
+                        event.composedPath()[0] as HTMLAnchorElement
+                    );
+                    event.stopPropagation();
+                    event.preventDefault();
+                }}
+            >
+                <sp-menu-item
+                    href="https://opensource.adobe.com/spectrum-web-components"
                 >
-                    <sp-menu-item
-                        href="https://opensource.adobe.com/spectrum-web-components"
-                    >
-                        Selected Text
-                    </sp-menu-item>
-                </sp-menu>
-            `
-        );
+                    Selected Text
+                </sp-menu-item>
+            </sp-menu>
+        `);
 
         await elementUpdated(el);
 
@@ -128,31 +123,23 @@ describe('Menu item', () => {
         expect(clickTargetSpy.calledWith(anchorElement)).to.be.true;
     });
     it('value attribute', async () => {
-        const el = await fixture<MenuItem>(
-            html`
-                <sp-menu-item value="selected" selected>
-                    Selected Text
-                </sp-menu-item>
-            `
-        );
+        const el = await fixture<MenuItem>(html`
+            <sp-menu-item value="selected" selected>Selected Text</sp-menu-item>
+        `);
         expect(el.itemText).to.equal('Selected Text');
         expect(el.value).to.equal('selected');
     });
     it('no value attribute', async () => {
-        const el = await fixture<MenuItem>(
-            html`
-                <sp-menu-item selected>Selected Text</sp-menu-item>
-            `
-        );
+        const el = await fixture<MenuItem>(html`
+            <sp-menu-item selected>Selected Text</sp-menu-item>
+        `);
         expect(el.itemText).to.equal('Selected Text');
         expect(el.value).to.equal('Selected Text');
     });
     it('value property', async () => {
-        const el = await fixture<MenuItem>(
-            html`
-                <sp-menu-item selected>Selected Text</sp-menu-item>
-            `
-        );
+        const el = await fixture<MenuItem>(html`
+            <sp-menu-item selected>Selected Text</sp-menu-item>
+        `);
         expect(el.itemText).to.equal('Selected Text');
         expect(el.value).to.equal('Selected Text');
         expect(el.hasAttribute('value')).to.be.false;
@@ -170,27 +157,21 @@ describe('Menu item', () => {
         expect(el.hasAttribute('value')).to.be.false;
     });
     it('assigns content to the description slot', async () => {
-        const el = await fixture<MenuItem>(
-            html`
-                <sp-menu-item selected>
-                    Menu Item Text
-                    <span slot="description">
-                        Description for the Menu-Item
-                    </span>
-                </sp-menu-item>
-            `
-        );
+        const el = await fixture<MenuItem>(html`
+            <sp-menu-item selected>
+                Menu Item Text
+                <span slot="description">Description for the Menu-Item</span>
+            </sp-menu-item>
+        `);
         const descriptionElement = el.querySelector('span') as HTMLElement;
         expect(descriptionElement.assignedSlot).to.not.be.null;
     });
     it('acualizes a submenu', async () => {
-        const test = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-item selected>Selected</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        const test = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item selected>Selected</sp-menu-item>
+            </sp-menu>
+        `);
 
         const el = test.querySelector('sp-menu-item') as MenuItem;
 
@@ -211,5 +192,36 @@ describe('Menu item', () => {
         await elementUpdated(el);
 
         expect(el.hasSubmenu).to.be.false;
+    });
+
+    it('should not allow text-align to cascade when used inside an overlay', async () => {
+        const element = await fixture<HTMLDivElement>(html`
+            <div style="text-align: center">
+                <p>
+                    The paragraph and the button are centered. Menu items are
+                    not.
+                </p>
+                <sp-action-menu label="Actions" selects="single">
+                    <sp-menu-item>One</sp-menu-item>
+                    <sp-menu-item>Two</sp-menu-item>
+                    <sp-menu-item>This is a long option</sp-menu-item>
+                    <sp-menu-item>
+                        More options
+                        <sp-menu slot="submenu">
+                            <sp-menu-item>Three</sp-menu-item>
+                            <sp-menu-item>Four</sp-menu-item>
+                            <sp-menu-item>Another long option</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-action-menu>
+            </div>
+        `);
+
+        const menuItems = element.querySelectorAll(
+            'sp-menu-item'
+        ) as NodeListOf<MenuItem>;
+
+        for (const menuItem of menuItems)
+            expect(getComputedStyle(menuItem).textAlign).to.equal('start');
     });
 });

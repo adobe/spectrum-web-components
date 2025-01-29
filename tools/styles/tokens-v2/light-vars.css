@@ -1,12 +1,6 @@
 :host,
 :root {
     --spectrum-overlay-opacity: 0.4;
-    --spectrum-drop-shadow-color-rgb: 0, 0, 0;
-    --spectrum-drop-shadow-color-opacity: 0.15;
-    --spectrum-drop-shadow-color: rgba(
-        var(--spectrum-drop-shadow-color-rgb),
-        var(--spectrum-drop-shadow-color-opacity)
-    );
     --spectrum-background-layer-2-color: var(--spectrum-gray-25);
     --spectrum-neutral-subdued-background-color-default: var(
         --spectrum-gray-700
@@ -83,8 +77,8 @@
     --spectrum-accent-visual-color: var(--spectrum-accent-color-800);
     --spectrum-informative-visual-color: var(--spectrum-informative-color-800);
     --spectrum-negative-visual-color: var(--spectrum-negative-color-800);
-    --spectrum-notice-visual-color: var(--spectrum-notice-color-700);
-    --spectrum-positive-visual-color: var(--spectrum-positive-color-700);
+    --spectrum-notice-visual-color: var(--spectrum-notice-color-800);
+    --spectrum-positive-visual-color: var(--spectrum-positive-color-800);
     --spectrum-gray-visual-color: var(--spectrum-gray-500);
     --spectrum-red-visual-color: var(--spectrum-red-800);
     --spectrum-orange-visual-color: var(--spectrum-orange-700);
@@ -113,7 +107,221 @@
     --spectrum-turquoise-background-color-default: var(
         --spectrum-turquoise-900
     );
+    --spectrum-drop-shadow-color-100-rgb: 0, 0, 0;
+    --spectrum-drop-shadow-color-100-opacity: 0.12;
+    --spectrum-drop-shadow-color-100: rgba(
+        var(--spectrum-drop-shadow-color-100-rgb),
+        var(--spectrum-drop-shadow-color-100-opacity)
+    );
+    --spectrum-drop-shadow-color-200-rgb: 0, 0, 0;
+    --spectrum-drop-shadow-color-200-opacity: 0.16;
+    --spectrum-drop-shadow-color-200: rgba(
+        var(--spectrum-drop-shadow-color-200-rgb),
+        var(--spectrum-drop-shadow-color-200-opacity)
+    );
+    --spectrum-drop-shadow-color-300-rgb: 0, 0, 0;
+    --spectrum-drop-shadow-color-300-opacity: 0.2;
+    --spectrum-drop-shadow-color-300: rgba(
+        var(--spectrum-drop-shadow-color-300-rgb),
+        var(--spectrum-drop-shadow-color-300-opacity)
+    );
+    --spectrum-neutral-subtle-background-color-default: var(
+        --spectrum-gray-100
+    );
+    --spectrum-gray-subtle-background-color-default: var(--spectrum-gray-100);
+    --spectrum-blue-subtle-background-color-default: var(--spectrum-blue-200);
+    --spectrum-green-subtle-background-color-default: var(--spectrum-green-200);
+    --spectrum-orange-subtle-background-color-default: var(
+        --spectrum-orange-200
+    );
+    --spectrum-red-subtle-background-color-default: var(--spectrum-red-200);
+    --spectrum-brown-subtle-background-color-default: var(--spectrum-brown-200);
+    --spectrum-cinnamon-subtle-background-color-default: var(
+        --spectrum-cinnamon-200
+    );
+    --spectrum-celery-subtle-background-color-default: var(
+        --spectrum-celery-200
+    );
+    --spectrum-chartreuse-subtle-background-color-default: var(
+        --spectrum-chartreuse-200
+    );
+    --spectrum-cyan-subtle-background-color-default: var(--spectrum-cyan-200);
+    --spectrum-fuchsia-subtle-background-color-default: var(
+        --spectrum-fuchsia-200
+    );
+    --spectrum-indigo-subtle-background-color-default: var(
+        --spectrum-indigo-200
+    );
+    --spectrum-magenta-subtle-background-color-default: var(
+        --spectrum-magenta-200
+    );
+    --spectrum-pink-subtle-background-color-default: var(--spectrum-pink-200);
+    --spectrum-purple-subtle-background-color-default: var(
+        --spectrum-purple-200
+    );
+    --spectrum-seafoam-subtle-background-color-default: var(
+        --spectrum-seafoam-200
+    );
+    --spectrum-silver-subtle-background-color-default: var(
+        --spectrum-silver-200
+    );
+    --spectrum-turquoise-subtle-background-color-default: var(
+        --spectrum-turquoise-200
+    );
+    --spectrum-yellow-subtle-background-color-default: var(
+        --spectrum-yellow-200
+    );
     --spectrum-opacity-checkerboard-square-dark: var(--spectrum-gray-200);
+    --spectrum-white-rgb: 255, 255, 255;
+    --spectrum-white: rgba(var(--spectrum-white-rgb));
+    --spectrum-transparent-white-25-rgb: 255, 255, 255;
+    --spectrum-transparent-white-25-opacity: 0;
+    --spectrum-transparent-white-25: rgba(
+        var(--spectrum-transparent-white-25-rgb),
+        var(--spectrum-transparent-white-25-opacity)
+    );
+    --spectrum-transparent-white-50-rgb: 255, 255, 255;
+    --spectrum-transparent-white-50-opacity: 0.04;
+    --spectrum-transparent-white-50: rgba(
+        var(--spectrum-transparent-white-50-rgb),
+        var(--spectrum-transparent-white-50-opacity)
+    );
+    --spectrum-transparent-white-75-rgb: 255, 255, 255;
+    --spectrum-transparent-white-75-opacity: 0.07;
+    --spectrum-transparent-white-75: rgba(
+        var(--spectrum-transparent-white-75-rgb),
+        var(--spectrum-transparent-white-75-opacity)
+    );
+    --spectrum-transparent-white-100-rgb: 255, 255, 255;
+    --spectrum-transparent-white-100-opacity: 0.11;
+    --spectrum-transparent-white-100: rgba(
+        var(--spectrum-transparent-white-100-rgb),
+        var(--spectrum-transparent-white-100-opacity)
+    );
+    --spectrum-transparent-white-200-rgb: 255, 255, 255;
+    --spectrum-transparent-white-200-opacity: 0.14;
+    --spectrum-transparent-white-200: rgba(
+        var(--spectrum-transparent-white-200-rgb),
+        var(--spectrum-transparent-white-200-opacity)
+    );
+    --spectrum-transparent-white-300-rgb: 255, 255, 255;
+    --spectrum-transparent-white-300-opacity: 0.17;
+    --spectrum-transparent-white-300: rgba(
+        var(--spectrum-transparent-white-300-rgb),
+        var(--spectrum-transparent-white-300-opacity)
+    );
+    --spectrum-transparent-white-400-rgb: 255, 255, 255;
+    --spectrum-transparent-white-400-opacity: 0.21;
+    --spectrum-transparent-white-400: rgba(
+        var(--spectrum-transparent-white-400-rgb),
+        var(--spectrum-transparent-white-400-opacity)
+    );
+    --spectrum-transparent-white-500-rgb: 255, 255, 255;
+    --spectrum-transparent-white-500-opacity: 0.39;
+    --spectrum-transparent-white-500: rgba(
+        var(--spectrum-transparent-white-500-rgb),
+        var(--spectrum-transparent-white-500-opacity)
+    );
+    --spectrum-transparent-white-600-rgb: 255, 255, 255;
+    --spectrum-transparent-white-600-opacity: 0.51;
+    --spectrum-transparent-white-600: rgba(
+        var(--spectrum-transparent-white-600-rgb),
+        var(--spectrum-transparent-white-600-opacity)
+    );
+    --spectrum-transparent-white-700-rgb: 255, 255, 255;
+    --spectrum-transparent-white-700-opacity: 0.66;
+    --spectrum-transparent-white-700: rgba(
+        var(--spectrum-transparent-white-700-rgb),
+        var(--spectrum-transparent-white-700-opacity)
+    );
+    --spectrum-transparent-white-800-rgb: 255, 255, 255;
+    --spectrum-transparent-white-800-opacity: 0.85;
+    --spectrum-transparent-white-800: rgba(
+        var(--spectrum-transparent-white-800-rgb),
+        var(--spectrum-transparent-white-800-opacity)
+    );
+    --spectrum-transparent-white-900-rgb: 255, 255, 255;
+    --spectrum-transparent-white-900-opacity: 0.94;
+    --spectrum-transparent-white-900: rgba(
+        var(--spectrum-transparent-white-900-rgb),
+        var(--spectrum-transparent-white-900-opacity)
+    );
+    --spectrum-transparent-white-1000-rgb: 255, 255, 255;
+    --spectrum-transparent-white-1000: rgba(
+        var(--spectrum-transparent-white-1000-rgb)
+    );
+    --spectrum-transparent-black-25-rgb: 0, 0, 0;
+    --spectrum-transparent-black-25-opacity: 0;
+    --spectrum-transparent-black-25: rgba(
+        var(--spectrum-transparent-black-25-rgb),
+        var(--spectrum-transparent-black-25-opacity)
+    );
+    --spectrum-transparent-black-50-rgb: 0, 0, 0;
+    --spectrum-transparent-black-50-opacity: 0.03;
+    --spectrum-transparent-black-50: rgba(
+        var(--spectrum-transparent-black-50-rgb),
+        var(--spectrum-transparent-black-50-opacity)
+    );
+    --spectrum-transparent-black-75-rgb: 0, 0, 0;
+    --spectrum-transparent-black-75-opacity: 0.05;
+    --spectrum-transparent-black-75: rgba(
+        var(--spectrum-transparent-black-75-rgb),
+        var(--spectrum-transparent-black-75-opacity)
+    );
+    --spectrum-transparent-black-100-rgb: 0, 0, 0;
+    --spectrum-transparent-black-100-opacity: 0.09;
+    --spectrum-transparent-black-100: rgba(
+        var(--spectrum-transparent-black-100-rgb),
+        var(--spectrum-transparent-black-100-opacity)
+    );
+    --spectrum-transparent-black-200-rgb: 0, 0, 0;
+    --spectrum-transparent-black-200-opacity: 0.12;
+    --spectrum-transparent-black-200: rgba(
+        var(--spectrum-transparent-black-200-rgb),
+        var(--spectrum-transparent-black-200-opacity)
+    );
+    --spectrum-transparent-black-300-rgb: 0, 0, 0;
+    --spectrum-transparent-black-300-opacity: 0.15;
+    --spectrum-transparent-black-300: rgba(
+        var(--spectrum-transparent-black-300-rgb),
+        var(--spectrum-transparent-black-300-opacity)
+    );
+    --spectrum-transparent-black-400-rgb: 0, 0, 0;
+    --spectrum-transparent-black-400-opacity: 0.22;
+    --spectrum-transparent-black-400: rgba(
+        var(--spectrum-transparent-black-400-rgb),
+        var(--spectrum-transparent-black-400-opacity)
+    );
+    --spectrum-transparent-black-500-rgb: 0, 0, 0;
+    --spectrum-transparent-black-500-opacity: 0.44;
+    --spectrum-transparent-black-500: rgba(
+        var(--spectrum-transparent-black-500-rgb),
+        var(--spectrum-transparent-black-500-opacity)
+    );
+    --spectrum-transparent-black-600-rgb: 0, 0, 0;
+    --spectrum-transparent-black-600-opacity: 0.56;
+    --spectrum-transparent-black-600: rgba(
+        var(--spectrum-transparent-black-600-rgb),
+        var(--spectrum-transparent-black-600-opacity)
+    );
+    --spectrum-transparent-black-700-rgb: 0, 0, 0;
+    --spectrum-transparent-black-700-opacity: 0.69;
+    --spectrum-transparent-black-700: rgba(
+        var(--spectrum-transparent-black-700-rgb),
+        var(--spectrum-transparent-black-700-opacity)
+    );
+    --spectrum-transparent-black-800-rgb: 0, 0, 0;
+    --spectrum-transparent-black-800-opacity: 0.84;
+    --spectrum-transparent-black-800: rgba(
+        var(--spectrum-transparent-black-800-rgb),
+        var(--spectrum-transparent-black-800-opacity)
+    );
+    --spectrum-transparent-black-900-rgb: 0, 0, 0;
+    --spectrum-transparent-black-900-opacity: 0.93;
+    --spectrum-transparent-black-900: rgba(
+        var(--spectrum-transparent-black-900-rgb),
+        var(--spectrum-transparent-black-900-opacity)
+    );
     --spectrum-gray-25-rgb: 255, 255, 255;
     --spectrum-gray-25: rgba(var(--spectrum-gray-25-rgb));
     --spectrum-gray-50-rgb: 248, 248, 248;
@@ -720,4 +928,94 @@
     --spectrum-icon-color-green-primary-default: var(--spectrum-green-900);
     --spectrum-icon-color-red-primary-default: var(--spectrum-red-900);
     --spectrum-icon-color-yellow-primary-default: var(--spectrum-yellow-400);
+    --spectrum-negative-subdued-background-color-default: var(
+        --spectrum-negative-subtle-background-color-default
+    );
+    --spectrum-accent-subtle-background-color-default: var(
+        --spectrum-accent-color-200
+    );
+    --spectrum-informative-subtle-background-color-default: var(
+        --spectrum-informative-color-200
+    );
+    --spectrum-positive-subtle-background-color-default: var(
+        --spectrum-positive-color-200
+    );
+    --spectrum-notice-subtle-background-color-default: var(
+        --spectrum-notice-color-200
+    );
+    --spectrum-negative-subtle-background-color-default: var(
+        --spectrum-negative-color-200
+    );
+    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-800-rgb);
+    --spectrum-dropindicator-color: var(--spectrum-blue-800);
+    --spectrum-calendar-day-background-color-selected: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.1
+    );
+    --spectrum-calendar-day-background-color-hover: rgba(
+        var(--spectrum-black-rgb),
+        0.06
+    );
+    --spectrum-calendar-day-today-background-color-selected-hover: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.2
+    );
+    --spectrum-calendar-day-background-color-selected-hover: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.2
+    );
+    --spectrum-calendar-day-background-color-down: var(
+        --spectrum-transparent-black-200
+    );
+    --spectrum-calendar-day-background-color-cap-selected: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.2
+    );
+    --spectrum-calendar-day-background-color-key-focus: rgba(
+        var(--spectrum-black-rgb),
+        0.06
+    );
+    --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-800);
+    --spectrum-badge-label-icon-color-primary: var(--spectrum-white);
+    --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-800);
+    --spectrum-steplist-current-marker-color-key-focus: var(
+        --spectrum-blue-800
+    );
+    --spectrum-treeview-item-background-color-quiet-selected: rgba(
+        var(--spectrum-gray-900-rgb),
+        0.06
+    );
+    --spectrum-treeview-item-background-color-selected: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.1
+    );
+    --spectrum-logic-button-and-background-color: var(--spectrum-blue-900);
+    --spectrum-logic-button-and-border-color: var(--spectrum-blue-900);
+    --spectrum-logic-button-and-background-color-hover: var(
+        --spectrum-blue-1100
+    );
+    --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1100);
+    --spectrum-logic-button-or-background-color: var(--spectrum-magenta-900);
+    --spectrum-logic-button-or-border-color: var(--spectrum-magenta-900);
+    --spectrum-logic-button-or-background-color-hover: var(
+        --spectrum-magenta-1100
+    );
+    --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-1100);
+    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-900);
+    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-900);
+    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-1000);
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
+        --spectrum-blue-900
+    );
+    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-800);
+    --spectrum-assetlist-item-background-color-selected-hover: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.2
+    );
+    --spectrum-assetlist-item-background-color-selected: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.1
+    );
+    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-800);
+    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-900-rgb);
 }

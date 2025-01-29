@@ -235,12 +235,35 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return this.rovingTabindexController.focusInElement || this;
     }
 
+    private limitDeltaToInterval(min: number, max: number) {
+        return (delta: number): number => {
+            if (delta < min) return min;
+            if (delta > max) return max;
+            return delta;
+        };
+    }
+
+    /**
+     * Scrolls through the tabs component, on the X-axis, by a given ammount of pixels/ delta. The given delta is limited to the scrollable area of the tabs component.
+     * @param {number} delta - The ammount of pixels to scroll by. If the value is positive, the tabs will scroll to the right. If the value is negative, the tabs will scroll to the left.
+     * @param {ScrollBehavior} behavior - The scroll behavior to use. Defaults to 'smooth'.
+     */
     public scrollTabs(
         delta: number,
         behavior: ScrollBehavior = 'smooth'
     ): void {
+        if (delta === 0) return;
+
+        const { scrollLeft, clientWidth, scrollWidth } = this.tabList;
+        const dirLimit = scrollWidth - clientWidth - Math.abs(scrollLeft);
+
+        const limitDelta =
+            this.dir === 'ltr'
+                ? this.limitDeltaToInterval(-scrollLeft, dirLimit)
+                : this.limitDeltaToInterval(-dirLimit, Math.abs(scrollLeft));
+
         this.tabList?.scrollBy({
-            left: delta,
+            left: limitDelta(delta),
             top: 0,
             behavior,
         });

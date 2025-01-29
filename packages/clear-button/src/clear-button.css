@@ -11,3 +11,8 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-clear-button.css');
+@import url('./clear-button-overrides.css');
+
+:host {
+    box-sizing: border-box;
+}

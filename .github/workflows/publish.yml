@@ -13,22 +13,30 @@ jobs:
         # Run the job if manually triggered or if the commit message includes '#publish' & the check suite has passed
         if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '#publish')
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: '18'
-                  cache: 'yarn'
-                  registry-url: 'https://registry.npmjs.org'
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
 
-            - name: Install dependencies
-              run: yarn --frozen-lockfile
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
-            - name: Generate Docs
-              run: yarn docs:ci
+            - name: Generate Custom Elements Manifest
+              run: yarn docs:analyze
+
+            - name: Move CEM to Storybook directory
+              run: cp projects/documentation/custom-elements.json storybook/
+
+            - name: Build documentation
+              run: yarn docs:production
+
+            - name: Build Storybook
+              run: yarn storybook:build
+
+            - name: Add redirects to documentation
+              run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
 
             - name: Deploy to GitHub Pages
               run: |
                   git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-                  npx gh-pages -d projects/documentation/dist -m "[skip ci] update demonstration site" -t -u "github-actions-bot <support+actions@github.com>" --nojekyll
+                  yarn gh-pages -d projects/documentation/dist -m "[skip ci] update demonstration site" -t -u "github-actions-bot <support+actions@github.com>" --nojekyll
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

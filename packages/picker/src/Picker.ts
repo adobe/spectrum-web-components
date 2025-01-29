@@ -25,7 +25,6 @@ import {
     ifDefined,
     StyleInfo,
     styleMap,
-    when,
 } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
@@ -35,6 +34,7 @@ import {
 
 import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
@@ -52,6 +52,7 @@ import {
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
+import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
 import type { FieldLabel } from '@spectrum-web-components/field-label';
@@ -94,6 +95,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     @property({ type: Boolean, reflect: true })
     public invalid = false;
+
+    /**
+     * Forces the Picker to render as a popover on mobile instead of a tray.
+     *
+     * @memberof PickerBase
+     */
+    @property({ type: Boolean, reflect: true })
+    public forcePopover = false;
 
     /** Whether the items are currently loading. */
     @property({ type: Boolean, reflect: true })
@@ -152,6 +161,17 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property({ attribute: false })
     public get selectedItem(): MenuItem | undefined {
         return this._selectedItem;
+    }
+
+    public pendingStateController: PendingStateController<this>;
+
+    /**
+     * Initializes the `PendingStateController` for the Picker component.
+     * The `PendingStateController` manages the pending state of the Picker.
+     */
+    constructor() {
+        super();
+        this.pendingStateController = new PendingStateController(this);
     }
 
     public set selectedItem(selectedItem: MenuItem | undefined) {
@@ -422,21 +442,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                           ></sp-icon-alert>
                       `
                     : nothing}
-                ${when(this.pending, () => {
-                    import(
-                        '@spectrum-web-components/progress-circle/sp-progress-circle.js'
-                    );
-                    // aria-valuetext is a workaround for aria-valuenow being applied in Firefox even in indeterminate mode.
-                    return html`
-                        <sp-progress-circle
-                            id="loader"
-                            size="s"
-                            indeterminate
-                            aria-valuetext=${this.pendingLabel}
-                            class="progress-circle"
-                        ></sp-progress-circle>
-                    `;
-                })}
+                ${this.pendingStateController.renderPendingState()}
                 <sp-icon-chevron100
                     class="picker ${chevronClass[
                         this.size as DefaultElementSize
@@ -519,8 +525,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected override update(changes: PropertyValues<this>): void {
         if (this.selects) {
-            // Always force `selects` to "single" when set.
-            // TODO: Add support functionally and visually for "multiple"
+            /**
+             * Always force `selects` to "single" when set.
+             *
+             * @todo: Add support functionally and visually for "multiple"
+             */
             this.selects = 'single';
         }
         if (changes.has('disabled') && this.disabled) {
@@ -569,7 +578,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 ) {
                     window.__swc.warn(
                         this,
-                        '<${this.localName}> needs one of the following to be accessible:',
+                        `<${this.localName}> needs one of the following to be accessible:`,
                         'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
                         {
                             type: 'accessibility',
@@ -620,8 +629,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             ${this.dismissHelper} ${menu} ${this.dismissHelper}
         `;
         // @todo: test in mobile
-        /* c8 ignore next 11 */
-        if (this.isMobile.matches) {
+        if (this.isMobile.matches && !this.forcePopover) {
             this.dependencyManager.add('sp-tray');
             import('@spectrum-web-components/tray/sp-tray.js');
             return html`
@@ -827,7 +835,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
  */
 export class Picker extends PickerBase {
     public static override get styles(): CSSResultArray {
-        return [pickerStyles, chevronStyles];
+        return [pickerStyles, chevronStyles, chevronIconOverrides];
     }
 
     protected override get containerStyles(): StyleInfo {

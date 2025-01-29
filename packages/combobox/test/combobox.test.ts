@@ -23,10 +23,15 @@ import {
     fixture,
     homeEvent,
 } from '../../../test/testing-helpers.js';
-import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
+import {
+    executeServerCommand,
+    sendKeys,
+    setViewport,
+} from '@web/test-runner-commands';
 import { PickerButton } from '@spectrum-web-components/picker-button';
 import {
     comboboxFixture,
+    longComboboxFixture,
     TestableCombobox,
     testActiveElement,
 } from './helpers.js';
@@ -367,7 +372,7 @@ describe('Combobox', () => {
             expect(el.shadowRoot.activeElement).to.equal(input);
         });
     });
-    describe('manage active decendent', () => {
+    describe('manage active descendent', () => {
         it('sets activeDescendant to first descendent on ArrowDown', async () => {
             const el = await comboboxFixture();
 
@@ -565,7 +570,63 @@ describe('Combobox', () => {
             expect(el.open).to.be.false;
             expect(el.activeDescendant).to.be.undefined;
         });
-        it('sets the value when an item is clicked programatically', async () => {
+        it('reflects the selected value in menu on reopening', async () => {
+            const el = await comboboxFixture();
+
+            await elementUpdated(el);
+
+            expect(el.value).to.equal('');
+            expect(el.activeDescendant).to.be.undefined;
+            expect(el.open).to.be.false;
+
+            let opened = oneEvent(el, 'sp-opened');
+            el.focusElement.click();
+            await opened;
+
+            const item = el.shadowRoot.querySelector(
+                '[value="banana"]'
+            ) as MenuItem;
+            await elementUpdated(item);
+
+            expect(el.open).to.be.true;
+
+            const itemValue = item.itemText;
+            const rect = item.getBoundingClientRect();
+            const closed = oneEvent(el, 'sp-closed');
+            await sendMouse({
+                steps: [
+                    {
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                        type: 'click',
+                    },
+                ],
+            });
+            await closed;
+
+            expect(el.value).to.equal(itemValue);
+            expect(el.open).to.be.false;
+            expect(el.activeDescendant).to.be.undefined;
+
+            opened = oneEvent(el, 'sp-opened');
+            el.focusElement.click();
+            await opened;
+
+            await elementUpdated(el);
+            await elementUpdated(item);
+
+            expect(el.open).to.be.true;
+
+            // item should be selected
+            expect(
+                el.shadowRoot
+                    .querySelector('sp-menu')
+                    ?.querySelector('[selected]')?.textContent
+            ).to.equal(item.textContent);
+        });
+        it('sets the value when an item is clicked programmatically', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
@@ -898,5 +959,28 @@ describe('Combobox', () => {
         expect(document.activeElement === el).to.be.false;
         expect(tooltipEl.open).to.be.false;
         expect(el.open).to.be.false;
+    });
+
+    it('scrolls to fit window', async () => {
+        await setViewport({ width: 360, height: 640 });
+        const el = await longComboboxFixture();
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('');
+        expect(el.activeDescendant).to.be.undefined;
+        expect(el.open).to.be.false;
+
+        const opened = oneEvent(el, 'sp-opened');
+        el.focusElement.click();
+        await opened;
+        expect(el.open).to.be.true;
+
+        const menu = el.shadowRoot.querySelector(
+            '[role="listbox"]'
+        ) as HTMLElement;
+        await elementUpdated(menu);
+
+        expect(menu.scrollHeight > window.innerHeight).to.be.true;
     });
 });

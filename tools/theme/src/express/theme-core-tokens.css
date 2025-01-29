@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 
 @import url('@spectrum-web-components/styles/tokens/global-vars.css');
+@import url('@spectrum-web-components/styles/tokens/spectrum/global-vars.css');
 @import url('@spectrum-web-components/styles/tokens/express/global-vars.css');
-@import url('@spectrum-web-components/styles/tokens/spectrum/custom-vars.css');
-@import url('@spectrum-web-components/styles/tokens/express/custom-vars.css');
+@import url('@spectrum-web-components/styles/tokens/express/system-theme-bridge.css');
 @import url('@spectrum-web-components/styles/typography.css');
 
 :host {
@@ -23,6 +23,21 @@ governing permissions and limitations under the License.
     --spectrum-picker-border-width: var(--spectrum-border-width-100);
 
     /* end workaround */
+    --spectrum-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-font-style: var(--spectrum-default-font-style);
+    --spectrum-font-size: var(--spectrum-font-size-100);
+
+    font-family: var(--spectrum-font-family);
+    font-size: var(--spectrum-font-size);
+    font-style: var(--spectrum-font-style);
+
+    &:lang(ar) {
+        font-family: var(--spectrum-font-family-ar);
+    }
+
+    &:lang(he) {
+        font-family: var(--spectrum-font-family-he);
+    }
 }
 
 #scale,

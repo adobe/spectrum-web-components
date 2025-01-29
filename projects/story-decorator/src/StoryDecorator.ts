@@ -25,7 +25,7 @@ import {
 import { DARK_MODE } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/theme/src/spectrum-two/themes-core-tokens.js';
+import '@spectrum-web-components/theme/src/spectrum-two/themes.js';
 import '@spectrum-web-components/theme/src/express/themes.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/picker/sp-picker.js';
@@ -48,7 +48,7 @@ const urlParams = new URLSearchParams(queryString);
 
 export let dir: 'ltr' | 'rtl' =
     (urlParams.get('sp_dir') as 'ltr' | 'rtl') || 'ltr';
-export let theme: SystemVariant =
+export const theme: SystemVariant =
     (urlParams.get('sp_theme') as SystemVariant) || 'spectrum';
 export let system: SystemVariant =
     (urlParams.get('sp_system') as SystemVariant) || 'spectrum';
@@ -57,8 +57,8 @@ export let color: Color =
     (matchMedia(DARK_MODE).matches ? 'dark' : 'light');
 export let scale: Scale = (urlParams.get('sp_scale') as Scale) || 'medium';
 export let reduceMotion = urlParams.get('sp_reduceMotion') === 'true';
-export let screenshot = urlParams.get('sp_screenshot') === 'true';
-export let locale = urlParams.get('sp_locale') || 'en-US';
+export const screenshot = urlParams.get('sp_screenshot') === 'true';
+export const locale = urlParams.get('sp_locale') || 'en-US';
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
     defaultSystemVariant: system,
@@ -70,18 +70,6 @@ window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
 };
 
 const reduceMotionProperties = css`
-    --spectrum-global-animation-duration-100: 0ms;
-    --spectrum-global-animation-duration-200: 0ms;
-    --spectrum-global-animation-duration-300: 0ms;
-    --spectrum-global-animation-duration-400: 0ms;
-    --spectrum-global-animation-duration-500: 0ms;
-    --spectrum-global-animation-duration-600: 0ms;
-    --spectrum-global-animation-duration-700: 0ms;
-    --spectrum-global-animation-duration-800: 0ms;
-    --spectrum-global-animation-duration-900: 0ms;
-    --spectrum-global-animation-duration-1000: 0ms;
-    --spectrum-global-animation-duration-2000: 0ms;
-    --spectrum-global-animation-duration-4000: 0ms;
     --spectrum-animation-duration-0: 0ms;
     --spectrum-animation-duration-100: 0ms;
     --spectrum-animation-duration-200: 0ms;
@@ -121,7 +109,7 @@ export class StoryDecorator extends SpectrumElement {
                                 var(--spectrum-component-height-100)
                         );
                     box-sizing: border-box;
-                    background-color: var(--spectrum-gray-100);
+                    background-color: var(--spectrum-background-base-color);
                     color: var(--spectrum-body-color);
 
                     --decorator-padding-100: calc(
@@ -149,7 +137,6 @@ export class StoryDecorator extends SpectrumElement {
                     align-items: flex-start;
                     justify-content: flex-end;
                     box-sizing: border-box;
-                    background-color: var(--spectrum-gray-100);
                     padding-bottom: calc(
                         2 * var(--spectrum-alias-focus-ring-size)
                     );
@@ -247,6 +234,13 @@ export class StoryDecorator extends SpectrumElement {
         }
     }
 
+    public get backgroundStyle() {
+        if (system === 'spectrum-two') {
+            return `background-color: var(--spectrum-background-base-color);`;
+        }
+        return `background-color: var(--spectrum-gray-100);`;
+    }
+
     protected handleKeydown(event: KeyboardEvent): void {
         const path = event.composedPath();
         const hasInput = path.some(
@@ -267,7 +261,7 @@ export class StoryDecorator extends SpectrumElement {
                 color=${this.color}
                 scale=${this.scale}
                 dir=${this.direction}
-                lang=${this.lang}
+                style=${this.backgroundStyle}
                 part="container"
                 @keydown=${this.handleKeydown}
             >

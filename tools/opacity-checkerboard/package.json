@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/opacity-checkerboard",
-    "version": "0.47.2",
+    "version": "1.1.0",
     "publishConfig": {
         "access": "public"
     },
@@ -22,7 +22,9 @@
     "exports": {
         ".": "./src/opacity-checkerboard.css.js",
         "./package.json": "./package.json",
+        "./src/is-opacity-checkerboard-overrides.css.js": "./src/is-opacity-checkerboard-overrides.css.js",
         "./src/is-opacity-checkerboard.css.js": "./src/is-opacity-checkerboard.css.js",
+        "./src/opacity-checkerboard-overrides.css.js": "./src/opacity-checkerboard-overrides.css.js",
         "./src/opacity-checkerboard.css.js": "./src/opacity-checkerboard.css.js"
     },
     "scripts": {
@@ -43,10 +45,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.47.2"
+        "@spectrum-web-components/base": "^1.1.0"
     },
     "devDependencies": {
-        "@spectrum-css/opacitycheckerboard": "^2.1.0"
+        "@spectrum-css/opacitycheckerboard": "3.0.0-s2-foundations.17"
     },
     "types": "./src/opacity-checkerboard.d.ts",
     "sideEffects": [

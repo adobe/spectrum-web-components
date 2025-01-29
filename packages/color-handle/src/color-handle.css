@@ -11,10 +11,12 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-color-handle.css');
+@import url('./color-handle-overrides.css');
 
 :host {
     touch-action: none;
-    transition: inline-size
+    transition:
+        inline-size
             var(
                 --mod-colorhandle-animation-duration,
                 var(--spectrum-colorhandle-animation-duration)

@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-button.css');
+@import url('./button-overrides.css');
 
 @media (forced-colors: active) {
     :host([treatment][disabled]) {
@@ -19,6 +20,11 @@ governing permissions and limitations under the License.
 
     :host([treatment]:not([disabled]):hover) {
         border-color: highlight;
+    }
+
+    :host(.remove-focus-ring-safari-hack:focus-visible):after {
+        forced-color-adjust: none;
+        box-shadow: none;
     }
 }
 
@@ -79,6 +85,7 @@ governing permissions and limitations under the License.
     visibility: revert-layer;
 
     --mod-progress-circle-position: relative;
+    --spectrum-icon-size: inherit;
 }
 
 sp-progress-circle {
@@ -96,4 +103,40 @@ sp-progress-circle {
 :host([pending]:not([disabled])) slot[name='icon'],
 :host([pending]:not([disabled])) #label {
     animation: hide-icons-label 0s var(--pending-delay, 1s) forwards;
+}
+
+:host(.remove-focus-ring-safari-hack:focus-visible):after {
+    margin: calc(
+        -1 * var(--mod-button-focus-indicator-gap, var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)))
+    );
+    box-shadow: none;
+}
+
+:host(.remove-focus-ring-safari-hack:focus-visible) {
+    box-shadow: none;
+    outline: none;
+}
+
+:host(.remove-focus-ring-safari-hack:focus-visible:not(:hover)) {
+    background-color: var(
+        --highcontrast-button-background-color-default,
+        var(
+            --mod-button-background-color-default,
+            var(--spectrum-button-background-color-default)
+        )
+    );
+    border-color: var(
+        --highcontrast-button-border-color-default,
+        var(
+            --mod-button-border-color-default,
+            var(--spectrum-button-border-color-default)
+        )
+    );
+    color: var(
+        --highcontrast-button-content-color-default,
+        var(
+            --mod-button-content-color-default,
+            var(--spectrum-button-content-color-default)
+        )
+    );
 }

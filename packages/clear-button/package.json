@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/clear-button",
-    "version": "0.47.2",
+    "version": "1.1.0",
     "publishConfig": {
         "access": "public"
     },
@@ -22,6 +22,7 @@
     "exports": {
         ".": "./src/clear-button.css.js",
         "./package.json": "./package.json",
+        "./src/clear-button-overrides.css.js": "./src/clear-button-overrides.css.js",
         "./src/clear-button.css.js": "./src/clear-button.css.js"
     },
     "scripts": {
@@ -42,10 +43,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.47.2"
+        "@spectrum-web-components/base": "^1.1.0"
     },
     "devDependencies": {
-        "@spectrum-css/clearbutton": "^6.1.0"
+        "@spectrum-css/clearbutton": "7.0.0-s2-foundations.16"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

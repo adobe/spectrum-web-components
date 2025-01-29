@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/coachmark",
-    "version": "0.47.2",
+    "version": "1.1.0",
     "publishConfig": {
         "access": "public"
     },
@@ -37,7 +37,9 @@
             "development": "./src/CoachmarkItem.dev.js",
             "default": "./src/CoachmarkItem.js"
         },
+        "./src/coach-indicator-overrides.css.js": "./src/coach-indicator-overrides.css.js",
         "./src/coach-indicator.css.js": "./src/coach-indicator.css.js",
+        "./src/coachmark-overrides.css.js": "./src/coachmark-overrides.css.js",
         "./src/coachmark.css.js": "./src/coachmark.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -70,19 +72,18 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/asset": "^0.47.2",
-        "@spectrum-web-components/base": "^0.47.2",
-        "@spectrum-web-components/button": "^0.47.2",
-        "@spectrum-web-components/button-group": "^0.47.2",
-        "@spectrum-web-components/icon": "^0.47.2",
-        "@spectrum-web-components/icons-ui": "^0.47.2",
-        "@spectrum-web-components/quick-actions": "^0.47.2",
-        "@spectrum-web-components/reactive-controllers": "^0.47.2",
-        "@spectrum-web-components/shared": "^0.47.2"
+        "@spectrum-web-components/asset": "^1.1.0",
+        "@spectrum-web-components/base": "^1.1.0",
+        "@spectrum-web-components/button": "^1.1.0",
+        "@spectrum-web-components/button-group": "^1.1.0",
+        "@spectrum-web-components/icon": "^1.1.0",
+        "@spectrum-web-components/icons-ui": "^1.1.0",
+        "@spectrum-web-components/reactive-controllers": "^1.1.0",
+        "@spectrum-web-components/shared": "^1.1.0"
     },
     "devDependencies": {
-        "@spectrum-css/coachindicator": "^2.1.0",
-        "@spectrum-css/coachmark": "^7.1.0"
+        "@spectrum-css/coachindicator": "3.0.0-s2-foundations.16",
+        "@spectrum-css/coachmark": "8.0.0-s2-foundations.17"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

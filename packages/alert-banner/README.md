@@ -50,7 +50,7 @@ Use the action slot for the contextual action that a user can take in response t
 ```html
 <sp-alert-banner open dismissible>
     Your trial has expired
-    <sp-button treatment="outline" static="white" slot="action">
+    <sp-button treatment="outline" static-color="white" slot="action">
         Buy now
     </sp-button>
 </sp-alert-banner>
@@ -63,7 +63,7 @@ Use the action slot for the contextual action that a user can take in response t
 ```html
 <sp-alert-banner open variant="info" dismissible>
     Your trial will expire in 3 days
-    <sp-button treatment="outline" static="white" slot="action">
+    <sp-button treatment="outline" static-color="white" slot="action">
         Buy now
     </sp-button>
 </sp-alert-banner>

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/card",
-    "version": "0.47.2",
+    "version": "1.1.0",
     "publishConfig": {
         "access": "public"
     },
@@ -29,6 +29,7 @@
             "development": "./src/Card.dev.js",
             "default": "./src/Card.js"
         },
+        "./src/card-overrides.css.js": "./src/card-overrides.css.js",
         "./src/card.css.js": "./src/card.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -57,17 +58,16 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/asset": "^0.47.2",
-        "@spectrum-web-components/base": "^0.47.2",
-        "@spectrum-web-components/checkbox": "^0.47.2",
-        "@spectrum-web-components/divider": "^0.47.2",
-        "@spectrum-web-components/icons-workflow": "^0.47.2",
-        "@spectrum-web-components/quick-actions": "^0.47.2",
-        "@spectrum-web-components/shared": "^0.47.2",
-        "@spectrum-web-components/styles": "^0.47.2"
+        "@spectrum-web-components/asset": "^1.1.0",
+        "@spectrum-web-components/base": "^1.1.0",
+        "@spectrum-web-components/checkbox": "^1.1.0",
+        "@spectrum-web-components/divider": "^1.1.0",
+        "@spectrum-web-components/icons-workflow": "^1.1.0",
+        "@spectrum-web-components/shared": "^1.1.0",
+        "@spectrum-web-components/styles": "^1.1.0"
     },
     "devDependencies": {
-        "@spectrum-css/card": "^8.1.1"
+        "@spectrum-css/card": "10.0.0-s2-foundations.20"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

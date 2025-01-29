@@ -14,12 +14,14 @@ import {
     css,
     CSSResultGroup,
     html,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
     customElement,
     property,
+    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Search } from '@spectrum-web-components/search';
@@ -28,6 +30,13 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import bodyStyles from '@spectrum-web-components/styles/body.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
+
+import iconsList from './iconsList.json' assert { type: 'json' };
+
+import {
+    SystemResolutionController,
+    systemResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
 
 @customElement('delayed-ready')
 export class DelayedReady extends SpectrumElement {
@@ -84,20 +93,77 @@ export class IconsDemo extends SpectrumElement {
         tag: string;
     }[] = [];
 
+    private filteredIcons: {
+        name: string;
+        story(size: string): TemplateResult;
+        tag: string;
+    }[] = [];
+
+    private unsubscribeSystemContext: (() => void) | null = null;
+
+    @state()
+    public spectrumVersion = 1;
+
     private iconset: string[] = [];
     public constructor() {
         super();
         this.iconset = [];
         this.handleIconSetAdded = this.handleIconSetAdded.bind(this);
     }
-    public override connectedCallback(): void {
+
+    public override async connectedCallback(): Promise<void> {
         super.connectedCallback();
         window.addEventListener('sp-iconset-added', this.handleIconSetAdded);
     }
     public override disconnectedCallback(): void {
         window.removeEventListener('sp-iconset-added', this.handleIconSetAdded);
         super.disconnectedCallback();
+        if (this.unsubscribeSystemContext) {
+            this.unsubscribeSystemContext();
+            this.unsubscribeSystemContext = null;
+        }
     }
+
+    private filterIconsBySpectrumVersion(): void {
+        const iconVersion = this.spectrumVersion === 2 ? 's2' : 's1';
+        let filteredIcons = this.icons;
+        // Filter out icons that are not in the current version for workflow icons
+        if (this.name === 'workflow') {
+            filteredIcons = filteredIcons.filter((icon) => {
+                const iconName = icon.name.replace(/\s/g, '').toLowerCase();
+                return iconsList[iconVersion].includes(iconName);
+            });
+        }
+
+        // Use a Set to remove duplicates that may get added because of the same icon name in both versions
+        const iconSet = new Set();
+        filteredIcons = filteredIcons.filter((icon) => {
+            if (iconSet.has(icon.name)) {
+                return false;
+            }
+            iconSet.add(icon.name);
+            return true;
+        });
+
+        this.filteredIcons = filteredIcons;
+    }
+
+    private systemResolver = new SystemResolutionController(this);
+
+    protected override update(changes: PropertyValues): void {
+        if (changes.has(systemResolverUpdatedSymbol)) {
+            this.spectrumVersion =
+                this.systemResolver.system === 'spectrum-two' ? 2 : 1;
+            this.filterIconsBySpectrumVersion();
+        }
+
+        if (changes.has('icons')) {
+            this.filterIconsBySpectrumVersion();
+        }
+
+        super.update(changes);
+    }
+
     public handleIconSetAdded(event: CustomEvent<IconsetAddedDetail>): void {
         const { iconset } = event.detail;
         this.iconset = iconset.getIconList();
@@ -120,7 +186,7 @@ export class IconsDemo extends SpectrumElement {
                     text-align: center;
                     border-radius: var(
                         --spectrum-alias-focus-ring-gap,
-                        var(--spectrum-global-dimension-static-size-25)
+                        var(--spectrum-spacing-50)
                     );
                 }
                 :host([package]) .icon {
@@ -142,7 +208,7 @@ export class IconsDemo extends SpectrumElement {
                     outline-offset: calc(
                         var(
                                 --spectrum-alias-focus-ring-gap,
-                                var(--spectrum-global-dimension-static-size-25)
+                                var(--spectrum-spacing-50)
                             ) * 2
                     );
                 }
@@ -183,10 +249,11 @@ export class IconsDemo extends SpectrumElement {
     }
     private renderSearch(): TemplateResult {
         const matchingIcons = this.search
-            ? this.icons.filter(
-                  (icon) => icon.name.toLowerCase().search(this.search) !== -1
+            ? this.filteredIcons.filter((icon) =>
+                  icon.name.toLowerCase().includes(this.search.toLowerCase())
               )
-            : this.icons;
+            : this.filteredIcons;
+
         return html`
             <div class="search" part="search">
                 <sp-field-label for="search">Spectrum icons:</sp-field-label>
@@ -200,8 +267,8 @@ export class IconsDemo extends SpectrumElement {
                     autocomplete="off"
                 >
                     <sp-help-text slot="help-text">
-                        Showing ${matchingIcons.length} of ${this.icons.length}
-                        available icons.
+                        Showing ${matchingIcons.length} of
+                        ${this.filteredIcons.length} available icons.
                     </sp-help-text>
                 </sp-search>
             </div>
@@ -225,7 +292,7 @@ export class IconsDemo extends SpectrumElement {
     }
     protected override render(): TemplateResult {
         return html`
-            ${this.icons.length
+            ${this.filteredIcons.length
                 ? this.renderSearch()
                 : html`
                       <slot></slot>

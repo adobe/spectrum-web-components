@@ -1228,6 +1228,28 @@ describe('NumberField', () => {
             expect(changeSpy.callCount).to.equal(1);
             expect(lastChangeValue, 'last change value').to.equal(10);
         });
+        xit('manages `inputMode` in iPad', async () => {
+            // setUserAgent is not currently supported by Playwright
+            await setUserAgent(
+                'Mozilla/5.0 (iPad; CPU OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile15E148 Safari/604.1'
+            );
+            el.min = 0;
+            await elementUpdated(el);
+            expect(el.focusElement.inputMode).to.equal('numeric');
+            el.min = -10;
+            await elementUpdated(el);
+            expect(el.focusElement.inputMode).to.equal('numeric');
+            el.min = undefined;
+            await elementUpdated(el);
+            expect(el.focusElement.inputMode).to.equal('numeric');
+            el.formatOptions = {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 2,
+            };
+            el.min = 0;
+            await elementUpdated(el);
+            expect(el.focusElement.inputMode).to.equal('decimal');
+        });
         xit('manages `inputMode` in iPhone', async () => {
             // setUserAgent is not currently supported by Playwright
             await setUserAgent(
@@ -1237,6 +1259,9 @@ describe('NumberField', () => {
             await elementUpdated(el);
             expect(el.focusElement.inputMode).to.equal('numeric');
             el.min = -10;
+            await elementUpdated(el);
+            expect(el.focusElement.inputMode).to.equal('text');
+            el.min = undefined;
             await elementUpdated(el);
             expect(el.focusElement.inputMode).to.equal('text');
             el.formatOptions = {
@@ -1258,6 +1283,9 @@ describe('NumberField', () => {
             el.min = -10;
             await elementUpdated(el);
             expect(el.focusElement.inputMode).to.equal('numeric');
+            el.min = undefined;
+            await elementUpdated(el);
+            expect(el.focusElement.inputMode).to.equal('numeric');
             el.formatOptions = {
                 minimumFractionDigits: 1,
                 maximumFractionDigits: 2,
@@ -1265,6 +1293,13 @@ describe('NumberField', () => {
             el.min = 0;
             await elementUpdated(el);
             expect(el.focusElement.inputMode).to.equal('decimal');
+            el.formatOptions = {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 2,
+            };
+            el.min = -10;
+            await elementUpdated(el);
+            expect(el.focusElement.inputMode).to.equal('numeric');
         });
         it('constrains `value`', async () => {
             el.value = 0;
@@ -1718,7 +1753,7 @@ describe('NumberField', () => {
         });
     });
     describe('accessibility model', () => {
-        it('buttons have proper label', async () => {
+        it('increment and decrement buttons cannot receive keyboard focus', async () => {
             await fixture<HTMLDivElement>(html`
                 <div>
                     ${Default({
@@ -1742,7 +1777,7 @@ describe('NumberField', () => {
                     (node) => node.name === 'Increase Enter a number'
                 ),
                 '`name` is the label text'
-            ).to.not.be.null;
+            ).to.be.null;
 
             expect(
                 findAccessibilityNode<NamedNode>(
@@ -1750,7 +1785,7 @@ describe('NumberField', () => {
                     (node) => node.name === 'Decrease Enter a number'
                 ),
                 '`name` is the label text'
-            ).to.not.be.null;
+            ).to.be.null;
         });
     });
 });

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/adobe/spectrum-web-components/compare/v1.0.3...v1.1.0) (2025-01-29)
+
+### Features
+
+-   use globals to enable VRT modes in chromatic ([5b674b4](https://github.com/adobe/spectrum-web-components/commit/5b674b46841155762a6e5f9ebd566a0110279384))
+
+## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+# [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+# [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+# [0.48.0](https://github.com/adobe/spectrum-web-components/compare/v0.47.2...v0.48.0) (2024-09-17)
+
+### Features
+
+-   locale picker in the storybook's decorator ([#4687](https://github.com/adobe/spectrum-web-components/issues/4687)) ([9e0cd08](https://github.com/adobe/spectrum-web-components/commit/9e0cd08d68cad858bbdc53e8b01b7eeabfde59fb))
+
 ## [0.47.2](https://github.com/adobe/spectrum-web-components/compare/v0.47.1...v0.47.2) (2024-09-03)
 
 **Note:** Version bump only for package @spectrum-web-components/story-decorator

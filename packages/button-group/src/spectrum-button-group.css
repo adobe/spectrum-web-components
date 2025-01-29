@@ -12,27 +12,11 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-buttongroup-spacing-horizontal: var(--spectrum-spacing-300);
-    --spectrum-buttongroup-spacing-vertical: var(--spectrum-spacing-300);
-}
-
-:host([size='s']) {
-    --spectrum-buttongroup-spacing-horizontal: var(--spectrum-spacing-200);
-    --spectrum-buttongroup-spacing-vertical: var(--spectrum-spacing-200);
-}
-
-:host([size='l']),
-:host,
-:host([size='xl']) {
-    --spectrum-buttongroup-spacing-horizontal: var(--spectrum-spacing-300);
-    --spectrum-buttongroup-spacing-vertical: var(--spectrum-spacing-300);
-}
-
-:host {
     gap: var(
         --mod-buttongroup-spacing-horizontal,
         var(--spectrum-buttongroup-spacing-horizontal)
     );
+    justify-content: normal;
     justify-content: var(--mod-buttongroup-justify-content, normal);
     flex-wrap: wrap;
     display: flex;
