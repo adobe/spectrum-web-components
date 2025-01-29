@@ -7812,9 +7812,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/menu@npm:8.0.0-s2-foundations.16":
-  version: 8.0.0-s2-foundations.16
-  resolution: "@spectrum-css/menu@npm:8.0.0-s2-foundations.16"
+"@spectrum-css/menu@npm:8.0.0-s2-foundations.17":
+  version: 8.0.0-s2-foundations.17
+  resolution: "@spectrum-css/menu@npm:8.0.0-s2-foundations.17"
   peerDependencies:
     "@spectrum-css/checkbox": ">=9"
     "@spectrum-css/divider": ">=3"
@@ -7831,7 +7831,7 @@ __metadata:
       optional: true
     "@spectrum-css/tray":
       optional: true
-  checksum: 10c0/410c83ab47b79053b0b06fd1b661a404711a84561aa5f757da7c02c5ee3b3ed436b430ecd1021a1f9722e968caa74103f6923b20dc69c541bf7bc35dcc2ba556
+  checksum: 10c0/953b189d50c0e3419a8242c8df491bc2032bbf857a6032194d8d77a8be348a1c671298c02e6bcdd0be6722566d07f9b8387a40cd0bcae379ebf7039f725df43b
   languageName: node
   linkType: hard
 
@@ -8104,16 +8104,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/textfield@npm:8.0.0-s2-foundations.16":
-  version: 8.0.0-s2-foundations.16
-  resolution: "@spectrum-css/textfield@npm:8.0.0-s2-foundations.16"
+"@spectrum-css/textfield@npm:8.0.0-s2-foundations.17":
+  version: 8.0.0-s2-foundations.17
+  resolution: "@spectrum-css/textfield@npm:8.0.0-s2-foundations.17"
   peerDependencies:
     "@spectrum-css/helptext": ">=5"
     "@spectrum-css/tokens": ">=14"
   peerDependenciesMeta:
     "@spectrum-css/helptext":
       optional: true
-  checksum: 10c0/a7e80c063497780af470fc6b299a285140c358f84cd15b1b1da186b80b25dbbab5ad6c2dd8e862c79b5ec675c614284ac40ab6fd0c2df6fb5d0e71bf17fedd8c
+  checksum: 10c0/2c5db59e6a645671897cdb72937c4fde7645b16e9f6812d21953bd90b8ef5b6f46099e8ffd8614cdfcd340a548930e4d0ebf02f4ca6c869c270d2652efeda00f
   languageName: node
   linkType: hard
 
@@ -8139,10 +8139,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.0.0-s2-foundations.27":
-  version: 15.0.0-s2-foundations.27
-  resolution: "@spectrum-css/tokens@npm:15.0.0-s2-foundations.27"
-  checksum: 10c0/da37e82a3169e1eeeacc7a98f3d418daeece0fadcbcd8cb4d289651c1f3b492c6199c8a0a6006ecace4f3f020f9efa072d78bcc5e4ca3abf71e25f64e3aa440f
+"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.0.0-s2-foundations.31":
+  version: 15.0.0-s2-foundations.31
+  resolution: "@spectrum-css/tokens@npm:15.0.0-s2-foundations.31"
+  checksum: 10c0/e09edb1540ebe73ed7776673c18e1284e98cabf0d91483a3826377a70678abd31bf16dce371b3ee03548d0d8cc963d134541f16d03f98696ac8fe2869f1b4059
   languageName: node
   linkType: hard
 
@@ -8869,7 +8869,7 @@ __metadata:
   resolution: "@spectrum-web-components/menu@workspace:packages/menu"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/menu": "npm:8.0.0-s2-foundations.16"
+    "@spectrum-css/menu": "npm:8.0.0-s2-foundations.17"
     "@spectrum-web-components/action-button": "npm:^1.0.3"
     "@spectrum-web-components/base": "npm:^1.0.1"
     "@spectrum-web-components/divider": "npm:^1.0.1"
@@ -9122,7 +9122,7 @@ __metadata:
   dependencies:
     "@spectrum-css/expressvars": "npm:^3.0.9"
     "@spectrum-css/tokens": "npm:15.0.0"
-    "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.0.0-s2-foundations.27"
+    "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.0.0-s2-foundations.31"
     "@spectrum-css/typography": "npm:7.0.0-s2-foundations.17"
     "@spectrum-css/vars": "npm:^9.0.8"
     "@spectrum-web-components/base": "npm:^1.0.1"
@@ -9201,7 +9201,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/textfield@workspace:packages/textfield"
   dependencies:
-    "@spectrum-css/textfield": "npm:8.0.0-s2-foundations.16"
+    "@spectrum-css/textfield": "npm:8.0.0-s2-foundations.17"
     "@spectrum-web-components/base": "npm:^1.0.1"
     "@spectrum-web-components/help-text": "npm:^1.0.3"
     "@spectrum-web-components/icon": "npm:^1.0.3"
