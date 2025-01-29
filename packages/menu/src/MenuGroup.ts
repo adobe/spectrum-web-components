@@ -53,9 +53,13 @@ export class MenuGroup extends Menu {
      * and should never function as a menu
      */
     protected override get ownRole(): string {
-        return 'menu';
+        return 'group';
     }
 
+    /**
+     * only a menu controls roving tabindex;
+     * groups should defer navigation to parent menu
+     */
     protected override get controlsRovingTabindex(): boolean {
         return false;
     }
