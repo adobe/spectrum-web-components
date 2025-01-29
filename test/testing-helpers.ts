@@ -61,8 +61,9 @@ export async function testForMemoryLeaks(
             if (
                 !window.gc ||
                 !('measureUserAgentSpecificMemory' in performance)
-            )
+            ) {
                 this.skip();
+            }
 
             this.timeout(10000);
 
@@ -228,15 +229,21 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
             let popoverOpen = false;
             try {
                 popoverOpen = closestDialog.matches(':popover-open');
-            } catch (error) {}
+            } catch (error) {
+                // do nothing
+            }
             let open = false;
             try {
                 open = closestDialog.matches(':open');
-            } catch (error) {}
+            } catch (error) {
+                // do nothing
+            }
             let modal = false;
             try {
                 modal = closestDialog.matches(':modal');
-            } catch (error) {}
+            } catch (error) {
+                // do nothing
+            }
             let polyfill = false;
             if (!popoverOpen && !open && !modal) {
                 const style = getComputedStyle(closestDialog);
@@ -294,18 +301,6 @@ export async function fixture<T extends Element>(
             ${story}
             <style>
                 sp-theme {
-                    --spectrum-global-animation-duration-100: 50ms;
-                    --spectrum-global-animation-duration-200: 50ms;
-                    --spectrum-global-animation-duration-300: 50ms;
-                    --spectrum-global-animation-duration-400: 50ms;
-                    --spectrum-global-animation-duration-500: 50ms;
-                    --spectrum-global-animation-duration-600: 50ms;
-                    --spectrum-global-animation-duration-700: 50ms;
-                    --spectrum-global-animation-duration-800: 50ms;
-                    --spectrum-global-animation-duration-900: 50ms;
-                    --spectrum-global-animation-duration-1000: 50ms;
-                    --spectrum-global-animation-duration-2000: 50ms;
-                    --spectrum-global-animation-duration-4000: 50ms;
                     --spectrum-animation-duration-0: 50ms;
                     --spectrum-animation-duration-100: 50ms;
                     --spectrum-animation-duration-200: 50ms;
@@ -332,7 +327,7 @@ export async function fixture<T extends Element>(
 export async function usedHeapMB(): Promise<
     Record<'dom' | 'js' | 'shared' | 'total', number>
 > {
-    // @ts-ignore
+    // @ts-expect-error - expect typescript error
     const memorySample = performance.measureUserAgentSpecificMemory();
     const result = (await memorySample) as {
         bytes: number;
