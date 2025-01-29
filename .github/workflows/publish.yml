@@ -26,7 +26,7 @@ jobs:
               run: cp projects/documentation/custom-elements.json storybook/
 
             - name: Build documentation
-              run: yarn docs:build
+              run: yarn docs:production
 
             - name: Build Storybook
               run: yarn storybook:build
