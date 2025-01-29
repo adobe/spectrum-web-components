@@ -70,6 +70,11 @@ const chevronClass = {
 
 export const DESCRIPTION_ID = 'option-picker';
 export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
+    static override shadowRootOptions = {
+        ...Focusable.shadowRootOptions,
+        delegatesFocus: true,
+    };
+
     public isMobile = new MatchMediaController(this, IS_MOBILE);
 
     public strategy!: DesktopController | MobileController;
