@@ -652,13 +652,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 }
             }
         }
-        selectedItems.map((item, i) => {
-            // When there is more than one "selected" item,
-            // ensure only the first one can be "focused"
-            if (i > 0) {
-                //item.focused = false;
-            }
-        });
         this.selectedItemsMap = selectedItemsMap;
         this._selected = selected;
         this.selectedItems = selectedItems;
