@@ -130,14 +130,17 @@ describe('Submenu', () => {
             });
             await opened;
 
+            const rootItem = this.el.querySelector('.root') as MenuItem;
             let submenu = this.el.querySelector('[slot="submenu"]') as Menu;
             let submenuItem = this.el.querySelector(
-                '.submenu-item-2'
+                '.submenu-item-1'
             ) as MenuItem;
 
             expect(this.rootItem.open).to.be.true;
+
+            //opening a menu via keyboard should set focus on first item
             expect(
-                submenu === document.activeElement,
+                submenuItem === document.activeElement,
                 `${document.activeElement?.id}`
             ).to.be.true;
 
@@ -148,8 +151,10 @@ describe('Submenu', () => {
             await closed;
 
             expect(this.rootItem.open).to.be.false;
+
+            //closing a submenu via keyboard should set focus on its parent menuitem
             expect(
-                this.el === document.activeElement,
+                rootItem === document.activeElement,
                 `${document.activeElement?.id}`
             ).to.be.true;
 
@@ -160,9 +165,10 @@ describe('Submenu', () => {
             await opened;
 
             submenu = this.el.querySelector('[slot="submenu"]') as Menu;
-            submenuItem = this.el.querySelector('.submenu-item-2') as MenuItem;
 
             expect(this.rootItem.open).to.be.true;
+            expect(submenuItem.focused).to.be.true;
+            expect(document.activeElement === submenuItem).to.be.true;
 
             await sendKeys({
                 press: 'ArrowDown',
@@ -170,9 +176,9 @@ describe('Submenu', () => {
             await elementUpdated(submenu);
             await elementUpdated(submenuItem);
 
-            expect(submenu.getAttribute('aria-activedescendant')).to.equal(
-                submenuItem.id
-            );
+            submenuItem = this.el.querySelector('.submenu-item-2') as MenuItem;
+            expect(submenuItem.focused).to.be.true;
+            expect(document.activeElement === submenuItem).to.be.true;
 
             closed = oneEvent(this.rootItem, 'sp-closed');
             await sendKeys({
