@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/tray",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "publishConfig": {
         "access": "public"
     },
@@ -58,11 +58,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.1.0",
-        "@spectrum-web-components/modal": "^1.1.0",
-        "@spectrum-web-components/reactive-controllers": "^1.1.0",
-        "@spectrum-web-components/shared": "^1.1.0",
-        "@spectrum-web-components/underlay": "^1.1.0"
+        "@spectrum-web-components/base": "^1.1.1",
+        "@spectrum-web-components/modal": "^1.1.1",
+        "@spectrum-web-components/reactive-controllers": "^1.1.1",
+        "@spectrum-web-components/shared": "^1.1.1",
+        "@spectrum-web-components/underlay": "^1.1.1"
     },
     "devDependencies": {
         "@spectrum-css/tray": "4.0.0-s2-foundations.15"
