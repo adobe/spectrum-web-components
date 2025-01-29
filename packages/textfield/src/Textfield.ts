@@ -30,13 +30,11 @@ import {
 
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
 import textfieldStyles from './textfield.css.js';
-import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
-import checkmarkSmallOverrides from '@spectrum-web-components/icon/src/icon-checkmark-overrides.css.js';
-
+import '@spectrum-web-components/icon/sp-icon.js';
+import { Checkmark100Icon } from '@spectrum-web-components/icons-ui';
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
 export type TextfieldType = (typeof textfieldTypes)[number];
 
@@ -50,7 +48,7 @@ export class TextfieldBase extends ManageHelpText(
     })
 ) {
     public static override get styles(): CSSResultArray {
-        return [textfieldStyles, checkmarkStyles, checkmarkSmallOverrides];
+        return [textfieldStyles];
     }
 
     @state()
@@ -280,10 +278,9 @@ export class TextfieldBase extends ManageHelpText(
             `;
         } else if (this.valid) {
             return html`
-                <sp-icon-checkmark100
-                    id="valid"
-                    class="icon spectrum-UIIcon-Checkmark100"
-                ></sp-icon-checkmark100>
+                <sp-icon id="valid" class="icon" size=${this.size}>
+                    ${Checkmark100Icon({ hidden: true })}
+                </sp-icon>
             `;
         }
         return nothing;

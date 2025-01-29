@@ -23,13 +23,7 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { CheckboxMixin } from './CheckboxMixin.js';
 import checkboxStyles from './checkbox.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark300.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
 import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 import checkmarkSmallOverrides from '@spectrum-web-components/icon/src/icon-checkmark-overrides.css.js';
 import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
@@ -46,26 +40,26 @@ const checkmarkIcon = {
     },
     m: () => {
         return html`
-            <sp-icon-checkmark100
+            <sp-icon-checkmark75
                 id="checkmark"
                 class="spectrum-Icon spectrum-UIIcon-Checkmark100"
-            ></sp-icon-checkmark100>
+            ></sp-icon-checkmark75>
         `;
     },
     l: () => {
         return html`
-            <sp-icon-checkmark200
+            <sp-icon-checkmark75
                 id="checkmark"
                 class="spectrum-Icon spectrum-UIIcon-Checkmark200"
-            ></sp-icon-checkmark200>
+            ></sp-icon-checkmark75>
         `;
     },
     xl: () => {
         return html`
-            <sp-icon-checkmark300
+            <sp-icon-checkmark75
                 id="checkmark"
                 class="spectrum-Icon spectrum-UIIcon-Checkmark300"
-            ></sp-icon-checkmark300>
+            ></sp-icon-checkmark75>
         `;
     },
 };
@@ -81,26 +75,26 @@ const dashIcon = {
     },
     m: () => {
         return html`
-            <sp-icon-dash100
+            <sp-icon-dash75
                 id="partialCheckmark"
                 class="spectrum-Icon spectrum-UIIcon-Dash100"
-            ></sp-icon-dash100>
+            ></sp-icon-dash75>
         `;
     },
     l: () => {
         return html`
-            <sp-icon-dash200
+            <sp-icon-dash75
                 id="partialCheckmark"
                 class="spectrum-Icon spectrum-UIIcon-Dash200"
-            ></sp-icon-dash200>
+            ></sp-icon-dash75>
         `;
     },
     xl: () => {
         return html`
-            <sp-icon-dash300
+            <sp-icon-dash75
                 id="partialCheckmark"
                 class="spectrum-Icon spectrum-UIIcon-Dash300"
-            ></sp-icon-dash300>
+            ></sp-icon-dash75>
         `;
     },
 };

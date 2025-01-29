@@ -23,28 +23,6 @@ export default {
     title: 'Icon',
 };
 
-export const Medium = (): TemplateResult => {
-    return html`
-        <sp-icons-medium></sp-icons-medium>
-        ${sizes.map(
-            (size) => html`
-                <sp-icon size=${size} name="ui:Chevron200"></sp-icon>
-            `
-        )}
-    `;
-};
-
-export const Large = (): TemplateResult => {
-    return html`
-        <sp-icons-large></sp-icons-large>
-        ${sizes.map(
-            (size) => html`
-                <sp-icon size=${size} name="ui:Chevron400"></sp-icon>
-            `
-        )}
-    `;
-};
-
 export const imageIcon = (): TemplateResult => {
     return html`
         ${sizes.map(

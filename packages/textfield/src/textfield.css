@@ -141,3 +141,10 @@ textarea {
     resize: none;
     overflow: hidden;
 }
+
+sp-icon {
+    /* I want to decrease the value of --spectrum-icon-size by 6px here to match the
+    value of icon-size in the snippet from packages/icon/src/icon-**-overrides.css */
+    block-size: calc(var(--spectrum-icon-size) - 8px);
+    inline-size: calc(var(--spectrum-icon-size) - 8px);
+}
