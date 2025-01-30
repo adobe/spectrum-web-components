@@ -24,11 +24,10 @@ describe('Action Menu - Groups', () => {
             groupsWithSelects({ onChange: () => {} })
         );
 
-        const firstGroup = el.querySelector('sp-menu-group') as HTMLElement;
         const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
         expect(firstItem.focused).to.be.false;
-        expect(document.activeElement === firstGroup).to.be.false;
+        expect(document.activeElement === firstItem).to.be.false;
 
         const opened = oneEvent(el, 'sp-opened');
         el.focus();
@@ -39,7 +38,7 @@ describe('Action Menu - Groups', () => {
 
         expect(firstItem.focused).to.be.true;
         expect(
-            document.activeElement === firstGroup,
+            document.activeElement === firstItem,
             document.activeElement?.localName
         ).to.be.true;
     });
