@@ -14,7 +14,7 @@ import { ElementPart, nothing, Part } from 'lit';
 import { AsyncDirective, directive } from 'lit/async-directive.js';
 import type { DirectiveResult } from 'lit/directive.js';
 
-type ListenerConfig = [string | string[], (event?: unknown) => void];
+type ListenerConfig = [string | string[], (event?: PointerEvent) => void];
 type ListenerConfigGroup = {
     start: ListenerConfig;
     end: ListenerConfig;
