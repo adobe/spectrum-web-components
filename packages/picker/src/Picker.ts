@@ -258,8 +258,18 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
         event.stopPropagation();
         event.preventDefault();
-        this.toggle(true);
+        this.keyboardOpen();
     };
+
+    protected async keyboardOpen(): Promise<void> {
+        this.toggle(true);
+        // timing issue with focus and open state
+        await Promise.all([
+            this.updateComplete,
+            new Promise((res) => requestAnimationFrame(() => res(true))),
+        ]);
+        this.optionsMenu.focus();
+    }
 
     protected async setValueFromItem(
         item: MenuItem,
@@ -520,6 +530,19 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         `;
     }
 
+    protected override willUpdate(changes: PropertyValues<this>): void {
+        super.willUpdate(changes);
+        if (
+            changes.has('open') &&
+            !this.open &&
+            this.focusElement === this.optionsMenu
+        ) {
+            this.updateComplete.then(async () => {
+                this.button.focus();
+            });
+        }
+    }
+
     protected override update(changes: PropertyValues<this>): void {
         if (this.selects) {
             // Always force `selects` to "single" when set.
@@ -564,29 +587,37 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 // However, `appliesLabel` is applied by external elements that must be update complete as well to be bound appropriately.
                 await new Promise((res) => requestAnimationFrame(res));
                 await new Promise((res) => requestAnimationFrame(res));
-                if (
-                    !this.label &&
-                    !this.getAttribute('aria-label') &&
-                    !this.getAttribute('aria-labelledby') &&
-                    !this.appliedLabel
-                ) {
-                    window.__swc.warn(
-                        this,
-                        `<${this.localName}> needs one of the following to be accessible:`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
-                        {
-                            type: 'accessibility',
-                            issues: [
-                                `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
-                                'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
-                                'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
-                            ],
-                        }
-                    );
+                if (!this.hasAccessibleLabel) {
+                    this.warnNoLabel();
                 }
             });
         }
         super.update(changes);
+    }
+
+    protected hasAccessibleLabel(): boolean {
+        return (
+            !!this.label ||
+            !!this.getAttribute('aria-label') ||
+            !!this.getAttribute('aria-labelledby') ||
+            !!this.appliedLabel
+        );
+    }
+
+    protected warnNoLabel(): void {
+        window.__swc.warn(
+            this,
+            `<${this.localName}> needs one of the following to be accessible:`,
+            'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+            {
+                type: 'accessibility',
+                issues: [
+                    `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
+                    'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
+                    'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
+                ],
+            }
+        );
     }
 
     protected bindButtonKeydownListener(): void {
@@ -848,7 +879,7 @@ export class Picker extends PickerBase {
             return;
         }
         if (code === 'ArrowUp' || code === 'ArrowDown') {
-            this.toggle(true);
+            this.keyboardOpen();
             event.preventDefault();
             return;
         }
