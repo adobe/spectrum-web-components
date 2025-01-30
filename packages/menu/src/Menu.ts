@@ -372,7 +372,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             return;
         }
         this.rovingTabindexController.focus({ preventScroll });
-        super.focus({ preventScroll });
         const selectedItem = this.selectedItems[0];
         if (selectedItem && !preventScroll) {
             selectedItem.scrollIntoView({ block: 'nearest' });
