@@ -541,6 +541,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             changes.has('open') &&
             !this.open &&
             this.focusElement === this.optionsMenu
+            && this.focusElement?.matches(':focus-within')
         ) {
             this.updateComplete.then(async () => {
                 this.button.focus();
