@@ -19,7 +19,8 @@ governing permissions and limitations under the License.
 }
 
 #tooltip {
-    inline-size: max-content;
+    width: fit-content;
+    max-width: var(--spectrum-tooltip-max-inline-size);
 }
 
 #tip {
