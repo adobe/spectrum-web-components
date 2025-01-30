@@ -15,11 +15,11 @@ governing permissions and limitations under the License.
 
 :host {
     display: contents;
-    white-space: initial;
 }
 
 #tooltip {
     width: fit-content;
+    white-space: initial;
     max-width: var(--spectrum-tooltip-max-inline-size);
 }
 
