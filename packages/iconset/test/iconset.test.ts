@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -106,11 +106,9 @@ describe('Iconset', () => {
             })
         );
 
-        const el = await fixture<Icon>(
-            html`
-                <sp-icon name="ui:Chevron200"></sp-icon>
-            `
-        );
+        const el = await fixture<Icon>(html`
+            <sp-icon name="ui:Chevron200"></sp-icon>
+        `);
 
         let svg = el.shadowRoot
             ? el.shadowRoot.querySelector('[role="img"]')
@@ -130,14 +128,12 @@ describe('Iconset', () => {
     });
 
     it('can be after `<sp-icon/>` in the DOM order', async () => {
-        const el = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-icon name="ui:Chevron200"></sp-icon>
-                    <sp-icons-medium></sp-icons-medium>
-                </div>
-            `
-        );
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-icon name="ui:Chevron200"></sp-icon>
+                <sp-icons-medium></sp-icons-medium>
+            </div>
+        `);
 
         const icon = el.querySelector('sp-icon') as Icon;
         const iconSet = el.querySelector('sp-icons-medium') as IconsMedium;

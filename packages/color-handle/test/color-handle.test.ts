@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,40 +19,32 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('ColorHandle', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<ColorHandle>(
-                html`
-                    <sp-color-handle></sp-color-handle>
-                `
-            )
+            await fixture<ColorHandle>(html`
+                <sp-color-handle></sp-color-handle>
+            `)
     );
     it('loads default color-handle accessibly', async () => {
-        const el = await fixture<ColorHandle>(
-            html`
-                <sp-color-handle></sp-color-handle>
-            `
-        );
+        const el = await fixture<ColorHandle>(html`
+            <sp-color-handle></sp-color-handle>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads [open] color-handle accessibly', async () => {
-        const el = await fixture<ColorHandle>(
-            html`
-                <sp-color-handle open></sp-color-handle>
-            `
-        );
+        const el = await fixture<ColorHandle>(html`
+            <sp-color-handle open></sp-color-handle>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('opens/closes on pointerdown/up/cancel', async () => {
-        const el = await fixture<ColorHandle>(
-            html`
-                <sp-color-handle></sp-color-handle>
-            `
-        );
+        const el = await fixture<ColorHandle>(html`
+            <sp-color-handle></sp-color-handle>
+        `);
 
         await elementUpdated(el);
         el.setPointerCapture = () => {

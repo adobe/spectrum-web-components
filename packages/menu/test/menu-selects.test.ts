@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -29,15 +29,13 @@ describe('Menu [selects]', () => {
     let el!: Menu;
     let options!: MenuItem[];
     beforeEach(async () => {
-        el = await fixture<Menu>(
-            html`
-                <sp-menu selects="single">
-                    <sp-menu-item value="1">Option 1</sp-menu-item>
-                    <sp-menu-item value="2">Option 2</sp-menu-item>
-                    <sp-menu-item value="3">Option 3</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item value="1">Option 1</sp-menu-item>
+                <sp-menu-item value="2">Option 2</sp-menu-item>
+                <sp-menu-item value="3">Option 3</sp-menu-item>
+            </sp-menu>
+        `);
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
         await Promise.all(options.map((option) => option.updateComplete));
         await nextFrame();
@@ -151,17 +149,15 @@ describe('Menu [selects] w/ group', () => {
     let el!: Menu;
     let options!: MenuItem[];
     beforeEach(async () => {
-        el = await fixture<Menu>(
-            html`
-                <sp-menu selects="single">
-                    <sp-menu-group selects="inherit">
-                        <sp-menu-item value="1">Option 1</sp-menu-item>
-                        <sp-menu-item value="2">Option 2</sp-menu-item>
-                        <sp-menu-item value="3">Option 3</sp-menu-item>
-                    </sp-menu-group>
-                </sp-menu>
-            `
-        );
+        el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-group selects="inherit">
+                    <sp-menu-item value="1">Option 1</sp-menu-item>
+                    <sp-menu-item value="2">Option 2</sp-menu-item>
+                    <sp-menu-item value="3">Option 3</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `);
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
         await Promise.all(options.map((option) => option.updateComplete));
         await nextFrame();
@@ -275,17 +271,15 @@ describe('Menu w/ group [selects]', () => {
     let group!: MenuGroup;
     let options!: MenuItem[];
     beforeEach(async () => {
-        el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-group selects="single">
-                        <sp-menu-item value="1">Option 1</sp-menu-item>
-                        <sp-menu-item value="2">Option 2</sp-menu-item>
-                        <sp-menu-item value="3">Option 3</sp-menu-item>
-                    </sp-menu-group>
-                </sp-menu>
-            `
-        );
+        el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-group selects="single">
+                    <sp-menu-item value="1">Option 1</sp-menu-item>
+                    <sp-menu-item value="2">Option 2</sp-menu-item>
+                    <sp-menu-item value="3">Option 3</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `);
         group = el.querySelector('sp-menu-group') as MenuGroup;
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
         await Promise.all(options.map((option) => option.updateComplete));
@@ -403,22 +397,20 @@ describe('Menu w/ groups [selects]', () => {
     let groupB!: MenuGroup;
     let options!: MenuItem[];
     beforeEach(async () => {
-        el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-group selects="single" id="group-1">
-                        <sp-menu-item value="1a">Option 1a</sp-menu-item>
-                        <sp-menu-item value="2a">Option 2a</sp-menu-item>
-                        <sp-menu-item value="3a">Option 3a</sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group selects="single" id="group-2">
-                        <sp-menu-item value="1b">Option 1b</sp-menu-item>
-                        <sp-menu-item value="2b">Option 2b</sp-menu-item>
-                        <sp-menu-item value="3b">Option 3b</sp-menu-item>
-                    </sp-menu-group>
-                </sp-menu>
-            `
-        );
+        el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-group selects="single" id="group-1">
+                    <sp-menu-item value="1a">Option 1a</sp-menu-item>
+                    <sp-menu-item value="2a">Option 2a</sp-menu-item>
+                    <sp-menu-item value="3a">Option 3a</sp-menu-item>
+                </sp-menu-group>
+                <sp-menu-group selects="single" id="group-2">
+                    <sp-menu-item value="1b">Option 1b</sp-menu-item>
+                    <sp-menu-item value="2b">Option 2b</sp-menu-item>
+                    <sp-menu-item value="3b">Option 3b</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `);
         groupA = el.querySelector('sp-menu-group:first-child') as MenuGroup;
         groupB = el.querySelector('sp-menu-group:last-child') as MenuGroup;
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];

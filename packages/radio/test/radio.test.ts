@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -34,16 +34,14 @@ describe('Radio', () => {
     let testDiv!: HTMLDivElement;
 
     beforeEach(async () => {
-        testDiv = await fixture<HTMLDivElement>(
-            html`
-                <div id="test-radio">
-                    <sp-radio value="first" checked>Option 1</sp-radio>
-                    <sp-radio value="second">Option 2</sp-radio>
-                    <sp-radio value="third" autofocus>Option 3</sp-radio>
-                    <sp-radio value="fourth" disabled>Option 4</sp-radio>
-                </div>
-            `
-        );
+        testDiv = await fixture<HTMLDivElement>(html`
+            <div id="test-radio">
+                <sp-radio value="first" checked>Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+                <sp-radio value="third" autofocus>Option 3</sp-radio>
+                <sp-radio value="fourth" disabled>Option 4</sp-radio>
+            </div>
+        `);
     });
     it('loads', async () => {
         const el = testDiv.querySelector('sp-radio[value=first]') as Radio;

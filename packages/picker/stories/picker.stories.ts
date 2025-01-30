@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -170,7 +170,7 @@ export const tooltip = (args: StoryArgs): TemplateResult => {
             id="picker-1"
             @change=${handleChange(args)}
             label="Select a Country with a very long label, too long, in fact"
-            ${spreadProps(rest)}
+            ...=${spreadProps(rest)}
         >
             <sp-menu-item value="option-1">Deselect</sp-menu-item>
             <sp-menu-item value="option-2">Select Inverse</sp-menu-item>

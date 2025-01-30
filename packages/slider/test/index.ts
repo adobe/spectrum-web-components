@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -110,24 +110,22 @@ export const testEditableSlider = (type: string): void => {
         it('dispatches `input` of the animation frame', async () => {
             const inputSpy = spy();
             const changeSpy = spy();
-            const el = await fixture<Slider>(
-                html`
-                    <sp-slider
-                        editable
-                        hide-stepper
-                        min="1"
-                        max="100"
-                        step="1"
-                        label="Slider label"
-                        @input=${(event: Event & { target: Slider }) => {
-                            inputSpy(event.target.value);
-                        }}
-                        @change=${(event: Event & { target: Slider }) => {
-                            changeSpy(event.target.value);
-                        }}
-                    ></sp-slider>
-                `
-            );
+            const el = await fixture<Slider>(html`
+                <sp-slider
+                    editable
+                    hide-stepper
+                    min="1"
+                    max="100"
+                    step="1"
+                    label="Slider label"
+                    @input=${(event: Event & { target: Slider }) => {
+                        inputSpy(event.target.value);
+                    }}
+                    @change=${(event: Event & { target: Slider }) => {
+                        changeSpy(event.target.value);
+                    }}
+                ></sp-slider>
+            `);
             await elementUpdated(el);
             expect(el.value).to.equal(50.5);
 

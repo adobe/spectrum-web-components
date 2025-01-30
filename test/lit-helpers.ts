@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { ElementPart, Part } from 'lit';
-import { nothing } from 'lit/html.js';
 import { AsyncDirective, directive } from 'lit/async-directive.js';
+import { nothing } from 'lit/html.js';
 
 type EventListenerWithOptions = EventListenerOrEventListenerObject &
     Partial<AddEventListenerOptions>;
@@ -42,6 +42,7 @@ class SpreadDirective extends AsyncDirective {
     element!: Element;
     prevData: { [key: string]: unknown } = {};
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     render(_spreadData: { [key: string]: unknown }) {
         return nothing;
     }
@@ -56,7 +57,9 @@ class SpreadDirective extends AsyncDirective {
     }
 
     apply(data: { [key: string]: unknown }) {
-        if (!data) return;
+        if (!data) {
+            return;
+        }
         const { prevData, element } = this;
         for (const key in data) {
             const value = data[key];
@@ -64,9 +67,9 @@ class SpreadDirective extends AsyncDirective {
                 continue;
             }
             const name = key.slice(1);
+            const prevHandler = prevData[key];
             switch (key[0]) {
                 case '@': // event listener
-                    const prevHandler = prevData[key];
                     if (prevHandler) {
                         element.removeEventListener(
                             name,
@@ -81,7 +84,6 @@ class SpreadDirective extends AsyncDirective {
                     );
                     break;
                 case '.': // property
-                    // @ts-ignore
                     element[name] = value;
                     break;
                 case '?': // boolean attribute
@@ -105,12 +107,14 @@ class SpreadDirective extends AsyncDirective {
 
     groom(data: { [key: string]: unknown }) {
         const { prevData, element } = this;
-        if (!prevData) return;
+        if (!prevData) {
+            return;
+        }
         for (const key in prevData) {
             if (!data || !(key in data)) {
+                const value = prevData[key];
                 switch (key[0]) {
                     case '@': // event listener
-                        const value = prevData[key];
                         element.removeEventListener(
                             key.slice(1),
                             this,
@@ -118,7 +122,6 @@ class SpreadDirective extends AsyncDirective {
                         );
                         break;
                     case '.': // property
-                        // @ts-ignore
                         element[key.slice(1)] = undefined;
                         break;
                     case '?': // boolean attribute
@@ -134,11 +137,12 @@ class SpreadDirective extends AsyncDirective {
     }
 
     handleEvent(event: Event) {
-        const value: Function | EventListenerObject = this.prevData[
-            `@${event.type}`
-        ] as Function | EventListenerObject;
+        const value: ((event: Event) => void) | EventListenerObject = this
+            .prevData[`@${event.type}`] as
+            | ((event: Event) => void)
+            | EventListenerObject;
         if (typeof value === 'function') {
-            (value as Function).call(this.host, event);
+            (value as (event: Event) => void).call(this.host, event);
         } else {
             (value as EventListenerObject).handleEvent(event);
         }
@@ -147,7 +151,9 @@ class SpreadDirective extends AsyncDirective {
     override disconnected() {
         const { prevData, element } = this;
         for (const key in prevData) {
-            if (key[0] !== '@') continue;
+            if (key[0] !== '@') {
+                continue;
+            }
             // event listener
             const value = prevData[key];
             element.removeEventListener(
@@ -161,7 +167,9 @@ class SpreadDirective extends AsyncDirective {
     override reconnected() {
         const { prevData, element } = this;
         for (const key in prevData) {
-            if (key[0] !== '@') continue;
+            if (key[0] !== '@') {
+                continue;
+            }
             // event listener
             const value = prevData[key];
             element.addEventListener(
@@ -180,9 +188,11 @@ class SpreadPropsDirective extends AsyncDirective {
     element!: Element;
     prevData: { [key: string]: unknown } = {};
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     render(_spreadData: { [key: string]: unknown }) {
         return nothing;
     }
+
     override update(part: Part, [spreadData]: Parameters<this['render']>) {
         if (this.element !== (part as ElementPart).element) {
             this.element = (part as ElementPart).element;
@@ -194,24 +204,26 @@ class SpreadPropsDirective extends AsyncDirective {
     }
 
     apply(data: { [key: string]: unknown }) {
-        if (!data) return;
+        if (!data) {
+            return;
+        }
         const { prevData, element } = this;
         for (const key in data) {
             const value = data[key];
             if (value === prevData[key]) {
                 continue;
             }
-            // @ts-ignore
             element[key] = value;
         }
     }
 
     groom(data: { [key: string]: unknown }) {
         const { prevData, element } = this;
-        if (!prevData) return;
+        if (!prevData) {
+            return;
+        }
         for (const key in prevData) {
             if (!data || !(key in data)) {
-                // @ts-ignore
                 element[key] = undefined;
             }
         }

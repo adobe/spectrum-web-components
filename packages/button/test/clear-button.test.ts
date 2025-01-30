@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -18,11 +18,9 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers';
 describe('Clear Button', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<ClearButton>(
-                html`
-                    <sp-clear-button size="m" label="Clear"></sp-clear-button>
-                `
-            )
+            await fixture<ClearButton>(html`
+                <sp-clear-button size="m" label="Clear"></sp-clear-button>
+            `)
     );
     (
         ['s', 'm', 'l', 'xl'] as (
@@ -36,14 +34,9 @@ describe('Clear Button', () => {
         )[]
     ).map((size) => {
         it(`loads - ${size}`, async () => {
-            const el = await fixture<ClearButton>(
-                html`
-                    <sp-clear-button
-                        size=${size}
-                        label="Clear"
-                    ></sp-clear-button>
-                `
-            );
+            const el = await fixture<ClearButton>(html`
+                <sp-clear-button size=${size} label="Clear"></sp-clear-button>
+            `);
 
             await expect(el).to.be.accessible();
         });

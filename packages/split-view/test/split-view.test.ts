@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -37,24 +37,20 @@ import { spy } from 'sinon';
 describe('SplitView', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<SplitView>(
-                html`
-                    <sp-split-view primary-size="100">
-                        <div>First panel</div>
-                        <div>Second panel</div>
-                    </sp-split-view>
-                `
-            )
-    );
-    it('loads default (horizontal) split-view accessibly', async () => {
-        const el = await fixture<SplitView>(
-            html`
+            await fixture<SplitView>(html`
                 <sp-split-view primary-size="100">
                     <div>First panel</div>
                     <div>Second panel</div>
                 </sp-split-view>
-            `
-        );
+            `)
+    );
+    it('loads default (horizontal) split-view accessibly', async () => {
+        const el = await fixture<SplitView>(html`
+            <sp-split-view primary-size="100">
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         await expect(el).to.be.accessible();
@@ -72,14 +68,12 @@ describe('SplitView', () => {
     });
 
     it('loads horizontal [resizable] split-view accessibly', async () => {
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view resizable primary-size="100px">
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view resizable primary-size="100px">
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         await expect(el).to.be.accessible();
@@ -96,18 +90,12 @@ describe('SplitView', () => {
     });
 
     it('loads [vertical] split-view accessibly', async () => {
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    vertical
-                    primary-size="75%"
-                    style="height: 400px"
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view vertical primary-size="75%" style="height: 400px">
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         await expect(el).to.be.accessible();
@@ -119,14 +107,12 @@ describe('SplitView', () => {
     });
 
     it('loads [vertical] [resizable] split-view accessibly', async () => {
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view vertical resizable style="height: 400px">
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view vertical resizable style="height: 400px">
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         await expect(el).to.be.accessible();
@@ -140,20 +126,18 @@ describe('SplitView', () => {
 
     it('set all panel values', async () => {
         const splitTotalWidth = 400;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    resizable
-                    primary-min="50"
-                    primary-max="300"
-                    secondary-min="50"
-                    style=${`height: 500px; width: ${splitTotalWidth}px;`}
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                resizable
+                primary-min="50"
+                primary-max="300"
+                secondary-min="50"
+                style=${`height: 500px; width: ${splitTotalWidth}px;`}
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
         await elementUpdated(el);
         expect(el.resizable).to.be.true;
         expect(el.primaryMin).to.equal(50);
@@ -164,26 +148,24 @@ describe('SplitView', () => {
 
     it('use auto height in primary pane', async () => {
         const splitTotalWidth = 400;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    resizable
-                    primary-size="auto"
-                    style=${`height: 500px; width: ${splitTotalWidth}px;`}
-                >
-                    <div>
-                        First panel Lorem Ipsum is simply dummy text of the
-                        printing and typesetting industry. Lorem Ipsum has been
-                        the industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book. It has
-                        survived not only five centuries, but also the leap into
-                        electronic typesetting, remaining essentially unchanged.
-                    </div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                resizable
+                primary-size="auto"
+                style=${`height: 500px; width: ${splitTotalWidth}px;`}
+            >
+                <div>
+                    First panel Lorem Ipsum is simply dummy text of the printing
+                    and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s, when an
+                    unknown printer took a galley of type and scrambled it to
+                    make a type specimen book. It has survived not only five
+                    centuries, but also the leap into electronic typesetting,
+                    remaining essentially unchanged.
+                </div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
         await elementUpdated(el);
         expect(el.resizable).to.be.true;
         expect(el.primarySize).to.equal('auto');
@@ -197,19 +179,17 @@ describe('SplitView', () => {
             SplitView & {
                 splitterPos: number;
             }
-        >(
-            html`
-                <sp-split-view
-                    resizable
-                    primary-min="50"
-                    secondary-min="50"
-                    style=${`height: 200px; width: ${splitTotalWidth}px;`}
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        >(html`
+            <sp-split-view
+                resizable
+                primary-min="50"
+                secondary-min="50"
+                style=${`height: 200px; width: ${splitTotalWidth}px;`}
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         expect(el.resizable).to.be.true;
@@ -282,20 +262,18 @@ describe('SplitView', () => {
     it('resizes when pointer moves and resizable is enabled [rtl]', async () => {
         let pointerId = -1;
         const splitTotalWidth = 400;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    resizable
-                    primary-min="50"
-                    secondary-min="40"
-                    style=${`height: 200px; width: ${splitTotalWidth}px;`}
-                    dir="rtl"
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                resizable
+                primary-min="50"
+                secondary-min="40"
+                style=${`height: 200px; width: ${splitTotalWidth}px;`}
+                dir="rtl"
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         expect(el.resizable).to.be.true;
@@ -346,18 +324,16 @@ describe('SplitView', () => {
 
     it('resizes to start pos when pointer moves in horizontal splitview', async () => {
         let pointerId = -1;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    resizable
-                    secondary-min="50"
-                    style="height: 200px; width: 400px;"
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                resizable
+                secondary-min="50"
+                style="height: 200px; width: 400px;"
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         const splitter = el.shadowRoot.querySelector(
@@ -388,18 +364,16 @@ describe('SplitView', () => {
     it('resizes to end pos when pointer moves in horizontal splitview', async () => {
         let pointerId = -1;
         const splitTotalWidth = 400;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    resizable
-                    primary-min="50"
-                    style=${`height: 200px; width: ${splitTotalWidth}px;`}
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                resizable
+                primary-min="50"
+                style=${`height: 200px; width: ${splitTotalWidth}px;`}
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         const splitter = el.shadowRoot.querySelector(
@@ -432,20 +406,18 @@ describe('SplitView', () => {
 
     it('resizes to start pos when pointer moves in [vertical] splitview', async () => {
         let pointerId = -1;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    vertical
-                    resizable
-                    primary-min="0"
-                    secondary-min="50"
-                    style="height: 400px; width: 200px;"
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                vertical
+                resizable
+                primary-min="0"
+                secondary-min="50"
+                style="height: 400px; width: 200px;"
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         const splitter = el.shadowRoot.querySelector(
@@ -476,19 +448,17 @@ describe('SplitView', () => {
     it('resizes to end pos when pointer moves in [vertical] splitview', async () => {
         let pointerId = -1;
         const splitTotalHeight = 400;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    vertical
-                    resizable
-                    primary-min="50"
-                    style=${`height: ${splitTotalHeight}px; width: 200px;`}
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                vertical
+                resizable
+                primary-min="50"
+                style=${`height: ${splitTotalHeight}px; width: 200px;`}
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         const splitter = el.shadowRoot.querySelector(
@@ -523,20 +493,18 @@ describe('SplitView', () => {
 
     it('resizes and collapses when pointer moves in horizontal splitview', async () => {
         let pointerId = -1;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    resizable
-                    collapsible
-                    primary-min="50"
-                    secondary-min="50"
-                    style="height: 200px; width: 400px;"
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                resizable
+                collapsible
+                primary-min="50"
+                secondary-min="50"
+                style="height: 200px; width: 400px;"
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         expect(el.collapsible).to.be.true;
@@ -602,21 +570,19 @@ describe('SplitView', () => {
     it('resizes and collapses when pointer moves in [vertical] splitview', async () => {
         let pointerId = -1;
         const splitTotalHeight = 400;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    vertical
-                    resizable
-                    collapsible
-                    primary-min="50"
-                    secondary-min="50"
-                    style=${`height: ${splitTotalHeight}px; width: 200px;`}
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                vertical
+                resizable
+                collapsible
+                primary-min="50"
+                secondary-min="50"
+                style=${`height: ${splitTotalHeight}px; width: 200px;`}
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         const splitter = el.shadowRoot.querySelector(
@@ -682,19 +648,17 @@ describe('SplitView', () => {
 
     it('handles focus and keyboard inputs and resizes accordingly for horizontal splitviews [ltr]', async () => {
         const splitTotalWidth = 500;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    resizable
-                    primary-min="50"
-                    secondary-min="50"
-                    style=${`height: 200px; width: ${splitTotalWidth}px;`}
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                resizable
+                primary-min="50"
+                secondary-min="50"
+                style=${`height: 200px; width: ${splitTotalWidth}px;`}
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         expect(el.resizable).to.be.true;
@@ -752,18 +716,16 @@ describe('SplitView', () => {
 
     it('handles focus and keyboard inputs and resizes accordingly for horizontal splitviews [rtl]', async () => {
         const splitTotalWidth = 500;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    resizable
-                    style=${`height: 200px; width: ${splitTotalWidth}px;`}
-                    dir="rtl"
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                resizable
+                style=${`height: 200px; width: ${splitTotalWidth}px;`}
+                dir="rtl"
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         expect(el.resizable).to.be.true;
@@ -813,18 +775,16 @@ describe('SplitView', () => {
 
     it('handles keyboard inputs and resizes accordingly for [vertical] splitviews', async () => {
         const splitTotalHeight = 500;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    vertical
-                    resizable
-                    style=${`width: 200px; height: ${splitTotalHeight}px;`}
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                vertical
+                resizable
+                style=${`width: 200px; height: ${splitTotalHeight}px;`}
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
         await elementUpdated(el);
         expect(el.resizable).to.be.true;
 
@@ -875,20 +835,18 @@ describe('SplitView', () => {
 
     it('handles focus and keyboard inputs and resizes accordingly for collapsible horizontal splitviews', async () => {
         const splitTotalWidth = 500;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    resizable
-                    collapsible
-                    primary-min="50"
-                    secondary-min="50"
-                    style=${`height: 200px; width: ${splitTotalWidth}px;`}
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                resizable
+                collapsible
+                primary-min="50"
+                secondary-min="50"
+                style=${`height: 200px; width: ${splitTotalWidth}px;`}
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         expect(el.resizable).to.be.true;
@@ -907,14 +865,12 @@ describe('SplitView', () => {
     });
 
     it('does not resize when not resizable', async () => {
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view>
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view>
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
         await elementUpdated(el);
         expect(el.resizable).to.be.false;
 
@@ -931,13 +887,11 @@ describe('SplitView', () => {
     });
 
     it('renders no splitter if only one panel is provided', async () => {
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view style="width: 400px">
-                    <div id="primary" style="width: 200px">First panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view style="width: 400px">
+                <div id="primary" style="width: 200px">First panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         expect(el.resizable).to.be.false;
@@ -956,15 +910,13 @@ describe('SplitView', () => {
     });
 
     it('renders only 2 out of 3 panels', async () => {
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view>
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                    <div id="testPanel">Third (invisible) panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view>
+                <div>First panel</div>
+                <div>Second panel</div>
+                <div id="testPanel">Third (invisible) panel</div>
+            </sp-split-view>
+        `);
         await elementUpdated(el);
         const testPanel = el.shadowRoot.querySelector(
             '#testPanel'
@@ -975,19 +927,17 @@ describe('SplitView', () => {
     it('allows a custom label when resizable if specified', async () => {
         const customLabel = 'Resizable Split View Custom Label';
         const defaultLabel = 'Resize the panels';
-        let el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    resizable
-                    label=${customLabel}
-                    primary-min="50"
-                    secondary-min="50"
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        let el = await fixture<SplitView>(html`
+            <sp-split-view
+                resizable
+                label=${customLabel}
+                primary-min="50"
+                secondary-min="50"
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
         expect(el.label).to.equal(customLabel);
         let splitter = el.shadowRoot.querySelector(
             '#splitter'
@@ -995,28 +945,24 @@ describe('SplitView', () => {
         expect(splitter.ariaLabel).to.equal(customLabel);
 
         // If custom label not provided, should fall back to default label
-        el = await fixture<SplitView>(
-            html`
-                <sp-split-view resizable primary-min="50" secondary-min="50">
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        el = await fixture<SplitView>(html`
+            <sp-split-view resizable primary-min="50" secondary-min="50">
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
         splitter = el.shadowRoot.querySelector('#splitter') as HTMLDivElement;
         expect(splitter.ariaLabel).to.equal(defaultLabel);
     });
 
     it('keeps the splitter pos when removing and re-adding a panel', async () => {
         let pointerId = -1;
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view resizable style="width: 400px">
-                    <div id="primary">First panel</div>
-                    <div id="secondary">Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view resizable style="width: 400px">
+                <div id="primary">First panel</div>
+                <div id="secondary">Second panel</div>
+            </sp-split-view>
+        `);
 
         await elementUpdated(el);
         expect(el.resizable).to.be.true;
@@ -1079,17 +1025,12 @@ describe('SplitView', () => {
 
     it('announces when splitterPos moves', async () => {
         const changeSpy = spy();
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    resizable
-                    style=${`height: 200px; width: 500px;`}
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view resizable style=${`height: 200px; width: 500px;`}>
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
         el.addEventListener('change', changeSpy);
         await elementUpdated(el);
         expect(el.resizable).to.be.true;
@@ -1106,18 +1047,16 @@ describe('SplitView', () => {
     });
 
     it('resizes when primarySize changes', async () => {
-        const el = await fixture<SplitView>(
-            html`
-                <sp-split-view
-                    resizable
-                    primary-size="100"
-                    style=${`height: 200px; width: 500px;`}
-                >
-                    <div>First panel</div>
-                    <div>Second panel</div>
-                </sp-split-view>
-            `
-        );
+        const el = await fixture<SplitView>(html`
+            <sp-split-view
+                resizable
+                primary-size="100"
+                style=${`height: 200px; width: 500px;`}
+            >
+                <div>First panel</div>
+                <div>Second panel</div>
+            </sp-split-view>
+        `);
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(100);
         el.primarySize = '300';

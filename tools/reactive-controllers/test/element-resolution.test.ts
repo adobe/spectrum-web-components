@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -20,15 +20,13 @@ describe('Element Resolution', () => {
         if (!customElements.get('test-element-resolution-el')) {
             customElements.define('test-element-resolution-el', TestEl);
         }
-        const test = await fixture(
-            html`
-                <div>
-                    <test-element-resolution-el></test-element-resolution-el>
-                    <div class="target" id="one"></div>
-                    <div class="target" id="two"></div>
-                </div>
-            `
-        );
+        const test = await fixture(html`
+            <div>
+                <test-element-resolution-el></test-element-resolution-el>
+                <div class="target" id="one"></div>
+                <div class="target" id="two"></div>
+            </div>
+        `);
         const el = test.querySelector('test-element-resolution-el') as TestEl;
         const target1 = test.querySelector('#one') as HTMLDivElement;
         const target2 = test.querySelector('#two') as HTMLDivElement;

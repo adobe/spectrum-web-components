@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -47,25 +47,23 @@ export const renderTabsOverflowExample = ({
                     ${repeat(
                         new Array(count),
                         (item) => item,
-                        (_item, index) =>
-                            html`
-                                <sp-tab
-                                    label=${`Tab Item ${index + 1}`}
-                                    value=${index + 1}
-                                ></sp-tab>
-                            `
+                        (_item, index) => html`
+                            <sp-tab
+                                label=${`Tab Item ${index + 1}`}
+                                value=${index + 1}
+                            ></sp-tab>
+                        `
                     )}
                     ${includeTabPanel
                         ? html`
                               ${repeat(
                                   new Array(count),
                                   (item) => item,
-                                  (_item, index) =>
-                                      html`
-                                          <sp-tab-panel value=${index + 1}>
-                                              Content for Tab Item ${index + 1}
-                                          </sp-tab-panel>
-                                      `
+                                  (_item, index) => html`
+                                      <sp-tab-panel value=${index + 1}>
+                                          Content for Tab Item ${index + 1}
+                                      </sp-tab-panel>
+                                  `
                               )}
                           `
                         : nothing}

@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -15,7 +15,16 @@ import {
     MiddlewareReturn,
 } from '@floating-ui/dom';
 
-export const fullSize = (options: { padding: number } = { padding: 0 }) => ({
+export const fullSize = (
+    options: { padding: number } = { padding: 0 }
+): {
+    name: string;
+    fn: (middlewareArguments: MiddlewareArguments) => Promise<
+        MiddlewareReturn & {
+            data: { availableWidth: number; availableHeight: number };
+        }
+    >;
+} => ({
     name: 'fullSize',
     async fn(middlewareArguments: MiddlewareArguments): Promise<
         MiddlewareReturn & {

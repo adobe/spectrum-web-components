@@ -1,10 +1,12 @@
-# Who are we?
+# Spectrum Web Components
+
+## Who are we?
 
 Spectrum Web Components is a future-looking project to develop Adobe Spectrum design language based around web components, ES-Modules, and modern browser standards.
 
 To this end, Spectrum Web Components only targets _modern_, evergreen browsers that fully implement the Custom Elements V1 specification, e.g. Chrome, Firefox, Safari. Polyfills will be avoided as much as possible but documented if necessary.
 
-# Requirements
+## Requirements
 
 -   NodeJS >= 20.0.0
 -   Typescript
@@ -17,7 +19,7 @@ To this end, Spectrum Web Components only targets _modern_, evergreen browsers t
 -   We support all viewport sizes across supported desktop browsers.
 -   While our components are designed to be responsive and mobile-friendly, we do not yet fully support mobile browsers due to limited testing in mobile hardware. We advise testing updates on mobile devices before updating and are happy to address any reported issues.
 
-# Getting started
+## Getting started
 
 ```bash
 git clone https://github.com/adobe/spectrum-web-components.git
@@ -34,7 +36,7 @@ Typical development will involve running `yarn storybook`, `yarn test`, and `yar
 Creating a new component from the command line can be done by running the following:
 
 ```bash
-$ yarn new-package
+yarn new-package
 ```
 
 This will scaffold your component's required architecture by prompting you for 2 data points - the desired name for your package and the name of the Spectrum CSS asset from which you will be building.
@@ -49,7 +51,7 @@ You can find this information in the [Spectrum CSS GitHub project](https://githu
 
 For additional information, please see the [generating components documentation](https://opensource.adobe.com/spectrum-web-components/guides/generating-components) and capturing the value of the package name: `"name": "@spectrum-css/accordion"`. In this example, that name is `accordion`. _Note_ that the project scope `@spectrum-css` is stripped out of the response.
 
-# Storybook
+## Storybook
 
 Testing & reviewing changes can be done using the Storybook instance. Running `yarn storybook` will spin up a local instance of Storybook, triggering the browser to open at completion. From there you can make changes to your code and the browser will automatically refresh.
 
@@ -61,7 +63,7 @@ yarn storybook
 
 By default, the resulting site will be available at [http://localhost:8000](http://localhost:8000).
 
-# Documentation
+## Documentation
 
 The Spectrum Web Components documentation site is available via the following command:
 
@@ -77,7 +79,7 @@ In the case that you'd like to serve and test a static build of the documentatio
 yarn docs:build
 ```
 
-# Updating Spectrum CSS
+## Updating Spectrum CSS
 
 There are two mechanisms for broadly updating SWC's Spectrum CSS dependencies:
 
@@ -87,7 +89,7 @@ There are two mechanisms for broadly updating SWC's Spectrum CSS dependencies:
 We aim to keep Spectrum CSS as current as possible, to track the Spectrum design system closely.
 The `:nonbreaking` variant lets us release patch updates quickly in cases where more work is required to be compatible with 'latest.'
 
-# Advanced development
+## Advanced development
 
 There are several commands that can be useful in specific scenarios:
 
@@ -105,7 +107,7 @@ The project will be linted on a pre-commit hook, but you can also run the lint s
 
 There are downstream issues that can arise from multiple packages in this mono-repo using dependencies with mismatching version strings. This is particularly an issue for dependencies below `1.0.0` but can be exacerbated in that context and others by more strict settings that can be applied in various package managers. By default, Lerna will bump version numbers of internal dependencies when the various packages are published and the depended version is pointing to the latest release, which can help to mitigate this issue. This can be further mitigated by using `^0.0.0` structured dependency versions, the `^` allowing for the highest amount of upward flexibility in satisfying the dependency. When using these version strings, `yarn lint:versions` which ensure that all instances of those strings for the same dependency match across the repo.
 
-`yarn list:versions --fix` will reach into the `package.json` files and update all dependencies to the latest version available in the library, _a possibly dangerous operation_. If you know this is what you want to do when there are mismatched versions found by `yarn lint:versions`, this can make greatly shorten the amount of work to catch the versions up to each other.
+`yarn list:versions --fix` will reach into the `package.json` files and update all dependencies to the latest version available in the library, _a possibly dangerous operation_. If you know this is what you want to do when there are mismatched versions found by `yarn lint:versions`, this can greatly shorten the amount of work to catch the versions up to each other.
 
 ## Testing
 
@@ -113,7 +115,7 @@ There are downstream issues that can arise from multiple packages in this mono-r
 
 Unit tests are run with [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/) in Playwright using the Chai, Mocha and Sinon helper libraries. These tests can be executed with:
 
-```
+```bash
 yarn test
 ```
 
@@ -155,7 +157,7 @@ If you find the `visual-*` jobs failing on CircleCI for reasons that you expect 
 
 Your failing branch will have created a new cache with a key of `v1-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.dir >>-{{ epoch }}`. Here `{{ .Revision }}` outlines the git commit hash of the current CI pass. In `.circleci/config.yml`, you will use that to update the cache that is requested at the beginning of the `run-regressions` job. As part of the review site, the git commit hash will be listed in the side navigation UI for easy access, use this number to update the `current_golden_images_hash` paramater that appears as follows:
 
-```
+```bash
 parameters:
     current_golden_images_hash:
         type: string
@@ -168,7 +170,7 @@ This will ensure that tests on this branch point to this cache key for at least 
 
 You can acquire current runtimes for the individual elements with:
 
-```
+```bash
 yarn build:tests
 yarn test:bench
 ```
@@ -203,7 +205,7 @@ For a list of component waiting to be implemented, visit our [`missing component
 
 The build process compiles `.css` files using PostCSS and wraps them in the `lit-html` `css` template tag and writes out a `.css.ts` file for easy import into TypeScript files. This file should not be edited, and is ignored by `.gitignore`, but you may also wish to hide the files in your IDE.
 
-# Contributing
+## Contributing
 
 We'd be very grateful if you contributed to the project! Check out our [contribution guidelines](CONTRIBUTING.md) for more information.
 

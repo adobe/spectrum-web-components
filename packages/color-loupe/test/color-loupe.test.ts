@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,18 +19,14 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('ColorLoupe', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<ColorLoupe>(
-                html`
-                    <sp-color-loupe></sp-color-loupe>
-                `
-            )
+            await fixture<ColorLoupe>(html`
+                <sp-color-loupe></sp-color-loupe>
+            `)
     );
     it('loads default color-loupe accessibly', async () => {
-        const el = await fixture<ColorLoupe>(
-            html`
-                <sp-color-loupe></sp-color-loupe>
-            `
-        );
+        const el = await fixture<ColorLoupe>(html`
+            <sp-color-loupe></sp-color-loupe>
+        `);
 
         await elementUpdated(el);
 

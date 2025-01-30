@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -27,66 +27,56 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('FieldLabel', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<FieldLabel>(
-                html`
-                    <div>
-                        <sp-field-label for="test">Input label</sp-field-label>
-                        <input id="test" />
-                    </div>
-                `
-            )
-    );
-    it('loads default field-label accessibly', async () => {
-        const el = await fixture<FieldLabel>(
-            html`
+            await fixture<FieldLabel>(html`
                 <div>
                     <sp-field-label for="test">Input label</sp-field-label>
                     <input id="test" />
                 </div>
-            `
-        );
+            `)
+    );
+    it('loads default field-label accessibly', async () => {
+        const el = await fixture<FieldLabel>(html`
+            <div>
+                <sp-field-label for="test">Input label</sp-field-label>
+                <input id="test" />
+            </div>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads [required] field-label accessibly', async () => {
-        const el = await fixture<FieldLabel>(
-            html`
-                <div>
-                    <sp-field-label required for="test">
-                        Required input label
-                    </sp-field-label>
-                    <input id="test" />
-                </div>
-            `
-        );
+        const el = await fixture<FieldLabel>(html`
+            <div>
+                <sp-field-label required for="test">
+                    Required input label
+                </sp-field-label>
+                <input id="test" />
+            </div>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads with no "for"', async () => {
-        const el = await fixture<FieldLabel>(
-            html`
-                <sp-field-label>Input label</sp-field-label>
-            `
-        );
+        const el = await fixture<FieldLabel>(html`
+            <sp-field-label>Input label</sp-field-label>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('observes based on `for` value', async () => {
-        const test = await fixture<FieldLabel>(
-            html`
-                <div>
-                    <sp-field-label for="test">Input label</sp-field-label>
-                    <input id="test" />
-                    <input id="test" />
-                </div>
-            `
-        );
+        const test = await fixture<FieldLabel>(html`
+            <div>
+                <sp-field-label for="test">Input label</sp-field-label>
+                <input id="test" />
+                <input id="test" />
+            </div>
+        `);
 
         const fieldLabel = test.querySelector('sp-field-label') as FieldLabel;
         const el = fieldLabel as unknown as { target: HTMLElement | undefined };
@@ -123,11 +113,9 @@ describe('FieldLabel', () => {
         expect(el.target === input2).to.be.true;
     });
     it('allows unfulfilled "for"', async () => {
-        const el = await fixture<FieldLabel>(
-            html`
-                <sp-field-label>Input label</sp-field-label>
-            `
-        );
+        const el = await fixture<FieldLabel>(html`
+            <sp-field-label>Input label</sp-field-label>
+        `);
         await elementUpdated(el);
         const manageSpy = stub(
             el as unknown as { manageTarget(): Promise<string> },
@@ -153,14 +141,12 @@ describe('FieldLabel', () => {
         expect(result).to.equal('No error was thrown.');
     });
     it('associates itself to an element whose "id" matches its "for" attribute', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-field-label required for="test"></sp-field-label>
-                    <input id="test" />
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-field-label required for="test"></sp-field-label>
+                <input id="test" />
+            </div>
+        `);
         const el = test.querySelector('sp-field-label') as FieldLabel;
         const input = test.querySelector('input') as HTMLInputElement;
 
@@ -170,14 +156,12 @@ describe('FieldLabel', () => {
         expect(input.getAttribute('aria-labelledby')).to.equal(el.id);
     });
     it('associates via "id" starting with number', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-field-label required for="1"></sp-field-label>
-                    <input id="1" />
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-field-label required for="1"></sp-field-label>
+                <input id="1" />
+            </div>
+        `);
         const el = test.querySelector('sp-field-label') as FieldLabel;
         const input = test.querySelector('input') as HTMLInputElement;
 
@@ -187,14 +171,12 @@ describe('FieldLabel', () => {
         expect(input.getAttribute('aria-labelledby')).to.equal(el.id);
     });
     it('passed clicks to assiciated form element as focus', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-field-label required for="test"></sp-field-label>
-                    <input id="test" />
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-field-label required for="test"></sp-field-label>
+                <input id="test" />
+            </div>
+        `);
         const el = test.querySelector('sp-field-label') as FieldLabel;
         const input = test.querySelector('input') as HTMLInputElement;
 
@@ -206,14 +188,12 @@ describe('FieldLabel', () => {
         expect(document.activeElement).to.equal(input);
     });
     it('associates itself to an element with a focueElement whose "id" matches its "for" attribute', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-field-label required for="test"></sp-field-label>
-                    <sp-textfield id="test"></sp-textfield>
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-field-label required for="test"></sp-field-label>
+                <sp-textfield id="test"></sp-textfield>
+            </div>
+        `);
         const el = test.querySelector('sp-field-label') as FieldLabel;
         const input = (test.querySelector('sp-textfield') as Textfield)
             .focusElement as HTMLInputElement;
@@ -226,14 +206,12 @@ describe('FieldLabel', () => {
         );
     });
     it('passed clicks to assiciated form element with a focueElement as focus', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-field-label required for="test"></sp-field-label>
-                    <sp-textfield id="test"></sp-textfield>
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-field-label required for="test"></sp-field-label>
+                <sp-textfield id="test"></sp-textfield>
+            </div>
+        `);
         const el = test.querySelector('sp-field-label') as FieldLabel;
         const input = test.querySelector('sp-textfield') as Textfield;
 
@@ -245,16 +223,14 @@ describe('FieldLabel', () => {
         expect(document.activeElement).to.equal(input);
     });
     it('forces focus visible when available', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-field-label required for="test"></sp-field-label>
-                    <sp-picker id="test">
-                        <sp-menu-item>Test</sp-menu-item>
-                    </sp-picker>
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-field-label required for="test"></sp-field-label>
+                <sp-picker id="test">
+                    <sp-menu-item>Test</sp-menu-item>
+                </sp-picker>
+            </div>
+        `);
         const el = test.querySelector('sp-field-label') as FieldLabel;
         const picker = test.querySelector('sp-picker') as Picker;
 

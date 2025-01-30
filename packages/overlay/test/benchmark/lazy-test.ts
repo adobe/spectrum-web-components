@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -52,12 +52,10 @@ const handleSlottableRequest = (event: SlottableRequestEvent): void => {
     render(template, event.target as HTMLElement);
 };
 
-measureFixtureCreation(
-    html`
-        <sp-button id="button">Trigger</sp-button>
-        <sp-overlay
-            trigger="button@click"
-            @slottable-request=${handleSlottableRequest}
-        ></sp-overlay>
-    `
-);
+measureFixtureCreation(html`
+    <sp-button id="button">Trigger</sp-button>
+    <sp-overlay
+        trigger="button@click"
+        @slottable-request=${handleSlottableRequest}
+    ></sp-overlay>
+`);

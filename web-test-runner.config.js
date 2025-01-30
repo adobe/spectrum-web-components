@@ -1,6 +1,6 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License")
+Copyright 2025 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -9,11 +9,15 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import rollupCommonjs from '@rollup/plugin-commonjs';
+import rollupJson from '@rollup/plugin-json';
+import { fromRollup } from '@web/dev-server-rollup';
 import {
     a11ySnapshotPlugin,
     sendKeysPlugin,
     setViewportPlugin,
 } from '@web/test-runner-commands/plugins';
+import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
     chromium,
@@ -26,10 +30,6 @@ import {
     vrtGroups,
     webkit,
 } from './web-test-runner.utils.js';
-import { fromRollup } from '@web/dev-server-rollup';
-import rollupJson from '@rollup/plugin-json';
-import rollupCommonjs from '@rollup/plugin-commonjs';
-import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
 
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);

@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -26,11 +26,9 @@ customElements.define('observe-slot-test', ObserverTest);
 
 describe('ObserveSlotText', () => {
     it('does no management when slot unavailable', async () => {
-        const el = await fixture<ObserverTest>(
-            html`
-                <observe-slot-test></observe-slot-test>
-            `
-        );
+        const el = await fixture<ObserverTest>(html`
+            <observe-slot-test></observe-slot-test>
+        `);
         await elementUpdated(el);
 
         expect(el.slotHasContent).to.be.false;

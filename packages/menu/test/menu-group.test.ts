@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -43,28 +43,7 @@ const focusableItems = (menu: Menu | MenuGroup): MenuItem[] => {
 describe('Menu group', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Menu>(
-                html`
-                    <sp-menu selects="single">
-                        <sp-menu-group selects="inherit">
-                            <span slot="header">Section Heading</span>
-                            <sp-menu-item>Action 1</sp-menu-item>
-                            <sp-menu-item>Action 2</sp-menu-item>
-                            <sp-menu-item>Action 3</sp-menu-item>
-                        </sp-menu-group>
-                        <sp-menu-divider></sp-menu-divider>
-                        <sp-menu-group selects="inherit">
-                            <span slot="header">Section Heading</span>
-                            <sp-menu-item>Save</sp-menu-item>
-                            <sp-menu-item disabled>Download</sp-menu-item>
-                        </sp-menu-group>
-                    </sp-menu>
-                `
-            )
-    );
-    it('renders', async () => {
-        const el = await fixture<Menu>(
-            html`
+            await fixture<Menu>(html`
                 <sp-menu selects="single">
                     <sp-menu-group selects="inherit">
                         <span slot="header">Section Heading</span>
@@ -79,22 +58,40 @@ describe('Menu group', () => {
                         <sp-menu-item disabled>Download</sp-menu-item>
                     </sp-menu-group>
                 </sp-menu>
-            `
-        );
+            `)
+    );
+    it('renders', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-group selects="inherit">
+                    <span slot="header">Section Heading</span>
+                    <sp-menu-item>Action 1</sp-menu-item>
+                    <sp-menu-item>Action 2</sp-menu-item>
+                    <sp-menu-item>Action 3</sp-menu-item>
+                </sp-menu-group>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-group selects="inherit">
+                    <span slot="header">Section Heading</span>
+                    <sp-menu-item>Save</sp-menu-item>
+                    <sp-menu-item disabled>Download</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `);
 
-        await waitUntil(() => {
-            return managedItems(el).length === 5;
-        }, `expected menu group to manage 5 children, received ${managedItems(el).length} of ${el.childItems.length}`);
+        await waitUntil(
+            () => {
+                return managedItems(el).length === 5;
+            },
+            `expected menu group to manage 5 children, received ${managedItems(el).length} of ${el.childItems.length}`
+        );
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('manages [slot="header"] content', async () => {
-        const el = await fixture<MenuGroup>(
-            html`
-                <sp-menu-group></sp-menu-group>
-            `
-        );
+        const el = await fixture<MenuGroup>(html`
+            <sp-menu-group></sp-menu-group>
+        `);
         await elementUpdated(el);
         const slot = el.shadowRoot.querySelector(
             '[name="header"'
@@ -116,46 +113,44 @@ describe('Menu group', () => {
         expect(header.id).to.equal('');
     });
     it('handles selects for nested menu groups', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu selects="single">
-                    <sp-menu-item selected>First</sp-menu-item>
-                    <!-- 1 -->
-                    <sp-menu-item>Second</sp-menu-item>
-                    <!-- 1 -->
-                    <sp-menu-group id="mg-multi" selects="multiple">
-                        <sp-menu-item selected>Multi1</sp-menu-item>
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item selected>First</sp-menu-item>
+                <!-- 1 -->
+                <sp-menu-item>Second</sp-menu-item>
+                <!-- 1 -->
+                <sp-menu-group id="mg-multi" selects="multiple">
+                    <sp-menu-item selected>Multi1</sp-menu-item>
+                    <!-- 2 -->
+                    <sp-menu-item>Multi2</sp-menu-item>
+                    <!-- 2 -->
+                    <sp-menu-group id="mg-sub-inherit" selects="inherit">
+                        <sp-menu-item>SubInherit1</sp-menu-item>
                         <!-- 2 -->
-                        <sp-menu-item>Multi2</sp-menu-item>
+                        <sp-menu-item>SubInherit2</sp-menu-item>
                         <!-- 2 -->
-                        <sp-menu-group id="mg-sub-inherit" selects="inherit">
-                            <sp-menu-item>SubInherit1</sp-menu-item>
-                            <!-- 2 -->
-                            <sp-menu-item>SubInherit2</sp-menu-item>
-                            <!-- 2 -->
-                        </sp-menu-group>
                     </sp-menu-group>
-                    <sp-menu-group id="mg-single" selects="single">
-                        <sp-menu-item selected>Single1</sp-menu-item>
-                        <!-- 3 -->
-                        <sp-menu-item>Single2</sp-menu-item>
-                        <!-- 3 -->
-                    </sp-menu-group>
-                    <sp-menu-group id="mg-none">
-                        <sp-menu-item>Inherit1</sp-menu-item>
-                        <!-- - -->
-                        <sp-menu-item>Inherit2</sp-menu-item>
-                        <!-- - -->
-                    </sp-menu-group>
-                    <sp-menu-group id="mg-inherit" selects="inherit">
-                        <sp-menu-item>Inherit1</sp-menu-item>
-                        <!-- 1 -->
-                        <sp-menu-item>Inherit2</sp-menu-item>
-                        <!-- 1 -->
-                    </sp-menu-group>
-                </sp-menu>
-            `
-        );
+                </sp-menu-group>
+                <sp-menu-group id="mg-single" selects="single">
+                    <sp-menu-item selected>Single1</sp-menu-item>
+                    <!-- 3 -->
+                    <sp-menu-item>Single2</sp-menu-item>
+                    <!-- 3 -->
+                </sp-menu-group>
+                <sp-menu-group id="mg-none">
+                    <sp-menu-item>Inherit1</sp-menu-item>
+                    <!-- - -->
+                    <sp-menu-item>Inherit2</sp-menu-item>
+                    <!-- - -->
+                </sp-menu-group>
+                <sp-menu-group id="mg-inherit" selects="inherit">
+                    <sp-menu-item>Inherit1</sp-menu-item>
+                    <!-- 1 -->
+                    <sp-menu-item>Inherit2</sp-menu-item>
+                    <!-- 1 -->
+                </sp-menu-group>
+            </sp-menu>
+        `);
 
         // 1 & 3 should be menuitemradio
         // 2 shouwl menuitemcheckbox
@@ -317,22 +312,20 @@ describe('Menu group', () => {
     });
 
     it('handles changing managed items for selects changes', async () => {
-        const el = await fixture<Menu>(
-            html`
-                <sp-menu selects="multiple" value-separator="--">
-                    <sp-menu-item selected>First</sp-menu-item>
-                    <sp-menu-item>Second</sp-menu-item>
-                    <sp-menu-group id="mg-inherit" selects="inherit">
-                        <sp-menu-item>Inherit1</sp-menu-item>
-                        <sp-menu-item>Inherit2</sp-menu-item>
-                        <sp-menu-group id="mg-sub-inherit" selects="inherit">
-                            <sp-menu-item>SubInherit1</sp-menu-item>
-                            <sp-menu-item selected>SubInherit2</sp-menu-item>
-                        </sp-menu-group>
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="multiple" value-separator="--">
+                <sp-menu-item selected>First</sp-menu-item>
+                <sp-menu-item>Second</sp-menu-item>
+                <sp-menu-group id="mg-inherit" selects="inherit">
+                    <sp-menu-item>Inherit1</sp-menu-item>
+                    <sp-menu-item>Inherit2</sp-menu-item>
+                    <sp-menu-group id="mg-sub-inherit" selects="inherit">
+                        <sp-menu-item>SubInherit1</sp-menu-item>
+                        <sp-menu-item selected>SubInherit2</sp-menu-item>
                     </sp-menu-group>
-                </sp-menu>
-            `
-        );
+                </sp-menu-group>
+            </sp-menu>
+        `);
 
         await waitUntil(
             () => managedItems(el).length == 6,
@@ -381,9 +374,12 @@ describe('Menu group', () => {
         await elementUpdated(inheritGroup);
         await elementUpdated(el);
 
-        await waitUntil(() => {
-            return managedItems(inheritGroup).length === 4;
-        }, `expected new single sub-group to manage 4 items, received ${managedItems(inheritGroup).length} because "selects === ${inheritGroup.selects}`);
+        await waitUntil(
+            () => {
+                return managedItems(inheritGroup).length === 4;
+            },
+            `expected new single sub-group to manage 4 items, received ${managedItems(inheritGroup).length} because "selects === ${inheritGroup.selects}`
+        );
 
         await waitUntil(
             () => managedItems(el).length === 2,

@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -30,42 +30,36 @@ const initTest = async (
     button: Button;
     popover: Popover;
 }> => {
-    const test = await fixture<HTMLDivElement>(
-        html`
-            <div class="container">
-                <style>
-                    .container {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        flex-direction: column;
-                    }
-                </style>
-                ${styles}
-                <overlay-trigger type="modal" id="trigger" placement="top">
-                    <sp-button
-                        id="outer-button"
-                        variant="primary"
-                        slot="trigger"
-                    >
-                        Show Popover
-                    </sp-button>
-                    <sp-popover
-                        id="outer-popover"
-                        slot="click-content"
-                        direction="bottom"
-                        tip
-                        tabindex="0"
-                        placement="top"
-                    >
-                        <sp-dialog no-divider>
-                            This is the overlay content.
-                        </sp-dialog>
-                    </sp-popover>
-                </overlay-trigger>
-            </div>
-        `
-    );
+    const test = await fixture<HTMLDivElement>(html`
+        <div class="container">
+            <style>
+                .container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                }
+            </style>
+            ${styles}
+            <overlay-trigger type="modal" id="trigger" placement="top">
+                <sp-button id="outer-button" variant="primary" slot="trigger">
+                    Show Popover
+                </sp-button>
+                <sp-popover
+                    id="outer-popover"
+                    slot="click-content"
+                    direction="bottom"
+                    tip
+                    tabindex="0"
+                    placement="top"
+                >
+                    <sp-dialog no-divider>
+                        This is the overlay content.
+                    </sp-dialog>
+                </sp-popover>
+            </overlay-trigger>
+        </div>
+    `);
     await nextFrame();
     await nextFrame();
     await nextFrame();

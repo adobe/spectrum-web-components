@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -18,11 +18,9 @@ describe('Focusable', () => {
     it('enforces the presense of a `focusElement`', async () => {
         customElements.define('focusable-test', class extends Focusable {});
         try {
-            const el = await fixture<Focusable>(
-                html`
-                    <focusable-test></focusable-test>
-                `
-            );
+            const el = await fixture<Focusable>(html`
+                <focusable-test></focusable-test>
+            `);
             await elementUpdated(el);
             const focusEl = el.focusElement;
             expect(focusEl).to.exist;

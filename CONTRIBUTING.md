@@ -83,7 +83,7 @@ Please be aware of our issue severity classification criteria:
 
 ## Branching Strategy
 
-### Branch Naming Convention:
+### Branch Naming Convention
 
 -   Use `[username]/[issue]` format for branches.
 -   `[username]` identifies the contributor.

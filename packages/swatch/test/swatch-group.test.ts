@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -312,13 +312,11 @@ describe('Swatch Group - DOM selected', () => {
         });
 
         it('warns in Dev Mode when mixed-value attribute is added in sp-swatch when parent sp-swatch-group is not having selects="multiple"', async () => {
-            const el = await fixture<SwatchGroup>(
-                html`
-                    <sp-swatch-group selects="single">
-                        <sp-swatch mixed-value></sp-swatch>
-                    </sp-swatch-group>
-                `
-            );
+            const el = await fixture<SwatchGroup>(html`
+                <sp-swatch-group selects="single">
+                    <sp-swatch mixed-value></sp-swatch>
+                </sp-swatch-group>
+            `);
 
             await elementUpdated(el);
             await nextFrame();
@@ -415,15 +413,13 @@ describe('Swatch Group - DOM selected', () => {
 
 describe('Swatch Group - slotted', () => {
     it('manages [selects="single"] selection through multiple slots', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-swatch value="First">First</sp-swatch>
-                    <sp-swatch value="Second">Second</sp-swatch>
-                    <sp-swatch value="Third" selected>Third</sp-swatch>
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-swatch value="First">First</sp-swatch>
+                <sp-swatch value="Second">Second</sp-swatch>
+                <sp-swatch value="Third" selected>Third</sp-swatch>
+            </div>
+        `);
 
         const firstItem = test.querySelector('sp-swatch') as Swatch;
         const thirdItem = test.querySelector('sp-swatch[selected]') as Swatch;

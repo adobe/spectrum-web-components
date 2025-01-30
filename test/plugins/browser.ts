@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -34,21 +34,19 @@ async function mouseCleanup() {
  * If available, add cleanup work to the `afterEach` and `after` commands.
  */
 function queueMouseCleanUp() {
-    if (mouseCleanupQueued) return;
+    if (mouseCleanupQueued) {
+        return;
+    }
     /**
      * This registers the fixture cleanup as a side effect
      */
     try {
         // we should not assume that our users load mocha types globally
-        // @ts-ignore
         if ('afterEach' in window && 'after' in window) {
             mouseCleanupQueued = true;
-            // @ts-ignore
             afterEach(async function () {
-                // @ts-ignore
                 await mouseCleanup();
             });
-            // @ts-ignore
             after(() => {
                 mouseCleanupQueued = false;
             });

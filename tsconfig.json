@@ -21,7 +21,8 @@
         "sourceMap": true,
         "target": "es2018",
         "types": ["mocha", "chai", "sinon", "node", "swc"],
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "forceConsistentCasingInFileNames": true
     },
     "include": ["./global.d.ts"]
 }

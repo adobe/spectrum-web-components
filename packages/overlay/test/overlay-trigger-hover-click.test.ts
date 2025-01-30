@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -23,8 +23,8 @@ import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { OverlayTrigger } from '@spectrum-web-components/overlay/src/OverlayTrigger';
-import { TriggerInteractions } from '@spectrum-web-components/overlay/src/overlay-types';
+import { OverlayTrigger } from '@spectrum-web-components/overlay/src/OverlayTrigger.js';
+import { TriggerInteractions } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import { sendMouse } from '../../../test/plugins/browser.js';
