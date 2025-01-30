@@ -262,13 +262,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     };
 
     protected async keyboardOpen(): Promise<void> {
+        this.addEventListener('sp-opened', () => this.optionsMenu.focus(), {
+            once: true,
+        });
         this.toggle(true);
-        // timing issue with focus and open state
-        await Promise.all([
-            this.updateComplete,
-            new Promise((res) => requestAnimationFrame(() => res(true))),
-        ]);
-        this.optionsMenu.focus();
     }
 
     protected async setValueFromItem(
