@@ -138,12 +138,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @query('sp-menu')
     public optionsMenu!: Menu;
 
-    private _selfManageFocusElement = false;
-
-    public override get selfManageFocusElement(): boolean {
-        return this._selfManageFocusElement;
-    }
-
     @query('sp-overlay')
     public overlayElement!: Overlay;
 
@@ -261,7 +255,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected handleKeydown = (event: KeyboardEvent): void => {
         this.focused = true;
-        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp') {
+        if (!['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(event.code)) {
             return;
         }
         event.stopPropagation();
@@ -270,7 +264,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     };
 
     protected async keyboardOpen(): Promise<void> {
-        this.addEventListener('sp-opened', () => this.optionsMenu.focusOnFirstSelectedItem(), {
+        this.addEventListener('sp-opened', () => this.optionsMenu?.focusOnFirstSelectedItem(), {
             once: true,
         });
         this.toggle(true);
@@ -341,11 +335,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         if (this.strategy) {
             this.strategy.open = this.open;
         }
-        if (this.open) {
-            this._selfManageFocusElement = true;
-        } else {
-            this._selfManageFocusElement = false;
-        }
+    }
+
+    protected handleDismiss():void {
+        this.button.focus();
+        this.close();
     }
 
     public close(): void {
@@ -652,7 +646,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 <button
                     tabindex="-1"
                     aria-label="Dismiss"
-                    @click=${this.close}
+                    @click=${this.handleDismiss}
                 ></button>
             </div>
         `;
@@ -882,11 +876,12 @@ export class Picker extends PickerBase {
 
     protected override handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
+        const handledCodes = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(code);
         this.focused = true;
-        if (!code.startsWith('Arrow') || this.readonly || this.pending) {
+        if (!handledCodes || this.readonly || this.pending) {
             return;
         }
-        if (code === 'ArrowUp' || code === 'ArrowDown') {
+        if (handledCodes) {
             this.keyboardOpen();
             event.preventDefault();
             return;

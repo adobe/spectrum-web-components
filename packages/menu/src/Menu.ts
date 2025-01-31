@@ -368,7 +368,18 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * for picker elements, will set focus on first selected item
      */
     public focusOnFirstSelectedItem({ preventScroll }: FocusOptions = {}): void {
-        this.rovingTabindexController?.focusByFirstFocusableElement(this.selectedItems, { preventScroll });
+        if(!this.rovingTabindexController) return;
+        const selectedItem = this.selectedItems.find((el) =>
+            this.rovingTabindexController?.isFocusableElement(el)
+        );
+        if(!selectedItem) {
+            this.focus({ preventScroll });
+            return;
+        }
+        this.rovingTabindexController?.focusOnItem(selectedItem, { preventScroll });
+        if (selectedItem && !preventScroll) {
+            selectedItem.scrollIntoView({ block: 'nearest' });
+        }
     }
 
     public override focus({ preventScroll }: FocusOptions = {}): void {
