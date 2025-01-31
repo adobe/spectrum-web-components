@@ -4,7 +4,7 @@ Users with permissions in the `@spectrum-web-components` organization on NPM can
 
 1. Merge all pull requests to be included in the release and wait for the `main` branch to show that it has completed the required CI jobs.
 2. `git checkout main && git fetch && git pull && git clean -dfX`
-3. Run `nvm use` assumes a Node Version Manager install, and confirm your on an operable version of Node.
+3. Run `nvm use` assumes a Node Version Manager install, and confirm your on an operable version of Node (20+).
 4. `yarn install`
 5. `yarn build`
 6. `npm whoami` ensure that you are logged in with the user account for the public NPM registry
