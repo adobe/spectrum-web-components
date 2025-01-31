@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,13 +10,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const processIcon = (srcPath, fd, scaleWidth, scaleHeight) => {
+const processIcon = (srcPath, fd) => {
     // get icon name from filename
     const iconName = path.basename(srcPath, path.extname(srcPath));
     // regex will extract width, height and svg content into $1, $2 and $3 respectively

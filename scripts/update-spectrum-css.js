@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,9 +12,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import fg from 'fast-glob';
 import { readFileSync, writeFileSync } from 'fs';
 import latestVersion from 'latest-version';
-import fg from 'fast-glob';
 
 // What tag to target, defaults to `latest`
 // Example: `node scripts/update-spectrum-css.js s2-foundations` will target the latest version of the s2-foundations tag
