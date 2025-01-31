@@ -180,6 +180,20 @@ export class FocusGroupController<T extends HTMLElement>
         this.manage();
     }
 
+    focusByFirstFocusableElement(elements: T[], options?: FocusOptions): void {
+        const focusableElement = elements.find((el) =>
+            this.isFocusableElement(el)
+        );
+        if (focusableElement) {
+            this.focusByElement(focusableElement, options);
+        }
+    }
+
+    focusByElement(el: T, options?: FocusOptions): void {
+        this.setCurrentIndexByElement(el);
+        this.focus(options);
+    }
+
     focus(options?: FocusOptions): void {
         const elements = this.elements;
         if (!elements.length) return;
@@ -208,6 +222,13 @@ export class FocusGroupController<T extends HTMLElement>
                 });
             });
         });
+    }
+
+    setCurrentIndexByElement(el: T) {
+        const diff = this.elements.indexOf(el) ? this.elements.indexOf(el) - this.currentIndex : undefined;
+        if(!!diff) {
+            this.setCurrentIndexCircularly(diff);
+        }
     }
 
     setCurrentIndexCircularly(diff: number): void {

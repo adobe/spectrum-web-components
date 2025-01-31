@@ -363,6 +363,14 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.addEventListener('sp-closed', this.handleSubmenuClosed);
     }
 
+
+    /**
+     * for picker elements, will set focus on first selected item
+     */
+    public focusOnFirstSelectedItem({ preventScroll }: FocusOptions = {}): void {
+        this.rovingTabindexController?.focusByFirstFocusableElement(this.selectedItems, { preventScroll });
+    }
+
     public override focus({ preventScroll }: FocusOptions = {}): void {
         if (!this.rovingTabindexController) return;
         if (
@@ -666,6 +674,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this._selected = selected;
         this.selectedItems = selectedItems;
         this.value = this.selected.join(this.valueSeparator);
+        this.focusedItemIndex = firstOrFirstSelectedIndex;
+        this.focusInItemIndex = firstOrFirstSelectedIndex;
     }
 
     private _willUpdateItems = false;

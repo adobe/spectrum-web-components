@@ -270,7 +270,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     };
 
     protected async keyboardOpen(): Promise<void> {
-        this.addEventListener('sp-opened', () => this.optionsMenu.focus(), {
+        this.addEventListener('sp-opened', () => this.optionsMenu.focusOnFirstSelectedItem(), {
             once: true,
         });
         this.toggle(true);
