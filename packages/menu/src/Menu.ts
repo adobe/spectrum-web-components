@@ -110,10 +110,14 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      */
     @property({ attribute: false })
     public get selected(): string[] {
-        return this._selected;
+        return !this.selects ? [] : this._selected;
     }
 
     public set selected(selected: string[]) {
+        if(!this.selects) {
+            this._selected = [];
+            return;
+        }
         if (selected === this.selected) {
             return;
         }
@@ -294,6 +298,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 : ((this.getAttribute('role') || undefined) as RoleType);
             this.resolvedSelects =
                 this.resolvedRole === 'none' ? 'ignore' : 'none';
+        }
+
+        if(this.resolvedRole === 'none') {
+            return;
         }
 
         const selects =
@@ -493,6 +501,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         const oldSelected = this.selected.slice();
         const oldSelectedItems = this.selectedItems.slice();
         const oldValue = this.value;
+        if(resolvedSelects === 'none') {
+            if(!targetItem.hasSubmenu && targetItem?.menuData?.focusRoot === this) this.dispatchEvent(new Event('close', { bubbles: true }));
+            return;
+        }
 
         if (targetItem.menuData.selectionRoot !== this) {
             return;
