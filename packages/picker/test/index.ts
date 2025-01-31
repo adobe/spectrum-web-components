@@ -441,25 +441,6 @@ export function runPickerTests(): void {
                 '`name` is the selected item text plus the label text'
             ).to.not.be.null;
         });
-        it('manages `aria-activedescendant`', async () => {
-            const firstItem = el.querySelector('sp-menu-item:nth-child(1)');
-            const secondItem = el.querySelector('sp-menu-item:nth-child(2)');
-            const opened = oneEvent(el, 'sp-opened');
-            el.open = true;
-            await opened;
-            expect(
-                (el as unknown as TestablePicker).optionsMenu.getAttribute(
-                    'aria-activedescendant'
-                )
-            ).to.equal(firstItem?.id);
-            await sendKeys({ press: 'ArrowDown' });
-            await elementUpdated(el);
-            expect(
-                (el as unknown as TestablePicker).optionsMenu.getAttribute(
-                    'aria-activedescendant'
-                )
-            ).to.equal(secondItem?.id);
-        });
         it('renders invalid accessibly', async () => {
             el.invalid = true;
             await elementUpdated(el);
@@ -1722,7 +1703,7 @@ export function runPickerTests(): void {
         const secondItem = el.querySelector(
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
-
+        
         expect(el.value).to.equal('inverse');
         expect(el.selectedItem?.itemText).to.equal('Select Inverse');
 
@@ -1738,22 +1719,12 @@ export function runPickerTests(): void {
         await opened;
 
         expect(
-            el === document.activeElement,
+            el.selectedItem === document.activeElement,
             `activeElement is ${document.activeElement?.localName}`
-        ).to.be.true;
-        expect(
-            (el as unknown as TestablePicker).optionsMenu ===
-                el.shadowRoot.activeElement,
-            `activeElement is ${el.shadowRoot.activeElement?.localName}`
         ).to.be.true;
 
         expect(firstItem.focused, 'firstItem NOT "focused"').to.be.false;
         expect(secondItem.focused, 'secondItem "focused"').to.be.true;
-        expect(
-            (el as unknown as TestablePicker).optionsMenu.getAttribute(
-                'aria-activedescendant'
-            )
-        ).to.equal(secondItem.id);
     });
     it('resets value when item not available', async () => {
         const el = await fixture<Picker>(html`
@@ -1877,7 +1848,8 @@ export function runPickerTests(): void {
         });
         await menuOpen;
         await tooltipClosed;
-        expect(document.activeElement === el).to.be.true;
+        const firstOption = el.querySelector('sp-menu-item') as MenuItem;
+        expect(document.activeElement === firstOption).to.be.true;
         expect(tooltipEl.open).to.be.false;
         expect(el.open).to.be.true;
 
