@@ -9,6 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { Page } from 'playwright';
 
 export type Step = {
@@ -20,6 +21,7 @@ export type Step = {
 export function sendMousePlugin() {
     return {
         name: 'send-pointer-command',
+        // @ts-ignore
         async executeCommand({
             command,
             session,
@@ -31,7 +33,7 @@ export function sendMousePlugin() {
                 id: string;
                 browser: { type: string; getPage: (id: string) => Page };
             };
-        }): Promise<unknown> {
+        }) {
             if (command === 'send-pointer') {
                 // handle specific behavior for playwright
                 if (session.browser.type === 'playwright') {

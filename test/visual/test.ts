@@ -55,7 +55,7 @@ export type TestsType = StoriesType & {
         swc_vrt?: {
             preload?: () => void;
         };
-        StoriesType;
+        StoriesType: StoriesType;
     };
 };
 

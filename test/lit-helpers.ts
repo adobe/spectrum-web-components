@@ -9,6 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/** We override the @ts-ignore error do to incorrect indexing of an Element with a string.
+ *
+ * @todo review the logic and index correctly to remove the @ts-ignore. Reference MDN docs for Element: https://developer.mozilla.org/en-US/docs/Web/API/Element
+ */
 import { ElementPart, Part } from 'lit';
 import { AsyncDirective, directive } from 'lit/async-directive.js';
 import { nothing } from 'lit/html.js';
@@ -84,6 +90,7 @@ class SpreadDirective extends AsyncDirective {
                     );
                     break;
                 case '.': // property
+                    // @ts-ignore
                     element[name] = value;
                     break;
                 case '?': // boolean attribute
@@ -122,6 +129,7 @@ class SpreadDirective extends AsyncDirective {
                         );
                         break;
                     case '.': // property
+                        // @ts-ignore
                         element[key.slice(1)] = undefined;
                         break;
                     case '?': // boolean attribute
@@ -137,12 +145,11 @@ class SpreadDirective extends AsyncDirective {
     }
 
     handleEvent(event: Event) {
-        const value: ((event: Event) => void) | EventListenerObject = this
-            .prevData[`@${event.type}`] as
-            | ((event: Event) => void)
-            | EventListenerObject;
+        const value: Function | EventListenerObject = this.prevData[
+            `@${event.type}`
+        ] as Function | EventListenerObject;
         if (typeof value === 'function') {
-            (value as (event: Event) => void).call(this.host, event);
+            (value as Function).call(this.host, event);
         } else {
             (value as EventListenerObject).handleEvent(event);
         }
@@ -213,6 +220,7 @@ class SpreadPropsDirective extends AsyncDirective {
             if (value === prevData[key]) {
                 continue;
             }
+            // @ts-ignore
             element[key] = value;
         }
     }
@@ -224,6 +232,7 @@ class SpreadPropsDirective extends AsyncDirective {
         }
         for (const key in prevData) {
             if (!data || !(key in data)) {
+                // @ts-ignore
                 element[key] = undefined;
             }
         }

@@ -14,7 +14,8 @@ import { ElementPart, nothing, Part } from 'lit';
 import { AsyncDirective, directive } from 'lit/async-directive.js';
 import type { DirectiveResult } from 'lit/directive.js';
 
-type ListenerConfig = [string | string[], (event?: PointerEvent) => void];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ListenerConfig = [string | string[], (event?: any) => void];
 type ListenerConfigGroup = {
     start: ListenerConfig;
     end: ListenerConfig;
