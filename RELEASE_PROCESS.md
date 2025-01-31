@@ -6,20 +6,21 @@ Users with permissions in the `@spectrum-web-components` organization on NPM can
 2. `git checkout main && git fetch && git pull && git clean -dfX`
 3. Run `nvm use` assumes a Node Version Manager install, and confirm your on an operable version of Node.
 4. `yarn install`
-5. `npm whoami` ensure that you are logged in with the user account for the public NPM registry
-6. `yarn lerna-publish`
-7. Scan the version summary for any unexpected changes.
+5. `yarn build`
+6. `npm whoami` ensure that you are logged in with the user account for the public NPM registry
+7. `yarn lerna-publish`
+8. Scan the version summary for any unexpected changes.
     - Changes to the _major_ versions number are likely to point to undesired version numbers.
     - Changes to the _minor_ or _feature_ version number should be confirmed as correct against the changes that have been made since the last release.
-8. `Y` to confirm.
-9. Enter one time password for npm.
-10. After the SWC packages are released, the React Wrapper packages will be generated. This multi-phase approach ensure that the wrapped packages share the same version as the standard packages.
-11. Scan the version summary for any unexpected changes.
+9. `Y` to confirm.
+10. Enter one time password for npm.
+11. After the SWC packages are released, the React Wrapper packages will be generated. This multi-phase approach ensure that the wrapped packages share the same version as the standard packages.
+12. Scan the version summary for any unexpected changes.
     - The versions _should_ be the same as those that just we applied to their matched SWC packages.
     - Changes to the _major_ versions number are likely to point to undesired version numbers.
     - Changes to the _minor_ or _feature_ version number should be confirmed as correct against the changes that have been made since the last release.
-12. `Y` to confirm.
-13. Enter a new one time password for npm.
+13. `Y` to confirm.
+14. Enter a new one time password for npm.
 
 The docs site will publish automatically if the `#publish` string is included in the commit message and the check suite runs successfully.
 
