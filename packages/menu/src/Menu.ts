@@ -605,13 +605,12 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this.closeDescendentOverlays();
             return;
         }
-        if (key === ' ') {
-            if (root?.hasSubmenu) {
-                // Remove focus while opening overlay from keyboard or the visible focus
-                // will slip back to the first item in the menu.
-                root.openOverlay();
-                return;
-            }
+        if (key === ' ' && root?.hasSubmenu) {
+            // Remove focus while opening overlay from keyboard or the visible focus
+            // will slip back to the first item in the menu.
+            event.preventDefault();
+            root.openOverlay();
+            return;
         }
         if (key === ' ' || key === 'Enter') {
             event.preventDefault();
