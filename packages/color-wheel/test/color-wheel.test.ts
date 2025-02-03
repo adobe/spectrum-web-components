@@ -27,7 +27,6 @@ import {
 import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
 import { ColorWheel } from '@spectrum-web-components/color-wheel';
 import { ColorTypes } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
-import { Default } from '../stories/color-wheel.stories.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy } from 'sinon';
@@ -565,14 +564,6 @@ describe('ColorWheel', () => {
                 expect(el.color).to.equal(format.test);
             } else expect(el.color).to.deep.equal(format.color);
         });
-    });
-    it(`maintains \`color\` format as TinyColor`, async () => {
-        const el = await fixture<ColorWheel>(html`
-            <sp-color-wheel></sp-color-wheel>
-        `);
-        const color = new TinyColor('rgb(204, 51, 204)');
-        el.color = color;
-        expect(color.equals(el.color));
     });
     it(`maintains hue value`, async () => {
         const el = await fixture<ColorWheel>(html`
