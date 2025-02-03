@@ -5,7 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.1](https://github.com/adobe/spectrum-web-components/compare/v1.1.0...v1.1.1) (2025-01-29)
 
-**Note:** Version bump only for package @spectrum-web-components/button-group
+### Features
+
+-   **sp-button-group:** sp-button-group react to size updates ([#5037](https://github.com/adobe/spectrum-web-components/issues/5037)) ([63bc618](https://github.com/adobe/spectrum-web-components/commit/63bc618c18e9d8e39155cc7544814564673893a7))
 
 # [1.1.0](https://github.com/adobe/spectrum-web-components/compare/v1.0.3...v1.1.0) (2025-01-29)
 
