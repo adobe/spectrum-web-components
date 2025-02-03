@@ -186,7 +186,7 @@ export class IconsDemo extends SpectrumElement {
                     text-align: center;
                     border-radius: var(
                         --spectrum-alias-focus-ring-gap,
-                        var(--spectrum-global-dimension-static-size-25)
+                        var(--spectrum-spacing-50)
                     );
                 }
                 :host([package]) .icon {
@@ -208,7 +208,7 @@ export class IconsDemo extends SpectrumElement {
                     outline-offset: calc(
                         var(
                                 --spectrum-alias-focus-ring-gap,
-                                var(--spectrum-global-dimension-static-size-25)
+                                var(--spectrum-spacing-50)
                             ) * 2
                     );
                 }

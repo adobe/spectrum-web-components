@@ -35,9 +35,16 @@ import { spy } from 'sinon';
 ignoreResizeObserverLoopError(before, after);
 
 describe('ColorWheel', () => {
-    testForLitDevWarnings(async () => await fixture<ColorWheel>(Default()));
+    testForLitDevWarnings(
+        async () =>
+            await fixture<ColorWheel>(html`
+                <sp-color-wheel></sp-color-wheel>
+            `)
+    );
     it('loads default color-wheel accessibly', async () => {
-        const el = await fixture<ColorWheel>(Default());
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
 
@@ -101,7 +108,9 @@ describe('ColorWheel', () => {
         expect(document.activeElement).to.equal(input1);
     });
     it('manages [focused]', async () => {
-        const el = await fixture<ColorWheel>(Default());
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
 
@@ -190,7 +199,9 @@ describe('ColorWheel', () => {
         expect(changeSpy.callCount).to.equal(1);
     });
     it('accepts "Arrow*" keypresses', async () => {
-        const el = await fixture<ColorWheel>(Default());
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
 
@@ -282,7 +293,9 @@ describe('ColorWheel', () => {
         expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses with alteration', async () => {
-        const el = await fixture<ColorWheel>(Default());
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
         el.focus();
@@ -553,8 +566,18 @@ describe('ColorWheel', () => {
             } else expect(el.color).to.deep.equal(format.color);
         });
     });
+    it(`maintains \`color\` format as TinyColor`, async () => {
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
+        const color = new TinyColor('rgb(204, 51, 204)');
+        el.color = color;
+        expect(color.equals(el.color));
+    });
     it(`maintains hue value`, async () => {
-        const el = await fixture<ColorWheel>(Default());
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
         const hue = 300;
         const hsl = `hsl(${hue}, 60%, 56%)`;
 
@@ -580,7 +603,11 @@ describe('ColorWheel', () => {
         expect(el.color).to.equal(hsva);
     });
     it('should flip orientation with dir="rtl"', async () => {
-        const el = await fixture<ColorWheel>(Default());
+        const el = await fixture<ColorWheel>(
+            html`
+                <sp-color-wheel></sp-color-wheel>
+            `
+        );
 
         await elementUpdated(el);
 
