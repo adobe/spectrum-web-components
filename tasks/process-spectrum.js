@@ -12,12 +12,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import fg from 'fast-glob';
 import 'colors';
-import { transform } from 'lightningcss';
-import path from 'path';
+import fg from 'fast-glob';
 import fs from 'fs';
+import { transform } from 'lightningcss';
 import { createRequire } from 'module';
+import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -162,16 +162,16 @@ async function processComponent(componentPath) {
      * @type { import('./spectrum-css-converter').SpectrumCSSConverter}
      */
     for await (const conversion of conversions) {
-        // The default package file is index.css but index-base.css contains the base styles compatible with theme switching.
+        // The initial source file is index.css but index-base.css contains the base styles compatible with theme switching.
         let sourceCSS;
-        let sourcePath = require
-            .resolve(conversion.inPackage)
-            .replace('index.css', 'index-base.css');
+        let sourcePath = require.resolve(conversion.inPackage);
         try {
-            sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
+            sourceCSS = fs.readFileSync(
+                sourcePath.replace('index.css', 'index-base.css'),
+                'utf-8'
+            );
         } catch (error) {
-            // replace index-base.css with index.css
-            sourcePath = sourcePath.replace('index-base.css', 'index.css');
+            // not every component has theming so we need to fallback to the original index.css
             sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
         }
 
@@ -634,7 +634,7 @@ async function processComponent(componentPath) {
                     fs.writeFileSync(
                         systemsPath,
                         `/*
-    Copyright 2023 Adobe. All rights reserved.
+    Copyright 2025 Adobe. All rights reserved.
     This file is licensed to you under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License. You may obtain a copy
     of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -819,7 +819,7 @@ async function processComponent(componentPath) {
         fs.writeFileSync(
             outputPath,
             `/*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0

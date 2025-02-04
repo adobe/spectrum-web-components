@@ -12,11 +12,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import path from 'path';
+import fg from 'fast-glob';
 import fs from 'fs-extra';
 import { transform } from 'lightningcss';
+import path from 'path';
 import { fileURLToPath } from 'url';
-import fg from 'fast-glob';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

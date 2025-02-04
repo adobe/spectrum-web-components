@@ -120,9 +120,9 @@
     },
     "devDependencies": {
         "@spectrum-css/expressvars": "^3.0.9",
-        "@spectrum-css/tokens": "15.0.0",
+        "@spectrum-css/tokens": "15.2.0",
         "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@16.0.0",
-        "@spectrum-css/typography": "8.0.0",
+        "@spectrum-css/typography": "8.0.1",
         "@spectrum-css/vars": "^9.0.8"
     },
     "customElements": "custom-elements.json",
