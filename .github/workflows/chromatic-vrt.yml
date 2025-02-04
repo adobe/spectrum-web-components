@@ -32,15 +32,14 @@ jobs:
               with:
                   fetch-depth: 0
 
-            - name: Setup Node 20
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '20'
-                  cache: 'yarn'
-                  registry-url: 'https://registry.npmjs.org'
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
-            - name: Install dependencies
-              run: yarn --immutable
+            - name: Generate Custom Elements Manifest
+              run: yarn docs:analyze
+
+            - name: Move CEM to Storybook directory
+              run: cp projects/documentation/custom-elements.json storybook/
 
             - name: Publish to Chromatic
               id: chromatic
