@@ -11,32 +11,12 @@
     */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-divider-background-color-small: var(
-        --system-divider-background-color-small
+.spectrum--legacy {
+    --system-divider-background-color: var(--spectrum-gray-300);
+    --system-divider-background-color-static-white: var(
+        --spectrum-transparent-white-300
     );
-    --spectrum-divider-background-color-medium: var(
-        --system-divider-background-color-medium
-    );
-    --spectrum-divider-background-color-large: var(
-        --system-divider-background-color-large
-    );
-    --spectrum-divider-background-color-small-static-white: var(
-        --system-divider-background-color-small-static-white
-    );
-    --spectrum-divider-background-color-medium-static-white: var(
-        --system-divider-background-color-medium-static-white
-    );
-    --spectrum-divider-background-color-large-static-white: var(
-        --system-divider-background-color-large-static-white
-    );
-    --spectrum-divider-background-color-small-static-black: var(
-        --system-divider-background-color-small-static-black
-    );
-    --spectrum-divider-background-color-medium-static-black: var(
-        --system-divider-background-color-medium-static-black
-    );
-    --spectrum-divider-background-color-large-static-black: var(
-        --system-divider-background-color-large-static-black
+    --system-divider-background-color-static-black: var(
+        --spectrum-transparent-black-300
     );
 }

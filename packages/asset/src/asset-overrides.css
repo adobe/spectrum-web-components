@@ -11,15 +11,8 @@
     */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-asset-transition-duration: var(
-        --system-asset-transition-duration
-    );
-    --spectrum-asset-folder-background-color: var(
-        --system-asset-folder-background-color
-    );
-    --spectrum-asset-file-background-color: var(
-        --system-asset-file-background-color
-    );
-    --spectrum-asset-icon-outline-color: var(--system-asset-icon-outline-color);
+.spectrum--legacy {
+    --system-asset-folder-background-color: var(--spectrum-gray-300);
+    --system-asset-file-background-color: var(--spectrum-gray-50);
+    --system-asset-icon-outline-color: var(--spectrum-gray-500);
 }

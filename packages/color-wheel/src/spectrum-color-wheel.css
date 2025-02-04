@@ -20,20 +20,34 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    --_track-width: var(
-        --mod-colorwheel-track-width,
-        var(--spectrum-colorwheel-track-width)
+    --spectrum-colorwheel-width: var(
+        --mod-colorwheel-width,
+        var(--spectrum-color-wheel-width)
     );
-    --_border-width: var(
+    --spectrum-colorwheel-height: var(
+        --mod-colorwheel-height,
+        var(--spectrum-color-wheel-width)
+    );
+    --spectrum-colorwheel-fill-color-disabled: var(
+        --mod-colorwheel-fill-color-disabled,
+        var(--spectrum-disabled-background-color)
+    );
+    --spectrum-colorwheel-border-width: var(
         --mod-colorwheel-border-width,
-        var(--spectrum-colorwheel-border-width)
+        var(--spectrum-border-width-100)
     );
+    --spectrum-colorwheel-track-width: var(
+        --mod-colorwheel-track-width,
+        var(--spectrum-color-control-track-width)
+    );
+    --_track-width: var(--spectrum-colorwheel-track-width);
+    --_border-width: var(--spectrum-colorwheel-border-width);
     min-inline-size: var(
         --mod-colorwheel-min-width,
-        var(--spectrum-colorwheel-min-width)
+        var(--spectrum-color-wheel-minimum-width)
     );
-    inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
-    block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
+    inline-size: var(--spectrum-colorwheel-width);
+    block-size: var(--spectrum-colorwheel-height);
     -webkit-user-select: none;
     user-select: none;
     cursor: default;
@@ -74,7 +88,7 @@ governing permissions and limitations under the License.
     inline-size: 100%;
     margin: var(
         --mod-colorwheel-colorarea-margin,
-        var(--spectrum-colorwheel-colorarea-margin)
+        var(--spectrum-color-wheel-color-area-margin)
     );
     justify-content: center;
     align-items: center;
@@ -94,7 +108,12 @@ governing permissions and limitations under the License.
 }
 
 .handle {
-    transform: translate(var(--spectrum-colorwheel-colorhandle-position));
+    transform: translate(
+        calc(
+            var(--spectrum-colorwheel-width) / 2 -
+                var(--spectrum-colorwheel-track-width) / 2
+        )
+    );
     inset-block-start: 50%;
     inset-inline: 50%;
 }
@@ -104,8 +123,8 @@ governing permissions and limitations under the License.
         --mod-colorwheel-border-color,
         var(--spectrum-colorwheel-border-color)
     );
-    inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
-    block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
+    inline-size: var(--spectrum-colorwheel-width);
+    block-size: var(--spectrum-colorwheel-height);
     clip-path: path(
         evenodd,
         var(
@@ -119,10 +138,7 @@ governing permissions and limitations under the License.
 :host([disabled]) .border {
     background-color: var(
         --highcontrast-colorwheel-border-color-disabled,
-        var(
-            --mod-colorwheel-fill-color-disabled,
-            var(--spectrum-colorwheel-fill-color-disabled)
-        )
+        var(--spectrum-colorwheel-fill-color-disabled)
     );
 }
 
@@ -156,9 +172,6 @@ governing permissions and limitations under the License.
     pointer-events: none;
     background: var(
         --highcontrast-colorwheel-fill-color-disabled,
-        var(
-            --mod-colorwheel-fill-color-disabled,
-            var(--spectrum-colorwheel-fill-color-disabled)
-        )
+        var(--spectrum-colorwheel-fill-color-disabled)
     );
 }

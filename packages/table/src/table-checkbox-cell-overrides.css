@@ -1,13 +1,35 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+    Copyright 2023 Adobe. All rights reserved.
+    This file is licensed to you under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License. You may obtain a copy
+    of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+    Unless required by applicable law or agreed to in writing, software distributed under
+    the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+    OF ANY KIND, either express or implied. See the License for the specific language
+    governing permissions and limitations under the License.
+    */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.spectrum--legacy {
+    --system-table-header-background-color: var(
+        --spectrum-transparent-white-100
+    );
+    --system-table-border-color: var(--spectrum-gray-300);
+    --system-table-divider-color: var(--spectrum-gray-300);
+    --system-table-row-background-color: var(--spectrum-gray-50);
+    --system-table-summary-row-background-color: var(--spectrum-gray-200);
+    --system-table-section-header-background-color: var(--spectrum-gray-200);
+    --system-table-icon-color-focus: var(
+        --spectrum-neutral-subdued-content-color-key-focus
+    );
+    --system-table-icon-color-focus-hover: var(
+        --spectrum-neutral-subdued-content-down
+    );
+    --system-table-quiet-header-background-color: var(
+        --spectrum-transparent-white-100
+    );
+    --system-table-quiet-row-background-color: var(
+        --spectrum-transparent-white-100
+    );
+}

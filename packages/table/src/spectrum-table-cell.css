@@ -35,9 +35,6 @@ governing permissions and limitations under the License.
             --highcontrast-table-divider-color,
             var(--mod-table-divider-color, var(--spectrum-table-divider-color))
         );
-}
-
-:host {
     box-sizing: border-box;
     font-size: var(
         --mod-table-row-font-size,
@@ -82,6 +79,7 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    display: table-cell;
     position: relative;
 }
 
@@ -126,10 +124,6 @@ governing permissions and limitations under the License.
             --highcontrast-table-divider-color,
             var(--mod-table-divider-color, var(--spectrum-table-divider-color))
         );
-}
-
-:host {
-    display: table-cell;
 }
 
 .spectrum-Table-cell--collapsible {
