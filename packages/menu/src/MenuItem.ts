@@ -632,8 +632,8 @@ export class MenuItem extends LikeAnchor(
         // make sure focus returns to the anchor element when submenu is closed
         if (
             changes.has('open') &&
-            !this.open &&
-            this.matches(':focus-within')
+            !this.open && this.hasSubmenu &&
+            this.hasVisibleFocusInTree()
         ) {
             this.focus();
         }
