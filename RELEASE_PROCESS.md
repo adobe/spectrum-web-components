@@ -6,7 +6,7 @@ Users with permissions in the `@spectrum-web-components` organization on NPM can
 2. `git checkout main && git fetch && git pull && git clean -dfX`
 3. Run `nvm use` assumes a Node Version Manager install, and confirm your on an operable version of Node (20+).
 4. `yarn install`
-5. `yarn build`
+5. `yarn setup`
 6. `npm whoami` ensure that you are logged in with the user account for the public NPM registry
 7. `yarn lerna-publish`
 8. Scan the version summary for any unexpected changes.
