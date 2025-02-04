@@ -220,12 +220,11 @@ export class FocusGroupController<T extends HTMLElement>
         });
     }
 
-    setCurrentIndexCircularly(diff: number): void {
+    getIndexCircularly(diff: number = 0, index: number = this.currentIndex): number {
         const { length } = this.elements;
         let steps = length;
-        this.prevIndex = this.currentIndex;
         // start at a possibly not 0 index
-        let nextIndex = (length + this.currentIndex + diff) % length;
+        let nextIndex = (length + index + diff) % length;
         while (
             // don't cycle the elements more than once
             steps &&
@@ -235,7 +234,12 @@ export class FocusGroupController<T extends HTMLElement>
             nextIndex = (length + nextIndex + diff) % length;
             steps -= 1;
         }
-        this.currentIndex = nextIndex;
+        return nextIndex;
+    }
+
+    setCurrentIndexCircularly(diff: number): void {
+        this.prevIndex = this.currentIndex;
+        this.currentIndex = this.getIndexCircularly(diff);
     }
 
     hostContainsFocus(): void {
