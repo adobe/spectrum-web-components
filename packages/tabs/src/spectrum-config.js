@@ -389,6 +389,12 @@ const config = {
                 },
             ],
         },
+        // {
+        //     inPackage: '@spectrum-css/tabs',
+        //     outPackage: 'tabs',
+        //     fileName: 'tabs-sizes',
+        //     components: [], 
+        // },
     ],
 };
 

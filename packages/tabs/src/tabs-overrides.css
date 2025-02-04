@@ -8,12 +8,12 @@
     the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
     OF ANY KIND, either express or implied. See the License for the specific language
     governing permissions and limitations under the License.
-    */
+*/
 
-    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-            #list {
-  --spectrum-tabs-font-weight: var(--system-tabs-font-weight);
-  --spectrum-tabs-divider-background-color: var(--system-tabs-divider-background-color);
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+#list {
+    --spectrum-tabs-font-weight: var(--system-tabs-font-weight);
+    --spectrum-tabs-divider-background-color: var(
+        --system-tabs-divider-background-color
+    );
 }
-
-            

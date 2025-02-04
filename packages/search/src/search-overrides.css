@@ -8,38 +8,54 @@
     the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
     OF ANY KIND, either express or implied. See the License for the specific language
     governing permissions and limitations under the License.
-    */
+*/
 
-    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-            :host {
-  --spectrum-search-border-color-default: var(--system-search-border-color-default);
-  --spectrum-search-border-color-hover: var(--system-search-border-color-hover);
-  --spectrum-search-border-color-focus: var(--system-search-border-color-focus);
-  --spectrum-search-border-color-focus-hover: var(--system-search-border-color-focus-hover);
-  --spectrum-search-border-color-key-focus: var(--system-search-border-color-key-focus);
-  --spectrum-search-background-color: var(--system-search-background-color);
-  --spectrum-search-border-radius: var(--system-search-border-radius);
-  --spectrum-search-edge-to-visual: var(--system-search-edge-to-visual);
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-search-border-color-default: var(
+        --system-search-border-color-default
+    );
+    --spectrum-search-border-color-hover: var(
+        --system-search-border-color-hover
+    );
+    --spectrum-search-border-color-focus: var(
+        --system-search-border-color-focus
+    );
+    --spectrum-search-border-color-focus-hover: var(
+        --system-search-border-color-focus-hover
+    );
+    --spectrum-search-border-color-key-focus: var(
+        --system-search-border-color-key-focus
+    );
+    --spectrum-search-background-color: var(--system-search-background-color);
+    --spectrum-search-border-radius: var(--system-search-border-radius);
+    --spectrum-search-edge-to-visual: var(--system-search-edge-to-visual);
 }
 
-:host([size="m"]) #textfield {
-  --spectrum-search-border-radius: var(--system-search-size-m-border-radius);
-  --spectrum-search-edge-to-visual: var(--system-search-size-m-edge-to-visual);
+:host([size='m']) #textfield {
+    --spectrum-search-border-radius: var(--system-search-size-m-border-radius);
+    --spectrum-search-edge-to-visual: var(
+        --system-search-size-m-edge-to-visual
+    );
 }
 
-:host([size="s"]) #textfield {
-  --spectrum-search-border-radius: var(--system-search-size-s-border-radius);
-  --spectrum-search-edge-to-visual: var(--system-search-size-s-edge-to-visual);
+:host([size='s']) #textfield {
+    --spectrum-search-border-radius: var(--system-search-size-s-border-radius);
+    --spectrum-search-edge-to-visual: var(
+        --system-search-size-s-edge-to-visual
+    );
 }
 
-:host([size="l"]) #textfield {
-  --spectrum-search-border-radius: var(--system-search-size-l-border-radius);
-  --spectrum-search-edge-to-visual: var(--system-search-size-l-edge-to-visual);
+:host([size='l']) #textfield {
+    --spectrum-search-border-radius: var(--system-search-size-l-border-radius);
+    --spectrum-search-edge-to-visual: var(
+        --system-search-size-l-edge-to-visual
+    );
 }
 
-:host([size="xl"]) #textfield {
-  --spectrum-search-border-radius: var(--system-search-size-xl-border-radius);
-  --spectrum-search-edge-to-visual: var(--system-search-size-xl-edge-to-visual);
+:host([size='xl']) #textfield {
+    --spectrum-search-border-radius: var(--system-search-size-xl-border-radius);
+    --spectrum-search-edge-to-visual: var(
+        --system-search-size-xl-edge-to-visual
+    );
 }
-
-            

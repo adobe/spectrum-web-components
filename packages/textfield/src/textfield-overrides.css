@@ -8,23 +8,37 @@
     the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
     OF ANY KIND, either express or implied. See the License for the specific language
     governing permissions and limitations under the License.
-    */
+*/
 
-    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-            :host {
-  --spectrum-textfield-background-color: var(--system-textfield-background-color);
-  --spectrum-textfield-background-color-disabled: var(--system-textfield-background-color-disabled);
-  --spectrum-textfield-border-color: var(--system-textfield-border-color);
-  --spectrum-textfield-border-color-hover: var(--system-textfield-border-color-hover);
-  --spectrum-textfield-border-color-focus: var(--system-textfield-border-color-focus);
-  --spectrum-textfield-border-color-focus-hover: var(--system-textfield-border-color-focus-hover);
-  --spectrum-textfield-border-color-keyboard-focus: var(--system-textfield-border-color-keyboard-focus);
-  --spectrum-textfield-border-color-disabled: var(--system-textfield-border-color-disabled);
-  --spectrum-textfield-border-width: var(--system-textfield-border-width);
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-textfield-background-color: var(
+        --system-textfield-background-color
+    );
+    --spectrum-textfield-background-color-disabled: var(
+        --system-textfield-background-color-disabled
+    );
+    --spectrum-textfield-border-color: var(--system-textfield-border-color);
+    --spectrum-textfield-border-color-hover: var(
+        --system-textfield-border-color-hover
+    );
+    --spectrum-textfield-border-color-focus: var(
+        --system-textfield-border-color-focus
+    );
+    --spectrum-textfield-border-color-focus-hover: var(
+        --system-textfield-border-color-focus-hover
+    );
+    --spectrum-textfield-border-color-keyboard-focus: var(
+        --system-textfield-border-color-keyboard-focus
+    );
+    --spectrum-textfield-border-color-disabled: var(
+        --system-textfield-border-color-disabled
+    );
+    --spectrum-textfield-border-width: var(--system-textfield-border-width);
 }
 
 :host([quiet]) #textfield {
-  --spectrum-textfield-border-color-disabled: var(--system-textfield-quiet-border-color-disabled);
+    --spectrum-textfield-border-color-disabled: var(
+        --system-textfield-quiet-border-color-disabled
+    );
 }
-
-            

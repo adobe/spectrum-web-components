@@ -646,6 +646,18 @@ const config = {
                 },
             ],
         },
+        // {
+        //     inPackage: '@spectrum-css/menu',
+        //     outPackage: 'menu',
+        //     fileName: 'menu-divider',
+        //     components: [],
+        // },
+        // {
+        //     inPackage: '@spectrum-css/menu',
+        //     outPackage: 'menu',
+        //     fileName: 'menu-item',
+        //     components: [],
+        // },
     ],
 };
 

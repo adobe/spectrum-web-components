@@ -313,6 +313,36 @@ const config = {
                 builder.element('tbody'),
             ],
         },
+        // {
+        //     inPackage: '@spectrum-css/table',
+        //     outPackage: 'table',
+        //     fileName: 'table-cell',
+        //     components: [],
+        // },
+        // {
+        //     inPackage: '@spectrum-css/table',
+        //     outPackage: 'table',
+        //     fileName: 'table-checkbox-cell',
+        //     components: [],
+        // },
+        // {
+        //     inPackage: '@spectrum-css/table',
+        //     outPackage: 'table',
+        //     fileName: 'table-head-cell',
+        //     components: [],
+        // },
+        // {
+        //     inPackage: '@spectrum-css/table',
+        //     outPackage: 'table',
+        //     fileName: 'table-head',
+        //     components: [],
+        // },
+        // {
+        //     inPackage: '@spectrum-css/table',
+        //     outPackage: 'table',
+        //     fileName: 'table-row',
+        //     components: [],
+        // },
     ],
 };
 

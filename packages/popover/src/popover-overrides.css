@@ -8,11 +8,9 @@
     the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
     OF ANY KIND, either express or implied. See the License for the specific language
     governing permissions and limitations under the License.
-    */
+*/
 
-    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-            :host {
-  --spectrum-popover-border-width: var(--system-popover-border-width);
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-popover-border-width: var(--system-popover-border-width);
 }
-
-            

@@ -197,7 +197,7 @@
         "tar-stream": "^3.0.0",
         "terser": "^4.8.1",
         "typescript": "^5.3.3",
-        "wireit": "^0.14.3",
+        "wireit": "^0.14.10",
         "yargs": "^17.2.1"
     },
     "wireit": {
@@ -220,7 +220,10 @@
                 "packages/**/*.css.ts",
                 "tools/**/*.css.ts"
             ],
-            "clean": "if-file-deleted"
+            "clean": "if-file-deleted",
+            "env": {
+                "WIREIT_LOGGER": "metrics"
+            }
         },
         "build:ts:watch": {
             "command": "node ./tasks/watch-packages.js",
@@ -277,7 +280,10 @@
                 "!test/visual/wds-vrt.config.js",
                 "!tools/base/src/version.js"
             ],
-            "clean": "if-file-deleted"
+            "clean": "if-file-deleted",
+            "env": {
+                "WIREIT_LOGGER": "metrics"
+            }
         },
         "build:types": {
             "command": "tsc --build tsconfig-all.json --pretty",
@@ -301,7 +307,10 @@
                 "!**/local.d.ts",
                 "!tools/base/src/version.d.ts"
             ],
-            "clean": "if-file-deleted"
+            "clean": "if-file-deleted",
+            "env": {
+                "WIREIT_LOGGER": "metrics"
+            }
         },
         "build:watch": {
             "dependencies": [
@@ -322,7 +331,10 @@
             ],
             "output": [
                 "packages/**/*.svg.ts"
-            ]
+            ],
+            "env": {
+                "WIREIT_LOGGER": "metrics"
+            }
         },
         "icons:ui": {
             "command": "yarn workspace @spectrum-web-components/icons-ui build",
@@ -342,7 +354,10 @@
                 "!packages/icons-ui/src/custom-tag.ts",
                 "!packages/icons-workflow/src/DefaultIcon.ts"
             ],
-            "clean": "if-file-deleted"
+            "clean": "if-file-deleted",
+            "env": {
+                "WIREIT_LOGGER": "metrics"
+            }
         },
         "icons:workflow": {
             "command": "yarn workspace @spectrum-web-components/icons-workflow build",
@@ -361,7 +376,10 @@
                 "!packages/icons-workflow/src/DefaultIcon.ts",
                 "!packages/icons-workflow/bin/icons-mapping.json"
             ],
-            "clean": "if-file-deleted"
+            "clean": "if-file-deleted",
+            "env": {
+                "WIREIT_LOGGER": "metrics"
+            }
         },
         "prestorybook": {
             "command": "cem analyze --outdir storybook/",
@@ -371,7 +389,10 @@
             ],
             "output": [
                 "storybook/custom-elements.json"
-            ]
+            ],
+            "env": {
+                "WIREIT_LOGGER": "metrics"
+            }
         },
         "process-icons": {
             "dependencies": [
@@ -403,7 +424,10 @@
                 "!tools/styles/express/scale-*.css",
                 "!tools/styles/express/theme-*.css"
             ],
-            "clean": false
+            "clean": false,
+            "env": {
+                "WIREIT_LOGGER": "metrics"
+            }
         },
         "storybook": {
             "command": "storybook dev -p 8080 -c storybook",
@@ -411,7 +435,10 @@
             "dependencies": [
                 "build:watch",
                 "prestorybook"
-            ]
+            ],
+            "env": {
+                "WIREIT_LOGGER": "metrics"
+            }
         },
         "test:create": {
             "command": "node test/visual/create.js",
@@ -423,7 +450,10 @@
                 "packages/*/test/*.test-vrt.ts",
                 "tools/*/test/*.test-vrt.ts"
             ],
-            "clean": "if-file-deleted"
+            "clean": "if-file-deleted",
+            "env": {
+                "WIREIT_LOGGER": "metrics"
+            }
         }
     },
     "workspaces": [

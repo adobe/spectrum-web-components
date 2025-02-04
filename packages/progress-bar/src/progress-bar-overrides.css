@@ -8,12 +8,12 @@
     the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
     OF ANY KIND, either express or implied. See the License for the specific language
     governing permissions and limitations under the License.
-    */
+*/
 
-    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-            :host {
-  --spectrum-progressbar-track-color: var(--system-progress-bar-track-color);
-  --spectrum-progressbar-track-color-white: var(--system-progress-bar-track-color-white);
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-progressbar-track-color: var(--system-progress-bar-track-color);
+    --spectrum-progressbar-track-color-white: var(
+        --system-progress-bar-track-color-white
+    );
 }
-
-            

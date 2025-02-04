@@ -11,7 +11,7 @@
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
+.spectrum-Table {
     --spectrum-table-header-background-color: var(
         --system-table-header-background-color
     );
@@ -32,7 +32,7 @@
     );
 }
 
-:host([quiet]) {
+.spectrum-Table--quiet {
     --spectrum-table-header-background-color: var(
         --system-table-quiet-header-background-color
     );
