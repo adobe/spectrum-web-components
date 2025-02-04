@@ -1,5 +1,5 @@
 /*
-    Copyright 2023 Adobe. All rights reserved.
+    Copyright 2025 Adobe. All rights reserved.
     This file is licensed to you under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License. You may obtain a copy
     of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,22 +10,4 @@
     governing permissions and limitations under the License.
     */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-colorarea-border-radius: var(--system-color-area-border-radius);
-    --spectrum-colorarea-border-color-rgb: var(
-        --system-color-area-border-color-rgb
-    );
-    --spectrum-colorarea-border-color-opacity: var(
-        --system-color-area-border-color-opacity
-    );
-    --spectrum-colorarea-border-color: var(--system-color-area-border-color);
-    --spectrum-colorarea-disabled-background-color: var(
-        --system-color-area-disabled-background-color
-    );
-    --spectrum-colorarea-border-width: var(--system-color-area-border-width);
-    --spectrum-colorarea-height: var(--system-color-area-height);
-    --spectrum-colorarea-width: var(--system-color-area-width);
-    --spectrum-colorarea-min-width: var(--system-color-area-min-width);
-    --spectrum-colorarea-min-height: var(--system-color-area-min-height);
-}
+    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */

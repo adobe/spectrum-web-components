@@ -1,5 +1,5 @@
 /*
-    Copyright 2023 Adobe. All rights reserved.
+    Copyright 2025 Adobe. All rights reserved.
     This file is licensed to you under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License. You may obtain a copy
     of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,83 +10,70 @@
     governing permissions and limitations under the License.
     */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum--legacy {
-    --system-action-button-background-color-default: var(--spectrum-gray-75);
-    --system-action-button-background-color-hover: var(--spectrum-gray-200);
-    --system-action-button-background-color-down: var(--spectrum-gray-300);
-    --system-action-button-background-color-focus: var(--spectrum-gray-200);
-    --system-action-button-background-color-selected-disabled: var(
-        --spectrum-transparent-black-200
-    );
-    --system-action-button-content-color-selected: var(--spectrum-gray-75);
-    --system-action-button-quiet-background-color-hover: var(
-        --spectrum-gray-200
-    );
-    --system-action-button-quiet-background-color-down: var(
-        --spectrum-gray-300
-    );
-    --system-action-button-quiet-background-color-focus: var(
-        --spectrum-gray-200
-    );
-    --system-action-button-static-black-border-color-default: var(
-        --spectrum-transparent-black-400
-    );
-    --system-action-button-static-black-border-color-hover: var(
-        --spectrum-transparent-black-500
-    );
-    --system-action-button-static-black-border-color-down: var(
-        --spectrum-transparent-black-600
-    );
-    --system-action-button-static-black-border-color-focus: var(
-        --spectrum-transparent-black-500
-    );
-    --system-action-button-static-black-background-color-hover: var(
-        --spectrum-transparent-black-300
-    );
-    --system-action-button-static-black-quiet-background-color-hover: var(
-        --spectrum-transparent-black-300
-    );
-    --system-action-button-static-black-background-color-down: var(
-        --spectrum-transparent-black-400
-    );
-    --system-action-button-static-black-quiet-background-color-down: var(
-        --spectrum-transparent-black-400
-    );
-    --system-action-button-static-black-background-color-focus: var(
-        --spectrum-transparent-black-300
-    );
-    --system-action-button-static-black-quiet-background-color-focus: var(
-        --spectrum-transparent-black-300
-    );
-    --system-action-button-static-white-border-color-default: var(
-        --spectrum-transparent-white-400
-    );
-    --system-action-button-static-white-border-color-hover: var(
-        --spectrum-transparent-white-500
-    );
-    --system-action-button-static-white-border-color-down: var(
-        --spectrum-transparent-white-600
-    );
-    --system-action-button-static-white-border-color-focus: var(
-        --spectrum-transparent-white-500
-    );
-    --system-action-button-static-white-background-color-hover: var(
-        --spectrum-transparent-white-300
-    );
-    --system-action-button-static-white-quiet-background-color-hover: var(
-        --spectrum-transparent-white-300
-    );
-    --system-action-button-static-white-background-color-down: var(
-        --spectrum-transparent-white-400
-    );
-    --system-action-button-static-white-quiet-background-color-down: var(
-        --spectrum-transparent-white-400
-    );
-    --system-action-button-static-white-background-color-focus: var(
-        --spectrum-transparent-white-300
-    );
-    --system-action-button-static-white-quiet-background-color-focus: var(
-        --spectrum-transparent-white-300
-    );
+    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+            :host {
+  --spectrum-actionbutton-background-color-default: var(--system-action-button-background-color-default);
+  --spectrum-actionbutton-background-color-hover: var(--system-action-button-background-color-hover);
+  --spectrum-actionbutton-background-color-down: var(--system-action-button-background-color-down);
+  --spectrum-actionbutton-background-color-focus: var(--system-action-button-background-color-focus);
+  --spectrum-actionbutton-background-color-selected-disabled: var(--system-action-button-background-color-selected-disabled);
+  --spectrum-actionbutton-background-color-selected: var(--system-action-button-background-color-selected);
+  --spectrum-actionbutton-background-color-selected-hover: var(--system-action-button-background-color-selected-hover);
+  --spectrum-actionbutton-background-color-selected-down: var(--system-action-button-background-color-selected-down);
+  --spectrum-actionbutton-background-color-selected-focus: var(--system-action-button-background-color-selected-focus);
+  --spectrum-actionbutton-border-color-default: var(--system-action-button-border-color-default);
+  --spectrum-actionbutton-border-color-hover: var(--system-action-button-border-color-hover);
+  --spectrum-actionbutton-border-color-down: var(--system-action-button-border-color-down);
+  --spectrum-actionbutton-border-color-focus: var(--system-action-button-border-color-focus);
+  --spectrum-actionbutton-border-color-disabled: var(--system-action-button-border-color-disabled);
+  --spectrum-actionbutton-content-color-selected: var(--system-action-button-content-color-selected);
 }
+
+:host([quiet]) {
+  --spectrum-actionbutton-background-color-default: var(--system-action-button-quiet-background-color-default);
+  --spectrum-actionbutton-background-color-hover: var(--system-action-button-quiet-background-color-hover);
+  --spectrum-actionbutton-background-color-down: var(--system-action-button-quiet-background-color-down);
+  --spectrum-actionbutton-background-color-focus: var(--system-action-button-quiet-background-color-focus);
+}
+
+:host([static-color="black"]) {
+  --spectrum-actionbutton-border-color-default: var(--system-action-button-static-black-border-color-default);
+  --spectrum-actionbutton-border-color-hover: var(--system-action-button-static-black-border-color-hover);
+  --spectrum-actionbutton-border-color-down: var(--system-action-button-static-black-border-color-down);
+  --spectrum-actionbutton-border-color-focus: var(--system-action-button-static-black-border-color-focus);
+  --spectrum-actionbutton-background-color-disabled: var(--system-action-button-static-black-background-color-disabled);
+  --spectrum-actionbutton-background-color-selected-disabled: var(--system-action-button-static-black-background-color-selected-disabled);
+  --spectrum-actionbutton-background-color-default: var(--system-action-button-static-black-background-color-default);
+  --spectrum-actionbutton-background-color-hover: var(--system-action-button-static-black-background-color-hover);
+  --spectrum-actionbutton-background-color-down: var(--system-action-button-static-black-background-color-down);
+  --spectrum-actionbutton-background-color-focus: var(--system-action-button-static-black-background-color-focus);
+}
+
+:host([static-color="black"][quiet]) {
+  --spectrum-actionbutton-background-color-default: var(--system-action-button-static-black-quiet-background-color-default);
+  --spectrum-actionbutton-background-color-hover: var(--system-action-button-static-black-quiet-background-color-hover);
+  --spectrum-actionbutton-background-color-down: var(--system-action-button-static-black-quiet-background-color-down);
+  --spectrum-actionbutton-background-color-focus: var(--system-action-button-static-black-quiet-background-color-focus);
+}
+
+:host([static-color="white"]) {
+  --spectrum-actionbutton-border-color-default: var(--system-action-button-static-white-border-color-default);
+  --spectrum-actionbutton-border-color-hover: var(--system-action-button-static-white-border-color-hover);
+  --spectrum-actionbutton-border-color-down: var(--system-action-button-static-white-border-color-down);
+  --spectrum-actionbutton-border-color-focus: var(--system-action-button-static-white-border-color-focus);
+  --spectrum-actionbutton-background-color-disabled: var(--system-action-button-static-white-background-color-disabled);
+  --spectrum-actionbutton-background-color-selected-disabled: var(--system-action-button-static-white-background-color-selected-disabled);
+  --spectrum-actionbutton-background-color-default: var(--system-action-button-static-white-background-color-default);
+  --spectrum-actionbutton-background-color-hover: var(--system-action-button-static-white-background-color-hover);
+  --spectrum-actionbutton-background-color-down: var(--system-action-button-static-white-background-color-down);
+  --spectrum-actionbutton-background-color-focus: var(--system-action-button-static-white-background-color-focus);
+}
+
+:host([static-color="white"][quiet]) {
+  --spectrum-actionbutton-background-color-default: var(--system-action-button-static-white-quiet-background-color-default);
+  --spectrum-actionbutton-background-color-hover: var(--system-action-button-static-white-quiet-background-color-hover);
+  --spectrum-actionbutton-background-color-down: var(--system-action-button-static-white-quiet-background-color-down);
+  --spectrum-actionbutton-background-color-focus: var(--system-action-button-static-white-quiet-background-color-focus);
+}
+
+            

@@ -1,5 +1,5 @@
 /*
-    Copyright 2023 Adobe. All rights reserved.
+    Copyright 2025 Adobe. All rights reserved.
     This file is licensed to you under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License. You may obtain a copy
     of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,8 +10,14 @@
     governing permissions and limitations under the License.
     */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum--legacy {
-    --system-checkbox-checkmark-color: var(--spectrum-gray-75);
-    --system-checkbox-control-corner-radius: var(--spectrum-corner-radius-75);
+    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+            :host {
+  --spectrum-checkbox-control-color-default: var(--system-checkbox-control-color-default);
+  --spectrum-checkbox-control-color-hover: var(--system-checkbox-control-color-hover);
+  --spectrum-checkbox-control-color-down: var(--system-checkbox-control-color-down);
+  --spectrum-checkbox-control-color-focus: var(--system-checkbox-control-color-focus);
+  --spectrum-checkbox-checkmark-color: var(--system-checkbox-checkmark-color);
+  --spectrum-checkbox-control-corner-radius: var(--system-checkbox-control-corner-radius);
 }
+
+            

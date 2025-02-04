@@ -1,5 +1,5 @@
 /*
-    Copyright 2023 Adobe. All rights reserved.
+    Copyright 2025 Adobe. All rights reserved.
     This file is licensed to you under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License. You may obtain a copy
     of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,13 +10,11 @@
     governing permissions and limitations under the License.
     */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum--legacy {
-    --system-progress-circle-track-border-color: var(--spectrum-gray-300);
-    --system-progress-circle-track-border-color-over-background: var(
-        --spectrum-transparent-white-300
-    );
-    --system-progress-circle-fill-border-color-over-background: var(
-        --spectrum-transparent-white-900
-    );
+    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+            :host {
+  --spectrum-progress-circle-track-border-color: var(--system-progress-circle-track-border-color);
+  --spectrum-progress-circle-track-border-color-over-background: var(--system-progress-circle-track-border-color-over-background);
+  --spectrum-progress-circle-fill-border-color-over-background: var(--system-progress-circle-fill-border-color-over-background);
 }
+
+            

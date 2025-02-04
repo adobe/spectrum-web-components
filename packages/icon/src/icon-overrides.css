@@ -1,5 +1,5 @@
 /*
-    Copyright 2023 Adobe. All rights reserved.
+    Copyright 2025 Adobe. All rights reserved.
     This file is licensed to you under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License. You may obtain a copy
     of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,13 +10,4 @@
     governing permissions and limitations under the License.
     */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-icon-size-xxs: var(--system-icon-size-xxs);
-    --spectrum-icon-size-xs: var(--system-icon-size-xs);
-    --spectrum-icon-size-s: var(--system-icon-size-s);
-    --spectrum-icon-size-m: var(--system-icon-size-m);
-    --spectrum-icon-size-l: var(--system-icon-size-l);
-    --spectrum-icon-size-xl: var(--system-icon-size-xl);
-    --spectrum-icon-size-xxl: var(--system-icon-size-xxl);
-}
+    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */

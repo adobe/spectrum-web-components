@@ -1,5 +1,5 @@
 /*
-    Copyright 2023 Adobe. All rights reserved.
+    Copyright 2025 Adobe. All rights reserved.
     This file is licensed to you under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License. You may obtain a copy
     of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,15 +10,15 @@
     governing permissions and limitations under the License.
     */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum--legacy {
-    --system-side-nav-background-hover: var(--spectrum-gray-200);
-    --system-side-nav-item-background-down: var(--spectrum-gray-300);
-    --system-side-nav-background-key-focus: var(--spectrum-gray-200);
-    --system-side-nav-item-background-default-selected: var(
-        --spectrum-gray-200
-    );
-    --system-side-nav-background-hover-selected: var(--spectrum-gray-300);
-    --system-side-nav-item-background-down-selected: var(--spectrum-gray-300);
-    --system-side-nav-background-key-focus-selected: var(--spectrum-gray-200);
+    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+            :host {
+  --spectrum-sidenav-background-hover: var(--system-side-nav-background-hover);
+  --spectrum-sidenav-item-background-down: var(--system-side-nav-item-background-down);
+  --spectrum-sidenav-background-key-focus: var(--system-side-nav-background-key-focus);
+  --spectrum-sidenav-item-background-default-selected: var(--system-side-nav-item-background-default-selected);
+  --spectrum-sidenav-background-hover-selected: var(--system-side-nav-background-hover-selected);
+  --spectrum-sidenav-item-background-down-selected: var(--system-side-nav-item-background-down-selected);
+  --spectrum-sidenav-background-key-focus-selected: var(--system-side-nav-background-key-focus-selected);
 }
+
+            

@@ -1,5 +1,5 @@
 /*
-    Copyright 2023 Adobe. All rights reserved.
+    Copyright 2025 Adobe. All rights reserved.
     This file is licensed to you under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License. You may obtain a copy
     of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,42 +10,4 @@
     governing permissions and limitations under the License.
     */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-Body {
-    --spectrum-body-sans-serif-font-family: var(
-        --system-body-sans-serif-font-family
-    );
-    --spectrum-body-serif-font-family: var(--system-body-serif-font-family);
-    --spectrum-body-cjk-font-family: var(--system-body-cjk-font-family);
-    --spectrum-body-cjk-letter-spacing: var(--system-body-cjk-letter-spacing);
-    --spectrum-body-font-color: var(--system-body-font-color);
-    --spectrum-body-font-size: var(--system-body-font-size);
-}
-
-.spectrum-Body--sizeXS {
-    --spectrum-body-font-size: var(--system-body-size-xs-font-size);
-}
-
-.spectrum-Body--sizeS {
-    --spectrum-body-font-size: var(--system-body-size-s-font-size);
-}
-
-.spectrum-Body--sizeM {
-    --spectrum-body-font-size: var(--system-body-size-m-font-size);
-}
-
-.spectrum-Body--sizeL {
-    --spectrum-body-font-size: var(--system-body-size-l-font-size);
-}
-
-.spectrum-Body--sizeXL {
-    --spectrum-body-font-size: var(--system-body-size-xl-font-size);
-}
-
-.spectrum-Body--sizeXXL {
-    --spectrum-body-font-size: var(--system-body-size-xxl-font-size);
-}
-
-.spectrum-Body--sizeXXXL {
-    --spectrum-body-font-size: var(--system-body-size-xxxl-font-size);
-}
+    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */

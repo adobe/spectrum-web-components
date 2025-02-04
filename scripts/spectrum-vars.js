@@ -20,6 +20,8 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+import 'colors';
+
 let removedVariableDeclarations = 0;
 
 const varRegex = /--spectrum-[^:,)\s]+/g;
@@ -203,19 +205,13 @@ systems.forEach((system) => {
 async function processSpectrumVars() {
     {
         // Typography
-        const typographyPath = path.join(
-            __dirname,
-            '..',
-            'node_modules',
-            '@spectrum-css',
-            'typography',
-            'dist'
-        );
-        const baseSrcPath = path.join(typographyPath, 'index.css');
+        const baseSrcPath = import.meta.resolve(`@spectrum-css/typography`).replace(/^file:\/\//, '');
+
         const dstPath = path.resolve(
             path.join(__dirname, '..', 'tools', 'styles', 'typography.css')
         );
-        console.log(`processing typography`);
+
+        console.log(`processing typography`, baseSrcPath);
         processes.push(processTypography(baseSrcPath, dstPath, 'typography'));
     }
 
