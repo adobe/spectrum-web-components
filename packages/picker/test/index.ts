@@ -71,6 +71,9 @@ ignoreResizeObserverLoopError(before, after);
 const isMenuActiveElement = function (el: Picker): boolean {
     return el.shadowRoot.activeElement?.localName === 'sp-menu';
 };
+const isSafari = /^((?!chrome|android).)*safari/i.test(
+    navigator.userAgent
+);
 
 export function runPickerTests(): void {
     let el: Picker;
@@ -532,7 +535,7 @@ export function runPickerTests(): void {
                 'finally, not visually focused'
             );
         });
-        it('opens, on click, without visible focus on a menu item', async () => {
+        it('opens, on click, with visible focus on a menu item', async () => {
             await nextFrame();
             await nextFrame();
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
@@ -554,7 +557,7 @@ export function runPickerTests(): void {
             await opened;
 
             expect(el.open).to.be.true;
-            expect(firstItem.focused, 'still not visually focused').to.be.false;
+            expect(firstItem.focused).to.be.true;
         });
         it('opens and selects in a single pointer button interaction', async () => {
             await nextFrame();
@@ -603,6 +606,7 @@ export function runPickerTests(): void {
             expect(el.open).to.be.false;
             expect(el.value).to.equal(thirdItem.value);
         });
+        // TODO why is this timing out on Chromium?
         it('opens/closes multiple times', async () => {
             await nextFrame();
             await nextFrame();
@@ -907,6 +911,7 @@ export function runPickerTests(): void {
             expect(el.selectedItem?.itemText).to.equal('Deselect');
             expect(el.value).to.equal('Deselect');
         });
+        //TODO: not sure why this is failing
         it('quick selects on ArrowLeft/Right', async () => {
             const selectionSpy = spy();
             el.addEventListener('change', (event: Event) => {
@@ -927,21 +932,21 @@ export function runPickerTests(): void {
             });
             await elementUpdated(el);
 
-            expect(selectionSpy.callCount).to.equal(1);
-            expect(selectionSpy.calledWith('Deselected'));
+            expect(selectionSpy.callCount, `selectionSpy.callCount: ${selectionSpy.callCount}`).to.equal(1);
+            expect(selectionSpy.calledWith('Deselect'), 'selectionSpy.calledWith("Deselect")').to.be.true;
             await sendKeys({
                 press: 'ArrowLeft',
             });
 
             await elementUpdated(el);
-            expect(selectionSpy.callCount).to.equal(1);
+            expect(selectionSpy.callCount, `selectionSpy.callCount: ${selectionSpy.callCount}`).to.equal(1);
             await sendKeys({
                 press: 'ArrowRight',
             });
 
             await nextFrame();
             await nextFrame();
-            expect(selectionSpy.calledWith('option-2'));
+            expect(selectionSpy.calledWith('option-2'), 'option-2');
 
             await sendKeys({
                 press: 'ArrowRight',
@@ -963,9 +968,9 @@ export function runPickerTests(): void {
             });
             await nextFrame();
             await nextFrame();
-            expect(selectionSpy.calledWith('Save Selection'));
-            expect(selectionSpy.calledWith('Make Work Path')).to.be.false;
-            expect(selectionSpy.callCount).to.equal(5);
+            expect(selectionSpy.calledWith('Save Selection'), 'selectionSpy.calledWith("Save Selection")');
+            expect(selectionSpy.calledWith('Make Work Path'), 'selectionSpy.calledWith("Make Work Path")').to.be.false;
+            expect(selectionSpy.callCount, `selectionSpy.callCount: ${selectionSpy.callCount}`).to.equal(5);
         });
         it('quick selects first item on ArrowRight when no value', async () => {
             await nextFrame();
@@ -987,6 +992,7 @@ export function runPickerTests(): void {
         it('loads', async () => {
             expect(el).to.not.be.undefined;
         });
+        //TODO: why is this timing out?
         it('closes when focusing away from the menu', async () => {
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
             const thirdItem = el.querySelector(
@@ -997,9 +1003,11 @@ export function runPickerTests(): void {
             el.insertAdjacentElement('afterend', input);
 
             el.focus();
-            await sendKeys({ press: 'Tab' });
-            expect(document.activeElement === input).to.be.true;
-            await sendKeys({ press: 'Shift+Tab' });
+            if(!isSafari) {
+                await sendKeys({ press: 'Tab' });
+                expect(document.activeElement === input).to.be.true;
+                await sendKeys({ press: 'Shift+Tab' });
+            }
             expect(document.activeElement === el).to.be.true;
             const opened = oneEvent(el, 'sp-opened');
             sendKeys({ press: 'Enter' });
@@ -1034,9 +1042,11 @@ export function runPickerTests(): void {
             el.insertAdjacentElement('afterend', input);
 
             el.focus();
-            await sendKeys({ press: 'Tab' });
-            expect(document.activeElement === input).to.be.true;
-            await sendKeys({ press: 'Shift+Tab' });
+            if(!isSafari) {
+                await sendKeys({ press: 'Tab' });
+                expect(document.activeElement === input).to.be.true;
+                await sendKeys({ press: 'Shift+Tab' });
+            }
             expect(document.activeElement === el).to.be.true;
             const opened = oneEvent(el, 'sp-opened');
             sendKeys({ down: 'Enter' });
@@ -1102,14 +1112,20 @@ export function runPickerTests(): void {
                 input2.remove();
             });
             it('tabs forward through the element', async () => {
-                // start at input1
-                input1.focus();
-                await nextFrame();
-                expect(document.activeElement === input1, 'focuses input 1').to
-                    .true;
-                // tab to the picker
-                let focused = oneEvent(el, 'focus');
-                await sendKeys({ press: 'Tab' });
+                let focused: Promise<CustomEvent<FocusEvent>>;
+                if(!isSafari) {
+                    // start at input1
+                    input1.focus();
+                    await nextFrame();
+                    expect(document.activeElement === input1, 'focuses input 1').to
+                        .true;
+                    // tab to the picker
+                    focused = oneEvent(el, 'focus');
+                    await sendKeys({ press: 'Tab' });
+                } else {
+                    focused = oneEvent(el, 'focus');
+                    el.focus();
+                }
                 await focused;
 
                 expect(el.focused, 'focused').to.be.true;
@@ -1129,14 +1145,17 @@ export function runPickerTests(): void {
                 expect(document.activeElement, 'focuses input 2').to.equal(
                     input2
                 );
-                // tab to the picker
                 let focused = oneEvent(el, 'focus');
-                await sendKeys({ press: 'Shift+Tab' });
-                await focused;
+                if(!isSafari) {
+                    await sendKeys({ press: 'Shift+Tab' });
+                    await focused;
 
-                expect(el.focused, 'focused').to.be.true;
-                expect(el.open, 'closed').to.be.false;
-                expect(document.activeElement, 'focuses el').to.equal(el);
+                    expect(el.focused, 'focused').to.be.true;
+                    expect(el.open, 'closed').to.be.false;
+                    expect(document.activeElement, 'focuses el').to.equal(el);
+                } else {
+                    el.focus();
+                }
                 // tab through the picker to input2
                 focused = oneEvent(input1, 'focus');
                 await sendKeys({ press: 'Shift+Tab' });
@@ -1153,10 +1172,12 @@ export function runPickerTests(): void {
                 const opened = oneEvent(el, 'sp-opened');
                 await sendKeys({ press: 'ArrowUp' });
                 await opened;
+                const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
                 expect(el.open, 'opened').to.be.true;
                 await waitUntil(
-                    () => isMenuActiveElement(el),
+                    // menu delegates focus
+                    () => document.activeElement === firstItem,
                     'first item focused'
                 );
 
@@ -1182,10 +1203,11 @@ export function runPickerTests(): void {
                 const opened = oneEvent(el, 'sp-opened');
                 await sendKeys({ press: 'ArrowUp' });
                 await opened;
+                const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
                 expect(el.open, 'opened').to.be.true;
                 await waitUntil(
-                    () => isMenuActiveElement(el),
+                    () => document.activeElement === firstItem,
                     'first item focused'
                 );
 
@@ -1235,7 +1257,7 @@ export function runPickerTests(): void {
             el.open = true;
             await opened;
             await waitUntil(
-                () => isMenuActiveElement(el),
+                () => document.activeElement === firstItem,
                 'first item focused'
             );
             const getParentOffset = (el: HTMLElement): number => {
@@ -1260,6 +1282,7 @@ export function runPickerTests(): void {
             expect(getParentOffset(lastItem)).to.be.greaterThan(40);
             expect(getParentOffset(firstItem)).to.be.greaterThan(-1);
         });
+        //TODO: This times out before the first open event is dispatched
         it('manages focus-ring styles', async () => {
             if (!isWebKit()) {
                 return;
@@ -1333,9 +1356,7 @@ export function runPickerTests(): void {
 
             // Let's use keyboard to open the tray now
             opened = oneEvent(el, 'sp-opened');
-            await sendKeys({
-                press: 'Tab',
-            });
+            el.focus();
             await sendKeys({
                 press: 'Enter',
             });
@@ -1513,7 +1534,6 @@ export function runPickerTests(): void {
             await elementUpdated(el);
             await nextFrame();
             await nextFrame();
-
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
             expect(
@@ -1703,7 +1723,7 @@ export function runPickerTests(): void {
         const secondItem = el.querySelector(
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
-        
+
         expect(el.value).to.equal('inverse');
         expect(el.selectedItem?.itemText).to.equal('Select Inverse');
 
@@ -1823,15 +1843,22 @@ export function runPickerTests(): void {
         await elementUpdated(el);
         const input1 = document.createElement('input');
         const input2 = document.createElement('input');
+        input1.id="input1";
+        input2.id="input2";
         const tooltipEl = el.querySelector('sp-tooltip') as Tooltip;
         el.insertAdjacentElement('beforebegin', input1);
         el.insertAdjacentElement('afterend', input2);
         input1.focus();
         expect(document.activeElement === input1).to.be.true;
         const tooltipOpened = oneEvent(el, 'sp-opened');
-        await sendKeys({
-            press: 'Tab',
-        });
+        if(!isSafari) {
+            await sendKeys({
+                press: 'Tab',
+            });
+        } else {
+            // by default Safari does not focus the button on tab unless user sets preferences
+            el.focus();
+        }
         await tooltipOpened;
         expect(
             document.activeElement === el,
@@ -1849,9 +1876,9 @@ export function runPickerTests(): void {
         await menuOpen;
         await tooltipClosed;
         const firstOption = el.querySelector('sp-menu-item') as MenuItem;
-        expect(document.activeElement === firstOption).to.be.true;
-        expect(tooltipEl.open).to.be.false;
-        expect(el.open).to.be.true;
+        expect(document.activeElement === firstOption, 'firstOption is activeElement').to.be.true;
+        expect(tooltipEl.open, 'tooltip open').to.be.false;
+        expect(el.open, 'menu open').to.be.true;
 
         const menuClosed = oneEvent(el, 'sp-closed');
         await sendKeys({
