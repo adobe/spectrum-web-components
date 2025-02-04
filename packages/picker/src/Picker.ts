@@ -481,6 +481,31 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.labelAlignment = labelElement.sideAligned ? 'inline' : undefined;
     };
 
+    protected hasAccessibleLabel(): boolean {
+        return (
+            !!this.label ||
+            !!this.getAttribute('aria-label') ||
+            !!this.getAttribute('aria-labelledby') ||
+            !!this.appliedLabel
+        );
+    }
+
+    protected warnNoLabel(): void {
+        window.__swc.warn(
+            this,
+            `<${this.localName}> needs one of the following to be accessible:`,
+            'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+            {
+                type: 'accessibility',
+                issues: [
+                    `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
+                    'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
+                    'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
+                ],
+            }
+        );
+    }
+
     protected renderOverlay(menu: TemplateResult): TemplateResult {
         if (this.strategy?.overlay === undefined) {
             return menu;
@@ -594,37 +619,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 // However, `appliesLabel` is applied by external elements that must be update complete as well to be bound appropriately.
                 await new Promise((res) => requestAnimationFrame(res));
                 await new Promise((res) => requestAnimationFrame(res));
-                if (!this.hasAccessibleLabel) {
+                if (!this.hasAccessibleLabel()) {
                     this.warnNoLabel();
                 }
             });
         }
         super.update(changes);
-    }
-
-    protected hasAccessibleLabel(): boolean {
-        return (
-            !!this.label ||
-            !!this.getAttribute('aria-label') ||
-            !!this.getAttribute('aria-labelledby') ||
-            !!this.appliedLabel
-        );
-    }
-
-    protected warnNoLabel(): void {
-        window.__swc.warn(
-            this,
-            `<${this.localName}> needs one of the following to be accessible:`,
-            'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
-            {
-                type: 'accessibility',
-                issues: [
-                    `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
-                    'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
-                    'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
-                ],
-            }
-        );
     }
 
     protected bindButtonKeydownListener(): void {
