@@ -205,6 +205,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public override click(): void {
+        this.focusElement.click();
+    }
+
+    public handleButtonClick(): void {
         if (this.disabled) {
             return;
         }
@@ -218,16 +222,20 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     public override focus(options?: FocusOptions): void {
         super.focus(options);
-
-        if (!this.disabled && this.focusElement) {
-            this.focused = this.hasVisibleFocusInTree();
-        }
     }
-
+    /**
+     * @deprecated - Use `focus` instead.
+     */
     public handleHelperFocus(): void {
         // set focused to true here instead of handleButtonFocus so clicks don't flash a focus outline
         this.focused = true;
         this.button.focus();
+    }
+
+    public handleFocus(): void {
+        if (!this.disabled && this.focusElement) {
+            this.focused = this.hasVisibleFocusInTree();
+        }
     }
 
     public handleChange(event: Event): void {
@@ -458,6 +466,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     aria-hidden="true"
                     name="tooltip"
                     id="tooltip"
+                    @keydown=${this.handleKeydown}
                     @slotchange=${this.handleTooltipSlotchange}
                 ></slot>
             `,
@@ -497,15 +506,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.tooltipEl.disabled = this.open;
         }
         return html`
-            <span
-                id="focus-helper"
-                tabindex="${this.focused || this.open ? '-1' : '0'}"
-                @focus=${this.handleHelperFocus}
-                aria-describedby=${DESCRIPTION_ID}
-            ></span>
             <button
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
-                aria-describedby="tooltip"
+                aria-describedby="tooltip ${DESCRIPTION_ID}"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-haspopup="true"
                 aria-labelledby="loader icon label applied-label"
@@ -515,13 +518,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                         ? `label-${this.labelAlignment}`
                         : undefined
                 )}
+                @click=${this.handleButtonClick}
+                @focus=${this.handleButtonFocus}
                 @blur=${this.handleButtonBlur}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
                 }}
                 ?disabled=${this.disabled}
-                tabindex="-1"
             >
                 ${this.buttonContent}
             </button>
@@ -841,6 +845,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     public override connectedCallback(): void {
         super.connectedCallback();
         this.recentlyConnected = this.hasUpdated;
+        this.addEventListener('focus', this.handleFocus);
     }
 
     public override disconnectedCallback(): void {
@@ -876,34 +881,22 @@ export class Picker extends PickerBase {
 
     protected override handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
-        const handledCodes = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(code);
+        const handledCodes = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', ' '].includes(code);
+        const openCodes = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(code);
         this.focused = true;
         if (!handledCodes || this.readonly || this.pending) {
             return;
         }
-        if (handledCodes) {
+        if (openCodes) {
             this.keyboardOpen();
             event.preventDefault();
             return;
         }
         event.preventDefault();
-        const selectedIndex = this.selectedItem
-            ? this.menuItems.indexOf(this.selectedItem)
-            : -1;
-        // use a positive offset to find the first non-disabled item when no selection is available.
-        const nextOffset = selectedIndex < 0 || code === 'ArrowRight' ? 1 : -1;
-        let nextIndex = selectedIndex + nextOffset;
-        while (
-            this.menuItems[nextIndex] &&
-            this.menuItems[nextIndex].disabled
-        ) {
-            nextIndex += nextOffset;
-        }
-        if (!this.menuItems[nextIndex] || this.menuItems[nextIndex].disabled) {
-            return;
-        }
-        if (!this.value || nextIndex !== selectedIndex) {
-            this.setValueFromItem(this.menuItems[nextIndex]);
+        const nextItem = code === 'ArrowRight' ? this.optionsMenu?.getNextItem(this.selectedItem) : code === 'ArrowLeft' ? this.optionsMenu?.getPrevItem() : undefined;
+        if (!this.value || nextItem !== this.selectedItem) {
+            // updates picker text but does not fire change event until action is completed
+            if(!!nextItem) this.setValueFromItem(nextItem as MenuItem, event);
         }
     };
 }
