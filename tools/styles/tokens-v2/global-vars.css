@@ -417,7 +417,6 @@
         --spectrum-corner-radius-700
     );
     --spectrum-drop-shadow-x: 0px;
-    --spectrum-android-elevation: 2dp;
     --spectrum-spacing-50: 2px;
     --spectrum-spacing-75: 4px;
     --spectrum-spacing-100: 8px;
@@ -1020,7 +1019,6 @@
     --spectrum-code-cjk-line-height: var(--spectrum-cjk-line-height-200);
     --spectrum-code-color: var(--spectrum-gray-800);
     --system: spectrum;
-    --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
     --spectrum-animation-duration-0: 0s;
     --spectrum-animation-duration-100: 0.13s;
     --spectrum-animation-duration-200: 0.16s;
@@ -1035,24 +1033,25 @@
     --spectrum-animation-duration-2000: 1s;
     --spectrum-animation-duration-4000: 2s;
     --spectrum-animation-duration-6000: 3s;
+    --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
     --spectrum-animation-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1);
     --spectrum-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
     --spectrum-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
     --spectrum-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
     --spectrum-sans-font-family-stack: adobe-clean,
         var(--spectrum-sans-serif-font-family), 'Source Sans Pro', -apple-system,
-        blinkmacsystemfont, 'Segoe UI', roboto, ubuntu, 'Trebuchet MS',
+        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
         'Lucida Grande', sans-serif;
     --spectrum-sans-serif-font: var(--spectrum-sans-font-family-stack);
     --spectrum-serif-font-family-stack: adobe-clean-serif,
-        var(--spectrum-serif-font-family), 'Source Serif Pro', georgia, serif;
+        var(--spectrum-serif-font-family), 'Source Serif Pro', Georgia, serif;
     --spectrum-serif-font: var(--spectrum-serif-font-family-stack);
-    --spectrum-code-font-family-stack: 'Source Code Pro', monaco, monospace;
+    --spectrum-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
     --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro',
-        -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu,
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
         'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro',
-        -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu,
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
         'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-font-family: var(--spectrum-sans-font-family-stack);
     --spectrum-font-style: var(--spectrum-default-font-style);

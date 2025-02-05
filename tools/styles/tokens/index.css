@@ -1408,7 +1408,6 @@
     --spectrum-in-field-button-edge-to-disclosure-icon-stacked-large: 13px;
     --spectrum-in-field-button-edge-to-disclosure-icon-stacked-extra-large: 16px;
     --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-small: 3px;
-    --spectrum-android-elevation: 2dp;
     --spectrum-spacing-50: 2px;
     --spectrum-spacing-75: 4px;
     --spectrum-spacing-100: 8px;
@@ -1489,9 +1488,9 @@
     --spectrum-positive-color-1300: var(--spectrum-green-1300);
     --spectrum-positive-color-1400: var(--spectrum-green-1400);
     --spectrum-default-font-family: var(--spectrum-sans-serif-font-family);
-    --spectrum-sans-serif-font-family: Adobe Clean;
-    --spectrum-serif-font-family: Adobe Clean Serif;
-    --spectrum-cjk-font-family: Adobe Clean Han;
+    --spectrum-sans-serif-font-family: adobe clean;
+    --spectrum-serif-font-family: adobe clean serif;
+    --spectrum-cjk-font-family: adobe clean han;
     --spectrum-light-font-weight: 300;
     --spectrum-regular-font-weight: 400;
     --spectrum-medium-font-weight: 500;
@@ -1929,7 +1928,7 @@
     --spectrum-detail-sans-serif-text-transform: uppercase;
     --spectrum-detail-serif-text-transform: uppercase;
     --spectrum-detail-color: var(--spectrum-gray-900);
-    --spectrum-code-font-family: Source Code Pro;
+    --spectrum-code-font-family: source code pro;
     --spectrum-code-cjk-font-family: var(--spectrum-code-font-family);
     --spectrum-code-font-weight: var(--spectrum-regular-font-weight);
     --spectrum-code-font-style: var(--spectrum-default-font-style);

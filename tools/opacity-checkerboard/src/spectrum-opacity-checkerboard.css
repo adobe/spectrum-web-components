@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,68 +12,18 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .opacity-checkerboard {
-    background: repeating-conic-gradient(
-            var(
-                    --mod-opacity-checkerboard-light,
-                    var(--spectrum-opacity-checkerboard-square-light)
-                )
-                0 25%,
-            var(
-                    --mod-opacity-checkerboard-dark,
-                    var(--spectrum-opacity-checkerboard-square-dark)
-                )
-                0 50%
-        )
-        0 0 /
-        calc(
-            var(
-                    --mod-opacity-checkerboard-size,
-                    var(--spectrum-opacity-checkerboard-square-size)
-                ) * 2
-        )
-        calc(
-            var(
-                    --mod-opacity-checkerboard-size,
-                    var(--spectrum-opacity-checkerboard-square-size)
-                ) * 2
-        );
+  background: repeating-conic-gradient(var(--mod-opacity-checkerboard-light, var(--spectrum-opacity-checkerboard-square-light)) 0 25.0%, var(--mod-opacity-checkerboard-dark, var(--spectrum-opacity-checkerboard-square-dark)) 0 50.0%) 0 0 / calc(var(--mod-opacity-checkerboard-size, var(--spectrum-opacity-checkerboard-square-size)) * 2) calc(var(--mod-opacity-checkerboard-size, var(--spectrum-opacity-checkerboard-square-size)) * 2);
 }
 
-@supports (
-    background:
-        repeating-conic-gradient(from 0deg, red 0deg, red 0deg 1deg, red 2deg)
-) {
-    .opacity-checkerboard {
-        background: repeating-conic-gradient(
-                var(
-                        --mod-opacity-checkerboard-light,
-                        var(--spectrum-opacity-checkerboard-square-light)
-                    )
-                    0 25%,
-                var(
-                        --mod-opacity-checkerboard-dark,
-                        var(--spectrum-opacity-checkerboard-square-dark)
-                    )
-                    0 50%
-            )
-            var(--mod-opacity-checkerboard-position, left top) /
-            calc(
-                var(
-                        --mod-opacity-checkerboard-size,
-                        var(--spectrum-opacity-checkerboard-square-size)
-                    ) * 2
-            )
-            calc(
-                var(
-                        --mod-opacity-checkerboard-size,
-                        var(--spectrum-opacity-checkerboard-square-size)
-                    ) * 2
-            );
-    }
+@supports (background: repeating-conic-gradient(from 0deg, red 0deg, red 0deg 1deg, red 2deg)) {
+  .opacity-checkerboard {
+    background: repeating-conic-gradient(var(--mod-opacity-checkerboard-light, var(--spectrum-opacity-checkerboard-square-light)) 0 25.0%, var(--mod-opacity-checkerboard-dark, var(--spectrum-opacity-checkerboard-square-dark)) 0 50.0%) var(--mod-opacity-checkerboard-position, left top) / calc(var(--mod-opacity-checkerboard-size, var(--spectrum-opacity-checkerboard-square-size)) * 2) calc(var(--mod-opacity-checkerboard-size, var(--spectrum-opacity-checkerboard-square-size)) * 2);
+  }
 }
 
 @media (forced-colors: active) {
-    .opacity-checkerboard {
-        forced-color-adjust: none;
-    }
+  .opacity-checkerboard {
+    forced-color-adjust: none;
+  }
 }
+

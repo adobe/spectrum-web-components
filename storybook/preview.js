@@ -9,12 +9,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { setCustomElementsManifest } from '@storybook/web-components';
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
-
 import cem from './custom-elements.json';
+import { setCustomElementsManifestWithOptions } from './utils/setCustomElementsManifestWithOptions.js';
+// import { setCustomElementsManifest } from '@storybook/web-components';
 
-setCustomElementsManifest(cem);
+/**
+ * This removes the private and protected fields in the custom elements
+ * manifest from being displayed in the storybook args table
+ */
+setCustomElementsManifestWithOptions(cem, { privateFields: false });
+// setCustomElementsManifest(cem);
 
 export const globalTypes = {
     system: {
@@ -97,8 +102,8 @@ export const globalTypes = {
 };
 
 export const parameters = {
-    docs: { hidden: true },
-    controls: { expanded: true },
+    docs: { toc: true },
+    controls: { expanded: true, sort: 'requiredFirst' },
     layout: 'fullscreen',
     badgesConfig: {
         deprecated: {

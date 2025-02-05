@@ -12,12 +12,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import fg from 'fast-glob';
 import 'colors';
-import { transform } from 'lightningcss';
-import path from 'path';
+import fg from 'fast-glob';
 import fs from 'fs';
+import { transform } from 'lightningcss';
 import { createRequire } from 'module';
+import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -25,6 +25,19 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '../');
 
 const require = createRequire(import.meta.url);
+
+const copyright = `/*
+    Copyright 2025 Adobe. All rights reserved.
+    This file is licensed to you under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License. You may obtain a copy
+    of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software distributed under
+    the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+    OF ANY KIND, either express or implied. See the License for the specific language
+    governing permissions and limitations under the License.
+*/
+`;
 
 /**
  * @to-do: normalize deep comparison old vs new usage when recursing.
@@ -162,11 +175,18 @@ async function processComponent(componentPath) {
      * @type { import('./spectrum-css-converter').SpectrumCSSConverter}
      */
     for await (const conversion of conversions) {
-        // The default package file is index.css but index-base.css contains the base styles compatible with theme switching.
-        const sourcePath = require
-            .resolve(conversion.inPackage)
-            .replace('index.css', 'index-base.css');
-        var sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
+        // The initial source file is index.css but index-base.css contains the base styles compatible with theme switching.
+        let sourceCSS;
+        let sourcePath = require.resolve(conversion.inPackage);
+        try {
+            sourceCSS = fs.readFileSync(
+                sourcePath.replace('index.css', 'index-base.css'),
+                'utf-8'
+            );
+        } catch (error) {
+            // not every component has theming so we need to fallback to the original index.css
+            sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
+        }
 
         const outputPath = path.join(
             ...(Array.isArray(conversion.outPackage)
@@ -423,17 +443,17 @@ async function processComponent(componentPath) {
                 .resolve(conversion.inPackage)
                 .replace('index.css', 'index-theme.css');
 
+            const systemsPath = path.join(
+                ...(Array.isArray(conversion.outPackage)
+                    ? conversion.outPackage
+                    : ['packages', conversion.outPackage]),
+                'src',
+                // @todo can we rename this file to be more descriptive? i.e. `spectrum-${conversion.fileName}-system-bridge.css`
+                `${conversion.fileName}-overrides.css`
+            );
+
             if (fs.existsSync(bridgepath)) {
                 let bridgeCss = fs.readFileSync(bridgepath, 'utf8');
-
-                const systemsPath = path.join(
-                    ...(Array.isArray(conversion.outPackage)
-                        ? conversion.outPackage
-                        : ['packages', conversion.outPackage]),
-                    'src',
-                    // @todo can we rename this file to be more descriptive? i.e. `spectrum-${conversion.fileName}-system-bridge.css`
-                    `${conversion.fileName}-overrides.css`
-                );
 
                 const { code } = transform({
                     code: Buffer.from(bridgeCss),
@@ -626,23 +646,22 @@ async function processComponent(componentPath) {
                 if (code.length != 1) {
                     fs.writeFileSync(
                         systemsPath,
-                        `/*
-    Copyright 2023 Adobe. All rights reserved.
-    This file is licensed to you under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License. You may obtain a copy
-    of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software distributed under
-    the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-    OF ANY KIND, either express or implied. See the License for the specific language
-    governing permissions and limitations under the License.
-    */
-
-    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+                        `${copyright}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ${code}
             `.replace(/\/\*![\w|\W]*\*\//, '')
                     );
                 }
+            } else {
+                console.warn(
+                    `No system overrides for ${conversion.inPackage}; creating empty placeholder file.`
+                );
+                fs.writeFileSync(
+                    systemsPath,
+                    `${copyright}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+`
+                );
             }
         }
 
@@ -812,7 +831,7 @@ async function processComponent(componentPath) {
         fs.writeFileSync(
             outputPath,
             `/*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
