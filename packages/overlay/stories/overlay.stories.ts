@@ -918,7 +918,7 @@ export const inline = (): TemplateResult => {
 
 export const longpress = (): TemplateResult => {
     return html`
-        <overlay-trigger placement="right-start">
+        <overlay-trigger content="longpress" placement="right-start">
             <sp-action-button slot="trigger" hold-affordance>
                 <sp-icon-magnify slot="icon"></sp-icon-magnify>
             </sp-action-button>
@@ -1551,4 +1551,44 @@ virtualElementDeclaratively.swc_vrt = {
 virtualElementDeclaratively.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
+};
+
+export const contentOptimization = (): TemplateResult => {
+    return html`
+        <div style="display: flex; gap: 20px; flex-direction: column;">
+            <!-- Click and hover only -->
+            <overlay-trigger content="click hover">
+                <sp-button slot="trigger">Click and hover trigger</sp-button>
+                <sp-popover slot="click-content" direction="right" tip>
+                    <sp-dialog size="s" no-divider>Click content</sp-dialog>
+                </sp-popover>
+                <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
+            </overlay-trigger>
+
+            <!-- Longpress only -->
+            <overlay-trigger content="longpress">
+                <sp-button slot="trigger">Longpress trigger</sp-button>
+                <sp-popover slot="longpress-content" direction="right" tip>
+                    <sp-dialog size="s" no-divider>Longpress content</sp-dialog>
+                </sp-popover>
+                <div slot="longpress-describedby-descriptor">
+                    Press and hold to reveal more options
+                </div>
+            </overlay-trigger>
+
+            <!-- Click only -->
+            <overlay-trigger content="click">
+                <sp-button slot="trigger">Click only trigger</sp-button>
+                <sp-popover slot="click-content" direction="right" tip>
+                    <sp-dialog size="s" no-divider>Click content</sp-dialog>
+                </sp-popover>
+            </overlay-trigger>
+
+            <!-- Hover only -->
+            <overlay-trigger content="hover">
+                <sp-button slot="trigger">Hover only trigger</sp-button>
+                <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
+            </overlay-trigger>
+        </div>
+    `;
 };

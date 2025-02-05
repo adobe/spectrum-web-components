@@ -117,6 +117,40 @@ The delivery of hover content can be customized via the `placement` attribute. H
 </overlay-trigger>
 ```
 
+### Performance optimization
+
+The `content` attribute allows you to explicitly declare which types of overlays your implementation will use. This can help optimize performance by avoiding unnecessary DOM operations and preventing race conditions during rendering.
+
+```html
+<!-- Only using click and hover overlays -->
+<overlay-trigger content="click hover">
+    <sp-button slot="trigger">Click and hover trigger</sp-button>
+    <sp-popover slot="click-content" direction="bottom" tip>
+        Click content
+    </sp-popover>
+    <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
+</overlay-trigger>
+
+<!-- Only using longpress overlay -->
+<overlay-trigger content="longpress">
+    <sp-button slot="trigger">Longpress trigger</sp-button>
+    <sp-popover slot="longpress-content" direction="bottom" tip>
+        Longpress content
+    </sp-popover>
+    <div slot="longpress-describedby-descriptor">
+        Press and hold to reveal more options
+    </div>
+</overlay-trigger>
+```
+
+The `content` attribute accepts a space-separated list of overlay types:
+
+-   `click` - For click-triggered content
+-   `hover` - For hover/focus-triggered content
+-   `longpress` - For longpress-triggered content
+
+When not specified, the component will automatically detect which content types are present, but this may result in additional rendering cycles. For optimal performance, especially in applications with many overlay triggers, explicitly declaring the content types you plan to use is recommended.
+
 ## Accessibility
 
 When using an `<overlay-trigger>` element, it is important to be sure the that content you project into `slot="trigger"` is "interactive". This means that an element within that branch of DOM will be able to receive focus, and said element will appropriately convert keyboard interactions to `click` events, similar to what you'd find with `<a href="#">Anchors</a>`, `<button>Buttons</button>`, etc. You can find further reading on the subject of accessible keyboard interactions at [https://www.w3.org/WAI/WCAG21/Understanding/keyboard](https://www.w3.org/WAI/WCAG21/Understanding/keyboard).
