@@ -7334,39 +7334,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/accordion@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/accordion@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/accordion@npm:6.0.0-s2-foundations.17":
+  version: 6.0.0-s2-foundations.17
+  resolution: "@spectrum-css/accordion@npm:6.0.0-s2-foundations.17"
   peerDependencies:
     "@spectrum-css/icon": ">=7"
     "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/0a1130fe21b27fdef9866726859073f3e96943948a7d8a28b636afbae730f0cdfb5ee13b934aa7cfd80a878bf8a2535d1dea5b9b90a0a88b09fa763e6f402d5a
+  checksum: 10c0/f36d4f3739e76f9d9428797a5747b0ac036e4f6bca97efc96185521127ac677a32baa79b7ab228bdc7ffbd2031c49220237929e23a7ee4db42155128862c00ee
   languageName: node
   linkType: hard
 
-"@spectrum-css/actionbar@npm:9.0.0-s2-foundations.16":
-  version: 9.0.0-s2-foundations.16
-  resolution: "@spectrum-css/actionbar@npm:9.0.0-s2-foundations.16"
+"@spectrum-css/actionbar@npm:9.0.0-s2-foundations.17":
+  version: 9.0.0-s2-foundations.17
+  resolution: "@spectrum-css/actionbar@npm:9.0.0-s2-foundations.17"
   peerDependencies:
     "@spectrum-css/actiongroup": ">=5"
     "@spectrum-css/closebutton": ">=5"
     "@spectrum-css/fieldlabel": ">=8"
     "@spectrum-css/popover": ">=7"
     "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/1c53a53303bb207ae668f097c58213305a8a15deb05ff285e439782766bd6c8bb25f121a08e6ce4b36541d0783f66cf60845747cf11e44e1089d31703a9ae569
+  checksum: 10c0/3bc7c948b705befd88ab3b6ce965c6d66362f76e48ef00a410f47745e1a816496b18693f47396f6eb0d4153416778cd9476f4e1203b8321e7edb6ebf99f82fea
   languageName: node
   linkType: hard
 
-"@spectrum-css/actionbutton@npm:7.0.0-s2-foundations.22":
-  version: 7.0.0-s2-foundations.22
-  resolution: "@spectrum-css/actionbutton@npm:7.0.0-s2-foundations.22"
+"@spectrum-css/actionbutton@npm:7.0.0-s2-foundations.24":
+  version: 7.0.0-s2-foundations.24
+  resolution: "@spectrum-css/actionbutton@npm:7.0.0-s2-foundations.24"
   peerDependencies:
     "@spectrum-css/icon": ">=7"
     "@spectrum-css/tokens": ">=14"
   peerDependenciesMeta:
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/4d15e3eea33b987dde8143b49f01282324575b6cd5f738c359325e8d3ecf493d272764ea2c61ecd4ae329594f585cb1b454bc445e9102c403ae7c158304c24a8
+  checksum: 10c0/2c186a33da07be525c0b792ceb0f895fe5c43dfff95e072aa04ca06a4159f2846a6ae5f0090a378bb466ff2ce8171a5e5236b474814fef6ffd08fd2fbd3f1d02
   languageName: node
   linkType: hard
 
@@ -8225,7 +8225,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/accordion@workspace:packages/accordion"
   dependencies:
-    "@spectrum-css/accordion": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/accordion": "npm:6.0.0-s2-foundations.17"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/icon": "npm:^1.1.1"
     "@spectrum-web-components/icons-ui": "npm:^1.1.1"
@@ -8238,7 +8238,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-bar@workspace:packages/action-bar"
   dependencies:
-    "@spectrum-css/actionbar": "npm:9.0.0-s2-foundations.16"
+    "@spectrum-css/actionbar": "npm:9.0.0-s2-foundations.17"
     "@spectrum-web-components/action-group": "npm:^1.1.1"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/button": "npm:^1.1.1"
@@ -8251,7 +8251,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-button@workspace:packages/action-button"
   dependencies:
-    "@spectrum-css/actionbutton": "npm:7.0.0-s2-foundations.22"
+    "@spectrum-css/actionbutton": "npm:7.0.0-s2-foundations.24"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/button": "npm:^1.1.1"
     "@spectrum-web-components/icon": "npm:^1.1.1"
