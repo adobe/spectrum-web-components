@@ -376,10 +376,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this.focus({ preventScroll });
             return;
         }
-        this.rovingTabindexController?.focusOnItem(selectedItem, { preventScroll });
+        
         if (selectedItem && !preventScroll) {
             selectedItem.scrollIntoView({ block: 'nearest' });
         }
+        this.rovingTabindexController?.focusOnItem(selectedItem);
     }
 
     public override focus({ preventScroll }: FocusOptions = {}): void {
@@ -398,11 +399,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             super.focus({ preventScroll });
             return;
         }
-        this.rovingTabindexController.focus({ preventScroll });
         const selectedItem = this.selectedItems[0];
         if (selectedItem && !preventScroll) {
             selectedItem.scrollIntoView({ block: 'nearest' });
         }
+        this.rovingTabindexController.focus({ preventScroll });
     }
 
     // if the click and pointerup events are on the same target, we should not
