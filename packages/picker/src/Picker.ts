@@ -151,6 +151,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property()
     public placement: Placement = 'bottom-start';
 
+    public override get selfManageFocusElement(): boolean {
+        return true;
+    }
+
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
@@ -213,7 +217,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             return;
         }
 
-        this.toggle();
+        this.toggle();;
     }
 
     public handleButtonBlur(): void {
@@ -343,11 +347,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         if (this.strategy) {
             this.strategy.open = this.open;
         }
-    }
-
-    protected handleDismiss():void {
-        this.button.focus();
-        this.close();
     }
 
     public close(): void {
@@ -543,7 +542,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                         ? `label-${this.labelAlignment}`
                         : undefined
                 )}
-                @click=${this.handleButtonClick}
                 @focus=${this.handleButtonFocus}
                 @blur=${this.handleButtonBlur}
                 @keydown=${{
@@ -650,7 +648,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 <button
                     tabindex="-1"
                     aria-label="Dismiss"
-                    @click=${this.handleDismiss}
+                    @click=${this.close}
                 ></button>
             </div>
         `;
