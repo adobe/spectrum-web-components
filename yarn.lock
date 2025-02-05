@@ -7944,15 +7944,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/search@npm:8.0.0-s2-foundations.18":
-  version: 8.0.0-s2-foundations.18
-  resolution: "@spectrum-css/search@npm:8.0.0-s2-foundations.18"
+"@spectrum-css/search@npm:8.0.1":
+  version: 8.0.1
+  resolution: "@spectrum-css/search@npm:8.0.1"
   peerDependencies:
     "@spectrum-css/clearbutton": ">=6"
     "@spectrum-css/icon": ">=7"
     "@spectrum-css/textfield": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/d2c8003c1b93df6d8f8308d87bbbe71937b569f9e500dd0ffb94435592482d602b46acaae4f460d3fd2cfe7c4e4761f3cd04d46e97e7c9e91cc77ceef5a5b9e8
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/9fa8d91326fff0296f5f2f5d95582bf08c0aaacbd8780bbe003b468f4904c834750dedc54979e7c284c14c05305380f32721799a8a133fa0cee7971cfb195e91
   languageName: node
   linkType: hard
 
@@ -9037,7 +9037,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/search@workspace:packages/search"
   dependencies:
-    "@spectrum-css/search": "npm:8.0.0-s2-foundations.18"
+    "@spectrum-css/search": "npm:8.0.1"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/button": "npm:^1.1.1"
     "@spectrum-web-components/icon": "npm:^1.1.1"
