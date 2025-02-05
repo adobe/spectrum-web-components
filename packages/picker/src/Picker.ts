@@ -263,6 +263,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     public handleButtonFocus(event: FocusEvent): void {
         this.strategy?.handleButtonFocus(event);
+        this.close();
     }
 
     protected handleKeydown = (event: KeyboardEvent): void => {
