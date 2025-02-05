@@ -481,11 +481,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     };
 
     protected hasAccessibleLabel(): boolean {
+        const slotContent = this.querySelector('[slot="label"]')?.textContent && this.querySelector('[slot="label"]')?.textContent?.trim() !== '';
+        const slotAlt = this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() && this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() !== '';
         return (
             !!this.label ||
             !!this.getAttribute('aria-label') ||
             !!this.getAttribute('aria-labelledby') ||
-            !!this.appliedLabel
+            !!this.appliedLabel || !!slotContent || !!slotAlt
         );
     }
 
