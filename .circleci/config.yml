@@ -100,32 +100,9 @@ commands:
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo "Generated hash: $hash"
-                      
-                      # Acquire lock before deploy
-                      while ! mkdir /tmp/netlify-deploy.lock 2>/dev/null; do
-                          echo "Waiting for other deploys to finish..."
-                          sleep 5
-                      done
-                      
-                      # Deploy with retries
-                      for i in 1 2 3; do
-                          if yarn netlify deploy \
-                              --site $NETLIFY_SITE_ID \
-                              --auth $NETLIFY_AUTH_TOKEN \
-                              --alias=$hash \
-                              --cwd test/visual; then
-                              rm -rf /tmp/netlify-deploy.lock  # Release lock
-                              exit 0
-                          fi
-                          echo "Deploy failed on attempt $i, retrying..."
-                          sleep $((5 * i))
-                      done
-                      
-                      rm -rf /tmp/netlify-deploy.lock  # Release lock even on failure
-                      echo "All deploy attempts failed"
-                      exit 1
+                      branch=$(npx slugify-cli $branch)
+                      alias="$branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
+                      yarn netlify deploy --alias="$alias" --cwd test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
@@ -316,9 +293,9 @@ jobs:
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
-                      echo hash
-                      yarn netlify deploy --alias=$hash --cwd test/visual
+                      branch=$(npx slugify-cli $branch)
+                      alias="$branch-hcm-medium-ltr"
+                      yarn netlify deploy --alias="$alias" --cwd test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
