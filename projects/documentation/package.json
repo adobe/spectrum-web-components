@@ -4,7 +4,7 @@
     "private": true,
     "description": "The documentation site for Spectrum Web Components",
     "license": "Apache-2.0",
-    "author": "",
+    "author": "Adobe",
     "main": "index.js",
     "type": "module",
     "scripts": {
@@ -49,7 +49,7 @@
         "posthtml-attrs-parser": "^1.0.1",
         "posthtml-match-helper": "^2.0.0",
         "prismjs": "^1.29.0",
-        "rimraf": "^5.0.1",
+        "rimraf": "^5.0.10",
         "rollup": "^4.12.0",
         "rollup-plugin-lit-css": "^5.0.0",
         "rollup-plugin-minify-html-literals": "^1.2.6",
@@ -258,5 +258,24 @@
                 }
             ]
         }
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "projects/documentation"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html"
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
 }

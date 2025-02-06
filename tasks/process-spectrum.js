@@ -1,33 +1,34 @@
 #!/usr/bin/env node
 // @ts-check
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the 'License');
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an 'AS IS' BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
-import fg from 'fast-glob';
-import 'colors';
-import { transform } from 'lightningcss';
 import path from 'path';
 import fs from 'fs';
 import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import fg from 'fast-glob';
+import 'colors';
+import { transform } from 'lightningcss';
 
+const fsp = fs.promises;
+const require = createRequire(import.meta.url);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '../');
 
-const require = createRequire(import.meta.url);
-
 /**
- * @to-do: normalize deep comparison old vs new usage when recursing.
+ * @todo: normalize deep comparison old vs new usage when recursing.
  */
 const compareSelectors = (oldSelector, newSelector) => {
     let matches = true;
@@ -158,6 +159,15 @@ async function processComponent(componentPath) {
      */
     const { conversions } = config;
 
+    const licensePath = path.resolve(__dirname, '..', 'config', 'license.js');
+    let header = '';
+    if (fs.existsSync(licensePath)) {
+        header = fs.readFileSync(licensePath, 'utf8');
+        header = header.replace('<%= YEAR %>', new Date().getFullYear());
+    }
+
+    const promises = [];
+
     /**
      * @type { import('./spectrum-css-converter').SpectrumCSSConverter}
      */
@@ -166,7 +176,7 @@ async function processComponent(componentPath) {
         const sourcePath = require
             .resolve(conversion.inPackage)
             .replace('index.css', 'index-base.css');
-        var sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
+        const sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
 
         const outputPath = path.join(
             ...(Array.isArray(conversion.outPackage)
@@ -175,6 +185,7 @@ async function processComponent(componentPath) {
             'src',
             `spectrum-${conversion.fileName}.css`
         );
+
         const processSelectorV2 = (selector) => {
             const matches = Array(selector.length);
             let injected = 0;
@@ -417,6 +428,7 @@ async function processComponent(componentPath) {
             const selectorMetadata = selectors.map(processSelectorV2);
             return buildSelectorsV2(selectorMetadata);
         };
+
         if (conversion.systemOverrides !== false) {
             // The default package file is index.css but index-theme.css contains the --system custom property mappings that facilitate theme switching.
             const bridgepath = require
@@ -626,21 +638,9 @@ async function processComponent(componentPath) {
                 if (code.length != 1) {
                     fs.writeFileSync(
                         systemsPath,
-                        `/*
-    Copyright 2023 Adobe. All rights reserved.
-    This file is licensed to you under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License. You may obtain a copy
-    of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software distributed under
-    the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-    OF ANY KIND, either express or implied. See the License for the specific language
-    governing permissions and limitations under the License.
-    */
-
-    /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-            ${code}
-            `.replace(/\/\*![\w|\W]*\*\//, '')
+                        `${header}\n/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */\n${code
+                            .toString()
+                            ?.replace(/\/\*![\w|\W]*\*\//, '')}\n`
                     );
                 }
             }
@@ -809,37 +809,33 @@ async function processComponent(componentPath) {
             filename: outputPath,
         });
 
-        fs.writeFileSync(
-            outputPath,
-            `/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-${code}
-`.replace(/\/\*![\w|\W]*\*\//, '')
+        promises.push(
+            fsp.writeFile(
+                outputPath,
+                `${header}\n/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */\n${code
+                    ?.toString()
+                    ?.replace(/\/\*![\w|\W]*\*\//, '')}\n`
+            )
         );
     }
+
+    return Promise.all(promises);
 }
 
 async function processComponents() {
     const promises = [];
+
     // eslint-disable-next-line no-console
     console.log('Processing Spectrum Components'.green);
+
     for (const configPath of await fg(
         `${root}/{packages,tools}/*/src/spectrum-config.js`
     )) {
         promises.push(processComponent(path.join(configPath, '..')));
     }
+
     await Promise.all(promises);
+
     // eslint-disable-next-line no-console
     console.log('Done'.green);
 }
