@@ -1049,7 +1049,9 @@
     --spectrum-accent-content-color-selected: var(
         --spectrum-accent-content-color-down
     );
-    --spectrum-disabled-background-color: var(--spectrum-gray-100);
+
+    /* TODO for combobox */
+    --spectrum-disabled-background-color: var(--spectrum-gray-25);
     --spectrum-disabled-static-white-background-color: var(
         --spectrum-transparent-white-100
     );
