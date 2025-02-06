@@ -102,8 +102,8 @@ module.exports = defineConfig({
 
             workspace.set('publishConfig.access', 'public');
             workspace.set('keywords', keywords(['component', 'css']));
-            workspace.set('main', 'src/index.js');
-            workspace.set('module', 'src/index.js');
+            workspace.set('main', './src/index.js');
+            workspace.set('module', './src/index.js');
             workspace.set('type', 'module');
         }
 

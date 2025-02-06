@@ -11,13 +11,13 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/number-field"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/number-field",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "src/index.js",
-    "module": "src/index.js",
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
@@ -52,10 +52,16 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
-        "lit-html"
+        "lit-html",
+        "component",
+        "css"
     ],
     "dependencies": {
         "@internationalized/number": "^3.6.0",

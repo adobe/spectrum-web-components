@@ -13,13 +13,13 @@
 export default {
     '*.css': [
         'stylelint --fix --cache --allow-empty-input --report-descriptionless-disables --report-invalid-scope-disables --report-needless-disables',
-        'prettier --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
+        'prettier --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write --config .prettierrc.yaml',
     ],
     '*.{ts,js,json}': [
         'eslint --fix --cache --no-error-on-unmatched-pattern --quiet',
-        'prettier --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
     '*.{md,html}': [
-        'prettier --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
+        'prettier --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write --config .prettierrc.yaml',
     ],
+    'package.json': () => 'yarn constraints --fix',
 };
