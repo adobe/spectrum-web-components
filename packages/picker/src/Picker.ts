@@ -894,10 +894,10 @@ export class Picker extends PickerBase {
             return;
         }
         event.preventDefault();
-        const nextItem = code === 'ArrowRight' ? this.optionsMenu?.getNextItem(this.selectedItem) : code === 'ArrowLeft' ? this.optionsMenu?.getPrevItem() : undefined;
+        const nextItem = this.optionsMenu?.quickSelectItem(this.selectedItem, code === 'ArrowLeft');
         if (!this.value || nextItem !== this.selectedItem) {
             // updates picker text but does not fire change event until action is completed
-            if(!!nextItem) this.setValueFromItem(nextItem as MenuItem, event);
-        }
+       if(!!nextItem) this.setValueFromItem(nextItem as MenuItem);
+       }
     };
 }

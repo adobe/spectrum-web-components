@@ -69,7 +69,7 @@ export type TestablePicker = { optionsMenu: Menu };
 ignoreResizeObserverLoopError(before, after);
 
 const isMenuActiveElement = function (el: Picker): boolean {
-    return el.contains(document.activeElement);
+    return document.activeElement?.tagName === 'SP-MENU-ITEM' && el.contains(document.activeElement);
 };
 const isSafari = /^((?!chrome|android).)*safari/i.test(
     navigator.userAgent
@@ -913,9 +913,11 @@ export function runPickerTests(): void {
         });
         //TODO: not sure why this is failing
         it('quick selects on ArrowLeft/Right', async () => {
+            //el.classList.add('debugging');
             const selectionSpy = spy();
             el.addEventListener('change', (event: Event) => {
                 const { value } = event.target as Picker;
+                console.log('change', value, el.selectedItem?.itemText, el.appliedLabel);
                 selectionSpy(value);
             });
 
@@ -1023,7 +1025,6 @@ export function runPickerTests(): void {
             expect(thirdItem.focused).to.be.true;
 
             const closed = oneEvent(el, 'sp-closed');
-            //TODO button does not focus
             button.focus();
             await closed;
             expect(isMenuActiveElement(el)).to.be.false;

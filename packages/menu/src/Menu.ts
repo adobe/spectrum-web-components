@@ -370,7 +370,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public focusOnFirstSelectedItem({ preventScroll }: FocusOptions = {}): void {
         if(!this.rovingTabindexController) return;
         const selectedItem = this.selectedItems.find((el) =>
-            this.rovingTabindexController?.isFocusableElement(el)
+            this.isFocusableElement(el)
         );
         if(!selectedItem) {
             this.focus({ preventScroll });
@@ -499,29 +499,21 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     };
 
     /**
-     * given a menu item, returns the next focusable menu item;
+     * given a menu item, returns the next focusable menu item before or after it;
      * if no menu item is provided, returns the first focusable menu item
      * @param menuItem {MenuItem} 
+     * @param before {boolean} return the item before; default is false
      * @returns {MenuItem} 
      */
-    public getNextItem(menuItem?: MenuItem): MenuItem {
+    public quickSelectItem(menuItem?: MenuItem, before = false): MenuItem {
+        const diff = before ? -1 : 1;
         const elements = this.rovingTabindexController?.elements || [];
         const index = !!menuItem ? elements.indexOf(menuItem) : -1;
-        const newIndex = this.rovingTabindexController?.getIndexCircularly(1, index);
-        return elements[newIndex || 0] as MenuItem;
-    }
-
-    /**
-     * given a menu item, returns the previous focusable menu item;
-     * if menuItem is not provided, returns the first focusable menu item
-     * @param menuItem {MenuItem} 
-     * @returns {MenuItem} 
-     */
-    public getPrevItem(menuItem?: MenuItem): MenuItem {
-        const elements = this.rovingTabindexController?.elements || [];
-        const index = !!menuItem ? elements.indexOf(menuItem) : -1;
-        const newIndex = this.rovingTabindexController?.getIndexCircularly(-1, Math.max(index));
-        return elements[newIndex || 0] as MenuItem;
+        let newIndex = Math.min(Math.max(0, index + diff), elements.length - 1);
+        while(!this.isFocusableElement(elements[newIndex]) && 0 < newIndex && newIndex < elements.length - 1) {
+            newIndex += diff;
+        }
+        return !!this.isFocusableElement(elements[newIndex]) ? elements[newIndex] as MenuItem : menuItem || elements[0];
     }
 
     public handleSubmenuOpened = (event: Event): void => {
@@ -867,10 +859,14 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                             : firstEnabledIndex;
                     },
                     elements: () => this.cachedChildItems || [],
-                    isFocusableElement: (el: MenuItem) => !el.disabled,
+                    isFocusableElement: this.isFocusableElement.bind(this),
                 });
         }
         this.updateComplete.then(() => this.updateItemFocus());
+    }
+
+    private isFocusableElement(el: MenuItem): boolean {
+        return !el.disabled;
     }
 
     public override disconnectedCallback(): void {
