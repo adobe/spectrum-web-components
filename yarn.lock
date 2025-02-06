@@ -7357,16 +7357,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/actionbutton@npm:7.0.0-s2-foundations.22":
-  version: 7.0.0-s2-foundations.22
-  resolution: "@spectrum-css/actionbutton@npm:7.0.0-s2-foundations.22"
+"@spectrum-css/actionbutton@npm:7.0.0-s2-foundations.24":
+  version: 7.0.0-s2-foundations.24
+  resolution: "@spectrum-css/actionbutton@npm:7.0.0-s2-foundations.24"
   peerDependencies:
     "@spectrum-css/icon": ">=7"
     "@spectrum-css/tokens": ">=14"
   peerDependenciesMeta:
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/4d15e3eea33b987dde8143b49f01282324575b6cd5f738c359325e8d3ecf493d272764ea2c61ecd4ae329594f585cb1b454bc445e9102c403ae7c158304c24a8
+  checksum: 10c0/2c186a33da07be525c0b792ceb0f895fe5c43dfff95e072aa04ca06a4159f2846a6ae5f0090a378bb466ff2ce8171a5e5236b474814fef6ffd08fd2fbd3f1d02
   languageName: node
   linkType: hard
 
@@ -7478,9 +7478,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/button@npm:14.0.0-s2-foundations.18":
-  version: 14.0.0-s2-foundations.18
-  resolution: "@spectrum-css/button@npm:14.0.0-s2-foundations.18"
+"@spectrum-css/button@npm:14.0.0-s2-foundations.19":
+  version: 14.0.0-s2-foundations.19
+  resolution: "@spectrum-css/button@npm:14.0.0-s2-foundations.19"
   peerDependencies:
     "@spectrum-css/icon": ">=7"
     "@spectrum-css/progresscircle": ">=3"
@@ -7490,7 +7490,7 @@ __metadata:
       optional: true
     "@spectrum-css/progresscircle":
       optional: true
-  checksum: 10c0/bedc7de743cf767b000b5714081b6f72159362371a397ec657dd26552cc9d9ec824649b20662f9705c3f29e965a87a6e9011c8c640d23bedb535edba095fb563
+  checksum: 10c0/c479b2abc320680db99f96a635ae1a739212aba50c5105adf7feef0597892c611b7524eea9120b2f106c46ddd2ace3838e9982682375a0a5229c8f64cdb8ef5e
   languageName: node
   linkType: hard
 
@@ -7780,6 +7780,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@spectrum-css/icon@npm:8.0.0-s2-foundations.19":
+  version: 8.0.0-s2-foundations.19
+  resolution: "@spectrum-css/icon@npm:8.0.0-s2-foundations.19"
+  peerDependencies:
+    "@spectrum-css/tokens": ">=15.0.0-s2-foundations.0"
+  checksum: 10c0/befb9626368c3a4a2ade710b904a58d5a67a21696b28532b735cced023469cdc1032456056be04af6e5ef4b975db80fc153ddbdbfb168297d98e8c0349864890
+  languageName: node
+  linkType: hard
+
 "@spectrum-css/illustratedmessage@npm:8.0.0-s2-foundations.15":
   version: 8.0.0-s2-foundations.15
   resolution: "@spectrum-css/illustratedmessage@npm:8.0.0-s2-foundations.15"
@@ -7925,12 +7934,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/progresscircle@npm:4.0.0-s2-foundations.15":
-  version: 4.0.0-s2-foundations.15
-  resolution: "@spectrum-css/progresscircle@npm:4.0.0-s2-foundations.15"
+"@spectrum-css/progresscircle@npm:4.0.0-s2-foundations.16":
+  version: 4.0.0-s2-foundations.16
+  resolution: "@spectrum-css/progresscircle@npm:4.0.0-s2-foundations.16"
   peerDependencies:
     "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/ff6914d7758d8d45247f2a9bccb2f45f7f0b836b2a4db363c4630e495ca5197103f753b331d8333e21e4d765fe7855f221f341b2434160b1bbd67aa643598855
+  checksum: 10c0/37f2d3f87f934bb246cc284ec95c41802a2bec7ef56489f1214efb69442101a47f144f8c5477f7b046461faf87d8c10092b81c647a95b51d70e5d5433979d228
   languageName: node
   linkType: hard
 
@@ -8139,10 +8148,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.0.0-s2-foundations.27":
-  version: 15.0.0-s2-foundations.27
-  resolution: "@spectrum-css/tokens@npm:15.0.0-s2-foundations.27"
-  checksum: 10c0/da37e82a3169e1eeeacc7a98f3d418daeece0fadcbcd8cb4d289651c1f3b492c6199c8a0a6006ecace4f3f020f9efa072d78bcc5e4ca3abf71e25f64e3aa440f
+"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.0.0-s2-foundations.31":
+  version: 15.0.0-s2-foundations.31
+  resolution: "@spectrum-css/tokens@npm:15.0.0-s2-foundations.31"
+  checksum: 10c0/e09edb1540ebe73ed7776673c18e1284e98cabf0d91483a3826377a70678abd31bf16dce371b3ee03548d0d8cc963d134541f16d03f98696ac8fe2869f1b4059
   languageName: node
   linkType: hard
 
@@ -8251,7 +8260,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-button@workspace:packages/action-button"
   dependencies:
-    "@spectrum-css/actionbutton": "npm:7.0.0-s2-foundations.22"
+    "@spectrum-css/actionbutton": "npm:7.0.0-s2-foundations.24"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/button": "npm:^1.1.1"
     "@spectrum-web-components/icon": "npm:^1.1.1"
@@ -8458,7 +8467,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/button@workspace:packages/button"
   dependencies:
-    "@spectrum-css/button": "npm:14.0.0-s2-foundations.18"
+    "@spectrum-css/button": "npm:14.0.0-s2-foundations.19"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/clear-button": "npm:^1.1.1"
     "@spectrum-web-components/close-button": "npm:^1.1.1"
@@ -8775,7 +8784,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/icon@workspace:packages/icon"
   dependencies:
-    "@spectrum-css/icon": "npm:8.0.0-s2-foundations.16"
+    "@spectrum-css/icon": "npm:8.0.0-s2-foundations.19"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/iconset": "npm:^1.1.1"
   languageName: unknown
@@ -9005,7 +9014,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/progress-circle@workspace:packages/progress-circle"
   dependencies:
-    "@spectrum-css/progresscircle": "npm:4.0.0-s2-foundations.15"
+    "@spectrum-css/progresscircle": "npm:4.0.0-s2-foundations.16"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/shared": "npm:^1.1.1"
   languageName: unknown
@@ -9122,7 +9131,7 @@ __metadata:
   dependencies:
     "@spectrum-css/expressvars": "npm:^3.0.9"
     "@spectrum-css/tokens": "npm:15.0.0"
-    "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.0.0-s2-foundations.27"
+    "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.0.0-s2-foundations.31"
     "@spectrum-css/typography": "npm:7.0.0-s2-foundations.17"
     "@spectrum-css/vars": "npm:^9.0.8"
     "@spectrum-web-components/base": "npm:^1.1.1"
