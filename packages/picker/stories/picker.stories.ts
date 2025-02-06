@@ -694,3 +694,29 @@ custom.args = {
     open: true,
 };
 custom.decorators = [isOverlayOpen];
+
+export const BackgroundClickTest = (): TemplateResult => {
+    return html`
+        <div style="display: flex; flex-direction: column;">
+            <sp-picker size="l">
+                <sp-menu-item value="option-1">Deselect</sp-menu-item>
+                <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+            </sp-picker>
+            <div style="position: absolute; bottom: 50px;">
+                <sp-button
+                    @click=${() => {
+                        console.log(
+                            'this button should not have been clicked...'
+                        );
+                    }}
+                    size="l"
+                >
+                    I shall not be clicked
+                </sp-button>
+            </div>
+        </div>
+    `;
+};
+BackgroundClickTest.swc_vrt = {
+    skip: true,
+};
