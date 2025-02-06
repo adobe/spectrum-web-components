@@ -7812,9 +7812,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/menu@npm:8.0.0-s2-foundations.16":
-  version: 8.0.0-s2-foundations.16
-  resolution: "@spectrum-css/menu@npm:8.0.0-s2-foundations.16"
+"@spectrum-css/menu@npm:8.0.0-s2-foundations.17":
+  version: 8.0.0-s2-foundations.17
+  resolution: "@spectrum-css/menu@npm:8.0.0-s2-foundations.17"
   peerDependencies:
     "@spectrum-css/checkbox": ">=9"
     "@spectrum-css/divider": ">=3"
@@ -7831,7 +7831,7 @@ __metadata:
       optional: true
     "@spectrum-css/tray":
       optional: true
-  checksum: 10c0/410c83ab47b79053b0b06fd1b661a404711a84561aa5f757da7c02c5ee3b3ed436b430ecd1021a1f9722e968caa74103f6923b20dc69c541bf7bc35dcc2ba556
+  checksum: 10c0/953b189d50c0e3419a8242c8df491bc2032bbf857a6032194d8d77a8be348a1c671298c02e6bcdd0be6722566d07f9b8387a40cd0bcae379ebf7039f725df43b
   languageName: node
   linkType: hard
 
@@ -8869,7 +8869,7 @@ __metadata:
   resolution: "@spectrum-web-components/menu@workspace:packages/menu"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/menu": "npm:8.0.0-s2-foundations.16"
+    "@spectrum-css/menu": "npm:8.0.0-s2-foundations.17"
     "@spectrum-web-components/action-button": "npm:^1.1.1"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/divider": "npm:^1.1.1"
