@@ -505,21 +505,23 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * @returns {MenuItem} 
      */
     public getNextItem(menuItem?: MenuItem): MenuItem {
-        const index = !!menuItem ? this.rovingTabindexController?.elements.indexOf(menuItem) : undefined;
-        const newIndex = !!index ? this.rovingTabindexController?.getIndexCircularly(1, (index || 0)) : undefined;
-        return this.rovingTabindexController?.elements[newIndex || 0] as MenuItem;
+        const elements = this.rovingTabindexController?.elements || [];
+        const index = !!menuItem ? elements.indexOf(menuItem) : -1;
+        const newIndex = this.rovingTabindexController?.getIndexCircularly(1, index);
+        return elements[newIndex || 0] as MenuItem;
     }
 
     /**
      * given a menu item, returns the previous focusable menu item;
-     * if menuItem is not provided, returns the last focusable menu item
+     * if menuItem is not provided, returns the first focusable menu item
      * @param menuItem {MenuItem} 
      * @returns {MenuItem} 
      */
     public getPrevItem(menuItem?: MenuItem): MenuItem {
-        const index = !!menuItem ? this.rovingTabindexController?.elements.indexOf(menuItem) : undefined;
-        const newIndex = this.rovingTabindexController?.getIndexCircularly(-1, (index || 1));
-        return this.rovingTabindexController?.elements[newIndex || 0] as MenuItem;
+        const elements = this.rovingTabindexController?.elements || [];
+        const index = !!menuItem ? elements.indexOf(menuItem) : -1;
+        const newIndex = this.rovingTabindexController?.getIndexCircularly(-1, Math.max(index));
+        return elements[newIndex || 0] as MenuItem;
     }
 
     public handleSubmenuOpened = (event: Event): void => {
