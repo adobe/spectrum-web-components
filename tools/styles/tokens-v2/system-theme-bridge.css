@@ -375,9 +375,8 @@
     --system-action-button-selected-border-color-down: transparent;
     --system-action-button-selected-border-color-focus: transparent;
     --system-action-button-selected-border-color-disabled: transparent;
-    /** TODO for Combobox */
     --system-action-button-selected-background-color-disabled: var(
-        --spectrum-gray-25
+        --spectrum-disabled-background-color
     );
     --system-action-button-selected-emphasized-background-color-default: var(
         --spectrum-accent-background-color-default
