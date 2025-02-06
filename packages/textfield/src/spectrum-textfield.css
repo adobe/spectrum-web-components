@@ -536,7 +536,11 @@ governing permissions and limitations under the License.
     );
     resize: none;
     opacity: 1;
-    border-color: #0000;
+    /** TODO foundations CSS */
+    border-color:  var(
+        --mod-textfield-border-color-disabled,
+        var(--spectrum-textfield-border-color-disabled)
+    );
 }
 
 .input:disabled,
