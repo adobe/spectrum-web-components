@@ -7529,13 +7529,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/checkbox@npm:10.0.0-s2-foundations.18":
-  version: 10.0.0-s2-foundations.18
-  resolution: "@spectrum-css/checkbox@npm:10.0.0-s2-foundations.18"
+"@spectrum-css/checkbox@npm:10.0.0-s2-foundations.20":
+  version: 10.0.0-s2-foundations.20
+  resolution: "@spectrum-css/checkbox@npm:10.0.0-s2-foundations.20"
   peerDependencies:
     "@spectrum-css/icon": ">=7"
     "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/74b517fdcdad9bc28deff8b48bee7e6910446ad7dfce32daab5e95f308254bf10ba61837df06730f8a7f96d8ba9def621debb4c37c858dcd56373cc4bd81ab2c
+  checksum: 10c0/0b374a8d7fc1acff8eb01c9808759deab983c78fca93222704d4a83164bef13f67a533bb7ee1b9cdd6a921e8b0bcd14dd45b575665e4219312cb9a663d477225
   languageName: node
   linkType: hard
 
@@ -8489,7 +8489,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/checkbox@workspace:packages/checkbox"
   dependencies:
-    "@spectrum-css/checkbox": "npm:10.0.0-s2-foundations.18"
+    "@spectrum-css/checkbox": "npm:10.0.0-s2-foundations.20"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/icon": "npm:^1.1.1"
     "@spectrum-web-components/icons-ui": "npm:^1.1.1"
