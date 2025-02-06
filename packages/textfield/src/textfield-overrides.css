@@ -12,21 +12,12 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-textfield-border-color: var(--system-textfield-border-color);
-    --spectrum-textfield-border-color-hover: var(
-        --system-textfield-border-color-hover
-    );
-    --spectrum-textfield-border-color-focus: var(
-        --system-textfield-border-color-focus
-    );
-    --spectrum-textfield-border-color-focus-hover: var(
-        --system-textfield-border-color-focus-hover
-    );
-    --spectrum-textfield-border-color-keyboard-focus: var(
-        --system-textfield-border-color-keyboard-focus
-    );
-    --spectrum-textfield-border-width: var(--system-textfield-border-width);
-    --spectrum-textfield-background-color: var(
-        --system-textfield-background-color
-    );
+  --spectrum-textfield-border-color: var(--system-textfield-border-color);
+  --spectrum-textfield-border-color-hover: var(--system-textfield-border-color-hover);
+  --spectrum-textfield-border-color-focus: var(--system-textfield-border-color-focus);
+  --spectrum-textfield-border-color-focus-hover: var(--system-textfield-border-color-focus-hover);
+  --spectrum-textfield-border-color-keyboard-focus: var(--system-textfield-border-color-keyboard-focus);
+  --spectrum-textfield-border-width: var(--system-textfield-border-width);
+  --spectrum-textfield-background-color: var(--system-textfield-background-color);
 }
+

@@ -83,6 +83,13 @@
             "rules": {
                 "no-console": ["off"]
             }
+        },
+        {
+            "files": ["*.json"],
+            "parser": "jsonc-eslint-parser",
+            "rules": {
+                "notice/notice": "off"
+            }
         }
     ]
 }

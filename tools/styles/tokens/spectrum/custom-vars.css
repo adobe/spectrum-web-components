@@ -1,3 +1,16 @@
+/*!
+ * Copyright 2023 Adobe. All rights reserved.
+ *
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at <http://www.apache.org/licenses/LICENSE-2.0>
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
 /* @deprecated these assets should not be used; the custom override values exist in spectrum/global-vars.css */
 :host,
 :root {
@@ -23,9 +36,9 @@
     --spectrum-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
 
     --spectrum-sans-font-family-stack: adobe-clean,
-        var(--spectrum-sans-serif-font-family), 'Source Sans Pro', -apple-system,
-        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
-        'Lucida Grande', sans-serif;
+        var(--spectrum-sans-serif-font-family), 'Source Sans Pro',
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+        'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-sans-serif-font: var(--spectrum-sans-font-family-stack);
 
     --spectrum-serif-font-family-stack: adobe-clean-serif,
