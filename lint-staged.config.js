@@ -10,20 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: var(--mod-swatchgroup-spacing-regular, var(--spectrum-swatchgroup-spacing-regular));
-  flex-flow: wrap;
-  display: inline-flex;
-}
-
-:host([density="compact"]) {
-  gap: var(--mod-swatchgroup-spacing-compact, var(--spectrum-swatchgroup-spacing-compact));
-}
-
-:host([density="spacious"]) {
-  gap: var(--mod-swatchgroup-spacing-spacious, var(--spectrum-swatchgroup-spacing-spacious));
-}
-
+export default {
+    '*.css': [
+        'stylelint --fix --cache --allow-empty-input --report-descriptionless-disables --report-invalid-scope-disables --report-needless-disables',
+        'prettier --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
+    ],
+    '*.{ts,js,json}': [
+        'eslint --fix --cache --no-error-on-unmatched-pattern --quiet',
+        'prettier --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
+    ],
+    '*.{md,html}': [
+        'prettier --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
+    ],
+};
