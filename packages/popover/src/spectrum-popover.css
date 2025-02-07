@@ -50,6 +50,32 @@ governing permissions and limitations under the License.
     );
 }
 
+:host {
+    --spectrum-popover-animation-distance: var(--spectrum-spacing-100);
+    --spectrum-popover-background-color: var(
+        --spectrum-background-layer-2-color
+    );
+    --spectrum-popover-border-color: var(--spectrum-gray-400);
+    --spectrum-popover-content-area-spacing-vertical: var(
+        --spectrum-popover-top-to-content-area
+    );
+    --spectrum-popover-shadow-horizontal: var(--spectrum-drop-shadow-x);
+    --spectrum-popover-shadow-vertical: var(--spectrum-drop-shadow-y);
+    --spectrum-popover-shadow-blur: var(--spectrum-drop-shadow-blur);
+    --spectrum-popover-shadow-color: var(--spectrum-drop-shadow-color);
+    --spectrum-popover-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-popover-pointer-width: var(--spectrum-popover-tip-width);
+    --spectrum-popover-pointer-height: var(--spectrum-popover-tip-height);
+    --spectrum-popover-pointer-edge-offset: calc(
+        var(--spectrum-corner-radius-100) + var(--spectrum-popover-tip-width) /
+            2
+    );
+    --spectrum-popover-pointer-edge-spacing: calc(
+        var(--spectrum-popover-pointer-edge-offset) -
+            var(--spectrum-popover-tip-width) / 2
+    );
+}
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-popover-border-color: CanvasText;
@@ -106,11 +132,8 @@ governing permissions and limitations under the License.
     stroke-linecap: square;
     stroke-linejoin: miter;
     fill: var(
-        --highcontrast-popover-background-color,
-        var(
-            --mod-popover-background-color,
-            var(--spectrum-popover-background-color)
-        )
+        --mod-popover-background-color,
+        var(--spectrum-popover-background-color)
     );
     stroke: var(
         --highcontrast-popover-border-color,

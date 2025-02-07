@@ -7699,12 +7699,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/divider@npm:4.0.0-s2-foundations.15":
-  version: 4.0.0-s2-foundations.15
-  resolution: "@spectrum-css/divider@npm:4.0.0-s2-foundations.15"
+"@spectrum-css/divider@npm:4.0.0-s2-foundations.16":
+  version: 4.0.0-s2-foundations.16
+  resolution: "@spectrum-css/divider@npm:4.0.0-s2-foundations.16"
   peerDependencies:
     "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/3a4a4bebbbf40f13c4c509c8505c28b546ad8795b567f77acec301cf786f5064847fe3e48ae27df4dcbfe867a2c91ced36911664c542e47c43d27b706349089c
+  checksum: 10c0/9035c7bf2a16f0aa212537152a9ea8bcbeadc0e15629fdeb9e565f9cb54c3bb69245799e37ffe8066bc426e9af482375e38b77e4861570e59e987ab2aa046da6
   languageName: node
   linkType: hard
 
@@ -7821,9 +7821,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/menu@npm:8.0.0-s2-foundations.16":
-  version: 8.0.0-s2-foundations.16
-  resolution: "@spectrum-css/menu@npm:8.0.0-s2-foundations.16"
+"@spectrum-css/menu@npm:8.0.0-s2-foundations.17":
+  version: 8.0.0-s2-foundations.17
+  resolution: "@spectrum-css/menu@npm:8.0.0-s2-foundations.17"
   peerDependencies:
     "@spectrum-css/checkbox": ">=9"
     "@spectrum-css/divider": ">=3"
@@ -7840,7 +7840,7 @@ __metadata:
       optional: true
     "@spectrum-css/tray":
       optional: true
-  checksum: 10c0/410c83ab47b79053b0b06fd1b661a404711a84561aa5f757da7c02c5ee3b3ed436b430ecd1021a1f9722e968caa74103f6923b20dc69c541bf7bc35dcc2ba556
+  checksum: 10c0/953b189d50c0e3419a8242c8df491bc2032bbf857a6032194d8d77a8be348a1c671298c02e6bcdd0be6722566d07f9b8387a40cd0bcae379ebf7039f725df43b
   languageName: node
   linkType: hard
 
@@ -7903,9 +7903,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/popover@npm:8.0.0-s2-foundations.16":
-  version: 8.0.0-s2-foundations.16
-  resolution: "@spectrum-css/popover@npm:8.0.0-s2-foundations.16"
+"@spectrum-css/popover@npm:8.0.0-s2-foundations.17":
+  version: 8.0.0-s2-foundations.17
+  resolution: "@spectrum-css/popover@npm:8.0.0-s2-foundations.17"
   peerDependencies:
     "@spectrum-css/alertdialog": ">=2"
     "@spectrum-css/dialog": ">=10"
@@ -7917,7 +7917,7 @@ __metadata:
       optional: true
     "@spectrum-css/menu":
       optional: true
-  checksum: 10c0/124b42ac1a23c113fd4e207eecdfa9fac77b070d7d2c8f8bdf8c342cba7ff97b83d9fbae0252cff90824cdc5ddcd68806a1634ecdf60090bccb2fcdb115d8a66
+  checksum: 10c0/03fb044f82627d69262a80e3413f3852994343ee7b7a4aa37a22618b73171dbdc4c68dc9260de217d5d0dab48cfe48e0f9a7934cff047b424672e72d03a6f0cc
   languageName: node
   linkType: hard
 
@@ -8707,7 +8707,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/divider@workspace:packages/divider"
   dependencies:
-    "@spectrum-css/divider": "npm:4.0.0-s2-foundations.15"
+    "@spectrum-css/divider": "npm:4.0.0-s2-foundations.16"
     "@spectrum-web-components/base": "npm:^1.1.1"
   languageName: unknown
   linkType: soft
@@ -8878,7 +8878,7 @@ __metadata:
   resolution: "@spectrum-web-components/menu@workspace:packages/menu"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/menu": "npm:8.0.0-s2-foundations.16"
+    "@spectrum-css/menu": "npm:8.0.0-s2-foundations.17"
     "@spectrum-web-components/action-button": "npm:^1.1.1"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/divider": "npm:^1.1.1"
@@ -8992,7 +8992,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/popover@workspace:packages/popover"
   dependencies:
-    "@spectrum-css/popover": "npm:8.0.0-s2-foundations.16"
+    "@spectrum-css/popover": "npm:8.0.0-s2-foundations.17"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/overlay": "npm:^1.1.1"
   languageName: unknown

@@ -140,3 +140,25 @@ sp-progress-circle {
         )
     );
 }
+
+/** Redifining mods so that it works like the old button */
+/* :host {
+    background-color: 
+        var(
+            --mod-button-background-color-default,
+            var(--spectrum-button-background-color-default)
+        )
+
+    border-color: 
+        var(
+            --mod-button-border-color-default,
+            var(--spectrum-button-border-color-default)
+        )
+
+    color: 
+        var(
+            --mod-button-content-color-default,
+            var(--spectrum-button-content-color-default)
+        )
+
+} */
