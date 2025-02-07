@@ -188,10 +188,7 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-border-color: transparent;
 }
 
-:host([emphasized]):not(
-        .spectrum-ActionButton--staticBlack,
-        .spectrum-ActionButton--staticWhite
-    ) {
+:host([emphasized]:not([static-color='black'], [static-color='white'])) {
     --mod-actionbutton-background-color-default-selected: var(
         --mod-actionbutton-background-color-default-selected-emphasized,
         var(--spectrum-accent-background-color-default)

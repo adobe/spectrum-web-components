@@ -7370,16 +7370,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/actiongroup@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/actiongroup@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/actiongroup@npm:6.0.0-s2-foundations.17":
+  version: 6.0.0-s2-foundations.17
+  resolution: "@spectrum-css/actiongroup@npm:6.0.0-s2-foundations.17"
   peerDependencies:
     "@spectrum-css/actionbutton": ">=6"
     "@spectrum-css/tokens": ">=14"
   peerDependenciesMeta:
     "@spectrum-css/actionbutton":
       optional: true
-  checksum: 10c0/321782cae699693279205dda5deadf25f8fae5dff56e3561d64ffa74fd85fc5c98804c0896d44b3ef8f50ba96390059d2c1453f21dd8d9a30f6dcfd7a36a8d56
+  checksum: 10c0/ca5bec6271fe0ffddea932ad558d94ede695bf925e36f6cea9eca28223493a6ee5e906cad0f0c45470deb4da1f83b0574f1f9b490cbcbf6dff925377406985a8
   languageName: node
   linkType: hard
 
@@ -8274,7 +8274,7 @@ __metadata:
   resolution: "@spectrum-web-components/action-group@workspace:packages/action-group"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/actiongroup": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/actiongroup": "npm:6.0.0-s2-foundations.17"
     "@spectrum-web-components/action-button": "npm:^1.1.1"
     "@spectrum-web-components/base": "npm:^1.1.1"
     "@spectrum-web-components/icons-workflow": "npm:^1.1.1"

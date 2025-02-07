@@ -200,7 +200,6 @@ const config = {
                     },
                     hoist: true,
                 },
-                // converter.notToAttribute('spectrum-Button--secondary', 'outline'),
                 converter.classToId('spectrum-Button-label'),
                 converter.classToSlotted('spectrum-Icon', 'icon'),
                 {
