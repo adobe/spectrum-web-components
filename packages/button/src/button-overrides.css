@@ -93,7 +93,7 @@
     );
 }
 
-:host([variant='secondary']):not(.spectrum-Button--outline) {
+:host([variant='secondary']:not([treatment='outline'])) {
     --mod-button-background-color-hover: var(
         --system-button-secondary-not-outline-background-color-hover
     );
@@ -189,9 +189,7 @@
     );
 }
 
-:host([static-color='white'][treatment='outline']):not(
-        .spectrum-Button--secondary
-    ) {
+:host([static-color='white'][treatment='outline']:not([variant='secondary'])) {
     --mod-button-background-color-hover: var(
         --system-button-static-white-outline-not-secondary-background-color-hover
     );
@@ -317,9 +315,7 @@
     );
 }
 
-:host([static-color='black'][treatment='outline']):not(
-        .spectrum-Button--secondary
-    ) {
+:host([static-color='black'][treatment='outline']:not([variant='secondary'])) {
     --mod-button-background-color-hover: var(
         --system-button-static-black-outline-not-secondary-background-color-hover
     );

@@ -511,9 +511,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static-color='white'][variant='secondary']):not(
-        .spectrum-Button--outline
-    ) {
+:host([static-color='white'][variant='secondary']:not([treatment='outline'])) {
     --mod-button-background-color-disabled: var(
         --spectrum-disabled-static-white-background-color
     );
@@ -541,9 +539,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([static-color='black'][variant='secondary']):not(
-        .spectrum-Button--outline
-    ) {
+:host([static-color='black'][variant='secondary']:not([treatment='outline'])) {
     --mod-button-background-color-disabled: var(
         --spectrum-disabled-static-black-background-color
     );

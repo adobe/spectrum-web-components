@@ -138,6 +138,69 @@ const config = {
                     ],
                     'static-color'
                 ),
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'class',
+                                    name: 'spectrum-Button--secondary',
+                                },
+                            ],
+                        ],
+                    },
+                    replace: {
+                        kind: 'not',
+                        type: 'pseudo-class',
+                        selectors: [
+                            [
+                                {
+                                    name: 'variant',
+                                    type: 'attribute',
+                                    operation: {
+                                        operator: 'equal',
+                                        value: 'secondary',
+                                    },
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'class',
+                                    name: 'spectrum-Button--outline',
+                                },
+                            ],
+                        ],
+                    },
+                    replace: {
+                        kind: 'not',
+                        type: 'pseudo-class',
+                        selectors: [
+                            [
+                                {
+                                    name: 'treatment',
+                                    type: 'attribute',
+                                    operation: {
+                                        operator: 'equal',
+                                        value: 'outline',
+                                    },
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
+                // converter.notToAttribute('spectrum-Button--secondary', 'outline'),
                 converter.classToId('spectrum-Button-label'),
                 converter.classToSlotted('spectrum-Icon', 'icon'),
                 {
