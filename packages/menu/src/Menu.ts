@@ -539,10 +539,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         const oldSelected = this.selected.slice();
         const oldSelectedItems = this.selectedItems.slice();
         const oldValue = this.value;
-        if(resolvedSelects === 'none') {
-            if(!targetItem.hasSubmenu && targetItem?.menuData?.focusRoot === this) this.dispatchEvent(new Event('close', { bubbles: true }));
-            return;
-        }
 
         if (targetItem.menuData.selectionRoot !== this) {
             return;
@@ -572,6 +568,18 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this._selected = selected;
             this.selectedItems = selectedItems;
             this.value = this.selected.join(this.valueSeparator);
+        } else if(resolvedSelects === 'none') {
+            // menus that are not selectable should not have any selected items, but should fire a change event
+            if(!targetItem.hasSubmenu && targetItem?.menuData?.focusRoot === this) this.dispatchEvent(new Event('close', { bubbles: true }));
+            this.value = targetItem.value;
+
+            this.dispatchEvent(
+                new Event('change', {
+                    cancelable: true,
+                    bubbles: true,
+                    composed: true,
+                }));
+            return;
         } else {
             this.selectedItemsMap.clear();
             this.selectedItemsMap.set(targetItem, true);
