@@ -98,54 +98,59 @@ export const Default = (args: StoryArgs): TemplateResult => {
 
 export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
     return html`
-        <h1>Force Popover on Mobile</h1>
-        <p>
-            The forcePopover attribute overrides the mobile device functionality
-            of rendering a tray so that a popover will always render no matter
-            the device.
-        </p>
-        <ol>
-            <li>Open Chrome DevTools (or equivalent).</li>
-            <li>Toggle the Device Toolbar (the phone/tablet icon).</li>
-            <li>Select a device preset (e.g. iPhone 12).</li>
-            <li>
-                Chrome will set user-agent strings, simulate touch, and adjust
-                DPI.
-            </li>
-            <li>Reload the page</li>
-            <li>Click the Picker 1 and see a tray</li>
-            <li>Click the Picker 2 and see a popover</li>
-        </ol>
-        <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
-            Do you want to see a tray menu?
-        </sp-field-label>
-        <sp-picker
-            id="picker-1"
-            @change=${handleChange(args)}
-            label="Select an option"
-        >
-            <sp-menu-item value="option-1">Yes</sp-menu-item>
-            <sp-menu-item value="option-2">No</sp-menu-item>
-        </sp-picker>
-        <sp-field-label for="picker-2" size=${ifDefined(args.size)}>
-            Do you want to see a popover menu?
-        </sp-field-label>
-        <sp-picker
-            id="picker-2"
-            forcePopover
-            @change=${handleChange(args)}
-            label="Select an option"
-        >
-            <sp-menu-item value="option-1">Yes</sp-menu-item>
-            <sp-menu-item value="option-2">No</sp-menu-item>
-        </sp-picker>
-        <div>
+        <div style="padding: 40px">
+            <h1>Force Popover on Mobile</h1>
             <p>
-                This button should't be clickable if a popover is open over it.
+                The forcePopover attribute overrides the mobile device
+                functionality of rendering a tray so that a popover will always
+                render no matter the device.
             </p>
-            <sp-button @click=${() => console.log('Whoops! I was clicked.')}>
-                Shouldn't be clickable
-            </sp-button>
+            <ol>
+                <li>Open Chrome DevTools (or equivalent).</li>
+                <li>Toggle the Device Toolbar (the phone/tablet icon).</li>
+                <li>Select a device preset (e.g. iPhone 12).</li>
+                <li>
+                    Chrome will set user-agent strings, simulate touch, and
+                    adjust DPI.
+                </li>
+                <li>Reload the page</li>
+                <li>Click the Picker 1 and see a tray</li>
+                <li>Click the Picker 2 and see a popover</li>
+            </ol>
+            <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
+                Do you want to see a tray menu?
+            </sp-field-label>
+            <sp-picker
+                id="picker-1"
+                @change=${handleChange(args)}
+                label="Select an option"
+            >
+                <sp-menu-item value="option-1">Yes</sp-menu-item>
+                <sp-menu-item value="option-2">No</sp-menu-item>
+            </sp-picker>
+            <sp-field-label for="picker-2" size=${ifDefined(args.size)}>
+                Do you want to see a popover menu?
+            </sp-field-label>
+            <sp-picker
+                id="picker-2"
+                forcePopover
+                @change=${handleChange(args)}
+                label="Select an option"
+            >
+                <sp-menu-item value="option-1">Yes</sp-menu-item>
+                <sp-menu-item value="option-2">No</sp-menu-item>
+            </sp-picker>
+            <div>
+                <p>
+                    This button should't be clickable if a popover is open over
+                    it.
+                </p>
+                <sp-button
+                    @click=${() => console.log('Whoops! I was clicked.')}
+                >
+                    Shouldn't be clickable
+                </sp-button>
+            </div>
         </div>
     `;
 };
