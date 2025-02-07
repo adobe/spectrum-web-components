@@ -32,3 +32,8 @@ svg,
         forced-color-adjust: auto;
     }
 }
+
+
+:host(:not(:root)) {
+    overflow: hidden;
+}
