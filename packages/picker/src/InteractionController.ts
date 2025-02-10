@@ -136,7 +136,7 @@ export class InteractionController implements ReactiveController {
             this.overlay.placement =
                 this.host.isMobile.matches && !this.host.forcePopover
                     ? undefined
-                    : 'bottom';
+                    : this.host.placement;
             this.overlay.receivesFocus = 'true';
             this.overlay.willPreventClose =
                 this.preventNextToggle !== 'no' && this.open;
