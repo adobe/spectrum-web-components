@@ -53,8 +53,7 @@ governing permissions and limitations under the License.
     z-index: 3;
 }
 
-:host:not(.spectrum-ActionGroup--vertical, .spectrum-ActionGroup--compact)
-    ::slotted(*) {
+:host(:not([vertical='true'][compact='true'])) ::slotted(*) {
     flex-shrink: 0;
 }
 
