@@ -64,7 +64,7 @@
         "process-icons": "wireit",
         "process-spectrum": "wireit",
         "publish:react": "yarn changeset publish --tag snapshot --no-push",
-        "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\"",
+        "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\" && git push",
         "spectrum-css": "wireit",
         "spectrum-tokens": "wireit",
         "spectrum-vars": "wireit",
