@@ -39,7 +39,7 @@ jobs:
             - name: Get latest published beta version
               id: get_latest_published_beta
               run: |
-                  LATEST_BETA_VERSION=$(npm view @spectrum-web-components/button@beta version 2>/dev/null || echo "none")
+                  LATEST_BETA_VERSION=$(npm view @spectrum-web-components/button@beta version || echo "none")
                   echo "latest_beta_version=$LATEST_BETA_VERSION" >> $GITHUB_OUTPUT
 
             - name: Calculate next beta version
