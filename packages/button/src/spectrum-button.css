@@ -391,10 +391,6 @@ governing permissions and limitations under the License.
     --mod-button-background-color-disabled: var(
         --spectrum-disabled-background-color
     );
-    --mod-button-content-color-default: var(--spectrum-white);
-    --mod-button-content-color-hover: var(--spectrum-white);
-    --mod-button-content-color-down: var(--spectrum-white);
-    --mod-button-content-color-focus: var(--spectrum-white);
     --mod-button-border-color-default: transparent;
     --mod-button-border-color-hover: transparent;
     --mod-button-border-color-down: transparent;
@@ -732,27 +728,6 @@ governing permissions and limitations under the License.
     inset: 0;
 }
 
-@media (hover: hover) {
-    :host(:hover) {
-        background-color: var(
-            --highcontrast-button-background-color-hover,
-            var(
-                --mod-button-background-color-hover,
-                var(--spectrum-button-background-color-hover)
-            )
-        );
-        border-color: var(
-            --highcontrast-button-border-color-hover,
-            var(
-                --mod-button-border-color-hover,
-                var(--spectrum-button-border-color-hover)
-            )
-        );
-        color: var(--spectrum-button-content-color-hover);
-        box-shadow: none;
-    }
-}
-
 :host(:focus-visible) {
     background-color: var(
         --highcontrast-button-background-color-focus,
@@ -798,6 +773,27 @@ governing permissions and limitations under the License.
     box-shadow: none;
 }
 
+@media (hover: hover) {
+    :host(:hover) {
+        background-color: var(
+            --highcontrast-button-background-color-hover,
+            var(
+                --mod-button-background-color-hover,
+                var(--spectrum-button-background-color-hover)
+            )
+        );
+        border-color: var(
+            --highcontrast-button-border-color-hover,
+            var(
+                --mod-button-border-color-hover,
+                var(--spectrum-button-border-color-hover)
+            )
+        );
+        color: var(--spectrum-button-content-color-hover);
+        box-shadow: none;
+    }
+}
+
 :host .is-disabled,
 :host([pending]),
 :host([disabled]),
@@ -817,6 +813,42 @@ governing permissions and limitations under the License.
         )
     );
     color: var(--spectrum-button-content-color-disabled);
+}
+
+::slotted([slot='icon']) {
+    --_icon-size-difference: max(
+        0px,
+        var(--spectrum-button-intended-icon-size) -
+            var(
+                --spectrum-icon-block-size,
+                var(--spectrum-button-intended-icon-size)
+            )
+    );
+    margin-block-start: var(
+        --mod-button-icon-margin-block-start,
+        max(
+            0px,
+            var(--mod-button-top-to-icon, var(--spectrum-button-top-to-icon)) -
+                var(
+                    --mod-button-border-width,
+                    var(--spectrum-button-border-width)
+                ) + (var(--_icon-size-difference, 0px) / 2)
+        )
+    );
+    margin-inline-start: calc(
+        var(--mod-button-edge-to-visual, var(--spectrum-button-edge-to-visual)) -
+            var(--mod-button-edge-to-text, var(--spectrum-button-edge-to-text))
+    );
+}
+
+:host([icon-only]) {
+    padding: calc(
+        var(
+                --mod-button-edge-to-visual-only,
+                var(--spectrum-button-edge-to-visual-only)
+            ) -
+            var(--mod-button-border-width, var(--spectrum-button-border-width))
+    );
 }
 
 #label,

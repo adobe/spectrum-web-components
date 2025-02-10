@@ -75,6 +75,21 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([variant='primary']) {
+    --mod-button-content-color-default: var(
+        --system-button-primary-content-color-default
+    );
+    --mod-button-content-color-hover: var(
+        --system-button-primary-content-color-hover
+    );
+    --mod-button-content-color-down: var(
+        --system-button-primary-content-color-down
+    );
+    --mod-button-content-color-focus: var(
+        --system-button-primary-content-color-focus
+    );
+}
+
 :host([variant='primary'][treatment='outline']) {
     --mod-button-background-color-hover: var(
         --system-button-primary-outline-background-color-hover
