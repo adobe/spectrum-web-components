@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 
 /**
- * @fileoverview This task generates and updates custom elements manifest JSON files 
+ * @fileoverview This task generates and updates custom elements manifest JSON files
  * for all workspace packages using the Custom Elements Manifest analyzer (CEM).
  *
  * @description
@@ -33,13 +33,21 @@ import path from 'path';
 
 // Get a list of all packages except those you want to ignore
 const getWorkspacePackages = (ignoredPackages) => {
-    const workspaceInfo = execSync('yarn workspaces info --json').toString();
-    const workspacePackages = JSON.parse(workspaceInfo);
-    return Object.entries(workspacePackages)
-        .filter(([pkgName]) => !ignoredPackages.includes(pkgName))
-        .map(([pkgName, pkgDetails]) => ({
-            name: pkgName,
-            path: pkgDetails.location,
+    const workspaceInfo = execSync('yarn workspaces list --json').toString();
+    // Parse the JSON lines since yarn 4 outputs one JSON object per line
+    const workspacePackages = workspaceInfo
+        .trim()
+        .split('\n')
+        .map((line) => JSON.parse(line));
+    return workspacePackages
+        .filter(
+            (pkg) =>
+                !ignoredPackages.includes(pkg.name) &&
+                pkg.name !== '@adobe/spectrum-web-components'
+        )
+        .map((pkg) => ({
+            name: pkg.name,
+            path: pkg.location,
         }));
 };
 

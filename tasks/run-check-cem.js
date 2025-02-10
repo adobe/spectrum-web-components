@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 
 /**
- * @fileoverview This task runs the check-cem.js validation script across all workspace 
+ * @fileoverview This task runs the check-cem.js validation script across all workspace
  * packages to verify their Custom Elements Manifest (CEM) files.
  *
  * @description
@@ -36,13 +36,21 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const getWorkspacePackages = (ignoredPackages) => {
-    const workspaceInfo = execSync('yarn workspaces info --json').toString();
-    const workspacePackages = JSON.parse(workspaceInfo);
-    return Object.entries(workspacePackages)
-        .filter(([pkgName]) => !ignoredPackages.includes(pkgName))
-        .map(([pkgName, pkgDetails]) => ({
-            name: pkgName,
-            path: pkgDetails.location,
+    const workspaceInfo = execSync('yarn workspaces list --json').toString();
+    // Parse the JSON lines since yarn 4 outputs one JSON object per line
+    const workspacePackages = workspaceInfo
+        .trim()
+        .split('\n')
+        .map((line) => JSON.parse(line));
+    return workspacePackages
+        .filter(
+            (pkg) =>
+                !ignoredPackages.includes(pkg.name) &&
+                pkg.name !== '@adobe/spectrum-web-components'
+        )
+        .map((pkg) => ({
+            name: pkg.name,
+            path: pkg.location,
         }));
 };
 
@@ -65,7 +73,7 @@ const ignoredPackages = [
     '@swc-react/*',
     'documentation',
     'example-project-rollup',
-'example-project-webpack',
+    'example-project-webpack',
     'swc-templates',
     '@types/swc',
 ];
