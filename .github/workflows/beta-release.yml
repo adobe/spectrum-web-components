@@ -3,7 +3,7 @@ name: Beta Release
 on:
     push:
         branches:
-            - main
+            - ruben/fix-beta-release
 
 jobs:
     release:
@@ -15,6 +15,9 @@ jobs:
 
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
+
+            - name: Install semver
+              run: npm install -g semver
 
             - name: Set Git identity
               run: |
