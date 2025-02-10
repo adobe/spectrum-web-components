@@ -318,9 +318,25 @@ export class OverlayTrigger extends SpectrumElement {
         `;
     }
 
-    protected override updated(changes: PropertyValues): void {
-        super.updated(changes);
-        if (this.disabled && changes.has('disabled')) {
+    protected override updated(changedProperties: PropertyValues): void {
+        super.updated(changedProperties);
+
+        if (window.__swc?.DEBUG && !this.content) {
+            const issues = [
+                'You have not specified the `content` property. For optimal performance, consider explicitly declaring which overlay types you plan to use.',
+                'Example: .content={["click", "hover"]}',
+                'This helps avoid unnecessary DOM operations and potential race conditions.',
+            ];
+
+            window.__swc.warn(
+                this,
+                'Performance optimization available for <overlay-trigger>:',
+                'https://opensource.adobe.com/spectrum-web-components/components/overlay-trigger/#performance-optimization',
+                { issues }
+            );
+        }
+
+        if (this.disabled && changedProperties.has('disabled')) {
             this.open = undefined;
             return;
         }

@@ -132,7 +132,7 @@ The `content` attribute allows you to explicitly declare which types of overlays
 </overlay-trigger>
 
 <!-- Only using longpress overlay -->
-<overlay-trigger content="longpress">
+<overlay-trigger .content={["longpress"]}>
     <sp-button slot="trigger">Longpress trigger</sp-button>
     <sp-popover slot="longpress-content" direction="bottom" tip>
         Longpress content
