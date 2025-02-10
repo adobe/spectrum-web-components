@@ -33,13 +33,13 @@ jobs:
             - name: Calculate next minor version
               id: calculate_next_minor_version
               run: |
-                  NEXT_MINOR_VERSION=$(yarn semver "${{ steps.get_lerna_version.outputs.version }}" -i minor)
+                  NEXT_MINOR_VERSION=$(semver "${{ steps.get_lerna_version.outputs.version }}" -i minor)
                   echo "next_minor_version=$NEXT_MINOR_VERSION" >> $GITHUB_OUTPUT
 
             - name: Get latest published beta version
               id: get_latest_published_beta
               run: |
-                  LATEST_BETA_VERSION=$(npm view @spectrum-web-components/button@beta version || echo "none")
+                  LATEST_BETA_VERSION=$(npm view @spectrum-web-components/button@beta version 2>/dev/null || echo "none")
                   echo "latest_beta_version=$LATEST_BETA_VERSION" >> $GITHUB_OUTPUT
 
             - name: Calculate next beta version
