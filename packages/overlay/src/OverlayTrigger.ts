@@ -61,7 +61,7 @@ export class OverlayTrigger extends SpectrumElement {
     /**
      * Optional property to optimize performance and prevent race conditions.
      *
-     * By explicitly declaring which content types are used (e.g. "click hover"),
+     * By explicitly declaring which content types are used (e.g. ["click", "hover"]),
      * we can avoid:
      * 1. Extra renders from unnecessary slot reparenting
      * 2. Potential infinite render loops during content detection
@@ -70,11 +70,8 @@ export class OverlayTrigger extends SpectrumElement {
      * By only returning overlay wrappers for explicitly declared content types,
      * we minimize unecessary DOM nodes, operations and ensure a more stable rendering behavior.
      */
-    @property({ type: String })
-    public content?:
-        | `${OverlayContentTypes}`
-        | `${OverlayContentTypes} ${OverlayContentTypes}`
-        | `${OverlayContentTypes} ${OverlayContentTypes} ${OverlayContentTypes}`;
+    @property({ type: Array })
+    public content?: OverlayContentTypes[];
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}

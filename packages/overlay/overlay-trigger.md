@@ -123,7 +123,7 @@ The `content` attribute allows you to explicitly declare which types of overlays
 
 ```html
 <!-- Only using click and hover overlays -->
-<overlay-trigger content="click hover">
+<overlay-trigger .content={["click", "hover"]}>
     <sp-button slot="trigger">Click and hover trigger</sp-button>
     <sp-popover slot="click-content" direction="bottom" tip>
         Click content
