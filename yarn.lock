@@ -7824,10 +7824,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.0.0-s2-foundations.27":
-  version: 15.0.0-s2-foundations.27
-  resolution: "@spectrum-css/tokens@npm:15.0.0-s2-foundations.27"
-  checksum: 10c0/da37e82a3169e1eeeacc7a98f3d418daeece0fadcbcd8cb4d289651c1f3b492c6199c8a0a6006ecace4f3f020f9efa072d78bcc5e4ca3abf71e25f64e3aa440f
+"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.0.0-s2-foundations.31":
+  version: 15.0.0-s2-foundations.31
+  resolution: "@spectrum-css/tokens@npm:15.0.0-s2-foundations.31"
+  checksum: 10c0/e09edb1540ebe73ed7776673c18e1284e98cabf0d91483a3826377a70678abd31bf16dce371b3ee03548d0d8cc963d134541f16d03f98696ac8fe2869f1b4059
   languageName: node
   linkType: hard
 
@@ -8807,7 +8807,7 @@ __metadata:
   dependencies:
     "@spectrum-css/expressvars": "npm:^3.0.9"
     "@spectrum-css/tokens": "npm:15.0.0"
-    "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.0.0-s2-foundations.27"
+    "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.0.0-s2-foundations.31"
     "@spectrum-css/typography": "npm:7.0.0-s2-foundations.17"
     "@spectrum-css/vars": "npm:^9.0.8"
     "@spectrum-web-components/base": "npm:^1.1.1"
