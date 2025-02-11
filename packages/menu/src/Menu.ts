@@ -114,22 +114,24 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     public set selected(selected: string[]) {
-        if(!this.selects) {
-            this._selected = [];
-            return;
-        }
+        if(this.isDebugging() && (this.value === '' || this.value === 'two')) console.log('set selected',this.selected, selected);
         if (selected === this.selected) {
             return;
         }
+        if(this.isDebugging()) console.log('setting 5', this.selected, this._selected, selected);
         const old = this.selected;
+        if(this.isDebugging()) console.log('setting 4', this.selected, this._selected, selected);
         this._selected = selected;
+        if(this.isDebugging()) console.log('setting 3', this.selected, this._selected, selected);
         this.selectedItems = [];
         this.selectedItemsMap.clear();
+        if(this.isDebugging()) console.log('setting 2', this.selected);
         this.childItems.forEach((item) => {
             if (this !== item.menuData.selectionRoot) {
                 return;
             }
             item.selected = this.selected.includes(item.value);
+            if(this.isDebugging() && item.value === 'two') console.log('setting', this.selected);
             if (item.selected) {
                 this.selectedItems.push(item);
                 this.selectedItemsMap.set(item, true);
@@ -466,6 +468,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         } else {
             return;
         }
+        this.prepareToCleanUp();
     }
 
     private descendentOverlays = new Map<Overlay, Overlay>();
@@ -568,18 +571,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this._selected = selected;
             this.selectedItems = selectedItems;
             this.value = this.selected.join(this.valueSeparator);
-        } else if(resolvedSelects === 'none') {
-            // menus that are not selectable should not have any selected items, but should fire a change event
-            if(!targetItem.hasSubmenu && targetItem?.menuData?.focusRoot === this) this.dispatchEvent(new Event('close', { bubbles: true }));
-            this.value = targetItem.value;
-
-            this.dispatchEvent(
-                new Event('change', {
-                    cancelable: true,
-                    bubbles: true,
-                    composed: true,
-                }));
-            return;
         } else {
             this.selectedItemsMap.clear();
             this.selectedItemsMap.set(targetItem, true);
@@ -613,6 +604,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             targetItem.selected = true;
         } else if (resolvedSelects === 'multiple') {
             targetItem.selected = !targetItem.selected;
+        } else if(!targetItem.hasSubmenu && targetItem?.menuData?.focusRoot === this) {
+            this.dispatchEvent(new Event('close', { bubbles: true }));
         }
     }
 
@@ -680,6 +673,29 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private _hasUpdatedSelectedItemIndex = false;
+
+    /**
+     * on focus, removes focus from focus styling item, and updates the selected item index
+     */
+    private prepareToCleanUp(): void {
+        document.addEventListener(
+            'focusout',
+            () => {
+                requestAnimationFrame(() => {
+                    const focusedItem = this.rovingTabindexController?.focusInElement;
+                    if (focusedItem) {
+                        focusedItem.focused = false;
+                        this.updateSelectedItemIndex();
+                    }
+                });
+            },
+            { once: true }
+        );
+    }
+
+    public isDebugging(): boolean {
+        return this.hasAttribute('debugging');
+    }
 
     public updateSelectedItemIndex(): void {
         let firstOrFirstSelectedIndex = 0;

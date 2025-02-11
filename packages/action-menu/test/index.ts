@@ -582,22 +582,41 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             ).to.be.true;
         });
         it('allows top-level selection state to change', async () => {
+            console.log('\n\n\n---------------------\n---------------------\n---------------------\n');
             let selected = true;
             const handleChange = (
                 event: Event & { target: ActionMenu }
             ): void => {
-                if (event.target.value === 'test') {
+                const { target } = event;
+                const eventValue = target.value;
+                console.log('\n\nhandleChange', event.target.value, selected);
+                if (target.value === 'two') {
                     selected = !selected;
+                    console.log('value is two, and selected is now', selected);
 
                     event.target.updateComplete.then(() => {
-                        event.target.value = selected ? 'test' : '';
+                        console.log('event target value is', eventValue, ', and root value is', target.value, 'so selected will be set to ', selected ? 'two' : '');
+                        event.target.value = selected ? 'two' : '';
+                        console.log('event target value is now', event.target.value);
                     });
                 }
             };
+            const evtStatus = (text:string, target: ActionMenu): void => {
+                const item = target?.querySelector('#root-selected-item') as MenuItem;
+                console.log(text, ': event target value is', target.value, 'will update?', target.willManageSelection, 'and itemTwo selected?', item.selected, 'and selected?', selected);
+            }
+            const handleValueChange = (event: Event & { target: ActionMenu }): void => evtStatus('handleValueChange', event.target);
+            const handleManage = (event: Event & { target: ActionMenu }): void => evtStatus('handleManage', event.target);
+            const handleSchedule = (event: Event & { target: ActionMenu }): void => evtStatus('handleSchedule', event.target);
+            const handleShould = (event: Event & { target: ActionMenu }): void => evtStatus('handleShould', event.target);
             const root = await fixture<ActionMenu>(html`
-                <sp-action-menu label="More Actions" @change=${handleChange}>
+                <sp-action-menu selects="single" label="More Actions" @change=${handleChange} 
+                    @sp-value-changed=${handleValueChange}
+                    @sp-manage=${handleManage}
+                    @sp-scheduled=${handleSchedule}
+                    @sp-should=${handleShould}>
                     <sp-menu-item>One</sp-menu-item>
-                    <sp-menu-item selected value="test" id="root-selected-item">
+                    <sp-menu-item selected value="two" id="root-selected-item">
                         Two
                     </sp-menu-item>
                     <sp-menu-item id="item-with-submenu">
@@ -613,29 +632,32 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 </sp-action-menu>
             `);
 
-            const unselectedItem = root.querySelector(
+            const itemOne = root.querySelector(
                 'sp-menu-item'
             ) as MenuItem;
-            const selectedItem = root.querySelector(
+            const itemTwo = root.querySelector(
                 '#root-selected-item'
             ) as MenuItem;
 
-            expect(unselectedItem.textContent).to.include('One');
-            expect(unselectedItem.selected).to.be.false;
-            expect(selectedItem.textContent).to.include('Two');
-            expect(selectedItem.selected).to.be.true;
+            console.log('value', root.value, selected, itemOne.selected, itemTwo.selected);
+            expect(itemOne.textContent, 'itemOne "One"').to.include('One');
+            expect(itemOne.selected, 'itemOne is NOT selected').to.be.false;
+            expect(itemTwo.textContent, 'itemTwo "Two"').to.include('Two');
+            expect(itemTwo.selected, 'itemTwo is selected').to.be.true;
 
             let opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
+            console.log('value 1', root.value, selected, itemOne.selected, itemTwo.selected);
 
             // close by clicking selected
             // (with event listener: should set selected = false)
             let closed = oneEvent(root, 'sp-closed');
-            selectedItem.click();
+            itemTwo.click();
             await closed;
+            console.log('value 2', root.value, selected, itemOne.selected, itemTwo.selected);
 
-            expect(root.open).to.be.false;
+            expect(root.open, 'open').to.be.false;
             opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
@@ -643,32 +665,36 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             // close by clicking unselected
             // (no event listener: should remain selected = false)
             closed = oneEvent(root, 'sp-closed');
-            unselectedItem.click();
+            itemOne.click();
             await closed;
+            console.log('value 3', root.value, selected, itemOne.selected, itemTwo.selected);
 
             opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
+            console.log('value 4', root.value, selected, itemOne.selected, itemTwo.selected);
 
-            expect(unselectedItem.textContent).to.include('One');
-            expect(unselectedItem.selected).to.be.false;
-            expect(selectedItem.textContent).to.include('Two');
-            expect(selectedItem.selected).to.be.false;
+            expect(itemOne.textContent, '4. itemOne "One"').to.include('One');
+            expect(itemOne.selected, '4. itemOne is NOT selected').to.be.false;
+            expect(itemTwo.textContent, '4. itemTwo "Two"').to.include('Two');
+            expect(itemTwo.selected, '4. itemTwo is NOT selected').to.be.false;
 
             // close by clicking selected
             // (with event listener: should set selected = false)
             closed = oneEvent(root, 'sp-closed');
-            selectedItem.click();
+            itemTwo.click();
             await closed;
+            console.log('value 5', root.value, selected, itemOne.selected, itemTwo.selected);
 
             opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
+            console.log('value 6', root.value, selected, itemOne.selected, itemTwo.selected);
 
-            expect(unselectedItem.textContent).to.include('One');
-            expect(unselectedItem.selected).to.be.false;
-            expect(selectedItem.textContent).to.include('Two');
-            expect(selectedItem.selected).to.be.true;
+            expect(itemOne.textContent, '6. itemOne "One"').to.include('One');
+            expect(itemOne.selected, '6. itemOne is NOT selected').to.be.false;
+            expect(itemTwo.textContent, '6. itemTwo "Two"').to.include('Two');
+            expect(itemTwo.selected, '6. itemTwo is selected').to.be.true;
         });
         it('shows tooltip', async function () {
             const openSpy = spy();
