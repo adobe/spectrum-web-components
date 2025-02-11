@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { execSync } from 'child_process';
-import pkg from '../packages/button/package.json' assert { type: 'json' };
+import pkg from '@spectrum-web-components/button/package.json' assert { type: 'json' };
 
 const version = pkg.version;
 
