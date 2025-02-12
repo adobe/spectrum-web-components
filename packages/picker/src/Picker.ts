@@ -138,8 +138,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @query('sp-menu')
     public optionsMenu!: Menu;
 
+    private _selfManageFocusElement = false;
+
     public override get selfManageFocusElement(): boolean {
-        return true;
+        return this._selfManageFocusElement;
     }
 
     @query('sp-overlay')
@@ -208,15 +210,16 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.focused = true;
     }
 
+    // handled by interaction controller, desktop or mobile; this is only called with a programmatic this.click()
     public override click(): void {
         this.focusElement.click();
     }
 
+    // pointer events handled by interaction controller, desktop or mobile; this is only called with a programmatic this.button.click()
     public handleButtonClick(): void {
         if (this.disabled) {
             return;
         }
-
         this.toggle();
     }
 
@@ -263,7 +266,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     public handleButtonFocus(event: FocusEvent): void {
         this.strategy?.handleButtonFocus(event);
-        this.close();
     }
 
     protected handleKeydown = (event: KeyboardEvent): void => {
@@ -287,7 +289,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         item: MenuItem,
         menuChangeEvent?: Event
     ): Promise<void> {
-        if(this.isDebugging()) console.log('setValueFromItem', item.value, this.value);
         this.open = false;
         // should always close when "setting" a value
         if (this.strategy) {
@@ -598,7 +599,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         if (changes.has('value')) {
             // MenuItems update a frame late for <slot> management,
             // await the same here.
-            if(this.isDebugging()) this.dispatchEvent(new Event('sp-value-changed', { bubbles: true }));
             this.shouldScheduleManageSelection();
         }
         // Maybe it's finally time to remove this support?s
@@ -815,7 +815,6 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
         this.selectionResolver();
         this.willManageSelection = false;
-        if(this.isDebugging()) console.log('managed', 'already scheduled?', this.willManageSelection);
     }
 
     private selectionPromise = Promise.resolve();

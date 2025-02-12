@@ -114,24 +114,18 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     public set selected(selected: string[]) {
-        if(this.isDebugging() && (this.value === '' || this.value === 'two')) console.log('set selected',this.selected, selected);
         if (selected === this.selected) {
             return;
         }
-        if(this.isDebugging()) console.log('setting 5', this.selected, this._selected, selected);
         const old = this.selected;
-        if(this.isDebugging()) console.log('setting 4', this.selected, this._selected, selected);
         this._selected = selected;
-        if(this.isDebugging()) console.log('setting 3', this.selected, this._selected, selected);
         this.selectedItems = [];
         this.selectedItemsMap.clear();
-        if(this.isDebugging()) console.log('setting 2', this.selected);
         this.childItems.forEach((item) => {
             if (this !== item.menuData.selectionRoot) {
                 return;
             }
             item.selected = this.selected.includes(item.value);
-            if(this.isDebugging() && item.value === 'two') console.log('setting', this.selected);
             if (item.selected) {
                 this.selectedItems.push(item);
                 this.selectedItemsMap.set(item, true);
@@ -685,7 +679,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                     const focusedItem = this.rovingTabindexController?.focusInElement;
                     if (focusedItem) {
                         focusedItem.focused = false;
-                        this.updateSelectedItemIndex();
                     }
                 });
             },
