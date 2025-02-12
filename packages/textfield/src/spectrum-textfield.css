@@ -184,7 +184,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([size='s']) {
+:host([size='s']) #textfield {
     --spectrum-textfield-height: var(--spectrum-component-height-75);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --spectrum-field-label-to-component-quiet-small
@@ -237,7 +237,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([size='l']) {
+:host([size='l']) #textfield {
     --spectrum-textfield-height: var(--spectrum-component-height-200);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --spectrum-field-label-to-component-quiet-large
@@ -290,7 +290,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([size='xl']) {
+:host([size='xl']) #textfield {
     --spectrum-textfield-height: var(--spectrum-component-height-300);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --spectrum-field-label-to-component-quiet-extra-large
