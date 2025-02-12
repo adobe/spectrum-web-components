@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/adobe/spectrum-web-components/compare/v1.1.1...v1.1.2) (2025-02-12)
+
+### Bug Fixes
+
+-   **overlay:** derive popover placement from host in interaction controller ([#5078](https://github.com/adobe/spectrum-web-components/issues/5078)) ([635cf53](https://github.com/adobe/spectrum-web-components/commit/635cf53df237b7f833633cb05d09c0697e61f6f4))
+
 ## [1.1.1](https://github.com/adobe/spectrum-web-components/compare/v1.1.0...v1.1.1) (2025-01-29)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

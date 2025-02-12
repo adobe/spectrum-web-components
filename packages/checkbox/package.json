@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/checkbox",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "publishConfig": {
         "access": "public"
     },
@@ -66,10 +66,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.1.1",
-        "@spectrum-web-components/icon": "^1.1.1",
-        "@spectrum-web-components/icons-ui": "^1.1.1",
-        "@spectrum-web-components/shared": "^1.1.1"
+        "@spectrum-web-components/base": "^1.1.2",
+        "@spectrum-web-components/icon": "^1.1.2",
+        "@spectrum-web-components/icons-ui": "^1.1.2",
+        "@spectrum-web-components/shared": "^1.1.2"
     },
     "devDependencies": {
         "@spectrum-css/checkbox": "10.0.0-s2-foundations.20"
