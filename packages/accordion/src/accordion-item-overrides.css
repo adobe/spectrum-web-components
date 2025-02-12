@@ -11,26 +11,3 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-Accordion--sizeM {
-    --spectrum-accordion-item-height: var(
-        --system-accordion-size-m-item-height
-    );
-    --spectrum-accordion-disclosure-indicator-height: var(
-        --system-accordion-size-m-disclosure-indicator-height
-    );
-    --spectrum-accordion-component-edge-to-text: var(
-        --system-accordion-size-m-component-edge-to-text
-    );
-    --spectrum-accordion-item-header-font-size: var(
-        --system-accordion-size-m-item-header-font-size
-    );
-    --spectrum-accordion-item-content-font-size: var(
-        --system-accordion-size-m-item-content-font-size
-    );
-    --spectrum-accordion-item-header-top-to-text-space: var(
-        --system-accordion-size-m-item-header-top-to-text-space
-    );
-    --spectrum-accordion-item-header-bottom-to-text-space: var(
-        --system-accordion-size-m-item-header-bottom-to-text-space
-    );
-}
