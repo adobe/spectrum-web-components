@@ -362,7 +362,7 @@
     --spectrum-blue-600: rgba(var(--spectrum-blue-600-rgb));
     --spectrum-blue-700-rgb: 52, 91, 248;
     --spectrum-blue-700: rgba(var(--spectrum-blue-700-rgb));
-    --spectrum-blue-800-rgb: 64, 105, 253;
+    --spectrum-blue-800-rgb: 69, 110, 254;
     --spectrum-blue-800: rgba(var(--spectrum-blue-800-rgb));
     --spectrum-blue-900-rgb: 86, 129, 255;
     --spectrum-blue-900: rgba(var(--spectrum-blue-900-rgb));
@@ -394,7 +394,7 @@
     --spectrum-red-600: rgba(var(--spectrum-red-600-rgb));
     --spectrum-red-700-rgb: 205, 46, 29;
     --spectrum-red-700: rgba(var(--spectrum-red-700-rgb));
-    --spectrum-red-800-rgb: 223, 52, 34;
+    --spectrum-red-800-rgb: 230, 54, 35;
     --spectrum-red-800: rgba(var(--spectrum-red-800-rgb));
     --spectrum-red-900-rgb: 252, 67, 46;
     --spectrum-red-900: rgba(var(--spectrum-red-900-rgb));
@@ -426,7 +426,7 @@
     --spectrum-orange-600: rgba(var(--spectrum-orange-600-rgb));
     --spectrum-orange-700-rgb: 185, 73, 0;
     --spectrum-orange-700: rgba(var(--spectrum-orange-700-rgb));
-    --spectrum-orange-800-rgb: 199, 82, 0;
+    --spectrum-orange-800-rgb: 205, 86, 0;
     --spectrum-orange-800: rgba(var(--spectrum-orange-800-rgb));
     --spectrum-orange-900-rgb: 224, 100, 0;
     --spectrum-orange-900: rgba(var(--spectrum-orange-900-rgb));
@@ -458,7 +458,7 @@
     --spectrum-yellow-600: rgba(var(--spectrum-yellow-600-rgb));
     --spectrum-yellow-700-rgb: 151, 97, 0;
     --spectrum-yellow-700: rgba(var(--spectrum-yellow-700-rgb));
-    --spectrum-yellow-800-rgb: 164, 106, 0;
+    --spectrum-yellow-800-rgb: 169, 110, 0;
     --spectrum-yellow-800: rgba(var(--spectrum-yellow-800-rgb));
     --spectrum-yellow-900-rgb: 186, 124, 0;
     --spectrum-yellow-900: rgba(var(--spectrum-yellow-900-rgb));
@@ -490,7 +490,7 @@
     --spectrum-chartreuse-600: rgba(var(--spectrum-chartreuse-600-rgb));
     --spectrum-chartreuse-700-rgb: 97, 116, 0;
     --spectrum-chartreuse-700: rgba(var(--spectrum-chartreuse-700-rgb));
-    --spectrum-chartreuse-800-rgb: 106, 127, 0;
+    --spectrum-chartreuse-800-rgb: 109, 131, 0;
     --spectrum-chartreuse-800: rgba(var(--spectrum-chartreuse-800-rgb));
     --spectrum-chartreuse-900-rgb: 122, 147, 0;
     --spectrum-chartreuse-900: rgba(var(--spectrum-chartreuse-900-rgb));
@@ -522,7 +522,7 @@
     --spectrum-celery-600: rgba(var(--spectrum-celery-600-rgb));
     --spectrum-celery-700-rgb: 60, 122, 15;
     --spectrum-celery-700: rgba(var(--spectrum-celery-700-rgb));
-    --spectrum-celery-800-rgb: 66, 134, 18;
+    --spectrum-celery-800-rgb: 69, 138, 19;
     --spectrum-celery-800: rgba(var(--spectrum-celery-800-rgb));
     --spectrum-celery-900-rgb: 78, 154, 23;
     --spectrum-celery-900: rgba(var(--spectrum-celery-900-rgb));
@@ -554,7 +554,7 @@
     --spectrum-green-600: rgba(var(--spectrum-green-600-rgb));
     --spectrum-green-700-rgb: 4, 124, 75;
     --spectrum-green-700: rgba(var(--spectrum-green-700-rgb));
-    --spectrum-green-800-rgb: 6, 136, 80;
+    --spectrum-green-800-rgb: 6, 140, 82;
     --spectrum-green-800: rgba(var(--spectrum-green-800-rgb));
     --spectrum-green-900-rgb: 9, 157, 89;
     --spectrum-green-900: rgba(var(--spectrum-green-900-rgb));
@@ -586,7 +586,7 @@
     --spectrum-seafoam-600: rgba(var(--spectrum-seafoam-600-rgb));
     --spectrum-seafoam-700-rgb: 6, 122, 103;
     --spectrum-seafoam-700: rgba(var(--spectrum-seafoam-700-rgb));
-    --spectrum-seafoam-800-rgb: 8, 134, 112;
+    --spectrum-seafoam-800-rgb: 8, 138, 116;
     --spectrum-seafoam-800: rgba(var(--spectrum-seafoam-800-rgb));
     --spectrum-seafoam-900-rgb: 10, 154, 128;
     --spectrum-seafoam-900: rgba(var(--spectrum-seafoam-900-rgb));
@@ -618,7 +618,7 @@
     --spectrum-cyan-600: rgba(var(--spectrum-cyan-600-rgb));
     --spectrum-cyan-700-rgb: 8, 115, 168;
     --spectrum-cyan-700: rgba(var(--spectrum-cyan-700-rgb));
-    --spectrum-cyan-800-rgb: 13, 125, 186;
+    --spectrum-cyan-800-rgb: 15, 128, 194;
     --spectrum-cyan-800: rgba(var(--spectrum-cyan-800-rgb));
     --spectrum-cyan-900-rgb: 24, 142, 220;
     --spectrum-cyan-900: rgba(var(--spectrum-cyan-900-rgb));
@@ -650,7 +650,7 @@
     --spectrum-indigo-600: rgba(var(--spectrum-indigo-600-rgb));
     --spectrum-indigo-700-rgb: 109, 75, 248;
     --spectrum-indigo-700: rgba(var(--spectrum-indigo-700-rgb));
-    --spectrum-indigo-800-rgb: 116, 91, 252;
+    --spectrum-indigo-800-rgb: 119, 97, 252;
     --spectrum-indigo-800: rgba(var(--spectrum-indigo-800-rgb));
     --spectrum-indigo-900-rgb: 128, 119, 254;
     --spectrum-indigo-900: rgba(var(--spectrum-indigo-900-rgb));
@@ -682,7 +682,7 @@
     --spectrum-purple-600: rgba(var(--spectrum-purple-600-rgb));
     --spectrum-purple-700-rgb: 148, 62, 224;
     --spectrum-purple-700: rgba(var(--spectrum-purple-700-rgb));
-    --spectrum-purple-800-rgb: 157, 78, 228;
+    --spectrum-purple-800-rgb: 161, 84, 229;
     --spectrum-purple-800: rgba(var(--spectrum-purple-800-rgb));
     --spectrum-purple-900-rgb: 173, 105, 233;
     --spectrum-purple-900: rgba(var(--spectrum-purple-900-rgb));
@@ -714,7 +714,7 @@
     --spectrum-fuchsia-600: rgba(var(--spectrum-fuchsia-600-rgb));
     --spectrum-fuchsia-700-rgb: 173, 51, 192;
     --spectrum-fuchsia-700: rgba(var(--spectrum-fuchsia-700-rgb));
-    --spectrum-fuchsia-800-rgb: 186, 60, 206;
+    --spectrum-fuchsia-800-rgb: 192, 64, 212;
     --spectrum-fuchsia-800: rgba(var(--spectrum-fuchsia-800-rgb));
     --spectrum-fuchsia-900-rgb: 213, 73, 235;
     --spectrum-fuchsia-900: rgba(var(--spectrum-fuchsia-900-rgb));
@@ -746,7 +746,7 @@
     --spectrum-magenta-600: rgba(var(--spectrum-magenta-600-rgb));
     --spectrum-magenta-700-rgb: 207, 31, 92;
     --spectrum-magenta-700: rgba(var(--spectrum-magenta-700-rgb));
-    --spectrum-magenta-800-rgb: 224, 38, 101;
+    --spectrum-magenta-800-rgb: 231, 41, 105;
     --spectrum-magenta-800: rgba(var(--spectrum-magenta-800-rgb));
     --spectrum-magenta-900-rgb: 255, 51, 119;
     --spectrum-magenta-900: rgba(var(--spectrum-magenta-900-rgb));
@@ -778,7 +778,7 @@
     --spectrum-pink-600: rgba(var(--spectrum-pink-600-rgb));
     --spectrum-pink-700-rgb: 196, 39, 138;
     --spectrum-pink-700: rgba(var(--spectrum-pink-700-rgb));
-    --spectrum-pink-800-rgb: 213, 45, 151;
+    --spectrum-pink-800-rgb: 220, 47, 156;
     --spectrum-pink-800: rgba(var(--spectrum-pink-800-rgb));
     --spectrum-pink-900-rgb: 236, 67, 175;
     --spectrum-pink-900: rgba(var(--spectrum-pink-900-rgb));
@@ -810,7 +810,7 @@
     --spectrum-turquoise-600: rgba(var(--spectrum-turquoise-600-rgb));
     --spectrum-turquoise-700-rgb: 7, 120, 131;
     --spectrum-turquoise-700: rgba(var(--spectrum-turquoise-700-rgb));
-    --spectrum-turquoise-800-rgb: 9, 131, 142;
+    --spectrum-turquoise-800-rgb: 9, 135, 147;
     --spectrum-turquoise-800: rgba(var(--spectrum-turquoise-800-rgb));
     --spectrum-turquoise-900-rgb: 11, 151, 164;
     --spectrum-turquoise-900: rgba(var(--spectrum-turquoise-900-rgb));
@@ -842,7 +842,7 @@
     --spectrum-brown-600: rgba(var(--spectrum-brown-600-rgb));
     --spectrum-brown-700-rgb: 132, 104, 61;
     --spectrum-brown-700: rgba(var(--spectrum-brown-700-rgb));
-    --spectrum-brown-800-rgb: 143, 114, 69;
+    --spectrum-brown-800-rgb: 148, 118, 73;
     --spectrum-brown-800: rgba(var(--spectrum-brown-800-rgb));
     --spectrum-brown-900-rgb: 163, 132, 84;
     --spectrum-brown-900: rgba(var(--spectrum-brown-900-rgb));
@@ -874,7 +874,7 @@
     --spectrum-silver-600: rgba(var(--spectrum-silver-600-rgb));
     --spectrum-silver-700-rgb: 108, 108, 108;
     --spectrum-silver-700: rgba(var(--spectrum-silver-700-rgb));
-    --spectrum-silver-800-rgb: 118, 118, 118;
+    --spectrum-silver-800-rgb: 123, 123, 123;
     --spectrum-silver-800: rgba(var(--spectrum-silver-800-rgb));
     --spectrum-silver-900-rgb: 137, 137, 137;
     --spectrum-silver-900: rgba(var(--spectrum-silver-900-rgb));
@@ -906,7 +906,7 @@
     --spectrum-cinnamon-600: rgba(var(--spectrum-cinnamon-600-rgb));
     --spectrum-cinnamon-700-rgb: 163, 88, 52;
     --spectrum-cinnamon-700: rgba(var(--spectrum-cinnamon-700-rgb));
-    --spectrum-cinnamon-800-rgb: 176, 98, 59;
+    --spectrum-cinnamon-800-rgb: 179, 103, 64;
     --spectrum-cinnamon-800: rgba(var(--spectrum-cinnamon-800-rgb));
     --spectrum-cinnamon-900-rgb: 192, 119, 80;
     --spectrum-cinnamon-900: rgba(var(--spectrum-cinnamon-900-rgb));
@@ -946,24 +946,8 @@
     --spectrum-negative-subtle-background-color-default: var(
         --spectrum-negative-color-300
     );
-    --color-scheme: dark;
-    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-800);
-    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-800);
-    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-900);
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-blue-800
-    );
-    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-700);
-    --spectrum-assetlist-item-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.25
-    );
-    --spectrum-assetlist-item-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.15
-    );
-    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
-    --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
+    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-900-rgb);
+    --spectrum-dropindicator-color: var(--spectrum-blue-700);
     --spectrum-calendar-day-background-color-selected: rgba(
         var(--spectrum-blue-800-rgb),
         0.15
@@ -992,10 +976,19 @@
         0.07
     );
     --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-700);
-    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-500-rgb);
+    --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
     --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-700);
-    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-900-rgb);
-    --spectrum-dropindicator-color: var(--spectrum-blue-700);
+    --spectrum-steplist-current-marker-color-key-focus: var(
+        --spectrum-blue-700
+    );
+    --spectrum-treeview-item-background-color-quiet-selected: rgba(
+        var(--spectrum-gray-900-rgb),
+        0.07
+    );
+    --spectrum-treeview-item-background-color-selected: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.15
+    );
     --spectrum-logic-button-and-background-color: var(--spectrum-blue-800);
     --spectrum-logic-button-and-border-color: var(--spectrum-blue-800);
     --spectrum-logic-button-and-background-color-hover: var(
@@ -1008,29 +1001,23 @@
         --spectrum-magenta-900
     );
     --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-900);
-    --spectrum-steplist-current-marker-color-key-focus: var(
-        --spectrum-blue-700
+    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-800);
+    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-800);
+    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-900);
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
+        --spectrum-blue-800
     );
-    --spectrum-swatch-border-color-rgb: 255, 255, 255;
-    --spectrum-swatch-border-color-opacity: 0.51;
-    --spectrum-swatch-border-color: rgba(
-        var(--spectrum-swatch-border-color-rgb),
-        var(--spectrum-swatch-border-color-opacity)
+    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-700);
+    --spectrum-assetlist-item-background-color-selected-hover: rgba(
+        var(--spectrum-blue-800-rgb),
+        0.25
     );
-    --spectrum-swatch-border-color-light-rgb: 255, 255, 255;
-    --spectrum-swatch-border-color-light-opacity: 0.2;
-    --spectrum-swatch-border-color-light: rgba(
-        var(--spectrum-swatch-border-color-light-rgb),
-        var(--spectrum-swatch-border-color-light-opacity)
-    );
-    --spectrum-treeview-item-background-color-quiet-selected: rgba(
-        var(--spectrum-gray-900-rgb),
-        0.07
-    );
-    --spectrum-treeview-item-background-color-selected: rgba(
+    --spectrum-assetlist-item-background-color-selected: rgba(
         var(--spectrum-blue-800-rgb),
         0.15
     );
+    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
+    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-500-rgb);
 }
 :host,
 :root {
@@ -2054,6 +2041,7 @@
     --spectrum-code-cjk-line-height: var(--spectrum-cjk-line-height-200);
     --spectrum-code-color: var(--spectrum-gray-800);
     --system: spectrum;
+    --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
     --spectrum-animation-duration-0: 0s;
     --spectrum-animation-duration-100: 0.13s;
     --spectrum-animation-duration-200: 0.16s;
@@ -2068,25 +2056,24 @@
     --spectrum-animation-duration-2000: 1s;
     --spectrum-animation-duration-4000: 2s;
     --spectrum-animation-duration-6000: 3s;
-    --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
     --spectrum-animation-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1);
     --spectrum-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
     --spectrum-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
     --spectrum-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
     --spectrum-sans-font-family-stack: adobe-clean,
         var(--spectrum-sans-serif-font-family), 'Source Sans Pro', -apple-system,
-        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
+        blinkmacsystemfont, 'Segoe UI', roboto, ubuntu, 'Trebuchet MS',
         'Lucida Grande', sans-serif;
     --spectrum-sans-serif-font: var(--spectrum-sans-font-family-stack);
     --spectrum-serif-font-family-stack: adobe-clean-serif,
-        var(--spectrum-serif-font-family), 'Source Serif Pro', Georgia, serif;
+        var(--spectrum-serif-font-family), 'Source Serif Pro', georgia, serif;
     --spectrum-serif-font: var(--spectrum-serif-font-family-stack);
-    --spectrum-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
+    --spectrum-code-font-family-stack: 'Source Code Pro', monaco, monospace;
     --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro',
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+        -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu,
         'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro',
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+        -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu,
         'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-font-family: var(--spectrum-sans-font-family-stack);
     --spectrum-font-style: var(--spectrum-default-font-style);
@@ -2102,6 +2089,7 @@
     --spectrum-docs-static-black-background-color: rgba(
         var(--spectrum-docs-static-black-background-color-rgb)
     );
+    --spectrum-coach-indicator-ring-static-white-color: var(--spectrum-white);
 }
 :host,
 :root {
@@ -2643,64 +2631,12 @@
     --spectrum-font-size-1100: 55px;
     --spectrum-font-size-1200: 62px;
     --spectrum-font-size-1300: 70px;
-    --scale: large;
-    --spectrum-alert-banner-close-button-spacing: var(--spectrum-spacing-200);
-    --spectrum-alert-banner-edge-to-divider: var(--spectrum-spacing-200);
-    --spectrum-alert-banner-edge-to-button: var(--spectrum-spacing-200);
-    --spectrum-alert-banner-text-to-button-vertical: var(
-        --spectrum-spacing-200
-    );
-    --spectrum-alert-dialog-padding: var(--spectrum-spacing-400);
-    --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-600);
-    --spectrum-assetcard-focus-ring-border-radius: 9px;
-    --spectrum-assetcard-selectionindicator-margin: 15px;
-    --spectrum-assetcard-title-font-size: var(--spectrum-heading-size-xxs);
-    --spectrum-assetcard-header-content-font-size: var(
-        --spectrum-heading-size-xxs
-    );
-    --spectrum-assetcard-content-font-size: var(--spectrum-body-size-xs);
-    --spectrum-button-top-to-text-small: 6px;
-    --spectrum-button-bottom-to-text-small: 5px;
-    --spectrum-button-top-to-text-medium: 9px;
-    --spectrum-button-bottom-to-text-medium: 10px;
-    --spectrum-button-top-to-text-large: 12px;
-    --spectrum-button-bottom-to-text-large: 13px;
-    --spectrum-button-top-to-text-extra-large: 16px;
-    --spectrum-button-bottom-to-text-extra-large: 17px;
-    --spectrum-coach-indicator-gap: 8px;
-    --spectrum-coach-indicator-ring-diameter: 20px;
-    --spectrum-coach-indicator-quiet-ring-diameter: 10px;
-    --spectrum-coachmark-buttongroup-display: none;
-    --spectrum-coachmark-buttongroup-mobile-display: flex;
-    --spectrum-coachmark-menu-display: none;
-    --spectrum-coachmark-menu-mobile-display: inline-flex;
+    --spectrum-slider-tick-mark-height: 13px;
+    --spectrum-slider-ramp-track-height: 20px;
     --spectrum-colorwheel-path: 'M 119 119 m -119 0 a 119 119 0 1 0 238 0 a 119 119 0 1 0 -238 0.2 M 119 119 m -91 0 a 91 91 0 1 0 182 0 a 91 91 0 1 0 -182 0';
     --spectrum-colorwheel-path-borders: 'M 120 120 m -120 0 a 120 120 0 1 0 240 0 a 120 120 0 1 0 -240 0.2 M 120 120 m -90 0 a 90 90 0 1 0 180 0 a 90 90 0 1 0 -180 0';
     --spectrum-colorwheel-colorarea-container-size: 182px;
     --spectrum-colorloupe-checkerboard-fill: url(#checkerboard-secondary);
-    --spectrum-contextual-help-content-spacing: var(--spectrum-spacing-200);
-    --spectrum-datepicker-initial-width: 160px;
-    --spectrum-datepicker-generic-padding: 15px;
-    --spectrum-datepicker-dash-line-height: 30px;
-    --spectrum-datepicker-width-quiet-first: 90px;
-    --spectrum-datepicker-width-quiet-second: 20px;
-    --spectrum-datepicker-datetime-width-first: 45px;
-    --spectrum-datepicker-invalid-icon-to-button: 10px;
-    --spectrum-datepicker-invalid-icon-to-button-quiet: 9px;
-    --spectrum-datepicker-input-datetime-width: 30px;
-    --spectrum-dial-border-radius: 20px;
-    --spectrum-dial-handle-position: 10px;
-    --spectrum-dial-handle-block-margin: 20px;
-    --spectrum-dial-handle-inline-margin: 20px;
-    --spectrum-dial-controls-margin: 10px;
-    --spectrum-dial-label-gap-y: 6px;
-    --spectrum-dial-label-container-top-to-text: 5px;
-    --spectrum-dialog-confirm-entry-animation-distance: 25px;
-    --spectrum-dialog-confirm-hero-height: 160px;
-    --spectrum-dialog-confirm-border-radius: 5px;
-    --spectrum-dialog-confirm-title-text-size: 19px;
-    --spectrum-dialog-confirm-description-text-size: 15px;
-    --spectrum-dialog-confirm-padding-grid: 24px;
     --spectrum-menu-item-selectable-edge-to-text-not-selected-small: 34px;
     --spectrum-menu-item-selectable-edge-to-text-not-selected-medium: 42px;
     --spectrum-menu-item-selectable-edge-to-text-not-selected-large: 47px;
@@ -2713,26 +2649,73 @@
     --spectrum-menu-item-checkmark-width-medium: 14px;
     --spectrum-menu-item-checkmark-width-large: 16px;
     --spectrum-menu-item-checkmark-width-extra-large: 16px;
-    --spectrum-pagination-textfield-width: 60px;
-    --spectrum-pagination-item-inline-spacing: 6px;
     --spectrum-rating-icon-spacing: var(--spectrum-spacing-100);
-    --spectrum-slider-tick-mark-height: 13px;
-    --spectrum-slider-ramp-track-height: 20px;
+    --spectrum-button-top-to-text-small: 6px;
+    --spectrum-button-bottom-to-text-small: 5px;
+    --spectrum-button-top-to-text-medium: 9px;
+    --spectrum-button-bottom-to-text-medium: 10px;
+    --spectrum-button-top-to-text-large: 12px;
+    --spectrum-button-bottom-to-text-large: 13px;
+    --spectrum-button-top-to-text-extra-large: 16px;
+    --spectrum-button-bottom-to-text-extra-large: 17px;
+    --spectrum-alert-banner-close-button-spacing: var(--spectrum-spacing-200);
+    --spectrum-alert-banner-edge-to-divider: var(--spectrum-spacing-200);
+    --spectrum-alert-banner-edge-to-button: var(--spectrum-spacing-200);
+    --spectrum-alert-banner-text-to-button-vertical: var(
+        --spectrum-spacing-200
+    );
+    --spectrum-alert-dialog-padding: var(--spectrum-spacing-400);
+    --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-600);
+    --spectrum-coach-indicator-gap: 8px;
+    --spectrum-coach-indicator-ring-diameter: 20px;
+    --spectrum-coach-indicator-quiet-ring-diameter: 10px;
+    --spectrum-coachmark-buttongroup-display: none;
+    --spectrum-coachmark-buttongroup-mobile-display: flex;
+    --spectrum-coachmark-menu-display: none;
+    --spectrum-coachmark-menu-mobile-display: inline-flex;
+    --spectrum-workflow-icon-size-xxl: 40px;
+    --spectrum-workflow-icon-size-xxs: 15px;
     --spectrum-treeview-item-indentation-medium: 20px;
     --spectrum-treeview-item-indentation-small: 15px;
     --spectrum-treeview-item-indentation-large: 25px;
     --spectrum-treeview-item-indentation-extra-large: 30px;
     --spectrum-treeview-indicator-inset-block-start: 6px;
     --spectrum-treeview-item-min-block-size-thumbnail-offset-medium: 2px;
+    --spectrum-dialog-confirm-entry-animation-distance: 25px;
+    --spectrum-dialog-confirm-hero-height: 160px;
+    --spectrum-dialog-confirm-border-radius: 5px;
+    --spectrum-dialog-confirm-title-text-size: 19px;
+    --spectrum-dialog-confirm-description-text-size: 15px;
+    --spectrum-dialog-confirm-padding-grid: 24px;
+    --spectrum-datepicker-initial-width: 160px;
+    --spectrum-datepicker-generic-padding: 15px;
+    --spectrum-datepicker-dash-line-height: 30px;
+    --spectrum-datepicker-width-quiet-first: 90px;
+    --spectrum-datepicker-width-quiet-second: 20px;
+    --spectrum-datepicker-datetime-width-first: 45px;
+    --spectrum-datepicker-invalid-icon-to-button: 10px;
+    --spectrum-datepicker-invalid-icon-to-button-quiet: 9px;
+    --spectrum-datepicker-input-datetime-width: 30px;
+    --spectrum-pagination-textfield-width: 60px;
+    --spectrum-pagination-item-inline-spacing: 6px;
+    --spectrum-dial-border-radius: 20px;
+    --spectrum-dial-handle-position: 10px;
+    --spectrum-dial-handle-block-margin: 20px;
+    --spectrum-dial-handle-inline-margin: 20px;
+    --spectrum-dial-controls-margin: 10px;
+    --spectrum-dial-label-gap-y: 6px;
+    --spectrum-dial-label-container-top-to-text: 5px;
+    --spectrum-assetcard-focus-ring-border-radius: 9px;
+    --spectrum-assetcard-selectionindicator-margin: 15px;
+    --spectrum-assetcard-title-font-size: var(--spectrum-heading-size-xxs);
+    --spectrum-assetcard-header-content-font-size: var(
+        --spectrum-heading-size-xxs
+    );
+    --spectrum-assetcard-content-font-size: var(--spectrum-body-size-xs);
     --spectrum-tooltip-animation-distance: 5px;
     --spectrum-ui-icon-medium-display: none;
     --spectrum-ui-icon-large-display: block;
-    --spectrum-well-border-radius: 5px;
-    --spectrum-well-margin-top: 5px;
-    --spectrum-well-min-width: 300px;
-    --spectrum-well-padding: 20px;
-    --spectrum-workflow-icon-size-xxl: 40px;
-    --spectrum-workflow-icon-size-xxs: 15px;
+    --spectrum-contextual-help-content-spacing: var(--spectrum-spacing-200);
 }
 :host,
 :root {
@@ -3682,24 +3665,8 @@
     --spectrum-negative-subtle-background-color-default: var(
         --spectrum-negative-color-200
     );
-    --color-scheme: light;
-    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-900);
-    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-900);
-    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-1000);
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-blue-900
-    );
-    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-800);
-    --spectrum-assetlist-item-background-color-selected-hover: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.2
-    );
-    --spectrum-assetlist-item-background-color-selected: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.1
-    );
-    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-800);
-    --spectrum-badge-label-icon-color-primary: var(--spectrum-white);
+    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-800-rgb);
+    --spectrum-dropindicator-color: var(--spectrum-blue-800);
     --spectrum-calendar-day-background-color-selected: rgba(
         var(--spectrum-blue-900-rgb),
         0.1
@@ -3728,10 +3695,19 @@
         0.06
     );
     --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-800);
-    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-900-rgb);
+    --spectrum-badge-label-icon-color-primary: var(--spectrum-white);
     --spectrum-coach-indicator-ring-default-color: var(--spectrum-blue-800);
-    --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-800-rgb);
-    --spectrum-dropindicator-color: var(--spectrum-blue-800);
+    --spectrum-steplist-current-marker-color-key-focus: var(
+        --spectrum-blue-800
+    );
+    --spectrum-treeview-item-background-color-quiet-selected: rgba(
+        var(--spectrum-gray-900-rgb),
+        0.06
+    );
+    --spectrum-treeview-item-background-color-selected: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.1
+    );
     --spectrum-logic-button-and-background-color: var(--spectrum-blue-900);
     --spectrum-logic-button-and-border-color: var(--spectrum-blue-900);
     --spectrum-logic-button-and-background-color-hover: var(
@@ -3744,29 +3720,23 @@
         --spectrum-magenta-1100
     );
     --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-1100);
-    --spectrum-steplist-current-marker-color-key-focus: var(
-        --spectrum-blue-800
+    --spectrum-assetcard-border-color-selected: var(--spectrum-blue-900);
+    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-900);
+    --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-1000);
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
+        --spectrum-blue-900
     );
-    --spectrum-swatch-border-color-rgb: 0, 0, 0;
-    --spectrum-swatch-border-color-opacity: 0.51;
-    --spectrum-swatch-border-color: rgba(
-        var(--spectrum-swatch-border-color-rgb),
-        var(--spectrum-swatch-border-color-opacity)
+    --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-800);
+    --spectrum-assetlist-item-background-color-selected-hover: rgba(
+        var(--spectrum-blue-900-rgb),
+        0.2
     );
-    --spectrum-swatch-border-color-light-rgb: 0, 0, 0;
-    --spectrum-swatch-border-color-light-opacity: 0.2;
-    --spectrum-swatch-border-color-light: rgba(
-        var(--spectrum-swatch-border-color-light-rgb),
-        var(--spectrum-swatch-border-color-light-opacity)
-    );
-    --spectrum-treeview-item-background-color-quiet-selected: rgba(
-        var(--spectrum-gray-900-rgb),
-        0.06
-    );
-    --spectrum-treeview-item-background-color-selected: rgba(
+    --spectrum-assetlist-item-background-color-selected: rgba(
         var(--spectrum-blue-900-rgb),
         0.1
     );
+    --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-800);
+    --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-900-rgb);
 }
 :host,
 :root {
@@ -4308,64 +4278,16 @@
     --spectrum-font-size-1100: 45px;
     --spectrum-font-size-1200: 50px;
     --spectrum-font-size-1300: 60px;
-    --scale: medium;
-    --spectrum-alert-banner-close-button-spacing: var(--spectrum-spacing-100);
-    --spectrum-alert-banner-edge-to-button: var(--spectrum-spacing-100);
-    --spectrum-alert-banner-edge-to-divider: var(--spectrum-spacing-100);
-    --spectrum-alert-banner-text-to-button-vertical: var(
-        --spectrum-spacing-100
-    );
-    --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-700);
-    --spectrum-alert-dialog-padding: var(--spectrum-spacing-500);
-    --spectrum-assetcard-content-font-size: var(--spectrum-body-size-s);
-    --spectrum-assetcard-focus-ring-border-radius: 8px;
-    --spectrum-assetcard-header-content-font-size: var(
-        --spectrum-heading-size-xs
-    );
-    --spectrum-assetcard-selectionindicator-margin: 12px;
-    --spectrum-assetcard-title-font-size: var(--spectrum-heading-size-xs);
-    --spectrum-button-bottom-to-text-small: 4px;
-    --spectrum-button-bottom-to-text-medium: 8px;
-    --spectrum-button-bottom-to-text-large: 10px;
-    --spectrum-button-bottom-to-text-extra-large: 13px;
-    --spectrum-button-top-to-text-small: 5px;
-    --spectrum-button-top-to-text-medium: 7px;
-    --spectrum-button-top-to-text-large: 10px;
-    --spectrum-button-top-to-text-extra-large: 13px;
-    --spectrum-coach-indicator-gap: 6px;
-    --spectrum-coach-indicator-ring-diameter: var(--spectrum-spacing-300);
-    --spectrum-coach-indicator-quiet-ring-diameter: var(--spectrum-spacing-100);
-    --spectrum-coachmark-buttongroup-display: flex;
-    --spectrum-coachmark-buttongroup-mobile-display: none;
-    --spectrum-coachmark-menu-display: inline-flex;
-    --spectrum-coachmark-menu-mobile-display: none;
-    --spectrum-colorloupe-checkerboard-fill: url(#checkerboard-primary);
-    --spectrum-colorwheel-colorarea-container-size: 144px;
+    --spectrum-slider-tick-mark-height: 10px;
+    --spectrum-slider-ramp-track-height: 16px;
     --spectrum-colorwheel-path: 'M 95 95 m -95 0 a 95 95 0 1 0 190 0 a 95 95 0 1 0 -190 0.2 M 95 95 m -73 0 a 73 73 0 1 0 146 0 a 73 73 0 1 0 -146 0';
     --spectrum-colorwheel-path-borders: 'M 96 96 m -96 0 a 96 96 0 1 0 192 0 a 96 96 0 1 0 -192 0.2 M 96 96 m -72 0 a 72 72 0 1 0 144 0 a 72 72 0 1 0 -144 0';
-    --spectrum-contextual-help-content-spacing: var(--spectrum-spacing-100);
-    --spectrum-datepicker-dash-line-height: 24px;
-    --spectrum-datepicker-datetime-width-first: 36px;
-    --spectrum-datepicker-generic-padding: var(--spectrum-spacing-200);
-    --spectrum-datepicker-initial-width: 128px;
-    --spectrum-datepicker-input-datetime-width: var(--spectrum-spacing-400);
-    --spectrum-datepicker-invalid-icon-to-button: 8px;
-    --spectrum-datepicker-invalid-icon-to-button-quiet: 7px;
-    --spectrum-datepicker-width-quiet-first: 72px;
-    --spectrum-datepicker-width-quiet-second: 16px;
-    --spectrum-dial-border-radius: 16px;
-    --spectrum-dial-controls-margin: 8px;
-    --spectrum-dial-handle-block-margin: 16px;
-    --spectrum-dial-handle-inline-margin: 16px;
-    --spectrum-dial-handle-position: 8px;
-    --spectrum-dial-label-container-top-to-text: 4px;
-    --spectrum-dial-label-gap-y: 5px;
-    --spectrum-dialog-confirm-border-radius: 4px;
-    --spectrum-dialog-confirm-description-text-size: 14px;
-    --spectrum-dialog-confirm-entry-animation-distance: 20px;
-    --spectrum-dialog-confirm-hero-height: 128px;
-    --spectrum-dialog-confirm-padding-grid: 40px;
-    --spectrum-dialog-confirm-title-text-size: 18px;
+    --spectrum-colorwheel-colorarea-container-size: 144px;
+    --spectrum-colorloupe-checkerboard-fill: url(#checkerboard-primary);
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-small: 28px;
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-medium: 32px;
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-large: 38px;
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-extra-large: 45px;
     --spectrum-menu-item-checkmark-height-small: 10px;
     --spectrum-menu-item-checkmark-height-medium: 10px;
     --spectrum-menu-item-checkmark-height-large: 12px;
@@ -4374,30 +4296,73 @@
     --spectrum-menu-item-checkmark-width-medium: 10px;
     --spectrum-menu-item-checkmark-width-large: 12px;
     --spectrum-menu-item-checkmark-width-extra-large: 14px;
-    --spectrum-menu-item-selectable-edge-to-text-not-selected-small: 28px;
-    --spectrum-menu-item-selectable-edge-to-text-not-selected-medium: 32px;
-    --spectrum-menu-item-selectable-edge-to-text-not-selected-large: 38px;
-    --spectrum-menu-item-selectable-edge-to-text-not-selected-extra-large: 45px;
-    --spectrum-pagination-item-inline-spacing: 5px;
-    --spectrum-pagination-textfield-width: var(--spectrum-spacing-700);
     --spectrum-rating-icon-spacing: var(--spectrum-spacing-75);
-    --spectrum-slider-ramp-track-height: 16px;
-    --spectrum-slider-tick-mark-height: 10px;
-    --spectrum-treeview-indicator-inset-block-start: 5px;
-    --spectrum-treeview-item-indentation-small: var(--spectrum-spacing-200);
+    --spectrum-button-top-to-text-small: 5px;
+    --spectrum-button-bottom-to-text-small: 4px;
+    --spectrum-button-top-to-text-medium: 7px;
+    --spectrum-button-bottom-to-text-medium: 8px;
+    --spectrum-button-top-to-text-large: 10px;
+    --spectrum-button-bottom-to-text-large: 10px;
+    --spectrum-button-top-to-text-extra-large: 13px;
+    --spectrum-button-bottom-to-text-extra-large: 13px;
+    --spectrum-alert-banner-close-button-spacing: var(--spectrum-spacing-100);
+    --spectrum-alert-banner-edge-to-divider: var(--spectrum-spacing-100);
+    --spectrum-alert-banner-edge-to-button: var(--spectrum-spacing-100);
+    --spectrum-alert-banner-text-to-button-vertical: var(
+        --spectrum-spacing-100
+    );
+    --spectrum-alert-dialog-padding: var(--spectrum-spacing-500);
+    --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-700);
+    --spectrum-coach-indicator-gap: 6px;
+    --spectrum-coach-indicator-ring-diameter: var(--spectrum-spacing-300);
+    --spectrum-coach-indicator-quiet-ring-diameter: var(--spectrum-spacing-100);
+    --spectrum-coachmark-buttongroup-display: flex;
+    --spectrum-coachmark-buttongroup-mobile-display: none;
+    --spectrum-coachmark-menu-display: inline-flex;
+    --spectrum-coachmark-menu-mobile-display: none;
+    --spectrum-workflow-icon-size-xxl: 32px;
+    --spectrum-workflow-icon-size-xxs: 12px;
     --spectrum-treeview-item-indentation-medium: var(--spectrum-spacing-300);
+    --spectrum-treeview-item-indentation-small: var(--spectrum-spacing-200);
     --spectrum-treeview-item-indentation-large: 20px;
     --spectrum-treeview-item-indentation-extra-large: var(
         --spectrum-spacing-400
     );
+    --spectrum-treeview-indicator-inset-block-start: 5px;
     --spectrum-treeview-item-min-block-size-thumbnail-offset-medium: 0px;
+    --spectrum-dialog-confirm-entry-animation-distance: 20px;
+    --spectrum-dialog-confirm-hero-height: 128px;
+    --spectrum-dialog-confirm-border-radius: 4px;
+    --spectrum-dialog-confirm-title-text-size: 18px;
+    --spectrum-dialog-confirm-description-text-size: 14px;
+    --spectrum-dialog-confirm-padding-grid: 40px;
+    --spectrum-datepicker-initial-width: 128px;
+    --spectrum-datepicker-generic-padding: var(--spectrum-spacing-200);
+    --spectrum-datepicker-dash-line-height: 24px;
+    --spectrum-datepicker-width-quiet-first: 72px;
+    --spectrum-datepicker-width-quiet-second: 16px;
+    --spectrum-datepicker-datetime-width-first: 36px;
+    --spectrum-datepicker-invalid-icon-to-button: 8px;
+    --spectrum-datepicker-invalid-icon-to-button-quiet: 7px;
+    --spectrum-datepicker-input-datetime-width: var(--spectrum-spacing-400);
+    --spectrum-pagination-textfield-width: var(--spectrum-spacing-700);
+    --spectrum-pagination-item-inline-spacing: 5px;
+    --spectrum-dial-border-radius: 16px;
+    --spectrum-dial-handle-position: 8px;
+    --spectrum-dial-handle-block-margin: 16px;
+    --spectrum-dial-handle-inline-margin: 16px;
+    --spectrum-dial-controls-margin: 8px;
+    --spectrum-dial-label-gap-y: 5px;
+    --spectrum-dial-label-container-top-to-text: 4px;
+    --spectrum-assetcard-focus-ring-border-radius: 8px;
+    --spectrum-assetcard-selectionindicator-margin: 12px;
+    --spectrum-assetcard-title-font-size: var(--spectrum-heading-size-xs);
+    --spectrum-assetcard-header-content-font-size: var(
+        --spectrum-heading-size-xs
+    );
+    --spectrum-assetcard-content-font-size: var(--spectrum-body-size-s);
     --spectrum-tooltip-animation-distance: var(--spectrum-spacing-75);
     --spectrum-ui-icon-medium-display: block;
     --spectrum-ui-icon-large-display: none;
-    --spectrum-well-border-radius: var(--spectrum-spacing-75);
-    --spectrum-well-margin-top: var(--spectrum-spacing-75);
-    --spectrum-well-min-width: 240px;
-    --spectrum-well-padding: var(--spectrum-spacing-300);
-    --spectrum-workflow-icon-size-xxl: 32px;
-    --spectrum-workflow-icon-size-xxs: 12px;
+    --spectrum-contextual-help-content-spacing: var(--spectrum-spacing-100);
 }
