@@ -12,8 +12,13 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-  --spectrum-menu-item-background-color-hover: var(--system-menu-item-background-color-hover);
-  --spectrum-menu-item-background-color-down: var(--system-menu-item-background-color-down);
-  --spectrum-menu-item-background-color-key-focus: var(--system-menu-item-background-color-key-focus);
+    --spectrum-menu-item-background-color-hover: var(
+        --system-menu-item-background-color-hover
+    );
+    --spectrum-menu-item-background-color-down: var(
+        --system-menu-item-background-color-down
+    );
+    --spectrum-menu-item-background-color-key-focus: var(
+        --system-menu-item-background-color-key-focus
+    );
 }
-

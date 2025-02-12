@@ -12,16 +12,15 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 @media (forced-colors: active) {
-  .spectrum-Icon {
-    forced-color-adjust: preserve-parent-color;
-  }
+    .spectrum-Icon {
+        forced-color-adjust: preserve-parent-color;
+    }
 }
 
 :host {
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
 }
-

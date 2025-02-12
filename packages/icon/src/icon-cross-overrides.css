@@ -12,30 +12,29 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-UIIcon-Cross75 {
-  --spectrum-icon-size: var(--system-ui-icon-cross-75-icon-size);
+    --spectrum-icon-size: var(--system-ui-icon-cross-75-icon-size);
 }
 
 .spectrum-UIIcon-Cross100 {
-  --spectrum-icon-size: var(--system-ui-icon-cross-100-icon-size);
+    --spectrum-icon-size: var(--system-ui-icon-cross-100-icon-size);
 }
 
 .spectrum-UIIcon-Cross200 {
-  --spectrum-icon-size: var(--system-ui-icon-cross-200-icon-size);
+    --spectrum-icon-size: var(--system-ui-icon-cross-200-icon-size);
 }
 
 .spectrum-UIIcon-Cross300 {
-  --spectrum-icon-size: var(--system-ui-icon-cross-300-icon-size);
+    --spectrum-icon-size: var(--system-ui-icon-cross-300-icon-size);
 }
 
 .spectrum-UIIcon-Cross400 {
-  --spectrum-icon-size: var(--system-ui-icon-cross-400-icon-size);
+    --spectrum-icon-size: var(--system-ui-icon-cross-400-icon-size);
 }
 
 .spectrum-UIIcon-Cross500 {
-  --spectrum-icon-size: var(--system-ui-icon-cross-500-icon-size);
+    --spectrum-icon-size: var(--system-ui-icon-cross-500-icon-size);
 }
 
 .spectrum-UIIcon-Cross600 {
-  --spectrum-icon-size: var(--system-ui-icon-cross-600-icon-size);
+    --spectrum-icon-size: var(--system-ui-icon-cross-600-icon-size);
 }
-
