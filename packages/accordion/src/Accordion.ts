@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import {
+    css,
     CSSResultArray,
     html,
     PropertyValues,
@@ -28,6 +29,28 @@ import { AccordionItem } from './AccordionItem.js';
 
 import styles from './accordion.css.js';
 
+const spectrum = css`
+:host {
+	--system-accordion-divider-color: var(--spectrum-gray-300);
+	--system-accordion-item-content-disabled-color: var(--spectrum-gray-400);
+	--system-accordion-item-content-color: var(--spectrum-gray-800);
+    background-color: hotpink !important;
+}`;
+const express = css`
+:host {
+	--system-accordion-divider-color: var(--spectrum-gray-300);
+	--system-accordion-item-content-disabled-color: var(--spectrum-gray-400);
+	--system-accordion-item-content-color: var(--spectrum-gray-800);
+    background-color: goldenrod !important;
+}`;
+const spectrum2 = css`
+:host {
+	--system-accordion-divider-color: var(--spectrum-gray-200);
+	--system-accordion-item-content-disabled-color: var(--spectrum-disabled-content-color);
+	--system-accordion-item-content-color: var(--spectrum-body-color);
+    background-color: green !important;
+}`;
+
 /**
  * @element sp-accordion
  * @slot - The sp-accordion-item children to display.
@@ -37,6 +60,14 @@ export class Accordion extends SizedMixin(SpectrumElement, {
 }) {
     public static override get styles(): CSSResultArray {
         return [styles];
+    }
+
+    public static override get systemTheming(): Map<string, CSSStyleSheet|null> {
+        return new Map([
+            ['spectrum', spectrum],
+            ['express', express],
+            ['spectrum-two', spectrum2],
+        ]);
     }
 
     /**
