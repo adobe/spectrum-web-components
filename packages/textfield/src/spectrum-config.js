@@ -45,6 +45,48 @@ export default {
                 },
                 // Default to `size='m'` without needing the attribute
                 converter.classToHost('spectrum-Textfield--sizeM'),
+                {
+                    find: [
+                        builder.class('spectrum-Textfield--sizeS'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('textfield'),
+                        },
+                        {
+                            replace: builder.attribute('size', 's'),
+                        }
+                        
+                    ],
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Textfield--sizeL'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('textfield'),
+                        },
+                        {
+                            replace: builder.attribute('size', 'l'),
+                        }
+                        
+                    ],
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Textfield--sizeXL'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('textfield'),
+                        },
+                        {
+                            replace: builder.attribute('size', 'xl'),
+                        }
+                        
+                    ],
+                },
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Textfield--sizeS', 's'],
