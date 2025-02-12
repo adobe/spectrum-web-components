@@ -119,7 +119,8 @@
         "css"
     ],
     "dependencies": {
-        "lit": "^2.5.0 || ^3.1.3"
+        "lit": "^2.5.0 || ^3.1.3",
+        "style-observer": "^0.1.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

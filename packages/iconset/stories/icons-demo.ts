@@ -21,7 +21,6 @@ import {
 import {
     customElement,
     property,
-    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Search } from '@spectrum-web-components/search';
@@ -32,11 +31,6 @@ import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 
 import iconsList from './iconsList.json' assert { type: 'json' };
-
-import {
-    SystemResolutionController,
-    systemResolverUpdatedSymbol,
-} from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
 
 @customElement('delayed-ready')
 export class DelayedReady extends SpectrumElement {
@@ -99,11 +93,6 @@ export class IconsDemo extends SpectrumElement {
         tag: string;
     }[] = [];
 
-    private unsubscribeSystemContext: (() => void) | null = null;
-
-    @state()
-    public spectrumVersion = 1;
-
     private iconset: string[] = [];
     public constructor() {
         super();
@@ -118,14 +107,10 @@ export class IconsDemo extends SpectrumElement {
     public override disconnectedCallback(): void {
         window.removeEventListener('sp-iconset-added', this.handleIconSetAdded);
         super.disconnectedCallback();
-        if (this.unsubscribeSystemContext) {
-            this.unsubscribeSystemContext();
-            this.unsubscribeSystemContext = null;
-        }
     }
 
     private filterIconsBySpectrumVersion(): void {
-        const iconVersion = this.spectrumVersion === 2 ? 's2' : 's1';
+        const iconVersion = this.system === 'spectrum-two' ? 's2' : 's1';
         let filteredIcons = this.icons;
         // Filter out icons that are not in the current version for workflow icons
         if (this.name === 'workflow') {
@@ -148,12 +133,8 @@ export class IconsDemo extends SpectrumElement {
         this.filteredIcons = filteredIcons;
     }
 
-    private systemResolver = new SystemResolutionController(this);
-
     protected override update(changes: PropertyValues): void {
-        if (changes.has(systemResolverUpdatedSymbol)) {
-            this.spectrumVersion =
-                this.systemResolver.system === 'spectrum-two' ? 2 : 1;
+        if (changes.has('system')) {
             this.filterIconsBySpectrumVersion();
         }
 

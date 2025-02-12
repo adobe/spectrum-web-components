@@ -304,6 +304,7 @@ __metadata:
     rollup: "npm:^4.12.0"
     sinon: "npm:^17.0.1"
     storybook: "npm:^8.6.12"
+    style-observer: "npm:^0.1.1"
     stylelint: "npm:^16.19.1"
     stylelint-config-standard: "npm:^38.0.0"
     stylelint-header: "npm:^3.0.0"
@@ -6402,6 +6403,7 @@ __metadata:
   resolution: "@spectrum-web-components/base@workspace:tools/base"
   dependencies:
     lit: "npm:^2.5.0 || ^3.1.3"
+    style-observer: "npm:^0.1.1"
   languageName: unknown
   linkType: soft
 
@@ -31288,6 +31290,13 @@ __metadata:
   peerDependencies:
     webpack: ^5.27.0
   checksum: 10c0/214bc0f3b018f8c374f79b9fa16da43df78c7fef2261e9a99e36c2f8387601fad10ac75a171aa8edba75903db214bc46952ae08b94a1f8544bd146c2c8d07d27
+  languageName: node
+  linkType: hard
+
+"style-observer@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "style-observer@npm:0.1.1"
+  checksum: 10c0/071dc7b3bd4e7de4030a5dafbb689e9a8dc2106b332cfbb1e531093b9810fe0d7d5ff15276ccd0bdbc34d209707f38d046fb39018470841e26d79afd2fe95fb4
   languageName: node
   linkType: hard
 
