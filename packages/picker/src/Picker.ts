@@ -106,7 +106,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
      *
      * @memberof PickerBase
      */
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean, reflect: true, attribute: 'force-popover' })
     public forcePopover = false;
 
     /** Whether the items are currently loading. */
