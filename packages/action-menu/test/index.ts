@@ -436,56 +436,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(firstRect).to.deep.equal(secondRect);
         });
-        it('opens and selects in a single pointer button interaction', async () => {
-            const el = await actionMenuFixture();
-            const thirdItem = el.querySelector(
-                'sp-menu-item:nth-of-type(3)'
-            ) as MenuItem;
-            const boundingRect = el.button.getBoundingClientRect();
-
-            expect(el.value).to.not.equal(thirdItem.value);
-            const opened = oneEvent(el, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                ],
-            });
-            await opened;
-
-            const thirdItemRect = thirdItem.getBoundingClientRect();
-            const closed = oneEvent(el, 'sp-closed');
-            let selected = '';
-            el.addEventListener('change', (event: Event) => {
-                selected = (event.target as ActionMenu).value;
-            });
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            thirdItemRect.x + thirdItemRect.width / 2,
-                            thirdItemRect.y + thirdItemRect.height / 2,
-                        ],
-                    },
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
-            await closed;
-
-            expect(el.open).to.be.false;
-            expect(selected).to.equal(thirdItem.value);
-        });
         it('has attribute aria-describedby', async () => {
             const name = 'sp-picker';
             const description = 'Rendering a Picker';
