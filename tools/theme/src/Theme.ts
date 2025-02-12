@@ -120,6 +120,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 : this.system;
         if (system !== this._system) {
             this._system = system;
+            this.style.setProperty('--system', system);
             this.requestUpdate();
         }
         if (system) {
