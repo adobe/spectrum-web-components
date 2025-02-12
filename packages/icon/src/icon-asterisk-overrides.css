@@ -12,17 +12,18 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-UIIcon-Asterisk75 {
-    --spectrum-icon-size: var(--system-ui-icon-asterisk-75-icon-size);
+  --spectrum-icon-size: var(--system-ui-icon-asterisk-75-icon-size);
 }
 
 .spectrum-UIIcon-Asterisk100 {
-    --spectrum-icon-size: var(--system-ui-icon-asterisk-100-icon-size);
+  --spectrum-icon-size: var(--system-ui-icon-asterisk-100-icon-size);
 }
 
 .spectrum-UIIcon-Asterisk200 {
-    --spectrum-icon-size: var(--system-ui-icon-asterisk-200-icon-size);
+  --spectrum-icon-size: var(--system-ui-icon-asterisk-200-icon-size);
 }
 
 .spectrum-UIIcon-Asterisk300 {
-    --spectrum-icon-size: var(--system-ui-icon-asterisk-300-icon-size);
+  --spectrum-icon-size: var(--system-ui-icon-asterisk-300-icon-size);
 }
+

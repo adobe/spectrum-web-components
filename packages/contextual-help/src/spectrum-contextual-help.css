@@ -12,65 +12,32 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .popover {
-    min-inline-size: var(
-        --mod-spectrum-contextual-help-minimum-width,
-        var(--spectrum-contextual-help-minimum-width)
-    );
-    padding-block: var(
-        --mod-spectrum-contextual-help-padding,
-        var(--spectrum-contextual-help-padding)
-    );
-    padding-inline: var(
-        --mod-spectrum-contextual-help-padding,
-        var(--spectrum-contextual-help-padding)
-    );
-    font-size: var(
-        --mod-spectrum-contextual-help-body-size,
-        var(--spectrum-contextual-help-body-size)
-    );
-    color: var(
-        --highcontrast-contextual-help-body-color,
-        var(
-            --mod-contextual-help-body-color,
-            var(--spectrum-contextual-help-body-color)
-        )
-    );
-    position: relative;
+  min-inline-size: var(--mod-spectrum-contextual-help-minimum-width, var(--spectrum-contextual-help-minimum-width));
+  padding-block: var(--mod-spectrum-contextual-help-padding, var(--spectrum-contextual-help-padding));
+  padding-inline: var(--mod-spectrum-contextual-help-padding, var(--spectrum-contextual-help-padding));
+  font-size: var(--mod-spectrum-contextual-help-body-size, var(--spectrum-contextual-help-body-size));
+  color: var(--highcontrast-contextual-help-body-color, var(--mod-contextual-help-body-color, var(--spectrum-contextual-help-body-color)));
+  position: relative;
 }
 
-.popover .body,
-.popover ::slotted([slot='heading']) {
-    margin: 0;
+.popover .body, .popover ::slotted([slot="heading"]) {
+  margin: 0;
 }
 
-.popover ::slotted([slot='heading']) {
-    font-size: var(
-        --mod-spectrum-contextual-help-heading-size,
-        var(--spectrum-contextual-help-heading-size)
-    );
-    color: var(
-        --highcontrast-contextual-help-heading-color,
-        var(
-            --mod-contextual-help-heading-color,
-            var(--spectrum-contextual-help-heading-color)
-        )
-    );
-    margin-block-end: var(
-        --mod-spectrum-contextual-help-content-spacing,
-        var(--spectrum-contextual-help-content-spacing)
-    );
+.popover ::slotted([slot="heading"]) {
+  font-size: var(--mod-spectrum-contextual-help-heading-size, var(--spectrum-contextual-help-heading-size));
+  color: var(--highcontrast-contextual-help-heading-color, var(--mod-contextual-help-heading-color, var(--spectrum-contextual-help-heading-color)));
+  margin-block-end: var(--mod-spectrum-contextual-help-content-spacing, var(--spectrum-contextual-help-content-spacing));
 }
 
-::slotted([slot='link']) {
-    margin-block-start: var(
-        --mod-spectrum-contextual-help-link-spacing,
-        var(--spectrum-contextual-help-link-spacing)
-    );
+::slotted([slot="link"]) {
+  margin-block-start: var(--mod-spectrum-contextual-help-link-spacing, var(--spectrum-contextual-help-link-spacing));
 }
 
 @media (forced-colors: active) {
-    :host {
-        --highcontrast-contextual-help-heading-color: CanvasText;
-        --highcontrast-contextual-help-body-color: CanvasText;
-    }
+  :host {
+    --highcontrast-contextual-help-heading-color: CanvasText;
+    --highcontrast-contextual-help-body-color: CanvasText;
+  }
 }
+
