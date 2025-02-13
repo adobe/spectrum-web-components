@@ -211,10 +211,6 @@ export class Combobox extends Textfield {
         this.optionEls = elements;
     }
 
-    public isDebugging(): boolean {
-        return this.hasAttribute('debugging');
-    }
-
     public activateNextDescendant(): void {
         const activeIndex = !this.activeDescendant
             ? -1
@@ -224,7 +220,6 @@ export class Combobox extends Textfield {
             this.availableOptions.length;
         this.activeDescendant = this.availableOptions[nextActiveIndex];
         this.optionEls.forEach(el=> el.setAttribute('aria-selected', el.value === this.activeDescendant?.value ? 'true' : 'false'));
-        if(this.isDebugging()) console.log('next', activeIndex, nextActiveIndex,this.availableOptions, this.activeDescendant);
     }
 
     public activatePreviousDescendant(): void {
@@ -236,11 +231,9 @@ export class Combobox extends Textfield {
             this.availableOptions.length;
         this.activeDescendant = this.availableOptions[previousActiveIndex];
         this.optionEls.forEach(el=> el.setAttribute('aria-selected', el.value === this.activeDescendant?.value ? 'true' : 'false'));
-        if(this.isDebugging()) console.log('prev', activeIndex, previousActiveIndex,this.availableOptions, this.activeDescendant);
     }
 
     public selectDescendant(): void {
-        if(this.isDebugging()) console.log('selectDescendant', this.activeDescendant);
         if (!this.activeDescendant) {
             return;
         }
@@ -248,11 +241,9 @@ export class Combobox extends Textfield {
         const activeEl = this.shadowRoot.getElementById(
             this.activeDescendant.value
         );
-        if(this.isDebugging()) console.log('active', (activeEl as MenuItem)?.value, this.activeDescendant);
         if (activeEl) {
             activeEl.click();
         }
-        if(this.isDebugging()) console.log('active clicked', (activeEl as MenuItem)?.value, this.activeDescendant);
     }
 
     public filterAvailableOptions(): void {
@@ -282,7 +273,6 @@ export class Combobox extends Textfield {
             (item) => item.value === target?.value
         );
         this.value = selected?.itemText || '';
-        if(this.isDebugging()) console.log('handleMenuChange', target?.selected, target?.value, selected, this.value);
         event.preventDefault();
         this.open = false;
         this._returnItems();
@@ -482,7 +472,6 @@ export class Combobox extends Textfield {
                 >
                     <sp-menu
                         @change=${this.handleMenuChange}
-                        ?debugging=${this.isDebugging()}
                         tabindex="-1"
                         aria-labelledby="label applied-label"
                         aria-label=${ifDefined(this.label || this.appliedLabel)}
