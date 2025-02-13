@@ -13,6 +13,7 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 
 type DirectionTypes = 'horizontal' | 'vertical' | 'both' | 'grid';
 export type FocusGroupConfig<T> = {
+    delegatesFocus?: boolean;
     focusInIndex?: (_elements: T[]) => number;
     direction?: DirectionTypes | (() => DirectionTypes);
     elementEnterAction?: (el: T) => void;
@@ -62,6 +63,8 @@ export class FocusGroupController<T extends HTMLElement>
     _direction = (): DirectionTypes => 'both';
 
     public directionLength = 5;
+
+    public delegatesFocus = false;
 
     elementEnterAction = (_el: T): void => {
         return;
@@ -120,6 +123,7 @@ export class FocusGroupController<T extends HTMLElement>
     constructor(
         host: ReactiveElement,
         {
+            delegatesFocus,
             direction,
             elementEnterAction,
             elements,
@@ -131,6 +135,7 @@ export class FocusGroupController<T extends HTMLElement>
         this.mutationObserver = new MutationObserver(() => {
             this.handleItemMutation();
         });
+        this.delegatesFocus = delegatesFocus || false;
         this.host = host;
         this.host.addController(this);
         this._elements = elements;
