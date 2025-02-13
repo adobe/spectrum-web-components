@@ -48,7 +48,7 @@
         "new-package": "cd projects/templates && plop",
         "postcustom-element-json": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,clear-button,close-button,iconset,modal,shared,opacity-checkerboard,styles,custom-vars-viewer,reactive-controllers,vrt-compare,eslint-plugin},stylelint-header,@swc-react/*,documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- node ../../tasks/check-cem.js",
         "postdocs:analyze": "node ./scripts/add-custom-properties.js --src=\"projects/documentation/custom-elements.json\"",
-        "postinstall": "patch-package && yarn get-ready",
+        "postinstall": "husky && patch-package && yarn get-ready",
         "postlerna-publish": "yarn publish:react",
         "postpublish:react": "git reset --hard HEAD^ && git prune",
         "precustom-element-json": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,iconset,modal,shared,opacity-checkerboard,styles,custom-vars-viewer,reactive-controllers,eslint-plugin},stylelint-header,@swc-react/*,documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- rm custom-elements.json ||:",
