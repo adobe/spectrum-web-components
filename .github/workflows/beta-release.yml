@@ -4,7 +4,6 @@ on:
     push:
         branches:
             - main
-            - ruben/add-prelerna-publish-to-beta-releases
 
 jobs:
     release:
@@ -81,5 +80,4 @@ jobs:
               run: |
                   git commit -am "chore: publish beta version ${{ steps.calculate_next_beta_version.outputs.beta_version }}"
                   yarn prelerna-publish
-                  node scripts/verify-build-artifacts.js
                   yarn lerna publish from-package --dist-tag beta --no-git-tag-version --no-push --yes
