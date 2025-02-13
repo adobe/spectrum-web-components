@@ -20,7 +20,7 @@ import {
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import { Combobox } from '@spectrum-web-components/combobox';
-import { detectOS, fixture } from '../../../test/testing-helpers.js';
+import { fixture } from '../../../test/testing-helpers.js';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import {
     a11ySnapshot,
@@ -29,7 +29,6 @@ import {
 } from '@web/test-runner-commands';
 import type { AccessibleNamedNode } from './helpers.js';
 import { comboboxFixture } from './helpers.js';
-import { isWebKit } from '@spectrum-web-components/shared';
 import {
     withFieldLabel,
     withHelpText,
