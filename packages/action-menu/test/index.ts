@@ -533,11 +533,11 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         });
         it('does not alter submenu selection when top-level menu items are selected', async () => {
             const root = await fixture<ActionMenu>(html`
-                <sp-action-menu id="actionmenu" label="More Actions" debugging>
+                <sp-action-menu id="actionmenu" label="More Actions">
                     <sp-menu-item id="item-1">One</sp-menu-item>
                     <sp-menu-item id="item-2">
                         Two, with B selected
-                        <sp-menu slot="submenu" id="menu-2" selects="single" debugging>
+                        <sp-menu slot="submenu" id="menu-2" selects="single">
                             <sp-menu-item id="item-2a" selected>A</sp-menu-item>
                             <sp-menu-item id="item-2b">
                                 B
@@ -603,7 +603,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(root.open, 'after reopening: open?').to.be.true;
             
             closed = oneEvent(root, 'sp-closed');
-            item2.click();
+            itemB.click();
             await closed;
 
             expect(item2.selected, 'after clicking item2: item2 selected?').to.be.false;
