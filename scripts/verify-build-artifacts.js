@@ -15,33 +15,38 @@ import path from 'path';
 import glob from 'fast-glob';
 import 'colors';
 
-function verifyCustomElementsJson() {
+async function verifyCustomElementsJson() {
     // Components that don't need their own custom-elements.json manifest
-    const customElementsIgnoreList = [
+    const customElementsIgnoreList = new Set([
         'packages/modal',
         'packages/iconset',
         'packages/clear-button',
         'packages/close-button',
-    ];
+    ]);
 
     const packages = glob.sync('packages/*/', { onlyDirectories: true });
-    for (const pkg of packages) {
-        // Remove trailing slash for comparison
+    const checks = packages.map(async (pkg) => {
         const pkgPath = pkg.replace(/\/$/, '');
-        if (customElementsIgnoreList.includes(pkgPath)) {
-            continue;
+        if (customElementsIgnoreList.has(pkgPath)) {
+            return;
         }
         const customElementsPath = path.join(pkg, 'custom-elements.json');
         if (!fs.existsSync(customElementsPath)) {
             throw new Error(`Missing custom-elements.json in ${pkg}`);
         }
-    }
+    });
+    await Promise.all(checks);
 }
 
 function verifyVersionJs() {
-    const basePackageJson = JSON.parse(
-        fs.readFileSync('tools/base/package.json', 'utf8')
-    );
+    let basePackageJson;
+    try {
+        basePackageJson = JSON.parse(
+            fs.readFileSync('tools/base/package.json', 'utf8')
+        );
+    } catch (error) {
+        throw new Error('Failed to read tools/base/package.json');
+    }
     const versionJsPath = 'tools/base/src/version.js';
 
     if (!fs.existsSync(versionJsPath)) {
@@ -63,10 +68,9 @@ function verifyVersionJs() {
     }
 }
 
-function verifyBuildArtifacts() {
+async function verifyBuildArtifacts() {
     const packages = glob.sync('packages/*/', { onlyDirectories: true });
-
-    const requiredFilesIgnoreList = [
+    const requiredFilesIgnoreList = new Set([
         'packages/clear-button', // extends button
         'packages/close-button', // extends button
         'packages/search-button', // extends button
@@ -74,7 +78,7 @@ function verifyBuildArtifacts() {
         'packages/icons-workflow', // extends icon
         'packages/iconset', // extends icon
         'packages/modal', // extends dialog
-    ];
+    ]);
 
     // Required files for each package
     const requiredFiles = [
@@ -86,20 +90,25 @@ function verifyBuildArtifacts() {
         ['sp-*.d.ts', 'component definition type file'],
     ];
 
-    for (const pkg of packages) {
+    const checks = packages.map(async (pkg) => {
         const pkgPath = pkg.replace(/\/$/, '');
 
-        // First verify src directory exists
         const srcPath = path.join(pkg, 'src');
         if (!fs.existsSync(srcPath)) {
             throw new Error(`Missing src directory in ${pkg}`);
         }
 
-        if (requiredFilesIgnoreList.includes(pkgPath)) {
-            continue;
+        // Check if src directory is empty
+        const srcFiles = fs.readdirSync(srcPath);
+        if (srcFiles.length === 0) {
+            throw new Error(`src directory is empty in ${pkg}`);
         }
 
-        // Then verify all required files exist for this package
+        if (requiredFilesIgnoreList.has(pkgPath)) {
+            return;
+        }
+
+        // Verify all required files exist for this package
         for (const [filePattern, description] of requiredFiles) {
             const pattern = path.join(pkg, filePattern);
             const files = glob.sync(pattern);
@@ -109,25 +118,30 @@ function verifyBuildArtifacts() {
                 );
             }
         }
+    });
+    await Promise.all(checks);
+}
+
+async function main() {
+    try {
+        console.log('Verifying custom-elements.json files...'.cyan);
+        await verifyCustomElementsJson();
+
+        console.log('Verifying version.js...'.cyan);
+        verifyVersionJs();
+
+        console.log('Verifying build artifacts...'.cyan);
+        await verifyBuildArtifacts();
+
+        console.log('All build artifacts verified successfully'.green.bold);
+        process.exit(0);
+    } catch (error) {
+        console.error(
+            'Build artifact verification failed:'.red.bold,
+            error.message.red
+        );
+        process.exit(1);
     }
 }
 
-try {
-    console.log('Verifying custom-elements.json files...'.cyan);
-    verifyCustomElementsJson();
-
-    console.log('Verifying version.js...'.cyan);
-    verifyVersionJs();
-
-    console.log('Verifying build artifacts...'.cyan);
-    verifyBuildArtifacts();
-
-    console.log('All build artifacts verified successfully'.green.bold);
-    process.exit(0);
-} catch (error) {
-    console.error(
-        'Build artifact verification failed:'.red.bold,
-        error.message.red
-    );
-    process.exit(1);
-}
+main();
