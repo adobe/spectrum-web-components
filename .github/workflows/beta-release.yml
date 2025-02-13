@@ -79,4 +79,5 @@ jobs:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
                   git commit -am "chore: publish beta version ${{ steps.calculate_next_beta_version.outputs.beta_version }}"
+                  yarn prelerna-publish
                   yarn lerna publish from-package --dist-tag beta --no-git-tag-version --no-push --yes
