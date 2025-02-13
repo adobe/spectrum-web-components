@@ -69,9 +69,9 @@ export const testActiveElement = (
     el: TestableCombobox,
     testId: string
 ): void => {
-    expect(el.activeDescendant?.value).to.equal(testId);
+    expect(el.activeDescendant?.value, 'active descendant').to.equal(testId);
     const activeElement = el.shadowRoot.querySelector(
         `#${el.activeDescendant.value}`
     ) as HTMLElement;
-    expect(activeElement.getAttribute('aria-selected')).to.equal('true');
+    expect(activeElement.getAttribute('aria-selected'), 'aria-selected').to.equal('true');
 };
