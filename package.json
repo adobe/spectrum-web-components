@@ -53,7 +53,7 @@
         "postpublish:react": "git reset --hard HEAD^ && git prune",
         "precustom-element-json": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,iconset,modal,shared,opacity-checkerboard,styles,custom-vars-viewer,reactive-controllers,eslint-plugin},stylelint-header,@swc-react/*,documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- rm custom-elements.json ||:",
         "preeleventy": "yarn docs:analyze",
-        "prelerna-publish": "rimraf react && yarn get-ready && yarn custom-element-json && yarn build:confirm",
+        "prelerna-publish": "rimraf react && yarn get-ready && yarn custom-element-json && yarn verify-build-artifacts && yarn build:confirm",
         "prepare": "husky",
         "prepublish:react": "yarn build:react && sed -i \"\" \"s/react/# react/g\" .gitignore && git commit -am \"Commit React Wrappers\" --no-verify",
         "prestorybook": "wireit",
@@ -91,7 +91,8 @@
         "update:spectrum-css:cleanup": "yarn lint:packagejson && yarn --ignore-scripts && yarn process-spectrum",
         "update:spectrum-css:nonbreaking": "node ./scripts/update-spectrum-css.js || yarn update:spectrum-css:cleanup",
         "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js",
-        "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link"
+        "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link",
+        "verify-build-artifacts": "node ./scripts/verify-build-artifacts.js"
     },
     "peerDependencies": {
         "common-tags": "^1.8.0"
