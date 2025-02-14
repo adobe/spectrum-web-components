@@ -159,19 +159,19 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([size='s']) {
+:host([size='s']) #textfield {
     --spectrum-search-block-size: var(--spectrum-component-height-75);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-75);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-75);
 }
 
-:host([size='l']) {
+:host([size='l']) #textfield {
     --spectrum-search-block-size: var(--spectrum-component-height-200);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-200);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-200);
 }
 
-:host([size='xl']) {
+:host([size='xl']) #textfield {
     --spectrum-search-block-size: var(--spectrum-component-height-300);
     --spectrum-search-icon-size: var(--spectrum-workflow-icon-size-300);
     --spectrum-search-text-to-icon: var(--spectrum-text-to-visual-300);
