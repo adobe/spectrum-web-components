@@ -48,6 +48,48 @@ const config = {
                     'size'
                 ),
                 {
+                    find: [
+                        builder.class('spectrum-Search--sizeS'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('textfield'),
+                        },
+                        {
+                            replace: builder.attribute('size', 's'),
+                        }
+
+                    ],
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Search--sizeL'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('textfield'),
+                        },
+                        {
+                            replace: builder.attribute('size', 'l'),
+                        }
+
+                    ],
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Search--sizeXL'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.id('textfield'),
+                        },
+                        {
+                            replace: builder.attribute('size', 'xl'),
+                        }
+
+                    ],
+                },
+                {
                     find: {
                         type: 'pseudo-class',
                         kind: 'not',
