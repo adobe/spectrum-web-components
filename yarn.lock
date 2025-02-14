@@ -9040,7 +9040,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/search@workspace:packages/search"
   dependencies:
-    "@spectrum-css/search": "npm:8.0.0-s2-foundations.18"
+    "@spectrum-css/search": "npm:8.0.0-s2-foundations.19"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/button": "npm:^1.2.0"
     "@spectrum-web-components/icon": "npm:^1.2.0"
@@ -9204,7 +9204,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/textfield@workspace:packages/textfield"
   dependencies:
-    "@spectrum-css/textfield": "npm:8.0.0-s2-foundations.16"
+    "@spectrum-css/textfield": "npm:8.0.0-s2-foundations.17"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/help-text": "npm:^1.2.0"
     "@spectrum-web-components/icon": "npm:^1.2.0"
