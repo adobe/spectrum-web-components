@@ -73,6 +73,7 @@ governing permissions and limitations under the License.
 ::slotted([slot='submenu']) {
     width: max-content;
     max-width: 100%;
+    overflow-y: auto;
 }
 
 :host([no-wrap]) #label {

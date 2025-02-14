@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/dialog",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "publishConfig": {
         "access": "public"
     },
@@ -74,15 +74,15 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/alert-dialog": "^1.1.1",
-        "@spectrum-web-components/base": "^1.1.1",
-        "@spectrum-web-components/button": "^1.1.1",
-        "@spectrum-web-components/button-group": "^1.1.1",
-        "@spectrum-web-components/divider": "^1.1.1",
-        "@spectrum-web-components/icons-workflow": "^1.1.1",
-        "@spectrum-web-components/modal": "^1.1.1",
-        "@spectrum-web-components/shared": "^1.1.1",
-        "@spectrum-web-components/underlay": "^1.1.1"
+        "@spectrum-web-components/alert-dialog": "^1.1.2",
+        "@spectrum-web-components/base": "^1.1.2",
+        "@spectrum-web-components/button": "^1.1.2",
+        "@spectrum-web-components/button-group": "^1.1.2",
+        "@spectrum-web-components/divider": "^1.1.2",
+        "@spectrum-web-components/icons-workflow": "^1.1.2",
+        "@spectrum-web-components/modal": "^1.1.2",
+        "@spectrum-web-components/shared": "^1.1.2",
+        "@spectrum-web-components/underlay": "^1.1.2"
     },
     "devDependencies": {
         "@spectrum-css/dialog": "11.0.0-s2-foundations.15"

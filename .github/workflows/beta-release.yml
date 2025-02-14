@@ -16,6 +16,9 @@ jobs:
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
 
+            - name: Install semver
+              run: npm install -g semver
+
             - name: Set Git identity
               run: |
                   git config --global user.email "support+actions@github.com"
@@ -30,7 +33,7 @@ jobs:
             - name: Calculate next minor version
               id: calculate_next_minor_version
               run: |
-                  NEXT_MINOR_VERSION=$(yarn semver "${{ steps.get_lerna_version.outputs.version }}" -i minor)
+                  NEXT_MINOR_VERSION=$(semver "${{ steps.get_lerna_version.outputs.version }}" -i minor)
                   echo "next_minor_version=$NEXT_MINOR_VERSION" >> $GITHUB_OUTPUT
 
             - name: Get latest published beta version
@@ -76,4 +79,5 @@ jobs:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
                   git commit -am "chore: publish beta version ${{ steps.calculate_next_beta_version.outputs.beta_version }}"
+                  yarn prelerna-publish
                   yarn lerna publish from-package --dist-tag beta --no-git-tag-version --no-push --yes
