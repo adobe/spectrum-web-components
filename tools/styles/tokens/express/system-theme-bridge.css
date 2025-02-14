@@ -722,10 +722,10 @@
     --system-button-selected-background-color-focus: var(
         --spectrum-neutral-background-color-key-focus
     );
-    --system-button-primary-content-color-default: var(--spectrum-gray-50);
-    --system-button-primary-content-color-hover: var(--spectrum-gray-50);
-    --system-button-primary-content-color-down: var(--spectrum-gray-50);
-    --system-button-primary-content-color-focus: var(--spectrum-gray-50);
+    --system-button-primary-content-color-default: var(--spectrum-white);
+    --system-button-primary-content-color-hover: var(--spectrum-white);
+    --system-button-primary-content-color-down: var(--spectrum-white);
+    --system-button-primary-content-color-focus: var(--spectrum-white);
     --system-button-primary-outline-background-color-hover: var(
         --spectrum-gray-300
     );
