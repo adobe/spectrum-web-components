@@ -1135,4 +1135,50 @@ describe('Submenu', () => {
         // This test will fail if the click event throws an error
         // because the submenu root is not a menu-item
     });
+    it('should make submenu scrollable when content exceeds max height', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item>
+                    Parent Item
+                    <div role="menu" slot="submenu">
+                        ${Array(20).fill(0).map((_, i) => html`
+                            <sp-menu-item>Submenu Item ${i + 1}</sp-menu-item>
+                        `)}
+                    </div>
+                </sp-menu-item>
+            </sp-menu>
+        `);
+
+        await elementUpdated(el);
+
+        const menuItem = el.querySelector('sp-menu-item') as MenuItem;
+        const submenu = menuItem.querySelector('[slot="submenu"]') as HTMLElement;
+
+        // Open the submenu
+        const opened = oneEvent(menuItem, 'sp-opened');
+        menuItem.dispatchEvent(
+            new PointerEvent('pointerenter', { bubbles: true })
+        );
+        await opened;
+
+        // Force a specific max-height to ensure scrolling
+        submenu.style.maxHeight = '200px';
+        await elementUpdated(submenu);
+
+        // Get computed styles
+        const computedStyle = window.getComputedStyle(submenu);
+
+        // Verify overflow-y is set to auto
+        expect(computedStyle.overflowY).to.equal('auto');
+
+        // Verify that the content is actually overflowing
+        expect(submenu.scrollHeight).to.be.greaterThan(submenu.clientHeight);
+
+        // Verify that the submenu is scrollable
+        const initialScrollTop = submenu.scrollTop;
+        submenu.scrollTop = 50;
+        await elementUpdated(submenu);
+        expect(submenu.scrollTop).to.equal(50);
+        expect(submenu.scrollTop).to.not.equal(initialScrollTop);
+    });
 });
