@@ -8910,7 +8910,7 @@ __metadata:
   dependencies:
     "@formatjs/intl-numberformat": "npm:^8.3.5"
     "@internationalized/number": "npm:^3.6.0"
-    "@spectrum-css/stepper": "npm:7.0.0-s2-foundations.18"
+    "@spectrum-css/stepper": "npm:7.0.0-s2-foundations.19"
     "@spectrum-web-components/base": "npm:^1.1.2"
     "@spectrum-web-components/icon": "npm:^1.1.2"
     "@spectrum-web-components/icons-ui": "npm:^1.1.2"
@@ -9037,7 +9037,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/search@workspace:packages/search"
   dependencies:
-    "@spectrum-css/search": "npm:8.0.0-s2-foundations.18"
+    "@spectrum-css/search": "npm:8.0.0-s2-foundations.19"
     "@spectrum-web-components/base": "npm:^1.1.2"
     "@spectrum-web-components/button": "npm:^1.1.2"
     "@spectrum-web-components/icon": "npm:^1.1.2"
@@ -9201,7 +9201,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/textfield@workspace:packages/textfield"
   dependencies:
-    "@spectrum-css/textfield": "npm:8.0.0-s2-foundations.16"
+    "@spectrum-css/textfield": "npm:8.0.0-s2-foundations.17"
     "@spectrum-web-components/base": "npm:^1.1.2"
     "@spectrum-web-components/help-text": "npm:^1.1.2"
     "@spectrum-web-components/icon": "npm:^1.1.2"
