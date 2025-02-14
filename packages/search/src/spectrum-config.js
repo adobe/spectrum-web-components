@@ -28,6 +28,20 @@ const config = {
             outPackage: 'search',
             fileName: 'search',
             hoistCustomPropertiesFrom: 'spectrum-Search',
+            excludeByWholeSelector: [
+                [
+                    builder.class('spectrum-Search'),
+                    builder.class('spectrum-Search--sizeS'),
+                ],
+                [
+                    builder.class('spectrum-Search'),
+                    builder.class('spectrum-Search--sizeXL'),
+                ],
+                [
+                    builder.class('spectrum-Search'),
+                    builder.class('spectrum-Search--sizeL'),
+                ],
+            ],
             components: [
                 converter.classToId('spectrum-Search', 'textfield'),
                 converter.classToClass('spectrum-Search-input', 'input'),
@@ -48,47 +62,39 @@ const config = {
                     'size'
                 ),
                 {
-                    find: [
-                        builder.class('spectrum-Search--sizeS'),
-                    ],
+                    find: [builder.class('spectrum-Search--sizeS')],
                     replace: [
                         {
                             replace: builder.id('textfield'),
                         },
                         {
                             replace: builder.attribute('size', 's'),
-                        }
-
+                        },
                     ],
                 },
                 {
-                    find: [
-                        builder.class('spectrum-Search--sizeL'),
-                    ],
+                    find: [builder.class('spectrum-Search--sizeL')],
                     replace: [
                         {
                             replace: builder.id('textfield'),
                         },
                         {
                             replace: builder.attribute('size', 'l'),
-                        }
-
+                        },
                     ],
                 },
                 {
-                    find: [
-                        builder.class('spectrum-Search--sizeXL'),
-                    ],
+                    find: [builder.class('spectrum-Search--sizeXL')],
                     replace: [
                         {
                             replace: builder.id('textfield'),
                         },
                         {
                             replace: builder.attribute('size', 'xl'),
-                        }
-
+                        },
                     ],
                 },
+
                 {
                     find: {
                         type: 'pseudo-class',

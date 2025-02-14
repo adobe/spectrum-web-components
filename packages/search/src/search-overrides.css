@@ -38,24 +38,3 @@ governing permissions and limitations under the License.
         --system-search-size-m-edge-to-visual
     );
 }
-
-:host([size='s']) #textfield#textfield {
-    --spectrum-search-border-radius: var(--system-search-size-s-border-radius);
-    --spectrum-search-edge-to-visual: var(
-        --system-search-size-s-edge-to-visual
-    );
-}
-
-:host([size='l']) #textfield#textfield {
-    --spectrum-search-border-radius: var(--system-search-size-l-border-radius);
-    --spectrum-search-edge-to-visual: var(
-        --system-search-size-l-edge-to-visual
-    );
-}
-
-:host([size='xl']) #textfield#textfield {
-    --spectrum-search-border-radius: var(--system-search-size-xl-border-radius);
-    --spectrum-search-edge-to-visual: var(
-        --system-search-size-xl-edge-to-visual
-    );
-}
