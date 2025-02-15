@@ -64,7 +64,9 @@ class OverlayStack {
         // pointer during the course of the interaction.
         // Ensure that this value is cleared even if the work in this method goes undone.
         const composedPath = this.pointerdownPath;
+        const lastOverlay = this.lastOverlay;
         this.pointerdownPath = undefined;
+        this.lastOverlay = undefined;
         if (!this.stack.length) return;
         if (!composedPath?.length) return;
         const lastOverlay = this.lastOverlay;
