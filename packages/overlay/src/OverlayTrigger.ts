@@ -177,15 +177,24 @@ export class OverlayTrigger extends SpectrumElement {
         super.update(changes);
     }
 
-    protected renderSlot(name: string): TemplateResult {
+    protected renderSlot(
+        name: string,
+        attachListener: boolean
+    ): TemplateResult {
         return html`
-            <slot name=${name} @slotchange=${this.handleSlotContent}></slot>
+            <slot
+                name=${name}
+                @slotchange=${attachListener ? this.handleSlotContent : null}
+            ></slot>
         `;
     }
 
     protected renderClickOverlay(): TemplateResult {
         import('@spectrum-web-components/overlay/sp-overlay.js');
-        const slot = this.renderSlot('click-content');
+        const slot = this.renderSlot(
+            'click-content',
+            !!this.clickContent.length
+        );
         if (!this.clickContent.length) {
             return slot;
         }
@@ -209,7 +218,10 @@ export class OverlayTrigger extends SpectrumElement {
 
     protected renderHoverOverlay(): TemplateResult {
         import('@spectrum-web-components/overlay/sp-overlay.js');
-        const slot = this.renderSlot('hover-content');
+        const slot = this.renderSlot(
+            'hover-content',
+            !!this.hoverContent.length
+        );
         if (!this.hoverContent.length) {
             return slot;
         }
@@ -235,7 +247,10 @@ export class OverlayTrigger extends SpectrumElement {
 
     protected renderLongpressOverlay(): TemplateResult {
         import('@spectrum-web-components/overlay/sp-overlay.js');
-        const slot = this.renderSlot('longpress-content');
+        const slot = this.renderSlot(
+            'longpress-content',
+            !!this.longpressContent.length
+        );
         if (!this.longpressContent.length) {
             return slot;
         }
