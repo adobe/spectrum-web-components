@@ -24,8 +24,8 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-background-color-focus: var(
         --system-action-button-background-color-focus
     );
-    --spectrum-actionbutton-background-color-selected-disabled: var(
-        --system-action-button-background-color-selected-disabled
+    --spectrum-actionbutton-background-color-disabled: var(
+        --system-action-button-background-color-disabled
     );
     --spectrum-actionbutton-background-color-selected: var(
         --system-action-button-background-color-selected
@@ -57,6 +57,39 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-content-color-selected: var(
         --system-action-button-content-color-selected
     );
+    --spectrum-actionbutton-background-color-selected-disabled: var(
+        --system-action-button-background-color-selected-disabled
+    );
+}
+
+:host {
+    --spectrum-actionbutton-border-radius: var(
+        --system-action-button-size-m-border-radius
+    );
+}
+
+:host([size='xs']) {
+    --spectrum-actionbutton-border-radius: var(
+        --system-action-button-size-xs-border-radius
+    );
+}
+
+:host([size='s']) {
+    --spectrum-actionbutton-border-radius: var(
+        --system-action-button-size-s-border-radius
+    );
+}
+
+:host([size='l']) {
+    --spectrum-actionbutton-border-radius: var(
+        --system-action-button-size-l-border-radius
+    );
+}
+
+:host([size='xl']) {
+    --spectrum-actionbutton-border-radius: var(
+        --system-action-button-size-xl-border-radius
+    );
 }
 
 :host([quiet]) {
@@ -71,6 +104,12 @@ governing permissions and limitations under the License.
     );
     --spectrum-actionbutton-background-color-focus: var(
         --system-action-button-quiet-background-color-focus
+    );
+    --spectrum-actionbutton-background-color-disabled: var(
+        --system-action-button-quiet-background-color-disabled
+    );
+    --spectrum-actionbutton-background-color-selected-disabled: var(
+        --system-action-button-quiet-background-color-selected-disabled
     );
 }
 
@@ -120,6 +159,9 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-background-color-focus: var(
         --system-action-button-static-black-quiet-background-color-focus
     );
+    --spectrum-actionbutton-background-color-disabled: var(
+        --system-action-button-static-black-quiet-background-color-disabled
+    );
 }
 
 :host([static-color='white']) {
@@ -167,5 +209,8 @@ governing permissions and limitations under the License.
     );
     --spectrum-actionbutton-background-color-focus: var(
         --system-action-button-static-white-quiet-background-color-focus
+    );
+    --spectrum-actionbutton-background-color-disabled: var(
+        --system-action-button-static-white-quiet-background-color-disabled
     );
 }

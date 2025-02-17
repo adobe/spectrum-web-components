@@ -295,9 +295,7 @@
     --system-action-button-background-color-hover: var(--spectrum-gray-300);
     --system-action-button-background-color-down: var(--spectrum-gray-400);
     --system-action-button-background-color-focus: var(--spectrum-gray-300);
-    --system-action-button-background-color-selected-disabled: var(
-        --spectrum-transparent-black-200
-    );
+    --system-action-button-background-color-disabled: var(--spectrum-gray-200);
     --system-action-button-background-color-selected: var(
         --spectrum-neutral-background-color-selected-default
     );
@@ -316,6 +314,21 @@
     --system-action-button-border-color-focus: transparent;
     --system-action-button-border-color-disabled: transparent;
     --system-action-button-content-color-selected: var(--spectrum-gray-75);
+    --system-action-button-size-m-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-action-button-size-xs-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-action-button-size-s-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-action-button-size-l-border-radius: var(
+        --spectrum-corner-radius-100
+    );
+    --system-action-button-size-xl-border-radius: var(
+        --spectrum-corner-radius-100
+    );
     --system-action-button-quiet-background-color-default: transparent;
     --system-action-button-quiet-background-color-hover: var(
         --spectrum-gray-300
@@ -326,13 +339,17 @@
     --system-action-button-quiet-background-color-focus: var(
         --spectrum-gray-300
     );
+    --system-action-button-quiet-background-color-disabled: transparent;
+    --system-action-button-quiet-background-color-selected-disabled: var(
+        --spectrum-disabled-background-color
+    );
     --system-action-button-static-black-border-color-default: transparent;
     --system-action-button-static-black-border-color-hover: transparent;
     --system-action-button-static-black-border-color-down: transparent;
     --system-action-button-static-black-border-color-focus: transparent;
     --system-action-button-static-black-background-color-disabled: transparent;
     --system-action-button-static-black-background-color-selected-disabled: var(
-        --spectrum-transparent-black-200
+        --spectrum-disabled-static-black-background-color
     );
     --system-action-button-static-black-background-color-default: var(
         --spectrum-transparent-black-200
@@ -358,13 +375,14 @@
     --system-action-button-static-black-quiet-background-color-focus: var(
         --spectrum-transparent-black-300
     );
+    --system-action-button-static-black-quiet-background-color-disabled: transparent;
     --system-action-button-static-white-border-color-default: transparent;
     --system-action-button-static-white-border-color-hover: transparent;
     --system-action-button-static-white-border-color-down: transparent;
     --system-action-button-static-white-border-color-focus: transparent;
     --system-action-button-static-white-background-color-disabled: transparent;
     --system-action-button-static-white-background-color-selected-disabled: var(
-        --spectrum-transparent-white-200
+        --spectrum-disabled-static-white-background-color
     );
     --system-action-button-static-white-background-color-default: var(
         --spectrum-transparent-white-200
@@ -389,6 +407,10 @@
     );
     --system-action-button-static-white-quiet-background-color-focus: var(
         --spectrum-transparent-white-300
+    );
+    --system-action-button-static-white-quiet-background-color-disabled: transparent;
+    --system-action-button-background-color-selected-disabled: var(
+        --spectrum-disabled-background-color
     );
     --system-action-group-gap-size-compact: var(--spectrum-spacing-50);
     --system-action-group-horizontal-spacing-compact: calc(

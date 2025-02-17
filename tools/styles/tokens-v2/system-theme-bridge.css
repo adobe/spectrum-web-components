@@ -295,8 +295,8 @@
     --system-action-button-background-color-hover: var(--spectrum-gray-100);
     --system-action-button-background-color-down: var(--spectrum-gray-200);
     --system-action-button-background-color-focus: var(--spectrum-gray-100);
-    --system-action-button-background-color-selected-disabled: var(
-        --spectrum-transparent-black-100
+    --system-action-button-background-color-disabled: var(
+        --spectrum-disabled-background-color
     );
     --system-action-button-background-color-selected: var(
         --spectrum-neutral-background-color-selected-default
@@ -318,6 +318,21 @@
         --spectrum-disabled-border-color
     );
     --system-action-button-content-color-selected: var(--spectrum-gray-50);
+    --system-action-button-size-m-border-radius: var(
+        --spectrum-corner-radius-medium-size-medium
+    );
+    --system-action-button-size-xs-border-radius: var(
+        --spectrum-corner-radius-medium-size-extra-small
+    );
+    --system-action-button-size-s-border-radius: var(
+        --spectrum-corner-radius-medium-size-small
+    );
+    --system-action-button-size-l-border-radius: var(
+        --spectrum-corner-radius-medium-size-large
+    );
+    --system-action-button-size-xl-border-radius: var(
+        --spectrum-corner-radius-medium-size-extra-large
+    );
     --system-action-button-quiet-background-color-default: transparent;
     --system-action-button-quiet-background-color-hover: var(
         --spectrum-gray-100
@@ -327,6 +342,10 @@
     );
     --system-action-button-quiet-background-color-focus: var(
         --spectrum-gray-100
+    );
+    --system-action-button-quiet-background-color-disabled: transparent;
+    --system-action-button-quiet-background-color-selected-disabled: var(
+        --spectrum-disabled-background-color
     );
     --system-action-button-static-black-border-color-default: var(
         --spectrum-transparent-black-500
@@ -340,9 +359,11 @@
     --system-action-button-static-black-border-color-focus: var(
         --spectrum-transparent-black-600
     );
-    --system-action-button-static-black-background-color-disabled: transparent;
+    --system-action-button-static-black-background-color-disabled: var(
+        --spectrum-disabled-static-black-background-color
+    );
     --system-action-button-static-black-background-color-selected-disabled: var(
-        --spectrum-transparent-black-200
+        --spectrum-disabled-static-black-background-color
     );
     --system-action-button-static-black-background-color-default: transparent;
     --system-action-button-static-black-quiet-background-color-default: transparent;
@@ -364,6 +385,8 @@
     --system-action-button-static-black-quiet-background-color-focus: var(
         --spectrum-transparent-black-400
     );
+    --system-action-button-static-black-background-color-disabled: transparent;
+    --system-action-button-static-black-quiet-background-color-disabled: transparent;
     --system-action-button-static-white-border-color-default: var(
         --spectrum-transparent-white-500
     );
@@ -376,9 +399,11 @@
     --system-action-button-static-white-border-color-focus: var(
         --spectrum-transparent-white-600
     );
-    --system-action-button-static-white-background-color-disabled: transparent;
+    --system-action-button-static-white-background-color-disabled: var(
+        --spectrum-disabled-static-white-background-color
+    );
     --system-action-button-static-white-background-color-selected-disabled: var(
-        --spectrum-transparent-white-200
+        --spectrum-disabled-static-white-background-color
     );
     --system-action-button-static-white-background-color-default: transparent;
     --system-action-button-static-white-quiet-background-color-default: transparent;
@@ -400,6 +425,8 @@
     --system-action-button-static-white-quiet-background-color-focus: var(
         --spectrum-transparent-white-400
     );
+    --system-action-button-static-white-background-color-disabled: transparent;
+    --system-action-button-static-white-quiet-background-color-disabled: transparent;
     --system-action-group-gap-size-compact: 0;
     --system-action-group-horizontal-spacing-compact: -1px;
     --system-action-group-vertical-spacing-compact: -1px;

@@ -156,7 +156,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-actionbutton-border-radius: var(
         --mod-actionbutton-border-radius,
-        var(--spectrum-corner-radius-100)
+        var(--spectrum-actionbutton-border-radius)
     );
     --spectrum-actionbutton-border-width: var(
         --mod-actionbutton-border-width,
