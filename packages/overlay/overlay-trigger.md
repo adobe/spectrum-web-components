@@ -123,7 +123,7 @@ The `content` attribute allows you to explicitly declare which types of overlays
 
 ```html
 <!-- Only using click and hover overlays -->
-<overlay-trigger .content=${["click", "hover"]}>
+<overlay-trigger .content=${["click", "hover"] satisfies ContentType}>
     <sp-button slot="trigger">Click and hover trigger</sp-button>
     <sp-popover slot="click-content" direction="bottom" tip>
         Click content
@@ -132,7 +132,7 @@ The `content` attribute allows you to explicitly declare which types of overlays
 </overlay-trigger>
 
 <!-- Only using longpress overlay -->
-<overlay-trigger .content={["longpress"]}>
+<overlay-trigger .content={["longpress"] satisfies ContentType}>
     <sp-button slot="trigger">Longpress trigger</sp-button>
     <sp-popover slot="longpress-content" direction="bottom" tip>
         Longpress content
