@@ -324,7 +324,7 @@ export class OverlayTrigger extends SpectrumElement {
         if (window.__swc?.DEBUG && !this.content) {
             const issues = [
                 'You have not specified the `content` property. For optimal performance, consider explicitly declaring which overlay types you plan to use.',
-                'Example: .content={["click", "hover"]}',
+                'Example: .content=${["click", "hover"]}',
                 'This helps avoid unnecessary DOM operations and potential race conditions.',
             ];
 
