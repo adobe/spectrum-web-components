@@ -27,10 +27,13 @@ import type { Placement } from '@floating-ui/dom';
 import type { BeforetoggleOpenEvent } from './events.js';
 import type { Overlay } from './Overlay.js';
 import type { OverlayTriggerInteractions } from './overlay-types';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
 export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
+
+export type ContentType = OverlayContentTypes[];
 
 /**
  * @element overlay-trigger
@@ -71,7 +74,7 @@ export class OverlayTrigger extends SpectrumElement {
      * we minimize unecessary DOM nodes, operations and ensure a more stable rendering behavior.
      */
     @property({ type: Array })
-    public content?: OverlayContentTypes[];
+    public content?: ContentType;
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
