@@ -40,6 +40,11 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],
     noDefaultSize: true,
 }) {
+
+    static override shadowRootOptions = {
+        ...SpectrumElement.shadowRootOptions,
+        delegatesFocus: true,
+    };
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -90,6 +95,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     : firstEnabledIndex;
             },
             elements: () => this.buttons,
+            hostDelegatesFocus: true,
             isFocusableElement: (el: ActionButton) => !el.disabled,
         }
     );
