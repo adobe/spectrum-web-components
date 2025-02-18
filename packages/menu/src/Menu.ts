@@ -296,7 +296,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 this.resolvedRole === 'none' ? 'ignore' : 'none';
         }
 
-        if(this.resolvedRole === 'none') {
+        if (this.resolvedRole === 'none') {
             return;
         }
 
@@ -359,20 +359,21 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.addEventListener('sp-closed', this.handleSubmenuClosed);
     }
 
-
     /**
      * for picker elements, will set focus on first selected item
      */
-    public focusOnFirstSelectedItem({ preventScroll }: FocusOptions = {}): void {
-        if(!this.rovingTabindexController) return;
+    public focusOnFirstSelectedItem({
+        preventScroll,
+    }: FocusOptions = {}): void {
+        if (!this.rovingTabindexController) return;
         const selectedItem = this.selectedItems.find((el) =>
             this.isFocusableElement(el)
         );
-        if(!selectedItem) {
+        if (!selectedItem) {
             this.focus({ preventScroll });
             return;
         }
-        
+
         if (selectedItem && !preventScroll) {
             selectedItem.scrollIntoView({ block: 'nearest' });
         }
@@ -498,19 +499,25 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     /**
      * given a menu item, returns the next focusable menu item before or after it;
      * if no menu item is provided, returns the first focusable menu item
-     * @param menuItem {MenuItem} 
+     * @param menuItem {MenuItem}
      * @param before {boolean} return the item before; default is false
-     * @returns {MenuItem} 
+     * @returns {MenuItem}
      */
     public quickSelectItem(menuItem?: MenuItem, before = false): MenuItem {
         const diff = before ? -1 : 1;
         const elements = this.rovingTabindexController?.elements || [];
         const index = !!menuItem ? elements.indexOf(menuItem) : -1;
         let newIndex = Math.min(Math.max(0, index + diff), elements.length - 1);
-        while(!this.isFocusableElement(elements[newIndex]) && 0 < newIndex && newIndex < elements.length - 1) {
+        while (
+            !this.isFocusableElement(elements[newIndex]) &&
+            0 < newIndex &&
+            newIndex < elements.length - 1
+        ) {
             newIndex += diff;
         }
-        return !!this.isFocusableElement(elements[newIndex]) ? elements[newIndex] as MenuItem : menuItem || elements[0];
+        return !!this.isFocusableElement(elements[newIndex])
+            ? (elements[newIndex] as MenuItem)
+            : menuItem || elements[0];
     }
 
     public handleSubmenuOpened = (event: Event): void => {
@@ -598,7 +605,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             targetItem.selected = true;
         } else if (resolvedSelects === 'multiple') {
             targetItem.selected = !targetItem.selected;
-        } else if(!targetItem.hasSubmenu && targetItem?.menuData?.focusRoot === this) {
+        } else if (
+            !targetItem.hasSubmenu &&
+            targetItem?.menuData?.focusRoot === this
+        ) {
             this.dispatchEvent(new Event('close', { bubbles: true }));
         }
     }
@@ -630,6 +640,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             return;
         }
         const { key, root, shiftKey, target } = event as MenuItemKeydownEvent;
+        const openSubmenuKey = ['Enter', ' '].includes(key);
         if (shiftKey && target !== this && this.hasAttribute('tabindex')) {
             this.removeAttribute('tabindex');
             const replaceTabindex = (
@@ -650,16 +661,16 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this.closeDescendentOverlays();
             return;
         }
-        if (key === ' ' && root?.hasSubmenu) {
+        if (openSubmenuKey && root?.hasSubmenu && !root.open) {
             // Remove focus while opening overlay from keyboard or the visible focus
             // will slip back to the first item in the menu.
             event.preventDefault();
-            root.openOverlay();
+            root.openOverlay(true);
             return;
         }
         if (key === ' ' || key === 'Enter') {
             event.preventDefault();
-            root?.click();
+            root?.focusElement?.click();
             if (root) this.selectOrToggleItem(root);
             return;
         }
@@ -676,7 +687,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             'focusout',
             () => {
                 requestAnimationFrame(() => {
-                    const focusedItem = this.rovingTabindexController?.focusInElement;
+                    const focusedItem =
+                        this.rovingTabindexController?.focusInElement;
                     if (focusedItem) {
                         focusedItem.focused = false;
                     }
@@ -877,7 +889,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                     },
                     elements: () => this.cachedChildItems || [],
                     isFocusableElement: this.isFocusableElement.bind(this),
-                    hostDelegatesFocus: true
+                    hostDelegatesFocus: true,
                 });
         }
         this.updateComplete.then(() => this.updateItemFocus());
