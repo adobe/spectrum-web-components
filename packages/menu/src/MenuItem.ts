@@ -479,8 +479,13 @@ export class MenuItem extends LikeAnchor(
      */
     handleKeydown = (event: KeyboardEvent): void => {
         const { target, key } = event;
+        const openSubmenuKey =
+            this.hasSubmenu && !this.open && [' ', 'Enter'].includes(key);
         if (target === this) {
-            if (['ArrowLeft', 'ArrowRight', 'Escape'].includes(key))
+            if (
+                ['ArrowLeft', 'ArrowRight', 'Escape'].includes(key) ||
+                openSubmenuKey
+            )
                 event.preventDefault();
             this.dispatchEvent(
                 new MenuItemKeydownEvent({ root: this, event: event })
