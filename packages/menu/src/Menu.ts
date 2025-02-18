@@ -877,6 +877,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                     },
                     elements: () => this.cachedChildItems || [],
                     isFocusableElement: this.isFocusableElement.bind(this),
+                    hostDelegatesFocus: true
                 });
         }
         this.updateComplete.then(() => this.updateItemFocus());
