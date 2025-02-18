@@ -204,7 +204,7 @@ export class FocusGroupController<T extends HTMLElement>
             focusElement = elements[this.currentIndex];
         }
         if (focusElement && this.isFocusableElement(focusElement)) {
-            if (elements[this.prevIndex] !== focusElement) {
+            if (!this.delegatesFocus || elements[this.prevIndex] !== focusElement) {
                 elements[this.prevIndex]?.setAttribute('tabindex', '-1');
             }
             focusElement.tabIndex = 0;
