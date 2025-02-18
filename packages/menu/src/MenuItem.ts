@@ -478,11 +478,14 @@ export class MenuItem extends LikeAnchor(
      * forward key info from keydown event to parent menu
      */
     handleKeydown = (event: KeyboardEvent): void => {
-        const { target } = event;
-        if (target === this)
+        const { target, key } = event;
+        if (target === this) {
+            if (['ArrowLeft', 'ArrowRight', 'Escape'].includes(key))
+                event.preventDefault();
             this.dispatchEvent(
                 new MenuItemKeydownEvent({ root: this, event: event })
             );
+        }
     };
 
     protected closeOverlaysForRoot(): void {
@@ -632,7 +635,8 @@ export class MenuItem extends LikeAnchor(
         // make sure focus returns to the anchor element when submenu is closed
         if (
             changes.has('open') &&
-            !this.open && this.hasSubmenu &&
+            !this.open &&
+            this.hasSubmenu &&
             this.hasVisibleFocusInTree()
         ) {
             this.focus();
