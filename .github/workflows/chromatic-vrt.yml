@@ -35,19 +35,13 @@ jobs:
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
 
-            - name: Generate Custom Elements Manifest
-              run: yarn docs:analyze
-
-            - name: Move CEM to Storybook directory
-              run: cp projects/documentation/custom-elements.json storybook/
-
             - name: Publish to Chromatic
               id: chromatic
               uses: chromaui/action@v11
               with:
                   projectToken: ${{ secrets.CHROMATIC_TOKEN }}
-                  buildScriptName: storybook:build
-                  storybookConfigDir: storybook
+                  buildScriptName: build
+                  storybookConfigDir: .storybook
                   exitOnceUploaded: true
                   onlyChanged: true
                   traceChanged: true

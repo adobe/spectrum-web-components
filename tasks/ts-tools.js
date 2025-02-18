@@ -55,6 +55,49 @@ const makeDev = {
     },
 };
 
+/**
+ * @description Interpret the provided paths to generate an esbuild configuration
+ * @param {string[]} [paths=[]] - The paths to build
+ * @param {object} [options] - The options to use to set up the configuration
+ * @param {'development'|'production'} [options.env='development'] - The environment to build for, either 'development' or 'production'
+ * @param {boolean} [options.minify=false] - Whether to minify the output (not all production assets should be minified)
+ * @returns {import('esbuild').BuildOptions}
+ */
+export const esBuildConfig = (
+    paths = [],
+    { env = 'development', minify = false, ...config } = {}
+) => {
+    const plugins = env === 'development' ? [makeDev] : [];
+
+    const baseConfig = {
+        bundle: false,
+        outdir: '.',
+        outbase: '.',
+        sourcemap: true,
+        target: ['es2018'],
+        ...config,
+    };
+
+    if (env === 'production') {
+        baseConfig.define = { 'window.__swc.DEBUG': 'false' };
+        baseConfig.minify = minify;
+    } else {
+        baseConfig.define = { 'window.__swc.DEBUG': 'true' };
+        baseConfig.outExtension = { '.js': '.dev.js' };
+    }
+
+    return {
+        ...baseConfig,
+        entryPoints: paths,
+        plugins,
+    };
+};
+
+/**
+ * @description Interpret the provided paths and return a set of build configurations
+ * @param {string[]} paths - The paths to build
+ * @returns {Promise<void>}
+ */
 export const buildPackage = async (paths) => {
     const devPaths = paths.filter(
         (path) =>
@@ -62,58 +105,43 @@ export const buildPackage = async (paths) => {
             path.search('/stories/') === -1 &&
             path.search('packages/icons-') === -1
     );
+
     const prodPath = paths.filter(
         (path) =>
             path.search('/test/') === -1 && path.search('/stories/') === -1
     );
+
     const toolPaths = paths.filter(
         (path) => path.search('/test/') > -1 || path.search('/stories/') > -1
     );
-    const devPlugins = [makeDev];
-    const prodPlugins = [];
+
     const builds = [];
-    const config = {
-        bundle: false,
-        outdir: '.',
-        outbase: '.',
-        sourcemap: true,
-        target: ['es2018'],
-    };
+
     if (devPaths.length) {
         builds.push(
-            build({
-                ...config,
-                entryPoints: devPaths,
-                define: { 'window.__swc.DEBUG': 'true' },
-                outExtension: { '.js': '.dev.js' },
-                plugins: devPlugins,
-            }).catch(() => process.exit(1))
+            build(esBuildConfig(devPaths)).catch(() => process.exit(1))
         );
     }
-    const prodConfig = {
-        ...config,
-        define: { 'window.__swc.DEBUG': 'false' },
-        plugins: paths.length === 1 ? [] : prodPlugins,
-    };
+
     if (prodPath.length) {
         builds.push(
-            build({
-                ...prodConfig,
-                entryPoints: prodPath,
-                minify: true,
-            }).catch(() => process.exit(1))
+            build(
+                esBuildConfig(prodPath, { env: 'production', minify: true })
+            ).catch(() => process.exit(1))
         );
     }
+
     // Do not minify tools files, especially stories as it messes up the exports
     // when processed with es-module-lexer.
     if (toolPaths.length) {
         builds.push(
-            build({
-                ...prodConfig,
-                entryPoints: toolPaths,
-            }).catch(() => process.exit(1))
+            build(
+                esBuildConfig(toolPaths, { env: 'production', minify: false })
+            ).catch(() => process.exit(1))
         );
     }
+
+    return Promise.all(builds);
 };
 
 export const watchFiles = async () => {
