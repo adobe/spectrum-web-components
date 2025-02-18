@@ -665,12 +665,12 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             // Remove focus while opening overlay from keyboard or the visible focus
             // will slip back to the first item in the menu.
             event.preventDefault();
-            root.openOverlay();
+            root.openOverlay(true);
             return;
         }
         if (key === ' ' || key === 'Enter') {
             event.preventDefault();
-            root?.click();
+            root?.focusElement?.click();
             if (root) this.selectOrToggleItem(root);
             return;
         }
