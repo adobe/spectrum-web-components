@@ -97,11 +97,13 @@ commands:
             - run:
                   when: always
                   name: Publish review site
+                  timeout: 15m
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo hash
+                      echo "Netlify alias hash: $hash" 
+                      echo "Deploying from test/visual directory..."
                       yarn netlify deploy --alias=$hash --cwd test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
