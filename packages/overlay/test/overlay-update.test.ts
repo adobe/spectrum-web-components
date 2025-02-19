@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
 import { AccordionItem } from '@spectrum-web-components/accordion/src/AccordionItem.js';
-import { OverlayTrigger } from '../src/OverlayTrigger.js';
+import { OverlayContentTypes, OverlayTrigger } from '../src/OverlayTrigger.js';
 import { accordion } from '../stories/overlay.stories.js';
 import {
     fixture,
@@ -27,7 +27,7 @@ describe('sp-update-overlays event', () => {
             '[label="Other things"]'
         ) as AccordionItem;
 
-        el.content = 'click';
+        el.content = ['click'] satisfies OverlayContentTypes[];
         await elementUpdated(item);
 
         const opened = oneEvent(el, 'sp-opened');
