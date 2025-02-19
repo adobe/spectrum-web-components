@@ -615,7 +615,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     protected navigateBetweenRelatedMenus(event: MenuItemKeydownEvent): void {
         const { key, root } = event;
-        event.stopPropagation();
         const shouldOpenSubmenu =
             (this.isLTR && key === 'ArrowRight') ||
             (!this.isLTR && key === 'ArrowLeft');
@@ -627,9 +626,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (shouldOpenSubmenu) {
             if (lastFocusedItem?.hasSubmenu) {
                 //open submenu and set focus
+                event.stopPropagation();
                 lastFocusedItem.openOverlay(true);
             }
         } else if (shouldCloseSelfAsSubmenu && this.isSubmenu) {
+            event.stopPropagation();
             this.dispatchEvent(new Event('close', { bubbles: true }));
             this.updateSelectedItemIndex();
         }

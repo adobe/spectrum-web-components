@@ -46,6 +46,8 @@ import type {
     MenuItem,
     MenuItemChildren,
 } from '@spectrum-web-components/menu';
+
+import type {  MenuItemKeydownEvent } from '@spectrum-web-components/menu';
 import { Placement } from '@spectrum-web-components/overlay';
 import {
     IS_MOBILE,
@@ -270,6 +272,14 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     public handleButtonFocus(event: FocusEvent): void {
         this.strategy?.handleButtonFocus(event);
     }
+
+    protected handleEscape = (event: MenuItemKeydownEvent): void => {
+        if(event.key === 'Escape' && this.open) {
+            event.stopPropagation();
+            event.preventDefault();
+            this.close();
+        }
+    };
 
     protected handleKeydown = (event: KeyboardEvent): void => {
         this.focused = true;
@@ -741,6 +751,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                 .selects=${this.selects}
                 .selected=${this.value ? [this.value] : []}
                 size=${this.size}
+                @sp-menu-item-keydown=${this.handleEscape}
                 @sp-menu-item-added-or-updated=${this.shouldManageSelection}
             >
                 <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
@@ -934,6 +945,7 @@ export class Picker extends PickerBase {
             'ArrowRight',
             'Enter',
             ' ',
+            'Escape'
         ].includes(key);
         const openKeys = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(key);
         this.focused = true;
@@ -946,6 +958,10 @@ export class Picker extends PickerBase {
             return;
         }
         event.preventDefault();
+        if('Escape' === key) {
+            this.close();
+            return;
+        }
         const nextItem = this.optionsMenu?.quickSelectItem(
             this.selectedItem,
             key === 'ArrowLeft'
