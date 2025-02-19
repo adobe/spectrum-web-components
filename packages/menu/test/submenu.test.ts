@@ -110,7 +110,7 @@ describe('Submenu', () => {
             this.el.parentElement.dir = testData.dir;
 
             await elementUpdated(this.el);
-            expect(this.rootItem.open).to.be.false;
+            expect(this.rootItem.open, `rootItem open before ${testData.openKey}`).to.be.false;
             const input = document.createElement('input');
             this.el.insertAdjacentElement('beforebegin', input);
             input.focus();
@@ -122,7 +122,7 @@ describe('Submenu', () => {
             });
             await elementUpdated(this.rootItem);
 
-            expect(this.rootItem.focused).to.be.true;
+            expect(this.rootItem.focused, `rootItem focused before ${testData.openKey}`).to.be.true;
 
             let opened = oneEvent(this.rootItem, 'sp-opened');
             await sendKeys({
@@ -136,7 +136,7 @@ describe('Submenu', () => {
                 '.submenu-item-1'
             ) as MenuItem;
 
-            expect(this.rootItem.open).to.be.true;
+            expect(this.rootItem.open, `rootItem open after ${testData.openKey}`).to.be.true;
 
             //opening a menu via keyboard should set focus on first item
             expect(
@@ -150,7 +150,7 @@ describe('Submenu', () => {
             });
             await closed;
 
-            expect(this.rootItem.open).to.be.false;
+            expect(this.rootItem.open, `rootItem open after ${testData.closeKey}`).to.be.false;
 
             //closing a submenu via keyboard should set focus on its parent menuitem
             expect(
@@ -177,8 +177,8 @@ describe('Submenu', () => {
             await elementUpdated(submenuItem);
 
             submenuItem = this.el.querySelector('.submenu-item-2') as MenuItem;
-            expect(submenuItem.focused).to.be.true;
-            expect(document.activeElement === submenuItem).to.be.true;
+            expect(submenuItem.focused, `submenu focused`).to.be.true;
+            expect(document.activeElement === submenuItem, `submenu active`).to.be.true;
 
             closed = oneEvent(this.rootItem, 'sp-closed');
             await sendKeys({
