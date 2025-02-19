@@ -22,8 +22,8 @@ import {
 } from '@open-wc/testing';
 
 import { ActionButton } from '@spectrum-web-components/action-button';
-import { MenuItem } from '@spectrum-web-components/menu';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
+import { MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -206,19 +206,19 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
 
         // expect the action-menu to be focused
-        expect((el.children[3] as ActionMenu)?.focused).to.be.true;
+        expect(el.children[3]).to.equal(document.activeElement);
 
         // press Enter to open the action-menu
         await sendKeys({ press: 'Enter' });
 
-        const opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
+        let opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
         await elementUpdated(el.children[3]);
         await opened;
 
         // expect the first menu item to be focused
-        const firstMenuItem = el.querySelector('#first-menu-item') as MenuItem;
-        expect(firstMenuItem?.focused).to.be.true;
-
+        const firstMenuItem = el.querySelector('#first-menu-item');
+        const fourthMenuItem = el.querySelector('#fourth-menu-item');
+        expect(firstMenuItem).to.equal(document.activeElement);
         // navigate to the fourth menu item using the arrow keys
         await sendKeys({ press: 'ArrowDown' });
         await sendKeys({ press: 'ArrowDown' });
@@ -227,18 +227,14 @@ describe('ActionGroup', () => {
         // press Enter to select the fourth menu item
         await sendKeys({ press: 'Enter' });
 
-        await elementUpdated(el.children[3]);
-
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
+        opened = oneEvent(fourthMenuItem as MenuItem, 'sp-opened');
+        await opened;
 
         // expect the second submenu item to be focused
         const secondSubMenuItem = el.querySelector(
             '#second-sub-menu-item'
         ) as MenuItem;
-        expect(secondSubMenuItem?.focused).to.be.true;
+        expect(secondSubMenuItem).to.equal(document.activeElement);
 
         // press Enter to select the second submenu item
         await sendKeys({ press: 'Enter' });
@@ -249,7 +245,7 @@ describe('ActionGroup', () => {
         await closed;
 
         // expect the action-menu to be focused
-        expect((el.children[3] as ActionMenu)?.focused).to.be.true;
+        expect(el.children[3]).to.equal(document.activeElement);
     });
 
     it('action-group with action-menu manages tabIndex correctly while using mouse', async () => {

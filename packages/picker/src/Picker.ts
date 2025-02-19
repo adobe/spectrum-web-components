@@ -18,6 +18,7 @@ import {
     PropertyValues,
     render,
     SizedMixin,
+    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -36,7 +37,6 @@ import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
@@ -69,9 +69,11 @@ const chevronClass = {
 };
 
 export const DESCRIPTION_ID = 'option-picker';
-export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
+export class PickerBase extends SizedMixin(SpectrumElement, {
+    noDefaultSize: true,
+}) {
     static override shadowRootOptions = {
-        ...Focusable.shadowRootOptions,
+        ...SpectrumElement.shadowRootOptions,
         delegatesFocus: true,
     };
 
@@ -90,7 +92,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     private deprecatedMenu: Menu | null = null;
 
     @property({ type: Boolean, reflect: true })
-    public override disabled = false;
+    public disabled = false;
 
     @property({ type: Boolean, reflect: true })
     public focused = false;
@@ -138,10 +140,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @query('sp-menu')
     public optionsMenu!: Menu;
 
-    private _selfManageFocusElement = false;
-
-    public override get selfManageFocusElement(): boolean {
-        return this._selfManageFocusElement;
+    /**
+     * @deprecated
+     * */
+    public get selfManageFocusElement(): boolean {
+        return true;
     }
 
     @query('sp-overlay')
@@ -195,7 +198,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected listRole: 'listbox' | 'menu' = 'listbox';
     protected itemRole = 'option';
 
-    public override get focusElement(): HTMLElement {
+    public get focusElement(): HTMLElement {
         if (this.open) {
             return this.optionsMenu;
         }
@@ -228,7 +231,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public override focus(options?: FocusOptions): void {
-        super.focus(options);
+        this.focusElement?.focus(options);
     }
     /**
      * @deprecated - Use `focus` instead.
@@ -584,6 +587,10 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.updateComplete.then(async () => {
                 this.button.focus();
             });
+        }
+        if (changes.has('tabIndex') && !!this.tabIndex) {
+            this.button.tabIndex = this.tabIndex;
+            this.removeAttribute('tabindex');
         }
     }
 
