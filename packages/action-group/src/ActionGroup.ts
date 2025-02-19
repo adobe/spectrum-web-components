@@ -23,6 +23,7 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import type { ActionButton } from '@spectrum-web-components/action-button';
+import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
@@ -40,7 +41,6 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],
     noDefaultSize: true,
 }) {
-
     static override shadowRootOptions = {
         ...SpectrumElement.shadowRootOptions,
         delegatesFocus: true,
@@ -62,7 +62,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
 
     public _buttons: ActionButton[] = [];
 
-    protected _buttonSelector = 'sp-action-button, sp-action-menu';
+    protected _buttonSelector = 'sp-action-button';
 
     constructor() {
         super();
@@ -418,6 +418,10 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         const buttons = assignedElements.reduce((acc: unknown[], el) => {
             if (el.matches(this._buttonSelector)) {
                 acc.push(el);
+            } else if (
+                (el as ActionMenu)?.focusElement?.matches(this._buttonSelector)
+            ) {
+                acc.push((el as ActionMenu)?.focusElement);
             } else {
                 const buttonDescendents = Array.from(
                     el.querySelectorAll(`:scope > ${this._buttonSelector}`)

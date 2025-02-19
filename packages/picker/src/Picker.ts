@@ -18,6 +18,7 @@ import {
     PropertyValues,
     render,
     SizedMixin,
+    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -36,7 +37,6 @@ import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
@@ -69,9 +69,11 @@ const chevronClass = {
 };
 
 export const DESCRIPTION_ID = 'option-picker';
-export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
+export class PickerBase extends SizedMixin(SpectrumElement, {
+    noDefaultSize: true,
+}) {
     static override shadowRootOptions = {
-        ...Focusable.shadowRootOptions,
+        ...SpectrumElement.shadowRootOptions,
         delegatesFocus: true,
     };
 
@@ -90,7 +92,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     private deprecatedMenu: Menu | null = null;
 
     @property({ type: Boolean, reflect: true })
-    public override disabled = false;
+    public disabled = false;
 
     @property({ type: Boolean, reflect: true })
     public focused = false;
@@ -138,10 +140,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @query('sp-menu')
     public optionsMenu!: Menu;
 
-    private _selfManageFocusElement = false;
-
-    public override get selfManageFocusElement(): boolean {
-        return this._selfManageFocusElement;
+    /**
+     * @deprecated
+     * */
+    public get selfManageFocusElement(): boolean {
+        return true;
     }
 
     @query('sp-overlay')
@@ -195,7 +198,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected listRole: 'listbox' | 'menu' = 'listbox';
     protected itemRole = 'option';
 
-    public override get focusElement(): HTMLElement {
+    public get focusElement(): HTMLElement {
         if (this.open) {
             return this.optionsMenu;
         }
@@ -228,7 +231,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public override focus(options?: FocusOptions): void {
-        super.focus(options);
+        this.focusElement?.focus(options);
     }
     /**
      * @deprecated - Use `focus` instead.
@@ -270,7 +273,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected handleKeydown = (event: KeyboardEvent): void => {
         this.focused = true;
-        if (!['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(event.code)) {
+        if (!['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(event.key)) {
             return;
         }
         event.stopPropagation();
@@ -279,9 +282,13 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     };
 
     protected async keyboardOpen(): Promise<void> {
-        this.addEventListener('sp-opened', () => this.optionsMenu?.focusOnFirstSelectedItem(), {
-            once: true,
-        });
+        this.addEventListener(
+            'sp-opened',
+            () => this.optionsMenu?.focusOnFirstSelectedItem(),
+            {
+                once: true,
+            }
+        );
         this.toggle(true);
     }
 
@@ -484,13 +491,21 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     };
 
     protected hasAccessibleLabel(): boolean {
-        const slotContent = this.querySelector('[slot="label"]')?.textContent && this.querySelector('[slot="label"]')?.textContent?.trim() !== '';
-        const slotAlt = this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() && this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() !== '';
+        const slotContent =
+            this.querySelector('[slot="label"]')?.textContent &&
+            this.querySelector('[slot="label"]')?.textContent?.trim() !== '';
+        const slotAlt =
+            this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() &&
+            this.querySelector('[slot="label"]')
+                ?.getAttribute('alt')
+                ?.trim() !== '';
         return (
             !!this.label ||
             !!this.getAttribute('aria-label') ||
             !!this.getAttribute('aria-labelledby') ||
-            !!this.appliedLabel || !!slotContent || !!slotAlt
+            !!this.appliedLabel ||
+            !!slotContent ||
+            !!slotAlt
         );
     }
 
@@ -566,12 +581,16 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         if (
             changes.has('open') &&
             !this.open &&
-            this.focusElement === this.optionsMenu
-            && this.focusElement?.matches(':focus-within')
+            this.focusElement === this.optionsMenu &&
+            this.focusElement?.matches(':focus-within')
         ) {
             this.updateComplete.then(async () => {
                 this.button.focus();
             });
+        }
+        if (changes.has('tabIndex') && !!this.tabIndex) {
+            this.button.tabIndex = this.tabIndex;
+            this.removeAttribute('tabindex');
         }
     }
 
@@ -748,7 +767,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     /**
      * when the value changes or the menu slot changes, manage the selection on the next frame, if not already scheduled
-     * @param event 
+     * @param event
      */
     protected shouldScheduleManageSelection(event?: Event): void {
         if (
@@ -778,8 +797,8 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.manageSelection();
     }
 
-    /** 
-     * updates menu selection based on value 
+    /**
+     * updates menu selection based on value
      */
     protected async manageSelection(): Promise<void> {
         if (this.selects == null) return;
@@ -834,7 +853,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     private enterKeydownOn: EventTarget | null = null;
 
     protected handleEnterKeydown = (event: KeyboardEvent): void => {
-        if (event.code !== 'Enter') {
+        if (event.key !== 'Enter') {
+            return;
+        }
+        const target = event?.target as MenuItem;
+        if (!target.open && target.hasSubmenu) {
+            event.preventDefault();
             return;
         }
 
@@ -846,7 +870,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.addEventListener(
             'keyup',
             async (keyupEvent: KeyboardEvent) => {
-                if (keyupEvent.code !== 'Enter') {
+                if (keyupEvent.key !== 'Enter') {
                     return;
                 }
                 this.enterKeydownOn = null;
@@ -902,23 +926,33 @@ export class Picker extends PickerBase {
     }
 
     protected override handleKeydown = (event: KeyboardEvent): void => {
-        const { code } = event;
-        const handledCodes = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', ' '].includes(code);
-        const openCodes = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(code);
+        const { key } = event;
+        const handledKeys = [
+            'ArrowUp',
+            'ArrowDown',
+            'ArrowLeft',
+            'ArrowRight',
+            'Enter',
+            ' ',
+        ].includes(key);
+        const openKeys = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(key);
         this.focused = true;
-        if (!handledCodes || this.readonly || this.pending) {
+        if (!handledKeys || this.readonly || this.pending) {
             return;
         }
-        if (openCodes) {
+        if (openKeys) {
             this.keyboardOpen();
             event.preventDefault();
             return;
         }
         event.preventDefault();
-        const nextItem = this.optionsMenu?.quickSelectItem(this.selectedItem, code === 'ArrowLeft');
+        const nextItem = this.optionsMenu?.quickSelectItem(
+            this.selectedItem,
+            key === 'ArrowLeft'
+        );
         if (!this.value || nextItem !== this.selectedItem) {
             // updates picker text but does not fire change event until action is completed
-       if(!!nextItem) this.setValueFromItem(nextItem as MenuItem);
-       }
+            if (!!nextItem) this.setValueFromItem(nextItem as MenuItem);
+        }
     };
 }
