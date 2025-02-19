@@ -38,8 +38,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */`;
 
-const S1IConsPackageDir =
-    '@adobe/spectrum-css-workflow-icons/dist/spectrum-css-workflow-icons/dist/18';
+const S1IConsPackageDir = '@adobe/spectrum-css-workflow-icons/dist/18';
 const S2IConsPackageDir =
     '@adobe/spectrum-css-workflow-icons-s2/dist/assets/svg';
 const keepColors = '';

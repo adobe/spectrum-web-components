@@ -181,27 +181,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@a4u/a4u-collection-react-spectrum-open-source-color-icons-release@npm:latest":
-  version: 2.0.0
-  resolution: "@a4u/a4u-collection-react-spectrum-open-source-color-icons-release@npm:2.0.0::__archiveUrl=https%3A%2F%2Fartifactory.corp.adobe.com%2Fartifactory%2Fapi%2Fnpm%2Fnpm-a4u-release-local%2F%40a4u%2Fa4u-collection-react-spectrum-open-source-color-icons-release%2F-%2F%40a4u%2Fa4u-collection-react-spectrum-open-source-color-icons-release-2.0.0.tgz"
-  checksum: 10c0/7ed70a2e2dd4b645e9eeaa426575665ea4519ced800deb4625ecb08e496a5a2a2d6747ad5ee0ae6c17c855220ee7862b5087a693ea12080710b6ec5a45408fdc
-  languageName: node
-  linkType: hard
-
-"@a4u/a4u-spectrum-express-open-source@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "@a4u/a4u-spectrum-express-open-source@npm:5.0.0::__archiveUrl=https%3A%2F%2Fartifactory.corp.adobe.com%2Fartifactory%2Fapi%2Fnpm%2Fnpm-a4u-release-local%2F%40a4u%2Fa4u-spectrum-express-open-source%2F-%2F%40a4u%2Fa4u-spectrum-express-open-source-5.0.0.tgz"
-  checksum: 10c0/1b608cb96bf1114a5f91b72fddd7f98e70b0830e80876a56918c966ff176215a83c2ce3b627c6301d51845a8b364821dec1af062c8800cc053c44e64af90c375
-  languageName: node
-  linkType: hard
-
-"@a4u/a4u-spectrum-open-source@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "@a4u/a4u-spectrum-open-source@npm:6.1.0::__archiveUrl=https%3A%2F%2Fartifactory.corp.adobe.com%2Fartifactory%2Fapi%2Fnpm%2Fnpm-a4u-release-local%2F%40a4u%2Fa4u-spectrum-open-source%2F-%2F%40a4u%2Fa4u-spectrum-open-source-6.1.0.tgz"
-  checksum: 10c0/c12154982649670cacefb4f5c57a5a14d618f0c5207ad90646cdcbe588990ce344207f3fd4099322f95c4315ff9b1aa7e6c5ec648b574cbef300120e66fea143
-  languageName: node
-  linkType: hard
-
 "@adobe/spectrum-css-workflow-icons-s2@npm:@adobe/spectrum-css-workflow-icons@^4.0.0":
   version: 4.0.0
   resolution: "@adobe/spectrum-css-workflow-icons@npm:4.0.0"
@@ -209,21 +188,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/spectrum-css-workflow-icons@npm:1.6.0":
-  version: 1.6.0
-  resolution: "@adobe/spectrum-css-workflow-icons@npm:1.6.0"
-  dependencies:
-    "@a4u/a4u-collection-react-spectrum-open-source-color-icons-release": "npm:latest"
-    "@a4u/a4u-spectrum-express-open-source": "npm:^5.0.0"
-    "@a4u/a4u-spectrum-open-source": "npm:^6.1.0"
-  dependenciesMeta:
-    "@a4u/a4u-collection-react-spectrum-open-source-color-icons-release":
-      optional: true
-    "@a4u/a4u-spectrum-express-open-source":
-      optional: true
-    "@a4u/a4u-spectrum-open-source":
-      optional: true
-  checksum: 10c0/7522e9e2450da4c050915c014f2ab7e4260f9b7f4790289770f0b335335f8a2bc9d84ef10ebeeffbf608e27caba9895c2cdd141d69c544065fe22ce009bff5a3
+"@adobe/spectrum-css-workflow-icons@npm:1.7.0":
+  version: 1.7.0
+  resolution: "@adobe/spectrum-css-workflow-icons@npm:1.7.0"
+  checksum: 10c0/75aba04e96664e6801522256e7ed2f9e18bdee07a49fa11806be06c04f82c735f34c8a9381e9ba934196bfb622a3253a1975550e839a98718ae6571e0bd19551
   languageName: node
   linkType: hard
 
@@ -8835,7 +8803,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/icons-workflow@workspace:packages/icons-workflow"
   dependencies:
-    "@adobe/spectrum-css-workflow-icons": "npm:1.6.0"
+    "@adobe/spectrum-css-workflow-icons": "npm:1.7.0"
     "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@^4.0.0"
     "@spectrum-css/icon": "npm:8.0.0-s2-foundations.16"
     "@spectrum-web-components/base": "npm:^1.1.2"
