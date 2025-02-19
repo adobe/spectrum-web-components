@@ -540,3 +540,24 @@ export const withScrollEvent = (): TemplateResult => {
 withScrollEvent.parameters = {
     chromatic: { disableSnapshot: true },
 };
+
+export const MenuItemAlerts = (): TemplateResult => html`
+    <sp-action-menu size="m">
+        <span slot="label">More Actions</span>
+        <sp-menu-item @click=${() => alert('Deselect')}>Deselect</sp-menu-item>
+        <sp-menu-item @click=${() => alert('Select inverse')}>
+            Select inverse
+        </sp-menu-item>
+        <sp-menu-item @click=${() => alert('Feather...')}>
+            Feather...
+        </sp-menu-item>
+        <sp-menu-item @click=${() => alert('Select and mask...')}>
+            Select and mask...
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item @click=${() => alert('Save selection')}>
+            Save selection
+        </sp-menu-item>
+        <sp-menu-item disabled>Make work path</sp-menu-item>
+    </sp-action-menu>
+`;
