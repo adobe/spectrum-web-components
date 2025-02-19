@@ -53,7 +53,6 @@ import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
 import '../stories/action-group.stories.js';
-import { isWebKit } from '@spectrum-web-components/shared';
 import sinon from 'sinon';
 
 class QuietActionGroup extends LitElement {
@@ -366,23 +365,12 @@ describe('ActionGroup', () => {
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
         await closed;
 
-        if (!isWebKit()) {
-            sendMouse({
-                steps: [
-                    {
-                        position: [0, 0],
-                        type: 'click',
-                    },
-                ],
-            });
-        }
-
         await aTimeout(500);
 
         expect(
             (el.children[0] as ActionButton)?.tabIndex,
             'final: should be focused on the first button'
-        ).to.equal(0);
+        ).to.equal(-1);
         expect(
             (el.children[1] as ActionButton)?.tabIndex,
             'final: should not be focused on the second button'
@@ -394,7 +382,7 @@ describe('ActionGroup', () => {
         expect(
             (el.children[3] as ActionMenu)?.tabIndex,
             'final: should not be focused on the fourth button'
-        ).to.equal(-1);
+        ).to.equal(0);
     });
 
     testForLitDevWarnings(

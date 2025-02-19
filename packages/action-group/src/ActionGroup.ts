@@ -22,8 +22,7 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import type { ActionButton } from '@spectrum-web-components/action-button';
-import type { ActionMenu } from '@spectrum-web-components/action-menu';
+import { ActionButton } from '@spectrum-web-components/action-button';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
@@ -62,7 +61,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
 
     public _buttons: ActionButton[] = [];
 
-    protected _buttonSelector = 'sp-action-button';
+    protected _buttonSelector = 'sp-action-button, sp-action-menu';
 
     constructor() {
         super();
@@ -251,7 +250,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 const selections: ActionButton[] = [];
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
-                    option.setAttribute('role', 'radio');
+                    if (option instanceof ActionButton)
+                        option.setAttribute('role', 'radio');
                     option.setAttribute(
                         'aria-checked',
                         option.selected ? 'true' : 'false'
@@ -279,7 +279,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 const selections: ActionButton[] = [];
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
-                    option.setAttribute('role', 'checkbox');
+                    if (option instanceof ActionButton)
+                        option.setAttribute('role', 'checkbox');
                     option.setAttribute(
                         'aria-checked',
                         option.selected ? 'true' : 'false'
@@ -303,7 +304,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     const selections: ActionButton[] = [];
                     const updates = options.map(async (option) => {
                         await option.updateComplete;
-                        option.setAttribute('role', 'button');
+                        if (option instanceof ActionButton)
+                            option.setAttribute('role', 'button');
                         if (option.selected) {
                             option.setAttribute('aria-pressed', 'true');
                             selections.push(option);
@@ -321,7 +323,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     );
                 } else {
                     this.buttons.forEach((option) => {
-                        option.setAttribute('role', 'button');
+                        if (option instanceof ActionButton)
+                            option.setAttribute('role', 'button');
                     });
                     break;
                 }
@@ -418,10 +421,6 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         const buttons = assignedElements.reduce((acc: unknown[], el) => {
             if (el.matches(this._buttonSelector)) {
                 acc.push(el);
-            } else if (
-                (el as ActionMenu)?.focusElement?.matches(this._buttonSelector)
-            ) {
-                acc.push((el as ActionMenu)?.focusElement);
             } else {
                 const buttonDescendents = Array.from(
                     el.querySelectorAll(`:scope > ${this._buttonSelector}`)
