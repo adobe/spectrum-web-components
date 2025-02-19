@@ -158,6 +158,7 @@ export class InteractionController implements ReactiveController {
         ) {
             this.preventNextToggle = 'yes';
         }
+        if(this.preventNextToggle === 'no') this.host.close();
     }
 
     public handleActivate(_event: Event): void {}

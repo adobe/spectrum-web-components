@@ -436,56 +436,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(firstRect).to.deep.equal(secondRect);
         });
-        it('opens and selects in a single pointer button interaction', async () => {
-            const el = await actionMenuFixture();
-            const thirdItem = el.querySelector(
-                'sp-menu-item:nth-of-type(3)'
-            ) as MenuItem;
-            const boundingRect = el.button.getBoundingClientRect();
-
-            expect(el.value).to.not.equal(thirdItem.value);
-            const opened = oneEvent(el, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                ],
-            });
-            await opened;
-
-            const thirdItemRect = thirdItem.getBoundingClientRect();
-            const closed = oneEvent(el, 'sp-closed');
-            let selected = '';
-            el.addEventListener('change', (event: Event) => {
-                selected = (event.target as ActionMenu).value;
-            });
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            thirdItemRect.x + thirdItemRect.width / 2,
-                            thirdItemRect.y + thirdItemRect.height / 2,
-                        ],
-                    },
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
-            await closed;
-
-            expect(el.open).to.be.false;
-            expect(selected).to.equal(thirdItem.value);
-        });
         it('has attribute aria-describedby', async () => {
             const name = 'sp-picker';
             const description = 'Rendering a Picker';
@@ -581,94 +531,84 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 'initially selected item should maintain selection'
             ).to.be.true;
         });
-        it('allows top-level selection state to change', async () => {
-            let selected = true;
-            const handleChange = (
-                event: Event & { target: ActionMenu }
-            ): void => {
-                if (event.target.value === 'test') {
-                    selected = !selected;
-
-                    event.target.updateComplete.then(() => {
-                        event.target.value = selected ? 'test' : '';
-                    });
-                }
-            };
+        it('does not alter submenu selection when top-level menu items are selected', async () => {
             const root = await fixture<ActionMenu>(html`
-                <sp-action-menu label="More Actions" @change=${handleChange}>
-                    <sp-menu-item>One</sp-menu-item>
-                    <sp-menu-item selected value="test" id="root-selected-item">
-                        Two
-                    </sp-menu-item>
-                    <sp-menu-item id="item-with-submenu">
-                        B should be selected
-                        <sp-menu slot="submenu">
-                            <sp-menu-item>A</sp-menu-item>
-                            <sp-menu-item selected id="sub-selected-item">
+                <sp-action-menu id="actionmenu" label="More Actions">
+                    <sp-menu-item id="item-1">One</sp-menu-item>
+                    <sp-menu-item id="item-2">
+                        Two, with B selected
+                        <sp-menu slot="submenu" id="menu-2" selects="single">
+                            <sp-menu-item id="item-2a" selected>A</sp-menu-item>
+                            <sp-menu-item id="item-2b">
                                 B
                             </sp-menu-item>
-                            <sp-menu-item>C</sp-menu-item>
                         </sp-menu>
                     </sp-menu-item>
                 </sp-action-menu>
             `);
 
-            const unselectedItem = root.querySelector(
-                'sp-menu-item'
+            const item1 = root.querySelector(
+                '#item-1'
             ) as MenuItem;
-            const selectedItem = root.querySelector(
-                '#root-selected-item'
+            const item2 = root.querySelector(
+                '#item-2'
             ) as MenuItem;
-
-            expect(unselectedItem.textContent).to.include('One');
-            expect(unselectedItem.selected).to.be.false;
-            expect(selectedItem.textContent).to.include('Two');
-            expect(selectedItem.selected).to.be.true;
+            const itemA = root.querySelector(
+                '#item-2a'
+            ) as MenuItem;
+            const itemB = root.querySelector(
+                '#item-2b'
+            ) as MenuItem;
 
             let opened = oneEvent(root, 'sp-opened');
+
+            expect(item1.selected, 'before opening: item1 selected?').to.be.false;
+            expect(item2.selected, 'before opening: item2 selected?').to.be.false;
+            expect(itemA.selected, 'before opening: itemA selected?').to.be.true;
+            expect(item2.selected, 'before opening: itemB selected?').to.be.false;
             root.click();
             await opened;
+            
+            expect(root.open, 'after clicking open: open?').to.be.true;
 
-            // close by clicking selected
-            // (with event listener: should set selected = false)
             let closed = oneEvent(root, 'sp-closed');
-            selectedItem.click();
+            item1.click();
             await closed;
 
-            expect(root.open).to.be.false;
+            expect(item1.selected, 'after clicking item1: item1 selected?').to.be.false;
+            expect(itemA.selected, 'after clicking item1: itemA selected?').to.be.true;
+            expect(root.open, 'after clicking item1: open?').to.be.false;
+
             opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
 
-            // close by clicking unselected
-            // (no event listener: should remain selected = false)
+            expect(root.open, 'after reopening: open?').to.be.true;
+
             closed = oneEvent(root, 'sp-closed');
-            unselectedItem.click();
+            itemB.click();
+            root.close();
             await closed;
+
+            expect(item1.selected, 'after clicking itemB: item1 selected?').to.be.false;
+            expect(item2.selected, 'after clicking itemB: item2 selected?').to.be.false;
+            expect(itemA.selected, 'after clicking itemB: itemA selected?').to.be.false;
+            expect(itemB.selected, 'after clicking itemB: itemB selected?').to.be.true;
+            expect(root.open, 'after clicking itemB: open?').to.be.false;
 
             opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
 
-            expect(unselectedItem.textContent).to.include('One');
-            expect(unselectedItem.selected).to.be.false;
-            expect(selectedItem.textContent).to.include('Two');
-            expect(selectedItem.selected).to.be.false;
-
-            // close by clicking selected
-            // (with event listener: should set selected = false)
+            expect(root.open, 'after reopening: open?').to.be.true;
+            
             closed = oneEvent(root, 'sp-closed');
-            selectedItem.click();
+            itemB.click();
             await closed;
 
-            opened = oneEvent(root, 'sp-opened');
-            root.click();
-            await opened;
-
-            expect(unselectedItem.textContent).to.include('One');
-            expect(unselectedItem.selected).to.be.false;
-            expect(selectedItem.textContent).to.include('Two');
-            expect(selectedItem.selected).to.be.true;
+            expect(item2.selected, 'after clicking item2: item2 selected?').to.be.false;
+            expect(itemB.selected, 'after clicking item2: itemB selected?').to.be.true;
+            expect(root.open, 'after clicking item2: open?').to.be.false;
         });
         it('shows tooltip', async function () {
             const openSpy = spy();

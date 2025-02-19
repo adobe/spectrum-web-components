@@ -70,3 +70,14 @@ export const menu = (args: StoryArgs): TemplateResult => {
         </sp-tray>
     `;
 };
+
+export const buttons = (args: StoryArgs): TemplateResult => {
+    return html`
+        <overlay-trigger type="modal">
+            <sp-button slot="trigger" variant="secondary">Toggle menu</sp-button>
+            <sp-tray slot="click-content" ?open=${args.open}>
+                <sp-button onclick="()=>alert('success!')">Can you click me?</sp-button>
+            </sp-tray>
+        </overlay-trigger>
+    `;
+}

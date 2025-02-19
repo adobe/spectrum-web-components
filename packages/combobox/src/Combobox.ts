@@ -219,6 +219,7 @@ export class Combobox extends Textfield {
             (this.availableOptions.length + activeIndex + 1) %
             this.availableOptions.length;
         this.activeDescendant = this.availableOptions[nextActiveIndex];
+        this.optionEls.forEach(el=> el.setAttribute('aria-selected', el.value === this.activeDescendant?.value ? 'true' : 'false'));
     }
 
     public activatePreviousDescendant(): void {
@@ -229,6 +230,7 @@ export class Combobox extends Textfield {
             (this.availableOptions.length + activeIndex - 1) %
             this.availableOptions.length;
         this.activeDescendant = this.availableOptions[previousActiveIndex];
+        this.optionEls.forEach(el=> el.setAttribute('aria-selected', el.value === this.activeDescendant?.value ? 'true' : 'false'));
     }
 
     public selectDescendant(): void {
@@ -267,9 +269,8 @@ export class Combobox extends Textfield {
 
     protected handleMenuChange(event: PointerEvent & { target: Menu }): void {
         const { target } = event;
-        const value = target.selected[0];
         const selected = (this.options || this.optionEls).find(
-            (item) => item.value === value
+            (item) => item.value === target?.value
         );
         this.value = selected?.itemText || '';
         event.preventDefault();
