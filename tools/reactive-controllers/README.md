@@ -4,7 +4,7 @@
 
 ### Reactive controllers
 
--   ColorController
+-   [ColorController](../color-controller)
 -   [ElementResolutionController](../element-resolution)
 -   FocusGroupController
 -   LanguageResolutionController

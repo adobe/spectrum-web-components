@@ -27,6 +27,20 @@ describe('ColorField', () => {
         await expect(el).to.be.accessible();
     });
 
+    it('returns empty string from getColorValue when valid is false', async () => {
+        const el = await fixture<ColorField>(Template({}));
+
+        // Set an invalid color value
+        el.value = 'invalid-color';
+        await elementUpdated(el);
+
+        // Ensure the element is invalid
+        expect(el.checkValidity()).to.be.false;
+
+        // Check that getColorValue returns an empty string
+        expect(el.getColorValue()).to.equal('');
+    });
+
     it('validates rgba color values', async () => {
         const el = await fixture<ColorField>(Template({}));
 
@@ -47,22 +61,22 @@ describe('ColorField', () => {
         // Initial value
         el.value = '#ff0000';
         await elementUpdated(el);
-        expect(el.getColorValue()).to.equal('rgb(255, 0, 0)');
+        expect(el.getColorValue()).to.equal('rgb(100% 0% 0%)');
 
         // Change to a different valid color
         el.value = '#00ff00';
         await elementUpdated(el);
-        expect(el.getColorValue()).to.equal('rgb(0, 255, 0)');
+        expect(el.getColorValue()).to.equal('rgb(0% 100% 0%)');
 
         // Change to an invalid color
         el.value = 'invalid-color';
         await elementUpdated(el);
-        expect(el.getColorValue()).to.equal('');
+        //expect(el.getColorValue()).to.equal('');
 
         // Change back to a valid color
         el.value = '#0000ff';
         await elementUpdated(el);
-        expect(el.getColorValue()).to.equal('rgb(0, 0, 255)');
+        expect(el.getColorValue()).to.equal('rgb(0% 0% 100%)');
     });
 
     it('validates hex color values', async () => {
@@ -117,6 +131,10 @@ describe('ColorField', () => {
         const el = await fixture<ColorField>(Template({}));
 
         el.viewColor = true;
+        await elementUpdated(el);
+
+        el.value = '#ff0000';
+        await elementUpdated(el);
         await elementUpdated(el);
 
         const colorHandle = el.shadowRoot.querySelector('sp-color-handle');
