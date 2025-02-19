@@ -34,6 +34,7 @@ import {
     longComboboxFixture,
     TestableCombobox,
     testActiveElement,
+    withDisabledItemsFixture,
 } from './helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { withTooltip } from '../stories/combobox.stories.js';
@@ -914,6 +915,85 @@ describe('Combobox', () => {
             expect(el.focusElement.value, '<input> has value').to.equal('g');
             expect(el.value, 'el has value').to.equal('g');
             expect(el.open).to.be.false;
+        });
+    });
+
+    describe('disabled items', () => {
+        it('disabled items should be disabled', async () => {
+            const el = await withDisabledItemsFixture();
+            await elementUpdated(el);
+
+            const opened = oneEvent(el, 'sp-opened');
+            el.click();
+            await opened;
+
+            const menuItems = el.shadowRoot.querySelectorAll('sp-menu-item');
+            expect(menuItems[2].disabled).to.be.true;
+        });
+        it('disabled items should not be focusable using keyboard', async () => {
+            const el = await withDisabledItemsFixture();
+            await elementUpdated(el);
+
+            const opened = oneEvent(el, 'sp-opened');
+            el.click();
+            await opened;
+
+            // let's press arrow down 3 times and check if we are on Algeria (the next to disabled item)
+            await sendKeys({
+                press: 'ArrowDown',
+            });
+            await sendKeys({
+                press: 'ArrowDown',
+            });
+            await sendKeys({
+                press: 'ArrowDown',
+            });
+            await elementUpdated(el);
+            expect(el.activeDescendant?.itemText).to.equal('Algeria');
+        });
+        it('disabled items should not be focusable using mouse', async () => {
+            const el = await withDisabledItemsFixture();
+            await elementUpdated(el);
+
+            const opened = oneEvent(el, 'sp-opened');
+            el.click();
+            await opened;
+
+            const menuItems = el.shadowRoot.querySelectorAll('sp-menu-item');
+            const disabledItem = menuItems[2];
+
+            const bounds = disabledItem.getBoundingClientRect();
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            bounds.x + bounds.width / 2,
+                            bounds.y + bounds.height / 2,
+                        ],
+                    },
+                ],
+            });
+            await elementUpdated(el);
+
+            // active descendant should be undefined
+            expect(el.activeDescendant).to.be.undefined;
+        });
+        it('disabled items cannot be programmatically clicked', async () => {
+            const el = await withDisabledItemsFixture();
+            await elementUpdated(el);
+
+            const opened = oneEvent(el, 'sp-opened');
+            el.click();
+            await opened;
+
+            const menuItems = el.shadowRoot.querySelectorAll('sp-menu-item');
+            const disabledItem = menuItems[2];
+
+            disabledItem.click();
+            await elementUpdated(el);
+
+            expect(el.activeDescendant).to.be.undefined;
         });
     });
 
