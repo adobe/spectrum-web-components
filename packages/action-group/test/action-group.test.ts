@@ -190,13 +190,28 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
 
         // expect the first button to be focused
-        expect(document.activeElement?.id).to.equal('first');
+        expect(
+            document.activeElement?.id,
+            'should be focused on the first button'
+        ).to.equal('first');
 
         // expect all the elements of the focus group to have a tabIndex of -1 except the first button because it is focused using Tab
-        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
-        expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
-        expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
-        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
+        expect(
+            (el.children[0] as ActionButton)?.tabIndex,
+            'should be focused on the first button'
+        ).to.equal(0);
+        expect(
+            (el.children[1] as ActionButton)?.tabIndex,
+            'should not be focused on the second button'
+        ).to.equal(-1);
+        expect(
+            (el.children[2] as ActionButton)?.tabIndex,
+            'should not be focused on the third button'
+        ).to.equal(-1);
+        expect(
+            (el.children[3] as ActionMenu)?.tabIndex,
+            'should not be focused on the fourth button'
+        ).to.equal(-1);
 
         // navigate to the action-menu using the arrow keys
         await sendKeys({ press: 'ArrowRight' });
@@ -206,7 +221,10 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
 
         // expect the action-menu to be focused
-        expect((el.children[3] as ActionMenu)?.focused).to.be.true;
+        expect(
+            (el.children[3] as ActionMenu)?.focused,
+            'should be focused on the action-menu after navigating to it'
+        ).to.be.true;
 
         // press Enter to open the action-menu
         await sendKeys({ press: 'Enter' });
@@ -217,7 +235,10 @@ describe('ActionGroup', () => {
 
         // expect the first menu item to be focused
         const firstMenuItem = el.querySelector('#first-menu-item') as MenuItem;
-        expect(firstMenuItem?.focused).to.be.true;
+        expect(
+            firstMenuItem?.focused,
+            'should be focused on the first menu item'
+        ).to.be.true;
 
         // navigate to the fourth menu item using the arrow keys
         await sendKeys({ press: 'ArrowDown' });
@@ -238,7 +259,10 @@ describe('ActionGroup', () => {
         const secondSubMenuItem = el.querySelector(
             '#second-sub-menu-item'
         ) as MenuItem;
-        expect(secondSubMenuItem?.focused).to.be.true;
+        expect(
+            secondSubMenuItem?.focused,
+            'should be focused on the second submenu item'
+        ).to.be.true;
 
         // press Enter to select the second submenu item
         await sendKeys({ press: 'Enter' });
@@ -249,7 +273,10 @@ describe('ActionGroup', () => {
         await closed;
 
         // expect the action-menu to be focused
-        expect((el.children[3] as ActionMenu)?.focused).to.be.true;
+        expect(
+            (el.children[3] as ActionMenu)?.focused,
+            'should be focused on the action-menu after closing'
+        ).to.be.true;
     });
 
     it('action-group with action-menu manages tabIndex correctly while using mouse', async () => {
@@ -280,10 +307,22 @@ describe('ActionGroup', () => {
         await aTimeout(500);
 
         // expect all the elements of the focus group to have a tabIndex of -1 except the first button because it is focused using mouse
-        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
-        expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
-        expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
-        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
+        expect(
+            (el.children[0] as ActionButton)?.tabIndex,
+            'mouse1: should be focused on the first button'
+        ).to.equal(0);
+        expect(
+            (el.children[1] as ActionButton)?.tabIndex,
+            'mouse1: should not be focused on the second button'
+        ).to.equal(-1);
+        expect(
+            (el.children[2] as ActionButton)?.tabIndex,
+            'mouse1: should not be focused on the third button'
+        ).to.equal(-1);
+        expect(
+            (el.children[3] as ActionMenu)?.tabIndex,
+            'mouse1: should not be focused on the fourth button'
+        ).to.equal(-1);
 
         // click outside the action-group and it should loose focus and update the tabIndexes
         sendMouse({
@@ -299,10 +338,22 @@ describe('ActionGroup', () => {
         await aTimeout(500);
 
         // expect the first button to have a tabIndex of 0 and everything else to have a tabIndex of -1
-        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
-        expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
-        expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
-        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
+        expect(
+            (el.children[0] as ActionButton)?.tabIndex,
+            'mouse2: should be focused on the first button'
+        ).to.equal(0);
+        expect(
+            (el.children[1] as ActionButton)?.tabIndex,
+            'mouse2: should not be focused on the second button'
+        ).to.equal(-1);
+        expect(
+            (el.children[2] as ActionButton)?.tabIndex,
+            'mouse2: should not be focused on the third button'
+        ).to.equal(-1);
+        expect(
+            (el.children[3] as ActionMenu)?.tabIndex,
+            'mouse2: should not be focused on the fourth button'
+        ).to.equal(-1);
 
         // get the bounding box of the action-menu
         const actionMenu = el.querySelector('#action-menu') as ActionMenu;
@@ -344,10 +395,22 @@ describe('ActionGroup', () => {
 
         await aTimeout(500);
 
-        expect((el.children[0] as ActionButton)?.tabIndex).to.equal(0);
-        expect((el.children[1] as ActionButton)?.tabIndex).to.equal(-1);
-        expect((el.children[2] as ActionButton)?.tabIndex).to.equal(-1);
-        expect((el.children[3] as ActionMenu)?.tabIndex).to.equal(-1);
+        expect(
+            (el.children[0] as ActionButton)?.tabIndex,
+            'final: should be focused on the first button'
+        ).to.equal(0);
+        expect(
+            (el.children[1] as ActionButton)?.tabIndex,
+            'final: should not be focused on the second button'
+        ).to.equal(-1);
+        expect(
+            (el.children[2] as ActionButton)?.tabIndex,
+            'final: should not be focused on the third button'
+        ).to.equal(-1);
+        expect(
+            (el.children[3] as ActionMenu)?.tabIndex,
+            'final: should not be focused on the fourth button'
+        ).to.equal(-1);
     });
 
     testForLitDevWarnings(
