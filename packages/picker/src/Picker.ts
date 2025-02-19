@@ -47,7 +47,7 @@ import type {
     MenuItemChildren,
 } from '@spectrum-web-components/menu';
 
-import type {  MenuItemKeydownEvent } from '@spectrum-web-components/menu';
+import type { MenuItemKeydownEvent } from '@spectrum-web-components/menu';
 import { Placement } from '@spectrum-web-components/overlay';
 import {
     IS_MOBILE,
@@ -273,8 +273,10 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         this.strategy?.handleButtonFocus(event);
     }
 
-    protected handleEscape = (event: MenuItemKeydownEvent | KeyboardEvent): void => {
-        if(event.key === 'Escape') {
+    protected handleEscape = (
+        event: MenuItemKeydownEvent | KeyboardEvent
+    ): void => {
+        if (event.key === 'Escape') {
             event.stopPropagation();
             event.preventDefault();
             this.toggle(false);
@@ -282,12 +284,15 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     };
 
     protected handleKeydown = (event: KeyboardEvent): void => {
-        
         this.focused = true;
-        if (!['ArrowUp', 'ArrowDown', 'Enter', ' ', 'Escape'].includes(event.key)) {
+        if (
+            !['ArrowUp', 'ArrowDown', 'Enter', ' ', 'Escape'].includes(
+                event.key
+            )
+        ) {
             return;
         }
-        if(event.key === 'Escape') {
+        if (event.key === 'Escape') {
             this.handleEscape(event);
             return;
         }
@@ -297,13 +302,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     };
 
     protected async keyboardOpen(): Promise<void> {
-        this.addEventListener(
-            'sp-opened',
-            () => this.optionsMenu?.focusOnFirstSelectedItem(),
-            {
-                once: true,
-            }
-        );
         this.toggle(true);
     }
 
@@ -368,7 +366,17 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         if (this.readonly || this.pending || this.disabled) {
             return;
         }
-        this.open = typeof target !== 'undefined' ? target : !this.open;
+        const open = typeof target !== 'undefined' ? target : !this.open;
+        if (open && !this.open)
+            this.addEventListener(
+                'sp-opened',
+                () => this.optionsMenu?.focusOnFirstSelectedItem(),
+                {
+                    once: true,
+                }
+            );
+
+        this.open = open;
         if (this.strategy) {
             this.strategy.open = this.open;
         }
@@ -944,11 +952,11 @@ export class Picker extends PickerBase {
             'ArrowRight',
             'Enter',
             ' ',
-            'Escape'
+            'Escape',
         ].includes(key);
         const openKeys = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(key);
         this.focused = true;
-        if('Escape' === key) {
+        if ('Escape' === key) {
             this.handleEscape(event);
             return;
         }
