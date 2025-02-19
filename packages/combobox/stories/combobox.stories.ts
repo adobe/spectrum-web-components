@@ -119,6 +119,9 @@ hasDisabledItems.args = {
         'Solomon Islands',
     ],
 };
+hasDisabledItems.swc_vrt = {
+    skip: true,
+};
 
 export const listAutocomplete = (args: StoryArgs): TemplateResult =>
     Template(args);
