@@ -32,7 +32,7 @@ commands:
                   name: Installing Dependencies
                   command: |
                       corepack enable
-                      yarn --immutable --insecure
+                      yarn --immutable
 
             - save_cache:
                   paths:
