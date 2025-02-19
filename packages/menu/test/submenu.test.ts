@@ -1135,9 +1135,15 @@ describe('Submenu', () => {
                 <sp-menu-item>
                     Parent Item
                     <div role="menu" slot="submenu">
-                        ${Array(20).fill(0).map((_, i) => html`
-                            <sp-menu-item>Submenu Item ${i + 1}</sp-menu-item>
-                        `)}
+                        ${Array(20)
+                            .fill(0)
+                            .map(
+                                (_, i) => html`
+                                    <sp-menu-item>
+                                        Submenu Item ${i + 1}
+                                    </sp-menu-item>
+                                `
+                            )}
                     </div>
                 </sp-menu-item>
             </sp-menu>
@@ -1146,7 +1152,9 @@ describe('Submenu', () => {
         await elementUpdated(el);
 
         const menuItem = el.querySelector('sp-menu-item') as MenuItem;
-        const submenu = menuItem.querySelector('[slot="submenu"]') as HTMLElement;
+        const submenu = menuItem.querySelector(
+            '[slot="submenu"]'
+        ) as HTMLElement;
 
         // Open the submenu
         const opened = oneEvent(menuItem, 'sp-opened');
