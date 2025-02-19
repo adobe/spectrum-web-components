@@ -34,13 +34,12 @@ describe('Slottable Request Directive', () => {
         expect(el.open, 'should be open after clicking').to.be.true;
         expect(el.children.length).to.be.gt(initialNodeLength);
 
-        // const closed = oneEvent(el, 'sp-closed');
+        const closed = oneEvent(el, 'sp-closed');
 
-        /** @todo: this is not firing due to the escape key not being handled in the Action Menu  */
         await sendKeys({
             press: 'Escape',
         });
-        // await closed;
+        await closed;
         await nextFrame();
         await nextFrame();
 
