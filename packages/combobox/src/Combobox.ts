@@ -46,6 +46,7 @@ import { Menu, MenuItem } from '@spectrum-web-components/menu';
 export type ComboboxOption = {
     value: string;
     itemText: string;
+    disabled?: boolean;
 };
 
 /**
