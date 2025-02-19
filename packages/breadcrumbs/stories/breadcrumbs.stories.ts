@@ -12,10 +12,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import { LitElement } from '@spectrum-web-components/base';
-import {
-    customElement,
-    property,
-} from '@spectrum-web-components/base/src/decorators.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import {
     getBreadcrumbs,
@@ -62,8 +59,7 @@ export const Links = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-@customElement('add-items-story-breadcrumbs')
-export class AddItemsStoryBreadcrumbs extends LitElement {
+class AddItemsStoryBreadcrumbs extends LitElement {
     private _counter = 2;
     private _items: TemplateResult[] = [];
 
@@ -103,6 +99,8 @@ export class AddItemsStoryBreadcrumbs extends LitElement {
         `;
     }
 }
+
+customElements.define('add-items-story-breadcrumbs', AddItemsStoryBreadcrumbs);
 
 export const AddItemsDynamic = (args: StoryArgs): TemplateResult => {
     return html`
