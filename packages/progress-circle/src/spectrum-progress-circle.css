@@ -23,15 +23,17 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    position: var(--mod-progress-circle-position, relative);
-    direction: ltr;
-    display: inline-block;
-    position: relative;
-    transform: translateZ(0);
-}
-
-:host,
-.track {
+    --spectrum-progress-circle-track-border-color: var(--spectrum-gray-300);
+    --spectrum-progress-circle-fill-border-color: var(
+        --spectrum-accent-content-color-default
+    );
+    --spectrum-progress-circle-track-border-color-over-background: var(
+        --spectrum-transparent-white-300
+    );
+    --spectrum-progress-circle-fill-border-color-over-background: var(
+        --spectrum-transparent-white-900
+    );
+    --spectrum-progress-circle-track-border-style: solid;
     inline-size: var(
         --mod-progress-circle-size,
         var(--spectrum-progress-circle-size)
@@ -40,16 +42,49 @@ governing permissions and limitations under the License.
         --mod-progress-circle-size,
         var(--spectrum-progress-circle-size)
     );
+    position: var(--mod-progress-circle-position, relative);
+    direction: ltr;
+    display: inline-block;
+    position: relative;
+    transform: translateZ(0);
+}
+
+:host([size='s']) {
+    --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-small);
+    --spectrum-progress-circle-thickness: var(
+        --spectrum-progress-circle-thickness-small
+    );
+}
+
+:host {
+    --spectrum-progress-circle-size: var(
+        --spectrum-progress-circle-size-medium
+    );
+    --spectrum-progress-circle-thickness: var(
+        --spectrum-progress-circle-thickness-medium
+    );
+}
+
+:host([size='l']) {
+    --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-large);
+    --spectrum-progress-circle-thickness: var(
+        --spectrum-progress-circle-thickness-large
+    );
 }
 
 .track {
     box-sizing: border-box;
+    inline-size: var(
+        --mod-progress-circle-size,
+        var(--spectrum-progress-circle-size)
+    );
+    block-size: var(
+        --mod-progress-circle-size,
+        var(--spectrum-progress-circle-size)
+    );
     border-style: var(
-        --highcontrast-progress-circle-track-border-style,
-        var(
-            --mod-progress-circle-track-border-style,
-            var(--spectrum-progress-circle-track-border-style)
-        )
+        --mod-progress-circle-track-border-style,
+        var(--spectrum-progress-circle-track-border-style)
     );
     border-width: var(
         --mod-progress-circle-thickness,

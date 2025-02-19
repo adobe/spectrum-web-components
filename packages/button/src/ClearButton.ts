@@ -24,7 +24,6 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-cross100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross300.js';
 import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
-import crossMediumOverrides from '@spectrum-web-components/icon/src/icon-cross-overrides.css.js';
 
 const crossIcon: Record<string, () => TemplateResult> = {
     s: () => html`
@@ -67,7 +66,6 @@ export class ClearButton extends SizedMixin(StyledButton, {
             ...super.styles,
             buttonStyles,
             crossMediumStyles,
-            crossMediumOverrides,
         ];
     }
 

@@ -216,3 +216,8 @@ governing permissions and limitations under the License.
             var(--spectrum-actiongroup-border-radius)
         );
 }
+
+/** flex-grow: 1; isn't enough to fully justify the action group */
+:host([justified]) ::slotted(*) {
+    flex: 1 1 0%;
+}

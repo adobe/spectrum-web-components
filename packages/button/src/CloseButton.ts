@@ -24,7 +24,6 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-cross300.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross400.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
 import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
-import crossMediumOverrides from '@spectrum-web-components/icon/src/icon-cross-overrides.css.js';
 import type { ButtonStaticColors } from './Button.js';
 
 const crossIcon: Record<string, () => TemplateResult> = {
@@ -68,7 +67,6 @@ export class CloseButton extends SizedMixin(StyledButton, {
             ...super.styles,
             buttonStyles,
             crossMediumStyles,
-            crossMediumOverrides,
         ];
     }
 

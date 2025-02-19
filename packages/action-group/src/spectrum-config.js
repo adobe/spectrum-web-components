@@ -178,6 +178,51 @@ const config = {
                         },
                     ],
                 },
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'class',
+                                    name: 'spectrum-ActionGroup--vertical',
+                                },
+                            ],
+                            [
+                                {
+                                    type: 'class',
+                                    name: 'spectrum-ActionGroup--compact',
+                                },
+                            ],
+                        ],
+                    },
+                    replace: {
+                        kind: 'not',
+                        type: 'pseudo-class',
+                        selectors: [
+                            [
+                                {
+                                    type: 'attribute',
+                                    name: 'vertical',
+                                    operation: {
+                                        operator: 'equal',
+                                        value: 'true',
+                                    },
+                                },
+                                {
+                                    type: 'attribute',
+                                    name: 'compact',
+                                    operation: {
+                                        operator: 'equal',
+                                        value: 'true',
+                                    },
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
             ],
         },
     ],
