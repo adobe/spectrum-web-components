@@ -273,17 +273,22 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         this.strategy?.handleButtonFocus(event);
     }
 
-    protected handleEscape = (event: MenuItemKeydownEvent): void => {
-        if(event.key === 'Escape' && this.open) {
+    protected handleEscape = (event: MenuItemKeydownEvent | KeyboardEvent): void => {
+        if(event.key === 'Escape') {
             event.stopPropagation();
             event.preventDefault();
-            this.close();
+            this.toggle(false);
         }
     };
 
     protected handleKeydown = (event: KeyboardEvent): void => {
+        
         this.focused = true;
-        if (!['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(event.key)) {
+        if (!['ArrowUp', 'ArrowDown', 'Enter', ' ', 'Escape'].includes(event.key)) {
+            return;
+        }
+        if(event.key === 'Escape') {
+            this.handleEscape(event);
             return;
         }
         event.stopPropagation();
@@ -360,7 +365,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     }
 
     public toggle(target?: boolean): void {
-        if (this.readonly || this.pending) {
+        if (this.readonly || this.pending || this.disabled) {
             return;
         }
         this.open = typeof target !== 'undefined' ? target : !this.open;
@@ -614,16 +619,10 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             this.selects = 'single';
         }
         if (changes.has('disabled') && this.disabled) {
-            if (this.strategy) {
-                this.open = false;
-                this.strategy.open = false;
-            }
+            this.close();
         }
         if (changes.has('pending') && this.pending) {
-            if (this.strategy) {
-                this.open = false;
-                this.strategy.open = false;
-            }
+            this.close();
         }
         if (changes.has('value')) {
             // MenuItems update a frame late for <slot> management,
@@ -949,6 +948,10 @@ export class Picker extends PickerBase {
         ].includes(key);
         const openKeys = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(key);
         this.focused = true;
+        if('Escape' === key) {
+            this.handleEscape(event);
+            return;
+        }
         if (!handledKeys || this.readonly || this.pending) {
             return;
         }
@@ -958,10 +961,6 @@ export class Picker extends PickerBase {
             return;
         }
         event.preventDefault();
-        if('Escape' === key) {
-            this.close();
-            return;
-        }
         const nextItem = this.optionsMenu?.quickSelectItem(
             this.selectedItem,
             key === 'ArrowLeft'

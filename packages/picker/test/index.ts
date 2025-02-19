@@ -458,7 +458,7 @@ export function runPickerTests(): void {
         it('opens with visible focus on a menu item on `DownArrow`', async () => {
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
             const opened = oneEvent(el, 'sp-opened');
-            // const closed = oneEvent(el, 'sp-closed');
+            const closed = oneEvent(el, 'sp-closed');
 
             expect(
                 firstItem.focused,
@@ -477,29 +477,25 @@ export function runPickerTests(): void {
                 'first item should be visually focused after opening'
             ).to.be.true;
 
-            /** @todo: this is not firing due to the escape key not being handled in the Picker  */
-            // await sendKeys({
-            //     press: 'Escape',
-            // });
-            // await closed;
-
-            el.open = false; // brute force close
+            await sendKeys({
+                 press: 'Escape',
+             });
+            await closed;
 
             expect(el.open, 'picker should be closed').to.be.false;
 
-            /** @todo: i believe this commented out code was a weird workaround to assert that the first menu item loses focus when the picker closes. I've put what I believe should be the correct assertions below. */
-            // expect(
-            //     document.activeElement === el,
-            //     `focused ${document.activeElement?.localName} instead of back on Picker`
-            // ).to.be.true;
-            // expect(
-            //     el.shadowRoot.activeElement === el.button,
-            //     `focused ${el.shadowRoot.activeElement?.localName} instead of back on button`
-            // ).to.be.true;
-            // await waitUntil(
-            //     () => !firstItem.focused,
-            //     'finally, not visually focused'
-            // );
+            expect(
+                 document.activeElement === el,
+                 `focused ${document.activeElement?.localName} instead of back on Picker`
+            ).to.be.true;
+             expect(
+                 el.shadowRoot.activeElement === el.button,
+                 `focused ${el.shadowRoot.activeElement?.localName} instead of back on button`
+            ).to.be.true;
+            await waitUntil(
+                 () => !firstItem.focused,
+                 'finally, not visually focused'
+            );
             expect(
                 firstItem.focused,
                 'first item should not be visually focused after closing'
@@ -508,7 +504,7 @@ export function runPickerTests(): void {
         it('opens with visible focus on a menu item on `Space`', async function () {
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
             const opened = oneEvent(el, 'sp-opened');
-            // const closed = oneEvent(el, 'sp-closed');
+            const closed = oneEvent(el, 'sp-closed');
 
             expect(
                 firstItem.focused,
@@ -527,29 +523,17 @@ export function runPickerTests(): void {
                 'should be visually focused after opening'
             ).to.be.true;
 
-            /** @todo: this is not firing due to the escape key not being handled in the Picker  */
-            // await sendKeys({
-            //     press: 'Escape',
-            // });
-            // await closed;
-
-            el.open = false; // brute force close
+            await sendKeys({
+                press: 'Escape',
+            });
+            await closed;
 
             expect(el.open, 'picker should be closed').to.be.false;
 
-            /** @todo: i believe this commented out code was a weird workaround to assert that the first menu item loses focus when the picker closes. I've put what I believe should be the correct assertions below. */
-            // expect(
-            //     document.activeElement === el,
-            //     `focused ${document.activeElement?.localName} instead of back on Picker`
-            // ).to.be.true;
-            // expect(
-            //     el.shadowRoot.activeElement === el.button,
-            //     `focused ${el.shadowRoot.activeElement?.localName} instead of back on button`
-            // ).to.be.true;
-            // await waitUntil(
-            //     () => !firstItem.focused,
-            //     'finally, not visually focused'
-            // );
+            expect(
+                document.activeElement === el, `focused ${document.activeElement?.localName} instead of back on Picker`).to.be.true;
+            expect(el.shadowRoot.activeElement === el.button, `focused ${el.shadowRoot.activeElement?.localName} instead of back on button`).to.be.true;
+            await waitUntil(() => !firstItem.focused, 'finally, not visually focused');
             expect(
                 firstItem.focused,
                 'first item should not be visually focused after closing'
@@ -693,15 +677,15 @@ export function runPickerTests(): void {
             expect(el.open).to.be.false;
         });
         it('closes when becoming disabled', async () => {
-            expect(el.open).to.be.false;
+            expect(el.open, 'open before click?').to.be.false;
             el.click();
             await elementUpdated(el);
 
-            expect(el.open).to.be.true;
+            expect(el.open, 'open after click?').to.be.true;
             el.disabled = true;
-            await elementUpdated(el);
+            await closed;
 
-            expect(el.open).to.be.false;
+            expect(el.open, 'open after disabled?').to.be.false;
         });
         it('closes when clicking away', async () => {
             el.id = 'closing';
@@ -897,12 +881,11 @@ export function runPickerTests(): void {
             expect(el.open, 'open by ArrowUp').to.be.true;
             await opened;
 
-            /** @todo: this is not firing due to the escape key not being handled in the Picker  */
-            // const closed = oneEvent(el, 'sp-closed');
+            const closed = oneEvent(el, 'sp-closed');
             sendKeys({
                 press: 'Escape',
             });
-            // await closed;
+            await closed;
             expect(el.open, 'should be closed after escape key is pressed').to
                 .be.false;
         });
@@ -935,7 +918,6 @@ export function runPickerTests(): void {
         });
         //TODO: not sure why this is failing
         it('quick selects on ArrowLeft/Right', async () => {
-            //el.classList.add('debugging');
             const selectionSpy = spy();
             el.addEventListener('change', (event: Event) => {
                 const { value } = event.target as Picker;
@@ -1701,7 +1683,7 @@ export function runPickerTests(): void {
         expect(el2.open, 'el2 to be closed').to.be.false;
 
         const el1open = oneEvent(el1, 'sp-opened');
-        const el1closed = oneEvent(el1, 'sp-closed');
+        let el1closed = oneEvent(el1, 'sp-closed');
         const el2open = oneEvent(el2, 'sp-opened');
         const el2closed = oneEvent(el2, 'sp-closed');
 
@@ -1728,6 +1710,7 @@ export function runPickerTests(): void {
         expect(el2.open, 'click el1 again: el2 to be closed').to.be.false;
         expect(el1.open, 'click el1 again: el1 to be open').to.be.true;
 
+        el1closed = oneEvent(el1, 'sp-closed');
         sendKeys({
             press: 'Escape',
         });
