@@ -7969,13 +7969,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/slider@npm:6.0.0-s2-foundations.17":
-  version: 6.0.0-s2-foundations.17
-  resolution: "@spectrum-css/slider@npm:6.0.0-s2-foundations.17"
+"@spectrum-css/slider@npm:6.0.1":
+  version: 6.0.1
+  resolution: "@spectrum-css/slider@npm:6.0.1"
   peerDependencies:
     "@spectrum-css/stepper": ">=6"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/c792dffb7b4b1f6283065d1058682a790a14d1f8a4853195525c0b23882ff1b8841679214b458bceedb43fe6b4c0f527225f010c268526fb4a8bc514715624b6
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/84c262e874ec01e5b22ab84c5562bd2ce820a1c45510807b90e8e301f41e9c278029d11cc99bc205ad1c304b9293c5a5f3e8de7eb3ee5393858e2744f3610bef
   languageName: node
   linkType: hard
 
@@ -9073,7 +9073,7 @@ __metadata:
   dependencies:
     "@internationalized/number": "npm:^3.6.0"
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/slider": "npm:6.0.0-s2-foundations.17"
+    "@spectrum-css/slider": "npm:6.0.1"
     "@spectrum-web-components/base": "npm:1.1.2"
     "@spectrum-web-components/field-label": "npm:1.1.2"
     "@spectrum-web-components/number-field": "npm:1.1.2"
