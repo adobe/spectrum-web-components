@@ -8778,6 +8778,7 @@ __metadata:
     "@spectrum-css/icon": "npm:8.0.0-s2-foundations.16"
     "@spectrum-web-components/base": "npm:^1.1.2"
     "@spectrum-web-components/iconset": "npm:^1.1.2"
+    style-observer: "npm:^0.0.4"
   languageName: unknown
   linkType: soft
 
@@ -34873,6 +34874,13 @@ __metadata:
   peerDependencies:
     webpack: ^5.27.0
   checksum: 10c0/214bc0f3b018f8c374f79b9fa16da43df78c7fef2261e9a99e36c2f8387601fad10ac75a171aa8edba75903db214bc46952ae08b94a1f8544bd146c2c8d07d27
+  languageName: node
+  linkType: hard
+
+"style-observer@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "style-observer@npm:0.0.4"
+  checksum: 10c0/ebf089ff0db1ff17b44b3960012320fb6c769228db9a890f1617cbc5f113f904b79e8bf49a0292120cccb22c86cf86ad616f9c68d44a3a2f7512c1d1c12a15d8
   languageName: node
   linkType: hard
 
