@@ -381,8 +381,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             selectedItem.scrollIntoView({ block: 'nearest' });
         }
         this.rovingTabindexController?.focusOnItem(selectedItem);
-        // ensure focusin fires in chromium tests
-        this.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
     }
 
     public override focus({ preventScroll }: FocusOptions = {}): void {
@@ -402,8 +400,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 return;
             }
             this.rovingTabindexController.focus({ preventScroll });
-            // ensure focusin fires in chromium tests
-            this.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
         }
     }
 
