@@ -97,7 +97,6 @@ commands:
             - run:
                   when: always
                   name: Publish review site
-                  timeout: 15m
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
