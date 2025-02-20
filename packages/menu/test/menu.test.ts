@@ -328,11 +328,7 @@ describe('Menu', () => {
         );
     });
 
-    /**
-     * This feels and behaves like a dark pattern. Skipping for not until I confirm a use case from Spectrum team that this behavior is expected. When would we want to add items to the menu after it has been rendered and have the focus move to the first item?
-     * @todo Remove skip when use case is confirmed.
-     */
-    it.skip('handle focus and late descendent additions', async () => {
+    it('handle focus and late descendant additions', async () => {
         const el = await fixture<Menu>(html`
             <sp-menu>
                 <sp-menu-group selects="inherit">
@@ -361,7 +357,7 @@ describe('Menu', () => {
             'Deselect'
         );
 
-        initialLoadedItem.blur();
+        el.blur();
 
         const group = el.querySelector('sp-menu-group') as HTMLElement;
 
@@ -405,11 +401,7 @@ describe('Menu', () => {
         expect(appendedItem.focused, 'last visibly focused').to.be.true;
     });
 
-    /**
-     * This feels like it might need to be a property set on the menu because it's not clear that this is the expected behavior versus focus remaining on the last focused item. This is used in the Picker component and I would expect the last focused item to remain focused when the menu is focused again.
-     * @todo Remove skip when use case is confirmed.
-     */
-    it.skip('cleans up when tabbing away', async () => {
+    it('cleans up when tabbing away', async () => {
         const el = await fixture<Menu>(html`
             <sp-menu>
                 <sp-menu-item>Deselect</sp-menu-item>
@@ -417,18 +409,10 @@ describe('Menu', () => {
                 <sp-menu-item>Third Item</sp-menu-item>
             </sp-menu>
         `);
-
-        await waitUntil(
-            () => el.childItems.length == 3,
-            'expected menu to manage 3 items'
-        );
         await elementUpdated(el);
 
         const firstItem = el.querySelector(
             'sp-menu-item:nth-of-type(1)'
-        ) as MenuItem;
-        const secondItem = el.querySelector(
-            'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
         const thirdItem = el.querySelector(
             'sp-menu-item:nth-of-type(3)'
@@ -445,7 +429,7 @@ describe('Menu', () => {
         el.dispatchEvent(arrowDownEvent());
         expect(thirdItem.focused, 'third item focused').to.be.true;
         // imitate tabbing away
-        el.dispatchEvent(tabEvent());
+        thirdItem.dispatchEvent(tabEvent());
         el.dispatchEvent(
             new CustomEvent('focusout', {
                 composed: true,
@@ -455,16 +439,13 @@ describe('Menu', () => {
         await nextFrame();
 
         el.focus();
+        expect(thirdItem.focused, 'third item focused').to.be.true;
         // focus management should start again from the first item.
         el.dispatchEvent(arrowDownEvent());
-        expect(secondItem.focused, 'second item focused').to.be.true;
+        expect(firstItem.focused, 'first item focused').to.be.true;
     });
 
-    /**
-     * This feels like another dark pattern. In what use case would you want to remove a focused item from the menu and have the focus move to the first item? When would we programmatically remove a focused item from the menu with out the user intending to do so?
-     * @todo Remove skip when use case is confirmed.
-     */
-    it.skip('handles focus across focused MenuItem removals', async () => {
+    it('handles focus across focused MenuItem removals', async () => {
         const el = await fixture<Menu>(html`
             <sp-menu id="test">
                 <sp-menu-item id="first">Deselect</sp-menu-item>
@@ -478,9 +459,7 @@ describe('Menu', () => {
         `);
         const firstItem = el.querySelector('#first') as MenuItem;
         const selectedItem = el.querySelector('#selected') as MenuItem;
-
         await elementUpdated(el);
-        await nextFrame();
         el.focus();
 
         expect(document.activeElement).to.equal(firstItem);

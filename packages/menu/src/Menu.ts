@@ -149,6 +149,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
+    public get focusInItem(): MenuItem | undefined {
+        return this.rovingTabindexController?.focusInElement;
+    }
+
     protected get controlsRovingTabindex(): boolean {
         return true;
     }
@@ -168,12 +172,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private cachedChildItems: MenuItem[] | undefined;
 
     private updateCachedMenuItems(): MenuItem[] {
-        this.cachedChildItems = [];
-
         if (!this.menuSlot) {
             return [];
         }
-
+        const itemsList = [];
         const slottedElements = this.menuSlot.assignedElements({
             flatten: true,
         }) as HTMLElement[];
@@ -181,7 +183,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         for (const [i, slottedElement] of slottedElements.entries()) {
             if (this.childItemSet.has(slottedElement as MenuItem)) {
                 // Assign <sp-menu-item> members of the array that are in this.childItemSet to this.chachedChildItems.
-                this.cachedChildItems.push(slottedElement as MenuItem);
+                itemsList.push(slottedElement as MenuItem);
                 continue;
             }
             const isHTMLSlotElement = slottedElement.localName === 'slot';
@@ -198,6 +200,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             );
         }
 
+        this.cachedChildItems = [...itemsList];
         this.rovingTabindexController?.clearElementCache();
 
         return this.cachedChildItems;
@@ -378,29 +381,30 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             selectedItem.scrollIntoView({ block: 'nearest' });
         }
         this.rovingTabindexController?.focusOnItem(selectedItem);
+        // ensure focusin fires in chromium tests
+        this.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
     }
 
     public override focus({ preventScroll }: FocusOptions = {}): void {
-        if (!this.rovingTabindexController) return;
-        if (
-            !this.childItems.length ||
-            this.childItems.every((childItem) => childItem.disabled)
-        ) {
-            return;
+        if (this.rovingTabindexController) {
+            if (
+                !this.childItems.length ||
+                this.childItems.every((childItem) => childItem.disabled)
+            ) {
+                return;
+            }
+            if (
+                this.childItems.some(
+                    (childItem) => childItem.menuData.focusRoot !== this
+                )
+            ) {
+                super.focus({ preventScroll });
+                return;
+            }
+            this.rovingTabindexController.focus({ preventScroll });
+            // ensure focusin fires in chromium tests
+            this.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
         }
-        if (
-            this.childItems.some(
-                (childItem) => childItem.menuData.focusRoot !== this
-            )
-        ) {
-            super.focus({ preventScroll });
-            return;
-        }
-        const selectedItem = this.selectedItems[0];
-        if (selectedItem && !preventScroll) {
-            selectedItem.scrollIntoView({ block: 'nearest' });
-        }
-        this.rovingTabindexController.focus({ preventScroll });
     }
 
     // if the click and pointerup events are on the same target, we should not
@@ -688,8 +692,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             'focusout',
             () => {
                 requestAnimationFrame(() => {
-                    const focusedItem =
-                        this.rovingTabindexController?.focusInElement;
+                    const focusedItem = this.focusInItem;
                     if (focusedItem) {
                         focusedItem.focused = false;
                     }
@@ -766,8 +769,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private updateItemFocus(): void {
-        const focusInElement = this.rovingTabindexController?.focusInElement;
-        focusInElement?.setAttribute('tabindex', '0');
+        this.focusInItem?.setAttribute('tabindex', '0');
         if (this.childItems.length == 0) {
             return;
         }
