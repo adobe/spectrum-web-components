@@ -605,6 +605,11 @@ export class Combobox extends Textfield {
             }
         }
         if (changed.has('options') || changed.has('optionEls')) {
+            // if all options are disabled, set combobox to disabled
+            if (this.options?.every((option) => option.disabled)) {
+                this.disabled = true;
+            }
+
             this.availableOptions = this.options || this.optionEls;
         }
     }
