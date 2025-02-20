@@ -62,10 +62,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.1.2",
-        "@spectrum-web-components/overlay": "^1.1.2",
-        "@spectrum-web-components/reactive-controllers": "^1.1.2",
-        "@spectrum-web-components/shared": "^1.1.2"
+        "@spectrum-web-components/base": "1.1.2",
+        "@spectrum-web-components/overlay": "1.1.2",
+        "@spectrum-web-components/reactive-controllers": "1.1.2",
+        "@spectrum-web-components/shared": "1.1.2"
     },
     "devDependencies": {
         "@spectrum-css/tooltip": "7.0.0-s2-foundations.15"

@@ -16,7 +16,10 @@ import path from 'path';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-const { fix } = yargs(hideBin(process.argv)).argv;
+const { fix } = yargs(hideBin(process.argv))
+    .boolean('fix')
+    .describe('fix', 'Modify package.json files to fix any issues')
+    .strict().argv;
 
 const getDirectories = (sourceDir) =>
     readdirSync(`./${sourceDir}`, { withFileTypes: true })
@@ -45,7 +48,7 @@ function readPackageJsonNameVersion(filePath) {
     if (existsSync(filePath)) {
         const jsonData = JSON.parse(readFileSync(filePath, 'utf-8'));
         const result = {};
-        result[jsonData.name] = `^${jsonData.version}`;
+        result[jsonData.name] = `${jsonData.version}`;
         return result;
     }
     return {};
@@ -143,7 +146,7 @@ directories.forEach(([sourceDir, subPackage]) => {
 
 if (written) {
     execSync('yarn lint:packagejson');
-    execSync('yarn --ignore-scripts');
+    execSync('yarn');
 }
 
 if (endReturn === 0) {
