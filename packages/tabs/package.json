@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/tabs",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "publishConfig": {
         "access": "public"
     },
@@ -88,11 +88,11 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.2",
-        "@spectrum-web-components/base": "^1.1.1",
-        "@spectrum-web-components/icon": "^1.1.1",
-        "@spectrum-web-components/icons-ui": "^1.1.1",
-        "@spectrum-web-components/reactive-controllers": "^1.1.1",
-        "@spectrum-web-components/shared": "^1.1.1"
+        "@spectrum-web-components/base": "1.1.2",
+        "@spectrum-web-components/icon": "1.1.2",
+        "@spectrum-web-components/icons-ui": "1.1.2",
+        "@spectrum-web-components/reactive-controllers": "1.1.2",
+        "@spectrum-web-components/shared": "1.1.2"
     },
     "devDependencies": {
         "@spectrum-css/tabs": "6.0.0-s2-foundations.16"
