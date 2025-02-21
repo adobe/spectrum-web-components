@@ -331,7 +331,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private async removeChildItem(item: MenuItem): Promise<void> {
-        if (item.focused) {
+        if (item.focused || item.hasAttribute('focused')) {
             this._updateFocus = true;
         }
         this.childItemSet.delete(item);
