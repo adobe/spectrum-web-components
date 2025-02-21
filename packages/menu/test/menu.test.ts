@@ -435,8 +435,7 @@ describe('Menu', () => {
         expect(firstItem.focused, 'first item focused again').to.be.true;
     });
 
-    // @todo this test is timing out
-    it.skip('handles focus across focused MenuItem removals', async function () {
+    it('handles focus across focused MenuItem removals', async function () {
         const el = await fixture<Menu>(html`
             <sp-menu>
                 <sp-menu-item id="first">Deselect</sp-menu-item>
