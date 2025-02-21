@@ -331,11 +331,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private async removeChildItem(item: MenuItem): Promise<void> {
-        if (
-            this.rovingTabindexController?.elements[
-                this.rovingTabindexController?.currentIndex
-            ] === item
-        ) {
+        if (item.focused) {
             this._updateFocus = true;
         }
         this.childItemSet.delete(item);
