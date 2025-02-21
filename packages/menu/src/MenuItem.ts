@@ -593,6 +593,7 @@ export class MenuItem extends LikeAnchor(
     }
 
     protected cleanup(): void {
+        this.setAttribute('aria-expanded', 'false');
         this.open = false;
         this.active = false;
     }
