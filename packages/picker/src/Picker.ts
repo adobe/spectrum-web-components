@@ -601,16 +601,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     protected override willUpdate(changes: PropertyValues<this>): void {
         super.willUpdate(changes);
-        if (
-            changes.has('open') &&
-            !this.open &&
-            this.focusElement === this.optionsMenu &&
-            this.focusElement?.matches(':focus-within')
-        ) {
-            this.updateComplete.then(async () => {
-                this.button.focus();
-            });
-        }
         if (changes.has('tabIndex') && !!this.tabIndex) {
             this.button.tabIndex = this.tabIndex;
             this.removeAttribute('tabindex');
