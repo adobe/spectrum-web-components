@@ -516,7 +516,7 @@ export class MenuItem extends LikeAnchor(
         if (event.composedPath().includes(this.overlayElement)) {
             return;
         }
-        this.openOverlay();
+        this.openOverlay(true);
     }
 
     protected handleSubmenuFocus(): void {
@@ -544,7 +544,7 @@ export class MenuItem extends LikeAnchor(
             delete this.leaveTimeout;
             return;
         }
-        this.openOverlay();
+        this.openOverlay(true);
     }
 
     protected leaveTimeout?: ReturnType<typeof setTimeout>;
