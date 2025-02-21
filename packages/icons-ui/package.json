@@ -44,9 +44,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.1.2",
-        "@spectrum-web-components/icon": "^1.1.2",
-        "@spectrum-web-components/iconset": "^1.1.2"
+        "@spectrum-web-components/base": "1.1.2",
+        "@spectrum-web-components/icon": "1.1.2",
+        "@spectrum-web-components/iconset": "1.1.2"
     },
     "devDependencies": {
         "@spectrum-css/ui-icons": "^1.1.2",
