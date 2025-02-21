@@ -331,13 +331,15 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private async removeChildItem(item: MenuItem): Promise<void> {
+        if (
+            this.rovingTabindexController?.elements[
+                this.rovingTabindexController?.currentIndex
+            ] === item
+        ) {
+            this._updateFocus = true;
+        }
         this.childItemSet.delete(item);
         this.cachedChildItems = undefined;
-        if (item.focused) {
-            this.handleItemsChanged();
-            await this.updateComplete;
-            this.focus();
-        }
     }
 
     public constructor() {
@@ -738,6 +740,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private _willUpdateItems = false;
+    private _updateFocus = false;
 
     private handleItemsChanged(): void {
         this.cachedChildItems = undefined;
@@ -784,6 +787,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         const assignedElements = target.assignedElements({
             flatten: true,
         }) as MenuItem[];
+        if (this._updateFocus) {
+            this.rovingTabindexController?.focus();
+            this._updateFocus = false;
+        }
         if (this.childItems.length !== assignedElements.length) {
             assignedElements.forEach((item) => {
                 if (typeof item.triggerUpdate !== 'undefined') {
@@ -886,7 +893,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                             ? firstSelectedIndex
                             : firstEnabledIndex;
                     },
-                    elements: () => this.cachedChildItems || [],
+                    elements: () => this.childItems,
                     isFocusableElement: this.isFocusableElement.bind(this),
                     hostDelegatesFocus: true,
                 });

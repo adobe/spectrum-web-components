@@ -740,6 +740,12 @@ export class MenuItem extends LikeAnchor(
         this.dispatchEvent(new FocusEvent('focus'));
     }
 
+    public override blur(): void {
+        // ensure focus event fires in Chromium for tests
+        this.dispatchEvent(new FocusEvent('blur'));
+        super.blur();
+    }
+
     public dispatchUpdate(): void {
         if (!this.isConnected) {
             return;

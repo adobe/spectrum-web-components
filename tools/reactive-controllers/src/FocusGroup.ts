@@ -186,7 +186,11 @@ export class FocusGroupController<T extends HTMLElement>
     }
 
     focusOnItem(item: T, options?: FocusOptions): void {
-        if (item && this.isFocusableElement(item) && this.elements.indexOf(item)) {
+        if (
+            item &&
+            this.isFocusableElement(item) &&
+            this.elements.indexOf(item)
+        ) {
             const diff = this.elements.indexOf(item) - this.currentIndex;
             this.setCurrentIndexCircularly(diff);
             item = this.elements[this.currentIndex];
@@ -204,11 +208,17 @@ export class FocusGroupController<T extends HTMLElement>
             focusElement = elements[this.currentIndex];
         }
         if (focusElement && this.isFocusableElement(focusElement)) {
-            if (!this.hostDelegatesFocus || elements[this.prevIndex] !== focusElement) {
+            if (
+                !this.hostDelegatesFocus ||
+                elements[this.prevIndex] !== focusElement
+            ) {
                 elements[this.prevIndex]?.setAttribute('tabindex', '-1');
             }
             focusElement.tabIndex = 0;
             focusElement.focus(options);
+            if (this.hostDelegatesFocus && !this.focused) {
+                this.hostContainsFocus();
+            }
         }
     }
 
