@@ -4188,20 +4188,141 @@
     --system-slider-handle-focus-ring-color-key-focus: var(
         --spectrum-focus-indicator-color
     );
+    --system-slider-value-inline-size: 18px;
+    --system-slider-ramp-track-block-size: var(
+        --spectrum-slider-ramp-track-height
+    );
+    --system-slider-cjk-line-height: var(--spectrum-cjk-line-height-100);
+    --system-slider-min-size: var(--spectrum-spacing-900);
     --system-slider-track-corner-radius: var(--spectrum-corner-radius-75);
+    --system-slider-label-margin-start: var(--spectrum-spacing-300);
+    --system-slider-handle-border-width: var(--spectrum-border-width-200);
+    --system-slider-track-fill-thickness: var(
+        --spectrum-slider-track-thickness
+    );
+    --system-slider-tick-mark-width: var(--spectrum-border-width-200);
+    --system-slider-tick-mark-border-radius: 2px;
+    --system-slider-tick-handle-background-color: var(--spectrum-gray-75);
+    --system-slider-track-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --system-slider-track-fill-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --system-slider-handle-border-color-disabled: var(
+        --spectrum-disabled-border-color
+    );
+    --system-slider-label-text-color: var(
+        --spectrum-neutral-content-color-default
+    );
+    --system-slider-tick-label-color: var(
+        --spectrum-neutral-content-color-default
+    );
+    --system-slider-label-text-color-disabled: var(
+        --spectrum-disabled-content-color
+    );
+    --system-slider-tick-mark-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --system-slider-ramp-handle-border-color-active: var(--spectrum-gray-75);
+    --system-slider-track-handleoffset: var(--spectrum-slider-handle-gap);
+    --system-slider-range-track-reset: 0;
+    --system-slider-font-size: var(--spectrum-font-size-75);
+    --system-slider-size-m-font-size: var(--spectrum-font-size-75);
+    --system-slider-handle-size: var(--spectrum-slider-handle-size-medium);
+    --system-slider-size-m-handle-size: var(
+        --spectrum-slider-handle-size-medium
+    );
+    --system-slider-control-height: var(--spectrum-component-height-100);
+    --system-slider-size-m-control-height: var(--spectrum-component-height-100);
     --system-slider-handle-border-radius: var(--spectrum-corner-radius-200);
     --system-slider-size-m-handle-border-radius: var(
         --spectrum-corner-radius-200
     );
+    --system-slider-handle-border-width-down: var(
+        --spectrum-slider-handle-border-width-down-medium
+    );
+    --system-slider-size-m-handle-border-width-down: var(
+        --spectrum-slider-handle-border-width-down-medium
+    );
+    --system-slider-label-top-to-text: var(--spectrum-component-top-to-text-75);
+    --system-slider-size-m-label-top-to-text: var(
+        --spectrum-component-top-to-text-75
+    );
+    --system-slider-control-to-field-label: var(
+        --spectrum-slider-control-to-field-label-medium
+    );
+    --system-slider-size-m-control-to-field-label: var(
+        --spectrum-slider-control-to-field-label-medium
+    );
+    --system-slider-value-side-padding-inline: var(--spectrum-spacing-200);
+    --system-slider-size-m-value-side-padding-inline: var(
+        --spectrum-spacing-200
+    );
+    --system-slider-size-s-font-size: var(--spectrum-font-size-75);
+    --system-slider-size-s-handle-size: var(
+        --spectrum-slider-handle-size-small
+    );
+    --system-slider-size-s-control-height: var(--spectrum-component-height-75);
     --system-slider-size-s-handle-border-radius: var(
         --spectrum-corner-radius-200
     );
+    --system-slider-size-s-handle-border-width-down: var(
+        --spectrum-slider-handle-border-width-down-small
+    );
+    --system-slider-size-s-label-top-to-text: var(
+        --spectrum-component-top-to-text-75
+    );
+    --system-slider-size-s-control-to-field-label: var(
+        --spectrum-slider-control-to-field-label-small
+    );
+    --system-slider-size-s-value-side-padding-inline: var(
+        --spectrum-spacing-100
+    );
+    --system-slider-size-l-font-size: var(--spectrum-font-size-100);
+    --system-slider-size-l-handle-size: var(
+        --spectrum-slider-handle-size-large
+    );
+    --system-slider-size-l-control-height: var(--spectrum-component-height-200);
     --system-slider-size-l-handle-border-radius: calc(
         var(--spectrum-corner-radius-200) * 4
+    );
+    --system-slider-size-l-handle-border-width-down: var(
+        --spectrum-slider-handle-border-width-down-large
+    );
+    --system-slider-size-l-label-top-to-text: var(
+        --spectrum-component-top-to-text-100
+    );
+    --system-slider-size-l-control-to-field-label: var(
+        --spectrum-slider-control-to-field-label-large
+    );
+    --system-slider-size-l-value-side-padding-inline: var(
+        --spectrum-spacing-200
+    );
+    --system-slider-size-l-value-inline-size: 18px;
+    --system-slider-size-xl-font-size: var(--spectrum-font-size-200);
+    --system-slider-size-xl-handle-size: var(
+        --spectrum-slider-handle-size-extra-large
+    );
+    --system-slider-size-xl-control-height: var(
+        --spectrum-component-height-300
     );
     --system-slider-size-xl-handle-border-radius: calc(
         var(--spectrum-corner-radius-200) * 4
     );
+    --system-slider-size-xl-handle-border-width-down: var(
+        --spectrum-slider-handle-border-width-down-extra-large
+    );
+    --system-slider-size-xl-label-top-to-text: var(
+        --spectrum-component-top-to-text-200
+    );
+    --system-slider-size-xl-control-to-field-label: var(
+        --spectrum-slider-control-to-field-label-extra-large
+    );
+    --system-slider-size-xl-value-side-padding-inline: var(
+        --spectrum-spacing-200
+    );
+    --system-slider-size-xl-value-inline-size: 22px;
     --system-split-view-vertical-width: 100%;
     --system-split-view-vertical-gripper-width: 50%;
     --system-split-view-vertical-gripper-outer-width: 100%;
