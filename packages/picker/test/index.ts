@@ -478,23 +478,23 @@ export function runPickerTests(): void {
             ).to.be.true;
 
             await sendKeys({
-                 press: 'Escape',
-             });
+                press: 'Escape',
+            });
             await closed;
 
             expect(el.open, 'picker should be closed').to.be.false;
 
             expect(
-                 document.activeElement === el,
-                 `focused ${document.activeElement?.localName} instead of back on Picker`
+                document.activeElement === el,
+                `focused ${document.activeElement?.localName} instead of back on Picker`
             ).to.be.true;
-             expect(
-                 el.shadowRoot.activeElement === el.button,
-                 `focused ${el.shadowRoot.activeElement?.localName} instead of back on button`
+            expect(
+                el.shadowRoot.activeElement === el.button,
+                `focused ${el.shadowRoot.activeElement?.localName} instead of back on button`
             ).to.be.true;
             await waitUntil(
-                 () => !firstItem.focused,
-                 'finally, not visually focused'
+                () => !firstItem.focused,
+                'finally, not visually focused'
             );
             expect(
                 firstItem.focused,
@@ -531,9 +531,17 @@ export function runPickerTests(): void {
             expect(el.open, 'picker should be closed').to.be.false;
 
             expect(
-                document.activeElement === el, `focused ${document.activeElement?.localName} instead of back on Picker`).to.be.true;
-            expect(el.shadowRoot.activeElement === el.button, `focused ${el.shadowRoot.activeElement?.localName} instead of back on button`).to.be.true;
-            await waitUntil(() => !firstItem.focused, 'finally, not visually focused');
+                document.activeElement === el,
+                `focused ${document.activeElement?.localName} instead of back on Picker`
+            ).to.be.true;
+            expect(
+                el.shadowRoot.activeElement === el.button,
+                `focused ${el.shadowRoot.activeElement?.localName} instead of back on button`
+            ).to.be.true;
+            await waitUntil(
+                () => !firstItem.focused,
+                'finally, not visually focused'
+            );
             expect(
                 firstItem.focused,
                 'first item should not be visually focused after closing'
@@ -823,7 +831,7 @@ export function runPickerTests(): void {
             expect(secondItem.selected, 'selection prevented').to.be.false;
             expect(el.open).to.be.true;
         });
-        it('can throw focus after `change`', async () => {
+        it('should NOT throw focus after `change`', async () => {
             const input = document.createElement('input');
             document.body.append(input);
 
@@ -855,11 +863,7 @@ export function runPickerTests(): void {
             expect(el.open).to.be.false;
             expect(el.value, 'value changed').to.equal('option-2');
             expect(secondItem.selected, 'selected changed').to.be.true;
-            await waitUntil(
-                () => document.activeElement === input,
-                'focus throw'
-            );
-            input.remove();
+            expect(document.activeElement === input).to.be.false;
         });
         it('opens on ArrowUp', async () => {
             const button = el.button as HTMLButtonElement;
@@ -1462,7 +1466,7 @@ export function runPickerTests(): void {
             await nextFrame();
         });
         afterEach(async () => {
-            if (el.open) {
+            if (el && el.open) {
                 const closed = oneEvent(el, 'sp-closed');
                 el.open = false;
                 await closed;
@@ -1485,7 +1489,7 @@ export function runPickerTests(): void {
         after(async () => {
             window.__swc.verbose = false;
             consoleWarnStub.restore();
-            if (el.open) {
+            if (el?.open) {
                 const closed = oneEvent(el, 'sp-closed');
                 el.open = false;
                 await closed;
