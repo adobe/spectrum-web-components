@@ -217,7 +217,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     // handled by interaction controller, desktop or mobile; this is only called with a programmatic this.click()
     public override click(): void {
-        this.focusElement.click();
+        this.toggle();
     }
 
     // pointer events handled by interaction controller, desktop or mobile; this is only called with a programmatic this.button.click()

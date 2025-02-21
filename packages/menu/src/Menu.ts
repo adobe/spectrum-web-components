@@ -901,7 +901,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private isFocusableElement(el: MenuItem): boolean {
-        return !el.disabled;
+        return el ? !el.disabled : false;
     }
 
     public override disconnectedCallback(): void {
