@@ -435,28 +435,46 @@ describe('Menu', () => {
         expect(firstItem.focused, 'first item focused again').to.be.true;
     });
 
-    it('handles focus across focused MenuItem removals', async function () {
+    it('handles focus across focused MenuItem removals', async () => {
         const el = await fixture<Menu>(html`
             <sp-menu>
-                <sp-menu-item id="first">Deselect</sp-menu-item>
-                <sp-menu-item>Invert Selection</sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-item>Select and Mask...</sp-menu-item>
-                <sp-menu-item selected id="selected">
-                    Save Selection
-                </sp-menu-item>
+                <sp-menu-item id="#deselect">Deselect</sp-menu-item>
+                <sp-menu-item selected>Select Inverse</sp-menu-item>
+                <sp-menu-item>Third Item</sp-menu-item>
             </sp-menu>
         `);
-        const firstItem = el.querySelector('#first') as MenuItem;
-        const selectedItem = el.querySelector('#selected') as MenuItem;
+        await waitUntil(
+            () => el.childItems.length == 3,
+            'expected menu to manage 3 items',
+            { timeout: 100 }
+        );
+
+        expect(el.children.length).to.equal(el.childItems.length);
+
         el.focus();
 
-        expect(document.activeElement).to.equal(selectedItem);
-        expect(selectedItem.focused).to.be.true;
-        selectedItem.remove();
+        const children = [...el.children];
 
-        expect(document.activeElement).to.equal(firstItem);
-        expect(firstItem.focused).to.be.true;
+        expect(children[1], 'selected element is focused').to.equal(
+            document.activeElement
+        );
+
+        await sendKeys({ press: 'ArrowUp' });
+
+        expect(children[0], 'first element is focused').to.equal(
+            document.activeElement
+        );
+
+        children[0].remove();
+        await elementUpdated(el);
+        expect(children[1], 'selected element is focused').to.equal(
+            document.activeElement
+        );
+
+        await sendKeys({ press: 'ArrowUp' });
+        expect(children[2], 'last element is focused').to.equal(
+            document.activeElement
+        );
     });
 
     it('handles single selection', async () => {

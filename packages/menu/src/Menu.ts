@@ -332,7 +332,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     private async removeChildItem(item: MenuItem): Promise<void> {
         if (item.focused || item.hasAttribute('focused')) {
-            this._updateFocus = true;
+            this._updateFocus = this.getNeighboringFocusableElement(item);
         }
         this.childItemSet.delete(item);
         this.cachedChildItems = undefined;
@@ -501,7 +501,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * @param before {boolean} return the item before; default is false
      * @returns {MenuItem}
      */
-    public quickSelectItem(menuItem?: MenuItem, before = false): MenuItem {
+    public getNeighboringFocusableElement(
+        menuItem?: MenuItem,
+        before = false
+    ): MenuItem {
         const diff = before ? -1 : 1;
         const elements = this.rovingTabindexController?.elements || [];
         const index = !!menuItem ? elements.indexOf(menuItem) : -1;
@@ -736,7 +739,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private _willUpdateItems = false;
-    private _updateFocus = false;
+    private _updateFocus?: MenuItem;
 
     private handleItemsChanged(): void {
         this.cachedChildItems = undefined;
@@ -783,10 +786,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         const assignedElements = target.assignedElements({
             flatten: true,
         }) as MenuItem[];
-        if (this._updateFocus) {
-            this.rovingTabindexController?.focus();
-            this._updateFocus = false;
-        }
         if (this.childItems.length !== assignedElements.length) {
             assignedElements.forEach((item) => {
                 if (typeof item.triggerUpdate !== 'undefined') {
@@ -799,6 +798,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                     });
                 }
             });
+        }
+        if (!!this._updateFocus) {
+            this.rovingTabindexController?.focusOnItem(this._updateFocus);
+            this._updateFocus = undefined;
         }
     }
 

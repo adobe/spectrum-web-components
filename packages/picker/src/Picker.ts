@@ -959,7 +959,7 @@ export class Picker extends PickerBase {
             return;
         }
         event.preventDefault();
-        const nextItem = this.optionsMenu?.quickSelectItem(
+        const nextItem = this.optionsMenu?.getNeighboringFocusableElement(
             this.selectedItem,
             key === 'ArrowLeft'
         );
