@@ -734,6 +734,12 @@ export class MenuItem extends LikeAnchor(
         this.dispatchUpdate();
     }
 
+    public override focus(): void {
+        super.focus();
+        // ensure focus event fires in Chromium for tests
+        this.dispatchEvent(new FocusEvent('focus'));
+    }
+
     public dispatchUpdate(): void {
         if (!this.isConnected) {
             return;
