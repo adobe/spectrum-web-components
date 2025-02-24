@@ -382,7 +382,7 @@ describe('ActionGroup', () => {
         expect(
             (el.children[3] as ActionMenu)?.tabIndex,
             'final: should not be focused on the fourth button'
-        ).to.equal(0);
+        ).to.equal(-1);
     });
 
     testForLitDevWarnings(

@@ -1186,9 +1186,7 @@ export function runPickerTests(): void {
                 focused = oneEvent(input1, 'focus');
                 await sendKeys({ press: 'Shift+Tab' });
                 await focused;
-                expect(document.activeElement, 'focuses input 1').to.equal(
-                    input1
-                );
+                expect(document.activeElement).to.equal(input1);
             });
             it('can close and immediately tab to the next tab stop', async () => {
                 el.focus();
@@ -1211,15 +1209,15 @@ export function runPickerTests(): void {
                 el.open = false;
                 await closed;
 
-                expect(el.open).to.be.false;
-                expect(document.activeElement === el).to.be.true;
+                expect(el.open, 'open?').to.be.false;
+                expect(document.activeElement).to.equal(el);
 
                 const focused = oneEvent(input2, 'focus');
                 await sendKeys({ press: 'Tab' });
                 await focused;
 
-                expect(el.open).to.be.false;
-                expect(document.activeElement === input2).to.be.true;
+                expect(el.open, 'open?').to.be.false;
+                expect(document.activeElement).to.equal(input2);
             });
             it('can close and immediate shift+tab to the previous tab stop', async () => {
                 el.focus();
@@ -1240,15 +1238,16 @@ export function runPickerTests(): void {
                 el.open = false;
                 await closed;
 
-                expect(el.open).to.be.false;
-                expect(document.activeElement === el).to.be.true;
+                expect(el.open, 'open?').to.be.false;
+                expect(document.activeElement).to.equal(el);
 
                 const focused = oneEvent(input1, 'focus');
                 sendKeys({ press: 'Shift+Tab' });
                 await focused;
 
-                expect(el.open).to.be.false;
-                expect(document.activeElement === input1).to.be.true;
+                expect(el.open, 'open?').to.be.false;
+                expect(document.activeElement === input1, 'input has focus').to
+                    .be.true;
             });
         });
         it('does not open when [readonly]', async () => {

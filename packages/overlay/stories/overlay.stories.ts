@@ -473,6 +473,7 @@ class ComplexModalReady extends HTMLElement {
     handlePickerOpen = async (): Promise<void> => {
         const picker = document.querySelector('#test-picker') as Picker;
         const actions = [nextFrame, picker.updateComplete];
+        picker.focus();
 
         await Promise.all(actions);
 

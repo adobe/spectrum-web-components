@@ -30,6 +30,11 @@ import { argTypes } from './args.js';
 import { states } from './states.js';
 import { handleChange, StoryArgs, Template } from './template.js';
 
+function setFocusOnOpen(id: string): void {
+    const element = document.querySelector(`#${id}`) as HTMLElement;
+    element?.focus();
+}
+
 export default {
     title: 'Picker',
     component: 'sp-picker',
@@ -391,6 +396,7 @@ export const iconsNone = (args: StoryArgs): TemplateResult => {
             ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
+            @sp-opened=${() => setFocusOnOpen('picker-quiet')}
             label="Pick an action"
             value="1"
             icons="none"
@@ -556,6 +562,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
                 label="Open picker"
                 ${spreadProps(args)}
                 @change=${handleChange(args)}
+                @sp-opened=${() => setFocusOnOpen('picker-open')}
             >
                 <span slot="label">
                     Select a Country with a very long label, too long, in fact
@@ -723,11 +730,6 @@ export const readonly = (args: StoryArgs): TemplateResult => {
         </sp-picker>
     `;
 };
-
-function setFocusOnOpen(id: string): void {
-    const element = document.querySelector(`#${id}`) as HTMLElement;
-    element?.focus();
-}
 
 export const custom = (args: StoryArgs): TemplateResult => {
     const initialState = 'lb1-mo';

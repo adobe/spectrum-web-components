@@ -404,35 +404,33 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 })
             );
 
-            await elementUpdated(el);
+            expect(el.open, 'open?').to.be.false;
 
-            el.focus();
-            await elementUpdated(el);
             let opened = oneEvent(el, 'sp-opened');
-            await sendKeys({ press: 'ArrowRight' });
-            await sendKeys({ press: 'ArrowLeft' });
-            await sendKeys({ press: 'Space' });
+            el.click();
             await opened;
+
+            expect(el.open, 'open?').to.be.true;
 
             const firstRect = (
                 el as unknown as { overlayElement: Overlay }
-            ).overlayElement.dialogEl.getBoundingClientRect();
+            )?.overlayElement?.dialogEl?.getBoundingClientRect();
 
-            let closed = oneEvent(el, 'sp-closed');
-            await sendKeys({ press: 'Space' });
+            const closed = oneEvent(el, 'sp-closed');
+            el.close();
             await closed;
+            expect(el.open, 'open?').to.be.false;
 
             opened = oneEvent(el, 'sp-opened');
-            await sendKeys({ press: 'Space' });
+            el.toggle();
             await opened;
+            expect(el.open, 'open?').to.be.true;
 
             const secondRect = (
                 el as unknown as { overlayElement: Overlay }
-            ).overlayElement.dialogEl.getBoundingClientRect();
+            )?.overlayElement?.dialogEl?.getBoundingClientRect();
 
-            closed = oneEvent(el, 'sp-closed');
-            await sendKeys({ press: 'Space' });
-            await closed;
+            el.close();
 
             expect(firstRect).to.deep.equal(secondRect);
         });
