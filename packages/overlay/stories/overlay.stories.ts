@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -155,7 +155,7 @@ const template = ({
     return html`
         ${storyStyles}
         <overlay-trigger
-            content="click hover"
+            triggered-by="click hover"
             id="trigger"
             placement="${placement}"
             offset="${offset}"
@@ -918,7 +918,7 @@ export const inline = (): TemplateResult => {
 
 export const longpress = (): TemplateResult => {
     return html`
-        <overlay-trigger content="longpress" placement="right-start">
+        <overlay-trigger triggered-by="longpress" placement="right-start">
             <sp-action-button slot="trigger" hold-affordance>
                 <sp-icon-magnify slot="icon"></sp-icon-magnify>
             </sp-action-button>
@@ -1553,11 +1553,11 @@ virtualElementDeclaratively.parameters = {
     chromatic: { disableSnapshot: true },
 };
 
-export const contentOptimization = (): TemplateResult => {
+export const triggeredByOptimization = (): TemplateResult => {
     return html`
         <div style="display: flex; gap: 20px; flex-direction: column;">
             <!-- Click and hover only -->
-            <overlay-trigger content="click hover">
+            <overlay-trigger triggered-by="click hover">
                 <sp-button slot="trigger">Click and hover trigger</sp-button>
                 <sp-popover slot="click-content" direction="right" tip>
                     <sp-dialog size="s" no-divider>Click content</sp-dialog>
@@ -1566,7 +1566,7 @@ export const contentOptimization = (): TemplateResult => {
             </overlay-trigger>
 
             <!-- Longpress only -->
-            <overlay-trigger content="longpress">
+            <overlay-trigger triggered-by="longpress">
                 <sp-button slot="trigger">Longpress trigger</sp-button>
                 <sp-popover slot="longpress-content" direction="right" tip>
                     <sp-dialog size="s" no-divider>Longpress content</sp-dialog>
@@ -1577,7 +1577,7 @@ export const contentOptimization = (): TemplateResult => {
             </overlay-trigger>
 
             <!-- Click only -->
-            <overlay-trigger content="click">
+            <overlay-trigger triggered-by="click">
                 <sp-button slot="trigger">Click only trigger</sp-button>
                 <sp-popover slot="click-content" direction="right" tip>
                     <sp-dialog size="s" no-divider>Click content</sp-dialog>
@@ -1585,7 +1585,7 @@ export const contentOptimization = (): TemplateResult => {
             </overlay-trigger>
 
             <!-- Hover only -->
-            <overlay-trigger content="hover">
+            <overlay-trigger triggered-by="hover">
                 <sp-button slot="trigger">Hover only trigger</sp-button>
                 <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
             </overlay-trigger>
