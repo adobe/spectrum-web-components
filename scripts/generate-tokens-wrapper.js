@@ -391,6 +391,10 @@ async function processComponentThemes(outputPath) {
             const theme = path.basename(themePath, '.css');
             const stream = streams[theme];
 
+            if (!stream) {
+                continue;
+            }
+
             // check if path exists
             if (!fs.existsSync(themePath)) {
                 continue;
