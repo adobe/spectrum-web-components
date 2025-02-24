@@ -7825,26 +7825,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/menu@npm:8.0.0-s2-foundations.17":
-  version: 8.0.0-s2-foundations.17
-  resolution: "@spectrum-css/menu@npm:8.0.0-s2-foundations.17"
+"@spectrum-css/menu@npm:9.1.0":
+  version: 9.1.0
+  resolution: "@spectrum-css/menu@npm:9.1.0"
   peerDependencies:
-    "@spectrum-css/checkbox": ">=9"
-    "@spectrum-css/divider": ">=3"
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/switch": ">=5"
-    "@spectrum-css/tokens": ">=14"
-    "@spectrum-css/tray": ">=3"
+    "@spectrum-css/checkbox": ">=10.0.0 <11.0.0"
+    "@spectrum-css/divider": ">=5.0.0 <6.0.0"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/switch": ">=6.0.0 <7.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+    "@spectrum-css/tray": ">=5.0.0 <6.0.0"
   peerDependenciesMeta:
     "@spectrum-css/checkbox":
       optional: true
     "@spectrum-css/divider":
       optional: true
+    "@spectrum-css/icon":
+      optional: true
     "@spectrum-css/switch":
+      optional: true
+    "@spectrum-css/tokens":
       optional: true
     "@spectrum-css/tray":
       optional: true
-  checksum: 10c0/953b189d50c0e3419a8242c8df491bc2032bbf857a6032194d8d77a8be348a1c671298c02e6bcdd0be6722566d07f9b8387a40cd0bcae379ebf7039f725df43b
+  checksum: 10c0/84ddfac1a26622b03f54d4061cc77fc1d22859685217f0fe42d5d1e5fc5c2534966065b9be190860eec1f75cb241ec33766839f29187af66332e94d67ce3bc21
   languageName: node
   linkType: hard
 
@@ -8882,7 +8886,7 @@ __metadata:
   resolution: "@spectrum-web-components/menu@workspace:packages/menu"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/menu": "npm:8.0.0-s2-foundations.17"
+    "@spectrum-css/menu": "npm:9.1.0"
     "@spectrum-web-components/action-button": "npm:1.1.2"
     "@spectrum-web-components/base": "npm:1.1.2"
     "@spectrum-web-components/divider": "npm:1.1.2"
