@@ -176,6 +176,13 @@ The popup menu items are filtered to only those completing the currently-input v
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
+<br>
+<sp-field-label for="color-disabled-item">Color</sp-field-label>
+<sp-combobox id="color">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue" disabled>Blue</sp-menu-item>
+</sp-combobox>
 ```
 
 </sp-tab-panel>
