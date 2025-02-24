@@ -31,7 +31,7 @@ describe('sp-update-overlays event', () => {
         await elementUpdated(item);
 
         const opened = oneEvent(el, 'sp-opened');
-        el.open = true;
+        el.open = 'click';
         await opened;
 
         const height1 = container.getBoundingClientRect().height;
