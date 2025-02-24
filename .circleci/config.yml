@@ -22,12 +22,12 @@ commands:
     downstream:
         steps:
             - checkout
-            - restore_cache:
-                  keys:
-                      - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            - restore_cache:
-                  keys:
-                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
+            # - restore_cache:
+            #       keys:
+            #           - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            # - restore_cache:
+            #       keys:
+            #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
             - run:
                   name: Installing Dependencies
                   command: |
