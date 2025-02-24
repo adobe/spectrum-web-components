@@ -63,11 +63,7 @@ export class CloseButton extends SizedMixin(StyledButton, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [
-            ...super.styles,
-            buttonStyles,
-            crossMediumStyles,
-        ];
+        return [...super.styles, buttonStyles, crossMediumStyles];
     }
 
     /**
