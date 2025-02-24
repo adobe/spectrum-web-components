@@ -8139,10 +8139,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.0.0-s2-foundations.31":
-  version: 15.0.0-s2-foundations.31
-  resolution: "@spectrum-css/tokens@npm:15.0.0-s2-foundations.31"
-  checksum: 10c0/e09edb1540ebe73ed7776673c18e1284e98cabf0d91483a3826377a70678abd31bf16dce371b3ee03548d0d8cc963d134541f16d03f98696ac8fe2869f1b4059
+"@spectrum-css/tokens-v2@npm:@spectrum-css/tokens@15.2.0":
+  version: 15.2.0
+  resolution: "@spectrum-css/tokens@npm:15.2.0"
+  checksum: 10c0/dd8d1dd39fc72d57bc12e183b3fda7654a7ebf90902267e8c4145d54b09eecfc150f09c92ec837b6c501c0c9da573e2d9b0bc3745c7c8981c3a39ee03367fc24
   languageName: node
   linkType: hard
 
@@ -8714,8 +8714,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.1.2
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=d8a9eb&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/78d45cc73ebf29f2c0246ee7a3a2146cea8bc2e9cbe2a8d8addb3091ecb684479c28376572ed27f5e7ae994845e57481b5d8518a857efcb270b79175276855d3
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=84adff&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/6f7cbdb8ba913403813d8ac59957ef9b8013d57751859d07c231fb818ec339155fd555b75455693259609ff4a7388a2e8c7dffb98431fba77c040309fc0a37ed
   languageName: node
   linkType: hard
 
@@ -9122,7 +9122,7 @@ __metadata:
   dependencies:
     "@spectrum-css/expressvars": "npm:^3.0.9"
     "@spectrum-css/tokens": "npm:15.0.0"
-    "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.0.0-s2-foundations.31"
+    "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@15.2.0"
     "@spectrum-css/typography": "npm:7.0.0-s2-foundations.17"
     "@spectrum-css/vars": "npm:^9.0.8"
     "@spectrum-web-components/base": "npm:1.1.2"
