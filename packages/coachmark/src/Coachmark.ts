@@ -42,11 +42,7 @@ import '@spectrum-web-components/button-group/sp-button-group.js';
  */
 export class Coachmark extends Popover {
     public static override get styles(): CSSResultArray {
-        return [
-            ...super.styles,
-            coachmarkStyles,
-            chevronStyles,
-        ];
+        return [...super.styles, coachmarkStyles, chevronStyles];
     }
     @property({ type: Object })
     public item?: CoachmarkItem;
