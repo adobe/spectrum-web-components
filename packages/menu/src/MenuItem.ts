@@ -220,6 +220,7 @@ export class MenuItem extends LikeAnchor(
                 characterData: true,
                 childList: true,
                 subtree: true,
+                attributeFilter: ['src'],
             },
             callback: (mutations) => {
                 const isSubmenu = mutations.every(
