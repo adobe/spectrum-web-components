@@ -315,11 +315,16 @@ export class Breadcrumbs extends SpectrumElement {
             return;
         }
 
+        // Wait for all breadcrumb items to complete their updates
         await Promise.all(
             this.breadcrumbsElements.map((el) => el.updateComplete)
         );
 
+        // Force a recalculation of widths and overflow
         this.calculateBreadcrumbItemsWidth();
+
+        // Reset visibleItems to 0 to force a full recalculation
+        this.visibleItems = 0;
         this.adjustOverflow();
     }
 
