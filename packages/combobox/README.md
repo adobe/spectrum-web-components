@@ -160,6 +160,17 @@ The popup menu items are filtered to only those completing the currently-input v
 </sp-combobox>
 ```
 
+### Disabled Items
+
+```html
+<sp-field-label for="color">Color</sp-field-label>
+<sp-combobox id="color">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue" disabled>Blue</sp-menu-item>
+</sp-combobox>
+```
+
 ### Invalid
 
 ```html
