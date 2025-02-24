@@ -33,7 +33,12 @@ import overlayTriggerStyles from './overlay-trigger.css.js';
 
 export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
 
-export type ContentType = OverlayContentTypes[];
+// Helper type to create all unique combinations of OverlayContentTypes
+type Combinations<T extends string, U extends string = T> = T extends string
+    ? T | `${T} ${Combinations<Exclude<U, T>>}`
+    : never;
+
+export type TriggerInteractionsType = Combinations<OverlayContentTypes>;
 
 /**
  * @element overlay-trigger
@@ -64,7 +69,7 @@ export class OverlayTrigger extends SpectrumElement {
     /**
      * Optional property to optimize performance and prevent race conditions.
      *
-     * By explicitly declaring which content types are used (e.g. ["click", "hover"]),
+     * By explicitly declaring which content types are used (e.g. "click", "longpress hover"),
      * we can avoid:
      * 1. Extra renders from unnecessary slot reparenting
      * 2. Potential infinite render loops during content detection
@@ -73,8 +78,8 @@ export class OverlayTrigger extends SpectrumElement {
      * By only returning overlay wrappers for explicitly declared content types,
      * we minimize unecessary DOM nodes, operations and ensure a more stable rendering behavior.
      */
-    @property({ type: Array })
-    public content?: ContentType;
+    @property({ attribute: 'trigger-interactions' })
+    triggerInteractions?: TriggerInteractionsType;
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
@@ -228,7 +233,7 @@ export class OverlayTrigger extends SpectrumElement {
         `;
 
         // If click interactions are explicitly enabled by customers, always return the overlay
-        if (this.content?.includes('click')) {
+        if (this.triggerInteractions?.includes('click')) {
             return clickOverlay;
         }
 
@@ -261,7 +266,7 @@ export class OverlayTrigger extends SpectrumElement {
         `;
 
         // If hover interactions are explicitly enabled by customers, always return the overlay
-        if (this.content?.includes('hover')) {
+        if (this.triggerInteractions?.includes('hover')) {
             return hoverOverlay;
         }
 
@@ -294,7 +299,7 @@ export class OverlayTrigger extends SpectrumElement {
         `;
 
         // If click interactions are explicitly enabled by customers, always return the overlay
-        if (this.content?.includes('longpress')) {
+        if (this.triggerInteractions?.includes('longpress')) {
             return longpressOverlay;
         }
 
@@ -324,10 +329,10 @@ export class OverlayTrigger extends SpectrumElement {
     protected override updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
 
-        if (window.__swc?.DEBUG && !this.content) {
+        if (window.__swc?.DEBUG && !this.triggerInteractions) {
             const issues = [
-                'You have not specified the `content` property. For optimal performance, consider explicitly declaring which overlay types you plan to use.',
-                'Example: .content=${["click", "hover"]}',
+                'You have not specified the `triggerInteractions` property. For optimal performance, consider explicitly declaring which overlay types you plan to use.',
+                'Example: trigger-interactions="click hover"',
                 'This helps avoid unnecessary DOM operations and potential race conditions.',
             ];
 

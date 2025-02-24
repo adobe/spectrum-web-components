@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { elementUpdated, expect, html } from '@open-wc/testing';
-import { ContentType, OverlayTrigger } from '../src/OverlayTrigger.js';
+import { OverlayTrigger } from '../src/OverlayTrigger.js';
 import { stub } from 'sinon';
 import {
     fixture,
@@ -23,8 +23,8 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/overlay/sync/overlay-trigger.js';
 
-describe('Overlay Trigger - Content Property', () => {
-    it('accepts valid content combinations', async () => {
+describe('Overlay Trigger - Trigger Interactions', () => {
+    it('accepts valid trigger interaction combinations', async () => {
         const el = await fixture<OverlayTrigger>(html`
             <overlay-trigger>
                 <sp-button slot="trigger">Test Button</sp-button>
@@ -36,40 +36,44 @@ describe('Overlay Trigger - Content Property', () => {
             </overlay-trigger>
         `);
 
-        // Test single content types
-        el.content = ['click'];
+        // Test single interaction types
+        el.triggerInteractions = 'click';
         await elementUpdated(el);
-        expect(el.content).to.deep.equal(['click']);
+        expect(el.triggerInteractions).to.deep.equal(['click']);
 
-        el.content = ['hover'];
+        el.triggerInteractions = 'hover';
         await elementUpdated(el);
-        expect(el.content).to.deep.equal(['hover']);
+        expect(el.triggerInteractions).to.deep.equal(['hover']);
 
-        el.content = ['longpress'];
+        el.triggerInteractions = 'longpress';
         await elementUpdated(el);
-        expect(el.content).to.deep.equal(['longpress']);
+        expect(el.triggerInteractions).to.deep.equal(['longpress']);
 
         // Test valid combinations
-        el.content = ['click', 'hover'];
+        el.triggerInteractions = 'click hover';
         await elementUpdated(el);
-        expect(el.content).to.deep.equal(['click', 'hover']);
+        expect(el.triggerInteractions).to.deep.equal(['click', 'hover']);
 
-        el.content = ['click', 'longpress'];
+        el.triggerInteractions = 'click longpress';
         await elementUpdated(el);
-        expect(el.content).to.deep.equal(['click', 'longpress']);
+        expect(el.triggerInteractions).to.deep.equal(['click', 'longpress']);
 
-        el.content = ['hover', 'longpress'];
+        el.triggerInteractions = 'hover longpress';
         await elementUpdated(el);
-        expect(el.content).to.deep.equal(['hover', 'longpress']);
+        expect(el.triggerInteractions).to.deep.equal(['hover', 'longpress']);
 
-        el.content = ['click', 'hover', 'longpress'];
+        el.triggerInteractions = 'click hover longpress';
         await elementUpdated(el);
-        expect(el.content).to.deep.equal(['click', 'hover', 'longpress']);
+        expect(el.triggerInteractions).to.deep.equal([
+            'click',
+            'hover',
+            'longpress',
+        ]);
     });
 
-    it('optimizes rendering based on content property', async () => {
+    it('optimizes rendering based on trigger interactions', async () => {
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger .content=${['click'] satisfies ContentType}>
+            <overlay-trigger trigger-interactions="click">
                 <sp-button slot="trigger">Test Button</sp-button>
             </overlay-trigger>
         `);
@@ -78,7 +82,7 @@ describe('Overlay Trigger - Content Property', () => {
         expect(overlays.length).to.equal(1);
         expect(overlays[0].id).to.equal('click-overlay');
 
-        el.content = ['click', 'hover'];
+        el.triggerInteractions = 'click hover';
         await elementUpdated(el);
         await el.updateComplete;
 
@@ -87,7 +91,7 @@ describe('Overlay Trigger - Content Property', () => {
         expect(overlays[0].id).to.equal('click-overlay');
         expect(overlays[1].id).to.equal('hover-overlay');
 
-        el.content = ['click', 'hover', 'longpress'];
+        el.triggerInteractions = 'click hover longpress';
         await elementUpdated(el);
         await el.updateComplete;
 
@@ -100,7 +104,7 @@ describe('Overlay Trigger - Content Property', () => {
 
     it('handles backwards compatible slot assigned content', async () => {
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger .content=${['click'] satisfies ContentType}>
+            <overlay-trigger trigger-interactions="click">
                 <sp-button slot="trigger">Test Button</sp-button>
                 <sp-popover slot="click-content">Click Content</sp-popover>
                 <sp-tooltip slot="hover-content">Hover Content</sp-tooltip>

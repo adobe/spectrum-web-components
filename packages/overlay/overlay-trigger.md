@@ -119,11 +119,11 @@ The delivery of hover content can be customized via the `placement` attribute. H
 
 ### Performance optimization
 
-The `content` attribute allows you to explicitly declare which types of overlays your implementation will use. This can help optimize performance by avoiding unnecessary DOM operations and preventing race conditions during rendering.
+The `trigger-interactions` attribute (`triggerInteractions` property) allows you to explicitly declare which types of overlays your implementation will use. This can help optimize performance by avoiding unnecessary DOM operations and preventing race conditions during rendering.
 
 ```html
 <!-- Only using click and hover overlays -->
-<overlay-trigger .content=${["click", "hover"] satisfies ContentType}>
+<overlay-trigger trigger-interactions="click hover">
     <sp-button slot="trigger">Click and hover trigger</sp-button>
     <sp-popover slot="click-content" direction="bottom" tip>
         Click content
@@ -132,7 +132,7 @@ The `content` attribute allows you to explicitly declare which types of overlays
 </overlay-trigger>
 
 <!-- Only using longpress overlay -->
-<overlay-trigger .content={["longpress"] satisfies ContentType}>
+<overlay-trigger trigger-interactions="longpress">
     <sp-button slot="trigger">Longpress trigger</sp-button>
     <sp-popover slot="longpress-content" direction="bottom" tip>
         Longpress content
@@ -143,7 +143,7 @@ The `content` attribute allows you to explicitly declare which types of overlays
 </overlay-trigger>
 ```
 
-The `content` attribute accepts a space-separated list of overlay types:
+The `trigger-interactions` attribute accepts a space-separated string of overlay types:
 
 -   `click` - For click-triggered content
 -   `hover` - For hover/focus-triggered content
