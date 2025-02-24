@@ -892,7 +892,21 @@
         "workflowadd",
         "wrench",
         "zoomin",
-        "zoomout"
+        "zoomout",
+        "discover",
+        "discoveroutline",
+        "enterprise",
+        "government",
+        "learn",
+        "offeractivities",
+        "offers",
+        "placeholder",
+        "resolvedcomment",
+        "treeview",
+        "unresolvedcomment",
+        "verticalmasonrygridview",
+        "viewcardonecol",
+        "viewtable"
     ],
     "s2": [
         "3dasset",
