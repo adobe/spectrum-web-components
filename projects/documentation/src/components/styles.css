@@ -963,6 +963,14 @@ sp-link {
     align-items: center;
 }
 
+/* Override flex behavior for breadcrumbs so they can properly adjust visible items */
+.demo-preview:has(sp-breadcrumbs) {
+    display: block;
+    padding: 20px;
+
+    --demo-container-width: 100%;
+}
+
 .demo-config {
     display: flex;
     flex-direction: column;

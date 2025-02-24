@@ -62,12 +62,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@ctrl/tinycolor": "^4.0.3",
-        "@spectrum-web-components/base": "1.1.2",
-        "@spectrum-web-components/color-handle": "1.1.2",
-        "@spectrum-web-components/opacity-checkerboard": "1.1.2",
-        "@spectrum-web-components/reactive-controllers": "1.1.2",
-        "@spectrum-web-components/shared": "1.1.2"
+        "@spectrum-web-components/base": "^1.1.2",
+        "@spectrum-web-components/color-handle": "^1.1.2",
+        "@spectrum-web-components/opacity-checkerboard": "^1.1.2",
+        "@spectrum-web-components/reactive-controllers": "^1.1.2",
+        "@spectrum-web-components/shared": "^1.1.2"
     },
     "devDependencies": {
         "@spectrum-css/colorarea": "6.0.0-s2-foundations.15"
