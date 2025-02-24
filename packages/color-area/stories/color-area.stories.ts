@@ -25,10 +25,10 @@ export default {
         onChange: { action: 'change' },
         color: {
             name: 'color',
-            type: { name: 'ColorValue', required: 'true' },
+            type: { name: 'ColorTypes', required: 'true' },
             description: 'The color displayed by the ColorArea.',
             table: {
-                type: { summary: 'ColorValue' },
+                type: { summary: 'ColorTypes' },
                 defaultValue: { summary: '' },
             },
             control: 'text',
@@ -44,6 +44,7 @@ type StoryArgs = {
 export const Default = ({ onChange, onInput }: StoryArgs): TemplateResult => {
     return html`
         <sp-color-area
+            color="#ff0000"
             @input=${({ target }: Event & { target: ColorArea }) => {
                 const next = target.nextElementSibling as HTMLElement;
                 next.textContent = target.color as string;
@@ -58,11 +59,21 @@ export const Default = ({ onChange, onInput }: StoryArgs): TemplateResult => {
     `;
 };
 
+export const appliedValues = (): TemplateResult => {
+    return html`
+        <sp-color-area
+            .color=${{ space: 'hsv', coords: [250, 90, 80] }}
+        ></sp-color-area>
+        <sp-color-area color="hsv(250, 90%, 80%)"></sp-color-area>
+        <sp-color-area hue="250" x="0.1" y="0.1"></sp-color-area>
+    `;
+};
+
 export const joint = (): TemplateResult => {
     return html`
         <div>
             <sp-color-area
-                color="hsv (120 0% 100%)"
+                color="hsv (0 100% 100%)"
                 @input=${({ target }: Event & { target: ColorArea }) => {
                     const next = target.nextElementSibling as ColorSlider;
                     const display = next.nextElementSibling as HTMLElement;
@@ -72,7 +83,7 @@ export const joint = (): TemplateResult => {
                 }}
             ></sp-color-area>
             <sp-color-slider
-                color="hsv(120 0% 1)"
+                color="hsv(0 100% 100%)"
                 @input=${({
                     target: {
                         color,
@@ -90,7 +101,7 @@ export const joint = (): TemplateResult => {
                     nextElementSibling.style.color = color as string;
                 }}
             ></sp-color-slider>
-            <div style="color: hsv(120, 0, 1)">hsv(120, 0, 1)</div>
+            <div style="color: hsv(0, 100%, 100%)">hsv(0, 100%, 100%)</div>
         </div>
     `;
 };

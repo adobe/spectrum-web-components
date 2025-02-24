@@ -144,11 +144,7 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
     }
 
     public static override get styles(): CSSResultArray {
-        return [
-            checkboxStyles,
-            checkmarkSmallStyles,
-            dashSmallStyles,
-        ];
+        return [checkboxStyles, checkmarkSmallStyles, dashSmallStyles];
     }
 
     public override click(): void {

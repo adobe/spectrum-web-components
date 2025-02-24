@@ -18,7 +18,7 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
+import { ColorTypes } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 
 import '@spectrum-web-components/color-area/sp-color-area.js';
 import { ColorArea } from '@spectrum-web-components/color-area';
@@ -74,7 +74,7 @@ describe('ColorArea', () => {
         expect(el.x).to.equal(0.3);
 
         const handle = el.shadowRoot.querySelector('.handle') as ColorHandle;
-        expect(handle.color).to.equal('hsl(0, 100%, 85%)');
+        expect(handle.color).to.equal('hsl(0 100% 85%)');
     });
     it('updates color when y value changes', async () => {
         const el = await fixture<ColorArea>(html`
@@ -91,7 +91,7 @@ describe('ColorArea', () => {
         expect(el.y).to.equal(0.5);
 
         const handle = el.shadowRoot.querySelector('.handle') as ColorHandle;
-        expect(handle.color).to.equal('hsl(0, 100%, 25%)');
+        expect(handle.color).to.equal('hsl(0 100% 25%)');
     });
     it('manages a single tab stop', async () => {
         const test = await fixture<HTMLDivElement>(html`
@@ -145,10 +145,15 @@ describe('ColorArea', () => {
         await sendKeys({
             press: 'ArrowDown',
         });
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await elementUpdated(el);
         expect(el.value).to.not.equal(value);
         await sendKeys({
             press: 'Shift+Tab',
         });
+
         expect(document.activeElement, 'before input again').to.equal(input1);
     });
     it('provides separate aria-labels for X and Y inputs', async () => {
@@ -204,10 +209,10 @@ describe('ColorArea', () => {
 
         const handle = el.shadowRoot.querySelector('.handle') as ColorHandle;
 
-        expect(handle.color).to.equal('hsl(0, 100%, 50%)');
+        expect(handle.color).to.equal('hsl(0 100% 50%)');
         el.x = 0.3;
         await el.updateComplete;
-        expect(handle.color).to.equal('hsl(0, 100%, 85%)');
+        expect(handle.color).to.equal('hsl(0 100% 85%)');
     });
     it('updates color when y value changes', async () => {
         const el = await fixture<ColorArea>(html`
@@ -217,11 +222,10 @@ describe('ColorArea', () => {
         await el.updateComplete;
 
         const handle = el.shadowRoot.querySelector('.handle') as ColorHandle;
-
-        expect(handle.color).to.equal('hsl(0, 100%, 50%)');
+        expect(handle.color).to.equal('hsl(0 100% 50%)');
         el.y = 0.7;
         await el.updateComplete;
-        expect(handle.color).to.equal('hsl(0, 100%, 35%)');
+        expect(handle.color).to.equal('hsl(0 100% 35%)');
     });
     it('accepts `hue` values', async () => {
         const el = await fixture<ColorArea>(html`
@@ -232,13 +236,13 @@ describe('ColorArea', () => {
 
         const { handle } = el as unknown as { handle: ColorHandle };
 
-        expect(handle.color).to.equal('hsl(0, 100%, 50%)');
+        expect(handle.color).to.equal('hsl(0 100% 50%)');
 
         el.hue = 125;
 
         await elementUpdated(el);
 
-        expect(handle.color).to.equal('hsl(125, 100%, 50%)');
+        expect(handle.color).to.equal('hsl(125 100% 50%)');
     });
     it('accepts "color" values as hsl', async () => {
         const el = await fixture<ColorArea>(html`
@@ -440,7 +444,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.color).to.equal('hsl(100, 65%, 57%)');
+        expect(el.color).to.equal('hsla(100, 65%, 57%, 1)');
         expect(el.x, 'first').to.equal(0.67);
         expect(el.y).to.equal(0.85);
 
@@ -453,7 +457,7 @@ describe('ColorArea', () => {
         });
         await elementUpdated(el);
 
-        expect(el.color).to.equal('hsl(100, 66%, 56%)');
+        expect(el.color).to.equal('hsla(100, 66%, 56%, 1)');
         expect(el.x).to.equal(0.69);
         expect(el.y).to.equal(0.85);
 
@@ -467,7 +471,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.color).to.equal('hsl(100, 53%, 49%)');
+        expect(el.color).to.equal('hsla(100, 53%, 49%, 1)');
         expect(el.x).to.equal(0.69);
         expect(el.y).to.equal(0.75);
 
@@ -485,7 +489,7 @@ describe('ColorArea', () => {
 
         await elementUpdated(el);
 
-        expect(el.color).to.equal('hsl(100, 50%, 50%)');
+        expect(el.color).to.equal('hsla(100, 50%, 50%, 1)');
         expect(el.x, 'last').to.equal(0.67);
         expect(el.y).to.equal(0.75);
     });
@@ -663,9 +667,7 @@ describe('ColorArea', () => {
         changeSpy.resetHistory();
         await sendKeys({ press: 'ArrowRight' });
         await sendKeys({ press: 'ArrowRight' });
-
         await elementUpdated(el);
-
         expect(inputSpy.callCount).to.equal(2);
         expect(changeSpy.callCount).to.equal(2);
         expect(parseFloat(el.inputX.value).toFixed(2)).to.equal(
@@ -675,6 +677,7 @@ describe('ColorArea', () => {
         el.inputY.focus();
         inputSpy.resetHistory();
         changeSpy.resetHistory();
+
         await sendKeys({ press: 'ArrowUp' });
         await sendKeys({ press: 'ArrowUp' });
 
@@ -799,7 +802,7 @@ describe('ColorArea', () => {
         await elementUpdated(el);
 
         let outputColor = el.color as { h: number; s: number; l: number };
-        const variance = 0.00005;
+        const variance = 0.004;
 
         expect(el.hue).to.equal(100);
         expect(el.x, 'x').to.equal(0.67);
@@ -843,6 +846,27 @@ describe('ColorArea', () => {
         expect(el.y, 'new y').to.equal(0.5);
         expect(el.color).to.equal('hsv(100, 0%, 50%)');
     });
+    it('updates gradient when hue value changes', async () => {
+        const el = await fixture<ColorArea>(html`
+            <sp-color-area hue="100"></sp-color-area>
+        `);
+
+        await elementUpdated(el);
+
+        const gradient = el.shadowRoot.querySelector(
+            '.gradient'
+        ) as HTMLElement;
+        const initialBackground = gradient.style.background;
+
+        // Change the hue value
+        el.hue = 200;
+        await elementUpdated(el);
+
+        const updatedBackground = gradient.style.background;
+
+        // Verify that the gradient background has been updated
+        expect(initialBackground).to.not.equal(updatedBackground);
+    });
     it('retains `hue` value when s = 0 in HSV object format', async () => {
         let inputColor = { h: 100, s: 0.5, v: 0.5 };
 
@@ -879,16 +903,8 @@ describe('ColorArea', () => {
     });
     const colorFormats: {
         name: string;
-        color:
-            | string
-            | number
-            | TinyColor
-            | HSVA
-            | HSV
-            | RGB
-            | RGBA
-            | HSL
-            | HSLA;
+        color: ColorTypes;
+        test?: string;
     }[] = [
         //rgb
         { name: 'RGB String', color: 'rgb(204, 51, 204)' },
@@ -903,7 +919,7 @@ describe('ColorArea', () => {
         { name: 'Hex8', color: 'cc33ccff' },
         { name: 'Hex8 String', color: '#cc33ccff' },
         // name
-        { name: 'string', color: 'red' },
+        { name: 'string', color: 'red', test: 'ff0000' },
         // hsl
         { name: 'HSL String', color: 'hsl(300, 60%, 50%)' },
         { name: 'HSL', color: { h: 300, s: 0.6000000000000001, l: 0.5, a: 1 } },
@@ -917,20 +933,21 @@ describe('ColorArea', () => {
                 <sp-color-area></sp-color-area>
             `);
 
-            el.color = format.color;
+            if (typeof format.color === 'string') {
+                el.color = format.color;
+            } else {
+                el.color = { ...format.color } as ColorTypes;
+            }
             if (format.name.startsWith('Hex')) {
                 expect(el.color).to.equal(format.color);
-            } else expect(el.color).to.deep.equal(format.color);
+            } else if (format.name == 'string') {
+                expect(el.color).to.equal(format.test);
+            } else {
+                expect(el.color).to.deep.equal(format.color);
+            }
         });
     });
-    it(`maintains \`color\` format as TinyColor`, async () => {
-        const el = await fixture<ColorArea>(html`
-            <sp-color-area></sp-color-area>
-        `);
-        const color = new TinyColor('rgb(204, 51, 204)');
-        el.color = color;
-        expect(color.equals(el.color));
-    });
+
     it(`resolves Hex3 format to Hex6 format`, async () => {
         const el = await fixture<ColorArea>(html`
             <sp-color-area></sp-color-area>

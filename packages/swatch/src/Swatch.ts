@@ -70,11 +70,7 @@ export class Swatch extends SizedMixin(Focusable, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [
-            opacityCheckerboardStyles,
-            styles,
-            dashStyles,
-        ];
+        return [opacityCheckerboardStyles, styles, dashStyles];
     }
 
     @property({ reflect: true })
