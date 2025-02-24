@@ -26,6 +26,7 @@ export type StoryArgs = {
     disabled?: boolean;
     readonly?: boolean;
     value?: string;
+    disabledItems?: string[];
     autocomplete?: 'list' | 'none';
     size?: ElementSize;
     onChange?: (val: string) => void;

@@ -46,6 +46,7 @@ import { Menu, MenuItem } from '@spectrum-web-components/menu';
 export type ComboboxOption = {
     value: string;
     itemText: string;
+    disabled?: boolean;
 };
 
 /**
@@ -110,7 +111,7 @@ export class Combobox extends Textfield {
      * An array of options to present in the Menu provided while typing into the input
      */
     @property({ type: Array })
-    public options?: ComboboxOption[];
+    public options?: (ComboboxOption | MenuItem)[];
 
     /**
      * The array of the children of the combobox, ie ComboboxItems.
@@ -215,20 +216,36 @@ export class Combobox extends Textfield {
         const activeIndex = !this.activeDescendant
             ? -1
             : this.availableOptions.indexOf(this.activeDescendant);
-        const nextActiveIndex =
-            (this.availableOptions.length + activeIndex + 1) %
-            this.availableOptions.length;
-        this.activeDescendant = this.availableOptions[nextActiveIndex];
+        let nextActiveIndex = activeIndex;
+        do {
+            nextActiveIndex =
+                (this.availableOptions.length + nextActiveIndex + 1) %
+                this.availableOptions.length;
+            // Break if we've checked all options to avoid infinite loop
+            if (nextActiveIndex === activeIndex) break;
+        } while (this.availableOptions[nextActiveIndex].disabled);
+
+        if (!this.availableOptions[nextActiveIndex].disabled) {
+            this.activeDescendant = this.availableOptions[nextActiveIndex];
+        }
     }
 
     public activatePreviousDescendant(): void {
         const activeIndex = !this.activeDescendant
             ? 0
             : this.availableOptions.indexOf(this.activeDescendant);
-        const previousActiveIndex =
-            (this.availableOptions.length + activeIndex - 1) %
-            this.availableOptions.length;
-        this.activeDescendant = this.availableOptions[previousActiveIndex];
+        let previousActiveIndex = activeIndex;
+        do {
+            previousActiveIndex =
+                (this.availableOptions.length + previousActiveIndex - 1) %
+                this.availableOptions.length;
+            // Break if we've checked all options to avoid infinite loop
+            if (previousActiveIndex === activeIndex) break;
+        } while (this.availableOptions[previousActiveIndex].disabled);
+
+        if (!this.availableOptions[previousActiveIndex].disabled) {
+            this.activeDescendant = this.availableOptions[previousActiveIndex];
+        }
     }
 
     public selectDescendant(): void {
@@ -504,6 +521,7 @@ export class Combobox extends Textfield {
                                               .value=${option.value}
                                               .selected=${option.value ===
                                               this.itemValue}
+                                              ?disabled=${option.disabled}
                                           >
                                               ${option.itemText}
                                           </sp-menu-item>
@@ -587,6 +605,11 @@ export class Combobox extends Textfield {
             }
         }
         if (changed.has('options') || changed.has('optionEls')) {
+            // if all options are disabled, set combobox to disabled
+            if (this.options?.every((option) => option.disabled)) {
+                this.disabled = true;
+            }
+
             this.availableOptions = this.options || this.optionEls;
         }
     }
