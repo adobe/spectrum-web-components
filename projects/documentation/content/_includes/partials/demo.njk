@@ -27,7 +27,7 @@
                 {% elif demoControl.control === 'text' %}
                     <sp-textfield class="demo-control" value="{{ demoControl.table.defaultValue.summary }}" id="{{ demoControl.name }}"></sp-textfield>
                 {% elif demoControl.control === 'number' %}
-                    <sp-number-field class="demo-control" value="{{ demoControl.table.defaultValue.summary }}" id="{{ demoControl.name }}"></sp-number-field>
+                    <sp-number-field class="demo-control" value="{{ demoControl.table.defaultValue.summary }}" id="{{ demoControl.name }}" min="{{ demoControl.min }}" max="{{ demoControl.max }}"></sp-number-field>
                 {% endif %}
             </div>
         {% endfor %}</sp-field-group>{% endif %}
