@@ -1451,7 +1451,6 @@
         --spectrum-corner-radius-700
     );
     --spectrum-drop-shadow-x: 0px;
-    --spectrum-android-elevation: 2dp;
     --spectrum-spacing-50: 2px;
     --spectrum-spacing-75: 4px;
     --spectrum-spacing-100: 8px;
@@ -2102,6 +2101,7 @@
     --spectrum-docs-static-black-background-color: rgba(
         var(--spectrum-docs-static-black-background-color-rgb)
     );
+    --spectrum-coach-indicator-ring-static-white-color: var(--spectrum-white);
 }
 :host,
 :root {

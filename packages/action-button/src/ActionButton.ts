@@ -22,7 +22,6 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from '@spectrum-web-components/button';
 import buttonStyles from './action-button.css.js';
 import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
-import cornerTriangleOverrides from '@spectrum-web-components/icon/src/icon-corner-triangle-overrides.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
 
 const holdAffordanceClass = {
@@ -55,12 +54,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     noDefaultSize: true,
 }) {
     public static override get styles(): CSSResultArray {
-        return [
-            ...super.styles,
-            buttonStyles,
-            cornerTriangleStyles,
-            cornerTriangleOverrides,
-        ];
+        return [...super.styles, buttonStyles, cornerTriangleStyles];
     }
 
     @property({ type: Boolean, reflect: true })
