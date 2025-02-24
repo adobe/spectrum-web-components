@@ -919,10 +919,21 @@ describe('Combobox', () => {
     });
 
     describe('disabled items', () => {
-        it('disabled items should be disabled', async () => {
-            const el = await withDisabledItemsFixture();
-            await elementUpdated(el);
+        let el: TestableCombobox;
 
+        beforeEach(async () => {
+            el = await withDisabledItemsFixture();
+            await elementUpdated(el);
+        });
+        afterEach(async () => {
+            if (el.open) {
+                const closed = oneEvent(el, 'sp-closed');
+                el.open = false;
+                await closed;
+            }
+        });
+
+        it('disabled items should be disabled', async () => {
             const opened = oneEvent(el, 'sp-opened');
             el.click();
             await opened;
@@ -931,9 +942,6 @@ describe('Combobox', () => {
             expect(menuItems[2].disabled).to.be.true;
         });
         it('disabled items should not be focusable using keyboard', async () => {
-            const el = await withDisabledItemsFixture();
-            await elementUpdated(el);
-
             const opened = oneEvent(el, 'sp-opened');
             el.click();
             await opened;
@@ -952,9 +960,6 @@ describe('Combobox', () => {
             expect(el.activeDescendant?.itemText).to.equal('Algeria');
         });
         it('disabled items should not be focusable using mouse', async () => {
-            const el = await withDisabledItemsFixture();
-            await elementUpdated(el);
-
             const opened = oneEvent(el, 'sp-opened');
             el.click();
             await opened;
@@ -980,9 +985,6 @@ describe('Combobox', () => {
             expect(el.activeDescendant).to.be.undefined;
         });
         it('disabled items cannot be programmatically clicked', async () => {
-            const el = await withDisabledItemsFixture();
-            await elementUpdated(el);
-
             const opened = oneEvent(el, 'sp-opened');
             el.click();
             await opened;
