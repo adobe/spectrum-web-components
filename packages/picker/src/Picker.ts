@@ -35,7 +35,6 @@ import {
 
 import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
@@ -922,7 +921,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
  */
 export class Picker extends PickerBase {
     public static override get styles(): CSSResultArray {
-        return [pickerStyles, chevronStyles, chevronIconOverrides];
+        return [pickerStyles, chevronStyles];
     }
 
     protected override get containerStyles(): StyleInfo {

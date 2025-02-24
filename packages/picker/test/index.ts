@@ -55,6 +55,7 @@ import { M as pending } from '../stories/picker-pending.stories.js';
 import {
     Default,
     disabled,
+    dynamicIcons,
     iconsOnly,
     noVisibleLabel,
     slottedLabel,
@@ -2012,6 +2013,62 @@ export function runPickerTests(): void {
                         'Pending Choose your neighborhood Where do you live?'
                 )
             ).to.not.be.null;
+        });
+    });
+    describe('dynamic icons', function () {
+        beforeEach(async function () {
+            const test = await fixture(html`
+                <div>${dynamicIcons(dynamicIcons.args)}</div>
+            `);
+            this.el = test.querySelector('sp-picker') as Picker;
+            await elementUpdated(this.el);
+        });
+        it('displays the same icon as the selected menu item', async function () {
+            // Delay long enough for the picker to display the selected item.
+            // Chromium and Webkit require 2 frames, Firefox requires 3 frames.
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+
+            // Check that the displayed icon matches the selected item's icon.
+            const picker: Picker = this.el;
+            const displayedIconBefore =
+                picker.shadowRoot.querySelector<Icon>('#icon > sp-icon');
+            expect(displayedIconBefore).to.be.ok;
+            const displayedIconSrcBefore = displayedIconBefore?.src;
+            expect(displayedIconSrcBefore).to.be.a.string;
+            const value = picker.value;
+            expect(value).to.be.a.string;
+            const selectedItem = picker.querySelector<MenuItem>(
+                `sp-menu-item[value="${value}"]`
+            );
+            expect(selectedItem).to.be.ok;
+            const selectedItemIcon = selectedItem?.querySelector('sp-icon');
+            expect(selectedItemIcon).to.be.ok;
+            const selectedItemIconSrcBefore = selectedItemIcon?.src;
+            expect(selectedItemIconSrcBefore).to.be.a.string;
+            expect(displayedIconSrcBefore).to.equal(selectedItemIconSrcBefore);
+
+            // Change the icon src of the selected item.
+            const newSrc = 'assets/new-icon.svg';
+            if (selectedItemIcon) {
+                selectedItemIcon.setAttribute('src', newSrc);
+            }
+            const selectedItemIconSrcAfter = selectedItemIcon?.src;
+            expect(selectedItemIconSrcAfter).to.equal(newSrc);
+
+            // Give the picker a chance to update. Chromium, Firefox, and Webkit require 3 frames.
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+
+            // Check that the displayed icon matches the selected item's icon.
+            const displayedIconAfter =
+                picker.shadowRoot.querySelector<Icon>('#icon > sp-icon');
+            expect(displayedIconAfter).to.be.ok;
+            const displayedIconSrcAfter = displayedIconAfter?.src;
+            expect(displayedIconSrcAfter).to.be.a.string;
+            expect(displayedIconSrcAfter).to.equal(newSrc);
         });
     });
 }

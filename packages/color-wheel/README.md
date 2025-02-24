@@ -37,7 +37,7 @@ The current color formats supported are as follows:
 -   Strings (eg "red", "blue")
 
 **Please note for the following formats: HSV, HSVA, HSL, HSLA**
-When using the HSL or HSV formats, and a color's value (in HSV) is set to 0, or its luminosity (in HSL) is set to 0 or 1, the hue and saturation values may not be preserved by the element's `color` property. This is detailed in the [TinyColor documentation](https://www.npmjs.com/package/@ctrl/tinycolor). Seperately, the element's `value` property is directly managed by the hue as represented in the interface.
+When using the HSL or HSV formats, and a color's value (in HSV) is set to 0, or its luminosity (in HSL) is set to 0 or 1, the hue and saturation values may not be preserved by the element's `color` property. This is detailed in the [colorjs documentation](https://colorjs.io/docs/). Seperately, the element's `value` property is directly managed by the hue as represented in the interface.
 
 ## Example
 

@@ -40,12 +40,12 @@ import type { Tooltip } from '@spectrum-web-components/tooltip';
 
 import styles from './combobox.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 
 export type ComboboxOption = {
     value: string;
     itemText: string;
+    disabled?: boolean;
 };
 
 /**
@@ -55,7 +55,7 @@ export type ComboboxOption = {
  */
 export class Combobox extends Textfield {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, styles, chevronStyles, chevronIconOverrides];
+        return [...super.styles, styles, chevronStyles];
     }
 
     /**
@@ -110,7 +110,7 @@ export class Combobox extends Textfield {
      * An array of options to present in the Menu provided while typing into the input
      */
     @property({ type: Array })
-    public options?: ComboboxOption[];
+    public options?: (ComboboxOption | MenuItem)[];
 
     /**
      * The array of the children of the combobox, ie ComboboxItems.
@@ -215,22 +215,48 @@ export class Combobox extends Textfield {
         const activeIndex = !this.activeDescendant
             ? -1
             : this.availableOptions.indexOf(this.activeDescendant);
-        const nextActiveIndex =
-            (this.availableOptions.length + activeIndex + 1) %
-            this.availableOptions.length;
-        this.activeDescendant = this.availableOptions[nextActiveIndex];
-        this.optionEls.forEach(el=> el.setAttribute('aria-selected', el.value === this.activeDescendant?.value ? 'true' : 'false'));
+        let nextActiveIndex = activeIndex;
+        do {
+            nextActiveIndex =
+                (this.availableOptions.length + nextActiveIndex + 1) %
+                this.availableOptions.length;
+            // Break if we've checked all options to avoid infinite loop
+            if (nextActiveIndex === activeIndex) break;
+        } while (this.availableOptions[nextActiveIndex].disabled);
+
+        if (!this.availableOptions[nextActiveIndex].disabled) {
+            this.activeDescendant = this.availableOptions[nextActiveIndex];
+        }
+        this.optionEls.forEach((el) =>
+            el.setAttribute(
+                'aria-selected',
+                el.value === this.activeDescendant?.value ? 'true' : 'false'
+            )
+        );
     }
 
     public activatePreviousDescendant(): void {
         const activeIndex = !this.activeDescendant
             ? 0
             : this.availableOptions.indexOf(this.activeDescendant);
-        const previousActiveIndex =
-            (this.availableOptions.length + activeIndex - 1) %
-            this.availableOptions.length;
-        this.activeDescendant = this.availableOptions[previousActiveIndex];
-        this.optionEls.forEach(el=> el.setAttribute('aria-selected', el.value === this.activeDescendant?.value ? 'true' : 'false'));
+        let previousActiveIndex = activeIndex;
+        do {
+            previousActiveIndex =
+                (this.availableOptions.length + previousActiveIndex - 1) %
+                this.availableOptions.length;
+            // Break if we've checked all options to avoid infinite loop
+            if (previousActiveIndex === activeIndex) break;
+        } while (this.availableOptions[previousActiveIndex].disabled);
+
+        if (!this.availableOptions[previousActiveIndex].disabled) {
+            this.activeDescendant = this.availableOptions[previousActiveIndex];
+        }
+        this.optionEls.forEach((el) =>
+            el.setAttribute(
+                'aria-selected',
+                el.value === this.activeDescendant?.value ? 'true' : 'false'
+            )
+        );
     }
 
     public selectDescendant(): void {
@@ -505,6 +531,7 @@ export class Combobox extends Textfield {
                                               .value=${option.value}
                                               .selected=${option.value ===
                                               this.itemValue}
+                                              ?disabled=${option.disabled}
                                           >
                                               ${option.itemText}
                                           </sp-menu-item>
@@ -588,6 +615,11 @@ export class Combobox extends Textfield {
             }
         }
         if (changed.has('options') || changed.has('optionEls')) {
+            // if all options are disabled, set combobox to disabled
+            if (this.options?.every((option) => option.disabled)) {
+                this.disabled = true;
+            }
+
             this.availableOptions = this.options || this.optionEls;
         }
     }

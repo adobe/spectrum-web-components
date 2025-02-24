@@ -64,6 +64,24 @@ export const longComboboxFixture = async (): Promise<TestableCombobox> => {
 
     return el;
 };
+export const withDisabledItemsFixture = async (): Promise<TestableCombobox> => {
+    const countriesWithDisabledItems = countries.map((country) => ({
+        ...country,
+        disabled: ['Albania', 'Azerbaijan', 'Solomon Islands'].includes(
+            country.itemText
+        ),
+    }));
+    const el = await fixture<TestableCombobox>(html`
+        <sp-combobox
+            .autocomplete=${'list'}
+            label="Combobox"
+            .options=${countriesWithDisabledItems}
+        >
+            Combobox
+        </sp-combobox>
+    `);
+    return el;
+};
 
 export const testActiveElement = (
     el: TestableCombobox,
@@ -73,5 +91,8 @@ export const testActiveElement = (
     const activeElement = el.shadowRoot.querySelector(
         `#${el.activeDescendant.value}`
     ) as HTMLElement;
-    expect(activeElement.getAttribute('aria-selected'), 'aria-selected').to.equal('true');
+    expect(
+        activeElement.getAttribute('aria-selected'),
+        'aria-selected'
+    ).to.equal('true');
 };

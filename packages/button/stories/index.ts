@@ -98,8 +98,6 @@ export const makeOverBackground =
         return html`
             <div
                 style="
-                    --mod-actionbutton-static-content-color: ${color};
-                    --mod-button-static-content-color: ${color};
                     background-color: ${color};
                     padding: calc(var(--swc-scale-factor) * 14px) calc(var(--swc-scale-factor) * 20px);
                     display: inline-block;
