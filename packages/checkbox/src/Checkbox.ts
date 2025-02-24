@@ -31,9 +31,7 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-dash100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
 import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
-import checkmarkSmallOverrides from '@spectrum-web-components/icon/src/icon-checkmark-overrides.css.js';
 import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
-import dashSmallOverrides from '@spectrum-web-components/icon/src/icon-dash-overrides.css.js';
 
 const checkmarkIcon = {
     s: () => {
@@ -146,13 +144,7 @@ export class Checkbox extends SizedMixin(CheckboxMixin(SpectrumElement), {
     }
 
     public static override get styles(): CSSResultArray {
-        return [
-            checkboxStyles,
-            checkmarkSmallStyles,
-            dashSmallStyles,
-            checkmarkSmallOverrides,
-            dashSmallOverrides,
-        ];
+        return [checkboxStyles, checkmarkSmallStyles, dashSmallStyles];
     }
 
     public override click(): void {
