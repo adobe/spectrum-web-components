@@ -34,6 +34,7 @@ import { isWebKit } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import { Tooltip } from '@spectrum-web-components/tooltip';
+import { Icon } from '@spectrum-web-components-icon';
 import {
     a11ySnapshot,
     findAccessibilityNode,
