@@ -4,7 +4,7 @@
 }
 
 .wrapper {
-    width: max-content;
+    width: var(--demo-container-width, max-content);
     margin: 0 auto;
     max-width: 580px;
 }

@@ -94,6 +94,36 @@ describe('Breadcrumbs', () => {
         expect(menuitems.length).to.equal(4);
         expect(menu.getAttribute('value')).to.equal('3');
     });
+    it('should respect max-visible-items when adding items dynamically', async () => {
+        const el = await fixture<Breadcrumbs>(html`
+            <sp-breadcrumbs max-visible-items=${3}>
+                ${getBreadcrumbs(4)}
+            </sp-breadcrumbs>
+        `);
+
+        // let's verify that we have 3 breadcrumbs visible and 1 hidden
+        const breadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
+        expect(breadcrumbs.length).to.equal(4);
+        expect(breadcrumbs[0]).not.to.be.displayed;
+        expect(breadcrumbs[1]).to.be.displayed;
+        expect(breadcrumbs[2]).to.be.displayed;
+        expect(breadcrumbs[3]).to.be.displayed;
+
+        // let's add one more item to the breadcrumbs directly
+        const newItem = document.createElement('sp-breadcrumb-item');
+        newItem.textContent = 'New item';
+        el.appendChild(newItem);
+        await elementUpdated(el);
+
+        // let's verify that we have 3 breadcrumbs visible and 2 hidden
+        const newBreadcrumbs = el.querySelectorAll('sp-breadcrumb-item');
+        expect(newBreadcrumbs.length).to.equal(5);
+        expect(newBreadcrumbs[0]).not.to.be.displayed;
+        expect(newBreadcrumbs[1]).not.to.be.displayed;
+        expect(newBreadcrumbs[2]).to.be.displayed;
+        expect(newBreadcrumbs[3]).to.be.displayed;
+        expect(newBreadcrumbs[4]).to.be.displayed;
+    });
     it('should always show the first breadcrumb if slot="root" is populated', async () => {
         const el = await fixture<Breadcrumbs>(html`
             <sp-breadcrumbs max-visible-items=${3}>
