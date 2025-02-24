@@ -7357,16 +7357,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/actionbutton@npm:7.0.0-s2-foundations.22":
-  version: 7.0.0-s2-foundations.22
-  resolution: "@spectrum-css/actionbutton@npm:7.0.0-s2-foundations.22"
+"@spectrum-css/actionbutton@npm:7.1.1":
+  version: 7.1.1
+  resolution: "@spectrum-css/actionbutton@npm:7.1.1"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/4d15e3eea33b987dde8143b49f01282324575b6cd5f738c359325e8d3ecf493d272764ea2c61ecd4ae329594f585cb1b454bc445e9102c403ae7c158304c24a8
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/6c18473545d391e8531d9ed873e02f20f46f0e2501bab791449921e1cd8dd7ed10555cd26e47c0c4a384bc7c0a626edc7bf1986eb2617c045d49b83e8dc80512
   languageName: node
   linkType: hard
 
@@ -8251,7 +8253,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-button@workspace:packages/action-button"
   dependencies:
-    "@spectrum-css/actionbutton": "npm:7.0.0-s2-foundations.22"
+    "@spectrum-css/actionbutton": "npm:7.1.1"
     "@spectrum-web-components/base": "npm:1.1.2"
     "@spectrum-web-components/button": "npm:1.1.2"
     "@spectrum-web-components/icon": "npm:1.1.2"
@@ -8714,8 +8716,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.1.2
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=d8a9eb&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/78d45cc73ebf29f2c0246ee7a3a2146cea8bc2e9cbe2a8d8addb3091ecb684479c28376572ed27f5e7ae994845e57481b5d8518a857efcb270b79175276855d3
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=84adff&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/6f7cbdb8ba913403813d8ac59957ef9b8013d57751859d07c231fb818ec339155fd555b75455693259609ff4a7388a2e8c7dffb98431fba77c040309fc0a37ed
   languageName: node
   linkType: hard
 
