@@ -95,11 +95,7 @@ export class MenuItem extends LikeAnchor(
     ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
 ) {
     public static override get styles(): CSSResultArray {
-        return [
-            menuItemStyles,
-            checkmarkStyles,
-            chevronStyles,
-        ];
+        return [menuItemStyles, checkmarkStyles, chevronStyles];
     }
 
     abortControllerSubmenu!: AbortController;
@@ -216,6 +212,7 @@ export class MenuItem extends LikeAnchor(
                 characterData: true,
                 childList: true,
                 subtree: true,
+                attributeFilter: ['src'],
             },
             callback: (mutations) => {
                 const isSubmenu = mutations.every(
