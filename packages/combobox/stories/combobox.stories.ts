@@ -72,6 +72,57 @@ readonly.args = {
     value: 'Solomon Islands',
 };
 
+export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
+    // let's create a new array from countries and set the disabled property to true if the value is in args.disabledItems
+    const countriesWithDisabledItems = countries.map((country) => ({
+        ...country,
+        disabled: args.disabledItems?.includes(country.itemText),
+    }));
+
+    return html`
+        <sp-field-label side-aligned="start" for="combobox-disabled-items">
+            Some fruits are disabled (light DOM)
+        </sp-field-label>
+        <sp-combobox
+            id="combobox-disabled-items"
+            style="min-width: 80px;--spectrum-textfield-m-min-width:0; width:160px;"
+        >
+            ${fruits.map(
+                (fruit) => html`
+                    <sp-menu-item
+                        id=${fruit.value}
+                        value=${fruit.value}
+                        ?disabled=${args.disabledItems?.includes(fruit.value)}
+                    >
+                        ${fruit.itemText}
+                    </sp-menu-item>
+                `
+            )}
+        </sp-combobox>
+        <sp-field-label side-aligned="start" for="combobox-disabled-countries">
+            Some countries are disabled (shadow DOM)
+        </sp-field-label>
+        <sp-combobox
+            id="combobox-disabled-countries"
+            .options=${countriesWithDisabledItems}
+            .value=${args.value || ''}
+        ></sp-combobox>
+    `;
+};
+hasDisabledItems.args = {
+    disabledItems: [
+        'banana',
+        'lemon',
+        'pear',
+        'Albania',
+        'Azerbaijan',
+        'Solomon Islands',
+    ],
+};
+hasDisabledItems.swc_vrt = {
+    skip: true,
+};
+
 export const listAutocomplete = (args: StoryArgs): TemplateResult =>
     Template(args);
 listAutocomplete.args = {
