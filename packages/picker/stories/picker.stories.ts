@@ -455,6 +455,7 @@ export const iconsOnly = (args: StoryArgs): TemplateResult => {
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
+            @sp-opened=${() => setFocusOnOpen('picker-quiet')}
             style="width: 100px"
             value="3"
         >
@@ -489,6 +490,7 @@ export const dynamicIcons = (args: StoryArgs): TemplateResult => {
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
+            @sp-opened=${() => setFocusOnOpen('picker-quiet')}
             value="2"
         >
             <sp-menu-item value="1">
@@ -722,6 +724,11 @@ export const readonly = (args: StoryArgs): TemplateResult => {
     `;
 };
 
+function setFocusOnOpen(id: string): void {
+    const element = document.querySelector(`#${id}`) as HTMLElement;
+    element?.focus();
+}
+
 export const custom = (args: StoryArgs): TemplateResult => {
     const initialState = 'lb1-mo';
     return html`
@@ -731,6 +738,7 @@ export const custom = (args: StoryArgs): TemplateResult => {
         <sp-picker
             style="width: 400px;"
             @change=${handleChange(args)}
+            @sp-opened=${() => setFocusOnOpen('picker-state')}
             id="picker-state"
             label="Pick a state"
             ${spreadProps(args)}

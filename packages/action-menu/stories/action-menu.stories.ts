@@ -398,6 +398,13 @@ export const controlled = ({ align = 'start' } = {}): TemplateResult => {
     `;
 };
 
+function setFocusOnOpen(): void {
+    const actionMenu = document.querySelector(
+        'sp-action-menu#groups'
+    ) as ActionMenu;
+    actionMenu.focus();
+}
+
 export const groups = ({
     align = 'start',
     onChange,
@@ -406,9 +413,11 @@ export const groups = ({
     onChange(value: string): void;
 }): TemplateResult => html`
     <sp-action-menu
+        id="groups"
         @change=${({ target: { value } }: Event & { target: ActionMenu }) =>
             onChange(value)}
         open
+        @sp-opened=${setFocusOnOpen}
         style=${ifDefined(align === 'end' ? 'float: inline-end;' : undefined)}
     >
         <sp-menu-group id="cms">
