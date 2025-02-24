@@ -38,7 +38,7 @@ type Combinations<T extends string, U extends string = T> = T extends string
     ? T | `${T} ${Combinations<Exclude<U, T>>}`
     : never;
 
-export type TriggerInteractionsType = Combinations<OverlayContentTypes>;
+export type TriggeredByType = Combinations<OverlayContentTypes>;
 
 /**
  * @element overlay-trigger
@@ -78,8 +78,8 @@ export class OverlayTrigger extends SpectrumElement {
      * By only returning overlay wrappers for explicitly declared content types,
      * we minimize unecessary DOM nodes, operations and ensure a more stable rendering behavior.
      */
-    @property({ attribute: 'trigger-interactions' })
-    triggerInteractions?: TriggerInteractionsType;
+    @property({ attribute: 'triggered-by' })
+    triggeredBy?: TriggeredByType;
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
@@ -233,7 +233,7 @@ export class OverlayTrigger extends SpectrumElement {
         `;
 
         // If click interactions are explicitly enabled by customers, always return the overlay
-        if (this.triggerInteractions?.includes('click')) {
+        if (this.triggeredBy?.includes('click')) {
             return clickOverlay;
         }
 
@@ -266,7 +266,7 @@ export class OverlayTrigger extends SpectrumElement {
         `;
 
         // If hover interactions are explicitly enabled by customers, always return the overlay
-        if (this.triggerInteractions?.includes('hover')) {
+        if (this.triggeredBy?.includes('hover')) {
             return hoverOverlay;
         }
 
@@ -299,7 +299,7 @@ export class OverlayTrigger extends SpectrumElement {
         `;
 
         // If click interactions are explicitly enabled by customers, always return the overlay
-        if (this.triggerInteractions?.includes('longpress')) {
+        if (this.triggeredBy?.includes('longpress')) {
             return longpressOverlay;
         }
 
@@ -329,10 +329,10 @@ export class OverlayTrigger extends SpectrumElement {
     protected override updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
 
-        if (window.__swc?.DEBUG && !this.triggerInteractions) {
+        if (window.__swc?.DEBUG && !this.triggeredBy) {
             const issues = [
-                'You have not specified the `triggerInteractions` property. For optimal performance, consider explicitly declaring which overlay types you plan to use.',
-                'Example: trigger-interactions="click hover"',
+                'You have not specified the `triggeredBy` property. For optimal performance, consider explicitly declaring which overlay types you plan to use.',
+                'Example: triggered-by="click hover"',
                 'This helps avoid unnecessary DOM operations and potential race conditions.',
             ];
 

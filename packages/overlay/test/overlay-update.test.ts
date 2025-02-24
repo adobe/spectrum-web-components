@@ -27,7 +27,7 @@ describe('sp-update-overlays event', () => {
             '[label="Other things"]'
         ) as AccordionItem;
 
-        el.triggerInteractions = 'click';
+        el.triggeredBy = 'click';
         await elementUpdated(item);
 
         const opened = oneEvent(el, 'sp-opened');

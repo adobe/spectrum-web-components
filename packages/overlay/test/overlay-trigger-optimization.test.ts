@@ -37,43 +37,39 @@ describe('Overlay Trigger - Trigger Interactions', () => {
         `);
 
         // Test single interaction types
-        el.triggerInteractions = 'click';
+        el.triggeredBy = 'click';
         await elementUpdated(el);
-        expect(el.triggerInteractions).to.deep.equal(['click']);
+        expect(el.triggeredBy).to.equal('click');
 
-        el.triggerInteractions = 'hover';
+        el.triggeredBy = 'hover';
         await elementUpdated(el);
-        expect(el.triggerInteractions).to.deep.equal(['hover']);
+        expect(el.triggeredBy).to.equal('hover');
 
-        el.triggerInteractions = 'longpress';
+        el.triggeredBy = 'longpress';
         await elementUpdated(el);
-        expect(el.triggerInteractions).to.deep.equal(['longpress']);
+        expect(el.triggeredBy).to.equal('longpress');
 
         // Test valid combinations
-        el.triggerInteractions = 'click hover';
+        el.triggeredBy = 'click hover';
         await elementUpdated(el);
-        expect(el.triggerInteractions).to.deep.equal(['click', 'hover']);
+        expect(el.triggeredBy).to.equal('click hover');
 
-        el.triggerInteractions = 'click longpress';
+        el.triggeredBy = 'click longpress';
         await elementUpdated(el);
-        expect(el.triggerInteractions).to.deep.equal(['click', 'longpress']);
+        expect(el.triggeredBy).to.equal('click longpress');
 
-        el.triggerInteractions = 'hover longpress';
+        el.triggeredBy = 'hover longpress';
         await elementUpdated(el);
-        expect(el.triggerInteractions).to.deep.equal(['hover', 'longpress']);
+        expect(el.triggeredBy).to.equal('hover longpress');
 
-        el.triggerInteractions = 'click hover longpress';
+        el.triggeredBy = 'click hover longpress';
         await elementUpdated(el);
-        expect(el.triggerInteractions).to.deep.equal([
-            'click',
-            'hover',
-            'longpress',
-        ]);
+        expect(el.triggeredBy).to.equal('click hover longpress');
     });
 
     it('optimizes rendering based on trigger interactions', async () => {
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger trigger-interactions="click">
+            <overlay-trigger triggered-by="click">
                 <sp-button slot="trigger">Test Button</sp-button>
             </overlay-trigger>
         `);
@@ -82,7 +78,7 @@ describe('Overlay Trigger - Trigger Interactions', () => {
         expect(overlays.length).to.equal(1);
         expect(overlays[0].id).to.equal('click-overlay');
 
-        el.triggerInteractions = 'click hover';
+        el.triggeredBy = 'click hover';
         await elementUpdated(el);
         await el.updateComplete;
 
@@ -91,7 +87,7 @@ describe('Overlay Trigger - Trigger Interactions', () => {
         expect(overlays[0].id).to.equal('click-overlay');
         expect(overlays[1].id).to.equal('hover-overlay');
 
-        el.triggerInteractions = 'click hover longpress';
+        el.triggeredBy = 'click hover longpress';
         await elementUpdated(el);
         await el.updateComplete;
 
@@ -104,7 +100,7 @@ describe('Overlay Trigger - Trigger Interactions', () => {
 
     it('handles backwards compatible slot assigned content', async () => {
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger trigger-interactions="click">
+            <overlay-trigger triggered-by="click">
                 <sp-button slot="trigger">Test Button</sp-button>
                 <sp-popover slot="click-content">Click Content</sp-popover>
                 <sp-tooltip slot="hover-content">Hover Content</sp-tooltip>
