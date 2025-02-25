@@ -265,8 +265,8 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                     @click=${this.handleLabelClick}
                     size=${this.size}
                 >
-                    ${this.slotHasContent ? nothing : this.label}
-                    <slot>${this.label}</slot>
+                    <span>${this.label}</span>
+                    <slot></slot>
                 </sp-field-label>
                 <sp-field-label
                     class=${classMap({
