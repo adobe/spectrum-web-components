@@ -1,3 +1,22 @@
+<div id="notice" style="border-color: var(--spectrum-notice-visual-color); margin-block-start: 24px; font-size: 14px;" class="spectrum-InLineAlert spectrum-InLineAlert--notice">
+    <div class="spectrum-InLineAlert-header">
+        <span> <code class="spectrum-Code" style="font-size: 17px;">triggered-by</code> performance optimization</span>
+        <sp-icon-alert
+            class="spectrum-InLineAlert-icon"
+            dir="ltr"
+            aria-hidden="true"
+            style="color: var(--spectrum-notice-visual-color);"
+        ></sp-icon-alert>
+    </div>
+    <div class="spectrum-InLineAlert-content">
+        Use the new <code class="spectrum-Code"  style="font-size: 17px;">triggered-by</code> attribute to declare which types of overlays
+        your implementation will use. This improves performance by avoiding
+        unnecessary DOM operations and preventing race conditions during
+        rendering. For more information, read the <a href="#performance-optimization">Performance
+        optimization</a> section.
+    </div>
+</div>
+
 ## Description
 
 An `<overlay-trigger>` element supports the delivery of temporary overlay content based on interaction with a persistent trigger element. An element prepared to receive accessible interactions (e.g. an `<sp-button>`, or `<button>`, etc.) is addressed to `slot="trigger"`, and the content to display (either via `click` or `hover`/`focus` interactions) is addressed to `slot="click-content"` or `slot="hover-content"`, respectively. A trigger element can be linked to the delivery of content, intended for a single interaction, or both. Content addressed to `slot="hover-content"` is made available when the mouse enters or leaves the target element. Keyboard navigation will make this content available when focus enters or leaves the target element. Be thoughtful with what content you address to `slot="hover-content"`, as the content available via "hover" will be transient and non-interactive.
