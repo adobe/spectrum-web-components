@@ -11,6 +11,8 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
+import { LitElement } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import {
     getBreadcrumbs,
@@ -22,6 +24,7 @@ import {
 import { argTypes } from './args.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
+import '@spectrum-web-components/button/sp-button.js';
 
 export default {
     title: 'Breadcrumbs',
@@ -54,6 +57,61 @@ export const Links = (args: StoryArgs): TemplateResult => {
             ${getBreadcrumbsWithLinks(4)}
         </sp-breadcrumbs>
     `;
+};
+
+class AddItemsStoryBreadcrumbs extends LitElement {
+    private _counter = 2;
+    private _items: TemplateResult[] = [];
+
+    @property({ type: Number })
+    accessor maxVisibleItems = 4;
+
+    protected override firstUpdated(): void {
+        this._items = getBreadcrumbsWithLinks(this._counter);
+        this.requestUpdate();
+    }
+
+    protected override render(): TemplateResult {
+        return html`
+            <sp-breadcrumbs
+                max-visible-items=${this.maxVisibleItems}
+                @slotchange=${() => {
+                    const breadcrumbs =
+                        this.shadowRoot?.querySelector('sp-breadcrumbs');
+                    if (breadcrumbs) {
+                        breadcrumbs.requestUpdate();
+                    }
+                }}
+            >
+                ${this._items}
+            </sp-breadcrumbs>
+            <sp-button
+                @click=${() => {
+                    this._counter++;
+                    this._items = getBreadcrumbsWithLinks(this._counter);
+                    this.requestUpdate();
+                }}
+                style="margin-top: 8px;"
+                id="add-more-items"
+            >
+                Add more items (current: ${this._counter})
+            </sp-button>
+        `;
+    }
+}
+
+customElements.define('add-items-story-breadcrumbs', AddItemsStoryBreadcrumbs);
+
+export const AddItemsDynamic = (args: StoryArgs): TemplateResult => {
+    return html`
+        <add-items-story-breadcrumbs
+            maxVisibleItems=${ifDefined(args['max-visible-items'])}
+        ></add-items-story-breadcrumbs>
+    `;
+};
+
+AddItemsDynamic.swc_vrt = {
+    skip: true,
 };
 
 export const ShowRoot = (args: StoryArgs): TemplateResult => {

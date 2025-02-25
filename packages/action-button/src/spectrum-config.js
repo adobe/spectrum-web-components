@@ -223,15 +223,15 @@ const config = {
                             [
                                 {
                                     type: 'class',
-                                    name: 'spectrum-ActionButton--staticBlack'
-                                }
+                                    name: 'spectrum-ActionButton--staticBlack',
+                                },
                             ],
                             [
                                 {
                                     type: 'class',
-                                    name: 'spectrum-ActionButton--staticWhite'
-                                }
-                            ]
+                                    name: 'spectrum-ActionButton--staticWhite',
+                                },
+                            ],
                         ],
                     },
                     replace: {
@@ -244,7 +244,7 @@ const config = {
                                     name: 'static-color',
                                     operation: {
                                         operator: 'equal',
-                                        value: 'black'
+                                        value: 'black',
                                     },
                                 },
                             ],

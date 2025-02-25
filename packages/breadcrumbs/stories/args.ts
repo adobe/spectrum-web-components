@@ -41,6 +41,8 @@ export const argTypes = {
             defaultValue: { summary: '4' },
         },
         control: 'number',
+        min: 0,
+        max: 4,
     },
     onChange: { action: 'change' },
 };
