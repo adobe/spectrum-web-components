@@ -8716,8 +8716,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.1.2
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=d8a9eb&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/78d45cc73ebf29f2c0246ee7a3a2146cea8bc2e9cbe2a8d8addb3091ecb684479c28376572ed27f5e7ae994845e57481b5d8518a857efcb270b79175276855d3
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=84adff&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/6f7cbdb8ba913403813d8ac59957ef9b8013d57751859d07c231fb818ec339155fd555b75455693259609ff4a7388a2e8c7dffb98431fba77c040309fc0a37ed
   languageName: node
   linkType: hard
 
@@ -10883,9 +10883,9 @@ __metadata:
   linkType: hard
 
 "@types/mocha@npm:^10.0.6":
-  version: 10.0.6
-  resolution: "@types/mocha@npm:10.0.6"
-  checksum: 10c0/4526c9e88388f9e1004c6d3937c5488a39908810f26b927173c58d52b43057f3895627dc06538e96706e08b88158885f869ec6311f6b58fd72bdef715f26d6c3
+  version: 10.0.10
+  resolution: "@types/mocha@npm:10.0.10"
+  checksum: 10c0/d2b8c48138cde6923493e42b38e839695eb42edd04629abe480a8f34c0e3f50dd82a55832c2e8d2b6e6f9e4deb492d7d733e600fbbdd5a0ceccbcfc6844ff9d5
   languageName: node
   linkType: hard
 
