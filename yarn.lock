@@ -7644,9 +7644,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/combobox@npm:4.0.0-s2-foundations.18":
-  version: 4.0.0-s2-foundations.18
-  resolution: "@spectrum-css/combobox@npm:4.0.0-s2-foundations.18"
+"@spectrum-css/combobox@npm:4.0.0-s2-foundations.21":
+  version: 4.0.0-s2-foundations.21
+  resolution: "@spectrum-css/combobox@npm:4.0.0-s2-foundations.21"
   peerDependencies:
     "@spectrum-css/menu": ">=7"
     "@spectrum-css/pickerbutton": ">=5"
@@ -7657,7 +7657,7 @@ __metadata:
   peerDependenciesMeta:
     "@spectrum-css/progresscircle":
       optional: true
-  checksum: 10c0/f5fd1304be11675cd88f33b210286530dba0a4267589d11194dc59a865ba22e9fb1654307c5e73120078c612fb2c194e1ddf920d5c801cd59b01dc998ffa15cf
+  checksum: 10c0/3837cf52d59a1c641d8020fca6f1592547ee68875a363439e1dd2ae150f268c388a163303d5751249c850e92886f27db4d7df83c37e7d0fe046633a4c4059426
   languageName: node
   linkType: hard
 
@@ -8611,7 +8611,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/combobox@workspace:packages/combobox"
   dependencies:
-    "@spectrum-css/combobox": "npm:4.0.0-s2-foundations.18"
+    "@spectrum-css/combobox": "npm:4.0.0-s2-foundations.21"
     "@spectrum-web-components/action-button": "npm:1.1.2"
     "@spectrum-web-components/base": "npm:1.1.2"
     "@spectrum-web-components/icon": "npm:1.1.2"
