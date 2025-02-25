@@ -1754,7 +1754,7 @@ describe('Slider', () => {
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
             expect(
-                spyCall.args.at(0).includes('default slot'),
+                (spyCall.args.at(0) as string).includes('default slot'),
                 'confirm "default slot" in message'
             ).to.be.true;
             expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
@@ -1801,7 +1801,7 @@ describe('Slider', () => {
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
             expect(
-                spyCall.args.at(0).includes('previous'),
+                (spyCall.args.at(0) as string).includes('previous'),
                 'confirm "previous" in message'
             ).to.be.true;
             expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
@@ -1848,7 +1848,7 @@ describe('Slider', () => {
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
             expect(
-                spyCall.args.at(0).includes('next'),
+                (spyCall.args.at(0) as string).includes('next'),
                 'confirm "next" in message'
             ).to.be.true;
             expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
