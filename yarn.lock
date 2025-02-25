@@ -7337,16 +7337,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/actionbar@npm:9.0.0-s2-foundations.16":
-  version: 9.0.0-s2-foundations.16
-  resolution: "@spectrum-css/actionbar@npm:9.0.0-s2-foundations.16"
+"@spectrum-css/actionbar@npm:9.0.1":
+  version: 9.0.1
+  resolution: "@spectrum-css/actionbar@npm:9.0.1"
   peerDependencies:
     "@spectrum-css/actiongroup": ">=5"
     "@spectrum-css/closebutton": ">=5"
     "@spectrum-css/fieldlabel": ">=8"
     "@spectrum-css/popover": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/1c53a53303bb207ae668f097c58213305a8a15deb05ff285e439782766bd6c8bb25f121a08e6ce4b36541d0783f66cf60845747cf11e44e1089d31703a9ae569
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/7d67de4befa8215b466bd46858b1b5b8c6c5dff8c1186a602f7f421f5ebe90844e9fc3ac27b4786494e09b9b7f902b94737f2e28dd88906d88004157655dec7a
   languageName: node
   linkType: hard
 
@@ -8244,7 +8244,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-bar@workspace:packages/action-bar"
   dependencies:
-    "@spectrum-css/actionbar": "npm:9.0.0-s2-foundations.16"
+    "@spectrum-css/actionbar": "npm:9.0.1"
     "@spectrum-web-components/action-group": "npm:1.1.2"
     "@spectrum-web-components/base": "npm:1.1.2"
     "@spectrum-web-components/button": "npm:1.1.2"
@@ -8716,8 +8716,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.1.2
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=d8a9eb&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/78d45cc73ebf29f2c0246ee7a3a2146cea8bc2e9cbe2a8d8addb3091ecb684479c28376572ed27f5e7ae994845e57481b5d8518a857efcb270b79175276855d3
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=84adff&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/6f7cbdb8ba913403813d8ac59957ef9b8013d57751859d07c231fb818ec339155fd555b75455693259609ff4a7388a2e8c7dffb98431fba77c040309fc0a37ed
   languageName: node
   linkType: hard
 
