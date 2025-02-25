@@ -594,11 +594,9 @@ describe('ColorWheel', () => {
         expect(el.color).to.equal(hsva);
     });
     it('should flip orientation with dir="rtl"', async () => {
-        const el = await fixture<ColorWheel>(
-            html`
-                <sp-color-wheel></sp-color-wheel>
-            `
-        );
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
 
         await elementUpdated(el);
 
