@@ -215,6 +215,53 @@ const config = {
                     },
                     hoist: true,
                 },
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [
+                            [
+                                {
+                                    type: 'class',
+                                    name: 'spectrum-ActionButton--staticBlack',
+                                },
+                            ],
+                            [
+                                {
+                                    type: 'class',
+                                    name: 'spectrum-ActionButton--staticWhite',
+                                },
+                            ],
+                        ],
+                    },
+                    replace: {
+                        kind: 'not',
+                        type: 'pseudo-class',
+                        selectors: [
+                            [
+                                {
+                                    type: 'attribute',
+                                    name: 'static-color',
+                                    operation: {
+                                        operator: 'equal',
+                                        value: 'black',
+                                    },
+                                },
+                            ],
+                            [
+                                {
+                                    type: 'attribute',
+                                    name: 'static-color',
+                                    operation: {
+                                        operator: 'equal',
+                                        value: 'white',
+                                    },
+                                },
+                            ],
+                        ],
+                    },
+                    hoist: true,
+                },
             ],
         },
     ],

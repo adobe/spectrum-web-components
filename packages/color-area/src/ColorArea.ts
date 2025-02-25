@@ -17,10 +17,7 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import {
-    ifDefined,
-    styleMap,
-} from '@spectrum-web-components/base/src/directives.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
@@ -29,10 +26,11 @@ import { streamingListener } from '@spectrum-web-components/base/src/streaming-l
 import { SWCResizeObserverEntry, WithSWCResizeObserver } from './types';
 import type { ColorHandle } from '@spectrum-web-components/color-handle';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
+
 import {
     ColorController,
-    ColorValue,
-} from '@spectrum-web-components/reactive-controllers/src/Color.js';
+    ColorTypes,
+} from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import {
     isAndroid,
@@ -72,18 +70,35 @@ export class ColorArea extends SpectrumElement {
 
     private languageResolver = new LanguageResolutionController(this);
 
-    private colorController = new ColorController(this, {
-        extractColorFromState: () => ({
-            h: this.hue,
-            s: this.x,
-            v: this.y,
-        }),
-        applyColorToState: ({ s, v }) => {
-            this._x = s;
-            this._y = v;
-            this.requestUpdate();
-        },
-    });
+    /**
+     * A controller for managing color interactions within the ColorArea component.
+     *
+     * The `ColorController` is instantiated with the `manageAs` option set to `hsv`
+     * because the ColorArea component is designed to manipulate the saturation (`s`)
+     * and value (`v`) components of the HSV color model along the x and y axes,
+     * respectively. In the HSV color model:
+     *
+     * - The `hue` (h) represents the color type and is typically controlled by a separate input.
+     * - The `saturation` (s) represents the intensity of the color, ranging from 0% (gray) to 100% (full color).
+     * - The `value` (v) represents the brightness of the color, ranging from 0% (black) to 100% (full brightness).
+     *
+     * In the ColorArea component:
+     *
+     * - The x-axis controls the saturation (`s`), allowing users to adjust the intensity of the color.
+     * - The y-axis controls the value (`v`), allowing users to adjust the brightness of the color.
+     *
+     * By managing the color as `hsv`, the ColorController can efficiently handle the changes in saturation and value
+     * as the user interacts with the ColorArea component.
+     *
+     * @private
+     * @type {ColorController}
+     * @memberof ColorArea
+     *
+     * @property {ColorArea} this - The instance of the ColorArea component.
+     * @property {Object} options - Configuration options for the ColorController.
+     * @property {string} options.manageAs - Specifies the color model to manage, in this case 'hsv'.
+     */
+    private colorController = new ColorController(this, { manageAs: 'hsv' });
 
     @property({ type: Number })
     public get hue(): number {
@@ -95,16 +110,16 @@ export class ColorArea extends SpectrumElement {
     }
 
     @property({ type: String })
-    public get value(): ColorValue {
-        return this.colorController.color;
+    public get value(): ColorTypes {
+        return this.colorController.colorValue;
     }
 
     @property({ type: String })
-    public get color(): ColorValue {
-        return this.colorController.color;
+    public get color(): ColorTypes {
+        return this.colorController.colorValue;
     }
 
-    public set color(color: ColorValue) {
+    public set color(color: ColorTypes) {
         this.colorController.color = color;
     }
 
@@ -113,7 +128,7 @@ export class ColorArea extends SpectrumElement {
 
     @property({ type: Number })
     public get x(): number {
-        return this._x;
+        return this.colorController.color.hsv.s / 100;
     }
 
     public set x(x: number) {
@@ -121,21 +136,22 @@ export class ColorArea extends SpectrumElement {
             return;
         }
         const oldValue = this.x;
-        this._x = x;
         if (this.inputX) {
             // Use the native `input[type='range']` control to validate this value after `firstUpdate`
             this.inputX.value = x.toString();
-            this._x = this.inputX.valueAsNumber;
+            this.colorController.color.set(
+                's',
+                this.inputX.valueAsNumber * 100
+            );
+        } else {
+            this.colorController.color.set('s', x * 100);
         }
         this.requestUpdate('x', oldValue);
-        this.colorController.applyColorFromState();
     }
-
-    private _x = 1;
 
     @property({ type: Number })
     public get y(): number {
-        return this._y;
+        return this.colorController.color.hsv.v / 100;
     }
 
     public set y(y: number) {
@@ -143,17 +159,16 @@ export class ColorArea extends SpectrumElement {
             return;
         }
         const oldValue = this.y;
-        this._y = y;
         if (this.inputY) {
             // Use the native `input[type='range']` control to validate this value after `firstUpdate`
             this.inputY.value = y.toString();
-            this._y = this.inputY.valueAsNumber;
+            this.colorController.color.set(
+                'v',
+                this.inputY.valueAsNumber * 100
+            );
         }
         this.requestUpdate('y', oldValue);
-        this.colorController.applyColorFromState();
     }
-
-    private _y = 1;
 
     @property({ type: Number })
     public step = 0.01;
@@ -201,6 +216,7 @@ export class ColorArea extends SpectrumElement {
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
         this.focused = true;
+
         this.altered = [event.shiftKey, event.ctrlKey, event.altKey].filter(
             (key) => !!key
         ).length;
@@ -262,7 +278,6 @@ export class ColorArea extends SpectrumElement {
         this.y = Math.min(1, Math.max(this.y + deltaY, 0));
 
         this.colorController.savePreviousColor();
-        this.colorController.applyColorFromState();
 
         if (deltaX != 0 || deltaY != 0) {
             this._valueChanged = true;
@@ -295,7 +310,6 @@ export class ColorArea extends SpectrumElement {
         const { valueAsNumber, name } = event.target;
 
         this[name as 'x' | 'y'] = valueAsNumber;
-        this.colorController.applyColorFromState();
     }
 
     private handleChange(event: Event & { target: HTMLInputElement }): void {
@@ -332,8 +346,8 @@ export class ColorArea extends SpectrumElement {
         this._valueChanged = false;
 
         this.x = x;
-        this.y = 1 - y;
-        this.colorController.applyColorFromState();
+        this.y = y;
+
         this.dispatchEvent(
             new Event('input', {
                 bubbles: true,
@@ -390,7 +404,7 @@ export class ColorArea extends SpectrumElement {
             Math.min(1, (offsetY - minOffsetY) / height)
         );
 
-        return [this.isLTR ? percentX : 1 - percentX, percentY];
+        return [this.isLTR ? percentX : 1 - percentX, 1 - percentY];
     }
 
     private handleAreaPointerdown(event: PointerEvent): void {
@@ -438,7 +452,7 @@ export class ColorArea extends SpectrumElement {
             <div
                 @pointerdown=${this.handleAreaPointerdown}
                 class="gradient"
-                style=${styleMap(style)}
+                style="background: ${style.background};"
             >
                 <slot name="gradient"></slot>
             </div>
@@ -534,13 +548,31 @@ export class ColorArea extends SpectrumElement {
         this.addEventListener('keydown', this.handleKeydown);
     }
 
+    /**
+     * Overrides the `updated` method to handle changes in property values.
+     *
+     * @param changed - A map of changed properties with their previous values.
+     *
+     * This method performs the following actions:
+     * - Updates the saturation (`s`) of the color if `x` has changed.
+     * - Updates the value (`v`) of the color if `y` has changed.
+     * - If the `focused` property has changed and is now true, it lazily binds
+     *   the `input[type="range"]` elements in shadow roots to prevent multiple
+     *   tab stops within the Color Area for certain browser settings (e.g., Webkit).
+     */
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
         if (this.x !== this.inputX.valueAsNumber) {
-            this._x = this.inputX.valueAsNumber;
+            this.colorController.color.set(
+                's',
+                this.inputX.valueAsNumber * 100
+            );
         }
         if (this.y !== this.inputY.valueAsNumber) {
-            this._y = this.inputY.valueAsNumber;
+            this.colorController.color.set(
+                'v',
+                (1 - this.inputY.valueAsNumber) * 100
+            );
         }
         if (changed.has('focused') && this.focused) {
             // Lazily bind the `input[type="range"]` elements in shadow roots

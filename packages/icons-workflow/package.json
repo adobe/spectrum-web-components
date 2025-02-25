@@ -45,11 +45,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.1.2",
-        "@spectrum-web-components/icon": "^1.1.2"
+        "@spectrum-web-components/base": "1.1.2",
+        "@spectrum-web-components/icon": "1.1.2"
     },
     "devDependencies": {
-        "@adobe/spectrum-css-workflow-icons": "1.5.4",
+        "@adobe/spectrum-css-workflow-icons": "1.7.0",
         "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@^4.0.0",
         "@spectrum-css/icon": "8.0.0-s2-foundations.16",
         "case": "^1.6.1",
