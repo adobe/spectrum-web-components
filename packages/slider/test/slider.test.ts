@@ -1378,100 +1378,6 @@ describe('Slider', () => {
         await elementUpdated(el);
         expect(el.values).to.deep.equal({ a: 10, b: 10, c: 10 });
     });
-    it('warns in Dev Mode when `min="previous"` is leveraged on first handle', async () => {
-        const consoleWarnStub = stub(console, 'warn');
-        window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
-        const el = await fixture<Slider>(html`
-            <sp-slider min="0" max="100">
-                <sp-slider-handle
-                    id="first-handle"
-                    min="previous"
-                    max="next"
-                    slot="handle"
-                    name="a"
-                    value="10"
-                ></sp-slider-handle>
-                <sp-slider-handle
-                    id="middle-handle"
-                    min="previous"
-                    max="next"
-                    slot="handle"
-                    name="b"
-                    value="20"
-                ></sp-slider-handle>
-                <sp-slider-handle
-                    id="last-handle"
-                    min="previous"
-                    slot="handle"
-                    name="c"
-                    value="30"
-                ></sp-slider-handle>
-            </sp-slider>
-        `);
-
-        await elementUpdated(el);
-
-        expect(consoleWarnStub.called).to.be.true;
-        const spyCall = consoleWarnStub.getCall(0);
-        expect(
-            spyCall.args.at(0).includes('previous'),
-            'confirm "previous" in message'
-        ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-            data: {
-                localName: 'sp-slider',
-                type: 'api',
-                level: 'default',
-            },
-        });
-        consoleWarnStub.restore();
-    });
-    it('warns in Dev Mode when `max="next"` is leveraged on last handle', async () => {
-        const consoleWarnStub = stub(console, 'warn');
-        window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
-        const el = await fixture<Slider>(html`
-            <sp-slider min="0" max="100">
-                <sp-slider-handle
-                    id="first-handle"
-                    max="next"
-                    slot="handle"
-                    name="a"
-                    value="10"
-                ></sp-slider-handle>
-                <sp-slider-handle
-                    id="middle-handle"
-                    min="previous"
-                    max="next"
-                    slot="handle"
-                    name="b"
-                    value="20"
-                ></sp-slider-handle>
-                <sp-slider-handle
-                    id="last-handle"
-                    min="previous"
-                    max="next"
-                    slot="handle"
-                    name="c"
-                    value="30"
-                ></sp-slider-handle>
-            </sp-slider>
-        `);
-
-        await elementUpdated(el);
-
-        expect(consoleWarnStub.called).to.be.true;
-        const spyCall = consoleWarnStub.getCall(0);
-        expect(spyCall.args.at(0).includes('next'), 'confirm "next" in message')
-            .to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-            data: {
-                localName: 'sp-slider',
-                type: 'api',
-                level: 'default',
-            },
-        });
-        consoleWarnStub.restore();
-    });
     it('builds both handles from a <template>', async () => {
         const template = document.createElement('template');
         template.innerHTML = `
@@ -1819,5 +1725,139 @@ describe('Slider', () => {
 
         // now the overlay should be closed
         expect(overlay.open).to.be.false;
+    });
+
+    describe('dev mode', () => {
+        let consoleWarnStub!: ReturnType<typeof stub>;
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
+        });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+            window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
+        });
+        after(() => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+        });
+
+        it('warns in Dev Mode when using the default slot for text labels', async () => {
+            const el = await fixture<Slider>(html`
+                <sp-slider min="0" max="100" value="50">
+                    This is a deprecated text label
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('default slot'),
+                'confirm "default slot" in message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-slider',
+                    level: 'deprecation',
+                    type: 'api',
+                },
+            });
+        });
+
+        it('warns in Dev Mode when `min="previous"` is leveraged on first handle', async () => {
+            window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
+            const el = await fixture<Slider>(html`
+                <sp-slider min="0" max="100">
+                    <sp-slider-handle
+                        id="first-handle"
+                        min="previous"
+                        max="next"
+                        slot="handle"
+                        name="a"
+                        value="10"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="middle-handle"
+                        min="previous"
+                        max="next"
+                        slot="handle"
+                        name="b"
+                        value="20"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="last-handle"
+                        min="previous"
+                        slot="handle"
+                        name="c"
+                        value="30"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('previous'),
+                'confirm "previous" in message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-slider',
+                    type: 'api',
+                    level: 'default',
+                },
+            });
+        });
+
+        it('warns in Dev Mode when `max="next"` is leveraged on last handle', async () => {
+            window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
+            const el = await fixture<Slider>(html`
+                <sp-slider min="0" max="100">
+                    <sp-slider-handle
+                        id="first-handle"
+                        max="next"
+                        slot="handle"
+                        name="a"
+                        value="10"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="middle-handle"
+                        min="previous"
+                        max="next"
+                        slot="handle"
+                        name="b"
+                        value="20"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="last-handle"
+                        min="previous"
+                        max="next"
+                        slot="handle"
+                        name="c"
+                        value="30"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('next'),
+                'confirm "next" in message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-slider',
+                    type: 'api',
+                    level: 'default',
+                },
+            });
+        });
     });
 });

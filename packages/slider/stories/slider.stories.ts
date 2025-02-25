@@ -21,6 +21,7 @@ import {
     variants,
 } from '@spectrum-web-components/slider';
 import { spreadProps } from '../../../test/lit-helpers.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
 
 export default {
     component: 'sp-slider',
@@ -1256,4 +1257,76 @@ export const focusTabDemo = (args: StoryArgs = {}): TemplateResult => {
             ></sp-slider>
         </div>
     `;
+};
+
+export const WithPopover = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                id="slider-with-popover"
+                label="Slider without Popover"
+                variant="filled"
+                max="100"
+                min="0"
+                step="5"
+                value="50"
+                editable
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                ...=${spreadProps(args)}
+            ></sp-slider>
+            <overlay-trigger placement="top">
+                <sp-slider
+                    slot="trigger"
+                    id="slider-with-popover"
+                    label="Label in attribute"
+                    variant="filled"
+                    max="100"
+                    min="0"
+                    step="5"
+                    value="50"
+                    editable
+                    @input=${handleEvent(args)}
+                    @change=${handleEvent(args)}
+                    ...=${spreadProps(args)}
+                ></sp-slider>
+                <sp-popover slot="hover-content" tip>
+                    Hover content for the slider
+                </sp-popover>
+            </overlay-trigger>
+
+            <overlay-trigger placement="top">
+                <sp-slider
+                    slot="trigger"
+                    id="slider-with-popover"
+                    variant="filled"
+                    max="100"
+                    min="0"
+                    step="5"
+                    value="50"
+                    editable
+                    @input=${handleEvent(args)}
+                    @change=${handleEvent(args)}
+                    ...=${spreadProps(args)}
+                >
+                    Label in slot
+                </sp-slider>
+                <sp-popover slot="hover-content" tip>
+                    Hover content for the slider
+                </sp-popover>
+            </overlay-trigger>
+        </div>
+    `;
+};
+
+WithPopover.args = {
+    variant: 'filled',
+};
+
+WithPopover.parameters = {
+    docs: {
+        description: {
+            story: 'A slider with a popover that appears on hover.',
+        },
+    },
 };
