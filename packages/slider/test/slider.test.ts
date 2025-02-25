@@ -1820,4 +1820,34 @@ describe('Slider', () => {
         // now the overlay should be closed
         expect(overlay.open).to.be.false;
     });
+
+    it('warns in Dev Mode when using the default slot for text labels', async () => {
+        const consoleWarnStub = stub(console, 'warn');
+        window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
+        const el = await fixture<Slider>(html`
+            <sp-slider min="0" max="100" value="50">
+                This is a deprecated text label
+            </sp-slider>
+        `);
+
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        const spyCall = consoleWarnStub.getCall(0);
+        expect(
+            spyCall.args.at(0).includes('default slot'),
+            'confirm "default slot" in message'
+        ).to.be.true;
+        expect(
+            spyCall.args.at(0).includes('deprecated'),
+            'confirm "deprecated" in message'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-slider',
+                level: 'deprecation',
+            },
+        });
+        consoleWarnStub.restore();
+    });
 });
