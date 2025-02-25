@@ -416,7 +416,7 @@ export const groups = ({
         @change=${({ target: { value } }: Event & { target: ActionMenu }) =>
             onChange(value)}
         open
-        @sp-opened=${() => setFocusOnOpen('#groups')}
+        @sp-opened.once=${() => setFocusOnOpen('#groups')}
         style=${ifDefined(align === 'end' ? 'float: inline-end;' : undefined)}
     >
         <sp-menu-group id="cms">

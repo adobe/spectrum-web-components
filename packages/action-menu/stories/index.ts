@@ -57,7 +57,7 @@ export const ActionMenuMarkup = ({
                 changeHandler(event.target.value);
                 onChange(event.target.value);
             }}
-            @sp-opened=${(event: Event & { target: ActionMenu }) => {
+            @sp-opened.once=${(event: Event & { target: ActionMenu }) => {
                 onSpOpened(event.target.value);
             }}
             .selects=${selects ? selects : undefined}

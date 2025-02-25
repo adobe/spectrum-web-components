@@ -396,7 +396,7 @@ export const iconsNone = (args: StoryArgs): TemplateResult => {
             ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
-            @sp-opened=${() => setFocusOnOpen('picker-quiet')}
+            @sp-opened.once=${() => setFocusOnOpen('picker-quiet')}
             label="Pick an action"
             value="1"
             icons="none"
@@ -461,7 +461,7 @@ export const iconsOnly = (args: StoryArgs): TemplateResult => {
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
-            @sp-opened=${() => setFocusOnOpen('picker-quiet')}
+            @sp-opened.once=${() => setFocusOnOpen('picker-quiet')}
             style="width: 100px"
             value="3"
         >
@@ -496,7 +496,7 @@ export const dynamicIcons = (args: StoryArgs): TemplateResult => {
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
-            @sp-opened=${() => setFocusOnOpen('picker-quiet')}
+            @sp-opened.once=${() => setFocusOnOpen('picker-quiet')}
             value="2"
         >
             <sp-menu-item value="1">
@@ -562,7 +562,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
                 label="Open picker"
                 ${spreadProps(args)}
                 @change=${handleChange(args)}
-                @sp-opened=${() => setFocusOnOpen('picker-open')}
+                @sp-opened.once=${() => setFocusOnOpen('picker-open')}
             >
                 <span slot="label">
                     Select a Country with a very long label, too long, in fact
@@ -740,7 +740,7 @@ export const custom = (args: StoryArgs): TemplateResult => {
         <sp-picker
             style="width: 400px;"
             @change=${handleChange(args)}
-            @sp-opened=${() => setFocusOnOpen('picker-state')}
+            @sp-opened.once=${() => setFocusOnOpen('picker-state')}
             id="picker-state"
             label="Pick a state"
             ${spreadProps(args)}
