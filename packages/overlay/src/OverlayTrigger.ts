@@ -79,7 +79,7 @@ export class OverlayTrigger extends SpectrumElement {
      * we minimize unecessary DOM nodes, operations and ensure a more stable rendering behavior.
      */
     @property({ attribute: 'triggered-by' })
-    triggeredBy?: TriggeredByType;
+    public triggeredBy?: TriggeredByType;
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
