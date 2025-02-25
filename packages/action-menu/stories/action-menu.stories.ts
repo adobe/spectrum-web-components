@@ -29,11 +29,6 @@ import { Menu } from '@spectrum-web-components/menu';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
 import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 
-function setFocusOnOpen(query: string): void {
-    const element = document.querySelector(query) as HTMLElement;
-    element?.focus();
-}
-
 export default {
     component: 'sp-action-menu',
     title: 'Action menu',
@@ -284,7 +279,6 @@ export const selects = (args: StoryArgs = {}): TemplateResult =>
     });
 selects.args = {
     open: true,
-    onSpOpened: () => setFocusOnOpen('sp-action-menu'),
 };
 selects.decorators = [isOverlayOpen];
 
@@ -416,7 +410,6 @@ export const groups = ({
         @change=${({ target: { value } }: Event & { target: ActionMenu }) =>
             onChange(value)}
         open
-        @sp-opened.once=${() => setFocusOnOpen('#groups')}
         style=${ifDefined(align === 'end' ? 'float: inline-end;' : undefined)}
     >
         <sp-menu-group id="cms">

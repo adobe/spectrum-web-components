@@ -25,7 +25,6 @@ export const ActionMenuMarkup = ({
     align = 'start',
     ariaLabel = 'More Actions',
     onChange = (() => undefined) as (value: string) => void,
-    onSpOpened = (() => undefined) as (value: string) => void,
     changeHandler = (() => undefined) as (value: string) => void,
     disabled = false,
     forcePopover = false,
@@ -56,9 +55,6 @@ export const ActionMenuMarkup = ({
             @change=${(event: Event & { target: ActionMenu }) => {
                 changeHandler(event.target.value);
                 onChange(event.target.value);
-            }}
-            @sp-opened.once=${(event: Event & { target: ActionMenu }) => {
-                onSpOpened(event.target.value);
             }}
             .selects=${selects ? selects : undefined}
             value=${selected ? 'Select Inverse' : ''}
