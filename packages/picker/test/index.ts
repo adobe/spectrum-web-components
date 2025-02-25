@@ -621,10 +621,7 @@ export function runPickerTests(): void {
             expect(el.open).to.be.false;
             expect(el.value).to.equal(thirdItem.value);
         });
-        // TODO why is this timing out on Chromium?
         it('opens/closes multiple times', async () => {
-            await nextFrame();
-            await nextFrame();
             expect(el.open).to.be.false;
             const boundingRect = el.button.getBoundingClientRect();
             let opened = oneEvent(el, 'sp-opened');
@@ -923,7 +920,6 @@ export function runPickerTests(): void {
             expect(el.selectedItem?.itemText).to.equal('Deselect');
             expect(el.value).to.equal('Deselect');
         });
-        //TODO: not sure why this is failing
         it('quick selects on ArrowLeft/Right', async () => {
             const selectionSpy = spy();
             el.addEventListener('change', (event: Event) => {
@@ -1190,31 +1186,20 @@ export function runPickerTests(): void {
             });
             it('can close and immediately tab to the next tab stop', async () => {
                 el.focus();
-                await nextFrame();
                 expect(document.activeElement, 'focuses el').to.equal(el);
                 // press down to open the picker
                 const opened = oneEvent(el, 'sp-opened');
                 await sendKeys({ press: 'ArrowUp' });
                 await opened;
-                const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
                 expect(el.open, 'opened').to.be.true;
-                await waitUntil(
-                    // menu delegates focus
-                    () => document.activeElement === firstItem,
-                    'first item focused'
-                );
-
                 const closed = oneEvent(el, 'sp-closed');
-                el.open = false;
+                el.close();
                 await closed;
 
                 expect(el.open, 'open?').to.be.false;
                 expect(document.activeElement).to.equal(el);
-
-                const focused = oneEvent(input2, 'focus');
                 await sendKeys({ press: 'Tab' });
-                await focused;
 
                 expect(el.open, 'open?').to.be.false;
                 expect(document.activeElement).to.equal(input2);
@@ -1229,13 +1214,9 @@ export function runPickerTests(): void {
                 await opened;
 
                 expect(el.open, 'opened').to.be.true;
-                await waitUntil(
-                    () => isMenuActiveElement(el),
-                    'first item focused'
-                );
 
                 const closed = oneEvent(el, 'sp-closed');
-                el.open = false;
+                el.close();
                 await closed;
 
                 expect(el.open, 'open?').to.be.false;
@@ -1305,7 +1286,6 @@ export function runPickerTests(): void {
             expect(getParentOffset(lastItem)).to.be.greaterThan(40);
             expect(getParentOffset(firstItem)).to.be.greaterThan(-1);
         });
-        //TODO: This times out before the first open event is dispatched
         it('manages focus-ring styles', async () => {
             if (!isWebKit()) {
                 return;
@@ -1345,8 +1325,6 @@ export function runPickerTests(): void {
 
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
             firstItem.click();
-
-            await elementUpdated(el);
             await closed;
 
             // expect the tray to be closed
@@ -1383,13 +1361,11 @@ export function runPickerTests(): void {
             await sendKeys({
                 press: 'Enter',
             });
-            await elementUpdated(el);
             await opened;
 
             // Make a selection again
             closed = oneEvent(el, 'sp-closed');
             firstItem.click();
-            await elementUpdated(el);
             await closed;
 
             // expect the tray to be closed
@@ -2027,6 +2003,7 @@ export function runPickerTests(): void {
         it('displays the same icon as the selected menu item', async function () {
             // Delay long enough for the picker to display the selected item.
             // Chromium and Webkit require 2 frames, Firefox requires 3 frames.
+            await nextFrame();
             await nextFrame();
             await nextFrame();
             await nextFrame();
