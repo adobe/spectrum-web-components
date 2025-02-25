@@ -8612,16 +8612,16 @@ __metadata:
   resolution: "@spectrum-web-components/combobox@workspace:packages/combobox"
   dependencies:
     "@spectrum-css/combobox": "npm:4.0.0-s2-foundations.21"
-    "@spectrum-web-components/action-button": "npm:^1.1.2"
-    "@spectrum-web-components/base": "npm:^1.1.2"
-    "@spectrum-web-components/icon": "npm:^1.1.2"
-    "@spectrum-web-components/icons-ui": "npm:^1.1.2"
-    "@spectrum-web-components/menu": "npm:^1.1.2"
-    "@spectrum-web-components/overlay": "npm:^1.1.2"
-    "@spectrum-web-components/picker-button": "npm:^1.1.2"
-    "@spectrum-web-components/popover": "npm:^1.1.2"
-    "@spectrum-web-components/progress-circle": "npm:^1.1.2"
-    "@spectrum-web-components/textfield": "npm:^1.1.2"
+    "@spectrum-web-components/action-button": "npm:1.1.2"
+    "@spectrum-web-components/base": "npm:1.1.2"
+    "@spectrum-web-components/icon": "npm:1.1.2"
+    "@spectrum-web-components/icons-ui": "npm:1.1.2"
+    "@spectrum-web-components/menu": "npm:1.1.2"
+    "@spectrum-web-components/overlay": "npm:1.1.2"
+    "@spectrum-web-components/picker-button": "npm:1.1.2"
+    "@spectrum-web-components/popover": "npm:1.1.2"
+    "@spectrum-web-components/progress-circle": "npm:1.1.2"
+    "@spectrum-web-components/textfield": "npm:1.1.2"
   languageName: unknown
   linkType: soft
 
