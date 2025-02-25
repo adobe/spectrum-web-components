@@ -309,6 +309,10 @@ export class MenuItem extends LikeAnchor(
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    public get firstSelectedItem(): MenuItem | undefined {
+        return (this.submenuElement as Menu)?.getFirstSelectedItem();
+    }
+
     private handleClickCapture(event: Event): void | boolean {
         if (this.disabled) {
             event.preventDefault();
@@ -596,12 +600,6 @@ export class MenuItem extends LikeAnchor(
             return;
         }
         if (focus) {
-            const handleSubmenuOpen = (): void => {
-                this.submenuElement?.focus();
-            };
-            this.addEventListener('sp-menu-submenu-opened', handleSubmenuOpen, {
-                once: true,
-            });
         }
         this.open = true;
         this.active = true;

@@ -367,9 +367,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         preventScroll,
     }: FocusOptions = {}): void {
         if (!this.rovingTabindexController) return;
-        const selectedItem = this.selectedItems.find((el) =>
-            this.isFocusableElement(el)
-        );
+        const selectedItem = this.getFirstSelectedItem();
         if (!selectedItem) {
             this.focus({ preventScroll });
             return;
@@ -379,6 +377,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             selectedItem.scrollIntoView({ block: 'nearest' });
         }
         this.rovingTabindexController?.focusOnItem(selectedItem);
+    }
+
+    public getFirstSelectedItem(): MenuItem | undefined {
+        return (
+            this.selectedItems.find((el) => this.isFocusableElement(el)) ||
+            this.childItems[0]
+        );
     }
 
     public override focus({ preventScroll }: FocusOptions = {}): void {
@@ -474,6 +479,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             target.overlayElement,
             target.overlayElement
         );
+        if (target.focused)
+            this.rovingTabindexController?.focusOnItem(
+                target?.firstSelectedItem
+            );
     }
 
     protected handleDescendentOverlayClosed(event: Event): void {

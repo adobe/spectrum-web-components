@@ -185,7 +185,7 @@ export class FocusGroupController<T extends HTMLElement>
         this.manage();
     }
 
-    focusOnItem(item: T, options?: FocusOptions): void {
+    focusOnItem(item?: T, options?: FocusOptions): void {
         if (
             item &&
             this.isFocusableElement(item) &&
