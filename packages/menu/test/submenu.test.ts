@@ -110,7 +110,7 @@ describe('Submenu', () => {
             this.el.parentElement.dir = testData.dir;
 
             await elementUpdated(this.el);
-            expect(this.rootItem.open).to.be.false;
+            expect(this.rootItem.open, `rootItem open before ${testData.openKey}`).to.be.false;
             const input = document.createElement('input');
             this.el.insertAdjacentElement('beforebegin', input);
             input.focus();
@@ -122,7 +122,7 @@ describe('Submenu', () => {
             });
             await elementUpdated(this.rootItem);
 
-            expect(this.rootItem.focused).to.be.true;
+            expect(this.rootItem.focused, `rootItem focused before ${testData.openKey}`).to.be.true;
 
             let opened = oneEvent(this.rootItem, 'sp-opened');
             await sendKeys({
@@ -130,14 +130,17 @@ describe('Submenu', () => {
             });
             await opened;
 
+            const rootItem = this.el.querySelector('.root') as MenuItem;
             let submenu = this.el.querySelector('[slot="submenu"]') as Menu;
             let submenuItem = this.el.querySelector(
-                '.submenu-item-2'
+                '.submenu-item-1'
             ) as MenuItem;
 
-            expect(this.rootItem.open).to.be.true;
+            expect(this.rootItem.open, `rootItem open after ${testData.openKey}`).to.be.true;
+
+            //opening a menu via keyboard should set focus on first item
             expect(
-                submenu === document.activeElement,
+                submenuItem === document.activeElement,
                 `${document.activeElement?.id}`
             ).to.be.true;
 
@@ -147,9 +150,11 @@ describe('Submenu', () => {
             });
             await closed;
 
-            expect(this.rootItem.open).to.be.false;
+            expect(this.rootItem.open, `rootItem open after ${testData.closeKey}`).to.be.false;
+
+            //closing a submenu via keyboard should set focus on its parent menuitem
             expect(
-                this.el === document.activeElement,
+                rootItem === document.activeElement,
                 `${document.activeElement?.id}`
             ).to.be.true;
 
@@ -160,9 +165,10 @@ describe('Submenu', () => {
             await opened;
 
             submenu = this.el.querySelector('[slot="submenu"]') as Menu;
-            submenuItem = this.el.querySelector('.submenu-item-2') as MenuItem;
 
             expect(this.rootItem.open).to.be.true;
+            expect(submenuItem.focused).to.be.true;
+            expect(document.activeElement === submenuItem).to.be.true;
 
             await sendKeys({
                 press: 'ArrowDown',
@@ -170,9 +176,9 @@ describe('Submenu', () => {
             await elementUpdated(submenu);
             await elementUpdated(submenuItem);
 
-            expect(submenu.getAttribute('aria-activedescendant')).to.equal(
-                submenuItem.id
-            );
+            submenuItem = this.el.querySelector('.submenu-item-2') as MenuItem;
+            expect(submenuItem.focused, `submenu focused`).to.be.true;
+            expect(document.activeElement === submenuItem, `submenu active`).to.be.true;
 
             closed = oneEvent(this.rootItem, 'sp-closed');
             await sendKeys({
@@ -552,7 +558,7 @@ describe('Submenu', () => {
             this.rootItem = this.el.querySelector('.root') as MenuItem;
             await elementUpdated(this.rootItem);
         });
-        describe.skip('selects', () => {
+        describe('selects', () => {
             selectWithPointer();
             selectsWithKeyboardData.map((testData) => {
                 selectsWithKeyboard(testData);

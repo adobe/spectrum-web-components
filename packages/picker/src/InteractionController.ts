@@ -137,7 +137,7 @@ export class InteractionController implements ReactiveController {
                 this.host.isMobile.matches && !this.host.forcePopover
                     ? undefined
                     : this.host.placement;
-            this.overlay.receivesFocus = 'true';
+            this.overlay.receivesFocus = 'false';
             this.overlay.willPreventClose =
                 this.preventNextToggle !== 'no' && this.open;
             this.overlay.addEventListener(
@@ -158,6 +158,7 @@ export class InteractionController implements ReactiveController {
         ) {
             this.preventNextToggle = 'yes';
         }
+        if (this.preventNextToggle === 'no') this.host.close();
     }
 
     public handleActivate(_event: Event): void {}
@@ -185,6 +186,15 @@ export class InteractionController implements ReactiveController {
             this.host.open !== this.overlay.open
         ) {
             this.overlay.willPreventClose = this.preventNextToggle !== 'no';
+            if (!this.open && this.host.optionsMenu.matches(':focus-within'))
+                this.host.addEventListener(
+                    'sp-closed',
+                    () => {
+                        this.preventNextToggle = 'yes';
+                        this.host.button.focus();
+                    },
+                    { once: true }
+                );
             this.overlay.open = this.host.open;
         }
     }
