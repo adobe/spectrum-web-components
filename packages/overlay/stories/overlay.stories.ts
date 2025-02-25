@@ -1555,6 +1555,24 @@ virtualElementDeclaratively.parameters = {
 
 export const triggeredByOptimization = (): TemplateResult => {
     return html`
+        <h2>"triggered-by" attribute optimization</h2>
+        <p>
+            This demo shows different ways to trigger overlays using the
+            <code>triggered-by</code>
+            attribute.
+        </p>
+        <p>
+            <strong>Pro tip:</strong>
+            Inspect the DOM to verify that only the respective overlay elements
+            are being rendered into the DOM based on the
+            <code>triggered-by</code>
+            value.
+        </p>
+        <p>
+            Unused interaction types aren't rendered. This improves performance,
+            reduces the number of unecessary DOM nodes and avoids race
+            conditions in slot reparenting.
+        </p>
         <div style="display: flex; gap: 20px; flex-direction: column;">
             <!-- Click and hover only -->
             <overlay-trigger triggered-by="click hover">
