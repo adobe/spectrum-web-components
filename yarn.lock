@@ -3759,16 +3759,16 @@ __metadata:
   linkType: hard
 
 "@geometricpanda/storybook-addon-badges@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@geometricpanda/storybook-addon-badges@npm:2.0.2"
+  version: 2.0.5
+  resolution: "@geometricpanda/storybook-addon-badges@npm:2.0.5"
   peerDependencies:
-    "@storybook/blocks": ^7.0.0
-    "@storybook/components": ^7.0.0
-    "@storybook/core-events": ^7.0.0
-    "@storybook/manager-api": ^7.0.0
-    "@storybook/preview-api": ^7.0.0
-    "@storybook/theming": ^7.0.0
-    "@storybook/types": ^7.0.0
+    "@storybook/blocks": ^8.3.0
+    "@storybook/components": ^8.3.0
+    "@storybook/core-events": ^8.3.0
+    "@storybook/manager-api": ^8.3.0
+    "@storybook/preview-api": ^8.3.0
+    "@storybook/theming": ^8.3.0
+    "@storybook/types": ^8.3.0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
   peerDependenciesMeta:
@@ -3776,7 +3776,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/83ec0c925a352fecb619ff3cb558ac9e878c9dd8fbd4c504f0d09f772ed31b7f653256a385261c74f129d82a844dfdab7b10494c0a35a20e37418695b4398bf3
+  checksum: 10c0/07b3dce482e452199b27ed4c537958f773b140bf1f2f7052d1baadb127ba134b9b285f46418cb2d384e26138228a19f154c988c6598f5f735e7f1eec61cc8b71
   languageName: node
   linkType: hard
 
@@ -8716,8 +8716,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.1.2
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=d8a9eb&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/78d45cc73ebf29f2c0246ee7a3a2146cea8bc2e9cbe2a8d8addb3091ecb684479c28376572ed27f5e7ae994845e57481b5d8518a857efcb270b79175276855d3
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=84adff&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/6f7cbdb8ba913403813d8ac59957ef9b8013d57751859d07c231fb818ec339155fd555b75455693259609ff4a7388a2e8c7dffb98431fba77c040309fc0a37ed
   languageName: node
   linkType: hard
 
