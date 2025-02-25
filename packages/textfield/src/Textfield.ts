@@ -35,7 +35,6 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
 import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
-import checkmarkSmallOverrides from '@spectrum-web-components/icon/src/icon-checkmark-overrides.css.js';
 
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
 export type TextfieldType = (typeof textfieldTypes)[number];
@@ -50,7 +49,7 @@ export class TextfieldBase extends ManageHelpText(
     })
 ) {
     public static override get styles(): CSSResultArray {
-        return [textfieldStyles, checkmarkStyles, checkmarkSmallOverrides];
+        return [textfieldStyles, checkmarkStyles];
     }
 
     @state()
