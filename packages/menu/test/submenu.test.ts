@@ -32,8 +32,7 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 import { TemplateResult } from 'lit-html';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
-
-//const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+import { isWebKit } from '@spectrum-web-components/shared';
 
 type SelectsWithKeyboardTest = {
     dir: 'ltr' | 'rtl' | 'auto';
@@ -121,8 +120,7 @@ describe('Submenu', () => {
             this.el.focus();
 
             // by default, Safari doesn't tab to some elements
-            //@todo this is timing out
-            /*if (!isSafari) {
+            if (!isWebKit) {
                 await sendKeys({
                     press: 'Shift+Tab',
                 });
@@ -133,7 +131,7 @@ describe('Submenu', () => {
                 });
 
                 expect(document.activeElement).to.equal(this.el);
-            }*/
+            }
             await sendKeys({
                 press: 'ArrowDown',
             });
@@ -220,10 +218,8 @@ describe('Submenu', () => {
         it('returns visible focus when submenu closed', async function () {
             const input = document.createElement('input');
             this.el.insertAdjacentElement('beforebegin', input);
-            input.focus();
             // by default, Safari doesn't tab to some elements
-            //@todo this is timing out on Chromium and Firefox
-            /*if (!isSafari) {
+            if (!isWebKit) {
                 await sendKeys({
                     press: 'Shift+Tab',
                 });
@@ -234,7 +230,7 @@ describe('Submenu', () => {
                 });
 
                 expect(document.activeElement).to.equal(this.el);
-            }*/
+            }
             this.el.focus();
             await sendKeys({
                 press: 'ArrowDown',
