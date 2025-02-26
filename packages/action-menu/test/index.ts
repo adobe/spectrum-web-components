@@ -97,7 +97,7 @@ const actionSubmenuFixture = async (): Promise<ActionMenu> =>
     `);
 
 export const testActionMenu = (mode: 'sync' | 'async'): void => {
-    describe.only(`Action menu: ${mode}`, () => {
+    describe(`Action menu: ${mode}`, () => {
         testForLitDevWarnings(async () => await actionMenuFixture());
         it('loads', async () => {
             const el = await actionMenuFixture();
