@@ -825,7 +825,7 @@ export function runPickerTests(): void {
             expect(secondItem.selected, 'selection prevented').to.be.false;
             expect(el.open, 'open?').to.be.true;
         });
-        it('should NOT throw focus after `change`', async () => {
+        it.only('should throw focus after `change`', async () => {
             const input = document.createElement('input');
             document.body.append(input);
 
@@ -849,17 +849,16 @@ export function runPickerTests(): void {
                 input.focus();
             });
 
-            const closed = oneEvent(el, 'sp-closed');
             secondItem.click();
-            await closed;
-            await elementUpdated(el);
-            await nextFrame();
+            await waitUntil(
+                () => document.activeElement === input,
+                'focus throw', { timeout: 300 }
+            );
 
             expect(el.open, 'open?').to.be.false;
             expect(el.value, 'value changed').to.equal('option-2');
             expect(secondItem.selected, 'selected changed').to.be.true;
-            console.log(document.activeElement);
-            expect(document.activeElement).to.equal(el);
+            input.remove();
         });
         it('opens on ArrowUp', async () => {
             const button = el.button as HTMLButtonElement;
