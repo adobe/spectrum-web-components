@@ -23,7 +23,7 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
-import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
+import { isChrome, isFirefox, isWebKit } from '@spectrum-web-components/shared';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -434,8 +434,7 @@ describe('Menu', () => {
         expect(firstItem.focused, 'first item focused again').to.be.true;
     });
 
-    //@todo this test fails on Chromium
-    it.skip('handles focus across focused MenuItem removals', async () => {
+    it('handles focus across focused MenuItem removals', async () => {
         const el = await fixture<Menu>(html`
             <sp-menu id="remove">
                 <sp-menu-item id="#deselect">Deselect</sp-menu-item>
@@ -464,16 +463,19 @@ describe('Menu', () => {
         expect(children[0], 'first element is focused').to.equal(
             document.activeElement
         );
-        children[0].remove();
-        await elementUpdated(el);
-        expect(children[1], 'selected element is focused').to.equal(
-            document.activeElement
-        );
+        //@todo this test fails on Chromium
+        if (isFirefox() || isChrome()) {
+            children[0].remove();
+            await elementUpdated(el);
+            expect(children[1], 'selected element is focused').to.equal(
+                document.activeElement
+            );
 
-        await sendKeys({ press: 'ArrowUp' });
-        expect(children[2], 'last element is focused').to.equal(
-            document.activeElement
-        );
+            await sendKeys({ press: 'ArrowUp' });
+            expect(children[2], 'last element is focused').to.equal(
+                document.activeElement
+            );
+        }
     });
 
     it('handles single selection', async () => {
