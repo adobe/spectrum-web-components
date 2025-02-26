@@ -39,7 +39,11 @@ import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import type { TestablePicker } from '../../picker/test/index.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
-import { sendKeys, setViewport } from '@web/test-runner-commands';
+import { 
+    a11ySnapshot,
+    findAccessibilityNode,
+    sendKeys, 
+    setViewport } from '@web/test-runner-commands';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { isWebKit } from '@spectrum-web-components/shared';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
@@ -93,7 +97,7 @@ const actionSubmenuFixture = async (): Promise<ActionMenu> =>
     `);
 
 export const testActionMenu = (mode: 'sync' | 'async'): void => {
-    describe(`Action menu: ${mode}`, () => {
+    describe.only(`Action menu: ${mode}`, () => {
         testForLitDevWarnings(async () => await actionMenuFixture());
         it('loads', async () => {
             const el = await actionMenuFixture();
@@ -142,6 +146,34 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await nextFrame();
 
             await expect(el).to.be.accessible();
+        });
+        it('has menuitems in accessibility tree', async() => {
+            const el = await fixture<ActionMenu>(html`
+                <sp-action-menu
+                    label="More Actions">
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                </sp-action-menu>
+            `);
+            let opened = oneEvent(el, 'sp-opened');
+            el.focus();
+            sendKeys({ press: 'Enter' });
+            await opened;
+            await nextFrame();
+
+
+            type NamedNode = { name: string, role: string, disabled: boolean };
+            const snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+                children: NamedNode[];
+            };
+            const button = findAccessibilityNode<NamedNode>(snapshot, (node) => node.name === 'More Actions');
+            const menu = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menu');
+            const deselect = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menuitem' && node.name === 'Deselect');
+            const workpath = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menuitem' && node.name === 'Make Work Path' && node.disabled);
+            expect(button, 'button').to.not.be.null;
+            expect(menu, 'menu').to.not.be.null;
+            expect(deselect, 'first menuitem').to.not.be.null;
+            expect(workpath, 'second menuitem').to.not.be.null;
         });
         it('dispatches change events, no [href]', async () => {
             const changeSpy = spy();
