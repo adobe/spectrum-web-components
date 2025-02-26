@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 @import '@spectrum-web-components/styles/tokens/global-vars.css';
 @import '@spectrum-web-components/styles/tokens/spectrum/global-vars.css';
 @import '@spectrum-web-components/styles/tokens/spectrum/custom-vars.css';
+@import '@spectrum-web-components/styles/tokens/spectrum/system-theme-bridge.css';
 @import '@spectrum-web-components/styles/src/spectrum-heading.css';
 @import '@spectrum-web-components/styles/src/heading-overrides.css';
 @import '@spectrum-web-components/styles/src/spectrum-body.css';
@@ -960,6 +961,14 @@ sp-link {
     display: flex;
     min-height: 200px;
     align-items: center;
+}
+
+/* Override flex behavior for breadcrumbs so they can properly adjust visible items */
+.demo-preview:has(sp-breadcrumbs) {
+    display: block;
+    padding: 20px;
+
+    --demo-container-width: 100%;
 }
 
 .demo-config {

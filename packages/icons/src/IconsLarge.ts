@@ -25,6 +25,18 @@ export class IconsLarge extends IconsetSVG {
         this.name = 'ui'; // default iconset name for these icons
     }
 
+    protected override firstUpdated(): void {
+        super.firstUpdated();
+        if (window.__swc.DEBUG) {
+            window.__swc.warn(
+                this,
+                'Icons package has been deprecated and will be removed from the project in an upcoming release. For default Spectrum Icons, learn more about leveraging UI Icons (https://opensource.adobe.com/spectrum-web-components/components/icons-ui/) or Workflow Icons (https://opensource.adobe.com/spectrum-web-components/components/icons-workflow/) as an alternative.',
+                'https://opensource.adobe.com/spectrum-web-components/components/icons/#deprecated',
+                { level: 'deprecation' }
+            );
+        }
+    }
+
     protected override renderDefaultContent(): TemplateResult {
         return iconsSVG;
     }

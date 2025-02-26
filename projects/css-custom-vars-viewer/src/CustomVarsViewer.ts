@@ -56,13 +56,13 @@ export class CustomVarsViewer extends SpectrumElement {
     static override styles = css`
         :host {
             display: block;
-            padding: var(--spectrum-global-dimension-size-300);
+            padding: var(--spectrum-spacing-200);
         }
         .picker-container {
-            padding-bottom: var(--spectrum-global-dimension-size-50);
+            padding-bottom: var(--spectrum-component-edge-to-visual-only-75);
         }
         sp-swatch-group {
-            padding: var(--spectrum-global-dimension-size-100);
+            padding: var(--spectrum-spacing-200);
         }
     `;
 

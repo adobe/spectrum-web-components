@@ -13,21 +13,21 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu.js';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
-import { ActionMenuMarkup } from './';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { makeOverBackground } from '../../button/stories/index.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
+import { ActionMenuMarkup } from './';
 
+import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
+import { Menu } from '@spectrum-web-components/menu';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
 import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
-import { Menu } from '@spectrum-web-components/menu';
-import type { ActionMenu } from '@spectrum-web-components/action-menu';
 
 export default {
     component: 'sp-action-menu',
@@ -160,6 +160,7 @@ export default {
         align: 'start',
         visibleLabel: 'More Actions',
         disabled: false,
+        forcePopover: false,
         open: false,
         quiet: false,
         tooltipDescription: '',
@@ -180,6 +181,7 @@ interface StoryArgs {
     staticValue?: 'white' | 'black' | undefined;
     tooltipDescription?: string | 'none';
     tooltipPlacement?: Placement;
+    forcePopover?: boolean;
 }
 
 const Template = (args: StoryArgs = {}): TemplateResult =>
@@ -204,6 +206,39 @@ quiet.args = {
     quiet: true,
 };
 
+export const forcePopoverOnMobile = (): TemplateResult => html`
+    <div style="padding: 40px">
+        <h1>Force Popover on Mobile</h1>
+        <p>
+            The forcePopover attribute overrides the mobile device functionality
+            of rendering a tray so that a popover will always render no matter
+            the device.
+        </p>
+        <ol>
+            <li>Open Chrome DevTools (or equivalent).</li>
+            <li>Toggle the Device Toolbar (the phone/tablet icon).</li>
+            <li>Select a device preset (e.g. iPhone 12).</li>
+            <li>
+                Chrome will set user-agent strings, simulate touch, and adjust
+                DPI.
+            </li>
+            <li>Reload the page</li>
+            <li>Click the Action Menu and see a popover</li>
+        </ol>
+        <sp-action-menu forcePopover>
+            <span slot="icon">
+                <sp-icon-settings></sp-icon-settings>
+            </span>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+        </sp-action-menu>
+    </div>
+`;
 export const labelOnly = ({
     align = 'start',
     changeHandler = (() => undefined) as (event: Event) => void,

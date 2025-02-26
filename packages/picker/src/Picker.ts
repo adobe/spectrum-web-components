@@ -34,7 +34,6 @@ import {
 
 import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
@@ -95,6 +94,14 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     @property({ type: Boolean, reflect: true })
     public invalid = false;
+
+    /**
+     * Forces the Picker to render as a popover on mobile instead of a tray.
+     *
+     * @memberof PickerBase
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'force-popover' })
+    public forcePopover = false;
 
     /** Whether the items are currently loading. */
     @property({ type: Boolean, reflect: true })
@@ -517,8 +524,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
     protected override update(changes: PropertyValues<this>): void {
         if (this.selects) {
-            // Always force `selects` to "single" when set.
-            // TODO: Add support functionally and visually for "multiple"
+            /**
+             * Always force `selects` to "single" when set.
+             *
+             * @todo: Add support functionally and visually for "multiple"
+             */
             this.selects = 'single';
         }
         if (changes.has('disabled') && this.disabled) {
@@ -618,8 +628,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             ${this.dismissHelper} ${menu} ${this.dismissHelper}
         `;
         // @todo: test in mobile
-        /* c8 ignore next 11 */
-        if (this.isMobile.matches) {
+        if (this.isMobile.matches && !this.forcePopover) {
             this.dependencyManager.add('sp-tray');
             import('@spectrum-web-components/tray/sp-tray.js');
             return html`
@@ -825,7 +834,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
  */
 export class Picker extends PickerBase {
     public static override get styles(): CSSResultArray {
-        return [pickerStyles, chevronStyles, chevronIconOverrides];
+        return [pickerStyles, chevronStyles];
     }
 
     protected override get containerStyles(): StyleInfo {
