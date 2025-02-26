@@ -366,10 +366,9 @@ describe('ActionGroup', () => {
         await closed;
 
         await aTimeout(500);
-
         expect(
             (el.children[0] as ActionButton)?.tabIndex,
-            'final: should be focused on the first button'
+            'final: should NOT be focused on the first button'
         ).to.equal(-1);
         expect(
             (el.children[1] as ActionButton)?.tabIndex,
@@ -381,8 +380,8 @@ describe('ActionGroup', () => {
         ).to.equal(-1);
         expect(
             (el.children[3] as ActionMenu)?.tabIndex,
-            'final: should not be focused on the fourth button'
-        ).to.equal(-1);
+            'final: should be be focused on the fourth button'
+        ).to.equal(0);
     });
 
     testForLitDevWarnings(
