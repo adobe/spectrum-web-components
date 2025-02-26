@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -8,8 +8,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import '@spectrum-web-components/button/sp-button.js';
+import { DialogWrapper } from '@spectrum-web-components/dialog';
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import {
     openOverlay,
     Overlay,
@@ -19,40 +28,31 @@ import {
     TriggerInteractions,
     VirtualTrigger,
 } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
-import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
-import { DialogWrapper } from '@spectrum-web-components/dialog';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 
+import '@spectrum-web-components/accordion/sp-accordion-item.js';
+import '@spectrum-web-components/accordion/sp-accordion.js';
+import '@spectrum-web-components/button-group/sp-button-group.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-group.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/slider/sp-slider.js';
-import '@spectrum-web-components/radio/sp-radio.js';
 import '@spectrum-web-components/radio/sp-radio-group.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/radio/sp-radio.js';
+import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/accordion/sp-accordion.js';
-import '@spectrum-web-components/accordion/sp-accordion-item.js';
-import '@spectrum-web-components/button-group/sp-button-group.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '../../../projects/story-decorator/src/types.js';
 
-import './overlay-story-components.js';
-import { render } from 'lit-html';
-import { Popover } from '@spectrum-web-components/popover';
 import { Button } from '@spectrum-web-components/button';
+import { Popover } from '@spectrum-web-components/popover';
+import { render } from 'lit-html';
+import './overlay-story-components.js';
 import { PopoverContent } from './overlay-story-components.js';
 
 const storyStyles = html`
@@ -155,7 +155,7 @@ const template = ({
     return html`
         ${storyStyles}
         <overlay-trigger
-            content="click hover"
+            triggered-by="click hover"
             id="trigger"
             placement="${placement}"
             offset="${offset}"
@@ -296,8 +296,28 @@ export const accordion = (): TemplateResult => {
 accordion.swc_vrt = {
     skip: true,
 };
-
 accordion.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
+export const clickAndHoverTarget = (): TemplateResult => {
+    return html`
+        <overlay-trigger type="modal">
+            <sp-button variant="primary" slot="trigger">Button</sp-button>
+            <sp-popover slot="click-content" placement="bottom" tip>
+                Popover content
+            </sp-popover>
+            <sp-tooltip slot="hover-content" placement="right">
+                Tooltip content
+            </sp-tooltip>
+        </overlay-trigger>
+    `;
+};
+clickAndHoverTarget.swc_vrt = {
+    skip: true,
+};
+clickAndHoverTarget.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
@@ -453,6 +473,7 @@ class ComplexModalReady extends HTMLElement {
     handlePickerOpen = async (): Promise<void> => {
         const picker = document.querySelector('#test-picker') as Picker;
         const actions = [nextFrame, picker.updateComplete];
+        picker.focus();
 
         await Promise.all(actions);
 
@@ -487,35 +508,6 @@ export const complexModal = (): TemplateResult => {
                 padding: 0;
                 display: grid;
                 place-content: center;
-            }
-            active-overlay > * {
-                --spectrum-global-animation-duration-100: 0ms;
-                --spectrum-global-animation-duration-200: 0ms;
-                --spectrum-global-animation-duration-300: 0ms;
-                --spectrum-global-animation-duration-400: 0ms;
-                --spectrum-global-animation-duration-500: 0ms;
-                --spectrum-global-animation-duration-600: 0ms;
-                --spectrum-global-animation-duration-700: 0ms;
-                --spectrum-global-animation-duration-800: 0ms;
-                --spectrum-global-animation-duration-900: 0ms;
-                --spectrum-global-animation-duration-1000: 0ms;
-                --spectrum-global-animation-duration-2000: 0ms;
-                --spectrum-global-animation-duration-4000: 0ms;
-                --spectrum-animation-duration-0: 0ms;
-                --spectrum-animation-duration-100: 0ms;
-                --spectrum-animation-duration-200: 0ms;
-                --spectrum-animation-duration-300: 0ms;
-                --spectrum-animation-duration-400: 0ms;
-                --spectrum-animation-duration-500: 0ms;
-                --spectrum-animation-duration-600: 0ms;
-                --spectrum-animation-duration-700: 0ms;
-                --spectrum-animation-duration-800: 0ms;
-                --spectrum-animation-duration-900: 0ms;
-                --spectrum-animation-duration-1000: 0ms;
-                --spectrum-animation-duration-2000: 0ms;
-                --spectrum-animation-duration-4000: 0ms;
-                --spectrum-coachmark-animation-indicator-ring-duration: 0ms;
-                --swc-test-duration: 1ms;
             }
         </style>
         <overlay-trigger type="modal" open="click">
@@ -927,7 +919,7 @@ export const inline = (): TemplateResult => {
 
 export const longpress = (): TemplateResult => {
     return html`
-        <overlay-trigger placement="right-start">
+        <overlay-trigger triggered-by="longpress" placement="right-start">
             <sp-action-button slot="trigger" hold-affordance>
                 <sp-icon-magnify slot="icon"></sp-icon-magnify>
             </sp-action-button>
@@ -1560,4 +1552,62 @@ virtualElementDeclaratively.swc_vrt = {
 virtualElementDeclaratively.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
+};
+
+export const triggeredByOptimization = (): TemplateResult => {
+    return html`
+        <h2>"triggered-by" attribute optimization</h2>
+        <p>
+            This demo shows different ways to trigger overlays using the
+            <code>triggered-by</code>
+            attribute.
+        </p>
+        <p>
+            <strong>Pro tip:</strong>
+            Inspect the DOM to verify that only the respective overlay elements
+            are being rendered into the DOM based on the
+            <code>triggered-by</code>
+            value.
+        </p>
+        <p>
+            Unused interaction types aren't rendered. This improves performance,
+            reduces the number of unecessary DOM nodes and avoids race
+            conditions in slot reparenting.
+        </p>
+        <div style="display: flex; gap: 20px; flex-direction: column;">
+            <!-- Click and hover only -->
+            <overlay-trigger triggered-by="click hover">
+                <sp-button slot="trigger">Click and hover trigger</sp-button>
+                <sp-popover slot="click-content" direction="right" tip>
+                    <sp-dialog size="s" no-divider>Click content</sp-dialog>
+                </sp-popover>
+                <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
+            </overlay-trigger>
+
+            <!-- Longpress only -->
+            <overlay-trigger triggered-by="longpress">
+                <sp-button slot="trigger">Longpress trigger</sp-button>
+                <sp-popover slot="longpress-content" direction="right" tip>
+                    <sp-dialog size="s" no-divider>Longpress content</sp-dialog>
+                </sp-popover>
+                <div slot="longpress-describedby-descriptor">
+                    Press and hold to reveal more options
+                </div>
+            </overlay-trigger>
+
+            <!-- Click only -->
+            <overlay-trigger triggered-by="click">
+                <sp-button slot="trigger">Click only trigger</sp-button>
+                <sp-popover slot="click-content" direction="right" tip>
+                    <sp-dialog size="s" no-divider>Click content</sp-dialog>
+                </sp-popover>
+            </overlay-trigger>
+
+            <!-- Hover only -->
+            <overlay-trigger triggered-by="hover">
+                <sp-button slot="trigger">Hover only trigger</sp-button>
+                <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
+            </overlay-trigger>
+        </div>
+    `;
 };

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/iconset",
-    "version": "1.0.3",
+    "version": "1.1.2",
     "publishConfig": {
         "access": "public"
     },
@@ -60,11 +60,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.0.1"
+        "@spectrum-web-components/base": "1.1.2"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
-    "deprecationNotice": "@spectrum-web-components/iconset is deprecated and will be removed in the SWC 1.0 release.",
+    "deprecationNotice": "@spectrum-web-components/iconset is deprecated and will be removed in an upcoming release.",
     "sideEffects": [
         "./src/index.js",
         "./stories/icons-demo.js",

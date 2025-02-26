@@ -14,7 +14,7 @@ parameters:
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: a095ed1ef88686fdb24936dad763598ac7981193
+        default: 34923d02e4b68736f367f04be8d5a4f3843bc091
     wireit_cache_name:
         type: string
         default: wireit
@@ -30,7 +30,10 @@ commands:
             #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
             - run:
                   name: Installing Dependencies
-                  command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+                  command: |
+                      corepack enable
+                      yarn --immutable
+
             - save_cache:
                   paths:
                       - ~/.cache/yarn
@@ -85,20 +88,21 @@ commands:
                       if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             # build diff review site
             - run:
-                  when: on_fail
+                  when: always
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
-                  when: on_fail
+                  when: always
                   name: Publish review site
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo hash
+                      echo "Netlify alias hash: $hash" 
+                      echo "Deploying from test/visual directory..."
                       yarn netlify deploy --alias=$hash --cwd test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
@@ -123,18 +127,7 @@ jobs:
         executor: node
 
         steps:
-            - checkout
-            - restore_cache:
-                  keys:
-                      - v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            - run:
-                  name: Installing Dependencies
-                  command: yarn --ignore-scripts --frozen-lockfile --cache-folder ~/.cache/yarn
-            - save_cache:
-                  paths:
-                      - ~/.cache/yarn
-                      - .wireit
-                  key: v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - downstream
             - run:
                   name: Define environment variable with lastest commit's message
                   command: |
@@ -211,12 +204,20 @@ jobs:
 
     preview-docs:
         executor: node
-
         steps:
             - downstream
             - run:
-                  name: Generate Docs
-                  command: yarn docs:preview
+                  name: Generate Custom Elements Manifest
+                  command: yarn docs:analyze
+            - run:
+                  name: Move CEM to Storybook directory
+                  command: cp projects/documentation/custom-elements.json storybook/
+            - run:
+                  name: Build documentation
+                  command: yarn docs:build
+            - run:
+                  name: Build Storybook
+                  command: yarn storybook:build
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
@@ -229,8 +230,17 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Generate Beta Docs
-                  command: yarn docs:preview
+                  name: Generate Custom Elements Manifest
+                  command: yarn docs:analyze
+            - run:
+                  name: Move CEM to Storybook directory
+                  command: cp projects/documentation/custom-elements.json storybook/
+            - run:
+                  name: Build documentation
+                  command: yarn docs:build
+            - run:
+                  name: Build Storybook
+                  command: yarn storybook:build
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
@@ -272,14 +282,14 @@ jobs:
                       if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             # build diff review site
             - run:
-                  when: on_fail
+                  when: always
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
-                  when: on_fail
+                  when: always
                   name: Publish review site
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual

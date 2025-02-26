@@ -14,15 +14,22 @@ import type { ReactiveController } from '@spectrum-web-components/base';
 import { AbstractOverlay } from './AbstractOverlay.js';
 
 export enum InteractionTypes {
-    'click',
-    'hover',
-    'longpress',
+    click = 'click',
+    hover = 'hover',
+    longpress = 'longpress',
 }
+
+export const lastInteractionType = Symbol('lastInteractionType');
+export const SAFARI_FOCUS_RING_CLASS = 'remove-focus-ring-safari-hack';
 
 export type ControllerOptions = {
     overlay?: AbstractOverlay;
     handleOverlayReady?: (overlay: AbstractOverlay) => void;
     isPersistent?: boolean;
+};
+
+type InteractionTarget = HTMLElement & {
+    [lastInteractionType]?: InteractionTypes;
 };
 
 export class InteractionController implements ReactiveController {
@@ -50,6 +57,7 @@ export class InteractionController implements ReactiveController {
         if (this.overlay) {
             // If there already is an Overlay, apply the value of `open` directly.
             this.overlay.open = open;
+            this.target[lastInteractionType] = this.type;
             return;
         }
         if (!open) {
@@ -65,6 +73,7 @@ export class InteractionController implements ReactiveController {
                 const { Overlay } = await import('./Overlay.js');
                 this.overlay = new Overlay();
                 this.overlay.open = true;
+                this.target[lastInteractionType] = this.type;
             });
         import('@spectrum-web-components/overlay/sp-overlay.js');
     }
@@ -93,7 +102,7 @@ export class InteractionController implements ReactiveController {
     type!: InteractionTypes;
 
     constructor(
-        public target: HTMLElement,
+        public target: InteractionTarget,
         { overlay, isPersistent, handleOverlayReady }: ControllerOptions
     ) {
         this.isPersistent = !!isPersistent;

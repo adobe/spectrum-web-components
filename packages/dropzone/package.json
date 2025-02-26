@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/dropzone",
-    "version": "1.0.3",
+    "version": "1.1.2",
     "publishConfig": {
         "access": "public"
     },
@@ -58,10 +58,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.0.1"
+        "@spectrum-web-components/base": "1.1.2"
     },
     "devDependencies": {
-        "@spectrum-css/dropzone": "^7.0.0-s2-foundations.16"
+        "@spectrum-css/dropzone": "7.0.0-s2-foundations.16"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
