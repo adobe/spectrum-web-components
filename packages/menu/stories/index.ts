@@ -53,19 +53,25 @@ export class ComplexSlottedGroup extends LitElement {
     get menu(): Menu {
         return this.renderRoot.querySelector('sp-menu') as Menu;
     }
+
+    static override shadowRootOptions = {
+        ...LitElement.shadowRootOptions,
+        delegatesFocus: true,
+    };
+
     protected override render(): TemplateResult {
         return html`
-            <sp-menu>
-                <sp-menu-group>
+            <sp-menu id="sp-menu">
+                <sp-menu-group id="sp-menu-group-1">
                     <sp-menu-item id="i-1">Before First</sp-menu-item>
                     <slot name="before"></slot>
                 </sp-menu-group>
-                <sp-menu-group>
+                <sp-menu-group id="sp-menu-group-2">
                     <sp-menu-item id="i-4">Sibling 1</sp-menu-item>
                     <slot></slot>
                     <sp-menu-item id="i-10">Sibling 2</sp-menu-item>
                 </sp-menu-group>
-                <sp-menu-group>
+                <sp-menu-group id="sp-menu-group-3">
                     <sp-menu-item id="i-11">After 1</sp-menu-item>
                     <sp-menu-item id="i-12">After 2</sp-menu-item>
                 </sp-menu-group>
@@ -84,9 +90,15 @@ export class ComplexSlottedMenu extends LitElement {
             ) as ComplexSlottedGroup
         ).menu;
     }
+
+    static override shadowRootOptions = {
+        ...LitElement.shadowRootOptions,
+        delegatesFocus: true,
+    };
+
     protected override render(): TemplateResult {
         return html`
-            <complex-slotted-group id="group">
+            <complex-slotted-group id="complex-slotted-group">
                 <sp-menu-item id="i-5">Middle 1</sp-menu-item>
                 <sp-menu-item id="i-6">Middle 2</sp-menu-item>
                 <sp-menu-item id="i-7">Middle 3</sp-menu-item>
