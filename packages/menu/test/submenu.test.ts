@@ -32,6 +32,7 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 import { TemplateResult } from 'lit-html';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 type SelectsWithKeyboardTest = {
     dir: 'ltr' | 'rtl' | 'auto';
@@ -110,19 +111,36 @@ describe('Submenu', () => {
             this.el.parentElement.dir = testData.dir;
 
             await elementUpdated(this.el);
-            expect(this.rootItem.open).to.be.false;
+            expect(
+                this.rootItem.open,
+                `rootItem open before ${testData.openKey}`
+            ).to.be.false;
             const input = document.createElement('input');
             this.el.insertAdjacentElement('beforebegin', input);
-            input.focus();
-            await sendKeys({
-                press: 'Tab',
-            });
+            this.el.focus();
+
+            // by default, Safari doesn't tab to some elements
+            if (!isWebKit) {
+                await sendKeys({
+                    press: 'Shift+Tab',
+                });
+
+                expect(document.activeElement).to.equal(input);
+                await sendKeys({
+                    press: 'Tab',
+                });
+
+                expect(document.activeElement).to.equal(this.el);
+            }
             await sendKeys({
                 press: 'ArrowDown',
             });
             await elementUpdated(this.rootItem);
 
-            expect(this.rootItem.focused).to.be.true;
+            expect(
+                this.rootItem.focused,
+                `rootItem focused before ${testData.openKey}`
+            ).to.be.true;
 
             let opened = oneEvent(this.rootItem, 'sp-opened');
             await sendKeys({
@@ -130,16 +148,19 @@ describe('Submenu', () => {
             });
             await opened;
 
+            const rootItem = this.el.querySelector('.root') as MenuItem;
             let submenu = this.el.querySelector('[slot="submenu"]') as Menu;
             let submenuItem = this.el.querySelector(
-                '.submenu-item-2'
+                '.submenu-item-1'
             ) as MenuItem;
 
-            expect(this.rootItem.open).to.be.true;
             expect(
-                submenu === document.activeElement,
-                `${document.activeElement?.id}`
+                this.rootItem.open,
+                `rootItem open after ${testData.openKey}`
             ).to.be.true;
+
+            //opening a menu via keyboard should set focus on first item
+            expect(document.activeElement).to.equal(submenuItem);
 
             let closed = oneEvent(this.rootItem, 'sp-closed');
             await sendKeys({
@@ -147,11 +168,13 @@ describe('Submenu', () => {
             });
             await closed;
 
-            expect(this.rootItem.open).to.be.false;
             expect(
-                this.el === document.activeElement,
-                `${document.activeElement?.id}`
-            ).to.be.true;
+                this.rootItem.open,
+                `rootItem open after ${testData.closeKey}`
+            ).to.be.false;
+
+            //closing a submenu via keyboard should set focus on its parent menuitem
+            expect(document.activeElement).to.equal(rootItem);
 
             opened = oneEvent(this.rootItem, 'sp-opened');
             await sendKeys({
@@ -160,9 +183,10 @@ describe('Submenu', () => {
             await opened;
 
             submenu = this.el.querySelector('[slot="submenu"]') as Menu;
-            submenuItem = this.el.querySelector('.submenu-item-2') as MenuItem;
 
             expect(this.rootItem.open).to.be.true;
+            expect(submenuItem.focused).to.be.true;
+            expect(document.activeElement).to.equal(submenuItem);
 
             await sendKeys({
                 press: 'ArrowDown',
@@ -170,9 +194,10 @@ describe('Submenu', () => {
             await elementUpdated(submenu);
             await elementUpdated(submenuItem);
 
-            expect(submenu.getAttribute('aria-activedescendant')).to.equal(
-                submenuItem.id
-            );
+            submenuItem = this.el.querySelector('.submenu-item-2') as MenuItem;
+            expect(submenuItem.focused, `submenu focused`).to.be.true;
+            expect(document.activeElement === submenuItem, `submenu active`).to
+                .be.true;
 
             closed = oneEvent(this.rootItem, 'sp-closed');
             await sendKeys({
@@ -193,13 +218,20 @@ describe('Submenu', () => {
         it('returns visible focus when submenu closed', async function () {
             const input = document.createElement('input');
             this.el.insertAdjacentElement('beforebegin', input);
-            input.focus();
-            await sendKeys({
-                press: 'Tab',
-            });
-            await elementUpdated(this.el);
-            await nextFrame();
-            await nextFrame();
+            // by default, Safari doesn't tab to some elements
+            if (!isWebKit) {
+                await sendKeys({
+                    press: 'Shift+Tab',
+                });
+
+                expect(document.activeElement).to.equal(input);
+                await sendKeys({
+                    press: 'Tab',
+                });
+
+                expect(document.activeElement).to.equal(this.el);
+            }
+            this.el.focus();
             await sendKeys({
                 press: 'ArrowDown',
             });
@@ -212,6 +244,7 @@ describe('Submenu', () => {
                 `focused: ${document.activeElement?.localName}`
             ).to.be.true;
             expect(this.rootItem.open, 'not open').to.be.false;
+            expect(document.activeElement).to.equal(this.rootItem);
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
             await sendKeys({
@@ -330,7 +363,6 @@ describe('Submenu', () => {
                 ],
             });
             await opened;
-
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
@@ -552,7 +584,7 @@ describe('Submenu', () => {
             this.rootItem = this.el.querySelector('.root') as MenuItem;
             await elementUpdated(this.rootItem);
         });
-        describe.skip('selects', () => {
+        describe('selects', () => {
             selectWithPointer();
             selectsWithKeyboardData.map((testData) => {
                 selectsWithKeyboard(testData);
@@ -716,7 +748,7 @@ describe('Submenu', () => {
         expect(subSubmenuChanged.calledWith('C'), 'sub submenu changed').to.be
             .true;
     });
-    it('closes all decendent submenus when closing a ancestor menu', async () => {
+    it('closes all descendant submenus when closing a ancestor menu', async () => {
         const el = await fixture<ActionMenu>(html`
             <sp-action-menu label="Closing ancestors will close submenus">
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
@@ -879,7 +911,7 @@ describe('Submenu', () => {
             });
             await closed;
         });
-        it('closes decendent menus when Menu Item in ancestor without a submenu is pointerentered', async function () {
+        it('closes descendant menus when Menu Item in ancestor without a submenu is pointerentered', async function () {
             const rootMenu = this.el.querySelector(
                 '#submenu-item-1'
             ) as MenuItem;
@@ -903,7 +935,7 @@ describe('Submenu', () => {
             );
             await closed;
         });
-        it('closes decendent menus when Menu Item in ancestor is clicked', async function () {
+        it('closes descendant menus when Menu Item in ancestor is clicked', async function () {
             const rootMenu1 = this.el.querySelector(
                 '#submenu-item-1'
             ) as MenuItem;
@@ -1135,9 +1167,15 @@ describe('Submenu', () => {
                 <sp-menu-item>
                     Parent Item
                     <div role="menu" slot="submenu">
-                        ${Array(20).fill(0).map((_, i) => html`
-                            <sp-menu-item>Submenu Item ${i + 1}</sp-menu-item>
-                        `)}
+                        ${Array(20)
+                            .fill(0)
+                            .map(
+                                (_, i) => html`
+                                    <sp-menu-item>
+                                        Submenu Item ${i + 1}
+                                    </sp-menu-item>
+                                `
+                            )}
                     </div>
                 </sp-menu-item>
             </sp-menu>
@@ -1146,7 +1184,9 @@ describe('Submenu', () => {
         await elementUpdated(el);
 
         const menuItem = el.querySelector('sp-menu-item') as MenuItem;
-        const submenu = menuItem.querySelector('[slot="submenu"]') as HTMLElement;
+        const submenu = menuItem.querySelector(
+            '[slot="submenu"]'
+        ) as HTMLElement;
 
         // Open the submenu
         const opened = oneEvent(menuItem, 'sp-opened');

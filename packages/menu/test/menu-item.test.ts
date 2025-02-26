@@ -117,8 +117,56 @@ describe('Menu item', () => {
         ).anchorElement.dispatchEvent(new FocusEvent('focus'));
 
         await elementUpdated(item);
-        expect(el === document.activeElement).to.be.true;
+
+        expect(item === document.activeElement).to.be.true;
         item.click();
+
+        expect(clickTargetSpy.calledWith(anchorElement)).to.be.true;
+    });
+    it('allows link click', async () => {
+        const clickTargetSpy = spy();
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                @click=${(event: Event) => {
+                    clickTargetSpy(
+                        event.composedPath()[0] as HTMLAnchorElement
+                    );
+                    event.stopPropagation();
+                    event.preventDefault();
+                }}
+            >
+                <sp-menu-item
+                    href="https://opensource.adobe.com/spectrum-web-components"
+                >
+                    Selected Text
+                </sp-menu-item>
+            </sp-menu>
+        `);
+
+        const item = el.querySelector('sp-menu-item') as MenuItem;
+        const { anchorElement } = item as unknown as {
+            anchorElement: HTMLAnchorElement;
+        };
+        (
+            item as unknown as { anchorElement: HTMLAnchorElement }
+        ).anchorElement.dispatchEvent(new FocusEvent('focus'));
+
+        await elementUpdated(item);
+        expect(item === document.activeElement).to.be.true;
+
+        // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
+        const rect = el.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'click',
+                },
+            ],
+        });
 
         expect(clickTargetSpy.calledWith(anchorElement)).to.be.true;
     });
@@ -193,7 +241,6 @@ describe('Menu item', () => {
 
         expect(el.hasSubmenu).to.be.false;
     });
-
     it('should not allow text-align to cascade when used inside an overlay', async () => {
         const element = await fixture<HTMLDivElement>(html`
             <div style="text-align: center">

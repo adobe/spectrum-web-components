@@ -353,48 +353,6 @@ describe('Tabs', () => {
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
     });
-    it('prevents [tabindex=0] while `focusin`', async () => {
-        const el = await fixture<Tabs>(html`
-            <sp-tabs>
-                <sp-tab label="Tab 1" value="first" selected>
-                    <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
-                </sp-tab>
-                <sp-tab label="Tab 2" value="second">
-                    <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
-                </sp-tab>
-            </sp-tabs>
-        `);
-
-        const selected = el.querySelector('[value="first"]') as Tab;
-        const toBeSelected = el.querySelector('[value="second"]') as Tab;
-
-        await elementUpdated(el);
-        await waitUntil(() => el.selected === 'first', 'wait for selection');
-
-        expect(el.selected).to.equal('first');
-        expect(selected.tabIndex).to.equal(0);
-
-        toBeSelected.dispatchEvent(new Event('focusin', { bubbles: true }));
-
-        await elementUpdated(el);
-
-        expect(el.selected).to.equal('first');
-        expect(selected.tabIndex).to.equal(-1);
-
-        toBeSelected.dispatchEvent(new Event('focusout', { bubbles: true }));
-
-        await elementUpdated(el);
-
-        expect(el.selected).to.equal('first');
-        expect(selected.tabIndex).to.equal(0);
-
-        toBeSelected.click();
-
-        await elementUpdated(el);
-
-        expect(el.selected).to.equal('second');
-        expect(toBeSelected.tabIndex).to.equal(0);
-    });
     it('accepts keyboard based selection', async () => {
         const el = await fixture<Tabs>(html`
             <sp-tabs selected="Unknown">

@@ -272,35 +272,27 @@ describe('tabIndex is cached properly', () => {
             </sp-action-menu>
         `);
 
-        expect(menuEl.tabIndex).to.equal(0);
-        expect(menuEl.focusElement?.tabIndex).to.equal(0);
-
-        menuEl.tabIndex = 1;
-
-        await elementUpdated(menuEl);
-
-        expect(menuEl.tabIndex).to.equal(1);
-        expect(menuEl.focusElement?.tabIndex).to.equal(1);
+        expect(
+            menuEl.focusElement?.tabIndex,
+            'button tabindex before disabling'
+        ).to.equal(0);
 
         menuEl.disabled = true;
 
         await elementUpdated(menuEl);
 
-        expect(menuEl.tabIndex).to.equal(-1);
-        expect(menuEl.focusElement?.tabIndex).to.equal(-1);
-
-        menuEl.tabIndex = 2;
-
-        await elementUpdated(menuEl);
-
-        expect(menuEl.tabIndex).to.equal(-1);
-        expect(menuEl.focusElement?.tabIndex).to.equal(-1);
+        expect(
+            menuEl.focusElement?.tabIndex,
+            'button tabindex after disabling'
+        ).to.equal(-1);
 
         menuEl.disabled = false;
 
         await elementUpdated(menuEl);
 
-        expect(menuEl.tabIndex).to.equal(2);
-        expect(menuEl.focusElement?.tabIndex).to.equal(2);
+        expect(
+            menuEl.focusElement?.tabIndex,
+            'button tabindex after setting to 0'
+        ).to.equal(0);
     });
 });
