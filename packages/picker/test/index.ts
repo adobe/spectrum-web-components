@@ -825,7 +825,7 @@ export function runPickerTests(): void {
             expect(secondItem.selected, 'selection prevented').to.be.false;
             expect(el.open, 'open?').to.be.true;
         });
-        it('should retain focus after click', async () => {
+        it('should return focus after click', async () => {
             const input = document.createElement('input');
             document.body.append(input);
 
@@ -848,7 +848,7 @@ export function runPickerTests(): void {
             secondItem.click();
             await waitUntil(
                 () => document.activeElement === el,
-                'focus throw', { timeout: 300 }
+                'focused', { timeout: 300 }
             );
 
             expect(el.open, 'open?').to.be.false;

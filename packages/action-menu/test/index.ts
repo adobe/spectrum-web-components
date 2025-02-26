@@ -17,6 +17,7 @@ import {
     html,
     nextFrame,
     oneEvent,
+    waitUntil
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
@@ -483,6 +484,44 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(el.open).to.be.false;
             expect(selected).to.equal(thirdItem.value);
+        });
+        it('returns focus on `Escape`', async () => {
+            const el = await actionMenuFixture();
+            const thirdItem = el.querySelector(
+                'sp-menu-item:nth-of-type(3)'
+            ) as MenuItem;
+
+            expect(el.value).to.not.equal(thirdItem.value);
+            const opened = oneEvent(el, 'sp-opened');
+            el.focus();
+            await sendKeys({ press: 'Enter'})
+            await opened;
+
+            await sendKeys({ press: 'Escape'});
+            await waitUntil(
+                () => document.activeElement === el,
+                'focused', { timeout: 300 }
+            );
+            expect(el.open).to.be.false;
+        });
+        it('returns focus on select', async () => {
+            const el = await actionMenuFixture();
+            const thirdItem = el.querySelector(
+                'sp-menu-item:nth-of-type(3)'
+            ) as MenuItem;
+
+            expect(el.value).to.not.equal(thirdItem.value);
+            const opened = oneEvent(el, 'sp-opened');
+            el.focus();
+            await sendKeys({ press: 'Enter'})
+            await opened;
+
+            thirdItem.click();
+            await waitUntil(
+                () => document.activeElement === el,
+                'focused', { timeout: 300 }
+            );
+            expect(el.open).to.be.false;
         });
         it('has attribute aria-describedby', async () => {
             const name = 'sp-picker';
