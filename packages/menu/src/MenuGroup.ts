@@ -48,15 +48,20 @@ export class MenuGroup extends Menu {
     @state()
     private headerElement?: HTMLElement;
 
+    /**
+     * a menu group must have the role `group`
+     * and should never function as a menu
+     */
     protected override get ownRole(): string {
-        switch (this.selects) {
-            case 'multiple':
-            case 'single':
-            case 'inherit':
-                return 'group';
-            default:
-                return 'menu';
-        }
+        return 'group';
+    }
+
+    /**
+     * only a menu controls roving tabindex;
+     * groups should defer navigation to parent menu
+     */
+    protected override get controlsRovingTabindex(): boolean {
+        return false;
     }
 
     protected updateLabel(): void {
@@ -87,7 +92,7 @@ export class MenuGroup extends Menu {
             <span class="header" ?hidden=${!this.headerElement}>
                 <slot name="header" @slotchange=${this.updateLabel}></slot>
             </span>
-            <sp-menu ignore>${this.renderMenuItemSlot()}</sp-menu>
+            ${this.renderMenuItemSlot()}
         `;
     }
 }
