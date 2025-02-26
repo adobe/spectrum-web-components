@@ -488,27 +488,35 @@ describe('Combobox', () => {
             await elementUpdated(el);
             expect(el.value).to.equal('');
             expect(el.activeDescendant).to.be.undefined;
-            expect(el.open).to.be.false;
+            expect(el.open, 'open?').to.be.false;
 
             el.focusElement.focus();
             const opened = oneEvent(el, 'sp-opened');
             el.focusElement.dispatchEvent(arrowDownEvent());
             await opened;
 
-            expect(el.open).to.be.true;
-
+            expect(el.open, 'open?').to.be.true;
             await elementUpdated(el);
-            el.focusElement.dispatchEvent(arrowDownEvent());
-
-            await elementUpdated(el);
-            testActiveElement(el, 'banana');
+            expect(
+                el.activeDescendant?.value,
+                'activeDscendant after open?'
+            ).to.equal('apple');
             el.focusElement.dispatchEvent(enterEvent());
 
             await elementUpdated(el);
-            expect(el.open).to.be.false;
-            expect(el.activeDescendant).to.be.undefined;
-            expect(el.value).to.equal('Banana');
-            expect(el.focusElement.value).to.equal(el.value);
+            expect(el.open, 'open?').to.be.false;
+            expect(el.activeDescendant, 'activeDescendant after Enter?').to.be
+                .undefined;
+            expect(el.value, 'value after enter').to.equal('Apple');
+            expect(
+                el.shadowRoot.querySelector(
+                    'sp-menu-item[aria-selected="true"]'
+                )?.id,
+                'aria-selected'
+            ).to.equal('apple');
+            expect(el.focusElement.value, 'focusElement after enter').to.equal(
+                el.value
+            );
         });
         it('does not set the value when `enter` is pressed and no active descendent', async () => {
             const el = await comboboxFixture();
@@ -538,9 +546,10 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
 
-            expect(el.value).to.equal('');
-            expect(el.activeDescendant).to.be.undefined;
-            expect(el.open).to.be.false;
+            expect(el.value, 'initial value').to.equal('');
+            expect(el.activeDescendant, 'initial activeDescendant').to.be
+                .undefined;
+            expect(el.open, 'initially open?').to.be.false;
 
             const opened = oneEvent(el, 'sp-opened');
             el.focusElement.click();
@@ -549,7 +558,7 @@ describe('Combobox', () => {
             const item = el.shadowRoot.querySelector('#cherry') as HTMLElement;
             await elementUpdated(item);
 
-            expect(el.open).to.be.true;
+            expect(el.open, 'open after click?').to.be.true;
 
             const itemValue = (item.textContent as string).trim();
             const rect = item.getBoundingClientRect();
@@ -567,9 +576,10 @@ describe('Combobox', () => {
             });
             await elementUpdated(el);
 
-            expect(el.value).to.equal(itemValue);
-            expect(el.open).to.be.false;
-            expect(el.activeDescendant).to.be.undefined;
+            expect(el.value, 'value after item click?').to.equal(itemValue);
+            expect(el.open, 'open after item click?').to.be.false;
+            expect(el.activeDescendant, 'activeDescendant after item click').to
+                .be.undefined;
         });
         it('reflects the selected value in menu on reopening', async () => {
             const el = await comboboxFixture();

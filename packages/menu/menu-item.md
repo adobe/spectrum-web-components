@@ -213,12 +213,35 @@ When the `value` attribute is leveraged, the selected `<sp-menu-item>` represent
 An `<sp-menu-item>` can also accept content addressed to its `"submenu"` slot. An `<sp-menu>` element with this slot name surfaces the options in an adjacent popover, which can be activated by hovering over the parent menu item with your pointer or focusing the menu item and pressing the appropriate `ArrowRight` or `ArrowLeft` key based on text direction to move into the submenu.
 
 ```html
-<sp-menu style="width: 200px;">
+<p>
+    Your favorite park in New York is:
+    <span id="group-1-value"></span>
+    <br />
+    <br />
+    Your favorite park in San Francisco is:
+    <span id="group-2-value"></span>
+</p>
+<sp-menu
+    style="width: 200px;"
+    onchange="this.parentElement
+        .previousElementSibling
+        .querySelector(`#${arguments[0].target.id}-value`)
+        .textContent = arguments[0].target.value"
+>
     <sp-menu-item>
-        Item with submenu
-        <sp-menu slot="submenu">
-            <sp-menu-item>Additional options</sp-menu-item>
-            <sp-menu-item>Available on request</sp-menu-item>
+        New York
+        <sp-menu slot="submenu" selects="single">
+            <sp-menu-item>Central Park</sp-menu-item>
+            <sp-menu-item>Flushing Meadows Corona Park</sp-menu-item>
+            <sp-menu-item>Prospect Park</sp-menu-item>
+        </sp-menu>
+    </sp-menu-item>
+    <sp-menu-item>
+        San Francisco
+        <sp-menu slot="submenu" selects="single">
+            <sp-menu-item>Golden Gate Park</sp-menu-item>
+            <sp-menu-item>John McLaren Park</sp-menu-item>
+            <sp-menu-item>Lake Merced Park</sp-menu-item>
         </sp-menu>
     </sp-menu-item>
 </sp-menu>
