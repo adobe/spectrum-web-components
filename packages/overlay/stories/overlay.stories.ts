@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -155,7 +155,7 @@ const template = ({
     return html`
         ${storyStyles}
         <overlay-trigger
-            content="click hover"
+            triggered-by="click hover"
             id="trigger"
             placement="${placement}"
             offset="${offset}"
@@ -919,7 +919,7 @@ export const inline = (): TemplateResult => {
 
 export const longpress = (): TemplateResult => {
     return html`
-        <overlay-trigger placement="right-start">
+        <overlay-trigger triggered-by="longpress" placement="right-start">
             <sp-action-button slot="trigger" hold-affordance>
                 <sp-icon-magnify slot="icon"></sp-icon-magnify>
             </sp-action-button>
@@ -1552,4 +1552,62 @@ virtualElementDeclaratively.swc_vrt = {
 virtualElementDeclaratively.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
+};
+
+export const triggeredByOptimization = (): TemplateResult => {
+    return html`
+        <h2>"triggered-by" attribute optimization</h2>
+        <p>
+            This demo shows different ways to trigger overlays using the
+            <code>triggered-by</code>
+            attribute.
+        </p>
+        <p>
+            <strong>Pro tip:</strong>
+            Inspect the DOM to verify that only the respective overlay elements
+            are being rendered into the DOM based on the
+            <code>triggered-by</code>
+            value.
+        </p>
+        <p>
+            Unused interaction types aren't rendered. This improves performance,
+            reduces the number of unecessary DOM nodes and avoids race
+            conditions in slot reparenting.
+        </p>
+        <div style="display: flex; gap: 20px; flex-direction: column;">
+            <!-- Click and hover only -->
+            <overlay-trigger triggered-by="click hover">
+                <sp-button slot="trigger">Click and hover trigger</sp-button>
+                <sp-popover slot="click-content" direction="right" tip>
+                    <sp-dialog size="s" no-divider>Click content</sp-dialog>
+                </sp-popover>
+                <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
+            </overlay-trigger>
+
+            <!-- Longpress only -->
+            <overlay-trigger triggered-by="longpress">
+                <sp-button slot="trigger">Longpress trigger</sp-button>
+                <sp-popover slot="longpress-content" direction="right" tip>
+                    <sp-dialog size="s" no-divider>Longpress content</sp-dialog>
+                </sp-popover>
+                <div slot="longpress-describedby-descriptor">
+                    Press and hold to reveal more options
+                </div>
+            </overlay-trigger>
+
+            <!-- Click only -->
+            <overlay-trigger triggered-by="click">
+                <sp-button slot="trigger">Click only trigger</sp-button>
+                <sp-popover slot="click-content" direction="right" tip>
+                    <sp-dialog size="s" no-divider>Click content</sp-dialog>
+                </sp-popover>
+            </overlay-trigger>
+
+            <!-- Hover only -->
+            <overlay-trigger triggered-by="hover">
+                <sp-button slot="trigger">Hover only trigger</sp-button>
+                <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
+            </overlay-trigger>
+        </div>
+    `;
 };
