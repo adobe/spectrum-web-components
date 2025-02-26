@@ -44,7 +44,7 @@ export const variants = ['filled', 'ramp', 'range', 'tick'];
 /**
  * @element sp-slider
  *
- * @slot - text label for the Slider
+ * @slot - @deprecated Text label for the Slider. Use the `label` property instead.
  * @slot handle - optionally accepts two or more sp-slider-handle elements
  */
 export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
@@ -269,6 +269,16 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     public override connectedCallback(): void {
         super.connectedCallback();
         this.handleController.hostConnected();
+
+        // Deprecation warning for default slot when content is provided
+        if (window.__swc.DEBUG && this.textContent?.trim()) {
+            window.__swc.warn(
+                this,
+                `The default slot for text label in <${this.localName}> has been deprecated and will be removed in a future release. Use the "label" property instead.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/slider/',
+                { level: 'deprecation' }
+            );
+        }
     }
 
     public override disconnectedCallback(): void {
@@ -303,8 +313,12 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                     @click=${this.handleLabelClick}
                     size=${this.size}
                 >
-                    ${this.slotHasContent ? nothing : this.label}
-                    <slot>${this.label}</slot>
+                    ${this.slotHasContent
+                        ? nothing
+                        : html`
+                              <span>${this.label}</span>
+                          `}
+                    <slot></slot>
                 </sp-field-label>
                 <sp-field-label
                     class=${classMap({
