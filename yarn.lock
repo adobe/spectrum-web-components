@@ -7365,16 +7365,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/actiongroup@npm:6.0.0-s2-foundations.17":
-  version: 6.0.0-s2-foundations.17
-  resolution: "@spectrum-css/actiongroup@npm:6.0.0-s2-foundations.17"
+"@spectrum-css/actiongroup@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@spectrum-css/actiongroup@npm:6.1.0"
   peerDependencies:
-    "@spectrum-css/actionbutton": ">=6"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/actionbutton": ">=7.0.0 <8.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/actionbutton":
       optional: true
-  checksum: 10c0/ca5bec6271fe0ffddea932ad558d94ede695bf925e36f6cea9eca28223493a6ee5e906cad0f0c45470deb4da1f83b0574f1f9b490cbcbf6dff925377406985a8
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/92e544155dc058117fc5fb3b776d63abe12901db8d9303a71f85bd2b6500efa46bf4b9c5c3d1a765c1678437744e5d7af24d356009be66e664bf301f9e6505ef
   languageName: node
   linkType: hard
 
@@ -8271,7 +8273,7 @@ __metadata:
   resolution: "@spectrum-web-components/action-group@workspace:packages/action-group"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/actiongroup": "npm:6.0.0-s2-foundations.17"
+    "@spectrum-css/actiongroup": "npm:6.1.0"
     "@spectrum-web-components/action-button": "npm:1.1.2"
     "@spectrum-web-components/base": "npm:1.1.2"
     "@spectrum-web-components/icons-workflow": "npm:1.1.2"
@@ -8716,8 +8718,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.1.2
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=d8a9eb&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/78d45cc73ebf29f2c0246ee7a3a2146cea8bc2e9cbe2a8d8addb3091ecb684479c28376572ed27f5e7ae994845e57481b5d8518a857efcb270b79175276855d3
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=84adff&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/6f7cbdb8ba913403813d8ac59957ef9b8013d57751859d07c231fb818ec339155fd555b75455693259609ff4a7388a2e8c7dffb98431fba77c040309fc0a37ed
   languageName: node
   linkType: hard
 
