@@ -576,6 +576,7 @@ export class MenuItem extends LikeAnchor(
     }
 
     protected handleSubmenuOpen(event: Event): void {
+        const shouldFocus = this.matches(':focus, :focus-within') || this.focused;
         this.focused = false;
         const parentOverlay = event.composedPath().find((el) => {
             return (
@@ -583,7 +584,7 @@ export class MenuItem extends LikeAnchor(
                 (el as HTMLElement).localName === 'sp-overlay'
             );
         }) as Overlay;
-        if (this.matches(':focus, :focus-within') || this.focused)
+        if (shouldFocus)
             this.submenuElement?.focus();
         this.overlayElement.parentOverlayToForceClose = parentOverlay;
     }
