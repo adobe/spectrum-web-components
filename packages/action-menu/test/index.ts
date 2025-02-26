@@ -169,11 +169,11 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const button = findAccessibilityNode<NamedNode>(snapshot, (node) => node.name === 'More Actions');
             const menu = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menu');
             const deselect = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menuitem' && node.name === 'Deselect');
-            const workpath = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menuitem' && node.name === 'Make Work Path' && node.disabled);
+            const workPath = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menuitem' && node.name === 'Make Work Path' && node.disabled);
             expect(button, 'button').to.not.be.null;
             expect(menu, 'menu').to.not.be.null;
             expect(deselect, 'first menuitem').to.not.be.null;
-            expect(workpath, 'second menuitem').to.not.be.null;
+            expect(workPath, 'second menuitem').to.not.be.null;
         });
         it('dispatches change events, no [href]', async () => {
             const changeSpy = spy();
