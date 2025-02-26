@@ -825,7 +825,7 @@ export function runPickerTests(): void {
             expect(secondItem.selected, 'selection prevented').to.be.false;
             expect(el.open, 'open?').to.be.true;
         });
-        it.only('should throw focus after `change`', async () => {
+        it('should throw focus after `change`', async () => {
             const input = document.createElement('input');
             document.body.append(input);
 
