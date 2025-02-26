@@ -615,7 +615,7 @@ export function runPickerTests(): void {
             expect(el.open, 'open?').to.be.false;
             expect(el.value).to.equal(thirdItem.value);
         });
-        it.skip('opens/closes multiple times', async () => {
+        it('opens/closes multiple times', async () => {
             expect(el.open, 'open?').to.be.false;
             const boundingRect = el.button.getBoundingClientRect();
             let opened = oneEvent(el, 'sp-opened');
@@ -678,7 +678,7 @@ export function runPickerTests(): void {
             await closed;
             expect(el.open, 'open?').to.be.false;
         });
-        it.skip('closes when becoming disabled', async () => {
+        it('closes when becoming disabled', async () => {
             expect(el.open, 'open before click?').to.be.false;
             el.click();
             await elementUpdated(el);
@@ -689,7 +689,7 @@ export function runPickerTests(): void {
 
             expect(el.open, 'open after disabled?').to.be.false;
         });
-        it.skip('closes when clicking away', async () => {
+        it('closes when clicking away', async () => {
             el.id = 'closing';
             const other = document.createElement('div');
             document.body.append(other);
@@ -710,7 +710,7 @@ export function runPickerTests(): void {
 
             other.remove();
         });
-        it.skip('selects', async () => {
+        it('selects', async () => {
             const secondItem = el.querySelector(
                 'sp-menu-item:nth-of-type(2)'
             ) as MenuItem;
@@ -731,7 +731,7 @@ export function runPickerTests(): void {
             expect(el.selectedItem?.itemText).to.equal('Select Inverse');
             expect(el.value).to.equal('option-2');
         });
-        it.skip('re-selects', async () => {
+        it('re-selects', async () => {
             const firstItem = el.querySelector(
                 'sp-menu-item:nth-of-type(1)'
             ) as MenuItem;
@@ -771,7 +771,7 @@ export function runPickerTests(): void {
             expect(el.selectedItem?.itemText).to.equal('Deselect');
             expect(el.value).to.equal('Deselect');
         });
-        it.skip('dispatches bubbling and composed events', async () => {
+        it('dispatches bubbling and composed events', async () => {
             const changeSpy = spy();
             const parent = el.parentElement as HTMLElement;
             (parent.shadowRoot as ShadowRoot).append(el);
@@ -794,7 +794,7 @@ export function runPickerTests(): void {
             expect(el.value).to.equal(secondItem.value);
             expect(changeSpy.calledOnce).to.be.true;
         });
-        it.skip('can have selection prevented', async () => {
+        it('can have selection prevented', async () => {
             const preventChangeSpy = spy();
             const secondItem = el.querySelector(
                 'sp-menu-item:nth-of-type(2)'
@@ -825,7 +825,7 @@ export function runPickerTests(): void {
             expect(secondItem.selected, 'selection prevented').to.be.false;
             expect(el.open, 'open?').to.be.true;
         });
-        it.skip('should NOT throw focus after `change`', async () => {
+        it('should NOT throw focus after `change`', async () => {
             const input = document.createElement('input');
             document.body.append(input);
 
@@ -858,9 +858,10 @@ export function runPickerTests(): void {
             expect(el.open, 'open?').to.be.false;
             expect(el.value, 'value changed').to.equal('option-2');
             expect(secondItem.selected, 'selected changed').to.be.true;
-            expect(document.activeElement).not.to.equal(input);
+            console.log(document.activeElement);
+            expect(document.activeElement).to.equal(el);
         });
-        it.skip('opens on ArrowUp', async () => {
+        it('opens on ArrowUp', async () => {
             const button = el.button as HTMLButtonElement;
 
             el.focus();
@@ -888,7 +889,7 @@ export function runPickerTests(): void {
             expect(el.open, 'should be closed after escape key is pressed').to
                 .be.false;
         });
-        it.skip('opens on ArrowDown', async () => {
+        it('opens on ArrowDown', async () => {
             const firstItem = el.querySelector(
                 'sp-menu-item:nth-of-type(1)'
             ) as MenuItem;
@@ -915,7 +916,7 @@ export function runPickerTests(): void {
             expect(el.selectedItem?.itemText).to.equal('Deselect');
             expect(el.value).to.equal('Deselect');
         });
-        it.skip('quick selects on ArrowLeft/Right', async () => {
+        it('quick selects on ArrowLeft/Right', async () => {
             const selectionSpy = spy();
             el.addEventListener('change', (event: Event) => {
                 const { value } = event.target as Picker;
@@ -990,7 +991,7 @@ export function runPickerTests(): void {
                 `selectionSpy.callCount: ${selectionSpy.callCount}`
             ).to.equal(5);
         });
-        it.skip('quick selects first item on ArrowRight when no value', async () => {
+        it('quick selects first item on ArrowRight when no value', async () => {
             await nextFrame();
             const selectionSpy = spy();
             el.addEventListener('change', (event: Event) => {
@@ -1007,10 +1008,10 @@ export function runPickerTests(): void {
             expect(selectionSpy.callCount).to.equal(1);
             expect(selectionSpy.calledWith('Deselected'));
         });
-        it.skip('loads', async () => {
+        it('loads', async () => {
             expect(el).to.not.be.undefined;
         });
-        it.skip('closes when focusing away from the menu', async () => {
+        it('closes when focusing away from the menu', async () => {
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
             const thirdItem = el.querySelector(
                 'sp-menu-item:nth-of-type(3)'
@@ -1046,7 +1047,7 @@ export function runPickerTests(): void {
             expect(isMenuActiveElement(el)).to.be.false;
             expect(el.open, 'open?').to.be.false;
         });
-        it.skip('does not listen to streaming `Enter` keydown', async () => {
+        it('does not listen to streaming `Enter` keydown', async () => {
             const openSpy = spy();
             const closedSpy = spy();
             el.addEventListener('sp-opened', () => openSpy());
@@ -1091,7 +1092,7 @@ export function runPickerTests(): void {
             expect(closedSpy.callCount).to.equal(1);
             await sendKeys({ up: 'Enter' });
         });
-        it.skip('allows tabbing to close', async () => {
+        it('allows tabbing to close', async () => {
             const input = document.createElement('input');
             el.insertAdjacentElement('afterend', input);
             const opened = oneEvent(el, 'sp-opened');
@@ -1128,7 +1129,7 @@ export function runPickerTests(): void {
                 input1.remove();
                 input2.remove();
             });
-            it.skip('tabs forward through the element', async () => {
+            it('tabs forward through the element', async () => {
                 let focused: Promise<CustomEvent<FocusEvent>>;
                 if (!isSafari) {
                     // start at input1
@@ -1155,7 +1156,7 @@ export function runPickerTests(): void {
                 expect(document.activeElement === input2, 'focuses input 2').to
                     .true;
             });
-            it.skip('shift+tabs backwards through the element', async () => {
+            it('shift+tabs backwards through the element', async () => {
                 // start at input1
                 input2.focus();
                 await nextFrame();
@@ -1179,7 +1180,7 @@ export function runPickerTests(): void {
                 await focused;
                 expect(document.activeElement).to.equal(input1);
             });
-            it.skip('can close and immediately tab to the next tab stop', async () => {
+            it('can close and immediately tab to the next tab stop', async () => {
                 el.focus();
                 expect(document.activeElement, 'focuses el').to.equal(el);
                 // press down to open the picker
@@ -1199,7 +1200,7 @@ export function runPickerTests(): void {
                 expect(el.open, 'open?').to.be.false;
                 expect(document.activeElement).to.equal(input2);
             });
-            it.skip('can close and immediate shift+tab to the previous tab stop', async () => {
+            it('can close and immediate shift+tab to the previous tab stop', async () => {
                 el.focus();
                 await nextFrame();
                 expect(document.activeElement === el, 'focuses el').to.be.true;
@@ -1226,7 +1227,7 @@ export function runPickerTests(): void {
                     .be.true;
             });
         });
-        it.skip('does not open when [readonly]', async () => {
+        it('does not open when [readonly]', async () => {
             el.readonly = true;
 
             await elementUpdated(el);
@@ -1236,7 +1237,7 @@ export function runPickerTests(): void {
 
             expect(el.open, 'open?').to.be.false;
         });
-        it.skip('scrolls selected into view on open', async () => {
+        it('scrolls selected into view on open', async () => {
             // the Popover is transient, you need to be able to apply custom styles to it...
             const styles = document.createElement('style');
             styles.innerText = 'sp-popover { height: 40px; }';
@@ -1281,7 +1282,7 @@ export function runPickerTests(): void {
             expect(getParentOffset(lastItem)).to.be.greaterThan(40);
             expect(getParentOffset(firstItem)).to.be.greaterThan(-1);
         });
-        it.skip('manages focus-ring styles', async () => {
+        it('manages focus-ring styles', async () => {
             if (!isWebKit()) {
                 return;
             }
@@ -1402,7 +1403,7 @@ export function runPickerTests(): void {
             await nextFrame();
             await nextFrame();
         });
-        it.skip('selects the item with a matching value in a group', async () => {
+        it('selects the item with a matching value in a group', async () => {
             const item = el.querySelector('#should-be-selected') as MenuItem;
             expect(item.selected).to.be.true;
         });
@@ -1446,7 +1447,7 @@ export function runPickerTests(): void {
             }
         });
 
-        it.skip('loads accessibly w/ slotted label', async () => {
+        it('loads accessibly w/ slotted label', async () => {
             await expect(el).to.be.accessible();
         });
     });
@@ -1495,7 +1496,7 @@ export function runPickerTests(): void {
 
             return test.querySelector('sp-picker') as Picker;
         };
-        it.skip('does not warn in Dev Mode when accessible elements leveraged', async () => {
+        it('does not warn in Dev Mode when accessible elements leveraged', async () => {
             const test = await fixture<Picker>(html`
                 <div>
                     <sp-field-label for="test">Test label</sp-field-label>
@@ -1515,7 +1516,7 @@ export function runPickerTests(): void {
 
             expect(consoleWarnStub.called).to.be.false;
         });
-        it.skip('warns in Dev Mode when accessible attributes are not leveraged', async function () {
+        it('warns in Dev Mode when accessible attributes are not leveraged', async function () {
             this.retries(0);
             el = await fixture<Picker>(html`
                 <sp-picker>
@@ -1543,7 +1544,7 @@ export function runPickerTests(): void {
             });
         });
         describe('deprecated', () => {
-            it.skip('warns in Dev Mode of deprecated `<sp-menu>` usage', async () => {
+            it('warns in Dev Mode of deprecated `<sp-menu>` usage', async () => {
                 el = await pickerFixture();
                 await elementUpdated(el);
 
@@ -1587,7 +1588,7 @@ export function runPickerTests(): void {
                     await closed;
                 }
             });
-            it.skip('selects with deprecated syntax', async () => {
+            it('selects with deprecated syntax', async () => {
                 const secondItem = el.querySelector(
                     'sp-menu-item:nth-of-type(2)'
                 ) as MenuItem;
@@ -1611,7 +1612,7 @@ export function runPickerTests(): void {
         });
     });
     testForLitDevWarnings(async () => await pickerFixture());
-    it.skip('manages its "name" value in the accessibility tree when [icons-only]', async () => {
+    it('manages its "name" value in the accessibility tree when [icons-only]', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>${iconsOnly({})}</div>
         `);
@@ -1649,7 +1650,7 @@ export function runPickerTests(): void {
             '`name` is the label text plus the selected item text'
         ).to.not.be.null;
     });
-    it.skip('toggles between pickers', async () => {
+    it('toggles between pickers', async () => {
         const el1 = await pickerFixture();
         const el2 = await pickerFixture();
 
@@ -1694,7 +1695,7 @@ export function runPickerTests(): void {
         await el1closed;
         expect(el1.open, 'escape key: el1 to be closed').to.be.false;
     });
-    it.skip('displays selected item text by default', async () => {
+    it('displays selected item text by default', async () => {
         const el = await fixture<Picker>(html`
             <sp-picker
                 value="inverse"
@@ -1745,7 +1746,7 @@ export function runPickerTests(): void {
         expect(firstItem.focused, 'firstItem NOT "focused"').to.be.false;
         expect(secondItem.focused, 'secondItem "focused"').to.be.true;
     });
-    it.skip('resets value when item not available', async () => {
+    it('resets value when item not available', async () => {
         const el = await fixture<Picker>(html`
             <sp-picker
                 value="missing"
@@ -1766,7 +1767,7 @@ export function runPickerTests(): void {
         expect(el.value).to.equal('');
         expect(el.selectedItem?.itemText).to.be.undefined;
     });
-    it.skip('allows event listeners on child items', async () => {
+    it('allows event listeners on child items', async () => {
         const mouseenterSpy = spy();
         const handleMouseenter = (): void => mouseenterSpy();
         const el = await fixture<Picker>(html`
@@ -1802,7 +1803,7 @@ export function runPickerTests(): void {
         expect(el.open, 'open?').to.be.false;
         expect(mouseenterSpy.calledOnce).to.be.true;
     });
-    it.skip('dispatches events on open/close', async () => {
+    it('dispatches events on open/close', async () => {
         const openedSpy = spy();
         const closedSpy = spy();
         const handleOpenedSpy = (event: Event): void => openedSpy(event);
@@ -1834,7 +1835,7 @@ export function runPickerTests(): void {
 
         expect(closedSpy.calledOnce).to.be.true;
     });
-    it.skip('closes tooltip on button blur', async () => {
+    it('closes tooltip on button blur', async () => {
         const test = await styledFixture(html`
             <div>${tooltip(tooltip.args)}</div>
         `);
@@ -1900,7 +1901,7 @@ export function runPickerTests(): void {
             this.el = test.querySelector('sp-picker') as Picker;
             await elementUpdated(this.elel);
         });
-        it.skip('does not recieve focus from an `<sp-field-label>`', async function () {
+        it('does not recieve focus from an `<sp-field-label>`', async function () {
             expect(this.el.disabled, 'this.el disabled?').to.be.true;
             expect(this.el.focused, 'this.el focused?').to.be.false;
 
@@ -1909,7 +1910,7 @@ export function runPickerTests(): void {
 
             expect(this.el.focused, 'this.el focused?').to.be.false;
         });
-        it.skip('does not open from `click()`', async function () {
+        it('does not open from `click()`', async function () {
             expect(this.el.disabled, 'this.el disabled?').to.be.true;
             expect(this.el.focused, 'this.el open?').to.be.false;
 
@@ -1918,7 +1919,7 @@ export function runPickerTests(): void {
 
             expect(this.el.focused, 'this.el open?').to.be.false;
         });
-        it.skip('does not open from `sendMouse()`', async function () {
+        it('does not open from `sendMouse()`', async function () {
             expect(this.el.disabled, 'this.el disabled?').to.be.true;
             expect(this.el.focused, 'this.el open?').to.be.false;
 
@@ -1953,7 +1954,7 @@ export function runPickerTests(): void {
             this.el = test.querySelector('sp-picker') as Picker;
             await elementUpdated(this.elel);
         });
-        it.skip('receives focus from an `<sp-field-label>`', async function () {
+        it('receives focus from an `<sp-field-label>`', async function () {
             expect(this.el.focused, 'this.el focused?').to.be.false;
 
             this.label.click();
@@ -1961,7 +1962,7 @@ export function runPickerTests(): void {
 
             expect(this.el.focused, 'this.el focused?').to.be.true;
         });
-        it.skip('does not open from `click()`', async function () {
+        it('does not open from `click()`', async function () {
             expect(this.el.focused, 'this.el open?').to.be.false;
 
             this.el.click();
@@ -1969,7 +1970,7 @@ export function runPickerTests(): void {
 
             expect(this.el.focused, 'this.el open?').to.be.false;
         });
-        it.skip('manages its "name" value in the accessibility tree when [pending]', async () => {
+        it('manages its "name" value in the accessibility tree when [pending]', async () => {
             type NamedNode = { name: string; role: string };
             const snapshot = (await a11ySnapshot(
                 {}
@@ -1995,7 +1996,7 @@ export function runPickerTests(): void {
             this.el = test.querySelector('sp-picker') as Picker;
             await elementUpdated(this.el);
         });
-        it.skip('displays the same icon as the selected menu item', async function () {
+        it('displays the same icon as the selected menu item', async function () {
             // Delay long enough for the picker to display the selected item.
             // Chromium and Webkit require 2 frames, Firefox requires 3 frames.
             await nextFrame();
