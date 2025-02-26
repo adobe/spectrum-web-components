@@ -825,6 +825,37 @@ export function runPickerTests(): void {
             expect(secondItem.selected, 'selection prevented').to.be.false;
             expect(el.open, 'open?').to.be.true;
         });
+        it('should retain focus after click', async () => {
+            const input = document.createElement('input');
+            document.body.append(input);
+
+            await elementUpdated(el);
+
+            const secondItem = el.querySelector(
+                'sp-menu-item:nth-of-type(2)'
+            ) as MenuItem;
+
+            const opened = oneEvent(el, 'sp-opened');
+            el.click();
+            await opened;
+            await elementUpdated(el);
+
+            expect(el.open, 'open?').to.be.true;
+            expect(el.selectedItem?.itemText).to.be.undefined;
+            expect(el.value).to.equal('');
+            expect(secondItem.selected).to.be.false;
+
+            secondItem.click();
+            await waitUntil(
+                () => document.activeElement === el,
+                'focus throw', { timeout: 300 }
+            );
+
+            expect(el.open, 'open?').to.be.false;
+            expect(el.value, 'value changed').to.equal('option-2');
+            expect(secondItem.selected, 'selected changed').to.be.true;
+            input.remove();
+        });
         it('should throw focus after `change`', async () => {
             const input = document.createElement('input');
             document.body.append(input);
