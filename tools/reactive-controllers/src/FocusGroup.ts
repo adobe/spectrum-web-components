@@ -185,6 +185,27 @@ export class FocusGroupController<T extends HTMLElement>
         this.manage();
     }
 
+    /**
+     * resets the focusedItem to initial item
+     */
+    reset(): void {
+        const elements = this.elements;
+        if (!elements.length) return;
+        this.setCurrentIndexCircularly(this.focusInIndex - this.currentIndex);
+        let focusElement = elements[this.currentIndex];
+        if (this.currentIndex < 0) {
+            return;
+        }
+        if (!focusElement || !this.isFocusableElement(focusElement)) {
+            this.setCurrentIndexCircularly(1);
+            focusElement = elements[this.currentIndex];
+        }
+        if (focusElement && this.isFocusableElement(focusElement)) {
+            elements[this.prevIndex]?.setAttribute('tabindex', '-1');
+            focusElement.setAttribute('tabindex', '0');
+        }
+    }
+
     focusOnItem(item?: T, options?: FocusOptions): void {
         if (
             item &&
@@ -193,7 +214,6 @@ export class FocusGroupController<T extends HTMLElement>
         ) {
             const diff = this.elements.indexOf(item) - this.currentIndex;
             this.setCurrentIndexCircularly(diff);
-            item = this.elements[this.currentIndex];
             this.elements[this.prevIndex]?.setAttribute('tabindex', '-1');
         }
         this.focus(options);

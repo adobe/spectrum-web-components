@@ -72,7 +72,6 @@ export class RovingTabindexController<
                 }
                 return;
             }
-            el.removeAttribute('tabindex');
             const updatable = el as unknown as {
                 requestUpdate?: () => void;
             };

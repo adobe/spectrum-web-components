@@ -309,10 +309,6 @@ export class MenuItem extends LikeAnchor(
     @property({ type: Boolean, reflect: true })
     public open = false;
 
-    public get firstSelectedItem(): MenuItem | undefined {
-        return (this.submenuElement as Menu)?.getFirstSelectedItem();
-    }
-
     private handleClickCapture(event: Event): void | boolean {
         if (this.disabled) {
             event.preventDefault();
@@ -513,7 +509,7 @@ export class MenuItem extends LikeAnchor(
         if (event.composedPath().includes(this.overlayElement)) {
             return;
         }
-        this.openOverlay(true);
+        this.openOverlay();
     }
 
     protected handleSubmenuFocus(): void {
@@ -521,6 +517,7 @@ export class MenuItem extends LikeAnchor(
             // Wait till after `closeDescendentOverlays` has happened in Menu
             // to reopen (keep open) the direct descendent of this Menu Item
             this.overlayElement.open = this.open;
+            this.focused = false;
         });
     }
 
@@ -541,7 +538,7 @@ export class MenuItem extends LikeAnchor(
             delete this.leaveTimeout;
             return;
         }
-        this.openOverlay(true);
+        this.openOverlay();
     }
 
     protected leaveTimeout?: ReturnType<typeof setTimeout>;
@@ -586,6 +583,8 @@ export class MenuItem extends LikeAnchor(
                 (el as HTMLElement).localName === 'sp-overlay'
             );
         }) as Overlay;
+        if (this.matches(':focus, :focus-within') || this.focused)
+            this.submenuElement?.focus();
         this.overlayElement.parentOverlayToForceClose = parentOverlay;
     }
 
@@ -595,11 +594,9 @@ export class MenuItem extends LikeAnchor(
         this.active = false;
     }
 
-    public async openOverlay(focus: boolean = false): Promise<void> {
+    public async openOverlay(): Promise<void> {
         if (!this.hasSubmenu || this.open || this.disabled) {
             return;
-        }
-        if (focus) {
         }
         this.open = true;
         this.active = true;
