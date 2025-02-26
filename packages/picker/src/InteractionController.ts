@@ -137,6 +137,9 @@ export class InteractionController implements ReactiveController {
                 this.host.isMobile.matches && !this.host.forcePopover
                     ? undefined
                     : this.host.placement;
+            // We should not be applying open is set programmatically via the picker's open.property.
+            // Focus should only be applied if a user action causes the menu to open. Otherwise,
+            // we could be pulling focus from a user when an picker with an open menu loads.
             this.overlay.receivesFocus = 'false';
             this.overlay.willPreventClose =
                 this.preventNextToggle !== 'no' && this.open;

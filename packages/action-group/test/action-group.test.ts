@@ -238,10 +238,10 @@ describe('ActionGroup', () => {
         await sendKeys({ press: 'ArrowDown' });
         await sendKeys({ press: 'ArrowDown' });
 
+        opened = oneEvent(fourthMenuItem as MenuItem, 'sp-opened');
+
         // press Enter to select the fourth menu item
         await sendKeys({ press: 'Enter' });
-
-        opened = oneEvent(fourthMenuItem as MenuItem, 'sp-opened');
         await opened;
 
         // expect the second submenu item to be focused

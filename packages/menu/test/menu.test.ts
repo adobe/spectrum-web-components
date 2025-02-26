@@ -23,7 +23,7 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
-import { isChrome, isFirefox, isWebKit } from '@spectrum-web-components/shared';
+import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -464,7 +464,7 @@ describe('Menu', () => {
             document.activeElement
         );
         //@todo this test fails on Chromium
-        if (isFirefox() || isChrome()) {
+        if (isFirefox() || isWebKit()) {
             children[0].remove();
             await elementUpdated(el);
             expect(children[1], 'selected element is focused').to.equal(

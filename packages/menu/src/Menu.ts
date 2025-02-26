@@ -737,10 +737,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         );
     }
 
-    public isDebugging(): boolean {
-        return this.hasAttribute('debugging');
-    }
-
     public updateSelectedItemIndex(): void {
         let firstOrFirstSelectedIndex = 0;
         const selectedItemsMap = new Map<MenuItem, boolean>();
@@ -768,6 +764,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 }
             }
         }
+
         this.selectedItemsMap = selectedItemsMap;
         this._selected = selected;
         this.selectedItems = selectedItems;

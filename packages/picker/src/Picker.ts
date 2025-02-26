@@ -727,16 +727,11 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         );
     }
 
-    public isDebugging(): boolean {
-        return this.hasAttribute('debugging');
-    }
-
     protected get renderMenu(): TemplateResult {
         const menu = html`
             <sp-menu
                 aria-labelledby="applied-label"
                 @change=${this.handleChange}
-                ?debugging=${this.isDebugging()}
                 id="menu"
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
