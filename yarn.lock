@@ -7327,13 +7327,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/accordion@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/accordion@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/accordion@npm:6.0.1":
+  version: 6.0.1
+  resolution: "@spectrum-css/accordion@npm:6.0.1"
   peerDependencies:
     "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/0a1130fe21b27fdef9866726859073f3e96943948a7d8a28b636afbae730f0cdfb5ee13b934aa7cfd80a878bf8a2535d1dea5b9b90a0a88b09fa763e6f402d5a
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/06872bdedce318c33afc7272ad804b5cb46c32257af37055dc6d7c2e76de82727819a06918317305afedb986b5edac97583d3420541ba2579f63307b9d28661e
   languageName: node
   linkType: hard
 
@@ -8231,7 +8231,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/accordion@workspace:packages/accordion"
   dependencies:
-    "@spectrum-css/accordion": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/accordion": "npm:6.0.1"
     "@spectrum-web-components/base": "npm:1.1.2"
     "@spectrum-web-components/icon": "npm:1.1.2"
     "@spectrum-web-components/icons-ui": "npm:1.1.2"
@@ -8716,8 +8716,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.1.2
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=d8a9eb&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/78d45cc73ebf29f2c0246ee7a3a2146cea8bc2e9cbe2a8d8addb3091ecb684479c28376572ed27f5e7ae994845e57481b5d8518a857efcb270b79175276855d3
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=84adff&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/6f7cbdb8ba913403813d8ac59957ef9b8013d57751859d07c231fb818ec339155fd555b75455693259609ff4a7388a2e8c7dffb98431fba77c040309fc0a37ed
   languageName: node
   linkType: hard
 
