@@ -155,7 +155,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                     <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-action-menu>
             `);
-            let opened = oneEvent(el, 'sp-opened');
+            const opened = oneEvent(el, 'sp-opened');
             el.focus();
             sendKeys({ press: 'Enter' });
             await opened;
