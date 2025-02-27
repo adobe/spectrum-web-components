@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-accordion-min-block-size: max(
         var(--mod-accordion-item-height, var(--spectrum-accordion-item-height)),

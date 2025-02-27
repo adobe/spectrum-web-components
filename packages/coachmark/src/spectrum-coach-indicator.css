@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     margin: var(--mod-coach-indicator-gap, var(--spectrum-coach-indicator-gap));
     min-inline-size: var(
@@ -37,25 +38,29 @@ governing permissions and limitations under the License.
         var(
                 --mod-coach-indicator-quiet-ring-diameter,
                 var(--spectrum-coach-indicator-quiet-ring-diameter-size)
-            ) * 2.75
+            ) *
+            2.75
     );
     --mod-coach-indicator-min-block-size: calc(
         var(
                 --mod-coach-indicator-quiet-ring-diameter,
                 var(--spectrum-coach-indicator-quiet-ring-diameter-size)
-            ) * 2.75
+            ) *
+            2.75
     );
     --mod-coach-indicator-inline-size: calc(
         var(
                 --mod-coach-indicator-quiet-ring-diameter,
                 var(--spectrum-coach-indicator-quiet-ring-diameter-size)
-            ) * 2.75
+            ) *
+            2.75
     );
     --mod-coach-indicator-block-size: calc(
         var(
                 --mod-coach-indicator-quiet-ring-diameter,
                 var(--spectrum-coach-indicator-quiet-ring-diameter-size)
-            ) * 2.75
+            ) *
+            2.75
     );
     --mod-coach-indicator-ring-inline-size: var(
         --mod-coach-indicator-quiet-ring-diameter,

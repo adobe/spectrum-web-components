@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-table-row-background-color: Canvas;
@@ -79,9 +80,6 @@ governing permissions and limitations under the License.
 :host:not(.spectrum-Table-scroller) {
     border-collapse: initial;
     border-spacing: 0;
-}
-
-:host:not(.spectrum-Table-scroller) {
     display: table;
 }
 

@@ -28,10 +28,10 @@
         "string-similarity": "^4.0.4"
     },
     "devDependencies": {
-        "jest": "^27.0.1",
-        "jest-preset-stylelint": "^7.0.0",
+        "jest": "^27.5.1",
+        "jest-preset-stylelint": "^7.2.0",
         "lodash": "^4.17.21",
-        "stylelint": "^16.0.0"
+        "stylelint": "^16.14.1"
     },
     "jest": {
         "preset": "jest-preset-stylelint"

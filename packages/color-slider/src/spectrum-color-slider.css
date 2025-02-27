@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-color-slider-border-color: CanvasText;
@@ -135,12 +136,12 @@ governing permissions and limitations under the License.
 
 .checkerboard,
 .gradient {
-    inline-size: 100%;
-    block-size: 100%;
     border-radius: var(
         --mod-color-slider-border-rounding,
         var(--spectrum-color-slider-border-rounding)
     );
+    block-size: 100%;
+    inline-size: 100%;
 }
 
 .gradient:dir(rtl),
@@ -150,10 +151,10 @@ governing permissions and limitations under the License.
 
 .slider {
     opacity: 0;
-    inline-size: 100%;
-    block-size: 100%;
     z-index: 0;
     pointer-events: none;
+    block-size: 100%;
+    inline-size: 100%;
     margin: 0;
     position: absolute;
     inset-block-start: 0;

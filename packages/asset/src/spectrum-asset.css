@@ -11,18 +11,19 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
-    inline-size: 100%;
-    block-size: 100%;
     justify-content: center;
     align-items: center;
+    block-size: 100%;
+    inline-size: 100%;
     display: flex;
 }
 
 ::slotted(*) {
-    max-inline-size: 100%;
-    max-block-size: 100%;
     object-fit: contain;
+    max-block-size: 100%;
+    max-inline-size: 100%;
     transition: opacity var(--spectrum-asset-transition-duration);
 }
 

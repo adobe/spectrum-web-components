@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 .modal {
     pointer-events: none;
     visibility: hidden;
@@ -140,17 +141,17 @@ governing permissions and limitations under the License.
 @media only screen and (device-height <= 350px),
     only screen and (device-width <= 400px) {
     :host([responsive]) .modal {
-        inline-size: 100%;
-        block-size: 100%;
-        max-inline-size: 100%;
-        max-block-size: 100%;
         border-radius: 0;
+        block-size: 100%;
+        max-block-size: 100%;
+        inline-size: 100%;
+        max-inline-size: 100%;
     }
 }
 
 .fullscreen {
-    max-inline-size: none;
     max-block-size: none;
+    max-inline-size: none;
     position: fixed;
     inset-block-start: var(
         --mod-modal-fullscreen-margin,
@@ -171,11 +172,11 @@ governing permissions and limitations under the License.
 }
 
 .fullscreenTakeover {
-    max-inline-size: none;
-    max-block-size: none;
     box-sizing: border-box;
     border: none;
     border-radius: 0;
+    max-block-size: none;
+    max-inline-size: none;
     position: fixed;
     inset: 0;
 }

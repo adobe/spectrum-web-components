@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 #separator {
     margin-block: var(
         --mod-breadcrumbs-icon-spacing-block,
@@ -207,22 +208,26 @@ governing permissions and limitations under the License.
             var(
                 --mod-breadcrumbs-focus-indicator-gap,
                 var(--spectrum-breadcrumbs-focus-indicator-gap)
-            ) * 2 +
+            ) *
+            2 +
             var(
                 --mod-breadcrumbs-focus-indicator-thickness,
                 var(--spectrum-breadcrumbs-focus-indicator-thickness)
-            ) * 2
+            ) *
+            2
     );
     block-size: calc(
         100% +
             var(
                 --mod-breadcrumbs-focus-indicator-gap,
                 var(--spectrum-breadcrumbs-focus-indicator-gap)
-            ) * 2 +
+            ) *
+            2 +
             var(
                 --mod-breadcrumbs-focus-indicator-thickness,
                 var(--spectrum-breadcrumbs-focus-indicator-thickness)
-            ) * 2
+            ) *
+            2
     );
     border-width: var(
         --mod-breadcrumbs-focus-indicator-thickness,
@@ -252,7 +257,8 @@ governing permissions and limitations under the License.
                         --mod-breadcrumbs-focus-indicator-thickness,
                         var(--spectrum-breadcrumbs-focus-indicator-thickness)
                     )
-            ) * -1
+            ) *
+            -1
     );
     margin-inline-start: calc(
         (
@@ -264,7 +270,8 @@ governing permissions and limitations under the License.
                         --mod-breadcrumbs-focus-indicator-thickness,
                         var(--spectrum-breadcrumbs-focus-indicator-thickness)
                     )
-            ) * -1
+            ) *
+            -1
     );
     display: block;
     position: absolute;

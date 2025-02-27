@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --mod-divider-vertical-margin: var(
         --mod-alert-banner-edge-to-divider,
@@ -89,7 +90,6 @@ governing permissions and limitations under the License.
 }
 
 .body {
-    inline-size: 100%;
     gap: max(
         calc(
             var(
@@ -103,6 +103,7 @@ governing permissions and limitations under the License.
         ),
         0px
     );
+    inline-size: 100%;
     flex-wrap: wrap;
     align-items: center;
     margin-inline-start: var(

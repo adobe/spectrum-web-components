@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-avatar-focus-indicator-color: CanvasText;
@@ -61,14 +62,16 @@ governing permissions and limitations under the License.
             var(
                 --mod-avatar-focus-indicator-gap,
                 var(--spectrum-avatar-focus-indicator-gap)
-            ) * 2
+            ) *
+            2
     );
     block-size: calc(
         var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) +
             var(
                 --mod-avatar-focus-indicator-gap,
                 var(--spectrum-avatar-focus-indicator-gap)
-            ) * 2
+            ) *
+            2
     );
     border-style: solid;
     border-width: var(
@@ -97,7 +100,8 @@ governing permissions and limitations under the License.
                         --mod-avatar-focus-indicator-thickness,
                         var(--spectrum-avatar-focus-indicator-thickness)
                     )
-            ) * -1
+            ) *
+            -1
     );
     inset-inline-start: calc(
         (
@@ -109,7 +113,8 @@ governing permissions and limitations under the License.
                         --mod-avatar-focus-indicator-thickness,
                         var(--spectrum-avatar-focus-indicator-thickness)
                     )
-            ) * -1
+            ) *
+            -1
     );
 }
 
