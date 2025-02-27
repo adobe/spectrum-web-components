@@ -50,6 +50,7 @@ governing permissions and limitations under the License.
     inset: auto;
     top: 0;
     left: 0;
+    display: flex;
 
     --sp-overlay-open: true;
 }

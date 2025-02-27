@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-field",
-    "version": "1.0.1",
+    "version": "1.1.2",
     "publishConfig": {
         "access": "public"
     },
@@ -56,10 +56,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@ctrl/tinycolor": "^4.0.3",
-        "@spectrum-web-components/base": "^1.0.1",
-        "@spectrum-web-components/color-handle": "^1.0.1",
-        "@spectrum-web-components/textfield": "^1.0.1"
+        "@spectrum-web-components/base": "^1.1.2",
+        "@spectrum-web-components/color-handle": "^1.1.2",
+        "@spectrum-web-components/textfield": "^1.1.2"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

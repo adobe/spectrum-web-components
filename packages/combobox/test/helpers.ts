@@ -15,7 +15,7 @@ import { html } from '@open-wc/testing';
 import { ComboboxOption } from '@spectrum-web-components/combobox';
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import { MenuItem } from '@spectrum-web-components/menu';
-import { fruits } from '../stories/index.js';
+import { countries, fruits } from '../stories/index.js';
 
 export type TestableCombobox = HTMLElement & {
     activeDescendant: ComboboxOption;
@@ -51,14 +51,48 @@ export const comboboxFixture = async (): Promise<TestableCombobox> => {
 
     return el;
 };
+export const longComboboxFixture = async (): Promise<TestableCombobox> => {
+    const el = await fixture<TestableCombobox>(html`
+        <sp-combobox
+            .autocomplete=${'list'}
+            label="Combobox"
+            .options=${countries}
+        >
+            Combobox
+        </sp-combobox>
+    `);
+
+    return el;
+};
+export const withDisabledItemsFixture = async (): Promise<TestableCombobox> => {
+    const countriesWithDisabledItems = countries.map((country) => ({
+        ...country,
+        disabled: ['Albania', 'Azerbaijan', 'Solomon Islands'].includes(
+            country.itemText
+        ),
+    }));
+    const el = await fixture<TestableCombobox>(html`
+        <sp-combobox
+            .autocomplete=${'list'}
+            label="Combobox"
+            .options=${countriesWithDisabledItems}
+        >
+            Combobox
+        </sp-combobox>
+    `);
+    return el;
+};
 
 export const testActiveElement = (
     el: TestableCombobox,
     testId: string
 ): void => {
-    expect(el.activeDescendant?.value).to.equal(testId);
+    expect(el.activeDescendant?.value, 'active descendant').to.equal(testId);
     const activeElement = el.shadowRoot.querySelector(
         `#${el.activeDescendant.value}`
     ) as HTMLElement;
-    expect(activeElement.getAttribute('aria-selected')).to.equal('true');
+    expect(
+        activeElement.getAttribute('aria-selected'),
+        'aria-selected'
+    ).to.equal('true');
 };

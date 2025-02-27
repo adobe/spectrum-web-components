@@ -22,7 +22,7 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import type { ActionButton } from '@spectrum-web-components/action-button';
+import { ActionButton } from '@spectrum-web-components/action-button';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
@@ -40,6 +40,10 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],
     noDefaultSize: true,
 }) {
+    static override shadowRootOptions = {
+        ...SpectrumElement.shadowRootOptions,
+        delegatesFocus: true,
+    };
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -90,6 +94,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     : firstEnabledIndex;
             },
             elements: () => this.buttons,
+            hostDelegatesFocus: true,
             isFocusableElement: (el: ActionButton) => !el.disabled,
         }
     );
@@ -245,7 +250,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 const selections: ActionButton[] = [];
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
-                    option.setAttribute('role', 'radio');
+                    if (option instanceof ActionButton)
+                        option.setAttribute('role', 'radio');
                     option.setAttribute(
                         'aria-checked',
                         option.selected ? 'true' : 'false'
@@ -273,7 +279,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 const selections: ActionButton[] = [];
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
-                    option.setAttribute('role', 'checkbox');
+                    if (option instanceof ActionButton)
+                        option.setAttribute('role', 'checkbox');
                     option.setAttribute(
                         'aria-checked',
                         option.selected ? 'true' : 'false'
@@ -297,7 +304,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     const selections: ActionButton[] = [];
                     const updates = options.map(async (option) => {
                         await option.updateComplete;
-                        option.setAttribute('role', 'button');
+                        if (option instanceof ActionButton)
+                            option.setAttribute('role', 'button');
                         if (option.selected) {
                             option.setAttribute('aria-pressed', 'true');
                             selections.push(option);
@@ -315,7 +323,8 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     );
                 } else {
                     this.buttons.forEach((option) => {
-                        option.setAttribute('role', 'button');
+                        if (option instanceof ActionButton)
+                            option.setAttribute('role', 'button');
                     });
                     break;
                 }

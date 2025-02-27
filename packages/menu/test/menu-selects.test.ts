@@ -29,15 +29,13 @@ describe('Menu [selects]', () => {
     let el!: Menu;
     let options!: MenuItem[];
     beforeEach(async () => {
-        el = await fixture<Menu>(
-            html`
-                <sp-menu selects="single">
-                    <sp-menu-item value="1">Option 1</sp-menu-item>
-                    <sp-menu-item value="2">Option 2</sp-menu-item>
-                    <sp-menu-item value="3">Option 3</sp-menu-item>
-                </sp-menu>
-            `
-        );
+        el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item value="1">Option 1</sp-menu-item>
+                <sp-menu-item value="2">Option 2</sp-menu-item>
+                <sp-menu-item value="3">Option 3</sp-menu-item>
+            </sp-menu>
+        `);
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
         await Promise.all(options.map((option) => option.updateComplete));
         await nextFrame();
@@ -151,17 +149,15 @@ describe('Menu [selects] w/ group', () => {
     let el!: Menu;
     let options!: MenuItem[];
     beforeEach(async () => {
-        el = await fixture<Menu>(
-            html`
-                <sp-menu selects="single">
-                    <sp-menu-group selects="inherit">
-                        <sp-menu-item value="1">Option 1</sp-menu-item>
-                        <sp-menu-item value="2">Option 2</sp-menu-item>
-                        <sp-menu-item value="3">Option 3</sp-menu-item>
-                    </sp-menu-group>
-                </sp-menu>
-            `
-        );
+        el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-group selects="inherit">
+                    <sp-menu-item value="1">Option 1</sp-menu-item>
+                    <sp-menu-item value="2">Option 2</sp-menu-item>
+                    <sp-menu-item value="3">Option 3</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `);
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
         await Promise.all(options.map((option) => option.updateComplete));
         await nextFrame();
@@ -275,17 +271,15 @@ describe('Menu w/ group [selects]', () => {
     let group!: MenuGroup;
     let options!: MenuItem[];
     beforeEach(async () => {
-        el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-group selects="single">
-                        <sp-menu-item value="1">Option 1</sp-menu-item>
-                        <sp-menu-item value="2">Option 2</sp-menu-item>
-                        <sp-menu-item value="3">Option 3</sp-menu-item>
-                    </sp-menu-group>
-                </sp-menu>
-            `
-        );
+        el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-group selects="single">
+                    <sp-menu-item value="1">Option 1</sp-menu-item>
+                    <sp-menu-item value="2">Option 2</sp-menu-item>
+                    <sp-menu-item value="3">Option 3</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `);
         group = el.querySelector('sp-menu-group') as MenuGroup;
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
         await Promise.all(options.map((option) => option.updateComplete));
@@ -403,22 +397,20 @@ describe('Menu w/ groups [selects]', () => {
     let groupB!: MenuGroup;
     let options!: MenuItem[];
     beforeEach(async () => {
-        el = await fixture<Menu>(
-            html`
-                <sp-menu>
-                    <sp-menu-group selects="single" id="group-1">
-                        <sp-menu-item value="1a">Option 1a</sp-menu-item>
-                        <sp-menu-item value="2a">Option 2a</sp-menu-item>
-                        <sp-menu-item value="3a">Option 3a</sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group selects="single" id="group-2">
-                        <sp-menu-item value="1b">Option 1b</sp-menu-item>
-                        <sp-menu-item value="2b">Option 2b</sp-menu-item>
-                        <sp-menu-item value="3b">Option 3b</sp-menu-item>
-                    </sp-menu-group>
-                </sp-menu>
-            `
-        );
+        el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-group selects="single" id="group-1">
+                    <sp-menu-item value="1a">Option 1a</sp-menu-item>
+                    <sp-menu-item value="2a">Option 2a</sp-menu-item>
+                    <sp-menu-item value="3a">Option 3a</sp-menu-item>
+                </sp-menu-group>
+                <sp-menu-group selects="single" id="group-2">
+                    <sp-menu-item value="1b">Option 1b</sp-menu-item>
+                    <sp-menu-item value="2b">Option 2b</sp-menu-item>
+                    <sp-menu-item value="3b">Option 3b</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        `);
         groupA = el.querySelector('sp-menu-group:first-child') as MenuGroup;
         groupB = el.querySelector('sp-menu-group:last-child') as MenuGroup;
         options = [...el.querySelectorAll('sp-menu-item')] as MenuItem[];
@@ -638,16 +630,17 @@ describe('Menu w/ groups [selects]', () => {
         input.focus();
         expect(document.activeElement === input).to.be.true;
         await sendKeys({ press: 'Shift+Tab' });
-        expect(document.activeElement === groupA).to.be.true;
+        expect(document.activeElement === options[0]).to.be.true;
         await sendKeys({ press: 'ArrowDown' });
+        expect(document.activeElement === options[1]).to.be.true;
         await sendKeys({ press: 'ArrowUp' });
 
         await elementUpdated(el);
         let optionCount = 0;
         for (const option of options) {
             const parentElement = option.parentElement as Menu;
-            expect(document.activeElement === parentElement, 'parent focused')
-                .to.be.true;
+            expect(document.activeElement === option, 'option focused').to.be
+                .true;
             expect(option.focused, `option ${optionCount} visually focused`).to
                 .be.true;
             await sendKeys({ press: 'Space' });

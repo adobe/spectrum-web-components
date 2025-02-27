@@ -15,7 +15,14 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import { Picker } from '@spectrum-web-components/picker';
 import { MenuItem } from '@spectrum-web-components/menu';
-import { expect, fixture, html, nextFrame, oneEvent } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    nextFrame,
+    oneEvent,
+} from '@open-wc/testing';
 
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -79,6 +86,7 @@ describe('Reparented Picker', () => {
         const { picker, before, after } = await fixtureElements();
 
         expect(picker.value).to.equal('');
+        picker.id = 'nikki';
 
         const item2 = picker.querySelector('[value="2"]') as MenuItem;
         const item3 = picker.querySelector('[value="3"]') as MenuItem;
@@ -110,11 +118,12 @@ describe('Reparented Picker', () => {
         opened = oneEvent(picker, 'sp-opened');
         picker.click();
         await opened;
+        await nextFrame();
         expect(picker.open).to.be.true;
         expect(picker.value).to.equal('3');
-        closed = oneEvent(picker, 'sp-closed');
+        opened = oneEvent(picker, 'sp-opened');
         before.append(picker);
-        await closed;
+        await elementUpdated(picker);
 
         expect(
             (picker as unknown as TestablePicker).optionsMenu.value

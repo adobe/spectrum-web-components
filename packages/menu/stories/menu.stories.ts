@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import type { Menu } from '@spectrum-web-components/menu';
+import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -153,6 +153,11 @@ export const controlled = (): TemplateResult => {
 };
 controlled.swc_vrt = {
     skip: true,
+};
+
+controlled.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
 
 export const menuItemWithDescription = (): TemplateResult => {
@@ -424,5 +429,26 @@ export const menuWithValueSlots = (): TemplateResult => {
                 </sp-menu-item>
             </sp-menu>
         </sp-popover>
+    `;
+};
+
+headersAndIcons.storyName = 'Dynamic MenuItems';
+
+export const dynamicRemoval = (): TemplateResult => {
+    const removeItem = async function (event: FocusEvent) {
+        await (event.target as MenuItem)?.updateComplete;
+        (event.target as MenuItem)?.remove();
+    };
+    return html`
+        <sp-menu id="casey" selects="single">
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item id="nikkimk" @focus=${removeItem}>
+                Feather...
+            </sp-menu-item>
+            <sp-menu-item selected>Select and Mask...</sp-menu-item>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+        </sp-menu>
     `;
 };

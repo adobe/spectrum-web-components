@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/adobe/spectrum-web-components/compare/v1.1.1...v1.1.2) (2025-02-12)
+
+### Bug Fixes
+
+-   **overlay:** derive popover placement from host in interaction controller ([#5078](https://github.com/adobe/spectrum-web-components/issues/5078)) ([635cf53](https://github.com/adobe/spectrum-web-components/commit/635cf53df237b7f833633cb05d09c0697e61f6f4))
+-   **picker:** stop the click events from reaching the elements below picker-tray ([#5060](https://github.com/adobe/spectrum-web-components/issues/5060)) ([7e4fdbf](https://github.com/adobe/spectrum-web-components/commit/7e4fdbf3e4487b4c148368b852129b85f88a620b))
+-   **tooltip:** make tooltip delivery consistent across all browsers ([#5056](https://github.com/adobe/spectrum-web-components/issues/5056)) ([d01d5cd](https://github.com/adobe/spectrum-web-components/commit/d01d5cd7aad818b4d2bdd718f59715f65d6a25d0))
+
+## [1.1.1](https://github.com/adobe/spectrum-web-components/compare/v1.1.0...v1.1.1) (2025-01-29)
+
+### Bug Fixes
+
+-   **overlay:** make :focus-visible consistent when using overlay type modal ([#4912](https://github.com/adobe/spectrum-web-components/issues/4912)) ([7a5f786](https://github.com/adobe/spectrum-web-components/commit/7a5f786819ff200f5ae2648e2e2c4db3729050a2)), closes [#5021](https://github.com/adobe/spectrum-web-components/issues/5021)
+
+### Features
+
+-   **opacity-checkerboard:** bump CSS version ([#5040](https://github.com/adobe/spectrum-web-components/issues/5040)) ([e3bf6d3](https://github.com/adobe/spectrum-web-components/commit/e3bf6d3c20c8dab6674ad8b1793082372901d155))
+-   **picker:** add forcePopover property ([#5041](https://github.com/adobe/spectrum-web-components/issues/5041)) ([3651e57](https://github.com/adobe/spectrum-web-components/commit/3651e57a90a05e551e6ee650e8ccc73aa05d3e7c))
+-   **sp-button-group:** sp-button-group react to size updates ([#5037](https://github.com/adobe/spectrum-web-components/issues/5037)) ([63bc618](https://github.com/adobe/spectrum-web-components/commit/63bc618c18e9d8e39155cc7544814564673893a7))
+-   **thumbnail:** bump thumbnail to use foundations release ([7490324](https://github.com/adobe/spectrum-web-components/commit/74903245d8dd8e3d39653a7f5296fa91e4562877))
+
+# [1.1.0](https://github.com/adobe/spectrum-web-components/compare/v1.0.3...v1.1.0) (2025-01-29)
+
+### Bug Fixes
+
+-   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+-   **overlay:** make :focus-visible consistent when using overlay type modal ([#4912](https://github.com/adobe/spectrum-web-components/issues/4912)) ([7a5f786](https://github.com/adobe/spectrum-web-components/commit/7a5f786819ff200f5ae2648e2e2c4db3729050a2)), closes [#5021](https://github.com/adobe/spectrum-web-components/issues/5021)
+
+### Features
+
+-   add an optional chromatic vrt action ([7d2f840](https://github.com/adobe/spectrum-web-components/commit/7d2f8401cb05c5e23872424f132a1a8edd95b666))
+-   **opacity-checkerboard:** bump CSS version ([#5040](https://github.com/adobe/spectrum-web-components/issues/5040)) ([e3bf6d3](https://github.com/adobe/spectrum-web-components/commit/e3bf6d3c20c8dab6674ad8b1793082372901d155))
+-   **picker:** add forcePopover property ([#5041](https://github.com/adobe/spectrum-web-components/issues/5041)) ([3651e57](https://github.com/adobe/spectrum-web-components/commit/3651e57a90a05e551e6ee650e8ccc73aa05d3e7c))
+-   **sp-button-group:** sp-button-group react to size updates ([#5037](https://github.com/adobe/spectrum-web-components/issues/5037)) ([63bc618](https://github.com/adobe/spectrum-web-components/commit/63bc618c18e9d8e39155cc7544814564673893a7))
+-   **thumbnail:** bump thumbnail to use foundations release ([7490324](https://github.com/adobe/spectrum-web-components/commit/74903245d8dd8e3d39653a7f5296fa91e4562877))
+-   use globals to enable VRT modes in chromatic ([5b674b4](https://github.com/adobe/spectrum-web-components/commit/5b674b46841155762a6e5f9ebd566a0110279384))
+
+## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
+
+### Bug Fixes
+
+-   **action-button:** action-button with href can be perceived by screen reader ([#4927](https://github.com/adobe/spectrum-web-components/issues/4927)) ([2a0b3a5](https://github.com/adobe/spectrum-web-components/commit/2a0b3a5b300d51c002db60c6d899694d74834d39))
+-   **dialog:** fade-out animation when lazy loaded on popover overlays ([#4937](https://github.com/adobe/spectrum-web-components/issues/4937)) ([d36fc6e](https://github.com/adobe/spectrum-web-components/commit/d36fc6ee30bd6a028351eebc0486c0ec5e6bd082))
+-   **number-field:** added aria-hidden attribute for inc/dec buttons ([#4933](https://github.com/adobe/spectrum-web-components/issues/4933)) ([b16a839](https://github.com/adobe/spectrum-web-components/commit/b16a839b33cc7d02b42e012afaa6327972eb0c6b))
+-   **overlay:** overlay scroll in safari and firefox ([#4969](https://github.com/adobe/spectrum-web-components/issues/4969)) ([05d24ff](https://github.com/adobe/spectrum-web-components/commit/05d24ffc4dc8e9b0281b90c768b7f983fe890def))
+-   **toast:** adds iconLabel to address accessibility ([#4944](https://github.com/adobe/spectrum-web-components/issues/4944)) ([8121057](https://github.com/adobe/spectrum-web-components/commit/8121057518062fb000279659b9597396753e21b7))
+
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
 ### Bug Fixes

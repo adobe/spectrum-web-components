@@ -23,12 +23,18 @@ import {
     fixture,
     homeEvent,
 } from '../../../test/testing-helpers.js';
-import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
+import {
+    executeServerCommand,
+    sendKeys,
+    setViewport,
+} from '@web/test-runner-commands';
 import { PickerButton } from '@spectrum-web-components/picker-button';
 import {
     comboboxFixture,
+    longComboboxFixture,
     TestableCombobox,
     testActiveElement,
+    withDisabledItemsFixture,
 } from './helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { withTooltip } from '../stories/combobox.stories.js';
@@ -367,7 +373,7 @@ describe('Combobox', () => {
             expect(el.shadowRoot.activeElement).to.equal(input);
         });
     });
-    describe('manage active decendent', () => {
+    describe('manage active descendent', () => {
         it('sets activeDescendant to first descendent on ArrowDown', async () => {
             const el = await comboboxFixture();
 
@@ -482,27 +488,35 @@ describe('Combobox', () => {
             await elementUpdated(el);
             expect(el.value).to.equal('');
             expect(el.activeDescendant).to.be.undefined;
-            expect(el.open).to.be.false;
+            expect(el.open, 'open?').to.be.false;
 
             el.focusElement.focus();
             const opened = oneEvent(el, 'sp-opened');
             el.focusElement.dispatchEvent(arrowDownEvent());
             await opened;
 
-            expect(el.open).to.be.true;
-
+            expect(el.open, 'open?').to.be.true;
             await elementUpdated(el);
-            el.focusElement.dispatchEvent(arrowDownEvent());
-
-            await elementUpdated(el);
-            testActiveElement(el, 'banana');
+            expect(
+                el.activeDescendant?.value,
+                'activeDscendant after open?'
+            ).to.equal('apple');
             el.focusElement.dispatchEvent(enterEvent());
 
             await elementUpdated(el);
-            expect(el.open).to.be.false;
-            expect(el.activeDescendant).to.be.undefined;
-            expect(el.value).to.equal('Banana');
-            expect(el.focusElement.value).to.equal(el.value);
+            expect(el.open, 'open?').to.be.false;
+            expect(el.activeDescendant, 'activeDescendant after Enter?').to.be
+                .undefined;
+            expect(el.value, 'value after enter').to.equal('Apple');
+            expect(
+                el.shadowRoot.querySelector(
+                    'sp-menu-item[aria-selected="true"]'
+                )?.id,
+                'aria-selected'
+            ).to.equal('apple');
+            expect(el.focusElement.value, 'focusElement after enter').to.equal(
+                el.value
+            );
         });
         it('does not set the value when `enter` is pressed and no active descendent', async () => {
             const el = await comboboxFixture();
@@ -532,9 +546,10 @@ describe('Combobox', () => {
 
             await elementUpdated(el);
 
-            expect(el.value).to.equal('');
-            expect(el.activeDescendant).to.be.undefined;
-            expect(el.open).to.be.false;
+            expect(el.value, 'initial value').to.equal('');
+            expect(el.activeDescendant, 'initial activeDescendant').to.be
+                .undefined;
+            expect(el.open, 'initially open?').to.be.false;
 
             const opened = oneEvent(el, 'sp-opened');
             el.focusElement.click();
@@ -543,7 +558,7 @@ describe('Combobox', () => {
             const item = el.shadowRoot.querySelector('#cherry') as HTMLElement;
             await elementUpdated(item);
 
-            expect(el.open).to.be.true;
+            expect(el.open, 'open after click?').to.be.true;
 
             const itemValue = (item.textContent as string).trim();
             const rect = item.getBoundingClientRect();
@@ -561,9 +576,10 @@ describe('Combobox', () => {
             });
             await elementUpdated(el);
 
-            expect(el.value).to.equal(itemValue);
-            expect(el.open).to.be.false;
-            expect(el.activeDescendant).to.be.undefined;
+            expect(el.value, 'value after item click?').to.equal(itemValue);
+            expect(el.open, 'open after item click?').to.be.false;
+            expect(el.activeDescendant, 'activeDescendant after item click').to
+                .be.undefined;
         });
         it('reflects the selected value in menu on reopening', async () => {
             const el = await comboboxFixture();
@@ -621,7 +637,7 @@ describe('Combobox', () => {
                     ?.querySelector('[selected]')?.textContent
             ).to.equal(item.textContent);
         });
-        it('sets the value when an item is clicked programatically', async () => {
+        it('sets the value when an item is clicked programmatically', async () => {
             const el = await comboboxFixture();
 
             await elementUpdated(el);
@@ -912,6 +928,87 @@ describe('Combobox', () => {
         });
     });
 
+    describe('disabled items', () => {
+        let el: TestableCombobox;
+
+        beforeEach(async () => {
+            el = await withDisabledItemsFixture();
+            await elementUpdated(el);
+        });
+        afterEach(async () => {
+            if (el.open) {
+                const closed = oneEvent(el, 'sp-closed');
+                el.open = false;
+                await closed;
+            }
+        });
+
+        it('disabled items should be disabled', async () => {
+            const opened = oneEvent(el, 'sp-opened');
+            el.click();
+            await opened;
+
+            const menuItems = el.shadowRoot.querySelectorAll('sp-menu-item');
+            expect(menuItems[2].disabled).to.be.true;
+        });
+        it('disabled items should not be focusable using keyboard', async () => {
+            const opened = oneEvent(el, 'sp-opened');
+            el.click();
+            await opened;
+
+            // let's press arrow down 3 times and check if we are on Algeria (the next to disabled item)
+            await sendKeys({
+                press: 'ArrowDown',
+            });
+            await sendKeys({
+                press: 'ArrowDown',
+            });
+            await sendKeys({
+                press: 'ArrowDown',
+            });
+            await elementUpdated(el);
+            expect(el.activeDescendant?.itemText).to.equal('Algeria');
+        });
+        it('disabled items should not be focusable using mouse', async () => {
+            const opened = oneEvent(el, 'sp-opened');
+            el.click();
+            await opened;
+
+            const menuItems = el.shadowRoot.querySelectorAll('sp-menu-item');
+            const disabledItem = menuItems[2];
+
+            const bounds = disabledItem.getBoundingClientRect();
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            bounds.x + bounds.width / 2,
+                            bounds.y + bounds.height / 2,
+                        ],
+                    },
+                ],
+            });
+            await elementUpdated(el);
+
+            // active descendant should be undefined
+            expect(el.activeDescendant).to.be.undefined;
+        });
+        it('disabled items cannot be programmatically clicked', async () => {
+            const opened = oneEvent(el, 'sp-opened');
+            el.click();
+            await opened;
+
+            const menuItems = el.shadowRoot.querySelectorAll('sp-menu-item');
+            const disabledItem = menuItems[2];
+
+            disabledItem.click();
+            await elementUpdated(el);
+
+            expect(el.activeDescendant).to.be.undefined;
+        });
+    });
+
     it('closes tooltip on button blur', async () => {
         const el = await fixture<TestableCombobox>(withTooltip());
         await elementUpdated(el);
@@ -954,5 +1051,28 @@ describe('Combobox', () => {
         expect(document.activeElement === el).to.be.false;
         expect(tooltipEl.open).to.be.false;
         expect(el.open).to.be.false;
+    });
+
+    it('scrolls to fit window', async () => {
+        await setViewport({ width: 360, height: 640 });
+        const el = await longComboboxFixture();
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('');
+        expect(el.activeDescendant).to.be.undefined;
+        expect(el.open).to.be.false;
+
+        const opened = oneEvent(el, 'sp-opened');
+        el.focusElement.click();
+        await opened;
+        expect(el.open).to.be.true;
+
+        const menu = el.shadowRoot.querySelector(
+            '[role="listbox"]'
+        ) as HTMLElement;
+        await elementUpdated(menu);
+
+        expect(menu.scrollHeight > window.innerHeight).to.be.true;
     });
 });

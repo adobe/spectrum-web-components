@@ -22,6 +22,7 @@ export enum InteractionTypes {
     'desktop',
     'mobile',
 }
+export const SAFARI_FOCUS_RING_CLASS = 'remove-focus-ring-safari-hack';
 
 export class InteractionController implements ReactiveController {
     abortController!: AbortController;
@@ -132,10 +133,14 @@ export class InteractionController implements ReactiveController {
             });
             this.overlay.type = this.host.isMobile.matches ? 'modal' : 'auto';
             this.overlay.triggerElement = this.host as HTMLElement;
-            this.overlay.placement = this.host.isMobile.matches
-                ? undefined
-                : this.host.placement;
-            this.overlay.receivesFocus = 'true';
+            this.overlay.placement =
+                this.host.isMobile.matches && !this.host.forcePopover
+                    ? undefined
+                    : this.host.placement;
+            // We should not be applying open is set programmatically via the picker's open.property.
+            // Focus should only be applied if a user action causes the menu to open. Otherwise,
+            // we could be pulling focus from a user when an picker with an open menu loads.
+            this.overlay.receivesFocus = 'false';
             this.overlay.willPreventClose =
                 this.preventNextToggle !== 'no' && this.open;
             this.overlay.addEventListener(
@@ -156,6 +161,7 @@ export class InteractionController implements ReactiveController {
         ) {
             this.preventNextToggle = 'yes';
         }
+        if (this.preventNextToggle === 'no') this.host.close();
     }
 
     public handleActivate(_event: Event): void {}
@@ -170,6 +176,11 @@ export class InteractionController implements ReactiveController {
 
     hostConnected(): void {
         this.init();
+        this.host.addEventListener('sp-closed', ()=> {
+            if(!this.open && this.host.optionsMenu.matches(':focus-within') && !this.host.button.matches(':focus')) {
+                this.host.button.focus();
+            }
+        });
     }
 
     hostDisconnected(): void {

@@ -12,21 +12,23 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '@spectrum-web-components/link/sp-link.js';
-import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
-import { states } from './states.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
-import { isOverlayOpen } from '../../overlay/stories/index.js';
-import '../../overlay/stories/index.js';
-import { handleChange, StoryArgs, Template } from './template.js';
-import { argTypes } from './args.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/link/sp-link.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { spreadProps } from '../../../test/lit-helpers.js';
+import '../../overlay/stories/index.js';
+import { isOverlayOpen } from '../../overlay/stories/index.js';
+import { argTypes } from './args.js';
+import { states } from './states.js';
+import { handleChange, StoryArgs, Template } from './template.js';
 
 export default {
     title: 'Picker',
@@ -92,6 +94,65 @@ export const Default = (args: StoryArgs): TemplateResult => {
             <a href="#anchor">link</a>
             .
         </p>
+    `;
+};
+
+export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
+    return html`
+        <div style="padding: 40px">
+            <h1>Force Popover on Mobile</h1>
+            <p>
+                The forcePopover attribute overrides the mobile device
+                functionality of rendering a tray so that a popover will always
+                render no matter the device.
+            </p>
+            <ol>
+                <li>Open Chrome DevTools (or equivalent).</li>
+                <li>Toggle the Device Toolbar (the phone/tablet icon).</li>
+                <li>Select a device preset (e.g. iPhone 12).</li>
+                <li>
+                    Chrome will set user-agent strings, simulate touch, and
+                    adjust DPI.
+                </li>
+                <li>Reload the page</li>
+                <li>Click the Picker 1 and see a tray</li>
+                <li>Click the Picker 2 and see a popover</li>
+            </ol>
+            <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
+                Do you want to see a tray menu?
+            </sp-field-label>
+            <sp-picker
+                id="picker-1"
+                @change=${handleChange(args)}
+                label="Select an option"
+            >
+                <sp-menu-item value="option-1">Yes</sp-menu-item>
+                <sp-menu-item value="option-2">No</sp-menu-item>
+            </sp-picker>
+            <sp-field-label for="picker-2" size=${ifDefined(args.size)}>
+                Do you want to see a popover menu?
+            </sp-field-label>
+            <sp-picker
+                id="picker-2"
+                forcePopover
+                @change=${handleChange(args)}
+                label="Select an option"
+            >
+                <sp-menu-item value="option-1">Yes</sp-menu-item>
+                <sp-menu-item value="option-2">No</sp-menu-item>
+            </sp-picker>
+            <div>
+                <p>
+                    This button should't be clickable if a popover is open over
+                    it.
+                </p>
+                <sp-button
+                    @click=${() => console.log('Whoops! I was clicked.')}
+                >
+                    Shouldn't be clickable
+                </sp-button>
+            </div>
+        </div>
     `;
 };
 
@@ -414,6 +475,67 @@ iconsOnly.args = {
 };
 iconsOnly.decorators = [isOverlayOpen];
 
+export const dynamicIcons = (args: StoryArgs): TemplateResult => {
+    return html`
+        <p>
+            The icon displayed in the picker should match the icon of the
+            selected menu item, even when the icons are updated dynamically.
+        </p>
+        <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
+            Choose an action type...
+        </sp-field-label>
+        <sp-picker
+            ${spreadProps(args)}
+            id="picker-quiet"
+            @change=${handleChange(args)}
+            label="Pick an action"
+            value="2"
+        >
+            <sp-menu-item value="1">
+                <sp-icon
+                    slot="icon"
+                    src="https://loremicon.com/rect/20/20/1/png"
+                ></sp-icon>
+                Edit
+            </sp-menu-item>
+            <sp-menu-item value="2">
+                <sp-icon
+                    slot="icon"
+                    src="https://loremicon.com/rect/20/20/2/png"
+                ></sp-icon>
+                Copy
+            </sp-menu-item>
+            <sp-menu-item value="3">
+                <sp-icon
+                    slot="icon"
+                    src="https://loremicon.com/rect/20/20/3/png"
+                ></sp-icon>
+                Delete
+            </sp-menu-item>
+        </sp-picker>
+        <sp-button
+            @click=${() => {
+                const icons = document.querySelectorAll('sp-icon');
+                const seed = Math.round(Math.random() * 1000);
+                icons.forEach((icon, index) => {
+                    icon.setAttribute(
+                        'src',
+                        `https://loremicon.com/rect/20/20/${seed + index}/png`
+                    );
+                });
+                const picker = document.querySelector('sp-picker');
+                if (picker) picker.open = true;
+            }}
+        >
+            Change icons
+        </sp-button>
+    `;
+};
+dynamicIcons.args = {
+    open: true,
+};
+dynamicIcons.decorators = [isOverlayOpen];
+
 export const Open = (args: StoryArgs): TemplateResult => {
     return html`
         <style>
@@ -550,6 +672,11 @@ OpenShowingEdgeCase.swc_vrt = {
     skip: true,
 };
 
+OpenShowingEdgeCase.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const initialValue = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="picker-initial" size=${ifDefined(args.size)}>
@@ -634,3 +761,29 @@ custom.args = {
     open: true,
 };
 custom.decorators = [isOverlayOpen];
+
+export const BackgroundClickTest = (): TemplateResult => {
+    return html`
+        <div style="display: flex; flex-direction: column;">
+            <sp-picker size="l">
+                <sp-menu-item value="option-1">Deselect</sp-menu-item>
+                <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+            </sp-picker>
+            <div style="position: absolute; bottom: 50px;">
+                <sp-button
+                    @click=${() => {
+                        console.log(
+                            'this button should not have been clicked...'
+                        );
+                    }}
+                    size="l"
+                >
+                    I shall not be clicked
+                </sp-button>
+            </div>
+        </div>
+    `;
+};
+BackgroundClickTest.swc_vrt = {
+    skip: true,
+};

@@ -1,4 +1,0 @@
-{
-    "./src/*": "./src/*",
-    "./sp-picker-button.js": "./sp-picker-button.js"
-}
