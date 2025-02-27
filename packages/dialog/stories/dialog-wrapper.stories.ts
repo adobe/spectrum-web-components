@@ -406,7 +406,6 @@ export const longHeading = (
 longHeading.decorators = [isOverlayOpen];
 
 export const wrapperDismissableUnderlayError = (
-    args: StoryArgs = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
@@ -414,15 +413,15 @@ export const wrapperDismissableUnderlayError = (
         <div>
             <sp-dialog-wrapper
                 ?open=${open}
-                hero=${landscape}
                 dismissable
                 error
-                headline="Wrapped Dialog w/ Hero Image"
+                headline="Wrapped Error Alert Dialog"
                 underlay
-                @close=${handleClose(args)}
+                secondary-label="Continue"
                 size="s"
             >
-                Content of the dialog
+                An error occured while sharing your project. Please verify the
+                email address and try again.
             </sp-dialog-wrapper>
             <sp-button
                 onClick="

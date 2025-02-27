@@ -28,13 +28,14 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import modalWrapperStyles from '@spectrum-web-components/modal/src/modal-wrapper.css.js';
 import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
+import { AlertDialog } from '@spectrum-web-components/alert-dialog';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 
 /**
  * @element sp-dialog-base
  *
- * @slot - A Dialog element to display.
+ * @slot - A Dialog or AlertDialog element to display.
  * @fires close - Announces that the dialog has been closed.
  */
 export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
@@ -66,10 +67,10 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
     @property({ type: Boolean })
     public underlay = false;
 
-    protected get dialog(): Dialog {
+    protected get dialog(): Dialog | AlertDialog {
         const dialog = (
             this.shadowRoot.querySelector('slot') as HTMLSlotElement
-        ).assignedElements()[0] as Dialog;
+        ).assignedElements()[0] as Dialog | AlertDialog;
         if (window.__swc.DEBUG) {
             if (!dialog) {
                 window.__swc.warn(
