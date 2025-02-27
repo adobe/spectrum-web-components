@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/adobe/spectrum-web-components/compare/v1.1.2...v1.2.0) (2025-02-27)
+
+### Bug Fixes
+
+-   **action menu:** keyboard accessibility omnibus ([#5031](https://github.com/adobe/spectrum-web-components/issues/5031)) ([ea38ef0](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)), closes [#4623](https://github.com/adobe/spectrum-web-components/issues/4623)
+-   **breadcrumbs:** show maxvisibleitems on dynamic updates ([#5100](https://github.com/adobe/spectrum-web-components/issues/5100)) ([199f989](https://github.com/adobe/spectrum-web-components/commit/199f989b04fd77e2ebf72c95da6c5cd5a199f680))
+-   **menu:** make submenu scrollable ([#5082](https://github.com/adobe/spectrum-web-components/issues/5082)) ([a13dac2](https://github.com/adobe/spectrum-web-components/commit/a13dac26e51fa953e36232ce2b10dc0f121ef6a8))
+-   **picker:** update picker when menu item icons change ([#5088](https://github.com/adobe/spectrum-web-components/issues/5088)) ([63ef1ad](https://github.com/adobe/spectrum-web-components/commit/63ef1adad473ce58647ffe4d5e2a8727caaee07b))
+-   **slider:** make label not disappear when using overlays in Safari ([#5118](https://github.com/adobe/spectrum-web-components/issues/5118)) ([191a15b](https://github.com/adobe/spectrum-web-components/commit/191a15bd951780b555ae1022297bdf42ceff9181))
+
+### Features
+
+-   **combobox:** allow support for disabled items ([#5104](https://github.com/adobe/spectrum-web-components/issues/5104)) ([b78d412](https://github.com/adobe/spectrum-web-components/commit/b78d4125a90266059746207ffafc0c4c22f2b0a4))
+-   **overlay:** add triggeredBy property to overlay-trigger for performance optimization ([#5046](https://github.com/adobe/spectrum-web-components/issues/5046)) ([fd504aa](https://github.com/adobe/spectrum-web-components/commit/fd504aa4c83d6961abfb7db955483bf1ede6734f))
+-   **reactive-controllers:** Migrate to Colorjs from Tinycolor ([#4713](https://github.com/adobe/spectrum-web-components/issues/4713)) ([9d740f0](https://github.com/adobe/spectrum-web-components/commit/9d740f0c830aa44273097181e761e9a92d3df4be))
+
 ## [1.1.2](https://github.com/adobe/spectrum-web-components/compare/v1.1.1...v1.1.2) (2025-02-12)
 
 ### Bug Fixes
