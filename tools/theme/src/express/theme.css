@@ -18,6 +18,8 @@ governing permissions and limitations under the License.
 @import url('@spectrum-web-components/styles/typography.css');
 
 :host {
+    --context: express;
+
     display: block;
 
     /* Workaround while https://github.com/adobe/spectrum-css/issues/2162 remains open */
