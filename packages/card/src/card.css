@@ -25,14 +25,7 @@ governing permissions and limitations under the License.
 
 .action-button {
     flex-grow: 0;
-}
-
-:host([dir='ltr']) .action-button {
-    margin-left: auto;
-}
-
-:host([dir='rtl']) .action-button {
-    margin-right: auto;
+    margin-inline-start: auto;
 }
 
 /* The description slot has a psuedo-element that also needs to receive the font styling. 
@@ -44,19 +37,15 @@ slot[name='description'] {
     );
 }
 
-#preview + #cover-photo {
-    display: none;
-}
-
 #cover-photo ::slotted(*),
-:host(:not([variant='quiet'])) #preview ::slotted(*) {
-    width: 100%;
+#preview ::slotted(*) {
+    inline-size: 100%;
     display: block;
 
     /* Since we're using <img> tags instead of background-image for the cover photo,
     we need an additional object-fit property to preserve the aspect ratio of the image
     In spectrum-css, background-size is used */
-    object-fit: cover;
+    object-fit: var(--mod-card-image-object-fit, cover);
 }
 
 :host(:not([variant='gallery'])) #preview ::slotted(*) {
@@ -86,11 +75,6 @@ sp-popover {
  **/
 .title {
     width: var(--spectrum-card-title-width);
-}
-
-.subtitle {
-    /* Override until https://github.com/adobe/spectrum-css/issues/1054 is fixed */
-    text-transform: none;
 }
 
 :host:before,
