@@ -27,29 +27,59 @@ import type { Placement } from '@floating-ui/dom';
 import type { BeforetoggleOpenEvent } from './events.js';
 import type { Overlay } from './Overlay.js';
 import type { OverlayTriggerInteractions } from './overlay-types';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 
 import overlayTriggerStyles from './overlay-trigger.css.js';
 
 export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
 
+// Helper type to create all unique combinations of OverlayContentTypes
+type Combinations<T extends string, U extends string = T> = T extends string
+    ? T | `${T} ${Combinations<Exclude<U, T>>}`
+    : never;
+
+export type TriggeredByType = Combinations<OverlayContentTypes>;
+
 /**
  * @element overlay-trigger
+ *
+ * A component that manages overlay content triggered by different interactions.
+ * Supports click, hover, and longpress triggered overlays with configurable
+ * placement and behavior.
  *
  * @slot trigger - The content that will trigger the various overlays
  * @slot hover-content - The content that will be displayed on hover
  * @slot click-content - The content that will be displayed on click
- * @slot longpress-content - The content that will be displayed on click
+ * @slot longpress-content - The content that will be displayed on longpress
+ * @slot longpress-describedby-descriptor - Description for longpress content
  *
  * @fires sp-opened - Announces that the overlay has been opened
  * @fires sp-closed - Announces that the overlay has been closed
+ *
+ * @attr {string} placement - The placement of the overlay relative to the trigger
+ * @attr {number} offset - The distance between the overlay and the trigger
+ * @attr {boolean} disabled - Whether the overlay trigger is disabled
+ * @attr {string} receives-focus - How focus should be handled ('true'|'false'|'auto')
  */
 export class OverlayTrigger extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [overlayTriggerStyles];
     }
 
-    @property()
-    content = 'click hover longpress';
+    /**
+     * Optional property to optimize performance and prevent race conditions.
+     *
+     * By explicitly declaring which content types are used (e.g. "click", "longpress hover"),
+     * we can avoid:
+     * 1. Extra renders from unnecessary slot reparenting
+     * 2. Potential infinite render loops during content detection
+     * 3. Race conditions during slot assignment
+     *
+     * By only returning overlay wrappers for explicitly declared content types,
+     * we minimize unecessary DOM nodes, operations and ensure a more stable rendering behavior.
+     */
+    @property({ attribute: 'triggered-by' })
+    public triggeredBy?: TriggeredByType;
 
     /**
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
@@ -184,12 +214,8 @@ export class OverlayTrigger extends SpectrumElement {
     }
 
     protected renderClickOverlay(): TemplateResult {
-        import('@spectrum-web-components/overlay/sp-overlay.js');
         const slot = this.renderSlot('click-content');
-        if (!this.clickContent.length) {
-            return slot;
-        }
-        return html`
+        const clickOverlay = html`
             <sp-overlay
                 id="click-overlay"
                 ?disabled=${this.disabled || !this.clickContent.length}
@@ -205,15 +231,22 @@ export class OverlayTrigger extends SpectrumElement {
                 ${slot}
             </sp-overlay>
         `;
+
+        // If click interactions are explicitly enabled by customers, always return the overlay
+        if (this.triggeredBy?.includes('click')) {
+            return clickOverlay;
+        }
+
+        if (!this.clickContent.length) {
+            return slot;
+        } else {
+            return clickOverlay;
+        }
     }
 
     protected renderHoverOverlay(): TemplateResult {
-        import('@spectrum-web-components/overlay/sp-overlay.js');
         const slot = this.renderSlot('hover-content');
-        if (!this.hoverContent.length) {
-            return slot;
-        }
-        return html`
+        const hoverOverlay = html`
             <sp-overlay
                 id="hover-overlay"
                 ?open=${this.open === 'hover' && !!this.hoverContent.length}
@@ -231,15 +264,22 @@ export class OverlayTrigger extends SpectrumElement {
                 ${slot}
             </sp-overlay>
         `;
+
+        // If hover interactions are explicitly enabled by customers, always return the overlay
+        if (this.triggeredBy?.includes('hover')) {
+            return hoverOverlay;
+        }
+
+        if (!this.hoverContent.length) {
+            return slot;
+        } else {
+            return hoverOverlay;
+        }
     }
 
     protected renderLongpressOverlay(): TemplateResult {
-        import('@spectrum-web-components/overlay/sp-overlay.js');
         const slot = this.renderSlot('longpress-content');
-        if (!this.longpressContent.length) {
-            return slot;
-        }
-        return html`
+        const longpressOverlay = html`
             <sp-overlay
                 id="longpress-overlay"
                 ?disabled=${this.disabled || !this.longpressContent.length}
@@ -257,12 +297,21 @@ export class OverlayTrigger extends SpectrumElement {
             </sp-overlay>
             <slot name="longpress-describedby-descriptor"></slot>
         `;
+
+        // If click interactions are explicitly enabled by customers, always return the overlay
+        if (this.triggeredBy?.includes('longpress')) {
+            return longpressOverlay;
+        }
+
+        if (!this.longpressContent.length) {
+            return slot;
+        } else {
+            return longpressOverlay;
+        }
     }
 
     protected override render(): TemplateResult {
-        const content = this.content.split(' ');
         // Keyboard event availability documented in README.md
-        /* eslint-disable lit-a11y/click-events-have-key-events */
         return html`
             <slot
                 id="trigger"
@@ -270,19 +319,32 @@ export class OverlayTrigger extends SpectrumElement {
                 @slotchange=${this.handleTriggerContent}
             ></slot>
             ${[
-                content.includes('click') ? this.renderClickOverlay() : html``,
-                content.includes('hover') ? this.renderHoverOverlay() : html``,
-                content.includes('longpress')
-                    ? this.renderLongpressOverlay()
-                    : html``,
+                this.renderClickOverlay(),
+                this.renderHoverOverlay(),
+                this.renderLongpressOverlay(),
             ]}
         `;
-        /* eslint-enable lit-a11y/click-events-have-key-events */
     }
 
-    protected override updated(changes: PropertyValues): void {
-        super.updated(changes);
-        if (this.disabled && changes.has('disabled')) {
+    protected override updated(changedProperties: PropertyValues): void {
+        super.updated(changedProperties);
+
+        if (window.__swc?.DEBUG && !this.triggeredBy) {
+            const issues = [
+                'You have not specified the `triggeredBy` property. For optimal performance, consider explicitly declaring which overlay types you plan to use.',
+                'Example: triggered-by="click hover"',
+                'This helps avoid unnecessary DOM operations and potential race conditions.',
+            ];
+
+            window.__swc.warn(
+                this,
+                'Performance optimization available for <overlay-trigger>:',
+                'https://opensource.adobe.com/spectrum-web-components/components/overlay-trigger/#performance-optimization',
+                { issues }
+            );
+        }
+
+        if (this.disabled && changedProperties.has('disabled')) {
             this.open = undefined;
             return;
         }

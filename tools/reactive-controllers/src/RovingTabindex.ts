@@ -45,7 +45,7 @@ export class RovingTabindexController<
     }
 
     manageTabindexes(): void {
-        if (this.focused) {
+        if (this.focused && !this.hostDelegatesFocus) {
             this.updateTabindexes(() => ({ tabIndex: -1 }));
         } else {
             this.updateTabindexes((el: HTMLElement): UpdateTabIndexes => {
@@ -72,7 +72,6 @@ export class RovingTabindexController<
                 }
                 return;
             }
-            el.removeAttribute('tabindex');
             const updatable = el as unknown as {
                 requestUpdate?: () => void;
             };

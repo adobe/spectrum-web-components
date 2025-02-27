@@ -207,32 +207,37 @@ quiet.args = {
 };
 
 export const forcePopoverOnMobile = (): TemplateResult => html`
-    <h1>Force Popover on Mobile</h1>
-    <p>
-        The forcePopover attribute overrides the mobile device functionality of
-        rendering a tray so that a popover will always render no matter the
-        device.
-    </p>
-    <ol>
-        <li>Open Chrome DevTools (or equivalent).</li>
-        <li>Toggle the Device Toolbar (the phone/tablet icon).</li>
-        <li>Select a device preset (e.g. iPhone 12).</li>
-        <li>
-            Chrome will set user-agent strings, simulate touch, and adjust DPI.
-        </li>
-        <li>Reload the page</li>
-        <li>Click the Action Menu and see a popover</li>
-    </ol>
-    <sp-action-menu forcePopover>
-        <span slot="label">Action Menu</span>
-        <sp-menu-item>Deselect</sp-menu-item>
-        <sp-menu-item>Select Inverse</sp-menu-item>
-        <sp-menu-item>Feather...</sp-menu-item>
-        <sp-menu-item>Select and Mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save Selection</sp-menu-item>
-        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-    </sp-action-menu>
+    <div style="padding: 40px">
+        <h1>Force Popover on Mobile</h1>
+        <p>
+            The forcePopover attribute overrides the mobile device functionality
+            of rendering a tray so that a popover will always render no matter
+            the device.
+        </p>
+        <ol>
+            <li>Open Chrome DevTools (or equivalent).</li>
+            <li>Toggle the Device Toolbar (the phone/tablet icon).</li>
+            <li>Select a device preset (e.g. iPhone 12).</li>
+            <li>
+                Chrome will set user-agent strings, simulate touch, and adjust
+                DPI.
+            </li>
+            <li>Reload the page</li>
+            <li>Click the Action Menu and see a popover</li>
+        </ol>
+        <sp-action-menu forcePopover>
+            <span slot="icon">
+                <sp-icon-settings></sp-icon-settings>
+            </span>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+        </sp-action-menu>
+    </div>
 `;
 export const labelOnly = ({
     align = 'start',
@@ -401,6 +406,7 @@ export const groups = ({
     onChange(value: string): void;
 }): TemplateResult => html`
     <sp-action-menu
+        id="groups"
         @change=${({ target: { value } }: Event & { target: ActionMenu }) =>
             onChange(value)}
         open
@@ -535,3 +541,24 @@ export const withScrollEvent = (): TemplateResult => {
 withScrollEvent.parameters = {
     chromatic: { disableSnapshot: true },
 };
+
+export const MenuItemAlerts = (): TemplateResult => html`
+    <sp-action-menu size="m">
+        <span slot="label">More Actions</span>
+        <sp-menu-item @click=${() => alert('Deselect')}>Deselect</sp-menu-item>
+        <sp-menu-item @click=${() => alert('Select inverse')}>
+            Select inverse
+        </sp-menu-item>
+        <sp-menu-item @click=${() => alert('Feather...')}>
+            Feather...
+        </sp-menu-item>
+        <sp-menu-item @click=${() => alert('Select and mask...')}>
+            Select and mask...
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item @click=${() => alert('Save selection')}>
+            Save selection
+        </sp-menu-item>
+        <sp-menu-item disabled>Make work path</sp-menu-item>
+    </sp-action-menu>
+`;

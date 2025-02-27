@@ -64,8 +64,8 @@ jobs:
                   uploadArtifacts: true
                   urls: |
                       https://opensource.adobe.com/spectrum-web-components/
-                      https://main--spectrum-web-components.netlify.app/
-                      https://${{ steps.extract_branch.outputs.branch }}--spectrum-web-components.netlify.app/
+                      https://main--spectrumwc.netlify.app/
+                      https://${{ steps.extract_branch.outputs.branch }}--spectrumwc.netlify.app/
 
             - name: Post Lighthouse Results Comment
               uses: actions/github-script@v7

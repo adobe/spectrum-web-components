@@ -26,27 +26,17 @@ import {
 
 import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { ColorSlider } from '@spectrum-web-components/color-slider';
-import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
+import { ColorTypes } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy } from 'sinon';
 import { ColorHandle } from '@spectrum-web-components/color-handle';
+import { Default } from '../stories/color-slider.stories.js';
 
 describe('ColorSlider', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<ColorSlider>(
-                html`
-                    <sp-color-slider></sp-color-slider>
-                `
-            )
-    );
+    testForLitDevWarnings(async () => await fixture<ColorSlider>(Default()));
     it('loads default color-slider accessibly', async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(Default());
 
         await elementUpdated(el);
 
@@ -54,15 +44,13 @@ describe('ColorSlider', () => {
     });
 
     it('manages a single tab stop', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <input type="text" id="test-input-1" />
-                    <sp-color-slider></sp-color-slider>
-                    <input type="text" id="test-input-2" />
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <input type="text" id="test-input-1" />
+                <sp-color-slider></sp-color-slider>
+                <input type="text" id="test-input-2" />
+            </div>
+        `);
         const el = test.querySelector('sp-color-slider') as ColorSlider;
         const input1 = test.querySelector(
             'input:nth-of-type(1)'
@@ -113,11 +101,7 @@ describe('ColorSlider', () => {
         expect(document.activeElement).to.equal(input1);
     });
     it('manages [focused]', async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(Default());
 
         await elementUpdated(el);
 
@@ -146,14 +130,12 @@ describe('ColorSlider', () => {
     it('dispatches input and change events in response to "Arrow*" keypresses', async () => {
         const inputSpy = spy();
         const changeSpy = spy();
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    @change=${() => changeSpy()}
-                    @input=${() => inputSpy()}
-                ></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                @change=${() => changeSpy()}
+                @input=${() => inputSpy()}
+            ></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -180,14 +162,12 @@ describe('ColorSlider', () => {
         // screen reader interactions dispatch events as found in the following test
         const inputSpy = spy();
         const changeSpy = spy();
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    @change=${() => changeSpy()}
-                    @input=${() => inputSpy()}
-                ></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                @change=${() => changeSpy()}
+                @input=${() => inputSpy()}
+            ></sp-color-slider>
+        `);
         await elementUpdated(el);
 
         el.focus();
@@ -208,13 +188,11 @@ describe('ColorSlider', () => {
         expect(changeSpy.callCount).to.equal(1);
     });
     it('manages value on "Arrow*" keypresses', async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-default-height: 24px;"
-                ></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-default-height: 24px;"
+            ></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -273,11 +251,9 @@ describe('ColorSlider', () => {
         expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses in dir="rtl"', async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider dir="rtl"></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider dir="rtl"></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -332,11 +308,7 @@ describe('ColorSlider', () => {
         expect(el.value).to.equal(0);
     });
     it('accepts "Arrow*" keypresses with alteration', async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(Default());
 
         await elementUpdated(el);
         el.focus();
@@ -389,7 +361,7 @@ describe('ColorSlider', () => {
             (20 * 100) / 360,
             0.000001
         );
-        expect(el.value).to.equal(20);
+        expect(el.value).to.be.approximately(20, 0.000001);
 
         await sendKeys({
             press: 'ArrowLeft',
@@ -407,15 +379,13 @@ describe('ColorSlider', () => {
         expect(el.value).to.equal(0);
     });
     it('accepts pointer events', async () => {
-        const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    .color=${color}
-                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-height: 24px;"
-                ></sp-color-slider>
-            `
-        );
+        const color = { h: '0', s: '20%', l: '70%' };
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                .color=${color}
+                style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-height: 24px;"
+            ></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -429,8 +399,12 @@ describe('ColorSlider', () => {
         };
 
         expect(el.sliderHandlePosition).to.equal(0);
-        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
-        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
+        expect(
+            (el.color as { h: number; s: number; l: number; a: number }).s
+        ).to.be.within(0.19, 0.21);
+        expect(
+            (el.color as { h: number; s: number; l: number; a: number }).l
+        ).to.be.within(0.69, 0.71);
 
         handle.dispatchEvent(
             new PointerEvent('pointerdown', {
@@ -446,8 +420,12 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
         expect(el.sliderHandlePosition).to.equal(0);
-        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
-        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
+        expect(
+            (el.color as { h: number; s: number; l: number; a: number }).s
+        ).to.be.within(0.19, 0.21);
+        expect(
+            (el.color as { h: number; s: number; l: number; a: number }).l
+        ).to.be.within(0.69, 0.71);
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const gradient = root.querySelector('.gradient') as HTMLElement;
@@ -465,8 +443,12 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
         expect(el.sliderHandlePosition).to.equal(0);
-        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
-        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
+        expect(
+            (el.color as { h: number; s: number; l: number; a: number }).s
+        ).to.be.within(0.19, 0.21);
+        expect(
+            (el.color as { h: number; s: number; l: number; a: number }).l
+        ).to.be.within(0.69, 0.71);
 
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
@@ -482,8 +464,12 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(47.91666666666667);
-        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
-        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
+        expect(
+            (el.color as { h: number; s: number; l: number; a: number }).s
+        ).to.be.within(0.19, 0.21);
+        expect(
+            (el.color as { h: number; s: number; l: number; a: number }).l
+        ).to.be.within(0.69, 0.71);
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -509,26 +495,28 @@ describe('ColorSlider', () => {
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(53.125);
-        expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
-        expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
+        expect(
+            (el.color as { h: number; s: number; l: number; a: number }).s
+        ).to.be.within(0.19, 0.21);
+        expect(
+            (el.color as { h: number; s: number; l: number; a: number }).l
+        ).to.be.within(0.69, 0.71);
     });
     it('can have `change` events prevented', async () => {
-        const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    .color=${color}
-                    @change=${(event: Event) => {
-                        event.preventDefault();
-                    }}
-                    style="
+        const color = { h: '0', s: '20%', l: '70%' };
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                .color=${color}
+                @change=${(event: Event) => {
+                    event.preventDefault();
+                }}
+                style="
                         --spectrum-colorslider-default-length: 192px;
                         --spectrum-colorslider-height: 24px;
                         --spectrum-colorhandle-size: 5px;
                     "
-                ></sp-color-slider>
-            `
-        );
+            ></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -579,14 +567,12 @@ describe('ColorSlider', () => {
         expect(el.value).to.equal(0);
     });
     it('accepts pointer events while [vertical]', async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    vertical
-                    style="--spectrum-colorslider-vertical-default-length: 192px; --spectrum-colorslider-vertical-width: 24px;"
-                ></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                vertical
+                style="--spectrum-colorslider-vertical-default-length: 192px; --spectrum-colorslider-vertical-width: 24px;"
+            ></sp-color-slider>
+        `);
 
         await elementUpdated(el);
 
@@ -645,14 +631,12 @@ describe('ColorSlider', () => {
     });
     it('accepts pointer events in dir="rtl"', async () => {
         document.documentElement.dir = 'rtl';
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider
-                    dir="rtl"
-                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-height: 24px;"
-                ></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(html`
+            <sp-color-slider
+                dir="rtl"
+                style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-height: 24px;"
+            ></sp-color-slider>
+        `);
         await elementUpdated(el);
 
         const { handle } = el as unknown as { handle: HTMLElement };
@@ -683,7 +667,10 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(100 - 52.083333333333336);
+        expect(el.sliderHandlePosition).to.be.approximately(
+            100 - 52.083333333333336,
+            0.000001
+        );
 
         handle.dispatchEvent(
             new PointerEvent('pointermove', {
@@ -712,31 +699,23 @@ describe('ColorSlider', () => {
     });
     const colorFormats: {
         name: string;
-        color:
-            | string
-            | number
-            | TinyColor
-            | HSVA
-            | HSV
-            | RGB
-            | RGBA
-            | HSL
-            | HSLA;
+        color: ColorTypes;
+        test?: string;
     }[] = [
         //rgb
-        { name: 'RGB String', color: 'rgb(204, 51, 204)' },
-        { name: 'RGB', color: { r: 204, g: 51, b: 204, a: 1 } },
+        { name: 'RGB String', color: 'rgba(204, 51, 204, 1)' },
+        { name: 'RGBA', color: { r: 204, g: 51, b: 204, a: 1 } },
         //prgb
-        { name: 'PRGB String', color: 'rgb(80%, 20%, 80%)' },
+        { name: 'PRGB String', color: 'rgba(80%, 20%, 80%,100%)' },
         { name: 'PRGB', color: { r: '80%', g: '20%', b: '80%', a: 1 } },
         // hex
-        { name: 'Hex', color: 'cc33cc' },
+        { name: 'Hex', color: '#cc33cc' },
         { name: 'Hex String', color: '#cc33cc' },
         // hex8
-        { name: 'Hex8', color: 'cc33ccff' },
+        { name: 'Hex8', color: '#cc33ccff' },
         { name: 'Hex8 String', color: '#cc33ccff' },
         // name
-        { name: 'string', color: 'red' },
+        { name: 'string', color: 'red', test: 'ff0000' },
         // hsl
         { name: 'HSL String', color: 'hsl(300, 60%, 50%)' },
         { name: 'HSL', color: { h: 300, s: 0.6000000000000001, l: 0.5, a: 1 } },
@@ -746,34 +725,30 @@ describe('ColorSlider', () => {
     ];
     colorFormats.map((format) => {
         it(`maintains \`color\` format as ${format.name}`, async () => {
-            const el = await fixture<ColorSlider>(
-                html`
-                    <sp-color-slider></sp-color-slider>
-                `
-            );
+            const el = await fixture<ColorSlider>(Default());
 
-            el.color = format.color;
+            if (typeof format.color === 'string') {
+                el.color = format.color;
+            } else {
+                el.color = { ...format.color } as ColorTypes;
+            }
+
             if (format.name.startsWith('Hex')) {
-                expect(el.color).to.equal(format.color);
-            } else expect(el.color).to.deep.equal(format.color);
+                expect(el.color, el.color.toString()).to.equal(
+                    format.test || format.color
+                );
+            } else {
+                expect(
+                    el.color,
+                    `${JSON.stringify(el.color)} ${JSON.stringify(
+                        format.color
+                    )}`
+                ).to.deep.equal(format.test || format.color);
+            }
         });
     });
-    it(`maintains \`color\` format as TinyColor`, async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
-        const color = new TinyColor('rgb(204, 51, 204)');
-        el.color = color;
-        expect(color.equals(el.color));
-    });
     it(`resolves Hex3 format to Hex6 format`, async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(Default());
         el.color = '0f0';
         expect(el.color).to.equal('00ff00');
 
@@ -781,62 +756,34 @@ describe('ColorSlider', () => {
         expect(el.color).to.equal('#11ee00');
     });
     it(`resolves Hex4 format to Hex8 format`, async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
-        el.color = 'f3af';
-        expect(el.color).to.equal('ff33aaff');
+        const el = await fixture<ColorSlider>(Default());
+        el.color = '#f3af';
+        expect(el.color).to.equal('#ff33aaff');
 
         el.color = '#f3af';
         expect(el.color).to.equal('#ff33aaff');
     });
     it(`maintains hue value`, async () => {
-        const el = await fixture<ColorSlider>(
-            html`
-                <sp-color-slider></sp-color-slider>
-            `
-        );
+        const el = await fixture<ColorSlider>(Default());
         const hue = 300;
-        const hsl = `hsl(${hue}, 60%, 100%)`;
+        const hsl = `hsl(${hue}, 60%, 99%)`;
         el.color = hsl;
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsl);
 
-        const hsla = `hsla(${hue}, 60%, 100%, 0.9)`;
+        const hsla = `hsla(${hue}, 60%, 99%, 0.9)`;
         el.color = hsla;
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsla);
 
-        const hsv = `hsv(${hue}, 60%, 100%)`;
+        const hsv = `hsv(${hue}, 60%, 99%)`;
         el.color = hsv;
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsv);
 
-        const hsva = `hsva(${hue}, 60%, 100%, 0.9)`;
+        const hsva = `hsva(${hue}, 60%, 99%, 0.9)`;
         el.color = hsva;
         expect(el.value).to.equal(hue);
         expect(el.color).to.equal(hsva);
-
-        const tinyHSV = new TinyColor({ h: hue, s: 60, v: 100 });
-        el.color = tinyHSV;
-        expect(el.value).to.equal(hue);
-        expect(tinyHSV.equals(el.color)).to.be.true;
-
-        const tinyHSVA = new TinyColor({ h: hue, s: 60, v: 100, a: 1 });
-        el.color = tinyHSVA;
-        expect(el.value).to.equal(hue);
-        expect(tinyHSVA.equals(el.color)).to.be.true;
-
-        const tinyHSL = new TinyColor({ h: hue, s: 60, l: 100 });
-        el.color = tinyHSL;
-        expect(el.value).to.equal(hue);
-        expect(tinyHSL.equals(el.color)).to.be.true;
-
-        const tinyHSLA = new TinyColor({ h: hue, s: 60, l: 100, a: 1 });
-        el.color = tinyHSLA;
-        expect(el.value).to.equal(hue);
-        expect(tinyHSLA.equals(el.color)).to.be.true;
     });
 });

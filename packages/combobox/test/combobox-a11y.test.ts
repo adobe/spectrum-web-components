@@ -20,7 +20,7 @@ import {
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import { Combobox } from '@spectrum-web-components/combobox';
-import { detectOS, fixture } from '../../../test/testing-helpers.js';
+import { fixture } from '../../../test/testing-helpers.js';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import {
     a11ySnapshot,
@@ -29,7 +29,6 @@ import {
 } from '@web/test-runner-commands';
 import type { AccessibleNamedNode } from './helpers.js';
 import { comboboxFixture } from './helpers.js';
-import { isWebKit } from '@spectrum-web-components/shared';
 import {
     withFieldLabel,
     withHelpText,
@@ -72,9 +71,6 @@ describe('Combobox accessibility', () => {
             <div>${withFieldLabel()}</div>
         `);
         const el = test.querySelector('sp-combobox') as unknown as Combobox;
-        const name = 'Pick something';
-        const webkitName = 'Pick something Banana';
-        const isWebKitMacOS = isWebKit() && detectOS() === 'Mac OS';
 
         await elementUpdated(el);
         await nextFrame();
@@ -89,7 +85,9 @@ describe('Combobox accessibility', () => {
         const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                node.name === name && !node.value && node.role === 'combobox'
+                node.name === 'Pick something' &&
+                !node.value &&
+                node.role === 'combobox'
         );
         // by default, is there a combobox that has `name` as the label?
         expect(a11yNode, '`name` is the label text').to.not.be.null;
@@ -102,55 +100,22 @@ describe('Combobox accessibility', () => {
         )) as unknown as AccessibleNamedNode & {
             children: AccessibleNamedNode[];
         };
-
-        // WebKit doesn't currently associate the `name` via the accessibility tree.
-        // Instead if lists this data in the description 🤷🏻‍♂️
-        // Give it an escape hatch for now.
         const node = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                (node.name === name ||
-                    (isWebKitMacOS && node.name === webkitName)) &&
+                node.name === 'Pick something' &&
                 node.value === 'Banana' &&
                 node.role === 'combobox'
         );
 
         expect(
             node,
-            `pre escape hatch node not available: ${JSON.stringify(
-                snapshot,
-                null,
-                '  '
-            )}`
+            `node not available: ${JSON.stringify(snapshot, null, '  ')}`
         ).to.not.be.null;
-
-        if (isWebKitMacOS) {
-            // Retest WebKit without the escape hatch, expecting it to fail.
-            // This way we get notified when the results are as expected, again.
-            const iOSNode = findAccessibilityNode<AccessibleNamedNode>(
-                snapshot,
-                (node) =>
-                    node.name === name &&
-                    node.value === 'Banana' &&
-                    node.role === 'combobox'
-            );
-            expect(
-                iOSNode,
-                `post escape hatch node available: ${JSON.stringify(
-                    snapshot,
-                    null,
-                    '  '
-                )}`
-            ).to.be.null;
-        }
     });
     it('manages its "name" value in the accessibility tree', async () => {
         const el = await comboboxFixture();
 
-        const name = 'Combobox';
-        const webkitName = 'Combobox Banana';
-        const isWebKitMacOS = isWebKit() && detectOS() === 'Mac OS';
-
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
@@ -164,7 +129,9 @@ describe('Combobox accessibility', () => {
         const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                node.name === name && !node.value && node.role === 'combobox'
+                node.name === 'Combobox' &&
+                !node.value &&
+                node.role === 'combobox'
         );
         // by default, is there a combobox that has `name` as the label?
         expect(a11yNode, '`name` is the label text').to.not.be.null;
@@ -177,47 +144,18 @@ describe('Combobox accessibility', () => {
         )) as unknown as AccessibleNamedNode & {
             children: AccessibleNamedNode[];
         };
-
-        // WebKit doesn't currently associate the `name` via the accessibility tree.
-        // Instead if lists this data in the description 🤷🏻‍♂️
-        // Give it an escape hatch for now.
         const node = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                (node.name === name ||
-                    (isWebKitMacOS && node.name === webkitName)) &&
+                node.name === 'Combobox' &&
                 node.value === 'Banana' &&
                 node.role === 'combobox'
         );
 
         expect(
             node,
-            `pre escape hatch node not available: ${JSON.stringify(
-                snapshot,
-                null,
-                '  '
-            )}`
+            `node not available: ${JSON.stringify(snapshot, null, '  ')}`
         ).to.not.be.null;
-
-        if (isWebKitMacOS) {
-            // Retest WebKit without the escape hatch, expecting it to fail.
-            // This way we get notified when the results are as expected, again.
-            const iOSNode = findAccessibilityNode<AccessibleNamedNode>(
-                snapshot,
-                (node) =>
-                    node.name === name &&
-                    node.value === 'Banana' &&
-                    node.role === 'combobox'
-            );
-            expect(
-                iOSNode,
-                `post escape hatch node available: ${JSON.stringify(
-                    snapshot,
-                    null,
-                    '  '
-                )}`
-            ).to.be.null;
-        }
     });
     it('manages its "description" value with slotted <sp-tooltip>', async () => {
         const test = await fixture<HTMLDivElement>(html`

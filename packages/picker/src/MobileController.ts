@@ -20,8 +20,11 @@ export class MobileController extends InteractionController {
     override type = InteractionTypes.mobile;
 
     handleClick(): void {
+        if (this.host.disabled) {
+            return;
+        }
         if (this.preventNextToggle == 'no') {
-            this.open = !this.open;
+            this.host.toggle();
         }
         this.preventNextToggle = 'no';
     }

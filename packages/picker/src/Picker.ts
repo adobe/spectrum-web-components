@@ -18,6 +18,7 @@ import {
     PropertyValues,
     render,
     SizedMixin,
+    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -34,9 +35,7 @@ import {
 
 import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import chevronIconOverrides from '@spectrum-web-components/icon/src/icon-chevron-overrides.css.js';
 
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
@@ -46,6 +45,8 @@ import type {
     MenuItem,
     MenuItemChildren,
 } from '@spectrum-web-components/menu';
+
+import type { MenuItemKeydownEvent } from '@spectrum-web-components/menu';
 import { Placement } from '@spectrum-web-components/overlay';
 import {
     IS_MOBILE,
@@ -69,7 +70,14 @@ const chevronClass = {
 };
 
 export const DESCRIPTION_ID = 'option-picker';
-export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
+export class PickerBase extends SizedMixin(SpectrumElement, {
+    noDefaultSize: true,
+}) {
+    static override shadowRootOptions = {
+        ...SpectrumElement.shadowRootOptions,
+        delegatesFocus: true,
+    };
+
     public isMobile = new MatchMediaController(this, IS_MOBILE);
 
     public strategy!: DesktopController | MobileController;
@@ -85,7 +93,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     private deprecatedMenu: Menu | null = null;
 
     @property({ type: Boolean, reflect: true })
-    public override disabled = false;
+    public disabled = false;
 
     @property({ type: Boolean, reflect: true })
     public focused = false;
@@ -101,7 +109,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
      *
      * @memberof PickerBase
      */
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean, reflect: true, attribute: 'force-popover' })
     public forcePopover = false;
 
     /** Whether the items are currently loading. */
@@ -133,10 +141,11 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @query('sp-menu')
     public optionsMenu!: Menu;
 
-    private _selfManageFocusElement = false;
-
-    public override get selfManageFocusElement(): boolean {
-        return this._selfManageFocusElement;
+    /**
+     * @deprecated
+     * */
+    public get selfManageFocusElement(): boolean {
+        return true;
     }
 
     @query('sp-overlay')
@@ -190,7 +199,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     protected listRole: 'listbox' | 'menu' = 'listbox';
     protected itemRole = 'option';
 
-    public override get focusElement(): HTMLElement {
+    public get focusElement(): HTMLElement {
         if (this.open) {
             return this.optionsMenu;
         }
@@ -205,11 +214,16 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.focused = true;
     }
 
+    // handled by interaction controller, desktop or mobile; this is only called with a programmatic this.click()
     public override click(): void {
+        this.toggle();
+    }
+
+    // pointer events handled by interaction controller, desktop or mobile; this is only called with a programmatic this.button.click()
+    public handleButtonClick(): void {
         if (this.disabled) {
             return;
         }
-
         this.toggle();
     }
 
@@ -218,17 +232,21 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public override focus(options?: FocusOptions): void {
-        super.focus(options);
-
-        if (!this.disabled && this.focusElement) {
-            this.focused = this.hasVisibleFocusInTree();
-        }
+        this.focusElement?.focus(options);
     }
-
+    /**
+     * @deprecated - Use `focus` instead.
+     */
     public handleHelperFocus(): void {
         // set focused to true here instead of handleButtonFocus so clicks don't flash a focus outline
         this.focused = true;
         this.button.focus();
+    }
+
+    public handleFocus(): void {
+        if (!this.disabled && this.focusElement) {
+            this.focused = this.hasVisibleFocusInTree();
+        }
     }
 
     public handleChange(event: Event): void {
@@ -254,15 +272,37 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.strategy?.handleButtonFocus(event);
     }
 
+    protected handleEscape = (
+        event: MenuItemKeydownEvent | KeyboardEvent
+    ): void => {
+        if (event.key === 'Escape') {
+            event.stopPropagation();
+            event.preventDefault();
+            this.toggle(false);
+        }
+    };
+
     protected handleKeydown = (event: KeyboardEvent): void => {
         this.focused = true;
-        if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp') {
+        if (
+            !['ArrowUp', 'ArrowDown', 'Enter', ' ', 'Escape'].includes(
+                event.key
+            )
+        ) {
+            return;
+        }
+        if (event.key === 'Escape') {
+            this.handleEscape(event);
             return;
         }
         event.stopPropagation();
         event.preventDefault();
-        this.toggle(true);
+        this.keyboardOpen();
     };
+
+    protected async keyboardOpen(): Promise<void> {
+        this.toggle(true);
+    }
 
     protected async setValueFromItem(
         item: MenuItem,
@@ -322,17 +362,22 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     }
 
     public toggle(target?: boolean): void {
-        if (this.readonly || this.pending) {
+        if (this.readonly || this.pending || this.disabled) {
             return;
         }
-        this.open = typeof target !== 'undefined' ? target : !this.open;
+        const open = typeof target !== 'undefined' ? target : !this.open;
+        if (open && !this.open)
+            this.addEventListener(
+                'sp-opened',
+                () => this.optionsMenu?.focusOnFirstSelectedItem(),
+                {
+                    once: true,
+                }
+            );
+
+        this.open = open;
         if (this.strategy) {
             this.strategy.open = this.open;
-        }
-        if (this.open) {
-            this._selfManageFocusElement = true;
-        } else {
-            this._selfManageFocusElement = false;
         }
     }
 
@@ -452,6 +497,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                     aria-hidden="true"
                     name="tooltip"
                     id="tooltip"
+                    @keydown=${this.handleKeydown}
                     @slotchange=${this.handleTooltipSlotchange}
                 ></slot>
             `,
@@ -465,6 +511,41 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.appliedLabel = value;
         this.labelAlignment = labelElement.sideAligned ? 'inline' : undefined;
     };
+
+    protected hasAccessibleLabel(): boolean {
+        const slotContent =
+            this.querySelector('[slot="label"]')?.textContent &&
+            this.querySelector('[slot="label"]')?.textContent?.trim() !== '';
+        const slotAlt =
+            this.querySelector('[slot="label"]')?.getAttribute('alt')?.trim() &&
+            this.querySelector('[slot="label"]')
+                ?.getAttribute('alt')
+                ?.trim() !== '';
+        return (
+            !!this.label ||
+            !!this.getAttribute('aria-label') ||
+            !!this.getAttribute('aria-labelledby') ||
+            !!this.appliedLabel ||
+            !!slotContent ||
+            !!slotAlt
+        );
+    }
+
+    protected warnNoLabel(): void {
+        window.__swc.warn(
+            this,
+            `<${this.localName}> needs one of the following to be accessible:`,
+            'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+            {
+                type: 'accessibility',
+                issues: [
+                    `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
+                    'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
+                    'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
+                ],
+            }
+        );
+    }
 
     protected renderOverlay(menu: TemplateResult): TemplateResult {
         if (this.strategy?.overlay === undefined) {
@@ -491,15 +572,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.tooltipEl.disabled = this.open;
         }
         return html`
-            <span
-                id="focus-helper"
-                tabindex="${this.focused || this.open ? '-1' : '0'}"
-                @focus=${this.handleHelperFocus}
-                aria-describedby=${DESCRIPTION_ID}
-            ></span>
             <button
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
-                aria-describedby="tooltip"
+                aria-describedby="tooltip ${DESCRIPTION_ID}"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-haspopup="true"
                 aria-labelledby="loader icon label applied-label"
@@ -509,18 +584,26 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                         ? `label-${this.labelAlignment}`
                         : undefined
                 )}
+                @focus=${this.handleButtonFocus}
                 @blur=${this.handleButtonBlur}
                 @keydown=${{
                     handleEvent: this.handleEnterKeydown,
                     capture: true,
                 }}
                 ?disabled=${this.disabled}
-                tabindex="-1"
             >
                 ${this.buttonContent}
             </button>
             ${this.renderMenu} ${this.renderDescriptionSlot}
         `;
+    }
+
+    protected override willUpdate(changes: PropertyValues<this>): void {
+        super.willUpdate(changes);
+        if (changes.has('tabIndex') && !!this.tabIndex) {
+            this.button.tabIndex = this.tabIndex;
+            this.removeAttribute('tabindex');
+        }
     }
 
     protected override update(changes: PropertyValues<this>): void {
@@ -533,23 +616,17 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.selects = 'single';
         }
         if (changes.has('disabled') && this.disabled) {
-            if (this.strategy) {
-                this.open = false;
-                this.strategy.open = false;
-            }
+            this.close();
         }
         if (changes.has('pending') && this.pending) {
-            if (this.strategy) {
-                this.open = false;
-                this.strategy.open = false;
-            }
+            this.close();
         }
         if (changes.has('value')) {
             // MenuItems update a frame late for <slot> management,
             // await the same here.
             this.shouldScheduleManageSelection();
         }
-        // Maybe it's finally time to remove this support?
+        // Maybe it's finally time to remove this support?s
         if (!this.hasUpdated) {
             this.deprecatedMenu = this.querySelector(':scope > sp-menu');
             this.deprecatedMenu?.toggleAttribute('ignore', true);
@@ -570,25 +647,8 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 // However, `appliesLabel` is applied by external elements that must be update complete as well to be bound appropriately.
                 await new Promise((res) => requestAnimationFrame(res));
                 await new Promise((res) => requestAnimationFrame(res));
-                if (
-                    !this.label &&
-                    !this.getAttribute('aria-label') &&
-                    !this.getAttribute('aria-labelledby') &&
-                    !this.appliedLabel
-                ) {
-                    window.__swc.warn(
-                        this,
-                        `<${this.localName}> needs one of the following to be accessible:`,
-                        'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
-                        {
-                            type: 'accessibility',
-                            issues: [
-                                `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
-                                'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
-                                'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
-                            ],
-                        }
-                    );
+                if (!this.hasAccessibleLabel()) {
+                    this.warnNoLabel();
                 }
             });
         }
@@ -682,6 +742,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 .selects=${this.selects}
                 .selected=${this.value ? [this.value] : []}
                 size=${this.size}
+                @sp-menu-item-keydown=${this.handleEscape}
                 @sp-menu-item-added-or-updated=${this.shouldManageSelection}
             >
                 <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
@@ -701,8 +762,15 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return menu;
     }
 
-    private willManageSelection = false;
+    /**
+     * whether a selection change is already scheduled
+     */
+    public willManageSelection = false;
 
+    /**
+     * when the value changes or the menu slot changes, manage the selection on the next frame, if not already scheduled
+     * @param event
+     */
     protected shouldScheduleManageSelection(event?: Event): void {
         if (
             !this.willManageSelection &&
@@ -710,6 +778,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
                 ((event.target as HTMLElement).getRootNode() as ShadowRoot)
                     .host === this)
         ) {
+            //s set a flag to manage selection on the next frame
             this.willManageSelection = true;
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
@@ -719,6 +788,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     }
 
+    /**
+     * when an item is added or updated, manage the selection, if it's not already scheduled
+     */
     protected shouldManageSelection(): void {
         if (this.willManageSelection) {
             return;
@@ -727,6 +799,9 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.manageSelection();
     }
 
+    /**
+     * updates menu selection based on value
+     */
     protected async manageSelection(): Promise<void> {
         if (this.selects == null) return;
 
@@ -780,7 +855,12 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     private enterKeydownOn: EventTarget | null = null;
 
     protected handleEnterKeydown = (event: KeyboardEvent): void => {
-        if (event.code !== 'Enter') {
+        if (event.key !== 'Enter') {
+            return;
+        }
+        const target = event?.target as MenuItem;
+        if (!target.open && target.hasSubmenu) {
+            event.preventDefault();
             return;
         }
 
@@ -792,7 +872,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.addEventListener(
             'keyup',
             async (keyupEvent: KeyboardEvent) => {
-                if (keyupEvent.code !== 'Enter') {
+                if (keyupEvent.key !== 'Enter') {
                     return;
                 }
                 this.enterKeydownOn = null;
@@ -813,6 +893,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
     public override connectedCallback(): void {
         super.connectedCallback();
         this.recentlyConnected = this.hasUpdated;
+        this.addEventListener('focus', this.handleFocus);
     }
 
     public override disconnectedCallback(): void {
@@ -835,7 +916,7 @@ export class PickerBase extends SizedMixin(Focusable, { noDefaultSize: true }) {
  */
 export class Picker extends PickerBase {
     public static override get styles(): CSSResultArray {
-        return [pickerStyles, chevronStyles, chevronIconOverrides];
+        return [pickerStyles, chevronStyles];
     }
 
     protected override get containerStyles(): StyleInfo {
@@ -847,34 +928,38 @@ export class Picker extends PickerBase {
     }
 
     protected override handleKeydown = (event: KeyboardEvent): void => {
-        const { code } = event;
+        const { key } = event;
+        const handledKeys = [
+            'ArrowUp',
+            'ArrowDown',
+            'ArrowLeft',
+            'ArrowRight',
+            'Enter',
+            ' ',
+            'Escape',
+        ].includes(key);
+        const openKeys = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(key);
         this.focused = true;
-        if (!code.startsWith('Arrow') || this.readonly || this.pending) {
+        if ('Escape' === key) {
+            this.handleEscape(event);
             return;
         }
-        if (code === 'ArrowUp' || code === 'ArrowDown') {
-            this.toggle(true);
+        if (!handledKeys || this.readonly || this.pending) {
+            return;
+        }
+        if (openKeys) {
+            this.keyboardOpen();
             event.preventDefault();
             return;
         }
         event.preventDefault();
-        const selectedIndex = this.selectedItem
-            ? this.menuItems.indexOf(this.selectedItem)
-            : -1;
-        // use a positive offset to find the first non-disabled item when no selection is available.
-        const nextOffset = selectedIndex < 0 || code === 'ArrowRight' ? 1 : -1;
-        let nextIndex = selectedIndex + nextOffset;
-        while (
-            this.menuItems[nextIndex] &&
-            this.menuItems[nextIndex].disabled
-        ) {
-            nextIndex += nextOffset;
-        }
-        if (!this.menuItems[nextIndex] || this.menuItems[nextIndex].disabled) {
-            return;
-        }
-        if (!this.value || nextIndex !== selectedIndex) {
-            this.setValueFromItem(this.menuItems[nextIndex]);
+        const nextItem = this.optionsMenu?.getNeighboringFocusableElement(
+            this.selectedItem,
+            key === 'ArrowLeft'
+        );
+        if (!this.value || nextItem !== this.selectedItem) {
+            // updates picker text but does not fire change event until action is completed
+            if (!!nextItem) this.setValueFromItem(nextItem as MenuItem);
         }
     };
 }

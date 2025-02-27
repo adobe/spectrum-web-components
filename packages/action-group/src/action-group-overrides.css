@@ -1,14 +1,14 @@
 /*
-    Copyright 2023 Adobe. All rights reserved.
-    This file is licensed to you under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License. You may obtain a copy
-    of the License at http://www.apache.org/licenses/LICENSE-2.0
+Copyright 2023 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software distributed under
-    the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-    OF ANY KIND, either express or implied. See the License for the specific language
-    governing permissions and limitations under the License.
-    */
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
@@ -20,65 +20,5 @@
     );
     --spectrum-actiongroup-vertical-spacing-compact: var(
         --system-action-group-vertical-spacing-compact
-    );
-    --spectrum-actiongroup-button-spacing-reset: var(
-        --system-action-group-button-spacing-reset
-    );
-    --spectrum-actiongroup-border-radius-reset: var(
-        --system-action-group-border-radius-reset
-    );
-    --spectrum-actiongroup-border-radius: var(
-        --system-action-group-border-radius
-    );
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-vertical-spacing-regular
-    );
-}
-
-:host([size='xs']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-xs-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-xs-vertical-spacing-regular
-    );
-}
-
-:host([size='s']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-s-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-s-vertical-spacing-regular
-    );
-}
-
-:host {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-m-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-m-vertical-spacing-regular
-    );
-}
-
-:host([size='l']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-l-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-l-vertical-spacing-regular
-    );
-}
-
-:host([size='xl']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --system-action-group-size-xl-horizontal-spacing-regular
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --system-action-group-size-xl-vertical-spacing-regular
     );
 }
