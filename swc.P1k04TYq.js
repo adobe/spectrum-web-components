@@ -11,4 +11,4 @@ import{e as r}from"./swc.DeJGzahI.js";import{x as e}from"./swc.BkWj9Vim.js";impo
                     referrerpolicy=${t(this.referrerpolicy)}
                     rel=${t(this.rel)}
                 >${i}</a>`}}return s([o()],a.prototype,"download"),s([o()],a.prototype,"label"),s([o()],a.prototype,"href"),s([o()],a.prototype,"target"),s([o()],a.prototype,"referrerpolicy"),s([o()],a.prototype,"rel"),a}export{i as L,a as n};
-//# sourceMappingURL=swc.CsY8uSOq.js.map
+//# sourceMappingURL=swc.CbjpZP5T.js.map
