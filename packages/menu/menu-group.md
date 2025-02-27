@@ -33,7 +33,7 @@ An `<sp-menu-group>` can be used to organize `<sp-menu-item>`s in an `<sp-memu>`
 <p>
     Your favorite park in New York is: <span id="group-1-value"></span>
     <br><br>
-    Your favorite park in San Fransisco is: <span id="group-2-value"></span>
+    Your favorite park in San Francisco is: <span id="group-2-value"></span>
 </p>
 <sp-popover open style="position: relative">
     <sp-menu
@@ -62,7 +62,7 @@ An `<sp-menu-group>` can be used to organize `<sp-menu-item>`s in an `<sp-memu>`
             id="group-2"
             selects="single"
         >
-            <span slot="header">San Fransisco</span>
+            <span slot="header">San Francisco</span>
             <sp-menu-item>
                 Golden Gate Park
             </sp-menu-item>
