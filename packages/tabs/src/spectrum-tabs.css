@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 #list {
     z-index: 0;
     vertical-align: top;
@@ -178,7 +179,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-tabs-focus-indicator-gap,
                 var(--spectrum-tabs-focus-indicator-gap)
-            ) * -1
+            ) *
+            -1
     );
 }
 

@@ -68,7 +68,7 @@
         "@spectrum-web-components/textfield": "^1.2.0"
     },
     "devDependencies": {
-        "@formatjs/intl-numberformat": "^8.3.5",
+        "@formatjs/intl-numberformat": "^8.15.3",
         "@spectrum-css/stepper": "7.0.0-s2-foundations.18"
     },
     "types": "./src/index.d.ts",

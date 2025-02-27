@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-swatch-disabled-icon-color: GrayText;
@@ -78,53 +79,61 @@ governing permissions and limitations under the License.
                 var(
                         --mod-swatch-border-thickness-selected,
                         var(--spectrum-swatch-border-thickness-selected)
-                    ) * 2
+                    ) *
+                    2
             )
             calc(
                 var(
                         --mod-swatch-border-thickness-selected,
                         var(--spectrum-swatch-border-thickness-selected)
-                    ) * 2
+                    ) *
+                    2
             ),
         calc(
                 100% -
                     var(
                         --mod-swatch-border-thickness-selected,
                         var(--spectrum-swatch-border-thickness-selected)
-                    ) * 2
+                    ) *
+                    2
             )
             calc(
                 var(
                         --mod-swatch-border-thickness-selected,
                         var(--spectrum-swatch-border-thickness-selected)
-                    ) * 2
+                    ) *
+                    2
             ),
         calc(
                 100% -
                     var(
                         --mod-swatch-border-thickness-selected,
                         var(--spectrum-swatch-border-thickness-selected)
-                    ) * 2
+                    ) *
+                    2
             )
             calc(
                 100% -
                     var(
                         --mod-swatch-border-thickness-selected,
                         var(--spectrum-swatch-border-thickness-selected)
-                    ) * 2
+                    ) *
+                    2
             ),
         calc(
                 var(
                         --mod-swatch-border-thickness-selected,
                         var(--spectrum-swatch-border-thickness-selected)
-                    ) * 2
+                    ) *
+                    2
             )
             calc(
                 100% -
                     var(
                         --mod-swatch-border-thickness-selected,
                         var(--spectrum-swatch-border-thickness-selected)
-                    ) * 2
+                    ) *
+                    2
             )
     );
     border-radius: 0;
@@ -165,7 +174,6 @@ governing permissions and limitations under the License.
         var(--spectrum-swatch-slash-thickness)
     );
     content: '';
-    block-size: 200%;
     background: var(
         --highcontrast-swatch-fill-foreground-color,
         var(
@@ -173,6 +181,7 @@ governing permissions and limitations under the License.
             var(--spectrum-swatch-slash-icon-color)
         )
     );
+    block-size: 200%;
     position: absolute;
     transform: rotate(-45deg);
 }
@@ -212,7 +221,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-swatch-focus-indicator-gap,
                 var(--spectrum-swatch-focus-indicator-gap)
-            ) * -2
+            ) *
+            -2
     );
     opacity: 0;
     border-width: var(
@@ -245,8 +255,6 @@ governing permissions and limitations under the License.
 }
 
 .fill {
-    inline-size: 100%;
-    block-size: 100%;
     box-sizing: border-box;
     border-radius: var(
         --mod-swatch-border-radius,
@@ -254,6 +262,8 @@ governing permissions and limitations under the License.
     );
     justify-content: center;
     align-items: center;
+    block-size: 100%;
+    inline-size: 100%;
     display: flex;
     position: relative;
     overflow: hidden;
@@ -306,7 +316,6 @@ governing permissions and limitations under the License.
 
 .mixedValueIcon {
     pointer-events: none;
-    color: #0000;
     color: var(--spectrum-picked-color, transparent);
     display: none;
 }
@@ -380,7 +389,8 @@ governing permissions and limitations under the License.
                     var(
                         --mod-swatch-border-thickness-selected,
                         var(--spectrum-swatch-border-thickness-selected)
-                    ) * 2
+                    ) *
+                    2
             )
             at 50% 50%
     );
@@ -388,8 +398,8 @@ governing permissions and limitations under the License.
 
 ::slotted([slot='image']) {
     object-fit: contain;
-    inline-size: 100%;
     block-size: 100%;
+    inline-size: 100%;
     transition:
         width
             var(

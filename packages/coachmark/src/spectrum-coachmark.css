@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --mod-buttongroup-justify-content: flex-end;
     --mod-popover-border-width: var(--spectrum-coachmark-popover-border-width);
@@ -66,7 +67,8 @@ governing permissions and limitations under the License.
             var(
                 --mod-coachmark-border-size,
                 var(--spectrum-coachmark-border-size)
-            ) * 2
+            ) *
+            2
     );
     object-fit: cover;
     object-position: center;
@@ -75,8 +77,6 @@ governing permissions and limitations under the License.
 }
 
 .image {
-    inline-size: 100%;
-    block-size: 100%;
     object-fit: cover;
     border-start-start-radius: calc(
         var(
@@ -98,6 +98,8 @@ governing permissions and limitations under the License.
                 var(--spectrum-coachmark-border-size)
             )
     );
+    block-size: 100%;
+    inline-size: 100%;
     display: block;
 }
 
@@ -234,6 +236,7 @@ governing permissions and limitations under the License.
         var(
                 --mod-coachmark-step-to-bottom,
                 var(--spectrum-coachmark-step-to-bottom)
-            ) - var(--mod-coachmark-padding, var(--spectrum-coachmark-padding))
+            ) -
+            var(--mod-coachmark-padding, var(--spectrum-coachmark-padding))
     );
 }

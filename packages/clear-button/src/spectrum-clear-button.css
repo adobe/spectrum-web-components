@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     block-size: var(
         --mod-clear-button-height,
@@ -111,11 +112,11 @@ governing permissions and limitations under the License.
         --mod-clear-button-background-color,
         var(--spectrum-clear-button-background-color)
     );
-    inline-size: 100%;
-    block-size: 100%;
     border-radius: 100%;
     justify-content: center;
     align-items: center;
+    block-size: 100%;
+    inline-size: 100%;
     display: flex;
 }
 

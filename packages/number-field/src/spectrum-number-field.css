@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 #textfield {
     --spectrum-stepper-width: calc(
         var(--mod-stepper-height, var(--spectrum-stepper-height)) *
@@ -25,7 +26,8 @@ governing permissions and limitations under the License.
             var(
                 --mod-stepper-border-width,
                 var(--spectrum-stepper-border-width)
-            ) * 2
+            ) *
+            2
     );
     --mod-infield-button-border-color: var(
         --highcontrast-stepper-border-color,
@@ -82,7 +84,8 @@ governing permissions and limitations under the License.
                         --mod-stepper-focus-indicator-width,
                         var(--spectrum-stepper-focus-indicator-width)
                     )
-            ) * -1
+            ) *
+            -1
     );
     inset-inline-start: 0;
 }

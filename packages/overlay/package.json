@@ -158,8 +158,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@floating-ui/dom": "^1.6.1",
-        "@floating-ui/utils": "^0.2.1",
+        "@floating-ui/dom": "^1.6.13",
+        "@floating-ui/utils": "^0.2.9",
         "@spectrum-web-components/action-button": "^1.2.0",
         "@spectrum-web-components/base": "^1.2.0",
         "@spectrum-web-components/reactive-controllers": "^1.2.0",

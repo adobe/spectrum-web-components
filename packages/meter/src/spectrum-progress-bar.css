@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     font-size: var(
         --mod-progressbar-font-size,
@@ -198,7 +199,8 @@ governing permissions and limitations under the License.
                 var(
                         --mod-progressbar-fill-size-indeterminate,
                         var(--spectrum-progressbar-fill-size-indeterminate)
-                    ) * -1
+                    ) *
+                    -1
             )
         );
     }
@@ -229,7 +231,8 @@ governing permissions and limitations under the License.
                 var(
                         --mod-progressbar-size-default,
                         var(--spectrum-progressbar-size-default)
-                    ) * -1
+                    ) *
+                    -1
             )
         );
     }
@@ -240,6 +243,6 @@ governing permissions and limitations under the License.
         --highcontrast-progressbar-fill-color: ButtonText;
         --highcontrast-progressbar-track-color: ButtonFace;
         forced-color-adjust: none;
-        border: 1px solid ButtonText;
+        border: 1px solid buttontext;
     }
 }

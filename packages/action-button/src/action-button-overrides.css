@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-actionbutton-background-color-default: var(
         --system-action-button-background-color-default
@@ -60,9 +61,6 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-background-color-selected-disabled: var(
         --system-action-button-background-color-selected-disabled
     );
-}
-
-:host {
     --spectrum-actionbutton-border-radius: var(
         --system-action-button-size-m-border-radius
     );

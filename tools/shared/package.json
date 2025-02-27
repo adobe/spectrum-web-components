@@ -100,9 +100,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^2.0.2",
+        "@lit-labs/observers": "^2.0.5",
         "@spectrum-web-components/base": "^1.2.0",
-        "focus-visible": "^5.1.0"
+        "focus-visible": "^5.2.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

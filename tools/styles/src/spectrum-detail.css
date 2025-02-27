@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 .spectrum-Typography .spectrum-Detail {
     --spectrum-detail-margin-start: calc(
         var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
@@ -42,6 +43,12 @@ governing permissions and limitations under the License.
         var(--spectrum-detail-sans-serif-font-weight)
     );
     font-size: var(--mod-detail-font-size, var(--spectrum-detail-font-size));
+    margin-block-start: 0;
+    margin-block-start: var(
+        --mod-detail-margin-start,
+        var(--spectrum-detail-margin-start, 0)
+    );
+    margin-block-end: 0;
     color: var(
         --highcontrast-detail-font-color,
         var(--mod-detail-font-color, var(--spectrum-detail-font-color))
@@ -55,10 +62,6 @@ governing permissions and limitations under the License.
         var(--spectrum-detail-letter-spacing)
     );
     text-transform: uppercase;
-    margin-block-start: var(
-        --mod-detail-margin-start,
-        var(--spectrum-detail-margin-start, 0)
-    );
     margin-block-end: var(
         --mod-detail-margin-end,
         var(--spectrum-detail-margin-end, 0)

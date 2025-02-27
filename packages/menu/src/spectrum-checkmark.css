@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 .checkmark {
     display: var(
         --mod-menu-checkmark-display,
@@ -63,7 +64,8 @@ governing permissions and limitations under the License.
             var(
                     --mod-menu-item-focus-indicator-width,
                     var(--spectrum-menu-item-focus-indicator-width)
-                ) * 1
+                ) *
+                1
         )
         0 0 0
         var(

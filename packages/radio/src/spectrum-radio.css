@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-radio-neutral-content-color: CanvasText;
@@ -42,8 +43,8 @@ governing permissions and limitations under the License.
 :host {
     vertical-align: top;
     min-block-size: var(--mod-radio-height, var(--spectrum-radio-height));
-    max-inline-size: 100%;
     align-items: flex-start;
+    max-inline-size: 100%;
     display: inline-flex;
     position: relative;
 }
@@ -258,11 +259,11 @@ governing permissions and limitations under the License.
         var(--spectrum-radio-line-height)
     );
     box-sizing: border-box;
-    inline-size: 100%;
-    block-size: 100%;
     opacity: 0;
     z-index: 1;
     cursor: pointer;
+    block-size: 100%;
+    inline-size: 100%;
     margin: 0;
     padding: 0;
     position: absolute;

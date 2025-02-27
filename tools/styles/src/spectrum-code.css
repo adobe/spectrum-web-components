@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     .spectrum-Code {
         --highcontrast-code-font-color: Text;
@@ -22,14 +23,16 @@ governing permissions and limitations under the License.
     font-style: var(--mod-code-font-style, var(--spectrum-code-font-style));
     font-weight: var(--mod-code-font-weight, var(--spectrum-code-font-weight));
     font-size: var(--mod-code-font-size, var(--spectrum-code-font-size));
+    margin-block-start: 0;
+    margin-block-start: var(
+        --mod-code-margin-start,
+        var(--spectrum-code-margin-end, 0)
+    );
+    margin-block-end: 0;
     line-height: var(--mod-code-line-height, var(--spectrum-code-line-height));
     color: var(
         --highcontrast-code-font-color,
         var(--mod-code-font-color, var(--spectrum-code-font-color))
-    );
-    margin-block-start: var(
-        --mod-code-margin-start,
-        var(--spectrum-code-margin-end, 0)
     );
     margin-block-end: var(
         --mod-code-margin-end,

@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     background: repeating-conic-gradient(
             var(
@@ -29,19 +30,25 @@ governing permissions and limitations under the License.
             var(
                     --mod-opacity-checkerboard-size,
                     var(--spectrum-opacity-checkerboard-square-size)
-                ) * 2
+                ) *
+                2
         )
         calc(
             var(
                     --mod-opacity-checkerboard-size,
                     var(--spectrum-opacity-checkerboard-square-size)
-                ) * 2
+                ) *
+                2
         );
 }
 
 @supports (
-    background:
-        repeating-conic-gradient(from 0deg, red 0deg, red 0deg 1deg, red 2deg)
+    background: repeating-conic-gradient(
+            from 0deg,
+            red 0deg,
+            red 0deg 1deg,
+            red 2deg
+        )
 ) {
     :host {
         background: repeating-conic-gradient(
@@ -61,13 +68,15 @@ governing permissions and limitations under the License.
                 var(
                         --mod-opacity-checkerboard-size,
                         var(--spectrum-opacity-checkerboard-square-size)
-                    ) * 2
+                    ) *
+                    2
             )
             calc(
                 var(
                         --mod-opacity-checkerboard-size,
                         var(--spectrum-opacity-checkerboard-square-size)
-                    ) * 2
+                    ) *
+                    2
             );
     }
 }

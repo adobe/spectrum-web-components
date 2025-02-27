@@ -11,9 +11,10 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     :host {
-        background-color: CanvasText !important;
+        background-color: canvastext !important;
     }
 }
 
@@ -41,7 +42,6 @@ governing permissions and limitations under the License.
 
 :host {
     block-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
-    inline-size: 100%;
     border: none;
     border-width: var(
         --mod-divider-thickness,
@@ -55,6 +55,7 @@ governing permissions and limitations under the License.
         --mod-divider-background-color,
         var(--spectrum-divider-background-color)
     );
+    inline-size: 100%;
     overflow: visible;
 }
 

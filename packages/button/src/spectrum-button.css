@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     cursor: pointer;
     -webkit-user-select: none;
@@ -92,7 +93,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-button-focus-indicator-gap,
                 var(--spectrum-focus-indicator-gap)
-            ) * -1
+            ) *
+            -1
     );
     transition:
         opacity
@@ -688,7 +690,6 @@ governing permissions and limitations under the License.
             var(--spectrum-button-border-color-default)
         )
     );
-    color: inherit;
     color: var(--spectrum-button-content-color-default, inherit);
     transition:
         border 0.13s linear,
@@ -714,7 +715,8 @@ governing permissions and limitations under the License.
             (
                     var(--spectrum-button-focus-ring-gap) +
                         var(--spectrum-button-border-width)
-                ) * -1
+                ) *
+                -1
         )
     );
     transition: box-shadow var(--spectrum-button-animation-duration) ease-in-out;
@@ -832,11 +834,27 @@ governing permissions and limitations under the License.
                 var(
                     --mod-button-border-width,
                     var(--spectrum-button-border-width)
-                ) + (var(--_icon-size-difference, 0px) / 2)
+                ) +
+                (0px / 2)
+        )
+    );
+    margin-block-start: var(
+        --mod-button-icon-margin-block-start,
+        max(
+            0px,
+            var(--mod-button-top-to-icon, var(--spectrum-button-top-to-icon)) -
+                var(
+                    --mod-button-border-width,
+                    var(--spectrum-button-border-width)
+                ) +
+                (var(--_icon-size-difference, 0px) / 2)
         )
     );
     margin-inline-start: calc(
-        var(--mod-button-edge-to-visual, var(--spectrum-button-edge-to-visual)) -
+        var(
+                --mod-button-edge-to-visual,
+                var(--spectrum-button-edge-to-visual)
+            ) -
             var(--mod-button-edge-to-text, var(--spectrum-button-edge-to-text))
     );
 }
@@ -894,6 +912,16 @@ governing permissions and limitations under the License.
                     --spectrum-icon-block-size,
                     var(--spectrum-button-intended-icon-size)
                 )
+        )
+    );
+    margin-block-start: var(
+        --mod-button-icon-margin-block-start,
+        max(
+            0px,
+            calc(
+                var(--spectrum-button-top-to-icon) -
+                    var(--spectrum-button-border-width)
+            )
         )
     );
     color: inherit;
