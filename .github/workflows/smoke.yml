@@ -1,9 +1,11 @@
 name: Playwright Tests
+
 on:
-    push:
-        branches: [main, smoke-test]
-    pull_request:
-        branches: [main, smoke-test]
+    workflow_run:
+        workflows: [Preview URLs and Lighthouse]
+        types:
+            - completed
+
 jobs:
     test:
         timeout-minutes: 60
@@ -18,11 +20,11 @@ jobs:
             - name: Install Playwright Browsers
               run: yarn playwright install --with-deps
 
-            - name: Serve Documentation
-              run: yarn docs:start
-
             - name: Run Playwright tests
               run: yarn playwright test projects/documentation/e2e/published.spec.ts
+              env:
+                  DOC_PREVIEW_URL: ${{ env.DOC_PREVIEW_URL }}
+                  NODE_ENV: CI
 
             - name: Upload Playwright Report
               uses: actions/upload-artifact@v4

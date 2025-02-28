@@ -1,4 +1,4 @@
-name: Performance check
+name: Preview URLs and Lighthouse
 
 on:
     pull_request:
@@ -30,6 +30,9 @@ jobs:
                   script: |
                       const { buildPreviewURLComment } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.js');
                       const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
+                      const { getDocPreviewURL } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.js');
+                      const docPreviewURL = getDocPreviewURL(process.env.GITHUB_HEAD_REF);
+                      echo "DOC_PREVIEW_URL=$docPreviewURL" >> $GITHUB_ENV
                       const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Branch preview', body);
     lighthouse:
@@ -75,111 +78,3 @@ jobs:
                       const body = buildLighthouseComment(${{ steps.lighthouse.outputs.links }}, ${{ steps.lighthouse.outputs.manifest }}, ${{ steps.lighthouse.outputs.assertionResults }});
                       const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Lighthouse scores', body);
-
-    compare-firefox:
-        name: Compare performance to latest release on Firefox
-
-        # The job will only run if the pull request is from the same repository.
-        # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
-        if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
-        runs-on: ubuntu-22.04
-        steps:
-            - name: Checkout main
-              uses: actions/checkout@v4
-              with:
-                  ref: main
-
-            - name: Checkout PR branch
-              uses: actions/checkout@v4
-
-            - name: Setup Job and Install Dependencies
-              uses: ./.github/actions/setup-job
-
-            - name: Print Firefox version
-              run: firefox --version
-
-            - name: Tachometer the changed packages
-              run: yarn test:changed --browser=firefox
-
-            - name: Create a dummy file to ensure at least one results file exists
-              run: touch tachometer.firefox-ran.txt
-
-            - name: Archive Firefox tachometer results
-              uses: actions/upload-artifact@v4
-              with:
-                  name: tachometer-results-firefox
-                  path: |
-                      tach-results.firefox.*.json
-                      tachometer.firefox-ran.txt
-
-    compare-chrome:
-        name: Compare performance to latest release on Chrome
-
-        # The job will only run if the pull request is from the same repository.
-        # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
-        if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout main
-              uses: actions/checkout@v4
-              with:
-                  ref: main
-
-            - name: Checkout PR branch
-              uses: actions/checkout@v4
-
-            - name: Setup Job and Install Dependencies
-              uses: ./.github/actions/setup-job
-
-            - name: Tachometer the changed packages
-              run: yarn test:changed
-
-            - name: Create a dummy file to ensure at least one results file exists
-              run: touch tachometer.chrome-ran.txt
-
-            - name: Archive Chrome tachometer results
-              uses: actions/upload-artifact@v4
-              with:
-                  name: tachometer-results-chrome
-                  path: |
-                      tach-results.*.json
-                      tachometer.chrome-ran.txt
-
-    comment-performance:
-        name: Comment tachometer performance results
-        needs: [compare-chrome, compare-firefox]
-
-        # The job will only run if the pull request is from the same repository.
-        # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
-        if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout main
-              uses: actions/checkout@v4
-              with:
-                  ref: main
-
-            - name: Checkout PR branch
-              uses: actions/checkout@v4
-
-            - name: Setup Job and Install Dependencies
-              uses: ./.github/actions/setup-job
-
-            - name: Retrieve tachometer results archives
-              uses: actions/download-artifact@v4
-              with:
-                  name: tachometer-results-firefox
-
-            - name: Retrieve tachometer results archives
-              uses: actions/download-artifact@v4
-              with:
-                  name: tachometer-results-chrome
-
-            - name: Post Tachometer Performance Comment
-              uses: actions/github-script@v7
-              with:
-                  script: |
-                      const { buildTachometerComment } = await import('${{ github.workspace }}/tasks/build-tachometer-comment.js');
-                      const body = buildTachometerComment();
-                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
-                      commentOrUpdate(github, context, '## Tachometer results', body);

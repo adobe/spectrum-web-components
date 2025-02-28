@@ -12,7 +12,10 @@ governing permissions and limitations under the License.
 import { expect, Page, test } from '@playwright/test';
 
 test.describe('search and go', () => {
-    const startURL = 'http://localhost:8000/';
+    const startURL =
+        process.env.NODE_ENV === 'CI'
+            ? process.env.DOC_PREVIEW_URL
+            : 'http://localhost:8000';
     const menuItemSelector = (href: string) => {
         return `#search-container sp-overlay[open] > sp-popover > sp-menu > sp-menu-group > sp-menu-item[href = "${href}"]`;
     };
