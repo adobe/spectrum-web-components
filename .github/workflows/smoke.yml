@@ -18,6 +18,9 @@ jobs:
             - name: Install Playwright Browsers
               run: yarn playwright install --with-deps
 
+            - name: Serve Documentation
+              run: yarn docs:start
+
             - name: Run Playwright tests
               run: yarn playwright test projects/documentation/e2e/published.spec.ts
 
