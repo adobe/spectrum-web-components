@@ -32,7 +32,7 @@ jobs:
                       const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
                       const { getDocPreviewURL } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.js');
                       const docPreviewURL = getDocPreviewURL(process.env.GITHUB_HEAD_REF);
-                      echo "DOC_PREVIEW_URL=$docPreviewURL" >> $GITHUB_ENV
+                      echo "DOC_PREVIEW_URL=$docPreviewURL" >> $GITHUB_ENV;
                       const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Branch preview', body);
     lighthouse:

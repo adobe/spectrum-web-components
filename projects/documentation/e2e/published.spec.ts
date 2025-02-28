@@ -39,7 +39,7 @@ test.describe('search and go', () => {
     };
 
     test.beforeEach(async ({ page }) => {
-        await page.goto(startURL);
+        await page.goto(startURL as string);
 
         // Click the get started link.
         const searchField = await page.getByRole('searchbox', {
