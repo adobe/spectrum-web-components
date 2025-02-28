@@ -78,7 +78,7 @@ export const buildPreviewURLComment = (ref) => {
 
     let comment = `## Branch preview
 
-- [Documentation Site](${getDocPreviewURL(ref)})
+- [Documentation Site](https://${branchSlug}--spectrumwc.netlify.app/)
 - [Storybook](https://${branchSlug}--spectrumwc.netlify.app/storybook/)
 
 
@@ -93,12 +93,6 @@ If the changes are expected, update the <code>current_golden_images_cache</code>
 If the changes are unexpected, you can investigate the cause of the differences and update the code accordingly.
 `;
     return comment;
-};
-
-export const getDocPreviewURL = (ref) => {
-    const branch = ref.replace('refs/heads/', '');
-    const branchSlug = slugify(branch);
-    return `https://${branchSlug}--spectrumwc.netlify.app/`;
 };
 
 console.log(buildPreviewURLComment('current/branch'));
