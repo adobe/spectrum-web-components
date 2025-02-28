@@ -83,6 +83,7 @@ jobs:
     playwright-smoke-tests:
         timeout-minutes: 60
         runs-on: ubuntu-latest
+        needs: comment-previews
         steps:
             - name: Checkout PR branch
               uses: actions/checkout@v4
