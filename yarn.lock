@@ -7426,12 +7426,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/asset@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/asset@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/asset@npm:6.0.1":
+  version: 6.0.1
+  resolution: "@spectrum-css/asset@npm:6.0.1"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/929a8c8d6feac737508bd94702dc0df2f35a8c63b940c7da31f3e4f1be0f8f5d8d491b29628a49189f99f0f58780caf48d2ee4e96bbb322503ea45e8c593122a
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/1314b9c0c07e3c001357f8372cdbd60a0391ca7a6205a67bc60096c14a797500afd357e84b7e6488b0de43b5cc09ae5679eeba2b51b5039ee4bce3d4f473da5b
   languageName: node
   linkType: hard
 
@@ -8352,7 +8352,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/asset@workspace:packages/asset"
   dependencies:
-    "@spectrum-css/asset": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/asset": "npm:6.0.1"
     "@spectrum-web-components/base": "npm:^1.2.0"
   languageName: unknown
   linkType: soft
@@ -8745,8 +8745,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.2.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=e85ef9&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/1ecdc6fa2204326ca9d2e52379a94a34d382fb6771534c1718eacdecc03f6aa7f29f51afc01b80eb0d8188c1b1c81c1472668f0890a026138bbf05ddeede5495
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=ff8a0b&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/45e85fc203eb88844d68829516524fdee7c7200302118fca6c759bd26e7eaf3c1fbff4c341e181099ca37916f2c226a9dd95a8503e53010b2b2a1830715f199a
   languageName: node
   linkType: hard
 
