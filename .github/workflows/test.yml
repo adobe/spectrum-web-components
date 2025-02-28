@@ -33,8 +33,6 @@ jobs:
                       const { getDocPreviewURL } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.js');
                       const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Branch preview', body);
-            - name: store doc preview url
-              run: echo "DOC_PREVIEW_URL=https://${{ steps.extract_branch.outputs.branch }}--spectrumwc.netlify.app/" >> $GITHUB_ENV
 
     lighthouse:
         name: Lighthouse CI
@@ -56,6 +54,9 @@ jobs:
               shell: bash
               run: echo "branch=$(npx slugify-cli ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}})" >> $GITHUB_OUTPUT
               id: extract_branch
+
+            - name: Extract doc preview url
+              run: echo "DOC_PREVIEW_URL=https://${{ steps.extract_branch.outputs.branch }}--spectrumwc.netlify.app/" >> $GITHUB_ENV
 
             - name: Run Lighthouse CI
               id: lighthouse
