@@ -13,9 +13,7 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-stepper-border-width: var(--system-stepper-border-width);
-    --spectrum-stepper-border-color-default: var(
-        --system-stepper-border-color-default
-    );
+    --spectrum-stepper-border-color: var(--system-stepper-border-color);
     --spectrum-stepper-border-color-hover: var(
         --system-stepper-border-color-hover
     );
@@ -27,6 +25,13 @@ governing permissions and limitations under the License.
     );
     --spectrum-stepper-border-color-keyboard-focus: var(
         --system-stepper-border-color-keyboard-focus
+    );
+    --spectrum-stepper-border-radius: var(--system-stepper-border-radius);
+    --spectrum-stepper-min-width-multiplier: var(
+        --system-stepper-min-width-multiplier
+    );
+    --spectrum-stepper-animation-duration: var(
+        --system-stepper-animation-duration
     );
     --spectrum-stepper-buttons-border-style: var(
         --system-stepper-buttons-border-style
@@ -49,11 +54,24 @@ governing permissions and limitations under the License.
     --spectrum-stepper-buttons-border-color-keyboard-focus: var(
         --system-stepper-buttons-border-color-keyboard-focus
     );
+    --spectrum-stepper-button-padding: var(--system-stepper-button-padding);
+    --spectrum-stepper-button-border-radius-reset: var(
+        --system-stepper-button-border-radius-reset
+    );
     --spectrum-stepper-button-border-width: var(
         --system-stepper-button-border-width
     );
+    --spectrum-stepper-button-background-color-focus: var(
+        --system-stepper-button-background-color-focus
+    );
+    --spectrum-stepper-button-background-color-keyboard-focus: var(
+        --system-stepper-button-background-color-keyboard-focus
+    );
     --spectrum-stepper-border-color-invalid: var(
         --system-stepper-border-color-invalid
+    );
+    --spectrum-stepper-border-color-hover-invalid: var(
+        --system-stepper-border-color-hover-invalid
     );
     --spectrum-stepper-border-color-focus-invalid: var(
         --system-stepper-border-color-focus-invalid
@@ -64,8 +82,20 @@ governing permissions and limitations under the License.
     --spectrum-stepper-border-color-keyboard-focus-invalid: var(
         --system-stepper-border-color-keyboard-focus-invalid
     );
-    --spectrum-stepper-border-color-disabled: var(
-        --system-stepper-border-color-disabled
+    --spectrum-stepper-focus-indicator-width: var(
+        --system-stepper-focus-indicator-width
+    );
+    --spectrum-stepper-focus-indicator-gap: var(
+        --system-stepper-focus-indicator-gap
+    );
+    --spectrum-stepper-focus-indicator-color: var(
+        --system-stepper-focus-indicator-color
+    );
+    --spectrum-stepper-button-border-color-quiet: var(
+        --system-stepper-button-border-color-quiet
+    );
+    --spectrum-stepper-button-border-color-disabled: var(
+        --system-stepper-button-border-color-disabled
     );
     --spectrum-stepper-button-border-width-disabled: var(
         --system-stepper-button-border-width-disabled
@@ -73,13 +103,26 @@ governing permissions and limitations under the License.
     --spectrum-stepper-buttons-background-color-disabled: var(
         --system-stepper-buttons-background-color-disabled
     );
+    --spectrum-stepper-button-width: var(--system-stepper-button-width);
+    --spectrum-stepper-height: var(--system-stepper-height);
 }
 
-:host([quiet]) #textfield {
-    --spectrum-stepper-buttons-border-style: var(
-        --system-stepper-quiet-buttons-border-style
-    );
-    --spectrum-stepper-button-edge-to-fill: var(
-        --system-stepper-quiet-button-edge-to-fill
-    );
+:host([size='s']) #textfield {
+    --spectrum-stepper-button-width: var(--system-stepper-size-s-button-width);
+    --spectrum-stepper-height: var(--system-stepper-size-s-height);
+}
+
+:host([size='m']) #textfield {
+    --spectrum-stepper-button-width: var(--system-stepper-size-m-button-width);
+    --spectrum-stepper-height: var(--system-stepper-size-m-height);
+}
+
+:host([size='l']) #textfield {
+    --spectrum-stepper-button-width: var(--system-stepper-size-l-button-width);
+    --spectrum-stepper-height: var(--system-stepper-size-l-height);
+}
+
+:host([size='xl']) #textfield {
+    --spectrum-stepper-button-width: var(--system-stepper-size-xl-button-width);
+    --spectrum-stepper-height: var(--system-stepper-size-xl-height);
 }
