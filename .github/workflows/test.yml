@@ -1,4 +1,4 @@
-name: Preview URLs and Lighthouse
+name: Links, Lighthouse, and Smoke Tests
 
 on:
     pull_request:
@@ -23,6 +23,15 @@ jobs:
 
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
+
+            - name: Extract branch name
+              shell: bash
+              run: echo "BRANCH=$(npx slugify-cli ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}})" >> $GITHUB_OUTPUT
+              id: extract_branch
+
+            - name: Extract doc preview url
+              run: echo "DOC_PREVIEW_URL=https://${{ steps.extract_branch.outputs.branch }}--spectrumwc.netlify.app/" >> $GITHUB_OUTPUT
+              id: extract_doc_preview_url
 
             - name: Post Previews Comment
               uses: actions/github-script@v7
@@ -50,14 +59,6 @@ jobs:
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
 
-            - name: Extract branch name
-              shell: bash
-              run: echo "branch=$(npx slugify-cli ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}})" >> $GITHUB_OUTPUT
-              id: extract_branch
-
-            - name: Extract doc preview url
-              run: echo "DOC_PREVIEW_URL=https://${{ steps.extract_branch.outputs.branch }}--spectrumwc.netlify.app/" >> $GITHUB_ENV
-
             - name: Run Lighthouse CI
               id: lighthouse
               uses: treosh/lighthouse-ci-action@v11
@@ -70,7 +71,7 @@ jobs:
                   urls: |
                       https://opensource.adobe.com/spectrum-web-components/
                       https://main--spectrumwc.netlify.app/
-                      https://${{ steps.extract_branch.outputs.branch }}--spectrumwc.netlify.app/
+                      ${{ env.DOC_PREVIEW_URL }}
 
             - name: Post Lighthouse Results Comment
               uses: actions/github-script@v7
@@ -97,7 +98,7 @@ jobs:
             - name: Run Playwright tests
               run: yarn playwright test projects/documentation/e2e/published.spec.ts
               env:
-                  DOC_PREVIEW_URL: ${{ env.DOC_PREVIEW_URL }}
+                  DOC_PREVIEW_URL: ${{ needs.comment-previews.outputs.extract_doc_preview_url }}
                   NODE_ENV: CI
 
             - name: Upload Playwright Report
