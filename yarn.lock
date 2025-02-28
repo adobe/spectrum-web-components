@@ -7407,22 +7407,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/alertdialog@npm:3.0.0-s2-foundations.15":
-  version: 3.0.0-s2-foundations.15
-  resolution: "@spectrum-css/alertdialog@npm:3.0.0-s2-foundations.15"
+"@spectrum-css/alertdialog@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@spectrum-css/alertdialog@npm:3.0.1"
   peerDependencies:
     "@spectrum-css/buttongroup": ">=7"
     "@spectrum-css/divider": ">=3"
     "@spectrum-css/icon": ">=7"
     "@spectrum-css/modal": ">=5"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/tokens": ">=14 || >=15"
     "@spectrum-css/underlay": ">=4"
   peerDependenciesMeta:
     "@spectrum-css/buttongroup":
       optional: true
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/986c6b1c5282e9cf4bae218c6c2a0f88dc58a2f60da8823de83c21da69335b326202b19268880b4c990aa26ce4d7be8c45b323beecd81089811db6f2b985a2cf
+  checksum: 10c0/a49e5fa85906503f5637c51befddb5b6019cc70d4b638b1bf0330dd41cd47232d07b38731d542f55096b7223e10053f8ce1f994da8f8c28a2fc8c1be9d6d4398
   languageName: node
   linkType: hard
 
@@ -8338,7 +8338,7 @@ __metadata:
   resolution: "@spectrum-web-components/alert-dialog@workspace:packages/alert-dialog"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/alertdialog": "npm:3.0.0-s2-foundations.15"
+    "@spectrum-css/alertdialog": "npm:3.0.1"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/button": "npm:^1.2.0"
     "@spectrum-web-components/button-group": "npm:^1.2.0"
@@ -8745,8 +8745,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.2.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=e85ef9&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/1ecdc6fa2204326ca9d2e52379a94a34d382fb6771534c1718eacdecc03f6aa7f29f51afc01b80eb0d8188c1b1c81c1472668f0890a026138bbf05ddeede5495
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=ff8a0b&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/45e85fc203eb88844d68829516524fdee7c7200302118fca6c759bd26e7eaf3c1fbff4c341e181099ca37916f2c226a9dd95a8503e53010b2b2a1830715f199a
   languageName: node
   linkType: hard
 
