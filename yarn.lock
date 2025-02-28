@@ -7444,16 +7444,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/badge@npm:5.0.0-s2-foundations.15":
-  version: 5.0.0-s2-foundations.15
-  resolution: "@spectrum-css/badge@npm:5.0.0-s2-foundations.15"
+"@spectrum-css/badge@npm:5.0.1":
+  version: 5.0.1
+  resolution: "@spectrum-css/badge@npm:5.0.1"
   peerDependencies:
     "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/tokens": ">=14 || >=15"
   peerDependenciesMeta:
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/02047ce5bf0fdd2304f62124b7c1e0bd480f021f2e2c4a288f82a3a7a2d2e9c648c66a0b67b946282dafa59042fdcd861fe42c8cf91472243db3b53547254419
+  checksum: 10c0/38b94e17dfd1c83d0319339ca8c4733810e8edff4fbca0c2f2ee098ae3924bb97af3842dbb0b011220ce6b9012b979a052ffbb9f065404bc87c13bd5d917e6ca
   languageName: node
   linkType: hard
 
@@ -8371,7 +8371,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/badge@workspace:packages/badge"
   dependencies:
-    "@spectrum-css/badge": "npm:5.0.0-s2-foundations.15"
+    "@spectrum-css/badge": "npm:5.0.1"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/shared": "npm:^1.2.0"
   languageName: unknown
@@ -8745,8 +8745,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.2.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=e85ef9&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/1ecdc6fa2204326ca9d2e52379a94a34d382fb6771534c1718eacdecc03f6aa7f29f51afc01b80eb0d8188c1b1c81c1472668f0890a026138bbf05ddeede5495
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=ff8a0b&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/45e85fc203eb88844d68829516524fdee7c7200302118fca6c759bd26e7eaf3c1fbff4c341e181099ca37916f2c226a9dd95a8503e53010b2b2a1830715f199a
   languageName: node
   linkType: hard
 
