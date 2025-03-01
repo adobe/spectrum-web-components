@@ -12,6 +12,8 @@ jobs:
         # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
+        outputs:
+            doc_preview_url: ${{ steps.extract_doc_preview_url.outputs.DOC_PREVIEW_URL }}
         steps:
             - name: Checkout main
               uses: actions/checkout@v4
@@ -71,7 +73,7 @@ jobs:
                   urls: |
                       https://opensource.adobe.com/spectrum-web-components/
                       https://main--spectrumwc.netlify.app/
-                      ${{ env.DOC_PREVIEW_URL }}
+                      ${{ needs.comment-previews.outputs.doc_preview_url }}
 
             - name: Post Lighthouse Results Comment
               uses: actions/github-script@v7
@@ -98,7 +100,7 @@ jobs:
             - name: Run Playwright tests
               run: yarn playwright test projects/documentation/e2e/published.spec.ts
               env:
-                  DOC_PREVIEW_URL: ${{ needs.comment-previews.outputs.extract_doc_preview_url }}
+                  DOC_PREVIEW_URL: ${{ needs.comment-previews.outputs.doc_preview_url }}
                   NODE_ENV: CI
 
             - name: Upload Playwright Report
