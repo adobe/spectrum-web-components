@@ -48,6 +48,14 @@
         "./sp-accordion-item.js": {
             "development": "./sp-accordion-item.dev.js",
             "default": "./sp-accordion-item.js"
+        },
+        "./src/AccordionBase.js": {
+            "development": "./src/AccordionBase.dev.js",
+            "default": "./src/AccordionBase.js"
+        },
+        "./src/AccordionItemBase.js": {
+            "development": "./src/AccordionItemBase.dev.js",
+            "default": "./src/AccordionItemBase.js"
         }
     },
     "scripts": {
