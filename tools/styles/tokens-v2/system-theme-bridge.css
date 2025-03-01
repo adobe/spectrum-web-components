@@ -1142,7 +1142,9 @@
     --system-breadcrumbs-focus-indicator-color: var(
         --spectrum-focus-indicator-color
     );
-    --system-checkbox-control-color-default: var(--spectrum-gray-600);
+    --system-checkbox-control-color-default: var(
+        --spectrum-neutral-content-color-default
+    );
     --system-checkbox-control-color-hover: var(--spectrum-gray-700);
     --system-checkbox-control-color-down: var(--spectrum-gray-800);
     --system-checkbox-control-color-focus: var(--spectrum-gray-700);
