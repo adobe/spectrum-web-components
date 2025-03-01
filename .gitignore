@@ -92,6 +92,7 @@ test/**/*.js.map
 test/**/*.d.ts
 !test/visual/**/*.js
 test/visual/test.js
+test-results
 
 # npm assets
 node_modules
