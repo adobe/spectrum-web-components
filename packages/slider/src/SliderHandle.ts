@@ -14,10 +14,6 @@ import { PropertyValues } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import {
-    LanguageResolutionController,
-    languageResolverUpdatedSymbol,
-} from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
-import {
     NumberFormatOptions,
     NumberFormatter,
 } from '@internationalized/number';
@@ -131,24 +127,13 @@ export class SliderHandle extends Focusable {
         return numberFormat.format(value);
     };
 
-    private languageResolver = new LanguageResolutionController(this);
-
     protected override update(changes: PropertyValues): void {
         if (!this.hasUpdated) {
-            const { max, min } = this as { max: number; min: number };
-            if (this.value == null) {
-                if (!isNaN(max) && !isNaN(min)) {
-                    this.value = max < min ? min : min + (max - min) / 2;
-                    this.handleController?.hostUpdate();
-                }
-            }
+            this.handleController?.setDefaultValue(this);
         }
 
-        if (
-            changes.has('formatOptions') ||
-            changes.has(languageResolverUpdatedSymbol)
-        ) {
-            delete this._numberFormatCache;
+        if (changes.has('formatOptions')) {
+            this.handleController?.formatOptionsChanged(this);
         }
         if (changes.has('value')) {
             const oldValue = changes.get('value');
@@ -158,7 +143,7 @@ export class SliderHandle extends Focusable {
                 });
             }
         }
-        this.handleController?.handleHasChanged(this);
+        this.handleController?.handleHasChanged();
         super.update(changes);
     }
 
@@ -179,52 +164,5 @@ export class SliderHandle extends Focusable {
         });
 
         this.dispatchEvent(inputEvent);
-    }
-
-    protected _numberFormatCache:
-        | { numberFormat: NumberFormatter; language: string }
-        | undefined;
-    protected getNumberFormat(): NumberFormatter {
-        /* c8 ignore next */
-        if (
-            !this._numberFormatCache ||
-            this.languageResolver.language !== this._numberFormatCache.language
-        ) {
-            let numberFormatter: NumberFormatter;
-            try {
-                numberFormatter = new NumberFormatter(
-                    this.languageResolver.language,
-                    this.formatOptions
-                );
-                this._forcedUnit = '';
-                // numberFormatter.format(1);
-            } catch (error) {
-                const {
-                    style,
-                    unit,
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    unitDisplay,
-                    ...formatOptionsNoUnit
-                } = this.formatOptions || {};
-                if (style === 'unit') {
-                    this._forcedUnit = unit as string;
-                }
-                numberFormatter = new NumberFormatter(
-                    this.languageResolver.language,
-                    formatOptionsNoUnit
-                );
-            }
-            this._numberFormatCache = {
-                language: this.languageResolver.language,
-                numberFormat: numberFormatter,
-            };
-        }
-        /* c8 ignore next */
-        return this._numberFormatCache?.numberFormat;
-    }
-
-    public get numberFormat(): NumberFormatter | undefined {
-        if (!this.formatOptions) return;
-        return this.getNumberFormat();
     }
 }

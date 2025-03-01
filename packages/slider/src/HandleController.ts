@@ -9,15 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import {
-    classMap,
-    ifDefined,
-    styleMap,
-} from '@spectrum-web-components/base/src/directives.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
-import { Slider } from './Slider.js';
+import { SliderBase } from './SliderBase.js';
 import { SliderHandle, SliderNormalization } from './SliderHandle.js';
+import { NumberFormatter } from '@internationalized/number';
 
 interface HandleReference {
     handle: HTMLElement;
@@ -32,10 +27,12 @@ interface RangeAndClamp {
     range: { min: number; max: number };
     clamp: { min: number; max: number };
 }
-interface ModelValue extends RangeAndClamp {
+
+export interface ModelValue extends RangeAndClamp {
     name: string;
     value: number;
     normalizedValue: number;
+    formattedValue: string;
     step: number;
     highlight: boolean;
     ariaLabel?: string;
@@ -58,14 +55,26 @@ export interface HandleValueDictionary {
 }
 
 export class HandleController {
-    private host!: Slider;
+    private host: SliderBase;
+    private defaultHandle?: SliderHandle;
     private handles: Map<string, SliderHandle> = new Map();
     private model: ModelValue[] = [];
     private handleOrder: string[] = [];
     private draggingHandle?: SliderHandle;
-    private handleRefMap?: WeakMap<SliderHandle, HandleReference>;
+    private handleComponentCache: WeakMap<
+        SliderHandle,
+        HandleReference
+    > | null = null;
+    private language = 'en-US';
+    private valueFormatterCache: Map<
+        SliderHandle | SliderBase,
+        {
+            numberFormatter: NumberFormatter;
+            forcedUnit: string;
+        }
+    > = new Map();
 
-    constructor(host: Slider) {
+    constructor(host: SliderBase) {
         this.host = host;
 
         new MutationController(this.host, {
@@ -77,8 +86,6 @@ export class HandleController {
                 this.extractModelFromLightDom();
             },
         });
-
-        this.extractModelFromLightDom();
     }
 
     public get values(): HandleValueDictionary {
@@ -132,28 +139,14 @@ export class HandleController {
         handle.value = input.valueAsNumber;
     }
 
-    public handleHasChanged(handle: SliderHandle): void {
-        if (handle !== this.host) {
-            this.requestUpdate();
-        }
-    }
-
-    public formattedValueForHandle(model: ModelValue): string {
-        const { handle } = model;
-        const numberFormat = handle.numberFormat ?? this.host.numberFormat;
-        const _forcedUnit =
-            handle._forcedUnit === ''
-                ? this.host._forcedUnit
-                : handle._forcedUnit;
-        return (
-            handle.getAriaHandleText(model.value, numberFormat) + _forcedUnit
-        );
+    public handleHasChanged(): void {
+        this.requestUpdate();
     }
 
     public get formattedValues(): Map<string, string> {
         const result = new Map<string, string>();
         for (const model of this.model) {
-            result.set(model.name, this.formattedValueForHandle(model));
+            result.set(model.name, model.formattedValue);
         }
         return result;
     }
@@ -202,8 +195,8 @@ export class HandleController {
         }
     }
 
-    public hostUpdate(): void {
-        this.updateModel();
+    public hostUpdated(): void {
+        this.buildHandleComponentCache();
     }
 
     // Since extractModelFromLightDom bails on the first un-upgraded handle,
@@ -220,13 +213,54 @@ export class HandleController {
         return true;
     }
 
-    private extractModelFromLightDom = (): void => {
+    private configureDefaultHandle(): void {
+        const handle = this.defaultHandle!;
+        // Configure basic properties
+        handle.min = this.host.min;
+        handle.max = this.host.max;
+        handle.value = this.host.value;
+        handle.step = this.host.step;
+        handle.getAriaHandleText = this.host.getAriaHandleText;
+
+        // Configure optional properties
+        if (this.host.defaultValue !== undefined) {
+            handle.defaultValue = this.host.defaultValue;
+        }
+
+        if (this.host.formatOptions) {
+            handle.formatOptions = this.host.formatOptions;
+        }
+
+        if (this.host.label) {
+            handle.label = this.host.label;
+        }
+
+        if (this.host.normalization) {
+            handle.normalization = this.host.normalization;
+        }
+    }
+
+    private extractModelFromLightDom(): void {
+        this.clearHandleComponentCache();
         let handles = [
             ...this.host.querySelectorAll('[slot="handle"]'),
         ] as SliderHandle[];
+
         if (handles.length === 0) {
-            handles = [this.host as SliderHandle];
+            // Create default handle
+            if (!this.defaultHandle) {
+                this.defaultHandle = new SliderHandle();
+                this.defaultHandle.name = 'value';
+                this.defaultHandle.handleController = this;
+                this.host.shadowRoot.appendChild(this.defaultHandle);
+            }
+            this.configureDefaultHandle();
+            handles = [this.defaultHandle];
+        } else {
+            this.defaultHandle?.remove();
+            this.defaultHandle = undefined;
         }
+
         // extractModelFromLightDom depends on slotted handles already having been upgraded
         if (handles.some((h) => this.waitForUpgrade(h))) {
             return;
@@ -243,14 +277,14 @@ export class HandleController {
             handle.handleController = this;
         });
         this.requestUpdate();
-    };
+    }
 
-    public get activeHandle(): string {
+    private get activeHandleName(): string {
         return this.handleOrder[this.handleOrder.length - 1];
     }
 
     public get activeHandleInputId(): string {
-        const active = this.activeHandle;
+        const active = this.activeHandleName;
         const index = this.model.findIndex((model) => model.name === active);
         return `input-${index}`;
     }
@@ -264,12 +298,16 @@ export class HandleController {
     }
 
     public get activeHandleModel(): ModelValue {
-        const active = this.activeHandle;
+        const active = this.activeHandleName;
         return this.model.find((model) => model.name === active)!;
     }
 
+    public get activeHandle(): SliderHandle {
+        return this.handles.get(this.activeHandleName) as SliderHandle;
+    }
+
     private getActiveHandleElements(): HandleComponents {
-        const name = this.activeHandle;
+        const name = this.activeHandleName;
         const handleSlider = this.handles.get(name) as SliderHandle;
         const elements = this.getHandleElements(
             handleSlider
@@ -278,31 +316,34 @@ export class HandleController {
     }
 
     private getHandleElements(sliderHandle: SliderHandle): HandleReference {
-        if (!this.handleRefMap) {
-            this.handleRefMap = new WeakMap();
-
-            const inputNodes =
-                this.host.shadowRoot.querySelectorAll('.handle > input');
-            for (const inputNode of inputNodes) {
-                const input = inputNode as HTMLInputElement;
-                const handle = input.parentElement as HTMLElement;
-                const model = this.handles.get(
-                    handle.getAttribute('name') as string
-                );
-                if (model) {
-                    this.handleRefMap.set(model, { input, handle });
-                }
-            }
-        }
-
-        const components = this.handleRefMap.get(
+        const components = this.handleComponentCache?.get(
             sliderHandle
         ) as HandleReference;
         return components;
     }
 
+    private buildHandleComponentCache(): void {
+        if (this.handleComponentCache === null) {
+            const inputNodes =
+                this.host.shadowRoot.querySelectorAll('.handle > input');
+            if (inputNodes.length > 0) {
+                this.handleComponentCache = new WeakMap();
+                for (const inputNode of inputNodes) {
+                    const input = inputNode as HTMLInputElement;
+                    const handle = input.parentElement as HTMLElement;
+                    const model = this.handles.get(
+                        handle.getAttribute('name') as string
+                    );
+                    if (model) {
+                        this.handleComponentCache.set(model, { input, handle });
+                    }
+                }
+            }
+        }
+    }
+
     private clearHandleComponentCache(): void {
-        delete this.handleRefMap;
+        this.handleComponentCache = null;
     }
 
     private _boundingClientRect?: DOMRect;
@@ -331,7 +372,9 @@ export class HandleController {
             const resolvedInput = !input;
             const model = input
                 ? input.model
-                : this.model.find((item) => item.name === this.activeHandle);
+                : this.model.find(
+                      (item) => item.name === this.activeHandleName
+                  );
             if (!input && !!model) {
                 input = model.handle.focusElement as InputWithModel;
             }
@@ -356,7 +399,10 @@ export class HandleController {
         ) as InputWithModel;
 
         if (input.model?.handle.defaultValue !== undefined) {
-            input.model.handle.value = input.model.handle.defaultValue;
+            this.setHandleValue(
+                input.model.handle,
+                input.model.handle.defaultValue
+            );
             this.dispatchChangeEvent(input, input.model.handle);
             input.model.handle.dispatchInputEvent();
             this.requestUpdate();
@@ -375,7 +421,7 @@ export class HandleController {
             this.host.labelEl.click();
         }
         this.draggingHandle = model.handle;
-        model.handle.dragging = true;
+        this.setHandleDragging(model.handle, true);
         this.activateHandle(model.name);
         if (resolvedInput) {
             // When the input is resolved forward the pointer event to
@@ -399,6 +445,27 @@ export class HandleController {
         this.dispatchChangeEvent(input, model.handle);
     }
 
+    private setHandleValue(handle: SliderHandle, value: number): void {
+        handle.value = value;
+        if (handle === this.defaultHandle) {
+            this.host.value = value;
+        }
+    }
+
+    private setHandleDragging(handle: SliderHandle, dragging: boolean): void {
+        handle.dragging = dragging;
+        if (handle === this.defaultHandle) {
+            this.host.dragging = dragging;
+        }
+    }
+
+    private setHandleHighlight(handle: SliderHandle, highlight: boolean): void {
+        handle.highlight = highlight;
+        if (handle === this.defaultHandle) {
+            this.host.highlight = highlight;
+        }
+    }
+
     public handlePointermove(event: PointerEvent): void {
         const { input, model } = this.extractDataFromEvent(event);
         if (!model) return;
@@ -407,32 +474,33 @@ export class HandleController {
             return;
         }
         input.value = this.calculateHandlePosition(event, model).toString();
-        model.handle.value = parseFloat(input.value);
+        this.setHandleValue(model.handle, parseFloat(input.value));
         this.host.indeterminate = false;
         this.requestUpdate();
     }
 
     public cancelDrag(model?: ModelValue): void {
         model =
-            model || this.model.find((item) => item.name === this.activeHandle);
+            model ||
+            this.model.find((item) => item.name === this.activeHandleName);
         if (!model) return;
-        model.handle.highlight = false;
+        this.setHandleHighlight(model.handle, false);
         delete this.draggingHandle;
-        model.handle.dragging = false;
+        this.setHandleDragging(model.handle, false);
     }
 
     /**
      * Keep the slider value property in sync with the input element's value
      */
-    private onInputChange = (event: Event): void => {
+    public onInputChange(event: Event): void {
         const input = event.target as InputWithModel;
-        input.model.handle.value = input.valueAsNumber;
+        this.setHandleValue(input.model.handle, input.valueAsNumber);
 
         this.requestUpdate();
         this.dispatchChangeEvent(input, input.model.handle);
-    };
+    }
 
-    private onInputFocus = (event: Event): void => {
+    public onInputFocus(event: Event): void {
         const input = event.target as InputWithModel;
         let isFocusVisible;
         try {
@@ -443,17 +511,17 @@ export class HandleController {
         } catch (error) {
             isFocusVisible = this.host.matches('.focus-visible');
         }
-        input.model.handle.highlight = isFocusVisible;
+        this.setHandleHighlight(input.model.handle, isFocusVisible);
         this.requestUpdate();
-    };
+    }
 
-    private onInputBlur = (event: Event): void => {
+    public onInputBlur(event: Event): void {
         const input = event.target as InputWithModel;
-        input.model.handle.highlight = false;
+        this.setHandleHighlight(input.model.handle, false);
         this.requestUpdate();
-    };
+    }
 
-    private onInputKeydown = (event: KeyboardEvent): void => {
+    public onInputKeydown(event: KeyboardEvent): void {
         if (event.key == 'Escape') {
             const input = event.target as InputWithModel;
             if (
@@ -470,9 +538,9 @@ export class HandleController {
             return;
         }
         const input = event.target as InputWithModel;
-        input.model.handle.highlight = true;
+        this.setHandleHighlight(input.model.handle, true);
         this.requestUpdate();
-    };
+    }
 
     private dispatchChangeEvent(
         input: HTMLInputElement,
@@ -514,78 +582,6 @@ export class HandleController {
         );
     }
 
-    public renderHandle(
-        model: ModelValue,
-        index: number,
-        zIndex: number,
-        isMultiHandle: boolean
-    ): TemplateResult {
-        const classes = {
-            handle: true,
-            dragging: this.draggingHandle?.handleName === model.name,
-            'handle-highlight': model.highlight,
-        };
-        const style = {
-            [this.host.isLTR ? 'left' : 'right']: `${
-                model.normalizedValue * 100
-            }%`,
-            'z-index': zIndex.toString(),
-            ...(isMultiHandle && {
-                'background-color': `var(--spectrum-slider-handle-background-color-${index}, var(--spectrum-slider-handle-background-color))`,
-                'border-color': `var(--spectrum-slider-handle-border-color-${index}, var(--spectrum-slider-handle-border-color))`,
-            }),
-        };
-        const ariaLabelledBy = isMultiHandle ? `label input-${index}` : 'label';
-        return html`
-            <div
-                class=${classMap(classes)}
-                name=${model.name}
-                style=${styleMap(style)}
-                role="presentation"
-            >
-                <input
-                    type="range"
-                    class="input"
-                    id="input-${index}"
-                    min=${model.clamp.min}
-                    max=${model.clamp.max}
-                    step=${model.step}
-                    value=${model.value}
-                    aria-disabled=${ifDefined(
-                        this.host.disabled ? 'true' : undefined
-                    )}
-                    tabindex=${ifDefined(this.host.editable ? -1 : undefined)}
-                    aria-label=${ifDefined(model.ariaLabel)}
-                    aria-labelledby=${ariaLabelledBy}
-                    aria-valuetext=${this.formattedValueForHandle(model)}
-                    aria-describedby="slider-description"
-                    @change=${this.onInputChange}
-                    @focus=${this.onInputFocus}
-                    @blur=${this.onInputBlur}
-                    @keydown=${this.onInputKeydown}
-                    .model=${model}
-                />
-                <span id="slider-description">
-                    Press escape or double click to reset the slider to its
-                    default value.
-                </span>
-            </div>
-        `;
-    }
-
-    public render(): TemplateResult[] {
-        this.clearHandleComponentCache();
-        return this.model.map((model, index) => {
-            const zIndex = this.handleOrder.indexOf(model.name) + 2;
-            return this.renderHandle(
-                model,
-                index,
-                zIndex,
-                this.model.length > 1
-            );
-        });
-    }
-
     /**
      * Returns a list of track segment [start, end] tuples where the values are
      * normalized to be between 0 and 1.
@@ -603,7 +599,7 @@ export class HandleController {
         ]);
     }
 
-    private updateModel(): void {
+    public updateModel(): void {
         const handles = [...this.handles.values()];
 
         const getRangeAndClamp = (index: number): RangeAndClamp => {
@@ -689,26 +685,133 @@ export class HandleController {
                 name: handle.handleName,
                 value: clampedValue,
                 normalizedValue,
+                // TODO: replace en-US with language from context
+                // formattedValue: handle.getAriaHandleText(clampedValue, handle.numberFormat ?? new NumberFormatter('en-US', this.host.formatOptions)),
+                formattedValue: this.formatValue(handle, clampedValue),
                 highlight: handle.highlight,
                 step: handle.step ?? this.host.step,
                 normalization: handle.normalization,
                 handle,
-                ariaLabel:
-                    handle !== this.host && handle?.label.length > 0
-                        ? handle.label
-                        : undefined,
+                ariaLabel: handle?.label.length > 0 ? handle.label : undefined,
                 ...rangeAndClamp,
             };
             return model;
         });
 
+        // Sync value if applicable
+        if (this.defaultHandle) {
+            this.host.value = this.defaultHandle.value;
+        }
+
         this.model = modelValues;
     }
 
-    public async handleUpdatesComplete(): Promise<void> {
-        const updates = [...this.handles.values()]
-            .filter((handle) => handle !== this.host)
-            .map((handle) => handle.updateComplete);
+    public async updateComplete(): Promise<void> {
+        const updates = [...this.handles.values()].map(
+            (handle) => handle.updateComplete
+        );
         await Promise.all(updates);
+    }
+
+    public get handleElements(): ModelValue[] {
+        return this.model;
+    }
+
+    // Add a public method to check if a handle is being dragged
+    public isHandleDragging(handleName: string): boolean {
+        return this.draggingHandle?.handleName === handleName;
+    }
+
+    // Add a public method to get z-index for a handle
+    public getZIndexForHandle(handleName: string): number {
+        return this.handleOrder.indexOf(handleName) + 2;
+    }
+
+    // Add a new public method to update the default handle
+    public syncHandleProps(): void {
+        if (!this.defaultHandle) {
+            window.__swc.warn(
+                this.host,
+                'Setting handle properties on sp-slider has no effect when handles are explicitly defined',
+                // TODO: add docs, link to specific section
+                'https://opensource.adobe.com/spectrum-web-components/components/slider'
+            );
+            return;
+        }
+
+        this.configureDefaultHandle();
+    }
+
+    public setDefaultValue(handleOrSlider: SliderHandle | SliderBase): void {
+        const { max, min } = handleOrSlider as { max: number; min: number };
+        if ((handleOrSlider.value ?? null) === null) {
+            if (!isNaN(max) && !isNaN(min)) {
+                handleOrSlider.value = max < min ? min : min + (max - min) / 2;
+                this.updateModel();
+            }
+        }
+    }
+
+    private buildValueFormatter(handleOrSlider: SliderHandle | SliderBase): {
+        numberFormatter: NumberFormatter;
+        forcedUnit: string;
+    } {
+        let numberFormatter: NumberFormatter;
+        let forcedUnit = '';
+
+        try {
+            numberFormatter = new NumberFormatter(
+                this.language,
+                handleOrSlider.formatOptions
+            );
+        } catch (error) {
+            const {
+                style,
+                unit,
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                unitDisplay,
+                ...formatOptionsNoUnit
+            } = handleOrSlider.formatOptions || {};
+            if (style === 'unit') {
+                forcedUnit = unit as string;
+            }
+            numberFormatter = new NumberFormatter(
+                this.language,
+                formatOptionsNoUnit
+            );
+            this.valueFormatterCache.set(handleOrSlider, {
+                numberFormatter,
+                forcedUnit,
+            });
+        }
+
+        return { numberFormatter, forcedUnit };
+    }
+
+    public formatValue(handle: SliderHandle, value?: number): string {
+        const formatterSource = handle.formatOptions ? handle : this.host;
+
+        let { numberFormatter, forcedUnit } =
+            this.valueFormatterCache.get(formatterSource) ?? {};
+
+        if (numberFormatter === undefined || forcedUnit === undefined) {
+            ({ numberFormatter, forcedUnit } =
+                this.buildValueFormatter(formatterSource));
+        }
+        return (
+            handle.getAriaHandleText(value ?? handle.value, numberFormatter!) +
+            forcedUnit
+        );
+    }
+
+    public languageChanged(language: string): void {
+        this.language = language;
+        this.valueFormatterCache.clear();
+    }
+
+    public formatOptionsChanged(
+        handleOrSlider: SliderHandle | SliderBase
+    ): void {
+        this.valueFormatterCache.delete(handleOrSlider);
     }
 }

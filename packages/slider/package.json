@@ -33,6 +33,10 @@
             "development": "./src/Slider.dev.js",
             "default": "./src/Slider.js"
         },
+        "./src/SliderBase.js": {
+            "development": "./src/SliderBase.dev.js",
+            "default": "./src/SliderBase.js"
+        },
         "./src/SliderHandle.js": {
             "development": "./src/SliderHandle.dev.js",
             "default": "./src/SliderHandle.js"

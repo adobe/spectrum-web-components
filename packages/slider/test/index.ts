@@ -110,24 +110,22 @@ export const testEditableSlider = (type: string): void => {
         it('dispatches `input` of the animation frame', async () => {
             const inputSpy = spy();
             const changeSpy = spy();
-            const el = await fixture<Slider>(
-                html`
-                    <sp-slider
-                        editable
-                        hide-stepper
-                        min="1"
-                        max="100"
-                        step="1"
-                        label="Slider label"
-                        @input=${(event: Event & { target: Slider }) => {
-                            inputSpy(event.target.value);
-                        }}
-                        @change=${(event: Event & { target: Slider }) => {
-                            changeSpy(event.target.value);
-                        }}
-                    ></sp-slider>
-                `
-            );
+            const el = await fixture<Slider>(html`
+                <sp-slider
+                    editable
+                    hide-stepper
+                    min="1"
+                    max="100"
+                    step="1"
+                    label="Slider label"
+                    @input=${(event: Event & { target: Slider }) => {
+                        inputSpy(event.target.value);
+                    }}
+                    @change=${(event: Event & { target: Slider }) => {
+                        changeSpy(event.target.value);
+                    }}
+                ></sp-slider>
+            `);
             await elementUpdated(el);
             expect(el.value).to.equal(50.5);
 
@@ -361,7 +359,9 @@ export const testEditableSlider = (type: string): void => {
             expect(el.dragging).to.be.false;
             expect(pointerId, '5').to.equal(3);
             expect(el.shadowRoot.activeElement).to.equal(
-                el.handleController.inputForHandle(el)
+                el.handleController.inputForHandle(
+                    el.handleController.activeHandle
+                )
             );
         });
     });

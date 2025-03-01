@@ -14,32 +14,19 @@ import {
     CSSResultArray,
     html,
     nothing,
-    PropertyValues,
-    SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import {
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
 import {
     classMap,
     ifDefined,
     repeat,
+    StyleInfo,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
-
-import sliderStyles from './slider.css.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import { StyleInfo } from 'lit-html/directives/style-map';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import type { NumberField } from '@spectrum-web-components/number-field';
-import { HandleController, HandleValueDictionary } from './HandleController.js';
-import { SliderHandle } from './SliderHandle.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
-import type { NumberFormatter } from '@internationalized/number';
-
-export const variants = ['filled', 'ramp', 'range', 'tick'];
+import { SliderBase } from './SliderBase.js';
+import sliderStyles from './slider.css.js';
+import { ModelValue } from './HandleController.js';
 
 /**
  * @element sp-slider
@@ -47,162 +34,10 @@ export const variants = ['filled', 'ramp', 'range', 'tick'];
  * @slot - @deprecated Text label for the Slider. Use the `label` property instead.
  * @slot handle - optionally accepts two or more sp-slider-handle elements
  */
-export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
-    noDefaultSize: true,
-    validSizes: ['s', 'm', 'l', 'xl'],
-}) {
+export class Slider extends SliderBase {
     public static override get styles(): CSSResultArray {
         return [sliderStyles];
     }
-
-    public override handleController: HandleController = new HandleController(
-        this
-    );
-
-    /**
-     * Whether to display a Number Field along side the slider UI
-     */
-    @property({ type: Boolean, reflect: true })
-    public get editable(): boolean {
-        return this._editable;
-    }
-
-    public set editable(editable: boolean) {
-        if (editable === this.editable) return;
-        const oldValue = this.editable;
-        this._editable = this.handleController.size < 2 ? editable : false;
-        if (this.editable) {
-            this._numberFieldInput = import(
-                '@spectrum-web-components/number-field/sp-number-field.js'
-            );
-        }
-        if (oldValue !== this.editable) {
-            this.requestUpdate('editable', oldValue);
-        }
-    }
-
-    private _editable = false;
-
-    /**
-     * Whether the stepper UI of the Number Field is hidden or not
-     */
-    @property({ type: Boolean, reflect: true, attribute: 'hide-stepper' })
-    public hideStepper = false;
-
-    @property()
-    public type = '';
-
-    @property({ reflect: true })
-    public override dir!: 'ltr' | 'rtl';
-
-    @property({ type: String })
-    public set variant(variant: string) {
-        const oldVariant = this.variant;
-        if (variant === this.variant) {
-            return;
-        }
-        if (variants.includes(variant) && this.fillStart === undefined) {
-            this._variant = variant;
-            this.setAttribute('variant', variant);
-        } else {
-            this._variant = '';
-            this.removeAttribute('variant');
-        }
-        this.requestUpdate('variant', oldVariant);
-    }
-
-    public get variant(): string {
-        return this._variant;
-    }
-
-    public get values(): HandleValueDictionary {
-        return this.handleController.values;
-    }
-
-    public override get handleName(): string {
-        return 'value';
-    }
-
-    /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
-    private _variant = '';
-
-    @property({ attribute: false })
-    public getAriaValueText: (values: Map<string, string>) => string = (
-        values
-    ) => {
-        const valueArray = [...values.values()];
-        if (valueArray.length === 2)
-            return `${valueArray[0]} - ${valueArray[1]}`;
-        return valueArray.join(', ');
-    };
-
-    public override get ariaValueText(): string {
-        if (!this.getAriaValueText) {
-            return `${this.value}${this._forcedUnit}`;
-        }
-        return this.getAriaValueText(this.handleController.formattedValues);
-    }
-
-    @property({ type: String, reflect: true, attribute: 'label-visibility' })
-    public labelVisibility?: 'text' | 'value' | 'none';
-
-    @property({ type: Number, reflect: true })
-    public override min = 0;
-
-    @property({ type: Number, reflect: true })
-    public override max = 100;
-
-    @property({ type: Number })
-    public override step = 1;
-
-    @property({ type: Number, attribute: 'tick-step' })
-    public tickStep = 0;
-
-    @property({ type: Boolean, attribute: 'tick-labels' })
-    public tickLabels = false;
-
-    @property({ type: Boolean, reflect: true })
-    public override disabled = false;
-
-    @property({ type: Number, reflect: true, attribute: 'fill-start' })
-    public fillStart?: number | boolean;
-
-    /**
-     * Applies `quiet` to the underlying `sp-number-field` when `editable === true`.
-     */
-    @property({ type: Boolean })
-    public quiet = false;
-
-    /**
-     * Applies `indeterminate` to the underlying `sp-number-field` when `editable === true`. Is removed on the next `change` event.
-     */
-    @property({ type: Boolean })
-    public indeterminate = false;
-
-    @query('#label')
-    public labelEl!: HTMLLabelElement;
-
-    @query('#number-field')
-    public numberField!: NumberField;
-
-    @query('#track')
-    public track!: HTMLDivElement;
-
-    public override get numberFormat(): NumberFormatter {
-        return this.getNumberFormat();
-    }
-
-    public override get focusElement(): HTMLElement {
-        return this.handleController.focusElement;
-    }
-
-    protected handleLabelClick(event: Event): void {
-        if (this.editable) {
-            event.preventDefault();
-            this.focus();
-        }
-    }
-
     protected override render(): TemplateResult {
         return html`
             ${this.renderLabel()} ${this.renderTrack()}
@@ -226,34 +61,6 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                   `
                 : nothing}
         `;
-    }
-
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        this.handleController.hostConnected();
-
-        // Deprecation warning for default slot when content is provided
-        if (window.__swc.DEBUG && this.textContent?.trim()) {
-            window.__swc.warn(
-                this,
-                `The default slot for text label in <${this.localName}> has been deprecated and will be removed in a future release. Use the "label" property instead.`,
-                'https://opensource.adobe.com/spectrum-web-components/components/slider/',
-                { level: 'deprecation' }
-            );
-        }
-    }
-
-    public override disconnectedCallback(): void {
-        super.disconnectedCallback();
-        this.handleController.hostDisconnected();
-    }
-
-    public override update(changedProperties: Map<string, boolean>): void {
-        this.handleController.hostUpdate();
-        if (changedProperties.has('disabled') && this.disabled) {
-            this.handleController.cancelDrag();
-        }
-        super.update(changedProperties);
     }
 
     private renderLabel(): TemplateResult {
@@ -369,9 +176,6 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         `;
     }
 
-    private _cachedValue: number | undefined;
-    private centerPoint: number | undefined;
-
     /**
      * @description calculates the fill width
      * @param fillStartValue
@@ -386,8 +190,10 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         return distance * 100;
     }
 
-    private fillStyles(centerPoint: number): StyleInfo {
-        const activeModel = this.handleController.activeHandleModel;
+    private fillStyles(
+        centerPoint: number,
+        activeModel: ModelValue
+    ): StyleInfo {
         const centerPointNormalized = activeModel.normalization.toNormalized(
             centerPoint,
             this.min,
@@ -410,7 +216,10 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     }
 
     private renderFillOffset(): TemplateResult {
-        if (this._cachedValue === undefined || this.centerPoint === undefined) {
+        if (
+            this.centerPoint === undefined ||
+            this.handleController.activeHandleModel === undefined
+        ) {
             return html``;
         }
         return html`
@@ -419,29 +228,28 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
                     fill: true,
                     offset: this.value > this.centerPoint,
                 })}
-                style=${styleMap(this.fillStyles(this.centerPoint))}
+                style=${styleMap(
+                    this.fillStyles(
+                        this.centerPoint,
+                        this.handleController.activeHandleModel
+                    )
+                )}
             ></div>
-        `;
-    }
-    private renderHandle(): TemplateResult {
-        if (this.variant === 'tick') {
-            return html``;
-        }
-        return html`
-            ${this.handleController.render()}
         `;
     }
 
     private renderTrack(): TemplateResult {
         const segments = this.handleController.trackSegments();
-        const handleItems = [
-            { id: 'handles', html: this.handleController.render() },
-        ];
+        const renderedHandles = this.renderHandles();
+        const handleItems = [{ id: 'handles', html: renderedHandles }];
         const trackItems = [
             { id: 'track0', html: this.renderTrackSegment(...segments[0]) },
             { id: 'fill', html: this.renderFillOffset() },
             { id: 'ramp', html: this.renderRamp() },
-            { id: 'handles', html: this.renderHandle() },
+            {
+                id: 'handles',
+                html: this.variant === 'tick' ? nothing : renderedHandles,
+            },
             ...segments.slice(1).map(([start, end], index) => ({
                 id: `track${index + 1}`,
                 html: this.renderTrackSegment(start, end),
@@ -492,47 +300,81 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         `;
     }
 
-    protected handleDoubleClick(event: PointerEvent): void {
-        this.handleController.handleDoubleClick(event);
+    private renderHandles(): TemplateResult {
+        return html`
+            ${this.handleController.handleElements.map((model, index) => {
+                const zIndex = this.handleController.getZIndexForHandle(
+                    model.name
+                );
+                return this.renderHandle(
+                    model,
+                    index,
+                    zIndex,
+                    this.handleController.handleElements.length > 1
+                );
+            })}
+        `;
     }
 
-    protected handlePointerdown(event: PointerEvent): void {
-        this.handleController.handlePointerdown(event);
-    }
-
-    protected handlePointermove(event: PointerEvent): void {
-        this.handleController.handlePointermove(event);
-    }
-
-    protected handlePointerup(event: PointerEvent): void {
-        this.handleController.handlePointerup(event);
-    }
-
-    private handleNumberInput(event: Event & { target: NumberField }): void {
-        const { value } = event.target;
-        if (event.target?.managedInput && !isNaN(value)) {
-            this.value = value;
-            return;
-        }
-        // Do not apply uncommited values to the parent element unless interacting with the stepper UI.
-        // Stop uncommitted input from being announced to the parent application.
-        event.stopPropagation();
-    }
-
-    private handleNumberChange(event: Event & { target: NumberField }): void {
-        const { value } = event.target;
-        if (isNaN(value)) {
-            event.target.value = this.value;
-            event.stopPropagation();
-        } else {
-            this.value = value;
-            if (!event.target?.managedInput) {
-                // When stepper is not active, sythesize an `input` event so that the
-                // `change` event isn't surprising.
-                this.dispatchInputEvent();
-            }
-        }
-        this.indeterminate = false;
+    private renderHandle(
+        model: ModelValue,
+        index: number,
+        zIndex: number,
+        isMultiHandle: boolean
+    ): TemplateResult {
+        const classes = {
+            handle: true,
+            dragging: this.handleController.isHandleDragging(model.name),
+            'handle-highlight': model.highlight,
+        };
+        const style = {
+            [this.isLTR ? 'left' : 'right']: `${model.normalizedValue * 100}%`,
+            'z-index': zIndex.toString(),
+            ...(isMultiHandle && {
+                'background-color': `var(--spectrum-slider-handle-background-color-${index}, var(--spectrum-slider-handle-background-color))`,
+                'border-color': `var(--spectrum-slider-handle-border-color-${index}, var(--spectrum-slider-handle-border-color))`,
+            }),
+        };
+        const ariaLabelledBy = isMultiHandle ? `label input-${index}` : 'label';
+        return html`
+            <div
+                class=${classMap(classes)}
+                name=${model.name}
+                style=${styleMap(style)}
+                role="presentation"
+            >
+                <input
+                    type="range"
+                    class="input"
+                    id="input-${index}"
+                    min=${model.clamp.min}
+                    max=${model.clamp.max}
+                    step=${model.step}
+                    value=${model.value}
+                    aria-disabled=${ifDefined(
+                        this.disabled ? 'true' : undefined
+                    )}
+                    tabindex=${ifDefined(this.editable ? -1 : undefined)}
+                    aria-label=${ifDefined(model.ariaLabel)}
+                    aria-labelledby=${ariaLabelledBy}
+                    aria-valuetext=${model.formattedValue}
+                    aria-describedby="slider-description"
+                    @change=${(event: Event) =>
+                        this.handleController.onInputChange(event)}
+                    @focus=${(event: Event) =>
+                        this.handleController.onInputFocus(event)}
+                    @blur=${(event: Event) =>
+                        this.handleController.onInputBlur(event)}
+                    @keydown=${(event: KeyboardEvent) =>
+                        this.handleController.onInputKeydown(event)}
+                    .model=${model}
+                />
+                <span id="slider-description">
+                    Press escape or double click to reset the slider to its
+                    default value.
+                </span>
+            </div>
+        `;
     }
 
     private trackSegmentStyles(start: number, end: number): StyleInfo {
@@ -543,31 +385,5 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             '--spectrum-slider-track-segment-position': `${start * 100}%`,
         };
         return styles;
-    }
-
-    private _numberFieldInput: Promise<unknown> = Promise.resolve();
-
-    protected override async getUpdateComplete(): Promise<boolean> {
-        const complete = (await super.getUpdateComplete()) as boolean;
-        if (this.editable) {
-            await this._numberFieldInput;
-            await this.numberField.updateComplete;
-        }
-        await this.handleController.handleUpdatesComplete();
-        return complete;
-    }
-
-    protected override willUpdate(changed: PropertyValues): void {
-        if (changed.has('value') && changed.has('fillStart')) {
-            this._cachedValue = Number(this.value);
-            // Test if fill-start is set without a value
-            if (this.getAttribute('fill-start') === '') {
-                this.centerPoint =
-                    (Number(this.max) - Number(this.min)) / 2 +
-                    Number(this.min);
-            } else if (!Number.isNaN(Number(this.fillStart))) {
-                this.centerPoint = Number(this.fillStart);
-            }
-        }
     }
 }
