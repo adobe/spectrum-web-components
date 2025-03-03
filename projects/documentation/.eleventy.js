@@ -66,11 +66,15 @@ export default function (eleventyConfig) {
         renderPermalink: (slug, opts, state, idx) => {
             // based on fifth version in
             // https://amberwilson.co.uk/blog/are-your-anchor-links-accessible/
-            const linkContent = state.tokens[idx + 1].children[0].content;
+            const linkContent = state.tokens[idx + 1].children[0]?.content;
             const heading = state.tokens[idx];
             const tag = heading.tag;
 
-            // Create the openning <div> for the wrapper
+            if (linkContent?.length < 1) {
+                console.warn()
+            }
+
+            // Create the opening <div> for the wrapper
             const headingWrapperTokenOpen = Object.assign(
                 new state.Token('div_open', 'div', 1),
                 {
