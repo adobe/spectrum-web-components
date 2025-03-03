@@ -12,23 +12,28 @@ governing permissions and limitations under the License.
 */
 
 /**
- * @property {string} fileName
- * @property {RegExp} regex
- * @returns {import('../../../tasks/spectrum-css-converter').Conversion}
+ * Generates a style configuration object.
+ *
+ * @param {string} fileName - The name of the file.
+ * @param {RegExp} regex - The regular expression to match class names.
+ * @returns {import('../../../tasks/spectrum-css-converter.js').Conversion} The style configuration object.
  */
-const styleType = (fileName, regex) => ({
-    inPackage: '@spectrum-css/typography',
-    outPackage: ['tools', 'styles'],
-    fileName,
-    requireComponentPresence: [
-        {
-            type: 'class',
-            name: regex,
-            regex,
-        },
-    ],
-    components: [],
-});
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- it's there but not being picked up
+function styleType(fileName, regex) {
+    return {
+        inPackage: '@spectrum-css/typography',
+        outPackage: ['tools', 'styles'],
+        fileName,
+        requireComponentPresence: [
+            {
+                type: 'class',
+                name: regex,
+                regex,
+            },
+        ],
+        components: [],
+    };
+}
 
 /**
  * @type { import('../../../tasks/spectrum-css-converter').SpectrumCSSConverter }
@@ -44,7 +49,6 @@ const config = {
             inPackage: '@spectrum-css/typography',
             outPackage: ['tools', 'styles'],
             fileName: 'lang',
-            allowThemeRules: true,
             requireComponentPresence: [
                 /** @type {import('lightningcss').SelectorComponent} */ ({
                     type: 'pseudo-class',

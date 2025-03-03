@@ -1,14 +1,14 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Typography .spectrum-Heading {
@@ -22,7 +22,55 @@ governing permissions and limitations under the License.
     }
 }
 
+.spectrum-Heading,
+.spectrum-Heading--sizeM {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-m);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-m);
+}
+
+.spectrum-Heading--sizeXXS {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xxs);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxs);
+}
+
+.spectrum-Heading--sizeXS {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xs);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xs);
+}
+
+.spectrum-Heading--sizeS {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-s);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-s);
+}
+
+.spectrum-Heading--sizeL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-l);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-l);
+}
+
+.spectrum-Heading--sizeXL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xl);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xl);
+}
+
+.spectrum-Heading--sizeXXL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xxl);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxl);
+}
+
+.spectrum-Heading--sizeXXXL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xxxl);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxxl);
+}
+
 .spectrum-Heading {
+    --spectrum-heading-sans-serif-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-heading-serif-font-family: var(--spectrum-serif-font-family-stack);
+    --spectrum-heading-cjk-font-family: var(--spectrum-cjk-font-family-stack);
+    --spectrum-heading-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
+    --spectrum-heading-font-color: var(--spectrum-heading-color);
+    --spectrum-heading-margin-start: calc(var(--mod-heading-font-size, var(--spectrum-heading-font-size)) * var(--spectrum-heading-margin-top-multiplier));
+    --spectrum-heading-margin-end: calc(var(--mod-heading-font-size, var(--spectrum-heading-font-size)) * var(--spectrum-heading-margin-bottom-multiplier));
     font-family: var(--mod-heading-sans-serif-font-family, var(--spectrum-heading-sans-serif-font-family));
     font-style: var(--mod-heading-sans-serif-font-style, var(--spectrum-heading-sans-serif-font-style));
     font-weight: var(--mod-heading-sans-serif-font-weight, var(--spectrum-heading-sans-serif-font-weight));

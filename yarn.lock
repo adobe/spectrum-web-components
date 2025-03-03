@@ -6550,13 +6550,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/clearbutton@npm:7.0.0-s2-foundations.16":
-  version: 7.0.0-s2-foundations.16
-  resolution: "@spectrum-css/clearbutton@npm:7.0.0-s2-foundations.16"
+"@spectrum-css/clearbutton@npm:7.2.0":
+  version: 7.2.0
+  resolution: "@spectrum-css/clearbutton@npm:7.2.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/6434ffd030908888f5b2898696fd20aba31c5eb9a8c41bb0426bc133990f80f4b326fd1186b77b7bbbb3ca7720b1eb801581412be9500063e5729978f542c1d9
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/10b0bd2a6c3a54ce55b99c3cd7287a9af1118822a81b0a9619d7e6cc7521032f9a6dcd9a6f697464645d9db9f7547e6a67124fa762dc66c7317130e8458b965b
   languageName: node
   linkType: hard
 
@@ -6575,30 +6580,45 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/coachindicator@npm:3.0.0-s2-foundations.16":
-  version: 3.0.0-s2-foundations.16
-  resolution: "@spectrum-css/coachindicator@npm:3.0.0-s2-foundations.16"
+"@spectrum-css/coachindicator@npm:4.1.0":
+  version: 4.1.0
+  resolution: "@spectrum-css/coachindicator@npm:4.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/ebbb62b3514c6e13db9347972f0aa8009cc12c23356d8c8c1d230713429850df14a221258f7ed1db2a240929cb6bb208afcaf0184e44b81c265e3748c55f159c
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/1f3349129c6b53a0146ab14f1b8be85101a1c6fe400badd4f86aadad646864284880814353c3ee0dfe434c709f783234b611a0259be90b45ce16df68b399163a
   languageName: node
   linkType: hard
 
-"@spectrum-css/coachmark@npm:8.0.0-s2-foundations.17":
-  version: 8.0.0-s2-foundations.17
-  resolution: "@spectrum-css/coachmark@npm:8.0.0-s2-foundations.17"
+"@spectrum-css/coachmark@npm:9.1.1":
+  version: 9.1.1
+  resolution: "@spectrum-css/coachmark@npm:9.1.1"
   peerDependencies:
-    "@spectrum-css/actionbutton": ">=6"
-    "@spectrum-css/actionmenu": ">=6"
-    "@spectrum-css/button": ">=13"
-    "@spectrum-css/buttongroup": ">=7"
-    "@spectrum-css/menu": ">=7"
-    "@spectrum-css/popover": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/actionbutton": ">=7.0.0 <8.0.0"
+    "@spectrum-css/actionmenu": ">=7.0.0 <8.0.0"
+    "@spectrum-css/button": ">=14.0.0 <15.0.0"
+    "@spectrum-css/buttongroup": ">=9.0.0 <10.0.0"
+    "@spectrum-css/menu": ">=9.0.0 <10.0.0"
+    "@spectrum-css/popover": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
+    "@spectrum-css/actionbutton":
+      optional: true
+    "@spectrum-css/actionmenu":
+      optional: true
     "@spectrum-css/button":
       optional: true
-  checksum: 10c0/e3359c555872a2ae9b2e867bb056363bb07f0c7bb63e8ddbe1ffd64556e5b6686ceaf5baf6f1dd792879ae0bf320d67d3c7c7e989a92f3fb87c7b344c257a2fb
+    "@spectrum-css/buttongroup":
+      optional: true
+    "@spectrum-css/menu":
+      optional: true
+    "@spectrum-css/popover":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/51ceac74a01ffdcba4e7d111e5130872e8218ddc37f42e43e88062f1b59e0118b6c00bf61378b4fad8a83ea6c261edc571f4878203f062a9251969cd5a56d5a5
   languageName: node
   linkType: hard
 
@@ -6734,23 +6754,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/dialog@npm:11.0.0-s2-foundations.15":
-  version: 11.0.0-s2-foundations.15
-  resolution: "@spectrum-css/dialog@npm:11.0.0-s2-foundations.15"
+"@spectrum-css/dialog@npm:12.1.0":
+  version: 12.1.0
+  resolution: "@spectrum-css/dialog@npm:12.1.0"
   peerDependencies:
-    "@spectrum-css/closebutton": ">=5"
-    "@spectrum-css/divider": ">=3"
-    "@spectrum-css/modal": ">=5"
-    "@spectrum-css/tokens": ">=14"
-    "@spectrum-css/underlay": ">=4"
+    "@spectrum-css/closebutton": ">=6.0.0 <7.0.0"
+    "@spectrum-css/divider": ">=5.0.0 <6.0.0"
+    "@spectrum-css/modal": ">=7.0.0 <8.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+    "@spectrum-css/underlay": ">=6.0.0 <7.0.0"
   peerDependenciesMeta:
+    "@spectrum-css/closebutton":
+      optional: true
     "@spectrum-css/divider":
       optional: true
     "@spectrum-css/modal":
       optional: true
+    "@spectrum-css/tokens":
+      optional: true
     "@spectrum-css/underlay":
       optional: true
-  checksum: 10c0/0911458424815f49f08a1c47aa10fb06fbfbdd4ccce9578039730f9f50aae1714997ab0d653ccc58bb6a11f8e776b4ccdb677b22627adb4b43682ac8abe39a91
+  checksum: 10c0/e6c761eb29e070f5b979dd6925e1b43aa727a24efa0389aa67cad25c1193a6149e1277c6270d0c44c831d6c0c0b2aa1e3c3cec6dde11677567bff756d1090e75
   languageName: node
   linkType: hard
 
@@ -6794,14 +6818,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/fieldgroup@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/fieldgroup@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/fieldgroup@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/fieldgroup@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/checkbox": ">=9"
-    "@spectrum-css/helptext": ">=5"
-    "@spectrum-css/radio": ">=9"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/checkbox": ">=10.0.0 <11.0.0"
+    "@spectrum-css/helptext": ">=7.0.0 <8.0.0"
+    "@spectrum-css/radio": ">=10.0.0 <11.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/checkbox":
       optional: true
@@ -6809,7 +6833,9 @@ __metadata:
       optional: true
     "@spectrum-css/radio":
       optional: true
-  checksum: 10c0/146b4f3d3fd30a32178c907defd2eec54389a55e8ece7dd6f4d84acc2ca1c8b0af6841a49f649e34f146c102c406836f33e316a034e0634984ff124434b14881
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/bb3b1fef4ddb1fe7dafc101bf72367c61cc1bcf050be98f0e55013f86c3f96b167a0b281d9c55b167616a6c16dc57b3c7fa2bd2df8c0bd5524ca741cf94e2667
   languageName: node
   linkType: hard
 
@@ -6924,13 +6950,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/meter@npm:0.0.0-s2-foundations.2":
-  version: 0.0.0-s2-foundations.2
-  resolution: "@spectrum-css/meter@npm:0.0.0-s2-foundations.2"
+"@spectrum-css/meter@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@spectrum-css/meter@npm:1.1.0"
   peerDependencies:
-    "@spectrum-css/progressbar": ">=4"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/77276ef171fe431a16a503452c20275c3f4175cbf2d8576873713912948410b2dd4e2a4d155299c47af11ae3868d5b4d6ec2c5942b0eefb5f36c9d0195baa04f
+    "@spectrum-css/progressbar": ">=6.0.0 <7.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/progressbar":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/44b4be47b33b8cade6e60c97c501857f248e930908d0648e37293b7c5fc2bbb317a7192a92edc250f79f8dd5ec5552e1b137480e393865ea87a1b08f330a1154
   languageName: node
   linkType: hard
 
@@ -7030,16 +7061,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/progressbar@npm:5.0.0-s2-foundations.19":
-  version: 5.0.0-s2-foundations.19
-  resolution: "@spectrum-css/progressbar@npm:5.0.0-s2-foundations.19"
+"@spectrum-css/progressbar@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@spectrum-css/progressbar@npm:6.1.0"
   peerDependencies:
-    "@spectrum-css/fieldlabel": ">=8"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/fieldlabel": ">=10.0.0 <11.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/fieldlabel":
       optional: true
-  checksum: 10c0/69018cd13d65b40edadee6b5f00cc3160f5c974181a68785db889fbc6259923c0d34e6a607ba9de2715b348203569e8831df1eedb5bda426b0287231372452da
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/186cedd5f2e453d45a4803884e6e1a544bf2e435b51eff99465291a45e703c4934dbcbcc6744280081717368bfc80584464ecd35ca026853d949ea6a3e90f29e
   languageName: node
   linkType: hard
 
@@ -7055,13 +7088,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/radio@npm:10.0.0-s2-foundations.17":
-  version: 10.0.0-s2-foundations.17
-  resolution: "@spectrum-css/radio@npm:10.0.0-s2-foundations.17"
+"@spectrum-css/radio@npm:10.1.0":
+  version: 10.1.0
+  resolution: "@spectrum-css/radio@npm:10.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/21f5459fccd2aef30b5dbc91308d13e73b75c73e72baeb20783989b2a2a8c7d88bc5abc5568440ec6fa2e069c3d37cd1c4c40b83dff9cb7e1233bc747c5a24c5
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/e45709e06f522704c70c3bcc87756a84f5bc8debee2ed05ff5a8ff2ea70d71b9e2474b9475cd78fc277fa6b2818e2a26bcd4efc0d2f2bca5c4457bab15a39d46
   languageName: node
   linkType: hard
 
@@ -7164,23 +7202,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/swatch@npm:7.0.0-s2-foundations.17":
-  version: 7.0.0-s2-foundations.17
-  resolution: "@spectrum-css/swatch@npm:7.0.0-s2-foundations.17"
+"@spectrum-css/swatch@npm:8.1.2":
+  version: 8.1.2
+  resolution: "@spectrum-css/swatch@npm:8.1.2"
   peerDependencies:
-    "@spectrum-css/opacitycheckerboard": ">=2"
-    "@spectrum-css/tokens": ">=14.5.0"
-  checksum: 10c0/80016a4c10276abc6376e854cff1aaa84a3499085f8b5afa80f8af365ce7cd79cf1f46f1fc74d1caf1fbf578621f327210f966b50e9c147156c2f0e0a547d73f
+    "@spectrum-css/opacitycheckerboard": ">=4.0.0 <5.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/opacitycheckerboard":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/1b9aceb3211bd9b8a60ae55ab982dd1e9f845e5d40c140692824bc3bd98ec1b24b0d809078906f318ccd92c3a79eeccf5b129391d4f89ab2588574fbc5206687
   languageName: node
   linkType: hard
 
-"@spectrum-css/swatchgroup@npm:4.0.0-s2-foundations.15":
-  version: 4.0.0-s2-foundations.15
-  resolution: "@spectrum-css/swatchgroup@npm:4.0.0-s2-foundations.15"
+"@spectrum-css/swatchgroup@npm:5.1.0":
+  version: 5.1.0
+  resolution: "@spectrum-css/swatchgroup@npm:5.1.0"
   peerDependencies:
-    "@spectrum-css/swatch": ">=6"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/7c5c2416479d8602c009f191e71a046af33ca96e3bb4b847586a568e52a5cb884e75cf02457d0c87aa8b5130c6817a328ea124b47c5a04dabc5918b4d8df5497
+    "@spectrum-css/swatch": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/swatch":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/2f0b5e818272c948e41a3b2372e1804266a5cbf1c296bfbade8dfd5eabe9b01366e971dc946e72c829641732171513ddfc2131c5348f0ba64a5d7f3d7c22e37b
   languageName: node
   linkType: hard
 
@@ -7384,12 +7432,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/typography@npm:7.0.0-s2-foundations.17":
-  version: 7.0.0-s2-foundations.17
-  resolution: "@spectrum-css/typography@npm:7.0.0-s2-foundations.17"
+"@spectrum-css/typography@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@spectrum-css/typography@npm:8.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/f5bb79cc4676dda88a3736ee3469c5fea6a1a64ec734884ae580bec4d2eba429fd61c9be31e4dcb89f43a4784494e94f00b63798f4d30154ffd774c77377daac
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/ed61f1856faaef788077c16612b911660e49eb49442aa900106020baa1ab9d7e723593abca0d97835c570992f4ff0bf90c01e432d3c273cceee7695c159ba0bb
   languageName: node
   linkType: hard
 
@@ -7706,7 +7757,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/clear-button@workspace:packages/clear-button"
   dependencies:
-    "@spectrum-css/clearbutton": "npm:7.0.0-s2-foundations.16"
+    "@spectrum-css/clearbutton": "npm:7.2.0"
     "@spectrum-web-components/base": "npm:1.6.0"
   languageName: unknown
   linkType: soft
@@ -7724,8 +7775,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/coachmark@workspace:packages/coachmark"
   dependencies:
-    "@spectrum-css/coachindicator": "npm:3.0.0-s2-foundations.16"
-    "@spectrum-css/coachmark": "npm:8.0.0-s2-foundations.17"
+    "@spectrum-css/coachindicator": "npm:4.1.0"
+    "@spectrum-css/coachmark": "npm:9.1.1"
     "@spectrum-web-components/asset": "npm:1.6.0"
     "@spectrum-web-components/base": "npm:1.6.0"
     "@spectrum-web-components/button": "npm:1.6.0"
@@ -7882,7 +7933,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/dialog@workspace:packages/dialog"
   dependencies:
-    "@spectrum-css/dialog": "npm:11.0.0-s2-foundations.15"
+    "@spectrum-css/dialog": "npm:12.1.0"
     "@spectrum-web-components/alert-dialog": "npm:1.6.0"
     "@spectrum-web-components/base": "npm:1.6.0"
     "@spectrum-web-components/button": "npm:1.6.0"
@@ -7930,7 +7981,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/field-group@workspace:packages/field-group"
   dependencies:
-    "@spectrum-css/fieldgroup": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/fieldgroup": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.6.0"
     "@spectrum-web-components/help-text": "npm:1.6.0"
   languageName: unknown
@@ -8087,8 +8138,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/meter@workspace:packages/meter"
   dependencies:
-    "@spectrum-css/meter": "npm:0.0.0-s2-foundations.2"
-    "@spectrum-css/progressbar": "npm:5.0.0-s2-foundations.19"
+    "@spectrum-css/meter": "npm:1.1.0"
+    "@spectrum-css/progressbar": "npm:6.1.0"
     "@spectrum-web-components/base": "npm:1.6.0"
     "@spectrum-web-components/field-label": "npm:1.6.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.6.0"
@@ -8195,7 +8246,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/progress-bar@workspace:packages/progress-bar"
   dependencies:
-    "@spectrum-css/progressbar": "npm:5.0.0-s2-foundations.19"
+    "@spectrum-css/progressbar": "npm:6.1.0"
     "@spectrum-web-components/base": "npm:1.6.0"
     "@spectrum-web-components/field-label": "npm:1.6.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.6.0"
@@ -8217,7 +8268,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/radio@workspace:packages/radio"
   dependencies:
-    "@spectrum-css/radio": "npm:10.0.0-s2-foundations.17"
+    "@spectrum-css/radio": "npm:10.1.0"
     "@spectrum-web-components/base": "npm:1.6.0"
     "@spectrum-web-components/field-group": "npm:1.6.0"
     "@spectrum-web-components/help-text": "npm:1.6.0"
@@ -8328,7 +8379,7 @@ __metadata:
     "@spectrum-css/expressvars": "npm:^3.0.9"
     "@spectrum-css/tokens": "npm:15.0.0"
     "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@16.0.1"
-    "@spectrum-css/typography": "npm:7.0.0-s2-foundations.17"
+    "@spectrum-css/typography": "npm:8.1.0"
     "@spectrum-css/vars": "npm:^9.0.8"
     "@spectrum-web-components/base": "npm:1.6.0"
     lit: "npm:^2.5.0 || ^3.1.3"
@@ -8340,8 +8391,8 @@ __metadata:
   resolution: "@spectrum-web-components/swatch@workspace:packages/swatch"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/swatch": "npm:7.0.0-s2-foundations.17"
-    "@spectrum-css/swatchgroup": "npm:4.0.0-s2-foundations.15"
+    "@spectrum-css/swatch": "npm:8.1.2"
+    "@spectrum-css/swatchgroup": "npm:5.1.0"
     "@spectrum-web-components/base": "npm:1.6.0"
     "@spectrum-web-components/icon": "npm:1.6.0"
     "@spectrum-web-components/icons-ui": "npm:1.6.0"

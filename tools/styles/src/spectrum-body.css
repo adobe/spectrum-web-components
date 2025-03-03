@@ -1,14 +1,14 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Typography .spectrum-Body {
@@ -21,14 +21,48 @@ governing permissions and limitations under the License.
     }
 }
 
+.spectrum-Body,
+.spectrum-Body--sizeM {
+    --spectrum-body-font-size: var(--spectrum-body-size-m);
+}
+
+.spectrum-Body--sizeXS {
+    --spectrum-body-font-size: var(--spectrum-body-size-xs);
+}
+
+.spectrum-Body--sizeS {
+    --spectrum-body-font-size: var(--spectrum-body-size-s);
+}
+
+.spectrum-Body--sizeL {
+    --spectrum-body-font-size: var(--spectrum-body-size-l);
+}
+
+.spectrum-Body--sizeXL {
+    --spectrum-body-font-size: var(--spectrum-body-size-xl);
+}
+
+.spectrum-Body--sizeXXL {
+    --spectrum-body-font-size: var(--spectrum-body-size-xxl);
+}
+
+.spectrum-Body--sizeXXXL {
+    --spectrum-body-font-size: var(--spectrum-body-size-xxxl);
+}
+
 .spectrum-Body {
+    --spectrum-body-sans-serif-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-body-serif-font-family: var(--spectrum-serif-font-family-stack);
+    --spectrum-body-cjk-font-family: var(--spectrum-cjk-font-family-stack);
+    --spectrum-body-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
+    --spectrum-body-font-color: var(--spectrum-body-color);
     font-family: var(--mod-body-sans-serif-font-family, var(--spectrum-body-sans-serif-font-family));
     font-style: var(--mod-body-sans-serif-font-style, var(--spectrum-body-sans-serif-font-style));
     font-weight: var(--mod-body-sans-serif-font-weight, var(--spectrum-body-sans-serif-font-weight));
     font-size: var(--mod-body-font-size, var(--spectrum-body-font-size));
     color: var(--highcontrast-body-font-color, var(--mod-body-font-color, var(--spectrum-body-font-color)));
     line-height: var(--mod-body-line-height, var(--spectrum-body-line-height));
-    margin-block-start: var(--mod-body-margin-start, var(--mod-body-margin, var(--spectrum-body-margin-start, 0)));
+    margin-block-start: var(--mod-body-margin-start, var(--mod-body-margin, 0));
     margin-block-end: var(--mod-body-margin-end, var(--mod-body-margin, var(--spectrum-body-margin-end, 0)));
 }
 
