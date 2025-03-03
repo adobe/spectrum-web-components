@@ -32,6 +32,7 @@ const config = {
                 builder.class('spectrum-Breadcrumbs-itemSeparator'),
                 builder.class('spectrum-Breadcrumbs-itemLink'),
                 builder.class('spectrum-Breadcrumbs-item'),
+                builder.class('spectrum-Breadcrumbs--multiline'),
             ],
             includeByWholeSelector: [
                 /* .spectrum-Breadcrumbs--compact .spectrum-Breadcrumbs-item */

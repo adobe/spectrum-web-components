@@ -69,7 +69,7 @@
     },
     "devDependencies": {
         "@formatjs/intl-numberformat": "^8.3.5",
-        "@spectrum-css/stepper": "7.0.0-s2-foundations.19"
+        "@spectrum-css/stepper": "7.1.2"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

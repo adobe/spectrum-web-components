@@ -1,45 +1,18 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-alert-banner-neutral-background: var(
         --system-alert-banner-neutral-background
     );
-    --spectrum-alert-banner-min-height: var(--system-alert-banner-min-height);
-    --spectrum-alert-banner-max-inline-size: var(
-        --system-alert-banner-max-inline-size
-    );
-    --spectrum-alert-banner-size: var(--system-alert-banner-size);
-    --spectrum-alert-banner-font-size: var(--system-alert-banner-font-size);
-    --spectrum-alert-banner-icon-size: var(--system-alert-banner-icon-size);
-    --spectrum-alert-banner-icon-to-text: var(
-        --system-alert-banner-icon-to-text
-    );
-    --spectrum-alert-banner-start-edge: var(--system-alert-banner-start-edge);
-    --spectrum-alert-banner-text-to-button-horizontal: var(
-        --system-alert-banner-text-to-button-horizontal
-    );
-    --spectrum-alert-banner-text-to-divider: var(
-        --system-alert-banner-text-to-divider
-    );
-    --spectrum-alert-banner-top-icon: var(--system-alert-banner-top-icon);
-    --spectrum-alert-banner-top-text: var(--system-alert-banner-top-text);
-    --spectrum-alert-banner-bottom-text: var(--system-alert-banner-bottom-text);
-    --spectrum-alert-banner-informative-background: var(
-        --system-alert-banner-informative-background
-    );
-    --spectrum-alert-banner-negative-background: var(
-        --system-alert-banner-negative-background
-    );
-    --spectrum-alert-banner-font-color: var(--system-alert-banner-font-color);
 }

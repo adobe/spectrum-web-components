@@ -1,58 +1,17 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-sidenav-focus-ring-size: var(--system-side-nav-focus-ring-size);
-    --spectrum-sidenav-focus-ring-gap: var(--system-side-nav-focus-ring-gap);
-    --spectrum-sidenav-focus-ring-color: var(
-        --system-side-nav-focus-ring-color
-    );
-    --spectrum-sidenav-min-height: var(--system-side-nav-min-height);
-    --spectrum-sidenav-width: var(--system-side-nav-width);
-    --spectrum-sidenav-min-width: var(--system-side-nav-min-width);
-    --spectrum-sidenav-max-width: var(--system-side-nav-max-width);
-    --spectrum-sidenav-border-radius: var(--system-side-nav-border-radius);
-    --spectrum-sidenav-icon-size: var(--system-side-nav-icon-size);
-    --spectrum-sidenav-icon-spacing: var(--system-side-nav-icon-spacing);
-    --spectrum-sidenav-inline-padding: var(--system-side-nav-inline-padding);
-    --spectrum-sidenav-gap: var(--system-side-nav-gap);
-    --spectrum-sidenav-top-to-icon: var(--system-side-nav-top-to-icon);
-    --spectrum-sidenav-top-to-label: var(--system-side-nav-top-to-label);
-    --spectrum-sidenav-bottom-to-label: var(--system-side-nav-bottom-to-label);
-    --spectrum-sidenav-start-to-content-second-level: var(
-        --system-side-nav-start-to-content-second-level
-    );
-    --spectrum-sidenav-start-to-content-third-level: var(
-        --system-side-nav-start-to-content-third-level
-    );
-    --spectrum-sidenav-start-to-content-with-icon-second-level: var(
-        --system-side-nav-start-to-content-with-icon-second-level
-    );
-    --spectrum-sidenav-start-to-content-with-icon-third-level: var(
-        --system-side-nav-start-to-content-with-icon-third-level
-    );
-    --spectrum-sidenav-heading-top-margin: var(
-        --system-side-nav-heading-top-margin
-    );
-    --spectrum-sidenav-heading-bottom-margin: var(
-        --system-side-nav-heading-bottom-margin
-    );
-    --spectrum-sidenav-background-disabled: var(
-        --system-side-nav-background-disabled
-    );
-    --spectrum-sidenav-background-default: var(
-        --system-side-nav-background-default
-    );
     --spectrum-sidenav-background-hover: var(
         --system-side-nav-background-hover
     );
@@ -73,110 +32,5 @@ governing permissions and limitations under the License.
     );
     --spectrum-sidenav-background-key-focus-selected: var(
         --system-side-nav-background-key-focus-selected
-    );
-    --spectrum-sidenav-header-color: var(--system-side-nav-header-color);
-    --spectrum-sidenav-content-disabled-color: var(
-        --system-side-nav-content-disabled-color
-    );
-    --spectrum-sidenav-content-color-default: var(
-        --system-side-nav-content-color-default
-    );
-    --spectrum-sidenav-content-color-hover: var(
-        --system-side-nav-content-color-hover
-    );
-    --spectrum-sidenav-content-color-down: var(
-        --system-side-nav-content-color-down
-    );
-    --spectrum-sidenav-content-color-key-focus: var(
-        --system-side-nav-content-color-key-focus
-    );
-    --spectrum-sidenav-content-color-default-selected: var(
-        --system-side-nav-content-color-default-selected
-    );
-    --spectrum-sidenav-content-color-hover-selected: var(
-        --system-side-nav-content-color-hover-selected
-    );
-    --spectrum-sidenav-content-color-down-selected: var(
-        --system-side-nav-content-color-down-selected
-    );
-    --spectrum-sidenav-content-color-key-focus-selected: var(
-        --system-side-nav-content-color-key-focus-selected
-    );
-    --spectrum-sidenav-text-font-family: var(
-        --system-side-nav-text-font-family
-    );
-    --spectrum-sidenav-text-font-weight: var(
-        --system-side-nav-text-font-weight
-    );
-    --spectrum-sidenav-text-font-style: var(--system-side-nav-text-font-style);
-    --spectrum-sidenav-text-font-size: var(--system-side-nav-text-font-size);
-    --spectrum-sidenav-text-line-height: var(
-        --system-side-nav-text-line-height
-    );
-    --spectrum-sidenav-top-level-font-family: var(
-        --system-side-nav-top-level-font-family
-    );
-    --spectrum-sidenav-top-level-font-weight: var(
-        --system-side-nav-top-level-font-weight
-    );
-    --spectrum-sidenav-top-level-font-style: var(
-        --system-side-nav-top-level-font-style
-    );
-    --spectrum-sidenav-top-level-font-size: var(
-        --system-side-nav-top-level-font-size
-    );
-    --spectrum-sidenav-top-level-line-height: var(
-        --system-side-nav-top-level-line-height
-    );
-    --spectrum-sidenav-header-font-family: var(
-        --system-side-nav-header-font-family
-    );
-    --spectrum-sidenav-header-font-weight: var(
-        --system-side-nav-header-font-weight
-    );
-    --spectrum-sidenav-header-font-style: var(
-        --system-side-nav-header-font-style
-    );
-    --spectrum-sidenav-header-font-size: var(
-        --system-side-nav-header-font-size
-    );
-    --spectrum-sidenav-header-line-height: var(
-        --system-side-nav-header-line-height
-    );
-}
-
-:host:lang(ja) {
-    --spectrum-sidenav-text-line-height: var(
-        --system-side-nav-lang-ja-text-line-height
-    );
-    --spectrum-sidenav-top-level-line-height: var(
-        --system-side-nav-lang-ja-top-level-line-height
-    );
-    --spectrum-sidenav-header-line-height: var(
-        --system-side-nav-lang-ja-header-line-height
-    );
-}
-
-:host:lang(zh) {
-    --spectrum-sidenav-text-line-height: var(
-        --system-side-nav-lang-zh-text-line-height
-    );
-    --spectrum-sidenav-top-level-line-height: var(
-        --system-side-nav-lang-zh-top-level-line-height
-    );
-    --spectrum-sidenav-header-line-height: var(
-        --system-side-nav-lang-zh-header-line-height
-    );
-}
-
-:host:lang(ko) {
-    --spectrum-sidenav-text-line-height: var(
-        --system-side-nav-lang-ko-text-line-height
-    );
-    --spectrum-sidenav-top-level-line-height: var(
-        --system-side-nav-lang-ko-top-level-line-height
-    );
-    --spectrum-sidenav-header-line-height: var(
-        --system-side-nav-lang-ko-header-line-height
     );
 }
