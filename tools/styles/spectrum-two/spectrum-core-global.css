@@ -1319,3 +1319,22 @@
     --spectrum-alias-categorical-color-15: var(--spectrum-global-color-static-magenta-200);
     --spectrum-alias-categorical-color-16: var(--spectrum-global-color-static-yellow-200);
 }
+
+:root,
+:host {
+    --spectrum-colorloupe-express-visibility: none;
+    --spectrum-colorloupe-spectrum-visibility: block;
+    --spectrum-colorloupe-outer-border-color: transparent;
+    --spectrum-colorloupe-outer-border-size: 0;
+    --spectrum-colorloupe-outer-stroke-color: var(--spectrum-global-color-static-transparent-black-200);
+    --spectrum-colorloupe-outer-stroke-width: var(--spectrum-alias-border-size-thick);
+    --spectrum-colorhandle-background-offset: calc(-1 * var(--spectrum-global-dimension-static-size-25));
+    --spectrum-colorhandle-inner-shadow-color: var(--spectrum-colorhandle-outer-shadow-color);
+    --spectrum-colorhandle-outer-shadow-color: #0000006b;
+    --spectrum-colorhandle-outer-shadow-blur: 0;
+    --spectrum-colorhandle-outer-shadow-spread: var(--spectrum-alias-border-size-thin);
+    --spectrum-colorcontrol-checkerboard-light-color: var(--spectrum-global-color-static-white);
+    --spectrum-colorcontrol-checkerboard-dark-color: var(--spectrum-global-color-static-gray-300);
+    --spectrum-slider-m-track-inside-border-radius: var(--spectrum-slider-m-track-border-radius);
+    --spectrum-slider-label-text-size: var(--spectrum-global-dimension-font-size-75);
+}
