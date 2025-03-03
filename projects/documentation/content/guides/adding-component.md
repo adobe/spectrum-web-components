@@ -396,7 +396,7 @@ Each component's `packages/_componentname_/README.md`. These files must meet our
 
 #### Documentation structure
 
-Our component documentation should follow the structure below. See [`packages/menu/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/menu/README.md) and [`packages/help-text/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/help-text/README.md) for examples.
+Our component documentation should follow the structure below. See [`packages/menu/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/menu/README.md) and [`packages/help-text/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/help-text/README.md) for overview.
 
 ```md
 ## Overview

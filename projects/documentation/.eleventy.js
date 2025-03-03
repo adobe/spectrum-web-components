@@ -101,25 +101,25 @@ export default function (eleventyConfig) {
                 tag === 'h2'
                     ? 'L'
                     : tag === 'h3'
-                        ? 'M'
-                        : tag === 'h4'
+                      ? 'M'
+                      : tag === 'h4'
                         ? 'S'
                         : tag === 'h5'
-                            ? 'XS'
-                            : tag === 'h6'
+                          ? 'XS'
+                          : tag === 'h6'
                             ? ''
                             : '';
-            const classes =
-                headingClass === ''
-                        ? ''
-                        : headingClass;
-            const comment = `\n<!-- ${tag} / ${headingClass} / ${heading.attrs.join(' ')} -->\n`
+            const classes = headingClass === '' ? '' : headingClass;
+            const comment = `\n<!-- ${tag} / ${headingClass} / ${heading.attrs.join(' ')} -->\n`;
             heading.attrs = [
                 ...heading.attrs,
                 ['class', `header-heading ${classes}`],
             ];
 
-            const divider = size == '' ? '' : `<sp-divider size="${size.toLowerCase().replace(/x/, '')}"></sp-divider>`;
+            const divider =
+                size == ''
+                    ? ''
+                    : `<sp-divider size="${size.toLowerCase().replace(/x/, '')}"></sp-divider>`;
 
             // Create the tokens for the full accessible anchor link
             // <a class="deeplink" href="#your-own-platform-is-the-nearest-you-can-get-help-to-setup">
@@ -205,7 +205,7 @@ export default function (eleventyConfig) {
 
     eleventyConfig.addCollection('component-root', function (collection) {
         return collection
-            .getFilteredByTags('component-examples', 'root')
+            .getFilteredByTags('component-overview', 'root')
             .sort(function (a, b) {
                 if (a.data.displayName < b.data.displayName) {
                     return -1;
@@ -219,7 +219,7 @@ export default function (eleventyConfig) {
 
     eleventyConfig.addCollection('component-all', function (collection) {
         return collection
-            .getFilteredByTag('component-examples')
+            .getFilteredByTag('component-overview')
             .sort(function (a, b) {
                 if (a.data.displayName < b.data.displayName) {
                     return -1;
@@ -233,7 +233,7 @@ export default function (eleventyConfig) {
 
     eleventyConfig.addCollection('tool-root', function (collection) {
         return collection
-            .getFilteredByTags('tool-examples', 'root')
+            .getFilteredByTags('tool-overview', 'root')
             .sort(function (a, b) {
                 if (a.data.displayName < b.data.displayName) {
                     return -1;
@@ -247,7 +247,7 @@ export default function (eleventyConfig) {
 
     eleventyConfig.addCollection('tool-all', function (collection) {
         return collection
-            .getFilteredByTag('tool-examples')
+            .getFilteredByTag('tool-overview')
             .sort(function (a, b) {
                 if (a.data.displayName < b.data.displayName) {
                     return -1;
