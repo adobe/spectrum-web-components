@@ -405,7 +405,7 @@ export const longHeading = (
 
 longHeading.decorators = [isOverlayOpen];
 
-export const wrapperDismissableUnderlayError = (
+export const wrapperDismissableunderlay = (
     args: StoryArgs = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
@@ -416,13 +416,45 @@ export const wrapperDismissableUnderlayError = (
                 ?open=${open}
                 hero=${landscape}
                 dismissable
-                error
                 headline="Wrapped Dialog w/ Hero Image"
                 underlay
                 @close=${handleClose(args)}
                 size="s"
             >
                 Content of the dialog
+            </sp-dialog-wrapper>
+            <sp-button
+                onClick="
+                    this.previousElementSibling.open = !this.previousElementSibling.open;
+                    if (this.previousElementSibling.open) {
+                        this.previousElementSibling.focus();
+                    }
+                "
+                variant="primary"
+            >
+                Toggle Dialog
+            </sp-button>
+        </div>
+    `;
+};
+
+export const wrapperErrorAlertDialog = (
+    context: { viewMode?: string } = {}
+): TemplateResult => {
+    const open = context.viewMode === 'docs' ? false : true;
+    return html`
+        <div>
+            <sp-dialog-wrapper
+                ?open=${open}
+                dismissable
+                error
+                headline="Wrapped Error Alert Dialog"
+                underlay
+                secondary-label="Continue"
+                size="s"
+            >
+                An error occured while sharing your project. Please verify the
+                email address and try again.
             </sp-dialog-wrapper>
             <sp-button
                 onClick="

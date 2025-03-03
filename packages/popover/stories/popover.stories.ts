@@ -65,7 +65,9 @@ export const Default = ({ content }: { content: string }): TemplateResult => {
     return html`
         <div style="color: var(--spectrum-gray-800)">
             <sp-popover variant="default" open style="max-width: 320px">
-                <div style="font-size: 14px; padding: 10px">${content}</div>
+                <sp-dialog no-divider>
+                    <div style="font-size: 14px; padding: 10px">${content}</div>
+                </sp-dialog>
             </sp-popover>
         </div>
     `;

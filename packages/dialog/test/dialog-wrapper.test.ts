@@ -31,7 +31,7 @@ import {
     wrapperButtons,
     wrapperButtonsUnderlay,
     wrapperDismissable,
-    wrapperDismissableUnderlayError,
+    wrapperDismissableunderlay,
     wrapperFullscreen,
     wrapperHeadlineVisibilityNone,
     wrapperLabeledHero,
@@ -185,7 +185,7 @@ describe('Dialog Wrapper', () => {
     });
     it('dismisses via clicking the underlay when [dismissable]', async () => {
         const test = await styledFixture<DialogWrapper>(
-            wrapperDismissableUnderlayError()
+            wrapperDismissableunderlay()
         );
         const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
         await elementUpdated(el);

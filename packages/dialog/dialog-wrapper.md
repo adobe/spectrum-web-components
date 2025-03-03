@@ -120,6 +120,41 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
 </overlay-trigger>
 ```
 
+### With `error` attribute
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        slot="click-content"
+        dismissable
+        error
+        headline="Wrapped Error Alert Dialog"
+        underlay
+        size="s"
+        cancel-label="Cancel"
+    >
+        An error occured while sharing your project. Please verify the email
+        address and try again.
+    </sp-dialog-wrapper>
+    <sp-button
+        slot="trigger"
+        variant="primary"
+        onClick="
+            const overlayTrigger = this.parentElement;
+            const dialogWrapper = overlayTrigger.clickContent;
+            function handleEvent({type}) {
+                spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
+                dialogWrapper.open = false;
+                dialogWrapper.removeEventListener('cancel', handleEvent);
+            }
+            dialogWrapper.addEventListener('cancel', handleEvent);
+        "
+    >
+        Toggle Dialog
+    </sp-button>
+</overlay-trigger>
+```
+
 ## Accessibility
 
 An `sp-dialog-wrapper` element leverages the `headline` attribute/property to label the dialog content for screen readers. The `headline-visibility` attribute will accept a value of `"none"` to suppress the headline visually.
