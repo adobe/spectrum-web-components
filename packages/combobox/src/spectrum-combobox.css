@@ -167,14 +167,6 @@
         --highcontrast-combobox-border-color-highlight: Highlight;
         --highcontrast-combobox-border-color-invalid: Highlight;
     }
-
-    .button.spectrum-PickerButton--quiet .spectrum-PickerButton-fill {
-        forced-color-adjust: none;
-    }
-
-    .button.spectrum-PickerButton--quiet .spectrum-PickerButton-icon {
-        color: initial;
-    }
 }
 
 :host {

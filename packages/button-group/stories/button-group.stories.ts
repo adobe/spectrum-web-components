@@ -29,6 +29,7 @@ interface Story<T> {
     (args: T): TemplateResult;
     args: Partial<T>;
     argTypes?: Record<string, unknown>;
+    storyName?: string;
 }
 
 export const buttons: Story<Properties> = (
@@ -42,6 +43,7 @@ export const buttons: Story<Properties> = (
         </sp-button-group>
     `;
 };
+buttons.storyName = 'Default';
 buttons.args = {
     size: 'm',
 };
@@ -60,3 +62,4 @@ export const buttonsVertical: Story<Properties> = (
 buttonsVertical.args = {
     size: 'm',
 };
+buttonsVertical.storyName = 'Vertical';

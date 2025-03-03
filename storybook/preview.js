@@ -134,12 +134,12 @@ export const parameters = {
     },
     badgesConfig: {
         deprecated: {
-            styles: {
-                backgroundColor: '#FFF',
-                borderColor: '#ea3829',
-                color: '#ea3829',
-            },
             title: 'Deprecated',
+            styles: {
+                backgroundColor: 'rgb(211,21,16)',
+                color: '#fff',
+                description: 'Should not be used and will not receive updates.',
+            },
         },
     },
     chromatic: {
@@ -165,5 +165,6 @@ export const parameters = {
 };
 
 export const decorators = [swcThemeDecorator];
+export const tags = ['autodocs', 'dev'];
 
 export const tags = ['autodocs'];

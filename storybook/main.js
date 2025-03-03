@@ -38,6 +38,10 @@ export default {
             lazyCompilation: true,
         },
     },
+    core: {
+        disableTelemetry: true,
+        disableWhatsNewNotifications: true,
+    },
     async webpackFinal(config) {
         return merge(config, {
             resolve: {
