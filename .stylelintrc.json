@@ -5,12 +5,16 @@
         "header/header": ["config/license.js", {}],
         "length-zero-no-unit": [true, { "ignore": "custom-properties" }],
         "selector-type-no-unknown": [true, { "ignore": ["custom-elements"] }],
+        "selector-not-notation": "complex",
         "selector-pseudo-element-colon-notation": ["single", {}],
         "custom-property-pattern": "^_?([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
         "no-duplicate-selectors": null,
         "selector-class-pattern": null,
         "no-descending-specificity": null,
-        "declaration-block-no-redundant-longhand-properties": null
+        "declaration-block-no-redundant-longhand-properties": null,
+        "declaration-empty-line-before": null,
+        "import-notation": null,
+        "number-max-precision": null
     },
     "overrides": [
         {

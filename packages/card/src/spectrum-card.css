@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -32,7 +32,7 @@ governing permissions and limitations under the License.
         var(--mod-card-background-color, var(--spectrum-card-background-color))
     );
     flex-direction: column;
-    -webkit-text-decoration: none;
+    text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     position: relative;
@@ -113,15 +113,15 @@ governing permissions and limitations under the License.
 }
 
 :host([selected]):before {
-    background-color: rgba(
+    background-color: rgb(
         var(
-            --mod-card-selected-background-color-rgb,
-            var(--spectrum-card-selected-background-color-rgb)
-        ),
-        var(
-            --mod-card-selected-background-opacity,
-            var(--spectrum-card-selected-background-opacity)
-        )
+                --mod-card-selected-background-color-rgb,
+                var(--spectrum-card-selected-background-color-rgb)
+            )
+            var(
+                --mod-card-selected-background-opacity,
+                var(--spectrum-card-selected-background-opacity)
+            )
     );
 }
 
@@ -185,15 +185,15 @@ governing permissions and limitations under the License.
         --mod-card-actions-border-radius,
         var(--spectrum-card-actions-border-radius)
     );
-    background-color: rgba(
+    background-color: rgb(
         var(
-            --mod-card-actions-background-color-rgb,
-            var(--spectrum-card-actions-background-color-rgb)
-        ),
-        var(
-            --mod-card-actions-background-color-opacity,
-            var(--spectrum-card-actions-background-color-opacity)
-        )
+                --mod-card-actions-background-color-rgb,
+                var(--spectrum-card-actions-background-color-rgb)
+            )
+            var(
+                --mod-card-actions-background-color-opacity,
+                var(--spectrum-card-actions-background-color-opacity)
+            )
     );
     pointer-events: auto;
     box-sizing: border-box;
@@ -651,15 +651,15 @@ governing permissions and limitations under the License.
 
 :host([variant='gallery'][selected]) #preview:before,
 :host([variant='quiet'][selected]) #preview:before {
-    background-color: rgba(
+    background-color: rgb(
         var(
-            --mod-card-selected-background-color-rgb,
-            var(--spectrum-card-selected-background-color-rgb)
-        ),
-        var(
-            --mod-card-selected-background-opacity,
-            var(--spectrum-card-selected-background-opacity)
-        )
+                --mod-card-selected-background-color-rgb,
+                var(--spectrum-card-selected-background-color-rgb)
+            )
+            var(
+                --mod-card-selected-background-opacity,
+                var(--spectrum-card-selected-background-opacity)
+            )
     );
 }
 

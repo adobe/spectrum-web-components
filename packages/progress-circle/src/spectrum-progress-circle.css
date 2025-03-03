@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -42,7 +42,6 @@ governing permissions and limitations under the License.
         --mod-progress-circle-size,
         var(--spectrum-progress-circle-size)
     );
-    position: var(--mod-progress-circle-position, relative);
     direction: ltr;
     display: inline-block;
     position: relative;
@@ -437,7 +436,7 @@ governing permissions and limitations under the License.
         transform: rotate(89.8deg);
     }
 
-    to {
+    100% {
         transform: rotate(90deg);
     }
 }
@@ -679,7 +678,7 @@ governing permissions and limitations under the License.
         transform: rotate(180deg);
     }
 
-    to {
+    100% {
         transform: rotate(180deg);
     }
 }
@@ -689,7 +688,7 @@ governing permissions and limitations under the License.
         transform: rotate(-90deg);
     }
 
-    to {
+    100% {
         transform: rotate(270deg);
     }
 }
