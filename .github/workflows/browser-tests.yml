@@ -27,9 +27,6 @@ jobs:
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
 
-            - name: Print ${{ matrix.browser }} version
-              run: ${{ matrix.browser }} --version
-
             - name: Tachometer the changed packages
               run: yarn test:changed --browser=${{ matrix.browser }}
 
