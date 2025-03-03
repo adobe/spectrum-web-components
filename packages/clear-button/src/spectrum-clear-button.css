@@ -1,21 +1,26 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-clear-button-height: var(--spectrum-component-height-100);
+    --spectrum-clear-button-width: var(--spectrum-component-height-100);
+    --spectrum-clear-button-padding: var(--spectrum-in-field-button-edge-to-fill);
+    --spectrum-clear-button-icon-color: var(--spectrum-neutral-content-color-default);
+    --spectrum-clear-button-icon-color-hover: var(--spectrum-neutral-content-color-hover);
+    --spectrum-clear-button-icon-color-down: var(--spectrum-neutral-content-color-down);
+    --spectrum-clear-button-icon-color-key-focus: var(--spectrum-neutral-content-color-key-focus);
     block-size: var(--mod-clear-button-height, var(--spectrum-clear-button-height));
     inline-size: var(--mod-clear-button-width, var(--spectrum-clear-button-width));
-    cursor: pointer;
-    background-color: initial;
     background-color: var(--mod-clear-button-background-color, transparent);
     padding: var(--mod-clear-button-padding, var(--spectrum-clear-button-padding));
     color: var(--mod-clear-button-icon-color, var(--spectrum-clear-button-icon-color));
@@ -24,47 +29,84 @@ governing permissions and limitations under the License.
     margin: 0;
 }
 
+:host([size='s']) {
+    --spectrum-clear-button-height: var(--spectrum-component-height-75);
+    --spectrum-clear-button-width: var(--spectrum-component-height-75);
+}
+
+:host([size='l']) {
+    --spectrum-clear-button-height: var(--spectrum-component-height-200);
+    --spectrum-clear-button-width: var(--spectrum-component-height-200);
+}
+
+:host([size='xl']) {
+    --spectrum-clear-button-height: var(--spectrum-component-height-300);
+    --spectrum-clear-button-width: var(--spectrum-component-height-300);
+}
+
+:host .spectrum-ClearButton--quiet {
+    --mod-clear-button-background-color: transparent;
+    --mod-clear-button-background-color-hover: transparent;
+    --mod-clear-button-background-color-down: transparent;
+    --mod-clear-button-background-color-key-focus: transparent;
+}
+
+:host .spectrum-ClearButton--staticWhite {
+    --mod-clear-button-icon-color: var(--spectrum-white);
+    --mod-clear-button-icon-color-hover: var(--spectrum-white);
+    --mod-clear-button-icon-color-down: var(--spectrum-white);
+    --mod-clear-button-icon-color-key-focus: var(--spectrum-white);
+    --mod-clear-button-icon-color-disabled: var(--spectrum-disabled-static-white-content-color);
+    --mod-clear-button-background-color: transparent;
+}
+
+:host([disabled]),
+:host([disabled]) {
+    --mod-clear-button-icon-color: var(--mod-clear-button-icon-color-disabled, var(--spectrum-disabled-content-color));
+    --mod-clear-button-icon-color-hover: var(--spectrum-disabled-content-color);
+    --mod-clear-button-icon-color-down: var(--spectrum-disabled-content-color);
+    --mod-clear-button-background-color: var(--mod-clear-button-background-color-disabled, transparent);
+}
+
+:host:not(:disabled) {
+    cursor: pointer;
+}
+
 .icon {
     margin-block: 0;
     margin-inline: auto;
 }
 
 @media (hover: hover) {
-    :host(:hover) {
+    :host:not(:disabled):hover {
         color: var(--highcontrast-clear-button-icon-color-hover, var(--mod-clear-button-icon-color-hover, var(--spectrum-clear-button-icon-color-hover)));
     }
 
-    :host(:hover) .fill {
+    :host:not(:disabled):hover .fill {
         background-color: var(--mod-clear-button-background-color-hover, var(--spectrum-clear-button-background-color-hover));
     }
 }
 
-:host(:is(:active, [active])) {
+:host(:is(:active, [active])):not(:disabled) {
     color: var(--mod-clear-button-icon-color-down, var(--spectrum-clear-button-icon-color-down));
 }
 
-:host(:is(:active, [active])) .fill {
+:host(:is(:active, [active])):not(:disabled) .fill {
     background-color: var(--mod-clear-button-background-color-down, var(--spectrum-clear-button-background-color-down));
 }
 
-:host([focus-within]) .js-focus-within,
-:host(:focus-visible),
-:host:focus-within,
-:host([focus-within]) .js-focus-within {
+:host:not(:disabled):focus-visible,
+:host:not(:disabled):focus-within {
     color: var(--mod-clear-button-icon-color-key-focus, var(--spectrum-clear-button-icon-color-key-focus));
 }
 
-:host([focus-within]) .js-focus-within .fill,
-:host(:focus-visible) .fill,
-:host:focus-within .fill,
-:host([focus-within]) .js-focus-within .fill {
+:host:not(:disabled):focus-visible .fill,
+:host:not(:disabled):focus-within .fill {
     background-color: var(--mod-clear-button-background-color-key-focus, var(--spectrum-clear-button-background-color-key-focus));
 }
 
-:host([disabled]),
-:host([disabled]) {
-    --spectrum-clear-button-icon-color: var(--mod-clear-button-icon-color-disabled, var(--spectrum-disabled-content-color));
-    --spectrum-clear-button-background-color: var(--mod-clear-button-background-color-disabled, transparent);
+.spectrum-ClearButton-icon {
+    color: inherit;
 }
 
 .fill {
@@ -77,7 +119,8 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-:host([variant='overBackground']:focus-visible) {
+:host([variant='overBackground']:focus-visible),
+.spectrum-ClearButton--staticWhite:focus-visible {
     outline: none;
 }
 
