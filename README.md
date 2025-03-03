@@ -96,6 +96,7 @@ There are several commands that can be useful in specific scenarios:
 -   `yarn process-icons` to make sure that the most recent icons are included.
 -   `yarn process-spectrum` to process the spectrum CSS style sources into the individual packages.
 -   `yarn build` to make sure the available JS has been built from the current TS source.
+-   `yarn build:component:css accordion action-bar` to build an individual (or small subset) component's styles as imported from `@spectrum-css`
 
 ## Linting
 

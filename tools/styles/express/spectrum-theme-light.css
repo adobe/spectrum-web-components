@@ -297,4 +297,63 @@
     --spectrum-alias-appframe-separator-color: var(
         --spectrum-global-color-gray-300
     );
+    --spectrum-scrollbar-mac-s-track-background-color: var(
+        --spectrum-global-color-gray-75
+    );
+    --spectrum-scrollbar-mac-m-track-background-color: var(
+        --spectrum-global-color-gray-75
+    );
+    --spectrum-scrollbar-mac-l-track-background-color: var(
+        --spectrum-global-color-gray-75
+    );
+    --spectrum-slider-s-tick-editable-radial-reaction-color: #2229;
+    --spectrum-slider-s-ramp-tick-editable-radial-reaction-color: #2229;
+    --spectrum-slider-s-range-tick-editable-radial-reaction-color: #2229;
+    --spectrum-slider-s-tick-radial-reaction-color: #2229;
+    --spectrum-slider-s-ramp-tick-radial-reaction-color: #2229;
+    --spectrum-slider-s-range-tick-radial-reaction-color: #2229;
+    --spectrum-slider-s-editable-radial-reaction-color: #2229;
+    --spectrum-slider-s-ramp-editable-radial-reaction-color: #2229;
+    --spectrum-slider-s-range-editable-radial-reaction-color: #2229;
+    --spectrum-slider-s-radial-reaction-color: #2229;
+    --spectrum-slider-s-ramp-radial-reaction-color: #2229;
+    --spectrum-slider-s-range-radial-reaction-color: #2229;
+    --spectrum-slider-m-tick-editable-radial-reaction-color: #2229;
+    --spectrum-slider-m-ramp-tick-editable-radial-reaction-color: #2229;
+    --spectrum-slider-m-range-tick-editable-radial-reaction-color: #2229;
+    --spectrum-slider-m-tick-radial-reaction-color: #2229;
+    --spectrum-slider-m-ramp-tick-radial-reaction-color: #2229;
+    --spectrum-slider-m-range-tick-radial-reaction-color: #2229;
+    --spectrum-slider-m-editable-radial-reaction-color: #2229;
+    --spectrum-slider-m-ramp-editable-radial-reaction-color: #2229;
+    --spectrum-slider-m-range-editable-radial-reaction-color: #2229;
+    --spectrum-slider-m-radial-reaction-color: #2229;
+    --spectrum-slider-m-ramp-radial-reaction-color: #2229;
+    --spectrum-slider-m-range-radial-reaction-color: #2229;
+    --spectrum-slider-l-tick-editable-radial-reaction-color: #2229;
+    --spectrum-slider-l-ramp-tick-editable-radial-reaction-color: #2229;
+    --spectrum-slider-l-range-tick-editable-radial-reaction-color: #2229;
+    --spectrum-slider-l-tick-radial-reaction-color: #2229;
+    --spectrum-slider-l-ramp-tick-radial-reaction-color: #2229;
+    --spectrum-slider-l-range-tick-radial-reaction-color: #2229;
+    --spectrum-slider-l-editable-radial-reaction-color: #2229;
+    --spectrum-slider-l-ramp-editable-radial-reaction-color: #2229;
+    --spectrum-slider-l-range-editable-radial-reaction-color: #2229;
+    --spectrum-slider-l-radial-reaction-color: #2229;
+    --spectrum-slider-l-ramp-radial-reaction-color: #2229;
+    --spectrum-slider-l-range-radial-reaction-color: #2229;
+    --spectrum-slider-xl-tick-editable-radial-reaction-color: #2229;
+    --spectrum-slider-xl-ramp-tick-editable-radial-reaction-color: #2229;
+    --spectrum-slider-xl-range-tick-editable-radial-reaction-color: #2229;
+    --spectrum-slider-xl-tick-radial-reaction-color: #2229;
+    --spectrum-slider-xl-ramp-tick-radial-reaction-color: #2229;
+    --spectrum-slider-xl-range-tick-radial-reaction-color: #2229;
+    --spectrum-slider-xl-editable-radial-reaction-color: #2229;
+    --spectrum-slider-xl-ramp-editable-radial-reaction-color: #2229;
+    --spectrum-slider-xl-range-editable-radial-reaction-color: #2229;
+    --spectrum-slider-xl-radial-reaction-color: #2229;
+    --spectrum-slider-xl-ramp-radial-reaction-color: #2229;
+    --spectrum-slider-xl-range-radial-reaction-color: #2229;
+    --spectrum-well-background-color: #22222205;
+    --spectrum-well-border-color: #0000000d;
 }
