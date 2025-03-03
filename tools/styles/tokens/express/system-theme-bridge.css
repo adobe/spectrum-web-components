@@ -1595,14 +1595,6 @@
     --system-combobox-background-color-disabled: var(
         --spectrum-disabled-background-color
     );
-    --system-contextual-help-padding: var(--spectrum-spacing-400);
-    --system-contextual-help-content-spacing: var(--spectrum-spacing-100);
-    --system-contextual-help-link-spacing: var(--spectrum-spacing-300);
-    --system-contextual-help-heading-size: var(
-        --spectrum-contextual-help-title-size
-    );
-    --system-contextual-help-heading-color: var(--spectrum-heading-color);
-    --system-contextual-help-body-color: var(--spectrum-body-color);
     --system-dialog-fullscreen-header-text-size: 28px;
     --system-dialog-min-inline-size: 288px;
     --system-dialog-confirm-small-width: 400px;

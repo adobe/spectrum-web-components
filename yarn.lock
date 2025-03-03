@@ -7661,18 +7661,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/contextualhelp@npm:4.0.0-s2-foundations.16":
-  version: 4.0.0-s2-foundations.16
-  resolution: "@spectrum-css/contextualhelp@npm:4.0.0-s2-foundations.16"
+"@spectrum-css/contextualhelp@npm:5.1.2":
+  version: 5.1.2
+  resolution: "@spectrum-css/contextualhelp@npm:5.1.2"
   peerDependencies:
-    "@spectrum-css/actionbutton": ">=6"
-    "@spectrum-css/link": ">=5"
-    "@spectrum-css/popover": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/actionbutton": ">=7.0.0 <8.0.0"
+    "@spectrum-css/link": ">=7.0.0 <8.0.0"
+    "@spectrum-css/popover": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
+    "@spectrum-css/actionbutton":
+      optional: true
     "@spectrum-css/link":
       optional: true
-  checksum: 10c0/29df379923f19f2892fd4114330095617e46d2a61df5492f8eedb0b48cf1a9aec7b3cb451630d649b4a3dbd027ec48636b06005938c7f77601cfa9e721d3e875
+    "@spectrum-css/popover":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/8e609715d9b92f299a72e073af8c32e1cb75a83358d1050d811894aa4dbfd07b69ee0c40dbd4a7535c46b4d89154e01d5657675c15ee54c996d217503483bfe8
   languageName: node
   linkType: hard
 
@@ -8629,7 +8635,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/contextual-help@workspace:packages/contextual-help"
   dependencies:
-    "@spectrum-css/contextualhelp": "npm:4.0.0-s2-foundations.16"
+    "@spectrum-css/contextualhelp": "npm:5.1.2"
     "@spectrum-web-components/action-button": "npm:^1.2.0"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/dialog": "npm:^1.2.0"
