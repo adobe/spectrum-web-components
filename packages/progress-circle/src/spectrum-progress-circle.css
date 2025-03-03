@@ -1,14 +1,14 @@
-/*
-Copyright 2025 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 @media (forced-colors: active) {
@@ -24,79 +24,41 @@ governing permissions and limitations under the License.
 
 :host {
     --spectrum-progress-circle-track-border-color: var(--spectrum-gray-300);
-    --spectrum-progress-circle-fill-border-color: var(
-        --spectrum-accent-content-color-default
-    );
-    --spectrum-progress-circle-track-border-color-over-background: var(
-        --spectrum-transparent-white-300
-    );
-    --spectrum-progress-circle-fill-border-color-over-background: var(
-        --spectrum-transparent-white-900
-    );
+    --spectrum-progress-circle-fill-border-color: var(--spectrum-accent-content-color-default);
+    --spectrum-progress-circle-track-border-color-over-background: var(--spectrum-transparent-white-300);
+    --spectrum-progress-circle-fill-border-color-over-background: var(--spectrum-transparent-white-900);
     --spectrum-progress-circle-track-border-style: solid;
-    inline-size: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
-    block-size: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
+    inline-size: var(--mod-progress-circle-size, var(--spectrum-progress-circle-size));
+    block-size: var(--mod-progress-circle-size, var(--spectrum-progress-circle-size));
     direction: ltr;
     display: inline-block;
     position: relative;
     transform: translateZ(0);
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-small);
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-small
-    );
+    --spectrum-progress-circle-thickness: var(--spectrum-progress-circle-thickness-small);
 }
 
 :host {
-    --spectrum-progress-circle-size: var(
-        --spectrum-progress-circle-size-medium
-    );
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-medium
-    );
+    --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-medium);
+    --spectrum-progress-circle-thickness: var(--spectrum-progress-circle-thickness-medium);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-large);
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-large
-    );
+    --spectrum-progress-circle-thickness: var(--spectrum-progress-circle-thickness-large);
 }
 
 .track {
     box-sizing: border-box;
-    inline-size: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
-    block-size: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
-    border-style: var(
-        --mod-progress-circle-track-border-style,
-        var(--spectrum-progress-circle-track-border-style)
-    );
-    border-width: var(
-        --mod-progress-circle-thickness,
-        var(--spectrum-progress-circle-thickness)
-    );
-    border-radius: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
-    border-color: var(
-        --mod-progress-circle-track-border-color,
-        var(--spectrum-progress-circle-track-border-color)
-    );
+    inline-size: var(--mod-progress-circle-size, var(--spectrum-progress-circle-size));
+    block-size: var(--mod-progress-circle-size, var(--spectrum-progress-circle-size));
+    border-style: var(--mod-progress-circle-track-border-style, var(--spectrum-progress-circle-track-border-style));
+    border-width: var(--mod-progress-circle-thickness, var(--spectrum-progress-circle-thickness));
+    border-radius: var(--mod-progress-circle-size, var(--spectrum-progress-circle-size));
+    border-color: var(--mod-progress-circle-track-border-color, var(--spectrum-progress-circle-track-border-color));
 }
 
 .fills {
@@ -109,47 +71,20 @@ governing permissions and limitations under the License.
 
 .fill {
     box-sizing: border-box;
-    inline-size: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
-    block-size: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
+    inline-size: var(--mod-progress-circle-size, var(--spectrum-progress-circle-size));
+    block-size: var(--mod-progress-circle-size, var(--spectrum-progress-circle-size));
     border-style: solid;
-    border-width: var(
-        --mod-progress-circle-thickness,
-        var(--spectrum-progress-circle-thickness)
-    );
-    border-radius: var(
-        --mod-progress-circle-size,
-        var(--spectrum-progress-circle-size)
-    );
-    border-color: var(
-        --highcontrast-progress-circle-fill-border-color,
-        var(
-            --mod-progress-circle-fill-border-color,
-            var(--spectrum-progress-circle-fill-border-color)
-        )
-    );
+    border-width: var(--mod-progress-circle-thickness, var(--spectrum-progress-circle-thickness));
+    border-radius: var(--mod-progress-circle-size, var(--spectrum-progress-circle-size));
+    border-color: var(--highcontrast-progress-circle-fill-border-color, var(--mod-progress-circle-fill-border-color, var(--spectrum-progress-circle-fill-border-color)));
 }
 
-:host([static-color='white']) .track {
-    border-color: var(
-        --mod-progress-circle-track-border-color-over-background,
-        var(--spectrum-progress-circle-track-border-color-over-background)
-    );
+:host([static-color="white"]) .track {
+    border-color: var(--mod-progress-circle-track-border-color-over-background, var(--spectrum-progress-circle-track-border-color-over-background));
 }
 
-:host([static-color='white']) .fill {
-    border-color: var(
-        --highcontrast-progress-circle-fill-border-color-over-background,
-        var(
-            --mod-progress-circle-fill-border-color-over-background,
-            var(--spectrum-progress-circle-fill-border-color-over-background)
-        )
-    );
+:host([static-color="white"]) .fill {
+    border-color: var(--highcontrast-progress-circle-fill-border-color-over-background, var(--mod-progress-circle-fill-border-color-over-background, var(--spectrum-progress-circle-fill-border-color-over-background)));
 }
 
 .fillMask1,
@@ -178,8 +113,7 @@ governing permissions and limitations under the License.
 :host([indeterminate]) .fills {
     will-change: transform;
     transform-origin: center;
-    animation: 1s cubic-bezier(0.25, 0.78, 0.48, 0.89) infinite
-        spectrum-fills-rotate;
+    animation: 1s cubic-bezier(0.25, 0.78, 0.48, 0.89) infinite spectrum-fills-rotate;
     transform: translateZ(0);
 }
 

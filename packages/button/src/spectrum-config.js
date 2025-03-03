@@ -225,6 +225,10 @@ const config = {
                     find: builder.pseudoClass('empty'),
                     replace: builder.attribute('hidden'),
                 },
+                {
+                    find: builder.class('spectrum-ProgressCircle'),
+                    replace: builder.element('sp-progress-circle'),
+                },
             ],
         },
     ],
