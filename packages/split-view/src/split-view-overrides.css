@@ -12,13 +12,7 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-splitview-background-color: var(
-        --system-split-view-background-color
-    );
-    --spectrum-splitview-handle-background-color: var(
-        --system-split-view-handle-background-color
-    );
-    --spectrum-splitview-gripper-border-radius: var(
-        --system-split-view-gripper-border-radius
-    );
+    --spectrum-splitview-background-color: var(--system-split-view-background-color);
+    --spectrum-splitview-handle-background-color: var(--system-split-view-handle-background-color);
+    --spectrum-splitview-gripper-border-radius: var(--system-split-view-gripper-border-radius);
 }

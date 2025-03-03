@@ -455,7 +455,7 @@
     transition: opacity var(--spectrum-button-animation-duration, 0.13s) ease-in-out;
 }
 
-.spectrum-ProgressCircle {
+sp-progress-circle {
     visibility: hidden;
     opacity: 0;
     transition:
@@ -471,8 +471,8 @@
     cursor: default;
 }
 
-:host([pending]) .spectrum-ProgressCircle,
-:host([pending]) .spectrum-ProgressCircle {
+:host([pending]) sp-progress-circle,
+:host([pending]) sp-progress-circle {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.13s ease-in-out;

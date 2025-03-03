@@ -13,7 +13,5 @@
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #list {
     --spectrum-tabs-font-weight: var(--system-tabs-font-weight);
-    --spectrum-tabs-divider-background-color: var(
-        --system-tabs-divider-background-color
-    );
+    --spectrum-tabs-divider-background-color: var(--system-tabs-divider-background-color);
 }

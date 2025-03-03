@@ -51,7 +51,7 @@ textarea {
 
 #sizer {
     block-size: auto;
-    /* stylelint-disable-next-line declaration-property-value-keyword-no-deprecated */
+    /* stylelint-disable-next-line declaration-property-value-keyword-no-deprecated -- Deprecated CSS property, remove in a future release. */
     word-break: break-word;
     opacity: 0;
     white-space: pre-line;
@@ -128,7 +128,8 @@ textarea {
             var(
                 --mod-textfield-focus-indicator-gap,
                 var(--spectrum-textfield-focus-indicator-gap)
-            ) * 2
+            ) *
+            2
     );
 }
 

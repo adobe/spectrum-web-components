@@ -7,6 +7,10 @@ bracketSpacing: true
 arrowParens: always
 htmlWhitespaceSensitivity: ignore
 overrides:
-    - files: '{tools,packages}/*/src/spectrum-*.css'
+    - files:
+        - 'packages/*/src/*.css'
+        - 'tools/*/src/*.css'
+        - 'tools/styles/*.css'
+        - 'tools/styles/*/*.css'
       options:
           printWidth: 500

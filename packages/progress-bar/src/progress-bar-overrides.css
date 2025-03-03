@@ -13,7 +13,5 @@
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-progressbar-track-color: var(--system-progress-bar-track-color);
-    --spectrum-progressbar-track-color-white: var(
-        --system-progress-bar-track-color-white
-    );
+    --spectrum-progressbar-track-color-white: var(--system-progress-bar-track-color-white);
 }
