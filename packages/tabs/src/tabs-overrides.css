@@ -1,76 +1,19 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #list {
     --spectrum-tabs-font-weight: var(--system-tabs-font-weight);
-    --spectrum-tabs-item-height: var(--system-tabs-item-height);
-    --spectrum-tabs-item-horizontal-spacing: var(
-        --system-tabs-item-horizontal-spacing
-    );
-    --spectrum-tabs-item-vertical-spacing: var(
-        --system-tabs-item-vertical-spacing
-    );
-    --spectrum-tabs-start-to-edge: var(--system-tabs-start-to-edge);
-    --spectrum-tabs-top-to-text: var(--system-tabs-top-to-text);
-    --spectrum-tabs-bottom-to-text: var(--system-tabs-bottom-to-text);
-    --spectrum-tabs-icon-size: var(--system-tabs-icon-size);
-    --spectrum-tabs-icon-to-text: var(--system-tabs-icon-to-text);
-    --spectrum-tabs-top-to-icon: var(--system-tabs-top-to-icon);
-    --spectrum-tabs-color: var(--system-tabs-color);
-    --spectrum-tabs-color-selected: var(--system-tabs-color-selected);
-    --spectrum-tabs-color-hover: var(--system-tabs-color-hover);
-    --spectrum-tabs-color-key-focus: var(--system-tabs-color-key-focus);
-    --spectrum-tabs-color-disabled: var(--system-tabs-color-disabled);
-    --spectrum-tabs-font-family: var(--system-tabs-font-family);
-    --spectrum-tabs-font-style: var(--system-tabs-font-style);
-    --spectrum-tabs-font-size: var(--system-tabs-font-size);
-    --spectrum-tabs-line-height: var(--system-tabs-line-height);
-    --spectrum-tabs-focus-indicator-width: var(
-        --system-tabs-focus-indicator-width
-    );
-    --spectrum-tabs-focus-indicator-border-radius: var(
-        --system-tabs-focus-indicator-border-radius
-    );
-    --spectrum-tabs-focus-indicator-gap: var(--system-tabs-focus-indicator-gap);
-    --spectrum-tabs-focus-indicator-color: var(
-        --system-tabs-focus-indicator-color
-    );
-    --spectrum-tabs-selection-indicator-color: var(
-        --system-tabs-selection-indicator-color
-    );
-    --spectrum-tabs-list-background-direction: var(
-        --system-tabs-list-background-direction
-    );
     --spectrum-tabs-divider-background-color: var(
         --system-tabs-divider-background-color
-    );
-    --spectrum-tabs-divider-size: var(--system-tabs-divider-size);
-    --spectrum-tabs-divider-border-radius: var(
-        --system-tabs-divider-border-radius
-    );
-    --spectrum-tabs-animation-duration: var(--system-tabs-animation-duration);
-    --spectrum-tabs-animation-ease: var(--system-tabs-animation-ease);
-}
-
-:host([emphasized]) #list {
-    --spectrum-tabs-color-selected: var(
-        --system-tabs-emphasized-color-selected
-    );
-    --spectrum-tabs-color-hover: var(--system-tabs-emphasized-color-hover);
-    --spectrum-tabs-color-key-focus: var(
-        --system-tabs-emphasized-color-key-focus
-    );
-    --spectrum-tabs-selection-indicator-color: var(
-        --system-tabs-emphasized-selection-indicator-color
     );
 }

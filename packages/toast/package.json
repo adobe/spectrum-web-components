@@ -65,7 +65,7 @@
         "@spectrum-web-components/shared": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/toast": "11.0.0-s2-foundations.15"
+        "@spectrum-css/toast": "11.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

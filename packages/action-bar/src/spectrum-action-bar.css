@@ -1,16 +1,44 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-actionbar-height: var(--spectrum-action-bar-height);
+    --spectrum-actionbar-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-actionbar-item-counter-font-size: var(--spectrum-font-size-100);
+    --spectrum-actionbar-item-counter-line-height: var(--spectrum-line-height-100);
+    --spectrum-actionbar-item-counter-color: var(--spectrum-neutral-content-color-default);
+    --spectrum-actionbar-emphasized-background-color: var(--spectrum-informative-background-color-default);
+    --spectrum-actionbar-emphasized-item-counter-color: var(--spectrum-white);
+    --spectrum-actionbar-spacing-outer-edge: var(--spectrum-spacing-300);
+    --spectrum-actionbar-spacing-close-button-top: var(--spectrum-spacing-100);
+    --spectrum-actionbar-spacing-close-button-start: var(--spectrum-spacing-100);
+    --spectrum-actionbar-spacing-close-button-end: var(--spectrum-spacing-75);
+    --spectrum-actionbar-spacing-item-counter-top: var(--spectrum-action-bar-top-to-item-counter);
+    --spectrum-actionbar-spacing-item-counter-end: var(--spectrum-spacing-400);
+    --spectrum-actionbar-spacing-action-group-top: var(--spectrum-spacing-100);
+    --spectrum-actionbar-spacing-action-group-end: var(--spectrum-spacing-100);
+    --spectrum-actionbar-shadow-horizontal: var(--spectrum-drop-shadow-x);
+    --spectrum-actionbar-shadow-vertical: var(--spectrum-drop-shadow-y);
+    --spectrum-actionbar-shadow-blur: var(--spectrum-drop-shadow-blur);
+    --spectrum-actionbar-shadow-color: var(--spectrum-drop-shadow-color);
+}
+
+:host:lang(ja),
+:host:lang(ko),
+:host:lang(zh) {
+    --spectrum-actionbar-item-counter-line-height-cjk: var(--spectrum-cjk-line-height-100);
+}
+
 @media (forced-colors: active) {
     :host,
     :host([emphasized]) #popover {
