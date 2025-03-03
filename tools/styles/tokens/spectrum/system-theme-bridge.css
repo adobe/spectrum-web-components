@@ -241,16 +241,16 @@
         --spectrum-transparent-white-300
     );
     --system-button-static-white-secondary-content-color-default: var(
-        --spectrum-white
+        --spectrum-transparent-white-800
     );
     --system-button-static-white-secondary-content-color-hover: var(
-        --spectrum-white
+        --spectrum-transparent-white-900
     );
     --system-button-static-white-secondary-content-color-down: var(
-        --spectrum-white
+        --spectrum-transparent-white-900
     );
     --system-button-static-white-secondary-content-color-focus: var(
-        --spectrum-white
+        --spectrum-transparent-white-900
     );
     --system-button-static-white-secondary-outline-border-color-default: var(
         --spectrum-transparent-white-300
@@ -264,6 +264,9 @@
     --system-button-static-white-secondary-outline-border-color-focus: var(
         --spectrum-transparent-white-400
     );
+    --system-button-static-white-outline-not-secondary-background-color-default: var(
+        --spectrum-transparent-white-25
+    );
     --system-button-static-white-outline-not-secondary-background-color-hover: var(
         --spectrum-transparent-white-300
     );
@@ -274,16 +277,16 @@
         --spectrum-transparent-white-300
     );
     --system-button-static-white-outline-not-secondary-content-color-default: var(
-        --spectrum-white
+        --spectrum-transparent-white-800
     );
     --system-button-static-white-outline-not-secondary-content-color-hover: var(
-        --spectrum-white
+        --spectrum-transparent-white-900
     );
     --system-button-static-white-outline-not-secondary-content-color-down: var(
-        --spectrum-white
+        --spectrum-transparent-white-900
     );
     --system-button-static-white-outline-not-secondary-content-color-focus: var(
-        --spectrum-white
+        --spectrum-transparent-white-900
     );
     --system-button-static-white-outline-not-secondary-border-color-default: var(
         --spectrum-transparent-white-800
@@ -335,25 +338,16 @@
         --spectrum-transparent-black-300
     );
     --system-button-static-black-secondary-content-color-default: var(
-        --spectrum-black
+        --spectrum-transparent-black-800
     );
     --system-button-static-black-secondary-content-color-hover: var(
-        --spectrum-black
+        --spectrum-transparent-black-900
     );
     --system-button-static-black-secondary-content-color-down: var(
-        --spectrum-black
+        --spectrum-transparent-black-900
     );
     --system-button-static-black-secondary-content-color-focus: var(
-        --spectrum-black
-    );
-    --system-button-static-black-secondary-outline-background-color-hover: var(
-        --spectrum-transparent-black-400
-    );
-    --system-button-static-black-secondary-outline-background-color-down: var(
-        --spectrum-transparent-black-500
-    );
-    --system-button-static-black-secondary-outline-background-color-focus: var(
-        --spectrum-transparent-black-400
+        --spectrum-transparent-black-900
     );
     --system-button-static-black-secondary-outline-border-color-default: var(
         --spectrum-transparent-black-300
@@ -367,6 +361,9 @@
     --system-button-static-black-secondary-outline-border-color-focus: var(
         --spectrum-transparent-black-400
     );
+    --system-button-static-black-outline-not-secondary-background-color-default: var(
+        --spectrum-transparent-black-25
+    );
     --system-button-static-black-outline-not-secondary-background-color-hover: var(
         --spectrum-transparent-black-300
     );
@@ -377,16 +374,16 @@
         --spectrum-transparent-black-300
     );
     --system-button-static-black-outline-not-secondary-content-color-default: var(
-        --spectrum-black
+        --spectrum-transparent-black-800
     );
     --system-button-static-black-outline-not-secondary-content-color-hover: var(
-        --spectrum-black
+        --spectrum-transparent-black-900
     );
     --system-button-static-black-outline-not-secondary-content-color-down: var(
-        --spectrum-black
+        --spectrum-transparent-black-900
     );
     --system-button-static-black-outline-not-secondary-content-color-focus: var(
-        --spectrum-black
+        --spectrum-transparent-black-900
     );
     --system-button-static-black-outline-not-secondary-border-color-default: var(
         --spectrum-transparent-black-400
@@ -463,9 +460,11 @@
     --system-combobox-border-color-focus: var(--spectrum-gray-500);
     --system-combobox-border-color-focus-hover: var(--spectrum-gray-600);
     --system-combobox-border-color-key-focus: var(--spectrum-gray-600);
+    --system-combobox-readonly-input-border-color: var(--spectrum-gray-500);
     --system-combobox-background-color-disabled: var(
         --spectrum-disabled-background-color
     );
+    --system-combobox-border-color-disabled: transparent;
     --system-divider-background-color: var(--spectrum-gray-300);
     --system-divider-background-color-static-white: var(
         --spectrum-transparent-white-300
@@ -557,6 +556,12 @@
     --system-search-border-color-focus-hover: var(--spectrum-gray-900);
     --system-search-border-color-key-focus: var(--spectrum-gray-900);
     --system-search-background-color: var(--spectrum-gray-50);
+    --system-search-background-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --system-search-border-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
     --system-search-border-radius: var(--spectrum-corner-radius-100);
     --system-search-size-m-border-radius: var(--spectrum-corner-radius-100);
     --system-search-edge-to-visual: var(
@@ -576,6 +581,10 @@
     --system-search-size-xl-border-radius: var(--spectrum-corner-radius-100);
     --system-search-size-xl-edge-to-visual: var(
         --spectrum-component-edge-to-visual-300
+    );
+    --system-search-quiet-background-color-disabled: transparent;
+    --system-search-quiet-border-color-disabled: var(
+        --spectrum-disabled-border-color
     );
     --system-side-nav-background-hover: var(--spectrum-gray-200);
     --system-side-nav-item-background-down: var(--spectrum-gray-300);
@@ -624,7 +633,7 @@
     --system-stepper-border-color-default: var(--spectrum-gray-500);
     --system-stepper-border-color-hover: var(--spectrum-gray-600);
     --system-stepper-border-color-focus: var(--spectrum-gray-800);
-    --system-stepper-border-color-focus-hover: var(--spectrum-gray-800);
+    --system-stepper-border-color-focus-hover: var(--spectrum-gray-900);
     --system-stepper-border-color-keyboard-focus: var(--spectrum-gray-800);
     --system-stepper-buttons-border-style: none;
     --system-stepper-buttons-border-width: 0;
@@ -633,7 +642,7 @@
     --system-stepper-buttons-border-color-hover: var(--spectrum-gray-600);
     --system-stepper-buttons-border-color-focus: var(--spectrum-gray-800);
     --system-stepper-buttons-border-color-keyboard-focus: var(
-        --spectrum-gray-900
+        --spectrum-gray-800
     );
     --system-stepper-button-border-width: var(--spectrum-border-width-100);
     --system-stepper-border-color-invalid: var(

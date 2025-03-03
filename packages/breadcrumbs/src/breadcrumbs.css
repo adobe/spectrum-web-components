@@ -48,7 +48,6 @@ governing permissions and limitations under the License.
                         --custom-actionbutton-edge-to-visual-only,
                         var(--spectrum-actionbutton-edge-to-visual-only)
                     )
-            ) *
-            -1
+            ) * - 1
     );
 }

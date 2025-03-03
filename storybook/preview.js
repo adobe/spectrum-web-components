@@ -114,16 +114,32 @@ export const globalTypes = {
 
 export const parameters = {
     docs: { hidden: true },
-    controls: { expanded: true },
+    controls: {
+        expanded: true,
+        hideNoControlsWarning: true,
+        sort: 'requiredFirst',
+    },
     layout: 'fullscreen',
-    badgesConfig: {
-        deprecated: {
-            styles: {
-                backgroundColor: '#FFF',
-                borderColor: '#ea3829',
-                color: '#ea3829',
+    options: {
+        storySort: {
+            method: 'alphabetical-by-kind',
+            order: [
+                'Components',
+                ['*', ['Default', 'Standard', 'Sizes', '*']],
+                'Tools',
+                ['*', ['Default', 'Sized', '*']],
+                '*',
+            ],
+            includeNames: true,
+        },
+    },
+    status: {
+        statuses: {
+            deprecated: {
+                background: 'rgb(211,21,16)',
+                color: '#fff',
+                description: 'Should not be used and will not receive updates.',
             },
-            title: 'Deprecated',
         },
     },
     chromatic: {
@@ -149,3 +165,4 @@ export const parameters = {
 };
 
 export const decorators = [swcThemeDecorator];
+export const tags = ['autodocs', 'dev'];

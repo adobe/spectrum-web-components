@@ -30,11 +30,13 @@ const config = {
         ...(process.env.NODE_ENV === 'development'
             ? ['@storybook/addon-designs']
             : []),
-        // https://geometricpanda.github.io/storybook-addon-badges/
-        '@geometricpanda/storybook-addon-badges',
+        // https://storybook.js.org/addons/@etchteam/storybook-addon-status
+        '@etchteam/storybook-addon-status',
     ],
-    framework: {
-        name: '@web/storybook-framework-web-components',
+    framework: '@web/storybook-framework-web-components',
+    core: {
+        disableTelemetry: true,
+        disableWhatsNewNotifications: true,
     },
     wdsFinal(config) {
         const json = fromRollup(rollupJson);
