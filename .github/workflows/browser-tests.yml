@@ -4,9 +4,6 @@ on:
     pull_request:
         types: [opened, synchronize, reopened]
 
-env:
-    IS_INTERNAL_PR: ${{ github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository }}
-
 jobs:
     test-changed-packages:
         strategy:
@@ -16,7 +13,7 @@ jobs:
 
         # The job will only run if the pull request is from the same repository.
         # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
-        if: ${{ github.env.IS_INTERNAL_PR }}
+        if: ${{ github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository }}
         runs-on: ubuntu-22.04
         steps:
             - name: Checkout main
@@ -53,7 +50,7 @@ jobs:
 
         # The job will only run if the pull request is from the same repository.
         # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
-        if: ${{ github.env.IS_INTERNAL_PR }}
+        if: ${{ github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository }}
         runs-on: ubuntu-latest
         steps:
             - name: Checkout main
