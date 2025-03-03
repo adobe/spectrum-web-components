@@ -16,25 +16,37 @@ import rollupCommonjs from '@rollup/plugin-commonjs';
 import { watchSWC } from '../web-test-runner.utils.js';
 
 /** @type { import('storybook-builder-wds').StorybookConfigWds } */
-const config = {
+export default {
     stories: [
-        '../packages/*/stories/*.stories.js',
-        '../tools/*/stories/*.stories.js',
+        {
+            directory: '../packages',
+            files: '*/stories/*.stories.js',
+            titlePrefix: 'Components',
+        },
+        {
+            directory: '../tools',
+            files: '*/stories/*.stories.js',
+            titlePrefix: 'Tools',
+        },
     ],
     addons: [
-        '@storybook/addon-links',
         '@storybook/addon-essentials',
+        // https://github.com/storybookjs/storybook/tree/next/code/addons/interactions
+        '@storybook/addon-interactions',
+        // https://github.com/storybookjs/storybook/tree/next/code/addons/a11y
         '@storybook/addon-a11y',
         // Conditionally add the addon-designs addon temporarily
         // https://storybook.js.org/addons/@storybook/addon-designs/
         ...(process.env.NODE_ENV === 'development'
             ? ['@storybook/addon-designs']
             : []),
-        // https://geometricpanda.github.io/storybook-addon-badges/
-        '@geometricpanda/storybook-addon-badges',
+        // https://storybook.js.org/addons/@etchteam/storybook-addon-status
+        '@etchteam/storybook-addon-status',
     ],
-    framework: {
-        name: '@web/storybook-framework-web-components',
+    framework: '@web/storybook-framework-web-components',
+    core: {
+        disableTelemetry: true,
+        disableWhatsNewNotifications: true,
     },
     wdsFinal(config) {
         const json = fromRollup(rollupJson);
@@ -74,16 +86,11 @@ const config = {
         );
         return config;
     },
-};
-
-if (process.env.NODE_ENV === 'development') {
-    config.refs = {
+    refs: process.env.NODE_ENV === 'development' && {
         'design-system': {
             title: 'Spectrum CSS',
             url: 'https://opensource.adobe.com/spectrum-css/preview/',
             expanded: false, // Optional, true by default
         },
-    };
-}
-
-export default config;
+    },
+};

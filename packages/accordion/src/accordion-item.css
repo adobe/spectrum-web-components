@@ -16,7 +16,14 @@ governing permissions and limitations under the License.
     display: block;
 }
 
+/* .spectrum-Accordion-itemHeading */
 #heading {
-    /* .spectrum-Accordion-itemHeading */
     height: auto;
+}
+
+:host([disabled]) #heading .indicator {
+    color: var(
+        --mod-accordion-item-header-disabled-color,
+        var(--spectrum-accordion-item-header-disabled-color)
+    );
 }
