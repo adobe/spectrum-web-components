@@ -33,6 +33,7 @@ test.describe('search and go', () => {
             ? `/${category}/${formattedSearchString}`
             : `/${formattedSearchString}`;
         const menuItem = await page.locator(menuItemSelector(href));
+        await expect(menuItem).toBeVisible({ timeout: 3000 });
 
         await expect(menuItem).toBeFocused();
         await page.keyboard.press('Enter');
