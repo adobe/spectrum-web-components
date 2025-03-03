@@ -12,10 +12,6 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-actionbar-popover-background-color: var(
-        --system-action-bar-popover-background-color
-    );
-    --spectrum-actionbar-popover-border-color: var(
-        --system-action-bar-popover-border-color
-    );
+    --spectrum-actionbar-popover-background-color: var(--system-action-bar-popover-background-color);
+    --spectrum-actionbar-popover-border-color: var(--system-action-bar-popover-border-color);
 }

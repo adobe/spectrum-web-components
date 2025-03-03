@@ -97,12 +97,6 @@
     block-size: var(--mod-breadcrumbs-block-size-compact, var(--spectrum-breadcrumbs-block-size-compact));
 }
 
-.spectrum-Breadcrumbs--multiline {
-    block-size: var(--mod-breadcrumbs-block-size-multiline, var(--spectrum-breadcrumbs-block-size-multiline));
-    flex-wrap: wrap;
-    align-content: center;
-}
-
 :host([compact]) ::slotted(sp-breadcrumb-item) {
     font-family: var(--mod-breadcrumbs-font-family-compact, var(--spectrum-breadcrumbs-font-family-compact));
     font-size: var(--mod-breadcrumbs-font-size-compact, var(--spectrum-breadcrumbs-font-size-compact));

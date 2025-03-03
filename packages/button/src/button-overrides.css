@@ -12,365 +12,159 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-button-background-color-default: var(
-        --system-button-background-color-default
-    );
-    --spectrum-button-background-color-hover: var(
-        --system-button-background-color-hover
-    );
-    --spectrum-button-background-color-down: var(
-        --system-button-background-color-down
-    );
-    --spectrum-button-background-color-focus: var(
-        --system-button-background-color-focus
-    );
-    --spectrum-button-border-color-default: var(
-        --system-button-border-color-default
-    );
-    --spectrum-button-border-color-hover: var(
-        --system-button-border-color-hover
-    );
+    --spectrum-button-background-color-default: var(--system-button-background-color-default);
+    --spectrum-button-background-color-hover: var(--system-button-background-color-hover);
+    --spectrum-button-background-color-down: var(--system-button-background-color-down);
+    --spectrum-button-background-color-focus: var(--system-button-background-color-focus);
+    --spectrum-button-border-color-default: var(--system-button-border-color-default);
+    --spectrum-button-border-color-hover: var(--system-button-border-color-hover);
     --spectrum-button-border-color-down: var(--system-button-border-color-down);
-    --spectrum-button-border-color-focus: var(
-        --system-button-border-color-focus
-    );
-    --spectrum-button-background-color-disabled: var(
-        --system-button-background-color-disabled
-    );
-    --spectrum-button-border-color-disabled: var(
-        --system-button-border-color-disabled
-    );
-    --mod-button-background-color-default: var(
-        --system-button-background-color-default
-    );
-    --mod-button-background-color-hover: var(
-        --system-button-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-background-color-focus
-    );
-    --mod-button-border-color-default: var(
-        --system-button-border-color-default
-    );
+    --spectrum-button-border-color-focus: var(--system-button-border-color-focus);
+    --spectrum-button-background-color-disabled: var(--system-button-background-color-disabled);
+    --spectrum-button-border-color-disabled: var(--system-button-border-color-disabled);
+    --mod-button-background-color-default: var(--system-button-background-color-default);
+    --mod-button-background-color-hover: var(--system-button-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-background-color-focus);
+    --mod-button-border-color-default: var(--system-button-border-color-default);
     --mod-button-border-color-hover: var(--system-button-border-color-hover);
     --mod-button-border-color-down: var(--system-button-border-color-down);
     --mod-button-border-color-focus: var(--system-button-border-color-focus);
 }
 
 :host([selected]) {
-    --mod-button-background-color-default: var(
-        --system-button-selected-background-color-default
-    );
-    --mod-button-background-color-hover: var(
-        --system-button-selected-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-selected-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-selected-background-color-focus
-    );
+    --mod-button-background-color-default: var(--system-button-selected-background-color-default);
+    --mod-button-background-color-hover: var(--system-button-selected-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-selected-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-selected-background-color-focus);
 }
 
 :host([variant='primary']) {
-    --mod-button-content-color-default: var(
-        --system-button-primary-content-color-default
-    );
-    --mod-button-content-color-hover: var(
-        --system-button-primary-content-color-hover
-    );
-    --mod-button-content-color-down: var(
-        --system-button-primary-content-color-down
-    );
-    --mod-button-content-color-focus: var(
-        --system-button-primary-content-color-focus
-    );
+    --mod-button-content-color-default: var(--system-button-primary-content-color-default);
+    --mod-button-content-color-hover: var(--system-button-primary-content-color-hover);
+    --mod-button-content-color-down: var(--system-button-primary-content-color-down);
+    --mod-button-content-color-focus: var(--system-button-primary-content-color-focus);
 }
 
 :host([variant='primary'][treatment='outline']) {
-    --mod-button-background-color-hover: var(
-        --system-button-primary-outline-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-primary-outline-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-primary-outline-background-color-focus
-    );
+    --mod-button-background-color-hover: var(--system-button-primary-outline-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-primary-outline-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-primary-outline-background-color-focus);
 }
 
 :host([variant='secondary']) {
-    --mod-button-background-color-default: var(
-        --system-button-secondary-background-color-default
-    );
+    --mod-button-background-color-default: var(--system-button-secondary-background-color-default);
 }
 
 :host([variant='secondary']:not([treatment='outline'])) {
-    --mod-button-background-color-hover: var(
-        --system-button-secondary-not-outline-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-secondary-not-outline-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-secondary-not-outline-background-color-focus
-    );
+    --mod-button-background-color-hover: var(--system-button-secondary-not-outline-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-secondary-not-outline-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-secondary-not-outline-background-color-focus);
 }
 
 :host([variant='secondary'][treatment='outline']) {
-    --mod-button-background-color-hover: var(
-        --system-button-secondary-outline-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-secondary-outline-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-secondary-outline-background-color-focus
-    );
-    --mod-button-border-color-default: var(
-        --system-button-secondary-outline-border-color-default
-    );
+    --mod-button-background-color-hover: var(--system-button-secondary-outline-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-secondary-outline-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-secondary-outline-background-color-focus);
+    --mod-button-border-color-default: var(--system-button-secondary-outline-border-color-default);
 }
 
 :host([static-color='white']) {
-    --mod-button-background-color-default: var(
-        --system-button-static-white-background-color-default
-    );
-    --mod-button-background-color-hover: var(
-        --system-button-static-white-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-static-white-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-static-white-background-color-focus
-    );
-    --mod-button-content-color-default: var(
-        --system-button-static-white-content-color-default
-    );
-    --mod-button-content-color-hover: var(
-        --system-button-static-white-content-color-hover
-    );
-    --mod-button-content-color-down: var(
-        --system-button-static-white-content-color-down
-    );
-    --mod-button-content-color-focus: var(
-        --system-button-static-white-content-color-focus
-    );
+    --mod-button-background-color-default: var(--system-button-static-white-background-color-default);
+    --mod-button-background-color-hover: var(--system-button-static-white-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-static-white-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-static-white-background-color-focus);
+    --mod-button-content-color-default: var(--system-button-static-white-content-color-default);
+    --mod-button-content-color-hover: var(--system-button-static-white-content-color-hover);
+    --mod-button-content-color-down: var(--system-button-static-white-content-color-down);
+    --mod-button-content-color-focus: var(--system-button-static-white-content-color-focus);
 }
 
 :host([static-color='white'][variant='secondary']) {
-    --mod-button-background-color-default: var(
-        --system-button-static-white-secondary-background-color-default
-    );
-    --mod-button-background-color-hover: var(
-        --system-button-static-white-secondary-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-static-white-secondary-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-static-white-secondary-background-color-focus
-    );
-    --mod-button-content-color-default: var(
-        --system-button-static-white-secondary-content-color-default
-    );
-    --mod-button-content-color-hover: var(
-        --system-button-static-white-secondary-content-color-hover
-    );
-    --mod-button-content-color-down: var(
-        --system-button-static-white-secondary-content-color-down
-    );
-    --mod-button-content-color-focus: var(
-        --system-button-static-white-secondary-content-color-focus
-    );
+    --mod-button-background-color-default: var(--system-button-static-white-secondary-background-color-default);
+    --mod-button-background-color-hover: var(--system-button-static-white-secondary-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-static-white-secondary-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-static-white-secondary-background-color-focus);
+    --mod-button-content-color-default: var(--system-button-static-white-secondary-content-color-default);
+    --mod-button-content-color-hover: var(--system-button-static-white-secondary-content-color-hover);
+    --mod-button-content-color-down: var(--system-button-static-white-secondary-content-color-down);
+    --mod-button-content-color-focus: var(--system-button-static-white-secondary-content-color-focus);
 }
 
 :host([static-color='white'][variant='secondary'][treatment='outline']) {
-    --mod-button-border-color-default: var(
-        --system-button-static-white-secondary-outline-border-color-default
-    );
-    --mod-button-border-color-hover: var(
-        --system-button-static-white-secondary-outline-border-color-hover
-    );
-    --mod-button-border-color-down: var(
-        --system-button-static-white-secondary-outline-border-color-down
-    );
-    --mod-button-border-color-focus: var(
-        --system-button-static-white-secondary-outline-border-color-focus
-    );
+    --mod-button-border-color-default: var(--system-button-static-white-secondary-outline-border-color-default);
+    --mod-button-border-color-hover: var(--system-button-static-white-secondary-outline-border-color-hover);
+    --mod-button-border-color-down: var(--system-button-static-white-secondary-outline-border-color-down);
+    --mod-button-border-color-focus: var(--system-button-static-white-secondary-outline-border-color-focus);
 }
 
 :host([static-color='white'][treatment='outline']:not([variant='secondary'])) {
-    --mod-button-background-color-default: var(
-        --system-button-static-white-outline-not-secondary-background-color-default
-    );
-    --mod-button-background-color-hover: var(
-        --system-button-static-white-outline-not-secondary-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-static-white-outline-not-secondary-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-static-white-outline-not-secondary-background-color-focus
-    );
-    --mod-button-content-color-default: var(
-        --system-button-static-white-outline-not-secondary-content-color-default
-    );
-    --mod-button-content-color-hover: var(
-        --system-button-static-white-outline-not-secondary-content-color-hover
-    );
-    --mod-button-content-color-down: var(
-        --system-button-static-white-outline-not-secondary-content-color-down
-    );
-    --mod-button-content-color-focus: var(
-        --system-button-static-white-outline-not-secondary-content-color-focus
-    );
-    --mod-button-border-color-default: var(
-        --system-button-static-white-outline-not-secondary-border-color-default
-    );
-    --mod-button-border-color-hover: var(
-        --system-button-static-white-outline-not-secondary-border-color-hover
-    );
-    --mod-button-border-color-down: var(
-        --system-button-static-white-outline-not-secondary-border-color-down
-    );
-    --mod-button-border-color-focus: var(
-        --system-button-static-white-outline-not-secondary-border-color-focus
-    );
+    --mod-button-background-color-default: var(--system-button-static-white-outline-not-secondary-background-color-default);
+    --mod-button-background-color-hover: var(--system-button-static-white-outline-not-secondary-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-static-white-outline-not-secondary-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-static-white-outline-not-secondary-background-color-focus);
+    --mod-button-content-color-default: var(--system-button-static-white-outline-not-secondary-content-color-default);
+    --mod-button-content-color-hover: var(--system-button-static-white-outline-not-secondary-content-color-hover);
+    --mod-button-content-color-down: var(--system-button-static-white-outline-not-secondary-content-color-down);
+    --mod-button-content-color-focus: var(--system-button-static-white-outline-not-secondary-content-color-focus);
+    --mod-button-border-color-default: var(--system-button-static-white-outline-not-secondary-border-color-default);
+    --mod-button-border-color-hover: var(--system-button-static-white-outline-not-secondary-border-color-hover);
+    --mod-button-border-color-down: var(--system-button-static-white-outline-not-secondary-border-color-down);
+    --mod-button-border-color-focus: var(--system-button-static-white-outline-not-secondary-border-color-focus);
 }
 
 :host([static-color='white'][treatment='outline'][variant='secondary']) {
-    --mod-button-background-color-hover: var(
-        --system-button-static-white-outline-secondary-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-static-white-outline-secondary-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-static-white-outline-secondary-background-color-focus
-    );
+    --mod-button-background-color-hover: var(--system-button-static-white-outline-secondary-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-static-white-outline-secondary-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-static-white-outline-secondary-background-color-focus);
 }
 
 :host([static-color='black']) {
-    --mod-button-background-color-default: var(
-        --system-button-static-black-background-color-default
-    );
-    --mod-button-background-color-hover: var(
-        --system-button-static-black-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-static-black-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-static-black-background-color-focus
-    );
-    --mod-button-content-color-default: var(
-        --system-button-static-black-content-color-default
-    );
-    --mod-button-content-color-hover: var(
-        --system-button-static-black-content-color-hover
-    );
-    --mod-button-content-color-down: var(
-        --system-button-static-black-content-color-down
-    );
-    --mod-button-content-color-focus: var(
-        --system-button-static-black-content-color-focus
-    );
+    --mod-button-background-color-default: var(--system-button-static-black-background-color-default);
+    --mod-button-background-color-hover: var(--system-button-static-black-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-static-black-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-static-black-background-color-focus);
+    --mod-button-content-color-default: var(--system-button-static-black-content-color-default);
+    --mod-button-content-color-hover: var(--system-button-static-black-content-color-hover);
+    --mod-button-content-color-down: var(--system-button-static-black-content-color-down);
+    --mod-button-content-color-focus: var(--system-button-static-black-content-color-focus);
 }
 
 :host([static-color='black'][variant='secondary']) {
-    --mod-button-background-color-default: var(
-        --system-button-static-black-secondary-background-color-default
-    );
-    --mod-button-background-color-hover: var(
-        --system-button-static-black-secondary-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-static-black-secondary-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-static-black-secondary-background-color-focus
-    );
-    --mod-button-content-color-default: var(
-        --system-button-static-black-secondary-content-color-default
-    );
-    --mod-button-content-color-hover: var(
-        --system-button-static-black-secondary-content-color-hover
-    );
-    --mod-button-content-color-down: var(
-        --system-button-static-black-secondary-content-color-down
-    );
-    --mod-button-content-color-focus: var(
-        --system-button-static-black-secondary-content-color-focus
-    );
+    --mod-button-background-color-default: var(--system-button-static-black-secondary-background-color-default);
+    --mod-button-background-color-hover: var(--system-button-static-black-secondary-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-static-black-secondary-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-static-black-secondary-background-color-focus);
+    --mod-button-content-color-default: var(--system-button-static-black-secondary-content-color-default);
+    --mod-button-content-color-hover: var(--system-button-static-black-secondary-content-color-hover);
+    --mod-button-content-color-down: var(--system-button-static-black-secondary-content-color-down);
+    --mod-button-content-color-focus: var(--system-button-static-black-secondary-content-color-focus);
 }
 
 :host([static-color='black'][variant='secondary'][treatment='outline']) {
-    --mod-button-border-color-default: var(
-        --system-button-static-black-secondary-outline-border-color-default
-    );
-    --mod-button-border-color-hover: var(
-        --system-button-static-black-secondary-outline-border-color-hover
-    );
-    --mod-button-border-color-down: var(
-        --system-button-static-black-secondary-outline-border-color-down
-    );
-    --mod-button-border-color-focus: var(
-        --system-button-static-black-secondary-outline-border-color-focus
-    );
+    --mod-button-border-color-default: var(--system-button-static-black-secondary-outline-border-color-default);
+    --mod-button-border-color-hover: var(--system-button-static-black-secondary-outline-border-color-hover);
+    --mod-button-border-color-down: var(--system-button-static-black-secondary-outline-border-color-down);
+    --mod-button-border-color-focus: var(--system-button-static-black-secondary-outline-border-color-focus);
 }
 
 :host([static-color='black'][treatment='outline']:not([variant='secondary'])) {
-    --mod-button-background-color-default: var(
-        --system-button-static-black-outline-not-secondary-background-color-default
-    );
-    --mod-button-background-color-hover: var(
-        --system-button-static-black-outline-not-secondary-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-static-black-outline-not-secondary-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-static-black-outline-not-secondary-background-color-focus
-    );
-    --mod-button-content-color-default: var(
-        --system-button-static-black-outline-not-secondary-content-color-default
-    );
-    --mod-button-content-color-hover: var(
-        --system-button-static-black-outline-not-secondary-content-color-hover
-    );
-    --mod-button-content-color-down: var(
-        --system-button-static-black-outline-not-secondary-content-color-down
-    );
-    --mod-button-content-color-focus: var(
-        --system-button-static-black-outline-not-secondary-content-color-focus
-    );
-    --mod-button-border-color-default: var(
-        --system-button-static-black-outline-not-secondary-border-color-default
-    );
-    --mod-button-border-color-hover: var(
-        --system-button-static-black-outline-not-secondary-border-color-hover
-    );
-    --mod-button-border-color-down: var(
-        --system-button-static-black-outline-not-secondary-border-color-down
-    );
-    --mod-button-border-color-focus: var(
-        --system-button-static-black-outline-not-secondary-border-color-focus
-    );
+    --mod-button-background-color-default: var(--system-button-static-black-outline-not-secondary-background-color-default);
+    --mod-button-background-color-hover: var(--system-button-static-black-outline-not-secondary-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-static-black-outline-not-secondary-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-static-black-outline-not-secondary-background-color-focus);
+    --mod-button-content-color-default: var(--system-button-static-black-outline-not-secondary-content-color-default);
+    --mod-button-content-color-hover: var(--system-button-static-black-outline-not-secondary-content-color-hover);
+    --mod-button-content-color-down: var(--system-button-static-black-outline-not-secondary-content-color-down);
+    --mod-button-content-color-focus: var(--system-button-static-black-outline-not-secondary-content-color-focus);
+    --mod-button-border-color-default: var(--system-button-static-black-outline-not-secondary-border-color-default);
+    --mod-button-border-color-hover: var(--system-button-static-black-outline-not-secondary-border-color-hover);
+    --mod-button-border-color-down: var(--system-button-static-black-outline-not-secondary-border-color-down);
+    --mod-button-border-color-focus: var(--system-button-static-black-outline-not-secondary-border-color-focus);
 }
 
 :host([static-color='black'][treatment='outline'][variant='secondary']) {
-    --mod-button-background-color-hover: var(
-        --system-button-static-black-outline-secondary-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-static-black-outline-secondary-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-static-black-outline-secondary-background-color-focus
-    );
+    --mod-button-background-color-hover: var(--system-button-static-black-outline-secondary-background-color-hover);
+    --mod-button-background-color-down: var(--system-button-static-black-outline-secondary-background-color-down);
+    --mod-button-background-color-focus: var(--system-button-static-black-outline-secondary-background-color-focus);
 }

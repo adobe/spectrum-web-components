@@ -12,13 +12,7 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-progress-circle-track-border-color: var(
-        --system-progress-circle-track-border-color
-    );
-    --spectrum-progress-circle-track-border-color-over-background: var(
-        --system-progress-circle-track-border-color-over-background
-    );
-    --spectrum-progress-circle-fill-border-color-over-background: var(
-        --system-progress-circle-fill-border-color-over-background
-    );
+    --spectrum-progress-circle-track-border-color: var(--system-progress-circle-track-border-color);
+    --spectrum-progress-circle-track-border-color-over-background: var(--system-progress-circle-track-border-color-over-background);
+    --spectrum-progress-circle-fill-border-color-over-background: var(--system-progress-circle-fill-border-color-over-background);
 }

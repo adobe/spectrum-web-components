@@ -12,35 +12,15 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-switch-handle-border-color-default: var(
-        --system-switch-handle-border-color-default
-    );
-    --spectrum-switch-handle-border-color-hover: var(
-        --system-switch-handle-border-color-hover
-    );
-    --spectrum-switch-handle-border-color-down: var(
-        --system-switch-handle-border-color-down
-    );
-    --spectrum-switch-handle-border-color-focus: var(
-        --system-switch-handle-border-color-focus
-    );
-    --spectrum-switch-handle-border-color-selected-default: var(
-        --system-switch-handle-border-color-selected-default
-    );
-    --spectrum-switch-handle-border-color-selected-hover: var(
-        --system-switch-handle-border-color-selected-hover
-    );
-    --spectrum-switch-handle-border-color-selected-down: var(
-        --system-switch-handle-border-color-selected-down
-    );
-    --spectrum-switch-handle-border-color-selected-focus: var(
-        --system-switch-handle-border-color-selected-focus
-    );
+    --spectrum-switch-handle-border-color-default: var(--system-switch-handle-border-color-default);
+    --spectrum-switch-handle-border-color-hover: var(--system-switch-handle-border-color-hover);
+    --spectrum-switch-handle-border-color-down: var(--system-switch-handle-border-color-down);
+    --spectrum-switch-handle-border-color-focus: var(--system-switch-handle-border-color-focus);
+    --spectrum-switch-handle-border-color-selected-default: var(--system-switch-handle-border-color-selected-default);
+    --spectrum-switch-handle-border-color-selected-hover: var(--system-switch-handle-border-color-selected-hover);
+    --spectrum-switch-handle-border-color-selected-down: var(--system-switch-handle-border-color-selected-down);
+    --spectrum-switch-handle-border-color-selected-focus: var(--system-switch-handle-border-color-selected-focus);
     --spectrum-switch-background-color: var(--system-switch-background-color);
-    --spectrum-switch-background-color-disabled: var(
-        --system-switch-background-color-disabled
-    );
-    --spectrum-switch-handle-background-color: var(
-        --system-switch-handle-background-color
-    );
+    --spectrum-switch-background-color-disabled: var(--system-switch-background-color-disabled);
+    --spectrum-switch-handle-background-color: var(--system-switch-handle-background-color);
 }

@@ -79,7 +79,7 @@
     display: var(--spectrum-coachmark-menu-display);
 }
 
-.spectrum-CoachMark-menu--mobile {
+.menu-mobile {
     --spectrum-coachmark-menu-display: var(--spectrum-coachmark-menu-mobile-display);
 }
 

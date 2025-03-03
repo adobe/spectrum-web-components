@@ -12,13 +12,7 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-actiongroup-gap-size-compact: var(
-        --system-action-group-gap-size-compact
-    );
-    --spectrum-actiongroup-horizontal-spacing-compact: var(
-        --system-action-group-horizontal-spacing-compact
-    );
-    --spectrum-actiongroup-vertical-spacing-compact: var(
-        --system-action-group-vertical-spacing-compact
-    );
+    --spectrum-actiongroup-gap-size-compact: var(--system-action-group-gap-size-compact);
+    --spectrum-actiongroup-horizontal-spacing-compact: var(--system-action-group-horizontal-spacing-compact);
+    --spectrum-actiongroup-vertical-spacing-compact: var(--system-action-group-vertical-spacing-compact);
 }
