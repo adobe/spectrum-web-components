@@ -185,3 +185,4 @@ export const parameters = {
 };
 
 export const decorators = [swcThemeDecorator];
+export const tags = ['autodocs', 'dev'];

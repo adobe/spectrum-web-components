@@ -43,8 +43,10 @@ export default {
         // https://www.chromatic.com/docs/visual-tests-addon/
         // '@chromatic-com/storybook',
     ],
-    framework: {
-        name: '@web/storybook-framework-web-components',
+    framework: '@web/storybook-framework-web-components',
+    core: {
+        disableTelemetry: true,
+        disableWhatsNewNotifications: true,
     },
     core: {
         // Disabled callback due to Adobe privacy policy
