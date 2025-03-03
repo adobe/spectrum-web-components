@@ -27,13 +27,13 @@ test.describe('search and go', () => {
     ): Promise<void> => {
         await page.keyboard.type(searchString, { delay: 100 });
 
-        await page.keyboard.press('ArrowDown');
         const formattedSearchString = searchString.replace(/\s+/g, '-');
         const href = category
             ? `/${category}/${formattedSearchString}`
             : `/${formattedSearchString}`;
         const menuItem = await page.locator(menuItemSelector(href));
         await expect(menuItem).toBeVisible({ timeout: 3000 });
+        await page.keyboard.press('ArrowDown');
 
         await expect(menuItem).toBeFocused();
         await page.keyboard.press('Enter');
