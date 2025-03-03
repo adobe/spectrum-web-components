@@ -16,13 +16,13 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
-import { visualDiff } from '@web/test-runner-visual-regression';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { StoryDecorator } from '@spectrum-web-components/story-decorator';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 import { Color, Scale } from '@spectrum-web-components/theme';
-import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/StoryDecorator';
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { render } from 'lit';
 import { emulateMedia, sendKeys } from '@web/test-runner-commands';
+import { visualDiff } from '@web/test-runner-visual-regression';
+import { render } from 'lit';
 import { ignoreResizeObserverLoopError } from '../testing-helpers.js';
 
 ignoreResizeObserverLoopError(before, after);
@@ -41,12 +41,12 @@ interface Story<T> {
     argTypes?: Record<string, unknown>;
     decorators?: (() => TemplateResult)[];
     swc_vrt?: {
-        skip: Boolean;
+        skip: boolean;
     };
 }
 
 type StoriesType = {
-    [name: string]: Story<{}>;
+    [name: string]: Story<object>;
 };
 
 export type TestsType = StoriesType & {
@@ -83,6 +83,7 @@ export const test = (
                 test.focus();
                 await sendKeys({ press: 'ArrowUp' });
                 await sendKeys({ press: 'ArrowDown' });
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const testsDefault = (tests as any).default;
                 const args = {
                     ...(testsDefault.args || {}),
@@ -92,10 +93,9 @@ export const test = (
                     ...(tests[story].decorators || []),
                     ...(testsDefault.decorators || []),
                 ];
-                let decoratedStory: () => TemplateResult = () =>
-                    html`
-                        ${tests[story](args)}
-                    `;
+                let decoratedStory: () => TemplateResult = () => html`
+                    ${tests[story](args)}
+                `;
                 const decorate = (
                     story: () => TemplateResult,
                     decorator: (
@@ -110,7 +110,7 @@ export const test = (
                     decoratedStory = decorate(decoratedStory, decorator);
                 }
                 render(decoratedStory(), test);
-                await testReady(test);
+                await waitUntil(() => testReady(test));
                 await nextFrame();
                 const testName = `${color} - ${scale} - ${dir} - ${name} - ${story}`;
                 const allowedRetries = 4;
@@ -130,7 +130,7 @@ export const test = (
                             ) > -1
                         ) {
                             retries = 0;
-                            // Don't retry "no baseline iamge" errors.
+                            // Don't retry "no baseline image" errors.
                             throw error;
                         } else {
                             test.remove();
