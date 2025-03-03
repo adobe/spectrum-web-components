@@ -15,68 +15,34 @@
     --spectrum-slider-track-color: var(--system-slider-track-color);
     --spectrum-slider-track-fill-color: var(--system-slider-track-fill-color);
     --spectrum-slider-ramp-track-color: var(--system-slider-ramp-track-color);
-    --spectrum-slider-ramp-track-color-disabled: var(
-        --system-slider-ramp-track-color-disabled
-    );
-    --spectrum-slider-handle-background-color: var(
-        --system-slider-handle-background-color
-    );
-    --spectrum-slider-handle-background-color-disabled: var(
-        --system-slider-handle-background-color-disabled
-    );
-    --spectrum-slider-ramp-handle-background-color: var(
-        --system-slider-ramp-handle-background-color
-    );
-    --spectrum-slider-ticks-handle-background-color: var(
-        --system-slider-ticks-handle-background-color
-    );
-    --spectrum-slider-handle-border-color: var(
-        --system-slider-handle-border-color
-    );
-    --spectrum-slider-handle-disabled-background-color: var(
-        --system-slider-handle-disabled-background-color
-    );
+    --spectrum-slider-ramp-track-color-disabled: var(--system-slider-ramp-track-color-disabled);
+    --spectrum-slider-handle-background-color: var(--system-slider-handle-background-color);
+    --spectrum-slider-handle-background-color-disabled: var(--system-slider-handle-background-color-disabled);
+    --spectrum-slider-ramp-handle-background-color: var(--system-slider-ramp-handle-background-color);
+    --spectrum-slider-ticks-handle-background-color: var(--system-slider-ticks-handle-background-color);
+    --spectrum-slider-handle-border-color: var(--system-slider-handle-border-color);
+    --spectrum-slider-handle-disabled-background-color: var(--system-slider-handle-disabled-background-color);
     --spectrum-slider-tick-mark-color: var(--system-slider-tick-mark-color);
-    --spectrum-slider-handle-border-color-hover: var(
-        --system-slider-handle-border-color-hover
-    );
-    --spectrum-slider-handle-border-color-down: var(
-        --system-slider-handle-border-color-down
-    );
-    --spectrum-slider-handle-border-color-key-focus: var(
-        --system-slider-handle-border-color-key-focus
-    );
-    --spectrum-slider-handle-focus-ring-color-key-focus: var(
-        --system-slider-handle-focus-ring-color-key-focus
-    );
-    --spectrum-slider-track-corner-radius: var(
-        --system-slider-track-corner-radius
-    );
-    --spectrum-slider-handle-border-radius: var(
-        --system-slider-handle-border-radius
-    );
+    --spectrum-slider-handle-border-color-hover: var(--system-slider-handle-border-color-hover);
+    --spectrum-slider-handle-border-color-down: var(--system-slider-handle-border-color-down);
+    --spectrum-slider-handle-border-color-key-focus: var(--system-slider-handle-border-color-key-focus);
+    --spectrum-slider-handle-focus-ring-color-key-focus: var(--system-slider-handle-focus-ring-color-key-focus);
+    --spectrum-slider-track-corner-radius: var(--system-slider-track-corner-radius);
+    --spectrum-slider-handle-border-radius: var(--system-slider-handle-border-radius);
 }
 
 :host {
-    --spectrum-slider-handle-border-radius: var(
-        --system-slider-size-m-handle-border-radius
-    );
+    --spectrum-slider-handle-border-radius: var(--system-slider-size-m-handle-border-radius);
 }
 
 :host([size='s']) {
-    --spectrum-slider-handle-border-radius: var(
-        --system-slider-size-s-handle-border-radius
-    );
+    --spectrum-slider-handle-border-radius: var(--system-slider-size-s-handle-border-radius);
 }
 
 :host([size='l']) {
-    --spectrum-slider-handle-border-radius: var(
-        --system-slider-size-l-handle-border-radius
-    );
+    --spectrum-slider-handle-border-radius: var(--system-slider-size-l-handle-border-radius);
 }
 
 :host([size='xl']) {
-    --spectrum-slider-handle-border-radius: var(
-        --system-slider-size-xl-handle-border-radius
-    );
+    --spectrum-slider-handle-border-radius: var(--system-slider-size-xl-handle-border-radius);
 }

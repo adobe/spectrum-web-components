@@ -44,14 +44,14 @@
     --spectrum-clear-button-width: var(--spectrum-component-height-300);
 }
 
-:host .spectrum-ClearButton--quiet {
+:host([quiet]) {
     --mod-clear-button-background-color: transparent;
     --mod-clear-button-background-color-hover: transparent;
     --mod-clear-button-background-color-down: transparent;
     --mod-clear-button-background-color-key-focus: transparent;
 }
 
-:host .spectrum-ClearButton--staticWhite {
+:host([static-color='white']) {
     --mod-clear-button-icon-color: var(--spectrum-white);
     --mod-clear-button-icon-color-hover: var(--spectrum-white);
     --mod-clear-button-icon-color-down: var(--spectrum-white);
@@ -105,7 +105,7 @@
     background-color: var(--mod-clear-button-background-color-key-focus, var(--spectrum-clear-button-background-color-key-focus));
 }
 
-.spectrum-ClearButton-icon {
+.icon {
     color: inherit;
 }
 
@@ -120,7 +120,7 @@
 }
 
 :host([variant='overBackground']:focus-visible),
-.spectrum-ClearButton--staticWhite:focus-visible {
+:host([static-color='white']:focus-visible) {
     outline: none;
 }
 

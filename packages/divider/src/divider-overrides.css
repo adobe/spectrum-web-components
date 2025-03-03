@@ -13,10 +13,6 @@
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-divider-background-color: var(--system-divider-background-color);
-    --spectrum-divider-background-color-static-white: var(
-        --system-divider-background-color-static-white
-    );
-    --spectrum-divider-background-color-static-black: var(
-        --system-divider-background-color-static-black
-    );
+    --spectrum-divider-background-color-static-white: var(--system-divider-background-color-static-white);
+    --spectrum-divider-background-color-static-black: var(--system-divider-background-color-static-black);
 }

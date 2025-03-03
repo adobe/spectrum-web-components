@@ -63,8 +63,16 @@ const config = {
                     ],
                     'variant'
                 ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-ClearButton--staticWhite', 'white'],
+                        ['spectrum-ClearButton--staticBlack', 'black'],
+                    ],
+                    'static-color'
+                ),
                 // Default to `size='m'` without needing the attribute
                 converter.classToHost('spectrum-ClearButton--sizeM'),
+                converter.classToAttribute('spectrum-ClearButton--quiet'),
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-ClearButton--sizeS', 's'],
@@ -74,6 +82,7 @@ const config = {
                     'size'
                 ),
                 converter.classToClass('spectrum-Icon', 'icon'),
+                converter.classToClass('spectrum-ClearButton-icon', 'icon'),
                 converter.classToClass('spectrum-ClearButton-fill'),
             ],
             excludeByComponents: [

@@ -12,28 +12,14 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-clear-button-background-color: var(
-        --system-clear-button-background-color
-    );
-    --spectrum-clear-button-background-color-hover: var(
-        --system-clear-button-background-color-hover
-    );
-    --spectrum-clear-button-background-color-down: var(
-        --system-clear-button-background-color-down
-    );
-    --spectrum-clear-button-background-color-key-focus: var(
-        --system-clear-button-background-color-key-focus
-    );
+    --spectrum-clear-button-background-color: var(--system-clear-button-background-color);
+    --spectrum-clear-button-background-color-hover: var(--system-clear-button-background-color-hover);
+    --spectrum-clear-button-background-color-down: var(--system-clear-button-background-color-down);
+    --spectrum-clear-button-background-color-key-focus: var(--system-clear-button-background-color-key-focus);
 }
 
-:host .spectrum-ClearButton--staticWhite {
-    --spectrum-clear-button-background-color-hover: var(
-        --system-clear-button-static-white-background-color-hover
-    );
-    --spectrum-clear-button-background-color-down: var(
-        --system-clear-button-static-white-background-color-down
-    );
-    --spectrum-clear-button-background-color-key-focus: var(
-        --system-clear-button-static-white-background-color-key-focus
-    );
+:host([static-color='white']) {
+    --spectrum-clear-button-background-color-hover: var(--system-clear-button-static-white-background-color-hover);
+    --spectrum-clear-button-background-color-down: var(--system-clear-button-static-white-background-color-down);
+    --spectrum-clear-button-background-color-key-focus: var(--system-clear-button-static-white-background-color-key-focus);
 }

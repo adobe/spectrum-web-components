@@ -13,8 +13,6 @@
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-swatch-border-color: var(--system-swatch-border-color);
-    --spectrum-swatch-inner-border-color-selected: var(
-        --system-swatch-inner-border-color-selected
-    );
+    --spectrum-swatch-inner-border-color-selected: var(--system-swatch-inner-border-color-selected);
     --spectrum-swatch-border-radius: var(--system-swatch-border-radius);
 }

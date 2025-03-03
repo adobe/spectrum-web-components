@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-dialog.css');
-@import url('./dialog-overrides.css');
 
 :host {
     --swc-alert-dialog-error-icon-color: var(--spectrum-negative-visual-color);
@@ -22,18 +21,12 @@ governing permissions and limitations under the License.
 }
 
 .footer {
-    color: var(
-        --spectrum-dialog-confirm-description-text-color,
-        var(--spectrum-gray-800)
-    );
+    color: var(--spectrum-dialog-confirm-description-text-color, var(--spectrum-gray-800));
 }
 
 .type-icon {
     grid-area: typeIcon;
-    color: var(
-        --mod-alert-dialog-error-icon-color,
-        var(--swc-alert-dialog-error-icon-color)
-    );
+    color: var(--mod-alert-dialog-error-icon-color, var(--swc-alert-dialog-error-icon-color));
 }
 
 .content[tabindex] {

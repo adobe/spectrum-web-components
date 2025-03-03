@@ -59,7 +59,7 @@ textarea {
 
 #sizer {
     block-size: auto;
-    /* stylelint-disable-next-line declaration-property-value-keyword-no-deprecated */
+    /* stylelint-disable-next-line declaration-property-value-keyword-no-deprecated -- Deprecated CSS property, remove in a future release. */
     word-break: break-word;
     opacity: 0;
     white-space: pre-line;
@@ -101,29 +101,14 @@ textarea {
 :host([disabled][quiet]) #textfield:hover .input,
 :host([quiet]) .input :disabled {
     background-color: #0000;
-    border-color: var(
-        --mod-textfield-border-color-disabled,
-        var(--spectrum-textfield-border-color-disabled)
-    );
-    color: var(
-        --highcontrast-textfield-text-color-disabled,
-        var(
-            --mod-textfield-text-color-disabled,
-            var(--spectrum-textfield-text-color-disabled)
-        )
-    );
+    border-color: var(--mod-textfield-border-color-disabled, var(--spectrum-textfield-border-color-disabled));
+    color: var(--highcontrast-textfield-text-color-disabled, var(--mod-textfield-text-color-disabled, var(--spectrum-textfield-text-color-disabled)));
 }
 
 /* :not selector not working with regex for process-spectrum so had to override here */
 :host([disabled]) #textfield .icon.icon-search,
 :host([readonly]) #textfield .icon.icon-search {
-    color: var(
-        --highcontrast-textfield-text-color-disabled,
-        var(
-            --mod-textfield-text-color-disabled,
-            var(--spectrum-textfield-text-color-disabled)
-        )
-    );
+    color: var(--highcontrast-textfield-text-color-disabled, var(--mod-textfield-text-color-disabled, var(--spectrum-textfield-text-color-disabled)));
 }
 
 :host([focused]) #textfield .icon.icon-search {
@@ -135,16 +120,7 @@ textarea {
 
 :host([multiline][grows]:not([quiet])) #textfield:after {
     grid-area: unset;
-    min-block-size: calc(
-        var(
-                --mod-text-area-min-block-size,
-                var(--spectrum-text-area-min-block-size)
-            ) +
-            var(
-                --mod-textfield-focus-indicator-gap,
-                var(--spectrum-textfield-focus-indicator-gap)
-            ) * 2
-    );
+    min-block-size: calc(var(--mod-text-area-min-block-size, var(--spectrum-text-area-min-block-size)) + var(--mod-textfield-focus-indicator-gap, var(--spectrum-textfield-focus-indicator-gap)) * 2);
 }
 
 :host([multiline][grows]:not([rows])) .input:not(#sizer) {

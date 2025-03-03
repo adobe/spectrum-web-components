@@ -146,7 +146,6 @@ const config = {
                     name: 'regex',
                     regex: /Datepicker/,
                 },
-                builder.class('🤫'),
                 // builder.class('spectrum-PickerButton-fill'),
             ],
         },

@@ -45,11 +45,11 @@
     --spectrum-coach-indicator-ring-default-color: var(--mod-coach-indicator-ring-dark-color, var(--spectrum-black));
 }
 
-:host .spectrum-CoachIndicator--staticWhite {
+:host([static-color='white']) {
     --spectrum-coach-indicator-ring-default-color: var(--spectrum-white);
 }
 
-:host .spectrum-CoachIndicator--staticBlack {
+:host([static-color='black']) {
     --spectrum-coach-indicator-ring-default-color: var(--spectrum-black);
 }
 

@@ -12,7 +12,5 @@
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-alert-banner-neutral-background: var(
-        --system-alert-banner-neutral-background
-    );
+    --spectrum-alert-banner-neutral-background: var(--system-alert-banner-neutral-background);
 }

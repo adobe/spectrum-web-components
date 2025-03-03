@@ -119,11 +119,11 @@
         "lit": "^2.5.0 || ^3.1.3"
     },
     "devDependencies": {
-        "@spectrum-css/expressvars": "^3.0.9",
+        "@spectrum-css/expressvars": "3.0.9",
         "@spectrum-css/tokens": "15.0.0",
         "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@16.0.1",
         "@spectrum-css/typography": "8.1.0",
-        "@spectrum-css/vars": "^9.0.8"
+        "@spectrum-css/vars": "9.0.8"
     },
     "customElements": "custom-elements.json",
     "sideEffects": [

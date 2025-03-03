@@ -15,23 +15,22 @@ governing permissions and limitations under the License.
 @import '@spectrum-web-components/styles/tokens/spectrum/custom-vars.css';
 @import '@spectrum-web-components/styles/tokens/spectrum/system-theme-bridge.css';
 @import '@spectrum-web-components/styles/src/spectrum-heading.css';
-@import '@spectrum-web-components/styles/src/heading-overrides.css';
 @import '@spectrum-web-components/styles/src/spectrum-body.css';
-@import '@spectrum-web-components/styles/src/body-overrides.css';
 @import '@spectrum-web-components/styles/src/spectrum-code.css';
-@import '@spectrum-web-components/styles/src/code-overrides.css';
 @import '@spectrum-web-components/opacity-checkerboard/src/spectrum-opacity-checkerboard.css';
 @import './inline-alert.css';
 @import './fonts.css';
 
 :root,
 :host {
-    --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro',
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro',
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-font-family-ar:
+        myriad-arabic, adobe-clean, 'Source Sans Pro', -apple-system,
+        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
+        'Lucida Grande', sans-serif;
+    --spectrum-font-family-he:
+        myriad-hebrew, adobe-clean, 'Source Sans Pro', -apple-system,
+        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
+        'Lucida Grande', sans-serif;
 
     --spectrum-font-family: var(--spectrum-sans-font-family-stack);
     --spectrum-font-style: var(--spectrum-default-font-style);
@@ -224,7 +223,11 @@ sp-tabs:not(:defined) {
 
 sp-tabs:not(:defined) {
     margin-top: calc(
-        -1 * var(--spectrum-heading-s-margin-top, var(--spectrum-alias-heading-s-margin-top))
+        -1 *
+            var(
+                --spectrum-heading-s-margin-top,
+                var(--spectrum-alias-heading-s-margin-top)
+            )
     );
 }
 

@@ -11,7 +11,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { converterFor } from '../../../tasks/process-spectrum-utils.js';
+import {
+    builder,
+    converterFor,
+} from '../../../tasks/process-spectrum-utils.js';
 
 const converter = converterFor('spectrum-Card');
 
@@ -66,6 +69,10 @@ const config = {
                     'spectrum-Card-description',
                     'description'
                 ),
+                {
+                    find: builder.class('spectrum-Divider'),
+                    replace: builder.element('sp-divider'),
+                },
             ],
         },
     ],

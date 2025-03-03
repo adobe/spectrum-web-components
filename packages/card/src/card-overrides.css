@@ -15,10 +15,6 @@
     --spectrum-card-border-color: var(--system-card-border-color);
     --spectrum-card-border-color-hover: var(--system-card-border-color-hover);
     --spectrum-card-divider-color: var(--system-card-divider-color);
-    --spectrum-card-preview-background-color: var(
-        --system-card-preview-background-color
-    );
-    --spectrum-card-preview-background-color-hover: var(
-        --system-card-preview-background-color-hover
-    );
+    --spectrum-card-preview-background-color: var(--system-card-preview-background-color);
+    --spectrum-card-preview-background-color-hover: var(--system-card-preview-background-color-hover);
 }

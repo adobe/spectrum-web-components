@@ -100,61 +100,21 @@ const config = {
                     replace: builder.pseudoClass('first-child'),
                     hoist: true,
                 },
-                {
-                    find: {
-                        type: 'pseudo-class',
-                        kind: 'not',
-                        selectors: [
-                            [
-                                {
-                                    type: 'pseudo-class',
-                                    kind: 'first-of-type',
-                                },
-                            ],
-                        ],
-                    },
-                    replace: {
-                        type: 'pseudo-class',
-                        kind: 'not',
-                        selectors: [
-                            [
-                                {
-                                    type: 'pseudo-class',
-                                    kind: 'first-of-type',
-                                },
-                            ],
-                        ],
-                    },
-                    hoist: true,
-                },
-                {
+                converter.notToPseudoClass('first-of-type'),
+                ...['hover', 'focus'].map((state) => ({
                     find: [
                         builder.class('spectrum-Accordion-itemHeader'),
-                        builder.pseudoClass('hover'),
+                        builder.pseudoClass(state),
                     ],
                     replace: [
                         {
                             replace: builder.id('header'),
                         },
                         {
-                            replace: builder.pseudoClass('hover'),
+                            replace: builder.pseudoClass(state),
                         },
                     ],
-                },
-                {
-                    find: [
-                        builder.class('spectrum-Accordion-itemHeader'),
-                        builder.pseudoClass('focus'),
-                    ],
-                    replace: [
-                        {
-                            replace: builder.id('header'),
-                        },
-                        {
-                            replace: builder.pseudoClass('focus'),
-                        },
-                    ],
-                },
+                })),
             ],
         },
     ],
