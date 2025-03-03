@@ -8660,7 +8660,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/number-field@npm:1.4.0, @spectrum-web-components/number-field@workspace:packages/number-field":
+"@spectrum-web-components/number-field@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@spectrum-web-components/number-field@npm:1.4.0"
+  dependencies:
+    "@internationalized/number": "npm:^3.6.0"
+    "@spectrum-web-components/base": "npm:1.4.0"
+    "@spectrum-web-components/icon": "npm:1.4.0"
+    "@spectrum-web-components/icons-ui": "npm:1.4.0"
+    "@spectrum-web-components/infield-button": "npm:1.4.0"
+    "@spectrum-web-components/reactive-controllers": "npm:1.4.0"
+    "@spectrum-web-components/shared": "npm:1.4.0"
+    "@spectrum-web-components/textfield": "npm:1.4.0"
+  checksum: 10c0/3412dacd40431749899a0a330c41c441f992fc155869ebb4fe6e8821c56eba7a84c13d93f3cb77bcbfaf85e3bcf9b0cdb569bd79fe61cf19bbbf8cdac06fcf0e
+  languageName: node
+  linkType: hard
+
+"@spectrum-web-components/number-field@workspace:packages/number-field":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/number-field@workspace:packages/number-field"
   dependencies:
@@ -8700,7 +8716,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/picker-button@npm:1.4.0, @spectrum-web-components/picker-button@workspace:packages/picker-button":
+"@spectrum-web-components/picker-button@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@spectrum-web-components/picker-button@npm:1.4.0"
+  dependencies:
+    "@spectrum-web-components/base": "npm:1.4.0"
+    "@spectrum-web-components/button": "npm:1.4.0"
+    "@spectrum-web-components/icon": "npm:1.4.0"
+    "@spectrum-web-components/icons-ui": "npm:1.4.0"
+    "@spectrum-web-components/shared": "npm:1.4.0"
+  checksum: 10c0/4f187b8b11ea7fbd6147fdc916e118337f99774884483b496e11c623c15e71ecc8571bbf323381ecc89e25b339602a9a396c31504b0d4095a38a4262651c93f3
+  languageName: node
+  linkType: hard
+
+"@spectrum-web-components/picker-button@workspace:packages/picker-button":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/picker-button@workspace:packages/picker-button"
   dependencies:
@@ -8790,7 +8819,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/search@npm:1.4.0, @spectrum-web-components/search@workspace:packages/search":
+"@spectrum-web-components/search@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@spectrum-web-components/search@npm:1.4.0"
+  dependencies:
+    "@spectrum-web-components/base": "npm:1.4.0"
+    "@spectrum-web-components/button": "npm:1.4.0"
+    "@spectrum-web-components/icon": "npm:1.4.0"
+    "@spectrum-web-components/icons-workflow": "npm:1.4.0"
+    "@spectrum-web-components/textfield": "npm:1.4.0"
+  checksum: 10c0/d73c3a4a91e435af1cd203a54acc8147f1c9c7cceff660eca4ba2b73a1a9a88fc95b4319856729b2df84ec5c9de1b3406d3cdf55013a73d55c4fd159aa442257
+  languageName: node
+  linkType: hard
+
+"@spectrum-web-components/search@workspace:packages/search":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/search@workspace:packages/search"
   dependencies:
@@ -8824,7 +8866,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/slider@npm:1.4.0, @spectrum-web-components/slider@workspace:packages/slider":
+"@spectrum-web-components/slider@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@spectrum-web-components/slider@npm:1.4.0"
+  dependencies:
+    "@internationalized/number": "npm:^3.6.0"
+    "@lit-labs/observers": "npm:^2.0.2"
+    "@spectrum-web-components/base": "npm:1.4.0"
+    "@spectrum-web-components/field-label": "npm:1.4.0"
+    "@spectrum-web-components/number-field": "npm:1.4.0"
+    "@spectrum-web-components/reactive-controllers": "npm:1.4.0"
+    "@spectrum-web-components/shared": "npm:1.4.0"
+    "@spectrum-web-components/theme": "npm:1.4.0"
+  checksum: 10c0/1da2fee1d29eb095312d7547b281a9105b61e2578473c05362c5cbb4b9168abe2295ca392348f55a37eb0f3624adf4bcf24bcaa0f6acf1cdc4e5d51aaca66dc4
+  languageName: node
+  linkType: hard
+
+"@spectrum-web-components/slider@workspace:packages/slider":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/slider@workspace:packages/slider"
   dependencies:
@@ -19085,9 +19143,9 @@ __metadata:
   linkType: hard
 
 "focus-visible@npm:^5.1.0":
-  version: 5.2.0
-  resolution: "focus-visible@npm:5.2.0"
-  checksum: 10c0/bc746775e4c17d05faf7219a91fd5ae6fec320b87f20cde5402eff17fab148b6253f25748f0235b3110528a1335ee0c6d4dc3692cc6b6174d0ebd253dd28a50d
+  version: 5.2.1
+  resolution: "focus-visible@npm:5.2.1"
+  checksum: 10c0/1c0e4e8b22be8684a664acc340efd6a41aafb560ce09979186a1c934de321ce8d6a3d7175c946aab1c87409b0e10f623274d7ce7d42ff16a0e4dc862fa151623
   languageName: node
   linkType: hard
 
