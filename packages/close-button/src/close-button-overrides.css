@@ -1,14 +1,14 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
@@ -24,40 +24,9 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-background-color-focus: var(
         --system-close-button-background-color-focus
     );
-    --spectrum-closebutton-icon-color-default: var(
-        --system-close-button-icon-color-default
-    );
-    --spectrum-closebutton-icon-color-hover: var(
-        --system-close-button-icon-color-hover
-    );
-    --spectrum-closebutton-icon-color-down: var(
-        --system-close-button-icon-color-down
-    );
-    --spectrum-closebutton-icon-color-focus: var(
-        --system-close-button-icon-color-focus
-    );
-    --spectrum-closebutton-icon-color-disabled: var(
-        --system-close-button-icon-color-disabled
-    );
-    --spectrum-closebutton-focus-indicator-thickness: var(
-        --system-close-button-focus-indicator-thickness
-    );
-    --spectrum-closebutton-focus-indicator-gap: var(
-        --system-close-button-focus-indicator-gap
-    );
-    --spectrum-closebutton-focus-indicator-color: var(
-        --system-close-button-focus-indicator-color
-    );
-    --spectrum-closebutton-animation-duration: var(
-        --system-close-button-animation-duration
-    );
-    --spectrum-closebutton-size: var(--system-close-button-size);
 }
 
 :host([static-color='white']) {
-    --spectrum-closebutton-static-background-color-default: var(
-        --system-close-button-static-white-static-background-color-default
-    );
     --spectrum-closebutton-static-background-color-hover: var(
         --system-close-button-static-white-static-background-color-hover
     );
@@ -67,21 +36,9 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-static-background-color-focus: var(
         --system-close-button-static-white-static-background-color-focus
     );
-    --spectrum-closebutton-icon-color-default: var(
-        --system-close-button-static-white-icon-color-default
-    );
-    --spectrum-closebutton-icon-color-disabled: var(
-        --system-close-button-static-white-icon-color-disabled
-    );
-    --spectrum-closebutton-focus-indicator-color: var(
-        --system-close-button-static-white-focus-indicator-color
-    );
 }
 
 :host([static-color='black']) {
-    --spectrum-closebutton-static-background-color-default: var(
-        --system-close-button-static-black-static-background-color-default
-    );
     --spectrum-closebutton-static-background-color-hover: var(
         --system-close-button-static-black-static-background-color-hover
     );
@@ -91,29 +48,4 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-static-background-color-focus: var(
         --system-close-button-static-black-static-background-color-focus
     );
-    --spectrum-closebutton-icon-color-default: var(
-        --system-close-button-static-black-icon-color-default
-    );
-    --spectrum-closebutton-icon-color-disabled: var(
-        --system-close-button-static-black-icon-color-disabled
-    );
-    --spectrum-closebutton-focus-indicator-color: var(
-        --system-close-button-static-black-focus-indicator-color
-    );
-}
-
-:host([size='s']) {
-    --spectrum-closebutton-size: var(--system-close-button-size-s-size);
-}
-
-:host {
-    --spectrum-closebutton-size: var(--system-close-button-size-m-size);
-}
-
-:host([size='l']) {
-    --spectrum-closebutton-size: var(--system-close-button-size-l-size);
-}
-
-:host([size='xl']) {
-    --spectrum-closebutton-size: var(--system-close-button-size-xl-size);
 }

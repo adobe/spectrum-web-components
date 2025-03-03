@@ -1,101 +1,24 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-card-background-color: var(--system-card-background-color);
-    --spectrum-card-body-spacing: var(--system-card-body-spacing);
-    --spectrum-card-title-padding-top: var(--system-card-title-padding-top);
-    --spectrum-card-title-padding-right: var(--system-card-title-padding-right);
-    --spectrum-card-content-margin-top: var(--system-card-content-margin-top);
-    --spectrum-card-content-margin-bottom: var(
-        --system-card-content-margin-bottom
-    );
-    --spectrum-card-footer-padding-top: var(--system-card-footer-padding-top);
-    --spectrum-card-subtitle-padding-right: var(
-        --system-card-subtitle-padding-right
-    );
-    --spectrum-card-border-width: var(--system-card-border-width);
-    --spectrum-card-corner-radius: var(--system-card-corner-radius);
     --spectrum-card-border-color: var(--system-card-border-color);
     --spectrum-card-border-color-hover: var(--system-card-border-color-hover);
-    --spectrum-card-border-color-selected: var(
-        --system-card-border-color-selected
-    );
     --spectrum-card-divider-color: var(--system-card-divider-color);
-    --spectrum-card-title-font-family: var(--system-card-title-font-family);
-    --spectrum-card-title-font-size: var(--system-card-title-font-size);
-    --spectrum-card-title-font-weight: var(--system-card-title-font-weight);
-    --spectrum-card-title-font-style: var(--system-card-title-font-style);
-    --spectrum-card-title-line-height: var(--system-card-title-line-height);
-    --spectrum-card-title-font-color: var(--system-card-title-font-color);
-    --spectrum-card-body-font-family: var(--system-card-body-font-family);
-    --spectrum-card-body-font-size: var(--system-card-body-font-size);
-    --spectrum-card-body-font-weight: var(--system-card-body-font-weight);
-    --spectrum-card-body-font-style: var(--system-card-body-font-style);
-    --spectrum-card-body-line-height: var(--system-card-body-line-height);
-    --spectrum-card-body-font-color: var(--system-card-body-font-color);
-    --spectrum-card-actions-spacing: var(--system-card-actions-spacing);
-    --spectrum-card-actions-size: var(--system-card-actions-size);
-    --spectrum-card-actions-border-radius: var(
-        --system-card-actions-border-radius
-    );
-    --spectrum-card-actions-background-color-rgb: var(
-        --system-card-actions-background-color-rgb
-    );
-    --spectrum-card-actions-background-color-opacity: var(
-        --system-card-actions-background-color-opacity
-    );
-    --spectrum-card-actions-drop-shadow-color: var(
-        --system-card-actions-drop-shadow-color
-    );
-    --spectrum-card-actions-drop-shadow-x: var(
-        --system-card-actions-drop-shadow-x
-    );
-    --spectrum-card-actions-drop-shadow-y: var(
-        --system-card-actions-drop-shadow-y
-    );
-    --spectrum-card-actions-drop-shadow-blur: var(
-        --system-card-actions-drop-shadow-blur
-    );
-    --spectrum-card-focus-indicator-color: var(
-        --system-card-focus-indicator-color
-    );
-    --spectrum-card-focus-indicator-width: var(
-        --system-card-focus-indicator-width
-    );
-    --spectrum-card-selected-background-opacity: var(
-        --system-card-selected-background-opacity
-    );
-    --spectrum-card-preview-border-width-selected: var(
-        --system-card-preview-border-width-selected
-    );
     --spectrum-card-preview-background-color: var(
         --system-card-preview-background-color
     );
     --spectrum-card-preview-background-color-hover: var(
         --system-card-preview-background-color-hover
-    );
-    --spectrum-card-horizontal-body-padding: var(
-        --system-card-horizontal-body-padding
-    );
-    --spectrum-card-horizontal-preview-padding: var(
-        --system-card-horizontal-preview-padding
-    );
-    --spectrum-card-content-margin-top-quiet: var(
-        --system-card-content-margin-top-quiet
-    );
-    --spectrum-card-minimum-width-quiet: var(--system-card-minimum-width-quiet);
-    --spectrum-card-background-color-quiet: var(
-        --system-card-background-color-quiet
     );
 }

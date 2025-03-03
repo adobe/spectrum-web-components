@@ -1,14 +1,14 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
@@ -36,149 +36,11 @@ governing permissions and limitations under the License.
     --spectrum-switch-handle-border-color-selected-focus: var(
         --system-switch-handle-border-color-selected-focus
     );
-    --spectrum-switch-label-color-default: var(
-        --system-switch-label-color-default
-    );
-    --spectrum-switch-label-color-hover: var(--system-switch-label-color-hover);
-    --spectrum-switch-label-color-down: var(--system-switch-label-color-down);
-    --spectrum-switch-label-color-focus: var(--system-switch-label-color-focus);
-    --spectrum-switch-label-color-disabled: var(
-        --system-switch-label-color-disabled
-    );
     --spectrum-switch-background-color: var(--system-switch-background-color);
     --spectrum-switch-background-color-disabled: var(
         --system-switch-background-color-disabled
     );
-    --spectrum-switch-background-color-selected-disabled: var(
-        --system-switch-background-color-selected-disabled
-    );
-    --spectrum-switch-background-color-selected-default: var(
-        --system-switch-background-color-selected-default
-    );
-    --spectrum-switch-background-color-selected-hover: var(
-        --system-switch-background-color-selected-hover
-    );
-    --spectrum-switch-background-color-selected-down: var(
-        --system-switch-background-color-selected-down
-    );
-    --spectrum-switch-background-color-selected-focus: var(
-        --system-switch-background-color-selected-focus
-    );
-    --spectrum-switch-focus-indicator-thickness: var(
-        --system-switch-focus-indicator-thickness
-    );
-    --spectrum-switch-focus-indicator-color: var(
-        --system-switch-focus-indicator-color
-    );
     --spectrum-switch-handle-background-color: var(
         --system-switch-handle-background-color
     );
-    --spectrum-switch-handle-border-color-disabled: var(
-        --system-switch-handle-border-color-disabled
-    );
-}
-
-:host([disabled]) {
-    --spectrum-switch-label-color-default: var(
-        --system-switch-disabled-label-color-default
-    );
-}
-
-:host([emphasized]) {
-    --spectrum-switch-background-color-selected-default: var(
-        --system-switch-emphasized-background-color-selected-default
-    );
-    --spectrum-switch-background-color-selected-hover: var(
-        --system-switch-emphasized-background-color-selected-hover
-    );
-    --spectrum-switch-background-color-selected-down: var(
-        --system-switch-emphasized-background-color-selected-down
-    );
-    --spectrum-switch-background-color-selected-focus: var(
-        --system-switch-emphasized-background-color-selected-focus
-    );
-    --spectrum-switch-handle-border-color-selected-default: var(
-        --system-switch-emphasized-handle-border-color-selected-default
-    );
-    --spectrum-switch-handle-border-color-selected-hover: var(
-        --system-switch-emphasized-handle-border-color-selected-hover
-    );
-    --spectrum-switch-handle-border-color-selected-down: var(
-        --system-switch-emphasized-handle-border-color-selected-down
-    );
-    --spectrum-switch-handle-border-color-selected-focus: var(
-        --system-switch-emphasized-handle-border-color-selected-focus
-    );
-}
-
-:host([size='s']) {
-    --spectrum-switch-min-height: var(--system-switch-size-s-min-height);
-    --spectrum-switch-control-width: var(--system-switch-size-s-control-width);
-    --spectrum-switch-control-height: var(
-        --system-switch-size-s-control-height
-    );
-    --spectrum-switch-control-label-spacing: var(
-        --system-switch-size-s-control-label-spacing
-    );
-    --spectrum-switch-spacing-top-to-control: var(
-        --system-switch-size-s-spacing-top-to-control
-    );
-    --spectrum-switch-spacing-top-to-label: var(
-        --system-switch-size-s-spacing-top-to-label
-    );
-    --spectrum-switch-font-size: var(--system-switch-size-s-font-size);
-}
-
-:host {
-    --spectrum-switch-min-height: var(--system-switch-size-m-min-height);
-    --spectrum-switch-control-width: var(--system-switch-size-m-control-width);
-    --spectrum-switch-control-height: var(
-        --system-switch-size-m-control-height
-    );
-    --spectrum-switch-control-label-spacing: var(
-        --system-switch-size-m-control-label-spacing
-    );
-    --spectrum-switch-spacing-top-to-control: var(
-        --system-switch-size-m-spacing-top-to-control
-    );
-    --spectrum-switch-spacing-top-to-label: var(
-        --system-switch-size-m-spacing-top-to-label
-    );
-    --spectrum-switch-font-size: var(--system-switch-size-m-font-size);
-}
-
-:host([size='l']) {
-    --spectrum-switch-min-height: var(--system-switch-size-l-min-height);
-    --spectrum-switch-control-width: var(--system-switch-size-l-control-width);
-    --spectrum-switch-control-height: var(
-        --system-switch-size-l-control-height
-    );
-    --spectrum-switch-control-label-spacing: var(
-        --system-switch-size-l-control-label-spacing
-    );
-    --spectrum-switch-spacing-top-to-control: var(
-        --system-switch-size-l-spacing-top-to-control
-    );
-    --spectrum-switch-spacing-top-to-label: var(
-        --system-switch-size-l-spacing-top-to-label
-    );
-    --spectrum-switch-font-size: var(--system-switch-size-l-font-size);
-}
-
-:host([size='xl']) {
-    --spectrum-switch-min-height: var(--system-switch-size-xl-min-height);
-    --spectrum-switch-control-width: var(--system-switch-size-xl-control-width);
-    --spectrum-switch-control-height: var(
-        --system-switch-size-xl-control-height
-    );
-    --spectrum-switch-control-label-spacing: var(
-        --system-switch-size-xl-control-label-spacing
-    );
-    --spectrum-switch-spacing-top-to-control: var(
-        --system-switch-size-xl-spacing-top-to-control
-    );
-    --spectrum-switch-spacing-top-to-label: var(
-        --system-switch-size-xl-spacing-top-to-label
-    );
-    --spectrum-switch-font-size: var(--system-switch-size-xl-font-size);
 }
