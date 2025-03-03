@@ -390,24 +390,24 @@
     --spectrum-global-color-static-transparent-black-900: rgb(
         var(--spectrum-global-color-static-transparent-black-900-rgb)
     );
-    --spectrum-global-color-sequential-cerulean:
-        #e9fff1, #c8f1e4, #a5e3d7, #82d5ca, #68c5c1, #54b4ba, #3fa2b2, #2991ac,
-        #2280a2, #1f6d98, #1d5c8d, #1a4b83, #1a3979, #1a266f, #191264, #180057;
-    --spectrum-global-color-sequential-forest:
-        #ffffdf, #e2f6ba, #c4eb95, #a4e16d, #8dd366, #77c460, #5fb65a, #48a754,
-        #36984f, #2c894d, #237a4a, #196b47, #105c45, #094d41, #033f3e, #00313a;
-    --spectrum-global-color-sequential-rose:
-        #fff4dd, #ffddd7, #ffc5d2, #feaecb, #fa96c4, #f57ebd, #ef64b5, #e846ad,
-        #d238a1, #bb2e96, #a3248c, #8a1b83, #71167c, #560f74, #370b6e, #000968;
-    --spectrum-global-color-diverging-orange-yellow-seafoam:
-        #580000, #79260b, #9c4511, #bd651a, #dd8629, #f5ad52, #fed693, #ffffe0,
-        #bbe4d1, #76c7be, #3ea8a6, #208288, #076769, #00494b, #002c2d;
-    --spectrum-global-color-diverging-red-yellow-blue:
-        #4a001e, #751232, #a52747, #c65154, #e47961, #f0a882, #fad4ac, #ffffe0,
-        #bce2cf, #89c0c4, #579eb9, #397aa8, #1c5796, #163771, #10194d;
-    --spectrum-global-color-diverging-red-blue:
-        #4a001e, #731331, #9f2945, #cc415a, #e06e85, #ed9ab0, #f8c3d9, #faf0ff,
-        #c6d0f2, #92b2de, #5d94cb, #2f74b3, #265191, #163670, #0b194c;
+    --spectrum-global-color-sequential-cerulean: #e9fff1, #c8f1e4, #a5e3d7,
+        #82d5ca, #68c5c1, #54b4ba, #3fa2b2, #2991ac, #2280a2, #1f6d98, #1d5c8d,
+        #1a4b83, #1a3979, #1a266f, #191264, #180057;
+    --spectrum-global-color-sequential-forest: #ffffdf, #e2f6ba, #c4eb95,
+        #a4e16d, #8dd366, #77c460, #5fb65a, #48a754, #36984f, #2c894d, #237a4a,
+        #196b47, #105c45, #094d41, #033f3e, #00313a;
+    --spectrum-global-color-sequential-rose: #fff4dd, #ffddd7, #ffc5d2, #feaecb,
+        #fa96c4, #f57ebd, #ef64b5, #e846ad, #d238a1, #bb2e96, #a3248c, #8a1b83,
+        #71167c, #560f74, #370b6e, #000968;
+    --spectrum-global-color-diverging-orange-yellow-seafoam: #580000, #79260b,
+        #9c4511, #bd651a, #dd8629, #f5ad52, #fed693, #ffffe0, #bbe4d1, #76c7be,
+        #3ea8a6, #208288, #076769, #00494b, #002c2d;
+    --spectrum-global-color-diverging-red-yellow-blue: #4a001e, #751232, #a52747,
+        #c65154, #e47961, #f0a882, #fad4ac, #ffffe0, #bce2cf, #89c0c4, #579eb9,
+        #397aa8, #1c5796, #163771, #10194d;
+    --spectrum-global-color-diverging-red-blue: #4a001e, #731331, #9f2945,
+        #cc415a, #e06e85, #ed9ab0, #f8c3d9, #faf0ff, #c6d0f2, #92b2de, #5d94cb,
+        #2f74b3, #265191, #163670, #0b194c;
     --spectrum-semantic-negative-background-color: var(
         --spectrum-global-color-static-red-600
     );
@@ -723,11 +723,11 @@
     --spectrum-global-dimension-static-font-size-800: 32px;
     --spectrum-global-dimension-static-font-size-900: 36px;
     --spectrum-global-dimension-static-font-size-1000: 40px;
-    --spectrum-global-font-family-base:
-        adobe-clean, 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-        'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-global-font-family-serif:
-        adobe-clean-serif, 'Source Serif Pro', Georgia, serif;
+    --spectrum-global-font-family-base: adobe-clean, 'Source Sans Pro',
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+        'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-global-font-family-serif: adobe-clean-serif, 'Source Serif Pro',
+        Georgia, serif;
     --spectrum-global-font-family-code: 'Source Code Pro', Monaco, monospace;
     --spectrum-global-font-weight-thin: 100;
     --spectrum-global-font-weight-ultra-light: 200;
@@ -750,32 +750,26 @@
     --spectrum-global-font-multiplier-0: 0em;
     --spectrum-global-font-multiplier-25: 0.25em;
     --spectrum-global-font-multiplier-75: 0.75em;
-    --spectrum-global-font-font-family-ar:
-        myriad-arabic, adobe-clean, 'Source Sans Pro', -apple-system,
-        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
-        'Lucida Grande', sans-serif;
-    --spectrum-global-font-font-family-he:
-        myriad-hebrew, adobe-clean, 'Source Sans Pro', -apple-system,
-        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
-        'Lucida Grande', sans-serif;
-    --spectrum-global-font-font-family-zh:
-        adobe-clean-han-traditional, source-han-traditional, 'MingLiu',
-        'Heiti TC Light', 'sans-serif';
-    --spectrum-global-font-font-family-zhhans:
-        adobe-clean-han-simplified-c, source-han-simplified-c, 'SimSun',
-        'Heiti SC Light', 'sans-serif';
-    --spectrum-global-font-font-family-ko:
-        adobe-clean-han-korean, source-han-korean, 'Malgun Gothic',
-        'Apple Gothic', 'sans-serif';
-    --spectrum-global-font-font-family-ja:
-        adobe-clean-han-japanese, 'Hiragino Kaku Gothic ProN',
-        'ヒラギノ角ゴ ProN W3', 'Osaka', YuGothic, 'Yu Gothic', 'メイリオ',
-        Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', 'sans-serif';
-    --spectrum-global-font-font-family-condensed:
-        adobe-clean-han-traditional, source-han-traditional, 'MingLiu',
-        'Heiti TC Light', adobe-clean, 'Source Sans Pro', -apple-system,
-        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
-        'Lucida Grande', sans-serif;
+    --spectrum-global-font-font-family-ar: myriad-arabic, adobe-clean,
+        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-global-font-font-family-he: myriad-hebrew, adobe-clean,
+        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-global-font-font-family-zh: adobe-clean-han-traditional,
+        source-han-traditional, 'MingLiu', 'Heiti TC Light', 'sans-serif';
+    --spectrum-global-font-font-family-zhhans: adobe-clean-han-simplified-c,
+        source-han-simplified-c, 'SimSun', 'Heiti SC Light', 'sans-serif';
+    --spectrum-global-font-font-family-ko: adobe-clean-han-korean,
+        source-han-korean, 'Malgun Gothic', 'Apple Gothic', 'sans-serif';
+    --spectrum-global-font-font-family-ja: adobe-clean-han-japanese,
+        'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', 'Osaka', YuGothic,
+        'Yu Gothic', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic',
+        'sans-serif';
+    --spectrum-global-font-font-family-condensed: adobe-clean-han-traditional,
+        source-han-traditional, 'MingLiu', 'Heiti TC Light', adobe-clean,
+        'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-alias-border-size-thin: var(
         --spectrum-global-dimension-static-size-10
     );
@@ -3243,5 +3237,42 @@
     );
     --spectrum-alias-categorical-color-16: var(
         --spectrum-global-color-static-yellow-200
+    );
+}
+
+:root,
+:host {
+    --spectrum-colorloupe-express-visibility: none;
+    --spectrum-colorloupe-spectrum-visibility: block;
+    --spectrum-colorloupe-outer-border-color: transparent;
+    --spectrum-colorloupe-outer-border-size: 0;
+    --spectrum-colorloupe-outer-stroke-color: var(
+        --spectrum-global-color-static-transparent-black-200
+    );
+    --spectrum-colorloupe-outer-stroke-width: var(
+        --spectrum-alias-border-size-thick
+    );
+    --spectrum-colorhandle-background-offset: calc(
+        -1 * var(--spectrum-global-dimension-static-size-25)
+    );
+    --spectrum-colorhandle-inner-shadow-color: var(
+        --spectrum-colorhandle-outer-shadow-color
+    );
+    --spectrum-colorhandle-outer-shadow-color: #0000006b;
+    --spectrum-colorhandle-outer-shadow-blur: 0;
+    --spectrum-colorhandle-outer-shadow-spread: var(
+        --spectrum-alias-border-size-thin
+    );
+    --spectrum-colorcontrol-checkerboard-light-color: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-colorcontrol-checkerboard-dark-color: var(
+        --spectrum-global-color-static-gray-300
+    );
+    --spectrum-slider-m-track-inside-border-radius: var(
+        --spectrum-slider-m-track-border-radius
+    );
+    --spectrum-slider-label-text-size: var(
+        --spectrum-global-dimension-font-size-75
     );
 }

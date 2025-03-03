@@ -140,8 +140,8 @@ function conditionSelector(newSelector) {
 /**
  * Process the selectors array and return the processed selectors
  * @param {import('./spectrum-css-converter').HostSelectorComponent} selector
- * @param {import('./spectrum-css-converter').ComponentConversion[]} components
- * @returns {import('./spectrum-css-converter').ProcessedSelector[]} processed selectors
+ * @param {any} components
+ * @returns {any} processed selectors
  */
 function processSelector(selector, components) {
     const matches = Array(selector.length);
@@ -273,8 +273,8 @@ function processSelector(selector, components) {
 
 /**
  * Process the selectors array and return the processed selectors
- * @param {import('./spectrum-css-converter').ProcessedSelector[]} metadata
- * @returns {import('./spectrum-css-converter').ProcessedSelector[]}
+ * @param {any} metadata
+ * @returns {any}
  */
 function buildSelectors(metadata) {
     const selectors = [];
@@ -416,13 +416,6 @@ async function transformAsset(filename, sourcePath, conversion) {
         visitor: {
             // @ts-expect-error - this is a valid visitor
             Rule(rule) {
-                // if (
-                //     !allowThemeRules &&
-                //     isThemeOnlyRule(rule)
-                // ) {
-                //     return nullRuleFromRule(rule);
-                // }
-
                 if (rule.type === 'style' && rule.value.selectors?.length) {
                     if (
                         hoistCustomPropertiesFrom &&
@@ -584,40 +577,38 @@ async function convertStyles(conversion) {
     // The default package file is index.css but index-base.css contains the base styles compatible with theme switching.
     const sourceDirectory = path.dirname(getPackagePath(inPackage));
     const sourcePath = getBaseCSS(sourceDirectory);
-
-    const promises = [];
-    if (fs.existsSync(path.join(sourceDirectory, 'index-theme.css'))) {
-        // The default package file is index.css but index-theme.css contains the --system custom properties mappings that facilitate theme switching.
-        const bridgepath = path.join(sourceDirectory, 'index-theme.css');
-
-        const overridesPath = path.join(
-            ...(Array.isArray(outPackage)
-                ? outPackage
-                : ['packages', outPackage]),
-            'src',
-            `${fileName}-overrides.css`
-        );
-
-        const transformedBridge = fs.existsSync(bridgepath)
-            ? await transformAsset(overridesPath, bridgepath, conversion)
-            : '';
-
-        // Note: We write the overrides file even if it's empty.
-        // This is to ensure that we don't end up with stale overrides
-        // files in the case where the bridge file previously contained
-        // overrides but no longer does.
-        promises.push(
-            writeMachineGeneratedSourceFile(overridesPath, transformedBridge)
-        );
-    }
-
     const outputPath = path.join(
         ...(Array.isArray(outPackage) ? outPackage : ['packages', outPackage]),
         'src',
         `spectrum-${fileName}.css`
     );
+    const overridesPath = path.join(
+        ...(Array.isArray(outPackage) ? outPackage : ['packages', outPackage]),
+        'src',
+        `${fileName}-overrides.css`
+    );
+
+    // Note: We write the overrides file even if it's empty.
+    // This is to ensure that we don't end up with stale overrides
+    // files in the case where the bridge file previously contained
+    // overrides but no longer does.
+    let transformedBridge = '';
+    const promises = [];
+    if (fs.existsSync(path.join(sourceDirectory, 'index-theme.css'))) {
+        // The default package file is index.css but index-theme.css contains the --system custom properties mappings that facilitate theme switching.
+        const bridgepath = path.join(sourceDirectory, 'index-theme.css');
+
+        if (fs.existsSync(bridgepath)) {
+            transformedBridge = await transformAsset(
+                overridesPath,
+                bridgepath,
+                conversion
+            );
+        }
+    }
 
     promises.push(
+        writeMachineGeneratedSourceFile(overridesPath, transformedBridge ?? ''),
         transformAsset(outputPath, sourcePath, conversion).then((result) =>
             writeMachineGeneratedSourceFile(outputPath, result)
         )
@@ -650,13 +641,19 @@ async function processComponent(componentPath) {
         ?.pop();
 
     log.notice(
-        `- ${componentFolder.cyan} ${'with'.gray} ${conversions.length} ${'custom conversion(s)'.gray}`
+        `- ${(componentFolder ?? '').cyan} ${'with'.gray} ${conversions.length} ${'custom conversion(s)'.gray}`
     );
 
     // Iterate over each conversion and process the provided settings
     return Promise.all(conversions.map(convertStyles));
 }
 
+/**
+ * Write the machine generated source file with the license header
+ * @param {any} outputPath
+ * @param {any} code
+ * @returns {Promise<void>}
+ */
 async function writeMachineGeneratedSourceFile(outputPath, code) {
     const prettierConfig = await prettier.resolveConfig(outputPath);
     // Before writing, lint and prettier the code
