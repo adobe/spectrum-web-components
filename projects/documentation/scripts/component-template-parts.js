@@ -260,7 +260,7 @@ export function exampleDestinationTemplate(
     packageName
 ) {
     return `---
-layout: examples.njk
+layout: overview.njk
 title: '${nameToTitle(componentName)}: Spectrum Web Components'
 displayName: ${nameToTitle(componentName)}
 componentName: ${componentName}
