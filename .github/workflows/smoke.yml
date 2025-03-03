@@ -1,10 +1,10 @@
 name: Playwright SmokeTests
 
 on:
-    workflow_run:
-        workflows: [Links, Lighthouse, and Smoke Tests]
-        types:
-            - completed
+    push:
+        branches: [main, smoke-test]
+    pull_request:
+        branches: [main, smoke-test]
 
 jobs:
     test:
@@ -23,7 +23,7 @@ jobs:
             - name: Run Playwright tests
               run: yarn playwright test projects/documentation/e2e/published.spec.ts
               env:
-                  DOC_PREVIEW_URL: ${{ env.DOC_PREVIEW_URL }}
+                  DOC_PREVIEW_URL: https://opensource.adobe.com/spectrum-web-components/
                   NODE_ENV: CI
 
             - name: Upload Playwright Report
