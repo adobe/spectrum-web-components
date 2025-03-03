@@ -33,8 +33,7 @@ const config = {
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('is-open', 'open'),
-                converter.classToClass('spectrum-ColorLoupe-outer'),
-                converter.classToClass('spectrum-ColorLoupe-inner'),
+                /* This component is using the spectrum- prefixed classes 🎉 */
             ],
         },
     ],

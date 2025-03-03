@@ -18,6 +18,12 @@ import fs from 'fs';
 import fg from 'fast-glob';
 import { transform } from 'lightningcss';
 import 'colors';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import stylelint from 'stylelint';
+import prettier from 'prettier';
+
+const argv = yargs(hideBin(process.argv)).parse();
 
 import {
     dirs,
@@ -652,24 +658,30 @@ async function processComponent(componentPath) {
 }
 
 async function writeMachineGeneratedSourceFile(outputPath, code) {
-    const license = await fsp.readFile(
-        path.join(dirs.root, 'config', 'license.js'),
-        { encoding: 'utf8' }
-    );
-    return fsp.writeFile(
-        outputPath,
-        `${license.replace('<%= YEAR %>', '2023')}\n\n/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */\n${code}`,
-        {
-            encoding: 'utf8',
-        }
-    );
+    const prettierConfig = await prettier.resolveConfig(outputPath);
+    // Before writing, lint and prettier the code
+    const formatted = await stylelint
+        .lint({
+            code: `/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */\n${code}`,
+            fix: true,
+        })
+        .then(({ code: result }) => {
+            return prettier.format(result, {
+                parser: 'css',
+                ...prettierConfig,
+            });
+        });
+
+    return fsp.writeFile(outputPath, formatted, {
+        encoding: 'utf8',
+    });
 }
 
 /**
  * The entry point for the script that processes Spectrum CSS variables
  */
-async function main() {
-    log.notice('\nProcessing components');
+async function main(components = []) {
+    log.notice('\nStarting component style conversions\n');
 
     const configurations = await fg(
         `${dirs.root}/{packages,tools}/*/src/spectrum-config.js`
@@ -680,9 +692,24 @@ async function main() {
         process.exit(0);
     }
 
-    const directories = configurations.map((configPath) =>
+    let directories = configurations.map((configPath) =>
         path.join(configPath, '..')
     );
+
+    if (components.length > 0) {
+        let fullSet = directories;
+        directories = directories.filter((dir) => {
+            // Capture the 2nd-to-last directory in the path
+            const componentName = dir.split(path.sep).slice(-2, -1)[0];
+            // Check if the component name is in the list of components to process
+            // so we can filter the list of directories to process
+            return components.includes(componentName);
+        });
+
+        if (directories.length === 0) {
+            directories = fullSet;
+        }
+    }
 
     return Promise.all(directories.map(processComponent))
         .then(() => {
@@ -698,4 +725,15 @@ async function main() {
         });
 }
 
-main();
+const inputs = argv._?.map((input) => {
+    // Remove the @spectrum-web-components/ prefix from the input if it exists
+    input = input.trim()?.replaceAll('@spectrum-web-components/', '');
+
+    // Check if any of the inputs include comma-separated values and split them into separate inputs
+    if (input.includes(',')) {
+        const splitInputs = input.split(',');
+        return splitInputs;
+    }
+    return input;
+})?.flat();
+main(inputs);

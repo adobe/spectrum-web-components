@@ -1,5 +1,5 @@
 {
-    "plugins": ["./linters/stylelint-header"],
+    "plugins": ["stylelint-header"],
     "extends": ["stylelint-config-standard"],
     "rules": {
         "header/header": ["config/license.js", {}],
@@ -14,19 +14,7 @@
         "declaration-block-no-redundant-longhand-properties": null,
         "declaration-empty-line-before": null,
         "import-notation": null,
-        "number-max-precision": null
-    },
-    "overrides": [
-        {
-            "files": [
-                "packages/**/src/spectrum-*.css",
-                "tools/**/src/spectrum-*.css",
-                "tools/styles/**/*.css"
-            ],
-            "extends": [],
-            "rules": {
-                "header/header": ["config/license.js", {}]
-            }
-        }
-    ]
+        "number-max-precision": null,
+        "property-no-vendor-prefix": null
+    }
 }
