@@ -24,7 +24,7 @@ jobs:
 
             - name: Update package versions for beta release
               env:
-                  GITHUB_TOKEN: ${{ secrets.USER_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   yarn changeset pre enter testing
                   # Apply the changeset with specific beta tag
