@@ -154,3 +154,7 @@ governing permissions and limitations under the License.
 #slider-description {
     display: none;
 }
+
+:host([label-visibility='none']) #label-container + #track {
+    margin-block-start: 0;
+}
