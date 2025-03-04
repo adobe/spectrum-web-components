@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/adobe/spectrum-web-components/compare/v1.1.2...v1.2.0) (2025-02-27)
+
+### Bug Fixes
+
+-   **action menu:** keyboard accessibility omnibus ([#5031](https://github.com/adobe/spectrum-web-components/issues/5031)) ([ea38ef0](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)), closes [#4623](https://github.com/adobe/spectrum-web-components/issues/4623)
+-   **menu:** make submenu scrollable ([#5082](https://github.com/adobe/spectrum-web-components/issues/5082)) ([a13dac2](https://github.com/adobe/spectrum-web-components/commit/a13dac26e51fa953e36232ce2b10dc0f121ef6a8))
+-   **picker:** update picker when menu item icons change ([#5088](https://github.com/adobe/spectrum-web-components/issues/5088)) ([63ef1ad](https://github.com/adobe/spectrum-web-components/commit/63ef1adad473ce58647ffe4d5e2a8727caaee07b))
+
+## [1.1.2](https://github.com/adobe/spectrum-web-components/compare/v1.1.1...v1.1.2) (2025-02-12)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
 ## [1.1.1](https://github.com/adobe/spectrum-web-components/compare/v1.1.0...v1.1.1) (2025-01-29)
 
 **Note:** Version bump only for package @spectrum-web-components/menu

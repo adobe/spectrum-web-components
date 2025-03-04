@@ -103,11 +103,9 @@ The project will be linted on a pre-commit hook, but you can also run the lint s
 
 ### Dependency linting
 
-Mismatched versions within this project can cause significant issues for downstream customers. This is particularly an issue for dependencies below `1.0.0`. By default, Changesets bumps the version number of internal dependencies when packages are published, but only if that package is pointing to the latest release. If versions should get out-of-sync, you can use the `yarn lint:versions` tool to validate and correct any mismatched dependencies in the project.
+There are downstream issues that can arise from multiple packages in this mono-repo using dependencies with mismatched version strings. By default, changesets will bump version numbers of internal dependencies when the various packages are published and the depended version is pointing to the latest release, which can help to mitigate this issue. Running `yarn lint:versions` will check that all version strings for each dependency match across the repo.
 
-A good rule of thumb is to use the semantic caret `^` prefix, eg. `^0.0.0`, for all your dependencies to pull in the latest features and patches for a package (but not breaking changes).
-
-`yarn list:versions --fix` will reach into the `package.json` files and update all dependencies to the latest version available in the library, _a possibly dangerous operation_. If you know this is what you want to do when there are mismatched versions found by `yarn lint:versions`, this can make greatly shorten the amount of work to catch the versions up to each other.
+`yarn list:versions --fix` will modify the `package.json` files, updating all dependencies to the latest version available in the library — _a potentially dangerous operation_. If this is what you want to do when `yarn lint:versions` discovers mismatched versions, this step can greatly reduce the amount of work to achieve matching version numbers.
 
 ## Testing
 
@@ -153,7 +151,7 @@ Visual regression testing is done against screens derived from the exports of th
 
 #### Keeping CI assets updated
 
-If you find the `visual-*` jobs failing on CircleCI for reasons that you expect (you've updated the Spectrum CSS dependencies, you've added new tests, etc.) then you will need to update the golden images cache key before your build will pass. You can review and share the diffs for a test pass via a URL shaped like `vrt--spectrum-web-components.netlify.app/${branchName}`. Before updating the cache key, be sure that the updated caches are both complete (there are times when process errors prevent images from being correctly created or when certain test passes take longer than others) and appear as expected. If you agree with the updated cache content, update the golden images cache key as follows.
+If you find the `visual-*` jobs failing on CircleCI for reasons that you expect (you've updated the Spectrum CSS dependencies, you've added new tests, etc.) then you will need to update the golden images cache key before your build will pass. You can review and share the diffs for a test pass via a URL shaped like `vrt--spectrumwc.netlify.app/${branchName}`. Before updating the cache key, be sure that the updated caches are both complete (there are times when process errors prevent images from being correctly created or when certain test passes take longer than others) and appear as expected. If you agree with the updated cache content, update the golden images cache key as follows.
 
 Your failing branch will have created a new cache with a key of `v1-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.dir >>-{{ epoch }}`. Here `{{ .Revision }}` outlines the git commit hash of the current CI pass. In `.circleci/config.yml`, you will use that to update the cache that is requested at the beginning of the `run-regressions` job. As part of the review site, the git commit hash will be listed in the side navigation UI for easy access, use this number to update the `current_golden_images_hash` paramater that appears as follows:
 

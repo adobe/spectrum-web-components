@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-button",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "publishConfig": {
         "access": "public"
     },
@@ -58,14 +58,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.1.1",
-        "@spectrum-web-components/button": "^1.1.1",
-        "@spectrum-web-components/icon": "^1.1.1",
-        "@spectrum-web-components/icons-ui": "^1.1.1",
-        "@spectrum-web-components/shared": "^1.1.1"
+        "@spectrum-web-components/base": "^1.2.0",
+        "@spectrum-web-components/button": "^1.2.0",
+        "@spectrum-web-components/icon": "^1.2.0",
+        "@spectrum-web-components/icons-ui": "^1.2.0",
+        "@spectrum-web-components/shared": "^1.2.0"
     },
     "devDependencies": {
-        "@spectrum-css/actionbutton": "7.0.0-s2-foundations.22"
+        "@spectrum-css/actionbutton": "7.1.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

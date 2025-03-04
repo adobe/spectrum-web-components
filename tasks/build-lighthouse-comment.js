@@ -15,7 +15,7 @@ import fs from 'fs';
 import prettyBytes from 'pretty-bytes';
 
 const latestURL = 'https://opensource.adobe.com/spectrum-web-components/';
-const mainURL = 'https://main--spectrum-web-components.netlify.app/';
+const mainURL = 'https://main--spectrumwc.netlify.app/';
 const winnerSign = ' 🏆'; // Emoji to indicate the best performance
 
 const totalIndex = 0;

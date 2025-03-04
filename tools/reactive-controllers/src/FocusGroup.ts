@@ -13,6 +13,7 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 
 type DirectionTypes = 'horizontal' | 'vertical' | 'both' | 'grid';
 export type FocusGroupConfig<T> = {
+    hostDelegatesFocus?: boolean;
     focusInIndex?: (_elements: T[]) => number;
     direction?: DirectionTypes | (() => DirectionTypes);
     elementEnterAction?: (el: T) => void;
@@ -62,6 +63,8 @@ export class FocusGroupController<T extends HTMLElement>
     _direction = (): DirectionTypes => 'both';
 
     public directionLength = 5;
+
+    public hostDelegatesFocus = false;
 
     elementEnterAction = (_el: T): void => {
         return;
@@ -120,6 +123,7 @@ export class FocusGroupController<T extends HTMLElement>
     constructor(
         host: ReactiveElement,
         {
+            hostDelegatesFocus,
             direction,
             elementEnterAction,
             elements,
@@ -131,6 +135,7 @@ export class FocusGroupController<T extends HTMLElement>
         this.mutationObserver = new MutationObserver(() => {
             this.handleItemMutation();
         });
+        this.hostDelegatesFocus = hostDelegatesFocus || false;
         this.host = host;
         this.host.addController(this);
         this._elements = elements;
@@ -180,6 +185,40 @@ export class FocusGroupController<T extends HTMLElement>
         this.manage();
     }
 
+    /**
+     * resets the focusedItem to initial item
+     */
+    reset(): void {
+        const elements = this.elements;
+        if (!elements.length) return;
+        this.setCurrentIndexCircularly(this.focusInIndex - this.currentIndex);
+        let focusElement = elements[this.currentIndex];
+        if (this.currentIndex < 0) {
+            return;
+        }
+        if (!focusElement || !this.isFocusableElement(focusElement)) {
+            this.setCurrentIndexCircularly(1);
+            focusElement = elements[this.currentIndex];
+        }
+        if (focusElement && this.isFocusableElement(focusElement)) {
+            elements[this.prevIndex]?.setAttribute('tabindex', '-1');
+            focusElement.setAttribute('tabindex', '0');
+        }
+    }
+
+    focusOnItem(item?: T, options?: FocusOptions): void {
+        if (
+            item &&
+            this.isFocusableElement(item) &&
+            this.elements.indexOf(item)
+        ) {
+            const diff = this.elements.indexOf(item) - this.currentIndex;
+            this.setCurrentIndexCircularly(diff);
+            this.elements[this.prevIndex]?.setAttribute('tabindex', '-1');
+        }
+        this.focus(options);
+    }
+
     focus(options?: FocusOptions): void {
         const elements = this.elements;
         if (!elements.length) return;
@@ -189,9 +228,17 @@ export class FocusGroupController<T extends HTMLElement>
             focusElement = elements[this.currentIndex];
         }
         if (focusElement && this.isFocusableElement(focusElement)) {
-            elements[this.prevIndex]?.setAttribute('tabindex', '-1');
+            if (
+                !this.hostDelegatesFocus ||
+                elements[this.prevIndex] !== focusElement
+            ) {
+                elements[this.prevIndex]?.setAttribute('tabindex', '-1');
+            }
             focusElement.tabIndex = 0;
             focusElement.focus(options);
+            if (this.hostDelegatesFocus && !this.focused) {
+                this.hostContainsFocus();
+            }
         }
     }
 
@@ -298,28 +345,28 @@ export class FocusGroupController<T extends HTMLElement>
         }
     };
 
-    acceptsEventCode(code: string): boolean {
-        if (code === 'End' || code === 'Home') {
+    acceptsEventKey(key: string): boolean {
+        if (key === 'End' || key === 'Home') {
             return true;
         }
         switch (this.direction) {
             case 'horizontal':
-                return code === 'ArrowLeft' || code === 'ArrowRight';
+                return key === 'ArrowLeft' || key === 'ArrowRight';
             case 'vertical':
-                return code === 'ArrowUp' || code === 'ArrowDown';
+                return key === 'ArrowUp' || key === 'ArrowDown';
             case 'both':
             case 'grid':
-                return code.startsWith('Arrow');
+                return key.startsWith('Arrow');
         }
     }
 
     handleKeydown = (event: KeyboardEvent): void => {
-        if (!this.acceptsEventCode(event.code) || event.defaultPrevented) {
+        if (!this.acceptsEventKey(event.key) || event.defaultPrevented) {
             return;
         }
         let diff = 0;
         this.prevIndex = this.currentIndex;
-        switch (event.code) {
+        switch (event.key) {
             case 'ArrowRight':
                 diff += 1;
                 break;
