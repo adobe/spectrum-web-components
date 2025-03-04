@@ -39,27 +39,15 @@ governing permissions and limitations under the License.
 :host([dir]) slot[slot='icon']::slotted([slot='icon']),
 :host([dir]) slot[slot='icon'] .icon {
     margin-inline: calc(
-            (
+        (
+                var(
+                        --custom-actionbutton-edge-to-text,
+                        var(--spectrum-actionbutton-edge-to-text)
+                    ) -
                     var(
-                            --custom-actionbutton-edge-to-text,
-                            var(--spectrum-actionbutton-edge-to-text)
-                        ) -
-                        var(
-                            --custom-actionbutton-edge-to-visual-only,
-                            var(--spectrum-actionbutton-edge-to-visual-only)
-                        )
-                ) * -1
-        )
-        calc(
-            (
-                    var(
-                            --custom-actionbutton-edge-to-text,
-                            var(--spectrum-actionbutton-edge-to-text)
-                        ) -
-                        var(
-                            --custom-actionbutton-edge-to-visual-only,
-                            var(--spectrum-actionbutton-edge-to-visual-only)
-                        )
-                ) * -1
-        );
+                        --custom-actionbutton-edge-to-visual-only,
+                        var(--spectrum-actionbutton-edge-to-visual-only)
+                    )
+            ) * -1
+    );
 }
