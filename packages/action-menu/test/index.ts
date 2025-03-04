@@ -17,7 +17,7 @@ import {
     html,
     nextFrame,
     oneEvent,
-    waitUntil
+    waitUntil,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
@@ -34,16 +34,15 @@ import {
     iconOnly,
     tooltipDescriptionAndPlacement,
 } from '../stories/action-menu.stories.js';
-import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
+import {
+    findDescribedNode,
+    testMenu,
+} from '../../../test/testing-helpers-a11y.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import type { TestablePicker } from '../../picker/test/index.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
-import { 
-    a11ySnapshot,
-    findAccessibilityNode,
-    sendKeys, 
-    setViewport } from '@web/test-runner-commands';
+import { sendKeys, setViewport } from '@web/test-runner-commands';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { isWebKit } from '@spectrum-web-components/shared';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
@@ -147,33 +146,21 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             await expect(el).to.be.accessible();
         });
-        it('has menuitems in accessibility tree', async() => {
+        it('passes accessibility tests', async () => {
             const el = await fixture<ActionMenu>(html`
-                <sp-action-menu
-                    label="More Actions">
+                <sp-action-menu label="More Actions">
                     <sp-menu-item>Deselect</sp-menu-item>
                     <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-action-menu>
             `);
-            const opened = oneEvent(el, 'sp-opened');
-            el.focus();
-            sendKeys({ press: 'Enter' });
-            await opened;
-            await nextFrame();
-
-
-            type NamedNode = { name: string, role: string, disabled: boolean };
-            const snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-                children: NamedNode[];
-            };
-            const button = findAccessibilityNode<NamedNode>(snapshot, (node) => node.name === 'More Actions');
-            const menu = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menu');
-            const deselect = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menuitem' && node.name === 'Deselect');
-            const workPath = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menuitem' && node.name === 'Make Work Path' && node.disabled);
-            expect(button, 'button').to.not.be.null;
-            expect(menu, 'menu').to.not.be.null;
-            expect(deselect, 'first menuitem').to.not.be.null;
-            expect(workPath, 'second menuitem').to.not.be.null;
+            testMenu({
+                debug: true,
+                el: el,
+                menuElement: el.optionsMenu,
+                menuButtonElement: el.button,
+                menuItemElements: [...el.querySelectorAll('sp-menu-item')],
+                menuButtonLabel: el.label,
+            });
         });
         it('dispatches change events, no [href]', async () => {
             const changeSpy = spy();
@@ -526,14 +513,13 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.value).to.not.equal(thirdItem.value);
             const opened = oneEvent(el, 'sp-opened');
             el.focus();
-            await sendKeys({ press: 'Enter'})
+            await sendKeys({ press: 'Enter' });
             await opened;
 
-            await sendKeys({ press: 'Escape'});
-            await waitUntil(
-                () => document.activeElement === el,
-                'focused', { timeout: 300 }
-            );
+            await sendKeys({ press: 'Escape' });
+            await waitUntil(() => document.activeElement === el, 'focused', {
+                timeout: 300,
+            });
             expect(el.open).to.be.false;
         });
         it('returns focus on select', async () => {
@@ -545,14 +531,13 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.value).to.not.equal(thirdItem.value);
             const opened = oneEvent(el, 'sp-opened');
             el.focus();
-            await sendKeys({ press: 'Enter'})
+            await sendKeys({ press: 'Enter' });
             await opened;
 
             thirdItem.click();
-            await waitUntil(
-                () => document.activeElement === el,
-                'focused', { timeout: 300 }
-            );
+            await waitUntil(() => document.activeElement === el, 'focused', {
+                timeout: 300,
+            });
             expect(el.open).to.be.false;
         });
         it('has attribute aria-describedby', async () => {
@@ -569,7 +554,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             await elementUpdated(el);
 
-            await findDescribedNode(name, description);
+            await findDescribedNode(name, description, true);
         });
         it('opens unmeasured with deprecated syntax', async () => {
             const el = await deprecatedActionMenuFixture();
