@@ -139,7 +139,16 @@ class AreIconsPresent extends HTMLElement {
     };
 
     private checkIcons = async (): Promise<void> => {
-        const icons = document.querySelectorAll('sp-icon');
+        const icons = [...document.querySelectorAll('sp-icon')];
+
+        // there is an icon inside the picker also
+        const picker = document.querySelector('sp-picker');
+        if (picker) {
+            const pickerIcon = picker.querySelector('sp-icon');
+            if (pickerIcon) {
+                icons.push(pickerIcon);
+            }
+        }
 
         // Create an array of promises for each icon to load
         const iconLoadPromises = Array.from(icons).map((icon) => {
