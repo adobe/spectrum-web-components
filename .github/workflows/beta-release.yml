@@ -42,5 +42,5 @@ jobs:
               run: |
                   git commit -am "chore: publish beta version"
                   yarn prepublishOnly
-                  yarn changeset publish --no-git-tag --tag testing
+                  yarn changeset publish --no-git-tag
                   git reset --hard HEAD^
