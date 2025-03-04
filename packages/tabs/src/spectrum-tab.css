@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     box-sizing: border-box;
     block-size: calc(
@@ -63,7 +64,8 @@ governing permissions and limitations under the License.
             var(
                 --mod-tabs-focus-indicator-gap,
                 var(--spectrum-tabs-focus-indicator-gap)
-            ) * 2
+            ) *
+            2
     );
     border: var(
             --mod-tabs-focus-indicator-width,
@@ -83,13 +85,15 @@ governing permissions and limitations under the License.
         var(
                 --mod-tabs-focus-indicator-gap,
                 var(--spectrum-tabs-focus-indicator-gap)
-            ) * -1
+            ) *
+            -1
     );
     inset-inline-end: calc(
         var(
                 --mod-tabs-focus-indicator-gap,
                 var(--spectrum-tabs-focus-indicator-gap)
-            ) * -1
+            ) *
+            -1
     );
 }
 

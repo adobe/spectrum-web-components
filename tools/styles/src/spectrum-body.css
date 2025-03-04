@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 .spectrum-Typography .spectrum-Body {
     --spectrum-body-margin-end: calc(
         var(--mod-body-font-size, var(--spectrum-body-font-size)) *
@@ -42,11 +43,13 @@ governing permissions and limitations under the License.
         --highcontrast-body-font-color,
         var(--mod-body-font-color, var(--spectrum-body-font-color))
     );
-    line-height: var(--mod-body-line-height, var(--spectrum-body-line-height));
+    margin-block-start: 0;
     margin-block-start: var(
         --mod-body-margin-start,
         var(--mod-body-margin, var(--spectrum-body-margin-start, 0))
     );
+    margin-block-end: 0;
+    line-height: var(--mod-body-line-height, var(--spectrum-body-line-height));
     margin-block-end: var(
         --mod-body-margin-end,
         var(--mod-body-margin, var(--spectrum-body-margin-end, 0))

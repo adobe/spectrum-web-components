@@ -52,12 +52,12 @@
         "@adobe/spectrum-css-workflow-icons": "1.7.0",
         "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@^4.0.0",
         "@spectrum-css/icon": "8.0.0-s2-foundations.16",
-        "case": "^1.6.1",
-        "cheerio": "^1.0.0-rc.2",
-        "fast-glob": "^3.2.12",
+        "case": "^1.6.3",
+        "cheerio": "^1.0.0",
+        "fast-glob": "^3.3.3",
         "fs": "^0.0.1-security",
         "path": "^0.12.7",
-        "prettier": "^3.0.0"
+        "prettier": "^3.5.2"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

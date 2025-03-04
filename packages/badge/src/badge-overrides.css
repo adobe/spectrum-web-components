@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-badge-corner-radius: var(--system-badge-corner-radius);
     --spectrum-badge-line-height: var(--system-badge-line-height);

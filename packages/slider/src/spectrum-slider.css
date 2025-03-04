@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-medium);
@@ -102,7 +103,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-slider-ramp-track-height,
                 var(--spectrum-slider-ramp-track-height)
-            ) / 2
+            ) /
+            2
     );
 }
 
@@ -206,7 +208,8 @@ governing permissions and limitations under the License.
             var(
                 --mod-slider-controls-margin,
                 var(--spectrum-slider-controls-margin)
-            ) * 2
+            ) *
+            2
     );
     block-size: var(
         --mod-slider-control-height,
@@ -260,12 +263,16 @@ governing permissions and limitations under the License.
     );
     position: absolute;
     inset-block-start: calc(
-        var(--mod-slider-control-height, var(--spectrum-slider-control-height)) /
+        var(
+                --mod-slider-control-height,
+                var(--spectrum-slider-control-height)
+            ) /
             2 -
             var(
                 --mod-slider-track-fill-thickness,
                 var(--spectrum-slider-track-fill-thickness)
-            ) / 2
+            ) /
+            2
     );
     inset-inline: 0 auto;
 }
@@ -273,11 +280,11 @@ governing permissions and limitations under the License.
 .fill:before,
 .track:before {
     content: '';
-    block-size: 100%;
     border-start-start-radius: 0;
     border-start-end-radius: 0;
     border-end-end-radius: 0;
     border-end-start-radius: 0;
+    block-size: 100%;
     display: block;
 }
 
@@ -441,8 +448,8 @@ governing permissions and limitations under the License.
 }
 
 #ramp svg {
-    inline-size: 100%;
     block-size: 100%;
+    inline-size: 100%;
     transform: var(--spectrum-logical-rotation,);
 }
 
@@ -482,7 +489,10 @@ governing permissions and limitations under the License.
     display: inline-block;
     position: absolute;
     inset-block-start: calc(
-        var(--mod-slider-control-height, var(--spectrum-slider-control-height)) /
+        var(
+                --mod-slider-control-height,
+                var(--spectrum-slider-control-height)
+            ) /
             2 -
             var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) /
             2
@@ -550,12 +560,18 @@ governing permissions and limitations under the License.
 .handle.handle-highlight:before {
     inline-size: calc(
         var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) +
-            var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) *
+            var(
+                --mod-focus-indicator-gap,
+                var(--spectrum-focus-indicator-gap)
+            ) *
             2
     );
     block-size: calc(
         var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) +
-            var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) *
+            var(
+                --mod-focus-indicator-gap,
+                var(--spectrum-focus-indicator-gap)
+            ) *
             2
     );
 }
@@ -645,11 +661,13 @@ governing permissions and limitations under the License.
             var(
                 --mod-slider-tick-mark-height,
                 var(--spectrum-slider-tick-mark-height)
-            ) / 2 -
+            ) /
+            2 -
             var(
                 --mod-slider-track-thickness,
                 var(--spectrum-slider-track-thickness)
-            ) / 2
+            ) /
+            2
     );
 }
 
@@ -658,7 +676,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-slider-tick-mark-height,
                 var(--spectrum-slider-tick-mark-height)
-            ) + var(--spectrum-text-to-visual-75)
+            ) +
+            var(--spectrum-text-to-visual-75)
     );
 }
 
@@ -682,12 +701,16 @@ governing permissions and limitations under the License.
 .tick {
     position: relative;
     inset-block-start: calc(
-        var(--mod-slider-track-thickness, var(--spectrum-slider-control-height)) /
+        var(
+                --mod-slider-track-thickness,
+                var(--spectrum-slider-control-height)
+            ) /
             2 -
             var(
                 --mod-slider-tick-mark-height,
                 var(--spectrum-slider-tick-mark-height)
-            ) / 2
+            ) /
+            2
     );
 }
 
@@ -717,7 +740,8 @@ governing permissions and limitations under the License.
             var(
                 --mod-slider-tick-mark-width,
                 var(--spectrum-slider-tick-mark-width)
-            ) / 2
+            ) /
+            2
     );
 }
 
@@ -748,7 +772,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-slider-tick-mark-width,
                 var(--spectrum-slider-tick-mark-width)
-            ) / -2
+            ) /
+            -2
     );
 }
 
@@ -761,7 +786,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-slider-tick-mark-width,
                 var(--spectrum-slider-tick-mark-width)
-            ) / -2
+            ) /
+            -2
     );
 }
 
@@ -1136,7 +1162,7 @@ governing permissions and limitations under the License.
     }
 
     :host([disabled]) #ramp + .handle {
-        fill: ButtonFace;
-        background-color: ButtonFace;
+        fill: buttonface;
+        background-color: buttonface;
     }
 }

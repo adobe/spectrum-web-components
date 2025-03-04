@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 #tooltip {
     pointer-events: none;
     visibility: hidden;
@@ -590,7 +591,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
-            ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
+            ) +
+            var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
     );
 }
 
@@ -605,7 +607,8 @@ governing permissions and limitations under the License.
             var(
                     --mod-tooltip-animation-distance,
                     var(--spectrum-tooltip-animation-distance)
-                ) * -1
+                ) *
+                -1
         )
     );
 }
@@ -619,7 +622,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
-            ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
+            ) +
+            var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
     );
 }
 
@@ -643,7 +647,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
-            ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
+            ) +
+            var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
     );
 }
 
@@ -665,7 +670,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
-            ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
+            ) +
+            var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
     );
 }
 
@@ -677,7 +683,8 @@ governing permissions and limitations under the License.
             var(
                     --mod-tooltip-animation-distance,
                     var(--spectrum-tooltip-animation-distance)
-                ) * -1
+                ) *
+                -1
         )
     );
 }
@@ -689,7 +696,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
-            ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
+            ) +
+            var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
     );
 }
 
@@ -701,7 +709,8 @@ governing permissions and limitations under the License.
             var(
                     --mod-tooltip-animation-distance,
                     var(--spectrum-tooltip-animation-distance)
-                ) * -1
+                ) *
+                -1
         )
     );
 }
@@ -727,7 +736,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
-            ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
+            ) +
+            var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
     );
 }
 
@@ -753,7 +763,8 @@ governing permissions and limitations under the License.
             var(
                     --mod-tooltip-animation-distance,
                     var(--spectrum-tooltip-animation-distance)
-                ) * -1
+                ) *
+                -1
         )
     );
 }

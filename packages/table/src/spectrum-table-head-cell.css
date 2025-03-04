@@ -11,8 +11,10 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 .sortedIcon {
     vertical-align: initial;
+    margin-inline-start: 0;
     transition: transform
         var(
             --highcontrast-table-transition-duration,
@@ -176,13 +178,15 @@ governing permissions and limitations under the License.
         var(
                 --mod-table-focus-indicator-thickness,
                 var(--spectrum-table-focus-indicator-thickness)
-            ) * -1
+            ) *
+            -1
     );
     outline-offset: calc(
         var(
                 --mod-table-focus-indicator-thickness,
                 var(--spectrum-table-focus-indicator-thickness)
-            ) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px)
+            ) *
+            -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px)
     );
 }
 

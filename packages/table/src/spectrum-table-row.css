@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     :host([focused]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
     :host(:focus-visible)
@@ -260,7 +261,8 @@ governing permissions and limitations under the License.
         var(
                 --mod-table-focus-indicator-thickness,
                 var(--spectrum-table-focus-indicator-thickness)
-            ) * -1
+            ) *
+            -1
     );
 }
 
@@ -441,7 +443,8 @@ governing permissions and limitations under the License.
             var(
                 --mod-table-collapsible-disclosure-inline-spacing,
                 var(--spectrum-table-collapsible-disclosure-inline-spacing)
-            ) * 2
+            ) *
+            2
     );
 }
 
@@ -466,7 +469,8 @@ governing permissions and limitations under the License.
                             --mod-table-disclosure-icon-size,
                             var(--spectrum-table-disclosure-icon-size)
                         )
-                ) / 2
+                ) /
+                2
         )
     );
 }
@@ -542,7 +546,8 @@ governing permissions and limitations under the License.
                                     var(--spectrum-table-row-font-size)
                                 )
                         )
-                ) / 2
+                ) /
+                2
         )
     );
 }
@@ -571,7 +576,8 @@ governing permissions and limitations under the License.
                             --mod-table-thumbnail-size,
                             var(--spectrum-table-thumbnail-size)
                         )
-                ) / 2
+                ) /
+                2
         )
     );
     --table-thumbnail-cell-block-spacing: max(

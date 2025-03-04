@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     #textfield #textfield,
     #textfield #textfield .input {
@@ -235,7 +236,10 @@ governing permissions and limitations under the License.
             var(--mod-search-border-width, var(--spectrum-search-border-width))
     );
     padding-block-end: calc(
-        var(--mod-search-bottom-to-text, var(--spectrum-search-bottom-to-text)) -
+        var(
+                --mod-search-bottom-to-text,
+                var(--spectrum-search-bottom-to-text)
+            ) -
             var(--mod-search-border-width, var(--spectrum-search-border-width))
     );
 }
@@ -254,8 +258,14 @@ governing permissions and limitations under the License.
 
 :host(:not([quiet])) #textfield .input {
     padding-inline-start: calc(
-        var(--mod-search-edge-to-visual, var(--spectrum-search-edge-to-visual)) -
-            var(--mod-search-border-width, var(--spectrum-search-border-width)) +
+        var(
+                --mod-search-edge-to-visual,
+                var(--spectrum-search-edge-to-visual)
+            ) -
+            var(
+                --mod-search-border-width,
+                var(--spectrum-search-border-width)
+            ) +
             var(--mod-search-icon-size, var(--spectrum-search-icon-size)) +
             var(--mod-search-text-to-icon, var(--spectrum-search-text-to-icon))
     );
@@ -272,7 +282,8 @@ governing permissions and limitations under the License.
     --spectrum-search-quiet-button-offset: var(
         --mod-search-quiet-button-offset,
         calc(
-            var(--mod-search-block-size, var(--spectrum-search-block-size)) / 2 -
+            var(--mod-search-block-size, var(--spectrum-search-block-size)) /
+                2 -
                 var(--mod-search-icon-size, var(--spectrum-search-icon-size)) /
                 2
         )
@@ -293,7 +304,10 @@ governing permissions and limitations under the License.
         var(--spectrum-search-top-to-text)
     );
     padding-inline-start: calc(
-        var(--mod-search-edge-to-visual, var(--spectrum-search-edge-to-visual)) +
+        var(
+                --mod-search-edge-to-visual,
+                var(--spectrum-search-edge-to-visual)
+            ) +
             var(--mod-search-icon-size, var(--spectrum-search-icon-size)) +
             var(--mod-search-text-to-icon, var(--spectrum-search-text-to-icon))
     );
@@ -301,6 +315,7 @@ governing permissions and limitations under the License.
         var(
                 --mod-search-button-inline-size,
                 var(--spectrum-search-button-inline-size)
-            ) - var(--spectrum-search-quiet-button-offset)
+            ) -
+            var(--spectrum-search-quiet-button-offset)
     );
 }

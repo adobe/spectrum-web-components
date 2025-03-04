@@ -11,26 +11,27 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-switch-focus-indicator-thickness: var(
         --mod-focus-indicator-thickness,
         var(--spectrum-focus-indicator-thickness)
     );
     min-block-size: var(--mod-switch-height, var(--spectrum-switch-min-height));
-    max-inline-size: 100%;
     vertical-align: top;
     align-items: flex-start;
+    max-inline-size: 100%;
     display: inline-flex;
     position: relative;
 }
 
 #input {
     box-sizing: border-box;
-    inline-size: 100%;
-    block-size: 100%;
     opacity: 0;
     z-index: 1;
     cursor: pointer;
+    block-size: 100%;
+    inline-size: 100%;
     margin: 0;
     padding: 0;
     position: absolute;
@@ -44,7 +45,8 @@ governing permissions and limitations under the License.
             var(
                     --mod-switch-control-width,
                     var(--spectrum-switch-control-width)
-                ) - 100%
+                ) -
+                100%
         )
     );
 }
@@ -57,8 +59,10 @@ governing permissions and limitations under the License.
                     var(
                             --mod-switch-control-width,
                             var(--spectrum-switch-control-width)
-                        ) - 100%
-                ) * -1
+                        ) -
+                        100%
+                ) *
+                -1
         )
     );
 }
@@ -137,7 +141,10 @@ governing permissions and limitations under the License.
         var(--spectrum-switch-control-height)
     );
     border-radius: calc(
-        var(--mod-switch-control-height, var(--spectrum-switch-control-height)) /
+        var(
+                --mod-switch-control-height,
+                var(--spectrum-switch-control-height)
+            ) /
             2
     );
     flex-grow: 0;
@@ -185,7 +192,10 @@ governing permissions and limitations under the License.
     );
     border-width: var(--mod-border-width-200, var(--spectrum-border-width-200));
     border-radius: calc(
-        var(--mod-switch-control-height, var(--spectrum-switch-control-height)) /
+        var(
+                --mod-switch-control-height,
+                var(--spectrum-switch-control-height)
+            ) /
             2
     );
     border-style: solid;
@@ -202,9 +212,15 @@ governing permissions and limitations under the License.
 
 #switch:after {
     border-radius: calc(
-        var(--mod-switch-control-height, var(--spectrum-switch-control-height)) /
+        var(
+                --mod-switch-control-height,
+                var(--spectrum-switch-control-height)
+            ) /
             2 +
-            var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) *
+            var(
+                --mod-focus-indicator-gap,
+                var(--spectrum-focus-indicator-gap)
+            ) *
             2
     );
     transition:
@@ -620,53 +636,53 @@ governing permissions and limitations under the License.
     }
 
     #input:not(:checked) + #switch {
-        box-shadow: inset 0 0 0 1px ButtonText;
+        box-shadow: inset 0 0 0 1px buttontext;
     }
 
     @media (hover: hover) {
         :host(:hover) #input:not(:checked) + #switch {
-            box-shadow: inset 0 0 0 1px Highlight;
+            box-shadow: inset 0 0 0 1px highlight;
         }
 
         :host([disabled][checked]:hover) #input + #switch,
         :host([disabled][checked]:hover) #input + #switch {
-            background-color: GrayText;
-            box-shadow: inset 0 0 0 1px GrayText;
+            background-color: graytext;
+            box-shadow: inset 0 0 0 1px graytext;
         }
 
         :host([disabled][checked]:hover) #input + #switch:before,
         :host([disabled][checked]:hover) #input + #switch:before {
-            background-color: ButtonFace;
-            border-color: GrayText;
+            background-color: buttonface;
+            border-color: graytext;
         }
     }
 
     :host([disabled]) #input:not(:checked) + #switch,
     :host([disabled]) #input:not(:checked) + #switch {
-        background-color: ButtonFace;
-        box-shadow: inset 0 0 0 1px GrayText;
+        background-color: buttonface;
+        box-shadow: inset 0 0 0 1px graytext;
     }
 
     :host([disabled]) #input:not(:checked) + #switch:before,
     :host([disabled]) #input:not(:checked) + #switch:before {
-        background-color: ButtonFace;
-        border-color: GrayText;
+        background-color: buttonface;
+        border-color: graytext;
     }
 
     :host([disabled][checked]) #input + #switch,
     :host([disabled][checked]) #input + #switch {
-        background-color: GrayText;
-        box-shadow: inset 0 0 0 1px GrayText;
+        background-color: graytext;
+        box-shadow: inset 0 0 0 1px graytext;
     }
 
     :host([disabled][checked]) #input + #switch:before,
     :host([disabled][checked]) #input + #switch:before {
-        background-color: ButtonFace;
-        border-color: GrayText;
+        background-color: buttonface;
+        border-color: graytext;
     }
 
     :host([disabled]) #input ~ #label,
     :host([disabled]) #input ~ #label {
-        color: GrayText;
+        color: graytext;
     }
 }

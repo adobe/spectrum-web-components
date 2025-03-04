@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-link-text-color-primary-default: LinkText;
@@ -67,7 +68,6 @@ a:focus-visible {
             var(--spectrum-link-text-color-primary-focus)
         )
     );
-    -webkit-text-decoration: underline double;
     text-decoration: underline double;
     text-decoration-color: inherit;
     text-decoration-color: var(--highcontrast-link-focus-color, inherit);

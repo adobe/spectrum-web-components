@@ -11,17 +11,18 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     display: flex;
     overflow: hidden;
 }
 
 ::slotted(*) {
-    block-size: 100%;
     background-color: var(
         --mod-splitview-background-color,
         var(--spectrum-splitview-background-color)
     );
+    block-size: 100%;
     color: var(
         --mod-splitview-content-color,
         var(--spectrum-splitview-content-color)
@@ -81,7 +82,8 @@ governing permissions and limitations under the License.
                         --mod-splitview-gripper-width,
                         var(--spectrum-splitview-gripper-width)
                     )
-            ) / 2 * -1
+            ) /
+            2 * -1
     );
     transform: translateY(-50%);
 }
@@ -110,8 +112,8 @@ governing permissions and limitations under the License.
         --mod-splitview-handle-width,
         var(--spectrum-splitview-handle-width)
     );
-    block-size: 100%;
     z-index: 1;
+    block-size: 100%;
     position: relative;
 }
 
@@ -130,7 +132,8 @@ governing permissions and limitations under the License.
             var(
                 --mod-splitview-handle-width,
                 var(--spectrum-splitview-handle-width)
-            ) / 2
+            ) /
+            2
     );
 }
 
@@ -298,7 +301,8 @@ governing permissions and limitations under the License.
             var(
                     --mod-splitview-vertical-gripper-width,
                     var(--spectrum-splitview-vertical-gripper-width)
-                ) * -1
+                ) *
+                -1
         )
     );
     inline-size: var(
@@ -336,7 +340,8 @@ governing permissions and limitations under the License.
                         --mod-splitview-gripper-width,
                         var(--spectrum-splitview-gripper-width)
                     )
-            ) / 2 * -1
+            ) /
+            2 * -1
     );
     inset-inline-start: var(
         --mod-splitview-vertical-gripper-width,
@@ -381,7 +386,8 @@ governing permissions and limitations under the License.
             var(
                 --mod-splitview-handle-width,
                 var(--spectrum-splitview-handle-width)
-            ) / 2
+            ) /
+            2
     );
     inset-inline-start: var(
         --mod-splitview-vertical-gripper-reset,

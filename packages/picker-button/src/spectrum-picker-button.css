@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 .root {
     background-color: initial;
     block-size: var(
@@ -260,8 +261,6 @@ governing permissions and limitations under the License.
 
 .spectrum-PickerButton-fill {
     box-sizing: border-box;
-    block-size: 100%;
-    inline-size: 100%;
     justify-content: center;
     align-items: center;
     gap: var(--mod-picker-button-gap, var(--spectrum-picker-button-gap));
@@ -277,6 +276,8 @@ governing permissions and limitations under the License.
         --mod-picker-button-border-width,
         var(--spectrum-picker-button-border-width)
     );
+    block-size: 100%;
+    inline-size: 100%;
     padding: calc(
         var(
                 --mod-picker-button-fill-padding,
