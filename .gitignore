@@ -11,6 +11,8 @@ build-storybook.log
 .devcontainer
 tach-results.*
 .gitconfig
+.eslintcache
+.stylelintcache
 .netlify/plugins
 
 # documentation
