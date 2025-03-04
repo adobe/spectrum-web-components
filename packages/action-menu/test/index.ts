@@ -146,7 +146,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             await expect(el).to.be.accessible();
         });
-        it.skip('passes accessibility tests', async () => {
+        it('passes accessibility tests', async () => {
             const el = await fixture<ActionMenu>(html`
                 <sp-action-menu label="More Actions">
                     <sp-icon-settings slot="icon"></sp-icon-settings>
@@ -160,7 +160,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 </sp-action-menu>
             `);
             await elementUpdated(el);
-            testMenu({
+            await testMenu({
                 debug: true,
                 el: el,
                 menuElement: el.optionsMenu,
