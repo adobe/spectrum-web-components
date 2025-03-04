@@ -27,6 +27,7 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical]) .slider {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     appearance: slider-vertical;
 }
 

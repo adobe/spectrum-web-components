@@ -51,6 +51,7 @@ textarea {
 
 #sizer {
     block-size: auto;
+    /* stylelint-disable-next-line declaration-property-value-keyword-no-deprecated */
     word-break: break-word;
     opacity: 0;
     white-space: pre-line;
