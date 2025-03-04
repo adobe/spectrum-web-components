@@ -7962,15 +7962,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/search@npm:8.0.0-s2-foundations.18":
-  version: 8.0.0-s2-foundations.18
-  resolution: "@spectrum-css/search@npm:8.0.0-s2-foundations.18"
+"@spectrum-css/search@npm:8.0.0-s2-foundations.19":
+  version: 8.0.0-s2-foundations.19
+  resolution: "@spectrum-css/search@npm:8.0.0-s2-foundations.19"
   peerDependencies:
     "@spectrum-css/clearbutton": ">=6"
     "@spectrum-css/icon": ">=7"
     "@spectrum-css/textfield": ">=7"
     "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/d2c8003c1b93df6d8f8308d87bbbe71937b569f9e500dd0ffb94435592482d602b46acaae4f460d3fd2cfe7c4e4761f3cd04d46e97e7c9e91cc77ceef5a5b9e8
+  checksum: 10c0/8ee475d3978032a5c66e46eee175bbc80f6b376bcab4fa7abfc63d6b30b392245d949db7f89be028463d20a00ebe5346d951c1ddc6a9e4858a7406841e8ecdfd
   languageName: node
   linkType: hard
 
@@ -8015,9 +8015,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/stepper@npm:7.0.0-s2-foundations.18":
-  version: 7.0.0-s2-foundations.18
-  resolution: "@spectrum-css/stepper@npm:7.0.0-s2-foundations.18"
+"@spectrum-css/stepper@npm:7.0.0-s2-foundations.19":
+  version: 7.0.0-s2-foundations.19
+  resolution: "@spectrum-css/stepper@npm:7.0.0-s2-foundations.19"
   peerDependencies:
     "@spectrum-css/actionbutton": ">=6"
     "@spectrum-css/icon": ">=7"
@@ -8027,7 +8027,7 @@ __metadata:
   peerDependenciesMeta:
     "@spectrum-css/infieldbutton":
       optional: true
-  checksum: 10c0/39e96fed038c89ecb2536a9a835af1b0094c2e40b005b0f46f4446b91bc9d5ce295ab4c3c455d511825d3005ee9d42b7f1b6c5cc3e98f050dcf461b2b22df651
+  checksum: 10c0/b1c1eabd00cca8121187d68dfdd155a84b52d3fb6305356a06b2ac8234811587366dad6e1a4b4a20301b02b98dc75c1e11dde4cd547d2fd8928fe1b1e5f5e1c2
   languageName: node
   linkType: hard
 
@@ -8122,16 +8122,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/textfield@npm:8.0.0-s2-foundations.16":
-  version: 8.0.0-s2-foundations.16
-  resolution: "@spectrum-css/textfield@npm:8.0.0-s2-foundations.16"
+"@spectrum-css/textfield@npm:8.0.0-s2-foundations.17":
+  version: 8.0.0-s2-foundations.17
+  resolution: "@spectrum-css/textfield@npm:8.0.0-s2-foundations.17"
   peerDependencies:
     "@spectrum-css/helptext": ">=5"
     "@spectrum-css/tokens": ">=14"
   peerDependenciesMeta:
     "@spectrum-css/helptext":
       optional: true
-  checksum: 10c0/a7e80c063497780af470fc6b299a285140c358f84cd15b1b1da186b80b25dbbab5ad6c2dd8e862c79b5ec675c614284ac40ab6fd0c2df6fb5d0e71bf17fedd8c
+  checksum: 10c0/2c5db59e6a645671897cdb72937c4fde7645b16e9f6812d21953bd90b8ef5b6f46099e8ffd8614cdfcd340a548930e4d0ebf02f4ca6c869c270d2652efeda00f
   languageName: node
   linkType: hard
 
@@ -8924,7 +8924,7 @@ __metadata:
   dependencies:
     "@formatjs/intl-numberformat": "npm:^8.3.5"
     "@internationalized/number": "npm:^3.6.0"
-    "@spectrum-css/stepper": "npm:7.0.0-s2-foundations.18"
+    "@spectrum-css/stepper": "npm:7.0.0-s2-foundations.19"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/icon": "npm:^1.2.0"
     "@spectrum-web-components/icons-ui": "npm:^1.2.0"
@@ -9052,7 +9052,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/search@workspace:packages/search"
   dependencies:
-    "@spectrum-css/search": "npm:8.0.0-s2-foundations.18"
+    "@spectrum-css/search": "npm:8.0.0-s2-foundations.19"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/button": "npm:^1.2.0"
     "@spectrum-web-components/icon": "npm:^1.2.0"
@@ -9216,7 +9216,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/textfield@workspace:packages/textfield"
   dependencies:
-    "@spectrum-css/textfield": "npm:8.0.0-s2-foundations.16"
+    "@spectrum-css/textfield": "npm:8.0.0-s2-foundations.17"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/help-text": "npm:^1.2.0"
     "@spectrum-web-components/icon": "npm:^1.2.0"
