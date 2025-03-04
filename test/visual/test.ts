@@ -10,23 +10,36 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/**
+ * Visual Regression Test Framework for Spectrum Web Components
+ *
+ * This file provides utilities to run visual regression tests across multiple
+ * themes, scales, and directions. It renders components in various states and
+ * compares them against baseline screenshots.
+ */
+
 import {
     elementUpdated,
     fixture,
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
-import { visualDiff } from '@web/test-runner-visual-regression';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { StoryDecorator } from '@spectrum-web-components/story-decorator';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 import { Color, Scale } from '@spectrum-web-components/theme';
-import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/StoryDecorator';
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { render } from 'lit';
 import { emulateMedia, sendKeys } from '@web/test-runner-commands';
+import { visualDiff } from '@web/test-runner-visual-regression';
+import { render } from 'lit';
 import { ignoreResizeObserverLoopError } from '../testing-helpers.js';
 
+// Suppress ResizeObserver errors which can occur during testing
 ignoreResizeObserverLoopError(before, after);
 
+/**
+ * Creates a story decorator element to wrap component tests
+ * This provides a consistent container for all visual tests
+ */
 const wrap = () => html`
     <sp-story-decorator
         reduce-motion
@@ -35,20 +48,30 @@ const wrap = () => html`
     ></sp-story-decorator>
 `;
 
+/**
+ * Interface for story functions that render components with specific props
+ * Similar to Storybook story format
+ */
 interface Story<T> {
     (args: T): TemplateResult;
     args?: Partial<T>;
     argTypes?: Record<string, unknown>;
     decorators?: (() => TemplateResult)[];
     swc_vrt?: {
-        skip: Boolean;
+        skip: boolean;
     };
 }
 
+/**
+ * Type representing a collection of related stories for a component
+ */
 type StoriesType = {
-    [name: string]: Story<{}>;
+    [name: string]: Story<object>;
 };
 
+/**
+ * Extended type that includes default settings and metadata for the test suite
+ */
 export type TestsType = StoriesType & {
     default: {
         title: string;
@@ -58,6 +81,12 @@ export type TestsType = StoriesType & {
     };
 };
 
+/**
+ * Waits for the story decorator to be ready before taking screenshots
+ *
+ * @param test - The StoryDecorator instance
+ * @param retry - Current retry attempt number
+ */
 async function testReady(test: StoryDecorator, retry = 0): Promise<void> {
     await waitUntil(
         () => test.ready,
@@ -68,6 +97,50 @@ async function testReady(test: StoryDecorator, retry = 0): Promise<void> {
     );
 }
 
+/**
+ * Ensures component rendering is stable before taking screenshots
+ * Waits for layout, animations, and pending renders to complete
+ *
+ * @param root - The root element containing the component under test
+ */
+async function ensureComponentStable(root: Element): Promise<void> {
+    // Force a layout computation
+    root.getBoundingClientRect();
+
+    // First frame to process attribute changes
+    await nextFrame();
+
+    // Wait for all animations to complete
+    try {
+        const animations = root.getAnimations({ subtree: true });
+        if (animations.length > 0) {
+            await Promise.all(
+                animations.map((a) =>
+                    a.finished.catch((error) => {
+                        console.warn('Animation failed:', error);
+                        return undefined;
+                    })
+                )
+            );
+        }
+    } catch (error) {
+        // Ignore errors in animation handling
+        console.warn('Error while waiting for animations', error);
+    }
+
+    // Additional frame to ensure everything is painted
+    await nextFrame();
+}
+
+/**
+ * Core test function that runs a single story through visual regression testing
+ *
+ * @param tests - Collection of stories to test
+ * @param name - Name of the component being tested
+ * @param color - Theme color (lightest, light, dark, darkest)
+ * @param scale - Component scale (medium, large)
+ * @param dir - Text direction (ltr, rtl)
+ */
 export const test = (
     tests: TestsType,
     name: string,
@@ -78,24 +151,34 @@ export const test = (
     Object.keys(tests).map((story) => {
         if (story !== 'default' && !tests[story].swc_vrt?.skip) {
             it(story, async () => {
+                // Create and setup the test fixture
                 let test = await fixture<StoryDecorator>(wrap());
                 await elementUpdated(test);
                 test.focus();
                 await sendKeys({ press: 'ArrowUp' });
                 await sendKeys({ press: 'ArrowDown' });
+
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const testsDefault = (tests as any).default;
+
+                // Merge default args with story-specific args
                 const args = {
                     ...(testsDefault.args || {}),
                     ...(tests[story].args || {}),
                 };
+
+                // Combine decorators from both default and story
                 const decorators = [
                     ...(tests[story].decorators || []),
                     ...(testsDefault.decorators || []),
                 ];
-                let decoratedStory: () => TemplateResult = () =>
-                    html`
-                        ${tests[story](args)}
-                    `;
+
+                // Create the base story render function
+                let decoratedStory: () => TemplateResult = () => html`
+                    ${tests[story](args)}
+                `;
+
+                // Helper to apply decorators to the story
                 const decorate = (
                     story: () => TemplateResult,
                     decorator: (
@@ -105,21 +188,33 @@ export const test = (
                 ) => {
                     return () => decorator(story, { args });
                 };
+
+                // Apply all decorators
                 while (decorators.length) {
                     const decorator = decorators.shift();
                     decoratedStory = decorate(decoratedStory, decorator);
                 }
+
+                // Render the story to the test fixture
                 render(decoratedStory(), test);
                 await testReady(test);
-                await nextFrame();
+
+                // Ensure component is fully rendered and stable before screenshot
+                await ensureComponentStable(test);
+
+                // Format the test name with all parameters for unique identification
                 const testName = `${color} - ${scale} - ${dir} - ${name} - ${story}`;
+
+                // Implementation of retry logic for flaky visual tests
                 const allowedRetries = 4;
                 let retries = allowedRetries;
                 let passed = false;
+
                 while (retries && !passed) {
                     retries -= 1;
                     const retry = allowedRetries - retries;
                     try {
+                        // Take screenshot and compare with baseline
                         await visualDiff(test, testName);
                         passed = true;
                     } catch (error) {
@@ -130,9 +225,10 @@ export const test = (
                             ) > -1
                         ) {
                             retries = 0;
-                            // Don't retry "no baseline iamge" errors.
+                            // Don't retry "no baseline image" errors.
                             throw error;
                         } else {
+                            // For rendering differences, try again with a fresh fixture
                             test.remove();
                             /**
                              * _Sometimes_ the browser will fail on weird renderings of rounded edges.
@@ -143,7 +239,11 @@ export const test = (
                             await elementUpdated(test);
                             render(decoratedStory(), test);
                             await testReady(test, retry);
-                            await nextFrame();
+
+                            // Ensure stability before retrying screenshot
+                            await ensureComponentStable(test);
+
+                            // On last try, let the error propagate if it still fails
                             if (!retries) {
                                 try {
                                     await visualDiff(test, testName);
@@ -160,6 +260,7 @@ export const test = (
                         }
                     }
                 }
+                // Log successful test with retry count
                 // eslint-disable-next-line no-console
                 console.log(
                     `Tried ${allowedRetries - retries} times. ${testName}`
@@ -169,6 +270,13 @@ export const test = (
     });
 };
 
+/**
+ * Main function to run visual regression tests for a component across all
+ * supported themes, scales, and directions.
+ *
+ * @param name - Component name being tested
+ * @param stories - Collection of stories to test
+ */
 export const regressVisuals = async (name: string, stories: TestsType) => {
     describe(`${name} Visual Regressions`, () => {
         const {
@@ -177,10 +285,14 @@ export const regressVisuals = async (name: string, stories: TestsType) => {
             defaultDirection: dir,
             hcm,
         } = window.__swc_hack_knobs__;
+
         before(async () => {
+            // Run any preload functions defined in the stories
             if (stories.default?.swc_vrt?.preload) {
                 await stories.default.swc_vrt.preload();
             }
+
+            // Enable high contrast mode if specified
             if (hcm) {
                 await emulateMedia({
                     forcedColors: 'active',
@@ -188,7 +300,9 @@ export const regressVisuals = async (name: string, stories: TestsType) => {
                 });
             }
         });
+
         after(async () => {
+            // Restore normal mode after tests
             if (hcm) {
                 await emulateMedia({
                     forcedColors: 'none',
@@ -196,18 +310,25 @@ export const regressVisuals = async (name: string, stories: TestsType) => {
                 });
             }
         });
+
         afterEach(() => {
+            // Clean up any remaining overlays after each test
             const overlays = [
                 ...(document.querySelectorAll('active-overlay') || []),
             ];
             overlays.map((overlay) => overlay.remove());
         });
+
+        // If specific theme parameters provided, only test that combination
         if (color && scale && dir) {
             test(stories, name, color, scale, dir);
         } else {
+            // Otherwise test all combinations
             const colors: Color[] = ['lightest', 'light', 'dark', 'darkest'];
             const scales: Scale[] = ['medium', 'large'];
             const directions: ('ltr' | 'rtl')[] = ['ltr', 'rtl'];
+
+            // Generate tests for every combination of color, scale and direction
             colors.forEach((color: Color) => {
                 scales.forEach((scale: Scale) => {
                     directions.forEach((dir) => {

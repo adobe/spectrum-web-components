@@ -12,22 +12,35 @@ governing permissions and limitations under the License.
 import { expect, Page, test } from '@playwright/test';
 
 test.describe('search and go', () => {
-    const startURL = 'https://opensource.adobe.com/spectrum-web-components/';
-    const menuSelector =
-        '#search-container sp-overlay[open] > sp-popover > sp-menu > sp-menu-group:nth-child(1)';
+    const startURL =
+        process.env.NODE_ENV === 'CI'
+            ? process.env.DOC_PREVIEW_URL
+            : 'http://localhost:8000';
+    const menuItemSelector = (href: string) => {
+        return `#search-container sp-overlay[open] > sp-popover > sp-menu > sp-menu-group > sp-menu-item[href = "${href}"]`;
+    };
+
     const searchFor = async (
         searchString: string,
-        page: Page
+        page: Page,
+        category?: string
     ): Promise<void> => {
         await page.keyboard.type(searchString, { delay: 100 });
-        const menu = await page.locator(menuSelector);
+
+        const formattedSearchString = searchString.replace(/\s+/g, '-');
+        const href = category
+            ? `/${category}/${formattedSearchString}`
+            : `/${formattedSearchString}`;
+        const menuItem = await page.locator(menuItemSelector(href));
+        await expect(menuItem).toBeVisible({ timeout: 3000 });
         await page.keyboard.press('ArrowDown');
-        await expect(menu).toBeFocused();
+
+        await expect(menuItem).toBeFocused();
         await page.keyboard.press('Enter');
     };
 
     test.beforeEach(async ({ page }) => {
-        await page.goto(startURL);
+        await page.goto(startURL as string);
 
         // Click the get started link.
         const searchField = await page.getByRole('searchbox', {
@@ -38,12 +51,12 @@ test.describe('search and go', () => {
     });
 
     test('component: accordion', async ({ page }) => {
-        await searchFor('accordion', page);
+        await searchFor('accordion', page, 'components');
         await expect(page).toHaveURL(/accordion/);
     });
 
     test('tool: base', async ({ page }) => {
-        await searchFor('base', page);
+        await searchFor('base', page, 'tools');
         await expect(page).toHaveURL(/base/);
     });
 
