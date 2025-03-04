@@ -39,6 +39,7 @@ governing permissions and limitations under the License.
 }
 
 .slider[orient='vertical'] {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     appearance: slider-vertical;
 }
 

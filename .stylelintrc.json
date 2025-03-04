@@ -1,5 +1,5 @@
 {
-    "plugins": ["./linters/stylelint-header"],
+    "plugins": ["stylelint-header"],
     "extends": ["stylelint-config-standard"],
     "rules": {
         "header/header": ["config/license.js", {}],
