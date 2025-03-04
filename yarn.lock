@@ -86,7 +86,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@11ty/eleventy@npm:^3.0.0-alpha.4":
+"@11ty/eleventy@npm:^3.0.0":
   version: 3.0.0
   resolution: "@11ty/eleventy@npm:3.0.0"
   dependencies:
@@ -17098,7 +17098,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "documentation@workspace:projects/documentation"
   dependencies:
-    "@11ty/eleventy": "npm:^3.0.0-alpha.4"
+    "@11ty/eleventy": "npm:^3.0.0"
     "@11ty/eleventy-plugin-syntaxhighlight": "npm:^5.0.0"
     "@open-wc/building-rollup": "npm:^3.0.2"
     "@rollup/plugin-alias": "npm:^5.0.1"
