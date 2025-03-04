@@ -98,6 +98,9 @@ jobs:
             - name: Print Firefox version
               run: firefox --version
 
+            - name: Authenticate with npm
+              run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
             - name: Tachometer the changed packages
               run: yarn test:changed --browser=firefox
 
