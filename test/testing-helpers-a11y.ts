@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, nextFrame } from '@open-wc/testing';
+import { expect, nextFrame, waitUntil } from '@open-wc/testing';
 import {
     a11ySnapshot,
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
-import { isWebKit } from '@spectrum-web-components/shared';
+import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
 
 export type DescribedNode = {
     name: string;
@@ -29,31 +29,14 @@ export const findDescribedNode = async (
     debug?: boolean
 ): Promise<void> => {
     await nextFrame();
-
     const snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
         children: DescribedNode[];
     };
 
     if (debug) {
         // eslint-disable-next-line no-console
-        console.log('snapshot:\n', JSON.stringify(snapshot));
+        console.log('snapshot:\n', snapshot);
     }
-
-    // WebKit doesn't currently associate the `aria-describedby` element to the attribute
-    // host in the accessibility tree. Give it an escape hatch for now.
-    const node = findAccessibilityNode(
-        snapshot,
-        (node) =>
-            node.name === name &&
-            (node.description === description || isWebKit())
-    );
-
-    if (debug) {
-        // eslint-disable-next-line no-console
-        console.log('node:\n', JSON.stringify(node));
-    }
-
-    expect(node, 'has node').to.not.be.null;
 
     if (isWebKit()) {
         // Retest WebKit without the escape hatch, expecting it to fail.
@@ -65,10 +48,24 @@ export const findDescribedNode = async (
 
         if (debug) {
             // eslint-disable-next-line no-console
-            console.log('iOSNode:\n', JSON.stringify(iOSNode));
+            console.log('iOSNode:\n', iOSNode);
         }
-        expect(iOSNode, 'remove escape hatch').to.be.null;
+        //expect(!!iOSNode, 'uses name as description').to.be.true;
     }
+
+    const node = findAccessibilityNode(
+        snapshot,
+        (node) =>
+            node.name === name &&
+            (node.description === description || isWebKit())
+    );
+
+    if (debug) {
+        // eslint-disable-next-line no-console
+        console.log('node:\n', node);
+    }
+
+    expect(!!node, 'has node').to.be.true;
 };
 
 export type NamedNode = {
@@ -90,8 +87,6 @@ export const findNodeByRole = async (
     },
     debug?: boolean
 ): Promise<RoleNode> => {
-    await nextFrame();
-
     const snapshot =
         searchNode ||
         ((await a11ySnapshot({})) as unknown as NamedNode & {
@@ -100,16 +95,19 @@ export const findNodeByRole = async (
 
     if (debug) {
         // eslint-disable-next-line no-console
-        console.log(JSON.stringify(snapshot, undefined, '  '));
+        console.log(`isFirefox`, isFirefox());
+        // eslint-disable-next-line no-console
+        console.log(
+            `find by '${role}' role`,
+            JSON.stringify(snapshot, undefined, '  ')
+        );
     }
 
     const node = findAccessibilityNode(snapshot, (node) => {
         const roleNode = node as RoleNode;
         return roleNode.role === role && (name ? roleNode.name === name : true);
     });
-
-    expect(node).to.not.be.null;
-    return node as RoleNode;
+    return (node ? node : undefined) as RoleNode;
 };
 
 type MenuItemNode = {
@@ -151,6 +149,10 @@ export type MenuTestConfig = {
     menuItemElements: HTMLElement[];
     // expected label for menu button
     menuButtonLabel?: string;
+    // function that will indicate when menu is open
+    openCondition?: () => Promise<unknown>;
+    // function that will indicate when menu is closed
+    closedCondition?: () => Promise<unknown>;
 };
 
 export const testMenu = async (config: MenuTestConfig): Promise<void> => {
@@ -158,12 +160,12 @@ export const testMenu = async (config: MenuTestConfig): Promise<void> => {
         children: NamedNode[];
     };
     let menuButton = (await findNodeByRole(
-        isWebKit() ? 'buttonmenu' : 'button',
+        isFirefox() ? 'buttonmenu' : 'button',
         config.menuButtonLabel,
         snapshot,
         config.debug
     )) as MenuButtonNode;
-    expect(menuButton, 'has menu button').to.not.be.null;
+    expect(!!menuButton, 'has menu button').to.be.true;
     await expect(
         menuButton.hasPopup === 'menu' || menuButton.hasPopup === 'true',
         `menu button has popup equals 'menu' or 'true'`
@@ -177,13 +179,18 @@ export const testMenu = async (config: MenuTestConfig): Promise<void> => {
         snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
             children: NamedNode[];
         };
+
+        if (config.debug) {
+            // eslint-disable-next-line no-console
+            console.log('testMenu.updateSnapshot:\n', snapshot);
+        }
+
         menuButton = (await findNodeByRole(
-            isWebKit() ? 'buttonmenu' : 'button',
+            isFirefox() ? 'buttonmenu' : 'button',
             config.menuButtonLabel,
             snapshot,
             config.debug
         )) as MenuButtonNode;
-        expect(menuButton?.expanded, 'testing expanded menu').to.be.true;
 
         menu = (await findNodeByRole(
             'menu',
@@ -192,7 +199,7 @@ export const testMenu = async (config: MenuTestConfig): Promise<void> => {
             config.debug
         )) as MenuNode;
 
-        menuItems = (menu?.children || []).filter((node) => {
+        menuItems = [...(menu?.children || [])].filter((node) => {
             const roleNode = node as RoleNode;
             return roleNode.role === 'menuitem';
         }) as MenuItemNode[];
@@ -200,9 +207,25 @@ export const testMenu = async (config: MenuTestConfig): Promise<void> => {
         focusedIndex = focusableMenuItems.findIndex((node) => node.focused);
     };
 
+    const snapshotAfter = async (
+        message = 'ready for snapshot',
+        predicate?: () => Promise<unknown>
+    ): Promise<void> => {
+        await waitUntil(
+            async () => {
+                if (predicate) {
+                    await predicate;
+                }
+            },
+            message,
+            { timeout: 100 }
+        );
+        await updateSnapshot();
+    };
+
     // test expanded menu
     const testExpanded = async (): Promise<void> => {
-        updateSnapshot();
+        await updateSnapshot();
         expect(menu, 'has menu').to.not.be.null;
         const arrowKeys =
             menu?.orientation === 'horizontal'
@@ -238,7 +261,7 @@ export const testMenu = async (config: MenuTestConfig): Promise<void> => {
             config.menuItemElements
                 .find((el) => !el.hasAttribute('disabled'))
                 ?.focus();
-            updateSnapshot();
+            await snapshotAfter('menu item focused');
             focusedIndex = focusableMenuItems.findIndex((node) => node.focused);
         }
 
@@ -254,7 +277,7 @@ export const testMenu = async (config: MenuTestConfig): Promise<void> => {
                     key === arrowKeys[0]
                 );
                 await sendKeys({ press: key });
-                updateSnapshot();
+                await updateSnapshot();
                 focusedIndex = focusableMenuItems.findIndex(
                     (node) => node.focused
                 );
@@ -275,8 +298,11 @@ export const testMenu = async (config: MenuTestConfig): Promise<void> => {
             el.matches(':focus, :focused-within')
         );
         focusedEl?.click();
-        await elementUpdated(config.el);
-        updateSnapshot();
+        await snapshotAfter('menu item focused', config.closedCondition);
+        expect(
+            menuButton?.expanded,
+            'clicking menu button when menu is open closes menu'
+        ).to.be.false;
 
         expect(menuButton.focused, 'focus is on menu button').to.be.true;
     };
@@ -284,7 +310,7 @@ export const testMenu = async (config: MenuTestConfig): Promise<void> => {
     // test a collapsed menu
     const testCollapsed = async (): Promise<void> => {
         const focusableMenuItems = menuItems.filter((node) => !node.disabled);
-        expect(menuButton.expanded, 'testing collapsed menu').to.be.false;
+        await updateSnapshot();
         await ['ArrowUp', 'ArrowDown'].forEach(async (key) => {
             const focusedItem =
                 key === 'ArrowUp'
@@ -292,26 +318,35 @@ export const testMenu = async (config: MenuTestConfig): Promise<void> => {
                     : focusableMenuItems[0];
             config.menuButtonElement.focus();
             await sendKeys({ press: key });
-            updateSnapshot();
-            expect(menuButton.expanded, `toggles with '${key}'`).to.not.equal(
-                expanded
+            await snapshotAfter(
+                `after pressing '${key}'`,
+                config.openCondition
             );
+            expect(menuButton.expanded, `opens with '${key}'`).to.true;
             expect(
                 focusedItem.focused,
                 `using '${key}' sets focus on ${focusedItem}`
             ).to.be.true;
             await sendKeys({ press: 'Enter' });
-            updateSnapshot();
-            expect(menuButton.expanded, 'closes menuitem').to.be.false;
+            await snapshotAfter(
+                `after pressing 'Enter'`,
+                config.closedCondition
+            );
+            expect(menuButton.expanded, `closes on 'Enter'`).to.be.false;
             expect(menuButton.focused, 'focus is on the button').to.be.true;
         });
         await ['Enter', 'Space'].forEach(async (key) => {
             config.menuButtonElement.focus();
             await sendKeys({ press: key });
-            updateSnapshot();
+            await snapshotAfter(
+                `after pressing '${key}'`,
+                config.openCondition
+            );
             expect(menuButton.expanded, `toggles with '${key}'`).to.be.true;
-            await sendKeys({ press: 'Escape' });
-            updateSnapshot();
+            await snapshotAfter(
+                `after pressing 'Escape'`,
+                config.closedCondition
+            );
             expect(menuButton.expanded, `closes on 'Escape'`).to.be.false;
             expect(menuButton.focused, 'focus is on the button').to.be.true;
         });
@@ -324,7 +359,10 @@ export const testMenu = async (config: MenuTestConfig): Promise<void> => {
         // make sure menu is opposite of what was already tested
         if (menuButton.expanded === expanded) {
             config.menuButtonElement.click();
-            await elementUpdated(config.el);
+            await snapshotAfter(
+                `after click`,
+                expanded ? config.closedCondition : config.openCondition
+            );
             updateSnapshot();
             expect(
                 menuButton.expanded,

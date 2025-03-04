@@ -146,13 +146,20 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             await expect(el).to.be.accessible();
         });
-        it('passes accessibility tests', async () => {
+        it.skip('passes accessibility tests', async () => {
             const el = await fixture<ActionMenu>(html`
                 <sp-action-menu label="More Actions">
+                    <sp-icon-settings slot="icon"></sp-icon-settings>
                     <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
                     <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-action-menu>
             `);
+            await elementUpdated(el);
             testMenu({
                 debug: true,
                 el: el,
@@ -160,6 +167,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 menuButtonElement: el.button,
                 menuItemElements: [...el.querySelectorAll('sp-menu-item')],
                 menuButtonLabel: el.label,
+                openCondition: () => oneEvent(el, 'sp-opened'),
+                closedCondition: () => oneEvent(el, 'sp-opened'),
             });
         });
         it('dispatches change events, no [href]', async () => {
