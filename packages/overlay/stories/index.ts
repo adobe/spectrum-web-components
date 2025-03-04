@@ -70,6 +70,11 @@ class IsOverlayOpen extends HTMLElement {
     get updateComplete(): Promise<boolean> {
         return this.readyPromise;
     }
+
+    // remove event listeners in disconnectCallback
+    disconnectedCallback(): void {
+        document.removeEventListener('sp-opened', this.handleOpened);
+    }
 }
 
 customElements.define('is-overlay-open', IsOverlayOpen);
@@ -184,6 +189,11 @@ class AreIconsPresent extends HTMLElement {
 
     get updateComplete(): Promise<boolean> {
         return this.readyPromise;
+    }
+
+    // remove event listeners in disconnectCallback
+    disconnectedCallback(): void {
+        document.removeEventListener('sp-opened', this.handleOpened);
     }
 }
 
