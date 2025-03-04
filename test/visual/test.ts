@@ -112,18 +112,15 @@ async function ensureComponentStable(root: Element): Promise<void> {
 
     // Wait for all animations to complete
     try {
-        const elements = Array.from(root.querySelectorAll('*'));
-        const animations = elements.flatMap((el) => {
-            try {
-                return el.getAnimations ? el.getAnimations() : [];
-            } catch (error) {
-                return [];
-            }
-        });
-
+        const animations = root.getAnimations({ subtree: true });
         if (animations.length > 0) {
             await Promise.all(
-                animations.map((a) => a.finished.catch(() => undefined))
+                animations.map((a) =>
+                    a.finished.catch((error) => {
+                        console.warn('Animation failed:', error);
+                        return undefined;
+                    })
+                )
             );
         }
     } catch (error) {
