@@ -22,13 +22,13 @@
         "build:ts:watch": "wireit",
         "build:types": "wireit",
         "build:watch": "wireit",
-        "chromatic": "chromatic --build-script-name storybook:build # note that --project-token must be set in your env variables",
+        "chromatic": "yarn workspace @spectrum-tools/storybook test",
         "custom-element-json": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,clear-button,close-button,modal,iconset,shared,opacity-checkerboard,styles,custom-vars-viewer,eslint-plugin},stylelint-header,@swc-react/*,documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- cem analyze --config ../../custom-elements-manifest.config.js --packagejson",
         "docs:analyze": "cem analyze --globs \"packages/**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --exclude \"**/icons/**\" --exclude \"**/elements/**\" --outdir projects/documentation --litelement",
-        "docs:build": "yarn workspace documentation build",
-        "docs:ci": "yarn docs:analyze && run-p docs:production storybook:build && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
-        "docs:preview": "yarn docs:analyze && run-p docs:build storybook:build && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
-        "docs:production": "yarn workspace documentation build:production",
+        "docs:build": "yarn docs:analyze && yarn workspace documentation build && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
+        "docs:ci": "run-p docs:production storybook:build",
+        "docs:preview": "run-p docs:build storybook:build",
+        "docs:production": "yarn docs:analyze && yarn workspace documentation build:production && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
         "docs:review": "alex packages/**/*.md",
         "docs:start": "yarn workspace documentation serve --watch",
         "find": "test -f custom-elements.json",
@@ -56,8 +56,6 @@
         "prelerna-publish": "rimraf react && yarn get-ready && yarn custom-element-json && yarn verify-build-artifacts && yarn build:confirm",
         "prepare": "husky",
         "prepublish:react": "yarn build:react && sed -i \"\" \"s/react/# react/g\" .gitignore && git commit -am \"Commit React Wrappers\" --no-verify",
-        "prestorybook": "wireit",
-        "prestorybook:build": "cem analyze --outdir storybook/",
         "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
         "pretest:visual": "yarn build && yarn build",
         "process-icons": "wireit",
@@ -68,9 +66,7 @@
         "spectrum-vars": "wireit",
         "start": "yarn storybook",
         "storybook": "wireit",
-        "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
-        "storybook:quick": "run-p build:watch storybook:run",
-        "storybook:run": "web-dev-server --config wds-storybook.config.js",
+        "storybook:build": "NODE_ENV=production yarn workspace @spectrum-tools/storybook build -o projects/documentation/dist/storybook",
         "test": "yarn test:focus unit",
         "test:bench": "yarn build:tests && node test/benchmark/cli.js",
         "test:changed": "node ./tasks/test-changes.js",
@@ -102,7 +98,6 @@
         "@commitlint/config-conventional": "^19.1.0",
         "@commitlint/config-lerna-scopes": "^19.0.0",
         "@custom-elements-manifest/analyzer": "^0.9.0",
-        "@geometricpanda/storybook-addon-badges": "^2.0.2",
         "@lit/react": "^1.0.4",
         "@netlify/build": "^29.17.3",
         "@open-wc/dev-server-hmr": "^0.2.0",
@@ -113,11 +108,6 @@
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@sindresorhus/slugify": "^2.1.1",
         "@spectrum-web-components/eslint-plugin": "file:./linters/eslint",
-        "@storybook/addon-a11y": "^7.5.0",
-        "@storybook/addon-designs": "^8.0.0",
-        "@storybook/addon-essentials": "^7.5.0",
-        "@storybook/addon-links": "^7.5.0",
-        "@storybook/web-components": "^7.5.0",
         "@types/chai": "^4.1.7",
         "@types/command-line-args": "^5.0.0",
         "@types/command-line-usage": "^5.0.1",
@@ -134,8 +124,6 @@
         "@web/dev-server-rollup": "^0.6.1",
         "@web/rollup-plugin-copy": "^0.5.1",
         "@web/rollup-plugin-html": "^2.1.2",
-        "@web/storybook-builder": "^0.1.7",
-        "@web/storybook-framework-web-components": "^0.1.1",
         "@web/test-runner": "^0.18.0",
         "@web/test-runner-commands": "^0.9.0",
         "@web/test-runner-junit-reporter": "^0.7.0",
@@ -186,12 +174,9 @@
         "pretty-bytes": "^6.1.1",
         "pretty-quick": "^4.0.0",
         "re-template-tag": "^2.0.1",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
         "rimraf": "^5.0.1",
         "rollup": "^4.12.0",
         "sinon": "^17.0.1",
-        "storybook": "^7.5.0",
         "stylelint": "^16.4.0",
         "stylelint-config-standard": "^36.0.0",
         "tachometer": "^0.7.0",
@@ -364,16 +349,6 @@
             ],
             "clean": "if-file-deleted"
         },
-        "prestorybook": {
-            "command": "cem analyze --outdir storybook/",
-            "files": [
-                "packages/**/*.ts",
-                "tools/**/*.ts"
-            ],
-            "output": [
-                "storybook/custom-elements.json"
-            ]
-        },
         "process-icons": {
             "dependencies": [
                 "icons",
@@ -407,12 +382,8 @@
             "clean": false
         },
         "storybook": {
-            "command": "storybook dev -p 8080 -c storybook",
-            "service": true,
-            "dependencies": [
-                "build:watch",
-                "prestorybook"
-            ]
+            "command": "yarn workspace @spectrum-tools/storybook start",
+            "service": true
         },
         "test:create": {
             "command": "node test/visual/create.js",
@@ -428,6 +399,7 @@
         }
     },
     "workspaces": [
+        ".storybook",
         "linters/*",
         "packages/*",
         "projects/*",
