@@ -4,7 +4,6 @@ on:
     push:
         branches:
             - main
-            - feat/changesets
 
 jobs:
     release:
@@ -26,7 +25,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                  yarn changeset pre enter testing
+                  yarn changeset pre enter beta
                   # Apply the changeset with specific beta tag
                   yarn changeset version
 
