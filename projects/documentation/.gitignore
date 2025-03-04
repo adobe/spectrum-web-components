@@ -1,17 +1,17 @@
-// eleventy build directory
+# eleventy build directory
 _site
 !.eleventy.js
 !content/_data/site.js
 
-// extraced component docs
+# extracted component docs
 content/components
 content/tools
 custom-elements.json
 
-// scripting
+# scripting
 !/scripts/*.js
 
-// typescript build artifacts
+# typescript build artifacts
 src/*.js
 src/*.js.map
 src/components/*.js
@@ -20,7 +20,8 @@ src/util/tempaltes.js
 src/util/tempaltes.js.map
 src/custom-elements.json
 
-// rollup build directory and artifacts
+# rollup build directory and artifacts
 dist/
 !web-dev-server.config.js
 stats.html
+searchIndex.json
