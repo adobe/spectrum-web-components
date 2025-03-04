@@ -24,6 +24,31 @@ input::-webkit-search-cancel-button {
 }
 
 /**
+ * Hardcoded values for the multiple search field sizes.
+ * Feel free to remove this if you find a better way to handle this on the spectrum-config.
+ **/
+:host([size='s']) #textfield {
+    --spectrum-search-border-radius: var(--system-search-size-s-border-radius);
+    --spectrum-search-edge-to-visual: var(
+        --system-search-size-s-edge-to-visual
+    );
+}
+
+:host([size='l']) #textfield {
+    --spectrum-search-border-radius: var(--system-search-size-l-border-radius);
+    --spectrum-search-edge-to-visual: var(
+        --system-search-size-l-edge-to-visual
+    );
+}
+
+:host([size='xl']) #textfield {
+    --spectrum-search-border-radius: var(--system-search-size-xl-border-radius);
+    --spectrum-search-edge-to-visual: var(
+        --system-search-size-xl-edge-to-visual
+    );
+}
+
+/**
  * While overriding the need for `size="m"` in SWC, these values correct the
  * cascade when attempting to delivery the Clear Button within the Search UI.
  **/
