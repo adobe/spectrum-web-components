@@ -2150,6 +2150,11 @@
         var(--spectrum-gray-1000-rgb),
         var(--spectrum-transparent-black-200-opacity)
     );
+    --system-menu-item-corner-radius: var(--spectrum-corner-radius-100);
+    --system-menu-item-focus-indicator-shadow: none;
+    --system-menu-item-focus-indicator-offset: var(--spectrum-spacing-50);
+    --system-menu-item-spacing-multiplier: 1;
+    --system-menu-item-focus-indicator-outline-style: solid;
     --system-meter-min-width: var(--spectrum-meter-minimum-width);
     --system-meter-max-width: var(--spectrum-meter-maximum-width);
     --system-meter-inline-size: var(--spectrum-meter-width);
@@ -2197,7 +2202,7 @@
     --system-picker-background-color-hover-open: var(--spectrum-gray-200);
     --system-picker-background-color-active: var(--spectrum-gray-200);
     --system-picker-background-color-key-focus: var(--spectrum-gray-200);
-    --system-picker-border-color-default: var(--spectrum-gray-800);
+    --system-picker-border-color-default: var(--spectrum-gray-500);
     --system-picker-border-color-default-open: var(--spectrum-gray-500);
     --system-picker-border-color-hover: var(--spectrum-gray-600);
     --system-picker-border-color-hover-open: var(--spectrum-gray-900);

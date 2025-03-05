@@ -43,7 +43,8 @@ governing permissions and limitations under the License.
         --spectrum-menu-item-label-to-description
     );
     --spectrum-menu-item-focus-indicator-width: var(
-        --spectrum-border-width-200
+        --mod-menu-item-focus-indicator-width,
+        var(--spectrum-border-width-200)
     );
     --spectrum-menu-item-focus-indicator-color: var(--spectrum-blue-800);
     --spectrum-menu-item-label-to-value-area-min-spacing: var(
@@ -150,20 +151,60 @@ governing permissions and limitations under the License.
     --spectrum-menu-checkmark-display: var(
         --spectrum-menu-checkmark-display-shown
     );
+    --spectrum-menu-item-min-height: var(--spectrum-component-height-100);
+    --spectrum-menu-item-icon-height: var(--spectrum-workflow-icon-size-100);
+    --spectrum-menu-item-icon-width: var(--spectrum-workflow-icon-size-100);
+    --spectrum-menu-item-label-font-size: var(--spectrum-font-size-100);
+    --spectrum-menu-item-label-text-to-visual: var(
+        --spectrum-text-to-visual-100
+    );
+    --spectrum-menu-item-label-inline-edge-to-content: var(
+        --spectrum-component-edge-to-text-100
+    );
+    --spectrum-menu-item-top-edge-to-text: var(
+        --spectrum-component-top-to-text-100
+    );
+    --spectrum-menu-item-bottom-edge-to-text: var(
+        --spectrum-component-bottom-to-text-100
+    );
+    --spectrum-menu-item-text-to-control: var(--spectrum-text-to-control-100);
+    --spectrum-menu-item-description-font-size: var(--spectrum-font-size-75);
+    --spectrum-menu-section-header-font-size: var(--spectrum-font-size-100);
+    --spectrum-menu-section-header-min-width: var(
+        --spectrum-component-height-100
+    );
+    --spectrum-menu-item-selectable-edge-to-text-not-selected: var(
+        --spectrum-menu-item-selectable-edge-to-text-not-selected-medium
+    );
+    --spectrum-menu-item-checkmark-height: var(
+        --spectrum-menu-item-checkmark-height-medium
+    );
+    --spectrum-menu-item-checkmark-width: var(
+        --spectrum-menu-item-checkmark-width-medium
+    );
+    --spectrum-menu-item-top-to-checkmark: var(
+        --spectrum-menu-item-top-to-selected-icon-medium
+    );
+    --spectrum-menu-back-icon-margin: var(
+        --spectrum-navigational-indicator-top-to-back-icon-medium
+    );
     --spectrum-menu-item-collapsible-no-icon-submenu-item-padding-x-start: calc(
         var(--spectrum-menu-item-label-inline-edge-to-content) +
             var(--spectrum-menu-item-checkmark-width) +
             var(--spectrum-menu-item-label-text-to-visual) +
             var(--spectrum-menu-item-focus-indicator-width)
     );
-    inline-size: auto;
-    inline-size: var(--mod-menu-inline-size, auto);
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    display: inline-block;
-    overflow: auto;
+    --spectrum-menu-item-focus-indicator-color-default: var(
+        --highcontrast-menu-item-focus-indicator-color,
+        var(
+            --mod-menu-item-focus-indicator-color,
+            var(--spectrum-menu-item-focus-indicator-color)
+        )
+    );
+    --spectrum-menu-item-focus-indicator-border-width: calc(
+        var(--spectrum-menu-item-focus-indicator-width) *
+            var(--spectrum-menu-item-focus-indicator-direction-scalar, 1)
+    );
 }
 
 :host([size='s']) {
@@ -203,47 +244,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-menu-back-icon-margin: var(
         --spectrum-navigational-indicator-top-to-back-icon-small
-    );
-}
-
-:host,
-:host {
-    --spectrum-menu-item-min-height: var(--spectrum-component-height-100);
-    --spectrum-menu-item-icon-height: var(--spectrum-workflow-icon-size-100);
-    --spectrum-menu-item-icon-width: var(--spectrum-workflow-icon-size-100);
-    --spectrum-menu-item-label-font-size: var(--spectrum-font-size-100);
-    --spectrum-menu-item-label-text-to-visual: var(
-        --spectrum-text-to-visual-100
-    );
-    --spectrum-menu-item-label-inline-edge-to-content: var(
-        --spectrum-component-edge-to-text-100
-    );
-    --spectrum-menu-item-top-edge-to-text: var(
-        --spectrum-component-top-to-text-100
-    );
-    --spectrum-menu-item-bottom-edge-to-text: var(
-        --spectrum-component-bottom-to-text-100
-    );
-    --spectrum-menu-item-text-to-control: var(--spectrum-text-to-control-100);
-    --spectrum-menu-item-description-font-size: var(--spectrum-font-size-75);
-    --spectrum-menu-section-header-font-size: var(--spectrum-font-size-100);
-    --spectrum-menu-section-header-min-width: var(
-        --spectrum-component-height-100
-    );
-    --spectrum-menu-item-selectable-edge-to-text-not-selected: var(
-        --spectrum-menu-item-selectable-edge-to-text-not-selected-medium
-    );
-    --spectrum-menu-item-checkmark-height: var(
-        --spectrum-menu-item-checkmark-height-medium
-    );
-    --spectrum-menu-item-checkmark-width: var(
-        --spectrum-menu-item-checkmark-width-medium
-    );
-    --spectrum-menu-item-top-to-checkmark: var(
-        --spectrum-menu-item-top-to-selected-icon-medium
-    );
-    --spectrum-menu-back-icon-margin: var(
-        --spectrum-navigational-indicator-top-to-back-icon-medium
     );
 }
 
@@ -327,6 +327,22 @@ governing permissions and limitations under the License.
     );
 }
 
+:host:dir(rtl),
+:host([dir='rtl']) {
+    --spectrum-menu-item-focus-indicator-direction-scalar: -1;
+}
+
+:host {
+    inline-size: auto;
+    inline-size: var(--mod-menu-inline-size, auto);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: inline-block;
+    overflow: auto;
+}
+
 :host:lang(ja),
 :host:lang(ko),
 :host:lang(zh) {
@@ -390,37 +406,14 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Menu-back:focus-visible {
-    box-shadow: inset
-        calc(
-            var(
-                    --mod-menu-item-focus-indicator-width,
-                    var(--spectrum-menu-item-focus-indicator-width)
-                ) * 1
-        )
-        0 0 0
-        var(
-            --highcontrast-menu-item-focus-indicator-color,
-            var(
-                --mod-menu-item-focus-indicator-color,
-                var(--spectrum-menu-item-focus-indicator-color)
-            )
-        );
-    box-shadow: inset
-        calc(
-            var(
-                    --mod-menu-item-focus-indicator-width,
-                    var(--spectrum-menu-item-focus-indicator-width)
-                ) *
-                var(--spectrum-menu-item-focus-indicator-direction-scalar, 1)
-        )
-        0 0 0
-        var(
-            --highcontrast-menu-item-focus-indicator-color,
-            var(
-                --mod-menu-item-focus-indicator-color,
-                var(--spectrum-menu-item-focus-indicator-color)
-            )
-        );
+    box-shadow: var(--spectrum-menu-item-focus-indicator-shadow)
+        var(--spectrum-menu-item-focus-indicator-border-width) 0 0 0
+        var(--spectrum-menu-item-focus-indicator-color-default);
+    outline: var(--spectrum-menu-item-focus-indicator-width)
+        var(--spectrum-menu-item-focus-indicator-outline-style)
+        var(--spectrum-menu-item-focus-indicator-color-default);
+    outline-offset: var(--spectrum-menu-item-focus-indicator-offset);
+    border-radius: var(--spectrum-menu-item-corner-radius);
 }
 
 .spectrum-Menu-sectionHeading {
