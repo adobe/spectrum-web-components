@@ -36,7 +36,7 @@ import {
 } from '../stories/action-menu.stories.js';
 import {
     findDescribedNode,
-    testMenu,
+    testMenuButtonA11y,
 } from '../../../test/testing-helpers-a11y.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -147,8 +147,9 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await expect(el).to.be.accessible();
         });
         it('passes accessibility tests', async () => {
+            const label = 'More Actions';
             const el = await fixture<ActionMenu>(html`
-                <sp-action-menu label="More Actions">
+                <sp-action-menu label="${label}">
                     <sp-icon-settings slot="icon"></sp-icon-settings>
                     <sp-menu-item>Deselect</sp-menu-item>
                     <sp-menu-item>Select Inverse</sp-menu-item>
@@ -160,16 +161,18 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 </sp-action-menu>
             `);
             await elementUpdated(el);
-            await testMenu({
-                debug: true,
-                el: el,
-                menuElement: el.optionsMenu,
-                menuButtonElement: el.button,
-                menuItemElements: [...el.querySelectorAll('sp-menu-item')],
-                menuButtonLabel: el.label,
-                openCondition: () => oneEvent(el, 'sp-opened'),
-                closedCondition: () => oneEvent(el, 'sp-opened'),
-            });
+            await testMenuButtonA11y(
+                {
+                    el: el,
+                    menuElement: el.optionsMenu,
+                    menuButtonElement: el.button,
+                    menuItemElements: [...el.querySelectorAll('sp-menu-item')],
+                    menuButtonLabel: label,
+                    openedCondition: () => oneEvent(el, 'sp-opened'),
+                    closedCondition: () => oneEvent(el, 'sp-closed'),
+                },
+                true
+            );
         });
         it('dispatches change events, no [href]', async () => {
             const changeSpy = spy();

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect, nextFrame, waitUntil } from '@open-wc/testing';
+import { elementUpdated, expect, nextFrame, waitUntil } from '@open-wc/testing';
 import {
     a11ySnapshot,
     findAccessibilityNode,
@@ -42,7 +42,9 @@ export const findDescribedNode = async (
         // eslint-disable-next-line no-console
         console.log(
             `findDescribedNode(${name}, ${description}, ${debug}) returns null`,
-            snapshot
+            snapshot,
+            'document',
+            document.body
         );
     }
 
@@ -63,16 +65,11 @@ export type RoleNode = {
 export const findNodeByRole = async (
     role: string,
     name?: string,
-    searchNode?: NamedNode & {
-        children: NamedNode[];
-    },
     debug?: boolean
 ): Promise<RoleNode> => {
-    const snapshot =
-        searchNode ||
-        ((await a11ySnapshot({})) as unknown as NamedNode & {
-            children: NamedNode[];
-        });
+    const snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+        children: NamedNode[];
+    };
 
     const node = findAccessibilityNode(snapshot, (node) => {
         const roleNode = node as RoleNode;
@@ -83,7 +80,9 @@ export const findNodeByRole = async (
         // eslint-disable-next-line no-console
         console.log(
             `findNodeByRole(${role}, ${name}, ${debug}) returns null`,
-            searchNode
+            snapshot,
+            'document',
+            document.body
         );
     }
     return (node ? node : undefined) as RoleNode;
@@ -116,248 +115,239 @@ type MenuNode = {
 };
 
 export type MenuTestConfig = {
-    // provide snapshot details in console
-    debug?: boolean;
+    // element with `role="menu"`
+    menuElement: HTMLElement;
+    // array of elements with `role="menuitem"`
+    menuItemElements: HTMLElement[];
+    // expected label for menu element
+    menuLabel?: string;
+};
+
+export type MenuButtonTestConfig = {
     // element that contains button, menu, and menuitems
     el: HTMLElement;
     // element with `role="menu"`
     menuElement: HTMLElement;
+    // expected label for menu element
+    menuLabel?: string;
     // element with `role="button"`
     menuButtonElement: HTMLElement;
     // array of elements with `role="menuitem"`
     menuItemElements: HTMLElement[];
     // expected label for menu button
     menuButtonLabel?: string;
-    // function that will indicate when menu is open
-    openCondition?: () => Promise<unknown>;
-    // function that will indicate when menu is closed
+    // promise that ensure menu has fully opened
+    openedCondition?: () => Promise<unknown>;
+    // promise that ensure menu has fully closed
     closedCondition?: () => Promise<unknown>;
 };
 
-export const testMenu = async (config: MenuTestConfig): Promise<void> => {
-    let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-        children: NamedNode[];
-    };
+const getMenuNode = async (debug = false, menuLabel?: string) =>
+    (await findNodeByRole('menu', menuLabel, debug)) as MenuNode;
+
+const getMenuItems = (menuNode: MenuNode) =>
+    [...(menuNode?.children || [])].filter((node) => {
+        const roleNode = node as RoleNode;
+        return roleNode.role === 'menuitem';
+    }) as MenuItemNode[];
+
+export const testMenuA11y = async (
+    config: MenuTestConfig,
+    debug = false
+): Promise<void> => {
+    if (debug) {
+        // eslint-disable-next-line no-console
+        console.log(`testMenuA11y`, config);
+    }
+    const { menuLabel } = config;
+    const focusableMenuItemElements = [
+        ...(config?.menuItemElements || []),
+    ].filter((item) => !item.hasAttribute('disabled'));
+
+    focusableMenuItemElements[0]?.focus();
+    await elementUpdated(focusableMenuItemElements[0]);
+
+    let menu = await getMenuNode(debug, menuLabel);
+    const arrowKeys =
+        menu?.orientation === 'horizontal'
+            ? ['ArrowLeft', 'ArrowRight']
+            : ['ArrowUp', 'ArrowDown'];
+    expect(!!menu, 'menu exists in accessibility tree').to.be.true;
+
+    let menuItems = getMenuItems(menu);
+    expect(menuItems.length, 'all menuitems in accessibility tree').to.equal(
+        [...(config?.menuItemElements || [])].length
+    );
+
+    let focusableItems = [...menuItems].filter((node) => !node.disabled);
+    expect(
+        focusableItems.length,
+        'items that are not disabled are focusable'
+    ).to.equal(focusableMenuItemElements.length);
+
+    const focusedItem = [...focusableItems].find((node) => node.focused);
+    expect(!!focusedItem, 'an item is focused').to.be.true;
+
+    // test arrow keys as they cycle through every menu item
+    await arrowKeys.forEach(async (key) => {
+        focusableItems = [...menuItems].filter((node) => !node.disabled);
+        const totalItems = focusableItems.length;
+        let focusedIndex = [...focusableItems].findIndex(
+            (node) => node.focused
+        );
+        if (debug) {
+            // eslint-disable-next-line no-console
+            console.log(
+                `looping through ${totalItems} focusableItems, starting with ${focusedIndex}`,
+                focusableItems
+            );
+        }
+        for (let i = 0; i < totalItems; i++) {
+            const direction = key === arrowKeys[0] ? -1 : 1;
+            let newIndex = focusedIndex + direction;
+            if (focusedIndex + direction < 0) {
+                newIndex += totalItems;
+            }
+            if (focusedIndex + direction > totalItems) {
+                newIndex -= totalItems;
+            }
+            await sendKeys({ press: key });
+            if (debug) {
+                // eslint-disable-next-line no-console
+                console.log(
+                    `pressing ${key} should move us ${direction} from ${focusedIndex} to ${newIndex}`
+                );
+            }
+            menu = await getMenuNode(debug, menuLabel);
+            if (debug) {
+                // eslint-disable-next-line no-console
+                console.log(`menu ${menuLabel}`, menu);
+            }
+            menuItems = getMenuItems(menu);
+            focusableItems = [...menuItems].filter((node) => !node.disabled);
+            focusedIndex = [...focusableItems].findIndex(
+                (node) => node.focused
+            );
+            expect(
+                focusableItems[focusedIndex],
+                `focused menu item after ${key}`
+            ).to.equal(focusableItems[newIndex]);
+            expect(
+                focusedItem?.name.length,
+                `menu item should have a name: ${focusedItem?.name}`
+            ).to.be.greaterThan(0);
+        }
+    });
+};
+
+export const testMenuButtonA11y = async (
+    config: MenuButtonTestConfig,
+    debug = false
+): Promise<void> => {
     let menuButton = (await findNodeByRole(
         isFirefox() ? 'buttonmenu' : 'button',
         config.menuButtonLabel,
-        snapshot,
-        config.debug
+        debug
     )) as MenuButtonNode;
+
     expect(!!menuButton, 'has menu button').to.be.true;
-    await expect(
+    expect(
         menuButton.hasPopup === 'menu' || menuButton.hasPopup === 'true',
         `menu button has popup equals 'menu' or 'true'`
     );
-    let menu: MenuNode;
-    let menuItems: MenuItemNode[];
-    let focusableMenuItems: MenuItemNode[];
-    let focusedIndex: number;
 
-    const updateSnapshot = async (): Promise<void> => {
-        snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
-            children: NamedNode[];
-        };
+    // ensures that menu is open
+    const opened = async (prefix = 'after opening') => {
+        if (config.openedCondition) {
+            await waitUntil(
+                await config.openedCondition,
+                `${prefix} menu is opened`,
+                {
+                    timeout: 100,
+                }
+            );
+        }
+    };
 
+    // ensures that menu is closed
+    const closed = async (prefix = 'after closing') => {
+        if (config.closedCondition) {
+            await waitUntil(
+                await config.closedCondition,
+                `${prefix} menu is closed`,
+                {
+                    timeout: 100,
+                }
+            );
+        }
+    };
+
+    // tests a closed menu
+    const testMenuClosed = async (prefix = 'after menu is open') => {
         menuButton = (await findNodeByRole(
             isFirefox() ? 'buttonmenu' : 'button',
             config.menuButtonLabel,
-            snapshot,
-            config.debug
+            debug
         )) as MenuButtonNode;
+        const menu = await getMenuNode(debug, config.menuLabel);
+        expect(!!menu, 'has menu').to.be.false;
+        expect(menuButton.expanded, `${prefix} menu is expanded`).to.be.false;
+    };
 
-        menu = (await findNodeByRole(
-            'menu',
-            undefined,
-            snapshot,
-            config.debug
-        )) as MenuNode;
-
-        if (config.debug && (!menuButton || (menuButton.expanded && !menu))) {
+    // tests an open menu
+    const testMenuOpened = async (prefix = 'after menu is open') => {
+        menuButton = (await findNodeByRole(
+            isFirefox() ? 'buttonmenu' : 'button',
+            config.menuButtonLabel,
+            debug
+        )) as MenuButtonNode;
+        const menu = await getMenuNode(debug, config.menuLabel);
+        if (debug) {
             // eslint-disable-next-line no-console
-            console.log('testMenu.updateSnapshot error', snapshot);
+            console.log(menu);
+        }
+        expect(!!menu, 'has menu').to.be.true;
+        expect(menuButton.expanded, `${prefix} menu is expanded`).to.be.true;
+    };
+
+    // start with an expanded menu
+    if (!menuButton.expanded) {
+        config.menuButtonElement.focus();
+        await sendKeys({ press: 'Enter' });
+        await opened;
+    }
+
+    await testMenuOpened();
+    await testMenuA11y(config, debug);
+
+    // test all the ways a menu can be toggled
+    ['ArrowUp', 'ArrowDown', 'Enter', 'Space'].forEach(async (key) => {
+        config.menuButtonElement.focus();
+
+        if (menuButton.expanded) {
+            await sendKeys({ press: 'Escape' });
+            await closed(`after pressing 'Escape'`);
         }
 
-        menuItems = [...(menu?.children || [])].filter((node) => {
-            const roleNode = node as RoleNode;
-            return roleNode.role === 'menuitem';
-        }) as MenuItemNode[];
-        focusableMenuItems = menuItems.filter((node) => !node.disabled);
-        focusedIndex = focusableMenuItems.findIndex((node) => node.focused);
-    };
+        await testMenuClosed(`before pressing ${key}`);
 
-    const snapshotAfter = async (
-        message = 'ready for snapshot',
-        predicate?: () => Promise<unknown>
-    ): Promise<void> => {
-        await waitUntil(
-            async () => {
-                if (predicate) {
-                    await predicate;
-                }
-            },
-            message,
-            { timeout: 100 }
-        );
-        await updateSnapshot();
-    };
+        sendKeys({ press: key });
+        await testMenuOpened(`after pressing ${key}`);
 
-    // test expanded menu
-    const testExpanded = async (): Promise<void> => {
-        await updateSnapshot();
-        expect(menu, 'has menu').to.not.be.null;
-        const arrowKeys =
-            menu?.orientation === 'horizontal'
-                ? ['ArrowLeft', 'ArrowRight']
-                : ['ArrowUp', 'ArrowDown'];
-
-        expect(menuItems.length, `all menu items exist`).to.equal(
-            config.menuItemElements.length
+        const menu = await getMenuNode(debug, config.menuLabel);
+        const menuItems = await getMenuItems(menu);
+        const focusableItems = [...menuItems].filter((node) => !node.disabled);
+        const focusedIndex = [...focusableItems].findIndex(
+            (node) => node.focused
         );
 
         expect(
-            focusableMenuItems.length,
-            `all focusable menu items are focusable`
-        ).to.equal(
-            config.menuItemElements.filter(
-                (item) => !item.hasAttribute('disabled')
-            ).length
-        );
+            focusedIndex,
+            `using '${key}' sets focus on the correct item`
+        ).to.equal(key === 'ArrowUp' ? focusableItems.length - 1 : 0);
+        await sendKeys({ press: 'Enter' });
+        await closed(`after pressing 'Enter'`);
 
-        const nextFocusableIndex = (index = 0, prev = false) => {
-            const dir = prev ? -1 : 1;
-            let newIndex = index + dir;
-            if (index + dir < 0) {
-                newIndex += focusableMenuItems.length;
-            }
-            if (index + dir > focusableMenuItems.length) {
-                newIndex -= focusableMenuItems.length;
-            }
-            return newIndex;
-        };
-
-        if (!focusedIndex) {
-            config.menuItemElements
-                .find((el) => !el.hasAttribute('disabled'))
-                ?.focus();
-            await snapshotAfter('menu item focused');
-            focusedIndex = focusableMenuItems.findIndex((node) => node.focused);
-        }
-
-        expect(focusableMenuItems[focusedIndex], 'focus is on a menu item').to
-            .not.be.null;
-
-        // test arrow keys as they cycle through every menu item
-        await arrowKeys.forEach(async (key) => {
-            let nextItem: number;
-            for (let i = 0; i < focusableMenuItems.length; i++) {
-                nextItem = nextFocusableIndex(
-                    focusedIndex,
-                    key === arrowKeys[0]
-                );
-                await sendKeys({ press: key });
-                await updateSnapshot();
-                focusedIndex = focusableMenuItems.findIndex(
-                    (node) => node.focused
-                );
-                expect(
-                    focusableMenuItems[focusedIndex],
-                    `after ${key}`
-                ).to.equal(focusableMenuItems[nextItem]);
-                expect(
-                    focusableMenuItems[focusedIndex].name.length,
-                    `menu item should have a name: ${focusableMenuItems[focusedIndex].name}`
-                ).to.be.greaterThan(0);
-            }
-        });
-
-        expect(focusableMenuItems[focusedIndex], 'focus is on a menu item').to
-            .not.be.null;
-        const focusedEl = config.menuItemElements.find((el) =>
-            el.matches(':focus, :focused-within')
-        );
-        focusedEl?.click();
-        await snapshotAfter('menu item focused', config.closedCondition);
-        expect(
-            menuButton?.expanded,
-            'clicking menu button when menu is open closes menu'
-        ).to.be.false;
-
-        expect(menuButton.focused, 'focus is on menu button').to.be.true;
-    };
-
-    // test a collapsed menu
-    const testCollapsed = async (): Promise<void> => {
-        await updateSnapshot();
-        await ['ArrowUp', 'ArrowDown'].forEach(async (key) => {
-            config.menuButtonElement.focus();
-            await sendKeys({ press: key });
-            await snapshotAfter(
-                `after pressing '${key}'`,
-                config.openCondition
-            );
-            const focusedItem =
-                key === 'ArrowUp'
-                    ? focusableMenuItems[focusableMenuItems.length - 1]
-                    : focusableMenuItems[0];
-            expect(menuButton.expanded, `opens with '${key}'`).to.true;
-            expect(
-                focusedItem.focused,
-                `using '${key}' sets focus on ${focusedItem}`
-            ).to.be.true;
-            await sendKeys({ press: 'Enter' });
-            await snapshotAfter(
-                `after pressing 'Enter'`,
-                config.closedCondition
-            );
-            expect(menuButton.expanded, `closes on 'Enter'`).to.be.false;
-            expect(menuButton.focused, 'focus is on the button').to.be.true;
-        });
-        await ['Enter', 'Space'].forEach(async (key) => {
-            config.menuButtonElement.focus();
-            await sendKeys({ press: key });
-            await snapshotAfter(
-                `after pressing '${key}'`,
-                config.openCondition
-            );
-            expect(menuButton.expanded, `toggles with '${key}'`).to.be.true;
-            await snapshotAfter(
-                `after pressing 'Escape'`,
-                config.closedCondition
-            );
-            expect(menuButton.expanded, `closes on 'Escape'`).to.be.false;
-            expect(menuButton.focused, 'focus is on the button').to.be.true;
-        });
-    };
-
-    // find out if menu is expanded
-    let expanded = menuButton.expanded;
-
-    const ensureMenuIsToggled = async (): Promise<void> => {
-        // make sure menu is opposite of what was already tested
-        if (menuButton.expanded === expanded) {
-            config.menuButtonElement.click();
-            await snapshotAfter(
-                `after click`,
-                expanded ? config.closedCondition : config.openCondition
-            );
-            updateSnapshot();
-            expect(
-                menuButton.expanded,
-                `set expanded to ${menuButton.expanded} to run next set of tests`
-            ).to.not.be.equal(expanded);
-        }
-    };
-
-    // test accordingly
-    expanded ? await testExpanded() : await testCollapsed();
-
-    // get ready to test menu the opposite way we found it
-    ensureMenuIsToggled();
-
-    expanded = menuButton.expanded;
-    expanded ? await testExpanded() : await testCollapsed();
-
-    // leave element the way we found it
-    ensureMenuIsToggled();
+        await testMenuClosed(`after pressing 'Enter'`);
+    });
 };
