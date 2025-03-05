@@ -27,7 +27,6 @@ const config = {
             inPackage: '@spectrum-css/button',
             outPackage: 'button',
             fileName: 'button',
-            systemOverrides: true,
             excludeByComponents: [
                 builder.element('a'),
                 {
@@ -225,6 +224,10 @@ const config = {
                     hoist: false,
                     find: builder.pseudoClass('empty'),
                     replace: builder.attribute('hidden'),
+                },
+                {
+                    find: builder.class('spectrum-ProgressCircle'),
+                    replace: builder.element('sp-progress-circle'),
                 },
             ],
         },

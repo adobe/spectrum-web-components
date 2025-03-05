@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -118,7 +118,8 @@ governing permissions and limitations under the License.
         var(--spectrum-combobox-border-color-default)
     );
     --mod-textfield-border-color-disabled: var(
-        --mod-combobox-border-color-disabled
+        --mod-combobox-border-color-disabled,
+        transparent
     );
     --mod-textfield-border-color-focus: var(
         --mod-combobox-border-color-focus,
@@ -332,6 +333,10 @@ governing permissions and limitations under the License.
             var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size)) /
             2
     );
+    --mod-textfield-border-color-disabled: var(
+        --mod-combobox-border-color-disabled,
+        initial
+    );
     --mod-picker-button-background-color-quiet: transparent;
     --mod-picker-button-border-color-quiet: transparent;
 }
@@ -364,14 +369,6 @@ governing permissions and limitations under the License.
     :host {
         --highcontrast-combobox-border-color-highlight: Highlight;
         --highcontrast-combobox-border-color-invalid: Highlight;
-    }
-
-    .button.spectrum-PickerButton--quiet .spectrum-PickerButton-fill {
-        forced-color-adjust: none;
-    }
-
-    .button.spectrum-PickerButton--quiet .spectrum-PickerButton-icon {
-        color: initial;
     }
 }
 

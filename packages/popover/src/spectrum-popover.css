@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -98,6 +98,7 @@ governing permissions and limitations under the License.
                 var(--spectrum-popover-shadow-color)
             )
     );
+
     box-sizing: border-box;
     padding: var(
             --mod-popover-content-area-spacing-vertical,
@@ -126,6 +127,10 @@ governing permissions and limitations under the License.
     flex-direction: column;
     display: inline-flex;
     position: absolute;
+}
+
+:host([tip]) {
+    overflow: visible;
 }
 
 :host([tip]) #tip .triangle {
@@ -172,13 +177,14 @@ governing permissions and limitations under the License.
 :host([open]) .spectrum-Popover--top-start,
 :host([placement*='top'][open]) {
     transform: translateY(
-        calc(
-            var(
-                    --mod-popover-animation-distance,
-                    var(--spectrum-popover-animation-distance)
-                ) * -1
+            calc(
+                var(
+                        --mod-popover-animation-distance,
+                        var(--spectrum-popover-animation-distance)
+                    ) * -1
+            )
         )
-    );
+        translateZ(0);
 }
 
 :host([tip]) .spectrum-Popover--bottom-end,
@@ -204,11 +210,12 @@ governing permissions and limitations under the License.
 :host([open]) .spectrum-Popover--bottom-start,
 :host([placement*='bottom'][open]) {
     transform: translateY(
-        var(
-            --mod-popover-animation-distance,
-            var(--spectrum-popover-animation-distance)
+            var(
+                --mod-popover-animation-distance,
+                var(--spectrum-popover-animation-distance)
+            )
         )
-    );
+        translateZ(0);
 }
 
 :host([tip]) .spectrum-Popover--right-bottom,
@@ -227,11 +234,12 @@ governing permissions and limitations under the License.
 :host([open]) .spectrum-Popover--right-top,
 :host([placement*='right'][open]) {
     transform: translateX(
-        var(
-            --mod-popover-animation-distance,
-            var(--spectrum-popover-animation-distance)
+            var(
+                --mod-popover-animation-distance,
+                var(--spectrum-popover-animation-distance)
+            )
         )
-    );
+        translateZ(0);
 }
 
 :host([tip]) .spectrum-Popover--left-bottom,
@@ -250,13 +258,14 @@ governing permissions and limitations under the License.
 :host([open]) .spectrum-Popover--left-top,
 :host([placement*='left'][open]) {
     transform: translateX(
-        calc(
-            var(
-                    --mod-popover-animation-distance,
-                    var(--spectrum-popover-animation-distance)
-                ) * -1
+            calc(
+                var(
+                        --mod-popover-animation-distance,
+                        var(--spectrum-popover-animation-distance)
+                    ) * -1
+            )
         )
-    );
+        translateZ(0);
 }
 
 :host([tip]) .spectrum-Popover--start-bottom,
@@ -275,13 +284,14 @@ governing permissions and limitations under the License.
 :host([open]) .spectrum-Popover--start-top,
 :host([open]) .spectrum-Popover--start {
     transform: translateX(
-        calc(
-            var(
-                    --mod-popover-animation-distance,
-                    var(--spectrum-popover-animation-distance)
-                ) * -1
+            calc(
+                var(
+                        --mod-popover-animation-distance,
+                        var(--spectrum-popover-animation-distance)
+                    ) * -1
+            )
         )
-    );
+        translateZ(0);
 }
 
 :host([open]) .spectrum-Popover--start-bottom:dir(rtl),
@@ -291,11 +301,12 @@ governing permissions and limitations under the License.
 :host([dir='rtl'][open]) .spectrum-Popover--start-top,
 :host([dir='rtl'][open]) .spectrum-Popover--start {
     transform: translateX(
-        var(
-            --mod-popover-animation-distance,
-            var(--spectrum-popover-animation-distance)
+            var(
+                --mod-popover-animation-distance,
+                var(--spectrum-popover-animation-distance)
+            )
         )
-    );
+        translateZ(0);
 }
 
 :host([tip]) .spectrum-Popover--end-bottom,
@@ -314,11 +325,12 @@ governing permissions and limitations under the License.
 :host([open]) .spectrum-Popover--end-top,
 :host([open]) .spectrum-Popover--end {
     transform: translateX(
-        var(
-            --mod-popover-animation-distance,
-            var(--spectrum-popover-animation-distance)
+            var(
+                --mod-popover-animation-distance,
+                var(--spectrum-popover-animation-distance)
+            )
         )
-    );
+        translateZ(0);
 }
 
 :host([open]) .spectrum-Popover--end-bottom:dir(rtl),
@@ -328,13 +340,14 @@ governing permissions and limitations under the License.
 :host([dir='rtl'][open]) .spectrum-Popover--end-top,
 :host([dir='rtl'][open]) .spectrum-Popover--end {
     transform: translateX(
-        calc(
-            var(
-                    --mod-popover-animation-distance,
-                    var(--spectrum-popover-animation-distance)
-                ) * -1
+            calc(
+                var(
+                        --mod-popover-animation-distance,
+                        var(--spectrum-popover-animation-distance)
+                    ) * -1
+            )
         )
-    );
+        translateZ(0);
 }
 
 :host([tip]) #tip,

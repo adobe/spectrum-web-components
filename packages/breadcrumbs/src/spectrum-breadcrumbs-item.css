@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -137,7 +137,7 @@ governing permissions and limitations under the License.
         --mod-breadcrumbs-text-spacing-block-end,
         var(--spectrum-breadcrumbs-text-spacing-block-end)
     );
-    -webkit-text-decoration: none;
+    text-decoration: none;
     text-decoration: none;
     display: block;
     position: relative;
@@ -171,7 +171,7 @@ governing permissions and limitations under the License.
 
 #item-link[href]:focus-visible,
 #item-link[tabindex]:focus-visible {
-    -webkit-text-decoration: underline;
+    text-decoration: underline;
     text-decoration: underline;
     text-decoration-thickness: var(
         --mod-breadcrumbs-text-decoration-thickness,
@@ -186,7 +186,7 @@ governing permissions and limitations under the License.
 @media (hover: hover) {
     #item-link[href]:hover,
     #item-link[tabindex]:hover {
-        -webkit-text-decoration: underline;
+        text-decoration: underline;
         text-decoration: underline;
         text-decoration-thickness: var(
             --mod-breadcrumbs-text-decoration-thickness,
