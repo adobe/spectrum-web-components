@@ -16,59 +16,20 @@ jobs:
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
 
-            - name: Install semver
-              run: npm install -g semver
-
             - name: Set Git identity
               run: |
                   git config --global user.email "support+actions@github.com"
                   git config --global user.name "github-actions-bot"
 
-            - name: Get Lerna current version
-              id: get_lerna_version
-              run: |
-                  CURRENT_VERSION=$(yarn lerna ls --json | jq -r '.[0].version')
-                  echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
-
-            - name: Calculate next minor version
-              id: calculate_next_minor_version
-              run: |
-                  NEXT_MINOR_VERSION=$(semver "${{ steps.get_lerna_version.outputs.version }}" -i minor)
-                  echo "next_minor_version=$NEXT_MINOR_VERSION" >> $GITHUB_OUTPUT
-
-            - name: Get latest published beta version
-              id: get_latest_published_beta
-              run: |
-                  LATEST_BETA_VERSION=$(npm view @spectrum-web-components/button@beta version || echo "none")
-                  echo "latest_beta_version=$LATEST_BETA_VERSION" >> $GITHUB_OUTPUT
-
-            - name: Calculate next beta version
-              id: calculate_next_beta_version
-              run: |
-                  NEXT_MINOR_VERSION="${{ steps.calculate_next_minor_version.outputs.next_minor_version }}"
-                  LATEST_BETA_VERSION="${{ steps.get_latest_published_beta.outputs.latest_beta_version }}"
-
-                  if [ "$LATEST_BETA_VERSION" == "none" ]; then
-                      BETA_VERSION="$NEXT_MINOR_VERSION-beta.0"
-                  else
-                      LATEST_BETA_BASE_VERSION=$(echo "$LATEST_BETA_VERSION" | sed 's/-beta\.[0-9]*//')
-
-                      if [ "$NEXT_MINOR_VERSION" != "$LATEST_BETA_BASE_VERSION" ]; then
-                          BETA_VERSION="$NEXT_MINOR_VERSION-beta.0"
-                      else
-                          CURRENT_BETA_NUMBER=$(echo "$LATEST_BETA_VERSION" | sed 's/.*-beta\.\([0-9]\+\)/\1/')
-                          NEXT_BETA_NUMBER=$((CURRENT_BETA_NUMBER + 1))
-                          BETA_VERSION="$NEXT_MINOR_VERSION-beta.$NEXT_BETA_NUMBER"
-                      fi
-                  fi
-
-                  echo "beta_version=$BETA_VERSION" >> $GITHUB_OUTPUT
-
             - name: Update package versions for beta release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                  yarn lerna version "${{ steps.calculate_next_beta_version.outputs.beta_version }}" --no-git-tag-version --no-push --yes
+                  yarn changeset pre enter beta
+                  # Apply the changeset with specific beta tag
+                  yarn changeset version
 
-            - name: Configure NPM for Lerna publish
+            - name: Configure NPM for changeset publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
@@ -78,6 +39,7 @@ jobs:
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
-                  git commit -am "chore: publish beta version ${{ steps.calculate_next_beta_version.outputs.beta_version }}"
-                  yarn prelerna-publish
-                  yarn lerna publish from-package --dist-tag beta --no-git-tag-version --no-push --yes
+                  git commit -am "chore: publish beta version"
+                  yarn prepublishOnly
+                  yarn changeset publish --no-git-tag
+                  git reset --hard HEAD^

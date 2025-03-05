@@ -7,7 +7,7 @@ Users with permissions in the `@spectrum-web-components` organization on NPM can
 3. Run `nvm use` assumes a Node Version Manager install, and confirm your on an operable version of Node.
 4. `yarn install`
 5. `npm whoami` ensure that you are logged in with the user account for the public NPM registry
-6. `yarn lerna-publish`
+6. `yarn changeset-publish`
 7. Scan the version summary for any unexpected changes.
     - Changes to the _major_ versions number are likely to point to undesired version numbers.
     - Changes to the _minor_ or _feature_ version number should be confirmed as correct against the changes that have been made since the last release.
@@ -23,11 +23,7 @@ Users with permissions in the `@spectrum-web-components` organization on NPM can
 
 The docs site will publish automatically if the `#publish` string is included in the commit message and the check suite runs successfully.
 
-If publishing fails with an error, check the [list of tags](https://github.com/adobe/spectrum-web-components/tags) to see if new tags have been released for your publishing attempt. If they have, then `yarn lerna-publish` will no longer work. Instead, you'll need to run:
-
-```
-yarn lerna-publish from-package
-```
+If publishing fails with an error, check the [list of tags](https://github.com/adobe/spectrum-web-components/tags) to see if new tags have been released for your publishing attempt. If they were, run `yarn changeset-publish` again.
 
 ### Publishing the docs site manually
 
