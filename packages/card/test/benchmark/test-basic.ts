@@ -17,7 +17,7 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 measureFixtureCreation(html`
     <sp-card variant="gallery" heading="Card Heading" subheading="JPG">
         <img
-            slot="preview"
+            slot="image"
             src="https://picsum.photos/532/192"
             alt="Demo Graphic"
         />
