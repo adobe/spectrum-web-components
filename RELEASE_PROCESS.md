@@ -23,7 +23,7 @@ Users with permissions in the `@spectrum-web-components` organization on NPM can
 
 The docs site will publish automatically if the `#publish` string is included in the commit message and the check suite runs successfully.
 
-If publishing fails with an error, check the [list of tags](https://github.com/adobe/spectrum-web-components/tags) to see if new tags have been released for your publishing attempt. If they have, then you have to again do `yarn changeset-publish`
+If publishing fails with an error, check the [list of tags](https://github.com/adobe/spectrum-web-components/tags) to see if new tags have been released for your publishing attempt. If they were, run `yarn changeset-publish` again.
 
 ### Publishing the docs site manually
 
