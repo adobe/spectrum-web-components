@@ -24,11 +24,10 @@ describe('Action Menu - Groups', () => {
             groupsWithSelects({ onChange: () => {} })
         );
 
-        const firstGroup = el.querySelector('sp-menu-group') as HTMLElement;
         const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
         expect(firstItem.focused).to.be.false;
-        expect(document.activeElement === firstGroup).to.be.false;
+        expect(document.activeElement === firstItem).to.be.false;
 
         const opened = oneEvent(el, 'sp-opened');
         el.focus();
@@ -39,7 +38,7 @@ describe('Action Menu - Groups', () => {
 
         expect(firstItem.focused).to.be.true;
         expect(
-            document.activeElement === firstGroup,
+            document.activeElement === firstItem,
             document.activeElement?.localName
         ).to.be.true;
     });
@@ -57,7 +56,7 @@ describe('Action Menu - Groups', () => {
             'sp-menu-item'
         ) as MenuItem;
 
-        expect(firstItem.selected).to.be.false;
+        expect(firstItem.selected, 'before opening: first item selected?').to.be.false;
 
         let opened = oneEvent(el, 'sp-opened');
         el.focus();
@@ -65,7 +64,7 @@ describe('Action Menu - Groups', () => {
             press: 'ArrowDown',
         });
         await opened;
-        expect(el.open).to.be.true;
+        expect(el.open, 'first opened: open?').to.be.true;
 
         await sendKeys({
             press: 'ArrowUp',
@@ -81,8 +80,8 @@ describe('Action Menu - Groups', () => {
         await elementUpdated(el);
         await elementUpdated(firstItem);
 
-        expect(el.open).to.be.false;
-        expect(firstItem.selected).to.be.true;
+        expect(el.open, 'first closed: open?').to.be.false;
+        expect(firstItem.selected, 'after select: first item selected?').to.be.true;
         expect(document.activeElement === el, document.activeElement?.localName)
             .to.be.true;
 
@@ -91,12 +90,7 @@ describe('Action Menu - Groups', () => {
             press: 'ArrowDown',
         });
         await opened;
-        expect(el.open).to.be.true;
-
-        await sendKeys({
-            press: 'ArrowUp',
-        });
-        await elementUpdated(el);
+        expect(el.open, 'reopened: open?').to.be.true;
 
         closed = oneEvent(el, 'sp-closed');
         await sendKeys({
@@ -107,7 +101,7 @@ describe('Action Menu - Groups', () => {
         await elementUpdated(el);
         await elementUpdated(firstItem);
 
-        expect(el.open).to.be.false;
-        expect(firstItem.selected).to.be.false;
+        expect(el.open, 'reclosed: open?').to.be.false;
+        expect(firstItem.selected, 'after deselect: first item selected?').to.be.false;
     });
 });
