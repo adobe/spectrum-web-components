@@ -64,10 +64,6 @@ type SelectorComponentWithRegex = SelectorComponent & {
 };
 
 type Conversion = {
-    /**
-     * By defaults `.spectrum`, `.spectrum--dark`, etc. are excluded
-     */
-    allowThemeRules?: boolean;
     components: (SelectorConversion | ComplexSelectorConversion)[];
     /**
      * Selectors exactly matching the array of Selector Components present will be excluded
@@ -93,10 +89,6 @@ type Conversion = {
      * Exclude Selectors that do not feature the Selector Components included herein
      */
     requireComponentPresence?: SelectorComponentWithRegex[];
-    /**
-     * Create a system-overrides.css file that acts as a bridge between different themes
-     */
-    systemOverrides?: boolean;
 };
 
 export type SpectrumCSSConverter = {
