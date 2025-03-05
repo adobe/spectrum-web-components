@@ -31,7 +31,8 @@ import {
     wrapperButtons,
     wrapperButtonsUnderlay,
     wrapperDismissable,
-    wrapperDismissableUnderlayError,
+    wrapperDismissableunderlay,
+    wrapperErrorAlertDialog,
     wrapperFullscreen,
     wrapperHeadlineVisibilityNone,
     wrapperLabeledHero,
@@ -185,7 +186,7 @@ describe('Dialog Wrapper', () => {
     });
     it('dismisses via clicking the underlay when [dismissable]', async () => {
         const test = await styledFixture<DialogWrapper>(
-            wrapperDismissableUnderlayError()
+            wrapperDismissableunderlay()
         );
         const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
         await elementUpdated(el);
@@ -196,6 +197,25 @@ describe('Dialog Wrapper', () => {
         await elementUpdated(el);
         expect(el.open).to.be.false;
     });
+    it('renders sp-alert-dialog when error attribute is added', async () => {
+        const test = await styledFixture<DialogWrapper>(
+            wrapperErrorAlertDialog()
+        );
+        const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
+
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+
+        const alertDialog = el.shadowRoot?.querySelector('sp-alert-dialog');
+        expect(alertDialog).to.exist;
+        expect(alertDialog?.getAttribute('variant')).to.equal('error');
+        const heading = alertDialog?.querySelector('h2');
+        if (el.headline) {
+            expect(heading).to.exist;
+            expect(heading?.textContent?.trim()).to.equal(el.headline);
+        }
+    });
+
     it('does not dismiss via clicking the underlay :not([dismissable])', async () => {
         const el = await styledFixture<DialogWrapper>(wrapperButtonsUnderlay());
         await elementUpdated(el);
