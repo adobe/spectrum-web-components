@@ -27,7 +27,6 @@ const config = {
             inPackage: '@spectrum-css/actionbutton',
             outPackage: 'action-button',
             fileName: 'action-button',
-            systemOverrides: true,
             excludeByComponents: [
                 {
                     type: 'type',
