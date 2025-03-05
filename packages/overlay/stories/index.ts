@@ -158,19 +158,85 @@ class AreIconsPresent extends HTMLElement {
         // Create an array of promises for each icon to load
         const iconLoadPromises = Array.from(icons).map((icon) => {
             return new Promise<void>((resolve) => {
+                // First check if the icon has an updateComplete promise we can use
+                if (
+                    'updateComplete' in icon &&
+                    typeof icon.updateComplete?.then === 'function'
+                ) {
+                    icon.updateComplete.then(() => {
+                        resolve();
+                    });
+                    return;
+                }
+
                 // Check if the icon has a src attribute
                 const src = icon.getAttribute('src');
                 if (!src) {
+                    // No src, check if it has an internal img element
+                    const imgElement = icon.querySelector('img');
+                    if (imgElement) {
+                        if (imgElement.complete) {
+                            // Image is already loaded
+                            resolve();
+                        } else {
+                            // Wait for the image to load
+                            imgElement.addEventListener(
+                                'load',
+                                () => {
+                                    resolve();
+                                },
+                                { once: true }
+                            );
+                            imgElement.addEventListener(
+                                'error',
+                                () => {
+                                    console.warn(`Failed to load icon image`);
+                                    resolve();
+                                },
+                                { once: true }
+                            );
+                        }
+                        return;
+                    }
+
+                    // No src and no img element, resolve immediately
                     resolve();
                     return;
                 }
 
-                // Create a new image to check if the icon loads
+                // For icons with src attribute, check if there's an internal img element first
+                const imgElement = icon.querySelector('img');
+                if (imgElement) {
+                    if (imgElement.complete) {
+                        // Image is already loaded
+                        resolve();
+                    } else {
+                        // Wait for the image to load
+                        imgElement.addEventListener(
+                            'load',
+                            () => {
+                                resolve();
+                            },
+                            { once: true }
+                        );
+                        imgElement.addEventListener(
+                            'error',
+                            () => {
+                                console.warn(
+                                    `Failed to load icon image: ${src}`
+                                );
+                                resolve();
+                            },
+                            { once: true }
+                        );
+                    }
+                    return;
+                }
+
+                // Fallback to creating a new Image instance
                 const img = new Image();
                 img.onload = () => resolve();
                 img.onerror = () => {
-                    // Even if the icon fails to load, we'll resolve the promise
-                    // to prevent the story from hanging
                     console.warn(`Failed to load icon: ${src}`);
                     resolve();
                 };
