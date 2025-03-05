@@ -4,7 +4,7 @@ executors:
     node:
         docker:
             - image: mcr.microsoft.com/playwright:v1.44.0
-        resource_class: large
+        resource_class: xlarge
         environment:
             NODE_ENV: development
 parameters:
@@ -55,7 +55,6 @@ commands:
                 type: string
             regression_dir:
                 type: string
-        resource_class: xlarge
         steps:
             - restore_cache:
                   name: Restore Golden Images Cache
