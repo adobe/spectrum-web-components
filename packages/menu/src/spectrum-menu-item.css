@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 ::slotted([slot='icon']) {
     fill: var(
         --highcontrast-menu-item-color-default,
@@ -28,9 +29,6 @@ governing permissions and limitations under the License.
     );
     grid-area: iconArea;
     align-self: start;
-}
-
-::slotted([slot='icon']) {
     margin-inline-end: var(
         --mod-menu-item-label-text-to-visual,
         var(--spectrum-menu-item-label-text-to-visual)

@@ -311,3 +311,5 @@ export class IconsDemo extends SpectrumElement {
         `;
     }
 }
+
+export default meta;

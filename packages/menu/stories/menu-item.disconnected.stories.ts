@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, LitElement, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
@@ -172,7 +173,7 @@ class MyPicker extends XElement {
 
 customElements.define('my-picker', MyPicker);
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-menu-item',
     title: 'Menu Item/Disconnected',
 };
@@ -189,3 +190,5 @@ disconnectedChildItems.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
+
+export default meta;

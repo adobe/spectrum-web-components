@@ -10,11 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { Properties } from '../../action-menu/stories/action-menu.stories';
+import type { Meta } from '@storybook/web-components';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { argTypes } from './args';
-import { StoryArgs, Template } from './template';
+import type { Properties } from './args';
+import { Template } from './template';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Picker/Pending',
     component: 'sp-picker',
     argTypes,
@@ -23,14 +26,16 @@ export default {
     },
 };
 
-export const S = (args: StoryArgs): TemplateResult =>
+export const S = (args: Properties): TemplateResult =>
     Template({ ...args, size: 's' });
 
-export const M = (args: StoryArgs): TemplateResult =>
+export const M = (args: Properties): TemplateResult =>
     Template({ ...args, size: 'm' });
 
-export const L = (args: StoryArgs): TemplateResult =>
+export const L = (args: Properties): TemplateResult =>
     Template({ ...args, size: 'l' });
 
-export const XL = (args: StoryArgs): TemplateResult =>
+export const XL = (args: Properties): TemplateResult =>
     Template({ ...args, size: 'xl' });
+
+export default meta;

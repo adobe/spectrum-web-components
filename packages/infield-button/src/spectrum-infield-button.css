@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     :host(:is(:active, [active])):not(:disabled),
     :host(:focus-visible):not(:disabled) {
@@ -46,8 +47,6 @@ governing permissions and limitations under the License.
 }
 
 .fill {
-    block-size: 100%;
-    inline-size: 100%;
     background-color: var(
         --mod-infield-button-background-color,
         var(--spectrum-infield-button-background-color)
@@ -64,6 +63,8 @@ governing permissions and limitations under the License.
             var(--spectrum-infield-button-border-color)
         )
     );
+    block-size: 100%;
+    inline-size: 100%;
     padding: var(
         --mod-infield-button-fill-padding,
         var(--spectrum-infield-button-fill-padding)

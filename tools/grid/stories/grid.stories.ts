@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import {
     css,
     html,
@@ -31,7 +32,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import type { ActionBar } from '@spectrum-web-components/action-bar';
 import type { Grid } from '@spectrum-web-components/grid';
 
-export default {
+const meta: Meta = {
     title: 'Grid',
     component: 'sp-grid',
 };
@@ -312,3 +313,5 @@ scrollParentInAssignedSlot.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
+
+export default meta;

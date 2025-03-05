@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import {
     html,
     nothing,
@@ -18,7 +19,6 @@ import {
 } from '@spectrum-web-components/base';
 import { state } from '@spectrum-web-components/base/src/decorators.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
-
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
@@ -27,118 +27,15 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-properties.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-view-all-tags.js';
 import { ActionGroup } from '@spectrum-web-components/action-group/src/ActionGroup.js';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Action Group/Tooltips',
     component: 'sp-action-group',
-    args: {
-        compact: false,
-        emphasized: false,
-        justified: false,
-        quiet: false,
-        vertical: false,
-        selects: 'none',
-        size: 'm',
-    },
-    argTypes: {
-        compact: {
-            name: 'compact',
-            description:
-                'Visually joins the buttons together to clarify their relationship to one another.',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        emphasized: {
-            name: 'emphasized',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        justified: {
-            name: 'justified',
-            description:
-                'Aligns the action group items to use all the available space on that line.',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        quiet: {
-            name: 'quiet',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        vertical: {
-            name: 'vertical',
-            description: 'Changes the orientation of the action group.',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        selects: {
-            name: 'selects',
-            description:
-                'Whether the elements selects its children and how many it can select at a time.',
-            table: {
-                defaultValue: { summary: '' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['none', 'single', 'multiple'],
-            },
-        },
-        size: {
-            name: 'size',
-            description: 'The size at which to display the action group.',
-            type: { name: 'string', required: true },
-            table: {
-                type: { summary: '"s" | "m" | "l" | "xl"' },
-                defaultValue: { summary: 'm' },
-            },
-            control: {
-                type: 'select',
-                options: ['s', 'm', 'l', 'xl'],
-            },
-        },
-    },
+    args,
+    argTypes,
 };
-
-interface Properties {
-    compact?: boolean;
-    emphasized?: boolean;
-    justified?: boolean;
-    quiet?: boolean;
-    vertical?: boolean;
-    selects?: 'none' | 'single' | 'multiple';
-    size?: 's' | 'm' | 'l' | 'xl';
-    [prop: string]: unknown;
-}
 
 const template = (args: Properties): TemplateResult => {
     requestAnimationFrame(() => {
@@ -412,3 +309,5 @@ customElements.define('action-group-tooltips', ActionGroupTooltips);
 export const controlled = (): TemplateResult => html`
     <action-group-tooltips></action-group-tooltips>
 `;
+
+export default meta;

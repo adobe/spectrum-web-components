@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/top-nav/sp-top-nav.js';
@@ -28,7 +29,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-link.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-search.js';
 import { avatar, logo } from './images';
 
-export default {
+const meta: Meta = {
     title: 'Top Nav',
     component: 'sp-top-nav',
 };
@@ -181,3 +182,5 @@ export const Modes = (): TemplateResult => {
         </sp-top-nav>
     `;
 };
+
+export default meta;

@@ -10,13 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/field-group/sp-field-group.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/radio/sp-radio.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Field Group',
     component: 'sp-field-group',
 };
@@ -44,3 +45,5 @@ export const vertical = (): TemplateResult => {
         </sp-field-group>
     `;
 };
+
+export default meta;

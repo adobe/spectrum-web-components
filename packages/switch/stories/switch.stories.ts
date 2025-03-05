@@ -9,51 +9,28 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import '@spectrum-web-components/switch/sp-switch.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { spreadProps } from '../../../test/lit-helpers.js';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-switch',
     title: 'Switch',
-
-    argTypes: {
-        size: {
-            name: 'size',
-            type: { name: 'string', required: false },
-            description: 'The size at which to display the Switch element',
-            table: {
-                type: { summary: '"s" | "m" | "l" | "xl"' },
-                defaultValue: { summary: 'm' },
-            },
-            control: {
-                type: 'text',
-            },
-        },
-    },
-    args: {
-        size: 'm',
-    },
+    argTypes,
+    args,
 };
 
-export interface StoryArgs {
-    Autofocus?: boolean;
-    checked?: boolean;
-    Disabled?: boolean;
-    disabledChecked?: boolean;
-    emphasized?: boolean;
-    readonly?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    [prop: string]: unknown;
-}
-
-function renderSwitch(args: StoryArgs): TemplateResult {
+function renderSwitch(args: Properties): TemplateResult {
     return html`
         <sp-switch ${spreadProps(args)}>Switch</sp-switch>
     `;
 }
 
-export const Default = (args: StoryArgs): TemplateResult => renderSwitch(args);
+export const Default = (args: Properties): TemplateResult => renderSwitch(args);
 
 export const Checked = (): TemplateResult => {
     return html`
@@ -107,3 +84,5 @@ export const disabledChecked = (): TemplateResult => {
         <sp-switch disabled checked>Switch</sp-switch>
     `;
 };
+
+export default meta;

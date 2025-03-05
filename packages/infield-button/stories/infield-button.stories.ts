@@ -9,36 +9,40 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import {
-    args,
-    argTypes,
     chevronDown,
     chevronUp,
-    StoryArgs,
     Template,
 } from './index.js';
+import {
+    args,
+    argTypes,
+    Properties,
+} from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Infield Button',
     component: 'sp-infield-button',
     argTypes,
     args,
 };
 
-export const Default = (args: StoryArgs): TemplateResult => Template(args);
-export const disabled = (args: StoryArgs): TemplateResult => Template(args);
+export const Default = (args: Properties): TemplateResult => Template(args);
+export const disabled = (args: Properties): TemplateResult => Template(args);
 disabled.args = {
     disabled: true,
 };
 
-export const inlineStart = (args: StoryArgs): TemplateResult => Template(args);
+export const inlineStart = (args: Properties): TemplateResult => Template(args);
 inlineStart.args = {
     inline: 'start',
 };
 
-export const inlineEnd = (args: StoryArgs): TemplateResult => Template(args);
+export const inlineEnd = (args: Properties): TemplateResult => Template(args);
 inlineEnd.args = {
     inline: 'end',
 };
@@ -56,7 +60,9 @@ export const stacked = (): TemplateResult => html`
     })}
 `;
 
-export const quiet = (args: StoryArgs): TemplateResult => Template(args);
+export const quiet = (args: Properties): TemplateResult => Template(args);
 quiet.args = {
     quiet: true,
 };
+
+export default meta;

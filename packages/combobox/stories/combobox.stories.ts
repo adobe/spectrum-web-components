@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import {
     html,
     LitElement,
@@ -25,54 +26,48 @@ import { Combobox, ComboboxOption } from '../src/Combobox.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 import { query, state } from '@spectrum-web-components/base/src/decorators.js';
 import { live } from '@spectrum-web-components/base/src/directives.js';
-import { countries, fruits, StoryArgs } from './index.js';
+import { countries, fruits } from './index.js';
 import { Template } from './template.js';
-import { argTypes } from './args.js';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Combobox',
     component: 'sp-combobox',
-    args: {
-        open: false,
-        disabled: false,
-        invalid: false,
-        pending: false,
-        readonly: false,
-        quiet: false,
-    },
+    args,
     argTypes,
 };
 
-export const Default = (args: StoryArgs): TemplateResult => Template(args);
+export const Default = (args: Properties): TemplateResult => Template(args);
 
-export const disabled = (args: StoryArgs): TemplateResult => Template(args);
+export const disabled = (args: Properties): TemplateResult => Template(args);
 disabled.args = {
     disabled: true,
     value: 'Azerbaijan',
 };
 
-export const invalid = (args: StoryArgs): TemplateResult => Template(args);
+export const invalid = (args: Properties): TemplateResult => Template(args);
 invalid.args = {
     invalid: true,
 };
 
-export const pending = (args: StoryArgs): TemplateResult => Template(args);
+export const pending = (args: Properties): TemplateResult => Template(args);
 pending.args = {
     pending: true,
 };
 
-export const quiet = (args: StoryArgs): TemplateResult => Template(args);
+export const quiet = (args: Properties): TemplateResult => Template(args);
 quiet.args = {
     quiet: true,
 };
 
-export const readonly = (args: StoryArgs): TemplateResult => Template(args);
+export const readonly = (args: Properties): TemplateResult => Template(args);
 readonly.args = {
     readonly: true,
     value: 'Solomon Islands',
 };
 
-export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
+export const hasDisabledItems = (args: Properties): TemplateResult => {
     // let's create a new array from countries and set the disabled property to true if the value is in args.disabledItems
     const countriesWithDisabledItems = countries.map((country) => ({
         ...country,
@@ -123,7 +118,7 @@ hasDisabledItems.swc_vrt = {
     skip: true,
 };
 
-export const listAutocomplete = (args: StoryArgs): TemplateResult =>
+export const listAutocomplete = (args: Properties): TemplateResult =>
     Template(args);
 listAutocomplete.args = {
     autocomplete: 'list',
@@ -284,3 +279,5 @@ controlled.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
+
+export default meta;

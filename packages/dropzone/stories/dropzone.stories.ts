@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import {
     html,
     LitElement,
@@ -22,46 +24,20 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import { illustration } from '../test/test-svg';
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 import '@spectrum-web-components/link/sp-link.js';
+import type {Properties} from './args.js';
+import { argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-dropzone',
     title: 'Dropzone',
     args: {
         isDragged: false,
         isFilled: false,
     },
-    argTypes: {
-        isDragged: {
-            name: 'isDragged',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        isFilled: {
-            name: 'isFilled',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-    },
+    argTypes,
 };
 
-type StoryArgs = {
-    isDragged?: boolean;
-    isFilled?: boolean;
-};
-
-export const Default = (args: StoryArgs): TemplateResult => {
+export const Default = (args: Properties): TemplateResult => {
     return html`
         <sp-dropzone id="dropzone" tabindex="0" ?dragged=${args.isDragged}>
             <sp-illustrated-message heading="Drag and Drop Your File">
@@ -89,7 +65,7 @@ export const Default = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const Dragged = (args: StoryArgs): TemplateResult => {
+export const Dragged = (args: Properties): TemplateResult => {
     return html`
         <sp-dropzone id="dropzone" tabindex="0" ?dragged=${args.isDragged}>
             <sp-illustrated-message heading="Drag and Drop Your File">
@@ -120,7 +96,7 @@ Dragged.args = {
     isDragged: true,
 };
 
-export const Filled = (args: StoryArgs): TemplateResult => {
+export const Filled = (args: Properties): TemplateResult => {
     return html`
         <sp-dropzone id="dropzone" ?filled=${args.isFilled}>
             Filled dropzone
@@ -208,3 +184,5 @@ export const Controlled = (): TemplateResult => {
         <controlled-dropzone></controlled-dropzone>
     `;
 };
+
+export default meta;

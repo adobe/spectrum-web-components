@@ -18,7 +18,6 @@ import { createRequire } from 'node:module';
 import { stripIndent } from 'common-tags';
 import 'colors';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
 
 const log = {
@@ -32,7 +31,12 @@ const getPackagePath = (packageName) => {
     // Escape hatch for local packages: @spectrum-web-components
     if (packageName.startsWith('@spectrum-web-components')) {
         return path.resolve(
-            path.join(__dirname, '..', 'node_modules', packageName)
+            path.join(
+                path.dirname(fileURLToPath(import.meta.url)),
+                '..',
+                'node_modules',
+                packageName
+            )
         );
     }
 
@@ -56,7 +60,12 @@ const wrapCSSResult = (content) => {
     `;
 };
 
-const licensePath = path.resolve(__dirname, '..', 'config', 'license.js');
+const licensePath = path.resolve(
+    path.dirname(fileURLToPath(import.meta.url)),
+    '..',
+    'config',
+    'license.js'
+);
 let header = '';
 if (fs.existsSync(licensePath)) {
     header = fs.readFileSync(licensePath, 'utf8');
@@ -66,10 +75,10 @@ if (fs.existsSync(licensePath)) {
 /**
  * Processes a CSS file using lightningcss, minifies it, and outputs a TypeScript module.
  * The output module includes license headers and wraps the CSS in a template literal.
- * 
+ *
  * @param {string} cssPath - Path to the CSS file to process
  * @returns {Promise<void>} A promise that resolves when processing is complete
- * 
+ *
  */
 export const processCSS = async (cssPath) => {
     return bundleAsync({

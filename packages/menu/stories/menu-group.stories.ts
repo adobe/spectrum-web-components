@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import { MenuGroup } from '@spectrum-web-components/menu';
@@ -22,7 +24,7 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 
 import './index.js';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-menu',
     title: 'Menu Group',
 };
@@ -164,3 +166,5 @@ export const inherit = (): TemplateResult => {
         </sp-popover>
     `;
 };
+
+export default meta;

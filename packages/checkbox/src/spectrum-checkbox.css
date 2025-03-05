@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-checkbox-content-color-default: var(
         --spectrum-neutral-content-color-default
@@ -134,9 +135,9 @@ governing permissions and limitations under the License.
         )
     );
     min-block-size: var(--mod-checkbox-height, var(--spectrum-checkbox-height));
-    max-inline-size: 100%;
     vertical-align: top;
     align-items: flex-start;
+    max-inline-size: 100%;
     display: inline-flex;
     position: relative;
 }
@@ -389,18 +390,6 @@ governing permissions and limitations under the License.
         );
     }
 
-    :host([emphasized][indeterminate]:hover) #box:before,
-    :host([emphasized][indeterminate]:hover) #input:checked + #box:before,
-    :host([emphasized]:hover) #input:checked + #box:before {
-        border-color: var(
-            --highcontrast-checkbox-color-hover,
-            var(
-                --mod-checkbox-emphasized-color-hover,
-                var(--spectrum-checkbox-emphasized-color-hover)
-            )
-        );
-    }
-
     :host([emphasized][invalid][invalid][indeterminate]:hover) #box:before,
     :host([emphasized][invalid][invalid][indeterminate]:hover)
         #input:checked
@@ -507,11 +496,11 @@ governing permissions and limitations under the License.
         var(--spectrum-checkbox-control-color-default)
     );
     box-sizing: border-box;
-    inline-size: 100%;
-    block-size: 100%;
     opacity: 0;
     z-index: 1;
     cursor: pointer;
+    block-size: 100%;
+    inline-size: 100%;
     margin: 0;
     padding: 0;
     font-family: inherit;

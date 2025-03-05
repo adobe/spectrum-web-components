@@ -10,12 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 import { thumbnail as image } from './images.js';
 
-export default {
+const meta: Meta = {
     title: 'Thumbnail/Sizes',
     component: 'sp-thumbnail',
 };
@@ -67,3 +68,5 @@ export const size800 = (): TemplateResult => thumbnail({ size: '800' });
 export const size900 = (): TemplateResult => thumbnail({ size: '900' });
 
 export const size1000 = (): TemplateResult => thumbnail({ size: '1000' });
+
+export default meta;

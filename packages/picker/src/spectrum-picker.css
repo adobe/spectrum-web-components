@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 #button {
     cursor: pointer;
     -webkit-user-select: none;
@@ -876,9 +877,9 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet]) #button:after {
+    border: none;
     block-size: auto;
     inline-size: auto;
-    border: none;
 }
 
 @media (hover: hover) {

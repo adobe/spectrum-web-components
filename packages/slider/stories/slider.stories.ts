@@ -9,87 +9,29 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/slider/sp-slider-handle.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
-import {
-    Slider,
-    SliderHandle,
-    variants,
-} from '@spectrum-web-components/slider';
+import { Slider, SliderHandle } from '@spectrum-web-components/slider';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-slider',
     title: 'Slider',
-    argTypes: {
-        onInput: { action: 'input' },
-        onChange: { action: 'change' },
-        variant: {
-            name: 'Variant',
-            description: 'Determines the style of slider.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: undefined },
-            },
-            control: {
-                type: 'inline-radio',
-                options: [undefined, ...variants],
-            },
-        },
-        tickStep: {
-            name: 'Tick Step',
-            description: 'Tick spacing on slider.',
-            table: {
-                type: { summary: 'number' },
-                defaultValue: { summary: 0.1 },
-            },
-            control: {
-                type: 'number',
-            },
-        },
-        labelVisibility: {
-            name: 'Label Visibility',
-            description: 'The labels visibily available in the UI',
-            table: {
-                type: { summary: '"text" | "value" | "none" | undefined' },
-                defaultValue: { summary: undefined },
-            },
-            control: {
-                type: 'text',
-            },
-        },
-    },
-    args: {
-        variant: undefined,
-        tickStep: 0.1,
-        labelVisibility: undefined,
-        min: undefined,
-        max: undefined,
-        value: undefined,
-        step: undefined,
-    },
+    argTypes,
+    args,
 };
 
-export interface StoryArgs {
-    variant?: string;
-    tickStep?: number;
-    labelVisibility?: string;
-    onInput?: (val: string) => void;
-    onChange?: (val: string) => void;
-    min?: number;
-    max?: number;
-    value?: number;
-    step?: number;
-    [prop: string]: unknown;
-}
-
 const handleEvent =
-    ({ onInput, onChange }: StoryArgs) =>
+    ({ onInput, onChange }: Properties) =>
     (event: Event): void => {
         const { value } = event.target as Slider;
         if (onInput && event.type === 'input') {
@@ -100,7 +42,7 @@ const handleEvent =
     };
 
 const handleHandleEvent =
-    ({ onInput, onChange }: StoryArgs) =>
+    ({ onInput, onChange }: Properties) =>
     (event: Event): void => {
         const target = event.target as SliderHandle;
         if (target.value != null) {
@@ -122,7 +64,7 @@ const handleHandleEvent =
         }
     };
 
-export const Default = (args: StoryArgs = {}): TemplateResult => {
+export const Default = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
@@ -141,7 +83,7 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const Filled = (args: StoryArgs = {}): TemplateResult => {
+export const Filled = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
@@ -161,7 +103,7 @@ export const Filled = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const HasADefaultValue = (args: StoryArgs = {}): TemplateResult => {
+export const HasADefaultValue = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
@@ -181,7 +123,7 @@ export const HasADefaultValue = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const FillStart = (args: StoryArgs = {}): TemplateResult => {
+export const FillStart = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
@@ -202,7 +144,7 @@ export const FillStart = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
+export const FillStartWithValue = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
@@ -239,7 +181,7 @@ export const FillStartWithValue = (args: StoryArgs = {}): TemplateResult => {
 };
 
 export const FillStartWithNegativeMinRange = (
-    args: StoryArgs = {}
+    args: Properties = {}
 ): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
@@ -290,7 +232,7 @@ export const FillStartWithNegativeMinRange = (
     `;
 };
 
-export const autofocus = (args: StoryArgs = {}): TemplateResult => {
+export const autofocus = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin-inline: 20px;">
             <sp-slider
@@ -318,7 +260,7 @@ export const minimalDOM = (): TemplateResult => {
     `;
 };
 
-export const noVisibleTextLabel = (args: StoryArgs = {}): TemplateResult => {
+export const noVisibleTextLabel = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -340,7 +282,7 @@ noVisibleTextLabel.args = {
     labelVisibility: 'value',
 };
 
-export const noVisibleValueLabel = (args: StoryArgs = {}): TemplateResult => {
+export const noVisibleValueLabel = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -362,7 +304,7 @@ noVisibleValueLabel.args = {
     labelVisibility: 'text',
 };
 
-export const noVisibleLabels = (args: StoryArgs = {}): TemplateResult => {
+export const noVisibleLabels = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -384,7 +326,7 @@ noVisibleLabels.args = {
     labelVisibility: 'none',
 };
 
-export const px = (args: StoryArgs = {}): TemplateResult => {
+export const px = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -432,7 +374,7 @@ const editableDecorator = (story: () => TemplateResult): TemplateResult => {
     `;
 };
 
-export const max20 = (args: StoryArgs = {}): TemplateResult => {
+export const max20 = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 200px; margin: 12px 20px;">
             <sp-slider
@@ -459,7 +401,7 @@ max20.parameters = {
     chromatic: { disableSnapshot: true },
 };
 
-export const editable = (args: StoryArgs = {}): TemplateResult => {
+export const editable = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -490,7 +432,7 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/tray/sp-tray.js';
 
-export const Multiple = (args: StoryArgs): TemplateResult => {
+export const Multiple = (args: Properties): TemplateResult => {
     const updateSliderConfig = (
         min: number,
         max: number,
@@ -560,7 +502,7 @@ Multiple.args = {
 };
 
 export const editableWithDefaultValue = (
-    args: StoryArgs = {}
+    args: Properties = {}
 ): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
@@ -596,7 +538,7 @@ editableWithDefaultValue.parameters = {
 };
 
 export const editableWithFractionValue = (
-    args: StoryArgs = {}
+    args: Properties = {}
 ): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
@@ -626,7 +568,7 @@ editableWithFractionValue.parameters = {
     chromatic: { disableSnapshot: true },
 };
 
-export const editableDisabled = (args: StoryArgs = {}): TemplateResult => {
+export const editableDisabled = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -653,7 +595,7 @@ export const editableDisabled = (args: StoryArgs = {}): TemplateResult => {
 
 editable.decorators = [editableDecorator];
 
-export const editableCustom = (args: StoryArgs = {}): TemplateResult => {
+export const editableCustom = (args: Properties = {}): TemplateResult => {
     return html`
         <div
             style="width: 500px; margin: 12px 20px; --mod-stepper-width: 150px;"
@@ -678,7 +620,7 @@ export const editableCustom = (args: StoryArgs = {}): TemplateResult => {
 editableCustom.decorators = [editableDecorator];
 
 export const editableWithoutVisibleLabels = (
-    args: StoryArgs = {}
+    args: Properties = {}
 ): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
@@ -703,7 +645,7 @@ editableWithoutVisibleLabels.args = {
     labelVisibility: 'none',
 };
 
-export const hideStepper = (args: StoryArgs = {}): TemplateResult => {
+export const hideStepper = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -726,7 +668,7 @@ export const hideStepper = (args: StoryArgs = {}): TemplateResult => {
 
 hideStepper.decorators = [editableDecorator];
 
-export const Gradient = (args: StoryArgs = {}): TemplateResult => {
+export const Gradient = (args: Properties = {}): TemplateResult => {
     return html`
         <style>
             sp-slider {
@@ -767,7 +709,7 @@ Gradient.args = {
     variant: undefined,
 };
 
-export const tick = (args: StoryArgs = {}): TemplateResult => {
+export const tick = (args: Properties = {}): TemplateResult => {
     return html`
         <sp-slider
             label="Slider Label"
@@ -790,7 +732,7 @@ tick.args = {
     tickStep: 5,
 };
 
-export const tickLabels = (args: StoryArgs = {}): TemplateResult => {
+export const tickLabels = (args: Properties = {}): TemplateResult => {
     return html`
         <sp-slider
             label="Slider Label"
@@ -815,7 +757,7 @@ tickLabels.args = {
     tickStep: 5,
 };
 
-export const Disabled = (args: StoryArgs = {}): TemplateResult => {
+export const Disabled = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -831,7 +773,7 @@ export const Disabled = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const Quiet = (args: StoryArgs = {}): TemplateResult => {
+export const Quiet = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -849,7 +791,7 @@ export const Quiet = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const inPopover = (args: StoryArgs = {}): TemplateResult => {
+export const inPopover = (args: Properties = {}): TemplateResult => {
     return html`
         <sp-popover open style="min-width: 0">
             <sp-dialog no-divider>
@@ -869,7 +811,7 @@ export const inPopover = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const Indeterminate = (args: StoryArgs = {}): TemplateResult => {
+export const Indeterminate = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -888,7 +830,7 @@ export const Indeterminate = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const ExplicitHandle = (args: StoryArgs = {}): TemplateResult => {
+export const ExplicitHandle = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -906,7 +848,7 @@ export const ExplicitHandle = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const TwoHandles = (args: StoryArgs = {}): TemplateResult => {
+export const TwoHandles = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -940,7 +882,7 @@ TwoHandles.args = {
     tickStep: 10,
 };
 
-export const TwoHandlesPt = (args: StoryArgs = {}): TemplateResult => {
+export const TwoHandlesPt = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -978,7 +920,7 @@ TwoHandlesPt.args = {
     tickStep: 10,
 };
 
-export const ThreeHandlesPc = (args: StoryArgs = {}): TemplateResult => {
+export const ThreeHandlesPc = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -1015,7 +957,7 @@ ThreeHandlesPc.args = {
     variant: 'range',
 };
 
-export const ThreeHandlesOrdered = (args: StoryArgs = {}): TemplateResult => {
+export const ThreeHandlesOrdered = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -1085,14 +1027,14 @@ ThreeHandlesOrdered.args = {
 // One iteresting thing to note is that the normalization function
 // can also be used to enforce clamping.
 //
-export const ThreeHandlesComplex = (args: StoryArgs = {}): TemplateResult => {
+export const ThreeHandlesComplex = (args: Properties = {}): TemplateResult => {
     const values: { [key: string]: number } = {
         black: 50,
         gray: 4.98,
         white: 225,
     };
     const handleEvent =
-        ({ onInput, onChange }: StoryArgs) =>
+        ({ onInput, onChange }: Properties) =>
         (event: Event): void => {
             const target = event.target as SliderHandle;
             if (target.value != null) {
@@ -1217,7 +1159,7 @@ ThreeHandlesComplex.args = {
     tickStep: 10,
 };
 
-export const focusTabDemo = (args: StoryArgs = {}): TemplateResult => {
+export const focusTabDemo = (args: Properties = {}): TemplateResult => {
     const value = 50;
     const min = 0;
     const max = 100;
@@ -1259,7 +1201,7 @@ export const focusTabDemo = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
-export const WithPopover = (args: StoryArgs = {}): TemplateResult => {
+export const WithPopover = (args: Properties = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
             <sp-slider
@@ -1330,3 +1272,5 @@ WithPopover.parameters = {
         },
     },
 };
+
+export default meta;

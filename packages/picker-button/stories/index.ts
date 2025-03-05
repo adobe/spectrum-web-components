@@ -12,18 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-
-export type StoryArgs = {
-    active: boolean;
-    icon: TemplateResult;
-    invalid: boolean;
-    label: boolean | string;
-    open: boolean;
-    position?: 'right' | 'left';
-    quiet: boolean;
-    rounded: boolean;
-    size: 's' | 'm' | 'l' | 'xl';
-};
+import type { Properties } from './args.js';
 
 export const Template = ({
     active,
@@ -35,7 +24,7 @@ export const Template = ({
     quiet,
     rounded,
     size,
-}: StoryArgs): TemplateResult => {
+}: Properties): TemplateResult => {
     return html`
         <sp-picker-button
             ?active=${active}
@@ -56,31 +45,4 @@ export const Template = ({
                 : nothing}
         </sp-picker-button>
     `;
-};
-
-export const argTypes = {
-    argTypes: {
-        open: {
-            control: {
-                type: 'boolean',
-            },
-        },
-        position: {
-            control: {
-                type: 'inline-radio',
-                options: ['right', 'left'],
-            },
-        },
-        quiet: {
-            control: {
-                type: 'boolean',
-            },
-        },
-        size: {
-            control: {
-                type: 'inline-radio',
-                options: ['s', 'm', 'l', 'xl'],
-            },
-        },
-    },
 };

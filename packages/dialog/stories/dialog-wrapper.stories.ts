@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
@@ -25,51 +26,42 @@ import { landscape } from './images.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
 import '../../overlay/stories/index.js';
 import type { DialogWrapper } from '@spectrum-web-components/dialog';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Dialog Wrapper',
     component: 'sp-dialog-wrapper',
-    argTypes: {
-        onClose: { action: 'close' },
-        onConfirm: { action: 'confirm' },
-        onSecondary: { action: 'secondary' },
-        onCancel: { action: 'cancel' },
-    },
-};
-
-type StoryArgs = {
-    onClose?: (event: Event) => void;
-    onConfirm?: (event: Event) => void;
-    onSecondary?: (event: Event) => void;
-    onCancel?: (event: Event) => void;
+    argTypes,
+    args,
 };
 
 const handleClose =
-    ({ onClose }: StoryArgs) =>
+    ({ onClose }: Properties) =>
     (event: Event) => {
         if (onClose) onClose(event);
     };
 
 const handleConfirm =
-    ({ onConfirm }: StoryArgs) =>
+    ({ onConfirm }: Properties) =>
     (event: Event) => {
         if (onConfirm) onConfirm(event);
     };
 
 const handleSecondary =
-    ({ onSecondary }: StoryArgs) =>
+    ({ onSecondary }: Properties) =>
     (event: Event) => {
         if (onSecondary) onSecondary(event);
     };
 
 const handleCancel =
-    ({ onCancel }: StoryArgs) =>
+    ({ onCancel }: Properties) =>
     (event: Event) => {
         if (onCancel) onCancel(event);
     };
 
 export const wrapperLabeledHero = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
@@ -107,7 +99,7 @@ export const wrapperLabeledHero = (
 };
 
 export const wrapperDismissable = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
@@ -138,7 +130,7 @@ export const wrapperDismissable = (
 };
 
 export const wrapperDismissableUnderlay = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
@@ -169,7 +161,7 @@ export const wrapperDismissableUnderlay = (
 };
 
 export const form = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
@@ -253,7 +245,7 @@ export const form = (
 form.decorators = [isOverlayOpen];
 
 export const longContent = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
@@ -374,7 +366,7 @@ export const longContent = (
 longContent.decorators = [isOverlayOpen];
 
 export const longHeading = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
@@ -406,7 +398,7 @@ export const longHeading = (
 longHeading.decorators = [isOverlayOpen];
 
 export const wrapperDismissableUnderlayError = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
@@ -440,7 +432,7 @@ export const wrapperDismissableUnderlayError = (
 };
 
 export const wrapperButtons = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
@@ -464,7 +456,7 @@ export const wrapperButtons = (
 };
 
 export const wrapperButtonsUnderlay = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
@@ -489,7 +481,7 @@ export const wrapperButtonsUnderlay = (
 };
 
 export const wrapperFullscreen = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
@@ -512,7 +504,7 @@ export const wrapperFullscreen = (
 };
 
 export const wrapperWithHeadline = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
@@ -528,7 +520,7 @@ export const wrapperWithHeadline = (
 };
 
 export const wrapperWithHeadlineNoDivider = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
@@ -545,7 +537,7 @@ export const wrapperWithHeadlineNoDivider = (
 };
 
 export const wrapperHeadlineVisibilityNone = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
@@ -562,7 +554,7 @@ export const wrapperHeadlineVisibilityNone = (
 };
 
 export const tooltips = (
-    args: StoryArgs = {},
+    args: Properties = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? undefined : 'click';
@@ -678,3 +670,5 @@ lazyHero.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
+
+export default meta;

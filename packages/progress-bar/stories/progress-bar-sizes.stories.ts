@@ -10,11 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Progress Bar/Sizes',
     component: 'sp-progress-bar',
 };
@@ -58,3 +59,5 @@ export const XL = (): TemplateResult => {
         ></sp-progress-bar>
     `;
 };
+
+export default meta;

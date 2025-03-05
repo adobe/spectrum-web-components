@@ -9,49 +9,34 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import type { Meta } from '@storybook/web-components';
 import { TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/color-field/sp-color-field.js';
 import { ColorFieldMarkup } from './template.js';
-import { argTypes } from './args.js';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-color-field',
     title: 'Color Field',
-    args: {
-        label: '',
-        size: 'm',
-    },
+    args,
     argTypes,
 };
 
-type Properties = {
-    quiet?: boolean;
-    readonly?: boolean;
-    disabled?: boolean;
-    viewColor?: boolean;
-    value?: string;
-    label?: string;
-    size?: 's' | 'm' | 'l' | 'xl';
-};
+export const Default = (args?: Properties): TemplateResult => ColorFieldMarkup(args);
 
-export const Default = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
-
-export const Quiet = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+export const Quiet = Default.bind({});
 Quiet.args = {
     quiet: true,
 };
 
-export const ReadOnly = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+export const ReadOnly = Default.bind({});
 ReadOnly.args = {
     readonly: true,
     value: 'rgb(255,255,255)',
 };
 
-export const Disabled = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+export const Disabled = Default.bind({});
 Disabled.args = {
     disabled: true,
 };
@@ -62,14 +47,14 @@ viewColor.args = {
     value: 'rgb(255,255,0)',
 };
 
-export const WrongInput = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
-
+export const WrongInput = Default.bind({});
 WrongInput.args = {
     value: 'apple',
 };
-export const RightInput = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+
+export const RightInput = Default.bind({});
 RightInput.args = {
     value: '#a8323a',
 };
+
+export default meta;

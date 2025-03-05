@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/icon/sp-icon.js';
@@ -18,7 +20,7 @@ import '@spectrum-web-components/icons/sp-icons-large.js';
 
 const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'];
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-icon',
     title: 'Icon',
 };
@@ -112,3 +114,5 @@ export const svgIcon = (): TemplateResult => {
 };
 
 svgIcon.storyName = 'SVG Icon';
+
+export default meta;

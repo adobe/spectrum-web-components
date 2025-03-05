@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
@@ -25,7 +27,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-share.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-menu',
     title: 'Menu',
 };
@@ -435,7 +437,7 @@ export const menuWithValueSlots = (): TemplateResult => {
 headersAndIcons.storyName = 'Dynamic MenuItems';
 
 export const dynamicRemoval = (): TemplateResult => {
-    const removeItem = async function (event: FocusEvent) {
+    const removeItem = async function (event: FocusEvent): void {
         await (event.target as MenuItem)?.updateComplete;
         (event.target as MenuItem)?.remove();
     };
@@ -452,3 +454,5 @@ export const dynamicRemoval = (): TemplateResult => {
         </sp-menu>
     `;
 };
+
+export default meta;

@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 @media (forced-colors: active) {
     :host(:not([head-cell])) {
         forced-color-adjust: none;
@@ -98,9 +99,6 @@ governing permissions and limitations under the License.
             --highcontrast-table-divider-color,
             var(--mod-table-divider-color, var(--spectrum-table-divider-color))
         );
-}
-
-:host(:not([head-cell])) {
     box-sizing: border-box;
     font-size: var(
         --mod-table-row-font-size,

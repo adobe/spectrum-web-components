@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
@@ -24,138 +25,16 @@ import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { ActionGroup } from '@spectrum-web-components/action-group/src/ActionGroup.js';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
+import { renderIconButtons} from './template.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Action Group',
     component: 'sp-action-group',
-    args: {
-        compact: false,
-        emphasized: false,
-        justified: false,
-        quiet: false,
-        vertical: false,
-        size: 'm',
-    },
-    argTypes: {
-        compact: {
-            name: 'compact',
-            description:
-                'Visually joins the buttons together to clarify their relationship to one another.',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        emphasized: {
-            name: 'emphasized',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        justified: {
-            name: 'justified',
-            description:
-                'Aligns the action group items to use all the available space on that line.',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        quiet: {
-            name: 'quiet',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        vertical: {
-            name: 'vertical',
-            description: 'Changes the orientation of the action group.',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        size: {
-            name: 'size',
-            description: 'The size at which to display the action group.',
-            type: { name: 'string', required: true },
-            table: {
-                type: { summary: '"s" | "m" | "l" | "xl"' },
-                defaultValue: { summary: 'm' },
-            },
-            control: {
-                type: 'select',
-                options: ['s', 'm', 'l', 'xl'],
-            },
-        },
-    },
+    args,
+    argTypes,
 };
-
-interface Properties {
-    compact?: boolean;
-    emphasized?: boolean;
-    justified?: boolean;
-    quiet?: boolean;
-    vertical?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    [prop: string]: unknown;
-}
-
-function renderIconButtons(args: Properties): TemplateResult {
-    return html`
-        <sp-action-group ${spreadProps(args)}>
-            <sp-action-button label="Properties">
-                <sp-icon-properties slot="icon"></sp-icon-properties>
-            </sp-action-button>
-            <sp-action-button label="Info">
-                <sp-icon-info slot="icon"></sp-icon-info>
-            </sp-action-button>
-            <sp-action-button label="View All Tags">
-                <sp-icon-view-all-tags slot="icon"></sp-icon-view-all-tags>
-            </sp-action-button>
-        </sp-action-group>
-    `;
-}
-
-function renderButtons(args: Properties): TemplateResult {
-    return html`
-        <sp-action-group ${spreadProps(args)}>
-            <sp-action-button>Button 1</sp-action-button>
-            <sp-action-button>Longer Button 2</sp-action-button>
-            <sp-action-button>Short 3</sp-action-button>
-        </sp-action-group>
-    `;
-}
-
-function displaySelectionState(): void {
-    const group = document.querySelector('sp-action-group') as ActionGroup;
-    const selectedDiv = group.nextElementSibling;
-    if (selectedDiv) {
-        selectedDiv.textContent = `Selected: ${JSON.stringify(group.selected)}`;
-    }
-}
 
 export const Default = (args: Properties): TemplateResult =>
     renderButtons(args);
@@ -303,91 +182,79 @@ export const selectsMultipleControlled = (args: Properties): TemplateResult => {
     `;
 };
 
-export const iconsOnly = (args: Properties): TemplateResult =>
+export const IconsOnly = (args: Properties): TemplateResult =>
     renderIconButtons(args);
 
-export const quietIconsOnly = (args: Properties): TemplateResult =>
-    renderIconButtons(args);
-quietIconsOnly.args = {
+export const QuietIconsOnly = IconsOnly.bind({});
+QuietIconsOnly.args = {
     quiet: true,
 };
 
-export const compact = (args: Properties): TemplateResult =>
-    renderButtons(args);
-compact.args = {
+export const Compact = Default.bind({});
+Compact.args = {
     compact: true,
 };
 
-export const compactIconsOnly = (args: Properties): TemplateResult =>
-    renderIconButtons(args);
-compactIconsOnly.args = {
+export const CompactIconsOnly = IconsOnly.bind({});
+CompactIconsOnly.args = {
     compact: true,
 };
 
-export const compactQuietIconsOnly = (args: Properties): TemplateResult =>
-    renderIconButtons(args);
-compactQuietIconsOnly.args = {
+export const CompactQuietIconsOnly = IconsOnly.bind({});
+CompactQuietIconsOnly.args = {
     compact: true,
     quiet: true,
 };
 
-export const vertical = (args: Properties): TemplateResult =>
-    renderButtons(args);
-vertical.args = {
+export const Vertical = Default.bind({});
+Vertical.args = {
     vertical: true,
 };
 
-export const verticalIconsOnly = (args: Properties): TemplateResult =>
-    renderIconButtons(args);
-verticalIconsOnly.args = {
+export const vVrticalIconsOnly = IconsOnly.bind({});
+VerticalIconsOnly.args = {
     vertical: true,
 };
 
-export const verticalQuietIconsOnly = (args: Properties): TemplateResult =>
-    renderIconButtons(args);
-verticalQuietIconsOnly.args = {
+export const VerticalQuietIconsOnly = IconsOnly.bind({});
+VerticalQuietIconsOnly.args = {
     quiet: true,
     vertical: true,
 };
 
-export const compactVertical = (args: Properties): TemplateResult =>
-    renderButtons(args);
-compactVertical.args = {
+export const CompactVertical = Default.bind({});
+CompactVertical.args = {
     compact: true,
     vertical: true,
 };
 
-export const compactVerticalIconsOnly = (args: Properties): TemplateResult =>
-    renderIconButtons(args);
-compactVerticalIconsOnly.args = {
+export const CompactVerticalIconsOnly = IconsOnly.bind({});
+CompactVerticalIconsOnly.args = {
     compact: true,
     vertical: true,
 };
 
-export const compactQuietVerticalIconsOnly = (
-    args: Properties
-): TemplateResult => renderIconButtons(args);
-compactQuietVerticalIconsOnly.args = {
+export const CompactQuietVerticalIconsOnly = IconsOnly.bind({});
+CompactQuietVerticalIconsOnly.args = {
     compact: true,
     quiet: true,
     vertical: true,
 };
 
-export const justified = (args: Properties): TemplateResult =>
-    renderButtons(args);
-justified.args = {
+export const Justified = Default.bind({});
+Justified.args = {
     justified: true,
 };
 
-export const justifiedIconsOnly = (args: Properties): TemplateResult =>
-    renderIconButtons(args);
-justifiedIconsOnly.args = {
+export const JustifiedIconsOnly = IconsOnly.bind({});
+JustifiedIconsOnly.args = {
     justified: true,
 };
 
-export const compactJustifiedIconsOnly = (args: Properties): TemplateResult =>
-    renderIconButtons(args);
-compactJustifiedIconsOnly.args = {
+export const CompactJustifiedIconsOnly = IconsOnly.bind({});
+CompactJustifiedIconsOnly.args = {
     compact: true,
     justified: true,
 };
+
+export default meta;

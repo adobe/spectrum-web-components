@@ -10,9 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-export default {
+const meta: Meta = {
     title: 'Styles',
 };
 
@@ -55,3 +56,5 @@ export const dividers = (): TemplateResult => html`
         <aside></aside>
     </div>
 `;
+
+export default meta;

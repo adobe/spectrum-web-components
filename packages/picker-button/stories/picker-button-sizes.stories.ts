@@ -9,37 +9,42 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import type { Meta } from '@storybook/web-components';
 import { TemplateResult } from '@spectrum-web-components/base';
 
-import { argTypes, StoryArgs, Template } from './index.js';
+import { argTypes } from './args.js';
+import type { Properties } from './args.js';
+import type { Template } from './index.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Picker Button/Sizes',
     component: 'sp-picker-button',
-    ...argTypes,
+    argTypes,
 };
 
-export const s = (args: StoryArgs): TemplateResult => Template(args);
+export const s = (args: Properties): TemplateResult => Template(args);
 s.args = { size: 's' };
 
-export const m = (args: StoryArgs): TemplateResult => Template(args);
+export const m = (args: Properties): TemplateResult => Template(args);
 m.args = { size: 'm' };
 
-export const l = (args: StoryArgs): TemplateResult => Template(args);
+export const l = (args: Properties): TemplateResult => Template(args);
 l.args = { size: 'l' };
 
-export const XL = (args: StoryArgs): TemplateResult => Template(args);
+export const XL = (args: Properties): TemplateResult => Template(args);
 XL.args = { size: 'xl' };
 
-export const sLabel = (args: StoryArgs): TemplateResult => Template(args);
+export const sLabel = (args: Properties): TemplateResult => Template(args);
 sLabel.args = { size: 's', label: true };
 
-export const mLabel = (args: StoryArgs): TemplateResult => Template(args);
+export const mLabel = (args: Properties): TemplateResult => Template(args);
 mLabel.args = { size: 'm', label: true };
 
-export const lLabel = (args: StoryArgs): TemplateResult => Template(args);
+export const lLabel = (args: Properties): TemplateResult => Template(args);
 lLabel.args = { size: 'l', label: true };
 
-export const XLLabel = (args: StoryArgs): TemplateResult => Template(args);
+export const XLLabel = (args: Properties): TemplateResult => Template(args);
 XLLabel.args = { size: 'xl', label: true };
+
+export default meta;

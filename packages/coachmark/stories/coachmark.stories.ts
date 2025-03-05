@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import type { MediaType } from '../src/CoachmarkItem.js';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
@@ -19,21 +20,7 @@ import { cave, gif } from './images.js';
 import type { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 
-export default {
-    title: 'Coachmark',
-    component: 'sp-coachmark',
-    argTypes: {
-        onPrimary: { action: 'primary' },
-        onSecondary: { action: 'secondary' },
-    },
-};
-
-type StoryArgs = {
-    onPrimary?: (event: Event) => void;
-    onSecondary?: (event: Event) => void;
-};
-
-type Properties = {
+export type Properties = {
     open?: boolean;
     placement?: Placement;
     id?: string;
@@ -48,6 +35,17 @@ type Properties = {
     totalSteps?: number;
     primaryCTA?: string;
     secondaryCTA?: string;
+    onPrimary?: (event: Event) => void;
+    onSecondary?: (event: Event) => void;
+};
+
+const meta: Meta<Properties> = {
+    title: 'Coachmark',
+    component: 'sp-coachmark',
+    argTypes: {
+        onPrimary: { action: 'primary' },
+        onSecondary: { action: 'secondary' },
+    },
 };
 
 export const Default = (): TemplateResult => {
@@ -64,7 +62,7 @@ export const Default = (): TemplateResult => {
 
 export const InTour = (
     props: Properties,
-    args: StoryArgs = {}
+    args: Properties = {}
 ): TemplateResult => {
     const {
         open = true,
@@ -334,3 +332,5 @@ export const withShortCut = (props: Properties): TemplateResult => {
         </sp-coachmark>
     `;
 };
+
+export default meta;

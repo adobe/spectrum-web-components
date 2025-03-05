@@ -10,48 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { Properties } from '../../action-menu/stories/action-menu.stories';
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/picker/sp-picker.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import { argTypes } from './args';
+import type { Properties } from './args';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Picker/Sizes',
     component: 'sp-picker',
-    argTypes: {
-        onChange: { action: 'change' },
-        invalid: {
-            name: 'invalid',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        pending: {
-            name: 'pending',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-    },
-};
-
-type StoryArgs = {
-    onChange: (val: string) => void;
-    invalid: boolean;
-    pending: boolean;
-    open: false;
+    argTypes,
 };
 
 const picker = ({
@@ -60,13 +33,7 @@ const picker = ({
     size,
     pending,
     invalid,
-}: {
-    onChange: (val: string) => void;
-    size: 's' | 'm' | 'l' | 'xl';
-    pending: boolean;
-    invalid: boolean;
-    open: boolean;
-}): TemplateResult => {
+}: Properties): TemplateResult => {
     return html`
         <sp-field-label for="picker-${size}" size=${size}>
             Where do you live?
@@ -93,26 +60,28 @@ const picker = ({
     `;
 };
 
-export const s = (args: StoryArgs): TemplateResult =>
+export const s = (args: Properties): TemplateResult =>
     picker({ ...args, size: 's' });
 
-export const sOpen = (args: StoryArgs): TemplateResult =>
+export const sOpen = (args: Properties): TemplateResult =>
     picker({ ...args, open: true, size: 's' });
 
-export const m = (args: StoryArgs): TemplateResult =>
+export const m = (args: Properties): TemplateResult =>
     picker({ ...args, size: 'm' });
 
-export const mOpen = (args: StoryArgs): TemplateResult =>
+export const mOpen = (args: Properties): TemplateResult =>
     picker({ ...args, open: true, size: 'm' });
 
-export const l = (args: StoryArgs): TemplateResult =>
+export const l = (args: Properties): TemplateResult =>
     picker({ ...args, size: 'l' });
 
-export const lOpen = (args: StoryArgs): TemplateResult =>
+export const lOpen = (args: Properties): TemplateResult =>
     picker({ ...args, open: true, size: 'l' });
 
-export const XL = (args: StoryArgs): TemplateResult =>
+export const XL = (args: Properties): TemplateResult =>
     picker({ ...args, size: 'xl' });
 
-export const XLOpen = (args: StoryArgs): TemplateResult =>
+export const XLOpen = (args: Properties): TemplateResult =>
     picker({ ...args, open: true, size: 'xl' });
+
+export default meta;

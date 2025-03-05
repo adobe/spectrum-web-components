@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
@@ -18,42 +20,15 @@ import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-tabs',
     title: 'Tabs',
-    argTypes: {
-        direction: {
-            name: 'direction',
-            type: { name: 'string', required: false },
-            description: 'The direction of the Tabs element',
-            table: {
-                type: {
-                    summary: '"vertical" | "vertical-right" | "horizontal"',
-                },
-                defaultValue: { summary: 'horizontal' },
-            },
-            control: {
-                type: 'text',
-            },
-        },
-        verticalTab: { control: 'boolean' },
-        auto: { control: 'boolean' },
-    },
-    args: {
-        direction: 'horizontal',
-        type: false,
-        verticalTab: false,
-        auto: false,
-    },
+    argTypes,
+    args,
 };
-
-interface Properties {
-    direction: 'vertical' | 'vertical-right' | 'horizontal';
-    verticalTabs?: boolean;
-    verticalTab?: boolean;
-    auto?: boolean;
-}
 
 const panels = (): TemplateResult => html`
     <sp-tab-panel value="1">Content for "Really Long Name"</sp-tab-panel>
@@ -71,8 +46,8 @@ export const Default = (args: Properties): TemplateResult => {
             }
             sp-tab-panel {
                 grid-area: 2/1/2/1;
-                transition: opacity var(--spectrum-animation-duration-300)
-                        ease-in-out,
+                transition:
+                    opacity var(--spectrum-animation-duration-300) ease-in-out,
                     transform var(--spectrum-animation-duration-300) ease-in-out;
             }
             sp-tab-panel:not([selected]) {
@@ -81,8 +56,8 @@ export const Default = (args: Properties): TemplateResult => {
                 height: 0;
                 pointer-events: none;
                 transform: translateY(calc(var(--swc-scale-factor) * 6px));
-                transition: opacity var(--spectrum-animation-duration-300)
-                        ease-in-out,
+                transition:
+                    opacity var(--spectrum-animation-duration-300) ease-in-out,
                     transform var(--spectrum-animation-duration-300) ease-in-out,
                     height 0s ease var(--spectrum-animation-duration-300);
             }
@@ -542,3 +517,5 @@ export const quietCompact = ({
 };
 
 quietCompact.storyName = 'Quiet Compact';
+
+export default meta;

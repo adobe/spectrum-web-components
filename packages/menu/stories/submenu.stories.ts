@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -23,7 +24,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-menu',
     title: 'Menu/Submenu',
 };
@@ -395,63 +396,85 @@ export const customRootSubmenuWithScroll = (): TemplateResult => {
             <sp-menu-item id="submenu-item-1">
                 Brooklyn
                 <div role="menuitem" slot="submenu" style="padding: 12px">
-                <sp-menu-item>Additional options</sp-menu-item>
-                <sp-menu-item>Available on request</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item>Additional options</sp-menu-item>
+                    <sp-menu-item>Available on request</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
                 </div>
             </sp-menu-item>
         </sp-action-menu>
@@ -461,3 +484,5 @@ export const customRootSubmenuWithScroll = (): TemplateResult => {
 customRootSubmenu.swc_vrt = {
     skip: true,
 };
+
+export default meta;

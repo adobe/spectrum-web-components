@@ -10,7 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export const argTypes = {
+import { html } from '@spectrum-web-components/base';
+import type { ArgTypes } from '@storybook/web-components';
+
+export type Properties = {
+    open?: boolean;
+    emphasized?: boolean;
+    tools?: boolean;
+};
+
+export const argTypes: ArgTypes = {
     open: {
         name: 'open',
         type: { name: 'boolean', required: false },
@@ -35,16 +44,31 @@ export const argTypes = {
             type: 'boolean',
         },
     },
-    tools: {
-        name: 'tools',
-        type: { name: 'boolean', required: false },
-        description: 'Whether to display tools in the action bar.',
+    variant: {
+        name: "Variant",
+        type: { name: "string" },
         table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: true },
+            type: { summary: "string" },
+            category: "Advanced",
         },
         control: {
-            type: 'boolean',
+            labels: {
+                sticky: 'Sticky',
+                fixed: 'Fixed',
+                undefined: 'Default',
+            },
+            type: 'inline-radio',
         },
     },
+};
+
+export const args: Properties = {
+    open: true,
+    emphasized: false,
+    content: '2 selected',
+    tools: html`
+        <sp-action-button slot="buttons" label="Edit">
+            <sp-icon-edit slot="icon"></sp-icon-edit>
+        </sp-action-button>
+    `,
 };

@@ -20,6 +20,7 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import type { Properties } from './args';
 
 export const ActionMenuMarkup = ({
     align = 'start',
@@ -38,7 +39,7 @@ export const ActionMenuMarkup = ({
     selected = false,
     tooltipDescription = '',
     tooltipPlacement = 'bottom' as Placement,
-} = {}): TemplateResult => {
+}: Properties = {}): TemplateResult => {
     return html`
         <sp-action-menu
             label=${ariaLabel}

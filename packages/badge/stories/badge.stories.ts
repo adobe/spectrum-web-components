@@ -10,11 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import '@spectrum-web-components/badge/sp-badge.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
 
-export default {
+const meta: Meta = {
     title: 'Badge',
     component: 'sp-badge',
 };
@@ -154,3 +155,5 @@ export const Fixed = (): TemplateResult => {
         </div>
     `;
 };
+
+export default meta;

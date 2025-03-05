@@ -10,10 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { MenuMarkup } from './';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-menu',
     title: 'Menu/Sizes',
 };
@@ -22,3 +23,5 @@ export const S = (): TemplateResult => MenuMarkup({ size: 's' });
 export const M = (): TemplateResult => MenuMarkup({ size: 'm' });
 export const L = (): TemplateResult => MenuMarkup({ size: 'l' });
 export const XL = (): TemplateResult => MenuMarkup({ size: 'xl' });
+
+export default meta;

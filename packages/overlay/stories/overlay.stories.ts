@@ -8,6 +8,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
@@ -92,7 +94,7 @@ const storyStyles = html`
     </style>
 `;
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Overlay',
     argTypes: {
         offset: { control: 'number' },
@@ -1611,3 +1613,5 @@ export const triggeredByOptimization = (): TemplateResult => {
         </div>
     `;
 };
+
+export default meta;

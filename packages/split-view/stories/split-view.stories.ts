@@ -10,35 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/split-view/sp-split-view.js';
+import type { Properties } from './args';
+import { args, argTypes } from './args';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Split View',
     component: 'sp-split-view',
-    args: {
-        primarySize: 100,
-    },
-    argTypes: {
-        primarySize: {
-            name: 'primarySize',
-            type: { name: 'number', required: false },
-            description: 'Size of the primary panel.',
-            table: {
-                type: { summary: 'number' },
-                defaultValue: { summary: undefined },
-            },
-            control: {
-                type: 'number',
-            },
-        },
-    },
+    args,
+    argTypes,
 };
-
-interface Properties {
-    primarySize?: string;
-}
 
 export const Horizontal = (args: Properties): TemplateResult => {
     return html`
@@ -318,3 +301,5 @@ export const ShowFirstTwoPanes = (args: Properties): TemplateResult => {
 ShowFirstTwoPanes.args = {
     primarySize: undefined,
 };
+
+export default meta;

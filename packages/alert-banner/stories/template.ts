@@ -10,6 +10,27 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { AlertBannerMarkup } from './';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
-export const Template = AlertBannerMarkup;
+import { AlertBannerVariants } from '@spectrum-web-components/alert-banner';
+import '@spectrum-web-components/alert-banner/sp-alert-banner.js';
+import '@spectrum-web-components/button/sp-button.js';
+
+export const AlertBannerMarkup = ({
+    text = 'Your trial has expired',
+    variant = 'neutral',
+    dismissible = true,
+    open = false,
+    actionLabel = 'Action',
+}): TemplateResult => html`
+    <sp-alert-banner
+        variant=${variant as AlertBannerVariants}
+        ?dismissible=${dismissible}
+        ?open=${open}
+    >
+        ${text}
+        <sp-button treatment="outline" static-color="white" slot="action">
+            ${actionLabel}
+        </sp-button>
+    </sp-alert-banner>
+`;

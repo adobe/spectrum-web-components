@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import {
     renderButton,
@@ -20,19 +22,17 @@ import {
     renderWithIconOnly,
 } from './index.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
-import type { Properties } from './index.js';
-import { args, argTypes } from './index.js';
+import { args } from './index.js';
+import { argTypes } from './args.js';
+export type { Properties } from './args.js';
 
-const variant = 'primary';
-const treatment = 'fill';
-
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-button',
     title: 'Button/Primary/Fill',
     args: {
         ...args,
-        variant,
-        treatment,
+        variant: 'primary',
+        treatment: 'fill',
     },
     argTypes,
 };
@@ -73,3 +73,5 @@ export const linkWithTarget = (props: Properties): TemplateResult =>
     renderLinkWithTarget(props);
 
 linkWithTarget.storyName = 'href with target="_blank"';
+
+export default meta;

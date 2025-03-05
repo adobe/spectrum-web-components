@@ -8,6 +8,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
@@ -18,7 +20,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
 import '../../overlay/stories/index.js';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-popover',
     title: 'Popover',
     argTypes: {
@@ -208,3 +210,5 @@ export const overlaidBottom = (): TemplateResult => overlaid('bottom');
 overlaidBottom.decorators = [isOverlayOpen];
 export const overlaidLeft = (): TemplateResult => overlaid('left');
 overlaidLeft.decorators = [isOverlayOpen];
+
+export default meta;

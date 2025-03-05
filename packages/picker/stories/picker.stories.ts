@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/button/sp-button.js';
@@ -26,11 +27,12 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '../../overlay/stories/index.js';
 import { areIconsPresent, isOverlayOpen } from '../../overlay/stories/index.js';
-import { argTypes } from './args.js';
 import { states } from './states.js';
-import { handleChange, StoryArgs, Template } from './template.js';
+import { handleChange, Properties, Template } from './template.js';
+import type { Properties } from './args.js';
+import { argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Picker',
     component: 'sp-picker',
     args: {
@@ -40,34 +42,10 @@ export default {
         quiet: false,
         pending: false,
     },
-    argTypes: {
-        ...argTypes,
-        onChange: { action: 'change' },
-        open: {
-            name: 'open',
-            type: { name: 'boolean', required: false },
-            description: 'Whether the menu is open or not.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: 'boolean',
-        },
-        pending: {
-            name: 'pending',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-    },
+    argTypes,
 };
 
-export const Default = (args: StoryArgs): TemplateResult => {
+export const Default = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
             Where do you live?
@@ -97,7 +75,7 @@ export const Default = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
+export const forcePopoverOnMobile = (args: Properties): TemplateResult => {
     return html`
         <div style="padding: 40px">
             <h1>Force Popover on Mobile</h1>
@@ -156,17 +134,17 @@ export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const disabled = (args: StoryArgs): TemplateResult => Template(args);
+export const disabled = (args: Properties): TemplateResult => Template(args);
 disabled.args = {
     disabled: true,
 };
 
-export const invalid = (args: StoryArgs): TemplateResult => Template(args);
+export const invalid = (args: Properties): TemplateResult => Template(args);
 invalid.args = {
     invalid: true,
 };
 
-export const tooltip = (args: StoryArgs): TemplateResult => {
+export const tooltip = (args: Properties): TemplateResult => {
     const { open, ...rest } = args;
     return html`
         <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
@@ -209,7 +187,7 @@ tooltip.args = {
 };
 tooltip.decorators = [isOverlayOpen];
 
-export const leftSideLabel = (args: StoryArgs): TemplateResult => {
+export const leftSideLabel = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label
             side-aligned="start"
@@ -243,7 +221,7 @@ export const leftSideLabel = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const noVisibleLabel = (args: StoryArgs): TemplateResult => {
+export const noVisibleLabel = (args: Properties): TemplateResult => {
     return html`
         <sp-picker
             @change=${handleChange(args)}
@@ -269,7 +247,7 @@ export const noVisibleLabel = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const slottedLabel = (args: StoryArgs): TemplateResult => {
+export const slottedLabel = (args: Properties): TemplateResult => {
     return html`
         <sp-picker @change=${handleChange(args)} ${spreadProps(args)}>
             <span slot="label">Where do you live?</span>
@@ -292,7 +270,7 @@ export const slottedLabel = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const quiet = (args: StoryArgs): TemplateResult => {
+export const quiet = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Where do you live?
@@ -321,7 +299,7 @@ quiet.args = {
     quiet: true,
 };
 
-export const quietSideLabel = (args: StoryArgs): TemplateResult => {
+export const quietSideLabel = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label
             side-aligned="start"
@@ -354,7 +332,7 @@ quietSideLabel.args = {
     quiet: true,
 };
 
-export const icons = (args: StoryArgs): TemplateResult => {
+export const icons = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Choose an action type...
@@ -382,7 +360,7 @@ export const icons = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const iconsNone = (args: StoryArgs): TemplateResult => {
+export const iconsNone = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Choose an action type...
@@ -415,7 +393,7 @@ iconsNone.args = {
 };
 iconsNone.decorators = [isOverlayOpen];
 
-export const iconValue = (args: StoryArgs): TemplateResult => {
+export const iconValue = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Choose an action type...
@@ -445,7 +423,7 @@ export const iconValue = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const iconsOnly = (args: StoryArgs): TemplateResult => {
+export const iconsOnly = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="picker-quiet" size=${ifDefined(args.size)}>
             Choose an action type...
@@ -475,7 +453,7 @@ iconsOnly.args = {
 };
 iconsOnly.decorators = [isOverlayOpen];
 
-export const dynamicIcons = (args: StoryArgs): TemplateResult => {
+export const dynamicIcons = (args: Properties): TemplateResult => {
     return html`
         <p>
             The icon displayed in the picker should match the icon of the
@@ -536,7 +514,7 @@ dynamicIcons.args = {
 };
 dynamicIcons.decorators = [areIconsPresent];
 
-export const Open = (args: StoryArgs): TemplateResult => {
+export const Open = (args: Properties): TemplateResult => {
     return html`
         <style>
             fieldset {
@@ -588,7 +566,7 @@ Open.args = {
 };
 Open.decorators = [isOverlayOpen];
 
-export const OpenShowingEdgeCase = (args: StoryArgs): TemplateResult => {
+export const OpenShowingEdgeCase = (args: Properties): TemplateResult => {
     return html`
         <style>
             fieldset {
@@ -677,7 +655,7 @@ OpenShowingEdgeCase.parameters = {
     chromatic: { disableSnapshot: true },
 };
 
-export const initialValue = (args: StoryArgs): TemplateResult => {
+export const initialValue = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="picker-initial" size=${ifDefined(args.size)}>
             Where do you live?
@@ -701,7 +679,7 @@ export const initialValue = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const readonly = (args: StoryArgs): TemplateResult => {
+export const readonly = (args: Properties): TemplateResult => {
     return html`
         <sp-picker
             @change=${handleChange(args)}
@@ -722,7 +700,7 @@ export const readonly = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const custom = (args: StoryArgs): TemplateResult => {
+export const custom = (args: Properties): TemplateResult => {
     const initialState = 'lb1-mo';
     return html`
         <sp-field-label for="picker-state" size=${ifDefined(args.size)}>
@@ -787,3 +765,5 @@ export const BackgroundClickTest = (): TemplateResult => {
 BackgroundClickTest.swc_vrt = {
     skip: true,
 };
+
+export default meta;

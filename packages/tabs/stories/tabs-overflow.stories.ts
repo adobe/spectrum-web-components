@@ -9,25 +9,30 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Properties } from './tabs.stories.js';
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { OverflowProperties, renderTabsOverflowExample } from './index.js';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Tabs Overflow',
     component: 'sp-tabs-overflow',
+    argTypes,
+    args,
 };
 
-export const compact = (args: OverflowProperties): TemplateResult => {
+export const Compact = (args: OverflowProperties): TemplateResult => {
     return renderTabsOverflowExample(args);
 };
-compact.args = {
+Compact.args = {
     compact: true,
 };
 
-export const autoscroll = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
-};
-autoscroll.args = {
+export const AutoScroll = Compact.bind({});
+AutoScroll.args = {
     selected: 15,
 };
 
@@ -51,3 +56,5 @@ export const autoscrollOnlyHorizontally = (
 autoscrollOnlyHorizontally.args = {
     selected: 15,
 };
+
+export default meta;

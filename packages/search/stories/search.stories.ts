@@ -9,10 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import '@spectrum-web-components/search/sp-search.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-export default {
+const meta: Meta = {
     component: 'sp-search',
     title: 'Search',
 };
@@ -40,3 +42,5 @@ export const Quiet = (): TemplateResult => html`
 export const holdValueOnEscape = (): TemplateResult => html`
     <sp-search holdValueOnEscape></sp-search>
 `;
+
+export default meta;

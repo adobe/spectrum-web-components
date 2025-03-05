@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/card/sp-card.js';
@@ -21,7 +23,13 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/link/sp-link.js';
 
-export default {
+export interface Properties {
+    horizontal?: boolean;
+    size?: 's' | 'm';
+    onClick?: ((event: Event) => void) | undefined;
+};
+
+const meta: Meta<Properties> = {
     component: 'sp-card',
     title: 'Card',
     args: {
@@ -42,13 +50,7 @@ export default {
     },
 };
 
-export interface StoryArgs {
-    horizontal?: boolean;
-    size?: 's' | 'm';
-    onClick?: ((event: Event) => void) | undefined;
-}
-
-export const Default = (args: StoryArgs): TemplateResult => {
+export const Default = (args: Properties): TemplateResult => {
     return html`
         <sp-card
             heading="Card Heading"
@@ -63,7 +65,7 @@ export const Default = (args: StoryArgs): TemplateResult => {
 };
 Default.args = {};
 
-export const SmallQuiet = (args: StoryArgs): TemplateResult => {
+export const SmallQuiet = (args: Properties): TemplateResult => {
     const { onClick } = args;
     return html`
         <sp-card
@@ -110,7 +112,7 @@ SmallQuiet.argTypes = {
     onClick: { action: 'link click' },
 };
 
-export const href = (args: StoryArgs): TemplateResult => {
+export const href = (args: Properties): TemplateResult => {
     const { onClick } = args;
     return html`
         <sp-card
@@ -154,7 +156,7 @@ href.argTypes = {
     onClick: { action: 'link click' },
 };
 
-export const actions = (args: StoryArgs): TemplateResult => {
+export const actions = (args: Properties): TemplateResult => {
     return html`
         <sp-card
             heading="Card Heading"
@@ -182,7 +184,7 @@ export const actions = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const Gallery = (args: StoryArgs): TemplateResult => {
+export const Gallery = (args: Properties): TemplateResult => {
     return html`
         <sp-card
             variant="gallery"
@@ -201,7 +203,7 @@ export const Gallery = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const noPreviewImage = (args: StoryArgs): TemplateResult => {
+export const noPreviewImage = (args: Properties): TemplateResult => {
     return html`
         <sp-card
             heading="Card Heading"
@@ -214,7 +216,7 @@ export const noPreviewImage = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const Quiet = (args: StoryArgs): TemplateResult => {
+export const Quiet = (args: Properties): TemplateResult => {
     return html`
         <div>
             <sp-card
@@ -231,7 +233,7 @@ export const Quiet = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const quietFile = (args: StoryArgs): TemplateResult => {
+export const quietFile = (args: Properties): TemplateResult => {
     return html`
         <div>
             <sp-card
@@ -249,7 +251,7 @@ export const quietFile = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const quietFolder = (args: StoryArgs): TemplateResult => {
+export const quietFolder = (args: Properties): TemplateResult => {
     return html`
         <div>
             <sp-card
@@ -267,7 +269,7 @@ export const quietFolder = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const quietActions = (args: StoryArgs): TemplateResult => {
+export const quietActions = (args: Properties): TemplateResult => {
     return html`
         <div>
             <sp-card
@@ -300,7 +302,7 @@ export const quietActions = (args: StoryArgs): TemplateResult => {
 
 quietActions.storyName = 'Quiet w/ Actions';
 
-export const Horizontal = (args: StoryArgs): TemplateResult => {
+export const Horizontal = (args: Properties): TemplateResult => {
     return html`
         <sp-card
             ?horizontal=${args.horizontal}
@@ -318,7 +320,7 @@ Horizontal.args = {
     horizontal: true,
 };
 
-export const horizontalWithHREF = (args: StoryArgs): TemplateResult => {
+export const horizontalWithHREF = (args: Properties): TemplateResult => {
     return html`
         <sp-card
             ?horizontal=${args.horizontal}
@@ -338,7 +340,7 @@ horizontalWithHREF.args = {
     horizontal: true,
 };
 
-export const smallQuiet = (args: StoryArgs): TemplateResult => {
+export const smallQuiet = (args: Properties): TemplateResult => {
     return html`
         <div>
             <sp-card
@@ -373,7 +375,7 @@ smallQuiet.args = {
     size: 's',
 };
 
-export const SlottedHeading = (args: StoryArgs): TemplateResult => {
+export const SlottedHeading = (args: Properties): TemplateResult => {
     return html`
         <style>
             .slotted-textfield-heading {
@@ -415,3 +417,5 @@ export const SlottedHeading = (args: StoryArgs): TemplateResult => {
         </sp-card>
     `;
 };
+
+export default meta;

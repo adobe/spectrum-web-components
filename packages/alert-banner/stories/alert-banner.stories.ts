@@ -10,48 +10,33 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { AlertBannerVariants } from '@spectrum-web-components/alert-banner';
-import { AlertBannerMarkup } from './';
-import { argTypes } from './args.js';
+import { AlertBannerMarkup } from './template.js';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-interface Properties {
-    text: string;
-    variant: AlertBannerVariants;
-    dismissible: boolean;
-    open: boolean;
-    onClose?: (event: Event) => void;
-    actionLabel?: string;
-}
-
-export default {
+const meta: Meta<Properties> = {
     title: 'Alert Banner',
     component: 'sp-alert-banner',
-    args: {
-        text: 'Your trial has expired',
-        dismissible: true,
-        open: true,
-        variant: 'neutral',
-    },
+    args,
     argTypes,
 };
 
 export const Default = (args: Properties): TemplateResult =>
     AlertBannerMarkup(args);
 
-export const Info = (args: Properties): TemplateResult =>
-    AlertBannerMarkup({
-        ...args,
-        variant: 'info',
-        text: 'Your trial will expire in 3 days',
-    });
+export const Info = Default.bind({});
+Info.args = {
+    variant: 'info',
+    text: 'Your trial will expire in 3 days',
+};
 
-export const Negative = (args: Properties): TemplateResult =>
-    AlertBannerMarkup({
-        ...args,
-        variant: 'negative',
-        text: 'Connection interrupted. Check your network to continue',
-    });
+export const Negative = Default.bind({});
+Negative.args = {
+    variant: 'negative',
+    text: 'Connection interrupted. Check your network to continue',
+};
 
 export const TextWrapping = (args: Properties): TemplateResult => html`
     <div style="max-width:800px;">
@@ -66,11 +51,11 @@ you have purchased the software.`,
     </div>
 `;
 
-export const Multilanguage = (args: Properties): TemplateResult => html`
-    ${AlertBannerMarkup({
-        ...args,
-        variant: 'info',
-        text: `ستنتهي الفترة التجريبية الخاصة بك في الأسبوع المقبل`,
-        actionLabel: `اشتري الآن`,
-    })}
-`;
+export const Multilanguage = Default.bind({});
+Multilanguage.args = {
+    variant: 'info',
+    text: `ستنتهي الفترة التجريبية الخاصة بك في الأسبوع المقبل`,
+    actionLabel: `اشتري الآن`,
+};
+
+export default meta;

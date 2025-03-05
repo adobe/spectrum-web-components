@@ -10,12 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '../../iconset/stories/icons-demo.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { until } from '@spectrum-web-components/base/src/directives.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Icons/UI',
     argTypes: {
         color: { control: 'color' },
@@ -125,3 +126,5 @@ export const Icons = ({ color, size }: Properties): TemplateResult => {
         </delayed-ready>
     `;
 };
+
+export default meta;

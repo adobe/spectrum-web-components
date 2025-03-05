@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { TemplateResult } from '@spectrum-web-components/base';
 
 import {
@@ -18,7 +19,7 @@ import {
     Properties,
 } from './button-group.stories.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Button Group/Sizes',
     component: 'sp-button-group',
 };
@@ -50,3 +51,5 @@ verticalL.args = { size: 'l' };
 export const verticalXL = (args: Properties): TemplateResult =>
     buttonsVertical(args);
 verticalXL.args = { size: 'XL' };
+
+export default meta;

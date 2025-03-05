@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
@@ -48,7 +50,7 @@ const iconOptions: {
     `,
 };
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-tooltip',
     title: 'Tooltip',
 };
@@ -454,3 +456,5 @@ draggable.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
+
+export default meta;

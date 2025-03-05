@@ -11,20 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import type { Table, TableItem } from '@spectrum-web-components/table';
-
-export type Properties = {
-    selected?: string[] | undefined;
-    selects?: undefined | 'single' | 'multiple';
-    onChange?: (
-        eventData: Event & {
-            target: Table;
-            first: number;
-            last: number;
-            type: string;
-        }
-    ) => void;
-};
+import type { TableItem } from '@spectrum-web-components/table';
 
 export interface Item extends TableItem {
     name: string;

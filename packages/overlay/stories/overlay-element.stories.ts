@@ -9,6 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
@@ -35,7 +36,18 @@ import {
     SlottableRequestEvent,
 } from '../src/slottable-request-event.js';
 
-export default {
+type WrapperStyleType = 'will-change' | 'container-type';
+export type Properties = {
+    delayed: boolean;
+    interaction: 'click' | 'hover' | 'longpress';
+    open?: boolean;
+    placement?: Placement;
+    receivesFocus: 'true' | 'false' | 'auto';
+    style?: WrapperStyleType;
+    type?: OverlayTypes;
+};
+
+const meta: Meta<Properties> = {
     title: 'Overlay Element',
     component: 'sp-overlay',
     args: {
@@ -68,18 +80,6 @@ export default {
             },
         },
     },
-};
-
-type WrapperStyleType = 'will-change' | 'container-type';
-
-type Properties = {
-    delayed: boolean;
-    interaction: 'click' | 'hover' | 'longpress';
-    open?: boolean;
-    placement?: Placement;
-    receivesFocus: 'true' | 'false' | 'auto';
-    style?: WrapperStyleType;
-    type?: OverlayTypes;
 };
 
 const Template = ({
@@ -742,3 +742,5 @@ lazyElements.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
+
+export default meta;

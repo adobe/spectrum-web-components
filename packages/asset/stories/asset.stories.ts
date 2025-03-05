@@ -10,12 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/asset/sp-asset.js';
 import { portrait } from '../../card/stories/images';
 
-export default {
+const meta: Meta = {
     title: 'Asset',
     component: 'sp-asset',
 };
@@ -39,3 +40,5 @@ export const Folder = (): TemplateResult => {
         <sp-asset variant="folder"></sp-asset>
     `;
 };
+
+export default meta;

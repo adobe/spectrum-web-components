@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/dialog/sp-dialog.js';
@@ -18,7 +19,11 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/tray/sp-tray.js';
 
-export default {
+export interface Properties {
+    open?: boolean;
+};
+
+const meta: Meta<Properties> = {
     title: 'Tray',
     component: 'sp-tray',
     args: {
@@ -70,3 +75,5 @@ export const menu = (args: StoryArgs): TemplateResult => {
         </sp-tray>
     `;
 };
+
+export default meta;

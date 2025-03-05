@@ -9,26 +9,28 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import {
-    ElementSize,
     html,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
 import '@spectrum-web-components/swatch/sp-swatch.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Swatch/Sizes',
     component: 'sp-swatch',
+    argTypes,
+    args,
 };
 
 const template = ({
     size,
     color = 'rgb(255 0 0 / 0.7)',
-}: {
-    size: ElementSize;
-    color?: string;
-}): TemplateResult => html`
+}: Properties): TemplateResult => html`
     <div style="display: flex; gap: 5px;">
         <sp-swatch color=${color} size=${size}></sp-swatch>
         <sp-swatch color=${color} rounding="none" size=${size}></sp-swatch>
@@ -59,3 +61,5 @@ export const s = (): TemplateResult => template({ size: 's' });
 export const m = (): TemplateResult => template({ size: 'm' });
 
 export const l = (): TemplateResult => template({ size: 'l' });
+
+export default meta;

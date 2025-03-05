@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/button/sp-button.js';
@@ -18,7 +20,11 @@ import '@spectrum-web-components/slider/sp-slider.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { Color } from '../src/index.js';
 
-export default {
+export interface Properties {
+    colorStop: 'light' | 'dark';
+};
+
+const meta: Meta<Properties> = {
     component: 'sp-theme',
     title: 'Theme',
     argTypes: {
@@ -279,3 +285,5 @@ export const reverseColorNestedTheme = ({
         </sp-theme>
     `;
 };
+
+export default meta;

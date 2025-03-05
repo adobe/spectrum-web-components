@@ -9,9 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 
-export interface StoryArgs {
+import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
+import type { ArgTypes } from '@storybook/web-components';
+
+export interface Properties {
     label?: string;
     variant?: 'info' | 'help';
     placement?: Placement;
@@ -19,7 +21,7 @@ export interface StoryArgs {
     [key: string]: unknown;
 }
 
-export const argTypes = {
+export const argTypes: ArgTypes = {
     open: {
         name: 'open',
         type: { name: 'boolean', required: false },

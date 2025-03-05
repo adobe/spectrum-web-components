@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     pointer-events: none;
     visibility: hidden;
@@ -504,7 +505,7 @@ governing permissions and limitations under the License.
 :host([dir='rtl'][tip]) .spectrum-Popover--start #tip,
 :host([dir='rtl'][tip]) .spectrum-Popover--start-bottom #tip,
 :host([dir='rtl'][tip]) .spectrum-Popover--start-top #tip {
-    transform: none;
+    transform: scaleX(-1);
 }
 
 :host([tip]) .spectrum-Popover--end #tip,

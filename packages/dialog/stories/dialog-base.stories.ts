@@ -9,6 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
@@ -17,14 +18,18 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import { trigger } from '@spectrum-web-components/overlay';
 import { alertDestructive } from './dialog.stories.js';
 import { portrait } from './images.js';
+import type { Properties } from './args';
+import { args, argTypes } from './args';
 import {
     disabledButtonWithOverlayDecorator,
     withOverlayDecorator,
 } from './index.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Dialog Base',
     component: 'sp-dialog-base',
+    argTypes,
+    args,
 };
 
 export const slotted = (): TemplateResult => html`
@@ -259,3 +264,5 @@ export const lazyLoaded = (): TemplateResult => {
 lazyLoaded.swc_vrt = {
     skip: true,
 };
+
+export default meta;

@@ -9,11 +9,21 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 
-export default {
+type Properties = {
+    size: 's' | 'm' | 'l' | 'xl';
+    checked?: boolean;
+    indeterminate?: boolean;
+    onClick: () => void;
+    onChange: () => void;
+};
+
+const meta: Meta<Properties> = {
     component: 'sp-checkbox',
     title: 'Checkbox/Sizes',
     argTypes: {
@@ -28,13 +38,7 @@ const checkbox = ({
     indeterminate,
     onClick,
     onChange,
-}: {
-    size: 's' | 'm' | 'l' | 'xl';
-    checked?: boolean;
-    indeterminate?: boolean;
-    onClick: () => void;
-    onChange: () => void;
-}): TemplateResult => {
+}: Properties): TemplateResult => {
     return html`
         <sp-checkbox
             size=${size}
@@ -48,43 +52,40 @@ const checkbox = ({
     `;
 };
 
-type StoryArgs = {
-    onClick: () => void;
-    onChange: () => void;
-};
-
-export const s = (args: StoryArgs): TemplateResult =>
+export const s = (args: Properties): TemplateResult =>
     checkbox({ ...args, size: 's' });
 
-export const sChecked = (args: StoryArgs): TemplateResult =>
+export const sChecked = (args: Properties): TemplateResult =>
     checkbox({ ...args, size: 's', checked: true });
 
-export const sIndeterminate = (args: StoryArgs): TemplateResult =>
+export const sIndeterminate = (args: Properties): TemplateResult =>
     checkbox({ ...args, size: 's', indeterminate: true });
 
-export const m = (args: StoryArgs): TemplateResult =>
+export const m = (args: Properties): TemplateResult =>
     checkbox({ ...args, size: 'm' });
 
-export const mChecked = (args: StoryArgs): TemplateResult =>
+export const mChecked = (args: Properties): TemplateResult =>
     checkbox({ ...args, size: 'm', checked: true });
 
-export const mIndeterminate = (args: StoryArgs): TemplateResult =>
+export const mIndeterminate = (args: Properties): TemplateResult =>
     checkbox({ ...args, size: 'm', indeterminate: true });
 
-export const l = (args: StoryArgs): TemplateResult =>
+export const l = (args: Properties): TemplateResult =>
     checkbox({ ...args, size: 'l' });
 
-export const lChecked = (args: StoryArgs): TemplateResult =>
+export const lChecked = (args: Properties): TemplateResult =>
     checkbox({ ...args, size: 'l', checked: true });
 
-export const lIndeterminate = (args: StoryArgs): TemplateResult =>
+export const lIndeterminate = (args: Properties): TemplateResult =>
     checkbox({ ...args, size: 'l', indeterminate: true });
 
-export const XL = (args: StoryArgs): TemplateResult =>
+export const XL = (args: Properties): TemplateResult =>
     checkbox({ ...args, size: 'xl' });
 
-export const XLChecked = (args: StoryArgs): TemplateResult =>
+export const XLChecked = (args: Properties): TemplateResult =>
     checkbox({ ...args, size: 'xl', checked: true });
 
-export const XLIndeterminate = (args: StoryArgs): TemplateResult =>
+export const XLIndeterminate = (args: Properties): TemplateResult =>
     checkbox({ ...args, size: 'xl', indeterminate: true });
+
+export default meta;

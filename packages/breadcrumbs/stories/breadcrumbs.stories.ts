@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import { LitElement } from '@spectrum-web-components/base';
@@ -18,36 +20,37 @@ import {
     getBreadcrumbs,
     getBreadcrumbsWithLinks,
     getResizableStyles,
-    StoryArgs,
+    Properties,
     Template,
 } from './template.js';
-import { argTypes } from './args.js';
+import { args, argTypes } from './args.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '@spectrum-web-components/button/sp-button.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Breadcrumbs',
     component: 'sp-breadcrumbs',
     args: {
+        ...args,
         'max-visible-items': 4,
     },
     argTypes,
 };
 
-export const Default = (args: StoryArgs): TemplateResult => Template(args);
+export const Default = (args: Properties): TemplateResult => Template(args);
 
-export const Disabled = (args: StoryArgs): TemplateResult => Template(args);
+export const Disabled = Default.bind({});
 Disabled.args = {
     disabled: true,
 };
 
-export const Compact = (args: StoryArgs): TemplateResult => Template(args);
+export const Compact = Default.bind({});
 Compact.args = {
     compact: true,
 };
 
-export const Links = (args: StoryArgs): TemplateResult => {
+export const Links = (args: Properties): TemplateResult => {
     return html`
         <sp-breadcrumbs
             ${spreadProps(args)}
@@ -102,7 +105,7 @@ class AddItemsStoryBreadcrumbs extends LitElement {
 
 customElements.define('add-items-story-breadcrumbs', AddItemsStoryBreadcrumbs);
 
-export const AddItemsDynamic = (args: StoryArgs): TemplateResult => {
+export const AddItemsDynamic = (args: Properties): TemplateResult => {
     return html`
         <add-items-story-breadcrumbs
             maxVisibleItems=${ifDefined(args['max-visible-items'])}
@@ -114,7 +117,7 @@ AddItemsDynamic.swc_vrt = {
     skip: true,
 };
 
-export const ShowRoot = (args: StoryArgs): TemplateResult => {
+export const ShowRoot = (args: Properties): TemplateResult => {
     return html`
         <sp-breadcrumbs
             ${spreadProps(args)}
@@ -129,7 +132,7 @@ export const ShowRoot = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const resizableBehavior = (args: StoryArgs): TemplateResult => {
+export const resizableBehavior = (args: Properties): TemplateResult => {
     return html`
         <div class="resizable-container">
             ${getResizableStyles()}
@@ -144,3 +147,5 @@ export const resizableBehavior = (args: StoryArgs): TemplateResult => {
         </div>
     `;
 };
+
+export default meta;

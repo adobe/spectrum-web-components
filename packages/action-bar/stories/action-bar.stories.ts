@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import type { Meta } from '@storybook/web-components';
+import { css, html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -23,8 +24,10 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 import { Template } from './template.js';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Action Bar',
     component: 'sp-action-bar',
     parameters: {
@@ -34,71 +37,63 @@ export default {
             url: 'https://www.figma.com/file/MPtRIVRzPp2VHiEplwXL2X/S-%2F-Manual?node-id=465%3A3127&t=xbooxCWItOFgG2xM-1',
         },
     },
+    argTypes,
+    args,
 };
 
-export const Default = (): TemplateResult =>
-    Template({
-        open: true,
-    });
-
-export const emphasized = (): TemplateResult => {
-    return html`
-        <sp-action-bar open emphasized>
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-bar>
-    `;
+export const Default = (args?: Properties): TemplateResult => Template(args);
+Default.args = {
+    tools: html`
+        <sp-action-button slot="buttons" label="Edit">
+            <sp-icon-edit slot="icon"></sp-icon-edit>
+        </sp-action-button>
+        <sp-action-button slot="buttons" label="Share">
+            <sp-icon-share slot="icon"></sp-icon-share>
+        </sp-action-button>
+    `,
 };
 
-export const fixed = (): TemplateResult => {
-    return html`
-        <style>
-            [variant='fixed'] {
-                bottom: 2.5em;
-                inset-inline-end: 1em;
-            }
-        </style>
-        <sp-action-bar open variant="fixed">
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-bar>
-    `;
+export const Emphasized = Default.bind({});
+Emphasized.args = {
+    emphasized: true
 };
 
-export const flexible = (): TemplateResult => {
-    return html`
-        <sp-action-bar open flexible emphasized>
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-bar>
-    `;
+export const Fixed = Default.bind({});
+Fixed.args = {
+    variant: 'fixed',
+    customStyles: css`
+        [variant='fixed'] {
+            bottom: 2.5em;
+            inset-inline-end: 1em;
+        }
+    `,
 };
 
-export const hasActionMenuAsChild = (): TemplateResult => {
-    return html`
-        <sp-action-bar open>
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-menu label="More Actions" slot="buttons">
-                <sp-menu-item>One</sp-menu-item>
-                <sp-menu-item>Two</sp-menu-item>
-                <sp-menu-item>
-                    Select some items
-                    <sp-menu slot="submenu" selects="multiple">
-                        <sp-menu-item>A</sp-menu-item>
-                        <sp-menu-item selected>B</sp-menu-item>
-                        <sp-menu-item>C</sp-menu-item>
-                    </sp-menu>
-                </sp-menu-item>
-            </sp-action-menu>
-        </sp-action-bar>
-    `;
+export const Flexible = Default.bind({});
+Flexible.args = {
+    variant: 'flexible',
+    emphasized: true,
 };
+
+export const ActionMenuAsChild = Default.bind({});
+ActionMenuAsChild.args = {
+    tools: html`
+        <sp-action-button slot="buttons" label="Edit">
+            <sp-icon-edit slot="icon"></sp-icon-edit>
+        </sp-action-button>
+        <sp-action-menu label="More Actions" slot="buttons">
+            <sp-menu-item>One</sp-menu-item>
+            <sp-menu-item>Two</sp-menu-item>
+            <sp-menu-item>
+                Select some items
+                <sp-menu slot="submenu" selects="multiple">
+                    <sp-menu-item>A</sp-menu-item>
+                    <sp-menu-item selected>B</sp-menu-item>
+                    <sp-menu-item>C</sp-menu-item>
+                </sp-menu>
+            </sp-menu-item>
+        </sp-action-menu>
+    `,
+};
+
+export default meta;

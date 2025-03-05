@@ -10,11 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { gradient } from './images.js';
-export default {
+const meta: Meta<Properties> = {
     title: 'Color/Slider',
     component: 'sp-color-slider',
 };
@@ -126,3 +127,5 @@ export const image = (): TemplateResult => {
         </sp-color-slider>
     `;
 };
+
+export default meta;

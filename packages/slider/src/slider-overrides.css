@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-slider-track-color: var(--system-slider-track-color);
     --spectrum-slider-track-fill-color: var(--system-slider-track-fill-color);
@@ -52,12 +53,6 @@ governing permissions and limitations under the License.
     --spectrum-slider-track-corner-radius: var(
         --system-slider-track-corner-radius
     );
-    --spectrum-slider-handle-border-radius: var(
-        --system-slider-handle-border-radius
-    );
-}
-
-:host {
     --spectrum-slider-handle-border-radius: var(
         --system-slider-size-m-handle-border-radius
     );

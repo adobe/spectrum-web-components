@@ -10,52 +10,40 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { TemplateResult } from '@spectrum-web-components/base';
-import { AccordionMarkup } from './';
-import { argTypes } from './args.js';
+import { AccordionMarkup } from './template';
+import type { Properties } from './args';
+import { args, argTypes } from './args';
 
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '@spectrum-web-components/link/sp-link.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Accordion',
     component: 'sp-accordion',
-    args: {
-        open: false,
-        size: 'm',
-        density: undefined,
-    },
     argTypes,
+    args,
 };
 
-type Properties = {
-    allowMultiple?: boolean;
-    disabled?: boolean;
-    open?: boolean;
-    density?: 'compact' | 'spacious' | undefined;
-    size?: 's' | 'm' | 'l' | 'xl';
-};
+export const Default = (args?: Properties): TemplateResult => AccordionMarkup(args);
 
-export const Default = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
-
-export const Open = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
+export const Open = Default.bind({});
 Open.args = {
     open: true,
     allowMultiple: false,
     disabled: false,
 };
 
-export const AllowMultiple = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
+export const AllowMultiple = Default.bind({});
 AllowMultiple.args = {
     allowMultiple: true,
 };
 
-export const Disabled = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
+export const Disabled = Default.bind({});
 Disabled.args = {
     disabled: true,
 };
+
+export default meta;

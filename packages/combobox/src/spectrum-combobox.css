@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     --spectrum-combobox-inline-size: var(--spectrum-field-width);
     --spectrum-combobox-block-size: var(--spectrum-component-height-100);
@@ -487,6 +488,7 @@ governing permissions and limitations under the License.
 }
 
 .button {
+    inset-inline-end: 0;
     position: absolute;
     inset-inline-end: calc(
         var(
@@ -786,6 +788,22 @@ governing permissions and limitations under the License.
                 var(--spectrum-combobox-spacing-inline-end-edge-to-text)
             ) -
             var(
+                --mod-combobox-border-width,
+                var(--spectrum-combobox-border-width)
+            ) * 2
+    );
+    padding-inline-end: calc(
+        var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) +
+            var(
+                --mod-combobox-spacing-inline-icon-to-button,
+                var(--spectrum-combobox-spacing-inline-icon-to-button)
+            ) +
+            var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size)) +
+            var(
+                --mod-combobox-spacing-inline-end-edge-to-text,
+                var(--spectrum-combobox-spacing-inline-end-edge-to-text)
+            ) -
+            var(
                 --mod-combobox-button-inline-offset,
                 var(--spectrum-combobox-button-inline-offset, 0px)
             ) -
@@ -906,6 +924,13 @@ governing permissions and limitations under the License.
             var(
                 --mod-combobox-spacing-inline-end-edge-to-text,
                 var(--spectrum-combobox-spacing-inline-end-edge-to-text)
+            )
+    );
+    padding-inline-end: calc(
+        var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) +
+            var(
+                --mod-combobox-spacing-inline-end-edge-to-text,
+                var(--spectrum-combobox-spacing-inline-end-edge-to-text)
             ) -
             var(
                 --mod-combobox-button-inline-offset,
@@ -916,6 +941,18 @@ governing permissions and limitations under the License.
 
 :host([quiet][invalid]) #textfield #input,
 :host([quiet][pending]) #textfield #input {
+    padding-inline-end: calc(
+        var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) +
+            var(
+                --mod-combobox-spacing-inline-icon-to-button,
+                var(--spectrum-combobox-spacing-inline-icon-to-button)
+            ) +
+            var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size)) +
+            var(
+                --mod-combobox-spacing-inline-end-edge-to-text,
+                var(--spectrum-combobox-spacing-inline-end-edge-to-text)
+            )
+    );
     padding-inline-end: calc(
         var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)) +
             var(

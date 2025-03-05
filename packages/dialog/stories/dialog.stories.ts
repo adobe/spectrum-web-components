@@ -10,13 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import { landscape } from './images.js';
 import '@spectrum-web-components/button/sp-button.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Dialog',
     component: 'sp-dialog',
 };
@@ -534,3 +535,5 @@ export const forcedScrolling = (): TemplateResult => html`
         </sp-dialog>
     </div>
 `;
+
+export default meta;

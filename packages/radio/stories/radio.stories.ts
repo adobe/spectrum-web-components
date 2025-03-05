@@ -9,89 +9,31 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/radio/sp-radio.js';
 import '@spectrum-web-components/radio/sp-radio-group.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-radio',
     title: 'Radio',
-    argTypes: {
-        checked: {
-            name: 'checked',
-            type: { name: 'boolean', required: false },
-            description: 'Represents when the input is checked',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: 'boolean',
-        },
-        disabled: {
-            name: 'disabled',
-            type: { name: 'boolean', required: false },
-            description:
-                'Disable this control. It will not receive focus or events.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        emphasized: {
-            name: 'emphasized',
-            type: { name: 'boolean', required: false },
-            description: "Set the button's state to emphasized.",
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        invalid: {
-            name: 'invalid',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-    },
-    args: {
-        checked: false,
-        disabled: false,
-        emphasized: false,
-        invalid: false,
-    },
+    argTypes,
+    args,
 };
 
-export interface StoryArgs {
-    checked?: boolean;
-    disabled?: boolean;
-    emphasized?: boolean;
-    invalid?: boolean;
-    readonly?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    [prop: string]: unknown;
-}
-
-function renderRadio(args: StoryArgs): TemplateResult {
+function renderRadio(args: Properties): TemplateResult {
     return html`
         <sp-radio ${spreadProps(args)}>Radio</sp-radio>
     `;
 }
-export const Default = (args: StoryArgs): TemplateResult => renderRadio(args);
+export const Default = (args: Properties): TemplateResult => renderRadio(args);
 
-export const readonly = (args: StoryArgs): TemplateResult =>
+export const readonly = (args: Properties): TemplateResult =>
     renderRadio({
         ...args,
         readonly: true,
@@ -100,25 +42,25 @@ readonly.args = {
     checked: true,
 };
 
-export const Emphasized = (args: StoryArgs): TemplateResult =>
+export const Emphasized = (args: Properties): TemplateResult =>
     renderRadio(args);
 Emphasized.args = {
     checked: true,
     emphasized: true,
 };
 
-export const Autofocus = (args: StoryArgs): TemplateResult => {
+export const Autofocus = (args: Properties): TemplateResult => {
     return html`
         <sp-radio autofocus ${spreadProps(args)}>Radio</sp-radio>
     `;
 };
 
-export const Invalid = (args: StoryArgs): TemplateResult => renderRadio(args);
+export const Invalid = (args: Properties): TemplateResult => renderRadio(args);
 Invalid.args = {
     invalid: true,
 };
 
-export const Disabled = (args: StoryArgs): TemplateResult => renderRadio(args);
+export const Disabled = (args: Properties): TemplateResult => renderRadio(args);
 Disabled.args = {
     disabled: true,
 };
@@ -181,3 +123,5 @@ export const horizontalTabIndexExample = (): TemplateResult => {
 };
 
 tabIndexExample.storyName = 'Tab index example';
+
+export default meta;

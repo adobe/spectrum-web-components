@@ -9,12 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 import { illustration } from '../../dropzone/test/test-svg.js';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-illustrated-message',
     title: 'IllustratedMessage',
 };
@@ -29,3 +31,5 @@ export const Default = (): TemplateResult => {
         </sp-illustrated-message>
     `;
 };
+
+export default meta;

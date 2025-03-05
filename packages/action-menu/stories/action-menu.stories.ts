@@ -9,9 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
@@ -21,187 +22,39 @@ import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { makeOverBackground } from '../../button/stories/index.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
-import { ActionMenuMarkup } from './';
-
+import { ActionMenuMarkup } from './template';
 import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import { Menu } from '@spectrum-web-components/menu';
 import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
-import { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
+import type { Properties } from './args';
+import { args, argTypes } from './args';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-action-menu',
     title: 'Action menu',
-    argTypes: {
-        onChange: { action: 'change' },
-        disabled: {
-            name: 'disabled',
-            type: { name: 'boolean', required: false },
-            description:
-                'Disable this control. It will not receive focus or events.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        open: {
-            name: 'open',
-            type: { name: 'boolean', required: false },
-            description: 'Whether the menu is open or not.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: 'boolean',
-        },
-        visibleLabel: {
-            name: 'Visible Label',
-            description: 'The placeholder content for the picker.',
-            type: { name: 'string', required: false },
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: '' },
-            },
-            control: 'text',
-        },
-        tooltipDescription: {
-            name: 'Tooltip Description',
-            type: { name: 'string', required: false },
-            description: 'Tooltip description',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: '' },
-            },
-            control: {
-                type: 'text',
-            },
-        },
-        tooltipPlacement: {
-            name: 'Tooltip Placement',
-            type: { name: 'string', required: false },
-            description: 'Tooltip Placement.',
-            table: {
-                defaultValue: { summary: 'bottom' },
-            },
-            control: {
-                options: [
-                    'auto',
-                    'auto-start',
-                    'auto-end',
-                    'top',
-                    'bottom',
-                    'right',
-                    'left',
-                    'top-start',
-                    'top-end',
-                    'bottom-start',
-                    'bottom-end',
-                    'right-start',
-                    'right-end',
-                    'left-start',
-                    'left-end',
-                    'none',
-                ],
-                type: 'select',
-            },
-        },
-        quiet: {
-            name: 'quiet',
-            type: { name: 'boolean', required: false },
-            description: 'Quiet rendering',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        staticColorValue: {
-            name: 'static-color',
-            type: { name: 'string', required: false },
-            description:
-                'The visual static color variant to apply to the button.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'none' },
-            },
-            control: {
-                type: 'select',
-                labels: {
-                    white: 'white',
-                    black: 'black',
-                    none: undefined,
-                },
-                options: ['white', 'black', 'none'],
-            },
-        },
-        align: {
-            name: 'align',
-            type: { name: 'string', required: false },
-            description: 'Alignment of the Action Menu',
-            table: {
-                defaultValue: { summary: 'start' },
-            },
-            control: {
-                type: 'select',
-                labels: {
-                    start: 'start',
-                    end: 'end',
-                },
-            },
-            options: ['start', 'end'],
-        },
-    },
-    args: {
-        align: 'start',
-        visibleLabel: 'More Actions',
-        disabled: false,
-        forcePopover: false,
-        open: false,
-        quiet: false,
-        tooltipDescription: '',
-        tooltipPlacement: 'bottom',
-        static: undefined,
-    },
+    argTypes,
+    args,
 };
 
-interface StoryArgs {
-    align?: 'start' | 'end';
-    visibleLabel?: string;
-    disabled?: boolean;
-    open?: boolean;
-    customIcon?: string | TemplateResult;
-    selects?: 'single';
-    selected?: boolean;
-    quiet?: boolean;
-    staticValue?: 'white' | 'black' | undefined;
-    tooltipDescription?: string | 'none';
-    tooltipPlacement?: Placement;
-    forcePopover?: boolean;
-}
-
-const Template = (args: StoryArgs = {}): TemplateResult =>
+const Template = (args: Properties = {}): TemplateResult =>
     ActionMenuMarkup(args);
 
-export const Default = (args: StoryArgs = {}): TemplateResult => Template(args);
+export const Default = (args: Properties = {}): TemplateResult => Template(args);
 
-export const staticWhite = (args: StoryArgs = {}): TemplateResult =>
+export const staticWhite = (args: Properties = {}): TemplateResult =>
     Template(args);
 staticWhite.args = {
     staticValue: 'white',
 };
 staticWhite.decorators = [makeOverBackground()];
-export const staticBlack = (args: StoryArgs = {}): TemplateResult =>
+export const staticBlack = (args: Properties = {}): TemplateResult =>
     Template(args);
 staticBlack.args = {
     staticValue: 'black',
 };
 staticBlack.decorators = [makeOverBackground()];
-export const quiet = (args: StoryArgs = {}): TemplateResult => Template(args);
+export const quiet = (args: Properties = {}): TemplateResult => Template(args);
 quiet.args = {
     quiet: true,
 };
@@ -271,7 +124,7 @@ export const labelOnly = ({
     </sp-action-menu>
 `;
 
-export const selects = (args: StoryArgs = {}): TemplateResult =>
+export const selects = (args: Properties = {}): TemplateResult =>
     Template({
         ...args,
         selects: 'single',
@@ -282,22 +135,22 @@ selects.args = {
 };
 selects.decorators = [isOverlayOpen];
 
-export const iconOnly = (args: StoryArgs = {}): TemplateResult =>
+export const iconOnly = (args: Properties = {}): TemplateResult =>
     Template(args);
 iconOnly.args = {
     visibleLabel: '',
 };
 
 export const tooltipDescriptionAndPlacement = (
-    args: StoryArgs = {}
+    args: Properties = {}
 ): TemplateResult => Template(args);
 tooltipDescriptionAndPlacement.args = {
     tooltipDescription: 'Your tooltip string here',
     visibleLabel: '',
     tooltipPlacement: 'bottom',
-} as StoryArgs;
+} as Properties;
 
-export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
+export const customIcon = (args: Properties): TemplateResult => Template(args);
 customIcon.args = {
     customIcon: html`
         <sp-icon-settings slot="icon"></sp-icon-settings>
@@ -562,3 +415,5 @@ export const MenuItemAlerts = (): TemplateResult => html`
         <sp-menu-item disabled>Make work path</sp-menu-item>
     </sp-action-menu>
 `;
+
+export default meta;

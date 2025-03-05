@@ -10,11 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
 
-export default {
+const meta: Meta = {
     title: 'Color/Wheel',
     component: 'sp-color-wheel',
 };
@@ -112,3 +113,5 @@ canvas.decorators = [
         `;
     },
 ];
+
+export default meta;

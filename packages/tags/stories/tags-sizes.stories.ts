@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import {
     ElementSize,
     html,
@@ -21,7 +23,7 @@ import '@spectrum-web-components/avatar/sp-avatar.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 
-export default {
+const meta: Meta = {
     title: 'Tags/Sizes',
     component: 'sp-tags',
 };
@@ -48,3 +50,5 @@ export const s = (): TemplateResult => template({ size: 's' });
 export const m = (): TemplateResult => template({ size: 'm' });
 
 export const l = (): TemplateResult => template({ size: 'l' });
+
+export default meta;

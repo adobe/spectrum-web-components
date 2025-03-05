@@ -9,94 +9,28 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Properties } from './swatch.stories.js';
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/swatch/sp-swatch-group.js';
 import '@spectrum-web-components/swatch/sp-swatch.js';
-import type {
-    SwatchBorder,
-    SwatchRounding,
-    SwatchShape,
-} from '../src/Swatch.js';
+import { argTypes } from './args.js';
 import { SwatchGroup } from '../src/SwatchGroup.js';
 
-type Properties = {
-    border: SwatchBorder | 'normal';
+export type GroupProperties = Omit<Properties, 'color', 'mixedValue', 'nothing'> & {
     density?: 'normal' | 'spacious' | 'compact';
-    rounding?: SwatchRounding | 'normal';
     selected?: string[];
     selects?: 'none' | 'single' | 'multiple';
-    shape?: SwatchShape | 'normal';
 };
 
-export default {
+const meta: Meta<GroupProperties> = {
     title: 'Swatch group',
     component: 'sp-swatch-group',
     args: {},
-    argTypes: {
-        border: {
-            name: 'border',
-            type: { name: 'string', required: false },
-            description: 'The border to apply to the Swatch children.',
-            table: {
-                defaultValue: { summary: '' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'light', 'none'],
-            },
-        },
-        density: {
-            name: 'density',
-            type: { name: 'string', required: false },
-            description: 'The density at which to display the Swatch children.',
-            table: {
-                defaultValue: { summary: '' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'compact', 'spacious'],
-            },
-        },
-        rounding: {
-            name: 'rounding',
-            type: { name: 'string', required: false },
-            description: 'The rounding to apply to the Swatch children.',
-            table: {
-                defaultValue: { summary: '' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'none', 'full'],
-            },
-        },
-        selects: {
-            name: 'selects',
-            type: { name: 'string', required: false },
-            description:
-                'Whether the Swatch Group manages a selection, and whether it is a sinlge or multiple selection.',
-            table: {
-                defaultValue: { summary: '' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['none', 'single', 'multiple'],
-            },
-        },
-        shape: {
-            name: 'shape',
-            type: { name: 'string', required: false },
-            description: 'The shape to apply to the Swatch children.',
-            table: {
-                defaultValue: { summary: '' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'rectangle'],
-            },
-        },
-    },
+    argTypes,
     decorators: [
         (
             story: () => TemplateResult,
@@ -230,3 +164,5 @@ export const shapeRectangle = (args: Properties): TemplateResult =>
 shapeRectangle.args = {
     shape: 'rectangle',
 } as Properties;
+
+export default meta;

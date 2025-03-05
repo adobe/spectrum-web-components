@@ -10,38 +10,27 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { ColorSlider } from '@spectrum-web-components/color-slider/src/ColorSlider';
 import '@spectrum-web-components/color-area/sp-color-area.js';
 import { ColorArea } from '@spectrum-web-components/color-area/src/ColorArea.js';
+import { argTypes } from './args.js';
 
-export default {
-    title: 'Color/Area',
-    component: 'sp-color-area',
-    argTypes: {
-        onInput: { action: 'input' },
-        onChange: { action: 'change' },
-        color: {
-            name: 'color',
-            type: { name: 'ColorTypes', required: 'true' },
-            description: 'The color displayed by the ColorArea.',
-            table: {
-                type: { summary: 'ColorTypes' },
-                defaultValue: { summary: '' },
-            },
-            control: 'text',
-        },
-    },
-};
-
-type StoryArgs = {
+export type Properties = {
     onInput: (val: string) => void;
     onChange: (val: string) => void;
 };
 
-export const Default = ({ onChange, onInput }: StoryArgs): TemplateResult => {
+const meta: Meta<Properties> = {
+    title: 'Color/Area',
+    component: 'sp-color-area',
+    argTypes,
+};
+
+export const Default = ({ onChange, onInput }: Properties): TemplateResult => {
     return html`
         <sp-color-area
             color="#ff0000"
@@ -196,3 +185,5 @@ canvas.decorators = [
         `;
     },
 ];
+
+export default meta;

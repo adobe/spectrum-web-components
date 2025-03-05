@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/toast/sp-toast.js';
@@ -50,7 +52,7 @@ const toast = ({
     </sp-toast>
 `;
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-toast',
     title: 'Toast',
     args: {
@@ -236,3 +238,5 @@ export const overlay = (args: Properties): TemplateResult => {
         </sp-overlay>
     `;
 };
+
+export default meta;

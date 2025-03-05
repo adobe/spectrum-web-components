@@ -10,7 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export const argTypes = {
+import type { ArgTypes } from '@storybook/web-components';
+import type { ElementSize } from '@spectrum-web-components/theme';
+
+export interface Properties {
+    quiet?: boolean;
+    readonly?: boolean;
+    disabled?: boolean;
+    viewColor?: boolean;
+    value?: string;
+    label?: string;
+    size?: ElementSize;
+    [prop: string]: unknown;
+};
+
+export const argTypes: ArgTypes = {
     quiet: {
         name: 'quiet',
         type: { name: 'boolean', required: false },
@@ -24,7 +38,7 @@ export const argTypes = {
         },
     },
     disabled: {
-        name: 'disabled',
+        name: 'Disabled',
         type: { name: 'boolean', required: false },
         description: 'Whether the color-field is disabled or not',
         table: {
@@ -64,4 +78,9 @@ export const argTypes = {
             type: 'select',
         },
     },
+};
+
+export const args: Properties = {
+    label: '',
+    size: 'm',
 };

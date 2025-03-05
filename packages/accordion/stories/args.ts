@@ -10,11 +10,33 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export const argTypes = {
+import type { ArgTypes } from '@storybook/web-components';
+import type { ElementSize } from '@spectrum-web-components/theme';
+
+export type Properties = {
+    allowMultiple?: boolean;
+    disabled?: boolean;
+    open?: boolean;
+    density?: 'compact' | 'spacious' | undefined;
+    size?: ElementSize;
+};
+
+export const argTypes: ArgTypes = {
     open: {
         name: 'open',
         type: { name: 'boolean', required: false },
         description: 'Whether the second accordion item is open.',
+        table: {
+            type: { summary: 'boolean' },
+            defaultValue: { summary: false },
+        },
+        control: {
+            type: 'boolean',
+        },
+    },
+    disabled: {
+        name: 'Disabled',
+        type: { name: 'boolean', required: false },
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: false },
@@ -69,4 +91,10 @@ export const argTypes = {
             type: 'select',
         },
     },
+};
+
+export const args: Properties = {
+    open: false,
+    size: 'm',
+    density: undefined,
 };

@@ -9,70 +9,19 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 import '@spectrum-web-components/swatch/sp-swatch.js';
-import type {
-    SwatchBorder,
-    SwatchRounding,
-    SwatchShape,
-} from '../src/Swatch.js';
 
-type Properties = {
-    color: string;
-    border: SwatchBorder | 'normal';
-    rounding: SwatchRounding | 'normal';
-    shape: SwatchShape | 'normal';
-    mixedValue?: boolean;
-    nothing?: boolean;
-};
-
-export default {
+const meta: Meta<Properties> = {
     title: 'Swatch',
     component: 'sp-swatch',
-    args: {
-        color: '#ff0000',
-    },
-    argTypes: {
-        color: { control: 'color' },
-        border: {
-            name: 'border',
-            type: { name: 'string', required: false },
-            description: 'The border to apply to the Swatch children.',
-            table: {
-                defaultValue: { summary: '' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'light', 'none'],
-            },
-        },
-        rounding: {
-            name: 'rounding',
-            type: { name: 'string', required: false },
-            description: 'The rounding to apply to the Swatch children.',
-            table: {
-                defaultValue: { summary: '' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'none', 'full'],
-            },
-        },
-        shape: {
-            name: 'shape',
-            type: { name: 'string', required: false },
-            description: 'The shape to apply to the Swatch children.',
-            table: {
-                defaultValue: { summary: '' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['normal', 'rectangle'],
-            },
-        },
-    },
+    args,
+    argTypes,
 };
 
 const template = ({
@@ -137,3 +86,5 @@ export const shapeRectangle = (args: Properties): TemplateResult =>
 shapeRectangle.args = {
     shape: 'rectangle',
 };
+
+export default meta;

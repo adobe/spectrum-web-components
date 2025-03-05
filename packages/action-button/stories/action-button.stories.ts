@@ -9,17 +9,22 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-import type { Properties } from './index.js';
-import { renderButton } from './index.js';
+import { renderButton } from './template.js';
 
 import '@spectrum-web-components/action-button/sp-action-button.js';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-action-button',
     title: 'Action Button',
+    argTypes,
+    args,
 };
 
 function renderButtonsSelected(args: Properties): TemplateResult {
@@ -53,3 +58,5 @@ href.args = {
         <sp-icon-edit hidden slot="icon"></sp-icon-edit>
     `,
 };
+
+export default meta;

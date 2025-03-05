@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
@@ -17,178 +18,17 @@ import '@spectrum-web-components/number-field/sp-number-field.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { NumberField } from '@spectrum-web-components/number-field/src/NumberField.js';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Number Field',
     component: 'sp-number-field',
-    args: {
-        disabled: false,
-        readonly: false,
-        quiet: false,
-        value: undefined,
-        placeholder: '',
-        min: undefined,
-        max: undefined,
-        step: undefined,
-    },
-    argTypes: {
-        disabled: {
-            name: 'disabled',
-            type: { name: 'boolean', required: false },
-            description:
-                'Disable this control. It will not receive focus or events.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        indeterminate: {
-            name: 'indeterminate',
-            type: { name: 'boolean', required: false },
-            description:
-                'Whether the value of the Number Field can be determined for display.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        readonly: {
-            name: 'readonly',
-            type: { name: 'boolean', required: false },
-            description:
-                'When this control is read only, you will not be able to input an updated value.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        quiet: {
-            name: 'quiet',
-            type: { name: 'boolean', required: false },
-            description:
-                'An altered delivery with no background and only a bottom border.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        hideStepper: {
-            name: 'hide stepper',
-            type: { name: 'boolean', required: false },
-            description: 'Whether to remove the stepper UI from the control.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        value: {
-            name: 'value',
-            type: { name: 'number', required: false },
-            description: 'Value to apply to the control.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: undefined },
-            },
-            control: {
-                type: 'number',
-            },
-        },
-        step: {
-            name: 'step',
-            type: { name: 'number', required: false },
-            description:
-                'Amount to change the value by when using the stepper or arrow key interactions.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: undefined },
-            },
-            control: {
-                type: 'number',
-            },
-        },
-        stepModifier: {
-            name: 'step modifier',
-            type: { name: 'number', required: false },
-            description:
-                'Amount to scale the step increment/decrement when holding the shift key',
-            table: {
-                type: { summary: 'number' },
-                defaultValue: { summary: 10 },
-            },
-            control: {
-                type: 'number',
-            },
-        },
-        placeholder: {
-            name: 'placeholder',
-            type: { name: 'string', required: false },
-            description: 'Placeholder to apply to the control.',
-            table: {
-                type: { summary: 'string' },
-            },
-            control: {
-                type: 'text',
-            },
-        },
-        min: {
-            name: 'min',
-            type: { name: 'number', required: false },
-            description: 'The minimum value the control can be set to.',
-            table: {
-                type: { summary: 'number' },
-                defaultValue: { summary: undefined },
-            },
-            control: {
-                type: 'number',
-            },
-        },
-        max: {
-            name: 'max',
-            type: { name: 'numer', required: false },
-            description: 'The maximum value the control can be set to.',
-            table: {
-                type: { summary: 'number' },
-                defaultValue: { summary: undefined },
-            },
-            control: {
-                type: 'number',
-            },
-        },
-    },
+    args,
+    argTypes,
 };
 
-interface StoryArgs {
-    disabled?: boolean;
-    indeterminate?: boolean;
-    invalid?: boolean;
-    value?: number;
-    placeholder?: string;
-    max?: number;
-    min?: number;
-    hideStepper?: boolean;
-    readonly?: boolean;
-    step?: number;
-    onChange?: (value: number) => void;
-    onInput?: (value: number) => void;
-    [prop: string]: unknown;
-}
-
-export const Default = (args: StoryArgs = {}): TemplateResult => {
+export const Default = (args: Properties = {}): TemplateResult => {
     const onChange =
         (args.onChange as (value: number) => void) ||
         (() => {
@@ -217,14 +57,14 @@ Default.args = {
     value: 100,
 };
 
-export const quiet = (args: StoryArgs = {}): TemplateResult => Default(args);
+export const quiet = (args: Properties = {}): TemplateResult => Default(args);
 
 quiet.args = {
     quiet: true,
     value: 100,
 };
 
-export const indeterminate = (args: StoryArgs = {}): TemplateResult =>
+export const indeterminate = (args: Properties = {}): TemplateResult =>
     Default(args);
 
 indeterminate.args = {
@@ -232,7 +72,7 @@ indeterminate.args = {
     indeterminate: true,
 };
 
-export const decimals = (args: StoryArgs): TemplateResult => {
+export const decimals = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="decimals">
             Enter a number with visible decimals
@@ -256,7 +96,7 @@ decimals.args = {
     value: 19.274,
 };
 
-export const germanDecimals = (args: StoryArgs): TemplateResult => {
+export const germanDecimals = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="decimals">
             Enter a number with visible decimals
@@ -281,7 +121,7 @@ germanDecimals.args = {
     value: 19.274,
 };
 
-export const percents = (args: StoryArgs = {}): TemplateResult => {
+export const percents = (args: Properties = {}): TemplateResult => {
     return html`
         <sp-field-label for="percents">Enter a percentage</sp-field-label>
         <sp-number-field
@@ -301,7 +141,7 @@ percents.args = {
     value: 0.372,
 };
 
-export const currency = (args: StoryArgs = {}): TemplateResult => {
+export const currency = (args: Properties = {}): TemplateResult => {
     return html`
         <sp-field-label for="currency">Enter a value in Euros</sp-field-label>
         <sp-number-field
@@ -322,7 +162,7 @@ currency.args = {
     value: 23.19,
 };
 
-export const units = (args: StoryArgs): TemplateResult => {
+export const units = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="units">Enter a lengths in inches</sp-field-label>
         <sp-number-field
@@ -343,7 +183,7 @@ units.args = {
     value: 24,
 };
 
-export const pixels = (args: StoryArgs): TemplateResult => {
+export const pixels = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="units">Enter a lengths in pixels</sp-field-label>
         <sp-number-field
@@ -363,7 +203,7 @@ pixels.args = {
     value: 800,
 };
 
-export const minMax = (args: StoryArgs): TemplateResult => html`
+export const minMax = (args: Properties): TemplateResult => html`
     <sp-field-label for="min-max">
         Enter a value between 0 and 255
     </sp-field-label>
@@ -381,7 +221,7 @@ minMax.args = {
     max: 255,
 };
 
-export const hideStepper = (args: StoryArgs): TemplateResult => {
+export const hideStepper = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="hideStepper">
             Enter a number without the stepper UI
@@ -398,7 +238,7 @@ hideStepper.args = {
     value: 67,
 };
 
-export const hideStepperQuiet = (args: StoryArgs): TemplateResult => {
+export const hideStepperQuiet = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="hideStepper">
             Enter a number without the stepper UI
@@ -416,7 +256,7 @@ hideStepperQuiet.args = {
     quiet: true,
 };
 
-export const disabled = (args: StoryArgs): TemplateResult => {
+export const disabled = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="disabled">
             This Number Field is disabled
@@ -433,7 +273,7 @@ disabled.args = {
     value: 892,
 };
 
-export const readOnly = (args: StoryArgs): TemplateResult => {
+export const readOnly = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="readonly">
             You can only read the following value
@@ -450,7 +290,7 @@ readOnly.args = {
     value: '15',
 };
 
-export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
+export const ScrollingContainer = (args: Properties = {}): TemplateResult => {
     const onChange =
         (args.onChange as (value: number) => void) ||
         (() => {
@@ -496,3 +336,5 @@ export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
         </div>
     `;
 };
+
+export default meta;

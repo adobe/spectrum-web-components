@@ -10,7 +10,25 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export const argTypes = {
+import type { ArgTypes } from '@storybook/web-components';
+import { ElementSize } from '@spectrum-web-components/base';
+
+export interface Properties {
+    open?: boolean;
+    pending?: boolean;
+    invalid?: boolean;
+    disabled?: boolean;
+    readonly?: boolean;
+    value?: string;
+    disabledItems?: string[];
+    autocomplete?: 'list' | 'none';
+    size?: ElementSize;
+    onChange?: (val: string) => void;
+    onInput?: (val: string) => void;
+    [prop: string]: unknown;
+};
+
+export const argTypes: ArgTypes = {
     size: {
         name: 'size',
         type: { name: 'string', required: false },
@@ -40,7 +58,7 @@ export const argTypes = {
         },
     },
     disabled: {
-        name: 'disabled',
+        name: 'Disabled',
         type: { name: 'boolean', required: false },
         description:
             'Disable this control. It will not receive focus or events.',
@@ -85,4 +103,13 @@ export const argTypes = {
             type: 'boolean',
         },
     },
+};
+
+export const args: Properties = {
+    open: false,
+    disabled: false,
+    invalid: false,
+    pending: false,
+    readonly: false,
+    quiet: false,
 };

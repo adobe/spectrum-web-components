@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/table/sp-table.js';
@@ -19,36 +21,14 @@ import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
 import type { Table } from '@spectrum-web-components/table';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Table',
     component: 'sp-table',
-    args: {
-        selected: [],
-        selects: '',
-    },
-    argTypes: {
-        selected: {
-            name: 'selected',
-            description: 'The value of the selected `<sp-table-row>`(s).',
-            control: {
-                type: 'text',
-            },
-        },
-        selects: {
-            name: 'selects',
-            description:
-                'Whether the elements selects its children and how many it can select at a time.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: '' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['', 'single', 'multiple'],
-            },
-        },
-    },
+    args,
+    argTypes,
 };
 
 export const elements = (): TemplateResult => {
@@ -350,3 +330,5 @@ export const emphasized = (): TemplateResult => {
 //         </sp-table>
 //     `;
 // };
+
+export default meta;

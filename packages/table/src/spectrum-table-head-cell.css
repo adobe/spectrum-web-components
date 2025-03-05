@@ -11,8 +11,10 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 .sortedIcon {
     vertical-align: initial;
+    margin-inline-start: 0;
     transition: transform
         var(
             --highcontrast-table-transition-duration,

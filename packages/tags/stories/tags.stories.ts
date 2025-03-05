@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/tags/sp-tag.js';
@@ -18,14 +20,14 @@ import { avatar } from '../../avatar/stories/images';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 
-export default {
+export interface Properties {
+    onDelete?: () => void;
+};
+
+const meta: Meta<Properties> = {
     title: 'Tags',
     component: 'sp-tags',
     argTypes: { onDelete: { action: 'delete' } },
-};
-
-type Props = {
-    onDelete: () => void;
 };
 
 export const Default = (): TemplateResult => {
@@ -82,7 +84,7 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const deletable = (args: Props): TemplateResult => {
+export const deletable = (args: Properties): TemplateResult => {
     return html`
         <sp-tags @delete=${args.onDelete}>
             <sp-tag deletable>Tag 1</sp-tag>
@@ -154,3 +156,5 @@ export const readonly = (): TemplateResult => {
         </sp-tags>
     `;
 };
+
+export default meta;

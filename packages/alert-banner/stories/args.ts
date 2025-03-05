@@ -10,7 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export const argTypes = {
+import type { ArgTypes } from '@storybook/web-components';
+import type { AlertBannerVariants } from '@spectrum-web-components/alert-banner';
+
+export interface Properties {
+    text: string;
+    variant: AlertBannerVariants;
+    dismissible: boolean;
+    open: boolean;
+    onClose?: (event: Event) => void;
+    actionLabel?: string;
+    [prop: string]: unknown;
+};
+
+export const argTypes: ArgTypes = {
     text: {
         name: 'text',
         type: { name: 'string', required: false },
@@ -59,4 +72,11 @@ export const argTypes = {
         },
         options: ['neutral', 'info', 'negative'],
     },
+};
+
+export const args: Properties = {
+    text: 'Your trial has expired',
+    dismissible: true,
+    open: true,
+    variant: 'neutral',
 };

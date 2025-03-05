@@ -9,35 +9,39 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
-import { OverflowProperties, renderTabsOverflowExample } from './index.js';
 
-export default {
+import type { Meta } from '@storybook/web-components';
+import { TemplateResult } from '@spectrum-web-components/base';
+import { renderTabsOverflowExample } from './index.js';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
+
+const meta: Meta<Properties> = {
     title: 'Tabs Overflow/Sizes',
     component: 'sp-tabs-overflow',
+    argTypes,
+    args,
 };
 
-export const s = (args: OverflowProperties): TemplateResult => {
+const Template = (args: Properties): TemplateResult => {
     return renderTabsOverflowExample(args);
 };
+
+export const s = Template.bind({});
 s.args = {
     size: 's',
 };
-export const m = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
-};
+export const m = Template.bind({});
 m.args = {
     size: 'm',
 };
-export const l = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
-};
+export const l = Template.bind({});
 l.args = {
     size: 'l',
 };
-export const XL = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
-};
+export const XL = Template.bind({});
 XL.args = {
     size: 'xl',
 };
+
+export default meta;

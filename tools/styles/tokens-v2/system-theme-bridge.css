@@ -1,3 +1,15 @@
+/*!
+ * Copyright 2024 Adobe. All rights reserved.
+ *
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at <http://www.apache.org/licenses/LICENSE-2.0>
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 :host,
 :root {
     --system-accordion-item-width: var(--spectrum-accordion-minimum-width);
@@ -359,9 +371,7 @@
     --system-action-button-static-black-border-color-focus: var(
         --spectrum-transparent-black-600
     );
-    --system-action-button-static-black-background-color-disabled: var(
-        --spectrum-disabled-static-black-background-color
-    );
+    --system-action-button-static-black-background-color-disabled: transparent;
     --system-action-button-static-black-background-color-selected-disabled: var(
         --spectrum-disabled-static-black-background-color
     );
@@ -385,7 +395,6 @@
     --system-action-button-static-black-quiet-background-color-focus: var(
         --spectrum-transparent-black-400
     );
-    --system-action-button-static-black-background-color-disabled: transparent;
     --system-action-button-static-black-quiet-background-color-disabled: transparent;
     --system-action-button-static-white-border-color-default: var(
         --spectrum-transparent-white-500
@@ -399,9 +408,7 @@
     --system-action-button-static-white-border-color-focus: var(
         --spectrum-transparent-white-600
     );
-    --system-action-button-static-white-background-color-disabled: var(
-        --spectrum-disabled-static-white-background-color
-    );
+    --system-action-button-static-white-background-color-disabled: transparent;
     --system-action-button-static-white-background-color-selected-disabled: var(
         --spectrum-disabled-static-white-background-color
     );
@@ -425,7 +432,6 @@
     --system-action-button-static-white-quiet-background-color-focus: var(
         --spectrum-transparent-white-400
     );
-    --system-action-button-static-white-background-color-disabled: transparent;
     --system-action-button-static-white-quiet-background-color-disabled: transparent;
     --system-action-group-gap-size-compact: 0;
     --system-action-group-horizontal-spacing-compact: -1px;
@@ -2152,8 +2158,8 @@
     );
     --system-meter-min-width: var(--spectrum-meter-minimum-width);
     --system-meter-max-width: var(--spectrum-meter-maximum-width);
-    --system-meter-inline-size: var(--spectrum-meter-width);
-    --system-meter-top-to-text: var(--spectrum-component-top-to-text);
+    --system-meter-inline-size: var(--spectrum-progressbar-size-2500);
+    --system-meter-top-to-text: var(--spectrum-component-top-to-text-200);
     --system-meter-fill-color-positive: var(--spectrum-positive-visual-color);
     --system-meter-fill-color-notice: var(--spectrum-notice-visual-color);
     --system-meter-fill-color-negative: var(--spectrum-negative-visual-color);
@@ -2163,11 +2169,9 @@
     --system-meter-size-s-top-to-text: var(--spectrum-component-top-to-text-75);
     --system-meter-thickness: var(--spectrum-meter-thickness-large);
     --system-meter-size-l-thickness: var(--spectrum-meter-thickness-large);
-    --system-meter-inline-size: var(--spectrum-progressbar-size-2500);
     --system-meter-size-l-inline-size: var(--spectrum-progressbar-size-2500);
     --system-meter-font-size: var(--spectrum-font-size-100);
     --system-meter-size-l-font-size: var(--spectrum-font-size-100);
-    --system-meter-top-to-text: var(--spectrum-component-top-to-text-200);
     --system-meter-size-l-top-to-text: var(
         --spectrum-component-top-to-text-200
     );

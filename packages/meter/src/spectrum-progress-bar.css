@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     font-size: var(
         --mod-progressbar-font-size,
@@ -240,6 +241,6 @@ governing permissions and limitations under the License.
         --highcontrast-progressbar-fill-color: ButtonText;
         --highcontrast-progressbar-track-color: ButtonFace;
         forced-color-adjust: none;
-        border: 1px solid ButtonText;
+        border: 1px solid buttontext;
     }
 }

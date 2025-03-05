@@ -10,7 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export const argTypes = {
+import type { ArgTypes } from '@storybook/web-components';
+
+export interface Properties {
+    compact?: boolean;
+    disabled?: boolean;
+    label?: string;
+    'max-visible-items'?: number;
+    onChange: () => void;
+    [prop: string]: unknown;
+};
+
+export const argTypes: ArgTypes = {
     compact: {
         name: 'compact',
         type: { name: 'boolean', required: false },
@@ -24,8 +35,19 @@ export const argTypes = {
             type: 'boolean',
         },
     },
+    disabled: {
+        name: 'Disabled',
+        type: { name: 'boolean', required: false },
+        table: {
+            type: { summary: 'boolean' },
+            defaultValue: { summary: false },
+        },
+        control: {
+            type: 'boolean',
+        },
+    },
     label: {
-        name: 'label',
+        name: 'Label',
         type: { name: 'string', required: false },
         table: {
             type: { summary: 'string' },
@@ -45,4 +67,9 @@ export const argTypes = {
         max: 4,
     },
     onChange: { action: 'change' },
+};
+
+export const args: Properties = {
+    compact: false,
+    disabled: false,
 };

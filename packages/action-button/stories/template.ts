@@ -15,24 +15,8 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-
 import '@spectrum-web-components/action-button/sp-action-button.js';
-
-export interface Properties {
-    active?: boolean;
-    quiet?: boolean;
-    disabled?: boolean;
-    selected?: boolean;
-    toggles?: boolean;
-    emphasized?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    staticColor?: 'white' | 'black';
-    holdAffordance?: boolean;
-    icon?: TemplateResult;
-    label?: string;
-    [prop: string]: unknown;
-    href: undefined;
-}
+import type { Properties } from './args.js';
 
 export function renderButton(properties: Properties): TemplateResult {
     return html`

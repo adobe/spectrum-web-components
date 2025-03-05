@@ -9,81 +9,132 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import rollupJson from '@rollup/plugin-json';
-import { mergeConfigs } from '@web/dev-server';
-import { fromRollup } from '@web/dev-server-rollup';
-import rollupCommonjs from '@rollup/plugin-commonjs';
-import { watchSWC } from '../web-test-runner.utils.js';
 
-/** @type { import('storybook-builder-wds').StorybookConfigWds } */
-const config = {
+import path from 'node:path';
+
+import { mergeConfig } from 'vite';
+import viteTsConfigPaths from 'vite-tsconfig-paths';
+
+import { getPackagePath } from '../tasks/css-tools.js';
+
+/** @type { import('@storybook/web-components-vite').StorybookConfig } */
+export default {
     stories: [
-        '../packages/*/stories/*.stories.js',
-        '../tools/*/stories/*.stories.js',
+        {
+            directory: '../packages',
+            files: '*/stories/*.stories.ts',
+            titlePrefix: 'Components',
+        },
+        {
+            directory: '../tools',
+            files: '*/stories/*.stories.ts',
+            titlePrefix: 'Tools',
+        },
     ],
+    rootDir: '../',
     addons: [
+        {
+            name: 'storybook-addon-swc',
+            options: {
+                enable: true,
+                enableSwcLoader: true,
+                enableSwcMinify: true,
+                swcLoaderOptions: {
+                    jsc: {
+                        experimental: {
+                            plugins: [],
+                        },
+                        parser: {
+                            syntax: 'typescript',
+                            decorators: true,
+                        },
+                        transform: {
+                            legacyDecorator: true,
+                            decoratorMetadata: true,
+                        },
+                    },
+                },
+                swcMinifyOptions: {},
+            },
+        },
         '@storybook/addon-links',
         '@storybook/addon-essentials',
+        // https://github.com/storybookjs/storybook/tree/next/code/addons/interactions
+        '@storybook/addon-interactions',
+        // https://github.com/storybookjs/storybook/tree/next/code/addons/a11y
         '@storybook/addon-a11y',
+        // https://docs.chromatic.com/docs/visual-tests-addon/
+        '@chromatic-com/storybook',
         // Conditionally add the addon-designs addon temporarily
         // https://storybook.js.org/addons/@storybook/addon-designs/
         ...(process.env.NODE_ENV === 'development'
             ? ['@storybook/addon-designs']
             : []),
-        // https://geometricpanda.github.io/storybook-addon-badges/
-        '@geometricpanda/storybook-addon-badges',
+        // https://storybook.js.org/addons/@etchteam/storybook-addon-status
+        '@etchteam/storybook-addon-status',
     ],
-    framework: {
-        name: '@web/storybook-framework-web-components',
+    framework: '@storybook/web-components-vite',
+    typescript: {
+        reactDocgen: 'react-docgen-typescript',
+        // check: true,
+        // checkOptions: {
+        //     tsconfig: path.resolve(__dirname, '../tsconfig.json'),
+        //     checkUnreachableCode: true,
+        // },
     },
-    wdsFinal(config) {
-        const json = fromRollup(rollupJson);
-        return mergeConfigs(config, {
-            nodeResolve: {
-                exportConditions: ['browser', 'development'],
-                moduleDirectories: [
-                    'node_modules',
-                    'packages',
-                    'projects',
-                    'tools',
-                ],
+    features: {
+        developmentModeForBuild: true,
+    },
+    core: {
+        disableTelemetry: true,
+        disableWhatsNewNotifications: true,
+    },
+    async viteFinal(config, { configType }) {
+        return mergeConfig(config, {
+            resolve: {
+                conditionNames: ['browser', 'development'],
+                modules: ['node_modules', 'packages', 'projects', 'tools'],
             },
-            clearTerminalOnReload: false,
-            mimeTypes: {
-                '**/*.json': 'js',
+            build: {
+                sourcemap: configType === 'DEVELOPMENT',
+                manifest: true,
+                minify: configType === 'PRODUCTION',
             },
-            plugins: [json(), watchSWC()],
-            http2: true,
+            css: {
+                transformer: 'lightningcss',
+                lightningcss: {
+                    minify: true,
+                    errorRecovery: true,
+                    resolver: {
+                        // read(filePath) {
+                        //     const file = fs.readFileSync(filePath, 'utf8');
+                        //     return file;
+                        // },
+                        resolve(specifier, from) {
+                            console.log({ specifier, from });
+                            if (specifier.startsWith('./')) {
+                                return path.resolve(from, '..', specifier);
+                            } else {
+                                return getPackagePath(specifier);
+                            }
+                        },
+                    },
+                },
+            },
             watch: true,
+            target: ['web', 'es5'],
+            plugins: [
+                viteTsConfigPaths({
+                    root: '../',
+                }),
+            ],
         });
     },
-    rollupFinal(config) {
-        // add a new plugin to the build
-        config.plugins.push(rollupJson());
-        config.plugins.push(
-            rollupCommonjs({
-                requireReturnsDefault: 'preferred',
-                include: [
-                    '**/node_modules/react-dom/**/*.js',
-                    '**/node_modules/react/**/*.js',
-                    '**/node_modules/memoizerific/**/*.js',
-                    '**/node_modules/lodash/**/*.js',
-                    '**/node_modules/@storybook/blocks/**/*.js',
-                ],
-            })
-        );
-        return config;
-    },
-};
-
-if (process.env.NODE_ENV === 'development') {
-    config.refs = {
+    refs: process.env.NODE_ENV === 'development' && {
         'design-system': {
             title: 'Spectrum CSS',
             url: 'https://opensource.adobe.com/spectrum-css/preview/',
             expanded: false, // Optional, true by default
         },
-    };
-}
-
-export default config;
+    },
+};

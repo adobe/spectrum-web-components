@@ -12,36 +12,22 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/avatar/sp-avatar.js';
-import { AvatarSize } from '@spectrum-web-components/avatar';
 import { avatar } from './images';
+import type { Properties } from './args';
+import { args, argTypes } from './args';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-avatar',
     title: 'Avatar',
-    argTypes: {
-        disabled: { control: 'boolean' },
-        label: { control: 'text' },
-        src: { control: 'text' },
-    },
-    args: {
-        disabled: false,
-        label: 'Place dog',
-        src: avatar,
-    },
+    argTypes,
+    args,
 };
-
-interface StoryArgs {
-    disabled?: boolean;
-    label?: string;
-    src?: string;
-    size?: AvatarSize;
-}
 
 const Template = ({
     label = 'Place Dog',
     src = avatar,
     size = 100,
-}: StoryArgs = {}): TemplateResult => {
+}: Properties = {}): TemplateResult => {
     return html`
         <sp-avatar label=${label} src=${src} size=${size}></sp-avatar>
     `;
@@ -52,7 +38,7 @@ const Link = ({
     label = 'Place Dog',
     src = avatar,
     size = 100,
-}: StoryArgs = {}): TemplateResult => {
+}: Properties = {}): TemplateResult => {
     return html`
         <sp-avatar
             href="https://opensource.adobe.com/spectrum-web-components"
@@ -64,24 +50,26 @@ const Link = ({
     `;
 };
 
-export const size50 = (args: StoryArgs = {}): TemplateResult =>
+export const size50 = (args: Properties = {}): TemplateResult =>
     Template({ ...args, size: 50 });
-export const size75 = (args: StoryArgs = {}): TemplateResult =>
+export const size75 = (args: Properties = {}): TemplateResult =>
     Template({ ...args, size: 75 });
-export const size100 = (args: StoryArgs = {}): TemplateResult =>
+export const size100 = (args: Properties = {}): TemplateResult =>
     Template({ ...args, size: 100 });
-export const size200 = (args: StoryArgs = {}): TemplateResult =>
+export const size200 = (args: Properties = {}): TemplateResult =>
     Template({ ...args, size: 200 });
-export const size300 = (args: StoryArgs = {}): TemplateResult =>
+export const size300 = (args: Properties = {}): TemplateResult =>
     Template({ ...args, size: 300 });
-export const size400 = (args: StoryArgs = {}): TemplateResult =>
+export const size400 = (args: Properties = {}): TemplateResult =>
     Template({ ...args, size: 400 });
-export const size500 = (args: StoryArgs = {}): TemplateResult =>
+export const size500 = (args: Properties = {}): TemplateResult =>
     Template({ ...args, size: 500 });
-export const size600 = (args: StoryArgs = {}): TemplateResult =>
+export const size600 = (args: Properties = {}): TemplateResult =>
     Template({ ...args, size: 600 });
-export const size700 = (args: StoryArgs = {}): TemplateResult =>
+export const size700 = (args: Properties = {}): TemplateResult =>
     Template({ ...args, size: 700 });
-export const linked = (args: StoryArgs = {}): TemplateResult => Link(args);
-export const disabled = (args: StoryArgs = {}): TemplateResult => Link(args);
+export const linked = (args: Properties = {}): TemplateResult => Link(args);
+export const disabled = (args: Properties = {}): TemplateResult => Link(args);
 disabled.args = { disabled: true };
+
+export default meta;

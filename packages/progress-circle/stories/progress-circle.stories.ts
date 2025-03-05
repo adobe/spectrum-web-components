@@ -10,12 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/button/sp-button.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Progress Circle',
     component: 'sp-progress-circle',
     argTypes: {
@@ -122,3 +123,5 @@ export const inButton = ({
         Processing...
     </sp-button>
 `;
+
+export default meta;

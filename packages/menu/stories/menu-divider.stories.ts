@@ -8,14 +8,17 @@ Unless required by applicable law or agreed to in writing, software distributed 
 the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
-*/ import { html, TemplateResult } from '@spectrum-web-components/base';
+*/
+
+import type { Meta } from '@storybook/web-components';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-menu-divider',
     title: 'Menu Divider',
 };
@@ -44,3 +47,5 @@ export const sizeS = (): TemplateResult => Template('s');
 export const sizeM = (): TemplateResult => Template('m');
 
 export const sizeL = (): TemplateResult => Template('l');
+
+export default meta;

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import {
-    ElementSize,
     html,
     type TemplateResult,
 } from '@spectrum-web-components/base';
@@ -19,30 +18,19 @@ import type { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import type { Properties } from './args.js';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-export interface StoryArgs {
-    disabled?: boolean;
-    invalid?: boolean;
-    open?: boolean;
-    quiet?: boolean;
-    pending?: boolean;
-    showText?: boolean;
-    onChange?: (val: string) => void;
-    [prop: string]: unknown;
-    size?: ElementSize;
-}
-
 export const handleChange =
-    ({ onChange }: StoryArgs) =>
+    ({ onChange }: Properties) =>
     (event: Event): void => {
         const picker = event.target as Picker;
         if (onChange) onChange(picker.value);
     };
 
-export const Template = (args: StoryArgs): TemplateResult => html`
+export const Template = (args: Properties): TemplateResult => html`
     <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
         Where do you live?
     </sp-field-label>

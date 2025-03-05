@@ -9,6 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/textfield/sp-textfield.js';
@@ -16,7 +18,7 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-export default {
+const meta: Meta = {
     component: 'sp-textfield',
     title: 'Textarea/Sizes',
 };
@@ -48,3 +50,5 @@ export const noSize = (): TemplateResult => template();
 export const m = (): TemplateResult => template({ size: 'm' });
 export const l = (): TemplateResult => template({ size: 'l' });
 export const XL = (): TemplateResult => template({ size: 'xl' });
+
+export default meta;

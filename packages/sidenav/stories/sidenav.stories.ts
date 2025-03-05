@@ -9,13 +9,19 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
 
-export default {
+export interface Properties {
+    onChange: () => void;
+};
+
+const meta: Meta<Properties> = {
     component: 'sp-sidenav',
     title: 'Sidenav',
     argTypes: {
@@ -23,11 +29,7 @@ export default {
     },
 };
 
-export const Default = ({
-    onChange,
-}: {
-    onChange: () => void;
-}): TemplateResult => {
+export const Default = ({ onChange }: Properties): TemplateResult => {
     return html`
         <sp-sidenav @change=${onChange} value="Section 1">
             <sp-sidenav-item
@@ -53,11 +55,7 @@ export const Default = ({
     `;
 };
 
-export const Multilevel = ({
-    onChange,
-}: {
-    onChange: () => void;
-}): TemplateResult => {
+export const Multilevel = ({ onChange }: Properties): TemplateResult => {
     return html`
         <sp-sidenav variant="multilevel" value="2.3.1" @change=${onChange}>
             <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
@@ -84,11 +82,7 @@ export const Multilevel = ({
 
 Multilevel.storyName = 'Multi-level';
 
-export const MultilevelSlotted = ({
-    onChange,
-}: {
-    onChange: () => void;
-}): TemplateResult => {
+export const MultilevelSlotted = ({ onChange }: Properties): TemplateResult => {
     return html`
         <sp-sidenav variant="multilevel" value="2.3.1" @change=${onChange}>
             <sp-sidenav-item value="foo">foo</sp-sidenav-item>
@@ -112,7 +106,7 @@ export const MultilevelSlotted = ({
 
 MultilevelSlotted.storyName = 'Multi-level Slotted';
 
-export const levelsAndDisabled = (): TemplateResult => {
+export const levelsAndDisabled = ({}: Properties): TemplateResult => {
     return html`
         <sp-sidenav>
             <sp-sidenav-heading label="Category 1">
@@ -136,7 +130,7 @@ export const levelsAndDisabled = (): TemplateResult => {
     `;
 };
 
-export const manageTabIndex = (): TemplateResult => {
+export const manageTabIndex = ({}: Properties): TemplateResult => {
     return html`
         <sp-sidenav manage-tab-index>
             <sp-sidenav-heading label="Category 1">
@@ -165,11 +159,7 @@ export const manageTabIndex = (): TemplateResult => {
     `;
 };
 
-export const Hrefs = ({
-    onChange,
-}: {
-    onChange: () => void;
-}): TemplateResult => {
+export const Hrefs = ({ onChange }: Properties): TemplateResult => {
     return html`
         <sp-sidenav @change=${onChange} value="current">
             <sp-sidenav-heading label="Github">
@@ -195,3 +185,5 @@ export const Hrefs = ({
         </sp-sidenav>
     `;
 };
+
+export default meta;

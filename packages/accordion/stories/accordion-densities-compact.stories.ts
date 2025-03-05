@@ -10,12 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import type { Meta } from '@storybook/web-components';
+import type { Properties } from './accordion.stories';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { AccordionMarkup } from './';
+import type { Properties } from './args.js';
+import { args, argTypes } from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Accordion/Densities/Compact',
     component: 'sp-accordion',
+    argTypes,
+    args,
 };
 
 export const s = (): TemplateResult =>
@@ -26,3 +32,5 @@ export const l = (): TemplateResult =>
     AccordionMarkup({ density: 'compact', size: 'l' });
 export const xl = (): TemplateResult =>
     AccordionMarkup({ density: 'compact', size: 'xl' });
+
+export default meta;

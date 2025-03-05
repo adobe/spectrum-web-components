@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     cursor: pointer;
     -webkit-user-select: none;
@@ -89,8 +90,8 @@ governing permissions and limitations under the License.
 }
 
 ::slotted([slot='icon']) {
-    max-block-size: 100%;
     flex-shrink: 0;
+    max-block-size: 100%;
 }
 
 #label {
@@ -668,7 +669,6 @@ governing permissions and limitations under the License.
     line-height: var(--spectrum-actionbutton-height);
     font-size: var(--spectrum-actionbutton-font-size);
     white-space: nowrap;
-    color: inherit;
     color: var(--mod-actionbutton-label-color, inherit);
     text-overflow: ellipsis;
     overflow: hidden;

@@ -9,37 +9,41 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import {
-    args,
-    argTypes,
     chevronDown,
     chevronUp,
-    StoryArgs,
     Template,
 } from './index.js';
+import {
+    args,
+    argTypes,
+    Properties,
+} from './args.js';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Infield Button/Sizes',
     component: 'sp-infield-button',
     argTypes,
     args,
 };
 
-export const s = (args: StoryArgs): TemplateResult => Template(args);
+export const s = (args: Properties): TemplateResult => Template(args);
 s.args = {
     size: 's',
 };
-export const m = (args: StoryArgs): TemplateResult => Template(args);
+export const m = (args: Properties): TemplateResult => Template(args);
 m.args = {
     size: 'm',
 };
-export const l = (args: StoryArgs): TemplateResult => Template(args);
+export const l = (args: Properties): TemplateResult => Template(args);
 l.args = {
     size: 'l',
 };
-export const XL = (args: StoryArgs): TemplateResult => Template(args);
+export const XL = (args: Properties): TemplateResult => Template(args);
 XL.args = {
     size: 'xl',
 };
@@ -100,3 +104,5 @@ export const stackedXL = (): TemplateResult => html`
         label: 'Decrease',
     })}
 `;
+
+export default meta;

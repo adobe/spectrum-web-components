@@ -9,6 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
@@ -16,8 +17,7 @@ import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 
-import type { Properties } from './template.js';
-export type { Properties };
+export type { Properties } from './args.js';
 
 export const args = {
     disabled: false,
@@ -25,72 +25,11 @@ export const args = {
     pending: false,
 };
 
-export const argTypes = {
-    disabled: {
-        name: 'disabled',
-        type: { name: 'boolean', required: false },
-        description:
-            'Disable this control. It will not receive focus or events.',
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
-    },
-    variant: {
-        name: 'variant',
-        type: { name: 'string', required: false },
-        description: 'The visual variant to apply to the button.',
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: 'cta' },
-        },
-        control: {
-            type: 'inline-radio',
-            options: [
-                'cta',
-                'accent',
-                'primary',
-                'secondary',
-                'negative',
-                'overBackground',
-                'black',
-                'white',
-            ],
-        },
-    },
-    treatment: {
-        name: 'treatment',
-        type: { name: 'string', required: false },
-        description: 'The visual treatment to apply to the button.',
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: 'fill' },
-        },
-        control: {
-            type: 'inline-radio',
-            options: ['fill', 'outline'],
-        },
-    },
-    pending: {
-        name: 'pending',
-        type: { name: 'boolean', required: false },
-        description: 'Shows the pending state of the button.',
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
-    },
-};
-
 export const makeOverBackground =
-    (variant?: 'white' | 'black') =>
-    (story: () => TemplateResult): TemplateResult => {
+    (
+        variant?: 'white' | 'black'
+    ): import('@storybook/web-components').Decorator =>
+    (story) => {
         const color =
             variant === 'black'
                 ? 'rgb(181, 209, 211)'

@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+
 :host {
     border-color: var(
         --highcontrast-tag-border-color,
@@ -32,9 +33,9 @@ governing permissions and limitations under the License.
     block-size: var(--mod-tag-height, var(--spectrum-tag-height));
     box-sizing: border-box;
     vertical-align: bottom;
-    max-inline-size: 100%;
     -webkit-user-select: none;
     user-select: none;
+    max-inline-size: 100%;
     transition:
         border-color
             var(
@@ -167,8 +168,8 @@ governing permissions and limitations under the License.
 }
 
 .label {
-    block-size: 100%;
     box-sizing: border-box;
+    block-size: 100%;
     line-height: var(
         --mod-tag-label-line-height,
         var(--spectrum-tag-label-line-height)

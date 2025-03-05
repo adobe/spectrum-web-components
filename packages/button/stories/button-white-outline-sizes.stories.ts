@@ -9,21 +9,22 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
+import type { Meta } from '@storybook/web-components';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { makeOverBackground, Properties, renderButtonSet } from './index.js';
-import { args, argTypes } from './index.js';
+import { args } from './index.js';
+import { argTypes } from './args.js';
+export type { Properties } from './args.js';
 
-const variant = 'white';
-const treatment = 'outline';
-
-export default {
+const meta: Meta<Properties> = {
     component: 'sp-button',
     title: 'Button/White/Outline/Sizes',
     decorators: [makeOverBackground()],
     args: {
         ...args,
-        variant,
-        treatment,
+        variant: 'white',
+        treatment: 'outline',
     },
     argTypes,
 };
@@ -47,3 +48,5 @@ export const XL = (args: Properties): TemplateResult => renderButtonSet(args);
 XL.args = {
     size: 'xl',
 };
+
+export default meta;

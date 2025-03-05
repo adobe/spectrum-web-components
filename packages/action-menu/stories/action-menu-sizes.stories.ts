@@ -9,20 +9,26 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
 
+import type { Meta } from '@storybook/web-components';
+import { TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
 import '../../overlay/stories/index.js';
-import { ActionMenuMarkup } from './';
+import { ActionMenuMarkup } from './template';
+import type { Properties } from './args';
+import { args, argTypes } from './args';
 
-export default {
+const meta: Meta<Properties> = {
     title: 'Action menu/Sizes',
     component: 'sp-action-menu',
+    argTypes,
+    args,
 };
 
 export const s = (): TemplateResult => ActionMenuMarkup({ size: 's' });
+
 export const sOpen = (): TemplateResult =>
     ActionMenuMarkup({ size: 's', open: true });
 sOpen.decorators = [isOverlayOpen];
@@ -41,3 +47,5 @@ export const XL = (): TemplateResult => ActionMenuMarkup({ size: 'xl' });
 export const XLOpen = (): TemplateResult =>
     ActionMenuMarkup({ size: 'xl', open: true });
 XLOpen.decorators = [isOverlayOpen];
+
+export default meta;
