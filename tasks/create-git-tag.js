@@ -26,6 +26,6 @@ try {
     });
     console.log(`Tag v${version} created successfully.`);
     console.log(`Pushing tag v${version} to remote...`);
-    //execSync(`git push origin v${version}`, { stdio: 'inherit' });
+    execSync(`git push origin v${version}`, { stdio: 'inherit' });
     console.log(`Tag v${version} pushed successfully.`);
 }
