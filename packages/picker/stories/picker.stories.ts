@@ -25,7 +25,7 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '../../overlay/stories/index.js';
-import { isOverlayOpen } from '../../overlay/stories/index.js';
+import { areIconsPresent, isOverlayOpen } from '../../overlay/stories/index.js';
 import { argTypes } from './args.js';
 import { states } from './states.js';
 import { handleChange, StoryArgs, Template } from './template.js';
@@ -534,7 +534,7 @@ export const dynamicIcons = (args: StoryArgs): TemplateResult => {
 dynamicIcons.args = {
     open: true,
 };
-dynamicIcons.decorators = [isOverlayOpen];
+dynamicIcons.decorators = [areIconsPresent];
 
 export const Open = (args: StoryArgs): TemplateResult => {
     return html`
