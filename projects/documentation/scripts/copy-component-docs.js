@@ -19,8 +19,8 @@ import {
     apiPartialTemplate,
     changelogDestinationTemplate,
     changelogPartialTemplate,
-    exampleDestinationTemplate,
-    examplePartialTemplate,
+    overviewDestinationTemplate,
+    overviewPartialTemplate,
 } from './component-template-parts.js';
 import { gatherUrls } from './gather-spectrum-urls.js';
 
@@ -193,7 +193,7 @@ export async function processREADME(mdPath) {
     const componentPath = path.resolve(destinationPath, componentName);
 
     fs.mkdirSync(componentPath, { recursive: true });
-    // Support the full page delivery of "Examples" and "API"
+    // Support the full page delivery of "Overview" and "API"
     const exampleDestinationFile = path.resolve(
         destinationPath,
         componentName,
@@ -206,7 +206,7 @@ export async function processREADME(mdPath) {
     );
     // Create content only pages for each section of an individual elements docs
     // The next two are not fully leveraged just yet.
-    const examplePartialFile = path.resolve(
+    const overviewPartialFile = path.resolve(
         destinationPath,
         componentName,
         'content.md'
@@ -227,11 +227,11 @@ export async function processREADME(mdPath) {
             apiPartialTemplate(componentName, componentHeading, tag)
         );
     }
-    const tagType = isComponent ? 'component-examples' : 'tool-examples';
+    const tagType = isComponent ? 'component-overview' : 'tool-overview';
     const body = fs.readFileSync(mdPath);
     fs.writeFileSync(
         exampleDestinationFile,
-        exampleDestinationTemplate(
+        overviewDestinationTemplate(
             componentName,
             componentHeading,
             tagType,
@@ -240,8 +240,8 @@ export async function processREADME(mdPath) {
         )
     );
     fs.writeFileSync(
-        examplePartialFile,
-        examplePartialTemplate(componentName, componentHeading, body)
+        overviewPartialFile,
+        overviewPartialTemplate(componentName, componentHeading, body)
     );
     const hasArgs = fs.existsSync(
         path.resolve(
