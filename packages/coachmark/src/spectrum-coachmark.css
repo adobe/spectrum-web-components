@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -21,6 +21,7 @@ governing permissions and limitations under the License.
     --mod-button-edge-to-visual-only: 9px;
     --spectrum-coachmark-border-size: var(--mod-popover-border-width);
     --spectrum-coachmark-border-radius: var(--mod-popover-corner-radius);
+
     min-inline-size: var(
         --mod-coachmark-min-width,
         var(--spectrum-coachmark-min-width)
@@ -41,6 +42,7 @@ governing permissions and limitations under the License.
     --mod-buttongroup-spacing-horizontal: var(
         --spectrum-coachmark-buttongroup-spacing-horizontal
     );
+
     display: var(--spectrum-coachmark-buttongroup-mobile-display);
 }
 
