@@ -312,8 +312,26 @@ jobs:
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
-                      echo hash
-                      yarn netlify deploy --alias=$hash --cwd test/visual
+                      echo "Netlify alias hash: $hash"
+                      echo "Deploying from test/visual directory..."
+
+                      max_attempts=3
+                      attempt=0
+
+                      while [ $attempt -lt $max_attempts ]; do
+                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
+                              echo "Deployment successful!"
+                              exit 0
+                          else
+                              attempt=$((attempt + 1))
+                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
+                              sleep 10  # Adjust delay if needed
+                          fi
+                      done
+
+                      echo "Deployment failed after $max_attempts attempts."
+                      exit 1
+
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
