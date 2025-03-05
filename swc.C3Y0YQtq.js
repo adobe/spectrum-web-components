@@ -122,4 +122,4 @@ import{i as e}from"./swc.Cl2X6-fK.js";import{t}from"./swc.BuhQgv07.js";import{S 
                   `:c}
             <slot></slot>
         `}firstUpdated(e){super.firstUpdated(e),this.addEventListener("click",this.handleClick),this.addEventListener("keydown",this.handleKeydown),this.addEventListener("keypress",this.handleKeypress)}update(e){e.has("sortDirection")&&this.setAttribute("aria-sort",(e=>({asc:"ascending",desc:"descending"}[e]||"none"))(this.sortDirection)),e.has("sortable")&&(this.tabIndex=this.sortable?0:-1),super.update(e)}}pe([l({type:Boolean,reflect:!0})],ve.prototype,"active"),pe([l({reflect:!0})],ve.prototype,"role"),pe([l({type:Boolean,reflect:!0})],ve.prototype,"sortable"),pe([l({reflect:!0,attribute:"sort-direction"})],ve.prototype,"sortDirection"),pe([l({attribute:"sort-key"})],ve.prototype,"sortKey"),i("sp-table-head-cell",ve);export{S as C,Q as a,K as b,T as c,Z as d,ee as v};
-//# sourceMappingURL=swc.B2JZ5sBT.js.map
+//# sourceMappingURL=swc.Dm3BH-jE.js.map

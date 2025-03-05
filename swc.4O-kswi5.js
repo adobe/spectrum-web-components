@@ -310,4 +310,4 @@ import{t as e,s as l}from"./swc.CJygKO7k.js";import{I as t}from"./swc.CD-llyAj.j
       fill="currentColor"
     />
   </svg>`;h("sp-icon-rect-select",class extends t{render(){return l(i),1===this.spectrumVersion?v({hidden:!this.label,title:this.label}):m({hidden:!this.label,title:this.label})}});export{w as A,g as D,c as H,v as R,o as S,n as a,d as b,m as c};
-//# sourceMappingURL=swc.spHT9gob.js.map
+//# sourceMappingURL=swc.DYCUhtXa.js.map

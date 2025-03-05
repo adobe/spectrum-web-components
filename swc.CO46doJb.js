@@ -56,4 +56,4 @@ import{i as o}from"./swc.Cl2X6-fK.js";import{c as r}from"./swc.Cqb1ebEF.js";impo
                 ?open=${this.open&&!this.disabled}
             ></sp-color-loupe>
         `}firstUpdated(o){super.firstUpdated(o),this.addEventListener("pointerdown",this.handlePointerdown),this.addEventListener("pointerup",this.handlePointerup),this.addEventListener("pointercancel",this.handlePointerup)}}u([l({type:Boolean,reflect:!0})],m.prototype,"disabled"),u([l({type:Boolean,reflect:!0})],m.prototype,"focused"),u([l({type:Boolean,reflect:!0})],m.prototype,"open"),u([l({type:String})],m.prototype,"color"),c("sp-color-handle",m);
-//# sourceMappingURL=swc.Di5yo2JA.js.map
+//# sourceMappingURL=swc.C4awWOzl.js.map

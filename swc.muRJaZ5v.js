@@ -4,4 +4,4 @@ import{B as o}from"./swc.CbvZVvRX.js";import{i as t}from"./swc.Cl2X6-fK.js";impo
             ${this.buttonContent}
             ${this.pendingStateController.renderPendingState()}
         `}}i([c({type:String,attribute:"pending-label"})],b.prototype,"pendingLabel",2),i([c({type:Boolean,reflect:!0,attribute:!0})],b.prototype,"pending",2),i([c()],b.prototype,"variant",1),i([c({reflect:!0,attribute:"static-color"})],b.prototype,"staticColor",2),i([c({reflect:!0})],b.prototype,"treatment",2),i([c({type:Boolean})],b.prototype,"quiet",1),i([c({type:Boolean,attribute:"no-wrap",reflect:!0})],b.prototype,"noWrap",2),a("sp-button",b);
-//# sourceMappingURL=swc.8O4smmgN.js.map
+//# sourceMappingURL=swc.BASVmbdY.js.map

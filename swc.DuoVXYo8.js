@@ -54,4 +54,4 @@ import{a as e}from"./swc.D31MWYkO.js";import{c as s}from"./swc.Cqb1ebEF.js";impo
                 @slotchange=${this.manageChange}
             ></slot>
         `}willUpdate(e){const s=[...this.getPassthroughSwatchActions(e),...this.getSelectionSwatchActions(e)];let t=new Set(this.selected);const r=new Set;e.has("selected")&&s.push((e=>{r.add(e.value),t.has(e.value)||!this.hasUpdated&&e.selected?e.selected=!0:e.selected=!1}));const o=()=>{t=new Set(this.selected),this.swatches.forEach((e=>{s.forEach((s=>{s(e)}))})),e.has("selected")&&(this._selected=[...t.values()].filter((e=>r.has(e))))};this.hasUpdated?o():this.shadowRoot.addEventListener("slotchange",(()=>{requestAnimationFrame(o)}),{once:!0})}}x([l({reflect:!0})],C.prototype,"border",2),x([l({reflect:!0})],C.prototype,"density",2),x([l({reflect:!0})],C.prototype,"rounding",2),x([l({type:Array})],C.prototype,"selected",1),x([l()],C.prototype,"selects",2),x([l({reflect:!0})],C.prototype,"shape",2),x([u({flatten:!0})],C.prototype,"swatches",2),n("sp-swatch-group",C);
-//# sourceMappingURL=swc.DxwD6jCd.js.map
+//# sourceMappingURL=swc.DvenO3Vq.js.map

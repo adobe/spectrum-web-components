@@ -34,4 +34,4 @@ import{t,s as e}from"./swc.CJygKO7k.js";import{I as r}from"./swc.CD-llyAj.js";im
       fill="currentColor"
     />
   </svg>`;s("sp-icon-show-menu",class extends r{render(){return e(i),1===this.spectrumVersion?h({hidden:!this.label,title:this.label}):l({hidden:!this.label,title:this.label})}});export{l as M,h as S};
-//# sourceMappingURL=swc.Dybr-sEW.js.map
+//# sourceMappingURL=swc.et0vRekI.js.map
