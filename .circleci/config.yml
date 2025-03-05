@@ -55,6 +55,7 @@ commands:
                 type: string
             regression_dir:
                 type: string
+        resource_class: xlarge
         steps:
             - restore_cache:
                   name: Restore Golden Images Cache
