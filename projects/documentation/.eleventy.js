@@ -60,43 +60,121 @@ export default function (eleventyConfig) {
         html: true,
     };
     const markdown = markdownIt(options).use(markdownItAnchors, {
-        level: [2, 3, 4],
         permalink: true,
         permalinkSymbol: '#',
-        permalinkAttrs: () => ({ 'aria-label': '§' }),
+        level: [2, 3, 4, 5, 6],
         renderPermalink: (slug, opts, state, idx) => {
-            const space = () =>
-                Object.assign(new state.Token('html_block', '', 0), {
-                    content: '&nbsp;',
-                });
+            // based on fifth version in
+            // https://amberwilson.co.uk/blog/are-your-anchor-links-accessible/
+            const linkContent = state.tokens[idx + 1].children[0]?.content;
+            const heading = state.tokens[idx];
+            const tag = heading.tag;
 
-            const linkTokens = [
-                Object.assign(new state.Token('link_open', 'sp-link', 1), {
+            if (linkContent?.length < 1) {
+                console.warn()
+            }
+
+            // Create the opening <div> for the wrapper
+            const headingWrapperTokenOpen = Object.assign(
+                new state.Token('div_open', 'div', 1),
+                {
+                    attrs: [['class', `headerContainer spectrum-Typography`]],
+                }
+            );
+            // Create the closing </div> for the wrapper
+            const headingWrapperTokenClose = Object.assign(
+                new state.Token('div_close', 'div', -1),
+                {
+                    attrs: [['class', `headerContainer`]],
+                }
+            );
+            const headingClasses = `spectrum-Heading spectrum-Heading--size`;
+            const headingClass =
+                tag === 'h2'
+                    ? `${headingClasses}L`
+                    : tag === 'h3'
+                      ? `${headingClasses}M`
+                      : tag === 'h4'
+                        ? `${headingClasses}S`
+                        : tag === 'h5'
+                          ? 'spectrum-Detail spectrum-Detail--sizeL'
+                          : tag === 'h6'
+                            ? 'spectrum-Detail spectrum-Detail--sizeM'
+                            : '';
+            const size =
+                tag === 'h2'
+                    ? 'L'
+                    : tag === 'h3'
+                      ? 'M'
+                      : tag === 'h4'
+                        ? 'S'
+                        : tag === 'h5'
+                          ? 'XS'
+                          : tag === 'h6'
+                            ? ''
+                            : '';
+            const classes = headingClass === '' ? '' : headingClass;
+            const comment = `\n<!-- ${tag} / ${headingClass} / ${heading.attrs.join(' ')} -->\n`;
+            heading.attrs = [
+                ...heading.attrs,
+                ['class', `header-heading ${classes}`],
+            ];
+
+            const divider =
+                size == ''
+                    ? ''
+                    : `<sp-divider size="${size.toLowerCase().replace(/x/, '')}"></sp-divider>`;
+
+            // Create the tokens for the full accessible anchor link
+            // <a class="deeplink" href="#your-own-platform-is-the-nearest-you-can-get-help-to-setup">
+            //   <span aria-hidden="true">
+            //     ${opts.permalinkSymbol}
+            //   </span>
+            //   <span class="visually-hidden">
+            //     Section titled Your "own" platform is the nearest you can(get help to) setup
+            //   </span>
+            // </a >
+            const anchorTokens = [
+                Object.assign(new state.Token('html_block', '', 0), {
+                    content: comment,
+                }),
+                Object.assign(new state.Token('link_open', 'a', 1), {
                     attrs: [
-                        ['class', opts.permalinkClass],
+                        ['class', `header-anchor ${classes}`],
                         ['href', opts.permalinkHref(slug, state)],
                         ...Object.entries(opts.permalinkAttrs(slug, state)),
                     ],
                 }),
+                Object.assign(new state.Token('span_open', 'span', 1), {
+                    attrs: [['aria-hidden', 'true']],
+                }),
                 Object.assign(new state.Token('html_block', '', 0), {
                     content: opts.permalinkSymbol,
                 }),
-                new state.Token('link_close', 'sp-link', -1),
+                Object.assign(new state.Token('span_close', 'span', -1), {}),
+                Object.assign(new state.Token('span_open', 'span', 1), {
+                    attrs: [['class', 'visually-hidden']],
+                }),
+                Object.assign(new state.Token('html_block', '', 0), {
+                    content: `Section titled ${linkContent}`,
+                }),
+                Object.assign(new state.Token('span_close', 'span', -1), {}),
+                Object.assign(new state.Token('link_close', 'a', -1), {}),
+                Object.assign(new state.Token('html_block', '', 0), {
+                    content: divider,
+                }),
             ];
 
-            const position = {
-                false: 'push',
-                true: 'unshift',
-            };
-            // `push` or `unshift` according to position option.
-            // Space is at the opposite side.
-            if (opts.permalinkSpace) {
-                linkTokens[position[!opts.permalinkBefore]](space());
-            }
-            // `push` or `unshift` according to position option.
-            // Link tokens are at the opposite side.
-            state.tokens[idx + 1].children[position[opts.permalinkBefore]](
-                ...linkTokens
+            // idx is the index of the heading's first token
+            // insert the wrapper opening before the heading
+            state.tokens.splice(idx, 0, headingWrapperTokenOpen);
+            // insert the anchor link tokens after the wrapper opening and the 3 tokens of the heading
+            state.tokens.splice(idx + 3 + 1, 0, ...anchorTokens);
+            // insert the wrapper closing after all these
+            state.tokens.splice(
+                idx + 3 + 1 + anchorTokens.length,
+                0,
+                headingWrapperTokenClose
             );
         },
     });
@@ -131,7 +209,7 @@ export default function (eleventyConfig) {
 
     eleventyConfig.addCollection('component-root', function (collection) {
         return collection
-            .getFilteredByTags('component-examples', 'root')
+            .getFilteredByTags('component-overview', 'root')
             .sort(function (a, b) {
                 if (a.data.displayName < b.data.displayName) {
                     return -1;
@@ -145,7 +223,7 @@ export default function (eleventyConfig) {
 
     eleventyConfig.addCollection('component-all', function (collection) {
         return collection
-            .getFilteredByTag('component-examples')
+            .getFilteredByTag('component-overview')
             .sort(function (a, b) {
                 if (a.data.displayName < b.data.displayName) {
                     return -1;
@@ -159,7 +237,7 @@ export default function (eleventyConfig) {
 
     eleventyConfig.addCollection('tool-root', function (collection) {
         return collection
-            .getFilteredByTags('tool-examples', 'root')
+            .getFilteredByTags('tool-overview', 'root')
             .sort(function (a, b) {
                 if (a.data.displayName < b.data.displayName) {
                     return -1;
@@ -173,7 +251,7 @@ export default function (eleventyConfig) {
 
     eleventyConfig.addCollection('tool-all', function (collection) {
         return collection
-            .getFilteredByTag('tool-examples')
+            .getFilteredByTag('tool-overview')
             .sort(function (a, b) {
                 if (a.data.displayName < b.data.displayName) {
                     return -1;

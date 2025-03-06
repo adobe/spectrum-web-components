@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 A `<sp-action-bar>` delivers a floating action bar that is a convenient way to deliver stateful actions in cases like selection mode. `<sp-action-bar>` can be deployed in two variants beyond the default: `[varient="fixed"]` to position the element in relation to the page, and `[variant=sticky]` to position the content in relation to content that may scroll.
 

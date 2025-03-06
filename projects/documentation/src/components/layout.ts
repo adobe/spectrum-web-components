@@ -487,10 +487,10 @@ export class LayoutElement extends LitElement {
             if (changes.get('color')) {
                 loadStyleFragments = true;
             }
-            const examples = [
+            const overview = [
                 ...this.querySelectorAll('code-example'),
             ] as CodeExample[];
-            examples.forEach((example) => {
+            overview.forEach((example) => {
                 example.codeTheme = this.color;
             });
             (

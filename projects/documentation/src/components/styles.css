@@ -152,6 +152,16 @@ body {
     }
 }
 
+.visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
 #logo {
     outline: none;
     margin-bottom: -11px;
@@ -612,8 +622,17 @@ sp-divider[size='s']:not(:defined) {
     margin-bottom: 28px;
 }
 
-.headerContainer sp-divider {
-    margin-bottom: 33px;
+.header-heading {
+    display: inline !important;
+}
+
+.header-anchor {
+    padding: 0 0.25rem;
+}
+
+.header-anchor:link,
+.header-anchor:visited {
+    text-decoration: none !important;
 }
 
 article {
@@ -700,8 +719,8 @@ sp-table.events .description {
     margin-bottom: calc(var(--swc-scale-factor) * 12px);
 }
 
-[id] > .header-anchor {
-    opacity: 0;
+.headerContainer:has([id]) > .header-anchor {
+    text-decoration: underline;
     transition: all 125ms ease-in-out;
 }
 
@@ -715,9 +734,9 @@ tr[id] {
 }
 
 /*! purgecss start ignore */
-[id]:hover > .header-anchor,
-[id] > .header-anchor.focus-visible {
-    opacity: 1;
+.headerContainer:has([id]):hover > .header-anchor,
+.headerContainer:has([id]) > .header-anchor.focus-visible {
+    text-decoration: none;
 }
 
 sp-link img {
@@ -822,17 +841,17 @@ docs-page:defined .section:not([selected]) {
 }
 
 docs-page:not(:defined) .section,
-sp-tabs[selected='examples'] sp-tab[value='api']:not(:defined),
-sp-tabs[selected='api'] sp-tab[value='examples']:not(:defined),
-sp-tabs[selected='examples'] sp-tab-panel[value='api'],
-sp-tabs[selected='api'] sp-tab-panel[value='examples'] {
+sp-tabs[selected='overview'] sp-tab[value='api']:not(:defined),
+sp-tabs[selected='api'] sp-tab[value='overview']:not(:defined),
+sp-tabs[selected='overview'] sp-tab-panel[value='api'],
+sp-tabs[selected='api'] sp-tab-panel[value='overview'] {
     order: 2;
 }
 
 docs-page:not(:defined) .section[selected],
-sp-tabs[selected='examples'] sp-tab[value='examples']:not(:defined),
+sp-tabs[selected='overview'] sp-tab[value='overview']:not(:defined),
 sp-tabs[selected='api'] sp-tab[value='api']:not(:defined),
-sp-tabs[selected='examples'] sp-tab-panel[value='examples'],
+sp-tabs[selected='overview'] sp-tab-panel[value='overview'],
 sp-tabs[selected='api'] sp-tab-panel[value='api'] {
     order: 1;
 }
@@ -882,6 +901,10 @@ sp-tab-panel:not(.section):focus code-example:after {
     left: 0;
     border-left: calc(var(--swc-scale-factor) * 2px) solid
         var(--spectrum-blue-600);
+}
+
+sp-tab-panel.section {
+    padding-top: 2rem;
 }
 
 .for-github {
@@ -971,6 +994,14 @@ sp-link {
     --demo-container-width: 100%;
 }
 
+/* Override flex behavior for breadcrumbs so they can properly adjust visible items */
+.demo-preview:has(sp-breadcrumbs) {
+    display: block;
+    padding: 20px;
+
+    --demo-container-width: 100%;
+}
+
 .demo-config {
     display: flex;
     flex-direction: column;
@@ -996,11 +1027,11 @@ sp-link {
     flex-wrap: wrap;
     gap: 16px;
     border-radius: 6px;
-    margin: 2rem 0 0 0;
+    margin: 2rem 0 2rem 0;
     container-type: inline-size;
 }
 
-.usage-links :is(h2, h3) {
+.usage-links :is([slot='heading']) {
     all: unset;
 }
 
