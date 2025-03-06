@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-switch>` is used to turn an option on or off. Switches allow users to select the state of a single option at a time. Use a switch rather than a checkbox when activating (or deactivating) an option, instead of selecting.
 
@@ -24,41 +24,28 @@ When looking to leverage the `Switch` base class as a type and/or for extension 
 import { Switch } from '@spectrum-web-components/switch';
 ```
 
-## Example
+### Anatomy
+
+A switch consists of a switch input and slotted label.
 
 ```html
-<sp-switch label="Switch" onclick="spAlert(this, '<sp-switch> clicked!')">
-    Switch
-</sp-switch>
+<sp-switch>Email notifications</sp-switch>
 ```
 
-### Standard switch buttons
+#### Checked
 
-Standard switches are the default style for switches. They are optimal for
-application panels where all visual elements are monochrome in order to direct
-focus to the content.
+A switch can be checked by setting the `checked` property/attribute.
 
-```html-live
-<div style="display: flex; justify-content: space-between;">
-    <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Default</h4>
-        <sp-field-group selected="first" name="example" vertical>
-            <sp-switch value="off">Switch Off</sp-switch>
-            <sp-switch value="on" checked>Switch On</sp-switch>
-        </sp-field-group>
-    </div>
-
-    <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
-        <sp-field-group selected="first" name="example" vertical>
-            <sp-switch disabled value="off">Switch Off</sp-switch>
-            <sp-switch disabled value="on" checked>Switch On</sp-switch>
-        </sp-field-group>
-    </div>
-</div>
+```html demo
+<sp-field-group vertical>
+    <sp-switch>Not checked</sp-switch>
+    <sp-switch checked>Checked</sp-switch>
+</sp-field-group>
 ```
 
-## Sizes
+### Options
+
+#### Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
 <sp-tab value="s">Small</sp-tab>
@@ -95,42 +82,94 @@ focus to the content.
 </sp-tab-panel>
 </sp-tabs>
 
-### Emphasized radio buttons
+#### Emphasized
 
-Emphasized switches are a secondary style for switches. The blue color provides a
-visual prominence that is optimal for forms, settings, etc. where the switches
+Emphasized switches, which use the `empahasized` attribute/property are a
+secondary style for switches. The blue color provides a visual prominence
+that is optimal for forms, settings, etc. where the switches
 need to be noticed.
 
-```html-live
-<div style="display: flex; justify-content: space-between;">
-    <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Default</h4>
-        <sp-field-group selected="first" name="example" vertical>
-            <sp-switch emphasized value="off">Switch Off</sp-switch>
-            <sp-switch emphasized value="on" checked>Switch On</sp-switch>
-        </sp-field-group>
-    </div>
-
-    <div style="display: flex; flex-direction: column;">
-        <h4 class="spectrum-Heading--subtitle1">Disabled</h4>
-        <sp-field-group selected="first" name="example" vertical>
-            <sp-switch emphasized disabled value="off">Switch Off</sp-switch>
-            <sp-switch emphasized disabled value="on" checked>Switch On</sp-switch>
-        </sp-field-group>
-    </div>
-</div>
+```html
+<sp-field-group vertical>
+    <sp-switch emphasized>Emphasized</sp-switch>
+    <sp-switch emphasized checked>Emphasized and checked</sp-switch>
+</sp-field-group>
 ```
 
-### Handling events
+### States
+
+A switch can be disabled using the `disabled` property/attribute.
+
+```html demo
+<sp-field-group vertical>
+    <sp-switch disabled>Disabled</sp-switch>
+    <sp-switch disabled checked>Disabled and checked</sp-switch>
+</sp-field-group>
+```
+
+### Behaviors
+
+#### Handling events
 
 Event handlers for clicks and other user actions can be registered on an `<sp-switch>` similar to a standard `<input type="checkbox">` element.
 
 ```html
-<sp-switch id="switch-example" onclick="spAlert(this, '<sp-radio> clicked!')">
+<sp-switch id="switch-example" onclick="spAlert(this, '<sp-switch> clicked!')">
     Web component
 </sp-switch>
 ```
 
-## Accessibility
+### Accessibility
 
-Switch are accessible by default, rendered in HTML using the `<input type="checkbox">` element with the appropriate accessibility role, `switch`. When the Switch is `checked` or `invalid`, the appropriate ARIA state attribute will automatically be applied.
+Switch are rendered in HTML using the `<input type="checkbox">` element with the appropriate accessibility role, `switch`. When the Switch is `checked`, the appropriate ARIA state attribute will automatically be applied.
+
+#### Include a label
+
+A switch is required to have either a visible text label nested inside `<sp-switch>` itself.
+
+```html
+<sp-switch>Email notifications</sp-switch>
+```
+
+Standalone switches should be used in situations where the context is clear without an associated text label. For example, a switch located at the top of a panel next to the panel's title makes it clear that the switch will enable/disable the panel options.
+
+<!--
+TODO: Update below when https://github.com/adobe/spectrum-web-components/issues/3269 is addressed.
+-->
+
+In those cases, you can use CSS to visually hide the text label.
+
+```html
+<div id="settings">
+    <sp-field-label for="notifications-settings">Notifications</sp-field-label>
+    <sp-switch id="notify">
+        <span class="visually-hidden">Notifications</span>
+    </sp-switch>
+    <sp-field-group id="notifications-settings" vertical>
+        <sp-switch disabled>Email</sp-switch>
+        <sp-switch disabled>Telephone</sp-switch>
+        <sp-switch disabled>Text</sp-switch>
+    </sp-field-group>
+</div>
+
+<style>
+    .visually-hidden {
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+    }
+    #settings {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: calc(100% - 50px) 50px;
+    }
+    #notifications-settings {
+        grid-column: 1 / 3;
+        grid-row: 2;
+    }
+</style>
+```
