@@ -37,7 +37,7 @@ tabs.addEventListener('change', (event: Event) => {
             history.pushState({}, document.title, dest);
             break;
         }
-        case 'examples': {
+        case 'overview': {
             if (!isAPI && !isChangelog) {
                 return;
             }
