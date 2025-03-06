@@ -71,7 +71,7 @@ export default function (eleventyConfig) {
             const tag = heading.tag;
 
             if (linkContent?.length < 1) {
-                console.warn()
+                console.warn();
             }
 
             // Create the opening <div> for the wrapper
