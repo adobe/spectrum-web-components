@@ -219,7 +219,9 @@ export class StoryDecorator extends SpectrumElement {
                     dir =
                     window.__swc_hack_knobs__.defaultDirection =
                         value as 'ltr' | 'rtl';
-                document.documentElement.dir = dir;
+                if (document.documentElement.dir !== dir) {
+                    document.documentElement.dir = dir;
+                }
                 break;
             case 'reduceMotion':
                 this.reduceMotion =
@@ -255,6 +257,18 @@ export class StoryDecorator extends SpectrumElement {
     }
 
     protected override render(): TemplateResult {
+        // Ensure direction persistence by checking URL and localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlDirection = urlParams.get('globals[textDirection]');
+
+        // If there's a direction in the URL, use it and update knobs
+        if (urlDirection === 'rtl' || urlDirection === 'ltr') {
+            this.direction = urlDirection;
+            window.__swc_hack_knobs__.defaultDirection = urlDirection;
+            // Update document direction to match
+            document.documentElement.dir = urlDirection;
+        }
+
         return html`
             <sp-theme
                 system=${this.system}

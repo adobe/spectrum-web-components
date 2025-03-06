@@ -63,6 +63,35 @@ export const swcThemeDecoratorWithConfig =
             `;
         }
 
+        // Update window.__swc_hack_knobs__ values with current context globals
+        if (context?.globals) {
+            if (context.globals.system) {
+                window.__swc_hack_knobs__.defaultSystemVariant =
+                    context.globals.system;
+            }
+            if (context.globals.color) {
+                window.__swc_hack_knobs__.defaultColor = context.globals.color;
+            }
+            if (context.globals.scale) {
+                window.__swc_hack_knobs__.defaultScale = context.globals.scale;
+            }
+            if (context.globals.textDirection) {
+                window.__swc_hack_knobs__.defaultDirection =
+                    context.globals.textDirection;
+                if (
+                    document.documentElement.dir !==
+                    context.globals.textDirection
+                ) {
+                    document.documentElement.dir =
+                        context.globals.textDirection;
+                }
+            }
+            if (context.globals.reduceMotion !== undefined) {
+                window.__swc_hack_knobs__.defaultReduceMotion =
+                    context.globals.reduceMotion;
+            }
+        }
+
         return html`
             ${themeStyles} ${hideNavStyles}
             <sp-story-decorator
