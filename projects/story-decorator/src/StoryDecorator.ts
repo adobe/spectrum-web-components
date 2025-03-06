@@ -219,7 +219,9 @@ export class StoryDecorator extends SpectrumElement {
                     dir =
                     window.__swc_hack_knobs__.defaultDirection =
                         value as 'ltr' | 'rtl';
-                document.documentElement.dir = dir;
+                if (document.documentElement.dir !== dir) {
+                    document.documentElement.dir = dir;
+                }
                 break;
             case 'reduceMotion':
                 this.reduceMotion =

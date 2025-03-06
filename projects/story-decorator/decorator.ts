@@ -78,6 +78,13 @@ export const swcThemeDecoratorWithConfig =
             if (context.globals.textDirection) {
                 window.__swc_hack_knobs__.defaultDirection =
                     context.globals.textDirection;
+                if (
+                    document.documentElement.dir !==
+                    context.globals.textDirection
+                ) {
+                    document.documentElement.dir =
+                        context.globals.textDirection;
+                }
             }
             if (context.globals.reduceMotion !== undefined) {
                 window.__swc_hack_knobs__.defaultReduceMotion =
