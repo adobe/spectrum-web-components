@@ -22,16 +22,16 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 
-import '@spectrum-web-components/divider/sp-divider.js';
-import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
+import '@spectrum-web-components/button/sp-close-button.js';
+import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 
-import styles from './dialog.css.js';
-import type { CloseButton } from '@spectrum-web-components/button';
 import { AlertDialog } from '@spectrum-web-components/alert-dialog/src/AlertDialog.js';
 import { classMap } from '@spectrum-web-components/base/src/directives.js';
+import type { CloseButton } from '@spectrum-web-components/button';
+import styles from './dialog.css.js';
 
 /**
  * @element sp-dialog
@@ -55,9 +55,6 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
     @query('.close-button')
     closeButton?: CloseButton;
 
-    /**
-     * @deprecated Use the Alert Dialog component with `variant="error"` instead.
-     */
     @property({ type: Boolean, reflect: true })
     public error = false;
 
@@ -176,15 +173,5 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (changes.has('error') && this.error) {
-            if (window.__swc.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `The "error" attribute of <${this.localName}> has been deprecated. Use the Alert Dialog component with the "variant='error'" instead. "error" will be removed in a future release.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/alert-dialog/#error',
-                    { level: 'deprecation' }
-                );
-            }
-        }
     }
 }
