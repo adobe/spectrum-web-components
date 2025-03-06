@@ -257,16 +257,21 @@ decimals.args = {
 };
 
 export const germanDecimals = (args: StoryArgs): TemplateResult => {
+    let currentDir = 'ltr';
+    if (window.__swc_hack_knobs__) {
+        currentDir = window.__swc_hack_knobs__.defaultDirection;
+    }
     return html`
         <sp-field-label for="decimals">
             Enter a number with visible decimals
         </sp-field-label>
-        <sp-theme lang="de">
+        <sp-theme lang="de" dir="${currentDir}">
             <sp-number-field
                 id="decimals"
                 style="width: 200px"
                 ...=${spreadProps(args)}
                 @change=${args.onChange}
+                @input=${args.onInput}
                 .formatOptions=${{
                     signDisplay: 'exceptZero',
                     minimumFractionDigits: 1,
