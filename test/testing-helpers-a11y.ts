@@ -259,11 +259,9 @@ export const testMenuButtonA11y = async (
     );
 
     // ensures that menu is open
-    const opened = async (prefix = 'after opening') => {
+    const opened = async () => {
         const isOpened = oneEvent(config.el, 'sp-opened');
-        await waitUntil(() => isOpened, `${prefix} menu is opened`, {
-            timeout: 100,
-        });
+        await isOpened;
     };
 
     // ensures that menu is closed
