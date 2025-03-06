@@ -286,6 +286,7 @@ export const testMenuButtonA11y = async (
 
     // tests an open menu
     const testMenuOpened = async (prefix = 'after menu is open') => {
+        expect(config.menuButtonElement.matches(':focus')).to.be.false;
         menuButton = (await findNodeByRole(
             isFirefox() ? 'buttonmenu' : 'button',
             config.menuButtonLabel,
