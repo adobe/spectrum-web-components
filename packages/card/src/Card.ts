@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import '@spectrum-web-components/asset/sp-asset.js';
 import {
     CSSResultArray,
     html,
@@ -19,30 +20,30 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
-import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import '@spectrum-web-components/asset/sp-asset.js';
-
-import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
+import {
+    ifDefined,
+    when,
+} from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '@spectrum-web-components/popover/sp-popover.js';
+import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import '@spectrum-web-components/divider/sp-divider.js';
-import cardStyles from './card.css.js';
-import headingStyles from '@spectrum-web-components/styles/heading.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
+import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import detailStyles from '@spectrum-web-components/styles/detail.js';
+import headingStyles from '@spectrum-web-components/styles/heading.js';
+import cardStyles from './card.css.js';
 
 /**
  * @element sp-card
  *
  * @fires change - Announces a change in the `selected` property of a card
- * @slot preview - This is the preview image for Gallery Cards
- * @slot cover-photo - This is the cover photo for Default and Quiet Cards
+ * @slot image - This is the image of the card
  * @slot heading - HTML content to be listed as the heading
  * @slot subheading - HTML content to be listed as the subheading
  * @slot description - A description of the card
@@ -51,10 +52,10 @@ import detailStyles from '@spectrum-web-components/styles/detail.js';
  */
 export class Card extends LikeAnchor(
     SizedMixin(
-        ObserveSlotPresence(FocusVisiblePolyfillMixin(SpectrumElement), [
-            '[slot="cover-photo"]',
-            '[slot="preview"]',
-        ]),
+        ObserveSlotPresence(
+            FocusVisiblePolyfillMixin(SpectrumElement),
+            '[slot="image"]'
+        ),
         {
             validSizes: ['s', 'm'],
             noDefaultSize: true,
@@ -104,12 +105,8 @@ export class Card extends LikeAnchor(
     @property()
     public subheading = '';
 
-    protected get hasCoverPhoto(): boolean {
-        return this.getSlotContentPresence('[slot="cover-photo"]');
-    }
-
-    protected get hasPreview(): boolean {
-        return this.getSlotContentPresence('[slot="preview"]');
+    protected hasImage(): boolean {
+        return this.getSlotContentPresence('[slot="image"]');
     }
 
     public override click(): void {
@@ -207,7 +204,7 @@ export class Card extends LikeAnchor(
         this.addEventListener('pointercancel', handleEnd);
     }
 
-    protected get renderHeading(): TemplateResult {
+    protected renderHeading(): TemplateResult {
         return html`
             <div
                 class="title spectrum-Heading spectrum-Heading--sizeXS"
@@ -218,10 +215,18 @@ export class Card extends LikeAnchor(
         `;
     }
 
-    protected get renderPreviewImage(): TemplateResult {
+    protected renderImage(): TemplateResult {
+        const hasPreview =
+            this.variant === 'gallery' ||
+            this.variant === 'quiet' ||
+            this.horizontal;
+
         return html`
-            <sp-asset id="preview" variant=${ifDefined(this.asset)}>
-                <slot name="preview"></slot>
+            <sp-asset
+                id=${hasPreview ? 'preview' : 'cover-photo'}
+                variant=${ifDefined(this.asset)}
+            >
+                <slot name="image"></slot>
             </sp-asset>
             ${this.variant !== 'quiet' && !this.horizontal
                 ? html`
@@ -231,37 +236,7 @@ export class Card extends LikeAnchor(
         `;
     }
 
-    protected get renderCoverImage(): TemplateResult {
-        return html`
-            <sp-asset id="cover-photo" variant=${ifDefined(this.asset)}>
-                <slot name="cover-photo"></slot>
-            </sp-asset>
-            ${this.variant !== 'quiet' && !this.horizontal
-                ? html`
-                      <sp-divider size="s"></sp-divider>
-                  `
-                : nothing}
-        `;
-    }
-
-    protected get images(): TemplateResult[] {
-        const images: TemplateResult[] = [];
-        if (this.hasPreview) images.push(this.renderPreviewImage);
-        if (this.hasCoverPhoto) images.push(this.renderCoverImage);
-        return images;
-    }
-
-    private renderImage(): TemplateResult[] {
-        if (this.horizontal) {
-            return this.images;
-        }
-        if (this.variant !== 'standard') {
-            return [this.renderPreviewImage];
-        }
-        return this.images;
-    }
-
-    private get renderSubtitleAndDescription(): TemplateResult {
+    protected renderSubtitleAndDescription(): TemplateResult {
         return html`
             <div class="subtitle spectrum-Detail spectrum-Detail--sizeS">
                 <slot name="subheading">${this.subheading}</slot>
@@ -272,12 +247,16 @@ export class Card extends LikeAnchor(
 
     protected override render(): TemplateResult {
         return html`
-            ${this.renderImage()}
+            ${when(
+                this.hasImage(),
+                () => this.renderImage(),
+                () => nothing
+            )}
             <div class="body">
                 <div class="header">
-                    ${this.renderHeading}
+                    ${this.renderHeading()}
                     ${this.variant === 'gallery'
-                        ? this.renderSubtitleAndDescription
+                        ? this.renderSubtitleAndDescription()
                         : nothing}
                     ${this.variant !== 'quiet' || this.size !== 's'
                         ? html`
@@ -293,7 +272,7 @@ export class Card extends LikeAnchor(
                 ${this.variant !== 'gallery'
                     ? html`
                           <div class="content">
-                              ${this.renderSubtitleAndDescription}
+                              ${this.renderSubtitleAndDescription()}
                           </div>
                       `
                     : nothing}
