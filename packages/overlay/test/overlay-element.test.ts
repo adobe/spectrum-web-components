@@ -1039,7 +1039,7 @@ describe('sp-overlay', () => {
 
                 expect(el.open).to.be.false;
             });
-            it('does not close when pressing `Escape`', async () => {
+            it('close last item of overlay stack when pressing `Escape`', async () => {
                 const test = await fixture(html`
                     <div>
                         ${click({

@@ -121,7 +121,7 @@ class OverlayStack {
             return;
         }
         if (last?.type === 'manual') {
-            // Manual Overlays should not close on "light dismiss".
+            // Manual overlays should close on "Escape" key, but not when losing focus or interacting with other parts of the page.
             this.closeOverlay(last);
             return;
         }
