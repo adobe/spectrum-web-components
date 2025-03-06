@@ -7273,13 +7273,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorarea@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/colorarea@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/colorarea@npm:6.0.1":
+  version: 6.0.1
+  resolution: "@spectrum-css/colorarea@npm:6.0.1"
   peerDependencies:
     "@spectrum-css/colorhandle": ">=8"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/e9c860cf2cfee28f99565ca70e388af4379f7baad5556c7d2d274da76a6bdc7f8eb2a530cd9761d7b15a7c98c147f56b1fcf6547045368c76f343e611164bfe7
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/1af99e7ec85fd6b7ff6f3424e74a3985adf6606f2fd183ebd9283d9bb423722b32b14c18acb7640451059c68f581fb71f644c8ccfd6094d1fc992d0c3c28d91f
   languageName: node
   linkType: hard
 
@@ -8244,7 +8244,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-area@workspace:packages/color-area"
   dependencies:
-    "@spectrum-css/colorarea": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/colorarea": "npm:6.0.1"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/color-handle": "npm:^1.2.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:^1.2.0"
@@ -8418,8 +8418,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.2.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=36d186&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/d5b05abd8cfb2f5d9b1b3176f08c719266f8543e0c378a09297c8fd216ecadcf53d53bbd1480cc050c4813a618fe5940950035f0434c6289108d237a96cd717a
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=8ff117&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/d0cae6a172b163b1ecb81f01b5b4e590003d3fd81c8eb46da9a06acecd9d1926468968b818a2f6514eb05b874753431a55fda65a41662072e1c58e1eb9a68ca1
   languageName: node
   linkType: hard
 
