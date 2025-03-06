@@ -12,37 +12,14 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Menu-back:focus-visible {
-    box-shadow: inset
-        calc(
-            var(
-                    --mod-menu-item-focus-indicator-width,
-                    var(--spectrum-menu-item-focus-indicator-width)
-                ) * 1
-        )
-        0 0 0
-        var(
-            --highcontrast-menu-item-focus-indicator-color,
-            var(
-                --mod-menu-item-focus-indicator-color,
-                var(--spectrum-menu-item-focus-indicator-color)
-            )
-        );
-    box-shadow: inset
-        calc(
-            var(
-                    --mod-menu-item-focus-indicator-width,
-                    var(--spectrum-menu-item-focus-indicator-width)
-                ) *
-                var(--spectrum-menu-item-focus-indicator-direction-scalar, 1)
-        )
-        0 0 0
-        var(
-            --highcontrast-menu-item-focus-indicator-color,
-            var(
-                --mod-menu-item-focus-indicator-color,
-                var(--spectrum-menu-item-focus-indicator-color)
-            )
-        );
+    box-shadow: var(--spectrum-menu-item-focus-indicator-shadow)
+        var(--spectrum-menu-item-focus-indicator-border-width) 0 0 0
+        var(--spectrum-menu-item-focus-indicator-color-default);
+    outline: var(--spectrum-menu-item-focus-indicator-width)
+        var(--spectrum-menu-item-focus-indicator-outline-style)
+        var(--spectrum-menu-item-focus-indicator-color-default);
+    outline-offset: var(--spectrum-menu-item-focus-indicator-offset);
+    border-radius: var(--spectrum-menu-item-corner-radius);
 }
 
 .header {
