@@ -1065,9 +1065,9 @@ describe('sp-overlay', () => {
                     press: 'Escape',
                 });
 
-                await aTimeout(200);
-
-                expect(el.open).to.be.true;
+                await elementUpdated(el);
+                // the last item of the overlay stack should close on pressing escape
+                expect(el.open).to.be.false;
 
                 const closed = oneEvent<OverlayStateEvent>(el, 'sp-closed');
                 el.open = false;

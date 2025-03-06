@@ -120,12 +120,12 @@ class OverlayStack {
             event.preventDefault();
             return;
         }
-        if (supportsPopover) return;
         if (last?.type === 'manual') {
             // Manual Overlays should not close on "light dismiss".
+            this.closeOverlay(last);
             return;
         }
-
+        if (supportsPopover) return;
         if (!last) return;
         this.closeOverlay(last);
     };
