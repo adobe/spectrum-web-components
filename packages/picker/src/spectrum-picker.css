@@ -558,8 +558,8 @@ governing permissions and limitations under the License.
     );
 }
 
-#button.is-keyboardFocused.placeholder,
-#button.placeholder:focus-visible {
+#button.is-keyboardFocused .label.placeholder,
+#button:focus-visible .label.placeholder {
     color: var(
         --highcontrast-picker-content-color-default,
         var(
