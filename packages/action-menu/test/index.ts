@@ -26,6 +26,11 @@ import { spy } from 'sinon';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
+    getMenuA11yNode,
+    getMenuItemA11yNodes,
+    testMenuA11y,
+} from '../../menu/test/menu.test.js';
+import {
     fixture,
     ignoreResizeObserverLoopError,
 } from '../../../test/testing-helpers.js';
@@ -36,7 +41,7 @@ import {
 } from '../stories/action-menu.stories.js';
 import {
     findDescribedNode,
-    testMenuButtonA11y,
+    findNodeByRole,
 } from '../../../test/testing-helpers-a11y.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -44,7 +49,7 @@ import type { TestablePicker } from '../../picker/test/index.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
 import { sendKeys, setViewport } from '@web/test-runner-commands';
 import { TemplateResult } from '@spectrum-web-components/base';
-import { isWebKit } from '@spectrum-web-components/shared';
+import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
 
 ignoreResizeObserverLoopError(before, after);
@@ -94,6 +99,137 @@ const actionSubmenuFixture = async (): Promise<ActionMenu> =>
             </sp-menu-item>
         </sp-action-menu>
     `);
+
+type MenuButtonA11yNode = {
+    description: string;
+    name: string;
+    role: string;
+    hasPopup: string;
+    expanded: boolean;
+    focused: boolean;
+    disabled: boolean;
+};
+
+export type MenuButtonA11yTestConfig = {
+    // element that contains button, menu, and menuitems
+    el: HTMLElement;
+    // element with `role="menu"`
+    menuElement: HTMLElement;
+    // expected label for menu element
+    menuLabel?: string;
+    // element with `role="button"`
+    menuButtonElement: HTMLElement;
+    // array of elements with `role="menuitem"`
+    menuItemElements: HTMLElement[];
+    // expected label for menu button
+    menuButtonLabel?: string;
+};
+
+export const testMenuButtonA11y = async (
+    config: MenuButtonA11yTestConfig,
+    debug = false
+): Promise<void> => {
+    let menuButton = (await findNodeByRole(
+        isFirefox() ? 'buttonmenu' : 'button',
+        config.menuButtonLabel,
+        debug
+    )) as MenuButtonA11yNode;
+
+    expect(!!menuButton, 'has menu button').to.be.true;
+    expect(
+        menuButton.hasPopup === 'menu' || menuButton.hasPopup === 'true',
+        `menu button has popup equals 'menu' or 'true'`
+    );
+
+    /* ensures that menu is open
+    const opened = async () => {
+        const isOpened = oneEvent(config.el, 'sp-opened');
+        await isOpened;
+    };*/
+
+    // ensures that menu is closed
+    const closed = async (prefix = 'after closing') => {
+        const isClosed = oneEvent(config.el, 'sp-closed');
+        await waitUntil(() => isClosed, `${prefix} menu is closed`, {
+            timeout: 100,
+        });
+    };
+
+    // tests a closed menu
+    const testMenuClosed = async (prefix = 'after menu is open') => {
+        menuButton = (await findNodeByRole(
+            isFirefox() ? 'buttonmenu' : 'button',
+            config.menuButtonLabel,
+            debug
+        )) as MenuButtonA11yNode;
+        const menu = await getMenuA11yNode(debug, config.menuLabel);
+        expect(!!menu, 'has menu').to.be.false;
+        expect(menuButton.expanded, `${prefix} menu is expanded`).to.be.false;
+    };
+
+    // tests an open menu
+    const testMenuOpened = async (prefix = 'after menu is open') => {
+        menuButton = (await findNodeByRole(
+            isFirefox() ? 'buttonmenu' : 'button',
+            config.menuButtonLabel,
+            debug
+        )) as MenuButtonA11yNode;
+        const menu = await getMenuA11yNode(debug, config.menuLabel);
+        if (debug) {
+            // eslint-disable-next-line no-console
+            console.log(menu);
+        }
+        expect(!!menu, 'has menu').to.be.true;
+        expect(menuButton.expanded, `${prefix} menu is expanded`).to.be.true;
+    };
+
+    config.menuButtonElement.focus();
+
+    // start with an expanded menu
+    if (!menuButton.expanded) {
+        const isOpened = oneEvent(config.el, 'sp-opened');
+        await sendKeys({ press: 'Enter' });
+        await isOpened;
+    }
+
+    await testMenuOpened();
+    await testMenuA11y(config, debug);
+
+    // test all the ways a menu can be toggled
+    ['ArrowUp', 'ArrowDown', 'Enter', 'Space', 'NumpadEnter'].forEach(
+        async (key) => {
+            config.menuButtonElement.focus();
+
+            if (menuButton.expanded) {
+                await sendKeys({ press: 'Escape' });
+                await closed(`after pressing 'Escape'`);
+            }
+
+            await testMenuClosed(`before pressing ${key}`);
+
+            sendKeys({ press: key });
+            await testMenuOpened(`after pressing ${key}`);
+
+            const menu = await getMenuA11yNode(debug, config.menuLabel);
+            const menuItems = await getMenuItemA11yNodes(menu);
+            const focusableItems = [...menuItems].filter(
+                (node) => !node.disabled
+            );
+            const focusedIndex = [...focusableItems].findIndex(
+                (node) => node.focused
+            );
+
+            expect(
+                focusedIndex,
+                `using '${key}' sets focus on the correct item`
+            ).to.equal(key === 'ArrowUp' ? focusableItems.length - 1 : 0);
+            await sendKeys({ press: 'Enter' });
+            await closed(`after pressing 'Enter'`);
+
+            await testMenuClosed(`after pressing 'Enter'`);
+        }
+    );
+};
 
 export const testActionMenu = (mode: 'sync' | 'async'): void => {
     describe(`Action menu: ${mode}`, () => {

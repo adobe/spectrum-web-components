@@ -38,7 +38,7 @@ import {
 import type { RoleNode } from '../../../test/testing-helpers-a11y.js';
 import { findNodeByRole } from '../../../test/testing-helpers-a11y.js';
 
-export type MenuItemNode = {
+export type MenuItemA11yNode = {
     description: string;
     disabled: boolean;
     focused: boolean;
@@ -46,7 +46,7 @@ export type MenuItemNode = {
     role: string;
 };
 
-export type MenuNode = {
+export type MenuA11yNode = {
     children: [];
     description: string;
     name: string;
@@ -54,7 +54,7 @@ export type MenuNode = {
     role: string;
 };
 
-export type MenuTestConfig = {
+export type MenuA11yTestConfig = {
     // element with `role="menu"`
     menuElement: HTMLElement;
     // array of elements with `role="menuitem"`
@@ -63,17 +63,17 @@ export type MenuTestConfig = {
     menuLabel?: string;
 };
 
-export const getMenuNode = async (debug = false, menuLabel?: string) =>
-    (await findNodeByRole('menu', menuLabel, debug)) as MenuNode;
+export const getMenuA11yNode = async (debug = false, menuLabel?: string) =>
+    (await findNodeByRole('menu', menuLabel, debug)) as MenuA11yNode;
 
-export const getMenuItems = (menuNode: MenuNode) =>
-    [...(menuNode?.children || [])].filter((node) => {
+export const getMenuItemA11yNodes = (MenuA11yNode: MenuA11yNode) =>
+    [...(MenuA11yNode?.children || [])].filter((node) => {
         const roleNode = node as RoleNode;
         return roleNode.role === 'menuitem';
-    }) as MenuItemNode[];
+    }) as MenuItemA11yNode[];
 
 export const testMenuA11y = async (
-    config: MenuTestConfig,
+    config: MenuA11yTestConfig,
     debug = false
 ): Promise<void> => {
     if (debug) {
@@ -88,14 +88,14 @@ export const testMenuA11y = async (
     focusableMenuItemElements[0]?.focus();
     await elementUpdated(focusableMenuItemElements[0]);
 
-    let menu = await getMenuNode(debug, menuLabel);
+    let menu = await getMenuA11yNode(debug, menuLabel);
     const arrowKeys =
         menu?.orientation === 'horizontal'
             ? ['ArrowLeft', 'ArrowRight']
             : ['ArrowUp', 'ArrowDown'];
     expect(!!menu, 'menu exists in accessibility tree').to.be.true;
 
-    let menuItems = getMenuItems(menu);
+    let menuItems = getMenuItemA11yNodes(menu);
     expect(menuItems.length, 'all menuitems in accessibility tree').to.equal(
         [...(config?.menuItemElements || [])].length
     );
@@ -139,12 +139,12 @@ export const testMenuA11y = async (
                     `pressing ${key} should move us ${direction} from ${focusedIndex} to ${newIndex}`
                 );
             }
-            menu = await getMenuNode(debug, menuLabel);
+            menu = await getMenuA11yNode(debug, menuLabel);
             if (debug) {
                 // eslint-disable-next-line no-console
                 console.log(`menu ${menuLabel}`, menu);
             }
-            menuItems = getMenuItems(menu);
+            menuItems = getMenuItemA11yNodes(menu);
             focusableItems = [...menuItems].filter((node) => !node.disabled);
             focusedIndex = [...focusableItems].findIndex(
                 (node) => node.focused
@@ -249,6 +249,14 @@ describe('Menu', () => {
 
         expect(el.childItems.length).to.equal(6);
         await expect(el).to.be.accessible();
+        await testMenuA11y(
+            {
+                menuElement: el,
+                menuItemElements: [...el.querySelectorAll('sp-menu-item')],
+                menuLabel: 'Pick an action:',
+            },
+            true
+        );
     });
 
     testForLitDevWarnings(
