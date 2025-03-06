@@ -148,8 +148,20 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         });
         it('passes accessibility tests', async () => {
             const label = 'More Actions';
+            const closed = () => {
+                el.setAttribute('fully-closed', 'fully-closed');
+                el.removeAttribute('fully-opened');
+            };
+            const opened = () => {
+                el.removeAttribute('fully-closed');
+                el.setAttribute('fully-opened', 'fully-opened');
+            };
             const el = await fixture<ActionMenu>(html`
-                <sp-action-menu label="${label}">
+                <sp-action-menu
+                    label="${label}"
+                    @sp-closed=${closed}
+                    @sp-opened=${opened}
+                >
                     <sp-icon-settings slot="icon"></sp-icon-settings>
                     <sp-menu-item>Deselect</sp-menu-item>
                     <sp-menu-item>Select Inverse</sp-menu-item>
@@ -168,8 +180,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                     menuButtonElement: el.button,
                     menuItemElements: [...el.querySelectorAll('sp-menu-item')],
                     menuButtonLabel: label,
-                    openedCondition: () => oneEvent(el, 'sp-opened'),
-                    closedCondition: () => oneEvent(el, 'sp-closed'),
                 },
                 true
             );

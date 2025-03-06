@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, nextFrame, waitUntil } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    nextFrame,
+    oneEvent,
+    waitUntil,
+} from '@open-wc/testing';
 import {
     a11ySnapshot,
     findAccessibilityNode,
@@ -136,10 +142,6 @@ export type MenuButtonTestConfig = {
     menuItemElements: HTMLElement[];
     // expected label for menu button
     menuButtonLabel?: string;
-    // promise that ensure menu has fully opened
-    openedCondition?: () => Promise<unknown>;
-    // promise that ensure menu has fully closed
-    closedCondition?: () => Promise<unknown>;
 };
 
 const getMenuNode = async (debug = false, menuLabel?: string) =>
@@ -258,28 +260,18 @@ export const testMenuButtonA11y = async (
 
     // ensures that menu is open
     const opened = async (prefix = 'after opening') => {
-        if (config.openedCondition) {
-            await waitUntil(
-                await config.openedCondition,
-                `${prefix} menu is opened`,
-                {
-                    timeout: 100,
-                }
-            );
-        }
+        const isOpened = oneEvent(config.el, 'sp-opened');
+        await waitUntil(() => isOpened, `${prefix} menu is opened`, {
+            timeout: 100,
+        });
     };
 
     // ensures that menu is closed
     const closed = async (prefix = 'after closing') => {
-        if (config.closedCondition) {
-            await waitUntil(
-                await config.closedCondition,
-                `${prefix} menu is closed`,
-                {
-                    timeout: 100,
-                }
-            );
-        }
+        const isClosed = oneEvent(config.el, 'sp-closed');
+        await waitUntil(() => isClosed, `${prefix} menu is closed`, {
+            timeout: 100,
+        });
     };
 
     // tests a closed menu
