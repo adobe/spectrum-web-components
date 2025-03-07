@@ -40,8 +40,6 @@ export type MenuButtonA11yTestConfig = {
     menuElement: HTMLElement;
     // expected label for menu element
     menuLabel?: string;
-    // expected role for menu element
-    menuRole?: 'menu' | 'listbox';
     // array of elements with `role="menuitem"`
     menuItemElements: HTMLElement[];
     // skip arrow key navigation tests within menu
@@ -55,19 +53,17 @@ export const testMenuButtonA11y = async (
     // returns menu menu button accessibility node from a mew snapshot
     const getMenuButtonNode = async (): Promise<MenuButtonA11yNode> => {
         return (await findNodeByRole(
-            isFirefox() ? 'buttonmenu' : 'button',
+            isFirefox() && config.menuElement?.role === 'menu'
+                ? 'buttonmenu'
+                : 'button',
             config.menuButtonLabel,
             debug
         )) as MenuButtonA11yNode;
     };
 
     await nextFrame();
+    const role = config.menuElement?.role === 'listbox' ? 'listbox' : 'menu';
     let menuButton = await getMenuButtonNode();
-    const role = config.menuRole
-        ? config.menuRole
-        : menuButton.hasPopup === 'listbox'
-          ? 'listbox'
-          : 'menu';
 
     expect(!!menuButton, 'has menu button').to.be.true;
     expect(

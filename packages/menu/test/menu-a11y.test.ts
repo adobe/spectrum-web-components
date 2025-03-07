@@ -38,8 +38,6 @@ export type MenuA11yTestConfig = {
     menuItemElements: HTMLElement[];
     // expected label for menu element
     menuLabel?: string;
-    // expected role for menu element
-    menuRole?: 'menu' | 'listbox' | 'true';
 };
 
 export const getMenuA11yNode = async (
@@ -63,7 +61,8 @@ export const testMenuA11y = async (
     config: MenuA11yTestConfig,
     debug = false
 ): Promise<void> => {
-    const { menuLabel, menuElement, menuRole } = config;
+    const { menuLabel, menuElement } = config;
+    const menuRole = menuElement?.role === 'listbox' ? 'listbox' : 'menu';
     const focusableMenuItemElements = [
         ...(config?.menuItemElements || []),
     ].filter((item) => !item.hasAttribute('disabled'));
