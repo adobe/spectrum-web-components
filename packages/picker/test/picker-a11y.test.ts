@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { expect, nextFrame, oneEvent, waitUntil } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
 import { findNodeByRole } from '../../../test/testing-helpers-a11y.js';
 import {
     getMenuA11yNode,
