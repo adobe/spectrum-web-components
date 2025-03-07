@@ -128,9 +128,38 @@ describe('Grid', () => {
         await nextFrame();
         await nextFrame();
 
-        expect(
-            el.querySelector(el.focusableSelector) === document.activeElement
-        ).to.be.true;
+        const firstItem = el.querySelector(el.focusableSelector) as HTMLElement;
+        expect(firstItem === document.activeElement).to.be.true;
+        expect(el.tabIndex).to.equal(-1);
+
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        await nextFrame();
+        await nextFrame();
+
+        await elementUpdated(el);
+
+        let activeElement = document.activeElement as HTMLElement;
+        expect(firstItem.contains(activeElement)).to.be.true;
+        expect(activeElement.tagName).to.equal('SP-ACTION-MENU');
+        expect(activeElement.tabIndex).to.equal(-1);
+        expect(el.tabIndex).to.equal(-1);
+
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        await nextFrame();
+        await nextFrame();
+
+        await elementUpdated(el);
+
+        activeElement = document.activeElement as HTMLElement;
+        expect(activeElement).to.match('input[type="checkbox"]');
+        expect(activeElement.tabIndex).to.equal(0);
+        expect(lastInput === document.activeElement).to.be.false;
         expect(el.tabIndex).to.equal(-1);
 
         await sendKeys({
