@@ -7306,14 +7306,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorslider@npm:7.0.0-s2-foundations.16":
-  version: 7.0.0-s2-foundations.16
-  resolution: "@spectrum-css/colorslider@npm:7.0.0-s2-foundations.16"
+"@spectrum-css/colorslider@npm:7.0.1":
+  version: 7.0.1
+  resolution: "@spectrum-css/colorslider@npm:7.0.1"
   peerDependencies:
     "@spectrum-css/colorhandle": ">=8"
     "@spectrum-css/opacitycheckerboard": ">=2"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/198cfe7d55d86a4c86445f31d912dc608f62b8d07970431ce11f4d54780e7e4f07d9d153c930657183ff5bcdfda923cd1c3f8209b048b8a86d754273ce471c0d
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/d1f9d56a92bbf29be2f8d96074b748f3cd9c0741c33eafb2c9785579fcae5303feee9ebe8eb6bb26ee5192454b37f0bc832a546b8d3dca4d051d3682a37555ae
   languageName: node
   linkType: hard
 
@@ -8288,7 +8288,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-slider@workspace:packages/color-slider"
   dependencies:
-    "@spectrum-css/colorslider": "npm:7.0.0-s2-foundations.16"
+    "@spectrum-css/colorslider": "npm:7.0.1"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/color-handle": "npm:^1.2.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:^1.2.0"
@@ -8418,8 +8418,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.2.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=36d186&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/d5b05abd8cfb2f5d9b1b3176f08c719266f8543e0c378a09297c8fd216ecadcf53d53bbd1480cc050c4813a618fe5940950035f0434c6289108d237a96cd717a
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=8ff117&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/d0cae6a172b163b1ecb81f01b5b4e590003d3fd81c8eb46da9a06acecd9d1926468968b818a2f6514eb05b874753431a55fda65a41662072e1c58e1eb9a68ca1
   languageName: node
   linkType: hard
 
