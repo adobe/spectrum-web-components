@@ -7158,9 +7158,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/button@npm:14.1.1":
-  version: 14.1.1
-  resolution: "@spectrum-css/button@npm:14.1.1"
+"@spectrum-css/button@npm:14.1.2":
+  version: 14.1.2
+  resolution: "@spectrum-css/button@npm:14.1.2"
   peerDependencies:
     "@spectrum-css/icon": ">=9.0.0 <10.0.0"
     "@spectrum-css/progresscircle": ">=5.0.0 <6.0.0"
@@ -7172,7 +7172,7 @@ __metadata:
       optional: true
     "@spectrum-css/tokens":
       optional: true
-  checksum: 10c0/b05affa64a8188e43e929180205315576ab9704647308c2313fbaad6480d50edf34e7f0ce9ac4066a4772c2e6df09896246186360ad5ce0facb0e4221936d9d3
+  checksum: 10c0/1eea83de053fbd75c66b91ee25efb94896df9f7802e4fe10a38d6ba07cb907d44caa32576f6540de3c56abf3539f2d6d179fde4826eabe77c4ff9734efb82048
   languageName: node
   linkType: hard
 
@@ -8166,7 +8166,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/button@workspace:packages/button"
   dependencies:
-    "@spectrum-css/button": "npm:14.1.1"
+    "@spectrum-css/button": "npm:14.1.2"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/clear-button": "npm:^1.2.0"
     "@spectrum-web-components/close-button": "npm:^1.2.0"
