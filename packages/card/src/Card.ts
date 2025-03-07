@@ -319,8 +319,9 @@ export class Card extends LikeAnchor(
                               class="checkbox"
                               @change=${this.handleSelectedChange}
                               ?checked=${this.selected}
-                              tabindex="-1"
-                          ></sp-checkbox>
+                          >
+                              <span class="sr-only">${this.heading}</span>
+                          </sp-checkbox>
                       </sp-popover>
                   `
                 : nothing}
