@@ -26,10 +26,6 @@ import { spy } from 'sinon';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
-    getMenuA11yNode,
-    testMenuA11y,
-} from '../../menu/test/menu-a11y.test.js';
-import {
     fixture,
     ignoreResizeObserverLoopError,
 } from '../../../test/testing-helpers.js';
@@ -38,17 +34,15 @@ import {
     iconOnly,
     tooltipDescriptionAndPlacement,
 } from '../stories/action-menu.stories.js';
-import {
-    findNodeByRole,
-    hasAccessibleDescription,
-} from '../../../test/testing-helpers-a11y.js';
+import { hasAccessibleDescription } from '../../../test/testing-helpers-a11y.js';
+import { testMenuButtonA11y } from '../../picker/picker/test/picker-a11y.test.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import type { TestablePicker } from '../../picker/test/index.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
 import { sendKeys, setViewport } from '@web/test-runner-commands';
 import { TemplateResult } from '@spectrum-web-components/base';
-import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
+import { isWebKit } from '@spectrum-web-components/shared';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
 
 ignoreResizeObserverLoopError(before, after);
@@ -98,107 +92,6 @@ const actionSubmenuFixture = async (): Promise<ActionMenu> =>
             </sp-menu-item>
         </sp-action-menu>
     `);
-
-type MenuButtonA11yNode = {
-    description: string;
-    name: string;
-    role: string;
-    hasPopup: string;
-    expanded: boolean;
-    focused: boolean;
-    disabled: boolean;
-};
-
-export type MenuButtonA11yTestConfig = {
-    // element that contains button, menu, and menuitems
-    el: HTMLElement;
-    // element with `role="menu"`
-    menuElement: HTMLElement;
-    // expected label for menu element
-    menuLabel?: string;
-    // element with `role="button"`
-    menuButtonElement: HTMLElement;
-    // array of elements with `role="menuitem"`
-    menuItemElements: HTMLElement[];
-    // expected label for menu button
-    menuButtonLabel?: string;
-};
-
-export const testMenuButtonA11y = async (
-    config: MenuButtonA11yTestConfig,
-    debug = false
-): Promise<void> => {
-    // returns menu menu button accessibility node from a mew snapshot
-    const getMenuButtonNode = async (): Promise<MenuButtonA11yNode> => {
-        return (await findNodeByRole(
-            isFirefox() ? 'buttonmenu' : 'button',
-            config.menuButtonLabel,
-            debug
-        )) as MenuButtonA11yNode;
-    };
-
-    await nextFrame();
-    let menuButton = await getMenuButtonNode();
-
-    expect(!!menuButton, 'has menu button').to.be.true;
-    expect(
-        menuButton.hasPopup === 'menu' || menuButton.hasPopup === 'true',
-        `menu button has popup equals 'menu' or 'true'`
-    );
-
-    // tests a closed menu
-    const testMenuClosed = async (
-        prefix = 'after menu is fully closed, '
-    ): Promise<void> => {
-        menuButton = await getMenuButtonNode();
-        const menu = await getMenuA11yNode(debug, config.menuLabel);
-        expect(
-            !menu,
-            `${prefix}does NOT have menu node${config.menuLabel ? `named "${config.menuLabel}"` : ''}`
-        ).to.be.true;
-        expect(
-            !menuButton.expanded,
-            `${prefix}menu button node is NOT expanded: ${JSON.stringify(menuButton)}`
-        ).to.be.true;
-    };
-
-    // tests an open menu
-    const testMenuOpened = async (
-        prefix = 'after menu is fully opened, '
-    ): Promise<void> => {
-        menuButton = await getMenuButtonNode();
-        const menu = await getMenuA11yNode(debug, config.menuLabel);
-        expect(
-            !!menu,
-            `${prefix}HAS menu node${config.menuLabel ? `named "${config.menuLabel}"` : ''}`
-        ).to.be.true;
-        expect(
-            !!menuButton.expanded || isWebKit(),
-            `${prefix}menu button node IS expanded: ${JSON.stringify(menuButton)}`
-        ).to.be.true;
-    };
-
-    config.menuButtonElement.focus();
-
-    // start with an expanded menu
-    if (!menuButton.expanded) {
-        if (isWebKit()) {
-            const menu = await getMenuA11yNode(debug, config.menuLabel);
-            if (!!menu) return;
-        }
-        await testMenuClosed();
-        const isOpened = oneEvent(config.el, 'sp-opened');
-        await sendKeys({ press: 'Enter' });
-        await isOpened;
-    }
-
-    await testMenuOpened();
-    await waitUntil(
-        async () => await testMenuA11y(config, debug),
-        'testing menu accessibility',
-        { timeout: 20000 }
-    );
-};
 
 export const testActionMenu = (mode: 'sync' | 'async'): void => {
     describe(`Action menu: ${mode}`, () => {
