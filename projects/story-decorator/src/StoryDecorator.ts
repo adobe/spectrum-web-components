@@ -59,6 +59,7 @@ export let scale: Scale = (urlParams.get('sp_scale') as Scale) || 'medium';
 export let reduceMotion = urlParams.get('sp_reduceMotion') === 'true';
 export const screenshot = urlParams.get('sp_screenshot') === 'true';
 export const locale = urlParams.get('sp_locale') || 'en-US';
+export const direction = urlParams.get('sp_direction') || 'ltr';
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
     defaultSystemVariant: system,
@@ -257,18 +258,6 @@ export class StoryDecorator extends SpectrumElement {
     }
 
     protected override render(): TemplateResult {
-        // Ensure direction persistence by checking URL and localStorage
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlDirection = urlParams.get('globals[textDirection]');
-
-        // If there's a direction in the URL, use it and update knobs
-        if (urlDirection === 'rtl' || urlDirection === 'ltr') {
-            this.direction = urlDirection;
-            window.__swc_hack_knobs__.defaultDirection = urlDirection;
-            // Update document direction to match
-            document.documentElement.dir = urlDirection;
-        }
-
         return html`
             <sp-theme
                 system=${this.system}
@@ -277,6 +266,7 @@ export class StoryDecorator extends SpectrumElement {
                 dir=${this.direction}
                 style=${this.backgroundStyle}
                 part="container"
+                lang=${this.lang}
                 @keydown=${this.handleKeydown}
             >
                 <slot @slotchange=${this.checkReady}></slot>
