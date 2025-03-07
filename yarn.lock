@@ -7297,12 +7297,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorloupe@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/colorloupe@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/colorloupe@npm:6.0.1":
+  version: 6.0.1
+  resolution: "@spectrum-css/colorloupe@npm:6.0.1"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/9f85d77c07202dc06c1ef571ca6d2e4e1ca227b71fb1dab0e085924daaf9e215450515dd5c429bb4422aee155065e18e0399392953e052482884a1a7d02a5f79
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/87817c8755629596227a7c027086005221acf7c2ccd699e9d8d3dbeaf467f414a55a8bec98669cfe65cb4356211ef7efdb5df11828506a96d2d669b4baa06024
   languageName: node
   linkType: hard
 
@@ -8278,7 +8278,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-loupe@workspace:packages/color-loupe"
   dependencies:
-    "@spectrum-css/colorloupe": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/colorloupe": "npm:6.0.1"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:^1.2.0"
   languageName: unknown
@@ -8418,8 +8418,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.2.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=36d186&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/d5b05abd8cfb2f5d9b1b3176f08c719266f8543e0c378a09297c8fd216ecadcf53d53bbd1480cc050c4813a618fe5940950035f0434c6289108d237a96cd717a
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=8ff117&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/d0cae6a172b163b1ecb81f01b5b4e590003d3fd81c8eb46da9a06acecd9d1926468968b818a2f6514eb05b874753431a55fda65a41662072e1c58e1eb9a68ca1
   languageName: node
   linkType: hard
 
