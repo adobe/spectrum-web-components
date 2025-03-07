@@ -65,6 +65,9 @@ const renderItem = (
             .selected=${selected}
             key=${index}
             draggable="true"
+            role="row"
+            aria-selected=${selected}
+            aria-rowindex=${index + 1}
         >
             <img
                 alt=""
@@ -124,13 +127,22 @@ export const Default = (): TemplateResult => {
     const items = generateItems(1000);
 
     return html`
-        <h1>Random before content that is focusable</h1>
+        <h1>
+            <label for="first-input">
+                Random before content that is focusable
+            </label>
+        </h1>
         <input id="first-input" />
         <sp-grid
             @change=${handleChange}
             .items=${items}
             .focusableSelector=${'sp-card'}
             .renderItem=${renderItem}
+            role="grid"
+            aria-label="Select images"
+            aria-multiselectable="true"
+            aria-rowcount=${items.length}
+            aria-colcount=${1}
         ></sp-grid>
         <sp-action-bar variant="fixed">
             <sp-checkbox @click=${handleActionBarChange} checked>
@@ -147,7 +159,11 @@ export const Default = (): TemplateResult => {
                 </sp-action-button>
             </sp-action-group>
         </sp-action-bar>
-        <h2>Random after content that is focusable</h2>
+        <h2>
+            <label for="last-input">
+                Random after content that is focusable
+            </label>
+        </h2>
         <input id="last-input" />
     `;
 };
