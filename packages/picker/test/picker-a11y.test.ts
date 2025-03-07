@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect, nextFrame, oneEvent, waitUntil } from '@open-wc/testing';
+import { expect, nextFrame, oneEvent } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { findNodeByRole } from '../../../test/testing-helpers-a11y.js';
 import {
@@ -32,16 +32,20 @@ type MenuButtonA11yNode = {
 export type MenuButtonA11yTestConfig = {
     // element that contains button, menu, and menuitems
     el: HTMLElement;
+    // element with `role="button"`
+    menuButtonElement: HTMLElement;
+    // expected label for menu button
+    menuButtonLabel?: string;
     // element with `role="menu"`
     menuElement: HTMLElement;
     // expected label for menu element
     menuLabel?: string;
-    // element with `role="button"`
-    menuButtonElement: HTMLElement;
+    // expected role for menu element
+    menuRole?: 'menu' | 'listbox';
     // array of elements with `role="menuitem"`
     menuItemElements: HTMLElement[];
-    // expected label for menu button
-    menuButtonLabel?: string;
+    // skip arrow key navigation tests within menu
+    skipTestMenuA11y?: boolean;
 };
 
 export const testMenuButtonA11y = async (
@@ -59,6 +63,11 @@ export const testMenuButtonA11y = async (
 
     await nextFrame();
     let menuButton = await getMenuButtonNode();
+    const role = config.menuRole
+        ? config.menuRole
+        : menuButton.hasPopup === 'listbox'
+          ? 'listbox'
+          : 'menu';
 
     expect(!!menuButton, 'has menu button').to.be.true;
     expect(
@@ -71,7 +80,7 @@ export const testMenuButtonA11y = async (
         prefix = 'after menu is fully closed, '
     ): Promise<void> => {
         menuButton = await getMenuButtonNode();
-        const menu = await getMenuA11yNode(debug, config.menuLabel);
+        const menu = await getMenuA11yNode(debug, config.menuLabel, role);
         expect(
             !menu,
             `${prefix}does NOT have menu node${config.menuLabel ? `named "${config.menuLabel}"` : ''}`
@@ -87,7 +96,7 @@ export const testMenuButtonA11y = async (
         prefix = 'after menu is fully opened, '
     ): Promise<void> => {
         menuButton = await getMenuButtonNode();
-        const menu = await getMenuA11yNode(debug, config.menuLabel);
+        const menu = await getMenuA11yNode(debug, config.menuLabel, role);
         expect(
             !!menu,
             `${prefix}HAS menu node${config.menuLabel ? `named "${config.menuLabel}"` : ''}`
@@ -103,7 +112,7 @@ export const testMenuButtonA11y = async (
     // start with an expanded menu
     if (!menuButton.expanded) {
         if (isWebKit()) {
-            const menu = await getMenuA11yNode(debug, config.menuLabel);
+            const menu = await getMenuA11yNode(debug, config.menuLabel, role);
             if (!!menu) return;
         }
         await testMenuClosed();
@@ -113,9 +122,5 @@ export const testMenuButtonA11y = async (
     }
 
     await testMenuOpened();
-    await waitUntil(
-        async () => await testMenuA11y(config, debug),
-        'testing menu accessibility',
-        { timeout: 20000 }
-    );
+    if (!config.skipTestMenuA11y) await testMenuA11y(config, debug);
 };

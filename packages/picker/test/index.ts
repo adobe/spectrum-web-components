@@ -22,6 +22,7 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+import { testMenuButtonA11y } from './picker-a11y.test.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { FieldLabel } from '@spectrum-web-components/field-label/src/FieldLabel.js';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
@@ -160,13 +161,16 @@ export function runPickerTests(): void {
                 children: NamedNode[];
             };
 
-            expect(
-                findAccessibilityNode<NamedNode>(
-                    snapshot,
-                    (node) => node.name === 'Where do you live?'
-                ),
-                '`name` is the label text'
-            ).to.not.be.null;
+            await testMenuButtonA11y(
+                {
+                    el: el,
+                    menuElement: el.optionsMenu,
+                    menuButtonElement: el.button,
+                    menuItemElements: [...el.querySelectorAll('sp-menu-item')],
+                    menuButtonLabel: 'Where do you live?',
+                },
+                true
+            );
 
             el.value = 'option-2';
             await elementUpdated(el);
@@ -846,10 +850,9 @@ export function runPickerTests(): void {
             expect(secondItem.selected).to.be.false;
 
             secondItem.click();
-            await waitUntil(
-                () => document.activeElement === el,
-                'focused', { timeout: 300 }
-            );
+            await waitUntil(() => document.activeElement === el, 'focused', {
+                timeout: 300,
+            });
 
             expect(el.open, 'open?').to.be.false;
             expect(el.value, 'value changed').to.equal('option-2');
@@ -883,7 +886,8 @@ export function runPickerTests(): void {
             secondItem.click();
             await waitUntil(
                 () => document.activeElement === input,
-                'focus throw', { timeout: 300 }
+                'focus throw',
+                { timeout: 300 }
             );
 
             expect(el.open, 'open?').to.be.false;
@@ -1362,8 +1366,10 @@ export function runPickerTests(): void {
             expect(button, 'has button').to.not.be.null;
 
             // we should have SAFARI_FOCUS_RING_CLASS in the classList
-            expect(button.classList.contains(SAFARI_FOCUS_RING_CLASS), 'has focus ring?').to.be
-                .true;
+            expect(
+                button.classList.contains(SAFARI_FOCUS_RING_CLASS),
+                'has focus ring?'
+            ).to.be.true;
 
             // picker should still have focus
             expect(document.activeElement).to.equal(el);
@@ -1398,8 +1404,10 @@ export function runPickerTests(): void {
             expect(el.open, 'open?').to.be.false;
 
             // we should not have SAFARI_FOCUS_RING_CLASS in the classList
-            expect(button.classList.contains(SAFARI_FOCUS_RING_CLASS), 'has focus ring?').to.be
-                .false;
+            expect(
+                button.classList.contains(SAFARI_FOCUS_RING_CLASS),
+                'has focus ring?'
+            ).to.be.false;
         });
     });
     describe('grouped', async () => {

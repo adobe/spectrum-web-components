@@ -35,9 +35,9 @@ import {
     tooltipDescriptionAndPlacement,
 } from '../stories/action-menu.stories.js';
 import { hasAccessibleDescription } from '../../../test/testing-helpers-a11y.js';
-import { testMenuButtonA11y } from '../../picker/picker/test/picker-a11y.test.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { testMenuButtonA11y } from '../../picker/test/picker-a11y.test.js';
 import type { TestablePicker } from '../../picker/test/index.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
 import { sendKeys, setViewport } from '@web/test-runner-commands';

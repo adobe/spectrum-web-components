@@ -576,7 +576,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                 aria-describedby="tooltip ${DESCRIPTION_ID}"
                 aria-expanded=${this.open ? 'true' : 'false'}
-                aria-haspopup="true"
+                aria-haspopup="${this.listRole}"
                 aria-labelledby="loader icon label applied-label"
                 id="button"
                 class=${ifDefined(

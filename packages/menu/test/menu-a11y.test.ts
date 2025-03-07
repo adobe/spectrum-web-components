@@ -38,13 +38,16 @@ export type MenuA11yTestConfig = {
     menuItemElements: HTMLElement[];
     // expected label for menu element
     menuLabel?: string;
+    // expected role for menu element
+    menuRole?: 'menu' | 'listbox' | 'true';
 };
 
 export const getMenuA11yNode = async (
     debug = false,
-    menuLabel?: string
+    menuLabel?: string,
+    role: 'menu' | 'listbox' = 'menu'
 ): Promise<MenuA11yNode> =>
-    (await findNodeByRole('menu', menuLabel, debug)) as MenuA11yNode;
+    (await findNodeByRole(role, menuLabel, debug)) as MenuA11yNode;
 
 export const getMenuItemA11yNodes = (
     MenuA11yNode?: MenuA11yNode
@@ -60,7 +63,7 @@ export const testMenuA11y = async (
     config: MenuA11yTestConfig,
     debug = false
 ): Promise<void> => {
-    const { menuLabel, menuElement } = config;
+    const { menuLabel, menuElement, menuRole } = config;
     const focusableMenuItemElements = [
         ...(config?.menuItemElements || []),
     ].filter((item) => !item.hasAttribute('disabled'));
@@ -68,7 +71,7 @@ export const testMenuA11y = async (
     menuElement?.focus();
     await elementUpdated(menuElement);
 
-    let menu = await getMenuA11yNode(debug, menuLabel);
+    let menu = await getMenuA11yNode(debug, menuLabel, menuRole);
     expect(!!menu, 'menu exists in accessibility tree').to.be.true;
 
     let menuItems = getMenuItemA11yNodes(menu);
@@ -103,7 +106,7 @@ export const testMenuA11y = async (
         await elementUpdated(menuElement);
         await nextFrame();
 
-        menu = await getMenuA11yNode(debug, menuLabel);
+        menu = await getMenuA11yNode(debug, menuLabel, menuRole);
         expect(!!menu, `after ${key} menu exists in accessibility tree`).to.be
             .true;
 
@@ -123,15 +126,15 @@ export const testMenuA11y = async (
 
     const testArrowKeys = async (key: string): Promise<void> => {
         for (let i = 0; i < focusableTotal; i++) await testArrowKey(key);
-        menu = await getMenuA11yNode(debug, menuLabel);
+        menu = await getMenuA11yNode(debug, menuLabel, menuRole);
         expect(!!menu, `after ${key} menu exists in accessibility tree`).to.be
             .true;
     };
-
-    await testArrowKeys(
-        menu?.orientation === 'horizontal' ? 'ArrowRight' : 'ArrowDown'
-    );
-    await testArrowKeys(
-        menu?.orientation === 'horizontal' ? 'ArrowLeft' : 'ArrowUp'
-    );
+    if (menu?.orientation === 'horizontal') {
+        await testArrowKeys('ArrowRight');
+        await testArrowKeys('ArrowLeft');
+    } else {
+        await testArrowKeys('ArrowDown');
+        await testArrowKeys('ArrowUp');
+    }
 };
