@@ -113,3 +113,7 @@ sp-popover {
     white-space: nowrap;
     border: 0;
 }
+
+.wrapper {
+    display: contents;
+}
