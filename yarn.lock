@@ -7317,20 +7317,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorwheel@npm:5.0.0-s2-foundations.15":
-  version: 5.0.0-s2-foundations.15
-  resolution: "@spectrum-css/colorwheel@npm:5.0.0-s2-foundations.15"
+"@spectrum-css/colorwheel@npm:5.0.1":
+  version: 5.0.1
+  resolution: "@spectrum-css/colorwheel@npm:5.0.1"
   peerDependencies:
     "@spectrum-css/colorarea": ">=5"
     "@spectrum-css/colorhandle": ">=8"
     "@spectrum-css/colorloupe": ">=5"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/tokens": ">=14 || >=15"
   peerDependenciesMeta:
     "@spectrum-css/colorarea":
       optional: true
     "@spectrum-css/colorloupe":
       optional: true
-  checksum: 10c0/c553dd54cf1a461126025f4e893b5276e46290ab7c8741f8f690e88e2b8c8edf8a87a9677011dc3f4186a03f8b82f3e547c9a490101ce8ca5756fb762e039b08
+  checksum: 10c0/377cc3080a5345c026442075178384ddec68fa12c0270504539c0706f5332c63e7682304e0fb6fde7006dd5116d7aae7f882cd3dc16ff2fd454b0e837b423cd8
   languageName: node
   linkType: hard
 
@@ -8301,7 +8301,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-wheel@workspace:packages/color-wheel"
   dependencies:
-    "@spectrum-css/colorwheel": "npm:5.0.0-s2-foundations.15"
+    "@spectrum-css/colorwheel": "npm:5.0.1"
     "@spectrum-web-components/base": "npm:^1.2.0"
     "@spectrum-web-components/color-handle": "npm:^1.2.0"
     "@spectrum-web-components/reactive-controllers": "npm:^1.2.0"
@@ -8418,8 +8418,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.2.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=36d186&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/d5b05abd8cfb2f5d9b1b3176f08c719266f8543e0c378a09297c8fd216ecadcf53d53bbd1480cc050c4813a618fe5940950035f0434c6289108d237a96cd717a
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=8ff117&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/d0cae6a172b163b1ecb81f01b5b4e590003d3fd81c8eb46da9a06acecd9d1926468968b818a2f6514eb05b874753431a55fda65a41662072e1c58e1eb9a68ca1
   languageName: node
   linkType: hard
 
