@@ -12,13 +12,14 @@ governing permissions and limitations under the License.
 
 import { expect, nextFrame } from '@open-wc/testing';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 export type DescribedNode = {
     name: string;
     description: string;
 };
 
-export const findDescribedNode = async (
+export const hasAccessibleDescription = async (
     name: string,
     description: string,
     debug?: boolean
@@ -28,22 +29,35 @@ export const findDescribedNode = async (
         children: DescribedNode[];
     };
 
+    // WebKit doesn't currently associate the `aria-describedby` element to the attribute
+    // host in the accessibility tree. Give it an escape hatch for now.
     const node = findAccessibilityNode(
         snapshot,
-        (node) => node.name === name && node.description === description
+        (node) =>
+            node.name === name &&
+            (node.description === description || isWebKit())
     );
 
     if (debug && !node) {
         // eslint-disable-next-line no-console
         console.log(
-            `findDescribedNode(${name}, ${description}, ${debug}) returns null`,
-            snapshot,
-            'document',
-            document.body
+            `unable to find node named "${name}" and described as "${description}" in current snapshot:`,
+            snapshot
         );
     }
 
-    expect(!!node, 'has node').to.be.true;
+    expect(!!node, `has node named "${name}" and described as "${description}"`)
+        .to.be.true;
+
+    if (isWebKit()) {
+        // Retest WebKit without the escape hatch, expecting it to fail.
+        // This way we get notified when the results are as expected, again.
+        const iOSNode = findAccessibilityNode(
+            snapshot,
+            (node) => node.name === name && node.description === description
+        );
+        expect(iOSNode).to.be.null;
+    }
 };
 
 export type NamedNode = {
@@ -74,10 +88,9 @@ export const findNodeByRole = async (
     if (debug && !node) {
         // eslint-disable-next-line no-console
         console.log(
-            `findNodeByRole(${role}, ${name}, ${debug}) returns null`,
+            `unable to find nodes with "${role}" role ${name ? `and named "${name}"` : ''} in current snapshot:`,
             snapshot,
-            'document',
-            document.body
+            document.body.innerHTML
         );
     }
     return (node ? node : undefined) as RoleNode;

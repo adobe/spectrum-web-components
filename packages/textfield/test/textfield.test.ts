@@ -13,7 +13,7 @@ import { Textfield, TextfieldType } from '../';
 import { elementUpdated, expect, html, litFixture } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
+import { hasAccessibleDescription } from '../../../test/testing-helpers-a11y.js';
 import { HelpText } from '@spectrum-web-components/help-text';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
@@ -1003,7 +1003,7 @@ describe('Textfield', () => {
 
             await elementUpdated(el);
 
-            await findDescribedNode(name, description);
+            await hasAccessibleDescription(name, description);
         });
         it('accepts help text in `slot="help-text"` w/ own ID', async () => {
             const el = await litFixture(html`
@@ -1016,7 +1016,7 @@ describe('Textfield', () => {
 
             await elementUpdated(el);
 
-            await findDescribedNode(name, description);
+            await hasAccessibleDescription(name, description);
         });
         it('manages neutral/negative help text pairs', async () => {
             const el = await litFixture<Textfield>(html`
@@ -1034,7 +1034,7 @@ describe('Textfield', () => {
             await elementUpdated(el);
 
             expect(negativeHelpText.variant).to.equal('neutral');
-            await findDescribedNode(name, description);
+            await hasAccessibleDescription(name, description);
 
             el.invalid = true;
             await elementUpdated(el);
@@ -1045,7 +1045,7 @@ describe('Textfield', () => {
             // wrapping preps the code to pass in that context regardless and error
             // when our tooling no longer runs into this error.
             try {
-                await findDescribedNode(name, descriptionNegative);
+                await hasAccessibleDescription(name, descriptionNegative);
                 if (isFirefox()) {
                     throw new Error('this does not fail anymore...');
                 }
@@ -1073,7 +1073,7 @@ describe('Textfield', () => {
             await elementUpdated(el);
 
             expect(negativeHelpText.variant).to.equal('neutral');
-            await findDescribedNode(name, description);
+            await hasAccessibleDescription(name, description);
 
             el.invalid = true;
             await elementUpdated(el);
@@ -1084,7 +1084,7 @@ describe('Textfield', () => {
             // wrapping preps the code to pass in that context regardless and error
             // when our tooling no longer runs into this error.
             try {
-                await findDescribedNode(name, descriptionNegative);
+                await hasAccessibleDescription(name, descriptionNegative);
                 if (isFirefox()) {
                     throw new Error('this does not fail anymore...');
                 }

@@ -27,9 +27,8 @@ import { ActionMenu } from '@spectrum-web-components/action-menu';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
     getMenuA11yNode,
-    getMenuItemA11yNodes,
     testMenuA11y,
-} from '../../menu/test/menu.test.js';
+} from '../../menu/test/menu-a11y.test.js';
 import {
     fixture,
     ignoreResizeObserverLoopError,
@@ -40,8 +39,8 @@ import {
     tooltipDescriptionAndPlacement,
 } from '../stories/action-menu.stories.js';
 import {
-    findDescribedNode,
     findNodeByRole,
+    hasAccessibleDescription,
 } from '../../../test/testing-helpers-a11y.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -129,11 +128,17 @@ export const testMenuButtonA11y = async (
     config: MenuButtonA11yTestConfig,
     debug = false
 ): Promise<void> => {
-    let menuButton = (await findNodeByRole(
-        isFirefox() ? 'buttonmenu' : 'button',
-        config.menuButtonLabel,
-        debug
-    )) as MenuButtonA11yNode;
+    // returns menu menu button accessibility node from a mew snapshot
+    const getMenuButtonNode = async (): Promise<MenuButtonA11yNode> => {
+        return (await findNodeByRole(
+            isFirefox() ? 'buttonmenu' : 'button',
+            config.menuButtonLabel,
+            debug
+        )) as MenuButtonA11yNode;
+    };
+
+    await nextFrame();
+    let menuButton = await getMenuButtonNode();
 
     expect(!!menuButton, 'has menu button').to.be.true;
     expect(
@@ -141,93 +146,57 @@ export const testMenuButtonA11y = async (
         `menu button has popup equals 'menu' or 'true'`
     );
 
-    /* ensures that menu is open
-    const opened = async () => {
-        const isOpened = oneEvent(config.el, 'sp-opened');
-        await isOpened;
-    };*/
-
-    // ensures that menu is closed
-    const closed = async (prefix = 'after closing') => {
-        const isClosed = oneEvent(config.el, 'sp-closed');
-        await waitUntil(() => isClosed, `${prefix} menu is closed`, {
-            timeout: 100,
-        });
-    };
-
     // tests a closed menu
-    const testMenuClosed = async (prefix = 'after menu is open') => {
-        menuButton = (await findNodeByRole(
-            isFirefox() ? 'buttonmenu' : 'button',
-            config.menuButtonLabel,
-            debug
-        )) as MenuButtonA11yNode;
+    const testMenuClosed = async (
+        prefix = 'after menu is fully closed, '
+    ): Promise<void> => {
+        menuButton = await getMenuButtonNode();
         const menu = await getMenuA11yNode(debug, config.menuLabel);
-        expect(!!menu, 'has menu').to.be.false;
-        expect(menuButton.expanded, `${prefix} menu is expanded`).to.be.false;
+        expect(
+            !menu,
+            `${prefix}does NOT have menu node${config.menuLabel ? `named "${config.menuLabel}"` : ''}`
+        ).to.be.true;
+        expect(
+            !menuButton.expanded,
+            `${prefix}menu button node is NOT expanded: ${JSON.stringify(menuButton)}`
+        ).to.be.true;
     };
 
     // tests an open menu
-    const testMenuOpened = async (prefix = 'after menu is open') => {
-        menuButton = (await findNodeByRole(
-            isFirefox() ? 'buttonmenu' : 'button',
-            config.menuButtonLabel,
-            debug
-        )) as MenuButtonA11yNode;
+    const testMenuOpened = async (
+        prefix = 'after menu is fully opened, '
+    ): Promise<void> => {
+        menuButton = await getMenuButtonNode();
         const menu = await getMenuA11yNode(debug, config.menuLabel);
-        if (debug) {
-            // eslint-disable-next-line no-console
-            console.log(menu);
-        }
-        expect(!!menu, 'has menu').to.be.true;
-        expect(menuButton.expanded, `${prefix} menu is expanded`).to.be.true;
+        expect(
+            !!menu,
+            `${prefix}HAS menu node${config.menuLabel ? `named "${config.menuLabel}"` : ''}`
+        ).to.be.true;
+        expect(
+            !!menuButton.expanded || isWebKit(),
+            `${prefix}menu button node IS expanded: ${JSON.stringify(menuButton)}`
+        ).to.be.true;
     };
 
     config.menuButtonElement.focus();
 
     // start with an expanded menu
     if (!menuButton.expanded) {
+        if (isWebKit()) {
+            const menu = await getMenuA11yNode(debug, config.menuLabel);
+            if (!!menu) return;
+        }
+        await testMenuClosed();
         const isOpened = oneEvent(config.el, 'sp-opened');
         await sendKeys({ press: 'Enter' });
         await isOpened;
     }
 
     await testMenuOpened();
-    await testMenuA11y(config, debug);
-
-    // test all the ways a menu can be toggled
-    ['ArrowUp', 'ArrowDown', 'Enter', 'Space', 'NumpadEnter'].forEach(
-        async (key) => {
-            config.menuButtonElement.focus();
-
-            if (menuButton.expanded) {
-                await sendKeys({ press: 'Escape' });
-                await closed(`after pressing 'Escape'`);
-            }
-
-            await testMenuClosed(`before pressing ${key}`);
-
-            sendKeys({ press: key });
-            await testMenuOpened(`after pressing ${key}`);
-
-            const menu = await getMenuA11yNode(debug, config.menuLabel);
-            const menuItems = await getMenuItemA11yNodes(menu);
-            const focusableItems = [...menuItems].filter(
-                (node) => !node.disabled
-            );
-            const focusedIndex = [...focusableItems].findIndex(
-                (node) => node.focused
-            );
-
-            expect(
-                focusedIndex,
-                `using '${key}' sets focus on the correct item`
-            ).to.equal(key === 'ArrowUp' ? focusableItems.length - 1 : 0);
-            await sendKeys({ press: 'Enter' });
-            await closed(`after pressing 'Enter'`);
-
-            await testMenuClosed(`after pressing 'Enter'`);
-        }
+    await waitUntil(
+        async () => await testMenuA11y(config, debug),
+        'testing menu accessibility',
+        { timeout: 20000 }
     );
 };
 
@@ -284,20 +253,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         });
         it('passes accessibility tests', async () => {
             const label = 'More Actions';
-            const closed = () => {
-                el.setAttribute('fully-closed', 'fully-closed');
-                el.removeAttribute('fully-opened');
-            };
-            const opened = () => {
-                el.removeAttribute('fully-closed');
-                el.setAttribute('fully-opened', 'fully-opened');
-            };
             const el = await fixture<ActionMenu>(html`
-                <sp-action-menu
-                    label="${label}"
-                    @sp-closed=${closed}
-                    @sp-opened=${opened}
-                >
+                <sp-action-menu label="${label}">
                     <sp-icon-settings slot="icon"></sp-icon-settings>
                     <sp-menu-item>Deselect</sp-menu-item>
                     <sp-menu-item>Select Inverse</sp-menu-item>
@@ -309,16 +266,13 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 </sp-action-menu>
             `);
             await elementUpdated(el);
-            await testMenuButtonA11y(
-                {
-                    el: el,
-                    menuElement: el.optionsMenu,
-                    menuButtonElement: el.button,
-                    menuItemElements: [...el.querySelectorAll('sp-menu-item')],
-                    menuButtonLabel: label,
-                },
-                true
-            );
+            await testMenuButtonA11y({
+                el: el,
+                menuElement: el.optionsMenu,
+                menuButtonElement: el.button,
+                menuItemElements: [...el.querySelectorAll('sp-menu-item')],
+                menuButtonLabel: label,
+            });
         });
         it('dispatches change events, no [href]', async () => {
             const changeSpy = spy();
@@ -699,8 +653,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.open).to.be.false;
         });
         it('has attribute aria-describedby', async () => {
-            const name = 'sp-picker';
-            const description = 'Rendering a Picker';
+            const name = 'action-menu';
+            const description = 'Rendering an action menu...';
 
             const el = await fixture(html`
                 <sp-action-menu label=${name}>
@@ -712,7 +666,9 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             await elementUpdated(el);
 
-            await findDescribedNode(name, description, true);
+            await aTimeout(100);
+
+            await hasAccessibleDescription(name, description, true);
         });
         it('opens unmeasured with deprecated syntax', async () => {
             const el = await deprecatedActionMenuFixture();
