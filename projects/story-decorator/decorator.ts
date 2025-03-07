@@ -90,6 +90,9 @@ export const swcThemeDecoratorWithConfig =
                 window.__swc_hack_knobs__.defaultReduceMotion =
                     context.globals.reduceMotion;
             }
+            if (context.globals.lang) {
+                window.__swc_hack_knobs__.defaultLocale = context.globals.lang;
+            }
         }
 
         return html`
@@ -99,6 +102,7 @@ export const swcThemeDecoratorWithConfig =
                 system=${context?.globals?.system}
                 color=${context?.globals?.color}
                 scale=${context?.globals?.scale}
+                lang=${context?.globals?.lang}
                 .direction=${context?.globals?.textDirection}
                 ?reduce-motion=${context?.globals?.reduceMotion}
             >
