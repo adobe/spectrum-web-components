@@ -2910,11 +2910,11 @@
     --system-stepper-border-color-hover: var(--spectrum-gray-600);
     --system-stepper-border-color-focus: var(--spectrum-gray-800);
     --system-stepper-border-color-focus-hover: var(--spectrum-gray-800);
-    --system-stepper-border-color-keyboard-focus: var(--spectrum-gray-900);
+    --system-stepper-border-color-keyboard-focus: var(--spectrum-gray-800);
     --system-stepper-buttons-border-style: none;
     --system-stepper-buttons-border-width: 0;
     --system-stepper-buttons-border-color: var(--spectrum-gray-500);
-    --system-stepper-buttons-background-color: var(--spectrum-gray-25);
+    --system-stepper-buttons-background-color: var(--spectrum-gray-100);
     --system-stepper-buttons-border-color-hover: var(--spectrum-gray-600);
     --system-stepper-buttons-border-color-focus: var(--spectrum-gray-800);
     --system-stepper-buttons-border-color-keyboard-focus: var(
@@ -2933,8 +2933,9 @@
     --system-stepper-border-color-keyboard-focus-invalid: var(
         --spectrum-negative-border-color-key-focus
     );
+    --system-stepper-border-color-disabled: var(--spectrum-gray-300);
     --system-stepper-button-border-width-disabled: var(
-        --spectrum-border-width-100
+        --spectrum-border-width-200
     );
     --system-stepper-buttons-background-color-disabled: var(--spectrum-gray-50);
     --system-stepper-quiet-buttons-border-style: none;
@@ -4042,13 +4043,28 @@
     );
     --system-tag-group-item-margin-block: var(--spectrum-spacing-75);
     --system-tag-group-item-margin-inline: var(--spectrum-spacing-75);
+    --system-textfield-background-color: var(--spectrum-gray-25);
+    --system-textfield-background-color-disabled: var(--spectrum-gray-25);
     --system-textfield-border-color: var(--spectrum-gray-500);
     --system-textfield-border-color-hover: var(--spectrum-gray-600);
     --system-textfield-border-color-focus: var(--spectrum-gray-800);
     --system-textfield-border-color-focus-hover: var(--spectrum-gray-900);
-    --system-textfield-border-color-keyboard-focus: var(--spectrum-gray-900);
+    --system-textfield-border-color-keyboard-focus: var(--spectrum-gray-800);
+    --system-textfield-border-color-disabled: var(--spectrum-gray-300);
     --system-textfield-border-width: var(--spectrum-border-width-100);
-    --system-textfield-background-color: var(--spectrum-gray-25);
+    --system-textfield-icon-spacing-block-invalid: var(
+        --spectrum-component-top-to-workflow-icon-100
+    );
+    --system-textfield-size-s-icon-spacing-block-invalid: var(
+        --spectrum-component-top-to-workflow-icon-75
+    );
+    --system-textfield-size-l-icon-spacing-block-invalid: var(
+        --spectrum-component-top-to-workflow-icon-200
+    );
+    --system-textfield-size-xl-icon-spacing-block-invalid: var(
+        --spectrum-component-top-to-workflow-icon-300
+    );
+    --system-textfield-quiet-border-color-disabled: var(--spectrum-gray-300);
     --system-thumbnail-border-radius: 2px;
     --system-toast-background-color-default: var(
         --spectrum-neutral-subdued-background-color-default
