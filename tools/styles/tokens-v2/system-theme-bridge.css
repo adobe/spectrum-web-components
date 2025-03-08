@@ -866,7 +866,7 @@
         --spectrum-white
     );
     --system-button-static-white-outline-not-secondary-border-color-default: var(
-        --spectrum-transparent-white-900
+        --spectrum-transparent-white-800
     );
     --system-button-static-white-outline-not-secondary-border-color-hover: var(
         --spectrum-transparent-white-1000
@@ -969,7 +969,7 @@
         --spectrum-black
     );
     --system-button-static-black-outline-not-secondary-border-color-default: var(
-        --spectrum-transparent-black-500
+        --spectrum-transparent-black-800
     );
     --system-button-static-black-outline-not-secondary-border-color-hover: var(
         --spectrum-transparent-black-600
