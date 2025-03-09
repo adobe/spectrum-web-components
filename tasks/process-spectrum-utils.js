@@ -23,6 +23,12 @@ export const converterFor = (component) => {
             enumAttributes(attributes, name, operator, component),
         notToAttribute: (name, value) =>
             convertNotToAttribute(name, value, component),
+        notToPseudoClass: (kind) =>
+            convertNotToAny(
+                { type: 'pseudo-class', kind },
+                { type: 'pseudo-class', kind },
+                true
+            ),
         pseudoToAttribute: (name, value) =>
             convertPseudoToAttribute(name, value),
     };
@@ -44,7 +50,6 @@ export const builder = {
                 name,
             });
         if (value) {
-            // @ts-ignore
             component.operation = {
                 operator,
                 value,
@@ -81,7 +86,6 @@ export const builder = {
         }
         return {
             type: 'combinator',
-            // @ts-ignore
             value,
         };
     },
@@ -110,7 +114,6 @@ export const builder = {
      */
     pseudoClass: (kind) => ({
         type: 'pseudo-class',
-        // @ts-ignore
         kind,
     }),
     /**
@@ -120,7 +123,6 @@ export const builder = {
      */
     pseudoElement: (kind) => ({
         type: 'pseudo-element',
-        // @ts-ignore
         kind,
     }),
     /**
@@ -136,7 +138,6 @@ export const builder = {
                 selector: [{ type: 'universal' }],
             });
         if (value) {
-            // @ts-ignore
             slotted.selector = [builder.attribute('slot', value)];
         }
         return slotted;
@@ -223,6 +224,27 @@ export const convertNotToAttribute = (name, value, component) => ({
 });
 
 /**
+ * A more abstract version of convertNotToAttribute that can be used for any type of selector
+ * @param {import('./spectrum-css-converter').HostSelectorComponent} from
+ * @param {import('./spectrum-css-converter').HostSelectorComponent} to - The name of the attribute to convert to
+ * @param {boolean} [hoist=true] - Whether to hoist the conversion to the top level
+ * @returns {import('./spectrum-css-converter').SelectorConversion}
+ */
+export const convertNotToAny = (from, to, hoist = true) => ({
+    find: {
+        type: 'pseudo-class',
+        kind: 'not',
+        selectors: [[from]],
+    },
+    replace: {
+        kind: 'not',
+        type: 'pseudo-class',
+        selectors: [[to]],
+    },
+    hoist,
+});
+
+/**
  * @param {import('lightningcss').PseudoClass['kind']} kind
  * @param {string} value
  * @returns {import('./spectrum-css-converter').SelectorConversion}
@@ -230,7 +252,6 @@ export const convertNotToAttribute = (name, value, component) => ({
 export const convertPseudoToAttribute = (kind, value) => ({
     find: {
         type: 'pseudo-class',
-        // @ts-ignore
         kind,
     },
     replace: {
@@ -309,7 +330,6 @@ export const enumAttributes = (
  */
 export const slottedSlot = (name, value) => {
     return {
-        // @ts-ignore
         find: builder.class(name),
         replace: builder.slotted(value),
     };

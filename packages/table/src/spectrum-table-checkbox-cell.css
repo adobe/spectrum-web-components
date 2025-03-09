@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -25,6 +25,7 @@ governing permissions and limitations under the License.
             var(--spectrum-table-icon-color-default)
         )
     );
+
     box-sizing: border-box;
     text-align: start;
     vertical-align: var(
@@ -98,9 +99,6 @@ governing permissions and limitations under the License.
             --highcontrast-table-divider-color,
             var(--mod-table-divider-color, var(--spectrum-table-divider-color))
         );
-}
-
-:host(:not([head-cell])) {
     box-sizing: border-box;
     font-size: var(
         --mod-table-row-font-size,
@@ -146,6 +144,7 @@ governing permissions and limitations under the License.
 
 :host(:not([head-cell])),
 :host([head-cell]) {
+    display: table-cell;
     position: relative;
 }
 
@@ -199,6 +198,7 @@ governing permissions and limitations under the License.
 
 :host(:host) sp-checkbox {
     --mod-checkbox-spacing: 0px;
+
     min-block-size: 0;
 }
 
@@ -228,9 +228,4 @@ governing permissions and limitations under the License.
         --mod-table-header-checkbox-block-spacing,
         var(--spectrum-table-header-checkbox-block-spacing)
     );
-}
-
-:host(:not([head-cell])),
-:host([head-cell]) {
-    display: table-cell;
 }

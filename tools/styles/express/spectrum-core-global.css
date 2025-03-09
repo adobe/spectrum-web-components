@@ -3243,3 +3243,75 @@
         --spectrum-global-color-static-yellow-200
     );
 }
+
+:root,
+:host {
+    --spectrum-colorloupe-express-visibility: block;
+    --spectrum-colorloupe-spectrum-visibility: none;
+    --spectrum-colorloupe-outer-border-color: transparent;
+    --spectrum-colorloupe-outer-border-size: 0;
+    --spectrum-colorloupe-outer-stroke-color: #00000026;
+    --spectrum-colorloupe-outer-stroke-width: 6px;
+    --spectrum-colorhandle-size: var(--spectrum-global-dimension-size-250);
+    --spectrum-colorhandle-background-offset: 0px;
+    --spectrum-colorhandle-inner-shadow-color: #00000026;
+    --spectrum-colorhandle-outer-shadow-color: #0000004d;
+    --spectrum-colorhandle-outer-shadow-blur: var(
+        --spectrum-global-dimension-static-size-50
+    );
+    --spectrum-colorhandle-outer-shadow-spread: 0;
+    --spectrum-colorslider-height: var(--spectrum-global-dimension-size-200);
+    --spectrum-colorslider-vertical-width: var(--spectrum-colorslider-height);
+    --spectrum-colorslider-border-radius: var(
+        --spectrum-alias-border-radius-small
+    );
+    --spectrum-colorcontrol-checkerboard-light-color: var(
+        --spectrum-global-color-static-white
+    );
+    --spectrum-colorcontrol-checkerboard-dark-color: var(
+        --spectrum-global-color-static-gray-200
+    );
+    --spectrum-slider-label-text-size: var(
+        --spectrum-global-dimension-font-size-100
+    );
+    --spectrum-slider-m-handle-gap: 0px;
+    --spectrum-slider-m-handle-border-radius: 100%;
+    --spectrum-slider-m-track-border-radius: var(
+        --spectrum-alias-border-radius-xsmall
+    );
+    --spectrum-slider-m-track-inside-border-radius: 0px;
+    --spectrum-slider-m-track-height: var(--spectrum-global-dimension-size-50);
+    --spectrum-slider-m-track-color: var(--spectrum-global-color-gray-200);
+    --spectrum-slider-m-track-fill-color: var(--spectrum-global-color-gray-600);
+    --spectrum-slider-m-tick-mark-color: var(--spectrum-global-color-gray-200);
+    --spectrum-slider-m-track-color-disabled: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-slider-m-handle-background-color: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-slider-m-handle-border-color: var(
+        --spectrum-global-color-gray-800
+    );
+    --spectrum-slider-m-handle-border-color-hover: var(
+        --spectrum-global-color-gray-900
+    );
+    --spectrum-slider-m-handle-border-color-disabled: var(
+        --spectrum-global-color-gray-300
+    );
+    --spectrum-slider-label-text-size: var(
+        --spectrum-global-dimension-font-size-100
+    );
+    --spectrum-fieldlabel-s-text-size: var(
+        --spectrum-global-dimension-font-size-100
+    );
+    --spectrum-fieldlabel-m-text-size: var(
+        --spectrum-global-dimension-font-size-100
+    );
+    --spectrum-fieldlabel-l-text-size: var(
+        --spectrum-global-dimension-font-size-200
+    );
+    --spectrum-fieldlabel-xl-text-size: var(
+        --spectrum-global-dimension-font-size-300
+    );
+}

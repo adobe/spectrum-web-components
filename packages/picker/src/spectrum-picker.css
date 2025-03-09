@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #button {
     cursor: pointer;
-    -webkit-user-select: none;
+    user-select: none;
     user-select: none;
     font-family: var(
         --mod-button-font-family,
@@ -30,7 +30,7 @@ governing permissions and limitations under the License.
     );
     text-transform: none;
     vertical-align: top;
-    -webkit-appearance: button;
+    appearance: button;
     transition:
         background
             var(
@@ -71,7 +71,7 @@ governing permissions and limitations under the License.
     justify-content: center;
     align-items: center;
     margin: 0;
-    -webkit-text-decoration: none;
+    text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     position: relative;
