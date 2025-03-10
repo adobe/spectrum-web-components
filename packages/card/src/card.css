@@ -117,3 +117,19 @@ sp-popover {
 .wrapper {
     display: contents;
 }
+
+@media (prefers-reduced-motion: reduce) {
+    .checkbox-toggle {
+        transition-duration: 0s, 0s, 0s;
+        transition-delay: 0s, 0s, 0.13s;
+    }
+
+    :host([focused]) .actions,
+    :host([focused]) .checkbox-toggle,
+    :host([selected]) .actions,
+    :host([selected]) .checkbox-toggle,
+    :host(:focus) .actions,
+    :host(:focus) .checkbox-toggle {
+        transition-delay: 0s, 0s, 0s;
+    }
+}

@@ -30,6 +30,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import type { ActionBar } from '@spectrum-web-components/action-bar';
 import type { Grid } from '@spectrum-web-components/grid';
+import type { RenderItemFunction } from '@lit-labs/virtualizer/virtualize.js';
 
 export default {
     title: 'Grid',
@@ -137,7 +138,7 @@ export const Default = (): TemplateResult => {
             @change=${handleChange}
             .items=${items}
             .focusableSelector=${'sp-card'}
-            .renderItem=${renderItem}
+            .renderItem=${renderItem as RenderItemFunction<Item>}
             role="grid"
             aria-label="Select images"
             aria-multiselectable="true"
@@ -213,7 +214,7 @@ export const sized = (
             @change=${handleChange}
             .items=${items}
             .focusableSelector=${'sp-card'}
-            .renderItem=${renderItem}
+            .renderItem=${renderItem as RenderItemFunction<Item>}
             .itemSize=${{
                 width: 200,
                 height: 300,
@@ -313,7 +314,7 @@ export const scrollParentInAssignedSlot = (): TemplateResult => {
             <sp-grid
                 .items=${items}
                 .focusableSelector=${'sp-card'}
-                .renderItem=${renderItem}
+                .renderItem=${renderItem as RenderItemFunction<Item>}
             ></sp-grid>
         </my-parent>
     `;
