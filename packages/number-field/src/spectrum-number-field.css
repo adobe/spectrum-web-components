@@ -254,6 +254,12 @@ governing permissions and limitations under the License.
     --mod-textfield-border-color: var(--spectrum-stepper-border-color);
 }
 
+#textfield:not(.spectrum-Stepper--quiet) {
+    --mod-textfield-border-color-disabled: var(
+        --spectrum-stepper-border-color-disabled
+    );
+}
+
 :host(:not([disabled])[focused]) #textfield,
 :host(:not([disabled])) #textfield:focus {
     --mod-infield-button-border-color: var(
@@ -412,7 +418,7 @@ governing permissions and limitations under the License.
         --mod-stepper-buttons-background-color: transparent;
     }
 
-    :host(:hover) #textfield:not(.is-invalid, .is-disabled) {
+    :host(:hover) #textfield:not(.is-invalid, .is-disabled, .is-focused) {
         --mod-infield-button-border-color: var(
             --mod-stepper-buttons-border-color-hover,
             var(--spectrum-stepper-buttons-border-color-hover)
