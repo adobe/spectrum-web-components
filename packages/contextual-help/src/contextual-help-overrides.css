@@ -11,21 +11,3 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-contextual-help-padding: var(--system-contextual-help-padding);
-    --spectrum-contextual-help-content-spacing: var(
-        --system-contextual-help-content-spacing
-    );
-    --spectrum-contextual-help-link-spacing: var(
-        --system-contextual-help-link-spacing
-    );
-    --spectrum-contextual-help-heading-size: var(
-        --system-contextual-help-heading-size
-    );
-    --spectrum-contextual-help-heading-color: var(
-        --system-contextual-help-heading-color
-    );
-    --spectrum-contextual-help-body-color: var(
-        --system-contextual-help-body-color
-    );
-}
