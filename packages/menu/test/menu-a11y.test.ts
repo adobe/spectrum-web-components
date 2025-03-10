@@ -41,9 +41,9 @@ export type MenuA11yTestConfig = {
 };
 
 export const getMenuA11yNode = async (
-    debug = false,
     menuLabel?: string,
-    role: 'menu' | 'listbox' = 'menu'
+    role: 'menu' | 'listbox' = 'menu',
+    debug = false
 ): Promise<MenuA11yNode> =>
     (await findNodeByRole(role, menuLabel, debug)) as MenuA11yNode;
 
@@ -70,7 +70,7 @@ export const testMenuA11y = async (
     menuElement?.focus();
     await elementUpdated(menuElement);
 
-    let menu = await getMenuA11yNode(debug, menuLabel, menuRole);
+    let menu = await getMenuA11yNode(menuLabel, menuRole, debug);
     expect(!!menu, 'menu exists in accessibility tree').to.be.true;
 
     let menuItems = getMenuItemA11yNodes(menu);
@@ -105,7 +105,7 @@ export const testMenuA11y = async (
         await elementUpdated(menuElement);
         await nextFrame();
 
-        menu = await getMenuA11yNode(debug, menuLabel, menuRole);
+        menu = await getMenuA11yNode(menuLabel, menuRole, debug);
         expect(!!menu, `after ${key} menu exists in accessibility tree`).to.be
             .true;
 
@@ -125,7 +125,7 @@ export const testMenuA11y = async (
 
     const testArrowKeys = async (key: string): Promise<void> => {
         for (let i = 0; i < focusableTotal; i++) await testArrowKey(key);
-        menu = await getMenuA11yNode(debug, menuLabel, menuRole);
+        menu = await getMenuA11yNode(menuLabel, menuRole, debug);
         expect(!!menu, `after ${key} menu exists in accessibility tree`).to.be
             .true;
     };

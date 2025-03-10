@@ -79,7 +79,6 @@ export const findNodeByRole = async (
     const snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
         children: NamedNode[];
     };
-
     const node = findAccessibilityNode(snapshot, (node) => {
         const roleNode = node as RoleNode;
         return roleNode.role === role && (name ? roleNode.name === name : true);

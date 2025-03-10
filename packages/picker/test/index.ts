@@ -168,6 +168,7 @@ export function runPickerTests(): void {
                     menuButtonElement: el.button,
                     menuItemElements: [...el.querySelectorAll('sp-menu-item')],
                     menuButtonLabel: 'Where do you live?',
+                    //skipTestMenuA11y: true
                 },
                 true
             );

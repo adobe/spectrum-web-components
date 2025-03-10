@@ -67,7 +67,9 @@ export const testMenuButtonA11y = async (
 
     expect(!!menuButton, 'has menu button').to.be.true;
     expect(
-        menuButton.hasPopup === 'menu' || menuButton.hasPopup === 'true',
+        menuButton.hasPopup === 'menu' ||
+            menuButton.hasPopup === 'true' ||
+            menuButton.hasPopup === 'listbox',
         `menu button has popup equals 'menu' or 'true'`
     );
 
@@ -76,7 +78,7 @@ export const testMenuButtonA11y = async (
         prefix = 'after menu is fully closed, '
     ): Promise<void> => {
         menuButton = await getMenuButtonNode();
-        const menu = await getMenuA11yNode(debug, config.menuLabel, role);
+        const menu = await getMenuA11yNode(config.menuLabel, role);
         expect(
             !menu,
             `${prefix}does NOT have menu node${config.menuLabel ? `named "${config.menuLabel}"` : ''}`
@@ -92,7 +94,7 @@ export const testMenuButtonA11y = async (
         prefix = 'after menu is fully opened, '
     ): Promise<void> => {
         menuButton = await getMenuButtonNode();
-        const menu = await getMenuA11yNode(debug, config.menuLabel, role);
+        const menu = await getMenuA11yNode(config.menuLabel, role, debug);
         expect(
             !!menu,
             `${prefix}HAS menu node${config.menuLabel ? `named "${config.menuLabel}"` : ''}`
@@ -107,11 +109,13 @@ export const testMenuButtonA11y = async (
 
     // start with an expanded menu
     if (!menuButton.expanded) {
+        //WebKit doesn't have a menu.expanded, so just see if the menu exists
         if (isWebKit()) {
-            const menu = await getMenuA11yNode(debug, config.menuLabel, role);
+            const menu = await getMenuA11yNode(config.menuLabel, role, debug);
+            //no need to open an open menu
             if (!!menu) return;
         }
-        await testMenuClosed();
+        // open the menu
         const isOpened = oneEvent(config.el, 'sp-opened');
         await sendKeys({ press: 'Enter' });
         await isOpened;
@@ -119,4 +123,8 @@ export const testMenuButtonA11y = async (
 
     await testMenuOpened();
     if (!config.skipTestMenuA11y) await testMenuA11y(config, debug);
+    const isClosed = oneEvent(config.el, 'sp-closed');
+    await sendKeys({ press: 'Enter' });
+    await isClosed;
+    await testMenuClosed();
 };
