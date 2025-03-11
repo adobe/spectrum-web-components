@@ -16,7 +16,6 @@ tach-results.*
 documentation/components/searchIndex.json
 documentation/api-docs
 documentation/dist
-.lighthouseci
 searchIndex.json
 
 # dependency folders
