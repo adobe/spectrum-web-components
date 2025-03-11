@@ -22,8 +22,8 @@
         "watch": "yarn serve --watch"
     },
     "dependencies": {
-        "@spectrum-web-components/bundle": "^1.2.0",
-        "@spectrum-web-components/custom-vars-viewer": "^1.2.0"
+        "@spectrum-web-components/bundle": "1.2.0",
+        "@spectrum-web-components/custom-vars-viewer": "1.2.0"
     },
     "devDependencies": {
         "@11ty/eleventy": "^3.0.0-alpha.4",
@@ -174,7 +174,8 @@
             ],
             "output": [
                 "_site/src/searchIndex.json",
-                "dist/searchIndex.json"
+                "dist/searchIndex.json",
+                "./searchIndex.json"
             ]
         },
         "build:search-index:prod": {
@@ -249,12 +250,10 @@
             "files": [],
             "dependencies": [
                 {
-                    "script": "build:assets",
-                    "cascade": false
+                    "script": "build:assets"
                 },
                 {
-                    "script": "build:search-index",
-                    "cascade": false
+                    "script": "build:search-index"
                 }
             ]
         }

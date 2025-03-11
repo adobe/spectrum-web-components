@@ -39,6 +39,7 @@ governing permissions and limitations under the License.
 
 :host {
     cursor: pointer;
+    border-radius: var(--spectrum-menu-item-corner-radius);
     box-sizing: border-box;
     background-color: var(
         --highcontrast-menu-item-background-color-default,
@@ -67,6 +68,12 @@ governing permissions and limitations under the License.
         --mod-menu-item-label-inline-edge-to-content,
         var(--spectrum-menu-item-label-inline-edge-to-content)
     );
+    margin: calc(
+        (
+                var(--spectrum-menu-item-focus-indicator-offset) +
+                    var(--spectrum-menu-item-focus-indicator-width)
+            ) * var(--spectrum-menu-item-spacing-multiplier)
+    );
     grid-template:
         '. chevronAreaCollapsible . headingIconArea sectionHeadingArea . . .' 1fr
         'selectedArea chevronAreaCollapsible checkmarkArea iconArea labelArea valueArea actionsArea chevronAreaDrillIn'
@@ -74,7 +81,6 @@ governing permissions and limitations under the License.
         '. . . . submenuArea . . .'
         / auto auto auto auto 1fr auto auto auto;
     align-items: center;
-    margin: 0;
     -webkit-text-decoration: none;
     text-decoration: none;
     display: grid;
@@ -218,11 +224,6 @@ governing permissions and limitations under the License.
     );
 }
 
-:host:dir(rtl),
-:host([dir='rtl']) {
-    --spectrum-menu-item-focus-indicator-direction-scalar: -1;
-}
-
 :host(:is(:active, [active])) {
     background-color: var(
         --highcontrast-menu-item-background-color-focus,
@@ -363,45 +364,14 @@ governing permissions and limitations under the License.
 
 :host([focused]) .spectrum-Menu-back,
 :host([focused]) {
-    box-shadow: inset
-        calc(
-            var(
-                    --mod-menu-item-focus-indicator-width,
-                    var(--spectrum-menu-item-focus-indicator-width)
-                ) * 1
-        )
-        0 0 0
-        var(
-            --highcontrast-menu-item-focus-indicator-color,
-            var(
-                --mod-menu-item-focus-indicator-color,
-                var(--spectrum-menu-item-focus-indicator-color)
-            )
-        );
-    box-shadow: inset
-        calc(
-            var(
-                    --mod-menu-item-focus-indicator-width,
-                    var(--spectrum-menu-item-focus-indicator-width)
-                ) *
-                var(--spectrum-menu-item-focus-indicator-direction-scalar, 1)
-        )
-        0 0 0
-        var(
-            --highcontrast-menu-item-focus-indicator-color,
-            var(
-                --mod-menu-item-focus-indicator-color,
-                var(--spectrum-menu-item-focus-indicator-color)
-            )
-        );
-}
-
-:host .is-selectableMultiple {
-    align-items: start;
-}
-
-.is-selectableMultiple .spectrum-Menu-itemCheckbox {
-    grid-area: checkmarkArea;
+    box-shadow: var(--spectrum-menu-item-focus-indicator-shadow)
+        var(--spectrum-menu-item-focus-indicator-border-width) 0 0 0
+        var(--spectrum-menu-item-focus-indicator-color-default);
+    outline: var(--spectrum-menu-item-focus-indicator-width)
+        var(--spectrum-menu-item-focus-indicator-outline-style)
+        var(--spectrum-menu-item-focus-indicator-color-default);
+    outline-offset: var(--spectrum-menu-item-focus-indicator-offset);
+    border-radius: var(--spectrum-menu-item-corner-radius);
 }
 
 .spectrum-Menu-itemSelection {

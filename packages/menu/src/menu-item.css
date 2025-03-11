@@ -79,3 +79,9 @@ governing permissions and limitations under the License.
 :host([no-wrap]) #label {
     display: block;
 }
+
+/** Host is :focus bt not :focus-visible so we remove the outline */
+:host([focused]:not(:focus-visible)) {
+    outline: none;
+    box-shadow: none;
+}
