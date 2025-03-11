@@ -13,7 +13,7 @@ import { setCustomElementsManifest } from '@storybook/web-components';
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
 import { Locales } from '@spectrum-web-components/story-decorator/src/locales.js';
 
-import cem from './custom-elements.json';
+const cem = await import('./custom-elements.json', { with: { type: 'json' } });
 
 setCustomElementsManifest(cem);
 
