@@ -98,6 +98,18 @@ sp-popover {
     pointer-events: none;
 }
 
+:host([variant='quiet']:focus) #preview:after {
+    border: var(
+            --mod-card-focus-indicator-width,
+            var(--spectrum-card-focus-indicator-width)
+        )
+        solid
+        var(
+            --mod-card-focus-indicator-color,
+            var(--spectrum-card-focus-indicator-color)
+        );
+}
+
 .checkbox-toggle .checkbox {
     --mod-checkbox-text-to-control: 0;
 }
