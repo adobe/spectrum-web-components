@@ -59,6 +59,7 @@ export let scale: Scale = (urlParams.get('sp_scale') as Scale) || 'medium';
 export let reduceMotion = urlParams.get('sp_reduceMotion') === 'true';
 export const screenshot = urlParams.get('sp_screenshot') === 'true';
 export const locale = urlParams.get('sp_locale') || 'en-US';
+export const direction = urlParams.get('sp_direction') || 'ltr';
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
     defaultSystemVariant: system,
@@ -219,7 +220,9 @@ export class StoryDecorator extends SpectrumElement {
                     dir =
                     window.__swc_hack_knobs__.defaultDirection =
                         value as 'ltr' | 'rtl';
-                document.documentElement.dir = dir;
+                if (document.documentElement.dir !== dir) {
+                    document.documentElement.dir = dir;
+                }
                 break;
             case 'reduceMotion':
                 this.reduceMotion =
@@ -263,6 +266,7 @@ export class StoryDecorator extends SpectrumElement {
                 dir=${this.direction}
                 style=${this.backgroundStyle}
                 part="container"
+                lang=${this.lang}
                 @keydown=${this.handleKeydown}
             >
                 <slot @slotchange=${this.checkReady}></slot>

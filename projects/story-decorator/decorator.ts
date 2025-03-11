@@ -63,6 +63,38 @@ export const swcThemeDecoratorWithConfig =
             `;
         }
 
+        // Update window.__swc_hack_knobs__ values with current context globals
+        if (context?.globals) {
+            if (context.globals.system) {
+                window.__swc_hack_knobs__.defaultSystemVariant =
+                    context.globals.system;
+            }
+            if (context.globals.color) {
+                window.__swc_hack_knobs__.defaultColor = context.globals.color;
+            }
+            if (context.globals.scale) {
+                window.__swc_hack_knobs__.defaultScale = context.globals.scale;
+            }
+            if (context.globals.textDirection) {
+                window.__swc_hack_knobs__.defaultDirection =
+                    context.globals.textDirection;
+                if (
+                    document.documentElement.dir !==
+                    context.globals.textDirection
+                ) {
+                    document.documentElement.dir =
+                        context.globals.textDirection;
+                }
+            }
+            if (context.globals.reduceMotion !== undefined) {
+                window.__swc_hack_knobs__.defaultReduceMotion =
+                    context.globals.reduceMotion;
+            }
+            if (context.globals.lang) {
+                window.__swc_hack_knobs__.defaultLocale = context.globals.lang;
+            }
+        }
+
         return html`
             ${themeStyles} ${hideNavStyles}
             <sp-story-decorator
@@ -70,6 +102,7 @@ export const swcThemeDecoratorWithConfig =
                 system=${context?.globals?.system}
                 color=${context?.globals?.color}
                 scale=${context?.globals?.scale}
+                lang=${context?.globals?.lang}
                 .direction=${context?.globals?.textDirection}
                 ?reduce-motion=${context?.globals?.reduceMotion}
             >

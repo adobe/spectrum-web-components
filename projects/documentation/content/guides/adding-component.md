@@ -383,6 +383,62 @@ See
 <sp-link href="https://github.com/adobe/spectrum-web-components/blob/main/packages/button/src/Button.ts">Button.ts</sp-link>
 for an example.
 
+#### Documentation standards
+
+Each component's `packages/_componentname_/README.md`. These files must meet our standards below:
+
+-   Heading structure must communicate the organization of the docs page. See W3C WAI's Tutorial on [Headings](https://www.w3.org/WAI/tutorials/page-structure/headings/).
+-   Main headings (level 2 and 3) should be consistent from component to component. See W3C WAI's [Understanding SC 3.2: Predictable](https://www.w3.org/WAI/WCAG21/Understanding/predictable.html) and the [Documentation structure](#documentatio-structuren) section below.
+-   All examples code must be accessible.
+-   The example code must show the component with enough context to demonstrate how to use it with other elements in an accessible way. See how the examples in [`packages/help-text/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/help-text/README.md) show the component used with field elements.
+-   The "Accessibility" section contains tips on how to use the component accessibly. See the Accessibility section of [`packages/picker/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/menu/README.md).
+-   The "Accessibility" section contains notes on any accessibility considerations that affect the component's development. See the notes on cross-root ARIA in Accessibility section of [`packages/help-text/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/help-text/README.md).
+
+#### Documentation structure
+
+Our component documentation should follow the structure below. See [`packages/menu/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/menu/README.md) and [`packages/help-text/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/help-text/README.md) for overview.
+
+```md
+## Overview
+
+### Usage
+
+<--
+Information on how to import the component.
+-->
+
+### Anatomy
+
+<--
+Information and examples about options
+(eg., labels, icons, etc.)
+of the component. -->
+
+### Options
+
+<--
+Information and examples about options
+(eg., sizes, variants, states, etc.)
+of the component.
+-->
+
+### Behaviors
+
+<--
+Information and examples about
+values, events, and methods
+of the component.
+-->
+
+### Accessibility
+
+<--
+Tips and examples on how to use the component accessibly
+with notes how accessibility considerations
+for how the component was developed.
+-->
+```
+
 ### Working with Storybook
 
 We use <sp-link href="https://storybook.js.org/">Storybook</sp-link> for developing our components.
