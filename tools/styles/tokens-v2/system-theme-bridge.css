@@ -2198,9 +2198,7 @@
     --system-picker-background-color-active: var(--spectrum-gray-200);
     --system-picker-background-color-key-focus: var(--spectrum-gray-200);
     --system-picker-border-color-default: var(--spectrum-gray-500);
-    --system-picker-border-color-default-open: var(
-        --spectrum-neutral-content-color-focus
-    );
+    --system-picker-border-color-default-open: var(--spectrum-gray-800);
     --system-picker-border-color-hover: var(--spectrum-gray-600);
     --system-picker-border-color-hover-open: var(--spectrum-gray-900);
     --system-picker-border-color-active: var(--spectrum-gray-700);
