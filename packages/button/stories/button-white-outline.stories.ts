@@ -48,6 +48,13 @@ Primary.args = {
     variant: 'primary',
 };
 
+export const Secondary = (props: Properties): TemplateResult =>
+    renderButtonSet(props);
+
+Secondary.args = {
+    variant: 'secondary',
+};
+
 export const withIcon = (props: Properties): TemplateResult =>
     renderWithIcon(props);
 
