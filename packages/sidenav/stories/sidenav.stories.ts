@@ -14,7 +14,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
-
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-star.js';
 export default {
     component: 'sp-sidenav',
     title: 'Sidenav',
@@ -49,6 +49,126 @@ export const Default = ({
                     label="Section 4"
                 ></sp-sidenav-item>
             </sp-sidenav-heading>
+        </sp-sidenav>
+    `;
+};
+
+export const MultilevelWithCategory = ({
+    onChange,
+}: {
+    onChange: () => void;
+}): TemplateResult => {
+    return html`
+        <div style="display: flex; gap: 24px;">
+            <div>
+                <h4>Items with category=true (Shows Caret)</h4>
+                <sp-sidenav @change=${onChange} value="category-item">
+                    <!-- Selected and expanded category item with children -->
+                    <sp-sidenav-item
+                        category
+                        expanded
+                        value="category-item"
+                        label="Category with Children"
+                        selected
+                    >
+                        <sp-icon-star slot="icon"></sp-icon-star>
+                        <sp-sidenav-item
+                            category
+                            expanded
+                            value="child-item-2"
+                            label="Child Item 2"
+                        >
+                            <sp-sidenav-item
+                                value="grandchild-item-1"
+                                label="Grandchild Item 1"
+                            >
+                                <sp-icon-star slot="icon"></sp-icon-star>
+                            </sp-sidenav-item>
+                            <sp-sidenav-item
+                                value="grandchild-item-2"
+                                label="Grandchild Item 2"
+                            >
+                                <sp-icon-star slot="icon"></sp-icon-star>
+                            </sp-sidenav-item>
+                        </sp-sidenav-item>
+                    </sp-sidenav-item>
+                </sp-sidenav>
+            </div>
+
+            <div>
+                <h4>Items with category=false (No Caret)</h4>
+                <sp-sidenav @change=${onChange}>
+                    <!-- Item with children but no category property -->
+                    <sp-sidenav-item
+                        expanded
+                        value="parent-item"
+                        label="Parent with Children (No Caret)"
+                    >
+                        <sp-icon-star slot="icon"></sp-icon-star>
+                        <sp-sidenav-item
+                            expanded
+                            value="parent-child-2"
+                            label="Child 2"
+                        >
+                            <sp-sidenav-item
+                                value="parent-grandchild-1"
+                                label="Grandchild 1"
+                            >
+                                <sp-icon-star slot="icon"></sp-icon-star>
+                            </sp-sidenav-item>
+                            <sp-sidenav-item
+                                value="parent-grandchild-2"
+                                label="Grandchild 2"
+                            >
+                                <sp-icon-star slot="icon"></sp-icon-star>
+                            </sp-sidenav-item>
+                        </sp-sidenav-item>
+                    </sp-sidenav-item>
+                </sp-sidenav>
+            </div>
+        </div>
+    `;
+};
+
+export const Disabled = ({
+    onChange,
+}: {
+    onChange: () => void;
+}): TemplateResult => {
+    return html`
+        <sp-sidenav @change=${onChange}>
+            <!-- Item with children but no category property -->
+            <sp-sidenav-item
+                expanded
+                value="parent-item"
+                label="Parent with Children"
+                disabled
+                category
+            >
+                <sp-icon-star slot="icon"></sp-icon-star>
+                <sp-sidenav-item
+                    expanded
+                    value="parent-child-2"
+                    label="Child 2"
+                    disabled
+                    category
+                >
+                    <sp-sidenav-item
+                        value="parent-grandchild-1"
+                        label="Grandchild 1"
+                        disabled
+                    >
+                        <sp-icon-star slot="icon"></sp-icon-star>
+                    </sp-sidenav-item>
+                    <sp-sidenav-item
+                        value="parent-grandchild-2"
+                        label="Grandchild 2"
+                        disabled
+                    >
+                        <sp-icon-star slot="icon"></sp-icon-star>
+                    </sp-sidenav-item>
+                </sp-sidenav-item>
+            </sp-sidenav-item>
         </sp-sidenav>
     `;
 };
