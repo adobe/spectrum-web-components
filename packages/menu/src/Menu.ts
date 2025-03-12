@@ -619,13 +619,16 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this.selectedItems = [targetItem];
         }
 
-        const applyDefault = this.dispatchEvent(
-            new Event('change', {
-                cancelable: true,
-                bubbles: true,
-                composed: true,
-            })
-        );
+        const applyDefault = setTimeout(() => {
+            this.dispatchEvent(
+                new Event('change', {
+                    cancelable: true,
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+        }, 0);
+
         if (!applyDefault) {
             // Cancel the event & don't apply the selection
             this._selected = oldSelected;
@@ -648,7 +651,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             !targetItem.hasSubmenu &&
             targetItem?.menuData?.focusRoot === this
         ) {
-            this.dispatchEvent(new Event('close', { bubbles: true }));
+            setTimeout(() => {
+                this.dispatchEvent(new Event('close', { bubbles: true }));
+            }, 0);
         }
     }
 
@@ -670,7 +675,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             }
         } else if (shouldCloseSelfAsSubmenu && this.isSubmenu) {
             event.stopPropagation();
-            this.dispatchEvent(new Event('close', { bubbles: true }));
+            setTimeout(() => {
+                this.dispatchEvent(new Event('close', { bubbles: true }));
+            }, 0);
             this.updateSelectedItemIndex();
         }
     }
