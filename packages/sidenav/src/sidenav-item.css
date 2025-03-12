@@ -19,8 +19,100 @@ governing permissions and limitations under the License.
 
 :host([disabled]) {
     pointer-events: none;
+    color: var(--spectrum-global-color-gray-500);
 }
 
 a ::slotted(sp-sidenav-item) {
     display: none;
+}
+
+#item-link {
+    display: flex;
+    justify-content: space-between;
+}
+
+:host([selected]) #item-link.is-keyboardFocused,
+:host([selected]) #item-link:focus-visible,
+#item-link.is-keyboardFocused,
+#item-link:focus-visible {
+    background-color: transparent; /* Change background on hover */
+}
+
+:host([selected]) #item-link {
+    background-color: transparent; /* Change background on hover */
+}
+
+:host([selected]) #item-link:hover {
+    background-color: transparent;
+}
+
+:host([selected]) #item-link:before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    bottom: 0;
+    width: 4px;
+    height: 80%;
+    background-color: black;
+}
+
+#item-link:hover:before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    bottom: 0;
+    width: 4px;
+    height: 80%;
+    background-color: var(--spectrum-global-color-gray-300);
+}
+
+/* Style for category items */
+:host([category]) a {
+    font-weight: var(
+        --spectrum-sidenav-heading-text-font-weight,
+        var(--spectrum-global-font-weight-bold)
+    );
+}
+
+/* stylelint-disable rule-empty-line-before */
+#item-link:hover {
+    background-color: transparent; /* Change background on hover */
+}
+
+.caret {
+    margin-left: auto; /* Pushes the caret to the far right */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 150ms ease-in-out;
+}
+
+#link-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+:host([expanded]) .caret {
+    transform: rotate(90deg);
+}
+
+.caret sp-icon-chevron-right {
+    width: var(--spectrum-icon-chevron-size-100);
+    height: var(--spectrum-icon-chevron-size-100);
+    color: var(--spectrum-sidenav-item-icon-color);
+}
+
+/* Selected indicator for category items */
+:host([category][selected]) a:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--spectrum-sidenav-item-selection-indicator-width, 4px);
+    background-color: var(--spectrum-sidenav-item-selection-indicator-color);
 }

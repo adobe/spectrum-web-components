@@ -21,6 +21,7 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-right.js';
 
 import { SideNav, SidenavSelectDetail } from './Sidenav.js';
 
@@ -44,6 +45,13 @@ export class SideNavItem extends LikeAnchor(Focusable) {
 
     @property({ type: Boolean, reflect: true })
     public expanded = false;
+
+    /**
+     * When true, the item is treated as a category and displays a caret icon
+     * on the right side that indicates it can be expanded.
+     */
+    @property({ type: Boolean, reflect: true })
+    public category = false;
 
     protected get parentSideNav(): SideNav | undefined {
         if (!this._parentSidenav) {
@@ -80,7 +88,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
         }
         // With an `href` this click will change the page contents, not toggle its children or become "selected".
         if (!this.disabled && (!this.href || event?.defaultPrevented)) {
-            if (this.hasChildren) {
+            if (this.hasChildren || this.category) {
                 this.expanded = !this.expanded;
             } else if (this.value) {
                 this.announceSelected(this.value);
@@ -118,6 +126,9 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     }
 
     protected override render(): TemplateResult {
+        // Only show caret when category is explicitly true
+        const shouldShowCaret = this.category && this.hasChildren;
+
         return html`
             <a
                 href=${this.href || '#'}
@@ -131,17 +142,29 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                     this.selected && this.href ? 'page' : undefined
                 )}
                 aria-expanded=${ifDefined(
-                    this.hasChildren ? this.expanded : undefined
+                    this.hasChildren || this.category
+                        ? this.expanded
+                        : undefined
                 )}
                 aria-controls=${ifDefined(
-                    this.hasChildren && this.expanded ? 'list' : undefined
+                    (this.hasChildren || this.category) && this.expanded
+                        ? 'list'
+                        : undefined
                 )}
+                class=${ifDefined(this.category ? 'category' : undefined)}
             >
                 <slot name="icon"></slot>
                 <span id="link-text">
                     ${this.label}
                     <slot></slot>
                 </span>
+                ${shouldShowCaret
+                    ? html`
+                          <span class="caret">
+                              <sp-icon-chevron-right></sp-icon-chevron-right>
+                          </span>
+                      `
+                    : nothing}
             </a>
             ${this.expanded
                 ? html`
@@ -155,7 +178,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
 
     protected override updated(changes: PropertyValues): void {
         if (
-            this.hasChildren &&
+            (this.hasChildren || this.category) &&
             this.expanded &&
             !this.selected &&
             this.parentSideNav?.manageTabIndex
