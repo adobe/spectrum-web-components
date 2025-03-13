@@ -37,7 +37,7 @@ import { Switch } from '@spectrum-web-components/switch';
 import {
     Color,
     Scale,
-    SystemVariant,
+    SystemThemes,
     Theme,
 } from '@spectrum-web-components/theme';
 import './types.js';
@@ -48,10 +48,10 @@ const urlParams = new URLSearchParams(queryString);
 
 export let dir: 'ltr' | 'rtl' =
     (urlParams.get('sp_dir') as 'ltr' | 'rtl') || 'ltr';
-export const theme: SystemVariant =
-    (urlParams.get('sp_theme') as SystemVariant) || 'spectrum';
-export let system: SystemVariant =
-    (urlParams.get('sp_system') as SystemVariant) || 'spectrum';
+export const theme: SystemThemes =
+    (urlParams.get('sp_theme') as SystemThemes) || 'spectrum';
+export let system: SystemThemes =
+    (urlParams.get('sp_system') as SystemThemes) || 'spectrum';
 export let color: Color =
     (urlParams.get('sp_color') as Color) ||
     (matchMedia(DARK_MODE).matches ? 'dark' : 'light');
@@ -69,26 +69,6 @@ window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
     defaultReduceMotion: reduceMotion,
     defaultLocale: locale,
 };
-
-const reduceMotionProperties = css`
-    --spectrum-animation-duration-0: 0ms;
-    --spectrum-animation-duration-100: 0ms;
-    --spectrum-animation-duration-200: 0ms;
-    --spectrum-animation-duration-300: 0ms;
-    --spectrum-animation-duration-400: 0ms;
-    --spectrum-animation-duration-500: 0ms;
-    --spectrum-animation-duration-600: 0ms;
-    --spectrum-animation-duration-700: 0ms;
-    --spectrum-animation-duration-800: 0ms;
-    --spectrum-animation-duration-900: 0ms;
-    --spectrum-animation-duration-1000: 0ms;
-    --spectrum-animation-duration-2000: 0ms;
-    --spectrum-animation-duration-4000: 0ms;
-    --spectrum-animation-duration-6000: 0ms;
-    --pending-delay: 0s;
-    --spectrum-coachmark-animation-indicator-ring-duration: 0ms;
-    --swc-test-duration: 1ms;
-`;
 
 export class StoryDecorator extends SpectrumElement {
     static override get styles() {
@@ -127,7 +107,23 @@ export class StoryDecorator extends SpectrumElement {
                     padding: var(--decorator-padding-100);
                 }
                 :host([reduce-motion]) sp-theme {
-                    ${reduceMotionProperties}
+                    --spectrum-animation-duration-0: 0ms;
+                    --spectrum-animation-duration-100: 0ms;
+                    --spectrum-animation-duration-200: 0ms;
+                    --spectrum-animation-duration-300: 0ms;
+                    --spectrum-animation-duration-400: 0ms;
+                    --spectrum-animation-duration-500: 0ms;
+                    --spectrum-animation-duration-600: 0ms;
+                    --spectrum-animation-duration-700: 0ms;
+                    --spectrum-animation-duration-800: 0ms;
+                    --spectrum-animation-duration-900: 0ms;
+                    --spectrum-animation-duration-1000: 0ms;
+                    --spectrum-animation-duration-2000: 0ms;
+                    --spectrum-animation-duration-4000: 0ms;
+                    --spectrum-animation-duration-6000: 0ms;
+                    --pending-delay: 0s;
+                    --spectrum-coachmark-animation-indicator-ring-duration: 0ms;
+                    --swc-test-duration: 1ms;
                 }
                 .manage-theme {
                     position: fixed;
@@ -157,8 +153,7 @@ export class StoryDecorator extends SpectrumElement {
     }
 
     @property({ type: String })
-    public system: SystemVariant =
-        window.__swc_hack_knobs__.defaultSystemVariant;
+    public override system = window.__swc_hack_knobs__.defaultSystemVariant;
 
     @property({ type: String })
     public color: Color = window.__swc_hack_knobs__.defaultColor;
@@ -201,7 +196,7 @@ export class StoryDecorator extends SpectrumElement {
                 this.system =
                     system =
                     window.__swc_hack_knobs__.defaultSystemVariant =
-                        value as SystemVariant;
+                        value as SystemThemes;
                 break;
             case 'color':
                 this.color =

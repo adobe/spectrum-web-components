@@ -48,3 +48,30 @@ interface Window {
         verbose?: boolean;
     };
 }
+
+/**
+ * @note This mimics the `style-observer` package's types.
+ * @todo Remove this when the `style-observer` package publishes its types.
+ */
+declare module 'style-observer' {
+    export type Record = {
+        target: Element;
+        property: string;
+        value: string;
+        oldValue: string;
+    };
+
+    export type StyleObserverCallback = (records: Record[]) => void;
+
+    export default class StyleObserver {
+        elementObservers: Map<Element, MutationObserver>;
+        constructor(
+            callback: StyleObserverCallback,
+            options: StyleObserverOptions | string | string[]
+        );
+        changed: (records: Record[]) => void;
+        observe(args: Element | Element[] | string | string[]): void;
+        unobserve(args: Element | Element[] | string | string[]): void;
+        updateTransition(targets: Element | Element[]): void;
+    }
+}

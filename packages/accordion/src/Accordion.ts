@@ -17,6 +17,7 @@ import {
     PropertyValues,
     SizedMixin,
     SpectrumElement,
+    SystemThemeConfig,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -29,26 +30,17 @@ import { AccordionItem } from './AccordionItem.js';
 
 import styles from './accordion.css.js';
 
-const spectrum = css`
+const legacy = css`
 :host {
-	--system-accordion-divider-color: var(--spectrum-gray-300);
-	--system-accordion-item-content-disabled-color: var(--spectrum-gray-400);
-	--system-accordion-item-content-color: var(--spectrum-gray-800);
-    background-color: hotpink !important;
-}`;
-const express = css`
-:host {
-	--system-accordion-divider-color: var(--spectrum-gray-300);
-	--system-accordion-item-content-disabled-color: var(--spectrum-gray-400);
-	--system-accordion-item-content-color: var(--spectrum-gray-800);
-    background-color: goldenrod !important;
+	--spectrum-accordion-divider-color: var(--spectrum-gray-300);
+	--spectrum-accordion-item-content-disabled-color: var(--spectrum-gray-400);
+	--spectrum-accordion-item-content-color: var(--spectrum-gray-800);
 }`;
 const spectrum2 = css`
 :host {
-	--system-accordion-divider-color: var(--spectrum-gray-200);
-	--system-accordion-item-content-disabled-color: var(--spectrum-disabled-content-color);
-	--system-accordion-item-content-color: var(--spectrum-body-color);
-    background-color: green !important;
+	--spectrum-accordion-divider-color: var(--spectrum-gray-200);
+	--spectrum-accordion-item-content-disabled-color: var(--spectrum-disabled-content-color);
+	--spectrum-accordion-item-content-color: var(--spectrum-body-color);
 }`;
 
 /**
@@ -62,10 +54,10 @@ export class Accordion extends SizedMixin(SpectrumElement, {
         return [styles];
     }
 
-    public static override get systemTheming(): Map<string, CSSStyleSheet|null> {
+    public override get systemTheming(): SystemThemeConfig {
         return new Map([
-            ['spectrum', spectrum],
-            ['express', express],
+            ['spectrum', legacy],
+            ['express', legacy],
             ['spectrum-two', spectrum2],
         ]);
     }

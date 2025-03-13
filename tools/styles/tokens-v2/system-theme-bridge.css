@@ -1,5 +1,10 @@
 :host,
 :root {
+    --system-accordion-divider-color: var(--spectrum-gray-200);
+    --system-accordion-item-content-disabled-color: var(
+        --spectrum-disabled-content-color
+    );
+    --system-accordion-item-content-color: var(--spectrum-body-color);
     --system-action-bar-height: var(--spectrum-action-bar-height);
     --system-action-bar-corner-radius: var(--spectrum-corner-radius-100);
     --system-action-bar-item-counter-font-size: var(--spectrum-font-size-100);
