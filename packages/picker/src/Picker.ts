@@ -320,14 +320,19 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         this.selectedItem = item;
         this.value = item?.value ?? '';
         await this.updateComplete;
-        const applyDefault = this.dispatchEvent(
-            new Event('change', {
-                bubbles: true,
-                // Allow it to be prevented.
-                cancelable: true,
-                composed: true,
-            })
-        );
+        const applyDefault = await new Promise<boolean>((resolve) => {
+            setTimeout(() => {
+                const shouldApplyDefault = this.dispatchEvent(
+                    new Event('change', {
+                        bubbles: true,
+                        // Allow it to be prevented.
+                        cancelable: true,
+                        composed: true,
+                    })
+                );
+                resolve(shouldApplyDefault);
+            }, 0);
+        });
         if (!applyDefault && this.selects) {
             if (menuChangeEvent) {
                 menuChangeEvent.preventDefault();

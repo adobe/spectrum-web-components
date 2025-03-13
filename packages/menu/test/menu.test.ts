@@ -16,6 +16,7 @@ import {
     expect,
     html,
     nextFrame,
+    oneEvent,
     waitUntil,
 } from '@open-wc/testing';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
@@ -505,7 +506,9 @@ describe('Menu', () => {
         expect(secondItem.getAttribute('aria-checked')).to.equal('false');
         expect(el.value).to.equal('First');
 
+        const change = oneEvent(el, 'change');
         secondItem.click();
+        await change;
 
         await elementUpdated(el);
         await elementUpdated(firstItem);
@@ -617,7 +620,9 @@ describe('Menu', () => {
         expect(el.value).to.equal('First');
         expect(el.selectedItems.length).to.equal(1);
 
+        let change = oneEvent(el, 'change');
         secondItem.click();
+        await change;
 
         await elementUpdated(el);
         await elementUpdated(firstItem);
@@ -631,7 +636,9 @@ describe('Menu', () => {
         expect(el.value).to.equal('First,Second');
         expect(el.selectedItems.length).to.equal(2);
 
+        change = oneEvent(el, 'change');
         firstItem.click();
+        await change;
 
         await elementUpdated(el);
         await elementUpdated(firstItem);

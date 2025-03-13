@@ -456,7 +456,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.handlePointerBasedSelection(event);
     }
 
-    private handlePointerBasedSelection(event: Event): void {
+    private async handlePointerBasedSelection(event: Event): Promise<void> {
         // Only handle left clicks
         if (event instanceof MouseEvent && event.button !== 0) {
             return;
@@ -480,12 +480,15 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (target?.href && target.href.length) {
             // This event will NOT ALLOW CANCELATION as link action
             // cancelation should occur on the `<sp-menu-item>` itself.
-            this.dispatchEvent(
-                new Event('change', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
+            await new Promise((resolve) => {
+                this.dispatchEvent(
+                    new Event('change', {
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+                resolve(true);
+            });
             return;
         } else if (
             target?.menuData?.selectionRoot === this &&
@@ -619,15 +622,18 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this.selectedItems = [targetItem];
         }
 
-        const applyDefault = setTimeout(() => {
-            this.dispatchEvent(
-                new Event('change', {
-                    cancelable: true,
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-        }, 0);
+        const applyDefault = await new Promise<boolean>((resolve) => {
+            setTimeout(() => {
+                const shouldApplyDefault = this.dispatchEvent(
+                    new Event('change', {
+                        cancelable: true,
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+                resolve(shouldApplyDefault);
+            }, 0);
+        });
 
         if (!applyDefault) {
             // Cancel the event & don't apply the selection
