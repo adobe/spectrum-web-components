@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResult, CSSResultGroup } from '@spectrum-web-components/base';
+import { CSSResult, CSSResultGroup, SystemThemes } from '@spectrum-web-components/base';
 import { version } from '@spectrum-web-components/base/src/version.js';
 import {
     Color,
@@ -25,11 +25,10 @@ import {
     ShadowRootWithAdoptedStyleSheets,
     SYSTEM_VARIANT_VALUES,
     SystemContextCallback,
-    SystemVariant,
     ThemeFragmentMap,
     ThemeKindProvider,
 } from './theme-interfaces.js';
-export type { ProvideLang, ThemeFragmentMap, Color, Scale, SystemVariant };
+export type { ProvideLang, ThemeFragmentMap, Color, Scale, SystemThemes };
 /**
  * @element sp-theme
  * @attr {string} [lang=""] - The language of the content scoped to this `sp-theme` element, see: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang" target="_blank">MDN reference</a>.
@@ -85,7 +84,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.lang = value;
             this._provideContext();
         } else if (attrName === 'system') {
-            this.system = value as SystemVariant;
+            this.system = value as SystemThemes;
             this._provideSystemContext();
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
@@ -97,7 +96,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
     public override shadowRoot!: ShadowRootWithAdoptedStyleSheets;
 
-    private _system: SystemVariant | '' = 'spectrum';
+    private _system: SystemThemes | '' = 'spectrum';
     /**
      * The Spectrum system that is applied to the content scoped to this `sp-theme` element.
      *
@@ -105,14 +104,14 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
      * @type {"spectrum" | "express" }
      * @attr
      */
-    get system(): SystemVariant | '' {
+    get system(): SystemThemes | '' {
         const systemFragments = Theme.themeFragmentsByKind.get('system');
         const { name } =
             (systemFragments && systemFragments.get('default')) || {};
-        return this._system || (name as SystemVariant) || '';
+        return this._system || (name as SystemThemes) || '';
     }
 
-    set system(newValue: SystemVariant | '') {
+    set system(newValue: SystemThemes | '') {
         if (newValue === this._system) return;
         const system =
             !!newValue && SYSTEM_VARIANT_VALUES.includes(newValue)
@@ -437,7 +436,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
 function checkForIssues(
     instance: Theme,
-    system: SystemVariant | '',
+    system: SystemThemes | '',
     color: Color | '',
     scale: Scale | '',
     themeFragmentsByKind: ThemeFragmentMap

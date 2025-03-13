@@ -50,27 +50,27 @@ export const COLOR_VALUES = [
     'darkest-spectrum-two',
 ] as const;
 
-export type SystemVariant = (typeof SYSTEM_VARIANT_VALUES)[number];
+export type SystemThemes = (typeof SYSTEM_VARIANT_VALUES)[number];
 export type Scale = (typeof SCALE_VALUES)[number];
 export type Color = (typeof COLOR_VALUES)[number];
 
 export type SystemContextCallback = (
-    system: SystemVariant | '',
+    system: SystemThemes | '',
     unsubscribe: () => void
 ) => void;
 
-export type FragmentName = Color | Scale | SystemVariant | 'core' | 'app';
+export type FragmentName = Color | Scale | SystemThemes | 'core' | 'app';
 
 export interface ThemeData {
     color?: Color;
     scale?: Scale;
     lang?: string;
-    theme?: SystemVariant;
-    system?: SystemVariant;
+    theme?: SystemThemes;
+    system?: SystemThemes;
 }
 
 export type ThemeKindProvider = {
-    [P in SettableFragmentTypes]: SystemVariant | Color | Scale | '';
+    [P in SettableFragmentTypes]: SystemThemes | Color | Scale | '';
 };
 
 export interface ProvideLang {

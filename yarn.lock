@@ -254,6 +254,7 @@ __metadata:
     "@web/test-runner-playwright": "npm:^0.11.0"
     "@web/test-runner-visual-regression": "npm:^0.9.0"
     "@webcomponents/webcomponentsjs": "npm:^2.8.0"
+    "@whitespace/storybook-addon-html": "npm:^7.0.0"
     "@yarnpkg/types": "npm:^4.0.1"
     alex: "npm:^11.0.1"
     cem-plugin-module-file-extensions: "npm:^0.0.5"
@@ -4359,6 +4360,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lit/context@npm:^1.1.4":
+  version: 1.1.4
+  resolution: "@lit/context@npm:1.1.4"
+  dependencies:
+    "@lit/reactive-element": "npm:^1.6.2 || ^2.0.0"
+  checksum: 10c0/53bb69952e642aa4f064d8c3afe74b36e1a8e148156114523850040ff333cb99e31c5de02096fd8e8c9773ecf524bad7af901cbd19b28492960ce28ef1f421c4
+  languageName: node
+  linkType: hard
+
 "@lit/react@npm:^1.0.4":
   version: 1.0.6
   resolution: "@lit/react@npm:1.0.6"
@@ -4368,7 +4378,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lit/reactive-element@npm:^1.0.0 || ^2.0.0, @lit/reactive-element@npm:^2.0.4":
+"@lit/reactive-element@npm:^1.0.0 || ^2.0.0, @lit/reactive-element@npm:^1.6.2 || ^2.0.0, @lit/reactive-element@npm:^2.0.4":
   version: 2.0.4
   resolution: "@lit/reactive-element@npm:2.0.4"
   dependencies:
@@ -6402,6 +6412,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/base@workspace:tools/base"
   dependencies:
+    "@lit/context": "npm:^1.1.4"
     lit: "npm:^2.5.0 || ^3.1.3"
     style-observer: "npm:^0.1.1"
   languageName: unknown
@@ -10471,6 +10482,15 @@ __metadata:
     webpack-dev-server:
       optional: true
   checksum: 10c0/36079d34971ff99a58b66b13f4184dcdd8617853c48cccdbc3f9ab7ea9e5d4fcf504e873c298ea7aa15e0b51ad2c4aee4d7a70bd7d9364e60f57b0eb93ca15fc
+  languageName: node
+  linkType: hard
+
+"@whitespace/storybook-addon-html@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@whitespace/storybook-addon-html@npm:7.0.0"
+  peerDependencies:
+    storybook: ^8.2.0
+  checksum: 10c0/dce03b966985011f62166b2907a7058b595377fedd3ff3a70f87fba470046e0ddc533d86e7dbcf1bcb0181535c17e5b54f0f916534bad58467769618af7b5b60
   languageName: node
   linkType: hard
 

@@ -26,7 +26,7 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import type {
     Color,
     Scale,
-    SystemVariant,
+    SystemThemes,
     Theme,
 } from '@spectrum-web-components/theme';
 import type { Picker } from '@spectrum-web-components/picker';
@@ -77,7 +77,7 @@ const DEFAULT_SYSTEM = (
           localStorage.getItem(SWC_THEME_SYSTEM_KEY) ||
           SYSTEM_FALLBACK
         : SYSTEM_FALLBACK
-) as SystemVariant;
+) as SystemThemes;
 const DEFAULT_DIR = (
     window.localStorage
         ? localStorage.getItem(SWC_THEME_DIR_KEY) || DIR_FALLBACK
@@ -86,10 +86,7 @@ const DEFAULT_DIR = (
 
 const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
 
-const lazyStyleFragment = (
-    name: Color | Scale,
-    system: SystemVariant
-): void => {
+const lazyStyleFragment = (name: Color | Scale, system: SystemThemes): void => {
     const fragmentName = `${name}-${system}`;
     switch (fragmentName) {
         case 'dark-spectrum' || 'darkest-spectrum':
@@ -183,13 +180,13 @@ export class LayoutElement extends LitElement {
     private isNarrow = isNarrowMediaQuery.matches;
 
     @property({ attribute: false })
-    public theme: SystemVariant = DEFAULT_SYSTEM;
+    public theme: SystemThemes = DEFAULT_SYSTEM;
 
     @property({ attribute: false })
     public scale: Scale = DEFAULT_SCALE;
 
     @property({ attribute: false })
-    public system: SystemVariant = DEFAULT_SYSTEM;
+    public system: SystemThemes = DEFAULT_SYSTEM;
 
     @queryAsync('sp-theme')
     private themeRoot!: Theme;
@@ -224,7 +221,7 @@ export class LayoutElement extends LitElement {
     }
 
     private updateSystem(event: Event) {
-        this.system = (event.target as Picker).value as SystemVariant;
+        this.system = (event.target as Picker).value as SystemThemes;
     }
 
     private updateDirection(event: Event) {

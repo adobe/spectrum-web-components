@@ -11,12 +11,17 @@ governing permissions and limitations under the License.
 */
 
 import {
+    consume,
+    ContextConsumer,
     css,
     CSSResultArray,
     html,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
+    systemContext,
+    SystemThemeConfig,
+    SystemThemes,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -29,26 +34,17 @@ import { AccordionItem } from './AccordionItem.js';
 
 import styles from './accordion.css.js';
 
-const spectrum = css`
+const legacy = css`
 :host {
-	--system-accordion-divider-color: var(--spectrum-gray-300);
-	--system-accordion-item-content-disabled-color: var(--spectrum-gray-400);
-	--system-accordion-item-content-color: var(--spectrum-gray-800);
-    background-color: hotpink !important;
-}`;
-const express = css`
-:host {
-	--system-accordion-divider-color: var(--spectrum-gray-300);
-	--system-accordion-item-content-disabled-color: var(--spectrum-gray-400);
-	--system-accordion-item-content-color: var(--spectrum-gray-800);
-    background-color: goldenrod !important;
+	--spectrum-accordion-divider-color: var(--spectrum-gray-300);
+	--spectrum-accordion-item-content-disabled-color: var(--spectrum-gray-400);
+	--spectrum-accordion-item-content-color: var(--spectrum-gray-800);
 }`;
 const spectrum2 = css`
 :host {
-	--system-accordion-divider-color: var(--spectrum-gray-200);
-	--system-accordion-item-content-disabled-color: var(--spectrum-disabled-content-color);
-	--system-accordion-item-content-color: var(--spectrum-body-color);
-    background-color: green !important;
+	--spectrum-accordion-divider-color: var(--spectrum-gray-200);
+	--spectrum-accordion-item-content-disabled-color: var(--spectrum-disabled-content-color);
+	--spectrum-accordion-item-content-color: var(--spectrum-body-color);
 }`;
 
 /**
@@ -62,10 +58,10 @@ export class Accordion extends SizedMixin(SpectrumElement, {
         return [styles];
     }
 
-    public static override get systemTheming(): Map<string, CSSStyleSheet|null> {
+    public override get systemTheming(): SystemThemeConfig {
         return new Map([
-            ['spectrum', spectrum],
-            ['express', express],
+            ['spectrum', legacy],
+            ['express', legacy],
             ['spectrum-two', spectrum2],
         ]);
     }
@@ -84,6 +80,20 @@ export class Accordion extends SizedMixin(SpectrumElement, {
 
     @queryAssignedNodes()
     private defaultNodes!: NodeListOf<AccordionItem>;
+
+    public override connectedCallback(): void {
+        super.connectedCallback();
+
+        console.log(this.system);
+    }
+
+    protected override update(changes: Map<PropertyKey, unknown>): void {
+        super.update(changes);
+
+        if (changes.has('system') && changes.get('system') !== this.system) {
+          this.styleUpdate(changes.get('system') as SystemThemes);
+        }
+    }
 
     private get items(): AccordionItem[] {
         return [...(this.defaultNodes || [])].filter(

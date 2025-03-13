@@ -348,7 +348,7 @@ import {
     SystemResolutionController,
     systemResolverUpdatedSymbol,
 } from './SystemResolutionController.js';
-import type { SystemVariant } from '@spectrum-web-components/theme';
+import type { SystemThemes } from '@spectrum-web-components/theme';
 ```
 
 2. Instantiate the `SystemResolutionController`:
@@ -382,7 +382,7 @@ protected update(changes: Map<PropertyKey, unknown>): void {
 
 ```ts
 private handleSystemChange(): void {
-  const currentSystem: SystemVariant = this.systemResolver.system;
+  const currentSystem: SystemThemes = this.systemResolver.system;
   // Implement logic based on the current system variant.
   // For example, update styles, states or re-render parts of the component.
 }

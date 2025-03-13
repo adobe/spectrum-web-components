@@ -169,9 +169,9 @@ async function buildIcons(icons, tag, iconsNameList) {
 
         const iconLiteral = `
         ${disclaimer}
-    
+
         import {tag as html, TemplateResult} from '../custom-tag.js';
-    
+
         export {setCustomTemplateLiteralTag} from '../custom-tag.js';
         export const ${ComponentName}Icon = ({
         width = 24,
@@ -237,11 +237,11 @@ async function buildIcons(icons, tag, iconsNameList) {
             otherVersionIconImport = `import { ${ComponentName}Icon as AlternateIcon } from '../${alternateTag}/${id}.js';\r\n`;
         }
 
-        const spectrumVersion = tag === 'icons' ? 1 : 2;
+        const spectrumVersion = tag === 'icons' ? 'spectrum' : 'spectrum-two';
 
         const iconElement = `
         ${disclaimer}
-        
+
         import {
             html,
             TemplateResult
@@ -252,22 +252,22 @@ async function buildIcons(icons, tag, iconsNameList) {
         import {
             setCustomTemplateLiteralTag
         } from '../custom-tag.js';
-        
+
         ${currenVersionIconImport}
         ${otherVersionIconImport}
-        
+
         /**
          * @element ${iconElementName}
          */
         export class Icon${ComponentName} extends IconBase {
             protected override render(): TemplateResult {
                 setCustomTemplateLiteralTag(html);
-    
-                if(this.spectrumVersion === ${spectrumVersion}){
+
+                if(this.system === '${spectrumVersion}'){
                     return CurrentIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
                 }
                 return AlternateIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
-    
+
             }
         }
         `;
@@ -302,12 +302,12 @@ async function buildIcons(icons, tag, iconsNameList) {
 
         const iconRegistration = `
         ${disclaimer}
-    
+
         import { Icon${ComponentName} } from '../src/elements/Icon${id}.js';
         import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
-    
+
         defineElement('${iconElementName}', Icon${ComponentName});
-    
+
         declare global {
             interface HTMLElementTagNameMap {
                 '${iconElementName}': Icon${ComponentName};
