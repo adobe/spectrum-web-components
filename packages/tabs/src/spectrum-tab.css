@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -31,7 +31,7 @@ governing permissions and limitations under the License.
         ease-out;
     cursor: pointer;
     outline: none;
-    -webkit-text-decoration: none;
+    text-decoration: none;
     text-decoration: none;
     position: relative;
 }
@@ -154,7 +154,7 @@ governing permissions and limitations under the License.
         --mod-tabs-bottom-to-text,
         var(--spectrum-tabs-bottom-to-text)
     );
-    -webkit-text-decoration: none;
+    text-decoration: none;
     text-decoration: none;
     display: inline-block;
 }
