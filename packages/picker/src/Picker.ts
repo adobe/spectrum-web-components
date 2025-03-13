@@ -325,7 +325,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         const applyDefault = await new Promise<boolean>((resolve) => {
             // Wait until the change event is dispatched before applying the selection changes
             // This was needed to avoid dispatching a change event before the pointerdown, pointerup and click sequence
-            // was completed.
+            // was completed because otherwise the click event leaks to the elements behind the menu.
             setTimeout(() => {
                 const shouldApplyDefault = this.dispatchEvent(
                     new Event('change', {
