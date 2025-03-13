@@ -41,6 +41,20 @@ export default {
 export const Default = (props: Properties): TemplateResult =>
     renderButtonSet(props);
 
+export const Primary = (props: Properties): TemplateResult =>
+    renderButtonSet(props);
+
+Primary.args = {
+    variant: 'primary',
+};
+
+export const Secondary = (props: Properties): TemplateResult =>
+    renderButtonSet(props);
+
+Secondary.args = {
+    variant: 'secondary',
+};
+
 export const withIcon = (props: Properties): TemplateResult =>
     renderWithIcon(props);
 
