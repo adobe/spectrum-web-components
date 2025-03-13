@@ -10,10 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { adoptStyles, LitElement, ReactiveElement } from 'lit';
+import { adoptStyles, CSSResultOrNative, LitElement, ReactiveElement } from 'lit';
 import StyleObserver from 'style-observer';
 import type { StyleObserverCallback } from 'style-observer';
+import { createContext } from '@lit/context';
+import { provide } from '@lit/context';
 import { version } from '@spectrum-web-components/base/src/version.js';
+
+export { consume, provide } from '@lit/context';
+
+export type SystemThemes = 'spectrum'|'express'|'spectrum-two';
+export type SystemThemeConfig = Map<SystemThemes, CSSResultOrNative | null>;
 
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
@@ -26,15 +33,15 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
-type SystemThemes = 'spectrum'|'express'|'spectrum-two';
+export const systemContext = createContext<SystemThemes>('spectrum');
 
 export interface SpectrumInterface {
-    systemTheming: Map<string, CSSStyleSheet|null>;
+    systemTheming: SystemThemeConfig;
+    system: SystemThemes;
     shadowRoot: ShadowRoot;
     isLTR: boolean;
     hasVisibleFocusInTree(): boolean;
     dir: 'ltr' | 'rtl';
-    system: SystemThemes;
 }
 
 const observedForElements: Set<HTMLElement> = new Set();
@@ -77,16 +84,12 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 // There should only be one record
                 if (idx > 0) return;
 
-                // Get the value of the context CSS custom property
-                const context = record.value as SystemThemes;
-                console.log('Updating system context', context, 'this.system was', this.system);
                 this.system = record.value as SystemThemes;
             });
         };
 
-        private styleObserver = new StyleObserver(this.styleProcessing);
-
-        public get systemTheming(): Map<string, CSSStyleSheet|null> {
+        private styleObserver: InstanceType<typeof StyleObserver> = new StyleObserver(this.styleProcessing, '--context');
+        public get systemTheming(): SystemThemeConfig {
             return new Map([
                 ['spectrum', null],
                 ['express', null],
@@ -117,25 +120,13 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
          * styling, markup, and/or API of the element and allows for the element to report on deprecations.
          * @memberof SpectrumMixinElement
          */
-        public get system(): SystemThemes {
-            // default to spectrum
-            return this.getAttribute('system') as SystemThemes || 'spectrum';
-        }
+        @provide({context: systemContext})
+        public system: SystemThemes = 'spectrum';
 
-        /**
-         * @description Sets the system context of the element.
-         */
-        public set system(value: SystemThemes) {
-            if (!value || value === '') value = 'spectrum';
-            console.log('Setting system context', value, this.system, this.getAttribute('system'));
-
-            // If the system context has changed or is being set for the first time,
-            // update the system attribute and swap themes if system theming is available
-            if (value !== this.system || !this.hasAttribute('system') || this.getAttribute('system') === '') {
-                this.setAttribute('system', value);
-
-                // Swap themes if system theming is available
-                this.forceSystemUpdate();
+        protected override update(changes: Map<PropertyKey, unknown>): void {
+            super.update(changes);
+            if (changes.has(this.system)) {
+              this.forceSystemUpdate(changes.get(this.system) as SystemThemes);
             }
         }
 
@@ -144,29 +135,18 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
          * @param {(SystemThemes|undefined)} system - The optional system context to force the element to update to.
          * @memberof SpectrumMixinElement
          */
-        public forceSystemUpdate(system: SystemThemes|undefined): void {
+        public forceSystemUpdate(system: SystemThemes|undefined = undefined): void {
             const updateValue = system || this.system;
 
             // Swap themes if system theming is available
-            if (this.systemTheming) {
-                switch(updateValue) {
-                    case 'spectrum-two':
-                        if (this.systemTheming.has('spectrum-two') && this.systemTheming.get('spectrum-two') !== null) {
-                            adoptStyles(this.shadowRoot, [this.systemTheming.get('spectrum-two')!]);
-                            break;
-                        }
-                        // Allow fallthrough to spectrum if spectrum-two is not available
-                    case 'express':
-                        if (this.systemTheming.has('express') && this.systemTheming.get('express') !== null) {
-                            adoptStyles(this.shadowRoot, [this.systemTheming.get('express')!]);
-                            break;
-                        }
-                        // Allow fallthrough to spectrum if express is not available
-                    default:
-                        if (this.systemTheming.has('spectrum') && this.systemTheming.get('spectrum') !== null) {
-                            adoptStyles(this.shadowRoot, [this.systemTheming.get('spectrum')!]);
-                        }
-                }
+            let theme: CSSResultOrNative | null;
+            if (this.systemTheming && this.systemTheming.has(updateValue) && this.systemTheming.get(updateValue)) {
+                theme = this.systemTheming.get(updateValue)!;
+                this.updateComplete.then(() => {
+                    if (theme !== null && this.shadowRoot) {
+                        adoptStyles(this.shadowRoot, [theme!]);
+                    }
+                });
             }
         }
 
@@ -261,7 +241,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             this.system = this.style.getPropertyValue('--context') as SystemThemes;
 
             // Set up the styleObserver to watch for changes to the context CSS custom property
-            this.styleObserver.observe(this, "--context");
+            this.styleObserver.observe(this);
 
             super.connectedCallback();
         }
