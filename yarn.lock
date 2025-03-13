@@ -7560,9 +7560,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/picker@npm:9.1.2":
-  version: 9.1.2
-  resolution: "@spectrum-css/picker@npm:9.1.2"
+"@spectrum-css/picker@npm:9.1.4":
+  version: 9.1.4
+  resolution: "@spectrum-css/picker@npm:9.1.4"
   peerDependencies:
     "@spectrum-css/helptext": ">=7.0.0 <8.0.0"
     "@spectrum-css/icon": ">=9.0.0 <10.0.0"
@@ -7583,7 +7583,7 @@ __metadata:
       optional: true
     "@spectrum-css/tokens":
       optional: true
-  checksum: 10c0/680767f17da83d6b3b0309947997729ba778dc81d2a7e5f8c21a37f4b9495814d318dc3730927a55add542e6b19998f17c12d72923ddab7f325e66aebb94edb5
+  checksum: 10c0/67331a4f0fb66518e9848179d0ec78ec0e8d1076d2913f25f9d4b3c72ff8ece3f0a4a6836eef70b1197106aeab3d38d4b4174612624be04543f5b08c165acd6c
   languageName: node
   linkType: hard
 
@@ -8662,7 +8662,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/picker@workspace:packages/picker"
   dependencies:
-    "@spectrum-css/picker": "npm:9.1.2"
+    "@spectrum-css/picker": "npm:9.1.4"
     "@spectrum-web-components/base": "npm:1.2.0"
     "@spectrum-web-components/button": "npm:1.2.0"
     "@spectrum-web-components/field-label": "npm:1.2.0"

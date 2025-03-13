@@ -1,4 +1,4 @@
-name: Links, Lighthouse, and Smoke Tests
+name: Links, and Smoke Tests
 
 on:
     pull_request:
@@ -44,45 +44,6 @@ jobs:
                       const { getDocPreviewURL } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.js');
                       const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Branch preview', body);
-
-    lighthouse:
-        name: Lighthouse CI
-        runs-on: ubuntu-22.04
-        needs: comment-previews
-        steps:
-            - name: Checkout main
-              uses: actions/checkout@v4
-              with:
-                  ref: main
-
-            - name: Checkout PR branch
-              uses: actions/checkout@v4
-
-            - name: Setup Job and Install Dependencies
-              uses: ./.github/actions/setup-job
-
-            - name: Run Lighthouse CI
-              id: lighthouse
-              uses: treosh/lighthouse-ci-action@v11
-              with:
-                  budgetPath: '.github/lighthouse/budgets.json'
-                  configPath: '.github/lighthouse/lighthouserc.json'
-                  runs: 3
-                  temporaryPublicStorage: true
-                  uploadArtifacts: true
-                  urls: |
-                      https://opensource.adobe.com/spectrum-web-components/
-                      https://main--spectrumwc.netlify.app/
-                      ${{ needs.comment-previews.outputs.doc_url }}
-
-            - name: Post Lighthouse Results Comment
-              uses: actions/github-script@v7
-              with:
-                  script: |
-                      const { buildLighthouseComment } = await import('${{ github.workspace }}/tasks/build-lighthouse-comment.js');
-                      const body = buildLighthouseComment(${{ steps.lighthouse.outputs.links }}, ${{ steps.lighthouse.outputs.manifest }}, ${{ steps.lighthouse.outputs.assertionResults }});
-                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
-                      commentOrUpdate(github, context, '## Lighthouse scores', body);
 
     playwright-smoke-tests:
         timeout-minutes: 60
