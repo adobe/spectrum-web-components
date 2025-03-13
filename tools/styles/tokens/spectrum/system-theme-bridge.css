@@ -274,16 +274,16 @@
         --spectrum-transparent-white-300
     );
     --system-button-static-white-secondary-content-color-default: var(
-        --spectrum-white
+        --spectrum-transparent-white-800
     );
     --system-button-static-white-secondary-content-color-hover: var(
-        --spectrum-white
+        --spectrum-transparent-white-900
     );
     --system-button-static-white-secondary-content-color-down: var(
-        --spectrum-white
+        --spectrum-transparent-white-900
     );
     --system-button-static-white-secondary-content-color-focus: var(
-        --spectrum-white
+        --spectrum-transparent-white-900
     );
     --system-button-static-white-secondary-outline-border-color-default: var(
         --spectrum-transparent-white-300
