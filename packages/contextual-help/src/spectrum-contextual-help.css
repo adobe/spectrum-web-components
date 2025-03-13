@@ -18,11 +18,11 @@ governing permissions and limitations under the License.
     );
     padding-block: var(
         --mod-spectrum-contextual-help-padding,
-        var(--spectrum-contextual-help-padding)
+        var(--spectrum-spacing-400)
     );
     padding-inline: var(
         --mod-spectrum-contextual-help-padding,
-        var(--spectrum-contextual-help-padding)
+        var(--spectrum-spacing-400)
     );
     font-size: var(
         --mod-spectrum-contextual-help-body-size,
@@ -30,11 +30,9 @@ governing permissions and limitations under the License.
     );
     color: var(
         --highcontrast-contextual-help-body-color,
-        var(
-            --mod-contextual-help-body-color,
-            var(--spectrum-contextual-help-body-color)
-        )
+        var(--mod-contextual-help-body-color, var(--spectrum-body-color))
     );
+    max-inline-size: var(--mod-spectrum-contextual-help-popover-maximum-width);
     position: relative;
 }
 
@@ -46,14 +44,11 @@ governing permissions and limitations under the License.
 .popover ::slotted([slot='heading']) {
     font-size: var(
         --mod-spectrum-contextual-help-heading-size,
-        var(--spectrum-contextual-help-heading-size)
+        var(--spectrum-contextual-help-title-size)
     );
     color: var(
         --highcontrast-contextual-help-heading-color,
-        var(
-            --mod-contextual-help-heading-color,
-            var(--spectrum-contextual-help-heading-color)
-        )
+        var(--mod-contextual-help-heading-color, var(--spectrum-heading-color))
     );
     margin-block-end: var(
         --mod-spectrum-contextual-help-content-spacing,
@@ -64,7 +59,7 @@ governing permissions and limitations under the License.
 ::slotted([slot='link']) {
     margin-block-start: var(
         --mod-spectrum-contextual-help-link-spacing,
-        var(--spectrum-contextual-help-link-spacing)
+        var(--spectrum-spacing-300)
     );
 }
 
