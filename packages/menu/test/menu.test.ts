@@ -323,6 +323,66 @@ describe('Menu', () => {
         );
     });
 
+    it('handle hover and keyboard input', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-menu>
+        `);
+
+        await waitUntil(
+            () => el.childItems.length == 6,
+            'expected menu to manage 6 items'
+        );
+        await elementUpdated(el);
+
+        const firstItem = el.querySelector(
+            'sp-menu-item:nth-of-type(1)'
+        ) as MenuItem;
+        const secondtItem = el.querySelector(
+            'sp-menu-item:nth-of-type(2)'
+        ) as MenuItem;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(document.activeElement === firstItem, 'active element').to.be
+            .true;
+        expect(firstItem.focused, 'first item focused').to.be.true;
+        const rect = secondtItem.getBoundingClientRect();
+
+        await sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'move',
+                },
+            ],
+        });
+
+        expect(
+            document.activeElement === secondtItem,
+            'active element after arrow up'
+        ).to.equal(secondtItem);
+        expect(secondtItem.focused, 'third to last item focused').to.be.true;
+
+        el.dispatchEvent(arrowUpEvent());
+        await elementUpdated(el);
+
+        expect(document.activeElement === firstItem, 'active element').to.be
+            .true;
+        expect(firstItem.focused, 'first item focused').to.be.true;
+    });
+
     it('handle focus and late descendant additions', async () => {
         const el = await fixture<Menu>(html`
             <sp-menu>
