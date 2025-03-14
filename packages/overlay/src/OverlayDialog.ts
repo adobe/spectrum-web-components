@@ -54,7 +54,6 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     if (!targetOpenState) {
                         const close = (): void => {
                             el.removeEventListener('close', close);
-                            this.cleanupIOSEventManagement();
                             finish(el, index);
                         };
                         el.addEventListener('close', close);
@@ -89,7 +88,6 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         return;
                     }
                     this.dialogEl.showModal();
-                    this.setupIOSEventManagement();
                 };
             const finish = (el: OpenableElement, index: number) => (): void => {
                 if (this.open !== targetOpenState) {

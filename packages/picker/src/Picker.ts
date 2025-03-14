@@ -320,14 +320,24 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         this.selectedItem = item;
         this.value = item?.value ?? '';
         await this.updateComplete;
-        const applyDefault = this.dispatchEvent(
-            new Event('change', {
-                bubbles: true,
-                // Allow it to be prevented.
-                cancelable: true,
-                composed: true,
-            })
-        );
+
+        // Wait until the change event is dispatched before applying the selection changes
+        const applyDefault = await new Promise<boolean>((resolve) => {
+            // Wait until the change event is dispatched before applying the selection changes
+            // This was needed to avoid dispatching a change event before the pointerdown, pointerup and click sequence
+            // was completed because otherwise the click event leaks to the elements behind the menu.
+            setTimeout(() => {
+                const shouldApplyDefault = this.dispatchEvent(
+                    new Event('change', {
+                        bubbles: true,
+                        // Allow it to be prevented.
+                        cancelable: true,
+                        composed: true,
+                    })
+                );
+                resolve(shouldApplyDefault);
+            }, 0);
+        });
         if (!applyDefault && this.selects) {
             if (menuChangeEvent) {
                 menuChangeEvent.preventDefault();

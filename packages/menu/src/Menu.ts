@@ -468,7 +468,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.handlePointerBasedSelection(event);
     }
 
-    private handlePointerBasedSelection(event: Event): void {
+    private async handlePointerBasedSelection(event: Event): Promise<void> {
         // Only handle left clicks
         if (event instanceof MouseEvent && event.button !== 0) {
             return;
@@ -492,12 +492,15 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (target?.href && target.href.length) {
             // This event will NOT ALLOW CANCELATION as link action
             // cancelation should occur on the `<sp-menu-item>` itself.
-            this.dispatchEvent(
-                new Event('change', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
+            await new Promise((resolve) => {
+                this.dispatchEvent(
+                    new Event('change', {
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+                resolve(true);
+            });
             return;
         } else if (
             target?.menuData?.selectionRoot === this &&
@@ -631,13 +634,23 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this.selectedItems = [targetItem];
         }
 
-        const applyDefault = this.dispatchEvent(
-            new Event('change', {
-                cancelable: true,
-                bubbles: true,
-                composed: true,
-            })
-        );
+        // Wait until the change event is dispatched before applying the selection changes
+        const applyDefault = await new Promise<boolean>((resolve) => {
+            // Wait for the call stack to clear before dispatching the change event
+            // This was needed to avoid dispatching a change event before the pointerdown, pointerup and click sequence
+            // was completed because otherwise the click event leaks to the elements behind the menu.
+            setTimeout(() => {
+                const shouldApplyDefault = this.dispatchEvent(
+                    new Event('change', {
+                        cancelable: true,
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+                resolve(shouldApplyDefault);
+            }, 0);
+        });
+
         if (!applyDefault) {
             // Cancel the event & don't apply the selection
             this._selected = oldSelected;
@@ -660,7 +673,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             !targetItem.hasSubmenu &&
             targetItem?.menuData?.focusRoot === this
         ) {
-            this.dispatchEvent(new Event('close', { bubbles: true }));
+            setTimeout(() => {
+                this.dispatchEvent(new Event('close', { bubbles: true }));
+            }, 0);
         }
     }
 
@@ -682,7 +697,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             }
         } else if (shouldCloseSelfAsSubmenu && this.isSubmenu) {
             event.stopPropagation();
-            this.dispatchEvent(new Event('close', { bubbles: true }));
+            setTimeout(() => {
+                this.dispatchEvent(new Event('close', { bubbles: true }));
+            }, 0);
             this.updateSelectedItemIndex();
         }
     }
