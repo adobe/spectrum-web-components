@@ -22,6 +22,8 @@ import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 
 // setCustomElementsManifest(cem);
 
+export const title = 'Spectrum Web Components';
+
 export const globalTypes = {
     system: {
         title: 'Design context',
@@ -122,9 +124,21 @@ export const parameters = {
     controls: {
         expanded: true,
         matchers: {
-            color: /(backgroundColor|color)$/i,
+            color: /(background|color)$/i,
             date: /Date$/,
         },
+        hideNoControlsWarning: true,
+        sort: 'alpha',
+        exclude: [
+            'dir',
+            'isLTR',
+            '_dirParent',
+            'shadowRoot',
+            'focusGroupController',
+            '[assignedNodesList]',
+            '[slotContentIsPresent]',
+            'VERSION',
+        ],
     },
     layout: 'fullscreen',
     options: {
@@ -147,18 +161,21 @@ export const parameters = {
         prefersReducedMotion: 'no-preference',
         pauseAnimationAtEnd: true,
         modes: {
-            'Context: Spectrum 1': {
-                scale: 'medium',
+            'Light | LTR': {
+                system: 'spectrum-two',
                 color: 'light',
                 textDirection: 'ltr',
-                context: 'spectrum1',
-            },
-            'Context: Express': {
-                context: 'express',
             },
             'Dark | RTL': {
+                system: 'spectrum-two',
                 color: 'dark',
                 textDirection: 'rtl',
+            },
+            Legacy: {
+                system: 'spectrum',
+            },
+            'Legacy | Express': {
+                system: 'express',
             },
         },
     },

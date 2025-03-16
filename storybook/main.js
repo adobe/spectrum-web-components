@@ -15,8 +15,16 @@ import { merge } from 'webpack-merge';
 /** @type { import('@storybook/web-components-webpack5').StorybookConfig } */
 export default {
     stories: [
-        '../packages/*/stories/*.stories.js',
-        '../tools/*/stories/*.stories.js',
+        {
+            directory: '../packages',
+            files: '*/stories/*.stories.js',
+            titlePrefix: 'Components',
+        },
+        {
+            directory: '../tools',
+            files: '*/stories/*.stories.js',
+            titlePrefix: 'Tools',
+        },
     ],
     addons: [
         '@storybook/addon-links',
@@ -41,6 +49,7 @@ export default {
         },
     },
     core: {
+        // Disabled callback due to Adobe privacy policy
         disableTelemetry: true,
         disableWhatsNewNotifications: true,
     },
