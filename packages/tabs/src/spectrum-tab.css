@@ -13,22 +13,11 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     box-sizing: border-box;
-    block-size: calc(
-        var(--mod-tabs-item-height, var(--spectrum-tabs-item-height)) -
-            var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size))
-    );
+    block-size: calc(var(--mod-tabs-item-height, var(--spectrum-tabs-item-height)) - var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size)));
     z-index: 1;
     white-space: nowrap;
-    color: var(
-        --highcontrast-tabs-color,
-        var(--mod-tabs-color, var(--spectrum-tabs-color))
-    );
-    transition: color
-        var(
-            --mod-tabs-animation-duration,
-            var(--spectrum-tabs-animation-duration)
-        )
-        ease-out;
+    color: var(--highcontrast-tabs-color, var(--mod-tabs-color, var(--spectrum-tabs-color)));
+    transition: color var(--mod-tabs-animation-duration, var(--spectrum-tabs-animation-duration)) ease-out;
     cursor: pointer;
     outline: none;
     -webkit-text-decoration: none;
@@ -39,82 +28,40 @@ governing permissions and limitations under the License.
 ::slotted([slot='icon']) {
     block-size: var(--mod-tabs-icon-size, var(--spectrum-tabs-icon-size));
     inline-size: var(--mod-tabs-icon-size, var(--spectrum-tabs-icon-size));
-    margin-block-start: var(
-        --mod-tabs-top-to-icon,
-        var(--spectrum-tabs-top-to-icon)
-    );
+    margin-block-start: var(--mod-tabs-top-to-icon, var(--spectrum-tabs-top-to-icon));
 }
 
 [name='icon'] + #item-label {
-    margin-inline-start: var(
-        --mod-tabs-icon-to-text,
-        var(--spectrum-tabs-icon-to-text)
-    );
+    margin-inline-start: var(--mod-tabs-icon-to-text, var(--spectrum-tabs-icon-to-text));
 }
 
 :host:before {
     content: '';
     box-sizing: border-box;
-    block-size: calc(
-        100% - var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text))
-    );
-    inline-size: calc(
-        100% +
-            var(
-                --mod-tabs-focus-indicator-gap,
-                var(--spectrum-tabs-focus-indicator-gap)
-            ) * 2
-    );
-    border: var(
-            --mod-tabs-focus-indicator-width,
-            var(--spectrum-tabs-focus-indicator-width)
-        )
-        solid transparent;
-    border-radius: var(
-        --mod-tabs-focus-indicator-border-radius,
-        var(--spectrum-tabs-focus-indicator-border-radius)
-    );
+    block-size: calc(100% - var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)));
+    inline-size: calc(100% + var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * 2);
+    border: var(--mod-tabs-focus-indicator-width, var(--spectrum-tabs-focus-indicator-width)) solid transparent;
+    border-radius: var(--mod-tabs-focus-indicator-border-radius, var(--spectrum-tabs-focus-indicator-border-radius));
     pointer-events: none;
     position: absolute;
-    inset-block-start: calc(
-        var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2
-    );
-    inset-inline-start: calc(
-        var(
-                --mod-tabs-focus-indicator-gap,
-                var(--spectrum-tabs-focus-indicator-gap)
-            ) * -1
-    );
-    inset-inline-end: calc(
-        var(
-                --mod-tabs-focus-indicator-gap,
-                var(--spectrum-tabs-focus-indicator-gap)
-            ) * -1
-    );
+    inset-block-start: calc(var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2);
+    inset-inline-start: calc(var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * -1);
+    inset-inline-end: calc(var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * -1);
 }
 
 @media (hover: hover) {
     :host(:hover) {
-        color: var(
-            --highcontrast-tabs-color-hover,
-            var(--mod-tabs-color-hover, var(--spectrum-tabs-color-hover))
-        );
+        color: var(--highcontrast-tabs-color-hover, var(--mod-tabs-color-hover, var(--spectrum-tabs-color-hover)));
     }
 }
 
 :host([selected]) {
-    color: var(
-        --highcontrast-tabs-color-selected,
-        var(--mod-tabs-color-selected, var(--spectrum-tabs-color-selected))
-    );
+    color: var(--highcontrast-tabs-color-selected, var(--mod-tabs-color-selected, var(--spectrum-tabs-color-selected)));
 }
 
 :host([disabled]) {
     cursor: default;
-    color: var(
-        --highcontrast-tabs-color-disabled,
-        var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled))
-    );
+    color: var(--highcontrast-tabs-color-disabled, var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled)));
 }
 
 :host([disabled]) #item-label {
@@ -122,20 +69,11 @@ governing permissions and limitations under the License.
 }
 
 :host(:focus-visible) {
-    color: var(
-        --highcontrast-tabs-color-key-focus,
-        var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus))
-    );
+    color: var(--highcontrast-tabs-color-key-focus, var(--mod-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus)));
 }
 
 :host(:focus-visible):before {
-    border-color: var(
-        --highcontrast-tabs-focus-indicator-color,
-        var(
-            --mod-tabs-focus-indicator-color,
-            var(--spectrum-tabs-focus-indicator-color)
-        )
-    );
+    border-color: var(--highcontrast-tabs-focus-indicator-color, var(--mod-tabs-focus-indicator-color, var(--spectrum-tabs-focus-indicator-color)));
 }
 
 #item-label {
@@ -146,14 +84,8 @@ governing permissions and limitations under the License.
     font-size: var(--mod-tabs-font-size, var(--spectrum-tabs-font-size));
     font-weight: var(--mod-tabs-font-weight, var(--spectrum-tabs-font-weight));
     line-height: var(--mod-tabs-line-height, var(--spectrum-tabs-line-height));
-    margin-block-start: var(
-        --mod-tabs-top-to-text,
-        var(--spectrum-tabs-top-to-text)
-    );
-    margin-block-end: var(
-        --mod-tabs-bottom-to-text,
-        var(--spectrum-tabs-bottom-to-text)
-    );
+    margin-block-start: var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text));
+    margin-block-end: var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text));
     -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-block;

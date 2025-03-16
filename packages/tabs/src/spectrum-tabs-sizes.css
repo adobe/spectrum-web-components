@@ -12,58 +12,22 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([size='s']) #list.spectrum-Tabs--compact {
-    --spectrum-tabs-item-height: var(
-        --mod-tabs-item-height-compact,
-        var(--spectrum-tab-item-compact-height-small)
-    );
-    --spectrum-tabs-top-to-text: var(
-        --mod-tabs-top-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-small)
-    );
-    --spectrum-tabs-bottom-to-text: var(
-        --mod-tabs-bottom-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-small)
-    );
-    --spectrum-tabs-top-to-icon: var(
-        --mod-tabs-top-to-icon-compact,
-        var(--spectrum-tab-item-top-to-workflow-icon-compact-small)
-    );
+    --spectrum-tabs-item-height: var(--mod-tabs-item-height-compact, var(--spectrum-tab-item-compact-height-small));
+    --spectrum-tabs-top-to-text: var(--mod-tabs-top-to-text-compact, var(--spectrum-tab-item-top-to-text-compact-small));
+    --spectrum-tabs-bottom-to-text: var(--mod-tabs-bottom-to-text-compact, var(--spectrum-tab-item-top-to-text-compact-small));
+    --spectrum-tabs-top-to-icon: var(--mod-tabs-top-to-icon-compact, var(--spectrum-tab-item-top-to-workflow-icon-compact-small));
 }
 
 :host([size='l']) #list.spectrum-Tabs--compact {
-    --spectrum-tabs-item-height: var(
-        --mod-tabs-item-height-compact,
-        var(--spectrum-tab-item-compact-height-large)
-    );
-    --spectrum-tabs-top-to-text: var(
-        --mod-tabs-top-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-large)
-    );
-    --spectrum-tabs-bottom-to-text: var(
-        --mod-tabs-bottom-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-large)
-    );
-    --spectrum-tabs-top-to-icon: var(
-        --mod-tabs-top-to-icon-compact,
-        var(--spectrum-tab-item-top-to-workflow-icon-compact-large)
-    );
+    --spectrum-tabs-item-height: var(--mod-tabs-item-height-compact, var(--spectrum-tab-item-compact-height-large));
+    --spectrum-tabs-top-to-text: var(--mod-tabs-top-to-text-compact, var(--spectrum-tab-item-top-to-text-compact-large));
+    --spectrum-tabs-bottom-to-text: var(--mod-tabs-bottom-to-text-compact, var(--spectrum-tab-item-top-to-text-compact-large));
+    --spectrum-tabs-top-to-icon: var(--mod-tabs-top-to-icon-compact, var(--spectrum-tab-item-top-to-workflow-icon-compact-large));
 }
 
 :host([size='xl']) #list.spectrum-Tabs--compact {
-    --spectrum-tabs-item-height: var(
-        --mod-tabs-item-height-compact,
-        var(--spectrum-tab-item-compact-height-extra-large)
-    );
-    --spectrum-tabs-top-to-text: var(
-        --mod-tabs-top-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-extra-large)
-    );
-    --spectrum-tabs-bottom-to-text: var(
-        --mod-tabs-bottom-to-text-compact,
-        var(--spectrum-tab-item-top-to-text-compact-extra-large)
-    );
-    --spectrum-tabs-top-to-icon: var(
-        --mod-tabs-top-to-icon-compact,
-        var(--spectrum-tab-item-top-to-workflow-icon-compact-extra-large)
-    );
+    --spectrum-tabs-item-height: var(--mod-tabs-item-height-compact, var(--spectrum-tab-item-compact-height-extra-large));
+    --spectrum-tabs-top-to-text: var(--mod-tabs-top-to-text-compact, var(--spectrum-tab-item-top-to-text-compact-extra-large));
+    --spectrum-tabs-bottom-to-text: var(--mod-tabs-bottom-to-text-compact, var(--spectrum-tab-item-top-to-text-compact-extra-large));
+    --spectrum-tabs-top-to-icon: var(--mod-tabs-top-to-icon-compact, var(--spectrum-tab-item-top-to-workflow-icon-compact-extra-large));
 }

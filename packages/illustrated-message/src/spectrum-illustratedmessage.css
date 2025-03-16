@@ -32,62 +32,26 @@ governing permissions and limitations under the License.
 }
 
 #illustration {
-    color: var(
-        --highcontrast-illustrated-message-illustration-color,
-        var(
-            --mod-illustrated-message-illustration-color,
-            var(--spectrum-illustrated-message-illustration-color)
-        )
-    );
+    color: var(--highcontrast-illustrated-message-illustration-color, var(--mod-illustrated-message-illustration-color, var(--spectrum-illustrated-message-illustration-color)));
     fill: currentColor;
     stroke: currentColor;
-    margin-block-end: var(
-        --mod-illustrated-message-title-to-heading,
-        var(--spectrum-illustrated-message-title-to-heading)
-    );
+    margin-block-end: var(--mod-illustrated-message-title-to-heading, var(--spectrum-illustrated-message-title-to-heading));
 }
 
 .spectrum-IllustratedMessage-accent {
-    color: var(
-        --highcontrast-illustrated-message-illustration-accent-color,
-        var(
-            --mod-illustrated-message-illustration-accent-color,
-            var(--spectrum-illustrated-message-illustration-accent-color)
-        )
-    );
+    color: var(--highcontrast-illustrated-message-illustration-accent-color, var(--mod-illustrated-message-illustration-accent-color, var(--spectrum-illustrated-message-illustration-accent-color)));
     fill: currentColor;
     stroke: currentColor;
 }
 
 #heading {
-    font-family: var(
-        --mod-illustrated-message-title-font-family,
-        var(--spectrum-illustrated-message-title-font-family)
-    );
-    font-weight: var(
-        --mod-illustrated-message-title-font-weight,
-        var(--spectrum-illustrated-message-title-font-weight)
-    );
-    font-style: var(
-        --mod-illustrated-message-title-font-style,
-        var(--spectrum-illustrated-message-title-font-style)
-    );
-    font-size: var(
-        --mod-illustrated-message-title-font-size,
-        var(--spectrum-illustrated-message-title-font-size)
-    );
-    line-height: var(
-        --mod-illustrated-message-title-line-height,
-        var(--spectrum-illustrated-message-title-line-height)
-    );
-    color: var(
-        --mod-illustrated-message-title-color,
-        var(--spectrum-illustrated-message-title-color)
-    );
-    max-inline-size: var(
-        --mod-illustrated-message-heading-max-inline-size,
-        var(--spectrum-illustrated-message-heading-max-inline-size)
-    );
+    font-family: var(--mod-illustrated-message-title-font-family, var(--spectrum-illustrated-message-title-font-family));
+    font-weight: var(--mod-illustrated-message-title-font-weight, var(--spectrum-illustrated-message-title-font-weight));
+    font-style: var(--mod-illustrated-message-title-font-style, var(--spectrum-illustrated-message-title-font-style));
+    font-size: var(--mod-illustrated-message-title-font-size, var(--spectrum-illustrated-message-title-font-size));
+    line-height: var(--mod-illustrated-message-title-line-height, var(--spectrum-illustrated-message-title-line-height));
+    color: var(--mod-illustrated-message-title-color, var(--spectrum-illustrated-message-title-color));
+    max-inline-size: var(--mod-illustrated-message-heading-max-inline-size, var(--spectrum-illustrated-message-heading-max-inline-size));
     margin-block-start: 0;
     margin-block-end: var(--mod-illustrated-message-heading-to-body, 0);
 }
@@ -96,41 +60,14 @@ governing permissions and limitations under the License.
     position: var(--mod-illustrated-message-description-position);
     z-index: var(--mod-illustrated-message-description-z-index);
     pointer-events: auto;
-    pointer-events: var(
-        --mod-illustrated-message-description-pointer-events,
-        auto
-    );
-    font-family: var(
-        --mod-illustrated-message-description-font-family,
-        var(--spectrum-illustrated-message-description-font-family)
-    );
-    font-weight: var(
-        --mod-illustrated-message-description-font-weight,
-        var(--spectrum-illustrated-message-description-font-weight)
-    );
-    font-style: var(
-        --mod-illustrated-message-description-font-style,
-        var(--spectrum-illustrated-message-description-font-style)
-    );
-    font-size: var(
-        --mod-illustrated-message-description-font-size,
-        var(--spectrum-illustrated-message-description-font-size)
-    );
-    line-height: var(
-        --mod-illustrated-message-description-line-height,
-        var(--spectrum-illustrated-message-description-line-height)
-    );
-    color: var(
-        --mod-illustrated-message-description-color,
-        var(--spectrum-illustrated-message-description-color)
-    );
-    max-inline-size: var(
-        --mod-illustrated-message-description-max-inline-size,
-        var(--spectrum-illustrated-message-description-max-inline-size)
-    );
-    margin-block-start: var(
-        --mod-illustrated-message-heading-to-description,
-        var(--spectrum-illustrated-message-heading-to-description)
-    );
+    pointer-events: var(--mod-illustrated-message-description-pointer-events, auto);
+    font-family: var(--mod-illustrated-message-description-font-family, var(--spectrum-illustrated-message-description-font-family));
+    font-weight: var(--mod-illustrated-message-description-font-weight, var(--spectrum-illustrated-message-description-font-weight));
+    font-style: var(--mod-illustrated-message-description-font-style, var(--spectrum-illustrated-message-description-font-style));
+    font-size: var(--mod-illustrated-message-description-font-size, var(--spectrum-illustrated-message-description-font-size));
+    line-height: var(--mod-illustrated-message-description-line-height, var(--spectrum-illustrated-message-description-line-height));
+    color: var(--mod-illustrated-message-description-color, var(--spectrum-illustrated-message-description-color));
+    max-inline-size: var(--mod-illustrated-message-description-max-inline-size, var(--spectrum-illustrated-message-description-max-inline-size));
+    margin-block-start: var(--mod-illustrated-message-heading-to-description, var(--spectrum-illustrated-message-heading-to-description));
     margin-block-end: 0;
 }

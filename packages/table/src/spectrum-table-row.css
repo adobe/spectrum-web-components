@@ -13,9 +13,7 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 @media (forced-colors: active) {
     :host([focused]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
-    :host(:focus-visible)
-        .spectrum-Table-checkbox
-        .spectrum-Checkbox-box:before {
+    :host(:focus-visible) .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
         outline: var(--highcontrast-table-row-text-color-hover) 1px solid;
     }
 
@@ -28,16 +26,11 @@ governing permissions and limitations under the License.
     :host([drop-target]) .spectrum-Table-body,
     :host([drop-target]),
     :host([selected]) {
-        --highcontrast-table-cell-focus-indicator-color: var(
-            --highcontrast-table-selected-row-text-color
-        );
+        --highcontrast-table-cell-focus-indicator-color: var(--highcontrast-table-selected-row-text-color);
         --highcontrast-table-cell-focus-extra-offset: 1px;
     }
 
-    :host([drop-target])
-        .spectrum-Table-body
-        .spectrum-Table-checkbox
-        .spectrum-Checkbox-box:before,
+    :host([drop-target]) .spectrum-Table-body .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
     :host([drop-target]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before,
     :host([selected]) .spectrum-Table-checkbox .spectrum-Checkbox-box:before {
         outline: var(--highcontrast-table-selected-row-text-color) 1px solid;
@@ -45,91 +38,39 @@ governing permissions and limitations under the License.
 }
 
 :host(:first-child) .spectrum-Table-body ::slotted(*) {
-    border-block-start: var(
-            --mod-table-border-width,
-            var(--spectrum-table-border-width)
-        )
-        solid
-        var(
-            --highcontrast-table-border-color,
-            var(--mod-table-border-color, var(--spectrum-table-border-color))
-        );
+    border-block-start: var(--mod-table-border-width, var(--spectrum-table-border-width)) solid var(--highcontrast-table-border-color, var(--mod-table-border-color, var(--spectrum-table-border-color)));
 }
 
 :host(:last-child) .spectrum-Table-body ::slotted(*) {
-    border-block-end: var(
-            --mod-table-border-width,
-            var(--spectrum-table-border-width)
-        )
-        solid
-        var(
-            --highcontrast-table-border-color,
-            var(--mod-table-border-color, var(--spectrum-table-border-color))
-        );
+    border-block-end: var(--mod-table-border-width, var(--spectrum-table-border-width)) solid var(--highcontrast-table-border-color, var(--mod-table-border-color, var(--spectrum-table-border-color)));
 }
 
 :host .spectrum-Table-body ::slotted(:first-child) {
-    border-inline-start: var(
-            --mod-table-outer-border-inline-width,
-            var(--spectrum-table-outer-border-inline-width)
-        )
-        solid
-        var(
-            --highcontrast-table-border-color,
-            var(--mod-table-border-color, var(--spectrum-table-border-color))
-        );
+    border-inline-start: var(--mod-table-outer-border-inline-width, var(--spectrum-table-outer-border-inline-width)) solid var(--highcontrast-table-border-color, var(--mod-table-border-color, var(--spectrum-table-border-color)));
 }
 
 :host .spectrum-Table-body ::slotted(:last-child) {
-    border-inline-end: var(
-            --mod-table-outer-border-inline-width,
-            var(--spectrum-table-outer-border-inline-width)
-        )
-        solid
-        var(
-            --highcontrast-table-border-color,
-            var(--mod-table-border-color, var(--spectrum-table-border-color))
-        );
+    border-inline-end: var(--mod-table-outer-border-inline-width, var(--spectrum-table-outer-border-inline-width)) solid var(--highcontrast-table-border-color, var(--mod-table-border-color, var(--spectrum-table-border-color)));
 }
 
 :host(:first-child) ::slotted(:first-child) {
-    border-start-start-radius: var(
-        --mod-table-border-radius,
-        var(--spectrum-table-border-radius)
-    );
+    border-start-start-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
 }
 
 :host(:first-child) ::slotted(:last-child) {
-    border-start-end-radius: var(
-        --mod-table-border-radius,
-        var(--spectrum-table-border-radius)
-    );
+    border-start-end-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
 }
 
 :host(:last-child) ::slotted(:first-child) {
-    border-end-start-radius: var(
-        --mod-table-border-radius,
-        var(--spectrum-table-border-radius)
-    );
+    border-end-start-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
 }
 
 :host(:last-child) ::slotted(:last-child) {
-    border-end-end-radius: var(
-        --mod-table-border-radius,
-        var(--spectrum-table-border-radius)
-    );
+    border-end-end-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
 }
 
 :host {
-    transition: background-color
-        var(
-            --highcontrast-table-transition-duration,
-            var(
-                --mod-table-transition-duration,
-                var(--spectrum-table-transition-duration)
-            )
-        )
-        ease-in-out;
+    transition: background-color var(--highcontrast-table-transition-duration, var(--mod-table-transition-duration, var(--spectrum-table-transition-duration))) ease-in-out;
     cursor: pointer;
     cursor: var(--mod-table-cursor-row-default, pointer);
     border-block-start: none;
@@ -137,25 +78,13 @@ governing permissions and limitations under the License.
 }
 
 :host(:first-child) {
-    border-start-start-radius: var(
-        --mod-table-border-radius,
-        var(--spectrum-table-border-radius)
-    );
-    border-start-end-radius: var(
-        --mod-table-border-radius,
-        var(--spectrum-table-border-radius)
-    );
+    border-start-start-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
+    border-start-end-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
 }
 
 :host(:last-child) {
-    border-end-end-radius: var(
-        --mod-table-border-radius,
-        var(--spectrum-table-border-radius)
-    );
-    border-end-start-radius: var(
-        --mod-table-border-radius,
-        var(--spectrum-table-border-radius)
-    );
+    border-end-end-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
+    border-end-start-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
 }
 
 :host(:focus) {
@@ -164,215 +93,79 @@ governing permissions and limitations under the License.
 
 :host([focused]),
 :host(:focus-visible) {
-    --highcontrast-table-row-text-color: var(
-        --highcontrast-table-row-text-color-hover
-    );
-    --highcontrast-table-icon-color: var(
-        --highcontrast-table-row-text-color-hover
-    );
-    --spectrum-table-cell-background-color: var(
-        --highcontrast-table-row-background-color-hover,
-        var(
-            --mod-table-row-background-color-hover,
-            var(--spectrum-table-row-background-color-hover)
-        )
-    );
+    --highcontrast-table-row-text-color: var(--highcontrast-table-row-text-color-hover);
+    --highcontrast-table-icon-color: var(--highcontrast-table-row-text-color-hover);
+    --spectrum-table-cell-background-color: var(--highcontrast-table-row-background-color-hover, var(--mod-table-row-background-color-hover, var(--spectrum-table-row-background-color-hover)));
 }
 
 :host:active {
-    --highcontrast-table-row-text-color: var(
-        --highcontrast-table-row-text-color-hover
-    );
-    --highcontrast-table-icon-color: var(
-        --highcontrast-table-row-text-color-hover
-    );
-    --spectrum-table-cell-background-color: var(
-        --highcontrast-table-row-background-color-hover,
-        var(
-            --mod-table-row-active-color,
-            var(--spectrum-table-row-active-color)
-        )
-    );
+    --highcontrast-table-row-text-color: var(--highcontrast-table-row-text-color-hover);
+    --highcontrast-table-icon-color: var(--highcontrast-table-row-text-color-hover);
+    --spectrum-table-cell-background-color: var(--highcontrast-table-row-background-color-hover, var(--mod-table-row-active-color, var(--spectrum-table-row-active-color)));
 }
 
 :host([selected]) {
-    --highcontrast-table-row-text-color: var(
-        --highcontrast-table-selected-row-text-color
-    );
-    --highcontrast-table-icon-color: var(
-        --highcontrast-table-selected-row-text-color
-    );
-    --spectrum-table-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color,
-        var(--spectrum-table-selected-cell-background-color)
-    );
+    --highcontrast-table-row-text-color: var(--highcontrast-table-selected-row-text-color);
+    --highcontrast-table-icon-color: var(--highcontrast-table-selected-row-text-color);
+    --spectrum-table-cell-background-color: var(--highcontrast-table-selected-row-background-color, var(--spectrum-table-selected-cell-background-color));
 }
 
 :host([selected][focused]),
 :host([selected]:focus-visible) {
-    --highcontrast-table-row-text-color: var(
-        --highcontrast-table-selected-row-text-color-focus
-    );
-    --highcontrast-table-icon-color: var(
-        --highcontrast-table-selected-row-text-color-focus
-    );
-    --spectrum-table-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color-focus,
-        var(--spectrum-table-selected-cell-background-color-focus)
-    );
+    --highcontrast-table-row-text-color: var(--highcontrast-table-selected-row-text-color-focus);
+    --highcontrast-table-icon-color: var(--highcontrast-table-selected-row-text-color-focus);
+    --spectrum-table-cell-background-color: var(--highcontrast-table-selected-row-background-color-focus, var(--spectrum-table-selected-cell-background-color-focus));
 }
 
 :host([drop-target]) .spectrum-Table-body,
 :host([drop-target]) {
-    --highcontrast-table-row-text-color: var(
-        --highcontrast-table-selected-row-text-color
-    );
-    --highcontrast-table-icon-color: var(
-        --highcontrast-table-selected-row-text-color
-    );
-    --spectrum-table-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color,
-        var(
-            --mod-table-drop-zone-background-color,
-            var(--spectrum-table-drop-zone-background-color)
-        )
-    );
+    --highcontrast-table-row-text-color: var(--highcontrast-table-selected-row-text-color);
+    --highcontrast-table-icon-color: var(--highcontrast-table-selected-row-text-color);
+    --spectrum-table-cell-background-color: var(--highcontrast-table-selected-row-background-color, var(--mod-table-drop-zone-background-color, var(--spectrum-table-drop-zone-background-color)));
 }
 
 :host([drop-target]) {
-    --spectrum-table-border-color: var(
-        --highcontrast-table-focus-indicator-color,
-        transparent
-    );
-    outline-width: var(
-        --mod-table-focus-indicator-thickness,
-        var(--spectrum-table-focus-indicator-thickness)
-    );
+    --spectrum-table-border-color: var(--highcontrast-table-focus-indicator-color, transparent);
+    outline-width: var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness));
     outline-style: solid;
-    outline-color: var(
-        --highcontrast-table-focus-indicator-color,
-        var(
-            --mod-table-drop-zone-outline-color,
-            var(--spectrum-table-drop-zone-outline-color)
-        )
-    );
-    outline-offset: calc(
-        var(
-                --mod-table-focus-indicator-thickness,
-                var(--spectrum-table-focus-indicator-thickness)
-            ) * -1
-    );
+    outline-color: var(--highcontrast-table-focus-indicator-color, var(--mod-table-drop-zone-outline-color, var(--spectrum-table-drop-zone-outline-color)));
+    outline-offset: calc(var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness)) * -1);
 }
 
 :host([drop-target]) ::slotted(*) {
-    border-block-start-color: var(
-        --highcontrast-table-focus-indicator-color,
-        var(
-            --mod-table-drop-zone-outline-color,
-            var(--spectrum-table-drop-zone-outline-color)
-        )
-    );
+    border-block-start-color: var(--highcontrast-table-focus-indicator-color, var(--mod-table-drop-zone-outline-color, var(--spectrum-table-drop-zone-outline-color)));
 }
 
 .spectrum-Table-row--summary {
-    --spectrum-table-cell-background-color: var(
-        --highcontrast-table-row-background-color,
-        var(
-            --mod-table-summary-row-background-color,
-            var(--spectrum-table-summary-row-background-color)
-        )
-    );
+    --spectrum-table-cell-background-color: var(--highcontrast-table-row-background-color, var(--mod-table-summary-row-background-color, var(--spectrum-table-summary-row-background-color)));
 }
 
 .spectrum-Table-row--summary ::slotted(*) {
-    font-weight: var(
-        --mod-table-summary-row-font-weight,
-        var(--spectrum-table-summary-row-font-weight)
-    );
-    font-size: var(
-        --mod-table-summary-row-font-size,
-        var(--spectrum-table-row-font-size)
-    );
-    font-family: var(
-        --mod-table-summary-row-font-family,
-        var(--spectrum-table-row-font-family)
-    );
-    font-style: var(
-        --mod-table-summary-row-font-style,
-        var(--spectrum-table-row-font-style)
-    );
-    line-height: var(
-        --mod-table-summary-row-line-height,
-        var(--spectrum-table-row-line-height)
-    );
-    color: var(
-        --highcontrast-table-row-text-color,
-        var(
-            --mod-table-summary-row-text-color,
-            var(--spectrum-table-row-text-color)
-        )
-    );
+    font-weight: var(--mod-table-summary-row-font-weight, var(--spectrum-table-summary-row-font-weight));
+    font-size: var(--mod-table-summary-row-font-size, var(--spectrum-table-row-font-size));
+    font-family: var(--mod-table-summary-row-font-family, var(--spectrum-table-row-font-family));
+    font-style: var(--mod-table-summary-row-font-style, var(--spectrum-table-row-font-style));
+    line-height: var(--mod-table-summary-row-line-height, var(--spectrum-table-row-line-height));
+    color: var(--highcontrast-table-row-text-color, var(--mod-table-summary-row-text-color, var(--spectrum-table-row-text-color)));
 }
 
 .spectrum-Table-row--sectionHeader {
-    --spectrum-table-cell-background-color: var(
-        --highcontrast-table-section-header-background-color,
-        var(
-            --mod-table-section-header-background-color,
-            var(--spectrum-table-section-header-background-color)
-        )
-    );
+    --spectrum-table-cell-background-color: var(--highcontrast-table-section-header-background-color, var(--mod-table-section-header-background-color, var(--spectrum-table-section-header-background-color)));
     cursor: auto;
     cursor: var(--mod-table-cursor-section-header, initial);
 }
 
 .spectrum-Table-row--sectionHeader ::slotted(*) {
-    font-weight: var(
-        --mod-table-section-header-font-weight,
-        var(--spectrum-table-section-header-font-weight)
-    );
+    font-weight: var(--mod-table-section-header-font-weight, var(--spectrum-table-section-header-font-weight));
     text-align: start;
-    block-size: var(
-        --mod-table-section-header-min-height,
-        var(--spectrum-table-section-header-min-height)
-    );
-    font-size: var(
-        --mod-table-section-header-font-size,
-        var(--spectrum-table-row-font-size)
-    );
-    font-family: var(
-        --mod-table-section-header-font-family,
-        var(--spectrum-table-row-font-family)
-    );
-    font-style: var(
-        --mod-table-section-header-font-style,
-        var(--spectrum-table-row-font-style)
-    );
-    line-height: var(
-        --mod-table-section-header-line-height,
-        var(--spectrum-table-row-line-height)
-    );
-    color: var(
-        --highcontrast-table-section-header-text-color,
-        var(
-            --mod-table-section-header-text-color,
-            var(--spectrum-table-row-text-color)
-        )
-    );
-    padding-block-start: calc(
-        var(
-                --mod-table-section-header-block-start-spacing,
-                var(--spectrum-table-section-header-block-start-spacing)
-            ) -
-            var(--mod-table-border-width, var(--spectrum-table-border-width))
-    );
-    padding-block-end: calc(
-        var(
-                --mod-table-section-header-block-end-spacing,
-                var(--spectrum-table-section-header-block-end-spacing)
-            ) -
-            var(--mod-table-border-width, var(--spectrum-table-border-width))
-    );
+    block-size: var(--mod-table-section-header-min-height, var(--spectrum-table-section-header-min-height));
+    font-size: var(--mod-table-section-header-font-size, var(--spectrum-table-row-font-size));
+    font-family: var(--mod-table-section-header-font-family, var(--spectrum-table-row-font-family));
+    font-style: var(--mod-table-section-header-font-style, var(--spectrum-table-row-font-style));
+    line-height: var(--mod-table-section-header-line-height, var(--spectrum-table-row-line-height));
+    color: var(--highcontrast-table-section-header-text-color, var(--mod-table-section-header-text-color, var(--spectrum-table-row-text-color)));
+    padding-block-start: calc(var(--mod-table-section-header-block-start-spacing, var(--spectrum-table-section-header-block-start-spacing)) - var(--mod-table-border-width, var(--spectrum-table-border-width)));
+    padding-block-end: calc(var(--mod-table-section-header-block-end-spacing, var(--spectrum-table-section-header-block-end-spacing)) - var(--mod-table-border-width, var(--spectrum-table-border-width)));
 }
 
 :host {
@@ -429,20 +222,8 @@ governing permissions and limitations under the License.
     padding-inline-end: 0;
 }
 
-.spectrum-Table-row--collapsible.is-last-tier
-    .spectrum-Table-cell--collapsible {
-    padding-inline-start: calc(
-        var(--spectrum-table-row-tier) *
-            var(--spectrum-table-collapsible-tier-indent) +
-            var(
-                --mod-table-disclosure-icon-size,
-                var(--spectrum-table-disclosure-icon-size)
-            ) +
-            var(
-                --mod-table-collapsible-disclosure-inline-spacing,
-                var(--spectrum-table-collapsible-disclosure-inline-spacing)
-            ) * 2
-    );
+.spectrum-Table-row--collapsible.is-last-tier .spectrum-Table-cell--collapsible {
+    padding-inline-start: calc(var(--spectrum-table-row-tier) * var(--spectrum-table-collapsible-tier-indent) + var(--mod-table-disclosure-icon-size, var(--spectrum-table-disclosure-icon-size)) + var(--mod-table-collapsible-disclosure-inline-spacing, var(--spectrum-table-collapsible-disclosure-inline-spacing)) * 2);
 }
 
 .spectrum-Table-row--collapsible.is-last-tier .spectrum-Table-disclosureIcon {
@@ -450,25 +231,8 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Table-row--collapsible .spectrum-Table-disclosureIcon {
-    margin-inline: var(
-        --mod-table-collapsible-disclosure-inline-spacing,
-        var(--spectrum-table-collapsible-disclosure-inline-spacing)
-    );
-    margin-block-start: max(
-        0px,
-        calc(
-            (
-                    var(
-                            --mod-table-min-row-height,
-                            var(--spectrum-table-min-row-height)
-                        ) -
-                        var(
-                            --mod-table-disclosure-icon-size,
-                            var(--spectrum-table-disclosure-icon-size)
-                        )
-                ) / 2
-        )
-    );
+    margin-inline: var(--mod-table-collapsible-disclosure-inline-spacing, var(--spectrum-table-collapsible-disclosure-inline-spacing));
+    margin-block-start: max(0px, calc((var(--mod-table-min-row-height, var(--spectrum-table-min-row-height)) - var(--mod-table-disclosure-icon-size, var(--spectrum-table-disclosure-icon-size))) / 2));
 }
 
 :host([hidden]) .spectrum-Table-row--collapsible {
@@ -477,81 +241,30 @@ governing permissions and limitations under the License.
 
 @media (hover: hover) {
     :host(:hover) {
-        --highcontrast-table-row-text-color: var(
-            --highcontrast-table-row-text-color-hover
-        );
-        --highcontrast-table-icon-color: var(
-            --highcontrast-table-row-text-color-hover
-        );
-        --spectrum-table-cell-background-color: var(
-            --highcontrast-table-row-background-color-hover,
-            var(
-                --mod-table-row-background-color-hover,
-                var(--spectrum-table-row-background-color-hover)
-            )
-        );
+        --highcontrast-table-row-text-color: var(--highcontrast-table-row-text-color-hover);
+        --highcontrast-table-icon-color: var(--highcontrast-table-row-text-color-hover);
+        --spectrum-table-cell-background-color: var(--highcontrast-table-row-background-color-hover, var(--mod-table-row-background-color-hover, var(--spectrum-table-row-background-color-hover)));
     }
 
     :host([selected]:hover) {
-        --highcontrast-table-row-text-color: var(
-            --highcontrast-table-selected-row-text-color-focus
-        );
-        --highcontrast-table-icon-color: var(
-            --highcontrast-table-selected-row-text-color-focus
-        );
-        --spectrum-table-cell-background-color: var(
-            --highcontrast-table-selected-row-background-color-focus,
-            var(--spectrum-table-selected-cell-background-color-focus)
-        );
+        --highcontrast-table-row-text-color: var(--highcontrast-table-selected-row-text-color-focus);
+        --highcontrast-table-icon-color: var(--highcontrast-table-selected-row-text-color-focus);
+        --spectrum-table-cell-background-color: var(--highcontrast-table-selected-row-background-color-focus, var(--spectrum-table-selected-cell-background-color-focus));
     }
 
     .spectrum-Table-row--sectionHeader:hover {
-        --highcontrast-table-row-text-color: var(
-            --highcontrast-table-section-header-text-color
-        );
-        --spectrum-table-cell-background-color: var(
-            --highcontrast-table-section-header-background-color,
-            var(
-                --mod-table-section-header-background-color,
-                var(--spectrum-table-section-header-background-color)
-            )
-        );
+        --highcontrast-table-row-text-color: var(--highcontrast-table-section-header-text-color);
+        --spectrum-table-cell-background-color: var(--highcontrast-table-section-header-background-color, var(--mod-table-section-header-background-color, var(--spectrum-table-section-header-background-color)));
     }
 }
 
 .spectrum-Table-row--thumbnail {
-    --table-thumbnail-cell-block-spacing: var(
-        --mod-table-thumbnail-block-spacing,
-        var(--spectrum-table-thumbnail-block-spacing)
-    );
-    --table-thumbnail-inner-content-block-spacing: max(
-        0px,
-        calc(
-            (
-                    var(
-                            --mod-table-thumbnail-size,
-                            var(--spectrum-table-thumbnail-size)
-                        ) -
-                        (
-                            var(
-                                    --mod-table-row-line-height,
-                                    var(--spectrum-table-row-line-height)
-                                ) *
-                                var(
-                                    --mod-table-header-font-size,
-                                    var(--spectrum-table-row-font-size)
-                                )
-                        )
-                ) / 2
-        )
-    );
+    --table-thumbnail-cell-block-spacing: var(--mod-table-thumbnail-block-spacing, var(--spectrum-table-thumbnail-block-spacing));
+    --table-thumbnail-inner-content-block-spacing: max(0px, calc((var(--mod-table-thumbnail-size, var(--spectrum-table-thumbnail-size)) - (var(--mod-table-row-line-height, var(--spectrum-table-row-line-height)) * var(--mod-table-header-font-size, var(--spectrum-table-row-font-size)))) / 2));
 }
 
 .spectrum-Table-row--thumbnail ::slotted(*) {
-    padding-block: calc(
-        var(--table-thumbnail-cell-block-spacing) +
-            var(--table-thumbnail-inner-content-block-spacing)
-    );
+    padding-block: calc(var(--table-thumbnail-cell-block-spacing) + var(--table-thumbnail-inner-content-block-spacing));
 }
 
 .spectrum-Table-row--thumbnail .spectrum-Table-cell--thumbnail {
@@ -559,26 +272,6 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Table-row--thumbnail.spectrum-Table-row--collapsible {
-    --table-thumbnail-inner-minimum-block-spacing: max(
-        0px,
-        calc(
-            (
-                    var(
-                            --mod-table-disclosure-icon-size,
-                            var(--spectrum-table-disclosure-icon-size)
-                        ) -
-                        var(
-                            --mod-table-thumbnail-size,
-                            var(--spectrum-table-thumbnail-size)
-                        )
-                ) / 2
-        )
-    );
-    --table-thumbnail-cell-block-spacing: max(
-        var(
-            --mod-table-thumbnail-block-spacing,
-            var(--spectrum-table-thumbnail-block-spacing)
-        ),
-        var(--table-thumbnail-inner-minimum-block-spacing)
-    );
+    --table-thumbnail-inner-minimum-block-spacing: max(0px, calc((var(--mod-table-disclosure-icon-size, var(--spectrum-table-disclosure-icon-size)) - var(--mod-table-thumbnail-size, var(--spectrum-table-thumbnail-size))) / 2));
+    --table-thumbnail-cell-block-spacing: max(var(--mod-table-thumbnail-block-spacing, var(--spectrum-table-thumbnail-block-spacing)), var(--table-thumbnail-inner-minimum-block-spacing));
 }

@@ -12,10 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    gap: var(
-        --mod-buttongroup-spacing-horizontal,
-        var(--spectrum-buttongroup-spacing-horizontal)
-    );
+    gap: var(--mod-buttongroup-spacing-horizontal, var(--spectrum-buttongroup-spacing-horizontal));
     justify-content: normal;
     justify-content: var(--mod-buttongroup-justify-content, normal);
     flex-wrap: wrap;
@@ -27,10 +24,7 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical]) {
-    gap: var(
-        --mod-buttongroup-spacing-vertical,
-        var(--spectrum-buttongroup-spacing-vertical)
-    );
+    gap: var(--mod-buttongroup-spacing-vertical, var(--spectrum-buttongroup-spacing-vertical));
     flex-direction: column;
     display: inline-flex;
 }

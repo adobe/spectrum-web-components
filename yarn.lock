@@ -301,8 +301,6 @@ __metadata:
     typescript: "npm:^5.3.3"
     wireit: "npm:^0.14.3"
     yargs: "npm:^17.2.1"
-  peerDependencies:
-    common-tags: ^1.8.0
   languageName: unknown
   linkType: soft
 

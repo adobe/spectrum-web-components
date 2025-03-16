@@ -14,42 +14,16 @@ governing permissions and limitations under the License.
 :host {
     inline-size: var(--spectrum-colorloupe-width);
     block-size: var(--spectrum-colorloupe-height);
-    transform: translateY(
-        var(
-            --mod-colorloupe-animation-distance,
-            var(--spectrum-colorloupe-animation-distance)
-        )
-    );
+    transform: translateY(var(--mod-colorloupe-animation-distance, var(--spectrum-colorloupe-animation-distance)));
     opacity: 0;
     transform-origin: bottom;
     pointer-events: none;
-    filter: drop-shadow(
-        var(
-                --mod-colorloupe-drop-shadow-x,
-                var(--spectrum-colorloupe-drop-shadow-x)
-            )
-            var(
-                --mod-colorloupe-drop-shadow-y,
-                var(--spectrum-colorloupe-drop-shadow-y)
-            )
-            var(
-                --mod-colorloupe-drop-shadow-blur,
-                var(--spectrum-colorloupe-drop-shadow-blur)
-            )
-            var(
-                --mod-colorloupe-drop-shadow-color,
-                var(--spectrum-colorloupe-drop-shadow-color)
-            )
-    );
+    filter: drop-shadow(var(--mod-colorloupe-drop-shadow-x, var(--spectrum-colorloupe-drop-shadow-x)) var(--mod-colorloupe-drop-shadow-y, var(--spectrum-colorloupe-drop-shadow-y)) var(--mod-colorloupe-drop-shadow-blur, var(--spectrum-colorloupe-drop-shadow-blur)) var(--mod-colorloupe-drop-shadow-color, var(--spectrum-colorloupe-drop-shadow-color)));
     transition:
         transform 0.1s ease-in-out,
         opacity 0.125s ease-in-out;
     position: absolute;
-    inset-block-end: calc(
-        var(--spectrum-color-handle-size) -
-            var(--spectrum-color-handle-outer-border-width) +
-            var(--mod-colorloupe-offset, var(--spectrum-colorloupe-offset))
-    );
+    inset-block-end: calc(var(--spectrum-color-handle-size) - var(--spectrum-color-handle-outer-border-width) + var(--mod-colorloupe-offset, var(--spectrum-colorloupe-offset)));
     inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2);
 }
 
@@ -65,31 +39,14 @@ governing permissions and limitations under the License.
 
 .spectrum-ColorLoupe-inner-border {
     fill: var(--spectrum-picked-color);
-    stroke: var(
-        --mod-colorloupe-inner-border-color,
-        var(--spectrum-colorloupe-inner-border-color)
-    );
-    stroke-width: var(
-        --mod-colorloupe-inner-border-width,
-        var(--spectrum-colorloupe-inner-border-width)
-    );
+    stroke: var(--mod-colorloupe-inner-border-color, var(--spectrum-colorloupe-inner-border-color));
+    stroke-width: var(--mod-colorloupe-inner-border-width, var(--spectrum-colorloupe-inner-border-width));
 }
 
 .spectrum-ColorLoupe-outer-border {
     fill: none;
-    stroke: var(
-        --highcontrast-colorloupe-outer-border-color,
-        var(
-            --mod-colorloupe-outer-border-color,
-            var(--spectrum-colorloupe-outer-border-color)
-        )
-    );
-    stroke-width: calc(
-        var(
-                --mod-colorloupe-outer-border-width,
-                var(--spectrum-colorloupe-outer-border-width)
-            ) + 2px
-    );
+    stroke: var(--highcontrast-colorloupe-outer-border-color, var(--mod-colorloupe-outer-border-color, var(--spectrum-colorloupe-outer-border-color)));
+    stroke-width: calc(var(--mod-colorloupe-outer-border-width, var(--spectrum-colorloupe-outer-border-width)) + 2px);
 }
 
 .spectrum-ColorLoupe-checkerboard-pattern {
