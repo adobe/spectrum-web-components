@@ -16,10 +16,18 @@ import rollupCommonjs from '@rollup/plugin-commonjs';
 import { watchSWC } from '../web-test-runner.utils.js';
 
 /** @type { import('storybook-builder-wds').StorybookConfigWds } */
-const config = {
+export default {
     stories: [
-        '../packages/*/stories/*.stories.js',
-        '../tools/*/stories/*.stories.js',
+        {
+            directory: '../packages',
+            files: '*/stories/*.stories.js',
+            titlePrefix: 'Components',
+        },
+        {
+            directory: '../tools',
+            files: '*/stories/*.stories.js',
+            titlePrefix: 'Tools',
+        },
     ],
     addons: [
         '@storybook/addon-links',
@@ -35,10 +43,13 @@ const config = {
         // https://www.chromatic.com/docs/visual-tests-addon/
         // '@chromatic-com/storybook',
     ],
-    framework: '@web/storybook-framework-web-components',
+    framework: {
+        name: '@web/storybook-framework-web-components',
+    },
     core: {
+        // Disabled callback due to Adobe privacy policy
         disableTelemetry: true,
-        disableWhatsNewNotifications: true,
+        disableWhatsNewNotifications: process.env.NODE_ENV === 'production',
     },
     wdsFinal(config) {
         const json = fromRollup(rollupJson);
@@ -78,16 +89,10 @@ const config = {
         );
         return config;
     },
-};
-
-if (process.env.NODE_ENV === 'development') {
-    config.refs = {
+    refs: {
         'design-system': {
             title: 'Spectrum CSS',
-            url: 'https://opensource.adobe.com/spectrum-css/preview/',
-            expanded: false, // Optional, true by default
+            url: 'https://opensource.adobe.com/spectrum-css/',
         },
-    };
-}
-
-export default config;
+    },
+};
