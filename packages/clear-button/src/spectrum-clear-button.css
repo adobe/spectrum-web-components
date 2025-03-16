@@ -14,39 +14,17 @@ governing permissions and limitations under the License.
 :host {
     --spectrum-clear-button-height: var(--spectrum-component-height-100);
     --spectrum-clear-button-width: var(--spectrum-component-height-100);
-    --spectrum-clear-button-padding: var(
-        --spectrum-in-field-button-edge-to-fill
-    );
-    --spectrum-clear-button-icon-color: var(
-        --spectrum-neutral-content-color-default
-    );
-    --spectrum-clear-button-icon-color-hover: var(
-        --spectrum-neutral-content-color-hover
-    );
-    --spectrum-clear-button-icon-color-down: var(
-        --spectrum-neutral-content-color-down
-    );
-    --spectrum-clear-button-icon-color-key-focus: var(
-        --spectrum-neutral-content-color-key-focus
-    );
-    block-size: var(
-        --mod-clear-button-height,
-        var(--spectrum-clear-button-height)
-    );
-    inline-size: var(
-        --mod-clear-button-width,
-        var(--spectrum-clear-button-width)
-    );
+    --spectrum-clear-button-padding: var(--spectrum-in-field-button-edge-to-fill);
+    --spectrum-clear-button-icon-color: var(--spectrum-neutral-content-color-default);
+    --spectrum-clear-button-icon-color-hover: var(--spectrum-neutral-content-color-hover);
+    --spectrum-clear-button-icon-color-down: var(--spectrum-neutral-content-color-down);
+    --spectrum-clear-button-icon-color-key-focus: var(--spectrum-neutral-content-color-key-focus);
+    block-size: var(--mod-clear-button-height, var(--spectrum-clear-button-height));
+    inline-size: var(--mod-clear-button-width, var(--spectrum-clear-button-width));
     background-color: initial;
     background-color: var(--mod-clear-button-background-color, transparent);
-    padding: var(
-        --mod-clear-button-padding,
-        var(--spectrum-clear-button-padding)
-    );
-    color: var(
-        --mod-clear-button-icon-color,
-        var(--spectrum-clear-button-icon-color)
-    );
+    padding: var(--mod-clear-button-padding, var(--spectrum-clear-button-padding));
+    color: var(--mod-clear-button-icon-color, var(--spectrum-clear-button-icon-color));
     border: none;
     border-radius: 100%;
     margin: 0;
@@ -79,24 +57,16 @@ governing permissions and limitations under the License.
     --mod-clear-button-icon-color-hover: var(--spectrum-white);
     --mod-clear-button-icon-color-down: var(--spectrum-white);
     --mod-clear-button-icon-color-key-focus: var(--spectrum-white);
-    --mod-clear-button-icon-color-disabled: var(
-        --spectrum-disabled-static-white-content-color
-    );
+    --mod-clear-button-icon-color-disabled: var(--spectrum-disabled-static-white-content-color);
     --mod-clear-button-background-color: transparent;
 }
 
 :host([disabled]),
 :host([disabled]) {
-    --mod-clear-button-icon-color: var(
-        --mod-clear-button-icon-color-disabled,
-        var(--spectrum-disabled-content-color)
-    );
+    --mod-clear-button-icon-color: var(--mod-clear-button-icon-color-disabled, var(--spectrum-disabled-content-color));
     --mod-clear-button-icon-color-hover: var(--spectrum-disabled-content-color);
     --mod-clear-button-icon-color-down: var(--spectrum-disabled-content-color);
-    --mod-clear-button-background-color: var(
-        --mod-clear-button-background-color-disabled,
-        transparent
-    );
+    --mod-clear-button-background-color: var(--mod-clear-button-background-color-disabled, transparent);
 }
 
 :host:not(:disabled) {
@@ -110,55 +80,34 @@ governing permissions and limitations under the License.
 
 @media (hover: hover) {
     :host:not(:disabled):hover {
-        color: var(
-            --highcontrast-clear-button-icon-color-hover,
-            var(
-                --mod-clear-button-icon-color-hover,
-                var(--spectrum-clear-button-icon-color-hover)
-            )
-        );
+        color: var(--highcontrast-clear-button-icon-color-hover, var(--mod-clear-button-icon-color-hover, var(--spectrum-clear-button-icon-color-hover)));
     }
 
     :host:not(:disabled):hover .fill {
-        background-color: var(
-            --mod-clear-button-background-color-hover,
-            var(--spectrum-clear-button-background-color-hover)
-        );
+        background-color: var(--mod-clear-button-background-color-hover, var(--spectrum-clear-button-background-color-hover));
     }
 }
 
 :host(:is(:active, [active])):not(:disabled) {
-    color: var(
-        --mod-clear-button-icon-color-down,
-        var(--spectrum-clear-button-icon-color-down)
-    );
+    color: var(--mod-clear-button-icon-color-down, var(--spectrum-clear-button-icon-color-down));
 }
 
 :host(:is(:active, [active])):not(:disabled) .fill {
-    background-color: var(
-        --mod-clear-button-background-color-down,
-        var(--spectrum-clear-button-background-color-down)
-    );
+    background-color: var(--mod-clear-button-background-color-down, var(--spectrum-clear-button-background-color-down));
 }
 
 :host([focus-within]) .js-focus-within:not(:disabled),
 :host:not(:disabled):focus-visible,
 :host:not(:disabled):focus-within,
 :host([focus-within]):not(:disabled).js-focus-within {
-    color: var(
-        --mod-clear-button-icon-color-key-focus,
-        var(--spectrum-clear-button-icon-color-key-focus)
-    );
+    color: var(--mod-clear-button-icon-color-key-focus, var(--spectrum-clear-button-icon-color-key-focus));
 }
 
 :host([focus-within]) .js-focus-within:not(:disabled) .fill,
 :host:not(:disabled):focus-visible .fill,
 :host:not(:disabled):focus-within .fill,
 :host([focus-within]):not(:disabled).js-focus-within .fill {
-    background-color: var(
-        --mod-clear-button-background-color-key-focus,
-        var(--spectrum-clear-button-background-color-key-focus)
-    );
+    background-color: var(--mod-clear-button-background-color-key-focus, var(--spectrum-clear-button-background-color-key-focus));
 }
 
 .icon {
@@ -166,10 +115,7 @@ governing permissions and limitations under the License.
 }
 
 .fill {
-    background-color: var(
-        --mod-clear-button-background-color,
-        var(--spectrum-clear-button-background-color)
-    );
+    background-color: var(--mod-clear-button-background-color, var(--spectrum-clear-button-background-color));
     inline-size: 100%;
     block-size: 100%;
     border-radius: 100%;

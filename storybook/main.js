@@ -32,6 +32,8 @@ const config = {
             : []),
         // https://storybook.js.org/addons/@etchteam/storybook-addon-status
         '@etchteam/storybook-addon-status',
+        // https://www.chromatic.com/docs/visual-tests-addon/
+        // '@chromatic-com/storybook',
     ],
     framework: '@web/storybook-framework-web-components',
     core: {

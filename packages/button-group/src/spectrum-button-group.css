@@ -12,23 +12,14 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-buttongroup-spacing: var(
-        --mod-buttongroup-spacing,
-        var(--mod-buttongroup-spacing-horizontal, var(--spectrum-spacing-300))
-    );
+    --spectrum-buttongroup-spacing: var(--mod-buttongroup-spacing, var(--mod-buttongroup-spacing-horizontal, var(--spectrum-spacing-300)));
     --spectrum-buttongroup-display: flex;
     --spectrum-buttongroup-flex-direction: row;
-    --spectrum-buttongroup-justify-content: var(
-        --mod-buttongroup-justify-content,
-        normal
-    );
+    --spectrum-buttongroup-justify-content: var(--mod-buttongroup-justify-content, normal);
 }
 
 :host([size='s']) {
-    --spectrum-buttongroup-spacing: var(
-        --mod-buttongroup-spacing,
-        var(--mod-buttongroup-spacing-horizontal, var(--spectrum-spacing-200))
-    );
+    --spectrum-buttongroup-spacing: var(--mod-buttongroup-spacing, var(--mod-buttongroup-spacing-horizontal, var(--spectrum-spacing-200)));
 }
 
 :host([vertical]) {

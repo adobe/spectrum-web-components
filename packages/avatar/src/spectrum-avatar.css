@@ -16,16 +16,10 @@ governing permissions and limitations under the License.
     --spectrum-avatar-inline-size: var(--spectrum-avatar-size-100);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-100);
     --spectrum-avatar-border-radius: var(--spectrum-avatar-block-size);
-    --spectrum-avatar-focus-indicator-thickness: var(
-        --spectrum-focus-indicator-thickness
-    );
+    --spectrum-avatar-focus-indicator-thickness: var(--spectrum-focus-indicator-thickness);
     --spectrum-avatar-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
-    --spectrum-avatar-focus-indicator-color: var(
-        --spectrum-focus-indicator-color
-    );
-    --spectrum-avatar-color-opacity-disabled: var(
-        --spectrum-avatar-opacity-disabled
-    );
+    --spectrum-avatar-focus-indicator-color: var(--spectrum-focus-indicator-color);
+    --spectrum-avatar-color-opacity-disabled: var(--spectrum-avatar-opacity-disabled);
 }
 
 :host([size='50']) {
@@ -80,22 +74,13 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    inline-size: var(
-        --mod-avatar-inline-size,
-        var(--spectrum-avatar-inline-size)
-    );
+    inline-size: var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size));
     block-size: var(--mod-avatar-block-size, var(--spectrum-avatar-block-size));
-    border-radius: var(
-        --mod-avatar-border-radius,
-        var(--spectrum-avatar-border-radius)
-    );
+    border-radius: var(--mod-avatar-border-radius, var(--spectrum-avatar-border-radius));
     -webkit-user-drag: none;
     -webkit-user-select: none;
     user-select: none;
-    opacity: var(
-        --mod-avatar-color-opacity,
-        var(--spectrum-avatar-color-opacity)
-    );
+    opacity: var(--mod-avatar-color-opacity, var(--spectrum-avatar-color-opacity));
     border-width: 0;
     outline: none;
     display: inline-block;
@@ -104,71 +89,22 @@ governing permissions and limitations under the License.
 }
 
 :host([disabled]) {
-    opacity: var(
-        --mod-avatar-color-opacity-disabled,
-        var(--spectrum-avatar-color-opacity-disabled)
-    );
+    opacity: var(--mod-avatar-color-opacity-disabled, var(--spectrum-avatar-color-opacity-disabled));
 }
 
 :host(:not([disabled])) .is-focused:after,
 :host(:not([disabled])) .link:focus-visible:after {
     pointer-events: none;
     content: '';
-    inline-size: calc(
-        var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) +
-            var(
-                --mod-avatar-focus-indicator-gap,
-                var(--spectrum-avatar-focus-indicator-gap)
-            ) * 2
-    );
-    block-size: calc(
-        var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) +
-            var(
-                --mod-avatar-focus-indicator-gap,
-                var(--spectrum-avatar-focus-indicator-gap)
-            ) * 2
-    );
+    inline-size: calc(var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) + var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) * 2);
+    block-size: calc(var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) + var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) * 2);
     border-style: solid;
-    border-width: var(
-        --mod-avatar-focus-indicator-thickness,
-        var(--spectrum-avatar-focus-indicator-thickness)
-    );
-    border-color: var(
-        --highcontrast-avatar-focus-indicator-color,
-        var(
-            --mod-avatar-focus-indicator-color,
-            var(--spectrum-avatar-focus-indicator-color)
-        )
-    );
-    border-radius: var(
-        --mod-avatar-border-radius,
-        var(--spectrum-avatar-border-radius)
-    );
+    border-width: var(--mod-avatar-focus-indicator-thickness, var(--spectrum-avatar-focus-indicator-thickness));
+    border-color: var(--highcontrast-avatar-focus-indicator-color, var(--mod-avatar-focus-indicator-color, var(--spectrum-avatar-focus-indicator-color)));
+    border-radius: var(--mod-avatar-border-radius, var(--spectrum-avatar-border-radius));
     position: absolute;
-    inset-block-start: calc(
-        (
-                var(
-                        --mod-avatar-focus-indicator-gap,
-                        var(--spectrum-avatar-focus-indicator-gap)
-                    ) +
-                    var(
-                        --mod-avatar-focus-indicator-thickness,
-                        var(--spectrum-avatar-focus-indicator-thickness)
-                    )
-            ) * -1
-    );
-    inset-inline-start: calc(
-        (
-                var(
-                        --mod-avatar-focus-indicator-gap,
-                        var(--spectrum-avatar-focus-indicator-gap)
-                    ) +
-                    var(
-                        --mod-avatar-focus-indicator-thickness,
-                        var(--spectrum-avatar-focus-indicator-thickness)
-                    )
-            ) * -1
-    );
+    inset-block-start: calc((var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) + var(--mod-avatar-focus-indicator-thickness, var(--spectrum-avatar-focus-indicator-thickness))) * -1);
+    inset-inline-start: calc((var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) + var(--mod-avatar-focus-indicator-thickness, var(--spectrum-avatar-focus-indicator-thickness))) * -1);
 }
 
 .link {
@@ -176,13 +112,7 @@ governing permissions and limitations under the License.
 }
 
 .image {
-    inline-size: var(
-        --mod-avatar-inline-size,
-        var(--spectrum-avatar-inline-size)
-    );
+    inline-size: var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size));
     block-size: var(--mod-avatar-block-size, var(--spectrum-avatar-block-size));
-    border-radius: var(
-        --mod-avatar-border-radius,
-        var(--spectrum-avatar-border-radius)
-    );
+    border-radius: var(--mod-avatar-border-radius, var(--spectrum-avatar-border-radius));
 }
