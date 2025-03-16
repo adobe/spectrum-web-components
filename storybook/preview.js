@@ -19,6 +19,8 @@ const cem = await import('./custom-elements.json', {
 
 setCustomElementsManifest(cem);
 
+export const title = 'Spectrum Web Components';
+
 export const globalTypes = {
     system: {
         title: 'Design context',
@@ -116,30 +118,32 @@ export const parameters = {
     docs: { hidden: true },
     controls: {
         expanded: true,
+        matchers: {
+            color: /(background|color)$/i,
+            date: /Date$/,
+        },
         hideNoControlsWarning: true,
-        sort: 'requiredFirst',
+        sort: 'alpha',
+        exclude: [
+            'dir',
+            'isLTR',
+            '_dirParent',
+            'shadowRoot',
+            'focusGroupController',
+            '[assignedNodesList]',
+            '[slotContentIsPresent]',
+            'VERSION',
+        ],
     },
     layout: 'fullscreen',
-    options: {
-        storySort: {
-            method: 'alphabetical-by-kind',
-            order: [
-                'Components',
-                ['*', ['Default', 'Standard', 'Sizes', '*']],
-                'Tools',
-                ['*', ['Default', 'Sized', '*']],
-                '*',
-            ],
-            includeNames: true,
-        },
-    },
-    status: {
-        statuses: {
-            deprecated: {
-                background: 'rgb(211,21,16)',
-                color: '#fff',
-                description: 'Should not be used and will not receive updates.',
+    badgesConfig: {
+        deprecated: {
+            styles: {
+                backgroundColor: '#FFF',
+                borderColor: '#ea3829',
+                color: '#ea3829',
             },
+            title: 'Deprecated',
         },
     },
     chromatic: {
@@ -147,22 +151,24 @@ export const parameters = {
         prefersReducedMotion: 'no-preference',
         pauseAnimationAtEnd: true,
         modes: {
-            'Context: Spectrum 1': {
-                scale: 'medium',
+            'Light | LTR': {
+                system: 'spectrum-two',
                 color: 'light',
                 textDirection: 'ltr',
-                context: 'spectrum1',
-            },
-            'Context: Express': {
-                context: 'express',
             },
             'Dark | RTL': {
+                system: 'spectrum-two',
                 color: 'dark',
                 textDirection: 'rtl',
+            },
+            Legacy: {
+                system: 'spectrum',
+            },
+            'Legacy | Express': {
+                system: 'express',
             },
         },
     },
 };
 
 export const decorators = [swcThemeDecorator];
-export const tags = ['autodocs', 'dev'];
