@@ -17,7 +17,7 @@ import {
     html,
     nextFrame,
     oneEvent,
-    waitUntil
+    waitUntil,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
@@ -31,19 +31,20 @@ import {
 } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import {
-    iconOnly,
-    tooltipDescriptionAndPlacement,
+    IconOnly,
+    TooltipDescriptionAndPlacement,
 } from '../stories/action-menu.stories.js';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import type { TestablePicker } from '../../picker/test/index.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
-import { 
+import {
     a11ySnapshot,
     findAccessibilityNode,
-    sendKeys, 
-    setViewport } from '@web/test-runner-commands';
+    sendKeys,
+    setViewport,
+} from '@web/test-runner-commands';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { isWebKit } from '@spectrum-web-components/shared';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
@@ -147,10 +148,9 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             await expect(el).to.be.accessible();
         });
-        it('has menuitems in accessibility tree', async() => {
+        it('has menuitems in accessibility tree', async () => {
             const el = await fixture<ActionMenu>(html`
-                <sp-action-menu
-                    label="More Actions">
+                <sp-action-menu label="More Actions">
                     <sp-menu-item>Deselect</sp-menu-item>
                     <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-action-menu>
@@ -161,15 +161,31 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await opened;
             await nextFrame();
 
-
-            type NamedNode = { name: string, role: string, disabled: boolean };
-            const snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+            type NamedNode = { name: string; role: string; disabled: boolean };
+            const snapshot = (await a11ySnapshot(
+                {}
+            )) as unknown as NamedNode & {
                 children: NamedNode[];
             };
-            const button = findAccessibilityNode<NamedNode>(snapshot, (node) => node.name === 'More Actions');
-            const menu = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menu');
-            const deselect = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menuitem' && node.name === 'Deselect');
-            const workPath = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menuitem' && node.name === 'Make Work Path' && node.disabled);
+            const button = findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === 'More Actions'
+            );
+            const menu = findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.role === 'menu'
+            );
+            const deselect = findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.role === 'menuitem' && node.name === 'Deselect'
+            );
+            const workPath = findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) =>
+                    node.role === 'menuitem' &&
+                    node.name === 'Make Work Path' &&
+                    node.disabled
+            );
             expect(button, 'button').to.not.be.null;
             expect(menu, 'menu').to.not.be.null;
             expect(deselect, 'first menuitem').to.not.be.null;
@@ -431,8 +447,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         });
         it('opens repeatedly with Menu in the correct location', async function () {
             const el = await fixture<ActionMenu>(
-                iconOnly({
-                    ...iconOnly.args,
+                IconOnly.render({
+                    ...IconOnly.args,
                     align: 'end',
                 })
             );
@@ -526,14 +542,13 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.value).to.not.equal(thirdItem.value);
             const opened = oneEvent(el, 'sp-opened');
             el.focus();
-            await sendKeys({ press: 'Enter'})
+            await sendKeys({ press: 'Enter' });
             await opened;
 
-            await sendKeys({ press: 'Escape'});
-            await waitUntil(
-                () => document.activeElement === el,
-                'focused', { timeout: 300 }
-            );
+            await sendKeys({ press: 'Escape' });
+            await waitUntil(() => document.activeElement === el, 'focused', {
+                timeout: 300,
+            });
             expect(el.open).to.be.false;
         });
         it('returns focus on select', async () => {
@@ -545,14 +560,13 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.value).to.not.equal(thirdItem.value);
             const opened = oneEvent(el, 'sp-opened');
             el.focus();
-            await sendKeys({ press: 'Enter'})
+            await sendKeys({ press: 'Enter' });
             await opened;
 
             thirdItem.click();
-            await waitUntil(
-                () => document.activeElement === el,
-                'focused', { timeout: 300 }
-            );
+            await waitUntil(() => document.activeElement === el, 'focused', {
+                timeout: 300,
+            });
             expect(el.open).to.be.false;
         });
         it('has attribute aria-describedby', async () => {
@@ -734,8 +748,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         it('shows tooltip', async function () {
             const openSpy = spy();
             const el = await fixture<ActionMenu>(
-                tooltipDescriptionAndPlacement(
-                    tooltipDescriptionAndPlacement.args
+                TooltipDescriptionAndPlacement.render(
+                    TooltipDescriptionAndPlacement.args
                 )
             );
             const tooltip = el.querySelector('sp-tooltip') as Tooltip;

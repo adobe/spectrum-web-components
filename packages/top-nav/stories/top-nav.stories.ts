@@ -142,9 +142,6 @@ export const autofocus = (): TemplateResult => {
     `;
 };
 
-// https://spectrum.adobe.com/page/application-frame/#Application-mode
-// https://spectrum.adobe.com/page/headers/#Anatomy
-
 export const Modes = (): TemplateResult => {
     return html`
         <sp-top-nav>

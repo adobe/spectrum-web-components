@@ -37,22 +37,30 @@ export default {
     argTypes,
 };
 
-export const Default = (props: Properties): TemplateResult =>
-    renderButtonSet(props);
+export const Default = {
+    render: (props: Properties): TemplateResult => renderButtonSet(props),
+};
 
-export const withIcon = (props: Properties): TemplateResult =>
-    renderWithIcon(props);
+export const withIcon = {
+    render: (props: Properties): TemplateResult => renderWithIcon(props),
+};
 
-export const withIconOnly = (props: Properties): TemplateResult =>
-    renderWithIconOnly(props);
+export const withIconOnly = {
+    render: (props: Properties): TemplateResult => renderWithIconOnly(props),
+};
 
-export const minWidthButton = (props: Properties): TemplateResult =>
-    renderMinWidthButton(props);
+export const minWidthButton = {
+    render: (props: Properties): TemplateResult => renderMinWidthButton(props),
 
-minWidthButton.storyName = 'min-width';
+    name: 'min-width',
+};
 
-export const noWrapButton = (props: Properties): TemplateResult =>
-    renderButton({ noWrap, content, ...props });
+export const noWrapButton = {
+    render: (props: Properties): TemplateResult =>
+        renderButton({ noWrap, content, ...props }),
+
+    name: 'no-wrap',
+};
 
 const noWrap = true;
 const content = html`
@@ -63,13 +71,14 @@ const content = html`
     problem. Do we have a problem? I hope we don't have a problem. Is this long
     enough to show we do not have a problem? Awesome, we do not have a problem.
 `;
-noWrapButton.storyName = 'no-wrap';
 
-export const link = (props: Properties): TemplateResult => renderLink(props);
+export const link = {
+    render: (props: Properties): TemplateResult => renderLink(props),
+    name: 'href',
+};
 
-link.storyName = 'href';
+export const linkWithTarget = {
+    render: (props: Properties): TemplateResult => renderLinkWithTarget(props),
 
-export const linkWithTarget = (props: Properties): TemplateResult =>
-    renderLinkWithTarget(props);
-
-linkWithTarget.storyName = 'href with target="_blank"';
+    name: 'href with target="_blank"',
+};

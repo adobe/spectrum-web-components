@@ -124,122 +124,126 @@ const submenuDecorator = (story: () => TemplateResult): TemplateResult => {
     `;
 };
 
-export const submenu = (): TemplateResult => {
-    const getValueEls = (): {
-        root: HTMLElement;
-        first: HTMLElement;
-        second: HTMLElement;
-    } => {
-        return {
-            root: document.querySelector('#root-value') as HTMLElement,
-            first: document.querySelector('#first-value') as HTMLElement,
-            second: document.querySelector('#second-value') as HTMLElement,
+export const submenu = {
+    render: (): TemplateResult => {
+        const getValueEls = (): {
+            root: HTMLElement;
+            first: HTMLElement;
+            second: HTMLElement;
+        } => {
+            return {
+                root: document.querySelector('#root-value') as HTMLElement,
+                first: document.querySelector('#first-value') as HTMLElement,
+                second: document.querySelector('#second-value') as HTMLElement,
+            };
         };
-    };
-    const clearValues = (): void => {
-        const valueEls = getValueEls();
-        valueEls.root.textContent = '';
-        valueEls.first.textContent = '';
-        valueEls.second.textContent = '';
-    };
-    const handleRootChange = (event: Event & { target: ActionMenu }): void => {
-        const valueEls = getValueEls();
-        valueEls.root.textContent = event.target.value;
-    };
-    const handleFirstDescendantChange = (
-        event: Event & { target: Menu }
-    ): void => {
-        const valueEls = getValueEls();
-        valueEls.first.textContent = event.target.selected[0] || '';
-    };
-    const handleSecondDescendantChange = (
-        event: Event & { target: Menu }
-    ): void => {
-        const valueEls = getValueEls();
-        valueEls.second.textContent = event.target.selected[0] || '';
-    };
-    return html`
-        <sp-action-menu
-            label="More Actions"
-            @change=${handleRootChange}
-            @sp-opened=${clearValues}
-        >
-            <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
-            <sp-menu-group
-                @change=${() => console.log('group change')}
-                role="none"
+        const clearValues = (): void => {
+            const valueEls = getValueEls();
+            valueEls.root.textContent = '';
+            valueEls.first.textContent = '';
+            valueEls.second.textContent = '';
+        };
+        const handleRootChange = (
+            event: Event & { target: ActionMenu }
+        ): void => {
+            const valueEls = getValueEls();
+            valueEls.root.textContent = event.target.value;
+        };
+        const handleFirstDescendantChange = (
+            event: Event & { target: Menu }
+        ): void => {
+            const valueEls = getValueEls();
+            valueEls.first.textContent = event.target.selected[0] || '';
+        };
+        const handleSecondDescendantChange = (
+            event: Event & { target: Menu }
+        ): void => {
+            const valueEls = getValueEls();
+            valueEls.second.textContent = event.target.selected[0] || '';
+        };
+        return html`
+            <sp-action-menu
+                label="More Actions"
+                @change=${handleRootChange}
+                @sp-opened=${clearValues}
             >
-                <span slot="header">New York</span>
-                <sp-menu-item>Bronx</sp-menu-item>
-                <sp-menu-item id="submenu-item-1">
-                    Brooklyn
-                    <sp-menu
-                        slot="submenu"
-                        @change=${handleFirstDescendantChange}
-                    >
-                        <sp-menu-item id="submenu-item-2">
-                            Ft. Greene
-                            <sp-menu
-                                slot="submenu"
-                                @change=${handleSecondDescendantChange}
-                            >
-                                <sp-menu-item>S. Oxford St</sp-menu-item>
-                                <sp-menu-item>S. Portland Ave</sp-menu-item>
-                                <sp-menu-item>S. Elliot Pl</sp-menu-item>
-                            </sp-menu>
-                        </sp-menu-item>
-                        <sp-menu-item disabled>Park Slope</sp-menu-item>
-                        <sp-menu-item>Williamsburg</sp-menu-item>
-                    </sp-menu>
-                </sp-menu-item>
-                <sp-menu-item>
-                    Manhattan
-                    <sp-menu
-                        slot="submenu"
-                        @change=${handleFirstDescendantChange}
-                    >
-                        <sp-menu-item disabled>SoHo</sp-menu-item>
-                        <sp-menu-item>
-                            Union Square
-                            <sp-menu
-                                slot="submenu"
-                                @change=${handleSecondDescendantChange}
-                            >
-                                <sp-menu-item>14th St</sp-menu-item>
-                                <sp-menu-item>Broadway</sp-menu-item>
-                                <sp-menu-item>Park Ave</sp-menu-item>
-                            </sp-menu>
-                        </sp-menu-item>
-                        <sp-menu-item>Upper East Side</sp-menu-item>
-                    </sp-menu>
-                </sp-menu-item>
-                <sp-menu-item disabled>
-                    Queens
-                    <sp-menu slot="submenu">
-                        <sp-menu-item>
-                            You shouldn't be able to see this!
-                        </sp-menu-item>
-                        <sp-menu-item>Forest Hills</sp-menu-item>
-                        <sp-menu-item>Jamaica</sp-menu-item>
-                    </sp-menu>
-                </sp-menu-item>
-            </sp-menu-group>
-        </sp-action-menu>
-        <div>
-            Root value:
-            <span id="root-value"></span>
-            <br />
-            First descendant value:
-            <span id="first-value"></span>
-            <br />
-            Second descendant value:
-            <span id="second-value"></span>
-            <br />
-        </div>
-    `;
-};
+                <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                <sp-menu-group
+                    @change=${() => console.log('group change')}
+                    role="none"
+                >
+                    <span slot="header">New York</span>
+                    <sp-menu-item>Bronx</sp-menu-item>
+                    <sp-menu-item id="submenu-item-1">
+                        Brooklyn
+                        <sp-menu
+                            slot="submenu"
+                            @change=${handleFirstDescendantChange}
+                        >
+                            <sp-menu-item id="submenu-item-2">
+                                Ft. Greene
+                                <sp-menu
+                                    slot="submenu"
+                                    @change=${handleSecondDescendantChange}
+                                >
+                                    <sp-menu-item>S. Oxford St</sp-menu-item>
+                                    <sp-menu-item>S. Portland Ave</sp-menu-item>
+                                    <sp-menu-item>S. Elliot Pl</sp-menu-item>
+                                </sp-menu>
+                            </sp-menu-item>
+                            <sp-menu-item disabled>Park Slope</sp-menu-item>
+                            <sp-menu-item>Williamsburg</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        Manhattan
+                        <sp-menu
+                            slot="submenu"
+                            @change=${handleFirstDescendantChange}
+                        >
+                            <sp-menu-item disabled>SoHo</sp-menu-item>
+                            <sp-menu-item>
+                                Union Square
+                                <sp-menu
+                                    slot="submenu"
+                                    @change=${handleSecondDescendantChange}
+                                >
+                                    <sp-menu-item>14th St</sp-menu-item>
+                                    <sp-menu-item>Broadway</sp-menu-item>
+                                    <sp-menu-item>Park Ave</sp-menu-item>
+                                </sp-menu>
+                            </sp-menu-item>
+                            <sp-menu-item>Upper East Side</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                    <sp-menu-item disabled>
+                        Queens
+                        <sp-menu slot="submenu">
+                            <sp-menu-item>
+                                You shouldn't be able to see this!
+                            </sp-menu-item>
+                            <sp-menu-item>Forest Hills</sp-menu-item>
+                            <sp-menu-item>Jamaica</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-menu-group>
+            </sp-action-menu>
+            <div>
+                Root value:
+                <span id="root-value"></span>
+                <br />
+                First descendant value:
+                <span id="first-value"></span>
+                <br />
+                Second descendant value:
+                <span id="second-value"></span>
+                <br />
+            </div>
+        `;
+    },
 
-submenu.decorators = [submenuDecorator];
+    decorators: [submenuDecorator],
+};
 
 export const contextMenu = (): TemplateResult => {
     const contextmenu = async (event: PointerEvent): Promise<void> => {
@@ -369,23 +373,29 @@ export const contextMenu = (): TemplateResult => {
     `;
 };
 
-export const customRootSubmenu = (): TemplateResult => {
-    return html`
-        <sp-action-menu label="More Actions">
-            <sp-menu-item>Bronx</sp-menu-item>
-            <sp-menu-item id="submenu-item-1">
-                Brooklyn
-                <div role="menuitem" slot="submenu" style="padding: 12px">
-                    <img
-                        src="https://placekitten.com/200/200"
-                        alt="Kitten"
-                        style="width: 100%; height: auto; border-radius: 4px"
-                    />
-                    <p>I am an arbitrary content in submenu</p>
-                </div>
-            </sp-menu-item>
-        </sp-action-menu>
-    `;
+export const customRootSubmenu = {
+    render: (): TemplateResult => {
+        return html`
+            <sp-action-menu label="More Actions">
+                <sp-menu-item>Bronx</sp-menu-item>
+                <sp-menu-item id="submenu-item-1">
+                    Brooklyn
+                    <div role="menuitem" slot="submenu" style="padding: 12px">
+                        <img
+                            src="https://placekitten.com/200/200"
+                            alt="Kitten"
+                            style="width: 100%; height: auto; border-radius: 4px"
+                        />
+                        <p>I am an arbitrary content in submenu</p>
+                    </div>
+                </sp-menu-item>
+            </sp-action-menu>
+        `;
+    },
+
+    swc_vrt: {
+        skip: true,
+    },
 };
 
 export const customRootSubmenuWithScroll = (): TemplateResult => {
@@ -395,69 +405,87 @@ export const customRootSubmenuWithScroll = (): TemplateResult => {
             <sp-menu-item id="submenu-item-1">
                 Brooklyn
                 <div role="menuitem" slot="submenu" style="padding: 12px">
-                <sp-menu-item>Additional options</sp-menu-item>
-                <sp-menu-item>Available on request</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
-                <sp-menu-item value="item-1">Deselect</sp-menu-item>
-                <sp-menu-item value="item-2">Select inverse</sp-menu-item>
-                <sp-menu-item value="item-3">Feather...</sp-menu-item>
-                <sp-menu-item value="item-4">Select and mask...</sp-menu-item>
-                <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item>Additional options</sp-menu-item>
+                    <sp-menu-item>Available on request</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
+                    <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                    <sp-menu-item value="item-2">Select inverse</sp-menu-item>
+                    <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                    <sp-menu-item value="item-4">
+                        Select and mask...
+                    </sp-menu-item>
+                    <sp-menu-item value="item-5">Save selection</sp-menu-item>
                 </div>
             </sp-menu-item>
         </sp-action-menu>
     `;
-};
-
-customRootSubmenu.swc_vrt = {
-    skip: true,
 };

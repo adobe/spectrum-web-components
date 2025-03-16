@@ -57,38 +57,36 @@ const storyStyles = html`
     </style>
 `;
 
-export const Default = ({
-    colorStop: color,
-}: {
-    colorStop: Color;
-}): TemplateResult => {
-    return html`
-        ${storyStyles}
-        <sp-theme
-            color="${color}"
-            system=${window.__swc_hack_knobs__.defaultSystemVariant}
-        >
-            <div id="example">
-                <div>
-                    <sp-slider
-                        value="5"
-                        step="1"
-                        min="1"
-                        max="11"
-                        label="Volume"
-                        id="volume-slider"
-                    ></sp-slider>
+export const Default = {
+    render: ({ colorStop: color }: { colorStop: Color }): TemplateResult => {
+        return html`
+            ${storyStyles}
+            <sp-theme
+                color="${color}"
+                system=${window.__swc_hack_knobs__.defaultSystemVariant}
+            >
+                <div id="example">
+                    <div>
+                        <sp-slider
+                            value="5"
+                            step="1"
+                            min="1"
+                            max="11"
+                            label="Volume"
+                            id="volume-slider"
+                        ></sp-slider>
+                    </div>
+                    <div><sp-switch>Overdrive</sp-switch></div>
+                    <sp-button-group id="buttons">
+                        <sp-button variant="primary" treatment="outline">
+                            Cancel
+                        </sp-button>
+                        <sp-button variant="accent">Continue</sp-button>
+                    </sp-button-group>
                 </div>
-                <div><sp-switch>Overdrive</sp-switch></div>
-                <sp-button-group id="buttons">
-                    <sp-button variant="primary" treatment="outline">
-                        Cancel
-                    </sp-button>
-                    <sp-button variant="accent">Continue</sp-button>
-                </sp-button-group>
-            </div>
-        </sp-theme>
-    `;
+            </sp-theme>
+        `;
+    },
 };
 
 export const displayFlex = (): TemplateResult => html`
@@ -138,144 +136,146 @@ export const none = (): TemplateResult => html`
     <sp-theme></sp-theme>
 `;
 
-export const nestedTheme = ({
-    colorStop: outer,
-}: {
-    colorStop: Color;
-}): TemplateResult => {
-    const inner = outer === 'light' ? 'dark' : 'light';
-    return html`
-        ${storyStyles}
-        <sp-theme
-            color="${outer}"
-            theme=${window.__swc_hack_knobs__.defaultSystemVariant}
-            system=${window.__swc_hack_knobs__.defaultSystemVariant}
-        >
-            <div id="outer">
-                <div>
-                    <sp-slider
-                        value="5"
-                        step="1"
-                        min="1"
-                        max="11"
-                        label="Volume"
-                        id="volume-slider"
-                    ></sp-slider>
-                </div>
-                <div><sp-switch>Overdrive</sp-switch></div>
-                <sp-button-group id="buttons">
-                    <sp-button variant="primary" treatment="outline">
-                        Cancel
-                    </sp-button>
-                    <sp-button variant="accent">Continue</sp-button>
-                </sp-button-group>
-                <sp-theme
-                    color="${inner}"
-                    dir="ltr"
-                    theme=${window.__swc_hack_knobs__.defaultSystemVariant}
-                    system=${window.__swc_hack_knobs__.defaultSystemVariant}
-                >
-                    <div id="inner">
-                        <div>
-                            <sp-slider
-                                value="5"
-                                step="1"
-                                min="1"
-                                max="11"
-                                label="Volume"
-                                id="volume-slider-inner"
-                            ></sp-slider>
-                        </div>
-                        <div><sp-switch>Overdrive</sp-switch></div>
-                        <sp-button-group id="buttons-inner">
-                            <sp-button variant="primary" treatment="outline">
-                                Cancel
-                            </sp-button>
-                            <sp-button variant="accent">Continue</sp-button>
-                        </sp-button-group>
+export const nestedTheme = {
+    render: ({ colorStop: outer }: { colorStop: Color }): TemplateResult => {
+        const inner = outer === 'light' ? 'dark' : 'light';
+        return html`
+            ${storyStyles}
+            <sp-theme
+                color="${outer}"
+                theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+                system=${window.__swc_hack_knobs__.defaultSystemVariant}
+            >
+                <div id="outer">
+                    <div>
+                        <sp-slider
+                            value="5"
+                            step="1"
+                            min="1"
+                            max="11"
+                            label="Volume"
+                            id="volume-slider"
+                        ></sp-slider>
                     </div>
-                </sp-theme>
-            </div>
-        </sp-theme>
-    `;
+                    <div><sp-switch>Overdrive</sp-switch></div>
+                    <sp-button-group id="buttons">
+                        <sp-button variant="primary" treatment="outline">
+                            Cancel
+                        </sp-button>
+                        <sp-button variant="accent">Continue</sp-button>
+                    </sp-button-group>
+                    <sp-theme
+                        color="${inner}"
+                        dir="ltr"
+                        theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+                        system=${window.__swc_hack_knobs__.defaultSystemVariant}
+                    >
+                        <div id="inner">
+                            <div>
+                                <sp-slider
+                                    value="5"
+                                    step="1"
+                                    min="1"
+                                    max="11"
+                                    label="Volume"
+                                    id="volume-slider-inner"
+                                ></sp-slider>
+                            </div>
+                            <div><sp-switch>Overdrive</sp-switch></div>
+                            <sp-button-group id="buttons-inner">
+                                <sp-button
+                                    variant="primary"
+                                    treatment="outline"
+                                >
+                                    Cancel
+                                </sp-button>
+                                <sp-button variant="accent">Continue</sp-button>
+                            </sp-button-group>
+                        </div>
+                    </sp-theme>
+                </div>
+            </sp-theme>
+        `;
+    },
 };
 
-export const reverseColorNestedTheme = ({
-    colorStop: outer,
-}: {
-    colorStop: Color;
-}): TemplateResult => {
-    const inner = outer === 'light' ? 'dark' : 'light';
-    return html`
-        <style type="text/css">
-            #outer {
-                width: 500px;
-                padding: 3em;
-                background-color: var(--spectrum-gray-100);
-                color: var(--spectrum-gray-800);
-            }
+export const reverseColorNestedTheme = {
+    render: ({ colorStop: outer }: { colorStop: Color }): TemplateResult => {
+        const inner = outer === 'light' ? 'dark' : 'light';
+        return html`
+            <style type="text/css">
+                #outer {
+                    width: 500px;
+                    padding: 3em;
+                    background-color: var(--spectrum-gray-100);
+                    color: var(--spectrum-gray-800);
+                }
 
-            #inner {
-                margin-top: 2em;
-                padding: 2em;
-                background-color: var(--spectrum-gray-100);
-                color: var(--spectrum-gray-800);
-            }
+                #inner {
+                    margin-top: 2em;
+                    padding: 2em;
+                    background-color: var(--spectrum-gray-100);
+                    color: var(--spectrum-gray-800);
+                }
 
-            #buttons {
-                margin-top: 2em;
-            }
-        </style>
-        <sp-theme
-            color="${inner}"
-            theme=${window.__swc_hack_knobs__.defaultSystemVariant}
-            system=${window.__swc_hack_knobs__.defaultSystemVariant}
-        >
-            <div id="outer">
-                <div>
-                    <sp-slider
-                        value="5"
-                        step="1"
-                        min="1"
-                        max="11"
-                        label="Volume"
-                        id="volume-slider"
-                    ></sp-slider>
-                </div>
-                <div><sp-switch>Overdrive</sp-switch></div>
-                <sp-button-group id="buttons">
-                    <sp-button variant="primary" treatment="outline">
-                        Cancel
-                    </sp-button>
-                    <sp-button variant="accent">Continue</sp-button>
-                </sp-button-group>
-                <sp-theme
-                    color="${outer}"
-                    dir="rtl"
-                    theme=${window.__swc_hack_knobs__.defaultSystemVariant}
-                    system=${window.__swc_hack_knobs__.defaultSystemVariant}
-                >
-                    <div id="inner">
-                        <div>
-                            <sp-slider
-                                value="5"
-                                step="1"
-                                min="1"
-                                max="11"
-                                label="Volume"
-                                id="volume-slider-inner"
-                            ></sp-slider>
-                        </div>
-                        <div><sp-switch>Overdrive</sp-switch></div>
-                        <sp-button-group id="buttons-inner">
-                            <sp-button variant="primary" treatment="outline">
-                                Cancel
-                            </sp-button>
-                            <sp-button variant="accent">Continue</sp-button>
-                        </sp-button-group>
+                #buttons {
+                    margin-top: 2em;
+                }
+            </style>
+            <sp-theme
+                color="${inner}"
+                theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+                system=${window.__swc_hack_knobs__.defaultSystemVariant}
+            >
+                <div id="outer">
+                    <div>
+                        <sp-slider
+                            value="5"
+                            step="1"
+                            min="1"
+                            max="11"
+                            label="Volume"
+                            id="volume-slider"
+                        ></sp-slider>
                     </div>
-                </sp-theme>
-            </div>
-        </sp-theme>
-    `;
+                    <div><sp-switch>Overdrive</sp-switch></div>
+                    <sp-button-group id="buttons">
+                        <sp-button variant="primary" treatment="outline">
+                            Cancel
+                        </sp-button>
+                        <sp-button variant="accent">Continue</sp-button>
+                    </sp-button-group>
+                    <sp-theme
+                        color="${outer}"
+                        dir="rtl"
+                        theme=${window.__swc_hack_knobs__.defaultSystemVariant}
+                        system=${window.__swc_hack_knobs__.defaultSystemVariant}
+                    >
+                        <div id="inner">
+                            <div>
+                                <sp-slider
+                                    value="5"
+                                    step="1"
+                                    min="1"
+                                    max="11"
+                                    label="Volume"
+                                    id="volume-slider-inner"
+                                ></sp-slider>
+                            </div>
+                            <div><sp-switch>Overdrive</sp-switch></div>
+                            <sp-button-group id="buttons-inner">
+                                <sp-button
+                                    variant="primary"
+                                    treatment="outline"
+                                >
+                                    Cancel
+                                </sp-button>
+                                <sp-button variant="accent">Continue</sp-button>
+                            </sp-button-group>
+                        </div>
+                    </sp-theme>
+                </div>
+            </sp-theme>
+        `;
+    },
 };

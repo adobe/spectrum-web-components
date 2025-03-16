@@ -16,6 +16,7 @@ import { MenuMarkup } from './';
 export default {
     component: 'sp-menu',
     title: 'Menu/Sizes',
+    tags: ['!dev'],
 };
 
 export const S = (): TemplateResult => MenuMarkup({ size: 's' });

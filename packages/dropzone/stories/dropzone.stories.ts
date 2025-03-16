@@ -56,79 +56,87 @@ export default {
     },
 };
 
-type StoryArgs = {
+export interface Properties {
     isDragged?: boolean;
     isFilled?: boolean;
-};
+}
 
-export const Default = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-dropzone id="dropzone" tabindex="0" ?dragged=${args.isDragged}>
-            <sp-illustrated-message heading="Drag and Drop Your File">
-                ${illustration}
-            </sp-illustrated-message>
-            <div>
-                <label for="file-input">
-                    <sp-link
-                        href="javascript:;"
-                        onclick="this.parentElement.nextElementSibling.click()"
-                    >
-                        Select a File
+export const Default = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-dropzone id="dropzone" tabindex="0" ?dragged=${args.isDragged}>
+                <sp-illustrated-message heading="Drag and Drop Your File">
+                    ${illustration}
+                </sp-illustrated-message>
+                <div>
+                    <label for="file-input">
+                        <sp-link
+                            href="javascript:;"
+                            onclick="this.parentElement.nextElementSibling.click()"
+                        >
+                            Select a File
+                        </sp-link>
+                        from your computer
+                    </label>
+                    <input type="file" id="file-input" style="display: none" />
+                </div>
+                <div>
+                    or
+                    <sp-link href="http://stock.adobe.com" target="blank">
+                        Search Adobe Stock
                     </sp-link>
-                    from your computer
-                </label>
-                <input type="file" id="file-input" style="display: none" />
-            </div>
-            <div>
-                or
-                <sp-link href="http://stock.adobe.com" target="blank">
-                    Search Adobe Stock
-                </sp-link>
-            </div>
-        </sp-dropzone>
-    `;
+                </div>
+            </sp-dropzone>
+        `;
+    },
 };
 
-export const Dragged = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-dropzone id="dropzone" tabindex="0" ?dragged=${args.isDragged}>
-            <sp-illustrated-message heading="Drag and Drop Your File">
-                ${illustration}
-            </sp-illustrated-message>
-            <div>
-                <label for="file-input">
-                    <sp-link
-                        href="javascript:;"
-                        onclick="this.parentElement.nextElementSibling.click()"
-                    >
-                        Select a File
+export const Dragged = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-dropzone id="dropzone" tabindex="0" ?dragged=${args.isDragged}>
+                <sp-illustrated-message heading="Drag and Drop Your File">
+                    ${illustration}
+                </sp-illustrated-message>
+                <div>
+                    <label for="file-input">
+                        <sp-link
+                            href="javascript:;"
+                            onclick="this.parentElement.nextElementSibling.click()"
+                        >
+                            Select a File
+                        </sp-link>
+                        from your computer
+                    </label>
+                    <input type="file" id="file-input" style="display: none" />
+                </div>
+                <div>
+                    or
+                    <sp-link href="http://stock.adobe.com" target="blank">
+                        Search Adobe Stock
                     </sp-link>
-                    from your computer
-                </label>
-                <input type="file" id="file-input" style="display: none" />
-            </div>
-            <div>
-                or
-                <sp-link href="http://stock.adobe.com" target="blank">
-                    Search Adobe Stock
-                </sp-link>
-            </div>
-        </sp-dropzone>
-    `;
-};
-Dragged.args = {
-    isDragged: true,
+                </div>
+            </sp-dropzone>
+        `;
+    },
+
+    args: {
+        isDragged: true,
+    },
 };
 
-export const Filled = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-dropzone id="dropzone" ?filled=${args.isFilled}>
-            Filled dropzone
-        </sp-dropzone>
-    `;
-};
-Filled.args = {
-    isFilled: true,
+export const Filled = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-dropzone id="dropzone" ?filled=${args.isFilled}>
+                Filled dropzone
+            </sp-dropzone>
+        `;
+    },
+
+    args: {
+        isFilled: true,
+    },
 };
 
 class ControlledDropzone extends LitElement {

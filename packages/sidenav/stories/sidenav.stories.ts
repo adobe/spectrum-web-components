@@ -23,94 +23,88 @@ export default {
     },
 };
 
-export const Default = ({
-    onChange,
-}: {
-    onChange: () => void;
-}): TemplateResult => {
-    return html`
-        <sp-sidenav @change=${onChange} value="Section 1">
-            <sp-sidenav-item
-                value="Section 1"
-                label="Section 1"
-            ></sp-sidenav-item>
-            <sp-sidenav-item
-                selected
-                value="Section 2"
-                label="Section 2"
-            ></sp-sidenav-item>
-            <sp-sidenav-heading label="Category 1">
+export const Default = {
+    render: ({ onChange }: { onChange: () => void }): TemplateResult => {
+        return html`
+            <sp-sidenav @change=${onChange} value="Section 1">
                 <sp-sidenav-item
-                    value="Section 3"
-                    label="Section 3"
+                    value="Section 1"
+                    label="Section 1"
                 ></sp-sidenav-item>
                 <sp-sidenav-item
-                    value="Section 4"
-                    label="Section 4"
+                    selected
+                    value="Section 2"
+                    label="Section 2"
                 ></sp-sidenav-item>
-            </sp-sidenav-heading>
-        </sp-sidenav>
-    `;
-};
-
-export const Multilevel = ({
-    onChange,
-}: {
-    onChange: () => void;
-}): TemplateResult => {
-    return html`
-        <sp-sidenav variant="multilevel" value="2.3.1" @change=${onChange}>
-            <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
-            <sp-sidenav-item value="baz" label="baz">
-                <sp-sidenav-item value="2.1" label="2.1"></sp-sidenav-item>
-                <sp-sidenav-item value="2.2" label="2.2"></sp-sidenav-item>
-                <sp-sidenav-item value="2.3" label="2.3">
+                <sp-sidenav-heading label="Category 1">
                     <sp-sidenav-item
-                        value="2.3.1"
-                        label="2.3.1"
+                        value="Section 3"
+                        label="Section 3"
                     ></sp-sidenav-item>
                     <sp-sidenav-item
-                        disabled
-                        value="2.3.2"
-                        label="2.3.2"
+                        value="Section 4"
+                        label="Section 4"
                     ></sp-sidenav-item>
-                </sp-sidenav-item>
-            </sp-sidenav-item>
-            <sp-sidenav-item value="test" label="test"></sp-sidenav-item>
-            <sp-sidenav-item value="hi" label="hi"></sp-sidenav-item>
-        </sp-sidenav>
-    `;
+                </sp-sidenav-heading>
+            </sp-sidenav>
+        `;
+    },
 };
 
-Multilevel.storyName = 'Multi-level';
-
-export const MultilevelSlotted = ({
-    onChange,
-}: {
-    onChange: () => void;
-}): TemplateResult => {
-    return html`
-        <sp-sidenav variant="multilevel" value="2.3.1" @change=${onChange}>
-            <sp-sidenav-item value="foo">foo</sp-sidenav-item>
-            <sp-sidenav-item value="baz">
-                baz
-                <sp-sidenav-item value="2.1">2.1</sp-sidenav-item>
-                <sp-sidenav-item value="2.2">2.2</sp-sidenav-item>
-                <sp-sidenav-item value="2.3">
-                    2.3
-                    <sp-sidenav-item value="2.3.1">2.3.1</sp-sidenav-item>
-                    <sp-sidenav-item disabled value="2.3.2">
-                        2.3.2
+export const Multilevel = {
+    render: ({ onChange }: { onChange: () => void }): TemplateResult => {
+        return html`
+            <sp-sidenav variant="multilevel" value="2.3.1" @change=${onChange}>
+                <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
+                <sp-sidenav-item value="baz" label="baz">
+                    <sp-sidenav-item value="2.1" label="2.1"></sp-sidenav-item>
+                    <sp-sidenav-item value="2.2" label="2.2"></sp-sidenav-item>
+                    <sp-sidenav-item value="2.3" label="2.3">
+                        <sp-sidenav-item
+                            value="2.3.1"
+                            label="2.3.1"
+                        ></sp-sidenav-item>
+                        <sp-sidenav-item
+                            disabled
+                            value="2.3.2"
+                            label="2.3.2"
+                        ></sp-sidenav-item>
                     </sp-sidenav-item>
                 </sp-sidenav-item>
-            </sp-sidenav-item>
-            <sp-sidenav-item value="test">test</sp-sidenav-item>
-            <sp-sidenav-item value="hi">hi</sp-sidenav-item>
-        </sp-sidenav>
-    `;
+                <sp-sidenav-item value="test" label="test"></sp-sidenav-item>
+                <sp-sidenav-item value="hi" label="hi"></sp-sidenav-item>
+            </sp-sidenav>
+        `;
+    },
+
+    name: 'Multi-level',
 };
 
-MultilevelSlotted.storyName = 'Multi-level Slotted';
+export const MultilevelSlotted = {
+    render: ({ onChange }: { onChange: () => void }): TemplateResult => {
+        return html`
+            <sp-sidenav variant="multilevel" value="2.3.1" @change=${onChange}>
+                <sp-sidenav-item value="foo">foo</sp-sidenav-item>
+                <sp-sidenav-item value="baz">
+                    baz
+                    <sp-sidenav-item value="2.1">2.1</sp-sidenav-item>
+                    <sp-sidenav-item value="2.2">2.2</sp-sidenav-item>
+                    <sp-sidenav-item value="2.3">
+                        2.3
+                        <sp-sidenav-item value="2.3.1">2.3.1</sp-sidenav-item>
+                        <sp-sidenav-item disabled value="2.3.2">
+                            2.3.2
+                        </sp-sidenav-item>
+                    </sp-sidenav-item>
+                </sp-sidenav-item>
+                <sp-sidenav-item value="test">test</sp-sidenav-item>
+                <sp-sidenav-item value="hi">hi</sp-sidenav-item>
+            </sp-sidenav>
+        `;
+    },
+
+    name: 'Multi-level Slotted',
+};
 
 export const levelsAndDisabled = (): TemplateResult => {
     return html`
@@ -165,33 +159,31 @@ export const manageTabIndex = (): TemplateResult => {
     `;
 };
 
-export const Hrefs = ({
-    onChange,
-}: {
-    onChange: () => void;
-}): TemplateResult => {
-    return html`
-        <sp-sidenav @change=${onChange} value="current">
-            <sp-sidenav-heading label="Github">
-                <sp-sidenav-item
-                    href=${window.location.href}
-                    label="Current"
-                    value="current"
-                    selected
-                ></sp-sidenav-item>
-                <sp-sidenav-item
-                    href="https://github.com/adobe/spectrum-web-components"
-                    label="Code"
-                ></sp-sidenav-item>
-                <sp-sidenav-item
-                    href="https://github.com/adobe/spectrum-web-components/issues"
-                    label="Issues"
-                ></sp-sidenav-item>
-                <sp-sidenav-item
-                    href="https://github.com/adobe/spectrum-web-components/pulls"
-                    label="Pull Requests"
-                ></sp-sidenav-item>
-            </sp-sidenav-heading>
-        </sp-sidenav>
-    `;
+export const Hrefs = {
+    render: ({ onChange }: { onChange: () => void }): TemplateResult => {
+        return html`
+            <sp-sidenav @change=${onChange} value="current">
+                <sp-sidenav-heading label="Github">
+                    <sp-sidenav-item
+                        href=${window.location.href}
+                        label="Current"
+                        value="current"
+                        selected
+                    ></sp-sidenav-item>
+                    <sp-sidenav-item
+                        href="https://github.com/adobe/spectrum-web-components"
+                        label="Code"
+                    ></sp-sidenav-item>
+                    <sp-sidenav-item
+                        href="https://github.com/adobe/spectrum-web-components/issues"
+                        label="Issues"
+                    ></sp-sidenav-item>
+                    <sp-sidenav-item
+                        href="https://github.com/adobe/spectrum-web-components/pulls"
+                        label="Pull Requests"
+                    ></sp-sidenav-item>
+                </sp-sidenav-heading>
+            </sp-sidenav>
+        `;
+    },
 };

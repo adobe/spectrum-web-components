@@ -23,37 +23,52 @@ export default {
 const staticColor = 'white';
 const quiet = true;
 
-export const XS = (args: Properties): TemplateResult => renderButtons(args);
-XS.args = {
-    size: 'xs',
-    quiet,
-    staticColor,
+export const XS = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'xs',
+        quiet,
+        staticColor,
+    },
 };
 
-export const s = (args: Properties): TemplateResult => renderButtons(args);
-s.args = {
-    size: 's',
-    quiet,
-    staticColor,
+export const s = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 's',
+        quiet,
+        staticColor,
+    },
 };
 
-export const m = (args: Properties): TemplateResult => renderButtons(args);
-m.args = {
-    size: 'm',
-    quiet,
-    staticColor,
+export const m = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'm',
+        quiet,
+        staticColor,
+    },
 };
 
-export const l = (args: Properties): TemplateResult => renderButtons(args);
-l.args = {
-    size: 'l',
-    quiet,
-    staticColor,
+export const l = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'l',
+        quiet,
+        staticColor,
+    },
 };
 
-export const XL = (args: Properties): TemplateResult => renderButtons(args);
-XL.args = {
-    size: 'xl',
-    quiet,
-    staticColor,
+export const XL = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'xl',
+        quiet,
+        staticColor,
+    },
 };

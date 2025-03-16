@@ -22,12 +22,12 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('Swatch Group', () => {
     let el: SwatchGroup;
     beforeEach(async () => {
-        el = await fixture<SwatchGroup>(Default(Default.args));
+        el = await fixture<SwatchGroup>(Default.render(Default.args));
 
         await elementUpdated(el);
     });
     testForLitDevWarnings(
-        async () => await fixture<SwatchGroup>(Default(Default.args))
+        async () => await fixture<SwatchGroup>(Default.render(Default.args))
     );
     it('loads default swatch accessibly', async () => {
         await expect(el).to.be.accessible();
@@ -312,13 +312,11 @@ describe('Swatch Group - DOM selected', () => {
         });
 
         it('warns in Dev Mode when mixed-value attribute is added in sp-swatch when parent sp-swatch-group is not having selects="multiple"', async () => {
-            const el = await fixture<SwatchGroup>(
-                html`
-                    <sp-swatch-group selects="single">
-                        <sp-swatch mixed-value></sp-swatch>
-                    </sp-swatch-group>
-                `
-            );
+            const el = await fixture<SwatchGroup>(html`
+                <sp-swatch-group selects="single">
+                    <sp-swatch mixed-value></sp-swatch>
+                </sp-swatch-group>
+            `);
 
             await elementUpdated(el);
             await nextFrame();
@@ -415,15 +413,13 @@ describe('Swatch Group - DOM selected', () => {
 
 describe('Swatch Group - slotted', () => {
     it('manages [selects="single"] selection through multiple slots', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-swatch value="First">First</sp-swatch>
-                    <sp-swatch value="Second">Second</sp-swatch>
-                    <sp-swatch value="Third" selected>Third</sp-swatch>
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-swatch value="First">First</sp-swatch>
+                <sp-swatch value="Second">Second</sp-swatch>
+                <sp-swatch value="Third" selected>Third</sp-swatch>
+            </div>
+        `);
 
         const firstItem = test.querySelector('sp-swatch') as Swatch;
         const thirdItem = test.querySelector('sp-swatch[selected]') as Swatch;

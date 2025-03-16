@@ -9,30 +9,43 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@spectrum-web-components/base';
-import { Default, StoryArgs } from './switch.stories.js';
+
+import { Default } from './switch.stories.js';
 
 export default {
     component: 'sp-switch',
     title: 'Switch/Sizes',
+    tags: ['!dev'],
 };
 
-export const s = (args: StoryArgs): TemplateResult => Default(args);
-s.args = {
-    size: 's',
+export const s = {
+    render: Default.render,
+
+    args: {
+        size: 's',
+    },
 };
 
-export const m = (args: StoryArgs): TemplateResult => Default(args);
-m.args = {
-    size: 'm',
+export const m = {
+    render: Default.render,
+
+    args: {
+        size: 'm',
+    },
 };
 
-export const l = (args: StoryArgs): TemplateResult => Default(args);
-l.args = {
-    size: 'l',
+export const l = {
+    render: Default.render,
+
+    args: {
+        size: 'l',
+    },
 };
 
-export const XL = (args: StoryArgs): TemplateResult => Default(args);
-XL.args = {
-    size: 'xl',
+export const XL = {
+    render: Default.render,
+
+    args: {
+        size: 'xl',
+    },
 };

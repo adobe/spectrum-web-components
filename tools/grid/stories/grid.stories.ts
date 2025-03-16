@@ -121,148 +121,150 @@ const handleActionBarChange = (event: Event): void => {
     grid.selected = [];
 };
 
-export const Default = (): TemplateResult => {
-    const items = generateItems(1000);
+export const Default = {
+    render: (): TemplateResult => {
+        const items = generateItems(1000);
 
-    return html`
-        <h1>Random before content that is focusable</h1>
-        <input id="first-input" />
-        <sp-grid
-            @change=${handleChange}
-            .items=${items}
-            .focusableSelector=${'sp-card'}
-            .renderItem=${renderItem}
-        ></sp-grid>
-        <sp-action-bar variant="fixed">
-            <sp-checkbox @click=${handleActionBarChange} checked>
-                <span class="selected"></span>
-                Selected
-                <span class="ids"></span>
-            </sp-checkbox>
-            <sp-action-group quiet>
-                <sp-action-button>
-                    <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
-                </sp-action-button>
-                <sp-action-button>
-                    <sp-icon-more slot="icon" label="More"></sp-icon-more>
-                </sp-action-button>
-            </sp-action-group>
-        </sp-action-bar>
-        <h2>Random after content that is focusable</h2>
-        <input id="last-input" />
-    `;
+        return html`
+            <h1>Random before content that is focusable</h1>
+            <input id="first-input" />
+            <sp-grid
+                @change=${handleChange}
+                .items=${items}
+                .focusableSelector=${'sp-card'}
+                .renderItem=${renderItem}
+            ></sp-grid>
+            <sp-action-bar variant="fixed">
+                <sp-checkbox @click=${handleActionBarChange} checked>
+                    <span class="selected"></span>
+                    Selected
+                    <span class="ids"></span>
+                </sp-checkbox>
+                <sp-action-group quiet>
+                    <sp-action-button>
+                        <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
+                    </sp-action-button>
+                    <sp-action-button>
+                        <sp-icon-more slot="icon" label="More"></sp-icon-more>
+                    </sp-action-button>
+                </sp-action-group>
+            </sp-action-bar>
+            <h2>Random after content that is focusable</h2>
+            <input id="last-input" />
+        `;
+    },
+
+    swc_vrt: {
+        skip: true,
+    },
+
+    parameters: {
+        // Disables Chromatic's snapshotting on a global level
+        chromatic: { disableSnapshot: true },
+    },
 };
 
-Default.swc_vrt = {
-    skip: true,
-};
+export const Sized = {
+    render: ({ gap, padding } = { gap: 10, padding: 10 }): TemplateResult => {
+        const items = generateItems(1000);
 
-Default.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
-};
-
-export const sized = (
-    { gap, padding } = { gap: 10, padding: 10 }
-): TemplateResult => {
-    const items = generateItems(1000);
-
-    function handleMediaChange(): void {
-        let width = document.body.offsetWidth * 0.4;
-        const height = 300;
-        if (matchMedium.matches) {
-            width = 300;
-        } else if (matchLarge.matches) {
-            width = 400;
+        function handleMediaChange(): void {
+            let width = document.body.offsetWidth * 0.4;
+            const height = 300;
+            if (matchMedium.matches) {
+                width = 300;
+            } else if (matchLarge.matches) {
+                width = 400;
+            }
+            (document.querySelector('sp-grid') as Grid).itemSize = {
+                width,
+                height,
+            };
         }
-        (document.querySelector('sp-grid') as Grid).itemSize = {
-            width,
-            height,
-        };
-    }
 
-    const matchSmall = window.matchMedia('(max-width: 600px)');
-    const matchMedium = window.matchMedia(
-        '(min-width: 601px) and (max-width: 1200px)'
-    );
-    const matchLarge = window.matchMedia('(min-width: 1201px)');
+        const matchSmall = window.matchMedia('(max-width: 600px)');
+        const matchMedium = window.matchMedia(
+            '(min-width: 601px) and (max-width: 1200px)'
+        );
+        const matchLarge = window.matchMedia('(min-width: 1201px)');
 
-    matchSmall.addEventListener('change', handleMediaChange);
-    matchMedium.addEventListener('change', handleMediaChange);
-    matchLarge.addEventListener('change', handleMediaChange);
+        matchSmall.addEventListener('change', handleMediaChange);
+        matchMedium.addEventListener('change', handleMediaChange);
+        matchLarge.addEventListener('change', handleMediaChange);
 
-    return html`
-        <h1>Random before content that is focusable</h1>
-        <input id="first-input" />
-        <sp-grid
-            @change=${handleChange}
-            .items=${items}
-            .focusableSelector=${'sp-card'}
-            .renderItem=${renderItem}
-            .itemSize=${{
-                width: 200,
-                height: 300,
-            }}
-            .gap=${`${gap}px`}
-            .padding=${`${padding}px`}
-        ></sp-grid>
-        <sp-action-bar variant="fixed" style="display: none">
-            <sp-checkbox @click=${handleActionBarChange} checked>
-                <span class="selected"></span>
-                Selected
-                <span class="ids"></span>
-            </sp-checkbox>
-            <sp-action-group quiet>
-                <sp-action-button>
-                    <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
-                </sp-action-button>
-                <sp-action-button>
-                    <sp-icon-more slot="icon" label="More"></sp-icon-more>
-                </sp-action-button>
-            </sp-action-group>
-        </sp-action-bar>
-        <h2>Random after content that is focusable</h2>
-        <input id="last-input" />
-    `;
-};
+        return html`
+            <h1>Random before content that is focusable</h1>
+            <input id="first-input" />
+            <sp-grid
+                @change=${handleChange}
+                .items=${items}
+                .focusableSelector=${'sp-card'}
+                .renderItem=${renderItem}
+                .itemSize=${{
+                    width: 200,
+                    height: 300,
+                }}
+                .gap=${`${gap}px`}
+                .padding=${`${padding}px`}
+            ></sp-grid>
+            <sp-action-bar variant="fixed" style="display: none">
+                <sp-checkbox @click=${handleActionBarChange} checked>
+                    <span class="selected"></span>
+                    Selected
+                    <span class="ids"></span>
+                </sp-checkbox>
+                <sp-action-group quiet>
+                    <sp-action-button>
+                        <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
+                    </sp-action-button>
+                    <sp-action-button>
+                        <sp-icon-more slot="icon" label="More"></sp-icon-more>
+                    </sp-action-button>
+                </sp-action-group>
+            </sp-action-bar>
+            <h2>Random after content that is focusable</h2>
+            <input id="last-input" />
+        `;
+    },
 
-sized.args = {
-    gap: 10,
-    padding: 10,
-};
+    args: {
+        gap: 10,
+        padding: 10,
+    },
 
-sized.argTypes = {
-    gap: {
-        name: 'gap',
-        type: { name: 'number', required: false },
-        description: 'Spacing between items.',
-        table: {
-            type: { summary: 'number' },
+    argTypes: {
+        gap: {
+            name: 'gap',
+            type: { name: 'number', required: false },
+            description: 'Spacing between items.',
+            table: {
+                type: { summary: 'number' },
+            },
+            control: {
+                type: 'number',
+            },
         },
-        control: {
-            type: 'number',
+        padding: {
+            name: 'padding',
+            type: { name: 'number', required: false },
+            description: 'Spacing around all items.',
+            table: {
+                type: { summary: 'number' },
+            },
+            control: {
+                type: 'number',
+            },
         },
     },
-    padding: {
-        name: 'padding',
-        type: { name: 'number', required: false },
-        description: 'Spacing around all items.',
-        table: {
-            type: { summary: 'number' },
-        },
-        control: {
-            type: 'number',
-        },
+
+    swc_vrt: {
+        skip: true,
     },
-};
 
-sized.swc_vrt = {
-    skip: true,
-};
-
-sized.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+    parameters: {
+        // Disables Chromatic's snapshotting on a global level
+        chromatic: { disableSnapshot: true },
+    },
 };
 
 class MyParent extends SpectrumElement {
@@ -290,25 +292,27 @@ class MyParent extends SpectrumElement {
 
 customElements.define('my-parent', MyParent);
 
-export const scrollParentInAssignedSlot = (): TemplateResult => {
-    const items = generateItems(1000);
+export const scrollParentInAssignedSlot = {
+    render: (): TemplateResult => {
+        const items = generateItems(1000);
 
-    return html`
-        <my-parent>
-            <sp-grid
-                .items=${items}
-                .focusableSelector=${'sp-card'}
-                .renderItem=${renderItem}
-            ></sp-grid>
-        </my-parent>
-    `;
-};
+        return html`
+            <my-parent>
+                <sp-grid
+                    .items=${items}
+                    .focusableSelector=${'sp-card'}
+                    .renderItem=${renderItem}
+                ></sp-grid>
+            </my-parent>
+        `;
+    },
 
-scrollParentInAssignedSlot.swc_vrt = {
-    skip: true,
-};
+    swc_vrt: {
+        skip: true,
+    },
 
-scrollParentInAssignedSlot.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+    parameters: {
+        // Disables Chromatic's snapshotting on a global level
+        chromatic: { disableSnapshot: true },
+    },
 };

@@ -18,6 +18,7 @@ import { thumbnail as image } from './images.js';
 export default {
     title: 'Thumbnail/Sizes',
     component: 'sp-thumbnail',
+    tags: ['!dev'],
 };
 
 const thumbnail = ({
