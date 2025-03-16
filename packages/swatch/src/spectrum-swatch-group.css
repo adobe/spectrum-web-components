@@ -15,7 +15,10 @@ governing permissions and limitations under the License.
     --spectrum-swatchgroup-spacing: var(--spectrum-spacing-75);
     justify-content: flex-start;
     align-items: flex-start;
-    gap: var(--mod-swatchgroup-spacing-regular, var(--spectrum-swatchgroup-spacing));
+    gap: var(
+        --mod-swatchgroup-spacing-regular,
+        var(--spectrum-swatchgroup-spacing)
+    );
     flex-flow: wrap;
     display: inline-flex;
 }

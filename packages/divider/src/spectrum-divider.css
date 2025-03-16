@@ -31,41 +31,74 @@ governing permissions and limitations under the License.
 }
 
 :host([static-color='white']) {
-    --mod-divider-background-color: var(--mod-divider-background-color-medium-static-white, var(--spectrum-divider-background-color-static-white));
+    --mod-divider-background-color: var(
+        --mod-divider-background-color-medium-static-white,
+        var(--spectrum-divider-background-color-static-white)
+    );
 }
 
 :host([static-color='white'][size='s']) {
-    --mod-divider-background-color: var(--mod-divider-background-color-small-static-white, var(--spectrum-divider-background-color-static-white));
+    --mod-divider-background-color: var(
+        --mod-divider-background-color-small-static-white,
+        var(--spectrum-divider-background-color-static-white)
+    );
 }
 
 :host([static-color='white'][size='l']) {
-    --mod-divider-background-color: var(--mod-divider-background-color-large-static-white, var(--spectrum-transparent-white-800));
+    --mod-divider-background-color: var(
+        --mod-divider-background-color-large-static-white,
+        var(--spectrum-transparent-white-800)
+    );
 }
 
 :host([static-color='black']) {
-    --mod-divider-background-color: var(--mod-divider-background-color-medium-static-black, var(--spectrum-divider-background-color-static-black));
+    --mod-divider-background-color: var(
+        --mod-divider-background-color-medium-static-black,
+        var(--spectrum-divider-background-color-static-black)
+    );
 }
 
 :host([static-color='black'][size='s']) {
-    --mod-divider-background-color: var(--mod-divider-background-color-small-static-black, var(--spectrum-divider-background-color-static-black));
+    --mod-divider-background-color: var(
+        --mod-divider-background-color-small-static-black,
+        var(--spectrum-divider-background-color-static-black)
+    );
 }
 
 :host([static-color='black'][size='l']) {
-    --mod-divider-background-color: var(--mod-divider-background-color-large-static-black, var(--spectrum-transparent-black-800));
+    --mod-divider-background-color: var(
+        --mod-divider-background-color-large-static-black,
+        var(--spectrum-transparent-black-800)
+    );
 }
 
 :host {
     block-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
     inline-size: 100%;
     border: none;
-    border-width: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
-    border-radius: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
-    background-color: var(--highcontrast-divider-background-color, var(--mod-divider-background-color, var(--spectrum-divider-background-color)));
+    border-width: var(
+        --mod-divider-thickness,
+        var(--spectrum-divider-thickness)
+    );
+    border-radius: var(
+        --mod-divider-thickness,
+        var(--spectrum-divider-thickness)
+    );
+    background-color: var(
+        --highcontrast-divider-background-color,
+        var(
+            --mod-divider-background-color,
+            var(--spectrum-divider-background-color)
+        )
+    );
     overflow: visible;
 }
 
 :host([vertical]) {
-    inline-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
+    inline-size: var(
+        --mod-divider-thickness,
+        var(--spectrum-divider-thickness)
+    );
     block-size: 100%;
     block-size: var(--mod-divider-vertical-height, 100%);
     margin-block: var(--mod-divider-vertical-margin);

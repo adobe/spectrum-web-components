@@ -67,6 +67,9 @@
         "process-spectrum": "wireit",
         "publish:react": "yarn changeset publish --no-git-tag --tag snapshot --no-push",
         "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\" && git push",
+        "spectrum-css": "wireit",
+        "spectrum-tokens": "wireit",
+        "spectrum-vars": "wireit",
         "start": "yarn storybook",
         "storybook": "wireit",
         "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
@@ -94,6 +97,9 @@
         "verify-build-artifacts": "node ./scripts/verify-build-artifacts.js",
         "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js",
         "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link"
+    },
+    "peerDependencies": {
+        "common-tags": "^1.8.0"
     },
     "devDependencies": {
         "@changesets/changelog-github": "^0.5.0",
@@ -381,7 +387,7 @@
             ]
         },
         "process-spectrum": {
-            "command": "node ./scripts/spectrum-vars.js && node ./tasks/process-spectrum.js && node ./scripts/generate-tokens.js && yarn lint:css --fix && pretty-quick --pattern \"{packages,tools}/**/*.css\"",
+            "command": "node ./scripts/spectrum-vars.js && node ./tasks/process-spectrum.js && node ./scripts/generate-tokens.js && yarn lint:css --fix && pretty-quick --pattern \"{packages,tools}/**/*.css\" && pretty-quick --pattern \"packages/dialog/src/spectrum-dialog.css\"",
             "files": [
                 "tasks/process-spectrum.js",
                 "packages/**/spectrum-config.js",

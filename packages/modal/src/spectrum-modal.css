@@ -12,29 +12,73 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-modal-confirm-entry-animation-duration: var(--mod-modal-confirm-entry-animation-duration, var(--spectrum-animation-duration-500));
-    --spectrum-modal-confirm-entry-animation-delay: var(--mod-overlay-animation-duration-opened, var(--mod-modal-confirm-entry-animation-delay, var(--spectrum-animation-duration-200)));
-    --spectrum-modal-confirm-exit-animation-duration: var(--mod-overlay-animation-duration, var(--mod-modal-confirm-exit-animation-duration, var(--spectrum-animation-duration-100)));
-    --spectrum-modal-confirm-exit-animation-delay: var(--mod-modal-confirm-exit-animation-delay, var(--spectrum-animation-duration-0));
-    --spectrum-modal-fullscreen-margin: var(--mod-modal-fullscreen-margin, 32px);
+    --spectrum-modal-confirm-entry-animation-duration: var(
+        --mod-modal-confirm-entry-animation-duration,
+        var(--spectrum-animation-duration-500)
+    );
+    --spectrum-modal-confirm-entry-animation-delay: var(
+        --mod-overlay-animation-duration-opened,
+        var(
+            --mod-modal-confirm-entry-animation-delay,
+            var(--spectrum-animation-duration-200)
+        )
+    );
+    --spectrum-modal-confirm-exit-animation-duration: var(
+        --mod-overlay-animation-duration,
+        var(
+            --mod-modal-confirm-exit-animation-duration,
+            var(--spectrum-animation-duration-100)
+        )
+    );
+    --spectrum-modal-confirm-exit-animation-delay: var(
+        --mod-modal-confirm-exit-animation-delay,
+        var(--spectrum-animation-duration-0)
+    );
+    --spectrum-modal-fullscreen-margin: var(
+        --mod-modal-fullscreen-margin,
+        32px
+    );
 }
 
 .modal {
     visibility: hidden;
     opacity: 0;
-    transform: translateY(var(--mod-modal-confirm-entry-animation-distance, var(--spectrum-dialog-confirm-entry-animation-distance)));
+    transform: translateY(
+        var(
+            --mod-modal-confirm-entry-animation-distance,
+            var(--spectrum-dialog-confirm-entry-animation-distance)
+        )
+    );
     z-index: 1;
     max-block-size: 90vh;
     max-block-size: var(--mod-modal-max-height, 90vh);
     max-inline-size: 90%;
     max-inline-size: var(--mod-modal-max-width, 90%);
-    background: var(--mod-modal-background-color, var(--spectrum-modal-background-color));
-    border-radius: var(--mod-modal-confirm-border-radius, var(--spectrum-corner-radius-100));
+    background: var(
+        --mod-modal-background-color,
+        var(--spectrum-modal-background-color)
+    );
+    border-radius: var(
+        --mod-modal-confirm-border-radius,
+        var(--spectrum-corner-radius-100)
+    );
     pointer-events: auto;
     transition:
-        opacity var(--spectrum-modal-confirm-exit-animation-duration) var(--spectrum-animation-ease-in) var(--spectrum-modal-confirm-exit-animation-delay),
-        visibility var(--spectrum-animation-duration-0) var(--spectrum-animation-linear) calc(var(--spectrum-modal-confirm-exit-animation-delay) + var(--spectrum-modal-confirm-exit-animation-duration)),
-        transform var(--spectrum-animation-duration-0) var(--spectrum-animation-linear) calc(var(--spectrum-modal-confirm-exit-animation-delay) + var(--spectrum-modal-confirm-exit-animation-duration));
+        opacity var(--spectrum-modal-confirm-exit-animation-duration)
+            var(--spectrum-animation-ease-in)
+            var(--spectrum-modal-confirm-exit-animation-delay),
+        visibility var(--spectrum-animation-duration-0)
+            var(--spectrum-animation-linear)
+            calc(
+                var(--spectrum-modal-confirm-exit-animation-delay) +
+                    var(--spectrum-modal-confirm-exit-animation-duration)
+            ),
+        transform var(--spectrum-animation-duration-0)
+            var(--spectrum-animation-linear)
+            calc(
+                var(--spectrum-modal-confirm-exit-animation-delay) +
+                    var(--spectrum-modal-confirm-exit-animation-duration)
+            );
     outline: none;
     overflow: hidden;
 }
@@ -44,12 +88,17 @@ governing permissions and limitations under the License.
     visibility: visible;
     opacity: 1;
     transition:
-        transform var(--spectrum-modal-confirm-entry-animation-duration) var(--spectrum-animation-ease-out) var(--spectrum-modal-confirm-entry-animation-delay),
-        opacity var(--spectrum-modal-confirm-entry-animation-duration) var(--spectrum-animation-ease-out) var(--spectrum-modal-confirm-entry-animation-delay);
+        transform var(--spectrum-modal-confirm-entry-animation-duration)
+            var(--spectrum-animation-ease-out)
+            var(--spectrum-modal-confirm-entry-animation-delay),
+        opacity var(--spectrum-modal-confirm-entry-animation-duration)
+            var(--spectrum-animation-ease-out)
+            var(--spectrum-modal-confirm-entry-animation-delay);
     transform: translateY(0);
 }
 
-@media only screen and (device-height <= 350px), only screen and (device-width <= 400px) {
+@media only screen and (device-height <= 350px),
+    only screen and (device-width <= 400px) {
     :host([responsive]) .modal {
         inline-size: 100%;
         block-size: 100%;
