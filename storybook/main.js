@@ -32,6 +32,8 @@ const config = {
             : []),
         // https://geometricpanda.github.io/storybook-addon-badges/
         '@geometricpanda/storybook-addon-badges',
+        // https://www.chromatic.com/docs/visual-tests-addon/
+        // '@chromatic-com/storybook',
     ],
     framework: '@web/storybook-framework-web-components',
     core: {
