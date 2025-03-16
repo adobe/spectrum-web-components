@@ -44,7 +44,6 @@ governing permissions and limitations under the License.
         --mod-coach-indicator-inner-animation-delay-multiple,
         -0.5
     );
-
     margin: var(--mod-coach-indicator-gap, var(--spectrum-coach-indicator-gap));
     min-inline-size: var(
         --mod-coach-indicator-min-inline-size,
@@ -207,7 +206,7 @@ governing permissions and limitations under the License.
         transform: scale(1.5);
     }
 
-    100% {
+    to {
         opacity: 0;
         transform: scale(2);
     }

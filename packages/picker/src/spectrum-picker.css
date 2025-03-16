@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #button {
     cursor: pointer;
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     font-family: var(
         --mod-button-font-family,
@@ -30,7 +30,7 @@ governing permissions and limitations under the License.
     );
     text-transform: none;
     vertical-align: top;
-    appearance: button;
+    -webkit-appearance: button;
     transition:
         background
             var(
@@ -71,7 +71,7 @@ governing permissions and limitations under the License.
     justify-content: center;
     align-items: center;
     margin: 0;
-    text-decoration: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     position: relative;

@@ -34,7 +34,6 @@ governing permissions and limitations under the License.
         --spectrum-transparent-white-900
     );
     --spectrum-progress-circle-track-border-style: solid;
-
     inline-size: var(
         --mod-progress-circle-size,
         var(--spectrum-progress-circle-size)
@@ -43,6 +42,7 @@ governing permissions and limitations under the License.
         --mod-progress-circle-size,
         var(--spectrum-progress-circle-size)
     );
+    position: var(--mod-progress-circle-position, relative);
     direction: ltr;
     display: inline-block;
     position: relative;
@@ -437,7 +437,7 @@ governing permissions and limitations under the License.
         transform: rotate(89.8deg);
     }
 
-    100% {
+    to {
         transform: rotate(90deg);
     }
 }
@@ -679,7 +679,7 @@ governing permissions and limitations under the License.
         transform: rotate(180deg);
     }
 
-    100% {
+    to {
         transform: rotate(180deg);
     }
 }
@@ -689,7 +689,7 @@ governing permissions and limitations under the License.
         transform: rotate(-90deg);
     }
 
-    100% {
+    to {
         transform: rotate(270deg);
     }
 }

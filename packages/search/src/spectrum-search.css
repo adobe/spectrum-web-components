@@ -134,7 +134,6 @@ governing permissions and limitations under the License.
         --mod-search-background-color-disabled,
         var(--spectrum-search-background-color-disabled)
     );
-
     inline-size: var(
         --mod-search-inline-size,
         var(--spectrum-search-inline-size)
@@ -214,7 +213,6 @@ governing permissions and limitations under the License.
         --highcontrast-search-color-default,
         var(--mod-search-color-default, var(--spectrum-search-color-default))
     );
-
     color: var(--spectrum-search-color);
     margin-block: auto;
     display: block;

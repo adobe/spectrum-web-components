@@ -63,7 +63,6 @@ governing permissions and limitations under the License.
         var(--spectrum-alert-banner-close-button-spacing)
     );
     --mod-closebutton-align-self: flex-start;
-
     inline-size: auto;
     inline-size: var(
         --mod-alert-banner-size,

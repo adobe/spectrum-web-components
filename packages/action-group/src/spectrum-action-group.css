@@ -96,7 +96,6 @@ governing permissions and limitations under the License.
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)
         );
-
     border-start-start-radius: var(
         --mod-actiongroup-border-radius,
         var(--spectrum-actiongroup-border-radius)
@@ -113,7 +112,6 @@ governing permissions and limitations under the License.
 
 :host([compact]:not([quiet])) ::slotted(:not(:first-child)) {
     --mod-actionbutton-focus-indicator-border-radius: 0px;
-
     margin-inline-start: var(
         --mod-actiongroup-horizontal-spacing-compact,
         var(--spectrum-actiongroup-horizontal-spacing-compact)
@@ -135,7 +133,6 @@ governing permissions and limitations under the License.
             var(--spectrum-actiongroup-border-radius)
         )
         0px;
-
     border-start-end-radius: var(
         --mod-actiongroup-border-radius,
         var(--spectrum-actiongroup-border-radius)
@@ -192,7 +189,6 @@ governing permissions and limitations under the License.
             var(--spectrum-actiongroup-border-radius)
         )
         0px 0px;
-
     border-start-start-radius: var(
         --mod-actiongroup-border-radius,
         var(--spectrum-actiongroup-border-radius)
@@ -244,7 +240,6 @@ governing permissions and limitations under the License.
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)
         );
-
     border-end-end-radius: var(
         --mod-actiongroup-border-radius,
         var(--spectrum-actiongroup-border-radius)

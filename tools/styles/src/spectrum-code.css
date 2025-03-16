@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 @media (forced-colors: active) {
     .spectrum-Code {
-        --highcontrast-code-font-color: text;
+        --highcontrast-code-font-color: Text;
     }
 }
 
@@ -42,7 +42,6 @@ governing permissions and limitations under the License.
     --spectrum-code-font-family: var(--spectrum-code-font-family-stack);
     --spectrum-code-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
     --spectrum-code-font-color: var(--spectrum-code-color);
-
     font-family: var(--mod-code-font-family, var(--spectrum-code-font-family));
     font-style: var(--mod-code-font-style, var(--spectrum-code-font-style));
     font-weight: var(--mod-code-font-weight, var(--spectrum-code-font-weight));

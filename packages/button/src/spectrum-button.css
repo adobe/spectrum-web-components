@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     cursor: pointer;
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     box-sizing: border-box;
     font-family: var(
@@ -31,7 +31,7 @@ governing permissions and limitations under the License.
     );
     text-transform: none;
     vertical-align: top;
-    appearance: button;
+    -webkit-appearance: button;
     transition:
         background
             var(
@@ -72,7 +72,7 @@ governing permissions and limitations under the License.
     justify-content: center;
     align-items: center;
     margin: 0;
-    text-decoration: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     overflow: visible;
@@ -661,7 +661,6 @@ governing permissions and limitations under the License.
         )
     );
     --mod-progress-circle-position: absolute;
-
     border-radius: var(--spectrum-button-border-radius);
     border-width: var(--spectrum-button-border-width);
     font-size: var(--spectrum-button-font-size);
@@ -825,7 +824,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-button-intended-icon-size)
             )
     );
-
     margin-block-start: var(
         --mod-button-icon-margin-block-start,
         max(
@@ -898,7 +896,6 @@ sp-progress-circle {
                 )
         )
     );
-
     color: inherit;
     flex-shrink: 0;
     align-self: flex-start;

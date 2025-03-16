@@ -25,7 +25,6 @@ governing permissions and limitations under the License.
             var(--spectrum-table-icon-color-default)
         )
     );
-
     box-sizing: border-box;
     text-align: start;
     vertical-align: var(
@@ -198,7 +197,6 @@ governing permissions and limitations under the License.
 
 :host(:host) sp-checkbox {
     --mod-checkbox-spacing: 0px;
-
     min-block-size: 0;
 }
 

@@ -608,7 +608,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-checkbox-control-size)
             )
     );
-
     margin: calc(
             var(--mod-checkbox-spacing, var(--spectrum-checkbox-spacing)) / 2
         )

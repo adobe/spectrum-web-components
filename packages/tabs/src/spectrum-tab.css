@@ -31,7 +31,7 @@ governing permissions and limitations under the License.
         ease-out;
     cursor: pointer;
     outline: none;
-    text-decoration: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
     position: relative;
 }
@@ -154,7 +154,7 @@ governing permissions and limitations under the License.
         --mod-tabs-bottom-to-text,
         var(--spectrum-tabs-bottom-to-text)
     );
-    text-decoration: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-block;
 }

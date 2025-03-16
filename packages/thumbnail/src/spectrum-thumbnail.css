@@ -128,7 +128,6 @@ governing permissions and limitations under the License.
     --spectrum-thumbnail-color-opacity-disabled: var(
         --spectrum-thumbnail-opacity-disabled
     );
-
     inline-size: var(--spectrum-thumbnail-size);
     block-size: var(--spectrum-thumbnail-size);
     z-index: 0;
@@ -288,7 +287,6 @@ governing permissions and limitations under the License.
         --highcontrast-thumbnail-border-color: CanvasText;
         --highcontrast-thumbnail-layer-border-color-inner: Canvas;
         --highcontrast-thumbnail-layer-border-color-outer: CanvasText;
-
         forced-color-adjust: none;
     }
 }

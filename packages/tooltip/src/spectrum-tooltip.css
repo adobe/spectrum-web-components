@@ -115,7 +115,6 @@ governing permissions and limitations under the License.
         --highcontrast-tooltip-background-color-informative: CanvasText;
         --highcontrast-tooltip-background-color-positive: CanvasText;
         --highcontrast-tooltip-background-color-negative: CanvasText;
-
         forced-color-adjust: none;
     }
 }
@@ -161,7 +160,7 @@ governing permissions and limitations under the License.
     word-break: break-word;
     -webkit-font-smoothing: antialiased;
     cursor: default;
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     flex-direction: row;
     align-items: center;

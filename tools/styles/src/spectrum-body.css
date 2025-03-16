@@ -20,7 +20,7 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     .spectrum-Body {
-        --highcontrast-body-font-color: text;
+        --highcontrast-body-font-color: Text;
     }
 }
 
@@ -61,7 +61,6 @@ governing permissions and limitations under the License.
     --spectrum-body-cjk-font-family: var(--spectrum-cjk-font-family-stack);
     --spectrum-body-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
     --spectrum-body-font-color: var(--spectrum-body-color);
-
     font-family: var(
         --mod-body-sans-serif-font-family,
         var(--spectrum-body-sans-serif-font-family)

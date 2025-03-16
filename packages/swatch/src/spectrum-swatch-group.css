@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-swatchgroup-spacing: var(--spectrum-spacing-75);
-
     justify-content: flex-start;
     align-items: flex-start;
     gap: var(

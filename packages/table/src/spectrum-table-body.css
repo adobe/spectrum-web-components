@@ -23,7 +23,6 @@ governing permissions and limitations under the License.
 
 :host([drop-target]) {
     --mod-table-border-color: transparent;
-
     outline-width: var(
         --mod-table-focus-indicator-thickness,
         var(--spectrum-table-focus-indicator-thickness)

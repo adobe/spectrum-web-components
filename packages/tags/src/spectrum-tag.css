@@ -255,7 +255,7 @@ governing permissions and limitations under the License.
     box-sizing: border-box;
     vertical-align: bottom;
     max-inline-size: 100%;
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     transition:
         border-color
@@ -341,9 +341,8 @@ governing permissions and limitations under the License.
     --mod-clear-button-width: fit-content;
     --spectrum-clearbutton-fill-size: fit-content;
     --spectrum-clearbutton-fill-background-color: transparent;
-
     box-sizing: border-box;
-    color: currentcolor;
+    color: currentColor;
     margin-inline-start: calc(
         var(
                 --mod-tag-clear-button-spacing-inline-start,
@@ -914,7 +913,6 @@ governing permissions and limitations under the License.
         --highcontrast-tag-content-color-active: ButtonText;
         --highcontrast-tag-content-color-focus: ButtonText;
         --highcontrast-tag-focus-ring-color: Highlight;
-
         forced-color-adjust: none;
     }
 

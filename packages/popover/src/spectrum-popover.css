@@ -98,7 +98,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-popover-shadow-color)
             )
     );
-
     box-sizing: border-box;
     padding: var(
             --mod-popover-content-area-spacing-vertical,

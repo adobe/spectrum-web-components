@@ -751,7 +751,6 @@ governing permissions and limitations under the License.
         --highcontrast-switch-background-color-selected-focus: Highlight;
         --highcontrast-switch-background-color-selected-disabled: Highlight;
         --highcontrast-switch-focus-indicator-color: ButtonText;
-
         forced-color-adjust: none;
     }
 

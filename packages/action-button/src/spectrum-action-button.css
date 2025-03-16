@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     cursor: pointer;
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     box-sizing: border-box;
     font-family: var(
@@ -31,7 +31,7 @@ governing permissions and limitations under the License.
     );
     text-transform: none;
     vertical-align: top;
-    appearance: button;
+    -webkit-appearance: button;
     transition:
         background
             var(
@@ -73,7 +73,7 @@ governing permissions and limitations under the License.
     justify-content: center;
     align-items: center;
     margin: 0;
-    text-decoration: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     overflow: visible;
@@ -569,7 +569,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-actionbutton-border-width)
         )
     );
-
     min-inline-size: var(
         --mod-actionbutton-min-width,
         calc(

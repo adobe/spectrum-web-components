@@ -364,7 +364,6 @@ governing permissions and limitations under the License.
     --spectrum-menu-checkmark-display: var(
         --spectrum-menu-checkmark-display-hidden
     );
-
     padding-inline-start: var(
         --mod-menu-item-selectable-edge-to-text-not-selected,
         var(--spectrum-menu-item-selectable-edge-to-text-not-selected)
@@ -375,7 +374,6 @@ governing permissions and limitations under the License.
     --spectrum-menu-checkmark-display: var(
         --spectrum-menu-checkmark-display-shown
     );
-
     padding-inline-start: var(
         --mod-menu-item-label-inline-edge-to-content,
         var(--spectrum-menu-item-label-inline-edge-to-content)

@@ -108,7 +108,6 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
     --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
-
     flex-direction: column;
     margin: 0;
     padding: 0;

@@ -576,12 +576,12 @@ governing permissions and limitations under the License.
 }
 
 :host([type='number']) .input {
-    appearance: textfield;
+    -moz-appearance: textfield;
 }
 
 :host([type='number']) .input::-webkit-inner-spin-button,
 :host([type='number']) .input::-webkit-outer-spin-button {
-    appearance: none;
+    -webkit-appearance: none;
     margin: 0;
 }
 

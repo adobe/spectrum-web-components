@@ -197,7 +197,7 @@ governing permissions and limitations under the License.
     );
     background-color: var(--spectrum-card-background-color);
     flex-direction: column;
-    text-decoration: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     position: relative;
@@ -254,7 +254,6 @@ governing permissions and limitations under the License.
 
 :host([drop-target]) {
     --mod-card-background-color: var(--spectrum-background-base-color);
-
     box-shadow: 0 0 0 1px var(--spectrum-card-border-color);
 }
 
@@ -496,7 +495,6 @@ sp-divider {
 :host([variant='gallery']),
 :host([variant='quiet']) {
     --mod-card-border-color-hover: transparent;
-
     background-color: initial;
     border-width: 0;
     border-color: #0000;

@@ -29,7 +29,6 @@ governing permissions and limitations under the License.
     --spectrum-clear-button-icon-color-key-focus: var(
         --spectrum-neutral-content-color-key-focus
     );
-
     block-size: var(
         --mod-clear-button-height,
         var(--spectrum-clear-button-height)

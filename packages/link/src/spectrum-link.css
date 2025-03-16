@@ -38,7 +38,7 @@ governing permissions and limitations under the License.
 
 a {
     background-color: initial;
-    text-decoration-skip: objects;
+    -webkit-text-decoration-skip: objects;
     text-decoration-skip: objects;
     transition: color
         var(
@@ -58,7 +58,7 @@ a {
         )
     );
     outline: none;
-    text-decoration: underline;
+    -webkit-text-decoration: underline;
     text-decoration: underline;
 }
 
@@ -80,14 +80,13 @@ a:focus-visible {
             var(--spectrum-accent-content-color-key-focus)
         )
     );
-
-    text-decoration: underline double;
+    -webkit-text-decoration: underline double;
     text-decoration: underline double;
     text-decoration-color: inherit;
 }
 
 :host([quiet]) a {
-    text-decoration: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
 }
 
@@ -103,7 +102,7 @@ a:focus-visible {
     }
 
     :host([quiet]) a:hover {
-        text-decoration: underline;
+        -webkit-text-decoration: underline;
         text-decoration: underline;
     }
 }

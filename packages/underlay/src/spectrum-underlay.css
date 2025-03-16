@@ -43,7 +43,6 @@ governing permissions and limitations under the License.
         --mod-underlay-background-color,
         rgba(var(--spectrum-black-rgb), var(--spectrum-overlay-opacity))
     );
-
     pointer-events: none;
     visibility: hidden;
     opacity: 0;

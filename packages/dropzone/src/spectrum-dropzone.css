@@ -104,7 +104,6 @@ governing permissions and limitations under the License.
         --mod-drop-zone-content-edge-to-text,
         var(--spectrum-component-edge-to-text-300)
     );
-
     box-sizing: border-box;
     inline-size: var(--mod-drop-zone-width, var(--spectrum-drop-zone-width));
     padding: calc(
@@ -193,7 +192,6 @@ governing permissions and limitations under the License.
             var(--spectrum-drop-zone-border-color-hover)
         )
     );
-
     outline: 0;
 }
 

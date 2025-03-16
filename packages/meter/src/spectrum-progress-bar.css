@@ -274,7 +274,7 @@ governing permissions and limitations under the License.
         );
     }
 
-    100% {
+    to {
         transform: translate(
             calc(
                 var(--spectrum-progressbar-dir-indeterminate-multiplier) *

@@ -289,7 +289,6 @@ governing permissions and limitations under the License.
             var(--spectrum-stepper-border-color-keyboard-focus)
         )
     );
-
     outline: var(--spectrum-stepper-focus-indicator-width) solid;
     outline-color: var(--spectrum-stepper-focus-indicator-color);
     outline-offset: var(--spectrum-stepper-focus-indicator-gap);
@@ -517,7 +516,6 @@ governing permissions and limitations under the License.
                 ) * 2
         )
     );
-
     inline-size: var(--spectrum-stepper-width);
     block-size: var(--spectrum-stepper-height);
     border-radius: var(--spectrum-stepper-border-radius);

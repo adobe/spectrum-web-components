@@ -24,7 +24,7 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     .spectrum-Detail {
-        --highcontrast-detail-font-color: text;
+        --highcontrast-detail-font-color: Text;
     }
 }
 
@@ -62,7 +62,6 @@ governing permissions and limitations under the License.
             var(--spectrum-detail-margin-bottom-multiplier)
     );
     --spectrum-detail-font-color: var(--spectrum-detail-color);
-
     font-family: var(
         --mod-detail-sans-serif-font-family,
         var(--spectrum-detail-sans-serif-font-family)

@@ -79,13 +79,12 @@ governing permissions and limitations under the License.
     );
     --spectrum-slider-track-handleoffset: var(--spectrum-slider-handle-gap);
     --spectrum-slider-range-track-reset: 0;
-
     z-index: 0;
     min-inline-size: var(
         --mod-slider-min-size,
         var(--spectrum-slider-min-size)
     );
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     display: block;
     position: relative;
@@ -368,7 +367,7 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='range']) #value {
-    user-select: text;
+    -webkit-user-select: text;
     user-select: text;
 }
 

@@ -71,7 +71,6 @@ governing permissions and limitations under the License.
     --spectrum-illustrated-message-description-color: var(
         --spectrum-body-color
     );
-
     block-size: 100%;
     display: flex;
     display: var(--mod-illustrated-message-display, flex);
@@ -100,8 +99,8 @@ governing permissions and limitations under the License.
             var(--spectrum-illustrated-message-illustration-color)
         )
     );
-    fill: currentcolor;
-    stroke: currentcolor;
+    fill: currentColor;
+    stroke: currentColor;
     margin-block-end: var(
         --mod-illustrated-message-title-to-heading,
         var(--spectrum-illustrated-message-title-to-heading)
@@ -116,8 +115,8 @@ governing permissions and limitations under the License.
             var(--spectrum-illustrated-message-illustration-accent-color)
         )
     );
-    fill: currentcolor;
-    stroke: currentcolor;
+    fill: currentColor;
+    stroke: currentColor;
 }
 
 #heading {

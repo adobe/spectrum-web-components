@@ -61,7 +61,6 @@ governing permissions and limitations under the License.
 @media (forced-colors: active) {
     :host {
         --highcontrast-toast-border-color: ButtonText;
-
         border: var(
                 --mod-toast-border-width,
                 var(--spectrum-toast-border-width)

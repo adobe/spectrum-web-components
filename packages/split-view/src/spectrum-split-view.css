@@ -31,7 +31,6 @@ governing permissions and limitations under the License.
     --spectrum-splitview-gripper-border-width-vertical: var(
         --spectrum-border-width-400
     );
-
     display: flex;
     overflow: hidden;
 }
@@ -124,7 +123,7 @@ governing permissions and limitations under the License.
             var(--spectrum-splitview-handle-background-color)
         )
     );
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     inline-size: var(
         --mod-splitview-handle-width,

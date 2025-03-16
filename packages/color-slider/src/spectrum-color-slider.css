@@ -16,7 +16,6 @@ governing permissions and limitations under the License.
         --highcontrast-color-slider-border-color: CanvasText;
         --highcontrast-color-slider-border-color-disabled: GrayText;
         --highcontrast-color-slider-background-color-disabled: Canvas;
-
         forced-color-adjust: none;
     }
 }
@@ -30,7 +29,6 @@ governing permissions and limitations under the License.
         --mod-color-slider-handle-hitarea-border-radius,
         0px
     );
-
     min-inline-size: var(
         --mod-color-slider-minimum-length,
         var(--spectrum-color-slider-minimum-length)
@@ -43,7 +41,7 @@ governing permissions and limitations under the License.
         --mod-color-slider-control-track-width,
         var(--spectrum-color-control-track-width)
     );
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     cursor: default;
     display: block;
@@ -130,7 +128,6 @@ governing permissions and limitations under the License.
             var(--spectrum-disabled-background-color)
         )
     );
-
     background: var(
         --highcontrast-color-slider-background-color-disabled,
         var(

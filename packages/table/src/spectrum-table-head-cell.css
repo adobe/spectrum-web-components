@@ -38,7 +38,6 @@ governing permissions and limitations under the License.
             var(--spectrum-table-icon-color-default)
         )
     );
-
     box-sizing: border-box;
     text-align: start;
     vertical-align: var(

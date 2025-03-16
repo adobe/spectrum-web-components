@@ -59,7 +59,6 @@ governing permissions and limitations under the License.
     --spectrum-alert-dialog-divider-to-description: var(--spectrum-spacing-300);
     --spectrum-alert-dialog-title-to-icon: var(--spectrum-spacing-300);
     --mod-buttongroup-justify-content: flex-end;
-
     box-sizing: border-box;
     inline-size: fit-content;
     min-inline-size: var(

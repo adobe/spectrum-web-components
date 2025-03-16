@@ -89,10 +89,9 @@ governing permissions and limitations under the License.
     --spectrum-swatch-focus-indicator-color: var(
         --spectrum-focus-indicator-color
     );
-
     inline-size: var(--mod-swatch-size, var(--spectrum-swatch-size));
     block-size: var(--mod-swatch-size, var(--spectrum-swatch-size));
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     outline: none;
     justify-content: center;

@@ -81,7 +81,7 @@ governing permissions and limitations under the License.
         '. . . . submenuArea . . .'
         / auto auto auto auto 1fr auto auto auto;
     align-items: center;
-    text-decoration: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: grid;
     position: relative;
@@ -90,7 +90,6 @@ governing permissions and limitations under the License.
 .spectrum-Menu-itemCheckbox {
     --mod-checkbox-top-to-text: 0;
     --mod-checkbox-text-to-control: 0;
-
     min-block-size: 0;
 }
 
@@ -382,7 +381,6 @@ governing permissions and limitations under the License.
 #label {
     --mod-switch-control-label-spacing: 0;
     --mod-switch-spacing-top-to-label: 0;
-
     font-size: var(
         --mod-menu-item-label-font-size,
         var(--spectrum-menu-item-label-font-size)

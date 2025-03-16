@@ -25,7 +25,6 @@ governing permissions and limitations under the License.
     --mod-popover-corner-radius: var(--spectrum-corner-radius-100);
     --mod-popover-content-area-spacing-vertical: 0;
     --mod-button-edge-to-visual-only: 9px;
-
     min-inline-size: var(
         --mod-coachmark-min-width,
         var(--spectrum-coach-mark-minimum-width)

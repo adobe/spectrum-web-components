@@ -24,7 +24,7 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     .spectrum-Heading {
-        --highcontrast-heading-font-color: text;
+        --highcontrast-heading-font-color: Text;
     }
 }
 
@@ -87,7 +87,6 @@ governing permissions and limitations under the License.
         var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
             var(--spectrum-heading-margin-bottom-multiplier)
     );
-
     font-family: var(
         --mod-heading-sans-serif-font-family,
         var(--spectrum-heading-sans-serif-font-family)

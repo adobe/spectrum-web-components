@@ -35,7 +35,6 @@ governing permissions and limitations under the License.
         var(--spectrum-color-handle-inner-border-opacity)
     );
     --mod-opacity-checkerboard-position: 50%;
-
     z-index: 1;
     box-sizing: border-box;
     inline-size: var(--mod-colorhandle-size, var(--spectrum-color-handle-size));

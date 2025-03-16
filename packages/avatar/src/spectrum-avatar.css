@@ -90,7 +90,7 @@ governing permissions and limitations under the License.
         var(--spectrum-avatar-border-radius)
     );
     -webkit-user-drag: none;
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     opacity: var(
         --mod-avatar-color-opacity,

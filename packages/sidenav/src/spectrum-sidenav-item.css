@@ -31,7 +31,6 @@ governing permissions and limitations under the License.
         --highcontrast-sidenav-top-level-font-color: ButtonText;
         --highcontrast-sidenav-content-color-default: ButtonText;
         --highcontrast-sidenav-content-color-down: HighlightText;
-
         forced-color-adjust: none;
     }
 }
@@ -127,7 +126,6 @@ governing permissions and limitations under the License.
     --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
     --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
-
     flex-direction: column;
     margin: 0;
     padding: 0;
@@ -274,7 +272,7 @@ governing permissions and limitations under the License.
     );
     justify-content: start;
     margin-block-end: var(--mod-sidenav-gap, var(--spectrum-sidenav-gap));
-    text-decoration: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     position: relative;

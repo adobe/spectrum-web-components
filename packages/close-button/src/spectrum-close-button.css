@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     cursor: pointer;
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     box-sizing: border-box;
     font-family: var(
@@ -31,7 +31,7 @@ governing permissions and limitations under the License.
     );
     text-transform: none;
     vertical-align: top;
-    appearance: button;
+    -webkit-appearance: button;
     transition:
         background
             var(
@@ -71,7 +71,7 @@ governing permissions and limitations under the License.
             ease-out;
     border-style: solid;
     margin: 0;
-    text-decoration: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
     overflow: visible;
 }
@@ -86,9 +86,9 @@ governing permissions and limitations under the License.
 }
 
 :host a {
+    -webkit-user-select: none;
     user-select: none;
-    user-select: none;
-    appearance: none;
+    -webkit-appearance: none;
 }
 
 @media (forced-colors: active) {
@@ -163,7 +163,6 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-animation-duration: var(
         --spectrum-animation-duration-100
     );
-
     block-size: var(--mod-closebutton-height, var(--spectrum-closebutton-size));
     inline-size: var(
         --mod-closebutton-width,

@@ -20,12 +20,11 @@ governing permissions and limitations under the License.
         --mod-icon-block-size,
         var(--mod-icon-size, var(--spectrum-icon-size))
     );
-
     inline-size: var(--spectrum-icon-inline-size);
     block-size: var(--spectrum-icon-block-size);
     color: inherit;
     color: var(--mod-icon-color, inherit);
-    fill: currentcolor;
+    fill: currentColor;
     pointer-events: none;
     display: inline-block;
 }

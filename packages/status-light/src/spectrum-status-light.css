@@ -164,7 +164,6 @@ governing permissions and limitations under the License.
     --spectrum-statuslight-nonsemantic-magenta-color: var(
         --spectrum-magenta-visual-color
     );
-
     min-block-size: var(
         --mod-statuslight-height,
         var(--spectrum-statuslight-height)
@@ -224,7 +223,6 @@ governing permissions and limitations under the License.
                 var(--spectrum-statuslight-spacing-top-to-label)
             )
     );
-
     content: '';
     inline-size: var(
         --mod-statuslight-dot-size,
@@ -403,7 +401,6 @@ governing permissions and limitations under the License.
     :host([dir]) {
         --highcontrast-statuslight-content-color-default: CanvasText;
         --highcontrast-statuslight-subdued-content-color-default: CanvasText;
-
         forced-color-adjust: none;
     }
 

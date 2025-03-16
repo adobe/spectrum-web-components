@@ -34,7 +34,6 @@ governing permissions and limitations under the License.
         --mod-asset-icon-outline-color,
         var(--spectrum-asset-icon-outline-color)
     );
-
     inline-size: 100%;
     block-size: 100%;
     justify-content: center;
@@ -79,6 +78,6 @@ governing permissions and limitations under the License.
 
 @media (forced-colors: active) {
     :host {
-        --highcontrast-asset-icon-background-color: currentcolor;
+        --highcontrast-asset-icon-background-color: currentColor;
     }
 }

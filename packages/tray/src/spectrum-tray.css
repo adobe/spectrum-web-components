@@ -45,7 +45,6 @@ governing permissions and limitations under the License.
         )
     );
     --mod-modal-max-width: 100%;
-
     inline-size: 100%;
     max-inline-size: 100%;
     max-block-size: calc(100vh - 64px);
@@ -110,7 +109,6 @@ governing permissions and limitations under the License.
 @media (forced-colors: active) {
     .tray {
         --highcontrast-tray-background-color: Canvas;
-
         border: solid;
     }
 

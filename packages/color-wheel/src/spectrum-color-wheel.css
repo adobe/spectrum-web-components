@@ -15,7 +15,6 @@ governing permissions and limitations under the License.
     :host {
         --highcontrast-colorwheel-border-color-disabled: GrayText;
         --highcontrast-colorwheel-fill-color-disabled: Canvas;
-
         forced-color-adjust: none;
     }
 }
@@ -43,14 +42,13 @@ governing permissions and limitations under the License.
     );
     --_track-width: var(--spectrum-colorwheel-track-width);
     --_border-width: var(--spectrum-colorwheel-border-width);
-
     min-inline-size: var(
         --mod-colorwheel-min-width,
         var(--spectrum-color-wheel-minimum-width)
     );
     inline-size: var(--spectrum-colorwheel-width);
     block-size: var(--spectrum-colorwheel-height);
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     cursor: default;
     display: block;

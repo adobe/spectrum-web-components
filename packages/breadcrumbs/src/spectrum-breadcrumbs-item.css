@@ -137,7 +137,7 @@ governing permissions and limitations under the License.
         --mod-breadcrumbs-text-spacing-block-end,
         var(--spectrum-breadcrumbs-text-spacing-block-end)
     );
-    text-decoration: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: block;
     position: relative;
@@ -171,7 +171,7 @@ governing permissions and limitations under the License.
 
 #item-link[href]:focus-visible,
 #item-link[tabindex]:focus-visible {
-    text-decoration: underline;
+    -webkit-text-decoration: underline;
     text-decoration: underline;
     text-decoration-thickness: var(
         --mod-breadcrumbs-text-decoration-thickness,
@@ -186,7 +186,7 @@ governing permissions and limitations under the License.
 @media (hover: hover) {
     #item-link[href]:hover,
     #item-link[tabindex]:hover {
-        text-decoration: underline;
+        -webkit-text-decoration: underline;
         text-decoration: underline;
         text-decoration-thickness: var(
             --mod-breadcrumbs-text-decoration-thickness,

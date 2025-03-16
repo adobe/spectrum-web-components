@@ -31,7 +31,6 @@ governing permissions and limitations under the License.
     --spectrum-helptext-icon-color-default: var(
         --spectrum-neutral-subdued-content-color-default
     );
-
     color: var(
         --highcontrast-helptext-content-color-default,
         var(
