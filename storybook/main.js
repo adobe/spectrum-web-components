@@ -29,6 +29,8 @@ export default {
             : []),
         // https://geometricpanda.github.io/storybook-addon-badges/
         '@geometricpanda/storybook-addon-badges',
+        // https://www.chromatic.com/docs/visual-tests-addon/
+        // '@chromatic-com/storybook',
     ],
     framework: {
         name: '@storybook/web-components-webpack5',
