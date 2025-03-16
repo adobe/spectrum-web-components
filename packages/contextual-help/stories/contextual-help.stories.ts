@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { argTypes, StoryArgs } from './args.js';
+import { argTypes, Properties } from './args.js';
 import { Template } from './template.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
@@ -25,33 +25,41 @@ export default {
     argTypes,
 };
 
-export const Default = (args?: StoryArgs): TemplateResult => Template(args);
-Default.args = {
-    open: true,
+export const Default = {
+    render: (args?: Properties): TemplateResult => Template(args),
+
+    args: {
+        open: true,
+    },
 };
 
-export const Help = (args?: StoryArgs): TemplateResult => Template(args);
-Help.args = {
-    variant: 'help',
-    open: true,
+export const Help = {
+    render: (args?: Properties): TemplateResult => Template(args),
+
+    args: {
+        variant: 'help',
+        open: true,
+    },
 };
 
-export const CustomPlacement = (args?: StoryArgs): TemplateResult => {
-    return html`
-        <div
-            style="width: 100%; height: 500px; display: flex; align-items: center; justify-content: center"
-        >
-            ${Template(args)}
-        </div>
-    `;
+export const CustomPlacement = {
+    render: (args?: Properties): TemplateResult => {
+        return html`
+            <div
+                style="width: 100%; height: 500px; display: flex; align-items: center; justify-content: center"
+            >
+                ${Template(args)}
+            </div>
+        `;
+    },
+
+    args: {
+        placement: 'top',
+        open: true,
+    },
 };
 
-CustomPlacement.args = {
-    placement: 'top',
-    open: true,
-};
-
-export const customMaxWidth = (args?: StoryArgs): TemplateResult => {
+export const customMaxWidth = (args?: Properties): TemplateResult => {
     return html`
         <sp-contextual-help
             ${spreadProps(args || {})}

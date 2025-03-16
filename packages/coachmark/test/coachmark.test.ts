@@ -29,9 +29,9 @@ import {
     Default,
     InTour,
     single,
-    withImage,
-    withKeys,
-    withShortCut,
+    WithImage,
+    WithKeys,
+    WithShortcut,
 } from '../stories/coachmark.stories.js';
 
 const defaultItem: CoachmarkItem = {
@@ -41,17 +41,15 @@ const defaultItem: CoachmarkItem = {
 describe('Coachmark', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Coachmark>(
-                html`
-                    <sp-coachmark
-                        id="coachmark"
-                        .content=${{
-                            title: defaultItem.heading,
-                            description: defaultItem.content,
-                        }}
-                    ></sp-coachmark>
-                `
-            )
+            await fixture<Coachmark>(html`
+                <sp-coachmark
+                    id="coachmark"
+                    .content=${{
+                        title: defaultItem.heading,
+                        description: defaultItem.content,
+                    }}
+                ></sp-coachmark>
+            `)
     );
     it('loads default coachmark accessibly', async () => {
         const el = await fixture<Coachmark>(Default());
@@ -82,7 +80,7 @@ describe('Coachmark', () => {
     });
     it('if in tour coachmark loads with pagination with previous, next buttons and action menu', async () => {
         const el = await fixture<Coachmark>(
-            InTour(
+            InTour.render(
                 {
                     open: true,
                     heading: 'Coachmark In Tour',
@@ -119,7 +117,7 @@ describe('Coachmark', () => {
     });
     it('loads pagination when total step count is greater than 1', async () => {
         const el = await fixture<Coachmark>(
-            InTour(
+            InTour.render(
                 {
                     open: true,
                     heading: 'Coachmark In Tour',
@@ -151,7 +149,7 @@ describe('Coachmark', () => {
     it('renders modifier keys with joiner', async () => {
         const modifierKeys = ['⇧ Shift', '⌘'];
         const el = await fixture<Coachmark>(
-            withKeys({
+            WithKeys.render({
                 modifierKeys,
                 heading: 'Coachmark with Keys',
                 content: 'This is a Coachmark with nothing but text in it.',
@@ -167,7 +165,7 @@ describe('Coachmark', () => {
     });
     it('renders with shortcut', async () => {
         const el = await fixture<Coachmark>(
-            withShortCut({
+            WithShortcut.render({
                 currentStep: 1,
                 totalSteps: 8,
             })
@@ -182,7 +180,7 @@ describe('Coachmark', () => {
     });
     it('renders content with image asset', async () => {
         const el = await fixture<Coachmark>(
-            withImage({
+            WithImage.render({
                 currentStep: 1,
                 totalSteps: 8,
             })
@@ -199,7 +197,7 @@ describe('Coachmark', () => {
         const handlePrimary = (): void => primarySpy();
         const handleSecondary = (): void => secondarySpy();
         const el = await fixture<Coachmark>(
-            InTour(
+            InTour.render(
                 {
                     open: true,
                     heading: 'Coachmark in Tour',

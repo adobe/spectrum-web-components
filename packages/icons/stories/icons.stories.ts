@@ -24,22 +24,26 @@ export default {
     },
 };
 
-interface Properties {
+export interface Properties {
     color: string;
 }
 
-export const listMedium = ({ color }: Properties): TemplateResult => html`
-    <icons-demo style="color: ${color}">
-        <sp-icons-medium></sp-icons-medium>
-    </icons-demo>
-`;
+export const listMedium = {
+    render: ({ color }: Properties): TemplateResult => html`
+        <icons-demo style="color: ${color}">
+            <sp-icons-medium></sp-icons-medium>
+        </icons-demo>
+    `,
 
-listMedium.storyName = 'UI Icons - Medium';
+    name: 'UI Icons - Medium',
+};
 
-export const listLarge = ({ color }: Properties): TemplateResult => html`
-    <icons-demo style="color: ${color}">
-        <sp-icons-large></sp-icons-large>
-    </icons-demo>
-`;
+export const listLarge = {
+    render: ({ color }: Properties): TemplateResult => html`
+        <icons-demo style="color: ${color}">
+            <sp-icons-large></sp-icons-large>
+        </icons-demo>
+    `,
 
-listLarge.storyName = 'UI Icons - Large';
+    name: 'UI Icons - Large',
+};

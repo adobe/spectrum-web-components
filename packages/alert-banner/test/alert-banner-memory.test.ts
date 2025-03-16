@@ -13,4 +13,4 @@ governing permissions and limitations under the License.
 import Props, { Default } from '../stories/alert-banner.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(Default(Props.args));
+testForMemoryLeaks(Default.render(Props.args));

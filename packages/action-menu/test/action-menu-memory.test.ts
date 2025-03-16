@@ -13,4 +13,4 @@ governing permissions and limitations under the License.
 import { Default } from '../stories/action-menu.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(Default({}));
+testForMemoryLeaks(Default.render({}));

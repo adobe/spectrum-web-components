@@ -82,8 +82,10 @@ export const XL = (): TemplateResult => html`
     <sp-status-light size="xl" variant="purple">purple</sp-status-light>
 `;
 
-export const disabledTrue = (): TemplateResult => html`
-    <sp-status-light variant="positive" disabled>positive</sp-status-light>
-`;
+export const disabledTrue = {
+    render: (): TemplateResult => html`
+        <sp-status-light variant="positive" disabled>positive</sp-status-light>
+    `,
 
-disabledTrue.storyName = 'disabled: true';
+    name: 'disabled: true',
+};

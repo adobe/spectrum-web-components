@@ -24,7 +24,7 @@ export default {
     argTypes,
 };
 
-type Properties = {
+export interface Properties {
     quiet?: boolean;
     readonly?: boolean;
     disabled?: boolean;
@@ -32,44 +32,58 @@ type Properties = {
     value?: string;
     label?: string;
     size?: 's' | 'm' | 'l' | 'xl';
+}
+
+export const Default = {
+    render: (args?: Properties): TemplateResult => ColorFieldMarkup(args),
 };
 
-export const Default = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+export const Quiet = {
+    render: (args?: Properties): TemplateResult => ColorFieldMarkup(args),
 
-export const Quiet = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
-Quiet.args = {
-    quiet: true,
+    args: {
+        quiet: true,
+    },
 };
 
-export const ReadOnly = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
-ReadOnly.args = {
-    readonly: true,
-    value: 'rgb(255,255,255)',
+export const ReadOnly = {
+    render: (args?: Properties): TemplateResult => ColorFieldMarkup(args),
+
+    args: {
+        readonly: true,
+        value: 'rgb(255,255,255)',
+    },
 };
 
-export const Disabled = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
-Disabled.args = {
-    disabled: true,
-};
-export const viewColor = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
-viewColor.args = {
-    viewColor: true,
-    value: 'rgb(255,255,0)',
+export const Disabled = {
+    render: (args?: Properties): TemplateResult => ColorFieldMarkup(args),
+
+    args: {
+        disabled: true,
+    },
 };
 
-export const WrongInput = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
+export const viewColor = {
+    render: (args?: Properties): TemplateResult => ColorFieldMarkup(args),
 
-WrongInput.args = {
-    value: 'apple',
+    args: {
+        viewColor: true,
+        value: 'rgb(255,255,0)',
+    },
 };
-export const RightInput = (args?: Properties): TemplateResult =>
-    ColorFieldMarkup(args);
-RightInput.args = {
-    value: '#a8323a',
+
+export const WrongInput = {
+    render: (args?: Properties): TemplateResult => ColorFieldMarkup(args),
+
+    args: {
+        value: 'apple',
+    },
+};
+
+export const RightInput = {
+    render: (args?: Properties): TemplateResult => ColorFieldMarkup(args),
+
+    args: {
+        value: '#a8323a',
+    },
 };

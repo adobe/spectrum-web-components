@@ -16,7 +16,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js';
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 
-export type StoryArgs = {
+export type Properties = {
     compact?: boolean;
     disabled?: boolean;
     label?: string;
@@ -74,7 +74,7 @@ export const getResizableStyles = (): TemplateResult => {
     `;
 };
 
-export const Template = (args: StoryArgs): TemplateResult => html`
+export const Template = (args: Properties): TemplateResult => html`
     <sp-breadcrumbs
         ${spreadProps(args)}
         max-visible-items=${ifDefined(args['max-visible-items'])}

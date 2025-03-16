@@ -61,37 +61,41 @@ export default {
     },
 };
 
-export const Default = ({ content }: { content: string }): TemplateResult => {
-    return html`
-        <div style="color: var(--spectrum-gray-800)">
-            <sp-popover variant="default" open style="max-width: 320px">
-                <div style="font-size: 14px; padding: 10px">${content}</div>
-            </sp-popover>
-        </div>
-    `;
-};
-Default.args = {
-    content: 'The quick brown fox jumps over the lazy dog',
-};
-Default.argTypes = {
-    content: {
-        name: 'content',
-        type: { name: 'string', required: false },
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: '' },
+export const Default = {
+    render: ({ content }: { content: string }): TemplateResult => {
+        return html`
+            <div style="color: var(--spectrum-gray-800)">
+                <sp-popover variant="default" open style="max-width: 320px">
+                    <div style="font-size: 14px; padding: 10px">${content}</div>
+                </sp-popover>
+            </div>
+        `;
+    },
+
+    args: {
+        content: 'The quick brown fox jumps over the lazy dog',
+    },
+
+    argTypes: {
+        content: {
+            name: 'content',
+            type: { name: 'string', required: false },
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
+            },
+            control: 'text',
         },
-        control: 'text',
     },
 };
 
-interface StoryArgs {
+export interface Properties {
     tip?: boolean;
     placement: Placement;
     open?: boolean;
 }
 
-const Template = ({ tip, placement, open }: StoryArgs): TemplateResult => {
+const Template = ({ tip, placement, open }: Properties): TemplateResult => {
     return html`
         <div
             style="color: var(--spectrum-gray-800); position: relative; display: contents"
@@ -114,25 +118,40 @@ const Template = ({ tip, placement, open }: StoryArgs): TemplateResult => {
     `;
 };
 
-export const dialogTop = (args: StoryArgs): TemplateResult => Template(args);
-dialogTop.args = {
-    tip: true,
-    placement: 'top',
+export const dialogTop = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        tip: true,
+        placement: 'top',
+    },
 };
-export const dialogRight = (args: StoryArgs): TemplateResult => Template(args);
-dialogRight.args = {
-    tip: true,
-    placement: 'right',
+
+export const dialogRight = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        tip: true,
+        placement: 'right',
+    },
 };
-export const dialogBottom = (args: StoryArgs): TemplateResult => Template(args);
-dialogBottom.args = {
-    tip: true,
-    placement: 'bottom',
+
+export const dialogBottom = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        tip: true,
+        placement: 'bottom',
+    },
 };
-export const dialogLeft = (args: StoryArgs): TemplateResult => Template(args);
-dialogLeft.args = {
-    tip: true,
-    placement: 'left',
+
+export const dialogLeft = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        tip: true,
+        placement: 'left',
+    },
 };
 
 const overlayStyles = html`
@@ -200,11 +219,22 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
     `;
 };
 
-export const overlaidTop = (): TemplateResult => overlaid('top');
-overlaidTop.decorators = [isOverlayOpen];
-export const overlaidRight = (): TemplateResult => overlaid('right');
-overlaidRight.decorators = [isOverlayOpen];
-export const overlaidBottom = (): TemplateResult => overlaid('bottom');
-overlaidBottom.decorators = [isOverlayOpen];
-export const overlaidLeft = (): TemplateResult => overlaid('left');
-overlaidLeft.decorators = [isOverlayOpen];
+export const overlaidTop = {
+    render: (): TemplateResult => overlaid('top'),
+    decorators: [isOverlayOpen],
+};
+
+export const overlaidRight = {
+    render: (): TemplateResult => overlaid('right'),
+    decorators: [isOverlayOpen],
+};
+
+export const overlaidBottom = {
+    render: (): TemplateResult => overlaid('bottom'),
+    decorators: [isOverlayOpen],
+};
+
+export const overlaidLeft = {
+    render: (): TemplateResult => overlaid('left'),
+    decorators: [isOverlayOpen],
+};

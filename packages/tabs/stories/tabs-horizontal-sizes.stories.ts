@@ -61,7 +61,7 @@ export default {
     },
 };
 
-interface Properties {
+export interface Properties {
     direction?: 'vertical' | 'vertical-right' | 'horizontal';
     verticalTab?: boolean;
     auto?: boolean;
@@ -93,22 +93,34 @@ const template = (args: Properties): TemplateResult => {
     `;
 };
 
-export const s = (args: Properties): TemplateResult => template(args);
-s.args = {
-    size: 's',
+export const s = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        size: 's',
+    },
 };
 
-export const m = (args: Properties): TemplateResult => template(args);
-m.args = {
-    size: 'm',
+export const m = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        size: 'm',
+    },
 };
 
-export const l = (args: Properties): TemplateResult => template(args);
-l.args = {
-    size: 'l',
+export const l = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        size: 'l',
+    },
 };
 
-export const XL = (args: Properties): TemplateResult => template(args);
-XL.args = {
-    size: 'XL',
+export const XL = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        size: 'XL',
+    },
 };

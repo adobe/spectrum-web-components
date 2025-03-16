@@ -22,7 +22,7 @@ document.adoptedStyleSheets = [
     chevronStyles.styleSheet as CSSStyleSheet,
 ];
 
-export type StoryArgs = {
+export type Properties = {
     block?: 'start' | 'end';
     content?: () => TemplateResult;
     disabled?: boolean;
@@ -39,7 +39,7 @@ export const args = {
     label: 'Add',
     size: undefined,
     quiet: false,
-} as StoryArgs;
+} as Properties;
 
 export const argTypes = {
     block: {
@@ -109,7 +109,7 @@ export const Template = ({
     label,
     size,
     quiet,
-}: StoryArgs): TemplateResult => {
+}: Properties): TemplateResult => {
     return html`
         <sp-infield-button
             block=${ifDefined(block)}

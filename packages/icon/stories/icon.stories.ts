@@ -45,70 +45,76 @@ export const Large = (): TemplateResult => {
     `;
 };
 
-export const imageIcon = (): TemplateResult => {
-    return html`
-        ${sizes.map(
-            (size) => html`
-                <sp-icon label="Back" size=${size} src=${back}></sp-icon>
-            `
-        )}
-    `;
+export const imageIcon = {
+    render: (): TemplateResult => {
+        return html`
+            ${sizes.map(
+                (size) => html`
+                    <sp-icon label="Back" size=${size} src=${back}></sp-icon>
+                `
+            )}
+        `;
+    },
+
+    name: 'Image Icon',
 };
 
-imageIcon.storyName = 'Image Icon';
+export const imageIconSrcError = {
+    render: (): TemplateResult => {
+        const invalidImgSrc = 'invalid-image-src';
+        const error = (): void => {
+            console.error('Invalid sp-icon src provided');
+        };
 
-export const imageIconSrcError = (): TemplateResult => {
-    const invalidImgSrc = 'invalid-image-src';
-    const error = (): void => {
-        console.error('Invalid sp-icon src provided');
-    };
+        return html`
+            ${sizes.map(
+                (size) => html`
+                    <sp-icon
+                        label="Back"
+                        size=${size}
+                        src=${invalidImgSrc}
+                        @error=${error}
+                    ></sp-icon>
+                `
+            )}
+        `;
+    },
 
-    return html`
-        ${sizes.map(
-            (size) => html`
-                <sp-icon
-                    label="Back"
-                    size=${size}
-                    src=${invalidImgSrc}
-                    @error=${error}
-                ></sp-icon>
-            `
-        )}
-    `;
+    name: 'Image Icon src invalid error',
+
+    swc_vrt: {
+        skip: true,
+    },
+
+    parameters: {
+        // Disables Chromatic's snapshotting on a global level
+        chromatic: { disableSnapshot: true },
+    },
 };
 
-imageIconSrcError.storyName = 'Image Icon src invalid error';
+export const svgIcon = {
+    render: (): TemplateResult => {
+        return html`
+            ${sizes.map(
+                (size) => html`
+                    <sp-icon size=${size}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 22 22"
+                            fill="currentColor"
+                            height="18"
+                            width="18"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M19.75,10.04h-15l5.97-5.97a.483.483,0,0,0,0-.7l-.35-.36a.513.513,0,0,0-.71,0L2.24,10.44a.513.513,0,0,0,0,.71l7.39,7.84a.513.513,0,0,0,.71,0l.35-.35a.513.513,0,0,0,0-.71L4.76,11.5H19.75a.25.25,0,0,0,.25-.25v-.96A.25.25,0,0,0,19.75,10.04Z"
+                            ></path>
+                        </svg>
+                    </sp-icon>
+                `
+            )}
+        `;
+    },
 
-imageIconSrcError.swc_vrt = {
-    skip: true,
+    name: 'SVG Icon',
 };
-
-imageIconSrcError.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
-};
-
-export const svgIcon = (): TemplateResult => {
-    return html`
-        ${sizes.map(
-            (size) => html`
-                <sp-icon size=${size}>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 22 22"
-                        fill="currentColor"
-                        height="18"
-                        width="18"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M19.75,10.04h-15l5.97-5.97a.483.483,0,0,0,0-.7l-.35-.36a.513.513,0,0,0-.71,0L2.24,10.44a.513.513,0,0,0,0,.71l7.39,7.84a.513.513,0,0,0,.71,0l.35-.35a.513.513,0,0,0,0-.71L4.76,11.5H19.75a.25.25,0,0,0,.25-.25v-.96A.25.25,0,0,0,19.75,10.04Z"
-                        ></path>
-                    </svg>
-                </sp-icon>
-            `
-        )}
-    `;
-};
-
-svgIcon.storyName = 'SVG Icon';

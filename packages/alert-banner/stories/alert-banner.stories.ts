@@ -15,7 +15,7 @@ import { AlertBannerVariants } from '@spectrum-web-components/alert-banner';
 import { AlertBannerMarkup } from './';
 import { argTypes } from './args.js';
 
-interface Properties {
+export interface Properties {
     text: string;
     variant: AlertBannerVariants;
     dismissible: boolean;
@@ -36,41 +36,50 @@ export default {
     argTypes,
 };
 
-export const Default = (args: Properties): TemplateResult =>
-    AlertBannerMarkup(args);
+export const Default = {
+    render: (args: Properties): TemplateResult => AlertBannerMarkup(args),
+};
 
-export const Info = (args: Properties): TemplateResult =>
-    AlertBannerMarkup({
-        ...args,
-        variant: 'info',
-        text: 'Your trial will expire in 3 days',
-    });
+export const Info = {
+    render: (args: Properties): TemplateResult =>
+        AlertBannerMarkup({
+            ...args,
+            variant: 'info',
+            text: 'Your trial will expire in 3 days',
+        }),
+};
 
-export const Negative = (args: Properties): TemplateResult =>
-    AlertBannerMarkup({
-        ...args,
-        variant: 'negative',
-        text: 'Connection interrupted. Check your network to continue',
-    });
-
-export const TextWrapping = (args: Properties): TemplateResult => html`
-    <div style="max-width:800px;">
-        ${AlertBannerMarkup({
+export const Negative = {
+    render: (args: Properties): TemplateResult =>
+        AlertBannerMarkup({
             ...args,
             variant: 'negative',
-            text: ` Your trial has expired. Please purchase to continue.
-Your work has been saved and is ready for you to open again once
-you have purchased the software.`,
-            actionLabel: 'Purchase',
-        })}
-    </div>
-`;
+            text: 'Connection interrupted. Check your network to continue',
+        }),
+};
 
-export const Multilanguage = (args: Properties): TemplateResult => html`
-    ${AlertBannerMarkup({
-        ...args,
-        variant: 'info',
-        text: `ستنتهي الفترة التجريبية الخاصة بك في الأسبوع المقبل`,
-        actionLabel: `اشتري الآن`,
-    })}
-`;
+export const TextWrapping = {
+    render: (args: Properties): TemplateResult => html`
+        <div style="max-width:800px;">
+            ${AlertBannerMarkup({
+                ...args,
+                variant: 'negative',
+                text: ` Your trial has expired. Please purchase to continue.
+    Your work has been saved and is ready for you to open again once
+    you have purchased the software.`,
+                actionLabel: 'Purchase',
+            })}
+        </div>
+    `,
+};
+
+export const Multilanguage = {
+    render: (args: Properties): TemplateResult => html`
+        ${AlertBannerMarkup({
+            ...args,
+            variant: 'info',
+            text: `ستنتهي الفترة التجريبية الخاصة بك في الأسبوع المقبل`,
+            actionLabel: `اشتري الآن`,
+        })}
+    `,
+};

@@ -104,7 +104,7 @@ export default {
     },
 };
 
-interface Properties {
+export interface Properties {
     variant: '' | 'negative' | 'positive' | 'info' | 'error' | 'warning';
     open: boolean;
     content: string;
@@ -113,14 +113,16 @@ interface Properties {
     onClose: (event: Event) => void;
 }
 
-export const Default = ({
-    variant,
-    open,
-    content,
-    timeout,
-    iconLabel,
-}: Properties): TemplateResult => {
-    return toast({ variant, open, content, timeout, iconLabel });
+export const Default = {
+    render: ({
+        variant,
+        open,
+        content,
+        timeout,
+        iconLabel,
+    }: Properties): TemplateResult => {
+        return toast({ variant, open, content, timeout, iconLabel });
+    },
 };
 
 const variantDemo = ({
@@ -133,22 +135,30 @@ const variantDemo = ({
     return toast({ variant, open, content, timeout, iconLabel });
 };
 
-export const Positive = (args: Properties): TemplateResult =>
-    variantDemo({ ...args, variant: 'positive' });
+export const Positive = {
+    render: (args: Properties): TemplateResult =>
+        variantDemo({ ...args, variant: 'positive' }),
+};
 
-export const Negative = (args: Properties): TemplateResult =>
-    variantDemo({ ...args, variant: 'negative' });
+export const Negative = {
+    render: (args: Properties): TemplateResult =>
+        variantDemo({ ...args, variant: 'negative' }),
+};
 
-export const Info = (args: Properties): TemplateResult =>
-    variantDemo({ ...args, variant: 'info' });
+export const Info = {
+    render: (args: Properties): TemplateResult =>
+        variantDemo({ ...args, variant: 'info' }),
+};
 
-export const Wrapping = (args: Properties): TemplateResult =>
-    variantDemo({
-        ...args,
-        variant: 'info',
-        content:
-            'A new version of Lightroom Classic is now available. Use the Update button below to start using the new version.',
-    });
+export const Wrapping = {
+    render: (args: Properties): TemplateResult =>
+        variantDemo({
+            ...args,
+            variant: 'info',
+            content:
+                'A new version of Lightroom Classic is now available. Use the Update button below to start using the new version.',
+        }),
+};
 
 const overlayStyles = html`
     <style>
@@ -221,18 +231,20 @@ export const overlaidRight = (): TemplateResult => overlaid('right');
 export const overlaidBottom = (): TemplateResult => overlaid('bottom');
 export const overlaidLeft = (): TemplateResult => overlaid('left');
 
-export const overlay = (args: Properties): TemplateResult => {
-    return html`
-        <style>
-            sp-toast {
-                position: fixed;
-                bottom: 1em;
-                left: 1em;
-            }
-        </style>
-        <sp-button id="overlay">Toggle Toast overlay</sp-button>
-        <sp-overlay trigger="overlay@click" type="auto" open>
-            ${variantDemo({ ...args, variant: 'positive' })}
-        </sp-overlay>
-    `;
+export const overlay = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <style>
+                sp-toast {
+                    position: fixed;
+                    bottom: 1em;
+                    left: 1em;
+                }
+            </style>
+            <sp-button id="overlay">Toggle Toast overlay</sp-button>
+            <sp-overlay trigger="overlay@click" type="auto" open>
+                ${variantDemo({ ...args, variant: 'positive' })}
+            </sp-overlay>
+        `;
+    },
 };

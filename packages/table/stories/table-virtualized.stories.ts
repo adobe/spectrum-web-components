@@ -143,171 +143,183 @@ export const virtualized = (): TemplateResult => {
     `;
 };
 
-export const virtualizedSingle = (args: Properties): TemplateResult => {
-    const onChange =
-        (args.onChange as (eventData: {
-            first: number;
-            last: number;
-            type: string;
-        }) => void) ||
-        (() => {
-            return;
-        });
+export const virtualizedSingle = {
+    render: (args: Properties): TemplateResult => {
+        const onChange =
+            (args.onChange as (eventData: {
+                first: number;
+                last: number;
+                type: string;
+            }) => void) ||
+            (() => {
+                return;
+            });
 
-    return html`
-        <sp-table
-            size="m"
-            scroller="true"
-            style="height: 300px"
-            selects=${args.selects}
-            .selected=${args.selected}
-            @change=${({ target }: Event & { target: Table }) => {
-                const next = target.nextElementSibling as HTMLDivElement;
-                next.textContent = `Selected: ${JSON.stringify(
-                    target.selected
-                )}`;
-            }}
-            .items=${virtualItems}
-            .renderItem=${renderItem}
-            @visibilityChanged=${(event: RangeChangedEvent) =>
-                onChange({
-                    first: event.first,
-                    last: event.last,
-                    type: 'visibility',
-                })}
-            @rangeChanged=${(event: RangeChangedEvent) =>
-                onChange({
-                    first: event.first,
-                    last: event.last,
-                    type: 'range',
-                })}
-        >
-            <sp-table-head>
-                <sp-table-head-cell>Column Title</sp-table-head-cell>
-                <sp-table-head-cell>Column Title</sp-table-head-cell>
-                <sp-table-head-cell>Column Title</sp-table-head-cell>
-            </sp-table-head>
-        </sp-table>
-        <div>Selected: ["49"]</div>
-    `;
-};
-virtualizedSingle.args = {
-    selects: 'single',
-    selected: ['49'],
-};
+        return html`
+            <sp-table
+                size="m"
+                scroller="true"
+                style="height: 300px"
+                selects=${args.selects}
+                .selected=${args.selected}
+                @change=${({ target }: Event & { target: Table }) => {
+                    const next = target.nextElementSibling as HTMLDivElement;
+                    next.textContent = `Selected: ${JSON.stringify(
+                        target.selected
+                    )}`;
+                }}
+                .items=${virtualItems}
+                .renderItem=${renderItem}
+                @visibilityChanged=${(event: RangeChangedEvent) =>
+                    onChange({
+                        first: event.first,
+                        last: event.last,
+                        type: 'visibility',
+                    })}
+                @rangeChanged=${(event: RangeChangedEvent) =>
+                    onChange({
+                        first: event.first,
+                        last: event.last,
+                        type: 'range',
+                    })}
+            >
+                <sp-table-head>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                </sp-table-head>
+            </sp-table>
+            <div>Selected: ["49"]</div>
+        `;
+    },
 
-export const virtualizedMultiple = (args: Properties): TemplateResult => {
-    return html`
-        <sp-table
-            size="m"
-            scroller="true"
-            style="height: 200px"
-            selects=${args.selects}
-            .selected=${args.selected}
-            @change=${({ target }: Event & { target: Table }) => {
-                const next = target.nextElementSibling as HTMLDivElement;
-                next.textContent = `Selected: ${JSON.stringify(
-                    target.selected,
-                    null,
-                    ' '
-                )}`;
-                const nextNext = next.nextElementSibling as HTMLDivElement;
-                nextNext.textContent = `Selected Count: ${target.selected.length}`;
-            }}
-            .items=${virtualItems}
-            .renderItem=${renderItem}
-        >
-            <sp-table-head>
-                <sp-table-head-cell>Column Title</sp-table-head-cell>
-                <sp-table-head-cell>Column Title</sp-table-head-cell>
-                <sp-table-head-cell>Column Title</sp-table-head-cell>
-            </sp-table-head>
-        </sp-table>
-        <div>Selected: ["0", "48"]</div>
-        <div>Selected Count: 2</div>
-    `;
-};
-virtualizedMultiple.args = {
-    selects: 'multiple',
-    selected: ['0', '48'],
-};
-
-export const virtualizedCustomValue = (args: Properties): TemplateResult => {
-    return html`
-        <sp-table
-            size="m"
-            scroller="true"
-            style="height: 200px"
-            selects=${args.selects}
-            .selected=${args.selected}
-            @change=${args.onChange}
-            .items=${virtualItems}
-            .itemValue=${(item: Item) => 'applied-' + item.date}
-            .renderItem=${renderItem}
-        >
-            <sp-table-head>
-                <sp-table-head-cell>Column Title</sp-table-head-cell>
-                <sp-table-head-cell>Column Title</sp-table-head-cell>
-                <sp-table-head-cell>Column Title</sp-table-head-cell>
-            </sp-table-head>
-            <sp-table-body></sp-table-body>
-        </sp-table>
-        <div>Selected: ["0", "48", "applied-47"]</div>
-        <div>Selected Count: 2</div>
-    `;
-};
-virtualizedCustomValue.args = {
-    selected: ['0', '48', 'applied-47'],
-    selects: 'multiple',
-    onChange: ({ target }: Event & { target: Table }) => {
-        const next = target.nextElementSibling as HTMLDivElement;
-        next.textContent = `Selected: ${JSON.stringify(
-            target.selected,
-            null,
-            ' '
-        )}`;
-        const nextNext = next.nextElementSibling as HTMLDivElement;
-        nextNext.textContent = `Selected Count: ${target.selected.length}`;
+    args: {
+        selects: 'single',
+        selected: ['49'],
     },
 };
 
-export const virtualizedCustomRow = (args: Properties): TemplateResult => {
-    virtualItems.splice(3, 1, { name: 'Scoobert', date: 2, _$rowType$: 1 });
+export const virtualizedMultiple = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-table
+                size="m"
+                scroller="true"
+                style="height: 200px"
+                selects=${args.selects}
+                .selected=${args.selected}
+                @change=${({ target }: Event & { target: Table }) => {
+                    const next = target.nextElementSibling as HTMLDivElement;
+                    next.textContent = `Selected: ${JSON.stringify(
+                        target.selected,
+                        null,
+                        ' '
+                    )}`;
+                    const nextNext = next.nextElementSibling as HTMLDivElement;
+                    nextNext.textContent = `Selected Count: ${target.selected.length}`;
+                }}
+                .items=${virtualItems}
+                .renderItem=${renderItem}
+            >
+                <sp-table-head>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                </sp-table-head>
+            </sp-table>
+            <div>Selected: ["0", "48"]</div>
+            <div>Selected Count: 2</div>
+        `;
+    },
 
-    return html`
-        <sp-table
-            size="m"
-            scroller="true"
-            style="height: 200px"
-            selects=${args.selects}
-            .selected=${args.selected}
-            @change=${({ target }: Event & { target: Table }) => {
-                const next = target.nextElementSibling as HTMLDivElement;
-                next.textContent = `Selected: ${JSON.stringify(
-                    target.selected,
-                    null,
-                    ' '
-                )}`;
-                const nextNext = next.nextElementSibling as HTMLDivElement;
-                nextNext.textContent = `Selected Count: ${target.selected.length}`;
-            }}
-            scroller?="false"
-            .items=${virtualItems}
-            .renderItem=${renderItem}
-        >
-            <sp-table-head>
-                <sp-table-head-cell>Column Title</sp-table-head-cell>
-                <sp-table-head-cell>Column Title</sp-table-head-cell>
-                <sp-table-head-cell>Column Title</sp-table-head-cell>
-            </sp-table-head>
-        </sp-table>
-        <div>Selected: ["0", "48"]</div>
-        <div>Selected Count: 2</div>
-    `;
+    args: {
+        selects: 'multiple',
+        selected: ['0', '48'],
+    },
 };
-virtualizedCustomRow.args = {
-    selects: 'multiple',
-    selected: ['0', '48'],
+
+export const virtualizedCustomValue = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-table
+                size="m"
+                scroller="true"
+                style="height: 200px"
+                selects=${args.selects}
+                .selected=${args.selected}
+                @change=${args.onChange}
+                .items=${virtualItems}
+                .itemValue=${(item: Item) => 'applied-' + item.date}
+                .renderItem=${renderItem}
+            >
+                <sp-table-head>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                </sp-table-head>
+                <sp-table-body></sp-table-body>
+            </sp-table>
+            <div>Selected: ["0", "48", "applied-47"]</div>
+            <div>Selected Count: 2</div>
+        `;
+    },
+
+    args: {
+        selected: ['0', '48', 'applied-47'],
+        selects: 'multiple',
+        onChange: ({ target }: Event & { target: Table }) => {
+            const next = target.nextElementSibling as HTMLDivElement;
+            next.textContent = `Selected: ${JSON.stringify(
+                target.selected,
+                null,
+                ' '
+            )}`;
+            const nextNext = next.nextElementSibling as HTMLDivElement;
+            nextNext.textContent = `Selected Count: ${target.selected.length}`;
+        },
+    },
+};
+
+export const virtualizedCustomRow = {
+    render: (args: Properties): TemplateResult => {
+        virtualItems.splice(3, 1, { name: 'Scoobert', date: 2, _$rowType$: 1 });
+
+        return html`
+            <sp-table
+                size="m"
+                scroller="true"
+                style="height: 200px"
+                selects=${args.selects}
+                .selected=${args.selected}
+                @change=${({ target }: Event & { target: Table }) => {
+                    const next = target.nextElementSibling as HTMLDivElement;
+                    next.textContent = `Selected: ${JSON.stringify(
+                        target.selected,
+                        null,
+                        ' '
+                    )}`;
+                    const nextNext = next.nextElementSibling as HTMLDivElement;
+                    nextNext.textContent = `Selected Count: ${target.selected.length}`;
+                }}
+                scroller?="false"
+                .items=${virtualItems}
+                .renderItem=${renderItem}
+            >
+                <sp-table-head>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                </sp-table-head>
+            </sp-table>
+            <div>Selected: ["0", "48"]</div>
+            <div>Selected Count: 2</div>
+        `;
+    },
+
+    args: {
+        selects: 'multiple',
+        selected: ['0', '48'],
+    },
 };
 
 export const virtualizedNoScroller = (): TemplateResult => {

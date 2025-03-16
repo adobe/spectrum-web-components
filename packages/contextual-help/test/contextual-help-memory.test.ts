@@ -13,4 +13,4 @@ governing permissions and limitations under the License.
 import { Default } from '../stories/contextual-help.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(Default());
+testForMemoryLeaks(Default.render());

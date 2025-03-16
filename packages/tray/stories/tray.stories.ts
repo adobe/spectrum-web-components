@@ -40,33 +40,37 @@ export default {
     },
 };
 
-type StoryArgs = {
+export interface Properties {
     open?: boolean;
+}
+
+export const Default = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-tray ?open=${args.open}>
+                <sp-dialog size="s">
+                    <h2 slot="heading">New Messages</h2>
+                    You have 5 new messages.
+                </sp-dialog>
+            </sp-tray>
+        `;
+    },
 };
 
-export const Default = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-tray ?open=${args.open}>
-            <sp-dialog size="s">
-                <h2 slot="heading">New Messages</h2>
-                You have 5 new messages.
-            </sp-dialog>
-        </sp-tray>
-    `;
-};
-
-export const menu = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-tray ?open=${args.open}>
-            <sp-menu style="width: 100%">
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item selected>Select Inverse</sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-item>Select and Mask...</sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>Save Selection</sp-menu-item>
-                <sp-menu-item disabled>Make Work Path</sp-menu-item>
-            </sp-menu>
-        </sp-tray>
-    `;
+export const menu = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-tray ?open=${args.open}>
+                <sp-menu style="width: 100%">
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item selected>Select Inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                </sp-menu>
+            </sp-tray>
+        `;
+    },
 };

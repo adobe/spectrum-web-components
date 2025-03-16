@@ -36,25 +36,31 @@ export default {
     argTypes,
 };
 
-export const Default = (props: Properties): TemplateResult =>
-    renderButtonSet(props);
+export const Default = {
+    render: (props: Properties): TemplateResult => renderButtonSet(props),
+};
 
-export const withIcon = (props: Properties): TemplateResult =>
-    renderWithIcon(props);
+export const withIcon = {
+    render: (props: Properties): TemplateResult => renderWithIcon(props),
+};
 
-export const withIconOnly = (props: Properties): TemplateResult =>
-    renderWithIconOnly(props);
+export const withIconOnly = {
+    render: (props: Properties): TemplateResult => renderWithIconOnly(props),
+};
 
-export const minWidthButton = (props: Properties): TemplateResult =>
-    renderMinWidthButton(props);
+export const minWidthButton = {
+    render: (props: Properties): TemplateResult => renderMinWidthButton(props),
 
-minWidthButton.storyName = 'min-width';
+    name: 'min-width',
+};
 
-export const link = (props: Properties): TemplateResult => renderLink(props);
+export const link = {
+    render: (props: Properties): TemplateResult => renderLink(props),
+    name: 'href',
+};
 
-link.storyName = 'href';
+export const linkWithTarget = {
+    render: (props: Properties): TemplateResult => renderLinkWithTarget(props),
 
-export const linkWithTarget = (props: Properties): TemplateResult =>
-    renderLinkWithTarget(props);
-
-linkWithTarget.storyName = 'href with target="_blank"';
+    name: 'href with target="_blank"',
+};

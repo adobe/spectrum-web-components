@@ -20,32 +20,47 @@ export default {
 
 const quiet = true;
 
-export const XS = (args: Properties): TemplateResult => renderButtons(args);
-XS.args = {
-    size: 'xs',
-    quiet,
+export const XS = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'xs',
+        quiet,
+    },
 };
 
-export const s = (args: Properties): TemplateResult => renderButtons(args);
-s.args = {
-    size: 's',
-    quiet,
+export const s = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 's',
+        quiet,
+    },
 };
 
-export const m = (args: Properties): TemplateResult => renderButtons(args);
-m.args = {
-    size: 'm',
-    quiet,
+export const m = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'm',
+        quiet,
+    },
 };
 
-export const l = (args: Properties): TemplateResult => renderButtons(args);
-l.args = {
-    size: 'l',
-    quiet,
+export const l = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'l',
+        quiet,
+    },
 };
 
-export const XL = (args: Properties): TemplateResult => renderButtons(args);
-XL.args = {
-    size: 'xl',
-    quiet,
+export const XL = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'xl',
+        quiet,
+    },
 };

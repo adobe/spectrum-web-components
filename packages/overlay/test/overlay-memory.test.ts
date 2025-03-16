@@ -14,7 +14,7 @@ import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 // Defualt Overlay
 testForMemoryLeaks(
-    Default({
+    Default.render({
         placement: 'bottom',
         offset: 0,
     })

@@ -37,12 +37,23 @@ export const wheelDisabled = (): TemplateResult => {
     `;
 };
 
-export const canvas = (): TemplateResult => {
-    return html`
-        <sp-color-wheel>
-            <canvas slot="gradient"></canvas>
-        </sp-color-wheel>
-    `;
+export const canvas = {
+    render: (): TemplateResult => {
+        return html`
+            <sp-color-wheel>
+                <canvas slot="gradient"></canvas>
+            </sp-color-wheel>
+        `;
+    },
+
+    decorators: [
+        (story: () => TemplateResult): TemplateResult => {
+            return html`
+                ${story()}
+                <wheel-canvas-writer></wheel-canvas-writer>
+            `;
+        },
+    ],
 };
 
 class CanvasWriter extends HTMLElement {
@@ -103,12 +114,3 @@ class CanvasWriter extends HTMLElement {
 }
 
 customElements.define('wheel-canvas-writer', CanvasWriter);
-
-canvas.decorators = [
-    (story: () => TemplateResult): TemplateResult => {
-        return html`
-            ${story()}
-            <wheel-canvas-writer></wheel-canvas-writer>
-        `;
-    },
-];

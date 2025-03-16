@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 
-export interface StoryArgs {
+export interface Properties {
     label?: string;
     variant?: 'info' | 'help';
     placement?: Placement;

@@ -33,8 +33,8 @@ import {
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import {
-    definedOverlayElement,
-    virtualElementV1,
+    DefinedOverlayElement,
+    VirtualElementV1,
 } from '../stories/overlay.stories';
 import { PopoverContent } from '../stories/overlay-story-components.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -513,8 +513,8 @@ describe('Overlay - type="modal", v1', () => {
             render(
                 html`
                     <sp-theme color="light" scale="large">
-                        ${virtualElementV1({
-                            ...virtualElementV1.args,
+                        ${VirtualElementV1.render({
+                            ...VirtualElementV1.args,
                             offset: 6,
                         })}
                     </sp-theme>
@@ -614,8 +614,8 @@ describe('Overlay - type="modal", v1', () => {
         });
 
         await fixture<HTMLDivElement>(html`
-            ${virtualElementV1({
-                ...virtualElementV1.args,
+            ${VirtualElementV1.render({
+                ...VirtualElementV1.args,
                 offset: 6,
             })}
         `);
@@ -653,7 +653,9 @@ describe('Overlay - type="modal", v1', () => {
     });
 
     it('opens children in the modal stack through shadow roots', async () => {
-        const el = await fixture<OverlayTrigger>(definedOverlayElement());
+        const el = await fixture<OverlayTrigger>(
+            DefinedOverlayElement.render()
+        );
         const trigger = el.querySelector(
             '[slot="trigger"]'
         ) as HTMLButtonElement;

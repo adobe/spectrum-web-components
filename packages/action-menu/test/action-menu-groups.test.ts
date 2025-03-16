@@ -14,14 +14,14 @@ import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
 import { fixture } from '../../../test/testing-helpers.js';
 import { sendKeys } from '@web/test-runner-commands';
 
-import { groupsWithSelects } from '../stories/action-menu.stories.js';
+import { GroupsWithSelects } from '../stories/action-menu.stories.js';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { MenuItem } from '@spectrum-web-components/menu';
 
 describe('Action Menu - Groups', () => {
     it('throws focus into the Menu when opened', async function () {
         const el = await fixture<ActionMenu>(
-            groupsWithSelects({ onChange: () => {} })
+            GroupsWithSelects.render({ onChange: () => {} })
         );
 
         const firstItem = el.querySelector('sp-menu-item') as MenuItem;
@@ -46,7 +46,7 @@ describe('Action Menu - Groups', () => {
     it('toggles child group with `selects="multiple"`', async function () {
         this.retries(0);
         const el = await fixture<ActionMenu>(
-            groupsWithSelects({ onChange: () => {} })
+            GroupsWithSelects.render({ onChange: () => {} })
         );
 
         const multipleGroup = el.querySelector(
@@ -56,7 +56,8 @@ describe('Action Menu - Groups', () => {
             'sp-menu-item'
         ) as MenuItem;
 
-        expect(firstItem.selected, 'before opening: first item selected?').to.be.false;
+        expect(firstItem.selected, 'before opening: first item selected?').to.be
+            .false;
 
         let opened = oneEvent(el, 'sp-opened');
         el.focus();
@@ -81,7 +82,8 @@ describe('Action Menu - Groups', () => {
         await elementUpdated(firstItem);
 
         expect(el.open, 'first closed: open?').to.be.false;
-        expect(firstItem.selected, 'after select: first item selected?').to.be.true;
+        expect(firstItem.selected, 'after select: first item selected?').to.be
+            .true;
         expect(document.activeElement === el, document.activeElement?.localName)
             .to.be.true;
 
@@ -102,6 +104,7 @@ describe('Action Menu - Groups', () => {
         await elementUpdated(firstItem);
 
         expect(el.open, 'reclosed: open?').to.be.false;
-        expect(firstItem.selected, 'after deselect: first item selected?').to.be.false;
+        expect(firstItem.selected, 'after deselect: first item selected?').to.be
+            .false;
     });
 });

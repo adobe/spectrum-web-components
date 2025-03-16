@@ -18,5 +18,7 @@ import { Default } from '../stories/accordion.stories.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Accordion - dev mode', () => {
-    testForLitDevWarnings(async () => await fixture<Accordion>(Default()));
+    testForLitDevWarnings(
+        async () => await fixture<Accordion>(Default.render())
+    );
 });

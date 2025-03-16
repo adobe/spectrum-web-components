@@ -74,7 +74,7 @@ export default {
     },
 };
 
-export interface StoryArgs {
+export interface Properties {
     checked?: boolean;
     disabled?: boolean;
     emphasized?: boolean;
@@ -84,43 +84,59 @@ export interface StoryArgs {
     [prop: string]: unknown;
 }
 
-function renderRadio(args: StoryArgs): TemplateResult {
+function renderRadio(args: Properties): TemplateResult {
     return html`
         <sp-radio ${spreadProps(args)}>Radio</sp-radio>
     `;
 }
-export const Default = (args: StoryArgs): TemplateResult => renderRadio(args);
 
-export const readonly = (args: StoryArgs): TemplateResult =>
-    renderRadio({
-        ...args,
-        readonly: true,
-    });
-readonly.args = {
-    checked: true,
+export const Default = {
+    render: (args: Properties): TemplateResult => renderRadio(args),
 };
 
-export const Emphasized = (args: StoryArgs): TemplateResult =>
-    renderRadio(args);
-Emphasized.args = {
-    checked: true,
-    emphasized: true,
+export const readonly = {
+    render: (args: Properties): TemplateResult =>
+        renderRadio({
+            ...args,
+            readonly: true,
+        }),
+
+    args: {
+        checked: true,
+    },
 };
 
-export const Autofocus = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-radio autofocus ${spreadProps(args)}>Radio</sp-radio>
-    `;
+export const Emphasized = {
+    render: (args: Properties): TemplateResult => renderRadio(args),
+
+    args: {
+        checked: true,
+        emphasized: true,
+    },
 };
 
-export const Invalid = (args: StoryArgs): TemplateResult => renderRadio(args);
-Invalid.args = {
-    invalid: true,
+export const Autofocus = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-radio autofocus ${spreadProps(args)}>Radio</sp-radio>
+        `;
+    },
 };
 
-export const Disabled = (args: StoryArgs): TemplateResult => renderRadio(args);
-Disabled.args = {
-    disabled: true,
+export const Invalid = {
+    render: (args: Properties): TemplateResult => renderRadio(args),
+
+    args: {
+        invalid: true,
+    },
+};
+
+export const Disabled = {
+    render: (args: Properties): TemplateResult => renderRadio(args),
+
+    args: {
+        disabled: true,
+    },
 };
 
 const values = {
@@ -152,18 +168,28 @@ export const horizontalGroup = (): TemplateResult => {
     `;
 };
 
-export const tabIndexExample = (): TemplateResult => {
-    return html`
-        <sp-radio-group vertical name="group-example">
-            <sp-radio emphasized value="zero" tabindex="0">
-                Tab Index 0
-            </sp-radio>
-            <sp-radio disabled value="three" tabindex="3">Tab Index 3</sp-radio>
-            <sp-radio value="one" tabindex="1" autofocus>Tab Index 1</sp-radio>
-            <sp-radio value="four" tabindex="4">Tab Index 4</sp-radio>
-            <sp-radio invalid value="two" tabindex="2">Tab Index 2</sp-radio>
-        </sp-radio-group>
-    `;
+export const tabIndexExample = {
+    render: (): TemplateResult => {
+        return html`
+            <sp-radio-group vertical name="group-example">
+                <sp-radio emphasized value="zero" tabindex="0">
+                    Tab Index 0
+                </sp-radio>
+                <sp-radio disabled value="three" tabindex="3">
+                    Tab Index 3
+                </sp-radio>
+                <sp-radio value="one" tabindex="1" autofocus>
+                    Tab Index 1
+                </sp-radio>
+                <sp-radio value="four" tabindex="4">Tab Index 4</sp-radio>
+                <sp-radio invalid value="two" tabindex="2">
+                    Tab Index 2
+                </sp-radio>
+            </sp-radio-group>
+        `;
+    },
+
+    name: 'Tab index example',
 };
 
 export const horizontalTabIndexExample = (): TemplateResult => {
@@ -179,5 +205,3 @@ export const horizontalTabIndexExample = (): TemplateResult => {
         </sp-radio-group>
     `;
 };
-
-tabIndexExample.storyName = 'Tab index example';

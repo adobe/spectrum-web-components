@@ -17,37 +17,43 @@ export default {
     component: 'sp-tabs-overflow',
 };
 
-export const compact = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
-};
-compact.args = {
-    compact: true,
+export const compact = {
+    render: (args: OverflowProperties): TemplateResult => {
+        return renderTabsOverflowExample(args);
+    },
+
+    args: {
+        compact: true,
+    },
 };
 
-export const autoscroll = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
-};
-autoscroll.args = {
-    selected: 15,
+export const autoscroll = {
+    render: (args: OverflowProperties): TemplateResult => {
+        return renderTabsOverflowExample(args);
+    },
+
+    args: {
+        selected: 15,
+    },
 };
 
-// https://github.com/adobe/spectrum-web-components/issues/4590
-export const autoscrollOnlyHorizontally = (
-    args: OverflowProperties
-): TemplateResult => {
-    return html`
-        <style>
-            .container {
-                height: 500px;
-                overflow-y: scroll;
-            }
-        </style>
-        <div class="container">
-            <div style="height: 500px">There are some tabs down here!</div>
-            ${renderTabsOverflowExample(args)}
-        </div>
-    `;
-};
-autoscrollOnlyHorizontally.args = {
-    selected: 15,
+export const autoscrollOnlyHorizontally = {
+    render: (args: OverflowProperties): TemplateResult => {
+        return html`
+            <style>
+                .container {
+                    height: 500px;
+                    overflow-y: scroll;
+                }
+            </style>
+            <div class="container">
+                <div style="height: 500px">There are some tabs down here!</div>
+                ${renderTabsOverflowExample(args)}
+            </div>
+        `;
+    },
+
+    args: {
+        selected: 15,
+    },
 };

@@ -18,7 +18,7 @@ import {
     getBreadcrumbs,
     getBreadcrumbsWithLinks,
     getResizableStyles,
-    StoryArgs,
+    Properties,
     Template,
 } from './template.js';
 import { argTypes } from './args.js';
@@ -35,19 +35,19 @@ export default {
     argTypes,
 };
 
-export const Default = (args: StoryArgs): TemplateResult => Template(args);
+export const Default = (args: Properties): TemplateResult => Template(args);
 
-export const Disabled = (args: StoryArgs): TemplateResult => Template(args);
+export const Disabled = (args: Properties): TemplateResult => Template(args);
 Disabled.args = {
     disabled: true,
 };
 
-export const Compact = (args: StoryArgs): TemplateResult => Template(args);
+export const Compact = (args: Properties): TemplateResult => Template(args);
 Compact.args = {
     compact: true,
 };
 
-export const Links = (args: StoryArgs): TemplateResult => {
+export const Links = (args: Properties): TemplateResult => {
     return html`
         <sp-breadcrumbs
             ${spreadProps(args)}
@@ -102,7 +102,7 @@ class AddItemsStoryBreadcrumbs extends LitElement {
 
 customElements.define('add-items-story-breadcrumbs', AddItemsStoryBreadcrumbs);
 
-export const AddItemsDynamic = (args: StoryArgs): TemplateResult => {
+export const AddItemsDynamic = (args: Properties): TemplateResult => {
     return html`
         <add-items-story-breadcrumbs
             maxVisibleItems=${ifDefined(args['max-visible-items'])}
@@ -114,7 +114,7 @@ AddItemsDynamic.swc_vrt = {
     skip: true,
 };
 
-export const ShowRoot = (args: StoryArgs): TemplateResult => {
+export const ShowRoot = (args: Properties): TemplateResult => {
     return html`
         <sp-breadcrumbs
             ${spreadProps(args)}
@@ -129,7 +129,7 @@ export const ShowRoot = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const resizableBehavior = (args: StoryArgs): TemplateResult => {
+export const resizableBehavior = (args: Properties): TemplateResult => {
     return html`
         <div class="resizable-container">
             ${getResizableStyles()}

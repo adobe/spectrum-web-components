@@ -17,7 +17,7 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Overlay } from '@spectrum-web-components/overlay';
 import { Slider, SliderHandle } from '@spectrum-web-components/slider';
-import { tick } from '../stories/slider.stories.js';
+import { Tick } from '../stories/slider.stories.js';
 import {
     elementUpdated,
     expect,
@@ -95,7 +95,7 @@ describe('Slider', () => {
     });
     it('accepts keyboard events', async () => {
         const el = await fixture<Slider>(
-            tick({
+            Tick.render({
                 variant: 'tick',
                 tickStep: 5,
             })

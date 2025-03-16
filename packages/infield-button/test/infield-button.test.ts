@@ -19,10 +19,10 @@ import { args } from '../stories/index.js';
 
 describe('InfieldButton', () => {
     testForLitDevWarnings(
-        async () => await fixture<InfieldButton>(Default(args))
+        async () => await fixture<InfieldButton>(Default.render(args))
     );
     it('loads default infield-button accessibly', async () => {
-        const el = await fixture<InfieldButton>(Default(args));
+        const el = await fixture<InfieldButton>(Default.render(args));
 
         await elementUpdated(el);
 

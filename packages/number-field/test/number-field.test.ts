@@ -21,14 +21,14 @@ import {
 import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
 
 import {
-    currency,
-    decimals,
+    Currency,
+    Decimals,
     Default,
-    germanDecimals,
-    indeterminate,
-    percents,
-    pixels,
-    units,
+    GermanDecimals,
+    Indeterminate,
+    Percents,
+    Pixels,
+    Units,
 } from '../stories/number-field.stories.js';
 import '@spectrum-web-components/number-field/sp-number-field.js';
 import {
@@ -67,16 +67,16 @@ describe('NumberField', () => {
             await import('@formatjs/intl-numberformat/locale-data/fr.js');
         }
     });
-    testForLitDevWarnings(async () => await getElFrom(Default({})));
+    testForLitDevWarnings(async () => await getElFrom(Default.render({})));
     it('loads default number-field accessibly', async () => {
-        const el = await getElFrom(Default({}));
+        const el = await getElFrom(Default.render({}));
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     describe('receives input', () => {
         it('without language context', async () => {
-            const el = await getElFrom(Default({ value: 1337 }));
+            const el = await getElFrom(Default.render({ value: 1337 }));
 
             el.size = 's';
             expect(el.formattedValue).to.equal('1,337');
@@ -97,7 +97,7 @@ describe('NumberField', () => {
             const [languageContext] = createLanguageContext('fr');
             const el = await getElFrom(html`
                 <div @sp-language-context=${languageContext}>
-                    ${Default({ value: 1337 })}
+                    ${Default.render({ value: 1337 })}
                 </div>
             `);
 
@@ -122,7 +122,7 @@ describe('NumberField', () => {
         await setUserAgent(
             'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1'
         );
-        const el = await getElFrom(decimals({ value: 1234 }));
+        const el = await getElFrom(Decimals.render({ value: 1234 }));
         expect(el.formattedValue).to.equal('1,234');
 
         el.focus();
@@ -154,7 +154,7 @@ describe('NumberField', () => {
     describe('Step', () => {
         it('can be 0', async () => {
             const el = await getElFrom(
-                Default({
+                Default.render({
                     step: 0,
                     min: 0,
                     max: 10,
@@ -170,7 +170,7 @@ describe('NumberField', () => {
         });
         it('respects other locales', async () => {
             const el = await getElFrom(
-                germanDecimals({
+                GermanDecimals.render({
                     step: 0.01,
                 })
             );
@@ -189,7 +189,7 @@ describe('NumberField', () => {
         });
         it('supports both positive and negative decimal values', async () => {
             const el = await getElFrom(
-                Default({
+                Default.render({
                     step: 0.001,
                     min: -10,
                     max: 10,
@@ -204,7 +204,7 @@ describe('NumberField', () => {
         });
         it('correctly handles max values greater than 1000 with step=1', async () => {
             const el = await getElFrom(
-                Default({
+                Default.render({
                     step: 1,
                     min: 0,
                     max: 200000,
@@ -232,7 +232,7 @@ describe('NumberField', () => {
         let el: NumberField;
 
         beforeEach(async () => {
-            el = await getElFrom(Default({}));
+            el = await getElFrom(Default.render({}));
             expect(el.value).to.be.NaN;
             expect(el.formattedValue).to.equal('');
             expect(el.valueAsString).to.equal('NaN');
@@ -357,7 +357,7 @@ describe('NumberField', () => {
         let el: NumberField;
 
         beforeEach(async () => {
-            el = await getElFrom(Default({}));
+            el = await getElFrom(Default.render({}));
             expect(el.value).to.be.NaN;
             expect(el.formattedValue).to.equal('');
             expect(el.valueAsString).to.equal('NaN');
@@ -484,7 +484,7 @@ describe('NumberField', () => {
         beforeEach(async () => {
             inputSpy.resetHistory();
             changeSpy.resetHistory();
-            el = await getElFrom(Default({ value: 50 }));
+            el = await getElFrom(Default.render({ value: 50 }));
             el.addEventListener('input', (event: Event) => {
                 inputSpy((event.target as NumberField)?.value);
             });
@@ -792,7 +792,7 @@ describe('NumberField', () => {
     });
     it('accepts pointer interactions with the stepper UI', async () => {
         const inputSpy = spy();
-        const el = await getElFrom(Default({ value: 50 }));
+        const el = await getElFrom(Default.render({ value: 50 }));
         el.addEventListener('input', () => inputSpy());
         expect(el.formattedValue).to.equal('50');
         expect(el.valueAsString).to.equal('50');
@@ -884,7 +884,7 @@ describe('NumberField', () => {
         expect(el.value).to.equal(value);
     });
     it('surfaces `valueAsNumber`', async () => {
-        const el = await getElFrom(Default({}));
+        const el = await getElFrom(Default.render({}));
         el.value = 1000;
         await elementUpdated(el);
         expect(el.formattedValue).to.equal('1,000');
@@ -898,13 +898,13 @@ describe('NumberField', () => {
     });
     describe('manages `value` with `formatOptions`', () => {
         it('manages decimals', async () => {
-            const el = await getElFrom(decimals({ value: 1.333333 }));
+            const el = await getElFrom(Decimals.render({ value: 1.333333 }));
             expect(el.value).to.equal(1.33);
             expect(el.formattedValue).to.equal('+1.33');
             expect(el.valueAsString).to.equal('1.33');
         });
         it('manages precents', async () => {
-            const el = await getElFrom(percents({ value: 0.45 }));
+            const el = await getElFrom(Percents.render({ value: 0.45 }));
             expect(el.formattedValue).to.equal('45%');
             expect(el.valueAsString).to.equal('0.45');
             expect(el.value).to.equal(0.45);
@@ -931,13 +931,13 @@ describe('NumberField', () => {
             expect(el.value).to.equal(0.54);
         });
         it('manages currency', async () => {
-            const el = await getElFrom(currency({ value: 234.21 }));
+            const el = await getElFrom(Currency.render({ value: 234.21 }));
             expect(el.formattedValue).to.equal('EUR 234.21');
             expect(el.valueAsString).to.equal('234.21');
             expect(el.value).to.equal(234.21);
         });
         it('manages units', async () => {
-            const el = await getElFrom(units({ value: 17 }));
+            const el = await getElFrom(Units.render({ value: 17 }));
             expect(el.formattedValue).to.equal('17 inches');
             expect(el.valueAsString).to.equal('17');
             expect(el.value).to.equal(17);
@@ -945,7 +945,7 @@ describe('NumberField', () => {
         it('does not select all on click based `focus`', async function () {
             this.retries(0);
             const modifier = isMac() ? 'Meta' : 'Control';
-            const el = await getElFrom(units({ value: 17 }));
+            const el = await getElFrom(Units.render({ value: 17 }));
             expect(el.value).to.equal(17);
             const rect = el.focusElement.getBoundingClientRect();
             await sendMouse({
@@ -988,7 +988,7 @@ describe('NumberField', () => {
         it('selects all on `Tab` based `focus`', async function () {
             this.retries(0);
             const modifier = isMac() ? 'Meta' : 'Control';
-            const el = await getElFrom(units({ value: 17 }));
+            const el = await getElFrom(Units.render({ value: 17 }));
             const input = document.createElement('input');
             el.insertAdjacentElement('beforebegin', input);
             input.focus();
@@ -1024,7 +1024,7 @@ describe('NumberField', () => {
             );
         });
         it('manages units not supported by the browser', async () => {
-            const el = await getElFrom(pixels({ value: 17 }));
+            const el = await getElFrom(Pixels.render({ value: 17 }));
             expect(el.formattedValue).to.equal('17px');
             expect(el.valueAsString).to.equal('17');
             expect(el.value).to.equal(17);
@@ -1040,7 +1040,7 @@ describe('NumberField', () => {
             inputSpy.resetHistory();
             changeSpy.resetHistory();
             el = await getElFrom(
-                Default({
+                Default.render({
                     max: 10,
                     value: 10,
                     onInput: (value: number) => {
@@ -1163,7 +1163,7 @@ describe('NumberField', () => {
             inputSpy.resetHistory();
             changeSpy.resetHistory();
             el = await getElFrom(
-                Default({
+                Default.render({
                     min: 10,
                     value: 10,
                     onInput: (value: number) => {
@@ -1373,7 +1373,7 @@ describe('NumberField', () => {
     describe('step', () => {
         let el: NumberField;
         beforeEach(async () => {
-            el = await getElFrom(Default({ value: 10, step: 5 }));
+            el = await getElFrom(Default.render({ value: 10, step: 5 }));
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
@@ -1412,7 +1412,7 @@ describe('NumberField', () => {
     describe('step + constraints', () => {
         let el: NumberField;
         beforeEach(async () => {
-            el = await getElFrom(Default({ step: 5 }));
+            el = await getElFrom(Default.render({ step: 5 }));
             expect(el.formattedValue).to.equal('');
             expect(el.valueAsString).to.equal('NaN');
             expect(el.value).to.be.NaN;
@@ -1523,7 +1523,7 @@ describe('NumberField', () => {
     describe('indeterminate', () => {
         let el: NumberField;
         beforeEach(async () => {
-            el = await getElFrom(indeterminate(indeterminate.args));
+            el = await getElFrom(Indeterminate.render(Indeterminate.args));
             expect(el.formattedValue).to.equal('100');
             expect(el.valueAsString).to.equal('100');
             expect(el.value).to.equal(100);
@@ -1666,7 +1666,7 @@ describe('NumberField', () => {
         });
     });
     it('removes the stepper UI with [hide-stepper]', async () => {
-        const el = await getElFrom(Default({ hideStepper: true }));
+        const el = await getElFrom(Default.render({ hideStepper: true }));
         const stepUp = el.shadowRoot.querySelector('.step-up');
         const stepDown = el.shadowRoot.querySelector('.step-down');
         expect(stepUp).to.be.null;
@@ -1675,7 +1675,9 @@ describe('NumberField', () => {
     describe('Disabled', () => {
         let el: NumberField;
         beforeEach(async () => {
-            el = await getElFrom(Default({ disabled: true, value: 1337 }));
+            el = await getElFrom(
+                Default.render({ disabled: true, value: 1337 })
+            );
             expect(el.formattedValue).to.equal('1,337');
             expect(el.valueAsString).to.equal('1337');
             expect(el.value).to.equal(1337);
@@ -1715,7 +1717,9 @@ describe('NumberField', () => {
     describe('Readonly', () => {
         let el: NumberField;
         beforeEach(async () => {
-            el = await getElFrom(Default({ readonly: true, value: 1337 }));
+            el = await getElFrom(
+                Default.render({ readonly: true, value: 1337 })
+            );
             expect(el.formattedValue).to.equal('1,337');
             expect(el.valueAsString).to.equal('1337');
             expect(el.value).to.equal(1337);
@@ -1756,7 +1760,7 @@ describe('NumberField', () => {
         it('increment and decrement buttons cannot receive keyboard focus', async () => {
             await fixture<HTMLDivElement>(html`
                 <div>
-                    ${Default({
+                    ${Default.render({
                         onChange: () => {
                             return;
                         },

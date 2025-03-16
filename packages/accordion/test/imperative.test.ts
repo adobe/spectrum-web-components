@@ -34,7 +34,7 @@ describe('Accordion - imperative interactions', () => {
         expect(item.size).to.equal('s');
     });
     it('only allows one open item by default', async () => {
-        const el = await fixture<Accordion>(Default());
+        const el = await fixture<Accordion>(Default.render());
         await elementUpdated(el);
         const firstItem = el.querySelector(
             'sp-accordion-item:nth-of-type(1)'
@@ -57,7 +57,7 @@ describe('Accordion - imperative interactions', () => {
         expect(openItems.length).to.equal(1);
     });
     it('allows more than one open item when `[allow-multiple]`', async () => {
-        const el = await fixture<Accordion>(Default());
+        const el = await fixture<Accordion>(Default.render());
         el.allowMultiple = true;
         await elementUpdated(el);
 
@@ -84,7 +84,7 @@ describe('Accordion - imperative interactions', () => {
         expect(secondItem.open).to.be.true;
     });
     it('ensures that the correct item is open and that items can be closed', async () => {
-        const el = await fixture<Accordion>(Default());
+        const el = await fixture<Accordion>(Default.render());
 
         await elementUpdated(el);
         const firstItem = el.querySelector(
@@ -113,7 +113,7 @@ describe('Accordion - imperative interactions', () => {
         expect(secondItem.open).to.be.false;
     });
     it('ensures that the correct item is open and that items can be closed when [allow-multiple]', async () => {
-        const el = await fixture<Accordion>(Default());
+        const el = await fixture<Accordion>(Default.render());
         el.allowMultiple = true;
         await elementUpdated(el);
 

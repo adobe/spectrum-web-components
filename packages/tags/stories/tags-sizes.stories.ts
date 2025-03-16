@@ -24,6 +24,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 export default {
     title: 'Tags/Sizes',
     component: 'sp-tags',
+    tags: ['!dev'],
 };
 
 const template = ({ size }: { size: ElementSize }): TemplateResult => html`

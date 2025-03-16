@@ -16,7 +16,7 @@ import {
     argTypes,
     chevronDown,
     chevronUp,
-    StoryArgs,
+    Properties,
     Template,
 } from './index.js';
 
@@ -27,20 +27,32 @@ export default {
     args,
 };
 
-export const Default = (args: StoryArgs): TemplateResult => Template(args);
-export const disabled = (args: StoryArgs): TemplateResult => Template(args);
-disabled.args = {
-    disabled: true,
+export const Default = {
+    render: (args: Properties): TemplateResult => Template(args),
 };
 
-export const inlineStart = (args: StoryArgs): TemplateResult => Template(args);
-inlineStart.args = {
-    inline: 'start',
+export const disabled = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        disabled: true,
+    },
 };
 
-export const inlineEnd = (args: StoryArgs): TemplateResult => Template(args);
-inlineEnd.args = {
-    inline: 'end',
+export const inlineStart = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        inline: 'start',
+    },
+};
+
+export const inlineEnd = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        inline: 'end',
+    },
 };
 
 export const stacked = (): TemplateResult => html`
@@ -56,7 +68,10 @@ export const stacked = (): TemplateResult => html`
     })}
 `;
 
-export const quiet = (args: StoryArgs): TemplateResult => Template(args);
-quiet.args = {
-    quiet: true,
+export const quiet = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        quiet: true,
+    },
 };

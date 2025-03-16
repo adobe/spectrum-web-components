@@ -18,6 +18,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 export default {
     component: 'sp-number-field',
     title: 'Number Field/Sizes',
+    tags: ['!dev'],
 };
 
 const template = ({

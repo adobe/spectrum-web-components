@@ -177,15 +177,17 @@ export default {
     title: 'Menu Item/Disconnected',
 };
 
-export const disconnectedChildItems = (): TemplateResult => html`
-    <my-container></my-container>
-`;
+export const disconnectedChildItems = {
+    render: (): TemplateResult => html`
+        <my-container></my-container>
+    `,
 
-disconnectedChildItems.swc_vrt = {
-    skip: true,
-};
+    swc_vrt: {
+        skip: true,
+    },
 
-disconnectedChildItems.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+    parameters: {
+        // Disables Chromatic's snapshotting on a global level
+        chromatic: { disableSnapshot: true },
+    },
 };

@@ -19,11 +19,11 @@ import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
 import '@spectrum-web-components/number-field/sp-number-field.js';
 import { remapMultiByteCharacters } from '@spectrum-web-components/number-field';
 import {
-    currency,
-    decimals,
+    Currency,
+    Decimals,
     Default,
-    minMax,
-    percents,
+    MinMax,
+    Percents,
 } from '../stories/number-field.stories.js';
 import { sendKeys } from '@web/test-runner-commands';
 
@@ -48,7 +48,7 @@ describe('NumberField - inputs', () => {
     describe('keystroke prevention', () => {
         it('converts 2 byte characters, default', async () => {
             const el = await getElFrom(html`
-                ${Default()}
+                ${Default.render()}
             `);
             await elementUpdated(el);
 
@@ -61,7 +61,7 @@ describe('NumberField - inputs', () => {
         });
         it('converts 2 byte characters, percents', async () => {
             const el = await getElFrom(html`
-                ${percents()}
+                ${Percents.render()}
             `);
             await elementUpdated(el);
 
@@ -74,7 +74,7 @@ describe('NumberField - inputs', () => {
         });
         it('prevents second "." in EN', async () => {
             const el = await getElFrom(html`
-                ${Default()}
+                ${Default.render()}
             `);
             el.formatOptions = {
                 maximumFractionDigits: 2,
@@ -90,7 +90,7 @@ describe('NumberField - inputs', () => {
         });
         it('prevents text characters', async () => {
             const el = await getElFrom(html`
-                ${Default()}
+                ${Default.render()}
             `);
             el.formatOptions = {
                 maximumFractionDigits: 1,
@@ -114,7 +114,7 @@ describe('NumberField - inputs', () => {
         });
         it('allows "-" to start', async () => {
             const el = await getElFrom(html`
-                ${Default()}
+                ${Default.render()}
             `);
             await elementUpdated(el);
 
@@ -127,7 +127,7 @@ describe('NumberField - inputs', () => {
         });
         it('prevents "-" not at the start', async () => {
             const el = await getElFrom(html`
-                ${Default()}
+                ${Default.render()}
             `);
             await elementUpdated(el);
 
@@ -148,7 +148,7 @@ describe('NumberField - inputs', () => {
         });
         it('prevent "+" to start, normally', async () => {
             const el = await getElFrom(html`
-                ${Default()}
+                ${Default.render()}
             `);
             await elementUpdated(el);
 
@@ -161,7 +161,7 @@ describe('NumberField - inputs', () => {
         });
         it('allow "+" to start when "signDisplay: always"', async () => {
             const el = await getElFrom(html`
-                ${Default()}
+                ${Default.render()}
             `);
             await elementUpdated(el);
             el.formatOptions = {
@@ -176,7 +176,7 @@ describe('NumberField - inputs', () => {
         });
         it('prevents "%" when when not percents', async () => {
             const el = await getElFrom(html`
-                ${Default()}
+                ${Default.render()}
             `);
             await elementUpdated(el);
 
@@ -192,7 +192,7 @@ describe('NumberField - inputs', () => {
         });
         it('allows "%" when percents, and keeps "%" on blur', async () => {
             const el = await getElFrom(html`
-                ${percents()}
+                ${Percents.render()}
             `);
             await elementUpdated(el);
 
@@ -208,7 +208,7 @@ describe('NumberField - inputs', () => {
         });
         it('prevents "Backspace" on curreny value text, and keeps currency value text of blur', async () => {
             const el = await getElFrom(html`
-                ${currency({ value: 234.21 })}
+                ${Currency.render({ value: 234.21 })}
             `);
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('EUR 234.21');
@@ -236,7 +236,7 @@ describe('NumberField - inputs', () => {
         });
         it('prevents "." when `maximumFractionDigits: 0`', async () => {
             const el = await getElFrom(html`
-                ${Default()}
+                ${Default.render()}
             `);
             await elementUpdated(el);
             el.formatOptions = {
@@ -258,7 +258,7 @@ describe('NumberField - inputs', () => {
         xit('allow arabic numerals entered', async () => {
             // Safari requires more polyfilling for this text
             const el = await getElFrom(html`
-                ${Default()}
+                ${Default.render()}
             `);
             await elementUpdated(el);
 
@@ -278,7 +278,7 @@ describe('NumberField - inputs', () => {
         xit('allow hanidec numerals entered', async () => {
             // Safari requires more polyfilling for this text
             const el = await getElFrom(html`
-                ${Default()}
+                ${Default.render()}
             `);
             await elementUpdated(el);
 
@@ -298,7 +298,7 @@ describe('NumberField - inputs', () => {
     });
     describe('user suplied large numbers', () => {
         it('do not crash the Number Field', async () => {
-            const el = await getElFrom(minMax(minMax.args));
+            const el = await getElFrom(MinMax.render(MinMax.args));
             await elementUpdated(el);
 
             el.focus();
@@ -316,7 +316,7 @@ describe('NumberField - inputs', () => {
     });
     describe('with floating point numbers', () => {
         it('do not crash the Number Field', async () => {
-            const el = await getElFrom(minMax(minMax.args));
+            const el = await getElFrom(MinMax.render(MinMax.args));
             el.setAttribute('min', '0.1');
             el.setAttribute('step', '0.01');
             el.setAttribute('value', '0.5');
@@ -339,7 +339,9 @@ describe('NumberField - inputs', () => {
         it('can determine the group symbol', async () => {
             const [languageContext] = createLanguageContext('es-ES');
             const el = await getElFrom(html`
-                <div @sp-language-context=${languageContext}>${Default()}</div>
+                <div @sp-language-context=${languageContext}>
+                    ${Default.render()}
+                </div>
             `);
             await elementUpdated(el);
 
@@ -363,7 +365,7 @@ describe('NumberField - inputs', () => {
         numbers.forEach((input) => {
             const actual = remapMultiByteCharacters[input];
             it(`accepts "${input}" as "${actual}"`, async () => {
-                const el = await getElFrom(Default());
+                const el = await getElFrom(Default.render());
                 el.focusElement.value = input;
                 el.focusElement.dispatchEvent(
                     new Event('input', {
@@ -379,7 +381,7 @@ describe('NumberField - inputs', () => {
             });
         });
         it('accepts "、" as "," and "。" as "."', async () => {
-            const el = await getElFrom(Default(Default.args));
+            const el = await getElFrom(Default.render(Default.args));
             el.focusElement.value = '１、２３４。５6';
             el.focusElement.dispatchEvent(
                 new Event('input', {
@@ -394,7 +396,7 @@ describe('NumberField - inputs', () => {
             expect(el.value).to.equal(Number(1234.56));
         });
         it('accepts misplaced "、" and corrects them', async () => {
-            const el = await getElFrom(Default(Default.args));
+            const el = await getElFrom(Default.render(Default.args));
             const nextFocusableElement = document.createElement('input');
             el.insertAdjacentElement('afterend', nextFocusableElement);
             el.focus();
@@ -424,7 +426,7 @@ describe('NumberField - inputs', () => {
             nextFocusableElement.remove();
         });
         it('accepts "＋" as "+" and "ー" as "-"', async () => {
-            const el = await getElFrom(decimals(decimals.args));
+            const el = await getElFrom(Decimals.render(Decimals.args));
             el.focusElement.value = '＋９。８７';
             el.focusElement.dispatchEvent(
                 new Event('input', {
@@ -452,7 +454,7 @@ describe('NumberField - inputs', () => {
             expect(el.value).to.equal(Number(-9.87));
         });
         it('accepts "％" as "%"', async () => {
-            const el = await getElFrom(percents(percents.args));
+            const el = await getElFrom(Percents.render(Percents.args));
             el.focusElement.value = '１０％';
             el.focusElement.dispatchEvent(
                 new Event('input', {
@@ -467,7 +469,7 @@ describe('NumberField - inputs', () => {
             expect(el.value).to.equal(Number(0.1));
         });
         it('does not accept non-numeric characters', async () => {
-            const el = await getElFrom(Default(Default.args));
+            const el = await getElFrom(Default.render(Default.args));
 
             el.focusElement.focus();
             el.dispatchEvent(new CompositionEvent('compositionstart'));

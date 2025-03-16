@@ -17,6 +17,7 @@ import '@spectrum-web-components/meter/sp-meter.js';
 export default {
     title: 'Meter/Sizes',
     component: 'sp-meter',
+    tags: ['!dev'],
 };
 
 export const s = (): TemplateResult => {

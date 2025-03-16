@@ -14,5 +14,5 @@ import { Default } from '../stories/accordion.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 describe('Accordion - memory usage', () => {
-    testForMemoryLeaks(Default());
+    testForMemoryLeaks(Default.render());
 });

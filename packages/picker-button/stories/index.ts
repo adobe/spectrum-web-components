@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-export type StoryArgs = {
+export type Properties = {
     active: boolean;
     icon: TemplateResult;
     invalid: boolean;
@@ -35,7 +35,7 @@ export const Template = ({
     quiet,
     rounded,
     size,
-}: StoryArgs): TemplateResult => {
+}: Properties): TemplateResult => {
     return html`
         <sp-picker-button
             ?active=${active}

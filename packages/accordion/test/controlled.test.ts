@@ -18,7 +18,7 @@ import { Default } from '../stories/accordion.stories.js';
 
 describe('Accordion - controlled', () => {
     it('can have `toggle` events canceled', async () => {
-        const el = await fixture<Accordion>(Default());
+        const el = await fixture<Accordion>(Default.render());
         await elementUpdated(el);
         const firstItem = el.querySelector(
             'sp-accordion-item:nth-of-type(1)'

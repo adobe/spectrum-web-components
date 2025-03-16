@@ -19,6 +19,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 export default {
     component: 'sp-textfield',
     title: 'Textarea/Sizes',
+    tags: ['!dev'],
 };
 
 const template = ({

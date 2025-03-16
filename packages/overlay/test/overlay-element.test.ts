@@ -33,9 +33,9 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 import { Button } from '@spectrum-web-components/button';
 import { sendKeys } from '@web/test-runner-commands';
 import {
-    click,
-    receivesFocus,
-    withSlider,
+    ClickOverlay,
+    OverlayReceivesFocus,
+    OverlayWithSlider,
 } from '../stories/overlay-element.stories.js';
 import {
     removeSlottableRequest,
@@ -793,7 +793,9 @@ describe('sp-overlay', () => {
         opensDeclaratively('auto');
         it('receives focus', async () => {
             const test = await fixture(html`
-                <div>${receivesFocus(receivesFocus.args)}</div>
+                <div>
+                    ${OverlayReceivesFocus.render(OverlayReceivesFocus.args)}
+                </div>
             `);
             const trigger = test.querySelector('#trigger') as Button;
             const overlay = test.querySelector('a');
@@ -808,7 +810,7 @@ describe('sp-overlay', () => {
         });
         it('does not close when clicking a Slider track in the Overlay', async function () {
             const test = await fixture(html`
-                <div>${withSlider()}</div>
+                <div>${OverlayWithSlider.render()}</div>
             `);
             const el = test.querySelector('sp-overlay') as Overlay;
             const button = test.querySelector('sp-button') as Button;
@@ -1000,8 +1002,8 @@ describe('sp-overlay', () => {
             it('does not close when clicking away', async () => {
                 const test = await fixture(html`
                     <div>
-                        ${click({
-                            ...click.args,
+                        ${ClickOverlay.render({
+                            ...ClickOverlay.args,
                             interaction: 'click',
                             placement: 'bottom',
                             type: 'manual',
@@ -1042,8 +1044,8 @@ describe('sp-overlay', () => {
             it('close last item of overlay stack when pressing `Escape`', async () => {
                 const test = await fixture(html`
                     <div>
-                        ${click({
-                            ...click.args,
+                        ${ClickOverlay.render({
+                            ...ClickOverlay.args,
                             interaction: 'click',
                             placement: 'bottom',
                             type: 'manual',

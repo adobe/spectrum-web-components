@@ -25,7 +25,7 @@ import { Combobox, ComboboxOption } from '../src/Combobox.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 import { query, state } from '@spectrum-web-components/base/src/decorators.js';
 import { live } from '@spectrum-web-components/base/src/directives.js';
-import { countries, fruits, StoryArgs } from './index.js';
+import { countries, fruits, Properties } from './index.js';
 import { Template } from './template.js';
 import { argTypes } from './args.js';
 
@@ -43,90 +43,118 @@ export default {
     argTypes,
 };
 
-export const Default = (args: StoryArgs): TemplateResult => Template(args);
-
-export const disabled = (args: StoryArgs): TemplateResult => Template(args);
-disabled.args = {
-    disabled: true,
-    value: 'Azerbaijan',
+export const Default = {
+    render: (args: Properties): TemplateResult => Template(args),
 };
 
-export const invalid = (args: StoryArgs): TemplateResult => Template(args);
-invalid.args = {
-    invalid: true,
+export const disabled = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        disabled: true,
+        value: 'Azerbaijan',
+    },
 };
 
-export const pending = (args: StoryArgs): TemplateResult => Template(args);
-pending.args = {
-    pending: true,
+export const invalid = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        invalid: true,
+    },
 };
 
-export const quiet = (args: StoryArgs): TemplateResult => Template(args);
-quiet.args = {
-    quiet: true,
+export const pending = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        pending: true,
+    },
 };
 
-export const readonly = (args: StoryArgs): TemplateResult => Template(args);
-readonly.args = {
-    readonly: true,
-    value: 'Solomon Islands',
+export const quiet = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        quiet: true,
+    },
 };
 
-export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
-    // let's create a new array from countries and set the disabled property to true if the value is in args.disabledItems
-    const countriesWithDisabledItems = countries.map((country) => ({
-        ...country,
-        disabled: args.disabledItems?.includes(country.itemText),
-    }));
+export const readonly = {
+    render: (args: Properties): TemplateResult => Template(args),
 
-    return html`
-        <sp-field-label side-aligned="start" for="combobox-disabled-items">
-            Some fruits are disabled (light DOM)
-        </sp-field-label>
-        <sp-combobox
-            id="combobox-disabled-items"
-            style="min-width: 80px;--spectrum-textfield-m-min-width:0; width:160px;"
-        >
-            ${fruits.map(
-                (fruit) => html`
-                    <sp-menu-item
-                        id=${fruit.value}
-                        value=${fruit.value}
-                        ?disabled=${args.disabledItems?.includes(fruit.value)}
-                    >
-                        ${fruit.itemText}
-                    </sp-menu-item>
-                `
-            )}
-        </sp-combobox>
-        <sp-field-label side-aligned="start" for="combobox-disabled-countries">
-            Some countries are disabled (shadow DOM)
-        </sp-field-label>
-        <sp-combobox
-            id="combobox-disabled-countries"
-            .options=${countriesWithDisabledItems}
-            .value=${args.value || ''}
-        ></sp-combobox>
-    `;
-};
-hasDisabledItems.args = {
-    disabledItems: [
-        'banana',
-        'lemon',
-        'pear',
-        'Albania',
-        'Azerbaijan',
-        'Solomon Islands',
-    ],
-};
-hasDisabledItems.swc_vrt = {
-    skip: true,
+    args: {
+        readonly: true,
+        value: 'Solomon Islands',
+    },
 };
 
-export const listAutocomplete = (args: StoryArgs): TemplateResult =>
-    Template(args);
-listAutocomplete.args = {
-    autocomplete: 'list',
+export const hasDisabledItems = {
+    render: (args: Properties): TemplateResult => {
+        // let's create a new array from countries and set the disabled property to true if the value is in args.disabledItems
+        const countriesWithDisabledItems = countries.map((country) => ({
+            ...country,
+            disabled: args.disabledItems?.includes(country.itemText),
+        }));
+
+        return html`
+            <sp-field-label side-aligned="start" for="combobox-disabled-items">
+                Some fruits are disabled (light DOM)
+            </sp-field-label>
+            <sp-combobox
+                id="combobox-disabled-items"
+                style="min-width: 80px;--spectrum-textfield-m-min-width:0; width:160px;"
+            >
+                ${fruits.map(
+                    (fruit) => html`
+                        <sp-menu-item
+                            id=${fruit.value}
+                            value=${fruit.value}
+                            ?disabled=${args.disabledItems?.includes(
+                                fruit.value
+                            )}
+                        >
+                            ${fruit.itemText}
+                        </sp-menu-item>
+                    `
+                )}
+            </sp-combobox>
+            <sp-field-label
+                side-aligned="start"
+                for="combobox-disabled-countries"
+            >
+                Some countries are disabled (shadow DOM)
+            </sp-field-label>
+            <sp-combobox
+                id="combobox-disabled-countries"
+                .options=${countriesWithDisabledItems}
+                .value=${args.value || ''}
+            ></sp-combobox>
+        `;
+    },
+
+    args: {
+        disabledItems: [
+            'banana',
+            'lemon',
+            'pear',
+            'Albania',
+            'Azerbaijan',
+            'Solomon Islands',
+        ],
+    },
+
+    swc_vrt: {
+        skip: true,
+    },
+};
+
+export const listAutocomplete = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        autocomplete: 'list',
+    },
 };
 
 export const noAutocomplete = (): TemplateResult => {
@@ -271,16 +299,19 @@ class ControlledCombo extends LitElement {
 }
 defineElement('controlled-combo', ControlledCombo);
 
-export const controlled = (): TemplateResult => {
-    return html`
-        <controlled-combo></controlled-combo>
-    `;
-};
-controlled.swc_vrt = {
-    skip: true,
-};
+export const controlled = {
+    render: (): TemplateResult => {
+        return html`
+            <controlled-combo></controlled-combo>
+        `;
+    },
 
-controlled.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+    swc_vrt: {
+        skip: true,
+    },
+
+    parameters: {
+        // Disables Chromatic's snapshotting on a global level
+        chromatic: { disableSnapshot: true },
+    },
 };

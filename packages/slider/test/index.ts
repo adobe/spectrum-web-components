@@ -12,10 +12,10 @@ governing permissions and limitations under the License.
 
 import { Slider } from '@spectrum-web-components/slider';
 import {
-    editable,
-    hideStepper,
+    Editable,
+    HideStepper,
     Indeterminate,
-    StoryArgs,
+    Properties,
 } from '../stories/slider.stories.js';
 import { elementUpdated, expect, nextFrame } from '@open-wc/testing';
 import { html, TemplateResult } from '@spectrum-web-components/base';
@@ -28,7 +28,7 @@ import {
 import { sendMouse } from '../../../test/plugins/browser.js';
 
 async function sliderFromFixture(
-    sliderFixture: (args: StoryArgs) => TemplateResult
+    sliderFixture: (args: Properties) => TemplateResult
 ): Promise<Slider> {
     const el = await fixture<Slider>(sliderFixture({}));
     const slider = el.querySelector('sp-slider') as Slider;
@@ -37,9 +37,11 @@ async function sliderFromFixture(
 
 export const testEditableSlider = (type: string): void => {
     describe(`Slider - editable, ${type}`, () => {
-        testForLitDevWarnings(async () => await sliderFromFixture(editable));
+        testForLitDevWarnings(
+            async () => await sliderFromFixture(Editable.render)
+        );
         it('loads', async () => {
-            const el = await sliderFromFixture(editable);
+            const el = await sliderFromFixture(Editable.render);
 
             await elementUpdated(el);
 
@@ -47,7 +49,7 @@ export const testEditableSlider = (type: string): void => {
         });
 
         it('loads - [hide-stepper]', async () => {
-            const el = await sliderFromFixture(hideStepper);
+            const el = await sliderFromFixture(HideStepper.render);
 
             await elementUpdated(el);
 
@@ -73,7 +75,7 @@ export const testEditableSlider = (type: string): void => {
         });
 
         it('toggles indeterminate when edited via the `<sp-number-field>`', async () => {
-            const el = await sliderFromFixture(Indeterminate);
+            const el = await sliderFromFixture(Indeterminate.render);
 
             await elementUpdated(el);
 
@@ -96,7 +98,7 @@ export const testEditableSlider = (type: string): void => {
         });
 
         it('focuses `<sp-number-field>` directly', async () => {
-            const el = await sliderFromFixture(editable);
+            const el = await sliderFromFixture(Editable.render);
 
             await elementUpdated(el);
 
@@ -110,24 +112,22 @@ export const testEditableSlider = (type: string): void => {
         it('dispatches `input` of the animation frame', async () => {
             const inputSpy = spy();
             const changeSpy = spy();
-            const el = await fixture<Slider>(
-                html`
-                    <sp-slider
-                        editable
-                        hide-stepper
-                        min="1"
-                        max="100"
-                        step="1"
-                        label="Slider label"
-                        @input=${(event: Event & { target: Slider }) => {
-                            inputSpy(event.target.value);
-                        }}
-                        @change=${(event: Event & { target: Slider }) => {
-                            changeSpy(event.target.value);
-                        }}
-                    ></sp-slider>
-                `
-            );
+            const el = await fixture<Slider>(html`
+                <sp-slider
+                    editable
+                    hide-stepper
+                    min="1"
+                    max="100"
+                    step="1"
+                    label="Slider label"
+                    @input=${(event: Event & { target: Slider }) => {
+                        inputSpy(event.target.value);
+                    }}
+                    @change=${(event: Event & { target: Slider }) => {
+                        changeSpy(event.target.value);
+                    }}
+                ></sp-slider>
+            `);
             await elementUpdated(el);
             expect(el.value).to.equal(50.5);
 
@@ -193,7 +193,7 @@ export const testEditableSlider = (type: string): void => {
         it('edits via the `<sp-number-field>`', async () => {
             const inputSpy = spy();
             const changeSpy = spy();
-            const el = await sliderFromFixture(editable);
+            const el = await sliderFromFixture(Editable.render);
             el.addEventListener('input', () => inputSpy());
             el.addEventListener('change', () => changeSpy());
 
@@ -272,7 +272,7 @@ export const testEditableSlider = (type: string): void => {
 
         it('focuses `<input>` after pointer interactions', async () => {
             let pointerId = -1;
-            const el = await sliderFromFixture(editable);
+            const el = await sliderFromFixture(Editable.render);
 
             await elementUpdated(el);
 

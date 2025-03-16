@@ -20,24 +20,37 @@ import { ActionMenuMarkup } from './';
 export default {
     title: 'Action menu/Sizes',
     component: 'sp-action-menu',
+    tags: ['!dev'],
 };
 
 export const s = (): TemplateResult => ActionMenuMarkup({ size: 's' });
-export const sOpen = (): TemplateResult =>
-    ActionMenuMarkup({ size: 's', open: true });
-sOpen.decorators = [isOverlayOpen];
+
+export const sOpen = {
+    render: (): TemplateResult => ActionMenuMarkup({ size: 's', open: true }),
+
+    decorators: [isOverlayOpen],
+};
 
 export const m = (): TemplateResult => ActionMenuMarkup({ size: 'm' });
-export const mOpen = (): TemplateResult =>
-    ActionMenuMarkup({ size: 'm', open: true });
-mOpen.decorators = [isOverlayOpen];
+
+export const mOpen = {
+    render: (): TemplateResult => ActionMenuMarkup({ size: 'm', open: true }),
+
+    decorators: [isOverlayOpen],
+};
 
 export const l = (): TemplateResult => ActionMenuMarkup({ size: 'l' });
-export const lOpen = (): TemplateResult =>
-    ActionMenuMarkup({ size: 'l', open: true });
-lOpen.decorators = [isOverlayOpen];
+
+export const lOpen = {
+    render: (): TemplateResult => ActionMenuMarkup({ size: 'l', open: true }),
+
+    decorators: [isOverlayOpen],
+};
 
 export const XL = (): TemplateResult => ActionMenuMarkup({ size: 'xl' });
-export const XLOpen = (): TemplateResult =>
-    ActionMenuMarkup({ size: 'xl', open: true });
-XLOpen.decorators = [isOverlayOpen];
+
+export const XLOpen = {
+    render: (): TemplateResult => ActionMenuMarkup({ size: 'xl', open: true }),
+
+    decorators: [isOverlayOpen],
+};

@@ -17,6 +17,13 @@ import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
+export interface Properties {
+    onChange: (val: string) => void;
+    invalid: boolean;
+    pending: boolean;
+    open: false;
+}
+
 export default {
     title: 'Picker/Sizes',
     component: 'sp-picker',
@@ -45,13 +52,7 @@ export default {
             },
         },
     },
-};
-
-type StoryArgs = {
-    onChange: (val: string) => void;
-    invalid: boolean;
-    pending: boolean;
-    open: false;
+    tags: ['!dev'],
 };
 
 const picker = ({
@@ -93,26 +94,42 @@ const picker = ({
     `;
 };
 
-export const s = (args: StoryArgs): TemplateResult =>
-    picker({ ...args, size: 's' });
+export const s = {
+    render: (args: Properties): TemplateResult =>
+        picker({ ...args, size: 's' }),
+};
 
-export const sOpen = (args: StoryArgs): TemplateResult =>
-    picker({ ...args, open: true, size: 's' });
+export const sOpen = {
+    render: (args: Properties): TemplateResult =>
+        picker({ ...args, open: true, size: 's' }),
+};
 
-export const m = (args: StoryArgs): TemplateResult =>
-    picker({ ...args, size: 'm' });
+export const m = {
+    render: (args: Properties): TemplateResult =>
+        picker({ ...args, size: 'm' }),
+};
 
-export const mOpen = (args: StoryArgs): TemplateResult =>
-    picker({ ...args, open: true, size: 'm' });
+export const mOpen = {
+    render: (args: Properties): TemplateResult =>
+        picker({ ...args, open: true, size: 'm' }),
+};
 
-export const l = (args: StoryArgs): TemplateResult =>
-    picker({ ...args, size: 'l' });
+export const l = {
+    render: (args: Properties): TemplateResult =>
+        picker({ ...args, size: 'l' }),
+};
 
-export const lOpen = (args: StoryArgs): TemplateResult =>
-    picker({ ...args, open: true, size: 'l' });
+export const lOpen = {
+    render: (args: Properties): TemplateResult =>
+        picker({ ...args, open: true, size: 'l' }),
+};
 
-export const XL = (args: StoryArgs): TemplateResult =>
-    picker({ ...args, size: 'xl' });
+export const XL = {
+    render: (args: Properties): TemplateResult =>
+        picker({ ...args, size: 'xl' }),
+};
 
-export const XLOpen = (args: StoryArgs): TemplateResult =>
-    picker({ ...args, open: true, size: 'xl' });
+export const XLOpen = {
+    render: (args: Properties): TemplateResult =>
+        picker({ ...args, open: true, size: 'xl' }),
+};

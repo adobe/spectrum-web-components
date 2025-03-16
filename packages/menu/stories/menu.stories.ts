@@ -122,42 +122,45 @@ export const multipleSelect = (): TemplateResult => {
     `;
 };
 
-export const controlled = (): TemplateResult => {
-    const forceSelection = (event: Event & { target: Menu }): void => {
-        event.target.updateComplete.then(() => {
-            event.target.selected = ['Select and Mask...'];
-        });
-    };
-    return html`
-        <p>
-            This Menu will default to a
-            <code>selected</code>
-            value of
-            <code>[ 'Feather...', 'Save Selection' ]</code>
-            but then on any subsequent interaction be forced to a
-            <code>selected</code>
-            value of
-            <code>[ 'Select and Mask...' ]</code>
-            .
-        </p>
-        <sp-menu selects="multiple" @change=${forceSelection}>
-            <sp-menu-item>Deselect</sp-menu-item>
-            <sp-menu-item>Select Inverse</sp-menu-item>
-            <sp-menu-item selected>Feather...</sp-menu-item>
-            <sp-menu-item>Select and Mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item selected>Save Selection</sp-menu-item>
-            <sp-menu-item disabled>Make Work Path</sp-menu-item>
-        </sp-menu>
-    `;
-};
-controlled.swc_vrt = {
-    skip: true,
-};
+export const controlled = {
+    render: (): TemplateResult => {
+        const forceSelection = (event: Event & { target: Menu }): void => {
+            event.target.updateComplete.then(() => {
+                event.target.selected = ['Select and Mask...'];
+            });
+        };
+        return html`
+            <p>
+                This Menu will default to a
+                <code>selected</code>
+                value of
+                <code>[ 'Feather...', 'Save Selection' ]</code>
+                but then on any subsequent interaction be forced to a
+                <code>selected</code>
+                value of
+                <code>[ 'Select and Mask...' ]</code>
+                .
+            </p>
+            <sp-menu selects="multiple" @change=${forceSelection}>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item selected>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item selected>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-menu>
+        `;
+    },
 
-controlled.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+    swc_vrt: {
+        skip: true,
+    },
+
+    parameters: {
+        // Disables Chromatic's snapshotting on a global level
+        chromatic: { disableSnapshot: true },
+    },
 };
 
 export const menuItemWithDescription = (): TemplateResult => {
@@ -222,45 +225,47 @@ export const selectsWithIcons = (): TemplateResult => {
     `;
 };
 
-export const headersAndIcons = (): TemplateResult => {
-    return html`
-        <sp-popover open>
-            <sp-menu selects="single">
-                <sp-menu-group>
-                    <span slot="header">Section Heading</span>
-                    <sp-menu-item>Action 1</sp-menu-item>
-                    <sp-menu-item>Action 2</sp-menu-item>
-                    <sp-menu-item>Action 3</sp-menu-item>
-                </sp-menu-group>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-group>
-                    <span slot="header">Section Heading</span>
-                    <sp-menu-item>
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Save
-                    </sp-menu-item>
-                    <sp-menu-item disabled>
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Download
-                    </sp-menu-item>
-                    <sp-menu-item disabled>
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Share link
-                        <span slot="description">Enable comments</span>
-                    </sp-menu-item>
-                </sp-menu-group>
-            </sp-menu>
-        </sp-popover>
-    `;
-};
+export const headersAndIcons = {
+    render: (): TemplateResult => {
+        return html`
+            <sp-popover open>
+                <sp-menu selects="single">
+                    <sp-menu-group>
+                        <span slot="header">Section Heading</span>
+                        <sp-menu-item>Action 1</sp-menu-item>
+                        <sp-menu-item>Action 2</sp-menu-item>
+                        <sp-menu-item>Action 3</sp-menu-item>
+                    </sp-menu-group>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-group>
+                        <span slot="header">Section Heading</span>
+                        <sp-menu-item>
+                            <sp-icon-checkmark-circle
+                                slot="icon"
+                            ></sp-icon-checkmark-circle>
+                            Save
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            <sp-icon-checkmark-circle
+                                slot="icon"
+                            ></sp-icon-checkmark-circle>
+                            Download
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            <sp-icon-checkmark-circle
+                                slot="icon"
+                            ></sp-icon-checkmark-circle>
+                            Share link
+                            <span slot="description">Enable comments</span>
+                        </sp-menu-item>
+                    </sp-menu-group>
+                </sp-menu>
+            </sp-popover>
+        `;
+    },
 
-headersAndIcons.storyName = 'Headers and Icons';
+    name: 'Dynamic MenuItems',
+};
 
 export const Selected = (): TemplateResult => {
     return html`
@@ -432,10 +437,8 @@ export const menuWithValueSlots = (): TemplateResult => {
     `;
 };
 
-headersAndIcons.storyName = 'Dynamic MenuItems';
-
 export const dynamicRemoval = (): TemplateResult => {
-    const removeItem = async function (event: FocusEvent) {
+    const removeItem = async function (event: FocusEvent): Promise<void> {
         await (event.target as MenuItem)?.updateComplete;
         (event.target as MenuItem)?.remove();
     };

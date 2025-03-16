@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { TemplateResult } from '@spectrum-web-components/base';
 import { argTypes } from './args';
-import { StoryArgs, Template } from './template';
+import { Properties, Template } from './template';
 
 export default {
     title: 'Picker/Pending',
@@ -23,14 +23,22 @@ export default {
     },
 };
 
-export const S = (args: StoryArgs): TemplateResult =>
-    Template({ ...args, size: 's' });
+export const S = {
+    render: (args: Properties): TemplateResult =>
+        Template({ ...args, size: 's' }),
+};
 
-export const M = (args: StoryArgs): TemplateResult =>
-    Template({ ...args, size: 'm' });
+export const M = {
+    render: (args: Properties): TemplateResult =>
+        Template({ ...args, size: 'm' }),
+};
 
-export const L = (args: StoryArgs): TemplateResult =>
-    Template({ ...args, size: 'l' });
+export const L = {
+    render: (args: Properties): TemplateResult =>
+        Template({ ...args, size: 'l' }),
+};
 
-export const XL = (args: StoryArgs): TemplateResult =>
-    Template({ ...args, size: 'xl' });
+export const XL = {
+    render: (args: Properties): TemplateResult =>
+        Template({ ...args, size: 'xl' }),
+};

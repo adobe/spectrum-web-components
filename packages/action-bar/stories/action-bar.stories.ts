@@ -80,7 +80,7 @@ export const flexible = (): TemplateResult => {
     `;
 };
 
-export const hasActionMenuAsChild = (): TemplateResult => {
+export const HasActionMenuAsChild = (): TemplateResult => {
     return html`
         <sp-action-bar open>
             2 selected
