@@ -19,28 +19,19 @@ governing permissions and limitations under the License.
 
 :host([size='s']),
 :host([size='xs']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --spectrum-spacing-75
-    );
+    --spectrum-actiongroup-horizontal-spacing-regular: var(--spectrum-spacing-75);
     --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
 }
 
 :host([size='l']),
 :host,
 :host([size='xl']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --spectrum-spacing-100
-    );
-    --spectrum-actiongroup-vertical-spacing-regular: var(
-        --spectrum-spacing-100
-    );
+    --spectrum-actiongroup-horizontal-spacing-regular: var(--spectrum-spacing-100);
+    --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-100);
 }
 
 :host {
-    gap: var(
-        --mod-actiongroup-horizontal-spacing-regular,
-        var(--spectrum-actiongroup-horizontal-spacing-regular)
-    );
+    gap: var(--mod-actiongroup-horizontal-spacing-regular, var(--spectrum-actiongroup-horizontal-spacing-regular));
     flex-wrap: wrap;
     display: flex;
 }
@@ -58,19 +49,13 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical]) {
-    gap: var(
-        --mod-actiongroup-vertical-spacing-regular,
-        var(--spectrum-actiongroup-vertical-spacing-regular)
-    );
+    gap: var(--mod-actiongroup-vertical-spacing-regular, var(--spectrum-actiongroup-vertical-spacing-regular));
     flex-direction: column;
     display: inline-flex;
 }
 
 :host([compact]) {
-    gap: var(
-        --mod-actiongroup-gap-size-compact,
-        var(--spectrum-actiongroup-gap-size-compact)
-    );
+    gap: var(--mod-actiongroup-gap-size-compact, var(--spectrum-actiongroup-gap-size-compact));
 }
 
 :host([compact]:not([quiet])) {
@@ -78,77 +63,30 @@ governing permissions and limitations under the License.
 }
 
 :host([compact]:not([quiet])) ::slotted(*) {
-    border-radius: var(
-        --mod-actiongroup-border-radius-reset,
-        var(--spectrum-actiongroup-border-radius-reset)
-    );
+    border-radius: var(--mod-actiongroup-border-radius-reset, var(--spectrum-actiongroup-border-radius-reset));
     z-index: 0;
     position: relative;
 }
 
 :host([compact]:not([quiet])) ::slotted(:first-child) {
-    --mod-actionbutton-focus-indicator-border-radius: var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        0px 0px
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        );
-    border-start-start-radius: var(
-        --mod-actiongroup-border-radius,
-        var(--spectrum-actiongroup-border-radius)
-    );
-    border-end-start-radius: var(
-        --mod-actiongroup-border-radius,
-        var(--spectrum-actiongroup-border-radius)
-    );
-    margin-inline-start: var(
-        --mod-actiongroup-button-spacing-reset,
-        var(--spectrum-actiongroup-button-spacing-reset)
-    );
+    --mod-actionbutton-focus-indicator-border-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0px 0px var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
+    border-start-start-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
+    border-end-start-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
+    margin-inline-start: var(--mod-actiongroup-button-spacing-reset, var(--spectrum-actiongroup-button-spacing-reset));
 }
 
 :host([compact]:not([quiet])) ::slotted(:not(:first-child)) {
     --mod-actionbutton-focus-indicator-border-radius: 0px;
-    margin-inline-start: var(
-        --mod-actiongroup-horizontal-spacing-compact,
-        var(--spectrum-actiongroup-horizontal-spacing-compact)
-    );
-    margin-inline-end: var(
-        --mod-actiongroup-horizontal-spacing-compact,
-        var(--spectrum-actiongroup-horizontal-spacing-compact)
-    );
+    margin-inline-start: var(--mod-actiongroup-horizontal-spacing-compact, var(--spectrum-actiongroup-horizontal-spacing-compact));
+    margin-inline-end: var(--mod-actiongroup-horizontal-spacing-compact, var(--spectrum-actiongroup-horizontal-spacing-compact));
 }
 
 :host([compact]:not([quiet])) ::slotted(:last-child) {
-    --mod-actionbutton-focus-indicator-border-radius: 0px
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        0px;
-    border-start-end-radius: var(
-        --mod-actiongroup-border-radius,
-        var(--spectrum-actiongroup-border-radius)
-    );
-    border-end-end-radius: var(
-        --mod-actiongroup-border-radius,
-        var(--spectrum-actiongroup-border-radius)
-    );
-    margin-inline-start: var(
-        --mod-actiongroup-horizontal-spacing-compact,
-        var(--spectrum-actiongroup-horizontal-spacing-compact)
-    );
-    margin-inline-end: var(
-        --mod-actiongroup-border-radius-reset,
-        var(--spectrum-actiongroup-border-radius-reset)
-    );
+    --mod-actionbutton-focus-indicator-border-radius: 0px var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0px;
+    border-start-end-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
+    border-end-end-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
+    margin-inline-start: var(--mod-actiongroup-horizontal-spacing-compact, var(--spectrum-actiongroup-horizontal-spacing-compact));
+    margin-inline-end: var(--mod-actiongroup-border-radius-reset, var(--spectrum-actiongroup-border-radius-reset));
 }
 
 :host([compact]:not([quiet])) ::slotted([selected]) {
@@ -166,96 +104,35 @@ governing permissions and limitations under the License.
 }
 
 :host([compact][vertical]:not([quiet])) {
-    gap: var(
-        --mod-actiongroup-gap-size-compact,
-        var(--spectrum-actiongroup-gap-size-compact)
-    );
+    gap: var(--mod-actiongroup-gap-size-compact, var(--spectrum-actiongroup-gap-size-compact));
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(*) {
-    border-radius: var(
-        --mod-actiongroup-border-radius-reset,
-        var(--spectrum-actiongroup-border-radius-reset)
-    );
+    border-radius: var(--mod-actiongroup-border-radius-reset, var(--spectrum-actiongroup-border-radius-reset));
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:first-child) {
-    --mod-actionbutton-focus-indicator-border-radius: var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        0px 0px;
-    border-start-start-radius: var(
-        --mod-actiongroup-border-radius,
-        var(--spectrum-actiongroup-border-radius)
-    );
-    border-start-end-radius: var(
-        --mod-actiongroup-border-radius,
-        var(--spectrum-actiongroup-border-radius)
-    );
-    margin-block-start: var(
-        --mod-actiongroup-vertical-spacing-compact,
-        var(--spectrum-actiongroup-vertical-spacing-compact)
-    );
-    margin-block-end: var(
-        --mod-actiongroup-vertical-spacing-compact,
-        var(--spectrum-actiongroup-vertical-spacing-compact)
-    );
-    margin-inline-end: var(
-        --mod-actiongroup-button-spacing-reset,
-        var(--spectrum-actiongroup-button-spacing-reset)
-    );
+    --mod-actionbutton-focus-indicator-border-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0px 0px;
+    border-start-start-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
+    border-start-end-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
+    margin-block-start: var(--mod-actiongroup-vertical-spacing-compact, var(--spectrum-actiongroup-vertical-spacing-compact));
+    margin-block-end: var(--mod-actiongroup-vertical-spacing-compact, var(--spectrum-actiongroup-vertical-spacing-compact));
+    margin-inline-end: var(--mod-actiongroup-button-spacing-reset, var(--spectrum-actiongroup-button-spacing-reset));
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:not(:first-child)) {
-    margin-block-start: var(
-        --mod-actiongroup-button-spacing-reset,
-        var(--spectrum-actiongroup-button-spacing-reset)
-    );
-    margin-block-end: var(
-        --mod-actiongroup-vertical-spacing-compact,
-        var(--spectrum-actiongroup-vertical-spacing-compact)
-    );
-    margin-inline-start: var(
-        --mod-actiongroup-button-spacing-reset,
-        var(--spectrum-actiongroup-button-spacing-reset)
-    );
-    margin-inline-end: var(
-        --mod-actiongroup-button-spacing-reset,
-        var(--spectrum-actiongroup-button-spacing-reset)
-    );
+    margin-block-start: var(--mod-actiongroup-button-spacing-reset, var(--spectrum-actiongroup-button-spacing-reset));
+    margin-block-end: var(--mod-actiongroup-vertical-spacing-compact, var(--spectrum-actiongroup-vertical-spacing-compact));
+    margin-inline-start: var(--mod-actiongroup-button-spacing-reset, var(--spectrum-actiongroup-button-spacing-reset));
+    margin-inline-end: var(--mod-actiongroup-button-spacing-reset, var(--spectrum-actiongroup-button-spacing-reset));
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:last-child) {
-    --mod-actionbutton-focus-indicator-border-radius: 0px 0px
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        );
-    border-end-end-radius: var(
-        --mod-actiongroup-border-radius,
-        var(--spectrum-actiongroup-border-radius)
-    );
-    border-end-start-radius: var(
-        --mod-actiongroup-border-radius,
-        var(--spectrum-actiongroup-border-radius)
-    );
-    margin-block-start: var(
-        --mod-actiongroup-vertical-spacing-compact,
-        var(--spectrum-actiongroup-vertical-spacing-compact)
-    );
-    margin-block-end: var(
-        --mod-actiongroup-button-spacing-reset,
-        var(--spectrum-actiongroup-button-spacing-reset)
-    );
+    --mod-actionbutton-focus-indicator-border-radius: 0px 0px var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
+    border-end-end-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
+    border-end-start-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
+    margin-block-start: var(--mod-actiongroup-vertical-spacing-compact, var(--spectrum-actiongroup-vertical-spacing-compact));
+    margin-block-end: var(--mod-actiongroup-button-spacing-reset, var(--spectrum-actiongroup-button-spacing-reset));
 }
 
 :host([justified]) ::slotted(*) {

@@ -12,28 +12,16 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    border-radius: var(
-        --mod-table-border-radius,
-        var(--spectrum-table-border-radius)
-    );
+    border-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
     border: none;
     position: relative;
 }
 
 :host([drop-target]) {
     --spectrum-table-border-color: transparent;
-    outline-width: var(
-        --mod-table-focus-indicator-thickness,
-        var(--spectrum-table-focus-indicator-thickness)
-    );
+    outline-width: var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness));
     outline-style: solid;
-    outline-color: var(
-        --highcontrast-table-focus-indicator-color,
-        var(
-            --mod-table-drop-zone-outline-color,
-            var(--spectrum-table-drop-zone-outline-color)
-        )
-    );
+    outline-color: var(--highcontrast-table-focus-indicator-color, var(--mod-table-drop-zone-outline-color, var(--spectrum-table-drop-zone-outline-color)));
 }
 
 :host {
