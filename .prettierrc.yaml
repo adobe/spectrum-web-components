@@ -11,6 +11,6 @@ overrides:
         - 'packages/*/src/*.css'
         - 'tools/*/src/*.css'
         - 'tools/styles/*.css'
-        - 'tools/styles/*/*.css'
+        - 'tools/styles/**/*.css'
       options:
           printWidth: 500
