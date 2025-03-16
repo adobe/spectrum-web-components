@@ -6,3 +6,7 @@ trailingComma: es5
 bracketSpacing: true
 arrowParens: always
 htmlWhitespaceSensitivity: ignore
+overrides:
+    - files: '{tools,packages}/*/src/spectrum-*.css'
+      options:
+          printWidth: 500

@@ -12,14 +12,8 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-icon-inline-size: var(
-        --mod-icon-inline-size,
-        var(--mod-icon-size, var(--spectrum-icon-size))
-    );
-    --spectrum-icon-block-size: var(
-        --mod-icon-block-size,
-        var(--mod-icon-size, var(--spectrum-icon-size))
-    );
+    --spectrum-icon-inline-size: var(--mod-icon-inline-size, var(--mod-icon-size, var(--spectrum-icon-size)));
+    --spectrum-icon-block-size: var(--mod-icon-block-size, var(--mod-icon-size, var(--spectrum-icon-size)));
     inline-size: var(--spectrum-icon-inline-size);
     block-size: var(--spectrum-icon-block-size);
     color: inherit;

@@ -20,11 +20,7 @@ governing permissions and limitations under the License.
     visibility: hidden;
     pointer-events: none;
     z-index: 1;
-    transition: visibility 0s linear
-        var(
-            --mod-modal-transition-animation-duration,
-            var(--spectrum-modal-transition-animation-duration)
-        );
+    transition: visibility 0s linear var(--mod-modal-transition-animation-duration, var(--spectrum-modal-transition-animation-duration));
     justify-content: center;
     align-items: center;
     display: flex;
@@ -37,8 +33,7 @@ governing permissions and limitations under the License.
     visibility: visible;
 }
 
-@media only screen and (device-height <= 350px),
-    only screen and (device-width <= 400px) {
+@media only screen and (device-height <= 350px), only screen and (device-width <= 400px) {
     :host([responsive]) {
         inline-size: 100%;
         block-size: 100%;

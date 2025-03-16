@@ -24,69 +24,36 @@ governing permissions and limitations under the License.
 }
 
 #list {
-    block-size: var(
-        --mod-breadcrumbs-block-size,
-        var(--spectrum-breadcrumbs-block-size)
-    );
+    block-size: var(--mod-breadcrumbs-block-size, var(--spectrum-breadcrumbs-block-size));
     flex-flow: row;
     flex: 1 0;
     justify-content: flex-start;
     align-items: center;
     margin: 0;
-    padding-inline-start: var(
-        --mod-breadcrumbs-inline-start,
-        var(--spectrum-breadcrumbs-inline-start)
-    );
-    padding-inline-end: var(
-        --mod-breadcrumbs-inline-end,
-        var(--spectrum-breadcrumbs-inline-end)
-    );
+    padding-inline-start: var(--mod-breadcrumbs-inline-start, var(--spectrum-breadcrumbs-inline-start));
+    padding-inline-end: var(--mod-breadcrumbs-inline-end, var(--spectrum-breadcrumbs-inline-end));
     list-style-type: none;
     display: flex;
 }
 
 :host([compact]) #list {
-    block-size: var(
-        --mod-breadcrumbs-block-size-compact,
-        var(--spectrum-breadcrumbs-block-size-compact)
-    );
+    block-size: var(--mod-breadcrumbs-block-size-compact, var(--spectrum-breadcrumbs-block-size-compact));
 }
 
 .spectrum-Breadcrumbs--multiline {
-    block-size: var(
-        --mod-breadcrumbs-block-size-multiline,
-        var(--spectrum-breadcrumbs-block-size-multiline)
-    );
+    block-size: var(--mod-breadcrumbs-block-size-multiline, var(--spectrum-breadcrumbs-block-size-multiline));
     flex-wrap: wrap;
     align-content: center;
 }
 
 :host([compact]) ::slotted(sp-breadcrumb-item) {
-    font-family: var(
-        --mod-breadcrumbs-font-family-compact,
-        var(--spectrum-breadcrumbs-font-family-compact)
-    );
-    font-size: var(
-        --mod-breadcrumbs-font-size-compact,
-        var(--spectrum-breadcrumbs-font-size-compact)
-    );
-    font-weight: var(
-        --mod-breadcrumbs-font-weight-compact,
-        var(--spectrum-breadcrumbs-font-weight-compact)
-    );
+    font-family: var(--mod-breadcrumbs-font-family-compact, var(--spectrum-breadcrumbs-font-family-compact));
+    font-size: var(--mod-breadcrumbs-font-size-compact, var(--spectrum-breadcrumbs-font-size-compact));
+    font-weight: var(--mod-breadcrumbs-font-weight-compact, var(--spectrum-breadcrumbs-font-weight-compact));
 }
 
 :host([compact]) ::slotted(:last-of-type) {
-    font-family: var(
-        --mod-breadcrumbs-font-family-compact-current,
-        var(--spectrum-breadcrumbs-font-family-compact-current)
-    );
-    font-size: var(
-        --mod-breadcrumbs-font-size-compact-current,
-        var(--spectrum-breadcrumbs-font-size-compact-current)
-    );
-    font-weight: var(
-        --mod-breadcrumbs-font-weight-compact-current,
-        var(--spectrum-breadcrumbs-font-weight-compact-current)
-    );
+    font-family: var(--mod-breadcrumbs-font-family-compact-current, var(--spectrum-breadcrumbs-font-family-compact-current));
+    font-size: var(--mod-breadcrumbs-font-size-compact-current, var(--spectrum-breadcrumbs-font-size-compact-current));
+    font-weight: var(--mod-breadcrumbs-font-weight-compact-current, var(--spectrum-breadcrumbs-font-weight-compact-current));
 }
