@@ -12,7 +12,6 @@
         "analyze": "lit-analyzer \"{packages,tools}/*/src/**/!(*.css).ts\"",
         "build": "wireit",
         "build:clear-cache": "rimraf packages/*/tsconfig.tsbuildinfo && rimraf tools/*/tsconfig.tsbuildinfo",
-        "build:component:css": "node ./tasks/process-spectrum.js",
         "build:component-inventory": "node ./tasks/build-component-inventory.js",
         "build:confirm": "node ./tasks/confirm-build.js",
         "build:css": "wireit",
