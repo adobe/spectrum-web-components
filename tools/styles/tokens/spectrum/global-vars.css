@@ -1,15 +1,9 @@
 :host,
 :root {
-    --spectrum-neutral-background-color-selected-default: var(
-        --spectrum-gray-700
-    );
-    --spectrum-neutral-background-color-selected-hover: var(
-        --spectrum-gray-800
-    );
+    --spectrum-neutral-background-color-selected-default: var(--spectrum-gray-700);
+    --spectrum-neutral-background-color-selected-hover: var(--spectrum-gray-800);
     --spectrum-neutral-background-color-selected-down: var(--spectrum-gray-900);
-    --spectrum-neutral-background-color-selected-key-focus: var(
-        --spectrum-gray-800
-    );
+    --spectrum-neutral-background-color-selected-key-focus: var(--spectrum-gray-800);
     --spectrum-slider-track-thickness: 2px;
     --spectrum-slider-handle-gap: 4px;
     --spectrum-picker-border-width: var(--spectrum-border-width-100);
@@ -19,18 +13,10 @@
     --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium: 3px;
     --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large: 4px;
     --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large: 5px;
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-small: var(
-        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-small
-    );
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-medium: var(
-        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium
-    );
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-large: var(
-        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large
-    );
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large: var(
-        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large
-    );
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-small: var(--spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-small);
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-medium: var(--spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium);
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-large: var(--spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large);
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large: var(--spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large);
     --spectrum-corner-radius-75: 2px;
     --spectrum-drop-shadow-x: 0px;
     --spectrum-border-width-100: 1px;
@@ -51,12 +37,8 @@
     --spectrum-heading-sans-serif-font-weight: var(--spectrum-bold-font-weight);
     --spectrum-heading-serif-font-weight: var(--spectrum-bold-font-weight);
     --spectrum-heading-cjk-font-weight: var(--spectrum-extra-bold-font-weight);
-    --spectrum-heading-sans-serif-emphasized-font-weight: var(
-        --spectrum-bold-font-weight
-    );
-    --spectrum-heading-serif-emphasized-font-weight: var(
-        --spectrum-bold-font-weight
-    );
+    --spectrum-heading-sans-serif-emphasized-font-weight: var(--spectrum-bold-font-weight);
+    --spectrum-heading-serif-emphasized-font-weight: var(--spectrum-bold-font-weight);
     --system: spectrum;
     --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
     --spectrum-animation-duration-0: 0s;
@@ -77,37 +59,21 @@
     --spectrum-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
     --spectrum-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
     --spectrum-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
-    --spectrum-sans-font-family-stack:
-        adobe-clean, var(--spectrum-sans-serif-font-family), 'Source Sans Pro',
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-sans-font-family-stack: adobe-clean, var(--spectrum-sans-serif-font-family), 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-sans-serif-font: var(--spectrum-sans-font-family-stack);
-    --spectrum-serif-font-family-stack:
-        adobe-clean-serif, var(--spectrum-serif-font-family),
-        'Source Serif Pro', Georgia, serif;
+    --spectrum-serif-font-family-stack: adobe-clean-serif, var(--spectrum-serif-font-family), 'Source Serif Pro', Georgia, serif;
     --spectrum-serif-font: var(--spectrum-serif-font-family-stack);
     --spectrum-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
-    --spectrum-font-family-ar:
-        myriad-arabic, adobe-clean, 'Source Sans Pro', -apple-system,
-        blinkmacsystemfont, 'Segoe UI', roboto, ubuntu, 'Trebuchet MS',
-        'Lucida Grande', sans-serif;
-    --spectrum-font-family-he:
-        myriad-hebrew, adobe-clean, 'Source Sans Pro', -apple-system,
-        blinkmacsystemfont, 'Segoe UI', roboto, ubuntu, 'Trebuchet MS',
-        'Lucida Grande', sans-serif;
+    --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-font-family: var(--spectrum-sans-font-family-stack);
     --spectrum-font-style: var(--spectrum-default-font-style);
     --spectrum-font-size: var(--spectrum-font-size-100);
-    --spectrum-cjk-font-family-stack:
-        adobe-clean-han-japanese, var(--spectrum-cjk-font-family), sans-serif;
+    --spectrum-cjk-font-family-stack: adobe-clean-han-japanese, var(--spectrum-cjk-font-family), sans-serif;
     --spectrum-cjk-font: var(--spectrum-code-font-family-stack);
     --spectrum-docs-static-white-background-color-rgb: 15, 121, 125;
-    --spectrum-docs-static-white-background-color: rgba(
-        var(--spectrum-docs-static-white-background-color-rgb)
-    );
+    --spectrum-docs-static-white-background-color: rgba(var(--spectrum-docs-static-white-background-color-rgb));
     --spectrum-docs-static-black-background-color-rgb: 181, 209, 211;
-    --spectrum-docs-static-black-background-color: rgba(
-        var(--spectrum-docs-static-black-background-color-rgb)
-    );
+    --spectrum-docs-static-black-background-color: rgba(var(--spectrum-docs-static-black-background-color-rgb));
     --spectrum-coach-indicator-ring-static-white-color: var(--spectrum-white);
 }

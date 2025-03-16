@@ -2,48 +2,19 @@
 :root {
     --spectrum-menu-item-background-color-default-rgb: 255, 255, 255;
     --spectrum-menu-item-background-color-default-opacity: 0;
-    --spectrum-menu-item-background-color-default: rgba(
-        var(--spectrum-menu-item-background-color-default-rgb),
-        var(--spectrum-menu-item-background-color-default-opacity)
-    );
-    --spectrum-menu-item-background-color-hover: var(
-        --spectrum-transparent-white-200
-    );
-    --spectrum-menu-item-background-color-down: var(
-        --spectrum-transparent-white-200
-    );
-    --spectrum-menu-item-background-color-key-focus: var(
-        --spectrum-transparent-white-200
-    );
+    --spectrum-menu-item-background-color-default: rgba(var(--spectrum-menu-item-background-color-default-rgb), var(--spectrum-menu-item-background-color-default-opacity));
+    --spectrum-menu-item-background-color-hover: var(--spectrum-transparent-white-200);
+    --spectrum-menu-item-background-color-down: var(--spectrum-transparent-white-200);
+    --spectrum-menu-item-background-color-key-focus: var(--spectrum-transparent-white-200);
     --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-900-rgb);
     --spectrum-dropindicator-color: var(--spectrum-blue-700);
-    --spectrum-calendar-day-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.15
-    );
-    --spectrum-calendar-day-background-color-hover: rgba(
-        var(--spectrum-white-rgb),
-        0.07
-    );
-    --spectrum-calendar-day-today-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.25
-    );
-    --spectrum-calendar-day-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.25
-    );
-    --spectrum-calendar-day-background-color-down: var(
-        --spectrum-transparent-white-200
-    );
-    --spectrum-calendar-day-background-color-cap-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.25
-    );
-    --spectrum-calendar-day-background-color-key-focus: rgba(
-        var(--spectrum-white-rgb),
-        0.07
-    );
+    --spectrum-calendar-day-background-color-selected: rgba(var(--spectrum-blue-800-rgb), 0.15);
+    --spectrum-calendar-day-background-color-hover: rgba(var(--spectrum-white-rgb), 0.07);
+    --spectrum-calendar-day-today-background-color-selected-hover: rgba(var(--spectrum-blue-800-rgb), 0.25);
+    --spectrum-calendar-day-background-color-selected-hover: rgba(var(--spectrum-blue-800-rgb), 0.25);
+    --spectrum-calendar-day-background-color-down: var(--spectrum-transparent-white-200);
+    --spectrum-calendar-day-background-color-cap-selected: rgba(var(--spectrum-blue-800-rgb), 0.25);
+    --spectrum-calendar-day-background-color-key-focus: rgba(var(--spectrum-white-rgb), 0.07);
     --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-700);
     --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-500-rgb);
     --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
@@ -51,105 +22,49 @@
     --spectrum-coach-indicator-ring-dark-color: var(--spectrum-gray-900);
     --spectrum-coach-indicator-ring-light-color: var(--spectrum-gray-50);
     --spectrum-well-border-color: rgba(var(--spectrum-white-rgb), 0.05);
-    --spectrum-steplist-current-marker-color-key-focus: var(
-        --spectrum-blue-700
-    );
-    --spectrum-treeview-item-background-color-quiet-selected: rgba(
-        var(--spectrum-gray-900-rgb),
-        0.07
-    );
-    --spectrum-treeview-item-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.15
-    );
+    --spectrum-steplist-current-marker-color-key-focus: var(--spectrum-blue-700);
+    --spectrum-treeview-item-background-color-quiet-selected: rgba(var(--spectrum-gray-900-rgb), 0.07);
+    --spectrum-treeview-item-background-color-selected: rgba(var(--spectrum-blue-800-rgb), 0.15);
     --spectrum-logic-button-and-background-color: var(--spectrum-blue-800);
     --spectrum-logic-button-and-border-color: var(--spectrum-blue-800);
-    --spectrum-logic-button-and-background-color-hover: var(
-        --spectrum-blue-1000
-    );
+    --spectrum-logic-button-and-background-color-hover: var(--spectrum-blue-1000);
     --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1000);
     --spectrum-logic-button-or-background-color: var(--spectrum-magenta-700);
     --spectrum-logic-button-or-border-color: var(--spectrum-magenta-700);
-    --spectrum-logic-button-or-background-color-hover: var(
-        --spectrum-magenta-900
-    );
+    --spectrum-logic-button-or-background-color-hover: var(--spectrum-magenta-900);
     --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-900);
     --spectrum-assetcard-border-color-selected: var(--spectrum-blue-800);
     --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-800);
     --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-900);
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-blue-800
-    );
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(--spectrum-blue-800);
     --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-700);
-    --spectrum-assetlist-item-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.25
-    );
-    --spectrum-assetlist-item-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.15
-    );
+    --spectrum-assetlist-item-background-color-selected-hover: rgba(var(--spectrum-blue-800-rgb), 0.25);
+    --spectrum-assetlist-item-background-color-selected: rgba(var(--spectrum-blue-800-rgb), 0.15);
     --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
     --spectrum-swatch-border-color-rgb: 255, 255, 255;
     --spectrum-swatch-border-color-opacity: 0.51;
-    --spectrum-swatch-border-color: rgba(
-        var(--spectrum-swatch-border-color-rgb),
-        var(--spectrum-swatch-border-color-opacity)
-    );
+    --spectrum-swatch-border-color: rgba(var(--spectrum-swatch-border-color-rgb), var(--spectrum-swatch-border-color-opacity));
     --spectrum-swatch-border-color-light-rgb: 255, 255, 255;
     --spectrum-swatch-border-color-light-opacity: 0.2;
-    --spectrum-swatch-border-color-light: rgba(
-        var(--spectrum-swatch-border-color-light-rgb),
-        var(--spectrum-swatch-border-color-light-opacity)
-    );
+    --spectrum-swatch-border-color-light: rgba(var(--spectrum-swatch-border-color-light-rgb), var(--spectrum-swatch-border-color-light-opacity));
 }
 :host,
 :root {
     --spectrum-menu-item-background-color-default-rgb: 255, 255, 255;
     --spectrum-menu-item-background-color-default-opacity: 0;
-    --spectrum-menu-item-background-color-default: rgba(
-        var(--spectrum-menu-item-background-color-default-rgb),
-        var(--spectrum-menu-item-background-color-default-opacity)
-    );
-    --spectrum-menu-item-background-color-hover: var(
-        --spectrum-transparent-white-200
-    );
-    --spectrum-menu-item-background-color-down: var(
-        --spectrum-transparent-white-200
-    );
-    --spectrum-menu-item-background-color-key-focus: var(
-        --spectrum-transparent-white-200
-    );
+    --spectrum-menu-item-background-color-default: rgba(var(--spectrum-menu-item-background-color-default-rgb), var(--spectrum-menu-item-background-color-default-opacity));
+    --spectrum-menu-item-background-color-hover: var(--spectrum-transparent-white-200);
+    --spectrum-menu-item-background-color-down: var(--spectrum-transparent-white-200);
+    --spectrum-menu-item-background-color-key-focus: var(--spectrum-transparent-white-200);
     --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-900-rgb);
     --spectrum-dropindicator-color: var(--spectrum-blue-700);
-    --spectrum-calendar-day-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.2
-    );
-    --spectrum-calendar-day-background-color-hover: rgba(
-        var(--spectrum-white-rgb),
-        0.08
-    );
-    --spectrum-calendar-day-today-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.3
-    );
-    --spectrum-calendar-day-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.3
-    );
-    --spectrum-calendar-day-background-color-down: rgba(
-        var(--spectrum-white-rgb),
-        0.15
-    );
-    --spectrum-calendar-day-background-color-cap-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.3
-    );
-    --spectrum-calendar-day-background-color-key-focus: rgba(
-        var(--spectrum-white-rgb),
-        0.08
-    );
+    --spectrum-calendar-day-background-color-selected: rgba(var(--spectrum-blue-800-rgb), 0.2);
+    --spectrum-calendar-day-background-color-hover: rgba(var(--spectrum-white-rgb), 0.08);
+    --spectrum-calendar-day-today-background-color-selected-hover: rgba(var(--spectrum-blue-800-rgb), 0.3);
+    --spectrum-calendar-day-background-color-selected-hover: rgba(var(--spectrum-blue-800-rgb), 0.3);
+    --spectrum-calendar-day-background-color-down: rgba(var(--spectrum-white-rgb), 0.15);
+    --spectrum-calendar-day-background-color-cap-selected: rgba(var(--spectrum-blue-800-rgb), 0.3);
+    --spectrum-calendar-day-background-color-key-focus: rgba(var(--spectrum-white-rgb), 0.08);
     --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-700);
     --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-600-rgb);
     --spectrum-badge-label-icon-color-primary: var(--spectrum-black);
@@ -157,70 +72,38 @@
     --spectrum-coach-indicator-ring-dark-color: var(--spectrum-gray-900);
     --spectrum-coach-indicator-ring-light-color: var(--spectrum-gray-50);
     --spectrum-well-border-color: rgba(var(--spectrum-white-rgb), 0.05);
-    --spectrum-steplist-current-marker-color-key-focus: var(
-        --spectrum-blue-700
-    );
-    --spectrum-treeview-item-background-color-quiet-selected: rgba(
-        var(--spectrum-gray-900-rgb),
-        0.08
-    );
-    --spectrum-treeview-item-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.2
-    );
+    --spectrum-steplist-current-marker-color-key-focus: var(--spectrum-blue-700);
+    --spectrum-treeview-item-background-color-quiet-selected: rgba(var(--spectrum-gray-900-rgb), 0.08);
+    --spectrum-treeview-item-background-color-selected: rgba(var(--spectrum-blue-800-rgb), 0.2);
     --spectrum-logic-button-and-background-color: var(--spectrum-blue-800);
     --spectrum-logic-button-and-border-color: var(--spectrum-blue-800);
-    --spectrum-logic-button-and-background-color-hover: var(
-        --spectrum-blue-1000
-    );
+    --spectrum-logic-button-and-background-color-hover: var(--spectrum-blue-1000);
     --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1000);
     --spectrum-logic-button-or-background-color: var(--spectrum-magenta-700);
     --spectrum-logic-button-or-border-color: var(--spectrum-magenta-700);
-    --spectrum-logic-button-or-background-color-hover: var(
-        --spectrum-magenta-900
-    );
+    --spectrum-logic-button-or-background-color-hover: var(--spectrum-magenta-900);
     --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-900);
     --spectrum-assetcard-border-color-selected: var(--spectrum-blue-800);
     --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-800);
     --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-900);
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-blue-800
-    );
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(--spectrum-blue-800);
     --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-700);
-    --spectrum-assetlist-item-background-color-selected-hover: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.3
-    );
-    --spectrum-assetlist-item-background-color-selected: rgba(
-        var(--spectrum-blue-800-rgb),
-        0.2
-    );
+    --spectrum-assetlist-item-background-color-selected-hover: rgba(var(--spectrum-blue-800-rgb), 0.3);
+    --spectrum-assetlist-item-background-color-selected: rgba(var(--spectrum-blue-800-rgb), 0.2);
     --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-700);
     --spectrum-swatch-border-color-rgb: 255, 255, 255;
     --spectrum-swatch-border-color-opacity: 0.51;
-    --spectrum-swatch-border-color: rgba(
-        var(--spectrum-swatch-border-color-rgb),
-        var(--spectrum-swatch-border-color-opacity)
-    );
+    --spectrum-swatch-border-color: rgba(var(--spectrum-swatch-border-color-rgb), var(--spectrum-swatch-border-color-opacity));
     --spectrum-swatch-border-color-light-rgb: 255, 255, 255;
     --spectrum-swatch-border-color-light-opacity: 0.2;
-    --spectrum-swatch-border-color-light: rgba(
-        var(--spectrum-swatch-border-color-light-rgb),
-        var(--spectrum-swatch-border-color-light-opacity)
-    );
+    --spectrum-swatch-border-color-light: rgba(var(--spectrum-swatch-border-color-light-rgb), var(--spectrum-swatch-border-color-light-opacity));
 }
 :host,
 :root {
-    --spectrum-neutral-background-color-selected-default: var(
-        --spectrum-gray-700
-    );
-    --spectrum-neutral-background-color-selected-hover: var(
-        --spectrum-gray-800
-    );
+    --spectrum-neutral-background-color-selected-default: var(--spectrum-gray-700);
+    --spectrum-neutral-background-color-selected-hover: var(--spectrum-gray-800);
     --spectrum-neutral-background-color-selected-down: var(--spectrum-gray-900);
-    --spectrum-neutral-background-color-selected-key-focus: var(
-        --spectrum-gray-800
-    );
+    --spectrum-neutral-background-color-selected-key-focus: var(--spectrum-gray-800);
     --spectrum-slider-track-thickness: 2px;
     --spectrum-slider-handle-gap: 4px;
     --spectrum-picker-border-width: var(--spectrum-border-width-100);
@@ -230,18 +113,10 @@
     --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium: 3px;
     --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large: 4px;
     --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large: 5px;
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-small: var(
-        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-small
-    );
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-medium: var(
-        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium
-    );
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-large: var(
-        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large
-    );
-    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large: var(
-        --spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large
-    );
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-small: var(--spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-small);
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-medium: var(--spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-medium);
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-large: var(--spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-large);
+    --spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large: var(--spectrum-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large);
     --spectrum-corner-radius-75: 2px;
     --spectrum-drop-shadow-x: 0px;
     --spectrum-border-width-100: 1px;
@@ -262,12 +137,8 @@
     --spectrum-heading-sans-serif-font-weight: var(--spectrum-bold-font-weight);
     --spectrum-heading-serif-font-weight: var(--spectrum-bold-font-weight);
     --spectrum-heading-cjk-font-weight: var(--spectrum-extra-bold-font-weight);
-    --spectrum-heading-sans-serif-emphasized-font-weight: var(
-        --spectrum-bold-font-weight
-    );
-    --spectrum-heading-serif-emphasized-font-weight: var(
-        --spectrum-bold-font-weight
-    );
+    --spectrum-heading-sans-serif-emphasized-font-weight: var(--spectrum-bold-font-weight);
+    --spectrum-heading-serif-emphasized-font-weight: var(--spectrum-bold-font-weight);
     --system: spectrum;
     --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
     --spectrum-animation-duration-0: 0s;
@@ -288,38 +159,22 @@
     --spectrum-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
     --spectrum-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
     --spectrum-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
-    --spectrum-sans-font-family-stack:
-        adobe-clean, var(--spectrum-sans-serif-font-family), 'Source Sans Pro',
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-sans-font-family-stack: adobe-clean, var(--spectrum-sans-serif-font-family), 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-sans-serif-font: var(--spectrum-sans-font-family-stack);
-    --spectrum-serif-font-family-stack:
-        adobe-clean-serif, var(--spectrum-serif-font-family),
-        'Source Serif Pro', Georgia, serif;
+    --spectrum-serif-font-family-stack: adobe-clean-serif, var(--spectrum-serif-font-family), 'Source Serif Pro', Georgia, serif;
     --spectrum-serif-font: var(--spectrum-serif-font-family-stack);
     --spectrum-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
-    --spectrum-font-family-ar:
-        myriad-arabic, adobe-clean, 'Source Sans Pro', -apple-system,
-        blinkmacsystemfont, 'Segoe UI', roboto, ubuntu, 'Trebuchet MS',
-        'Lucida Grande', sans-serif;
-    --spectrum-font-family-he:
-        myriad-hebrew, adobe-clean, 'Source Sans Pro', -apple-system,
-        blinkmacsystemfont, 'Segoe UI', roboto, ubuntu, 'Trebuchet MS',
-        'Lucida Grande', sans-serif;
+    --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro', -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
     --spectrum-font-family: var(--spectrum-sans-font-family-stack);
     --spectrum-font-style: var(--spectrum-default-font-style);
     --spectrum-font-size: var(--spectrum-font-size-100);
-    --spectrum-cjk-font-family-stack:
-        adobe-clean-han-japanese, var(--spectrum-cjk-font-family), sans-serif;
+    --spectrum-cjk-font-family-stack: adobe-clean-han-japanese, var(--spectrum-cjk-font-family), sans-serif;
     --spectrum-cjk-font: var(--spectrum-code-font-family-stack);
     --spectrum-docs-static-white-background-color-rgb: 15, 121, 125;
-    --spectrum-docs-static-white-background-color: rgba(
-        var(--spectrum-docs-static-white-background-color-rgb)
-    );
+    --spectrum-docs-static-white-background-color: rgba(var(--spectrum-docs-static-white-background-color-rgb));
     --spectrum-docs-static-black-background-color-rgb: 181, 209, 211;
-    --spectrum-docs-static-black-background-color: rgba(
-        var(--spectrum-docs-static-black-background-color-rgb)
-    );
+    --spectrum-docs-static-black-background-color: rgba(var(--spectrum-docs-static-black-background-color-rgb));
     --spectrum-coach-indicator-ring-static-white-color: var(--spectrum-white);
 }
 :host,
@@ -403,9 +258,7 @@
     --spectrum-alert-banner-close-button-spacing: var(--spectrum-spacing-200);
     --spectrum-alert-banner-edge-to-divider: var(--spectrum-spacing-200);
     --spectrum-alert-banner-edge-to-button: var(--spectrum-spacing-200);
-    --spectrum-alert-banner-text-to-button-vertical: var(
-        --spectrum-spacing-200
-    );
+    --spectrum-alert-banner-text-to-button-vertical: var(--spectrum-spacing-200);
     --spectrum-alert-dialog-padding: var(--spectrum-spacing-400);
     --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-600);
     --spectrum-coach-indicator-gap: 8px;
@@ -454,9 +307,7 @@
     --spectrum-assetcard-focus-ring-border-radius: 9px;
     --spectrum-assetcard-selectionindicator-margin: 15px;
     --spectrum-assetcard-title-font-size: var(--spectrum-heading-size-xxs);
-    --spectrum-assetcard-header-content-font-size: var(
-        --spectrum-heading-size-xxs
-    );
+    --spectrum-assetcard-header-content-font-size: var(--spectrum-heading-size-xxs);
     --spectrum-assetcard-content-font-size: var(--spectrum-body-size-xs);
     --spectrum-tooltip-animation-distance: 5px;
     --spectrum-ui-icon-medium-display: none;
@@ -466,48 +317,19 @@
 :root {
     --spectrum-menu-item-background-color-default-rgb: 0, 0, 0;
     --spectrum-menu-item-background-color-default-opacity: 0;
-    --spectrum-menu-item-background-color-default: rgba(
-        var(--spectrum-menu-item-background-color-default-rgb),
-        var(--spectrum-menu-item-background-color-default-opacity)
-    );
-    --spectrum-menu-item-background-color-hover: var(
-        --spectrum-transparent-black-200
-    );
-    --spectrum-menu-item-background-color-down: var(
-        --spectrum-transparent-black-200
-    );
-    --spectrum-menu-item-background-color-key-focus: var(
-        --spectrum-transparent-black-200
-    );
+    --spectrum-menu-item-background-color-default: rgba(var(--spectrum-menu-item-background-color-default-rgb), var(--spectrum-menu-item-background-color-default-opacity));
+    --spectrum-menu-item-background-color-hover: var(--spectrum-transparent-black-200);
+    --spectrum-menu-item-background-color-down: var(--spectrum-transparent-black-200);
+    --spectrum-menu-item-background-color-key-focus: var(--spectrum-transparent-black-200);
     --spectrum-drop-zone-background-color-rgb: var(--spectrum-blue-800-rgb);
     --spectrum-dropindicator-color: var(--spectrum-blue-800);
-    --spectrum-calendar-day-background-color-selected: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.1
-    );
-    --spectrum-calendar-day-background-color-hover: rgba(
-        var(--spectrum-black-rgb),
-        0.06
-    );
-    --spectrum-calendar-day-today-background-color-selected-hover: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.2
-    );
-    --spectrum-calendar-day-background-color-selected-hover: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.2
-    );
-    --spectrum-calendar-day-background-color-down: var(
-        --spectrum-transparent-black-200
-    );
-    --spectrum-calendar-day-background-color-cap-selected: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.2
-    );
-    --spectrum-calendar-day-background-color-key-focus: rgba(
-        var(--spectrum-black-rgb),
-        0.06
-    );
+    --spectrum-calendar-day-background-color-selected: rgba(var(--spectrum-blue-900-rgb), 0.1);
+    --spectrum-calendar-day-background-color-hover: rgba(var(--spectrum-black-rgb), 0.06);
+    --spectrum-calendar-day-today-background-color-selected-hover: rgba(var(--spectrum-blue-900-rgb), 0.2);
+    --spectrum-calendar-day-background-color-selected-hover: rgba(var(--spectrum-blue-900-rgb), 0.2);
+    --spectrum-calendar-day-background-color-down: var(--spectrum-transparent-black-200);
+    --spectrum-calendar-day-background-color-cap-selected: rgba(var(--spectrum-blue-900-rgb), 0.2);
+    --spectrum-calendar-day-background-color-key-focus: rgba(var(--spectrum-black-rgb), 0.06);
     --spectrum-calendar-day-border-color-key-focus: var(--spectrum-blue-800);
     --spectrum-card-selected-background-color-rgb: var(--spectrum-blue-900-rgb);
     --spectrum-badge-label-icon-color-primary: var(--spectrum-white);
@@ -515,57 +337,31 @@
     --spectrum-coach-indicator-ring-dark-color: var(--spectrum-gray-900);
     --spectrum-coach-indicator-ring-light-color: var(--spectrum-gray-50);
     --spectrum-well-border-color: var(--spectrum-black);
-    --spectrum-steplist-current-marker-color-key-focus: var(
-        --spectrum-blue-800
-    );
-    --spectrum-treeview-item-background-color-quiet-selected: rgba(
-        var(--spectrum-gray-900-rgb),
-        0.06
-    );
-    --spectrum-treeview-item-background-color-selected: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.1
-    );
+    --spectrum-steplist-current-marker-color-key-focus: var(--spectrum-blue-800);
+    --spectrum-treeview-item-background-color-quiet-selected: rgba(var(--spectrum-gray-900-rgb), 0.06);
+    --spectrum-treeview-item-background-color-selected: rgba(var(--spectrum-blue-900-rgb), 0.1);
     --spectrum-logic-button-and-background-color: var(--spectrum-blue-900);
     --spectrum-logic-button-and-border-color: var(--spectrum-blue-900);
-    --spectrum-logic-button-and-background-color-hover: var(
-        --spectrum-blue-1100
-    );
+    --spectrum-logic-button-and-background-color-hover: var(--spectrum-blue-1100);
     --spectrum-logic-button-and-border-color-hover: var(--spectrum-blue-1100);
     --spectrum-logic-button-or-background-color: var(--spectrum-magenta-900);
     --spectrum-logic-button-or-border-color: var(--spectrum-magenta-900);
-    --spectrum-logic-button-or-background-color-hover: var(
-        --spectrum-magenta-1100
-    );
+    --spectrum-logic-button-or-background-color-hover: var(--spectrum-magenta-1100);
     --spectrum-logic-button-or-border-color-hover: var(--spectrum-magenta-1100);
     --spectrum-assetcard-border-color-selected: var(--spectrum-blue-900);
     --spectrum-assetcard-border-color-selected-hover: var(--spectrum-blue-900);
     --spectrum-assetcard-border-color-selected-down: var(--spectrum-blue-1000);
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-blue-900
-    );
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(--spectrum-blue-900);
     --spectrum-assestcard-focus-indicator-color: var(--spectrum-blue-800);
-    --spectrum-assetlist-item-background-color-selected-hover: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.2
-    );
-    --spectrum-assetlist-item-background-color-selected: rgba(
-        var(--spectrum-blue-900-rgb),
-        0.1
-    );
+    --spectrum-assetlist-item-background-color-selected-hover: rgba(var(--spectrum-blue-900-rgb), 0.2);
+    --spectrum-assetlist-item-background-color-selected: rgba(var(--spectrum-blue-900-rgb), 0.1);
     --spectrum-assetlist-border-color-key-focus: var(--spectrum-blue-800);
     --spectrum-swatch-border-color-rgb: 0, 0, 0;
     --spectrum-swatch-border-color-opacity: 0.51;
-    --spectrum-swatch-border-color: rgba(
-        var(--spectrum-swatch-border-color-rgb),
-        var(--spectrum-swatch-border-color-opacity)
-    );
+    --spectrum-swatch-border-color: rgba(var(--spectrum-swatch-border-color-rgb), var(--spectrum-swatch-border-color-opacity));
     --spectrum-swatch-border-color-light-rgb: 0, 0, 0;
     --spectrum-swatch-border-color-light-opacity: 0.2;
-    --spectrum-swatch-border-color-light: rgba(
-        var(--spectrum-swatch-border-color-light-rgb),
-        var(--spectrum-swatch-border-color-light-opacity)
-    );
+    --spectrum-swatch-border-color-light: rgba(var(--spectrum-swatch-border-color-light-rgb), var(--spectrum-swatch-border-color-light-opacity));
 }
 :host,
 :root {
@@ -648,9 +444,7 @@
     --spectrum-alert-banner-close-button-spacing: var(--spectrum-spacing-100);
     --spectrum-alert-banner-edge-to-divider: var(--spectrum-spacing-100);
     --spectrum-alert-banner-edge-to-button: var(--spectrum-spacing-100);
-    --spectrum-alert-banner-text-to-button-vertical: var(
-        --spectrum-spacing-100
-    );
+    --spectrum-alert-banner-text-to-button-vertical: var(--spectrum-spacing-100);
     --spectrum-alert-dialog-padding: var(--spectrum-spacing-500);
     --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-700);
     --spectrum-coach-indicator-gap: 6px;
@@ -669,9 +463,7 @@
     --spectrum-treeview-item-indentation-medium: var(--spectrum-spacing-300);
     --spectrum-treeview-item-indentation-small: var(--spectrum-spacing-200);
     --spectrum-treeview-item-indentation-large: 20px;
-    --spectrum-treeview-item-indentation-extra-large: var(
-        --spectrum-spacing-400
-    );
+    --spectrum-treeview-item-indentation-extra-large: var(--spectrum-spacing-400);
     --spectrum-treeview-indicator-inset-block-start: 5px;
     --spectrum-treeview-item-min-block-size-thumbnail-offset-medium: 0px;
     --spectrum-dialog-confirm-entry-animation-distance: 20px;
@@ -701,9 +493,7 @@
     --spectrum-assetcard-focus-ring-border-radius: 8px;
     --spectrum-assetcard-selectionindicator-margin: 12px;
     --spectrum-assetcard-title-font-size: var(--spectrum-heading-size-xs);
-    --spectrum-assetcard-header-content-font-size: var(
-        --spectrum-heading-size-xs
-    );
+    --spectrum-assetcard-header-content-font-size: var(--spectrum-heading-size-xs);
     --spectrum-assetcard-content-font-size: var(--spectrum-body-size-s);
     --spectrum-tooltip-animation-distance: var(--spectrum-spacing-75);
     --spectrum-ui-icon-medium-display: block;
