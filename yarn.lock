@@ -7392,12 +7392,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/divider@npm:4.0.0-s2-foundations.16":
-  version: 4.0.0-s2-foundations.16
-  resolution: "@spectrum-css/divider@npm:4.0.0-s2-foundations.16"
+"@spectrum-css/divider@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@spectrum-css/divider@npm:4.0.1"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/9035c7bf2a16f0aa212537152a9ea8bcbeadc0e15629fdeb9e565f9cb54c3bb69245799e37ffe8066bc426e9af482375e38b77e4861570e59e987ab2aa046da6
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/848afaa204e3d4309591cf7fc9afc23f2aeea9000d9bbf2404870a3fcec55a94dc55708a4ccda35e7d5d1aef15227f443f280e467deee5088870f876442b91f9
   languageName: node
   linkType: hard
 
@@ -8399,7 +8399,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/divider@workspace:packages/divider"
   dependencies:
-    "@spectrum-css/divider": "npm:4.0.0-s2-foundations.16"
+    "@spectrum-css/divider": "npm:4.0.1"
     "@spectrum-web-components/base": "npm:1.3.0"
   languageName: unknown
   linkType: soft
@@ -8415,8 +8415,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.3.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=850176&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/49197a16df8435d740d61d048a43fea9accdf3dc4c13e2c2f4e986ef5e5474a325f19fd7406814cb6aa0033da949da4b4922b5127c18855bd4bb69880bae7dda
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=2eb1f0&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/646f7fd6d92878bfd71f32c64ac198fb94462321a3c1296194dd6c777e7ee8303370e5b211ce2587d6eed527a9c2cc99397f06611ec68d003e06cd40a8a5d2ab
   languageName: node
   linkType: hard
 
