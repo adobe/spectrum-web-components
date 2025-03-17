@@ -7425,14 +7425,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/fieldgroup@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/fieldgroup@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/fieldgroup@npm:6.0.1":
+  version: 6.0.1
+  resolution: "@spectrum-css/fieldgroup@npm:6.0.1"
   peerDependencies:
     "@spectrum-css/checkbox": ">=9"
     "@spectrum-css/helptext": ">=5"
     "@spectrum-css/radio": ">=9"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/tokens": ">=14 || >=15"
   peerDependenciesMeta:
     "@spectrum-css/checkbox":
       optional: true
@@ -7440,7 +7440,7 @@ __metadata:
       optional: true
     "@spectrum-css/radio":
       optional: true
-  checksum: 10c0/146b4f3d3fd30a32178c907defd2eec54389a55e8ece7dd6f4d84acc2ca1c8b0af6841a49f649e34f146c102c406836f33e316a034e0634984ff124434b14881
+  checksum: 10c0/8cd88744e799383ccbe772956447962ed5d9b44f26d742ca3cb66e6f5311dc4477990f1d5b2475fe696d32c042377d80cd8b4107de74b2a74d7790511c51327c
   languageName: node
   linkType: hard
 
@@ -8415,8 +8415,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.3.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=850176&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/49197a16df8435d740d61d048a43fea9accdf3dc4c13e2c2f4e986ef5e5474a325f19fd7406814cb6aa0033da949da4b4922b5127c18855bd4bb69880bae7dda
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=2eb1f0&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/646f7fd6d92878bfd71f32c64ac198fb94462321a3c1296194dd6c777e7ee8303370e5b211ce2587d6eed527a9c2cc99397f06611ec68d003e06cd40a8a5d2ab
   languageName: node
   linkType: hard
 
@@ -8430,7 +8430,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/field-group@workspace:packages/field-group"
   dependencies:
-    "@spectrum-css/fieldgroup": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/fieldgroup": "npm:6.0.1"
     "@spectrum-web-components/base": "npm:1.3.0"
     "@spectrum-web-components/help-text": "npm:1.3.0"
   languageName: unknown
