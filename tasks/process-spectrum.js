@@ -163,11 +163,11 @@ async function processComponent(componentPath) {
      */
     for await (const conversion of conversions) {
         // The default package file is index.css but index-base.css contains the base styles compatible with theme switching.
-        var sourcePath = require
+        let sourcePath = require
             .resolve(conversion.inPackage)
             .replace('index.css', 'index-base.css');
 
-        var sourceCSS = '';
+        let sourceCSS = '';
 
         // try to find the index-base.css file
         try {
