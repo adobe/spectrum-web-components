@@ -1,5 +1,85 @@
 # Change Log
 
+## 1.3.0
+
+### Patch Changes
+
+-   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f), [`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
+    -   @spectrum-web-components/reactive-controllers@1.3.0
+    -   @spectrum-web-components/action-menu@1.3.0
+    -   @spectrum-web-components/picker@1.3.0
+    -   @spectrum-web-components/menu@1.3.0
+    -   @spectrum-web-components/checkbox@1.3.0
+    -   @spectrum-web-components/dialog@1.3.0
+    -   @spectrum-web-components/overlay@1.3.0
+    -   @spectrum-web-components/accordion@1.3.0
+    -   @spectrum-web-components/action-group@1.3.0
+    -   @spectrum-web-components/button@1.3.0
+    -   @spectrum-web-components/coachmark@1.3.0
+    -   @spectrum-web-components/color-area@1.3.0
+    -   @spectrum-web-components/color-slider@1.3.0
+    -   @spectrum-web-components/color-wheel@1.3.0
+    -   @spectrum-web-components/field-label@1.3.0
+    -   @spectrum-web-components/meter@1.3.0
+    -   @spectrum-web-components/number-field@1.3.0
+    -   @spectrum-web-components/progress-bar@1.3.0
+    -   @spectrum-web-components/radio@1.3.0
+    -   @spectrum-web-components/sidenav@1.3.0
+    -   @spectrum-web-components/slider@1.3.0
+    -   @spectrum-web-components/swatch@1.3.0
+    -   @spectrum-web-components/tabs@1.3.0
+    -   @spectrum-web-components/tags@1.3.0
+    -   @spectrum-web-components/tooltip@1.3.0
+    -   @spectrum-web-components/tray@1.3.0
+    -   @spectrum-web-components/grid@1.3.0
+    -   @spectrum-web-components/breadcrumbs@1.3.0
+    -   @spectrum-web-components/combobox@1.3.0
+    -   @spectrum-web-components/card@1.3.0
+    -   @spectrum-web-components/switch@1.3.0
+    -   @spectrum-web-components/table@1.3.0
+    -   @spectrum-web-components/contextual-help@1.3.0
+    -   @spectrum-web-components/popover@1.3.0
+    -   @spectrum-web-components/truncated@1.3.0
+    -   @spectrum-web-components/action-bar@1.3.0
+    -   @spectrum-web-components/action-button@1.3.0
+    -   @spectrum-web-components/alert-banner@1.3.0
+    -   @spectrum-web-components/button-group@1.3.0
+    -   @spectrum-web-components/infield-button@1.3.0
+    -   @spectrum-web-components/picker-button@1.3.0
+    -   @spectrum-web-components/search@1.3.0
+    -   @spectrum-web-components/toast@1.3.0
+    -   @spectrum-web-components/top-nav@1.3.0
+    -   @spectrum-web-components/asset@1.3.0
+    -   @spectrum-web-components/avatar@1.3.0
+    -   @spectrum-web-components/badge@1.3.0
+    -   @spectrum-web-components/clear-button@1.3.0
+    -   @spectrum-web-components/close-button@1.3.0
+    -   @spectrum-web-components/color-field@1.3.0
+    -   @spectrum-web-components/color-handle@1.3.0
+    -   @spectrum-web-components/color-loupe@1.3.0
+    -   @spectrum-web-components/divider@1.3.0
+    -   @spectrum-web-components/dropzone@1.3.0
+    -   @spectrum-web-components/field-group@1.3.0
+    -   @spectrum-web-components/help-text@1.3.0
+    -   @spectrum-web-components/icon@1.3.0
+    -   @spectrum-web-components/icons@1.3.0
+    -   @spectrum-web-components/icons-ui@1.3.0
+    -   @spectrum-web-components/icons-workflow@1.3.0
+    -   @spectrum-web-components/iconset@1.3.0
+    -   @spectrum-web-components/illustrated-message@1.3.0
+    -   @spectrum-web-components/link@1.3.0
+    -   @spectrum-web-components/modal@1.3.0
+    -   @spectrum-web-components/progress-circle@1.3.0
+    -   @spectrum-web-components/split-view@1.3.0
+    -   @spectrum-web-components/status-light@1.3.0
+    -   @spectrum-web-components/textfield@1.3.0
+    -   @spectrum-web-components/thumbnail@1.3.0
+    -   @spectrum-web-components/underlay@1.3.0
+    -   @spectrum-web-components/base@1.3.0
+    -   @spectrum-web-components/shared@1.3.0
+    -   @spectrum-web-components/styles@1.3.0
+    -   @spectrum-web-components/theme@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

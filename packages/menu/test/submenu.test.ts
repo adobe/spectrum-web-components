@@ -181,6 +181,7 @@ describe('Submenu', () => {
                 press: testData.openKey,
             });
             await opened;
+            await elementUpdated(this.rootItem);
 
             submenu = this.el.querySelector('[slot="submenu"]') as Menu;
 
