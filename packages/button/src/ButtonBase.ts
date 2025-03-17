@@ -92,33 +92,10 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             event.stopPropagation();
             return false;
         }
-
-        if (this.shouldProxyClick()) {
-            return;
-        }
     }
 
     private proxyFocus(): void {
         this.focus();
-    }
-
-    private shouldProxyClick(): boolean {
-        let handled = false;
-        if (this.anchorElement) {
-            // click HTML anchor element by proxy
-            this.anchorElement.click();
-            handled = true;
-            // if the button type is `submit` or `reset`
-        } else if (this.type !== 'button') {
-            // create an HTML Button Element by proxy, click it, and remove it
-            const proxy = document.createElement('button');
-            proxy.type = this.type;
-            this.insertAdjacentElement('afterend', proxy);
-            proxy.click();
-            proxy.remove();
-            handled = true;
-        }
-        return handled;
     }
 
     public override renderAnchor(): TemplateResult {
