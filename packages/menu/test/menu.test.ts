@@ -44,24 +44,19 @@ describe('Menu', () => {
 
         const anchor = el.querySelector('a') as HTMLAnchorElement;
         await elementUpdated(el);
-        expect(document.activeElement === el, 'self not focused, 1').to.be
-            .false;
-        expect(document.activeElement === anchor, 'child not focused, 1').to.be
-            .false;
+        expect(document.activeElement).to.not.equal(el);
+        expect(document.activeElement).to.not.equal(anchor);
 
         expect(el.getAttribute('role')).to.equal('menu');
 
         el.focus();
         await elementUpdated(el);
-        expect(document.activeElement === el, 'self not focused, 2').to.be
-            .false;
-        expect(document.activeElement === anchor, 'child not focused, 2').to.be
-            .false;
+        expect(document.activeElement).to.not.equal(el);
+        expect(document.activeElement).to.not.equal(anchor);
 
         anchor.focus();
-        expect(document.activeElement === el, 'self not focused, 3').to.be
-            .false;
-        expect(document.activeElement === anchor, 'anchor').to.be.true;
+        expect(document.activeElement).to.not.equal(el);
+        expect(document.activeElement).to.equal(anchor);
     });
     it('renders w/ [disabled] menu items', async () => {
         const focusinSpy = spy();
@@ -72,13 +67,11 @@ describe('Menu', () => {
         `);
 
         await elementUpdated(el);
-        expect(document.activeElement === el, 'self not focused, 1').to.be
-            .false;
+        expect(document.activeElement).to.not.equal(el);
 
         el.focus();
         await elementUpdated(el);
-        expect(document.activeElement === el, 'self not focused, 2').to.be
-            .false;
+        expect(document.activeElement).to.not.equal(el);
         expect(focusinSpy.callCount).to.equal(0);
     });
     it('renders w/ all [disabled] menu items', async () => {
@@ -92,18 +85,15 @@ describe('Menu', () => {
         const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
         await elementUpdated(el);
-        expect(document.activeElement === el, 'self not focused, 1').to.be
-            .false;
+        expect(document.activeElement).to.not.equal(el);
 
         el.focus();
         await elementUpdated(el);
-        expect(document.activeElement === el, 'self not focused, 2').to.be
-            .false;
+        expect(document.activeElement).to.not.equal(el);
         expect(focusinSpy.callCount).to.equal(0);
         firstItem.focus();
         await elementUpdated(el);
-        expect(document.activeElement === el, 'self not focused, 2').to.be
-            .false;
+        expect(document.activeElement).to.not.equal(el);
         expect(focusinSpy.callCount).to.equal(0);
         expect(el.matches(':focus-within')).to.be.false;
     });
@@ -291,8 +281,7 @@ describe('Menu', () => {
         el.focus();
         await elementUpdated(el);
 
-        expect(document.activeElement === firstItem, 'active element').to.be
-            .true;
+        expect(document.activeElement).to.equal(firstItem);
         expect(firstItem.focused, 'first item focused').to.be.true;
         expect(firstItem.textContent, 'focused item text').to.equal('Deselect');
 
@@ -323,6 +312,56 @@ describe('Menu', () => {
         );
     });
 
+    it('handles hover and keyboard input', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+            </sp-menu>
+        `);
+
+        await waitUntil(
+            () => el.childItems.length == 2,
+            'expected menu to manage 2 items'
+        );
+
+        const firstItem = el.querySelector(
+            'sp-menu-item:nth-of-type(1)'
+        ) as MenuItem;
+        const secondItem = el.querySelector(
+            'sp-menu-item:nth-of-type(2)'
+        ) as MenuItem;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(document.activeElement).to.equal(firstItem);
+        expect(firstItem.focused, 'first item focused').to.be.true;
+        const rect = secondItem.getBoundingClientRect();
+
+        await sendMouse({
+            steps: [
+                {
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                    type: 'move',
+                },
+            ],
+        });
+
+        expect(document.activeElement, 'active element after hover').to.equal(
+            secondItem
+        );
+        expect(secondItem.focused, 'second item focused').to.be.true;
+
+        await sendKeys({ press: 'ArrowUp' });
+
+        expect(document.activeElement).to.equal(firstItem);
+        expect(firstItem.focused, 'first item focused').to.be.true;
+    });
+
     it('handle focus and late descendant additions', async () => {
         const el = await fixture<Menu>(html`
             <sp-menu>
@@ -345,8 +384,7 @@ describe('Menu', () => {
 
         await elementUpdated(el);
 
-        expect(document.activeElement === initialLoadedItem, 'active element')
-            .to.be.true;
+        expect(document.activeElement).to.equal(initialLoadedItem);
         expect(initialLoadedItem.focused, 'visually focused').to.be.true;
         expect(initialLoadedItem.textContent, 'focused item text').to.equal(
             'Deselect'

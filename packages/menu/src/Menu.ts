@@ -386,6 +386,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         );
 
         this.addEventListener('click', this.handleClick);
+        this.addEventListener('mouseover', this.handleMouseover);
         this.addEventListener('focusout', this.handleFocusout);
         this.addEventListener('sp-menu-item-keydown', this.handleKeydown);
         this.addEventListener('pointerup', this.handlePointerup);
@@ -437,6 +438,17 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     // if the click and pointerup events are on the same target, we should not
     // handle the click event.
     private pointerUpTarget = null as EventTarget | null;
+
+    private handleMouseover(event: MouseEvent): void {
+        const { target } = event;
+        const menuItem = target as MenuItem;
+        if (
+            this.childItems.includes(menuItem) &&
+            this.isFocusableElement(menuItem)
+        ) {
+            this.rovingTabindexController?.focusOnItem(menuItem);
+        }
+    }
 
     private handleFocusout(): void {
         if (!this.matches(':focus-within'))
