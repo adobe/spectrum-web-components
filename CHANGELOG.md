@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/adobe/spectrum-web-components/compare/v1.2.0...v1.3.0) (2025-03-13)
+
+### Bug Fixes
+
+-   **overlay** sp-overlay with type="manual" should close on pressing ESC key. ([#5160](https://github.com/adobe/spectrum-web-components/issues/5160)) ([be28fdd](https://github.com/adobe/spectrum-web-components/commit/be28fdd6cede4f4784afe6d617077007071d48a4))
+-   **sp-slider**: Now correctly centers alignment for a slider with no visible label ([#5144](https://github.com/adobe/spectrum-web-components/issues/5144)) ([946899d](https://github.com/adobe/spectrum-web-components/commit/946899d1203ca0670d080c50264f8b4ec03c9e4f))
+-   **sp-dialog, sp-dialog-wrapper**: The error property deprecation has been removed to prevent confusion and false urgency in migration.([#5156](https://github.com/adobe/spectrum-web-components/issues/5156)) ([596f864](https://github.com/adobe/spectrum-web-components/commit/596f864f7733f1d17d1f166245dadda2ba46a79c))
+-   **sp-picker**: Added Spectrum 2 corrected border-radius and background-color.([#5153](https://github.com/adobe/spectrum-web-components/issues/5153)) ([d780fd1](https://github.com/adobe/spectrum-web-components/commit/d780fd1ecd2951f1af9438f77ec4ab5efa04e757))
+
 # [1.2.0](https://github.com/adobe/spectrum-web-components/compare/v1.1.2...v1.2.0) (2025-02-27)
 
 ### Bug Fixes
