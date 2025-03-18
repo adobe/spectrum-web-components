@@ -163,10 +163,20 @@ async function processComponent(componentPath) {
      */
     for await (const conversion of conversions) {
         // The default package file is index.css but index-base.css contains the base styles compatible with theme switching.
-        const sourcePath = require
+        let sourcePath = require
             .resolve(conversion.inPackage)
             .replace('index.css', 'index-base.css');
-        var sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
+
+        let sourceCSS = '';
+
+        // try to find the index-base.css file
+        try {
+            sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
+        } catch (error) {
+            // if failed, try to find the index.css file
+            sourcePath = require.resolve(conversion.inPackage);
+            sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
+        }
 
         const outputPath = path.join(
             ...(Array.isArray(conversion.outPackage)
@@ -817,7 +827,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 ${code}
-`.replace(/\/\*\![\w|\W]*\*\//, '')
+`.replace(/\/\*![\w|\W]*\*\//, '')
     );
 }
 

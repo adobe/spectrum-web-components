@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { argTypes, StoryArgs } from './args.js';
 import { Template } from './template.js';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     title: 'Contextual Help',
@@ -47,5 +48,22 @@ export const CustomPlacement = (args?: StoryArgs): TemplateResult => {
 
 CustomPlacement.args = {
     placement: 'top',
+    open: true,
+};
+
+export const customMaxWidth = (args?: StoryArgs): TemplateResult => {
+    return html`
+        <sp-contextual-help
+            ${spreadProps(args || {})}
+            style="--mod-spectrum-contextual-help-popover-maximum-width: 200px;"
+        >
+            <h2 slot="heading">Custom max width</h2>
+            This is a test of the contextual help component with a custom max
+            width of 200px.
+        </sp-contextual-help>
+    `;
+};
+
+customMaxWidth.args = {
     open: true,
 };
