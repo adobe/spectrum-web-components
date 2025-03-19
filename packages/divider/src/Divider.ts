@@ -20,7 +20,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import styles from './divider.css.js';
+import styles from './divider.css' with { type: 'css' };
 
 /**
  * @element sp-divider

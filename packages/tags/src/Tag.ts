@@ -23,7 +23,7 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import '@spectrum-web-components/button/sp-clear-button.js';
 
-import styles from './tag.css.js';
+import styles from './tag.css' with { type: 'css' };
 
 /**
  * @element sp-tag

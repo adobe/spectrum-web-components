@@ -23,7 +23,7 @@ import { when } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
-import styles from './accordion-item.css.js';
+import styles from './accordion-item.css' with { type: 'css' };
 
 const chevronIcon: Record<string, () => TemplateResult> = {
     s: () => html`

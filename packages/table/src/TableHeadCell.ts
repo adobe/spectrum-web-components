@@ -20,7 +20,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow100.js';
 
-import styles from './table-head-cell.css.js';
+import styles from './table-head-cell.css' with { type: 'css' };
 import arrowStyles from '@spectrum-web-components/icon/src/spectrum-icon-arrow.css.js';
 
 export type SortedEventDetails = {

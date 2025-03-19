@@ -20,7 +20,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
 
-import styles from './thumbnail.css.js';
+import styles from './thumbnail.css' with { type: 'css' };
 
 const validSizes = [
     '50',

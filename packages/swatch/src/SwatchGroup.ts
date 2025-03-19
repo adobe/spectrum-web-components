@@ -26,7 +26,7 @@ import {
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
-import styles from './swatch-group.css.js';
+import styles from './swatch-group.css' with { type: 'css' };
 import type {
     Swatch,
     SwatchBorder,

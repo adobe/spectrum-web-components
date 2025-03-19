@@ -32,7 +32,7 @@ import {
 } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
-import styles from './color-wheel.css.js';
+import styles from './color-wheel.css' with { type: 'css' };
 
 /**
  * @element sp-color-wheel

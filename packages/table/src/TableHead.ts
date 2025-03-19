@@ -19,7 +19,7 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { TableHeadCell } from './TableHeadCell.js';
 import { TableCheckboxCell } from './TableCheckboxCell.js';
 
-import styles from './table-head.css.js';
+import styles from './table-head.css' with { type: 'css' };
 
 /**
  * @element sp-table-head

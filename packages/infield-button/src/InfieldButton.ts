@@ -18,7 +18,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from '@spectrum-web-components/button/src/ButtonBase.js';
 
-import styles from './infield-button.css.js';
+import styles from './infield-button.css' with { type: 'css' };
 
 /**
  * @element sp-infield-button

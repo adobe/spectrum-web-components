@@ -26,7 +26,7 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
-import styles from './action-group.css.js';
+import styles from './action-group.css' with { type: 'css' };
 
 const EMPTY_SELECTION: string[] = [];
 

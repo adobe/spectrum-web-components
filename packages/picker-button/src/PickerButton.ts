@@ -22,7 +22,7 @@ import { ButtonBase } from '@spectrum-web-components/button/src/ButtonBase.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 
-import styles from './picker-button.css.js';
+import styles from './picker-button.css' with { type: 'css' };
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 const chevronClass = {

@@ -25,7 +25,7 @@ import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import styles from './table.css.js';
+import styles from './table.css' with { type: 'css' };
 import { TableBody } from './TableBody.js';
 import type { TableCheckboxCell } from './TableCheckboxCell.js';
 import type { TableHead } from './TableHead.js';

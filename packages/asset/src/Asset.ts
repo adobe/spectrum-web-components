@@ -18,7 +18,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import styles from './asset.css.js';
+import styles from './asset.css' with { type: 'css' };
 
 const file = (label: string): TemplateResult => html`
     <svg

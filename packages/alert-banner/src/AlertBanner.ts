@@ -20,7 +20,7 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
-import styles from './alert-banner.css.js';
+import styles from './alert-banner.css' with { type: 'css' };
 
 const VALID_VARIANTS = ['neutral', 'info', 'negative'];
 export type AlertBannerVariants = (typeof VALID_VARIANTS)[number];

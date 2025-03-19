@@ -36,7 +36,7 @@ import {
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
 import opacityCheckerBoardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
-import styles from './color-slider.css.js';
+import styles from './color-slider.css' with { type: 'css' };
 
 /**
  * @element sp-color-slider

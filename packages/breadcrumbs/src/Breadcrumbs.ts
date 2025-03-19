@@ -37,7 +37,7 @@ import {
     ref,
 } from '@spectrum-web-components/base/src/directives.js';
 
-import styles from './breadcrumbs.css.js';
+import styles from './breadcrumbs.css' with { type: 'css' };
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 type BreadcrumbItem = {

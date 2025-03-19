@@ -33,7 +33,7 @@ import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import { WithSWCResizeObserver } from './types';
 
-import styles from './split-view.css.js';
+import styles from './split-view.css' with { type: 'css' };
 
 const DEFAULT_MAX_SIZE = 3840;
 

@@ -26,7 +26,7 @@ import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focu
 import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 
 import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
-import styles from './tray.css.js';
+import styles from './tray.css' with { type: 'css' };
 
 /**
  * @element sp-tray
@@ -50,7 +50,7 @@ export class Tray extends SpectrumElement {
 
     private transitionPromise = Promise.resolve();
 
-    private resolveTransitionPromise = () => {};
+    private resolveTransitionPromise: () => void = () => {};
 
     @query('.tray')
     private tray!: HTMLDivElement;

@@ -28,7 +28,7 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 
-import styles from './truncated.css.js';
+import styles from './truncated.css' with { type: 'css' };
 
 /**
  * @element sp-truncated
