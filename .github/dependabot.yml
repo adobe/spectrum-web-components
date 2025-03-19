@@ -1,3 +1,4 @@
+# Temporarily disable dependabot PRs
 version: 2
 updates:
     - package-ecosystem: 'npm'
@@ -7,7 +8,8 @@ updates:
           day: 'tuesday'
           time: '12:00'
           timezone: 'America/Los_Angeles'
-      open-pull-requests-limit: 5
+      # Set open-pull-requests-limit to 0 to disable PRs
+      open-pull-requests-limit: 0
       reviewers:
           - 'adobe/swc-maintainers'
       groups:
@@ -38,3 +40,5 @@ updates:
       directory: '/'
       schedule:
           interval: 'monthly'
+      # Set open-pull-requests-limit to 0 to disable PRs
+      open-pull-requests-limit: 0
