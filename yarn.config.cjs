@@ -101,10 +101,19 @@ module.exports = defineConfig({
             }
 
             workspace.set('publishConfig.access', 'public');
-            workspace.set('keywords', keywords(['component', 'css']));
-            workspace.set('main', './src/index.js');
-            workspace.set('module', './src/index.js');
             workspace.set('type', 'module');
+            workspace.set('keywords', keywords(['component', 'css']));
+
+            // A subset of components have a different entry point than the default
+            if (
+                ['clear-button', 'close-button', 'modal'].includes(folderName)
+            ) {
+                workspace.set('main', `./src/${folderName}.css.js`);
+                workspace.set('module', `./src/${folderName}.css.js`);
+            } else {
+                workspace.set('main', './src/index.js');
+                workspace.set('module', './src/index.js');
+            }
         }
 
         /**
