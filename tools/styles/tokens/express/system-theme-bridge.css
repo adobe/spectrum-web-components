@@ -1598,9 +1598,11 @@
     --system-combobox-border-color-focus: var(--spectrum-gray-900);
     --system-combobox-border-color-focus-hover: var(--spectrum-gray-800);
     --system-combobox-border-color-key-focus: var(--spectrum-gray-900);
+    --system-combobox-readonly-input-border-color: var(--spectrum-gray-400);
     --system-combobox-background-color-disabled: var(
         --spectrum-disabled-background-color
     );
+    --system-combobox-border-color-disabled: transparent;
     --system-dialog-fullscreen-header-text-size: 28px;
     --system-dialog-min-inline-size: 288px;
     --system-dialog-confirm-small-width: 400px;
