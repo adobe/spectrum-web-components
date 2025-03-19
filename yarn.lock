@@ -7591,15 +7591,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/pickerbutton@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/pickerbutton@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/pickerbutton@npm:6.1.1":
+  version: 6.1.1
+  resolution: "@spectrum-css/pickerbutton@npm:6.1.1"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/menu": ">=7"
-    "@spectrum-css/popover": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/09c014918e5b26942d896631d356c12d6abafe3fc3f6dfc1c2461e7c5676f395de2718f8c39e9083e014551d7cdb023e94365e1645a8c80cbd37a8972e51ba13
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/menu": ">=9.0.0 <10.0.0"
+    "@spectrum-css/popover": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/menu":
+      optional: true
+    "@spectrum-css/popover":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/dad6b9adfc47d5ee29716377255c3c79f9cd758efae416cd250975c3a2a23e8a9c564e030f330872c47a5dde68f1a555e9fb3bb4e26ca8802c77a91ae88a75a6
   languageName: node
   linkType: hard
 
@@ -7813,16 +7822,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/textfield@npm:8.0.0-s2-foundations.17":
-  version: 8.0.0-s2-foundations.17
-  resolution: "@spectrum-css/textfield@npm:8.0.0-s2-foundations.17"
+"@spectrum-css/textfield@npm:8.1.1":
+  version: 8.1.1
+  resolution: "@spectrum-css/textfield@npm:8.1.1"
   peerDependencies:
-    "@spectrum-css/helptext": ">=5"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/helptext": ">=7.0.0 <8.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/helptext":
       optional: true
-  checksum: 10c0/2c5db59e6a645671897cdb72937c4fde7645b16e9f6812d21953bd90b8ef5b6f46099e8ffd8614cdfcd340a548930e4d0ebf02f4ca6c869c270d2652efeda00f
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/1f54e4fb2bdc232283dfbe4d9b2ee855b26f15949817f99f7f44b2249d15900bcfdd2bcb029f68f1ba47a927deaeb8c2a17bc80a68f0b5f68df4cf7e560898b4
   languageName: node
   linkType: hard
 
@@ -8653,7 +8664,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/picker-button@workspace:packages/picker-button"
   dependencies:
-    "@spectrum-css/pickerbutton": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/pickerbutton": "npm:6.1.1"
     "@spectrum-web-components/base": "npm:1.3.0"
     "@spectrum-web-components/button": "npm:1.3.0"
     "@spectrum-web-components/icon": "npm:1.3.0"
@@ -8907,7 +8918,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/textfield@workspace:packages/textfield"
   dependencies:
-    "@spectrum-css/textfield": "npm:8.0.0-s2-foundations.17"
+    "@spectrum-css/textfield": "npm:8.1.1"
     "@spectrum-web-components/base": "npm:1.3.0"
     "@spectrum-web-components/help-text": "npm:1.3.0"
     "@spectrum-web-components/icon": "npm:1.3.0"
