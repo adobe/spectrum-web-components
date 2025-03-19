@@ -34,7 +34,7 @@
     "@types/node": "^20.11.11",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
-    "@web/dev-server": "^0.4.3",
+    "@web/dev-server": "^0.4.6",
     "concurrently": "^8.0.0",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^9.1.0",
