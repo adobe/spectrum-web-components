@@ -65,7 +65,7 @@
         "@spectrum-web-components/shared": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/meter": "0.0.0-s2-foundations.2",
+        "@spectrum-css/meter": "0.0.0",
         "@spectrum-css/progressbar": "5.0.0-s2-foundations.19"
     },
     "types": "./src/index.d.ts",
