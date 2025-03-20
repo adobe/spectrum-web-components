@@ -7333,20 +7333,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/combobox@npm:4.0.0-s2-foundations.21":
-  version: 4.0.0-s2-foundations.21
-  resolution: "@spectrum-css/combobox@npm:4.0.0-s2-foundations.21"
+"@spectrum-css/combobox@npm:4.1.2":
+  version: 4.1.2
+  resolution: "@spectrum-css/combobox@npm:4.1.2"
   peerDependencies:
-    "@spectrum-css/menu": ">=7"
-    "@spectrum-css/pickerbutton": ">=5"
-    "@spectrum-css/popover": ">=7"
-    "@spectrum-css/progresscircle": ">=3"
-    "@spectrum-css/textfield": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/menu": ">=9.0.0 <10.0.0"
+    "@spectrum-css/pickerbutton": ">=6.0.0 <7.0.0"
+    "@spectrum-css/popover": ">=8.0.0 <9.0.0"
+    "@spectrum-css/progresscircle": ">=5.0.0 <6.0.0"
+    "@spectrum-css/textfield": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
+    "@spectrum-css/menu":
+      optional: true
+    "@spectrum-css/pickerbutton":
+      optional: true
+    "@spectrum-css/popover":
+      optional: true
     "@spectrum-css/progresscircle":
       optional: true
-  checksum: 10c0/3837cf52d59a1c641d8020fca6f1592547ee68875a363439e1dd2ae150f268c388a163303d5751249c850e92886f27db4d7df83c37e7d0fe046633a4c4059426
+    "@spectrum-css/textfield":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/1410f56520c90c0204cb64f142fa6ec108eb201161fdea66cbebcc048873db3de49209fe725b6d5f29f20978365ed53ddde12815734ab3e0aa0743692d642b3c
   languageName: node
   linkType: hard
 
@@ -8309,7 +8319,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/combobox@workspace:packages/combobox"
   dependencies:
-    "@spectrum-css/combobox": "npm:4.0.0-s2-foundations.21"
+    "@spectrum-css/combobox": "npm:4.1.2"
     "@spectrum-web-components/action-button": "npm:1.3.0"
     "@spectrum-web-components/base": "npm:1.3.0"
     "@spectrum-web-components/icon": "npm:1.3.0"
