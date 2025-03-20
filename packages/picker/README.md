@@ -137,7 +137,7 @@ When using `<sp-menu-item>` elements without text content, be sure to use the `v
 </sp-picker>
 ```
 
-##### Advanced icon management
+#### Advanced icon management
 
 The `icons` attribute manages how the selected item will appear. Set `icons="only"` to display only the selected item's icon in the `<sp-picker>` element, or `icons="none"` to display the selected item text without the icon `<sp-picker>`.
 
@@ -564,11 +564,11 @@ While in pending state, `<sp-picker>` elements will not respond to click events 
 </sp-tab-panel>
 </sp-tabs>
 
-## Behaviors
+### Behaviors
 
 #### Force Popover on Mobile Devices
 
-On mobile, the menu can be exposed in either a `sp-popover` or `sp-tray`. By default, `sp-picker` will render an `sp-tray`. If you would like to render `sp-popover` on mobile, add the attribute `forcePopover` to the `sp-picker`.
+On mobile, the menu can be exposed in either a `sp-popover` or `sp-tray`. By default, `sp-picker` will render an `sp-tray`. If you would like to render `sp-popover` on mobile, add the attribute `force-popover` to the `sp-picker`.
 
 Usage Guidance:
 
@@ -589,14 +589,11 @@ To see this functionality in action, load this page from your mobile device or u
 <sp-field-label for="picker-popover">
     Do you want to see a popover menu?
 </sp-field-label>
-<sp-picker id="picker-popover" label="Select an option" forcePopover>
+<sp-picker id="picker-popover" label="Select an option" force-popover>
     <sp-menu-item value="option-1">Yes</sp-menu-item>
     <sp-menu-item value="option-2">No</sp-menu-item>
 </sp-picker>
 ```
-
-</sp-tab-panel>
-</sp-tabs>
 
 ### Accessibility
 

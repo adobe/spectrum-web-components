@@ -102,7 +102,7 @@ export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
         <div style="padding: 40px">
             <h1>Force Popover on Mobile</h1>
             <p>
-                The forcePopover attribute overrides the mobile device
+                The force-popover attribute overrides the mobile device
                 functionality of rendering a tray so that a popover will always
                 render no matter the device.
             </p>
@@ -134,7 +134,7 @@ export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
             </sp-field-label>
             <sp-picker
                 id="picker-2"
-                forcePopover
+                force-popover
                 @change=${handleChange(args)}
                 label="Select an option"
             >

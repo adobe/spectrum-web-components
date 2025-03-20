@@ -74,6 +74,22 @@ By default a `sp-contextual-help` will render its popover at the `bottom-start` 
 </sp-contextual-help>
 ```
 
+## Custom max width
+
+Contextual help allows for a custom maximum width to be set using the `--mod-spectrum-contextual-help-popover-maximum-width` custom property.
+
+Note: Maximum width should not be less than 100px.
+
+```html
+<sp-contextual-help
+    style="--mod-spectrum-contextual-help-popover-maximum-width: 200px;"
+>
+    <h2 slot="heading">Custom max width</h2>
+    This is a test of the contextual help component with a custom max width of
+    200px.
+</sp-contextual-help>
+```
+
 ## Events
 
 `sp-contextual-help` does not fire any events of its own. You can listen, however, for the `sp-open` and `sp-closed` events which are fired when the popover opens or closes.

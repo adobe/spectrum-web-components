@@ -238,8 +238,8 @@ export class StoryDecorator extends SpectrumElement {
     }
 
     public get backgroundStyle() {
-        if (system === 'spectrum-two') {
-            return `background-color: var(--spectrum-background-base-color);`;
+        if (this.system === 'spectrum-two') {
+            return `background-color: var(--spectrum-gray-50)`;
         }
         return `background-color: var(--spectrum-gray-100);`;
     }
