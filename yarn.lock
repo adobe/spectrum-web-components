@@ -7541,12 +7541,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/modal@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/modal@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/modal@npm:6.0.1":
+  version: 6.0.1
+  resolution: "@spectrum-css/modal@npm:6.0.1"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/e42a9e7c45b4ec2f3707f6794cb19d2587eb583d72890685c4c497e64e95377df8ad998b3c9bd31b959f1f218653c68b8c6f629663afcf8db96432780d4aedb6
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/d0d0cd10643b34e1bc4c7bf2a700a0375f24b26aaf7e862603050cd46288751c072f8710c8e74618e0e3de2df5f4d63388a10fb5a1f230c0dc4d776b9772ad50
   languageName: node
   linkType: hard
 
@@ -8414,8 +8414,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.3.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=850176&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/49197a16df8435d740d61d048a43fea9accdf3dc4c13e2c2f4e986ef5e5474a325f19fd7406814cb6aa0033da949da4b4922b5127c18855bd4bb69880bae7dda
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=2eb1f0&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/646f7fd6d92878bfd71f32c64ac198fb94462321a3c1296194dd6c777e7ee8303370e5b211ce2587d6eed527a9c2cc99397f06611ec68d003e06cd40a8a5d2ab
   languageName: node
   linkType: hard
 
@@ -8599,7 +8599,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/modal@workspace:packages/modal"
   dependencies:
-    "@spectrum-css/modal": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/modal": "npm:6.0.1"
     "@spectrum-web-components/base": "npm:1.3.0"
   languageName: unknown
   linkType: soft
