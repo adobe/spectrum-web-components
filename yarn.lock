@@ -7237,13 +7237,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/illustratedmessage@npm:8.0.0-s2-foundations.15":
-  version: 8.0.0-s2-foundations.15
-  resolution: "@spectrum-css/illustratedmessage@npm:8.0.0-s2-foundations.15"
+"@spectrum-css/illustratedmessage@npm:8.0.1":
+  version: 8.0.1
+  resolution: "@spectrum-css/illustratedmessage@npm:8.0.1"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/tokens": ">=14 || >=15"
     "@spectrum-css/typography": ">=6"
-  checksum: 10c0/94fee5a0dbd2237b2b90fb7c92c783996a42350120fa9016869faacbdd4de9f19d71613507ccad8eec9ba3522f9cce24cb9e0c99862036b58aa1359874ecb2b2
+  checksum: 10c0/7abe65b9e8a54181503810b632ff26f75cbd559665412867c01e37878b61db9c53973658dedc4685d0d3394952241caaf7470a84c70d7d997fdb85e29b4824ad
   languageName: node
   linkType: hard
 
@@ -8303,7 +8303,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/illustrated-message@workspace:packages/illustrated-message"
   dependencies:
-    "@spectrum-css/illustratedmessage": "npm:8.0.0-s2-foundations.15"
+    "@spectrum-css/illustratedmessage": "npm:8.0.1"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/styles": "npm:1.4.0"
   languageName: unknown
