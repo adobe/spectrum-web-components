@@ -4,6 +4,10 @@ on:
     pull_request:
         types: [opened, synchronize, reopened]
 
+permissions:
+    contents: read
+    pull-requests: write
+
 jobs:
     test-changed-packages:
         strategy:
@@ -13,7 +17,7 @@ jobs:
 
         # The job will only run if the pull request is from the same repository.
         # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
-        if: ${{ github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository }}
+        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         runs-on: ubuntu-22.04
         steps:
             - name: Checkout main
@@ -34,6 +38,7 @@ jobs:
               run: touch tachometer.${{ matrix.browser }}-ran.txt
 
             - name: Archive ${{ matrix.browser }} tachometer results
+              id: upload-artifact
               uses: actions/upload-artifact@v4
               with:
                   name: tachometer-results-${{ matrix.browser }}
@@ -57,11 +62,16 @@ jobs:
 
             - name: Checkout PR branch
               uses: actions/checkout@v4
+              with:
+                  fetch-depth: 2
 
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
 
             - uses: actions/download-artifact@v4
+              with:
+                  pattern: tachometer-results-*
+                  merge-multiple: true
 
             - name: Post Tachometer Performance Comment
               uses: actions/github-script@v7
