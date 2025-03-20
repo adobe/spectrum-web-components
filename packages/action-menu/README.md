@@ -276,7 +276,7 @@ When `selects` is set to `single`, the `<sp-action-menu>` element will maintain 
 
 ## Force Popover on Mobile Devices
 
-On mobile, the menu can be exposed in either a `sp-popover` or `sp-tray`. By default, `sp-action-menu` will render an `sp-tray`. If you would like to render `sp-popover` on mobile, add the attribute `forcePopover` to the `sp-action-menu`.
+On mobile, the menu can be exposed in either a `sp-popover` or `sp-tray`. By default, `sp-action-menu` will render an `sp-tray`. If you would like to render `sp-popover` on mobile, add the attribute `force-popover` to the `sp-action-menu`.
 
 Usage Guidance:
 
@@ -286,7 +286,7 @@ Usage Guidance:
 To see this functionality in action, load this page from your mobile device or use Chrome DevTools (or equivalent) and select a mobile device once the Device Toolbar (the phone/tablet icon) is active.
 
 ```html
-<sp-action-menu forcePopover>
+<sp-action-menu force-popover>
     <span slot="label">Action Menu</span>
     <sp-menu-item>Deselect</sp-menu-item>
     <sp-menu-item>Select Inverse</sp-menu-item>

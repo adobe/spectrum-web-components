@@ -126,6 +126,9 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-border-color-focus: var(
         --system-action-button-static-black-border-color-focus
     );
+    --spectrum-actionbutton-border-color-disabled: var(
+        --system-action-button-static-black-border-color-disabled
+    );
     --spectrum-actionbutton-background-color-disabled: var(
         --system-action-button-static-black-background-color-disabled
     );
@@ -176,6 +179,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-actionbutton-border-color-focus: var(
         --system-action-button-static-white-border-color-focus
+    );
+    --spectrum-actionbutton-border-color-disabled: var(
+        --system-action-button-static-white-border-color-disabled
     );
     --spectrum-actionbutton-background-color-disabled: var(
         --system-action-button-static-white-background-color-disabled
