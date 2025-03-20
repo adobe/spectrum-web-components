@@ -149,6 +149,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
+    /**
+     * whether or not to support pointerdown - drag - pointerup selection strategy
+     * default is true
+     * should be false for mobile to prevent click event being captured behind the menu-tray (cz menu immediately closes on pointerup)
+     */
+    public shouldSupportDragAndSelect = true;
+
     public get focusInItem(): MenuItem | undefined {
         return this.rovingTabindexController?.focusInElement;
     }
@@ -452,6 +459,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private handlePointerup(event: Event): void {
+        /*
+         * early return if drag and select is not supported
+         * in this case, selection will be handled by the click event
+         */
+        if (!this.shouldSupportDragAndSelect) {
+            return;
+        }
         this.pointerUpTarget = event.target;
         this.handlePointerBasedSelection(event);
     }
@@ -622,22 +636,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this.selectedItems = [targetItem];
         }
 
-        // Wait until the change event is dispatched before applying the selection changes
-        const applyDefault = await new Promise<boolean>((resolve) => {
-            // Wait for the call stack to clear before dispatching the change event
-            // This was needed to avoid dispatching a change event before the pointerdown, pointerup and click sequence
-            // was completed because otherwise the click event leaks to the elements behind the menu.
-            setTimeout(() => {
-                const shouldApplyDefault = this.dispatchEvent(
-                    new Event('change', {
-                        cancelable: true,
-                        bubbles: true,
-                        composed: true,
-                    })
-                );
-                resolve(shouldApplyDefault);
-            }, 0);
-        });
+        const applyDefault = this.dispatchEvent(
+            new Event('change', {
+                cancelable: true,
+                bubbles: true,
+                composed: true,
+            })
+        );
 
         if (!applyDefault) {
             // Cancel the event & don't apply the selection
@@ -661,9 +666,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             !targetItem.hasSubmenu &&
             targetItem?.menuData?.focusRoot === this
         ) {
-            setTimeout(() => {
-                this.dispatchEvent(new Event('close', { bubbles: true }));
-            }, 0);
+            this.dispatchEvent(new Event('close', { bubbles: true }));
         }
     }
 
@@ -685,9 +688,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             }
         } else if (shouldCloseSelfAsSubmenu && this.isSubmenu) {
             event.stopPropagation();
-            setTimeout(() => {
-                this.dispatchEvent(new Event('close', { bubbles: true }));
-            }, 0);
+            this.dispatchEvent(new Event('close', { bubbles: true }));
             this.updateSelectedItemIndex();
         }
     }
