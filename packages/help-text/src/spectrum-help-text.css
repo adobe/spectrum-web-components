@@ -11,6 +11,118 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-helptext-line-height: var(--spectrum-line-height-100);
+    --spectrum-helptext-content-color-default: var(
+        --spectrum-neutral-subdued-content-color-default
+    );
+    --spectrum-helptext-icon-color-default: var(
+        --spectrum-neutral-subdued-content-color-default
+    );
+    --spectrum-helptext-disabled-content-color: var(
+        --spectrum-disabled-content-color
+    );
+}
+
+:host([variant='neutral']) {
+    --spectrum-helptext-content-color-default: var(
+        --spectrum-neutral-subdued-content-color-default
+    );
+    --spectrum-helptext-icon-color-default: var(
+        --spectrum-neutral-subdued-content-color-default
+    );
+}
+
+:host([variant='negative']) {
+    --spectrum-helptext-content-color-default: var(
+        --spectrum-negative-color-900
+    );
+    --spectrum-helptext-icon-color-default: var(--spectrum-negative-color-900);
+}
+
+:host([disabled]) {
+    --spectrum-helptext-content-color-default: var(
+        --spectrum-helptext-disabled-content-color
+    );
+    --spectrum-helptext-icon-color-default: var(
+        --spectrum-helptext-disabled-content-color
+    );
+}
+
+:host(:lang(ja)),
+:host(:lang(ko)),
+:host(:lang(zh)) {
+    --spectrum-helptext-line-height-cjk: var(--spectrum-cjk-line-height-100);
+}
+
+:host([size='s']) {
+    --spectrum-helptext-min-height: var(--spectrum-component-height-75);
+    --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-75);
+    --spectrum-helptext-font-size: var(--spectrum-font-size-75);
+    --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-75);
+    --spectrum-helptext-top-to-workflow-icon: var(
+        --spectrum-help-text-top-to-workflow-icon-small
+    );
+    --spectrum-helptext-bottom-to-workflow-icon: var(
+        --spectrum-helptext-top-to-workflow-icon
+    );
+    --spectrum-helptext-top-to-text: var(--spectrum-component-top-to-text-75);
+    --spectrum-helptext-bottom-to-text: var(
+        --spectrum-component-bottom-to-text-75
+    );
+}
+
+:host {
+    --spectrum-helptext-min-height: var(--spectrum-component-height-75);
+    --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-helptext-font-size: var(--spectrum-font-size-75);
+    --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-75);
+    --spectrum-helptext-top-to-workflow-icon: var(
+        --spectrum-help-text-top-to-workflow-icon-medium
+    );
+    --spectrum-helptext-bottom-to-workflow-icon: var(
+        --spectrum-helptext-top-to-workflow-icon
+    );
+    --spectrum-helptext-top-to-text: var(--spectrum-component-top-to-text-75);
+    --spectrum-helptext-bottom-to-text: var(
+        --spectrum-component-bottom-to-text-75
+    );
+}
+
+:host([size='l']) {
+    --spectrum-helptext-min-height: var(--spectrum-component-height-100);
+    --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-200);
+    --spectrum-helptext-font-size: var(--spectrum-font-size-100);
+    --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-100);
+    --spectrum-helptext-top-to-workflow-icon: var(
+        --spectrum-help-text-top-to-workflow-icon-large
+    );
+    --spectrum-helptext-bottom-to-workflow-icon: var(
+        --spectrum-helptext-top-to-workflow-icon
+    );
+    --spectrum-helptext-top-to-text: var(--spectrum-component-top-to-text-100);
+    --spectrum-helptext-bottom-to-text: var(
+        --spectrum-component-bottom-to-text-100
+    );
+}
+
+:host([size='xl']) {
+    --spectrum-helptext-min-height: var(--spectrum-component-height-200);
+    --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-300);
+    --spectrum-helptext-font-size: var(--spectrum-font-size-200);
+    --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-200);
+    --spectrum-helptext-top-to-workflow-icon: var(
+        --spectrum-help-text-top-to-workflow-icon-extra-large
+    );
+    --spectrum-helptext-bottom-to-workflow-icon: var(
+        --spectrum-helptext-top-to-workflow-icon
+    );
+    --spectrum-helptext-top-to-text: var(--spectrum-component-top-to-text-200);
+    --spectrum-helptext-bottom-to-text: var(
+        --spectrum-component-bottom-to-text-200
+    );
+}
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-helptext-content-color-default: CanvasText;
@@ -25,9 +137,6 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    --spectrum-helptext-bottom-to-workflow-icon: var(
-        --spectrum-helptext-top-to-workflow-icon
-    );
     color: var(
         --highcontrast-helptext-content-color-default,
         var(
