@@ -345,7 +345,7 @@ governing permissions and limitations under the License.
     }
 
     :host([invalid][invalid]:hover) #box:before,
-    :host([invalid][invalid]:hover) #input:checked + #box {
+    :host([invalid][invalid]:hover) #input:checked + #box:before {
         border-color: var(
             --highcontrast-checkbox-color-hover,
             var(
