@@ -1,5 +1,10 @@
 name: Setup Job
 description: Common setup for all jobs
+inputs:
+    node-version:
+        description: 'The Node.js version to use'
+        required: false
+        default: '20'
 runs:
     using: 'composite'
     steps:
@@ -7,16 +12,28 @@ runs:
           shell: bash
           run: corepack enable
 
-        - name: Setup Node 20
+        - name: Setup Node LTS version
           uses: actions/setup-node@v4
           with:
-              node-version: '20'
+              node-version: ${{ inputs.node-version }}
               cache: 'yarn'
               registry-url: 'https://registry.npmjs.org'
 
+        ## --- YARN CACHE --- ##
+        - name: Check for cached dependencies
+          continue-on-error: true
+          id: cache-dependencies
+          uses: actions/cache@v4
+          with:
+              path: |
+                  .cache/yarn
+                  node_modules
+              key: ${{ runner.os }}-node${{ inputs.node-version }}-${{ hashFiles('yarn.lock') }}
+
+        ## --- INSTALL --- ##
         - name: Install dependencies
           shell: bash
-          run: yarn --immutable
+          run: yarn install --immutable
 
         - name: Build the project
           shell: bash
