@@ -11,26 +11,13 @@ governing permissions and limitations under the License.
 */
 
 import { defineConfig, devices } from '@playwright/test';
-import fs from 'fs';
-
-// Ensure required directories exist
-const snapshotDirs = [
-    'playwright/snapshots/baseline',
-    'playwright/snapshots/current',
-    'playwright/snapshots/diff',
-];
-for (const dir of snapshotDirs) {
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-    }
-}
 
 // Check for UPDATE_SNAPSHOTS env var for visual baseline management
 const updateSnapshots = process.env.UPDATE_SNAPSHOTS === 'true';
 // Export for use in test files
 process.env.UPDATE_VISUAL_SNAPSHOTS = updateSnapshots ? 'true' : 'false';
 
-const baseURL = 'http://localhost:8080';
+const baseURL = 'http://localhost:8000';
 
 // Two different import patterns depending on whether we're doing component or e2e testing
 // For e2e tests
@@ -41,8 +28,7 @@ export default defineConfig({
     workers: process.env.CI ? 1 : undefined,
     reporter: process.env.CI ? 'html' : 'list',
     // Single template for all assertions
-    snapshotPathTemplate:
-        '{testDir}/__screenshots__{/projectName}/{testFilePath}/{arg}{ext}',
+    snapshotPathTemplate: '{testFileDir}/__snapshots__/{arg}{ext}',
 
     /* Maximum time one test can run for */
     timeout: 30 * 1000,
@@ -59,7 +45,7 @@ export default defineConfig({
     projects: [
         {
             name: 'chrome-desktop',
-            testMatch: '**/*.spec.ts',
+            testMatch: '**/test/**/*.spec.ts',
             use: {
                 ...devices['Desktop Chrome'],
                 baseURL: baseURL,
@@ -72,7 +58,7 @@ export default defineConfig({
         },
         {
             name: 'firefox-desktop',
-            testMatch: '**/*.spec.ts',
+            testMatch: '**/test/**/*.spec.ts',
             use: {
                 ...devices['Desktop Firefox'],
                 baseURL: baseURL,
@@ -85,7 +71,7 @@ export default defineConfig({
         },
         {
             name: 'safari-desktop',
-            testMatch: '**/*.spec.ts',
+            testMatch: '**/test/**/*.spec.ts',
             use: {
                 ...devices['Desktop Safari'],
                 baseURL: baseURL,
@@ -97,8 +83,8 @@ export default defineConfig({
             },
         },
         {
-            name: 'Mobile Chrome',
-            testMatch: '**/test/*.spec.ts',
+            name: 'chrome-mobile',
+            testMatch: '**/test/**/*.spec.ts',
 
             use: {
                 ...devices['Pixel 5'],
@@ -111,8 +97,8 @@ export default defineConfig({
             },
         },
         {
-            name: 'Mobile Safari',
-            testMatch: '**/*.spec.ts',
+            name: 'safari-mobile',
+            testMatch: '**/test/**/*.spec.ts',
 
             use: {
                 ...devices['iPhone 12'],
@@ -127,7 +113,7 @@ export default defineConfig({
     ],
     /* Run your local Storybook before starting the tests */
     webServer: {
-        command: 'yarn storybook',
+        command: 'yarn storybook:playwright',
         url: baseURL,
         reuseExistingServer: !process.env.CI,
         timeout: 120 * 1000, // Give it time to start up

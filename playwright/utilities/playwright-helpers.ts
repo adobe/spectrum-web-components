@@ -18,20 +18,21 @@ import { axeTest } from '../fixtures/axe-test';
  * Navigate to a specific story in Storybook
  *
  * @param page Playwright page
- * @param componentPath Path to the component (e.g., 'button')
- * @param storyId Specific story ID (e.g., 'primary')
+ * @param componentName Name of the component (e.g., 'button')
+ * @param storyDirectory Directory of the story, comes after the component name and before the '--' in the story URL (e.g., 'density-compact')
+ * @param storyId Specific story ID, comes after the '--' in the story URL (e.g., 'primary')
  * @returns Promise that resolves when navigation is complete
  */
 export async function navigateToStory(
     page: Page,
-    componentPath: string,
+    componentName: string,
     storyId: string,
+    storyDirectory?: string,
     theme: 'light' | 'dark' = 'light'
 ): Promise<void> {
     // Navigate to the story URL
-    // eslint-disable-next-line prettier/prettier
     await page.goto(
-        `/iframe.html?id=${componentPath}--${storyId}&viewMode=story&globals=color:${theme}`
+        `/iframe.html?id=${componentName}${storyDirectory ? `-${storyDirectory}` : ''}--${storyId}&viewMode=story&globals=system:spectrum-two;color:${theme}`
     );
 
     // Wait for the story to load
@@ -64,9 +65,10 @@ export const componentTestSetup = async (
     page: Page,
     componentName: string,
     storyId: string,
+    storyDirectory?: string,
     theme: 'light' | 'dark' = 'light'
 ) => {
-    await navigateToStory(page, componentName, storyId, theme);
+    await navigateToStory(page, componentName, storyId, storyDirectory, theme);
     const component = await getComponentFromStory(page, `sp-${componentName}`);
     expect(component).toBeVisible();
 };
@@ -74,11 +76,18 @@ export const componentTestSetup = async (
 export const axeStoryTest = async (
     componentName: string,
     storyId: string,
+    storyDirectory?: string,
     theme: 'light' | 'dark' = 'light'
 ) => {
-    return test.describe(`${storyId}`, () => {
+    return test.describe(`${storyDirectory ? `${storyDirectory}-` : ''}${storyId}`, () => {
         test.beforeEach(async ({ page }) => {
-            await componentTestSetup(page, componentName, storyId, theme);
+            await componentTestSetup(
+                page,
+                componentName,
+                storyId,
+                storyDirectory,
+                theme
+            );
         });
 
         axeTest('should pass axe scan', async ({ makeAxeBuilder }) => {
@@ -89,7 +98,7 @@ export const axeStoryTest = async (
 
         test('should take snapshot', async ({ page }) => {
             await expect(page.locator('sp-theme')).toMatchAriaSnapshot({
-                name: `${componentName}-${theme}-${storyId}.aria.yml`,
+                name: `${componentName}-${theme}${storyDirectory ? `-${storyDirectory}` : ''}-${storyId}.aria.yml`,
             });
         });
     });

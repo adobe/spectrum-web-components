@@ -10,79 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect, test } from '@playwright/test';
-import { axeTest } from '../../../../playwright/fixtures/axe-test';
-import { componentTestSetup } from '../../../../playwright/utilities/playwright-helpers';
-
+import { test } from '@playwright/test';
+import { axeStoryTest } from '../../../../playwright/utilities/playwright-helpers';
+import { accordionTestStories } from './accordionTestStories';
 // Test suite for the Accordion component in Storybook
 test.describe('Accordion', () => {
-    test.describe('light', () => {
-        test.describe('default', () => {
-            test.beforeEach(async ({ page }) => {
-                await componentTestSetup(page, 'accordion', 'default');
-            });
-
-            axeTest('should pass axe scan', async ({ makeAxeBuilder }) => {
-                const accessibilityScanResults =
-                    await makeAxeBuilder().analyze();
-
-                expect(accessibilityScanResults.violations).toEqual([]);
-            });
-            test('should take snapshot', async ({ page }) => {
-                await expect(page.locator('sp-theme')).toMatchAriaSnapshot(`
-                  - heading "Heading 1" [level=3]:
-                    - button "Heading 1"
-                  - heading "Heading 2" [level=3]:
-                    - button "Heading 2"
-                  - heading "Heading 3" [level=3]:
-                    - button "Heading 3"
-                `);
-            });
-        });
-        test.describe('open', () => {
-            test.beforeEach(async ({ page }) => {
-                await componentTestSetup(page, 'accordion', 'open');
-            });
-
-            axeTest('should pass axe scan', async ({ makeAxeBuilder }) => {
-                const accessibilityScanResults =
-                    await makeAxeBuilder().analyze();
-
-                expect(accessibilityScanResults.violations).toEqual([]);
-            });
-            test('should take snapshot', async ({ page }) => {
-                await expect(page.locator('sp-theme')).toMatchAriaSnapshot(`
-                  - heading "Heading 1" [level=3]:
-                    - button "Heading 1"
-                  - heading "Heading 2" [level=3]:
-                    - button "Heading 2" [expanded]
-                  - region "Heading 2"
-                  - heading "Heading 3" [level=3]:
-                    - button "Heading 3"
-                `);
-            });
-        });
-        test.describe('allow multiple', () => {
-            test.beforeEach(async ({ page }) => {
-                await componentTestSetup(page, 'accordion', 'allow-multiple');
-            });
-
-            axeTest('should pass axe scan', async ({ makeAxeBuilder }) => {
-                const accessibilityScanResults =
-                    await makeAxeBuilder().analyze();
-
-                expect(accessibilityScanResults.violations).toEqual([]);
-            });
-            test('should take snapshot', async ({ page }) => {
-                await expect(page.locator('sp-theme')).toMatchAriaSnapshot(`
-                  - heading "Heading 1" [level=3]:
-                    - button "Heading 1"
-                  - heading "Heading 2" [level=3]:
-                    - button "Heading 2"
-                  - heading "Heading 3" [level=3]:
-                    - button "Heading 3"
-                `);
-            });
+    test.describe('light theme', () => {
+        accordionTestStories.forEach((story) => {
+            axeStoryTest(
+                'accordion',
+                story.storyId,
+                story.storyDirectory,
+                'light'
+            );
         });
     });
 });

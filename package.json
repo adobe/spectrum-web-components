@@ -71,6 +71,7 @@
         "spectrum-vars": "wireit",
         "start": "yarn storybook",
         "storybook": "wireit",
+        "storybook:playwright": "wireit",
         "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
         "storybook:quick": "run-p build:watch storybook:run",
         "storybook:run": "web-dev-server --config wds-storybook.config.js",
@@ -84,7 +85,7 @@
         "test:playwright": "playwright test",
         "test:playwright:ui": "playwright test --ui",
         "test:playwright:codegen": "playwright codegen",
-        "test:playwright:update-snapshots": "test:playwright --update-snapshots",
+        "test:playwright:update-snapshots": "playwright test --update-snapshots",
         "test:playwright:clean-snapshots": "rimraf **/test/playwright/__snapshots__/*",
         "test:start": "web-test-runner",
         "test:visual": "yarn test:visual:ci",
@@ -416,6 +417,14 @@
         },
         "storybook": {
             "command": "storybook dev -p 8080 -c storybook",
+            "service": true,
+            "dependencies": [
+                "build:watch",
+                "prestorybook"
+            ]
+        },
+        "storybook:playwright": {
+            "command": "storybook dev -p 8000 -c storybook",
             "service": true,
             "dependencies": [
                 "build:watch",

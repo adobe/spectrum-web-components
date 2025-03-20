@@ -12,12 +12,18 @@ governing permissions and limitations under the License.
 
 import { test } from '@playwright/test';
 import { axeStoryTest } from '../../../../playwright/utilities/playwright-helpers';
+import { accordionTestStories } from './accordionTestStories';
 
 // Test suite for the Accordion component in Storybook
 test.describe('Accordion', () => {
     test.describe('dark theme', () => {
-        axeStoryTest('accordion', 'default', 'dark');
-        axeStoryTest('accordion', 'open', 'dark');
-        axeStoryTest('accordion', 'disabled', 'dark');
+        accordionTestStories.forEach((story) => {
+            axeStoryTest(
+                'accordion',
+                story.storyId,
+                story.storyDirectory,
+                'dark'
+            );
+        });
     });
 });
