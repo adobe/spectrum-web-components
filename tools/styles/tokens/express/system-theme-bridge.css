@@ -1655,6 +1655,7 @@
     --system-meter-size-l-top-to-text: var(
         --spectrum-component-top-to-text-200
     );
+    --system-modal-background-color: var(--spectrum-gray-100);
     --system-picker-background-color-default: var(--spectrum-gray-200);
     --system-picker-background-color-default-open: var(--spectrum-gray-300);
     --system-picker-background-color-hover: var(--spectrum-gray-300);
