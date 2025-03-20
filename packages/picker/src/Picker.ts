@@ -503,13 +503,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                         this.size as DefaultElementSize
                     ]}"
                 ></sp-icon-chevron100>
-                <slot
-                    aria-hidden="true"
-                    name="tooltip"
-                    id="tooltip"
-                    @keydown=${this.handleKeydown}
-                    @slotchange=${this.handleTooltipSlotchange}
-                ></slot>
             `,
         ];
     }
@@ -604,6 +597,13 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             >
                 ${this.buttonContent}
             </button>
+            <slot
+                aria-hidden="true"
+                name="tooltip"
+                id="tooltip"
+                @keydown=${this.handleKeydown}
+                @slotchange=${this.handleTooltipSlotchange}
+            ></slot>
             ${this.renderMenu} ${this.renderDescriptionSlot}
         `;
     }
@@ -902,6 +902,16 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     public override connectedCallback(): void {
         super.connectedCallback();
+        this.updateComplete.then(() => {
+            if (!this.tooltipEl?.selfManaged) {
+                return;
+            }
+            const overlayElement = this.tooltipEl.overlayElement;
+            if (overlayElement) {
+                overlayElement.triggerElement = this.button;
+            }
+        });
+
         this.recentlyConnected = this.hasUpdated;
         this.addEventListener('focus', this.handleFocus);
     }
