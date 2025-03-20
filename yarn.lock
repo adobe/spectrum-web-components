@@ -7207,13 +7207,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/fieldlabel@npm:9.0.1":
-  version: 9.0.1
-  resolution: "@spectrum-css/fieldlabel@npm:9.0.1"
+"@spectrum-css/fieldlabel@npm:10.1.0":
+  version: 10.1.0
+  resolution: "@spectrum-css/fieldlabel@npm:10.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14 || >=15"
-  checksum: 10c0/d2676e3ab06dbb13c3cbda85faee748178204066d737c0147b05bcf5ab5ce6bfd99db1ba6dd1bc8063e1c0555482380c16f6e6a5bbb2f7ea7257bb74c07eb957
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/cbec138c6e841c03dee15d81604ca625139ce7737077a2c1265bb622dabbc2b9db5b8c32ac919f9e4ae4f25635e345411e6e1e8effbaf7ae11211cfe2df1444c
   languageName: node
   linkType: hard
 
@@ -8209,7 +8214,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/field-label@workspace:packages/field-label"
   dependencies:
-    "@spectrum-css/fieldlabel": "npm:9.0.1"
+    "@spectrum-css/fieldlabel": "npm:10.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
     "@spectrum-web-components/icons-ui": "npm:1.4.0"
