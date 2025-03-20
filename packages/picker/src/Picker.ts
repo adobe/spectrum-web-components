@@ -70,6 +70,16 @@ const chevronClass = {
 };
 
 export const DESCRIPTION_ID = 'option-picker';
+
+/**
+ * @element sp-picker
+ * @slot label - The placeholder content for the Picker
+ * @slot description - The description content for the Picker
+ * @slot tooltip - Tooltip to to be applied to the the Picker Button
+ * @slot - menu items to be listed in the Picker
+ * @fires change - Announces that the `value` of the element has changed
+ * @fires sp-opened - Announces that the overlay has been opened
+ */
 export class PickerBase extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
 }) {

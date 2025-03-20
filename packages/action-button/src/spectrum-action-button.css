@@ -112,13 +112,6 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
     }
 
-    :host([disabled]),
-    :host([disabled]) {
-        --highcontrast-actionbutton-content-color: GrayText;
-        --highcontrast-actionbutton-border-color: GrayText;
-        --highcontrast-actionbutton-background-color: ButtonFace;
-    }
-
     :host([selected]) {
         --highcontrast-actionbutton-background-color: Highlight;
         --highcontrast-actionbutton-border-color: HighlightText;
@@ -129,6 +122,13 @@ governing permissions and limitations under the License.
     :host([selected]) ::slotted([slot='icon']),
     :host([selected]) #label {
         forced-color-adjust: none;
+    }
+
+    :host([disabled]),
+    :host([disabled]) {
+        --highcontrast-actionbutton-content-color: GrayText;
+        --highcontrast-actionbutton-border-color: GrayText;
+        --highcontrast-actionbutton-background-color: ButtonFace;
     }
 }
 
@@ -236,9 +236,6 @@ governing permissions and limitations under the License.
     --mod-actionbutton-background-color-focus-selected: var(
         --spectrum-transparent-black-900
     );
-    --mod-actionbutton-border-color-disabled: var(
-        --spectrum-disabled-static-black-border-color
-    );
     --mod-actionbutton-content-color-default: var(--spectrum-black);
     --mod-actionbutton-content-color-hover: var(--spectrum-black);
     --mod-actionbutton-content-color-down: var(--spectrum-black);
@@ -279,9 +276,6 @@ governing permissions and limitations under the License.
     );
     --mod-actionbutton-background-color-focus-selected: var(
         --spectrum-transparent-white-900
-    );
-    --mod-actionbutton-border-color-disabled: var(
-        --spectrum-disabled-static-white-border-color
     );
     --mod-actionbutton-content-color-default: var(--spectrum-white);
     --mod-actionbutton-content-color-hover: var(--spectrum-white);
