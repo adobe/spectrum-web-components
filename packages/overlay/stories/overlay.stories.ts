@@ -1611,3 +1611,106 @@ export const triggeredByOptimization = (): TemplateResult => {
         </div>
     `;
 };
+
+export const disabledOverlayTrigger = (): TemplateResult => {
+    return html`
+        ${storyStyles}
+        <h2>Disabled Overlay Trigger</h2>
+        <p>This demonstrates how disabled overlay-triggers should work:</p>
+        <ul>
+            <li>
+                The overlay (tooltip/popover) functionality should be disabled
+            </li>
+            <li>But the trigger content itself should remain interactive</li>
+        </ul>
+
+        <div style="display: flex; gap: 24px; margin: 24px 0;">
+            <!-- Disabled overlay-trigger with interactive content -->
+            <div>
+                <h3>Disabled overlay-trigger</h3>
+                <overlay-trigger triggered-by="click hover" disabled>
+                    <div
+                        slot="trigger"
+                        style="padding: 8px; border: 1px solid #ccc;"
+                    >
+                        <p>This container has a disabled overlay-trigger</p>
+                        <sp-button variant="primary" id="test-button-disabled">
+                            This button should still be clickable
+                        </sp-button>
+                    </div>
+                    <sp-tooltip slot="hover-content">
+                        This tooltip should not appear (disabled)
+                    </sp-tooltip>
+                    <sp-popover slot="click-content" placement="bottom" tip>
+                        <sp-dialog size="s" no-divider>
+                            This popover should not appear (disabled)
+                        </sp-dialog>
+                    </sp-popover>
+                </overlay-trigger>
+                <p id="disabled-click-indicator">Button not clicked yet</p>
+            </div>
+
+            <!-- Regular overlay-trigger for comparison -->
+            <div>
+                <h3>Regular overlay-trigger (for comparison)</h3>
+                <overlay-trigger triggered-by="click hover">
+                    <div
+                        slot="trigger"
+                        style="padding: 8px; border: 1px solid #ccc;"
+                    >
+                        <p>This container has a regular overlay-trigger</p>
+                        <sp-button variant="primary" id="test-button-enabled">
+                            This button should be clickable
+                        </sp-button>
+                    </div>
+                    <sp-tooltip slot="hover-content">
+                        This tooltip should appear on hover
+                    </sp-tooltip>
+                    <sp-popover slot="click-content" placement="bottom" tip>
+                        <sp-dialog size="s" no-divider>
+                            This popover should appear on click
+                        </sp-dialog>
+                    </sp-popover>
+                </overlay-trigger>
+                <p id="enabled-click-indicator">Button not clicked yet</p>
+            </div>
+        </div>
+
+        <script>
+            // Add click handlers to demonstrate button interactivity
+            setTimeout(() => {
+                const disabledButton = document.getElementById(
+                    'test-button-disabled'
+                );
+                const enabledButton = document.getElementById(
+                    'test-button-enabled'
+                );
+                const disabledIndicator = document.getElementById(
+                    'disabled-click-indicator'
+                );
+                const enabledIndicator = document.getElementById(
+                    'enabled-click-indicator'
+                );
+
+                if (disabledButton) {
+                    disabledButton.addEventListener('click', () => {
+                        disabledIndicator.textContent =
+                            'Button was clicked! ✅';
+                        disabledIndicator.style.color = 'green';
+                    });
+                }
+
+                if (enabledButton) {
+                    enabledButton.addEventListener('click', () => {
+                        enabledIndicator.textContent = 'Button was clicked! ✅';
+                        enabledIndicator.style.color = 'green';
+                    });
+                }
+            }, 100);
+        </script>
+    `;
+};
+
+disabledOverlayTrigger.swc_vrt = {
+    skip: true,
+};
