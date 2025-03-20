@@ -1,0 +1,103 @@
+name: Build
+#
+# This workflow validates that the commit in question can be built successfully
+# in several environments:
+#
+#   Systems:    Ubuntu, MacOS, Windows
+#   Node:       20
+#
+# After the build is successful, the compiled assets are uploaded as an artifact
+# to the workflow run. This allows us to download the compiled assets and use
+# them in other workflows.
+#
+# Note: we need to skip the nx cache b/c it does not contain the compiled assets
+#
+
+on:
+    workflow_dispatch:
+        inputs:
+            system:
+                required: false
+                default: 'macos-latest'
+            node-version:
+                required: false
+                default: '20'
+            experimental:
+                required: false
+                default: 'false'
+            ref:
+                description: 'The branch or tag to checkout'
+                required: false
+    workflow_call:
+        inputs:
+            system:
+                required: false
+                type: string
+                default: 'macos-latest'
+            node-version:
+                required: false
+                type: string
+                default: '20'
+            experimental:
+                required: false
+                type: boolean
+                default: false
+            ref:
+                description: 'The branch or tag to checkout'
+                required: false
+                type: string
+                default: ${{ github.head_ref }}
+
+permissions:
+    contents: read
+    pull-requests: write
+
+defaults:
+    run:
+        shell: bash
+
+jobs:
+    # ---------- Validate build for various environments ---------- #
+    build:
+        strategy:
+            fail-fast: false
+            matrix:
+                system:
+                    - ${{ inputs.system }}
+                node-version:
+                    - ${{ inputs.node-version }}
+                experimental:
+                    - ${{ inputs.experimental }}
+        runs-on: ${{ matrix.system }}
+        continue-on-error: ${{ matrix.experimental }}
+        timeout-minutes: 10
+        name: Build ${{ matrix.system }}, node v${{ matrix.node-version }}
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ inputs.ref || github.head_ref }}
+                  fetch-depth: 0
+
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Build the project
+              if: always()
+              run: yarn build
+
+            # This step will evaluate the repo status and report the change
+            # If there are changes, capture the changes and upload them as an artifact
+            - name: Check if there are changes
+              if: always()
+              run: |
+                  if [[ -z $(git status --porcelain) ]]; then
+                      echo "No changes detected"
+                      exit 0
+                  else
+                      echo "Changes detected"
+                      git status
+                      exit 1
+                  fi
