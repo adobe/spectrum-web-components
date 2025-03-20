@@ -7550,12 +7550,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/opacitycheckerboard@npm:3.0.0-s2-foundations.17":
-  version: 3.0.0-s2-foundations.17
-  resolution: "@spectrum-css/opacitycheckerboard@npm:3.0.0-s2-foundations.17"
+"@spectrum-css/opacitycheckerboard@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@spectrum-css/opacitycheckerboard@npm:3.0.1"
   peerDependencies:
-    "@spectrum-css/tokens": ">=15.0.0-s2-foundations.0"
-  checksum: 10c0/ebed9bb7f7ca248fdd35f91debc513bc6e885f3c06d86f0759500b72182467c28a165dbb2980265ecdd926a8e259d785f3cddc98c0d487d212d37cc749ae001c
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/554ff94d866d31fd43802736e503a966c9dfe5ffa829976ef983929ea8c89b9f88df3c221130ad12f4dd51399e5f37ae485817425cc44f2872963a64af92fa1c
   languageName: node
   linkType: hard
 
@@ -8414,8 +8414,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.3.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=850176&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/49197a16df8435d740d61d048a43fea9accdf3dc4c13e2c2f4e986ef5e5474a325f19fd7406814cb6aa0033da949da4b4922b5127c18855bd4bb69880bae7dda
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=2eb1f0&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/646f7fd6d92878bfd71f32c64ac198fb94462321a3c1296194dd6c777e7ee8303370e5b211ce2587d6eed527a9c2cc99397f06611ec68d003e06cd40a8a5d2ab
   languageName: node
   linkType: hard
 
@@ -8625,7 +8625,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/opacity-checkerboard@workspace:tools/opacity-checkerboard"
   dependencies:
-    "@spectrum-css/opacitycheckerboard": "npm:3.0.0-s2-foundations.17"
+    "@spectrum-css/opacitycheckerboard": "npm:3.0.1"
     "@spectrum-web-components/base": "npm:1.3.0"
   languageName: unknown
   linkType: soft
