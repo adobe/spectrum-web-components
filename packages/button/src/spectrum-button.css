@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -860,7 +860,7 @@ governing permissions and limitations under the License.
         ease-in-out;
 }
 
-.spectrum-ProgressCircle {
+sp-progress-circle {
     visibility: hidden;
     opacity: 0;
     transition:
@@ -876,8 +876,8 @@ governing permissions and limitations under the License.
     cursor: default;
 }
 
-:host([pending]) .spectrum-ProgressCircle,
-:host([pending]) .spectrum-ProgressCircle {
+:host([pending]) sp-progress-circle,
+:host([pending]) sp-progress-circle {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.13s ease-in-out;

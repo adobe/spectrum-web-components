@@ -13,22 +13,14 @@ governing permissions and limitations under the License.
 @import url('./spectrum-action-group.css');
 @import url('./action-group-overrides.css');
 
-:host([size='xs']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --spectrum-spacing-75
-    ); /* .spectrum-ActionGroup--sizeS */
-
-    --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
-}
-
 /**
  * The following styles corrects issues found in the Spectrum CSS output
  * that are tracked via: https://github.com/adobe/spectrum-css/issues/795
  */
 
 :host([dir][compact][vertical]) ::slotted(:nth-child(n)) {
-    margin-right: 0;
-    margin-left: 0;
+    margin-inline-end: 0;
+    margin-inline-start: 0;
 }
 
 /**
