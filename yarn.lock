@@ -7328,12 +7328,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/modal@npm:6.0.1":
-  version: 6.0.1
-  resolution: "@spectrum-css/modal@npm:6.0.1"
+"@spectrum-css/modal@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/modal@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14 || >=15"
-  checksum: 10c0/d0d0cd10643b34e1bc4c7bf2a700a0375f24b26aaf7e862603050cd46288751c072f8710c8e74618e0e3de2df5f4d63388a10fb5a1f230c0dc4d776b9772ad50
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/b1118e40233e3bda28aed35bf6078e45547dde9588e922d6457d5f9cd86e3fd18638fb4a1149188b68c88906ea283e5ece9c6d49e73c9e21a43e6f7892fe04f0
   languageName: node
   linkType: hard
 
@@ -8400,7 +8403,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/modal@workspace:packages/modal"
   dependencies:
-    "@spectrum-css/modal": "npm:6.0.1"
+    "@spectrum-css/modal": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft
