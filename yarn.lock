@@ -7313,12 +7313,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/opacitycheckerboard@npm:3.0.0-s2-foundations.17":
-  version: 3.0.0-s2-foundations.17
-  resolution: "@spectrum-css/opacitycheckerboard@npm:3.0.0-s2-foundations.17"
+"@spectrum-css/opacitycheckerboard@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@spectrum-css/opacitycheckerboard@npm:3.0.1"
   peerDependencies:
-    "@spectrum-css/tokens": ">=15.0.0-s2-foundations.0"
-  checksum: 10c0/ebed9bb7f7ca248fdd35f91debc513bc6e885f3c06d86f0759500b72182467c28a165dbb2980265ecdd926a8e259d785f3cddc98c0d487d212d37cc749ae001c
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/554ff94d866d31fd43802736e503a966c9dfe5ffa829976ef983929ea8c89b9f88df3c221130ad12f4dd51399e5f37ae485817425cc44f2872963a64af92fa1c
   languageName: node
   linkType: hard
 
@@ -8388,7 +8388,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/opacity-checkerboard@workspace:tools/opacity-checkerboard"
   dependencies:
-    "@spectrum-css/opacitycheckerboard": "npm:3.0.0-s2-foundations.17"
+    "@spectrum-css/opacitycheckerboard": "npm:3.0.1"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft
