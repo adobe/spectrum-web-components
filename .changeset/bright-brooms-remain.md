@@ -3,7 +3,7 @@
 '@spectrum-web-components/menu': minor
 ---
 
-Updated pointerup and click event handling in menu selection. The change event now fires after both the pointerup and click have completed successfully.
+Disabled drag and select functionality of picker in mobile devices. This is done to prevent click event being captured behind the menu-tray combination because the menu was closing immediately on pointerup.
 
--   Fixed a bug where the picker in a dialog was not closing when clicking outside the dialog.
--   Fixed another bug where the elements behind the menu were receiving click events.
+-   Fixed a bug where the picker in a dialog was not closing when clicking outside the dialog. ([#5111](https://github.com/adobe/spectrum-web-components/issues/5111))
+-   Fixed another bug where the elements behind the menu were receiving click events. ([#5060](https://github.com/adobe/spectrum-web-components/issues/5060))
