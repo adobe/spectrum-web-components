@@ -15,7 +15,7 @@ test.describe('search and go', () => {
     const startURL =
         process.env.NODE_ENV === 'CI'
             ? process.env.DOC_PREVIEW_URL
-            : 'http://localhost:8000';
+            : 'http://localhost:8080';
     const menuItemSelector = (href: string) => {
         return `#search-container sp-overlay[open] > sp-popover > sp-menu > sp-menu-group > sp-menu-item[href = "${href}"]`;
     };

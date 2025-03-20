@@ -12,10 +12,7 @@ governing permissions and limitations under the License.
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
 import { Locales } from '@spectrum-web-components/story-decorator/src/locales.js';
 import { setCustomElementsManifest } from '@storybook/web-components';
-
-const cem = await import('./custom-elements.json', {
-    assert: { type: 'json' },
-});
+import cem from './custom-elements.json';
 
 setCustomElementsManifest(cem);
 
