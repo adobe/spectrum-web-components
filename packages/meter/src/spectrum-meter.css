@@ -12,22 +12,29 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --mod-progressbar-size-default: var(--mod-meter-inline-size, var(--spectrum-meter-inline-size));
-    --mod-progressbar-max-size: var(--mod-meter-max-width, var(--spectrum-meter-max-width));
-    --mod-progressbar-min-size: var(--mod-meter-min-width, var(--spectrum-meter-min-width));
-    --mod-progressbar-thickness: var(--spectrum-meter-thickness);
-    --mod-progressbar-font-size: var(--spectrum-meter-font-size);
-    --mod-progressbar-spacing-top-to-text: var(--spectrum-meter-top-to-text);
+    --mod-progressbar-size-default: var(--mod-meter-inline-size, var(--spectrum-meter-default-width));
+    --mod-progressbar-max-size: var(--mod-meter-max-width, var(--spectrum-meter-maximum-width));
+    --mod-progressbar-min-size: var(--mod-meter-min-width, var(--spectrum-meter-minimum-width));
+    --mod-progressbar-thickness: var(--spectrum-meter-thickness-small);
+    --mod-progressbar-font-size: var(--spectrum-font-size-75);
+    --mod-progressbar-spacing-top-to-text: var(--spectrum-component-top-to-text-75);
+}
+
+:host([size='l']) {
+    --mod-progressbar-size-default: var(--mod-meter-inline-size, var(--spectrum-progressbar-size-2500));
+    --mod-progressbar-thickness: var(--spectrum-meter-thickness-large);
+    --mod-progressbar-font-size: var(--spectrum-font-size-100);
+    --mod-progressbar-spacing-top-to-text: var(--spectrum-component-top-to-text-200);
 }
 
 :host([variant='positive']) {
-    --mod-progressbar-fill-color: var(--mod-meter-fill-color-positive, var(--spectrum-meter-fill-color-positive));
+    --mod-progressbar-fill-color: var(--spectrum-positive-visual-color);
 }
 
 :host([variant='notice']) {
-    --mod-progressbar-fill-color: var(--mod-meter-fill-color-notice, var(--spectrum-meter-fill-color-notice));
+    --mod-progressbar-fill-color: var(--spectrum-notice-visual-color);
 }
 
 :host([variant='negative']) {
-    --mod-progressbar-fill-color: var(--mod-meter-fill-color-negative, var(--spectrum-meter-fill-color-negative));
+    --mod-progressbar-fill-color: var(--spectrum-negative-visual-color);
 }
