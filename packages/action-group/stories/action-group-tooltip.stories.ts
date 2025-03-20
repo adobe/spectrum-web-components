@@ -129,7 +129,7 @@ export default {
     },
 };
 
-interface Properties {
+export interface Properties {
     compact?: boolean;
     emphasized?: boolean;
     justified?: boolean;
@@ -192,36 +192,46 @@ const template = (args: Properties): TemplateResult => {
     `;
 };
 
-export const selectsSingle = (args: Properties): TemplateResult =>
-    template(args);
-selectsSingle.args = {
-    compact: true,
-    emphasized: true,
-    selects: 'single',
+export const selectsSingle = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        compact: true,
+        emphasized: true,
+        selects: 'single',
+    },
 };
 
-export const selectsMultiple = (args: Properties): TemplateResult =>
-    template(args);
-selectsMultiple.args = {
-    compact: true,
-    emphasized: true,
-    selects: 'multiple',
+export const selectsMultiple = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        compact: true,
+        emphasized: true,
+        selects: 'multiple',
+    },
 };
 
-export const justified = (args: Properties): TemplateResult => template(args);
-justified.args = {
-    compact: true,
-    emphasized: true,
-    justified: true,
-    selects: undefined,
+export const justified = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        compact: true,
+        emphasized: true,
+        justified: true,
+        selects: undefined,
+    },
 };
 
-export const vertical = (args: Properties): TemplateResult => template(args);
-vertical.args = {
-    compact: true,
-    emphasized: true,
-    vertical: true,
-    selects: undefined,
+export const vertical = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        compact: true,
+        emphasized: true,
+        vertical: true,
+        selects: undefined,
+    },
 };
 
 class ActionGroupTooltips extends SpectrumElement {

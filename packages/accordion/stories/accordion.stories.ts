@@ -29,33 +29,40 @@ export default {
     argTypes,
 };
 
-type Properties = {
+export interface Properties {
     allowMultiple?: boolean;
     disabled?: boolean;
     open?: boolean;
     density?: 'compact' | 'spacious' | undefined;
     size?: 's' | 'm' | 'l' | 'xl';
+}
+
+export const Default = {
+    render: (args?: Properties): TemplateResult => AccordionMarkup(args),
 };
 
-export const Default = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
+export const Open = {
+    render: (args?: Properties): TemplateResult => AccordionMarkup(args),
 
-export const Open = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
-Open.args = {
-    open: true,
-    allowMultiple: false,
-    disabled: false,
+    args: {
+        open: true,
+        allowMultiple: false,
+        disabled: false,
+    },
 };
 
-export const AllowMultiple = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
-AllowMultiple.args = {
-    allowMultiple: true,
+export const AllowMultiple = {
+    render: (args?: Properties): TemplateResult => AccordionMarkup(args),
+
+    args: {
+        allowMultiple: true,
+    },
 };
 
-export const Disabled = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
-Disabled.args = {
-    disabled: true,
+export const Disabled = {
+    render: (args?: Properties): TemplateResult => AccordionMarkup(args),
+
+    args: {
+        disabled: true,
+    },
 };

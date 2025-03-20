@@ -17,6 +17,7 @@ import '@spectrum-web-components/help-text/sp-help-text.js';
 export default {
     title: 'Help Text/Sizes',
     component: 'sp-help-text',
+    tags: ['!dev'],
 };
 
 export const s = (): TemplateResult => {

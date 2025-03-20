@@ -16,6 +16,7 @@ import { AccordionMarkup } from './';
 export default {
     title: 'Accordion/Sizes',
     component: 'sp-accordion',
+    tags: ['!dev'],
 };
 
 export const s = (): TemplateResult => AccordionMarkup({ size: 's' });

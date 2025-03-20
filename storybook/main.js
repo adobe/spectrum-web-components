@@ -1,41 +1,63 @@
-/*
-Copyright 2022 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+/**!
+ * Copyright 2022 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
 import rollupJson from '@rollup/plugin-json';
 import { mergeConfigs } from '@web/dev-server';
 import { fromRollup } from '@web/dev-server-rollup';
 import rollupCommonjs from '@rollup/plugin-commonjs';
 import { watchSWC } from '../web-test-runner.utils.js';
 
-/** @type { import('storybook-builder-wds').StorybookConfigWds } */
-const config = {
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+/** @type { import('@web/storybook-framework-web-components').StorybookConfig } */
+export default {
     stories: [
-        '../packages/*/stories/*.stories.js',
-        '../tools/*/stories/*.stories.js',
+        {
+            directory: '../packages',
+            files: '*/stories/*.stories.js',
+            titlePrefix: 'Components',
+        },
+        {
+            directory: '../tools',
+            files: '*/stories/*.stories.js',
+            titlePrefix: 'Tools',
+        },
     ],
+
     addons: [
         '@storybook/addon-links',
         '@storybook/addon-essentials',
         '@storybook/addon-a11y',
         // Conditionally add the addon-designs addon temporarily
         // https://storybook.js.org/addons/@storybook/addon-designs/
-        ...(process.env.NODE_ENV === 'development'
-            ? ['@storybook/addon-designs']
-            : []),
-        // https://geometricpanda.github.io/storybook-addon-badges/
+        ...(isDevelopment ? ['@storybook/addon-designs'] : []),
         '@geometricpanda/storybook-addon-badges',
+        '@chromatic-com/storybook',
     ],
+
     framework: {
         name: '@web/storybook-framework-web-components',
+        options: {
+            builder: {},
+        },
     },
+
+    core: {
+        // Disabled callback due to Adobe privacy policy
+        disableTelemetry: true,
+        disableWhatsNewNotifications: true,
+    },
+
+    // Optionally add Storybook-specific configuration for @web/dev-server
     wdsFinal(config) {
         const json = fromRollup(rollupJson);
         return mergeConfigs(config, {
@@ -57,8 +79,10 @@ const config = {
             watch: true,
         });
     },
-    rollupFinal(config) {
-        // add a new plugin to the build
+
+    // Optionally add extra configuration for the static build
+    async rollupFinal(config) {
+        // add JSON plugin to the build
         config.plugins.push(rollupJson());
         config.plugins.push(
             rollupCommonjs({
@@ -74,16 +98,15 @@ const config = {
         );
         return config;
     },
-};
 
-if (process.env.NODE_ENV === 'development') {
-    config.refs = {
+    refs: {
         'design-system': {
             title: 'Spectrum CSS',
-            url: 'https://opensource.adobe.com/spectrum-css/preview/',
-            expanded: false, // Optional, true by default
+            url: 'https://opensource.adobe.com/spectrum-css/',
         },
-    };
-}
+    },
 
-export default config;
+    docs: {
+        autodocs: true,
+    },
+};

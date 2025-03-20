@@ -12,11 +12,11 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
-import { StoryArgs } from './args.js';
+import { Properties } from './args.js';
 import '@spectrum-web-components/link/sp-link.js';
 import '../sp-contextual-help.js';
 
-export const ContextualHelpMarkup = (args: StoryArgs = {}): TemplateResult => {
+export const ContextualHelpMarkup = (args: Properties = {}): TemplateResult => {
     return html`
         <sp-contextual-help
             ${spreadProps(args)}

@@ -22,32 +22,47 @@ export default {
 
 const staticColor = 'black';
 
-export const XS = (args: Properties): TemplateResult => renderButtons(args);
-XS.args = {
-    size: 'xs',
-    staticColor,
+export const XS = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'xs',
+        staticColor,
+    },
 };
 
-export const s = (args: Properties): TemplateResult => renderButtons(args);
-s.args = {
-    size: 's',
-    staticColor,
+export const s = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 's',
+        staticColor,
+    },
 };
 
-export const m = (args: Properties): TemplateResult => renderButtons(args);
-m.args = {
-    size: 'm',
-    staticColor,
-} as Properties;
+export const m = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
 
-export const l = (args: Properties): TemplateResult => renderButtons(args);
-l.args = {
-    size: 'l',
-    staticColor,
+    args: {
+        size: 'm',
+        staticColor,
+    } as Properties,
 };
 
-export const XL = (args: Properties): TemplateResult => renderButtons(args);
-XL.args = {
-    size: 'xl',
-    staticColor,
+export const l = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'l',
+        staticColor,
+    },
+};
+
+export const XL = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'xl',
+        staticColor,
+    },
 };

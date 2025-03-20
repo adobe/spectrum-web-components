@@ -19,7 +19,7 @@ import '@spectrum-web-components/combobox/sp-combobox.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers';
 
-export type StoryArgs = {
+export type Properties = {
     open?: boolean;
     pending?: boolean;
     invalid?: boolean;
@@ -34,20 +34,20 @@ export type StoryArgs = {
 };
 
 const handleChange =
-    ({ onChange }: StoryArgs) =>
+    ({ onChange }: Properties) =>
     (event: Event): void => {
         const picker = event.target as Combobox;
         if (onChange) onChange(picker.value);
     };
 
 const handleInput =
-    ({ onInput }: StoryArgs) =>
+    ({ onInput }: Properties) =>
     (event: Event): void => {
         const picker = event.target as Combobox;
         if (onInput) onInput(picker.value);
     };
 
-export const ComboboxMarkup = (args: StoryArgs): TemplateResult => {
+export const ComboboxMarkup = (args: Properties): TemplateResult => {
     return html`
         <sp-field-label for="combobox">Where do you live?</sp-field-label>
         <sp-combobox

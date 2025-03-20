@@ -20,32 +20,47 @@ export default {
 
 const emphasized = true;
 
-export const XS = (args: Properties): TemplateResult => renderButtons(args);
-XS.args = {
-    emphasized,
-    size: 'xs',
+export const XS = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        emphasized,
+        size: 'xs',
+    },
 };
 
-export const s = (args: Properties): TemplateResult => renderButtons(args);
-s.args = {
-    emphasized,
-    size: 's',
+export const s = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        emphasized,
+        size: 's',
+    },
 };
 
-export const m = (args: Properties): TemplateResult => renderButtons(args);
-m.args = {
-    emphasized,
-    size: 'm',
+export const m = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        emphasized,
+        size: 'm',
+    },
 };
 
-export const l = (args: Properties): TemplateResult => renderButtons(args);
-l.args = {
-    emphasized,
-    size: 'l',
+export const l = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        emphasized,
+        size: 'l',
+    },
 };
 
-export const XL = (args: Properties): TemplateResult => renderButtons(args);
-XL.args = {
-    emphasized,
-    size: 'xl',
+export const XL = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        emphasized,
+        size: 'xl',
+    },
 };

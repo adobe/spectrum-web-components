@@ -107,9 +107,10 @@ export default {
             },
         },
     },
+    tags: ['!dev'],
 };
 
-interface Properties {
+export interface Properties {
     compact?: boolean;
     emphasized?: boolean;
     justified?: boolean;
@@ -129,51 +130,72 @@ function renderButtons(args: Properties): TemplateResult {
     `;
 }
 
-export const XS = (args: Properties): TemplateResult => renderButtons(args);
-XS.args = { size: 'xs' };
-
-export const s = (args: Properties): TemplateResult => renderButtons(args);
-s.args = { size: 's' };
-
-export const m = (args: Properties): TemplateResult => renderButtons(args);
-m.args = { size: 'm' };
-
-export const l = (args: Properties): TemplateResult => renderButtons(args);
-l.args = { size: 'l' };
-
-export const XL = (args: Properties): TemplateResult => renderButtons(args);
-XL.args = { size: 'xl' };
-
-export const XSVertical = (args: Properties): TemplateResult =>
-    renderButtons(args);
-XSVertical.args = {
-    vertical: true,
-    size: 'xs',
-};
-export const sVertical = (args: Properties): TemplateResult =>
-    renderButtons(args);
-sVertical.args = {
-    vertical: true,
-    size: 's',
+export const XS = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+    args: { size: 'xs' },
 };
 
-export const mVertical = (args: Properties): TemplateResult =>
-    renderButtons(args);
-mVertical.args = {
-    vertical: true,
-    size: 'm',
+export const s = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+    args: { size: 's' },
 };
 
-export const lVertical = (args: Properties): TemplateResult =>
-    renderButtons(args);
-lVertical.args = {
-    vertical: true,
-    size: 'l',
+export const m = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+    args: { size: 'm' },
 };
 
-export const XLVertical = (args: Properties): TemplateResult =>
-    renderButtons(args);
-XLVertical.args = {
-    vertical: true,
-    size: 'xl',
+export const l = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+    args: { size: 'l' },
+};
+
+export const XL = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+    args: { size: 'xl' },
+};
+
+export const XSVertical = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        vertical: true,
+        size: 'xs',
+    },
+};
+
+export const sVertical = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        vertical: true,
+        size: 's',
+    },
+};
+
+export const mVertical = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        vertical: true,
+        size: 'm',
+    },
+};
+
+export const lVertical = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        vertical: true,
+        size: 'l',
+    },
+};
+
+export const XLVertical = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        vertical: true,
+        size: 'xl',
+    },
 };

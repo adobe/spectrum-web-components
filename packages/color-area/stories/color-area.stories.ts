@@ -36,27 +36,29 @@ export default {
     },
 };
 
-type StoryArgs = {
+export interface Properties {
     onInput: (val: string) => void;
     onChange: (val: string) => void;
-};
+}
 
-export const Default = ({ onChange, onInput }: StoryArgs): TemplateResult => {
-    return html`
-        <sp-color-area
-            color="#ff0000"
-            @input=${({ target }: Event & { target: ColorArea }) => {
-                const next = target.nextElementSibling as HTMLElement;
-                next.textContent = target.color as string;
-                next.style.color = target.color as string;
-                onInput(target.value as string);
-            }}
-            @change=${({ target }: Event & { target: ColorArea }) => {
-                onChange(target.value as string);
-            }}
-        ></sp-color-area>
-        <div style="color: #ff0000" aria-live="off">#ff0000</div>
-    `;
+export const Default = {
+    render: ({ onChange, onInput }: Properties): TemplateResult => {
+        return html`
+            <sp-color-area
+                color="#ff0000"
+                @input=${({ target }: Event & { target: ColorArea }) => {
+                    const next = target.nextElementSibling as HTMLElement;
+                    next.textContent = target.color as string;
+                    next.style.color = target.color as string;
+                    onInput(target.value as string);
+                }}
+                @change=${({ target }: Event & { target: ColorArea }) => {
+                    onChange(target.value as string);
+                }}
+            ></sp-color-area>
+            <div style="color: #ff0000" aria-live="off">#ff0000</div>
+        `;
+    },
 };
 
 export const appliedValues = (): TemplateResult => {
@@ -118,12 +120,23 @@ export const sized = (): TemplateResult => {
     `;
 };
 
-export const canvas = (): TemplateResult => {
-    return html`
-        <sp-color-area>
-            <canvas slot="gradient"></canvas>
-        </sp-color-area>
-    `;
+export const canvas = {
+    render: (): TemplateResult => {
+        return html`
+            <sp-color-area>
+                <canvas slot="gradient"></canvas>
+            </sp-color-area>
+        `;
+    },
+
+    decorators: [
+        (story: () => TemplateResult): TemplateResult => {
+            return html`
+                ${story()}
+                <area-canvas-writer></area-canvas-writer>
+            `;
+        },
+    ],
 };
 
 class CanvasWriter extends HTMLElement {
@@ -187,12 +200,3 @@ class CanvasWriter extends HTMLElement {
 }
 
 customElements.define('area-canvas-writer', CanvasWriter);
-
-canvas.decorators = [
-    (story: () => TemplateResult): TemplateResult => {
-        return html`
-            ${story()}
-            <area-canvas-writer></area-canvas-writer>
-        `;
-    },
-];

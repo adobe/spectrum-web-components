@@ -10,43 +10,50 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@spectrum-web-components/base';
-
-import {
-    buttons,
-    buttonsVertical,
-    Properties,
-} from './button-group.stories.js';
+import { Buttons, ButtonsVertical } from './button-group.stories.js';
 
 export default {
     title: 'Button Group/Sizes',
     component: 'sp-button-group',
+    tags: ['!dev'],
 };
 
-export const s = (args: Properties): TemplateResult => buttons(args);
-s.args = { size: 's' };
+export const s = {
+    ...Buttons,
+    args: { size: 's' },
+};
 
-export const m = (args: Properties): TemplateResult => buttons(args);
-m.args = { size: 'm' };
+export const m = {
+    ...Buttons,
+    args: { size: 'm' },
+};
 
-export const l = (args: Properties): TemplateResult => buttons(args);
-l.args = { size: 'l' };
+export const l = {
+    ...Buttons,
+    args: { size: 'l' },
+};
 
-export const XL = (args: Properties): TemplateResult => buttons(args);
-XL.args = { size: 'XL' };
+export const XL = {
+    ...Buttons,
+    args: { size: 'XL' },
+};
 
-export const verticalS = (args: Properties): TemplateResult =>
-    buttonsVertical(args);
-verticalS.args = { size: 's' };
+export const verticalS = {
+    ...ButtonsVertical,
+    args: { size: 's' },
+};
 
-export const verticalM = (args: Properties): TemplateResult =>
-    buttonsVertical(args);
-verticalM.args = { size: 'm' };
+export const verticalM = {
+    ...ButtonsVertical,
+    args: { size: 'm' },
+};
 
-export const verticalL = (args: Properties): TemplateResult =>
-    buttonsVertical(args);
-verticalL.args = { size: 'l' };
+export const verticalL = {
+    ...ButtonsVertical,
+    args: { size: 'l' },
+};
 
-export const verticalXL = (args: Properties): TemplateResult =>
-    buttonsVertical(args);
-verticalXL.args = { size: 'XL' };
+export const verticalXL = {
+    ...ButtonsVertical,
+    args: { size: 'XL' },
+};

@@ -33,7 +33,7 @@ describe('ActionButton', () => {
     testForLitDevWarnings(
         async () =>
             await fixture<ActionButton>(
-                BlackActionButton(BlackActionButton.args)
+                BlackActionButton.render(BlackActionButton.args)
             )
     );
     it('loads default', async () => {

@@ -28,12 +28,12 @@ describe('Grid', () => {
     testForLitDevWarnings(
         async () =>
             await fixture<HTMLDivElement>(html`
-                <div>${Default()}</div>
+                <div>${Default.render()}</div>
             `)
     );
     it('loads default grid accessibly', async () => {
         const test = await fixture<HTMLDivElement>(html`
-            <div>${Default()}</div>
+            <div>${Default.render()}</div>
         `);
         const el = test.querySelector('sp-grid') as Grid;
 
@@ -43,7 +43,7 @@ describe('Grid', () => {
     });
     it('accepts focus', async () => {
         const test = await fixture<HTMLDivElement>(html`
-            <div>${Default()}</div>
+            <div>${Default.render()}</div>
         `);
         const el = test.querySelector('sp-grid') as Grid;
 
@@ -70,7 +70,9 @@ describe('Grid', () => {
     });
     it('does not focus when clicking grid', async () => {
         const test = await fixture<HTMLDivElement>(html`
-            <sp-theme color="light" scale="medium">${Default()}</sp-theme>
+            <sp-theme color="light" scale="medium">
+                ${Default.render()}
+            </sp-theme>
         `);
         const el = test.querySelector('sp-grid') as Grid;
 
@@ -107,7 +109,7 @@ describe('Grid', () => {
     });
     it('allows to tab in and out', async () => {
         const test = await fixture<HTMLDivElement>(html`
-            <div>${Default()}</div>
+            <div>${Default.render()}</div>
         `);
         const el = test.querySelector('sp-grid') as Grid;
         const firstInput = test.querySelector('#first-input') as HTMLElement;
@@ -160,7 +162,7 @@ describe('Grid', () => {
     });
     it('manages roving tabindex', async () => {
         const test = await fixture<HTMLDivElement>(html`
-            <div>${Default()}</div>
+            <div>${Default.render()}</div>
         `);
         const el = test.querySelector('sp-grid') as Grid;
 
@@ -222,7 +224,7 @@ describe('Grid', () => {
     });
     it('manages selection', async () => {
         const test = await fixture<HTMLDivElement>(html`
-            <div>${Default()}</div>
+            <div>${Default.render()}</div>
         `);
         const el = test.querySelector('sp-grid') as Grid;
 
@@ -299,7 +301,7 @@ describe('Grid', () => {
     });
     it('does not claim lit-virtualizer on the global registry', async () => {
         const test = await fixture<HTMLDivElement>(html`
-            <div>${Default()}</div>
+            <div>${Default.render()}</div>
         `);
         const el = test.querySelector('sp-grid') as Grid;
 

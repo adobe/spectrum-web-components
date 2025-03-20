@@ -20,7 +20,7 @@ import { Default } from '../stories/accordion.stories.js';
 
 describe('Accordion - a11y tree', () => {
     it('renders with items accessibly', async () => {
-        const el = await fixture<Accordion>(Default());
+        const el = await fixture<Accordion>(Default.render());
 
         await elementUpdated(el);
 

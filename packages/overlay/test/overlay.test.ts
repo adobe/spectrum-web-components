@@ -34,9 +34,9 @@ import {
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import {
-    clickAndHoverTarget,
-    definedOverlayElement,
-    virtualElement,
+    ClickAndHoverTarget,
+    DefinedOverlayElement,
+    VirtualElement,
 } from '../stories/overlay.stories';
 import { PopoverContent } from '../stories/overlay-story-components.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -626,8 +626,8 @@ describe('Overlay - type="modal"', () => {
             render(
                 html`
                     <sp-theme color="light" scale="large">
-                        ${virtualElement({
-                            ...virtualElement.args,
+                        ${VirtualElement.render({
+                            ...VirtualElement.args,
                             offset: 6,
                         })}
                     </sp-theme>
@@ -727,8 +727,8 @@ describe('Overlay - type="modal"', () => {
         });
 
         await fixture<HTMLDivElement>(html`
-            ${virtualElement({
-                ...virtualElement.args,
+            ${VirtualElement.render({
+                ...VirtualElement.args,
                 offset: 6,
             })}
         `);
@@ -766,7 +766,9 @@ describe('Overlay - type="modal"', () => {
     });
 
     it('opens children in the modal stack through shadow roots', async () => {
-        const el = await fixture<OverlayTrigger>(definedOverlayElement());
+        const el = await fixture<OverlayTrigger>(
+            DefinedOverlayElement.render()
+        );
         const trigger = el.querySelector(
             '[slot="trigger"]'
         ) as HTMLButtonElement;
@@ -793,7 +795,7 @@ describe('Overlay - type="modal"', () => {
 
     it('should not open hover overlay right after closing the click overlay using the mouse', async () => {
         const overlayTrigger = await fixture<OverlayTrigger>(
-            clickAndHoverTarget()
+            ClickAndHoverTarget.render()
         );
 
         await elementUpdated(overlayTrigger);
@@ -827,7 +829,7 @@ describe('Overlay - type="modal"', () => {
 
     it('should not open hover overlay right after closing the click overlay using the keyboard', async () => {
         const overlayTrigger = await fixture<OverlayTrigger>(
-            clickAndHoverTarget()
+            ClickAndHoverTarget.render()
         );
 
         const trigger = overlayTrigger.querySelector(
@@ -976,7 +978,7 @@ describe('maintains focus consistency in webkit', () => {
         }
 
         const overlayTrigger = await fixture<OverlayTrigger>(
-            clickAndHoverTarget()
+            ClickAndHoverTarget.render()
         );
         await elementUpdated(overlayTrigger);
         expect(overlayTrigger.open).to.be.undefined;

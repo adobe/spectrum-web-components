@@ -158,7 +158,7 @@ describe('ActionGroup', () => {
 
     it('loads action-group with action-menu accessibly', async () => {
         const el = await fixture<ActionGroup>(
-            HasActionMenuAsChild({ label: 'Action Group' })
+            HasActionMenuAsChild.render({ label: 'Action Group' })
         );
 
         await elementUpdated(el);
@@ -173,7 +173,7 @@ describe('ActionGroup', () => {
 
     it('action-group with action-menu manages tabIndex correctly while using keyboard', async () => {
         const el = await fixture<ActionGroup>(
-            HasActionMenuAsChild({ label: 'Action Group' })
+            HasActionMenuAsChild.render({ label: 'Action Group' })
         );
 
         await elementUpdated(el);
@@ -264,7 +264,7 @@ describe('ActionGroup', () => {
 
     it('action-group with action-menu manages tabIndex correctly while using mouse', async () => {
         const el = await fixture<ActionGroup>(
-            HasActionMenuAsChild({ label: 'Action Group' })
+            HasActionMenuAsChild.render({ label: 'Action Group' })
         );
 
         await elementUpdated(el);
