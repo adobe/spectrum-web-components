@@ -71,6 +71,7 @@
         "spectrum-vars": "wireit",
         "start": "yarn storybook",
         "storybook": "wireit",
+        "storybook:playwright": "wireit",
         "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
         "storybook:quick": "run-p build:watch storybook:run",
         "storybook:run": "web-dev-server --config wds-storybook.config.js",
@@ -81,6 +82,11 @@
         "test:create": "wireit",
         "test:errors": "yarn test | grep -A 32 ❌",
         "test:focus": "yarn build && yarn test:ci --group",
+        "test:playwright": "playwright test",
+        "test:playwright:ui": "playwright test --ui",
+        "test:playwright:codegen": "playwright codegen",
+        "test:playwright:update-snapshots": "playwright test --update-snapshots",
+        "test:playwright:clean-snapshots": "rimraf **/test/playwright/__snapshots__/*",
         "test:start": "web-test-runner",
         "test:visual": "yarn test:visual:ci",
         "test:visual:ci": "yarn test:start --group",
@@ -101,6 +107,7 @@
         "common-tags": "^1.8.0"
     },
     "devDependencies": {
+        "@axe-core/playwright": "^4.10.1",
         "@changesets/changelog-github": "^0.5.0",
         "@changesets/cli": "^2.27.5",
         "@commitlint/cli": "^19.8.0",
@@ -111,7 +118,7 @@
         "@netlify/build": "^29.17.3",
         "@open-wc/dev-server-hmr": "^0.2.0",
         "@open-wc/testing": "^4.0.0",
-        "@playwright/test": "^1.44.0",
+        "@playwright/test": "^1.51.1",
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-json": "^6.0.1",
         "@rollup/plugin-node-resolve": "^15.2.3",
@@ -411,6 +418,14 @@
         },
         "storybook": {
             "command": "storybook dev -p 8080 -c storybook",
+            "service": true,
+            "dependencies": [
+                "build:watch",
+                "prestorybook"
+            ]
+        },
+        "storybook:playwright": {
+            "command": "storybook dev -p 8000 -c storybook",
             "service": true,
             "dependencies": [
                 "build:watch",

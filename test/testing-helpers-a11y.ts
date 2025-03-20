@@ -19,21 +19,15 @@ export type DescribedNode = {
     description: string;
 };
 
-export const findDescribedNode = async (
+export const hasAccessibleDescription = async (
     name: string,
     description: string,
     debug?: boolean
 ): Promise<void> => {
     await nextFrame();
-
     const snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
         children: DescribedNode[];
     };
-
-    if (debug) {
-        // eslint-disable-next-line no-console
-        console.log(JSON.stringify(snapshot, undefined, '  '));
-    }
 
     // WebKit doesn't currently associate the `aria-describedby` element to the attribute
     // host in the accessibility tree. Give it an escape hatch for now.
@@ -44,7 +38,16 @@ export const findDescribedNode = async (
             (node.description === description || isWebKit())
     );
 
-    expect(node).to.not.be.null;
+    if (debug && !node) {
+        // eslint-disable-next-line no-console
+        console.log(
+            `unable to find node named "${name}" and described as "${description}" in current snapshot:`,
+            snapshot
+        );
+    }
+
+    expect(!!node, `has node named "${name}" and described as "${description}"`)
+        .to.be.true;
 
     if (isWebKit()) {
         // Retest WebKit without the escape hatch, expecting it to fail.
@@ -55,4 +58,39 @@ export const findDescribedNode = async (
         );
         expect(iOSNode).to.be.null;
     }
+};
+
+export type NamedNode = {
+    name: string;
+};
+
+export type RoleNode = {
+    description?: string;
+    disabled?: boolean;
+    name?: string;
+    role: string;
+};
+
+export const findNodeByRole = async (
+    role: string,
+    name?: string,
+    debug?: boolean
+): Promise<RoleNode> => {
+    const snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+        children: NamedNode[];
+    };
+    const node = findAccessibilityNode(snapshot, (node) => {
+        const roleNode = node as RoleNode;
+        return roleNode.role === role && (name ? roleNode.name === name : true);
+    });
+
+    if (debug && !node) {
+        // eslint-disable-next-line no-console
+        console.log(
+            `unable to find nodes with "${role}" role ${name ? `and named "${name}"` : ''} in current snapshot:`,
+            snapshot,
+            document.body.innerHTML
+        );
+    }
+    return (node ? node : undefined) as RoleNode;
 };

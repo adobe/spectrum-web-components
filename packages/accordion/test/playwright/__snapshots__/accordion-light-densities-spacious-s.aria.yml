@@ -1,0 +1,6 @@
+- heading "Heading 1" [level=3]:
+  - button "Heading 1"
+- heading "Heading 2" [level=3]:
+  - button "Heading 2"
+- heading "Heading 3" [level=3]:
+  - button "Heading 3"

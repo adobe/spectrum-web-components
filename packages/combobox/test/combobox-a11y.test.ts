@@ -21,7 +21,7 @@ import {
 import '@spectrum-web-components/combobox/sp-combobox.js';
 import { Combobox } from '@spectrum-web-components/combobox';
 import { fixture } from '../../../test/testing-helpers.js';
-import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
+import { hasAccessibleDescription } from '../../../test/testing-helpers-a11y.js';
 import {
     a11ySnapshot,
     findAccessibilityNode,
@@ -85,7 +85,9 @@ describe('Combobox accessibility', () => {
         const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                node.name === 'Pick something' && !node.value && node.role === 'combobox'
+                node.name === 'Pick something' &&
+                !node.value &&
+                node.role === 'combobox'
         );
         // by default, is there a combobox that has `name` as the label?
         expect(a11yNode, '`name` is the label text').to.not.be.null;
@@ -108,11 +110,7 @@ describe('Combobox accessibility', () => {
 
         expect(
             node,
-            `node not available: ${JSON.stringify(
-                snapshot,
-                null,
-                '  '
-            )}`
+            `node not available: ${JSON.stringify(snapshot, null, '  ')}`
         ).to.not.be.null;
     });
     it('manages its "name" value in the accessibility tree', async () => {
@@ -131,7 +129,9 @@ describe('Combobox accessibility', () => {
         const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                node.name === 'Combobox' && !node.value && node.role === 'combobox'
+                node.name === 'Combobox' &&
+                !node.value &&
+                node.role === 'combobox'
         );
         // by default, is there a combobox that has `name` as the label?
         expect(a11yNode, '`name` is the label text').to.not.be.null;
@@ -154,11 +154,7 @@ describe('Combobox accessibility', () => {
 
         expect(
             node,
-            `node not available: ${JSON.stringify(
-                snapshot,
-                null,
-                '  '
-            )}`
+            `node not available: ${JSON.stringify(snapshot, null, '  ')}`
         ).to.not.be.null;
     });
     it('manages its "description" value with slotted <sp-tooltip>', async () => {
@@ -169,7 +165,7 @@ describe('Combobox accessibility', () => {
         const tooltipText = 'This combobox has a tooltip.';
 
         await elementUpdated(el);
-        await findDescribedNode(el.label, tooltipText);
+        await hasAccessibleDescription(el.label, tooltipText);
     });
     it('renders open', async () => {
         const el = await comboboxFixture();
