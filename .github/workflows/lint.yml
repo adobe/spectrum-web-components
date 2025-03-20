@@ -1,0 +1,68 @@
+name: Lint
+#
+# This workflow lints the UI library and reports back any suggested fixes
+#
+
+on:
+    workflow_dispatch:
+    workflow_call:
+
+permissions:
+    contents: read
+    pull-requests: write
+
+defaults:
+    run:
+        shell: bash
+
+jobs:
+    # --- Lint pre-compiled assets for consistency --- #
+    lint:
+        name: Lint
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        outputs:
+            eslint_diff_files: ${{ steps.changed-files.outputs.eslint_diff_files }}
+            stylelint_diff_files: ${{ steps.changed-files.outputs.stylelint_diff_files }}
+        steps:
+            # install but don't build - we're linting pre-compiled assets
+            - name: Check out code
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 2
+
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+
+            - name: Check for changed files
+              id: changed-files
+              run: |
+                  echo "eslint=$(git diff --name-only --diff-filter=d -- "projects/documentation/**/*.ts" "packages/**/*.ts" "tools/**/*.ts" | xargs)" >> $GITHUB_OUTPUT
+                  echo "stylelint=$(git diff --name-only --diff-filter=d -- "packages/**/*.css" "tools/**/*.css" | xargs)" >> $GITHUB_OUTPUT
+
+            - name: echo eslint changed files
+              run: echo ${{ steps.changed-files.outputs.eslint }}
+
+            - name: echo stylelint changed files
+              run: echo ${{ steps.changed-files.outputs.stylelint }}
+
+            - name: Lint component styles
+              uses: reviewdog/action-stylelint@v1.30.0
+              if: ${{ steps.changed-files.outputs.stylelint != '' }}
+              with:
+                  fail_level: error
+                  filter_mode: diff_context
+                  level: error
+                  reporter: github-pr-review
+                  stylelint_input: '${{ steps.changed-files.outputs.stylelint }}'
+                  stylelint_config: '${{ github.workspace }}/.stylelintrc.json'
+
+            - name: Run eslint on packages and stories
+              uses: reviewdog/action-eslint@v1.33.0
+              if: ${{ steps.changed-files.outputs.eslint != '' }}
+              with:
+                  fail_level: error
+                  level: error
+                  reporter: github-pr-review
+                  filter_mode: diff_context
+                  eslint_flags: '${{ steps.changed-files.outputs.eslint }}'

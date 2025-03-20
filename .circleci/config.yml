@@ -209,19 +209,6 @@ jobs:
             - store_test_results:
                   path: /root/project/results/
 
-    lint:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Lint
-                  command: yarn lint
-            - run: yarn analyze
-            - run:
-                  name: Are there changes?
-                  command: git diff-files --exit-code
-
     preview-docs:
         executor: node
         steps:
@@ -383,7 +370,6 @@ workflows:
             - test-chromium-memory
             - test-firefox
             - test-webkit
-            - lint
             - hcm-visual:
                   filters:
                       branches:

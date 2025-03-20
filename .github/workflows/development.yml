@@ -1,0 +1,72 @@
+name: PR verification
+# -------------------------------------------------------------
+# This workflow will build and verify pull requests. It will:
+# - Build the branch and fail if the build fails
+# - Run code coverage tests on the PR branch
+# - Lint the PR branch
+# -------------------------------------------------------------
+
+on:
+    merge_group:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+        types:
+            - opened
+            - synchronize
+            - reopened
+            - labeled
+            - unlabeled
+            - auto_merge_enabled
+
+permissions:
+    contents: read
+    pull-requests: write
+
+concurrency:
+    group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+    cancel-in-progress: true
+
+defaults:
+    run:
+        shell: bash
+
+jobs:
+    # -------------------------------------------------------------
+    # Validate build for various environments
+    # -------------------------------------------------------------
+    verify_builds:
+        name: Verify build
+        # Check that the PR is not in draft mode (or if it is, that it has the run_ci label to force a build)
+        if: ${{ github.event.pull_request.draft != 'true' || contains(github.event.pull_request.labels.*.name, 'run_ci') }}
+        strategy:
+            fail-fast: false
+            matrix:
+                system:
+                    - macos-latest
+                    - ubuntu-latest
+                    # - windows-latest
+                node-version:
+                    - 20
+        uses: ./.github/workflows/build.yml
+        with:
+            system: ${{ matrix.system }}
+            node-version: ${{ matrix.node-version }}
+        secrets: inherit
+
+    coverage:
+        name: Code coverage
+        # Check that the PR is not in draft mode (or if it is, that it has the run_ci label to force a build)
+        if: ${{ github.event.pull_request.draft != 'true' || contains(github.event.pull_request.labels.*.name, 'run_ci') }}
+        uses: ./.github/workflows/coveralls.yml
+        secrets: inherit
+
+    # -------------------------------------------------------------
+    # Lint pre-compiled assets for consistency
+    # -------------------------------------------------------------
+    lint:
+        name: Lint
+        if: ${{ contains(github.event.pull_request.labels.*.name, 'skip_lint') == false }}
+        uses: ./.github/workflows/lint.yml
+        secrets: inherit
