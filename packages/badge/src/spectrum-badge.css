@@ -24,14 +24,8 @@ governing permissions and limitations under the License.
     cursor: default;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    border-radius: var(
-        --mod-badge-corner-radius,
-        var(--spectrum-badge-corner-radius)
-    );
-    color: var(
-        --mod-badge-label-icon-color,
-        var(--spectrum-badge-label-icon-color)
-    );
+    border-radius: var(--mod-badge-corner-radius, var(--spectrum-badge-corner-radius));
+    color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
     border: 1px solid #0000;
     display: inline-flex;
     position: relative;
@@ -39,143 +33,83 @@ governing permissions and limitations under the License.
 
 :host,
 :host([variant='neutral']) {
-    background: var(
-        --mod-badge-background-color-default,
-        var(--spectrum-badge-background-color-default)
-    );
+    background: var(--mod-badge-background-color-default, var(--spectrum-badge-background-color-default));
 }
 
 :host([variant='accent']) {
-    background: var(
-        --mod-badge-background-color-accent,
-        var(--spectrum-badge-background-color-accent)
-    );
+    background: var(--mod-badge-background-color-accent, var(--spectrum-badge-background-color-accent));
 }
 
 :host([variant='informative']) {
-    background: var(
-        --mod-badge-background-color-informative,
-        var(--spectrum-badge-background-color-informative)
-    );
+    background: var(--mod-badge-background-color-informative, var(--spectrum-badge-background-color-informative));
 }
 
 :host([variant='negative']) {
-    background: var(
-        --mod-badge-background-color-negative,
-        var(--spectrum-badge-background-color-negative)
-    );
+    background: var(--mod-badge-background-color-negative, var(--spectrum-badge-background-color-negative));
 }
 
 :host([variant='positive']) {
-    background: var(
-        --mod-badge-background-color-positive,
-        var(--spectrum-badge-background-color-positive)
-    );
+    background: var(--mod-badge-background-color-positive, var(--spectrum-badge-background-color-positive));
 }
 
 :host([variant='notice']) {
-    background: var(
-        --mod-badge-background-color-notice,
-        var(--spectrum-badge-background-color-notice)
-    );
+    background: var(--mod-badge-background-color-notice, var(--spectrum-badge-background-color-notice));
 }
 
 :host([variant='gray']) {
-    background: var(
-        --mod-badge-background-color-gray,
-        var(--spectrum-badge-background-color-gray)
-    );
+    background: var(--mod-badge-background-color-gray, var(--spectrum-badge-background-color-gray));
 }
 
 :host([variant='red']) {
-    background: var(
-        --mod-badge-background-color-red,
-        var(--spectrum-badge-background-color-red)
-    );
+    background: var(--mod-badge-background-color-red, var(--spectrum-badge-background-color-red));
 }
 
 :host([variant='orange']) {
-    background: var(
-        --mod-badge-background-color-orange,
-        var(--spectrum-badge-background-color-orange)
-    );
+    background: var(--mod-badge-background-color-orange, var(--spectrum-badge-background-color-orange));
 }
 
 :host([variant='yellow']) {
-    background: var(
-        --mod-badge-background-color-yellow,
-        var(--spectrum-badge-background-color-yellow)
-    );
+    background: var(--mod-badge-background-color-yellow, var(--spectrum-badge-background-color-yellow));
 }
 
 :host([variant='chartreuse']) {
-    background: var(
-        --mod-badge-background-color-chartreuse,
-        var(--spectrum-badge-background-color-chartreuse)
-    );
+    background: var(--mod-badge-background-color-chartreuse, var(--spectrum-badge-background-color-chartreuse));
 }
 
 :host([variant='celery']) {
-    background: var(
-        --mod-badge-background-color-celery,
-        var(--spectrum-badge-background-color-celery)
-    );
+    background: var(--mod-badge-background-color-celery, var(--spectrum-badge-background-color-celery));
 }
 
 :host([variant='green']) {
-    background: var(
-        --mod-badge-background-color-green,
-        var(--spectrum-badge-background-color-green)
-    );
+    background: var(--mod-badge-background-color-green, var(--spectrum-badge-background-color-green));
 }
 
 :host([variant='seafoam']) {
-    background: var(
-        --mod-badge-background-color-seafoam,
-        var(--spectrum-badge-background-color-seafoam)
-    );
+    background: var(--mod-badge-background-color-seafoam, var(--spectrum-badge-background-color-seafoam));
 }
 
 :host([variant='cyan']) {
-    background: var(
-        --mod-badge-background-color-cyan,
-        var(--spectrum-badge-background-color-cyan)
-    );
+    background: var(--mod-badge-background-color-cyan, var(--spectrum-badge-background-color-cyan));
 }
 
 :host([variant='blue']) {
-    background: var(
-        --mod-badge-background-color-blue,
-        var(--spectrum-badge-background-color-blue)
-    );
+    background: var(--mod-badge-background-color-blue, var(--spectrum-badge-background-color-blue));
 }
 
 :host([variant='indigo']) {
-    background: var(
-        --mod-badge-background-color-indigo,
-        var(--spectrum-badge-background-color-indigo)
-    );
+    background: var(--mod-badge-background-color-indigo, var(--spectrum-badge-background-color-indigo));
 }
 
 :host([variant='purple']) {
-    background: var(
-        --mod-badge-background-color-purple,
-        var(--spectrum-badge-background-color-purple)
-    );
+    background: var(--mod-badge-background-color-purple, var(--spectrum-badge-background-color-purple));
 }
 
 :host([variant='fuchsia']) {
-    background: var(
-        --mod-badge-background-color-fuchsia,
-        var(--spectrum-badge-background-color-fuchsia)
-    );
+    background: var(--mod-badge-background-color-fuchsia, var(--spectrum-badge-background-color-fuchsia));
 }
 
 :host([variant='magenta']) {
-    background: var(
-        --mod-badge-background-color-magenta,
-        var(--spectrum-badge-background-color-magenta)
-    );
+    background: var(--mod-badge-background-color-magenta, var(--spectrum-badge-background-color-magenta));
 }
 
 :host([fixed='inline-start']) {
@@ -200,39 +134,18 @@ governing permissions and limitations under the License.
 
 .label {
     font-size: var(--mod-badge-font-size, var(--spectrum-badge-font-size));
-    line-height: var(
-        --mod-badge-line-height,
-        var(--spectrum-badge-line-height)
-    );
-    color: var(
-        --mod-badge-label-icon-color,
-        var(--spectrum-badge-label-icon-color)
-    );
-    padding-block-start: var(
-        --mod-badge-label-spacing-vertical-top,
-        var(--spectrum-badge-label-spacing-vertical-top)
-    );
-    padding-block-end: var(
-        --mod-badge-label-spacing-vertical-bottom,
-        var(--spectrum-badge-label-spacing-vertical-bottom)
-    );
-    padding-inline-start: var(
-        --mod-badge-label-spacing-horizontal,
-        var(--spectrum-badge-label-spacing-horizontal)
-    );
-    padding-inline-end: var(
-        --mod-badge-label-spacing-horizontal,
-        var(--spectrum-badge-label-spacing-horizontal)
-    );
+    line-height: var(--mod-badge-line-height, var(--spectrum-badge-line-height));
+    color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
+    padding-block-start: var(--mod-badge-label-spacing-vertical-top, var(--spectrum-badge-label-spacing-vertical-top));
+    padding-block-end: var(--mod-badge-label-spacing-vertical-bottom, var(--spectrum-badge-label-spacing-vertical-bottom));
+    padding-inline-start: var(--mod-badge-label-spacing-horizontal, var(--spectrum-badge-label-spacing-horizontal));
+    padding-inline-end: var(--mod-badge-label-spacing-horizontal, var(--spectrum-badge-label-spacing-horizontal));
 }
 
 .label:lang(ja),
 .label:lang(ko),
 .label:lang(zh) {
-    line-height: var(
-        --mod-badge-line-height-cjk,
-        var(--spectrum-badge-line-height-cjk)
-    );
+    line-height: var(--mod-badge-line-height-cjk, var(--spectrum-badge-line-height-cjk));
 }
 
 [name='icon'] + .label {
@@ -240,48 +153,17 @@ governing permissions and limitations under the License.
 }
 
 ::slotted([slot='icon']) {
-    block-size: var(
-        --mod-badge-workflow-icon-size,
-        var(--spectrum-badge-workflow-icon-size)
-    );
-    inline-size: var(
-        --mod-badge-workflow-icon-size,
-        var(--spectrum-badge-workflow-icon-size)
-    );
-    flex: 0 0
-        var(
-            --mod-badge-workflow-icon-size,
-            var(--spectrum-badge-workflow-icon-size)
-        );
-    color: var(
-        --mod-badge-label-icon-color,
-        var(--spectrum-badge-label-icon-color)
-    );
-    padding-block-start: var(
-        --mod-badge-icon-spacing-vertical-top,
-        var(--spectrum-badge-icon-spacing-vertical-top)
-    );
-    padding-block-end: var(
-        --mod-badge-icon-spacing-vertical-top,
-        var(--spectrum-badge-icon-spacing-vertical-top)
-    );
-    padding-inline-start: var(
-        --mod-badge-icon-spacing-horizontal,
-        var(--spectrum-badge-icon-spacing-horizontal)
-    );
-    padding-inline-end: var(
-        --mod-badge-icon-text-spacing,
-        var(--spectrum-badge-icon-text-spacing)
-    );
+    block-size: var(--mod-badge-workflow-icon-size, var(--spectrum-badge-workflow-icon-size));
+    inline-size: var(--mod-badge-workflow-icon-size, var(--spectrum-badge-workflow-icon-size));
+    flex: 0 0 var(--mod-badge-workflow-icon-size, var(--spectrum-badge-workflow-icon-size));
+    color: var(--mod-badge-label-icon-color, var(--spectrum-badge-label-icon-color));
+    padding-block-start: var(--mod-badge-icon-spacing-vertical-top, var(--spectrum-badge-icon-spacing-vertical-top));
+    padding-block-end: var(--mod-badge-icon-spacing-vertical-top, var(--spectrum-badge-icon-spacing-vertical-top));
+    padding-inline-start: var(--mod-badge-icon-spacing-horizontal, var(--spectrum-badge-icon-spacing-horizontal));
+    padding-inline-end: var(--mod-badge-icon-text-spacing, var(--spectrum-badge-icon-text-spacing));
 }
 
 [icon-only]::slotted(*) {
-    padding-inline-start: var(
-        --mod-badge-icon-only-spacing-horizontal,
-        var(--spectrum-badge-icon-only-spacing-horizontal)
-    );
-    padding-inline-end: var(
-        --mod-badge-icon-only-spacing-horizontal,
-        var(--spectrum-badge-icon-only-spacing-horizontal)
-    );
+    padding-inline-start: var(--mod-badge-icon-only-spacing-horizontal, var(--spectrum-badge-icon-only-spacing-horizontal));
+    padding-inline-end: var(--mod-badge-icon-only-spacing-horizontal, var(--spectrum-badge-icon-only-spacing-horizontal));
 }

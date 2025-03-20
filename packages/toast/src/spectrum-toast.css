@@ -14,210 +14,92 @@ governing permissions and limitations under the License.
 @media (forced-colors: active) {
     :host {
         --highcontrast-toast-border-color: ButtonText;
-        border: var(
-                --mod-toast-border-width,
-                var(--spectrum-toast-border-width)
-            )
-            solid var(--highcontrast-toast-border-color, transparent);
+        border: var(--mod-toast-border-width, var(--spectrum-toast-border-width)) solid var(--highcontrast-toast-border-color, transparent);
     }
 }
 
 :host {
     box-sizing: border-box;
-    min-block-size: var(
-        --mod-toast-block-size,
-        var(--spectrum-toast-block-size)
-    );
-    max-inline-size: var(
-        --mod-toast-max-inline-size,
-        var(--spectrum-toast-max-inline-size)
-    );
-    border-radius: var(
-        --mod-toast-corner-radius,
-        var(--spectrum-toast-corner-radius)
-    );
+    min-block-size: var(--mod-toast-block-size, var(--spectrum-toast-block-size));
+    max-inline-size: var(--mod-toast-max-inline-size, var(--spectrum-toast-max-inline-size));
+    border-radius: var(--mod-toast-corner-radius, var(--spectrum-toast-corner-radius));
     font-size: var(--mod-toast-font-size, var(--spectrum-toast-font-size));
-    font-weight: var(
-        --mod-toast-font-weight,
-        var(--spectrum-toast-font-weight)
-    );
+    font-weight: var(--mod-toast-font-weight, var(--spectrum-toast-font-weight));
     -webkit-font-smoothing: antialiased;
-    background-color: var(
-        --highcontrast-toast-background-color-default,
-        var(
-            --mod-toast-background-color-default,
-            var(--spectrum-toast-background-color-default)
-        )
-    );
-    color: var(
-        --highcontrast-toast-background-color-default,
-        var(
-            --mod-toast-background-color-default,
-            var(--spectrum-toast-background-color-default)
-        )
-    );
+    background-color: var(--highcontrast-toast-background-color-default, var(--mod-toast-background-color-default, var(--spectrum-toast-background-color-default)));
+    color: var(--highcontrast-toast-background-color-default, var(--mod-toast-background-color-default, var(--spectrum-toast-background-color-default)));
     overflow-wrap: anywhere;
     flex-direction: row;
     align-items: stretch;
-    padding-inline-start: var(
-        --mod-toast-spacing-start-edge-to-text-and-icon,
-        var(--spectrum-toast-spacing-start-edge-to-text-and-icon)
-    );
+    padding-inline-start: var(--mod-toast-spacing-start-edge-to-text-and-icon, var(--spectrum-toast-spacing-start-edge-to-text-and-icon));
     display: inline-flex;
 }
 
 :host([variant='negative']) {
-    background-color: var(
-        --highcontrast-toast-negative-background-color-default,
-        var(
-            --mod-toast-negative-background-color-default,
-            var(--spectrum-toast-negative-background-color-default)
-        )
-    );
+    background-color: var(--highcontrast-toast-negative-background-color-default, var(--mod-toast-negative-background-color-default, var(--spectrum-toast-negative-background-color-default)));
 }
 
 :host([variant='negative']),
 :host([variant='negative']) .closeButton:focus-visible:not(:active) {
-    color: var(
-        --highcontrast-toast-negative-background-color-default,
-        var(
-            --mod-toast-negative-background-color-default,
-            var(--spectrum-toast-negative-background-color-default)
-        )
-    );
+    color: var(--highcontrast-toast-negative-background-color-default, var(--mod-toast-negative-background-color-default, var(--spectrum-toast-negative-background-color-default)));
 }
 
 :host([variant='info']) {
-    background-color: var(
-        --highcontrast-toast-informative-background-color-default,
-        var(
-            --mod-toast-informative-background-color-default,
-            var(--spectrum-toast-informative-background-color-default)
-        )
-    );
+    background-color: var(--highcontrast-toast-informative-background-color-default, var(--mod-toast-informative-background-color-default, var(--spectrum-toast-informative-background-color-default)));
 }
 
 :host([variant='info']),
 :host([variant='info']) .closeButton:focus-visible:not(:active) {
-    color: var(
-        --highcontrast-toast-informative-background-color-default,
-        var(
-            --mod-toast-informative-background-color-default,
-            var(--spectrum-toast-informative-background-color-default)
-        )
-    );
+    color: var(--highcontrast-toast-informative-background-color-default, var(--mod-toast-informative-background-color-default, var(--spectrum-toast-informative-background-color-default)));
 }
 
 :host([variant='positive']) {
-    background-color: var(
-        --highcontrast-toast-positive-background-color-default,
-        var(
-            --mod-toast-positive-background-color-default,
-            var(--spectrum-toast-positive-background-color-default)
-        )
-    );
+    background-color: var(--highcontrast-toast-positive-background-color-default, var(--mod-toast-positive-background-color-default, var(--spectrum-toast-positive-background-color-default)));
 }
 
 :host([variant='positive']),
 :host([variant='positive']) .closeButton:focus-visible:not(:active) {
-    color: var(
-        --highcontrast-toast-positive-background-color-default,
-        var(
-            --mod-toast-positive-background-color-default,
-            var(--spectrum-toast-positive-background-color-default)
-        )
-    );
+    color: var(--highcontrast-toast-positive-background-color-default, var(--mod-toast-positive-background-color-default, var(--spectrum-toast-positive-background-color-default)));
 }
 
 .type {
     flex-grow: 0;
     flex-shrink: 0;
-    margin-block-start: var(
-        --mod-toast-spacing-top-edge-to-icon,
-        var(--spectrum-toast-spacing-top-edge-to-icon)
-    );
+    margin-block-start: var(--mod-toast-spacing-top-edge-to-icon, var(--spectrum-toast-spacing-top-edge-to-icon));
     margin-inline-start: 0;
-    margin-inline-end: var(
-        --mod-toast-spacing-icon-to-text,
-        var(--spectrum-toast-spacing-icon-to-text)
-    );
+    margin-inline-end: var(--mod-toast-spacing-icon-to-text, var(--spectrum-toast-spacing-icon-to-text));
 }
 
 .content,
 .type {
-    color: var(
-        --highcontrast-toast-text-and-icon-color,
-        var(
-            --mod-toast-text-and-icon-color,
-            var(--spectrum-toast-text-and-icon-color)
-        )
-    );
+    color: var(--highcontrast-toast-text-and-icon-color, var(--mod-toast-text-and-icon-color, var(--spectrum-toast-text-and-icon-color)));
 }
 
 .content {
     box-sizing: border-box;
-    line-height: var(
-        --mod-toast-line-height,
-        var(--spectrum-toast-line-height)
-    );
+    line-height: var(--mod-toast-line-height, var(--spectrum-toast-line-height));
     text-align: start;
     flex: auto;
-    padding-block-start: calc(
-        var(
-                --mod-toast-spacing-top-edge-to-text,
-                var(--spectrum-toast-spacing-top-edge-to-text)
-            ) -
-            var(
-                --mod-toast-spacing-block-start,
-                var(--spectrum-toast-spacing-block-start)
-            )
-    );
-    padding-block-end: calc(
-        var(
-                --mod-toast-spacing-bottom-edge-to-text,
-                var(--spectrum-toast-spacing-bottom-edge-to-text)
-            ) -
-            var(
-                --mod-toast-spacing-block-end,
-                var(--spectrum-toast-spacing-block-end)
-            )
-    );
+    padding-block-start: calc(var(--mod-toast-spacing-top-edge-to-text, var(--spectrum-toast-spacing-top-edge-to-text)) - var(--mod-toast-spacing-block-start, var(--spectrum-toast-spacing-block-start)));
+    padding-block-end: calc(var(--mod-toast-spacing-bottom-edge-to-text, var(--spectrum-toast-spacing-bottom-edge-to-text)) - var(--mod-toast-spacing-block-end, var(--spectrum-toast-spacing-block-end)));
     padding-inline-start: 0;
-    padding-inline-end: var(
-        --mod-toast-spacing-text-to-action-button-horizontal,
-        var(--spectrum-toast-spacing-text-to-action-button-horizontal)
-    );
+    padding-inline-end: var(--mod-toast-spacing-text-to-action-button-horizontal, var(--spectrum-toast-spacing-text-to-action-button-horizontal));
     display: inline-block;
 }
 
 .content:lang(ja),
 .content:lang(ko),
 .content:lang(zh) {
-    line-height: var(
-        --mod-toast-line-height-cjk,
-        var(--spectrum-toast-line-height-cjk)
-    );
+    line-height: var(--mod-toast-line-height-cjk, var(--spectrum-toast-line-height-cjk));
 }
 
 .buttons {
-    border-inline-start-color: var(
-        --mod-toast-divider-color,
-        var(--spectrum-toast-divider-color)
-    );
+    border-inline-start-color: var(--mod-toast-divider-color, var(--spectrum-toast-divider-color));
     flex: none;
     align-items: flex-start;
-    margin-block-start: var(
-        --mod-toast-spacing-top-edge-to-divider,
-        var(--spectrum-toast-spacing-top-edge-to-divider)
-    );
-    margin-block-end: var(
-        --mod-toast-spacing-bottom-edge-to-divider,
-        var(--spectrum-toast-spacing-bottom-edge-to-divider)
-    );
-    padding-inline-end: var(
-        --mod-toast-spacing-close-button,
-        var(--spectrum-toast-spacing-close-button)
-    );
+    margin-block-start: var(--mod-toast-spacing-top-edge-to-divider, var(--spectrum-toast-spacing-top-edge-to-divider));
+    margin-block-end: var(--mod-toast-spacing-bottom-edge-to-divider, var(--spectrum-toast-spacing-bottom-edge-to-divider));
+    padding-inline-end: var(--mod-toast-spacing-close-button, var(--spectrum-toast-spacing-close-button));
     display: flex;
 }
 
@@ -230,38 +112,23 @@ governing permissions and limitations under the License.
     flex: auto;
     align-self: center;
     align-items: center;
-    padding-block-start: var(
-        --mod-toast-spacing-block-start,
-        var(--spectrum-toast-spacing-block-start)
-    );
-    padding-block-end: var(
-        --mod-toast-spacing-block-end,
-        var(--spectrum-toast-spacing-block-end)
-    );
+    padding-block-start: var(--mod-toast-spacing-block-start, var(--spectrum-toast-spacing-block-start));
+    padding-block-end: var(--mod-toast-spacing-block-end, var(--spectrum-toast-spacing-block-end));
     display: flex;
 }
 
 .body ::slotted([slot='action']) {
     margin-inline-start: auto;
-    margin-inline-end: var(
-        --mod-toast-spacing-text-and-action-button-to-divider,
-        var(--spectrum-toast-spacing-text-and-action-button-to-divider)
-    );
+    margin-inline-end: var(--mod-toast-spacing-text-and-action-button-to-divider, var(--spectrum-toast-spacing-text-and-action-button-to-divider));
 }
 
 .body ::slotted([slot='action']:dir(rtl)),
 :host([dir='rtl']) .body ::slotted([slot='action']) {
-    margin-inline-end: var(
-        --mod-toast-spacing-text-and-action-button-to-divider,
-        var(--spectrum-toast-spacing-text-and-action-button-to-divider)
-    );
+    margin-inline-end: var(--mod-toast-spacing-text-and-action-button-to-divider, var(--spectrum-toast-spacing-text-and-action-button-to-divider));
 }
 
 .body + .buttons {
     border-inline-start-style: solid;
     border-inline-start-width: 1px;
-    padding-inline-start: var(
-        --mod-toast-spacing-close-button,
-        var(--spectrum-toast-spacing-close-button)
-    );
+    padding-inline-start: var(--mod-toast-spacing-close-button, var(--spectrum-toast-spacing-close-button));
 }

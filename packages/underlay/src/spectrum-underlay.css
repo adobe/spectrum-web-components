@@ -20,23 +20,9 @@ governing permissions and limitations under the License.
         opacity 0.13s ease-in-out,
         visibility 0s linear 0.13s;
     transition:
-        transform
-            var(
-                --mod-overlay-animation-duration,
-                var(--spectrum-animation-duration-100, 0.13s)
-            )
-            ease-in-out,
-        opacity
-            var(
-                --mod-overlay-animation-duration,
-                var(--spectrum-animation-duration-100, 0.13s)
-            )
-            ease-in-out,
-        visibility 0s linear
-            var(
-                --mod-overlay-animation-duration,
-                var(--spectrum-animation-duration-100, 0.13s)
-            );
+        transform var(--mod-overlay-animation-duration, var(--spectrum-animation-duration-100, 0.13s)) ease-in-out,
+        opacity var(--mod-overlay-animation-duration, var(--spectrum-animation-duration-100, 0.13s)) ease-in-out,
+        visibility 0s linear var(--mod-overlay-animation-duration, var(--spectrum-animation-duration-100, 0.13s));
 }
 
 :host([open]) {
@@ -44,45 +30,15 @@ governing permissions and limitations under the License.
     visibility: visible;
     opacity: 1;
     transition-delay: 0s;
-    transition-delay: var(
-        --mod-overlay-animation-duration-opened,
-        var(--spectrum-animation-duration-0, 0s)
-    );
+    transition-delay: var(--mod-overlay-animation-duration-opened, var(--spectrum-animation-duration-0, 0s));
 }
 
 :host {
-    background-color: var(
-        --mod-underlay-background-color,
-        var(--spectrum-underlay-background-color)
-    );
+    background-color: var(--mod-underlay-background-color, var(--spectrum-underlay-background-color));
     z-index: 1;
     transition:
-        opacity
-            var(
-                --mod-underlay-background-exit-animation-duration,
-                var(--spectrum-underlay-background-exit-animation-duration)
-            )
-            var(
-                --mod-underlay-background-exit-animation-ease,
-                var(--spectrum-underlay-background-exit-animation-ease)
-            )
-            var(
-                --mod-underlay-background-exit-animation-delay,
-                var(--spectrum-underlay-background-exit-animation-delay)
-            ),
-        visibility 0s linear
-            calc(
-                var(
-                        --mod-underlay-background-exit-animation-delay,
-                        var(--spectrum-underlay-background-exit-animation-delay)
-                    ) +
-                    var(
-                        --mod-underlay-background-exit-animation-duration,
-                        var(
-                            --spectrum-underlay-background-exit-animation-duration
-                        )
-                    )
-            );
+        opacity var(--mod-underlay-background-exit-animation-duration, var(--spectrum-underlay-background-exit-animation-duration)) var(--mod-underlay-background-exit-animation-ease, var(--spectrum-underlay-background-exit-animation-ease)) var(--mod-underlay-background-exit-animation-delay, var(--spectrum-underlay-background-exit-animation-delay)),
+        visibility 0s linear calc(var(--mod-underlay-background-exit-animation-delay, var(--spectrum-underlay-background-exit-animation-delay)) + var(--mod-underlay-background-exit-animation-duration, var(--spectrum-underlay-background-exit-animation-duration)));
     position: fixed;
     inset-block: 0;
     inset-inline: 0;
@@ -90,17 +46,5 @@ governing permissions and limitations under the License.
 }
 
 :host([open]) {
-    transition: opacity
-        var(
-            --mod-underlay-background-entry-animation-duration,
-            var(--spectrum-underlay-background-entry-animation-duration)
-        )
-        var(
-            --mod-underlay-background-entry-animation-ease,
-            var(--spectrum-underlay-background-entry-animation-ease)
-        )
-        var(
-            --mod-underlay-background-entry-animation-delay,
-            var(--spectrum-underlay-background-entry-animation-delay)
-        );
+    transition: opacity var(--mod-underlay-background-entry-animation-duration, var(--spectrum-underlay-background-entry-animation-duration)) var(--mod-underlay-background-entry-animation-ease, var(--spectrum-underlay-background-entry-animation-ease)) var(--mod-underlay-background-entry-animation-delay, var(--spectrum-underlay-background-entry-animation-delay));
 }

@@ -15,114 +15,35 @@ governing permissions and limitations under the License.
     --mod-modal-max-width: 100%;
     inline-size: 100%;
     max-inline-size: 100%;
-    max-block-size: calc(
-        100vh -
-            var(
-                --mod-tray-spacing-edge-to-tray-safe-zone,
-                var(--spectrum-tray-spacing-edge-to-tray-safe-zone)
-            )
-    );
+    max-block-size: calc(100vh - var(--mod-tray-spacing-edge-to-tray-safe-zone, var(--spectrum-tray-spacing-edge-to-tray-safe-zone)));
     box-sizing: border-box;
     border-radius: 0;
-    border-radius: var(--mod-tray-corner-radius-portrait, 0)
-        var(--mod-tray-corner-radius-portrait, 0) 0 0;
+    border-radius: var(--mod-tray-corner-radius-portrait, 0) var(--mod-tray-corner-radius-portrait, 0) 0 0;
     transition:
-        opacity
-            var(
-                --mod-tray-exit-animation-duration,
-                var(--spectrum-tray-exit-animation-duration)
-            )
-            cubic-bezier(0.5, 0, 1, 1)
-            var(
-                --mod-tray-exit-animation-delay,
-                var(--spectrum-tray-exit-animation-delay)
-            ),
-        visibility
-            var(
-                --mod-tray-exit-animation-duration,
-                var(--spectrum-tray-exit-animation-duration)
-            )
-            linear
-            calc(
-                var(
-                        --mod-tray-exit-animation-delay,
-                        var(--spectrum-tray-exit-animation-delay)
-                    ) +
-                    var(
-                        --mod-tray-exit-animation-duration,
-                        var(--spectrum-tray-exit-animation-duration)
-                    )
-            ),
-        transform
-            var(
-                --mod-tray-exit-animation-duration,
-                var(--spectrum-tray-exit-animation-duration)
-            )
-            cubic-bezier(0.5, 0, 1, 1)
-            var(
-                --mod-tray-exit-animation-delay,
-                var(--spectrum-tray-exit-animation-delay)
-            );
-    background-color: var(
-        --highcontrast-tray-background-color,
-        var(--mod-tray-background-color, var(--spectrum-tray-background-color))
-    );
+        opacity var(--mod-tray-exit-animation-duration, var(--spectrum-tray-exit-animation-duration)) cubic-bezier(0.5, 0, 1, 1) var(--mod-tray-exit-animation-delay, var(--spectrum-tray-exit-animation-delay)),
+        visibility var(--mod-tray-exit-animation-duration, var(--spectrum-tray-exit-animation-duration)) linear calc(var(--mod-tray-exit-animation-delay, var(--spectrum-tray-exit-animation-delay)) + var(--mod-tray-exit-animation-duration, var(--spectrum-tray-exit-animation-duration))),
+        transform var(--mod-tray-exit-animation-duration, var(--spectrum-tray-exit-animation-duration)) cubic-bezier(0.5, 0, 1, 1) var(--mod-tray-exit-animation-delay, var(--spectrum-tray-exit-animation-delay));
+    background-color: var(--highcontrast-tray-background-color, var(--mod-tray-background-color, var(--spectrum-tray-background-color)));
     outline: none;
-    margin-block-start: var(
-        --mod-tray-spacing-edge-to-tray-safe-zone,
-        var(--spectrum-tray-spacing-edge-to-tray-safe-zone)
-    );
-    padding-block-start: var(
-        --mod-tray-top-to-content-area,
-        var(--spectrum-tray-top-to-content-area)
-    );
-    padding-block-end: var(
-        --mod-tray-bottom-to-content-area,
-        var(--spectrum-tray-top-to-content-area)
-    );
+    margin-block-start: var(--mod-tray-spacing-edge-to-tray-safe-zone, var(--spectrum-tray-spacing-edge-to-tray-safe-zone));
+    padding-block-start: var(--mod-tray-top-to-content-area, var(--spectrum-tray-top-to-content-area));
+    padding-block-end: var(--mod-tray-bottom-to-content-area, var(--spectrum-tray-top-to-content-area));
     overflow: auto;
     transform: translateY(100%);
 }
 
 :host([open]) .tray {
     transition:
-        transform
-            var(
-                --mod-tray-entry-animation-duration,
-                var(--spectrum-tray-entry-animation-duration)
-            )
-            cubic-bezier(0, 0, 0.4, 1)
-            var(
-                --mod-tray-entry-animation-delay,
-                var(--spectrum-tray-entry-animation-delay)
-            ),
-        opacity
-            var(
-                --spectrum-tray-entry-animation-duration,
-                var(--mod-tray-entry-animation-duration)
-            )
-            cubic-bezier(0, 0, 0.4, 1)
-            var(
-                --mod-tray-entry-animation-delay,
-                var(--spectrum-tray-entry-animation-delay)
-            );
+        transform var(--mod-tray-entry-animation-duration, var(--spectrum-tray-entry-animation-duration)) cubic-bezier(0, 0, 0.4, 1) var(--mod-tray-entry-animation-delay, var(--spectrum-tray-entry-animation-delay)),
+        opacity var(--spectrum-tray-entry-animation-duration, var(--mod-tray-entry-animation-duration)) cubic-bezier(0, 0, 0.4, 1) var(--mod-tray-entry-animation-delay, var(--spectrum-tray-entry-animation-delay));
     transform: translateY(0);
 }
 
 @media screen and (orientation: landscape) {
     .tray {
-        max-inline-size: var(
-            --mod-tray-max-inline-size,
-            var(--spectrum-tray-max-inline-size)
-        );
-        border-start-start-radius: var(
-            --mod-tray-corner-radius,
-            var(--spectrum-tray-corner-radius)
-        );
-        border-start-end-radius: var(
-            --mod-tray-corner-radius,
-            var(--spectrum-tray-corner-radius)
-        );
+        max-inline-size: var(--mod-tray-max-inline-size, var(--spectrum-tray-max-inline-size));
+        border-start-start-radius: var(--mod-tray-corner-radius, var(--spectrum-tray-corner-radius));
+        border-start-end-radius: var(--mod-tray-corner-radius, var(--spectrum-tray-corner-radius));
     }
 }
 

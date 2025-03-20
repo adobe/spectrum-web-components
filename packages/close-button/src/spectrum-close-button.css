@@ -16,59 +16,18 @@ governing permissions and limitations under the License.
     -webkit-user-select: none;
     user-select: none;
     box-sizing: border-box;
-    font-family: var(
-        --mod-button-font-family,
-        var(
-            --mod-sans-font-family-stack,
-            var(--spectrum-sans-font-family-stack)
-        )
-    );
+    font-family: var(--mod-button-font-family, var(--mod-sans-font-family-stack, var(--spectrum-sans-font-family-stack)));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: var(
-        --mod-button-line-height,
-        var(--mod-line-height-100, var(--spectrum-line-height-100))
-    );
+    line-height: var(--mod-button-line-height, var(--mod-line-height-100, var(--spectrum-line-height-100)));
     text-transform: none;
     vertical-align: top;
     -webkit-appearance: button;
     transition:
-        background
-            var(
-                --mod-button-animation-duration,
-                var(
-                    --mod-animation-duration-100,
-                    var(--spectrum-animation-duration-100)
-                )
-            )
-            ease-out,
-        border-color
-            var(
-                --mod-button-animation-duration,
-                var(
-                    --mod-animation-duration-100,
-                    var(--spectrum-animation-duration-100)
-                )
-            )
-            ease-out,
-        color
-            var(
-                --mod-button-animation-duration,
-                var(
-                    --mod-animation-duration-100,
-                    var(--spectrum-animation-duration-100)
-                )
-            )
-            ease-out,
-        box-shadow
-            var(
-                --mod-button-animation-duration,
-                var(
-                    --mod-animation-duration-100,
-                    var(--spectrum-animation-duration-100)
-                )
-            )
-            ease-out;
+        background var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
+        border-color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
+        color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
+        box-shadow var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out;
     border-style: solid;
     margin: 0;
     -webkit-text-decoration: none;
@@ -103,23 +62,10 @@ governing permissions and limitations under the License.
 
     :host(:focus-visible):after {
         forced-color-adjust: none;
-        margin: var(
-            --mod-closebutton-focus-indicator-gap,
-            var(--spectrum-closebutton-focus-indicator-gap)
-        );
+        margin: var(--mod-closebutton-focus-indicator-gap, var(--spectrum-closebutton-focus-indicator-gap));
         transition:
-            opacity
-                var(
-                    --mod-closebutton-animation-duration,
-                    var(--spectrum-closebutton-animation-duration)
-                )
-                ease-out,
-            margin
-                var(
-                    --mod-closebutton-animation-duraction,
-                    var(--spectrum-closebutton-animation-duration)
-                )
-                ease-out;
+            opacity var(--mod-closebutton-animation-duration, var(--spectrum-closebutton-animation-duration)) ease-out,
+            margin var(--mod-closebutton-animation-duraction, var(--spectrum-closebutton-animation-duration)) ease-out;
     }
 
     :host([static-color='black']) {
@@ -139,16 +85,8 @@ governing permissions and limitations under the License.
     block-size: var(--mod-closebutton-height, var(--spectrum-closebutton-size));
     inline-size: var(--mod-closebutton-width, var(--spectrum-closebutton-size));
     color: inherit;
-    border-radius: var(
-        --mod-closebutton-border-radius,
-        var(--spectrum-closebutton-size)
-    );
-    transition: border-color
-        var(
-            --mod-closebutton-animation-duration,
-            var(--spectrum-closebutton-animation-duration)
-        )
-        ease-in-out;
+    border-radius: var(--mod-closebutton-border-radius, var(--spectrum-closebutton-size));
+    transition: border-color var(--mod-closebutton-animation-duration, var(--spectrum-closebutton-animation-duration)) ease-in-out;
     margin-inline: var(--mod-closebutton-margin-inline);
     justify-content: center;
     align-items: center;
@@ -165,25 +103,9 @@ governing permissions and limitations under the License.
 :host:after {
     pointer-events: none;
     content: '';
-    margin: calc(
-        var(
-                --mod-closebutton-focus-indicator-gap,
-                var(--spectrum-closebutton-focus-indicator-gap)
-            ) * -1
-    );
-    border-radius: calc(
-        var(--mod-closebutton-size, var(--spectrum-closebutton-size)) +
-            var(
-                --mod-closebutton-focus-indicator-gap,
-                var(--spectrum-closebutton-focus-indicator-gap)
-            )
-    );
-    transition: box-shadow
-        var(
-            --mod-closebutton-animation-duration,
-            var(--spectrum-closebutton-animation-duration)
-        )
-        ease-in-out;
+    margin: calc(var(--mod-closebutton-focus-indicator-gap, var(--spectrum-closebutton-focus-indicator-gap)) * -1);
+    border-radius: calc(var(--mod-closebutton-size, var(--spectrum-closebutton-size)) + var(--mod-closebutton-focus-indicator-gap, var(--spectrum-closebutton-focus-indicator-gap)));
+    transition: box-shadow var(--mod-closebutton-animation-duration, var(--spectrum-closebutton-animation-duration)) ease-in-out;
     position: absolute;
     inset-block: 0;
     inset-inline: 0;
@@ -195,186 +117,88 @@ governing permissions and limitations under the License.
 }
 
 :host(:focus-visible):after {
-    box-shadow: 0 0 0
-        var(
-            --mod-closebutton-focus-indicator-thickness,
-            var(--spectrum-closebutton-focus-indicator-thickness)
-        )
-        var(
-            --highcontrast-closebutton-focus-indicator-color,
-            var(
-                --mod-closebutton-focus-indicator-color,
-                var(--spectrum-closebutton-focus-indicator-color)
-            )
-        );
+    box-shadow: 0 0 0 var(--mod-closebutton-focus-indicator-thickness, var(--spectrum-closebutton-focus-indicator-thickness)) var(--highcontrast-closebutton-focus-indicator-color, var(--mod-closebutton-focus-indicator-color, var(--spectrum-closebutton-focus-indicator-color)));
 }
 
 :host(:not([disabled])) {
-    background-color: var(
-        --highcontrast-closebutton-background-color-default,
-        var(
-            --mod-closebutton-background-color-default,
-            var(--spectrum-closebutton-background-color-default)
-        )
-    );
+    background-color: var(--highcontrast-closebutton-background-color-default, var(--mod-closebutton-background-color-default, var(--spectrum-closebutton-background-color-default)));
 }
 
 :host(:not([disabled]):is(:active, [active])) {
-    background-color: var(
-        --mod-closebutton-background-color-down,
-        var(--spectrum-closebutton-background-color-down)
-    );
+    background-color: var(--mod-closebutton-background-color-down, var(--spectrum-closebutton-background-color-down));
 }
 
 :host(:not([disabled]):is(:active, [active])) .icon {
-    color: var(
-        --highcontrast-closebutton-icon-color-down,
-        var(
-            --mod-closebutton-icon-color-down,
-            var(--spectrum-closebutton-icon-color-down)
-        )
-    );
+    color: var(--highcontrast-closebutton-icon-color-down, var(--mod-closebutton-icon-color-down, var(--spectrum-closebutton-icon-color-down)));
 }
 
 :host([focused]:not([disabled])),
 :host(:not([disabled]):focus-visible) {
-    background-color: var(
-        --mod-closebutton-background-color-focus,
-        var(--spectrum-closebutton-background-color-focus)
-    );
+    background-color: var(--mod-closebutton-background-color-focus, var(--spectrum-closebutton-background-color-focus));
 }
 
 :host([focused]:not([disabled])) .icon,
 :host(:not([disabled]):focus-visible) .icon {
-    color: var(
-        --highcontrast-closebutton-icon-color-focus,
-        var(
-            --mod-closebutton-icon-color-focus,
-            var(--spectrum-closebutton-icon-color-focus)
-        )
-    );
+    color: var(--highcontrast-closebutton-icon-color-focus, var(--mod-closebutton-icon-color-focus, var(--spectrum-closebutton-icon-color-focus)));
 }
 
 :host(:not([disabled])) .icon {
-    color: var(
-        --mod-closebutton-icon-color-default,
-        var(--spectrum-closebutton-icon-color-default)
-    );
+    color: var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default));
 }
 
 :host([focused]:not([disabled])) .icon,
 :host(:not([disabled]):focus) .icon {
-    color: var(
-        --highcontrast-closebutton-icon-color-focus,
-        var(
-            --mod-closebutton-icon-color-focus,
-            var(--spectrum-closebutton-icon-color-focus)
-        )
-    );
+    color: var(--highcontrast-closebutton-icon-color-focus, var(--mod-closebutton-icon-color-focus, var(--spectrum-closebutton-icon-color-focus)));
 }
 
 :host([disabled]) {
-    background-color: var(
-        --mod-closebutton-background-color-default,
-        var(--spectrum-closebutton-background-color-default)
-    );
+    background-color: var(--mod-closebutton-background-color-default, var(--spectrum-closebutton-background-color-default));
 }
 
 :host([disabled]) .icon {
-    color: var(
-        --highcontrast-closebutton-icon-color-disabled,
-        var(
-            --mod-closebutton-icon-color-disabled,
-            var(--spectrum-closebutton-icon-color-disabled)
-        )
-    );
+    color: var(--highcontrast-closebutton-icon-color-disabled, var(--mod-closebutton-icon-color-disabled, var(--spectrum-closebutton-icon-color-disabled)));
 }
 
 :host([static-color='black']:not([disabled])),
 :host([static-color='white']:not([disabled])) {
-    background-color: var(
-        --highcontrast-closebutton-static-background-color-default,
-        var(
-            --mod-closebutton-static-background-color-default,
-            var(--spectrum-closebutton-static-background-color-default)
-        )
-    );
+    background-color: var(--highcontrast-closebutton-static-background-color-default, var(--mod-closebutton-static-background-color-default, var(--spectrum-closebutton-static-background-color-default)));
 }
 
 @media (hover: hover) {
     :host(:not([disabled]):hover) {
-        background-color: var(
-            --mod-closebutton-background-color-hover,
-            var(--spectrum-closebutton-background-color-hover)
-        );
+        background-color: var(--mod-closebutton-background-color-hover, var(--spectrum-closebutton-background-color-hover));
     }
 
     :host(:not([disabled]):hover) .icon {
-        color: var(
-            --highcontrast-closebutton-icon-color-hover,
-            var(
-                --mod-closebutton-icon-color-hover,
-                var(--spectrum-closebutton-icon-color-hover)
-            )
-        );
+        color: var(--highcontrast-closebutton-icon-color-hover, var(--mod-closebutton-icon-color-hover, var(--spectrum-closebutton-icon-color-hover)));
     }
 
     :host([static-color='black']:not([disabled]):hover),
     :host([static-color='white']:not([disabled]):hover) {
-        background-color: var(
-            --highcontrast-closebutton-static-background-color-hover,
-            var(
-                --mod-closebutton-static-background-color-hover,
-                var(--spectrum-closebutton-static-background-color-hover)
-            )
-        );
+        background-color: var(--highcontrast-closebutton-static-background-color-hover, var(--mod-closebutton-static-background-color-hover, var(--spectrum-closebutton-static-background-color-hover)));
     }
 
     :host([static-color='black']:not([disabled]):hover) .icon,
     :host([static-color='white']:not([disabled]):hover) .icon {
-        color: var(
-            --highcontrast-closebutton-icon-color-default,
-            var(
-                --mod-closebutton-icon-color-default,
-                var(--spectrum-closebutton-icon-color-default)
-            )
-        );
+        color: var(--highcontrast-closebutton-icon-color-default, var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default)));
     }
 }
 
 :host([static-color='black']:not([disabled]):is(:active, [active])),
 :host([static-color='white']:not([disabled]):is(:active, [active])) {
-    background-color: var(
-        --highcontrast-closebutton-static-background-color-down,
-        var(
-            --mod-closebutton-static-background-color-down,
-            var(--spectrum-closebutton-static-background-color-down)
-        )
-    );
+    background-color: var(--highcontrast-closebutton-static-background-color-down, var(--mod-closebutton-static-background-color-down, var(--spectrum-closebutton-static-background-color-down)));
 }
 
 :host([static-color='black']:not([disabled]):is(:active, [active])) .icon,
 :host([static-color='white']:not([disabled]):is(:active, [active])) .icon {
-    color: var(
-        --highcontrast-closebutton-icon-color-default,
-        var(
-            --mod-closebutton-icon-color-default,
-            var(--spectrum-closebutton-icon-color-default)
-        )
-    );
+    color: var(--highcontrast-closebutton-icon-color-default, var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default)));
 }
 
 :host([static-color='black'][focused]:not([disabled])),
 :host([static-color='black']:not([disabled]):focus-visible),
 :host([static-color='white'][focused]:not([disabled])),
 :host([static-color='white']:not([disabled]):focus-visible) {
-    background-color: var(
-        --highcontrast-closebutton-static-background-color-focus,
-        var(
-            --mod-closebutton-static-background-color-focus,
-            var(--spectrum-closebutton-static-background-color-focus)
-        )
-    );
+    background-color: var(--highcontrast-closebutton-static-background-color-focus, var(--mod-closebutton-static-background-color-focus, var(--spectrum-closebutton-static-background-color-focus)));
 }
 
 :host([static-color='black'][focused]:not([disabled])) .icon,
@@ -385,32 +209,17 @@ governing permissions and limitations under the License.
 :host([static-color='white'][focused]:not([disabled])) .icon,
 :host([static-color='white']:not([disabled]):focus) .icon,
 :host([static-color='white']:not([disabled]):focus-visible) .icon {
-    color: var(
-        --highcontrast-closebutton-icon-color-default,
-        var(
-            --mod-closebutton-icon-color-default,
-            var(--spectrum-closebutton-icon-color-default)
-        )
-    );
+    color: var(--highcontrast-closebutton-icon-color-default, var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default)));
 }
 
 :host([static-color='black']:not([disabled])) .icon,
 :host([static-color='white']:not([disabled])) .icon {
-    color: var(
-        --mod-closebutton-icon-color-default,
-        var(--spectrum-closebutton-icon-color-default)
-    );
+    color: var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default));
 }
 
 :host([static-color='black'][disabled]) .icon,
 :host([static-color='white'][disabled]) .icon {
-    color: var(
-        --highcontrast-closebutton-icon-disabled,
-        var(
-            --mod-closebutton-icon-color-disabled,
-            var(--spectrum-closebutton-icon-color-disabled)
-        )
-    );
+    color: var(--highcontrast-closebutton-icon-disabled, var(--mod-closebutton-icon-color-disabled, var(--spectrum-closebutton-icon-color-disabled)));
 }
 
 .icon {

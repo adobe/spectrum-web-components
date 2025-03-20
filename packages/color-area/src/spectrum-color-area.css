@@ -28,33 +28,13 @@ governing permissions and limitations under the License.
     cursor: default;
     -webkit-user-select: none;
     user-select: none;
-    min-inline-size: var(
-        --mod-colorarea-min-width,
-        var(--spectrum-colorarea-min-width)
-    );
-    min-block-size: var(
-        --mod-colorarea-min-height,
-        var(--spectrum-colorarea-min-height)
-    );
+    min-inline-size: var(--mod-colorarea-min-width, var(--spectrum-colorarea-min-width));
+    min-block-size: var(--mod-colorarea-min-height, var(--spectrum-colorarea-min-height));
     inline-size: var(--mod-colorarea-width, var(--spectrum-colorarea-width));
     block-size: var(--mod-colorarea-height, var(--spectrum-colorarea-height));
     box-sizing: border-box;
-    border-radius: var(
-        --mod-colorarea-border-radius,
-        var(--spectrum-colorarea-border-radius)
-    );
-    border: var(
-            --mod-colorarea-border-width,
-            var(--spectrum-colorarea-border-width)
-        )
-        solid
-        var(
-            --highcontrast-colorarea-border-color,
-            var(
-                --mod-colorarea-border-color,
-                var(--spectrum-colorarea-border-color)
-            )
-        );
+    border-radius: var(--mod-colorarea-border-radius, var(--spectrum-colorarea-border-radius));
+    border: var(--mod-colorarea-border-width, var(--spectrum-colorarea-border-width)) solid var(--highcontrast-colorarea-border-color, var(--mod-colorarea-border-color, var(--spectrum-colorarea-border-color)));
     display: inline-block;
     position: relative;
 }
@@ -65,18 +45,8 @@ governing permissions and limitations under the License.
 
 :host([disabled]) {
     pointer-events: none;
-    background: var(
-        --highcontrast-colorarea-fill-color-disabled,
-        var(
-            --mod-colorarea-disabled-background-color,
-            var(--spectrum-colorarea-disabled-background-color)
-        )
-    );
-    border: var(
-            --mod-colorarea-border-width,
-            var(--spectrum-colorarea-border-width)
-        )
-        solid var(--highcontrast-colorarea-border-color-disabled);
+    background: var(--highcontrast-colorarea-fill-color-disabled, var(--mod-colorarea-disabled-background-color, var(--spectrum-colorarea-disabled-background-color)));
+    border: var(--mod-colorarea-border-width, var(--spectrum-colorarea-border-width)) solid var(--highcontrast-colorarea-border-color-disabled);
 }
 
 :host([disabled]) .gradient {
@@ -84,12 +54,7 @@ governing permissions and limitations under the License.
 }
 
 .handle {
-    transform: translate(
-        calc(
-            var(--mod-colorarea-width, var(--spectrum-colorarea-width)) -
-                var(--spectrum-colorarea-border-width)
-        )
-    );
+    transform: translate(calc(var(--mod-colorarea-width, var(--spectrum-colorarea-width)) - var(--spectrum-colorarea-border-width)));
     inset-block-start: 0;
 }
 
@@ -101,10 +66,7 @@ governing permissions and limitations under the License.
 .gradient {
     inline-size: 100%;
     block-size: 100%;
-    border-radius: var(
-        --mod-colorarea-border-radius,
-        var(--spectrum-colorarea-border-radius)
-    );
+    border-radius: var(--mod-colorarea-border-radius, var(--spectrum-colorarea-border-radius));
 }
 
 .slider {

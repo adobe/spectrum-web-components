@@ -15,75 +15,37 @@ governing permissions and limitations under the License.
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-medium);
     --spectrum-slider-control-height: var(--spectrum-component-height-100);
-    --spectrum-slider-handle-border-width-down: var(
-        --spectrum-slider-handle-border-width-down-medium
-    );
-    --spectrum-slider-label-top-to-text: var(
-        --spectrum-component-top-to-text-75
-    );
-    --spectrum-slider-control-to-field-label: var(
-        --spectrum-slider-control-to-field-label-medium
-    );
+    --spectrum-slider-handle-border-width-down: var(--spectrum-slider-handle-border-width-down-medium);
+    --spectrum-slider-label-top-to-text: var(--spectrum-component-top-to-text-75);
+    --spectrum-slider-control-to-field-label: var(--spectrum-slider-control-to-field-label-medium);
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
     --spectrum-slider-value-inline-size: 18px;
     --spectrum-slider-cjk-line-height: var(--spectrum-cjk-line-height-100);
     --spectrum-slider-min-size: var(--spectrum-spacing-900);
     --spectrum-slider-label-margin-start: var(--spectrum-spacing-300);
     --spectrum-slider-handle-border-width: var(--spectrum-border-width-200);
-    --spectrum-slider-handle-margin-left: calc(
-        var(--spectrum-slider-handle-size) / -2
-    );
-    --spectrum-slider-controls-margin: calc(
-        var(--spectrum-slider-handle-size) / 2
-    );
-    --spectrum-slider-track-margin-offset: calc(
-        var(--spectrum-slider-controls-margin) * -1
-    );
-    --spectrum-slider-track-middle-handleoffset: calc(
-        var(--spectrum-slider-handle-gap) + var(--spectrum-slider-handle-size) /
-            2
-    );
-    --spectrum-slider-input-top-size: calc(
-        var(--spectrum-slider-handle-size) / -2 / 4
-    );
-    --spectrum-slider-track-fill-thickness: var(
-        --spectrum-slider-track-thickness
-    );
+    --spectrum-slider-handle-margin-left: calc(var(--spectrum-slider-handle-size) / -2);
+    --spectrum-slider-controls-margin: calc(var(--spectrum-slider-handle-size) / 2);
+    --spectrum-slider-track-margin-offset: calc(var(--spectrum-slider-controls-margin) * -1);
+    --spectrum-slider-track-middle-handleoffset: calc(var(--spectrum-slider-handle-gap) + var(--spectrum-slider-handle-size) / 2);
+    --spectrum-slider-input-top-size: calc(var(--spectrum-slider-handle-size) / -2 / 4);
+    --spectrum-slider-track-fill-thickness: var(--spectrum-slider-track-thickness);
     --spectrum-slider-tick-mark-width: var(--spectrum-border-width-200);
     --spectrum-slider-tick-mark-border-radius: 2px;
     --spectrum-slider-tick-handle-background-color: var(--spectrum-gray-100);
-    --spectrum-slider-track-color-disabled: var(
-        --spectrum-disabled-background-color
-    );
-    --spectrum-slider-track-fill-color-disabled: var(
-        --spectrum-disabled-background-color
-    );
-    --spectrum-slider-handle-border-color-disabled: var(
-        --spectrum-disabled-border-color
-    );
-    --spectrum-slider-label-text-color: var(
-        --spectrum-neutral-content-color-default
-    );
-    --spectrum-slider-tick-label-color: var(
-        --spectrum-neutral-content-color-default
-    );
-    --spectrum-slider-label-text-color-disabled: var(
-        --spectrum-disabled-content-color
-    );
-    --spectrum-slider-tick-mark-color-disabled: var(
-        --spectrum-disabled-background-color
-    );
+    --spectrum-slider-track-color-disabled: var(--spectrum-disabled-background-color);
+    --spectrum-slider-track-fill-color-disabled: var(--spectrum-disabled-background-color);
+    --spectrum-slider-handle-border-color-disabled: var(--spectrum-disabled-border-color);
+    --spectrum-slider-label-text-color: var(--spectrum-neutral-content-color-default);
+    --spectrum-slider-tick-label-color: var(--spectrum-neutral-content-color-default);
+    --spectrum-slider-label-text-color-disabled: var(--spectrum-disabled-content-color);
+    --spectrum-slider-tick-mark-color-disabled: var(--spectrum-disabled-background-color);
     --spectrum-slider-ramp-handle-border-color-active: var(--spectrum-gray-100);
-    --spectrum-slider-input-left: calc(
-        var(--spectrum-slider-handle-margin-left) / 4
-    );
+    --spectrum-slider-input-left: calc(var(--spectrum-slider-handle-margin-left) / 4);
     --spectrum-slider-track-handleoffset: var(--spectrum-slider-handle-gap);
     --spectrum-slider-range-track-reset: 0;
     z-index: 0;
-    min-inline-size: var(
-        --mod-slider-min-size,
-        var(--spectrum-slider-min-size)
-    );
+    min-inline-size: var(--mod-slider-min-size, var(--spectrum-slider-min-size));
     -webkit-user-select: none;
     user-select: none;
     display: block;
@@ -95,30 +57,17 @@ governing permissions and limitations under the License.
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
-:host:not(.spectrum-Slider--sideLabel)
-    #label-container
-    + #track:has(.spectrum-Slider-ramp) {
-    margin-block-start: calc(
-        var(
-                --mod-slider-ramp-track-height,
-                var(--spectrum-slider-ramp-track-height)
-            ) / 2
-    );
+:host:not(.spectrum-Slider--sideLabel) #label-container + #track:has(.spectrum-Slider-ramp) {
+    margin-block-start: calc(var(--mod-slider-ramp-track-height, var(--spectrum-slider-ramp-track-height)) / 2);
 }
 
 :host([size='s']) {
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-small);
     --spectrum-slider-control-height: var(--spectrum-component-height-75);
-    --spectrum-slider-handle-border-width-down: var(
-        --spectrum-slider-handle-border-width-down-small
-    );
-    --spectrum-slider-label-top-to-text: var(
-        --spectrum-component-top-to-text-75
-    );
-    --spectrum-slider-control-to-field-label: var(
-        --spectrum-slider-control-to-field-label-small
-    );
+    --spectrum-slider-handle-border-width-down: var(--spectrum-slider-handle-border-width-down-small);
+    --spectrum-slider-label-top-to-text: var(--spectrum-component-top-to-text-75);
+    --spectrum-slider-control-to-field-label: var(--spectrum-slider-control-to-field-label-small);
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-100);
 }
 
@@ -126,34 +75,20 @@ governing permissions and limitations under the License.
     --spectrum-slider-font-size: var(--spectrum-font-size-100);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-large);
     --spectrum-slider-control-height: var(--spectrum-component-height-200);
-    --spectrum-slider-handle-border-width-down: var(
-        --spectrum-slider-handle-border-width-down-large
-    );
-    --spectrum-slider-label-top-to-text: var(
-        --spectrum-component-top-to-text-100
-    );
-    --spectrum-slider-control-to-field-label: var(
-        --spectrum-slider-control-to-field-label-large
-    );
+    --spectrum-slider-handle-border-width-down: var(--spectrum-slider-handle-border-width-down-large);
+    --spectrum-slider-label-top-to-text: var(--spectrum-component-top-to-text-100);
+    --spectrum-slider-control-to-field-label: var(--spectrum-slider-control-to-field-label-large);
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
     --spectrum-slider-value-inline-size: 18px;
 }
 
 :host([size='xl']) {
     --spectrum-slider-font-size: var(--spectrum-font-size-200);
-    --spectrum-slider-handle-size: var(
-        --spectrum-slider-handle-size-extra-large
-    );
+    --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-extra-large);
     --spectrum-slider-control-height: var(--spectrum-component-height-300);
-    --spectrum-slider-handle-border-width-down: var(
-        --spectrum-slider-handle-border-width-down-extra-large
-    );
-    --spectrum-slider-label-top-to-text: var(
-        --spectrum-component-top-to-text-200
-    );
-    --spectrum-slider-control-to-field-label: var(
-        --spectrum-slider-control-to-field-label-extra-large
-    );
+    --spectrum-slider-handle-border-width-down: var(--spectrum-slider-handle-border-width-down-extra-large);
+    --spectrum-slider-label-top-to-text: var(--spectrum-component-top-to-text-200);
+    --spectrum-slider-control-to-field-label: var(--spectrum-slider-control-to-field-label-extra-large);
     --spectrum-slider-value-side-padding-inline: var(--spectrum-spacing-200);
     --spectrum-slider-value-inline-size: 22px;
 }
@@ -168,10 +103,7 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Slider--sideLabel #label-container #label {
-    margin-inline-end: var(
-        --mod-slider-value-side-padding-inline,
-        var(--spectrum-slider-value-side-padding-inline)
-    );
+    margin-inline-end: var(--mod-slider-value-side-padding-inline, var(--spectrum-slider-value-side-padding-inline));
 }
 
 .spectrum-Slider--sideLabel #label-container + #track {
@@ -179,44 +111,23 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Slider--sideLabel #controls {
-    margin-inline-end: var(
-        --mod-slider-controls-margin,
-        var(--spectrum-slider-controls-margin)
-    );
+    margin-inline-end: var(--mod-slider-controls-margin, var(--spectrum-slider-controls-margin));
 }
 
 .spectrum-Slider--sideLabel #value {
-    inline-size: var(
-        --mod-slider-value-inline-size,
-        var(--spectrum-slider-value-inline-size)
-    );
+    inline-size: var(--mod-slider-value-inline-size, var(--spectrum-slider-value-inline-size));
     text-align: start;
-    margin-inline-start: var(
-        --mod-slider-value-side-padding-inline,
-        var(--spectrum-slider-value-side-padding-inline)
-    );
+    margin-inline-start: var(--mod-slider-value-side-padding-inline, var(--spectrum-slider-value-side-padding-inline));
 }
 
 #controls {
     box-sizing: border-box;
     cursor: pointer;
     z-index: auto;
-    inline-size: calc(
-        100% -
-            var(
-                --mod-slider-controls-margin,
-                var(--spectrum-slider-controls-margin)
-            ) * 2
-    );
-    block-size: var(
-        --mod-slider-control-height,
-        var(--spectrum-slider-control-height)
-    );
+    inline-size: calc(100% - var(--mod-slider-controls-margin, var(--spectrum-slider-controls-margin)) * 2);
+    block-size: var(--mod-slider-control-height, var(--spectrum-slider-control-height));
     vertical-align: top;
-    margin-inline-start: var(
-        --mod-slider-controls-margin,
-        var(--spectrum-slider-controls-margin)
-    );
+    margin-inline-start: var(--mod-slider-controls-margin, var(--spectrum-slider-controls-margin));
     display: inline-block;
     position: relative;
 }
@@ -227,46 +138,25 @@ governing permissions and limitations under the License.
 }
 
 #label-container + #track {
-    margin-block-start: calc(
-        var(--spectrum-slider-control-to-field-label) * -1
-    );
+    margin-block-start: calc(var(--spectrum-slider-control-to-field-label) * -1);
 }
 
 :host([tick-labels]) {
-    margin-block-end: var(
-        --mod-slider-control-height,
-        var(--spectrum-slider-control-height)
-    );
+    margin-block-end: var(--mod-slider-control-height, var(--spectrum-slider-control-height));
 }
 
 .fill,
 .track {
-    block-size: var(
-        --mod-slider-track-fill-thickness,
-        var(--spectrum-slider-track-fill-thickness)
-    );
+    block-size: var(--mod-slider-track-fill-thickness, var(--spectrum-slider-track-fill-thickness));
     box-sizing: border-box;
     z-index: 1;
     pointer-events: none;
-    margin-inline-start: var(
-        --mod-slider-track-margin-offset,
-        var(--spectrum-slider-track-margin-offset)
-    );
+    margin-inline-start: var(--mod-slider-track-margin-offset, var(--spectrum-slider-track-margin-offset));
     padding-block: 0;
     padding-inline-start: 0;
-    padding-inline-end: var(
-        --mod-slider-handle-gap,
-        var(--spectrum-slider-handle-gap)
-    );
+    padding-inline-end: var(--mod-slider-handle-gap, var(--spectrum-slider-handle-gap));
     position: absolute;
-    inset-block-start: calc(
-        var(--mod-slider-control-height, var(--spectrum-slider-control-height)) /
-            2 -
-            var(
-                --mod-slider-track-fill-thickness,
-                var(--spectrum-slider-track-fill-thickness)
-            ) / 2
-    );
+    inset-block-start: calc(var(--mod-slider-control-height, var(--spectrum-slider-control-height)) / 2 - var(--mod-slider-track-fill-thickness, var(--spectrum-slider-track-fill-thickness)) / 2);
     inset-inline: 0 auto;
 }
 
@@ -282,88 +172,42 @@ governing permissions and limitations under the License.
 }
 
 .track:first-of-type:before {
-    border-start-start-radius: var(
-        --mod-slider-track-corner-radius,
-        var(--spectrum-slider-track-corner-radius)
-    );
-    border-end-start-radius: var(
-        --mod-slider-track-corner-radius,
-        var(--spectrum-slider-track-corner-radius)
-    );
+    border-start-start-radius: var(--mod-slider-track-corner-radius, var(--spectrum-slider-track-corner-radius));
+    border-end-start-radius: var(--mod-slider-track-corner-radius, var(--spectrum-slider-track-corner-radius));
 }
 
 .track:last-of-type:before {
-    border-start-end-radius: var(
-        --mod-slider-track-corner-radius,
-        var(--spectrum-slider-track-corner-radius)
-    );
-    border-end-end-radius: var(
-        --mod-slider-track-corner-radius,
-        var(--spectrum-slider-track-corner-radius)
-    );
+    border-start-end-radius: var(--mod-slider-track-corner-radius, var(--spectrum-slider-track-corner-radius));
+    border-end-end-radius: var(--mod-slider-track-corner-radius, var(--spectrum-slider-track-corner-radius));
 }
 
 .track ~ .track {
-    margin-inline-start: var(
-        --mod-slider-range-track-reset,
-        var(--spectrum-slider-range-track-reset)
-    );
-    margin-inline-end: var(
-        --mod-slider-track-margin-offset,
-        var(--spectrum-slider-track-margin-offset)
-    );
+    margin-inline-start: var(--mod-slider-range-track-reset, var(--spectrum-slider-range-track-reset));
+    margin-inline-end: var(--mod-slider-track-margin-offset, var(--spectrum-slider-track-margin-offset));
     padding-block: 0;
-    padding-inline-start: var(
-        --mod-slider-track-handleoffset,
-        var(--spectrum-slider-track-handleoffset)
-    );
+    padding-inline-start: var(--mod-slider-track-handleoffset, var(--spectrum-slider-track-handleoffset));
     padding-inline-end: 0;
     inset-inline-start: auto;
-    inset-inline-end: var(
-        --mod-slider-range-track-reset,
-        var(--spectrum-slider-range-track-reset)
-    );
+    inset-inline-end: var(--mod-slider-range-track-reset, var(--spectrum-slider-range-track-reset));
 }
 
 :host([variant='range']) .track ~ .track {
-    padding-inline: var(
-            --mod-slider-track-middle-handleoffset,
-            var(--spectrum-slider-track-middle-handleoffset)
-        )
-        var(
-            --mod-slider-track-middle-handleoffset,
-            var(--spectrum-slider-track-middle-handleoffset)
-        );
-    margin-inline: var(
-        --mod-slider-range-track-reset,
-        var(--spectrum-slider-range-track-reset)
-    );
+    padding-inline: var(--mod-slider-track-middle-handleoffset, var(--spectrum-slider-track-middle-handleoffset)) var(--mod-slider-track-middle-handleoffset, var(--spectrum-slider-track-middle-handleoffset));
+    margin-inline: var(--mod-slider-range-track-reset, var(--spectrum-slider-range-track-reset));
     inset-inline: auto;
 }
 
 .fill {
     margin-inline-start: 0;
     padding-block: 0;
-    padding-inline-start: calc(
-        var(
-                --mod-slider-controls-margin,
-                var(--spectrum-slider-controls-margin)
-            ) +
-            var(--spectrum-slider-handle-gap, var(--spectrum-slider-handle-gap))
-    );
+    padding-inline-start: calc(var(--mod-slider-controls-margin, var(--spectrum-slider-controls-margin)) + var(--spectrum-slider-handle-gap, var(--spectrum-slider-handle-gap)));
     padding-inline-end: 0;
 }
 
 .offset {
     padding-block: 0;
     padding-inline-start: 0;
-    padding-inline-end: calc(
-        var(
-                --mod-slider-controls-margin,
-                var(--spectrum-slider-controls-margin)
-            ) +
-            var(--spectrum-slider-handle-gap, var(--spectrum-slider-handle-gap))
-    );
+    padding-inline-end: calc(var(--mod-slider-controls-margin, var(--spectrum-slider-controls-margin)) + var(--spectrum-slider-handle-gap, var(--spectrum-slider-handle-gap)));
 }
 
 :host([variant='range']) #value {
@@ -372,72 +216,36 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='range']) .track:first-of-type {
-    margin-inline-start: var(
-        --mod-slider-track-margin-offset,
-        var(--spectrum-slider-track-margin-offset)
-    );
+    margin-inline-start: var(--mod-slider-track-margin-offset, var(--spectrum-slider-track-margin-offset));
     padding-inline-start: 0;
-    padding-inline-end: var(
-        --mod-slider-track-handleoffset,
-        var(--spectrum-slider-track-handleoffset)
-    );
-    inset-inline-start: var(
-        --mod-slider-range-track-reset,
-        var(--spectrum-slider-range-track-reset)
-    );
+    padding-inline-end: var(--mod-slider-track-handleoffset, var(--spectrum-slider-track-handleoffset));
+    inset-inline-start: var(--mod-slider-range-track-reset, var(--spectrum-slider-range-track-reset));
     inset-inline-end: auto;
 }
 
 :host([variant='range']) .track:first-of-type:before {
-    border-start-start-radius: var(
-        --mod-slider-track-corner-radius,
-        var(--spectrum-slider-track-corner-radius)
-    );
-    border-end-start-radius: var(
-        --mod-slider-track-corner-radius,
-        var(--spectrum-slider-track-corner-radius)
-    );
+    border-start-start-radius: var(--mod-slider-track-corner-radius, var(--spectrum-slider-track-corner-radius));
+    border-end-start-radius: var(--mod-slider-track-corner-radius, var(--spectrum-slider-track-corner-radius));
 }
 
 :host([variant='range']) .track:last-of-type {
-    margin-inline-end: var(
-        --mod-slider-track-margin-offset,
-        var(--spectrum-slider-track-margin-offset)
-    );
+    margin-inline-end: var(--mod-slider-track-margin-offset, var(--spectrum-slider-track-margin-offset));
     padding-inline-start: var(--spectrum-slider-track-handleoffset);
     padding-inline-end: 0;
     inset-inline-start: auto;
-    inset-inline-end: var(
-        --mod-slider-range-track-reset,
-        var(--spectrum-slider-range-track-reset)
-    );
+    inset-inline-end: var(--mod-slider-range-track-reset, var(--spectrum-slider-range-track-reset));
 }
 
 :host([variant='range']) .track:last-of-type:before {
-    border-start-end-radius: var(
-        --mod-slider-track-corner-radius,
-        var(--spectrum-slider-track-corner-radius)
-    );
-    border-end-end-radius: var(
-        --mod-slider-track-corner-radius,
-        var(--spectrum-slider-track-corner-radius)
-    );
+    border-start-end-radius: var(--mod-slider-track-corner-radius, var(--spectrum-slider-track-corner-radius));
+    border-end-end-radius: var(--mod-slider-track-corner-radius, var(--spectrum-slider-track-corner-radius));
 }
 
 #ramp {
-    block-size: var(
-        --mod-slider-ramp-track-height,
-        var(--spectrum-slider-ramp-track-height)
-    );
+    block-size: var(--mod-slider-ramp-track-height, var(--spectrum-slider-ramp-track-height));
     position: absolute;
-    inset-inline-start: var(
-        --spectrum-slider-track-margin-offset,
-        var(--spectrum-slider-track-margin-offset)
-    );
-    inset-inline-end: var(
-        --spectrum-slider-track-margin-offset,
-        var(--spectrum-slider-track-margin-offset)
-    );
+    inset-inline-start: var(--spectrum-slider-track-margin-offset, var(--spectrum-slider-track-margin-offset));
+    inset-inline-end: var(--spectrum-slider-track-margin-offset, var(--spectrum-slider-track-margin-offset));
 }
 
 #ramp svg {
@@ -449,53 +257,24 @@ governing permissions and limitations under the License.
 .handle {
     z-index: 2;
     box-sizing: border-box;
-    inline-size: var(
-        --mod-slider-handle-size,
-        var(--spectrum-slider-handle-size)
-    );
-    block-size: var(
-        --mod-slider-handle-size,
-        var(--spectrum-slider-handle-size)
-    );
+    inline-size: var(--mod-slider-handle-size, var(--spectrum-slider-handle-size));
+    block-size: var(--mod-slider-handle-size, var(--spectrum-slider-handle-size));
     margin-block: 0;
-    margin-inline: calc(
-            var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) /
-                -2
-        )
-        0;
-    border-width: var(
-        --mod-slider-handle-border-width,
-        var(--spectrum-slider-handle-border-width)
-    );
-    border-radius: var(
-        --mod-slider-handle-border-radius,
-        var(--spectrum-slider-handle-border-radius)
-    );
-    transition: border-width
-        var(
-            --mod-animation-duration-100,
-            var(--spectrum-animation-duration-100)
-        )
-        ease-in-out;
+    margin-inline: calc(var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) / -2) 0;
+    border-width: var(--mod-slider-handle-border-width, var(--spectrum-slider-handle-border-width));
+    border-radius: var(--mod-slider-handle-border-radius, var(--spectrum-slider-handle-border-radius));
+    transition: border-width var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-in-out;
     border-style: solid;
     outline: none;
     display: inline-block;
     position: absolute;
-    inset-block-start: calc(
-        var(--mod-slider-control-height, var(--spectrum-slider-control-height)) /
-            2 -
-            var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) /
-            2
-    );
+    inset-block-start: calc(var(--mod-slider-control-height, var(--spectrum-slider-control-height)) / 2 - var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) / 2);
     inset-inline-start: 0;
 }
 
 .handle.dragging,
 .handle:active {
-    border-width: var(
-        --mod-slider-handle-border-width-down,
-        var(--spectrum-slider-handle-border-width-down)
-    );
+    border-width: var(--mod-slider-handle-border-width-down, var(--spectrum-slider-handle-border-width-down));
 }
 
 .handle.dragging,
@@ -508,32 +287,11 @@ governing permissions and limitations under the License.
 .handle:before {
     content: '';
     transition:
-        box-shadow
-            var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
-            )
-            ease-out,
-        inline-size
-            var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
-            )
-            ease-out,
-        block-size
-            var(
-                --mod-animation-duration-100,
-                var(--spectrum-animation-duration-100)
-            )
-            ease-out;
-    inline-size: var(
-        --mod-slider-handle-size,
-        var(--spectrum-slider-handle-size)
-    );
-    block-size: var(
-        --mod-slider-handle-size,
-        var(--spectrum-slider-handle-size)
-    );
+        box-shadow var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-out,
+        inline-size var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-out,
+        block-size var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-out;
+    inline-size: var(--mod-slider-handle-size, var(--spectrum-slider-handle-size));
+    block-size: var(--mod-slider-handle-size, var(--spectrum-slider-handle-size));
     border-radius: 100%;
     display: block;
     position: absolute;
@@ -548,27 +306,13 @@ governing permissions and limitations under the License.
 }
 
 .handle.handle-highlight:before {
-    inline-size: calc(
-        var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) +
-            var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) *
-            2
-    );
-    block-size: calc(
-        var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) +
-            var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) *
-            2
-    );
+    inline-size: calc(var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) + var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) * 2);
+    block-size: calc(var(--mod-slider-handle-size, var(--spectrum-slider-handle-size)) + var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) * 2);
 }
 
 .input {
-    inline-size: var(
-        --mod-slider-handle-size,
-        var(--spectrum-slider-handle-size)
-    );
-    block-size: var(
-        --mod-slider-handle-size,
-        var(--spectrum-slider-handle-size)
-    );
+    inline-size: var(--mod-slider-handle-size, var(--spectrum-slider-handle-size));
+    block-size: var(--mod-slider-handle-size, var(--spectrum-slider-handle-size));
     opacity: 0;
     cursor: default;
     appearance: none;
@@ -577,14 +321,8 @@ governing permissions and limitations under the License.
     margin: 0;
     padding: 0;
     position: absolute;
-    inset-block-start: var(
-        --mod-slider-input-top-size,
-        var(--spectrum-slider-input-top-size)
-    );
-    inset-inline-start: var(
-        --mod-slider-input-left,
-        var(--spectrum-slider-input-left)
-    );
+    inset-block-start: var(--mod-slider-input-top-size, var(--spectrum-slider-input-top-size));
+    inset-inline-start: var(--mod-slider-input-left, var(--spectrum-slider-input-left));
     overflow: hidden;
 }
 
@@ -598,10 +336,7 @@ governing permissions and limitations under the License.
     line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
     justify-content: space-between;
     align-items: center;
-    margin-block-start: var(
-        --mod-slider-label-top-to-text,
-        var(--spectrum-slider-label-top-to-text)
-    );
+    margin-block-start: var(--mod-slider-label-top-to-text, var(--spectrum-slider-label-top-to-text));
     display: flex;
     position: relative;
 }
@@ -609,10 +344,7 @@ governing permissions and limitations under the License.
 #label-container:lang(ja),
 #label-container:lang(ko),
 #label-container:lang(zh) {
-    line-height: var(
-        --mod-slider-cjk-line-height,
-        var(--spectrum-slider-cjk-line-height)
-    );
+    line-height: var(--mod-slider-cjk-line-height, var(--spectrum-slider-cjk-line-height));
 }
 
 #label {
@@ -625,112 +357,57 @@ governing permissions and limitations under the License.
     font-feature-settings: 'tnum';
     text-align: end;
     flex-grow: 0;
-    margin-inline-start: var(
-        --mod-slider-label-margin-start,
-        var(--spectrum-slider-label-margin-start)
-    );
+    margin-inline-start: var(--mod-slider-label-margin-start, var(--spectrum-slider-label-margin-start));
     padding-inline-end: 0;
 }
 
 :host([variant='tick']) .handle {
-    background-color: var(
-        --mod-slider-tick-handle-background-color,
-        var(--spectrum-slider-tick-handle-background-color)
-    );
+    background-color: var(--mod-slider-tick-handle-background-color, var(--spectrum-slider-tick-handle-background-color));
 }
 
 :host([variant='tick']) #controls {
-    margin-block-start: calc(
-        var(--spectrum-text-to-visual-75) -
-            var(
-                --mod-slider-tick-mark-height,
-                var(--spectrum-slider-tick-mark-height)
-            ) / 2 -
-            var(
-                --mod-slider-track-thickness,
-                var(--spectrum-slider-track-thickness)
-            ) / 2
-    );
+    margin-block-start: calc(var(--spectrum-text-to-visual-75) - var(--mod-slider-tick-mark-height, var(--spectrum-slider-tick-mark-height)) / 2 - var(--mod-slider-track-thickness, var(--spectrum-slider-track-thickness)) / 2);
 }
 
 :host([variant='tick']) .tickLabel {
-    margin-block-start: calc(
-        var(
-                --mod-slider-tick-mark-height,
-                var(--spectrum-slider-tick-mark-height)
-            ) + var(--spectrum-text-to-visual-75)
-    );
+    margin-block-start: calc(var(--mod-slider-tick-mark-height, var(--spectrum-slider-tick-mark-height)) + var(--spectrum-text-to-visual-75));
 }
 
 .ticks {
     z-index: 0;
-    margin-inline: var(
-        --mod-slider-track-margin-offset,
-        var(--spectrum-slider-track-margin-offset)
-    );
+    margin-inline: var(--mod-slider-track-margin-offset, var(--spectrum-slider-track-margin-offset));
     justify-content: space-between;
     display: flex;
 }
 
 .ticks ~ .handleContainer .handle {
-    background: var(
-        --mod-slider-ticks-handle-background-color,
-        var(--spectrum-slider-ticks-handle-background-color)
-    );
+    background: var(--mod-slider-ticks-handle-background-color, var(--spectrum-slider-ticks-handle-background-color));
 }
 
 .tick {
     position: relative;
-    inset-block-start: calc(
-        var(--mod-slider-track-thickness, var(--spectrum-slider-control-height)) /
-            2 -
-            var(
-                --mod-slider-tick-mark-height,
-                var(--spectrum-slider-tick-mark-height)
-            ) / 2
-    );
+    inset-block-start: calc(var(--mod-slider-track-thickness, var(--spectrum-slider-control-height)) / 2 - var(--mod-slider-tick-mark-height, var(--spectrum-slider-tick-mark-height)) / 2);
 }
 
 .tick,
 .tick:after {
-    inline-size: var(
-        --mod-slider-tick-mark-width,
-        var(--spectrum-slider-tick-mark-width)
-    );
+    inline-size: var(--mod-slider-tick-mark-width, var(--spectrum-slider-tick-mark-width));
 }
 
 .tick:after {
     content: '';
-    block-size: var(
-        --mod-slider-tick-mark-height,
-        var(--spectrum-slider-tick-mark-height)
-    );
-    border-radius: var(
-        --mod-slider-tick-mark-border-radius,
-        var(--spectrum-slider-tick-mark-border-radius)
-    );
+    block-size: var(--mod-slider-tick-mark-height, var(--spectrum-slider-tick-mark-height));
+    border-radius: var(--mod-slider-tick-mark-border-radius, var(--spectrum-slider-tick-mark-border-radius));
     display: block;
     position: absolute;
     inset-block-start: 0;
-    inset-inline-start: calc(
-        50% -
-            var(
-                --mod-slider-tick-mark-width,
-                var(--spectrum-slider-tick-mark-width)
-            ) / 2
-    );
+    inset-inline-start: calc(50% - var(--mod-slider-tick-mark-width, var(--spectrum-slider-tick-mark-width)) / 2);
 }
 
 .tick .tickLabel {
     font-size: var(--mod-font-size-75, var(--spectrum-font-size-75));
     line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
-    color: var(
-        --highcontrast-slider-label-text-color,
-        var(
-            --mod-slider-tick-label-color,
-            var(--spectrum-slider-tick-label-color)
-        )
-    );
+    color: var(--highcontrast-slider-label-text-color, var(--mod-slider-tick-label-color, var(--spectrum-slider-tick-label-color)));
     justify-content: center;
     align-items: center;
     display: flex;
@@ -744,12 +421,7 @@ governing permissions and limitations under the License.
 }
 
 .tick:first-of-type {
-    inset-inline-start: calc(
-        var(
-                --mod-slider-tick-mark-width,
-                var(--spectrum-slider-tick-mark-width)
-            ) / -2
-    );
+    inset-inline-start: calc(var(--mod-slider-tick-mark-width, var(--spectrum-slider-tick-mark-width)) / -2);
 }
 
 .tick:first-of-type .tickLabel {
@@ -757,12 +429,7 @@ governing permissions and limitations under the License.
 }
 
 .tick:last-of-type {
-    inset-inline-end: calc(
-        var(
-                --mod-slider-tick-mark-width,
-                var(--spectrum-slider-tick-mark-width)
-            ) / -2
-    );
+    inset-inline-end: calc(var(--mod-slider-tick-mark-width, var(--spectrum-slider-tick-mark-width)) / -2);
 }
 
 .tick:last-of-type .tickLabel {
@@ -778,123 +445,52 @@ governing permissions and limitations under the License.
 }
 
 .trackContainer {
-    block-size: var(
-        --mod-slider-control-height,
-        var(--spectrum-slider-control-height)
-    );
+    block-size: var(--mod-slider-control-height, var(--spectrum-slider-control-height));
     overflow: hidden;
 }
 
 .track:before {
-    background: var(
-        --highcontrast-slider-track-color-static,
-        var(--mod-slider-track-color, var(--spectrum-slider-track-color))
-    );
+    background: var(--highcontrast-slider-track-color-static, var(--mod-slider-track-color, var(--spectrum-slider-track-color)));
 }
 
 .track:not(:has(~ .spectrum-Slider-fill)):before {
-    background: var(
-        --highcontrast-slider-track-color,
-        var(--mod-slider-track-color, var(--spectrum-slider-track-color))
-    );
+    background: var(--highcontrast-slider-track-color, var(--mod-slider-track-color, var(--spectrum-slider-track-color)));
 }
 
 #label-container {
-    color: var(
-        --highcontrast-slider-label-text-color,
-        var(
-            --mod-slider-label-text-color,
-            var(--spectrum-slider-label-text-color)
-        )
-    );
+    color: var(--highcontrast-slider-label-text-color, var(--mod-slider-label-text-color, var(--spectrum-slider-label-text-color)));
 }
 
 :host([variant='filled']) .track:first-child:before,
 .fill:before {
-    background: var(
-        --highcontrast-slider-filled-track-fill-color,
-        var(
-            --mod-slider-track-fill-color,
-            var(--spectrum-slider-track-fill-color)
-        )
-    );
+    background: var(--highcontrast-slider-filled-track-fill-color, var(--mod-slider-track-fill-color, var(--spectrum-slider-track-fill-color)));
 }
 
 #ramp path {
-    fill: var(
-        --highcontrast-slider-ramp-track-color,
-        var(
-            --mod-slider-ramp-track-color,
-            var(--spectrum-slider-ramp-track-color)
-        )
-    );
+    fill: var(--highcontrast-slider-ramp-track-color, var(--mod-slider-ramp-track-color, var(--spectrum-slider-ramp-track-color)));
 }
 
 .handle {
-    border-color: var(
-        --highcontrast-slider-handle-border-color,
-        var(
-            --mod-slider-handle-border-color,
-            var(--spectrum-slider-handle-border-color)
-        )
-    );
-    background: var(
-        --highcontrast-slider-handle-background-color,
-        var(
-            --mod-slider-handle-background-color,
-            var(--spectrum-slider-handle-background-color)
-        )
-    );
+    border-color: var(--highcontrast-slider-handle-border-color, var(--mod-slider-handle-border-color, var(--spectrum-slider-handle-border-color)));
+    background: var(--highcontrast-slider-handle-background-color, var(--mod-slider-handle-background-color, var(--spectrum-slider-handle-background-color)));
 }
 
 .handle.handle-highlight {
-    border-color: var(
-        --highcontrast-slider-handle-border-color-key-focus,
-        var(
-            --mod-slider-handle-border-color-key-focus,
-            var(--spectrum-slider-handle-border-color-key-focus)
-        )
-    );
+    border-color: var(--highcontrast-slider-handle-border-color-key-focus, var(--mod-slider-handle-border-color-key-focus, var(--spectrum-slider-handle-border-color-key-focus)));
 }
 
 .handle.handle-highlight:before {
-    box-shadow: 0 0 0 var(--spectrum-focus-indicator-thickness)
-        var(
-            --highcontrast-slider-handle-focus-ring-color-key-focus,
-            var(
-                --mod-slider-handle-focus-ring-color-key-focus,
-                var(--spectrum-slider-handle-focus-ring-color-key-focus)
-            )
-        );
+    box-shadow: 0 0 0 var(--spectrum-focus-indicator-thickness) var(--highcontrast-slider-handle-focus-ring-color-key-focus, var(--mod-slider-handle-focus-ring-color-key-focus, var(--spectrum-slider-handle-focus-ring-color-key-focus)));
 }
 
 .handle.dragging,
 .handle:active {
-    border-color: var(
-        --highcontrast-slider-handle-border-color-down,
-        var(
-            --mod-slider-handle-border-color-down,
-            var(--spectrum-slider-handle-border-color-down)
-        )
-    );
+    border-color: var(--highcontrast-slider-handle-border-color-down, var(--mod-slider-handle-border-color-down, var(--spectrum-slider-handle-border-color-down)));
 }
 
 :host([variant='ramp']) .handle {
-    box-shadow: 0 0 0 var(--spectrum-slider-handle-gap)
-        var(
-            --highcontrast-slider-ramp-handle-border-color-active,
-            var(
-                --mod-sectrum-slider-ramp-handle-border-color-active,
-                var(--spectrum-slider-ramp-handle-border-color-active)
-            )
-        );
-    background: var(
-        --mod-slider-ramp-handle-background-color,
-        var(
-            --highcontrast-slider-ramp-handle-background-color,
-            var(--spectrum-slider-ramp-handle-background-color)
-        )
-    );
+    box-shadow: 0 0 0 var(--spectrum-slider-handle-gap) var(--highcontrast-slider-ramp-handle-border-color-active, var(--mod-sectrum-slider-ramp-handle-border-color-active, var(--spectrum-slider-ramp-handle-border-color-active)));
+    background: var(--mod-slider-ramp-handle-background-color, var(--highcontrast-slider-ramp-handle-background-color, var(--spectrum-slider-ramp-handle-background-color)));
 }
 
 .input {
@@ -902,40 +498,16 @@ governing permissions and limitations under the License.
 }
 
 .tick:after {
-    background-color: var(
-        --highcontrast-slider-tick-mark-color,
-        var(
-            --mod-slider-tick-mark-color,
-            var(--spectrum-slider-tick-mark-color)
-        )
-    );
+    background-color: var(--highcontrast-slider-tick-mark-color, var(--mod-slider-tick-mark-color, var(--spectrum-slider-tick-mark-color)));
 }
 
 .handle.dragging {
-    border-color: var(
-        --highcontrast-slider-handle-border-color-down,
-        var(
-            --mod-slider-handle-border-color-down,
-            var(--spectrum-slider-handle-border-color-down)
-        )
-    );
-    background: var(
-        --highcontrast-slider-handle-background-color,
-        var(
-            --mod-slider-handle-background-color,
-            var(--spectrum-slider-handle-background-color)
-        )
-    );
+    border-color: var(--highcontrast-slider-handle-border-color-down, var(--mod-slider-handle-border-color-down, var(--spectrum-slider-handle-border-color-down)));
+    background: var(--highcontrast-slider-handle-background-color, var(--mod-slider-handle-background-color, var(--spectrum-slider-handle-background-color)));
 }
 
 :host([variant='range']) .track:not(:first-of-type, :last-of-type):before {
-    background: var(
-        --highcontrast-slider-filled-track-fill-color,
-        var(
-            --mod-slider-track-fill-color,
-            var(--spectrum-slider-track-fill-color)
-        )
-    );
+    background: var(--highcontrast-slider-filled-track-fill-color, var(--mod-slider-track-fill-color, var(--spectrum-slider-track-fill-color)));
 }
 
 :host([disabled]),
@@ -945,124 +517,51 @@ governing permissions and limitations under the License.
 
 :host([disabled]) #label-container,
 :host([disabled]) .tickLabel {
-    color: var(
-        --highcontrast-slider-label-text-color-disabled,
-        var(
-            --mod-slider-label-text-color-disabled,
-            var(--spectrum-slider-label-text-color-disabled)
-        )
-    );
+    color: var(--highcontrast-slider-label-text-color-disabled, var(--mod-slider-label-text-color-disabled, var(--spectrum-slider-label-text-color-disabled)));
 }
 
 :host([disabled]) .handle {
-    border-color: var(
-        --highcontrast-slider-handle-border-color-disabled,
-        var(
-            --mod-slider-handle-border-color-disabled,
-            var(--spectrum-slider-handle-border-color-disabled)
-        )
-    );
-    background: var(
-        --highcontrast-slider-handle-disabled-background-color,
-        var(
-            --mod-slider-handle-disabled-background-color,
-            var(--spectrum-slider-handle-disabled-background-color)
-        )
-    );
+    border-color: var(--highcontrast-slider-handle-border-color-disabled, var(--mod-slider-handle-border-color-disabled, var(--spectrum-slider-handle-border-color-disabled)));
+    background: var(--highcontrast-slider-handle-disabled-background-color, var(--mod-slider-handle-disabled-background-color, var(--spectrum-slider-handle-disabled-background-color)));
     cursor: default;
     pointer-events: none;
 }
 
 :host([disabled]) .handle:active {
-    border-color: var(
-        --mod-disabled-border-color,
-        var(--spectrum-disabled-border-color)
-    );
-    background: var(
-        --highcontrast-slider-handle-background-color-disabled,
-        var(
-            --mod-slider-handle-background-color-disabled,
-            var(--spectrum-slider-handle-background-color-disabled)
-        )
-    );
+    border-color: var(--mod-disabled-border-color, var(--spectrum-disabled-border-color));
+    background: var(--highcontrast-slider-handle-background-color-disabled, var(--mod-slider-handle-background-color-disabled, var(--spectrum-slider-handle-background-color-disabled)));
 }
 
 @media (hover: hover) {
     .handle:hover {
-        border-color: var(
-            --highcontrast-slider-handle-border-color-hover,
-            var(
-                --mod-slider-handle-border-color-hover,
-                var(--spectrum-slider-handle-border-color-hover)
-            )
-        );
+        border-color: var(--highcontrast-slider-handle-border-color-hover, var(--mod-slider-handle-border-color-hover, var(--spectrum-slider-handle-border-color-hover)));
     }
 
     :host([disabled]) .handle:hover {
-        border-color: var(
-            --mod-disabled-border-color,
-            var(--spectrum-disabled-border-color)
-        );
-        background: var(
-            --highcontrast-slider-handle-background-color-disabled,
-            var(
-                --mod-slider-handle-background-color-disabled,
-                var(--spectrum-slider-handle-background-color-disabled)
-            )
-        );
+        border-color: var(--mod-disabled-border-color, var(--spectrum-disabled-border-color));
+        background: var(--highcontrast-slider-handle-background-color-disabled, var(--mod-slider-handle-background-color-disabled, var(--spectrum-slider-handle-background-color-disabled)));
     }
 }
 
 :host([disabled]) .track:before {
-    background: var(
-        --highcontrast-slider-track-color-disabled,
-        var(
-            --mod-slider-track-color-disabled,
-            var(--spectrum-slider-track-color-disabled)
-        )
-    );
+    background: var(--highcontrast-slider-track-color-disabled, var(--mod-slider-track-color-disabled, var(--spectrum-slider-track-color-disabled)));
 }
 
 :host([disabled]) .fill:before,
 :host([disabled][variant='filled']) .track:first-child:before {
-    background: var(
-        --highcontrast-slider-track-fill-color-disabled,
-        var(
-            --mod-slider-track-fill-color-disabled,
-            var(--spectrum-slider-track-fill-color-disabled)
-        )
-    );
+    background: var(--highcontrast-slider-track-fill-color-disabled, var(--mod-slider-track-fill-color-disabled, var(--spectrum-slider-track-fill-color-disabled)));
 }
 
 :host([disabled]) #ramp path {
-    fill: var(
-        --highcontrast-slider-ramp-track-color-disabled,
-        var(
-            --mod-slider-ramp-track-color-disabled,
-            var(--spectrum-slider-ramp-track-color-disabled)
-        )
-    );
+    fill: var(--highcontrast-slider-ramp-track-color-disabled, var(--mod-slider-ramp-track-color-disabled, var(--spectrum-slider-ramp-track-color-disabled)));
 }
 
 :host([disabled]) .tick:after {
-    background-color: var(
-        --highcontrast-slider-tick-mark-color-disabled,
-        var(
-            --mod-slider-tick-mark-color-disabled,
-            var(--spectrum-slider-tick-mark-color-disabled)
-        )
-    );
+    background-color: var(--highcontrast-slider-tick-mark-color-disabled, var(--mod-slider-tick-mark-color-disabled, var(--spectrum-slider-tick-mark-color-disabled)));
 }
 
-:host([disabled][variant='range'])
-    .track:not(:first-of-type, :last-of-type):before {
-    background: var(
-        --highcontrast-slider-track-color-disabled,
-        var(
-            --mod-slider-track-color-disabled,
-            var(--spectrum-slider-track-color-disabled)
-        )
-    );
+:host([disabled][variant='range']) .track:not(:first-of-type, :last-of-type):before {
+    background: var(--highcontrast-slider-track-color-disabled, var(--mod-slider-track-color-disabled, var(--spectrum-slider-track-color-disabled)));
 }
 
 @media (forced-colors: active) {
@@ -1096,25 +595,11 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
     }
 
-    :host([focus-within])
-        .js-focus-within:not(
-            .is-disabled,
-            .spectrum-Slider--filled,
-            .spectrum-Slider--range
-        )
-        #controls,
-    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
-        #controls.handle-highlight,
-    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
-        #controls:active,
-    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range)
-        #controls:focus-within,
-    :host([focus-within]):not(
-            .is-disabled,
-            .spectrum-Slider--filled,
-            .spectrum-Slider--range
-        ).js-focus-within
-        #controls {
+    :host([focus-within]) .js-focus-within:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls,
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls.handle-highlight,
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls:active,
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls:focus-within,
+    :host([focus-within]):not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range).js-focus-within #controls {
         --highcontrast-slider-track-color: Highlight;
         --highcontrast-slider-handle-border-color: Highlight;
         --highcontrast-slider-ramp-track-color: Highlight;
@@ -1122,12 +607,7 @@ governing permissions and limitations under the License.
     }
 
     @media (hover: hover) {
-        :host:not(
-                .is-disabled,
-                .spectrum-Slider--filled,
-                .spectrum-Slider--range
-            )
-            #controls:hover {
+        :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls:hover {
             --highcontrast-slider-track-color: Highlight;
             --highcontrast-slider-handle-border-color: Highlight;
             --highcontrast-slider-ramp-track-color: Highlight;

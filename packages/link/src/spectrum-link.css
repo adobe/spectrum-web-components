@@ -30,43 +30,20 @@ a {
     background-color: initial;
     -webkit-text-decoration-skip: objects;
     text-decoration-skip: objects;
-    transition: color
-        var(
-            --mod-link-animation-duration,
-            var(--spectrum-link-animation-duration)
-        )
-        ease-in-out;
+    transition: color var(--mod-link-animation-duration, var(--spectrum-link-animation-duration)) ease-in-out;
     cursor: pointer;
-    color: var(
-        --highcontrast-link-text-color-primary-default,
-        var(
-            --mod-link-text-color-primary-default,
-            var(--spectrum-link-text-color-primary-default)
-        )
-    );
+    color: var(--highcontrast-link-text-color-primary-default, var(--mod-link-text-color-primary-default, var(--spectrum-link-text-color-primary-default)));
     outline: none;
     -webkit-text-decoration: underline;
     text-decoration: underline;
 }
 
 a:active {
-    color: var(
-        --highcontrast-link-text-color-primary-active,
-        var(
-            --mod-link-text-color-primary-active,
-            var(--spectrum-link-text-color-primary-active)
-        )
-    );
+    color: var(--highcontrast-link-text-color-primary-active, var(--mod-link-text-color-primary-active, var(--spectrum-link-text-color-primary-active)));
 }
 
 a:focus-visible {
-    color: var(
-        --highcontrast-link-text-color-primary-focus,
-        var(
-            --mod-link-text-color-primary-focus,
-            var(--spectrum-link-text-color-primary-focus)
-        )
-    );
+    color: var(--highcontrast-link-text-color-primary-focus, var(--mod-link-text-color-primary-focus, var(--spectrum-link-text-color-primary-focus)));
     -webkit-text-decoration: underline double;
     text-decoration: underline double;
     text-decoration-color: inherit;
@@ -74,33 +51,15 @@ a:focus-visible {
 }
 
 :host([variant='secondary']) a {
-    color: var(
-        --highcontrast-link-text-color-secondary-default,
-        var(
-            --mod-link-text-color-secondary-default,
-            var(--spectrum-link-text-color-secondary-default)
-        )
-    );
+    color: var(--highcontrast-link-text-color-secondary-default, var(--mod-link-text-color-secondary-default, var(--spectrum-link-text-color-secondary-default)));
 }
 
 :host([variant='secondary']) a:active {
-    color: var(
-        --highcontrast-link-text-color-secondary-active,
-        var(
-            --mod-link-text-color-secondary-active,
-            var(--spectrum-link-text-color-secondary-active)
-        )
-    );
+    color: var(--highcontrast-link-text-color-secondary-active, var(--mod-link-text-color-secondary-active, var(--spectrum-link-text-color-secondary-active)));
 }
 
 :host([variant='secondary']) a:focus {
-    color: var(
-        --highcontrast-link-text-color-secondary-focus,
-        var(
-            --mod-link-text-color-secondary-focus,
-            var(--spectrum-link-text-color-secondary-focus)
-        )
-    );
+    color: var(--highcontrast-link-text-color-secondary-focus, var(--mod-link-text-color-secondary-focus, var(--spectrum-link-text-color-secondary-focus)));
 }
 
 :host([quiet]) a {
@@ -111,40 +70,22 @@ a:focus-visible {
 :host([static-color='white']) a,
 :host([static-color='white']) a:active,
 :host([static-color='white']) a:focus {
-    color: var(
-        --highcontrast-link-text-color-white,
-        var(--mod-link-text-color-white, var(--spectrum-link-text-color-white))
-    );
+    color: var(--highcontrast-link-text-color-white, var(--mod-link-text-color-white, var(--spectrum-link-text-color-white)));
 }
 
 :host([static-color='black']) a,
 :host([static-color='black']) a:active,
 :host([static-color='black']) a:focus {
-    color: var(
-        --highcontrast-link-text-color-black,
-        var(--mod-link-text-color-black, var(--spectrum-link-text-color-black))
-    );
+    color: var(--highcontrast-link-text-color-black, var(--mod-link-text-color-black, var(--spectrum-link-text-color-black)));
 }
 
 @media (hover: hover) {
     a:hover {
-        color: var(
-            --highcontrast-link-text-color-primary-hover,
-            var(
-                --mod-link-text-color-primary-hover,
-                var(--spectrum-link-text-color-primary-hover)
-            )
-        );
+        color: var(--highcontrast-link-text-color-primary-hover, var(--mod-link-text-color-primary-hover, var(--spectrum-link-text-color-primary-hover)));
     }
 
     :host([variant='secondary']) a:hover {
-        color: var(
-            --highcontrast-link-text-color-secondary-hover,
-            var(
-                --mod-link-text-color-secondary-hover,
-                var(--spectrum-link-text-color-secondary-hover)
-            )
-        );
+        color: var(--highcontrast-link-text-color-secondary-hover, var(--mod-link-text-color-secondary-hover, var(--spectrum-link-text-color-secondary-hover)));
     }
 
     :host([quiet]) a:hover {
@@ -153,22 +94,10 @@ a:focus-visible {
     }
 
     :host([static-color='white']) a:hover {
-        color: var(
-            --highcontrast-link-text-color-white,
-            var(
-                --mod-link-text-color-white,
-                var(--spectrum-link-text-color-white)
-            )
-        );
+        color: var(--highcontrast-link-text-color-white, var(--mod-link-text-color-white, var(--spectrum-link-text-color-white)));
     }
 
     :host([static-color='black']) a:hover {
-        color: var(
-            --highcontrast-link-text-color-black,
-            var(
-                --mod-link-text-color-black,
-                var(--spectrum-link-text-color-black)
-            )
-        );
+        color: var(--highcontrast-link-text-color-black, var(--mod-link-text-color-black, var(--spectrum-link-text-color-black)));
     }
 }

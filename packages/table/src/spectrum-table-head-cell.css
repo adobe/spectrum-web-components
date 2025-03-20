@@ -13,88 +13,29 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .sortedIcon {
     vertical-align: initial;
-    transition: transform
-        var(
-            --highcontrast-table-transition-duration,
-            var(
-                --mod-table-transition-duration,
-                var(--spectrum-table-transition-duration)
-            )
-        )
-        ease-in-out;
+    transition: transform var(--highcontrast-table-transition-duration, var(--mod-table-transition-duration, var(--spectrum-table-transition-duration))) ease-in-out;
     margin-inline-start: var(--mod-table-sort-icon-inline-start-spacing, 0);
-    margin-inline-end: var(
-        --mod-table-sort-icon-inline-end-spacing,
-        var(--mod-table-icon-to-text, var(--spectrum-table-icon-to-text))
-    );
+    margin-inline-end: var(--mod-table-sort-icon-inline-end-spacing, var(--mod-table-icon-to-text, var(--spectrum-table-icon-to-text)));
     display: none;
 }
 
 :host {
-    --spectrum-table-icon-color: var(
-        --highcontrast-table-icon-color,
-        var(
-            --mod-table-icon-color-default,
-            var(--spectrum-table-icon-color-default)
-        )
-    );
+    --spectrum-table-icon-color: var(--highcontrast-table-icon-color, var(--mod-table-icon-color-default, var(--spectrum-table-icon-color-default)));
     box-sizing: border-box;
     text-align: start;
-    vertical-align: var(
-        --mod-table-header-vertical-align,
-        var(--spectrum-table-header-vertical-align)
-    );
-    font-family: var(
-        --mod-table-header-font-family,
-        var(--spectrum-table-row-font-family)
-    );
-    font-size: var(
-        --mod-table-header-font-size,
-        var(--spectrum-table-row-font-size)
-    );
-    font-weight: var(
-        --mod-table-header-font-weight,
-        var(--spectrum-table-header-font-weight)
-    );
-    line-height: var(
-        --mod-table-header-line-height,
-        var(--spectrum-table-row-line-height)
-    );
+    vertical-align: var(--mod-table-header-vertical-align, var(--spectrum-table-header-vertical-align));
+    font-family: var(--mod-table-header-font-family, var(--spectrum-table-row-font-family));
+    font-size: var(--mod-table-header-font-size, var(--spectrum-table-row-font-size));
+    font-weight: var(--mod-table-header-font-weight, var(--spectrum-table-header-font-weight));
+    line-height: var(--mod-table-header-line-height, var(--spectrum-table-row-line-height));
     text-transform: none;
     text-transform: var(--mod-table-header-text-transform, none);
-    block-size: var(
-        --mod-table-min-header-height,
-        var(--spectrum-table-min-header-height)
-    );
-    padding-block: var(
-            --mod-table-header-top-to-text,
-            var(--spectrum-table-header-top-to-text)
-        )
-        var(
-            --mod-table-header-bottom-to-text,
-            var(--spectrum-table-header-bottom-to-text)
-        );
-    padding-inline: var(
-        --mod-table-cell-inline-space,
-        var(--spectrum-table-cell-inline-space)
-    );
-    color: var(
-        --mod-table-header-text-color,
-        var(--spectrum-table-header-text-color)
-    );
-    background-color: var(
-        --mod-table-header-background-color,
-        var(--spectrum-table-header-background-color)
-    );
-    transition: color
-        var(
-            --highcontrast-table-transition-duration,
-            var(
-                --mod-table-transition-duration,
-                var(--spectrum-table-transition-duration)
-            )
-        )
-        ease-in-out;
+    block-size: var(--mod-table-min-header-height, var(--spectrum-table-min-header-height));
+    padding-block: var(--mod-table-header-top-to-text, var(--spectrum-table-header-top-to-text)) var(--mod-table-header-bottom-to-text, var(--spectrum-table-header-bottom-to-text));
+    padding-inline: var(--mod-table-cell-inline-space, var(--spectrum-table-cell-inline-space));
+    color: var(--mod-table-header-text-color, var(--spectrum-table-header-text-color));
+    background-color: var(--mod-table-header-background-color, var(--spectrum-table-header-background-color));
+    transition: color var(--highcontrast-table-transition-duration, var(--mod-table-transition-duration, var(--spectrum-table-transition-duration))) ease-in-out;
     cursor: auto;
     cursor: var(--mod-table-cursor-header-default, initial);
     border-radius: 0;
@@ -112,34 +53,16 @@ governing permissions and limitations under the License.
 }
 
 :host([sortable][active]) {
-    --spectrum-table-icon-color: var(
-        --highcontrast-table-icon-color-focus,
-        var(
-            --mod-table-icon-color-active,
-            var(--spectrum-table-icon-color-active)
-        )
-    );
+    --spectrum-table-icon-color: var(--highcontrast-table-icon-color-focus, var(--mod-table-icon-color-active, var(--spectrum-table-icon-color-active)));
 }
 
 :host([sortable]:focus) {
-    --spectrum-table-icon-color: var(
-        --highcontrast-table-icon-color-focus,
-        var(
-            --mod-table-icon-color-focus,
-            var(--spectrum-table-icon-color-focus)
-        )
-    );
+    --spectrum-table-icon-color: var(--highcontrast-table-icon-color-focus, var(--mod-table-icon-color-focus, var(--spectrum-table-icon-color-focus)));
 }
 
 :host([sortable]) .is-keyboardFocused,
 :host([sortable]:focus-visible) {
-    --spectrum-table-icon-color: var(
-        --highcontrast-table-icon-color-focus,
-        var(
-            --mod-table-icon-color-key-focus,
-            var(--spectrum-table-icon-color-key-focus)
-        )
-    );
+    --spectrum-table-icon-color: var(--highcontrast-table-icon-color-focus, var(--mod-table-icon-color-key-focus, var(--spectrum-table-icon-color-key-focus)));
 }
 
 :host([sort-direction='asc']) .sortedIcon,
@@ -157,47 +80,16 @@ governing permissions and limitations under the License.
 
 :host([focused]),
 :host(:focus-visible) {
-    outline-width: var(
-        --mod-table-focus-indicator-thickness,
-        var(--spectrum-table-focus-indicator-thickness)
-    );
+    outline-width: var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness));
     outline-style: solid;
-    outline-color: var(
-        --highcontrast-table-cell-focus-indicator-color,
-        var(
-            --highcontrast-table-focus-indicator-color,
-            var(
-                --mod-table-focus-indicator-color,
-                var(--spectrum-table-focus-indicator-color)
-            )
-        )
-    );
-    outline-offset: calc(
-        var(
-                --mod-table-focus-indicator-thickness,
-                var(--spectrum-table-focus-indicator-thickness)
-            ) * -1
-    );
-    outline-offset: calc(
-        var(
-                --mod-table-focus-indicator-thickness,
-                var(--spectrum-table-focus-indicator-thickness)
-            ) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px)
-    );
+    outline-color: var(--highcontrast-table-cell-focus-indicator-color, var(--highcontrast-table-focus-indicator-color, var(--mod-table-focus-indicator-color, var(--spectrum-table-focus-indicator-color))));
+    outline-offset: calc(var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness)) * -1);
+    outline-offset: calc(var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness)) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px));
 }
 
 :host .spectrum-Table-checkboxCell .spectrum-Table-checkbox {
-    margin-block-start: calc(
-        var(
-                --mod-table-header-checkbox-block-spacing,
-                var(--spectrum-table-header-checkbox-block-spacing)
-            ) -
-            var(--mod-table-border-width, var(--spectrum-table-border-width))
-    );
-    margin-block-end: var(
-        --mod-table-header-checkbox-block-spacing,
-        var(--spectrum-table-header-checkbox-block-spacing)
-    );
+    margin-block-start: calc(var(--mod-table-header-checkbox-block-spacing, var(--spectrum-table-header-checkbox-block-spacing)) - var(--mod-table-border-width, var(--spectrum-table-border-width)));
+    margin-block-end: var(--mod-table-header-checkbox-block-spacing, var(--spectrum-table-header-checkbox-block-spacing));
 }
 
 :host {
@@ -205,35 +97,15 @@ governing permissions and limitations under the License.
 }
 
 :host .spectrum-Table-scroller {
-    border-block-end: var(
-            --mod-table-border-width,
-            var(--spectrum-table-border-width)
-        )
-        solid
-        var(
-            --highcontrast-table-border-color,
-            var(--mod-table-border-color, var(--spectrum-table-border-color))
-        );
+    border-block-end: var(--mod-table-border-width, var(--spectrum-table-border-width)) solid var(--highcontrast-table-border-color, var(--mod-table-border-color, var(--spectrum-table-border-color)));
 }
 
 @media (hover: hover) {
     :host([sortable]:hover) {
-        --spectrum-table-icon-color: var(
-            --highcontrast-table-icon-color-focus,
-            var(
-                --mod-table-icon-color-hover,
-                var(--spectrum-table-icon-color-hover)
-            )
-        );
+        --spectrum-table-icon-color: var(--highcontrast-table-icon-color-focus, var(--mod-table-icon-color-hover, var(--spectrum-table-icon-color-hover)));
     }
 
     :host([sortable]:focus):hover {
-        --spectrum-table-icon-color: var(
-            --highcontrast-table-icon-color-focus,
-            var(
-                --mod-table-icon-color-focus-hover,
-                var(--spectrum-table-icon-color-focus-hover)
-            )
-        );
+        --spectrum-table-icon-color: var(--highcontrast-table-icon-color-focus, var(--mod-table-icon-color-focus-hover, var(--spectrum-table-icon-color-focus-hover)));
     }
 }

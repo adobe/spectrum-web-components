@@ -26,30 +26,15 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Typography .spectrum-Heading {
-    --spectrum-heading-margin-start: calc(
-        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
-            var(--spectrum-heading-margin-top-multiplier)
-    );
-    --spectrum-heading-margin-end: calc(
-        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
-            var(--spectrum-heading-margin-bottom-multiplier)
-    );
+    --spectrum-heading-margin-start: calc(var(--mod-heading-font-size, var(--spectrum-heading-font-size)) * var(--spectrum-heading-margin-top-multiplier));
+    --spectrum-heading-margin-end: calc(var(--mod-heading-font-size, var(--spectrum-heading-font-size)) * var(--spectrum-heading-margin-bottom-multiplier));
 }
 
 .spectrum-Typography .spectrum-Body {
-    --spectrum-body-margin-end: calc(
-        var(--mod-body-font-size, var(--spectrum-body-font-size)) *
-            var(--spectrum-body-margin-multiplier)
-    );
+    --spectrum-body-margin-end: calc(var(--mod-body-font-size, var(--spectrum-body-font-size)) * var(--spectrum-body-margin-multiplier));
 }
 
 .spectrum-Typography .spectrum-Detail {
-    --spectrum-detail-margin-start: calc(
-        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
-            var(--spectrum-detail-margin-top-multiplier)
-    );
-    --spectrum-detail-margin-end: calc(
-        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
-            var(--spectrum-detail-margin-bottom-multiplier)
-    );
+    --spectrum-detail-margin-start: calc(var(--mod-detail-font-size, var(--spectrum-detail-font-size)) * var(--spectrum-detail-margin-top-multiplier));
+    --spectrum-detail-margin-end: calc(var(--mod-detail-font-size, var(--spectrum-detail-font-size)) * var(--spectrum-detail-margin-bottom-multiplier));
 }

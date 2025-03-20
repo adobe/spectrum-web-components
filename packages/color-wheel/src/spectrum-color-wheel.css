@@ -20,18 +20,9 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    --_track-width: var(
-        --mod-colorwheel-track-width,
-        var(--spectrum-colorwheel-track-width)
-    );
-    --_border-width: var(
-        --mod-colorwheel-border-width,
-        var(--spectrum-colorwheel-border-width)
-    );
-    min-inline-size: var(
-        --mod-colorwheel-min-width,
-        var(--spectrum-colorwheel-min-width)
-    );
+    --_track-width: var(--mod-colorwheel-track-width, var(--spectrum-colorwheel-track-width));
+    --_border-width: var(--mod-colorwheel-border-width, var(--spectrum-colorwheel-border-width));
+    min-inline-size: var(--mod-colorwheel-min-width, var(--spectrum-colorwheel-min-width));
     inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
     block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
     -webkit-user-select: none;
@@ -54,14 +45,8 @@ governing permissions and limitations under the License.
 }
 
 .inner {
-    inline-size: var(
-        --mod-colorwheel-colorarea-container-size,
-        var(--spectrum-colorwheel-colorarea-container-size)
-    );
-    block-size: var(
-        --mod-colorwheel-colorarea-container-size,
-        var(--spectrum-colorwheel-colorarea-container-size)
-    );
+    inline-size: var(--mod-colorwheel-colorarea-container-size, var(--spectrum-colorwheel-colorarea-container-size));
+    block-size: var(--mod-colorwheel-colorarea-container-size, var(--spectrum-colorwheel-colorarea-container-size));
     margin: auto;
     display: flex;
     position: absolute;
@@ -72,10 +57,7 @@ governing permissions and limitations under the License.
 .colorarea-container {
     block-size: auto;
     inline-size: 100%;
-    margin: var(
-        --mod-colorwheel-colorarea-margin,
-        var(--spectrum-colorwheel-colorarea-margin)
-    );
+    margin: var(--mod-colorwheel-colorarea-margin, var(--spectrum-colorwheel-colorarea-margin));
     justify-content: center;
     align-items: center;
     display: flex;
@@ -100,65 +82,26 @@ governing permissions and limitations under the License.
 }
 
 .border {
-    background-color: var(
-        --mod-colorwheel-border-color,
-        var(--spectrum-colorwheel-border-color)
-    );
+    background-color: var(--mod-colorwheel-border-color, var(--spectrum-colorwheel-border-color));
     inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
     block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
-    clip-path: path(
-        evenodd,
-        var(
-            --mod-colorwheel-path-borders,
-            var(--spectrum-colorwheel-path-borders)
-        )
-    );
+    clip-path: path(evenodd, var(--mod-colorwheel-path-borders, var(--spectrum-colorwheel-path-borders)));
     position: relative;
 }
 
 :host([disabled]) .border {
-    background-color: var(
-        --highcontrast-colorwheel-border-color-disabled,
-        var(
-            --mod-colorwheel-fill-color-disabled,
-            var(--spectrum-colorwheel-fill-color-disabled)
-        )
-    );
+    background-color: var(--highcontrast-colorwheel-border-color-disabled, var(--mod-colorwheel-fill-color-disabled, var(--spectrum-colorwheel-fill-color-disabled)));
 }
 
 .wheel {
     inset-block: var(--spectrum-colorwheel-border-width);
     inset-inline: var(--spectrum-colorwheel-border-width);
-    clip-path: path(
-        evenodd,
-        var(--mod-colorwheel-path, var(--spectrum-colorwheel-path))
-    );
-    background: conic-gradient(
-        from 90deg,
-        red,
-        #ff8000,
-        #ff0,
-        #80ff00,
-        #0f0,
-        #00ff80,
-        #0ff,
-        #0080ff,
-        #00f,
-        #8000ff,
-        #f0f,
-        #ff0080,
-        red
-    );
+    clip-path: path(evenodd, var(--mod-colorwheel-path, var(--spectrum-colorwheel-path)));
+    background: conic-gradient(from 90deg, red, #ff8000, #ff0, #80ff00, #0f0, #00ff80, #0ff, #0080ff, #00f, #8000ff, #f0f, #ff0080, red);
     position: absolute;
 }
 
 :host([disabled]) .wheel {
     pointer-events: none;
-    background: var(
-        --highcontrast-colorwheel-fill-color-disabled,
-        var(
-            --mod-colorwheel-fill-color-disabled,
-            var(--spectrum-colorwheel-fill-color-disabled)
-        )
-    );
+    background: var(--highcontrast-colorwheel-fill-color-disabled, var(--mod-colorwheel-fill-color-disabled, var(--spectrum-colorwheel-fill-color-disabled)));
 }
