@@ -7210,9 +7210,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/checkbox@npm:10.1.1":
-  version: 10.1.1
-  resolution: "@spectrum-css/checkbox@npm:10.1.1"
+"@spectrum-css/checkbox@npm:10.1.2":
+  version: 10.1.2
+  resolution: "@spectrum-css/checkbox@npm:10.1.2"
   peerDependencies:
     "@spectrum-css/icon": ">=9.0.0 <10.0.0"
     "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
@@ -7221,7 +7221,7 @@ __metadata:
       optional: true
     "@spectrum-css/tokens":
       optional: true
-  checksum: 10c0/370719feb998f154d464276488cdd5d4110ef3b2eed1a63befa82cabb8d9c7c50c2e2c044666b3c4bb8d9a117daf56688549847cf0542d50fc8a905222bcf104
+  checksum: 10c0/40472415f5c2ad6128584dcc5019a8b925ad1aebc250f5b350d567b9b0e375142c761eead450a3e6442ec26d21ce55692ddc9c34c1b106b6a8c78f4b63d4056d
   languageName: node
   linkType: hard
 
@@ -8193,7 +8193,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/checkbox@workspace:packages/checkbox"
   dependencies:
-    "@spectrum-css/checkbox": "npm:10.1.1"
+    "@spectrum-css/checkbox": "npm:10.1.2"
     "@spectrum-web-components/base": "npm:1.3.0"
     "@spectrum-web-components/icon": "npm:1.3.0"
     "@spectrum-web-components/icons-ui": "npm:1.3.0"
@@ -8414,8 +8414,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.3.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=850176&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/49197a16df8435d740d61d048a43fea9accdf3dc4c13e2c2f4e986ef5e5474a325f19fd7406814cb6aa0033da949da4b4922b5127c18855bd4bb69880bae7dda
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=2eb1f0&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/646f7fd6d92878bfd71f32c64ac198fb94462321a3c1296194dd6c777e7ee8303370e5b211ce2587d6eed527a9c2cc99397f06611ec68d003e06cd40a8a5d2ab
   languageName: node
   linkType: hard
 
