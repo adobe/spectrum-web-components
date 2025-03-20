@@ -20,6 +20,7 @@
 }
 
 :host([size="l"]) {
+    --mod-progressbar-size-default: var(--mod-meter-inline-size, var(--spectrum-progressbar-size-2500));
     --mod-progressbar-thickness: var(--spectrum-meter-thickness-large);
     --mod-progressbar-font-size: var(--spectrum-font-size-100);
     --mod-progressbar-spacing-top-to-text: var(--spectrum-component-top-to-text-200);
