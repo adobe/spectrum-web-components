@@ -54,7 +54,7 @@ import {
     SlottableRequestEvent,
 } from './slottable-request-event.js';
 
-import styles from './overlay.css.js';
+import styles from './overlay.css' with { type: 'css' };
 
 const browserSupportsPopover = 'showPopover' in document.createElement('div');
 

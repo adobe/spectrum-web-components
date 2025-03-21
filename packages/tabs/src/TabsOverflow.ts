@@ -31,7 +31,7 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import tabSizes from './tabs-sizes.css.js';
-import styles from './tabs-overflow.css.js';
+import styles from './tabs-overflow.css' with { type: 'css' };
 
 interface TabsOverflowState {
     canScrollLeft: boolean;

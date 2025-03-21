@@ -26,7 +26,7 @@ import { FocusGroupController } from '@spectrum-web-components/reactive-controll
 
 import { AccordionItem } from './AccordionItem.js';
 
-import styles from './accordion.css.js';
+import styles from './accordion.css' with { type: 'css' };
 
 /**
  * @element sp-accordion

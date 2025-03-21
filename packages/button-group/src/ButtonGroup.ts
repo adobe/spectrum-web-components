@@ -24,7 +24,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import type { Button } from '@spectrum-web-components/button';
 
-import styles from './button-group.css.js';
+import styles from './button-group.css' with { type: 'css' };
 
 /**
  * @element sp-button-group

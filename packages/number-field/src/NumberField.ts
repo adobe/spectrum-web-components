@@ -40,7 +40,7 @@ import {
     isIPhone,
 } from '@spectrum-web-components/shared/src/platform.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
-import styles from './number-field.css.js';
+import styles from './number-field.css' with { type: 'css' };
 
 export const FRAMES_PER_CHANGE = 5;
 // Debounce duration for inserting a `change` event after a batch of `wheel` originating `input` events.

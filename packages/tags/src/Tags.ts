@@ -22,7 +22,7 @@ import { RovingTabindexController } from '@spectrum-web-components/reactive-cont
 
 import { Tag } from './Tag.js';
 
-import styles from './tags.css.js';
+import styles from './tags.css' with { type: 'css' };
 
 /**
  * @element sp-tags

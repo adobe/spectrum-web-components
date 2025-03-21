@@ -31,7 +31,7 @@ import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import styles from './contextual-help.css.js';
+import styles from './contextual-help.css' with { type: 'css' };
 
 /**
  * Spectrum Contextual help provides additional information about
