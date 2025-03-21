@@ -149,7 +149,7 @@ See [help text](../help-text) for more information.
 </sp-tab-panel>
 </sp-tabs>
 
-### Types
+#### Types
 
 When inputting URLs, telephone numbers, email addresses, or passwords, specify a `type` to provide
 user affordances like mobile keyboards and obscured characters:
@@ -173,7 +173,7 @@ user affordances like mobile keyboards and obscured characters:
 
 If the `type` attribute is not specified, or if it does not match any of these values, the default type adopted is "text."
 
-### Quiet
+#### Quiet
 
 The quiet style works best when a clear layout (vertical stack, table, grid) assists in a user's ability to parse the element. Too many quiet components in a small space can be hard to read.
 
