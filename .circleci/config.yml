@@ -33,6 +33,9 @@ commands:
                   command: |
                       corepack enable
                       yarn --immutable
+            - run:
+                  name: Build the project
+                  command: yarn build
 
             - save_cache:
                   paths:
