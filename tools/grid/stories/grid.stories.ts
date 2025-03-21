@@ -30,6 +30,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import type { ActionBar } from '@spectrum-web-components/action-bar';
 import type { Grid } from '@spectrum-web-components/grid';
+import type { RenderItemFunction } from '@lit-labs/virtualizer/virtualize.js';
 
 export default {
     title: 'Grid',
@@ -65,6 +66,9 @@ const renderItem = (
             .selected=${selected}
             key=${index}
             draggable="true"
+            role="row"
+            aria-selected=${selected}
+            aria-rowindex=${index + 1}
         >
             <img
                 alt=""
@@ -79,7 +83,6 @@ const renderItem = (
                 slot="actions"
                 placement="bottom-end"
                 quiet
-                tabindex="-1"
             >
                 <sp-tooltip slot="tooltip" self-managed placement="top">
                     Do stuff
@@ -125,13 +128,22 @@ export const Default = (): TemplateResult => {
     const items = generateItems(1000);
 
     return html`
-        <h1>Random before content that is focusable</h1>
+        <h1>
+            <label for="first-input">
+                Random before content that is focusable
+            </label>
+        </h1>
         <input id="first-input" />
         <sp-grid
             @change=${handleChange}
             .items=${items}
             .focusableSelector=${'sp-card'}
-            .renderItem=${renderItem}
+            .renderItem=${renderItem as RenderItemFunction<Item>}
+            role="grid"
+            aria-label="Select images"
+            aria-multiselectable="true"
+            aria-rowcount=${items.length}
+            aria-colcount=${1}
         ></sp-grid>
         <sp-action-bar variant="fixed">
             <sp-checkbox @click=${handleActionBarChange} checked>
@@ -148,7 +160,11 @@ export const Default = (): TemplateResult => {
                 </sp-action-button>
             </sp-action-group>
         </sp-action-bar>
-        <h2>Random after content that is focusable</h2>
+        <h2>
+            <label for="last-input">
+                Random after content that is focusable
+            </label>
+        </h2>
         <input id="last-input" />
     `;
 };
@@ -198,7 +214,7 @@ export const sized = (
             @change=${handleChange}
             .items=${items}
             .focusableSelector=${'sp-card'}
-            .renderItem=${renderItem}
+            .renderItem=${renderItem as RenderItemFunction<Item>}
             .itemSize=${{
                 width: 200,
                 height: 300,
@@ -298,7 +314,7 @@ export const scrollParentInAssignedSlot = (): TemplateResult => {
             <sp-grid
                 .items=${items}
                 .focusableSelector=${'sp-card'}
-                .renderItem=${renderItem}
+                .renderItem=${renderItem as RenderItemFunction<Item>}
             ></sp-grid>
         </my-parent>
     `;
