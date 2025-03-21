@@ -27,10 +27,13 @@ export type HandleValues = {
     value: number;
 }[];
 
-export type SliderNormalization = {
+/**
+ * Normalization interface for converting between raw and normalized values
+ */
+export interface SliderNormalization {
     toNormalized: (value: number, min: number, max: number) => number;
     fromNormalized: (value: number, min: number, max: number) => number;
-};
+}
 
 export const defaultNormalization: SliderNormalization = {
     toNormalized(value: number, min: number, max: number) {
@@ -64,45 +67,22 @@ const MaxConverter = {
 /**
  * @element sp-slider-handle
  *
+ * Represents an individual handle in a slider component.
+ * Can be used standalone or as part of a multi-handle slider.
+ *
  * @fires input - The value of the element has changed.
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
 export class SliderHandle extends Focusable {
+    // Controller reference
     public handleController?: HandleController;
 
-    public get handleName(): string {
-        return this.name;
-    }
-
-    public override get focusElement(): HTMLElement {
-        /* c8 ignore next */
-        return this.handleController?.inputForHandle(this) ?? this;
-    }
-
-    _forcedUnit = '';
-
-    /**
-     * By default, the value of a Slider Handle will be halfway between its
-     * `min` and `max` values, or the `min` value when `max` is less than `min`.
-     */
+    // Core properties
     @property({ type: Number })
     public value!: number;
 
-    /**
-     * Set the default value of the handle. Setting this property will cause the
-     * handle to reset to the default value on double click or pressing the `escape` key.
-     */
     @property({ type: Number, attribute: 'default-value' })
     public defaultValue!: number;
-
-    @property({ type: Boolean, reflect: true })
-    public dragging = false;
-
-    @property({ type: Boolean })
-    public highlight = false;
-
-    @property({ type: String })
-    public name = '';
 
     @property({ reflect: true, converter: MinConverter })
     public min?: number | 'previous';
@@ -113,12 +93,31 @@ export class SliderHandle extends Focusable {
     @property({ type: Number, reflect: true })
     public step?: number;
 
-    @property({ type: Object, attribute: 'format-options' })
-    public formatOptions?: NumberFormatOptions;
+    // State properties
+    @property({ type: Boolean, reflect: true })
+    public dragging = false;
+
+    @property({ type: Boolean })
+    public highlight = false;
+
+    // Identification properties
+    @property({ type: String })
+    public name = '';
 
     @property({ type: String })
     public label = '';
 
+    // Formatting properties
+    @property({ type: Object, attribute: 'format-options' })
+    public formatOptions?: NumberFormatOptions;
+
+    @property({ attribute: false })
+    public normalization: SliderNormalization = defaultNormalization;
+
+    // Internal state
+    _forcedUnit = '';
+
+    // Callback properties
     @property({ attribute: false })
     public getAriaHandleText: (
         value: number,
@@ -127,6 +126,17 @@ export class SliderHandle extends Focusable {
         return numberFormat.format(value);
     };
 
+    // Computed properties
+    public get handleName(): string {
+        return this.name;
+    }
+
+    public override get focusElement(): HTMLElement {
+        /* c8 ignore next */
+        return this.handleController?.inputForHandle(this) ?? this;
+    }
+
+    // Lifecycle methods
     protected override update(changes: PropertyValues): void {
         if (!this.hasUpdated) {
             this.handleController?.setDefaultValue(this);
@@ -154,9 +164,7 @@ export class SliderHandle extends Focusable {
         this.dispatchEvent(new CustomEvent('sp-slider-handle-ready'));
     }
 
-    @property({ attribute: false })
-    public normalization: SliderNormalization = defaultNormalization;
-
+    // Event methods
     public dispatchInputEvent(): void {
         const inputEvent = new Event('input', {
             bubbles: true,

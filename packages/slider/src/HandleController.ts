@@ -14,6 +14,9 @@ import { SliderBase } from './SliderBase.js';
 import { SliderHandle, SliderNormalization } from './SliderHandle.js';
 import { NumberFormatter } from '@internationalized/number';
 
+/**
+ * Interface for handle reference elements
+ */
 interface HandleReference {
     handle: HTMLElement;
     input: HTMLInputElement;
@@ -54,6 +57,14 @@ export interface HandleValueDictionary {
     [key: string]: number;
 }
 
+/**
+ * Controller that manages slider handles and their interactions.
+ * Responsible for:
+ * - Managing multiple handles
+ * - Handling drag operations
+ * - Formatting values
+ * - Coordinating handle updates
+ */
 export class HandleController {
     private host: SliderBase;
     private defaultHandle?: SliderHandle;
@@ -88,6 +99,7 @@ export class HandleController {
         });
     }
 
+    // Public API methods
     public get values(): HandleValueDictionary {
         const result: HandleValueDictionary = {};
         for (const model of this.handles.values()) {
@@ -445,6 +457,11 @@ export class HandleController {
         this.dispatchChangeEvent(input, model.handle);
     }
 
+    /**
+     * Sets a handle's value and updates the host if it's the default handle
+     * @param handle The handle to update
+     * @param value The new value
+     */
     private setHandleValue(handle: SliderHandle, value: number): void {
         handle.value = value;
         if (handle === this.defaultHandle) {
@@ -452,6 +469,11 @@ export class HandleController {
         }
     }
 
+    /**
+     * Sets a handle's dragging state and updates the host if it's the default handle
+     * @param handle The handle to update
+     * @param dragging The new dragging state
+     */
     private setHandleDragging(handle: SliderHandle, dragging: boolean): void {
         handle.dragging = dragging;
         if (handle === this.defaultHandle) {
@@ -459,6 +481,11 @@ export class HandleController {
         }
     }
 
+    /**
+     * Sets a handle's highlight state and updates the host if it's the default handle
+     * @param handle The handle to update
+     * @param highlight The new highlight state
+     */
     private setHandleHighlight(handle: SliderHandle, highlight: boolean): void {
         handle.highlight = highlight;
         if (handle === this.defaultHandle) {
@@ -599,6 +626,10 @@ export class HandleController {
         ]);
     }
 
+    /**
+     * Updates the model data for all handles
+     * This is the core method that synchronizes handle state
+     */
     public updateModel(): void {
         const handles = [...this.handles.values()];
 
@@ -727,7 +758,10 @@ export class HandleController {
         return this.handleOrder.indexOf(handleName) + 2;
     }
 
-    // Add a new public method to update the default handle
+    /**
+     * Syncs properties from the slider to the default handle
+     * Called when slider properties change and need to be reflected in the handle
+     */
     public syncHandleProps(): void {
         if (!this.defaultHandle) {
             window.__swc.warn(
@@ -742,6 +776,10 @@ export class HandleController {
         this.configureDefaultHandle();
     }
 
+    /**
+     * Sets a default value for a handle or slider if none is provided
+     * @param handleOrSlider The handle or slider to set the default value for
+     */
     public setDefaultValue(handleOrSlider: SliderHandle | SliderBase): void {
         const { max, min } = handleOrSlider as { max: number; min: number };
         if ((handleOrSlider.value ?? null) === null) {
@@ -788,6 +826,12 @@ export class HandleController {
         return { numberFormatter, forcedUnit };
     }
 
+    /**
+     * Formats a value for display using the appropriate number formatter
+     * @param handle The handle to use for formatting context
+     * @param value Optional value to format (defaults to handle's value)
+     * @returns Formatted value string
+     */
     public formatValue(handle: SliderHandle, value?: number): string {
         const formatterSource = handle.formatOptions ? handle : this.host;
 

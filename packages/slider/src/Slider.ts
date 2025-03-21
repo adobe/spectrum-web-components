@@ -38,6 +38,10 @@ export class Slider extends SliderBase {
     public static override get styles(): CSSResultArray {
         return [sliderStyles];
     }
+
+    /**
+     * Main render method that composes the slider UI
+     */
     protected override render(): TemplateResult {
         return html`
             ${this.renderLabel()} ${this.renderTrack()}
@@ -63,6 +67,9 @@ export class Slider extends SliderBase {
         `;
     }
 
+    /**
+     * Renders the slider label, including both text and value labels
+     */
     private renderLabel(): TemplateResult {
         const textLabelVisible =
             this.labelVisibility === 'none' || this.labelVisibility === 'value';
@@ -107,6 +114,9 @@ export class Slider extends SliderBase {
         `;
     }
 
+    /**
+     * Renders the ramp visualization for the slider
+     */
     private renderRamp(): TemplateResult {
         if (this.variant !== 'ramp') {
             return html``;
@@ -127,6 +137,9 @@ export class Slider extends SliderBase {
         `;
     }
 
+    /**
+     * Renders tick marks for the slider when variant is 'tick'
+     */
     private renderTicks(): TemplateResult {
         if (this.variant !== 'tick') {
             return html``;
@@ -163,6 +176,26 @@ export class Slider extends SliderBase {
         `;
     }
 
+    /**
+     * Generates styles for a track segment
+     * @param start Normalized start position (0-1)
+     * @param end Normalized end position (0-1)
+     */
+    private trackSegmentStyles(start: number, end: number): StyleInfo {
+        const size = end - start;
+        const styles: StyleInfo = {
+            width: `${size * 100}%`,
+            '--spectrum-slider-track-background-size': `${(1 / size) * 100}%`,
+            '--spectrum-slider-track-segment-position': `${start * 100}%`,
+        };
+        return styles;
+    }
+
+    /**
+     * Renders a segment of the slider track
+     * @param start Normalized start position (0-1)
+     * @param end Normalized end position (0-1)
+     */
     private renderTrackSegment(start: number, end: number): TemplateResult {
         if (this.variant === 'ramp') {
             return html``;
@@ -177,10 +210,10 @@ export class Slider extends SliderBase {
     }
 
     /**
-     * @description calculates the fill width
-     * @param fillStartValue
-     * @param currentValue
-     * @returns
+     * Calculates the fill width for the slider
+     * @param fillStartValue The starting value for the fill
+     * @param currentValue The current slider value
+     * @returns Width as a percentage
      */
     private getOffsetWidth(
         fillStartValue: number,
@@ -190,6 +223,11 @@ export class Slider extends SliderBase {
         return distance * 100;
     }
 
+    /**
+     * Generates styles for the fill element
+     * @param centerPoint The center point value
+     * @param activeModel The active handle model
+     */
     private fillStyles(
         centerPoint: number,
         activeModel: ModelValue
@@ -215,6 +253,9 @@ export class Slider extends SliderBase {
         return styles;
     }
 
+    /**
+     * Renders the fill offset element
+     */
     private renderFillOffset(): TemplateResult {
         if (
             this.centerPoint === undefined ||
@@ -238,6 +279,9 @@ export class Slider extends SliderBase {
         `;
     }
 
+    /**
+     * Renders the track container with all its components
+     */
     private renderTrack(): TemplateResult {
         const segments = this.handleController.trackSegments();
         const renderedHandles = this.renderHandles();
@@ -300,6 +344,9 @@ export class Slider extends SliderBase {
         `;
     }
 
+    /**
+     * Renders all slider handles
+     */
     private renderHandles(): TemplateResult {
         return html`
             ${this.handleController.handleElements.map((model, index) => {
@@ -316,6 +363,13 @@ export class Slider extends SliderBase {
         `;
     }
 
+    /**
+     * Renders a single handle
+     * @param model The handle model data
+     * @param index The index of the handle
+     * @param zIndex The z-index for proper stacking
+     * @param isMultiHandle Whether there are multiple handles
+     */
     private renderHandle(
         model: ModelValue,
         index: number,
@@ -375,15 +429,5 @@ export class Slider extends SliderBase {
                 </span>
             </div>
         `;
-    }
-
-    private trackSegmentStyles(start: number, end: number): StyleInfo {
-        const size = end - start;
-        const styles: StyleInfo = {
-            width: `${size * 100}%`,
-            '--spectrum-slider-track-background-size': `${(1 / size) * 100}%`,
-            '--spectrum-slider-track-segment-position': `${start * 100}%`,
-        };
-        return styles;
     }
 }

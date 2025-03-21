@@ -31,6 +31,10 @@ import {
 
 export const variants = ['filled', 'ramp', 'range', 'tick'];
 
+/**
+ * Base class for slider components that provides common functionality
+ * for handling slider interactions, properties, and rendering.
+ */
 export abstract class SliderBase extends SizedMixin(
     ObserveSlotText(Focusable, ''),
     {
@@ -38,19 +42,73 @@ export abstract class SliderBase extends SizedMixin(
         validSizes: ['s', 'm', 'l', 'xl'],
     }
 ) {
+    // Controllers
     public handleController: HandleController;
     private languageResolver: LanguageResolutionController;
 
-    constructor() {
-        super();
-        this.languageResolver = new LanguageResolutionController(this);
-        this.handleController = new HandleController(this);
-        this.handleController.languageChanged(this.languageResolver.language);
+    // Core properties
+    @property({ type: Number, reflect: true })
+    public min = 0;
+
+    @property({ type: Number, reflect: true })
+    public max = 100;
+
+    @property({ type: Number })
+    public step = 1;
+
+    @property({ type: Number })
+    public value!: number;
+
+    @property({ type: Number, attribute: 'default-value' })
+    public defaultValue?: number;
+
+    @property({ type: Boolean, reflect: true })
+    public override disabled = false;
+
+    // Visual properties
+    @property({ type: String })
+    public set variant(variant: string) {
+        const oldVariant = this.variant;
+        if (variant === this.variant) {
+            return;
+        }
+        if (variants.includes(variant) && this.fillStart === undefined) {
+            this._variant = variant;
+            this.setAttribute('variant', variant);
+        } else {
+            this._variant = '';
+            this.removeAttribute('variant');
+        }
+        this.requestUpdate('variant', oldVariant);
     }
 
-    /**
-     * Whether to display a Number Field along side the slider UI
-     */
+    public get variant(): string {
+        return this._variant;
+    }
+
+    /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
+    private _variant = '';
+
+    @property({ type: Number, reflect: true, attribute: 'fill-start' })
+    public fillStart?: number | boolean;
+
+    @property({ type: Number, attribute: 'tick-step' })
+    public tickStep = 0;
+
+    @property({ type: Boolean, attribute: 'tick-labels' })
+    public tickLabels = false;
+
+    // State properties
+    @property({ type: Boolean, reflect: true })
+    public dragging = false;
+
+    @property({ type: Boolean })
+    public highlight = false;
+
+    @property({ type: Boolean })
+    public indeterminate = false;
+
+    // Editable properties
     @property({ type: Boolean, reflect: true })
     public get editable(): boolean {
         return this._editable;
@@ -72,45 +130,49 @@ export abstract class SliderBase extends SizedMixin(
 
     private _editable = false;
 
-    /**
-     * Whether the stepper UI of the Number Field is hidden or not
-     */
     @property({ type: Boolean, reflect: true, attribute: 'hide-stepper' })
     public hideStepper = false;
 
+    @property({ type: Boolean })
+    public quiet = false;
+
+    // Label properties
+    @property({ type: String })
+    public label = '';
+
+    @property({ type: String, reflect: true, attribute: 'label-visibility' })
+    public labelVisibility?: 'text' | 'value' | 'none';
+
+    // Formatting properties
+    @property({ type: Object, attribute: 'format-options' })
+    public formatOptions?: Intl.NumberFormatOptions;
+
+    @property({ type: Object, attribute: 'normalization' })
+    public normalization?: SliderNormalization;
+
+    // Other properties
     @property()
     public type = '';
 
     @property({ reflect: true })
     public override dir!: 'ltr' | 'rtl';
 
-    @property({ type: String })
-    public set variant(variant: string) {
-        const oldVariant = this.variant;
-        if (variant === this.variant) {
-            return;
-        }
-        if (variants.includes(variant) && this.fillStart === undefined) {
-            this._variant = variant;
-            this.setAttribute('variant', variant);
-        } else {
-            this._variant = '';
-            this.removeAttribute('variant');
-        }
-        this.requestUpdate('variant', oldVariant);
-    }
+    // DOM references
+    @query('#label')
+    public labelEl!: HTMLLabelElement;
 
-    public get variant(): string {
-        return this._variant;
-    }
+    @query('#number-field')
+    public numberField!: NumberField;
 
-    public get values(): HandleValueDictionary {
-        return this.handleController.values;
-    }
+    @query('#track')
+    public track!: HTMLDivElement;
 
-    /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
-    private _variant = '';
+    // Internal state
+    protected centerPoint: number | undefined;
+    private _numberFieldInput: Promise<unknown> = Promise.resolve();
+    private _forcedUnit = '';
 
+    // Callback properties
     @property({ attribute: false })
     public getAriaValueText: (values: Map<string, string>) => string = (
         values
@@ -121,67 +183,20 @@ export abstract class SliderBase extends SizedMixin(
         return valueArray.join(', ');
     };
 
-    public override get ariaValueText(): string {
-        if (!this.getAriaValueText) {
-            return `${this.value}${this._forcedUnit}`;
-        }
-        return this.getAriaValueText(this.handleController.formattedValues);
-    }
+    @property({ attribute: false })
+    public getAriaHandleText: (
+        value: number,
+        numberFormat: NumberFormatter
+    ) => string = (value, numberFormat) => {
+        return numberFormat.format(value);
+    };
 
-    @property({ type: String, reflect: true, attribute: 'label-visibility' })
-    public labelVisibility?: 'text' | 'value' | 'none';
-
-    @property({ type: Number, reflect: true })
-    public min = 0;
-
-    @property({ type: Number, reflect: true })
-    public max = 100;
-
-    @property({ type: Number })
-    public step = 1;
-
-    @property({ type: Number, attribute: 'tick-step' })
-    public tickStep = 0;
-
-    @property({ type: Boolean, attribute: 'tick-labels' })
-    public tickLabels = false;
-
-    @property({ type: Boolean, reflect: true })
-    public override disabled = false;
-
-    @property({ type: Number, reflect: true, attribute: 'fill-start' })
-    public fillStart?: number | boolean;
-
-    /**
-     * Applies `quiet` to the underlying `sp-number-field` when `editable === true`.
-     */
-    @property({ type: Boolean })
-    public quiet = false;
-
-    /**
-     * Applies `indeterminate` to the underlying `sp-number-field` when `editable === true`. Is removed on the next `change` event.
-     */
-    @property({ type: Boolean })
-    public indeterminate = false;
-
-    @query('#label')
-    public labelEl!: HTMLLabelElement;
-
-    @query('#number-field')
-    public numberField!: NumberField;
-
-    @query('#track')
-    public track!: HTMLDivElement;
-
-    public override get focusElement(): HTMLElement {
-        return this.handleController.focusElement;
-    }
-
-    protected handleLabelClick(event: Event): void {
-        if (this.editable) {
-            event.preventDefault();
-            this.focus();
-        }
+    // Constructor and lifecycle methods
+    constructor() {
+        super();
+        this.languageResolver = new LanguageResolutionController(this);
+        this.handleController = new HandleController(this);
+        this.handleController.languageChanged(this.languageResolver.language);
     }
 
     public override connectedCallback(): void {
@@ -214,63 +229,6 @@ export abstract class SliderBase extends SizedMixin(
             this.handleController.cancelDrag();
         }
         super.update(changedProperties);
-    }
-
-    protected centerPoint: number | undefined;
-
-    protected handleDoubleClick(event: PointerEvent): void {
-        this.handleController.handleDoubleClick(event);
-    }
-
-    protected handlePointerdown(event: PointerEvent): void {
-        this.handleController.handlePointerdown(event);
-    }
-
-    protected handlePointermove(event: PointerEvent): void {
-        this.handleController.handlePointermove(event);
-    }
-
-    protected handlePointerup(event: PointerEvent): void {
-        this.handleController.handlePointerup(event);
-    }
-
-    protected handleNumberInput(event: Event & { target: NumberField }): void {
-        const { value } = event.target;
-        if (event.target?.managedInput && !isNaN(value)) {
-            this.value = value;
-            return;
-        }
-        // Do not apply uncommited values to the parent element unless interacting with the stepper UI.
-        // Stop uncommitted input from being announced to the parent application.
-        event.stopPropagation();
-    }
-
-    protected handleNumberChange(event: Event & { target: NumberField }): void {
-        const { value } = event.target;
-        if (isNaN(value)) {
-            event.target.value = this.value;
-            event.stopPropagation();
-        } else {
-            this.value = value;
-            if (!event.target?.managedInput) {
-                // When stepper is not active, sythesize an `input` event so that the
-                // `change` event isn't surprising.
-                this.dispatchInputEvent();
-            }
-        }
-        this.indeterminate = false;
-    }
-
-    private _numberFieldInput: Promise<unknown> = Promise.resolve();
-
-    protected override async getUpdateComplete(): Promise<boolean> {
-        const complete = (await super.getUpdateComplete()) as boolean;
-        if (this.editable) {
-            await this._numberFieldInput;
-            await this.numberField.updateComplete;
-        }
-        await this.handleController.updateComplete();
-        return complete;
     }
 
     protected override willUpdate(changed: PropertyValues): void {
@@ -320,16 +278,84 @@ export abstract class SliderBase extends SizedMixin(
         this.handleController.hostUpdated();
     }
 
-    /**
-     * Render method to be implemented by subclasses
-     */
-    protected abstract override render(): TemplateResult;
+    protected override async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
+        if (this.editable) {
+            await this._numberFieldInput;
+            await this.numberField.updateComplete;
+        }
+        await this.handleController.updateComplete();
+        return complete;
+    }
 
-    @property({ type: Number })
-    public value!: number;
+    // Computed properties
+    public get values(): HandleValueDictionary {
+        return this.handleController.values;
+    }
 
-    private _forcedUnit = '';
+    public override get ariaValueText(): string {
+        if (!this.getAriaValueText) {
+            return `${this.value}${this._forcedUnit}`;
+        }
+        return this.getAriaValueText(this.handleController.formattedValues);
+    }
 
+    public override get focusElement(): HTMLElement {
+        return this.handleController.focusElement;
+    }
+
+    // Event handlers
+    protected handleLabelClick(event: Event): void {
+        if (this.editable) {
+            event.preventDefault();
+            this.focus();
+        }
+    }
+
+    protected handleDoubleClick(event: PointerEvent): void {
+        this.handleController.handleDoubleClick(event);
+    }
+
+    protected handlePointerdown(event: PointerEvent): void {
+        this.handleController.handlePointerdown(event);
+    }
+
+    protected handlePointermove(event: PointerEvent): void {
+        this.handleController.handlePointermove(event);
+    }
+
+    protected handlePointerup(event: PointerEvent): void {
+        this.handleController.handlePointerup(event);
+    }
+
+    protected handleNumberInput(event: Event & { target: NumberField }): void {
+        const { value } = event.target;
+        if (event.target?.managedInput && !isNaN(value)) {
+            this.value = value;
+            return;
+        }
+        // Do not apply uncommited values to the parent element unless interacting with the stepper UI.
+        // Stop uncommitted input from being announced to the parent application.
+        event.stopPropagation();
+    }
+
+    protected handleNumberChange(event: Event & { target: NumberField }): void {
+        const { value } = event.target;
+        if (isNaN(value)) {
+            event.target.value = this.value;
+            event.stopPropagation();
+        } else {
+            this.value = value;
+            if (!event.target?.managedInput) {
+                // When stepper is not active, sythesize an `input` event so that the
+                // `change` event isn't surprising.
+                this.dispatchInputEvent();
+            }
+        }
+        this.indeterminate = false;
+    }
+
+    // Public methods
     public dispatchInputEvent(): void {
         const inputEvent = new Event('input', {
             bubbles: true,
@@ -338,29 +364,9 @@ export abstract class SliderBase extends SizedMixin(
         this.dispatchEvent(inputEvent);
     }
 
-    @property({ type: Object, attribute: 'format-options' })
-    public formatOptions?: Intl.NumberFormatOptions;
-
-    @property({ type: Number, attribute: 'default-value' })
-    public defaultValue?: number;
-
-    @property({ type: Boolean, reflect: true })
-    public dragging = false;
-
-    @property({ type: Boolean })
-    public highlight = false;
-
-    @property({ type: String })
-    public label = '';
-
-    @property({ type: Object, attribute: 'normalization' })
-    public normalization?: SliderNormalization;
-
-    @property({ attribute: false })
-    public getAriaHandleText: (
-        value: number,
-        numberFormat: NumberFormatter
-    ) => string = (value, numberFormat) => {
-        return numberFormat.format(value);
-    };
+    // Abstract methods
+    /**
+     * Render method to be implemented by subclasses
+     */
+    protected abstract override render(): TemplateResult;
 }
