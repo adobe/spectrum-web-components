@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,6 +16,7 @@ governing permissions and limitations under the License.
         --mod-focus-indicator-thickness,
         var(--spectrum-focus-indicator-thickness)
     );
+
     min-block-size: var(--mod-switch-height, var(--spectrum-switch-min-height));
     max-inline-size: 100%;
     vertical-align: top;
@@ -616,6 +617,7 @@ governing permissions and limitations under the License.
         --highcontrast-switch-background-color-selected-focus: Highlight;
         --highcontrast-switch-background-color-selected-disabled: Highlight;
         --highcontrast-switch-focus-indicator-color: ButtonText;
+
         forced-color-adjust: none;
     }
 

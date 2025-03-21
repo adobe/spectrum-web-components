@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -28,7 +28,7 @@ governing permissions and limitations under the License.
 
 a {
     background-color: initial;
-    -webkit-text-decoration-skip: objects;
+    text-decoration-skip: objects;
     text-decoration-skip: objects;
     transition: color
         var(
@@ -45,7 +45,7 @@ a {
         )
     );
     outline: none;
-    -webkit-text-decoration: underline;
+    text-decoration: underline;
     text-decoration: underline;
 }
 
@@ -67,7 +67,7 @@ a:focus-visible {
             var(--spectrum-link-text-color-primary-focus)
         )
     );
-    -webkit-text-decoration: underline double;
+    text-decoration: underline double;
     text-decoration: underline double;
     text-decoration-color: inherit;
     text-decoration-color: var(--highcontrast-link-focus-color, inherit);
@@ -104,7 +104,7 @@ a:focus-visible {
 }
 
 :host([quiet]) a {
-    -webkit-text-decoration: none;
+    text-decoration: none;
     text-decoration: none;
 }
 
@@ -148,7 +148,7 @@ a:focus-visible {
     }
 
     :host([quiet]) a:hover {
-        -webkit-text-decoration: underline;
+        text-decoration: underline;
         text-decoration: underline;
     }
 
