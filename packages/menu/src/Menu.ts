@@ -506,15 +506,12 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (target?.href && target.href.length) {
             // This event will NOT ALLOW CANCELATION as link action
             // cancelation should occur on the `<sp-menu-item>` itself.
-            await new Promise((resolve) => {
-                this.dispatchEvent(
-                    new Event('change', {
-                        bubbles: true,
-                        composed: true,
-                    })
-                );
-                resolve(true);
-            });
+            this.dispatchEvent(
+                new Event('change', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
             return;
         } else if (
             target?.menuData?.selectionRoot === this &&
