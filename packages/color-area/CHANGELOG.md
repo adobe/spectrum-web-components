@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.3.0
+
+### Patch Changes
+
+-   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
+    -   @spectrum-web-components/reactive-controllers@1.3.0
+    -   @spectrum-web-components/color-handle@1.3.0
+    -   @spectrum-web-components/base@1.3.0
+    -   @spectrum-web-components/opacity-checkerboard@1.3.0
+    -   @spectrum-web-components/shared@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

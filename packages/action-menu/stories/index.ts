@@ -45,7 +45,7 @@ export const ActionMenuMarkup = ({
             ?disabled=${disabled}
             ?open=${open}
             ?quiet=${quiet}
-            ?forcePopover=${forcePopover}
+            ?force-popover=${forcePopover}
             static-color=${ifDefined(
                 staticValue === 'none'
                     ? undefined

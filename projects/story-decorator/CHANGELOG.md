@@ -1,5 +1,23 @@
 # Change Log
 
+## 1.3.0
+
+### Patch Changes
+
+-   [#5158](https://github.com/adobe/spectrum-web-components/pull/5158) [`30adee2`](https://github.com/adobe/spectrum-web-components/commit/30adee2f95236e595055baff466af55a8425bf05) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Decorator now sets the **swc_hack_knobs** correctly so that the stories with nested sp-theme updates the theme attributes correctly
+
+-   [#5175](https://github.com/adobe/spectrum-web-components/pull/5175) [`20df69e`](https://github.com/adobe/spectrum-web-components/commit/20df69ecb7ad6b3d3c0a63a4174ec164a79568ee) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - added the locale picker back to the storybook decorator
+
+-   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f), [`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
+    -   @spectrum-web-components/reactive-controllers@1.3.0
+    -   @spectrum-web-components/picker@1.3.0
+    -   @spectrum-web-components/menu@1.3.0
+    -   @spectrum-web-components/overlay@1.3.0
+    -   @spectrum-web-components/field-label@1.3.0
+    -   @spectrum-web-components/switch@1.3.0
+    -   @spectrum-web-components/base@1.3.0
+    -   @spectrum-web-components/theme@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

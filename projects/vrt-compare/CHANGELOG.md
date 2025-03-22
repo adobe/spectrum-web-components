@@ -1,5 +1,20 @@
 # Change Log
 
+## 1.3.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/action-group@1.3.0
+    -   @spectrum-web-components/action-bar@1.3.0
+    -   @spectrum-web-components/action-button@1.3.0
+    -   @spectrum-web-components/icons-workflow@1.3.0
+    -   @spectrum-web-components/split-view@1.3.0
+    -   @spectrum-web-components/base@1.3.0
+    -   @spectrum-web-components/shared@1.3.0
+    -   @spectrum-web-components/styles@1.3.0
+    -   @spectrum-web-components/theme@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
