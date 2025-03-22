@@ -176,8 +176,21 @@ export class InteractionController implements ReactiveController {
 
     hostConnected(): void {
         this.init();
-        this.host.addEventListener('sp-closed', ()=> {
-            if(!this.open && this.host.optionsMenu.matches(':focus-within') && !this.host.button.matches(':focus')) {
+        this.host.addEventListener('sp-opened', () => {
+            /**
+             * set shouldSupportDragAndSelect to false for mobile
+             * to prevent click event being captured behind the menu-tray
+             * we do this here because the menu gets reinitialized on overlay open
+             */
+            this.host.optionsMenu.shouldSupportDragAndSelect =
+                !this.host.isMobile.matches;
+        });
+        this.host.addEventListener('sp-closed', () => {
+            if (
+                !this.open &&
+                this.host.optionsMenu.matches(':focus-within') &&
+                !this.host.button.matches(':focus')
+            ) {
                 this.host.button.focus();
             }
         });

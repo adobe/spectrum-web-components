@@ -320,9 +320,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     ): Promise<void> {
         this.open = false;
         // should always close when "setting" a value
-        if (this.strategy) {
-            this.strategy.open = false;
-        }
         const oldSelectedItem = this.selectedItem;
         const oldValue = this.value;
 
