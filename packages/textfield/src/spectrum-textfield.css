@@ -83,12 +83,6 @@ governing permissions and limitations under the License.
     --spectrum-textfield-text-color-readonly: var(
         --spectrum-neutral-content-color-default
     );
-    --spectrum-textfield-background-color-disabled: var(
-        --spectrum-disabled-background-color
-    );
-    --spectrum-textfield-border-color-disabled: var(
-        --spectrum-disabled-border-color
-    );
     --spectrum-textfield-text-color-disabled: var(
         --spectrum-disabled-content-color
     );
@@ -128,10 +122,6 @@ governing permissions and limitations under the License.
     --spectrum-text-area-min-block-size: var(
         --spectrum-text-area-minimum-height
     );
-}
-
-#textfield,
-:host {
     --spectrum-textfield-height: var(--spectrum-component-height-100);
     --spectrum-textfield-label-spacing-block-quiet: var(
         --spectrum-field-label-to-component-quiet-medium
@@ -154,9 +144,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-textfield-icon-spacing-inline-end-valid: var(
         --spectrum-field-edge-to-validation-icon-medium
-    );
-    --spectrum-textfield-icon-spacing-block-invalid: var(
-        --spectrum-field-top-to-alert-icon-medium
     );
     --spectrum-textfield-icon-spacing-block-valid: var(
         --spectrum-field-top-to-validation-icon-medium
@@ -208,9 +195,6 @@ governing permissions and limitations under the License.
     --spectrum-textfield-icon-spacing-inline-end-valid: var(
         --spectrum-field-edge-to-validation-icon-small
     );
-    --spectrum-textfield-icon-spacing-block-invalid: var(
-        --spectrum-field-top-to-alert-icon-small
-    );
     --spectrum-textfield-icon-spacing-block-valid: var(
         --spectrum-field-top-to-validation-icon-small
     );
@@ -260,9 +244,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-textfield-icon-spacing-inline-end-valid: var(
         --spectrum-field-edge-to-validation-icon-large
-    );
-    --spectrum-textfield-icon-spacing-block-invalid: var(
-        --spectrum-field-top-to-alert-icon-large
     );
     --spectrum-textfield-icon-spacing-block-valid: var(
         --spectrum-field-top-to-validation-icon-large
@@ -314,9 +295,6 @@ governing permissions and limitations under the License.
     --spectrum-textfield-icon-spacing-inline-end-valid: var(
         --spectrum-field-edge-to-validation-icon-extra-large
     );
-    --spectrum-textfield-icon-spacing-block-invalid: var(
-        --spectrum-field-top-to-alert-icon-extra-large
-    );
     --spectrum-textfield-icon-spacing-block-valid: var(
         --spectrum-field-top-to-validation-icon-extra-large
     );
@@ -352,66 +330,6 @@ governing permissions and limitations under the License.
     display: inline-grid;
     position: relative;
     overflow: visible;
-}
-
-:host([quiet]) #textfield:after {
-    content: '';
-    pointer-events: none;
-    inline-size: 100%;
-    block-size: var(
-        --mod-textfield-focus-indicator-width,
-        var(--spectrum-textfield-focus-indicator-width)
-    );
-    position: absolute;
-    inset-block-end: calc(
-        (
-                var(
-                        --mod-textfield-focus-indicator-gap,
-                        var(--spectrum-textfield-focus-indicator-gap)
-                    ) +
-                    var(
-                        --mod-textfield-focus-indicator-width,
-                        var(--spectrum-textfield-focus-indicator-width)
-                    )
-            ) * -1
-    );
-    inset-inline-start: 0;
-}
-
-:host([quiet][focused]) #textfield:after {
-    background-color: var(
-        --highcontrast-textfield-focus-indicator-color,
-        var(
-            --mod-textfield-focus-indicator-color,
-            var(--spectrum-textfield-focus-indicator-color)
-        )
-    );
-}
-
-:host([quiet][invalid]) #textfield .input {
-    padding-inline-end: calc(
-        var(
-                --mod-textfield-icon-spacing-inline-start-invalid,
-                var(--spectrum-textfield-icon-spacing-inline-start-invalid)
-            ) +
-            var(
-                --mod-textfield-icon-size-invalid,
-                var(--spectrum-textfield-icon-size-invalid)
-            )
-    );
-}
-
-:host([quiet][valid]) #textfield .input {
-    padding-inline-end: calc(
-        var(
-                --mod-textfield-icon-spacing-inline-start-valid,
-                var(--spectrum-textfield-icon-spacing-inline-start-valid)
-            ) +
-            var(
-                --mod-textfield-icon-size-valid,
-                var(--spectrum-textfield-icon-size-valid)
-            )
-    );
 }
 
 :host([invalid]) #textfield .icon,
@@ -511,7 +429,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([disabled]) .spectrum-FieldLabel {
+:host([disabled]) #textfield .spectrum-FieldLabel {
     color: var(--spectrum-textfield-text-color-disabled);
 }
 
@@ -856,9 +774,12 @@ governing permissions and limitations under the License.
         --mod-textfield-background-color-disabled,
         var(--spectrum-textfield-background-color-disabled)
     );
+    border-color: var(
+        --mod-textfield-border-color-disabled,
+        var(--spectrum-textfield-border-color-disabled)
+    );
     resize: none;
     opacity: 1;
-    border-color: #0000;
 }
 
 .input:disabled,
@@ -1012,9 +933,12 @@ governing permissions and limitations under the License.
             --mod-textfield-background-color-disabled,
             var(--spectrum-textfield-background-color-disabled)
         );
+        border-color: var(
+            --mod-textfield-border-color-disabled,
+            var(--spectrum-textfield-border-color-disabled)
+        );
         resize: none;
         opacity: 1;
-        border-color: #0000;
     }
 
     :host([quiet][disabled]:hover) .input,
@@ -1135,6 +1059,66 @@ governing permissions and limitations under the License.
     );
     resize: none;
     overflow-y: hidden;
+}
+
+:host([quiet]):after {
+    content: '';
+    pointer-events: none;
+    inline-size: 100%;
+    block-size: var(
+        --mod-textfield-focus-indicator-width,
+        var(--spectrum-textfield-focus-indicator-width)
+    );
+    position: absolute;
+    inset-block-end: calc(
+        (
+                var(
+                        --mod-textfield-focus-indicator-gap,
+                        var(--spectrum-textfield-focus-indicator-gap)
+                    ) +
+                    var(
+                        --mod-textfield-focus-indicator-width,
+                        var(--spectrum-textfield-focus-indicator-width)
+                    )
+            ) * -1
+    );
+    inset-inline-start: 0;
+}
+
+:host([quiet][focused]):after {
+    background-color: var(
+        --highcontrast-textfield-focus-indicator-color,
+        var(
+            --mod-textfield-focus-indicator-color,
+            var(--spectrum-textfield-focus-indicator-color)
+        )
+    );
+}
+
+:host([quiet][invalid]) .input {
+    padding-inline-end: calc(
+        var(
+                --mod-textfield-icon-spacing-inline-start-invalid,
+                var(--spectrum-textfield-icon-spacing-inline-start-invalid)
+            ) +
+            var(
+                --mod-textfield-icon-size-invalid,
+                var(--spectrum-textfield-icon-size-invalid)
+            )
+    );
+}
+
+:host([quiet][valid]) .input {
+    padding-inline-end: calc(
+        var(
+                --mod-textfield-icon-spacing-inline-start-valid,
+                var(--spectrum-textfield-icon-spacing-inline-start-valid)
+            ) +
+            var(
+                --mod-textfield-icon-size-valid,
+                var(--spectrum-textfield-icon-size-valid)
+            )
+    );
 }
 
 @media (forced-colors: active) {

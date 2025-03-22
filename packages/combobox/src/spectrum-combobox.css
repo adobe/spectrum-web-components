@@ -118,7 +118,8 @@ governing permissions and limitations under the License.
         var(--spectrum-combobox-border-color-default)
     );
     --mod-textfield-border-color-disabled: var(
-        --mod-combobox-border-color-disabled
+        --mod-combobox-border-color-disabled,
+        var(--spectrum-combobox-border-color-disabled)
     );
     --mod-textfield-border-color-focus: var(
         --mod-combobox-border-color-focus,
@@ -174,10 +175,13 @@ governing permissions and limitations under the License.
     --mod-picker-button-font-color-disabled: var(
         --mod-combobox-font-color-disabled
     );
+    --mod-picker-button-border-color-disabled: var(
+        --mod-combobox-border-color-disabled,
+        var(--spectrum-combobox-border-color-disabled)
+    );
     --spectrum-combobox-readonly-input-background-color: var(
         --spectrum-gray-50
     );
-    --spectrum-combobox-readonly-input-border-color: var(--spectrum-gray-500);
     --spectrum-combobox-readonly-border-color-invalid-default: var(
         --spectrum-negative-border-color-default
     );
@@ -187,7 +191,7 @@ governing permissions and limitations under the License.
     --spectrum-combobox-readonly-text-color-disabled: var(
         --spectrum-disabled-content-color
     );
-    --spectrum-combobox-border-color-disabled: var(
+    --spectrum-combobox-readonly-border-color-disabled: var(
         --spectrum-disabled-border-color
     );
 }
@@ -332,6 +336,10 @@ governing permissions and limitations under the License.
             var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size)) /
             2
     );
+    --mod-textfield-border-color-disabled: var(
+        --mod-combobox-border-color-disabled,
+        initial
+    );
     --mod-picker-button-background-color-quiet: transparent;
     --mod-picker-button-border-color-quiet: transparent;
 }
@@ -439,6 +447,11 @@ governing permissions and limitations under the License.
         --mod-textfield-background-color-disabled,
         var(--spectrum-combobox-readonly-background-color-disabled)
     );
+    border-color: #0000;
+    border-color: var(
+        --mod-combobox-readonly-border-color-disabled,
+        var(--spectrum-combobox-readonly-border-color-disabled, transparent)
+    );
     color: var(
         --highcontrast-textfield-text-color-disabled,
         var(
@@ -446,7 +459,6 @@ governing permissions and limitations under the License.
             var(--spectrum-combobox-readonly-text-color-disabled)
         )
     );
-    border-color: #0000;
 }
 
 .progress-circle {
@@ -874,7 +886,7 @@ governing permissions and limitations under the License.
     );
     border-color: var(
         --mod-textfield-border-color-disabled,
-        var(--spectrum-combobox-border-color-disabled)
+        var(--spectrum-combobox-readonly-border-color-disabled)
     );
 }
 
