@@ -50,12 +50,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-search-border-width: var(--spectrum-border-width-100);
     --spectrum-search-color-disabled: var(--spectrum-disabled-content-color);
-    --spectrum-search-background-color-disabled: var(
-        --spectrum-disabled-background-color
-    );
-    --spectrum-search-border-color-disabled: var(
-        --spectrum-disabled-background-color
-    );
     --mod-textfield-font-family: var(
         --mod-search-font-family,
         var(--spectrum-search-font-family)
