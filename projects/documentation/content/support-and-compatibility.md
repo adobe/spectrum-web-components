@@ -17,7 +17,7 @@ Starting from version 1.0.0, Spectrum Web Components follows semantic versioning
 
 To provide early access to upcoming releases, we maintain a beta tag that points to the next minor version. The beta tag will always correspond to the next minor version incremented from the latest stable release. For example, if the latest tagged release is `1.2.1`, the beta tag will be `1.3.0-beta.0`.
 
-You can find the respective `beta` version of the documentation website under the following link: https://beta--spectrumwc.netlify.app/
+You can find the respective `beta` version of the documentation website under the following link: https://beta--spectrum-w-c.netlify.app/
 
 You can install the beta version of a specific Spectrum Web Components package by using the`@beta` tag with your package manager. For example, to install the beta version of the `@spectrum-web-components/button` package, run:
 

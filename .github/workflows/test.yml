@@ -32,7 +32,7 @@ jobs:
               id: extract_branch
 
             - name: Extract doc preview url
-              run: echo "DOC_URL=https://${{ steps.extract_branch.outputs.BRANCH }}--spectrumwc.netlify.app/" >> $GITHUB_OUTPUT
+              run: echo "DOC_URL=https://${{ steps.extract_branch.outputs.BRANCH }}--spectrum-w-c.netlify.app/" >> $GITHUB_OUTPUT
               id: extract_doc_url
 
             - name: Post Previews Comment
