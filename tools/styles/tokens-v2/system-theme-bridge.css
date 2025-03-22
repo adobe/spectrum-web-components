@@ -2194,10 +2194,10 @@
     --system-picker-border-color-key-focus: var(--spectrum-gray-900);
     --system-picker-border-color-disabled: var(--spectrum-gray-300);
     --system-picker-border-width: var(--spectrum-border-width-100);
-    --system-picker-button-background-color: var(--spectrum-gray-50);
-    --system-picker-button-background-color-hover: var(--spectrum-gray-100);
+    --system-picker-button-background-color: var(--spectrum-gray-100);
+    --system-picker-button-background-color-hover: var(--spectrum-gray-200);
     --system-picker-button-background-color-down: var(--spectrum-gray-200);
-    --system-picker-button-background-color-key-focus: var(--spectrum-gray-100);
+    --system-picker-button-background-color-key-focus: var(--spectrum-gray-200);
     --system-picker-button-border-color: none;
     --system-picker-button-border-radius: var(--spectrum-corner-radius-75);
     --system-picker-button-border-radius-rounded-sided: var(
