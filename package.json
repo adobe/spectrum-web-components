@@ -149,7 +149,7 @@
         "alex": "^11.0.1",
         "cem-plugin-module-file-extensions": "^0.0.5",
         "chromatic": "^11.20.0",
-        "chromedriver": "^133.0.3",
+        "chromedriver": "^134.0.3",
         "colors": "^1.4.0",
         "common-tags": "^1.8.2",
         "custom-elements-manifest": "^2.0.0",

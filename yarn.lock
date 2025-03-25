@@ -247,7 +247,7 @@ __metadata:
     alex: "npm:^11.0.1"
     cem-plugin-module-file-extensions: "npm:^0.0.5"
     chromatic: "npm:^11.20.0"
-    chromedriver: "npm:^133.0.3"
+    chromedriver: "npm:^134.0.3"
     colors: "npm:^1.4.0"
     common-tags: "npm:^1.8.2"
     custom-elements-manifest: "npm:^2.0.0"
@@ -7034,9 +7034,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/actionbutton@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@spectrum-css/actionbutton@npm:7.1.1"
+"@spectrum-css/actionbutton@npm:7.1.2":
+  version: 7.1.2
+  resolution: "@spectrum-css/actionbutton@npm:7.1.2"
   peerDependencies:
     "@spectrum-css/icon": ">=9.0.0 <10.0.0"
     "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
@@ -7045,7 +7045,7 @@ __metadata:
       optional: true
     "@spectrum-css/tokens":
       optional: true
-  checksum: 10c0/6c18473545d391e8531d9ed873e02f20f46f0e2501bab791449921e1cd8dd7ed10555cd26e47c0c4a384bc7c0a626edc7bf1986eb2617c045d49b83e8dc80512
+  checksum: 10c0/f77bd14ac5cadf821ac6b0d0359550293d62caa52dfac1eb88182e6b2431f24c36664851f20ef6848394587e7481f8b897961d1cd9180e7f64a441be7768eab0
   languageName: node
   linkType: hard
 
@@ -7955,7 +7955,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-button@workspace:packages/action-button"
   dependencies:
-    "@spectrum-css/actionbutton": "npm:7.1.1"
+    "@spectrum-css/actionbutton": "npm:7.1.2"
     "@spectrum-web-components/base": "npm:1.3.0"
     "@spectrum-web-components/button": "npm:1.3.0"
     "@spectrum-web-components/icon": "npm:1.3.0"
@@ -14182,9 +14182,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromedriver@npm:^133.0.3":
-  version: 133.0.3
-  resolution: "chromedriver@npm:133.0.3"
+"chromedriver@npm:^134.0.3":
+  version: 134.0.3
+  resolution: "chromedriver@npm:134.0.3"
   dependencies:
     "@testim/chrome-version": "npm:^1.1.4"
     axios: "npm:^1.7.4"
@@ -14195,7 +14195,7 @@ __metadata:
     tcp-port-used: "npm:^1.0.2"
   bin:
     chromedriver: bin/chromedriver
-  checksum: 10c0/c5c60a6fd27495478d31fbfb79e6da25d334434d3bbba13c67a05f1ee10430977411f798944824250698d2eb9ab4ea5c5491b852c4e75ec282c88e06702751e5
+  checksum: 10c0/2d522ed1ed7b28b2b5c6869c255040ef76044a4d0ad25e64af643ef6c9177554e9bde03c9864be3d15ba9c9eb4803bf6a2ddffdb531ae9d76ca9141f1001d391
   languageName: node
   linkType: hard
 
