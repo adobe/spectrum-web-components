@@ -64,12 +64,16 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
     };
 
     @queryAssignedElements({ selector: 'sp-tabs', flatten: true })
-    private scrollContent!: Tabs[];
+    private tabs!: Tabs[];
 
     @query('.tabs-overflow-container')
     private overflowContainer!: HTMLDivElement;
 
     resizeController!: ResizeController;
+
+    protected get scrollContent(): Tabs[] {
+        return this.tabs;
+    }
 
     public constructor() {
         super();
