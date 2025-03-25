@@ -147,8 +147,8 @@ export class ColorController {
             /^hsv\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*\)$/i,
         ];
         const hexRegExpArray = [
-            /^#([A-Fa-f0-9]{6})(?:\s*([01](?:\.\d+)?))?$/,
-            /^#([A-Fa-f0-9]{3})(?:\s*([01](?:\.\d+)?))?$/,
+            /^#([A-Fa-f0-9]{6})([A-Fa-f0-9]{2})?$/,
+            /^#([A-Fa-f0-9]{3})([A-Fa-f0-9]{1})?$/,
         ];
 
         const rgbaMatch = rgbRegExpArray
@@ -231,7 +231,7 @@ export class ColorController {
                 numericA >= 0 &&
                 numericA <= 1;
         } else if (hexMatch) {
-            const [, hex, alpha] = hexMatch;
+            const [, hex, alphaHex] = hexMatch;
 
             // Function to process 2-digit or repeated 1-digit hex
             const processHex = (hex: string): number => {
@@ -256,8 +256,8 @@ export class ColorController {
                 numericB = processHex(hex.substring(4, 6));
             }
 
-            // Numeric alpha: if not provided, default to 1
-            const numericA = alpha ? Number(alpha) : 1;
+            // Process hex alpha if provided (convert from 0-255 to 0-1)
+            const numericA = alphaHex ? processHex(alphaHex) : 1;
 
             // Validate the color values
             result.spaceId = 'srgb';
@@ -478,37 +478,45 @@ export class ColorController {
                 }
                 case 'hex string': {
                     const { r, g, b } = (this._color.to('srgb') as Color).srgb;
-                    const hadAlpha =
-                        this._colorOrigin.length === 5 ||
-                        this._colorOrigin.length === 9;
                     const a = this._color.alpha;
-                    const rHex = Math.round(r * 255).toString(16);
-                    const gHex = Math.round(g * 255).toString(16);
-                    const bHex = Math.round(b * 255).toString(16);
-                    const aHex = Math.round(a * 255).toString(16);
-                    return `#${rHex.padStart(2, '0')}${gHex.padStart(
-                        2,
-                        '0'
-                    )}${bHex.padStart(2, '0')}${
-                        hadAlpha ? aHex.padStart(2, '0') : ''
-                    }`;
+                    // Check if the original input included alpha (either as 8-digit hex or separate value)
+                    const hadAlpha =
+                        this._colorOrigin.length === 9 || // #RRGGBBAA format
+                        this._colorOrigin.length === 5; // #RGBA format
+                    const rHex = Math.round(r * 255)
+                        .toString(16)
+                        .padStart(2, '0');
+                    const gHex = Math.round(g * 255)
+                        .toString(16)
+                        .padStart(2, '0');
+                    const bHex = Math.round(b * 255)
+                        .toString(16)
+                        .padStart(2, '0');
+                    const aHex = Math.round(a * 255)
+                        .toString(16)
+                        .padStart(2, '0');
+                    return `#${rHex}${gHex}${bHex}${hadAlpha ? aHex : ''}`;
                 }
                 case 'hex': {
                     const { r, g, b } = (this._color.to('srgb') as Color).srgb;
-                    const hadAlpha =
-                        this._colorOrigin.length === 4 ||
-                        this._colorOrigin.length === 8;
                     const a = this._color.alpha;
-                    const rHex = Math.round(r * 255).toString(16);
-                    const gHex = Math.round(g * 255).toString(16);
-                    const bHex = Math.round(b * 255).toString(16);
-                    const aHex = Math.round(a * 255).toString(16);
-                    return `${rHex.padStart(2, '0')}${gHex.padStart(
-                        2,
-                        '0'
-                    )}${bHex.padStart(2, '0')}${
-                        hadAlpha ? aHex.padStart(2, '0') : ''
-                    }`;
+                    // Check if the original input included alpha (either as 8-digit hex or separate value)
+                    const hadAlpha =
+                        this._colorOrigin.length === 8 || // RRGGBBAA format (no #)
+                        this._colorOrigin.length === 4; // RGBA format (no #)
+                    const rHex = Math.round(r * 255)
+                        .toString(16)
+                        .padStart(2, '0');
+                    const gHex = Math.round(g * 255)
+                        .toString(16)
+                        .padStart(2, '0');
+                    const bHex = Math.round(b * 255)
+                        .toString(16)
+                        .padStart(2, '0');
+                    const aHex = Math.round(a * 255)
+                        .toString(16)
+                        .padStart(2, '0');
+                    return `${rHex}${gHex}${bHex}${hadAlpha ? aHex : ''}`;
                 }
                 //rgb
                 default: {
