@@ -1,3 +1,14 @@
+# Branch
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+echo ""
+echo "Current Branch: $branch"
+echo ""
+
+if [ "$branch" = "main" ]; then
+  echo "You can't commit directly to the $branch branch"
+  exit 1
+fi
 STAGED_FILES_TO_LINT=$(git diff --name-only --cached --diff-filter=d -- "*.ts" "*.js")
 VERSION_FILE=$(dirname "$0")/../tools/base/src/version.js
 yarn eslint -f pretty $STAGED_FILES_TO_LINT
