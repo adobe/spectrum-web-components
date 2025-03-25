@@ -90,10 +90,6 @@ export class ActionMenu extends ObserveSlotPresence(
                       `}
                 <slot name="label" ?hidden=${!this.hasLabel}></slot>
                 <slot name="label-only"></slot>
-                <slot
-                    name="tooltip"
-                    @slotchange=${this.handleTooltipSlotchange}
-                ></slot>
             `,
         ];
     }
@@ -125,6 +121,10 @@ export class ActionMenu extends ObserveSlotPresence(
             >
                 ${this.buttonContent}
             </sp-action-button>
+            <slot
+                name="tooltip"
+                @slotchange=${this.handleTooltipSlotchange}
+            ></slot>
             ${this.renderMenu} ${this.renderDescriptionSlot}
         `;
     }
