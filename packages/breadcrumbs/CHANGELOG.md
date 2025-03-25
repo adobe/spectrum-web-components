@@ -1,7 +1,24 @@
 # Change Log
 
+## 1.3.0
+
+### Patch Changes
+
+-   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f), [`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
+    -   @spectrum-web-components/action-menu@1.3.0
+    -   @spectrum-web-components/menu@1.3.0
+    -   @spectrum-web-components/icons-workflow@1.3.0
+    -   @spectrum-web-components/link@1.3.0
+    -   @spectrum-web-components/base@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [1.2.0](https://github.com/adobe/spectrum-web-components/compare/v1.1.2...v1.2.0) (2025-02-27)
+
+### Bug Fixes
+
+-   **breadcrumbs:** show maxvisibleitems on dynamic updates ([#5100](https://github.com/adobe/spectrum-web-components/issues/5100)) ([199f989](https://github.com/adobe/spectrum-web-components/commit/199f989b04fd77e2ebf72c95da6c5cd5a199f680))
 
 ## [1.1.2](https://github.com/adobe/spectrum-web-components/compare/v1.1.1...v1.1.2) (2025-02-12)
 

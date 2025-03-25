@@ -1,7 +1,37 @@
 # Change Log
 
+## 1.3.0
+
+### Minor Changes
+
+-   [#5031](https://github.com/adobe/spectrum-web-components/pull/5031) [`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f) Thanks [@nikkimk](https://github.com/nikkimk)! - Used WAI ARIA Authoring Practices Guide (APG) to make accessibility improvements for `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>`, including:
+
+    -   Numpad keys now work with `<sp-picker>` and `<sp-action-menu>` -`<sp-action-menu>`'s `<sp-menu-item>` elements can now be read by a screen reader ([#4556](https://github.com/adobe/spectrum-web-components/issues/4556))
+    -   `<sp-menu-item>` href can now be clicked by a screen reader ([#4997](https://github.com/adobe/spectrum-web-components/issues/4997))
+    -   Opening a `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>` with a keyboard now sets focus on an item within the menu. ([#4557](https://github.com/adobe/spectrum-web-components/issues/4557))
+
+    See the following APG examples for more information:
+
+    -   [Navigation Menu Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/)
+    -   [Editor Menubar Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/)
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/progress-circle@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [1.2.0](https://github.com/adobe/spectrum-web-components/compare/v1.1.2...v1.2.0) (2025-02-27)
+
+### Bug Fixes
+
+-   **action menu:** keyboard accessibility omnibus ([#5031](https://github.com/adobe/spectrum-web-components/issues/5031)) ([ea38ef0](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)), closes [#4623](https://github.com/adobe/spectrum-web-components/issues/4623)
+
+### Features
+
+-   **reactive-controllers:** Migrate to Colorjs from Tinycolor ([#4713](https://github.com/adobe/spectrum-web-components/issues/4713)) ([9d740f0](https://github.com/adobe/spectrum-web-components/commit/9d740f0c830aa44273097181e761e9a92d3df4be))
 
 ## [1.1.2](https://github.com/adobe/spectrum-web-components/compare/v1.1.1...v1.1.2) (2025-02-12)
 

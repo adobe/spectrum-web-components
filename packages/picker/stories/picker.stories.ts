@@ -25,7 +25,7 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '../../overlay/stories/index.js';
-import { isOverlayOpen } from '../../overlay/stories/index.js';
+import { areIconsPresent, isOverlayOpen } from '../../overlay/stories/index.js';
 import { argTypes } from './args.js';
 import { states } from './states.js';
 import { handleChange, StoryArgs, Template } from './template.js';
@@ -102,7 +102,7 @@ export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
         <div style="padding: 40px">
             <h1>Force Popover on Mobile</h1>
             <p>
-                The forcePopover attribute overrides the mobile device
+                The force-popover attribute overrides the mobile device
                 functionality of rendering a tray so that a popover will always
                 render no matter the device.
             </p>
@@ -134,7 +134,7 @@ export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
             </sp-field-label>
             <sp-picker
                 id="picker-2"
-                forcePopover
+                force-popover
                 @change=${handleChange(args)}
                 label="Select an option"
             >
@@ -534,7 +534,7 @@ export const dynamicIcons = (args: StoryArgs): TemplateResult => {
 dynamicIcons.args = {
     open: true,
 };
-dynamicIcons.decorators = [isOverlayOpen];
+dynamicIcons.decorators = [areIconsPresent];
 
 export const Open = (args: StoryArgs): TemplateResult => {
     return html`

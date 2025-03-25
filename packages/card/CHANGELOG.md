@@ -1,7 +1,24 @@
 # Change Log
 
+## 1.3.0
+
+### Patch Changes
+
+-   Updated dependencies [[`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
+    -   @spectrum-web-components/checkbox@1.3.0
+    -   @spectrum-web-components/asset@1.3.0
+    -   @spectrum-web-components/divider@1.3.0
+    -   @spectrum-web-components/icons-workflow@1.3.0
+    -   @spectrum-web-components/base@1.3.0
+    -   @spectrum-web-components/shared@1.3.0
+    -   @spectrum-web-components/styles@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [1.2.0](https://github.com/adobe/spectrum-web-components/compare/v1.1.2...v1.2.0) (2025-02-27)
+
+**Note:** Version bump only for package @spectrum-web-components/card
 
 ## [1.1.2](https://github.com/adobe/spectrum-web-components/compare/v1.1.1...v1.1.2) (2025-02-12)
 

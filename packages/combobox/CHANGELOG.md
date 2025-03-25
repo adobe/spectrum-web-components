@@ -1,7 +1,33 @@
 # Change Log
 
+## 1.3.0
+
+### Patch Changes
+
+-   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f), [`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
+    -   @spectrum-web-components/menu@1.3.0
+    -   @spectrum-web-components/overlay@1.3.0
+    -   @spectrum-web-components/popover@1.3.0
+    -   @spectrum-web-components/action-button@1.3.0
+    -   @spectrum-web-components/picker-button@1.3.0
+    -   @spectrum-web-components/icon@1.3.0
+    -   @spectrum-web-components/icons-ui@1.3.0
+    -   @spectrum-web-components/progress-circle@1.3.0
+    -   @spectrum-web-components/textfield@1.3.0
+    -   @spectrum-web-components/base@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [1.2.0](https://github.com/adobe/spectrum-web-components/compare/v1.1.2...v1.2.0) (2025-02-27)
+
+### Bug Fixes
+
+-   **action menu:** keyboard accessibility omnibus ([#5031](https://github.com/adobe/spectrum-web-components/issues/5031)) ([ea38ef0](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)), closes [#4623](https://github.com/adobe/spectrum-web-components/issues/4623)
+
+### Features
+
+-   **combobox:** allow support for disabled items ([#5104](https://github.com/adobe/spectrum-web-components/issues/5104)) ([b78d412](https://github.com/adobe/spectrum-web-components/commit/b78d4125a90266059746207ffafc0c4c22f2b0a4))
 
 ## [1.1.2](https://github.com/adobe/spectrum-web-components/compare/v1.1.1...v1.1.2) (2025-02-12)
 

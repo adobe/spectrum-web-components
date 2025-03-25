@@ -1,7 +1,36 @@
 # Change Log
 
+## 1.3.0
+
+### Patch Changes
+
+-   [#5176](https://github.com/adobe/spectrum-web-components/pull/5176) [`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - 1. chore(checkbox): updated to latest css v10.1.1 for s2 fast follow
+
+    2. chore(dialog):
+       The error property was not properly deprecated with a full migration plan in place. This has caused confusion and false sense of urgency for consumers to migrate. We are removing it to eliminate those pain points for consumers while we take a deep look at our dialogs and patterns.
+    3. chore(menu): updated to latest css v9.1.1 for s2 fast follow
+    4. fix(overlay):
+       sp-overlay with type="manual" should close on pressing ESC key. When the last item is on overlay stack we are triggering the close method on esc key event.
+
+-   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
+    -   @spectrum-web-components/reactive-controllers@1.3.0
+    -   @spectrum-web-components/action-button@1.3.0
+    -   @spectrum-web-components/base@1.3.0
+    -   @spectrum-web-components/shared@1.3.0
+    -   @spectrum-web-components/theme@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [1.2.0](https://github.com/adobe/spectrum-web-components/compare/v1.1.2...v1.2.0) (2025-02-27)
+
+### Bug Fixes
+
+-   **action menu:** keyboard accessibility omnibus ([#5031](https://github.com/adobe/spectrum-web-components/issues/5031)) ([ea38ef0](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)), closes [#4623](https://github.com/adobe/spectrum-web-components/issues/4623)
+
+### Features
+
+-   **overlay:** add triggeredBy property to overlay-trigger for performance optimization ([#5046](https://github.com/adobe/spectrum-web-components/issues/5046)) ([fd504aa](https://github.com/adobe/spectrum-web-components/commit/fd504aa4c83d6961abfb7db955483bf1ede6734f))
 
 ## [1.1.2](https://github.com/adobe/spectrum-web-components/compare/v1.1.1...v1.1.2) (2025-02-12)
 

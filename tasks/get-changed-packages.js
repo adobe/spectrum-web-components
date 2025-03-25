@@ -19,7 +19,7 @@ export const getChangedPackages = () => {
     try {
         // Execute the command to list changed packages since the last commit on origin/main
         command = execSync(
-            'yarn --silent lerna ls --since origin/main --json --loglevel silent'
+            'yarn changeset status --since origin/main --json'
         );
     } catch (error) {
         console.log(error.message);
