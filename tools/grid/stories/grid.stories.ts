@@ -69,6 +69,7 @@ const renderItem = (
             role="row"
             aria-selected=${selected}
             aria-rowindex=${index + 1}
+            label="Card Heading ${item.id}"
         >
             <img
                 alt=""

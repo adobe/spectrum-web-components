@@ -98,6 +98,9 @@ export class Card extends LikeAnchor(
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    /**
+     * Indicates whether the card can be toggled between selected and unselected states.
+     */
     @property({ type: Boolean, reflect: true })
     public toggles = false;
 
@@ -274,6 +277,10 @@ export class Card extends LikeAnchor(
     }
 
     protected override render(): TemplateResult {
+        /* When rendering the card within a grid,
+        where the card has role="row", the row have an
+        immediate descendant of role="gridcell", otherwise
+        the role for the content wrapper can remain undefined. */
         const roleForWrapper = this.role === 'row' ? 'gridcell' : undefined;
         return html`
             <div class="wrapper" role=${ifDefined(roleForWrapper)}>
@@ -323,9 +330,11 @@ export class Card extends LikeAnchor(
                               <sp-checkbox
                                   class="checkbox"
                                   @change=${this.handleSelectedChange}
-                                  ?checked=${this.selected}
+                                  .checked=${this.selected}
                               >
-                                  <span class="sr-only">${this.heading}</span>
+                                  <span class="sr-only">
+                                      ${this.label || this.heading}
+                                  </span>
                               </sp-checkbox>
                           </sp-popover>
                       `
@@ -346,9 +355,27 @@ export class Card extends LikeAnchor(
 
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
+        if (changes.has('label')) {
+            if (this.label) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
+        }
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('focusin', this.handleFocusin);
         this.shadowRoot.addEventListener('focusin', this.handleFocusin);
         this.addEventListener('focusout', this.handleFocusout);
+    }
+
+    protected override update(changes: PropertyValues): void {
+        super.update(changes);
+        if (changes.has('label')) {
+            if (this.label) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
+        }
     }
 }
