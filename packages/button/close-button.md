@@ -1,9 +1,6 @@
 ## Overview
 
-An `<sp-button>` represents an action a user can take. sp-buttons can be clicked
-or tapped to perform an action or to navigate to another page. Buttons in
-Spectrum have several variations for different uses and multiple levels of
-loudness for various attention-getting needs.
+An `<sp-close-button>` is a special extension of the `BaseButton` class that includes icons and styling for buttons used to close a modal or dialog.
 
 ### Usage
 
@@ -15,16 +12,16 @@ loudness for various attention-getting needs.
 yarn add @spectrum-web-components/button
 ```
 
-Import the side effectful registration of `<sp-button>` as follows:
+Import the side effectful registration of `<sp-close-button>` as follows:
 
 ```
-import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/button/sp-clear-button.js';
 ```
 
-When looking to leverage the `Button` base classes as a type and/or for extension purposes, do so via:
+When looking to leverage the `CloseButton` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Button } from '@spectrum-web-components/button';
+import { ClearButton } from '@spectrum-web-components/button';
 ```
 
 ### Anatomy
