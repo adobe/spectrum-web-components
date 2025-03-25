@@ -217,7 +217,9 @@
                 "packages/**/*.css",
                 "tools/**/*.css",
                 "tasks/build-css.js",
-                "tasks/css-tools.js"
+                "tasks/css-tools.js",
+                ".prettierrc.yaml",
+                ".stylelintrc.json"
             ],
             "output": [
                 "packages/**/*.css.ts",
