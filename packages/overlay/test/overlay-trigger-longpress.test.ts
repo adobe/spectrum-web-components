@@ -34,7 +34,7 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
+import { hasAccessibleDescription } from '../../../test/testing-helpers-a11y.js';
 import { fixture, isOnTopLayer } from '../../../test/testing-helpers.js';
 import { longpress } from '../stories/overlay.stories.js';
 
@@ -347,7 +347,7 @@ describe('Overlay Trigger - Longpress', () => {
             '[slot="longpress-describedby-descriptor"]'
         ) as HTMLElement;
         expect(longpressHelper).to.not.be.null;
-        await findDescribedNode(
+        await hasAccessibleDescription(
             'Trigger with hold affordance',
             LONGPRESS_INSTRUCTIONS.keyboard
         );
@@ -364,7 +364,7 @@ describe('Overlay Trigger - Longpress', () => {
         ) as HTMLElement;
         expect(longpressHelper).to.not.be.null;
 
-        await findDescribedNode(
+        await hasAccessibleDescription(
             'Trigger with hold affordance',
             LONGPRESS_INSTRUCTIONS.keyboard
         );
@@ -382,7 +382,7 @@ describe('Overlay Trigger - Longpress', () => {
         ) as HTMLElement;
         expect(longpressHelper).to.not.be.null;
 
-        await findDescribedNode(
+        await hasAccessibleDescription(
             'Trigger with hold affordance',
             LONGPRESS_INSTRUCTIONS.keyboard
         );
@@ -448,7 +448,7 @@ describe('Overlay Trigger - Longpress', () => {
         await nextFrame();
         await nextFrame();
 
-        await findDescribedNode(
+        await hasAccessibleDescription(
             'Trigger with hold affordance',
             LONGPRESS_INSTRUCTIONS.keyboard
         );
@@ -498,11 +498,11 @@ describe('Overlay Trigger - Longpress', () => {
 
         expect(div.childNodes.length, 'always').to.equal(5);
 
-        await findDescribedNode(
+        await hasAccessibleDescription(
             'First button',
             LONGPRESS_INSTRUCTIONS.keyboard
         );
-        await findDescribedNode(
+        await hasAccessibleDescription(
             'Second button',
             LONGPRESS_INSTRUCTIONS.keyboard
         );
@@ -560,7 +560,7 @@ describe('Overlay Trigger - Longpress', () => {
         expect(document.activeElement === trigger, 'Trigger focused').to.be
             .true;
 
-        await findDescribedNode(
+        await hasAccessibleDescription(
             'Trigger with hold affordance',
             LONGPRESS_INSTRUCTIONS.keyboard
         );
@@ -569,7 +569,7 @@ describe('Overlay Trigger - Longpress', () => {
             press: 'Tab',
         });
 
-        await findDescribedNode(
+        await hasAccessibleDescription(
             'Trigger with hold affordance',
             LONGPRESS_INSTRUCTIONS.keyboard
         );
@@ -593,7 +593,7 @@ describe('Overlay Trigger - Longpress', () => {
         await nextFrame();
         await nextFrame();
 
-        await findDescribedNode(
+        await hasAccessibleDescription(
             'Trigger with hold affordance',
             LONGPRESS_INSTRUCTIONS.keyboard
         );

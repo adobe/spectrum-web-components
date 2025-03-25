@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
+import { hasAccessibleDescription } from '../../../test/testing-helpers-a11y.js';
 import { HelpText } from '@spectrum-web-components/help-text';
 import { FieldGroup } from '@spectrum-web-components/field-group';
 import '@spectrum-web-components/help-text/sp-help-text.js';
@@ -22,21 +22,7 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('FieldGroup', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<FieldGroup>(
-                html`
-                    <sp-field-group horizontal>
-                        <sp-checkbox>Checkbox 1</sp-checkbox>
-                        <sp-checkbox>Checkbox 2</sp-checkbox>
-                        <sp-checkbox>Checkbox 3</sp-checkbox>
-                        <sp-checkbox>Checkbox 4</sp-checkbox>
-                        <sp-checkbox>Checkbox 5</sp-checkbox>
-                    </sp-field-group>
-                `
-            )
-    );
-    it('loads default field-group accessibly', async () => {
-        const el = await fixture<FieldGroup>(
-            html`
+            await fixture<FieldGroup>(html`
                 <sp-field-group horizontal>
                     <sp-checkbox>Checkbox 1</sp-checkbox>
                     <sp-checkbox>Checkbox 2</sp-checkbox>
@@ -44,8 +30,18 @@ describe('FieldGroup', () => {
                     <sp-checkbox>Checkbox 4</sp-checkbox>
                     <sp-checkbox>Checkbox 5</sp-checkbox>
                 </sp-field-group>
-            `
-        );
+            `)
+    );
+    it('loads default field-group accessibly', async () => {
+        const el = await fixture<FieldGroup>(html`
+            <sp-field-group horizontal>
+                <sp-checkbox>Checkbox 1</sp-checkbox>
+                <sp-checkbox>Checkbox 2</sp-checkbox>
+                <sp-checkbox>Checkbox 3</sp-checkbox>
+                <sp-checkbox>Checkbox 4</sp-checkbox>
+                <sp-checkbox>Checkbox 5</sp-checkbox>
+            </sp-field-group>
+        `);
 
         await elementUpdated(el);
 
@@ -65,7 +61,7 @@ describe('FieldGroup', () => {
 
             await elementUpdated(el);
 
-            await findDescribedNode(name, description);
+            await hasAccessibleDescription(name, description);
         });
         it('accepts help text in `slot="help-text"` w/ own ID', async () => {
             const el = await fixture(html`
@@ -78,7 +74,7 @@ describe('FieldGroup', () => {
 
             await elementUpdated(el);
 
-            await findDescribedNode(name, description);
+            await hasAccessibleDescription(name, description);
         });
         it('manages neutral/negative help text pairs', async () => {
             const el = await fixture<FieldGroup>(html`
@@ -96,13 +92,13 @@ describe('FieldGroup', () => {
             await elementUpdated(el);
 
             expect(negativeHelpText.variant).to.equal('neutral');
-            await findDescribedNode(name, description);
+            await hasAccessibleDescription(name, description);
 
             el.invalid = true;
             await elementUpdated(el);
 
             expect(negativeHelpText.variant).to.equal('negative');
-            await findDescribedNode(name, descriptionNegative);
+            await hasAccessibleDescription(name, descriptionNegative);
         });
         it('manages neutral/negative help text pairs w/ own IDs', async () => {
             const el = await fixture<FieldGroup>(html`
@@ -122,13 +118,13 @@ describe('FieldGroup', () => {
             await elementUpdated(el);
 
             expect(negativeHelpText.variant).to.equal('neutral');
-            await findDescribedNode(name, description);
+            await hasAccessibleDescription(name, description);
 
             el.invalid = true;
             await elementUpdated(el);
 
             expect(negativeHelpText.variant).to.equal('negative');
-            await findDescribedNode(name, descriptionNegative);
+            await hasAccessibleDescription(name, descriptionNegative);
         });
     });
 });

@@ -35,6 +35,7 @@ import {
     testForLitDevWarnings,
     tEvent,
 } from '../../../test/testing-helpers.js';
+import { testMenuA11y } from './menu-a11y.test.js';
 
 describe('Menu', () => {
     it('renders empty', async () => {
@@ -114,6 +115,14 @@ describe('Menu', () => {
 
         expect(el.childItems.length).to.equal(6);
         await expect(el).to.be.accessible();
+        await testMenuA11y(
+            {
+                menuElement: el,
+                menuItemElements: [...el.querySelectorAll('sp-menu-item')],
+                menuLabel: 'Pick an action:',
+            },
+            true
+        );
     });
 
     testForLitDevWarnings(
