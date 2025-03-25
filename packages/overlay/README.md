@@ -250,21 +250,17 @@ This overlay type does not accept focus and does not interfere with the user's i
 
 ### Auto
 
-`'auto'` Overlays provide a place for content that is ephemeral _and_ interactive. These Overlays can accept focus but will close when losing that focus, or when interacting with other parts of the page.
+`'auto'` Overlays provide a place for content that is ephemeral _and_ interactive. These Overlays can accept focus and remain open while interacting with their content. They will close when focus moves outside the overlay or when clicking elsewhere on the page.
 
 ```html
-<style>
-    sp-toast {
-        position: fixed;
-        top: 1em;
-        right: 1em;
-    }
-</style>
-<sp-button id="trigger">open auto</sp-button>
-<sp-overlay trigger="trigger@click" type="auto">
-    <sp-toast variant="info">
-        This is information that you should read.
-    </sp-toast>
+<sp-button id="trigger">Open Overlay</sp-button>
+<sp-overlay trigger="trigger@click" type="auto" placement="bottom">
+    <sp-popover dialog>
+        <p>
+            My slider in overlay element:
+            <sp-slider label="Slider Label - Editable" editable></sp-slider>
+        </p>
+    </sp-popover>
 </sp-overlay>
 ```
 
