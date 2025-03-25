@@ -110,6 +110,18 @@ sp-popover {
         );
 }
 
+:host([variant='quiet'][selected]:focus) #preview {
+    border-width: var(
+        --mod-card-focus-indicator-width,
+        var(--spectrum-card-focus-indicator-width)
+    );
+}
+
+/* This ensures that the checkbox is tabbable when the card toggles but is not itself focusable */
+:host([toggles]:not([tabindex])) .checkbox-toggle {
+    visibility: visible;
+}
+
 .checkbox-toggle .checkbox {
     --mod-checkbox-text-to-control: 0;
 }
@@ -131,6 +143,13 @@ sp-popover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    /* With prefers-reduced-motion: reduce,
+    we should not animate the checkbox fade in
+    when the card receives focus, but still retain
+    the transition-delay before hiding the checkbox on blur,
+    which will ensure that tabbing from the card or action menu
+    will focus the checkbox before it has a chance to hide.
+    */
     .checkbox-toggle {
         transition-duration: 0s, 0s, 0s;
         transition-delay: 0s, 0s, 0.13s;
