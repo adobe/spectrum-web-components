@@ -380,7 +380,6 @@ export class MenuItem extends LikeAnchor(
         return html`
             <sp-overlay
                 receives-focus="false"
-                receives-focus="false"
                 .triggerElement=${this as HTMLElement}
                 ?disabled=${!this.hasSubmenu}
                 ?open=${this.hasSubmenu &&
@@ -473,7 +472,6 @@ export class MenuItem extends LikeAnchor(
         this.setAttribute('tabindex', '-1');
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('mouseover', this.handleMouseover);
-        this.addEventListener('mouseover', this.handleMouseover);
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('pointerenter', this.closeOverlaysForRoot);
         if (!this.hasAttribute('id')) {
@@ -532,7 +530,6 @@ export class MenuItem extends LikeAnchor(
             return;
         }
         this.openOverlay(true);
-        this.openOverlay(true);
     }
 
     protected handleSubmenuFocus(): void {
@@ -571,7 +568,6 @@ export class MenuItem extends LikeAnchor(
 
     protected handlePointerleave(): void {
         this._closedViaPointer = true;
-        this._closedViaPointer = true;
         if (this.open && !this.recentlyLeftChild) {
             this.leaveTimeout = setTimeout(() => {
                 delete this.leaveTimeout;
@@ -608,15 +604,12 @@ export class MenuItem extends LikeAnchor(
             );
         }) as Overlay;
         if (this._openedViaKeyboard) {
-            if (this._openedViaKeyboard) {
-                this.submenuElement?.focus();
-            }
+            this.submenuElement?.focus();
         }
         this.overlayElement.parentOverlayToForceClose = parentOverlay;
     }
 
     protected cleanup(): void {
-        this._closedViaPointer = false;
         this._closedViaPointer = false;
         this.setAttribute('aria-expanded', 'false');
         this.open = false;
