@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.4.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/base@1.4.0
+
 ## 1.3.0
 
 ### Patch Changes

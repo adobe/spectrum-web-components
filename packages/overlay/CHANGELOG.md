@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.4.0
+
+### Minor Changes
+
+-   [#5223](https://github.com/adobe/spectrum-web-components/pull/5223) [`46cd782`](https://github.com/adobe/spectrum-web-components/commit/46cd7828f65491fc08790e5ba0aec412ee89199d) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Removed pointer-events:none from the slot-trigger under overlay-trigger to disable the overlay content and not the trigger element.
+
+-   [#5248](https://github.com/adobe/spectrum-web-components/pull/5248) [`70f5f6f`](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - overlay type auto stays open when interacting with elements inside
+
+### Patch Changes
+
+-   Updated dependencies [[`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98)]:
+    -   @spectrum-web-components/action-button@1.4.0
+    -   @spectrum-web-components/theme@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+    -   @spectrum-web-components/reactive-controllers@1.4.0
+    -   @spectrum-web-components/shared@1.4.0
+
 ## 1.3.0
 
 ### Patch Changes
