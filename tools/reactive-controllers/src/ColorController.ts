@@ -120,35 +120,59 @@ export class ColorController {
             alpha: 1,
         };
 
+        // RGB color formats
         const rgbRegExpArray = [
-            /rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d*\.?\d+)\s*\)/i,
-            /rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)/i,
-            /^rgba\s+(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(0|0?\.\d+|1)\s*$/i,
-            /^rgb\s+(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*$/i,
-            /^rgba\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(\d*\.?\d+)\s*\)$/i,
-            /^rgb\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*\)$/i,
-            /rgb\(\s*(100|[0-9]{1,2}%)\s*,\s*(100|[0-9]{1,2}%)\s*,\s*(100|[0-9]{1,2}%)\s*\)/i,
-            /rgba\(\s*(100|[0-9]{1,2})%\s*,\s*(100|[0-9]{1,2})%\s*,\s*(100|[0-9]{1,2})%\s*,\s*(\d*\.?\d+)\s*\)/i,
+            // With commas
+            /rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d*\.?\d+)\s*\)/i, // rgba(r, g, b, a)
+            /rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)/i, // rgb(r, g, b)
+
+            // With spaces
+            /^rgba\s+(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(0|0?\.\d+|1)\s*$/i, // rgba r g b a
+            /^rgb\s+(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*$/i, // rgb r g b
+
+            // Spaces inside parentheses
+            /^rgba\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(\d*\.?\d+)\s*\)$/i, // rgba(r g b a)
+            /^rgb\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*\)$/i, // rgb(r g b)
+
+            // Percentage values
+            /rgb\(\s*(100|[0-9]{1,2}%)\s*,\s*(100|[0-9]{1,2}%)\s*,\s*(100|[0-9]{1,2}%)\s*\)/i, // rgb(r%, g%, b%)
+            /rgba\(\s*(100|[0-9]{1,2})%\s*,\s*(100|[0-9]{1,2})%\s*,\s*(100|[0-9]{1,2})%\s*,\s*(\d*\.?\d+)\s*\)/i, // rgba(r%, g%, b%, a)
         ];
+
+        // HSL color formats
         const hslRegExpArray = [
-            /hsla\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*,\s*(\d*\.?\d+)\s*\)/i,
-            /hsl\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*\)/i,
-            /^hsla\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*$/i,
-            /^hsl\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*$/i,
-            /^hsla\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*\)$/i,
-            /^hsl\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*\)$/i,
+            // With commas
+            /hsla\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*,\s*(\d*\.?\d+)\s*\)/i, // hsla(h, s, l, a)
+            /hsl\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*\)/i, // hsl(h, s, l)
+
+            // With spaces
+            /^hsla\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*$/i, // hsla h s l a
+            /^hsl\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*$/i, // hsl h s l
+
+            // Spaces inside parentheses
+            /^hsla\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*\)$/i, // hsla(h s l a)
+            /^hsl\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*\)$/i, // hsl(h s l)
         ];
+
+        // HSV color formats
         const hsvRegExpArray = [
-            /hsva\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*,\s*(\d*\.?\d+)\s*\)/i,
-            /hsv\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*\)/i,
-            /^hsva\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*$/i,
-            /^hsv\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*$/i,
-            /^hsva\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*\)$/i,
-            /^hsv\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*\)$/i,
+            // With commas
+            /hsva\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*,\s*(\d*\.?\d+)\s*\)/i, // hsva(h, s, v, a)
+            /hsv\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*\)/i, // hsv(h, s, v)
+
+            // With spaces
+            /^hsva\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*$/i, // hsva h s v a
+            /^hsv\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*$/i, // hsv h s v
+
+            // Spaces inside parentheses
+            /^hsva\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*\)$/i, // hsva(h s v a)
+            /^hsv\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*\)$/i, // hsv(h s v)
         ];
+
+        // HEX color formats
         const hexRegExpArray = [
-            /^#([A-Fa-f0-9]{6})(?:\s*([01](?:\.\d+)?))?$/,
-            /^#([A-Fa-f0-9]{3})(?:\s*([01](?:\.\d+)?))?$/,
+            /^#([A-Fa-f0-9]{6})([A-Fa-f0-9]{2})?$/, // 6-digit hex with optional hex alpha
+            /^#([A-Fa-f0-9]{3})([A-Fa-f0-9]{1})?$/, // 3-digit hex with optional hex alpha
         ];
 
         const rgbaMatch = rgbRegExpArray
@@ -231,7 +255,7 @@ export class ColorController {
                 numericA >= 0 &&
                 numericA <= 1;
         } else if (hexMatch) {
-            const [, hex, alpha] = hexMatch;
+            const [, hex, alphaHex] = hexMatch;
 
             // Function to process 2-digit or repeated 1-digit hex
             const processHex = (hex: string): number => {
@@ -256,8 +280,8 @@ export class ColorController {
                 numericB = processHex(hex.substring(4, 6));
             }
 
-            // Numeric alpha: if not provided, default to 1
-            const numericA = alpha ? Number(alpha) : 1;
+            // Process hex alpha if provided (convert from 0-255 to 0-1)
+            const numericA = alphaHex ? processHex(alphaHex) : 1;
 
             // Validate the color values
             result.spaceId = 'srgb';
@@ -325,6 +349,34 @@ export class ColorController {
      * @private
      */
     private _previousColor!: Color;
+
+    /**
+     * Private helper method to convert RGB color to hex format with optional alpha
+     *
+     * @private
+     * @param {boolean} includeHash - Whether to include the # prefix in the returned string
+     * @param {boolean} includeAlpha - Whether to include the alpha channel in the returned string
+     * @returns {string} The color in hex format
+     */
+    private _getHexString(includeHash: boolean, includeAlpha: boolean): string {
+        const { r, g, b } = (this._color.to('srgb') as Color).srgb;
+        const a = this._color.alpha;
+
+        const rHex = Math.round(r * 255)
+            .toString(16)
+            .padStart(2, '0');
+        const gHex = Math.round(g * 255)
+            .toString(16)
+            .padStart(2, '0');
+        const bHex = Math.round(b * 255)
+            .toString(16)
+            .padStart(2, '0');
+        const aHex = Math.round(a * 255)
+            .toString(16)
+            .padStart(2, '0');
+
+        return `${includeHash ? '#' : ''}${rHex}${gHex}${bHex}${includeAlpha ? aHex : ''}`;
+    }
 
     /**
      * Sets the color value for the controller. The color can be provided in various formats:
@@ -477,38 +529,18 @@ export class ColorController {
                     })`;
                 }
                 case 'hex string': {
-                    const { r, g, b } = (this._color.to('srgb') as Color).srgb;
+                    // Check if the original input included alpha
                     const hadAlpha =
-                        this._colorOrigin.length === 5 ||
-                        this._colorOrigin.length === 9;
-                    const a = this._color.alpha;
-                    const rHex = Math.round(r * 255).toString(16);
-                    const gHex = Math.round(g * 255).toString(16);
-                    const bHex = Math.round(b * 255).toString(16);
-                    const aHex = Math.round(a * 255).toString(16);
-                    return `#${rHex.padStart(2, '0')}${gHex.padStart(
-                        2,
-                        '0'
-                    )}${bHex.padStart(2, '0')}${
-                        hadAlpha ? aHex.padStart(2, '0') : ''
-                    }`;
+                        this._colorOrigin.length === 9 || // #RRGGBBAA format
+                        this._colorOrigin.length === 5; // #RGBA format
+                    return this._getHexString(true, hadAlpha);
                 }
                 case 'hex': {
-                    const { r, g, b } = (this._color.to('srgb') as Color).srgb;
+                    // Check if the original input included alpha
                     const hadAlpha =
-                        this._colorOrigin.length === 4 ||
-                        this._colorOrigin.length === 8;
-                    const a = this._color.alpha;
-                    const rHex = Math.round(r * 255).toString(16);
-                    const gHex = Math.round(g * 255).toString(16);
-                    const bHex = Math.round(b * 255).toString(16);
-                    const aHex = Math.round(a * 255).toString(16);
-                    return `${rHex.padStart(2, '0')}${gHex.padStart(
-                        2,
-                        '0'
-                    )}${bHex.padStart(2, '0')}${
-                        hadAlpha ? aHex.padStart(2, '0') : ''
-                    }`;
+                        this._colorOrigin.length === 8 || // RRGGBBAA format (no #)
+                        this._colorOrigin.length === 4; // RGBA format (no #)
+                    return this._getHexString(false, hadAlpha);
                 }
                 //rgb
                 default: {

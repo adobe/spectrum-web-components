@@ -85,10 +85,19 @@ describe('ColorField', () => {
         el.value = '#ff0000';
         expect(el.checkValidity()).to.be.true;
 
+        el.value = '#008000aa';
+        expect(el.checkValidity()).to.be.true;
+
+        el.value = '#f00a';
+        expect(el.checkValidity()).to.be.true;
+
         el.value = '#f00';
         expect(el.checkValidity()).to.be.true;
 
         el.value = '##F00000000000';
+        expect(el.checkValidity()).to.be.false;
+
+        el.value = '#ff00000.3';
         expect(el.checkValidity()).to.be.false;
     });
 
