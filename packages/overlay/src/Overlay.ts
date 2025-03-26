@@ -657,8 +657,12 @@ export class Overlay extends ComputedOverlayBase {
         event.relatedTarget.addEventListener(
             relationEvent.type,
             (event: Event) => {
-                // If the newly focused element is not within the overlay, close the overlay.
-                if (!event.composedPath().includes(this)) {
+                // Check if the newly focused element is within the overlay or its children
+                const path = event.composedPath();
+                const isWithinOverlay = path.some((el) => el === this);
+
+                // Only close if focus moves outside the overlay and its children
+                if (!isWithinOverlay) {
                     this.open = false;
                 }
             }
