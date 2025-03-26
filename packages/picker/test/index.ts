@@ -846,10 +846,9 @@ export function runPickerTests(): void {
             expect(secondItem.selected).to.be.false;
 
             secondItem.click();
-            await waitUntil(
-                () => document.activeElement === el,
-                'focused', { timeout: 300 }
-            );
+            await waitUntil(() => document.activeElement === el, 'focused', {
+                timeout: 300,
+            });
 
             expect(el.open, 'open?').to.be.false;
             expect(el.value, 'value changed').to.equal('option-2');
@@ -883,7 +882,8 @@ export function runPickerTests(): void {
             secondItem.click();
             await waitUntil(
                 () => document.activeElement === input,
-                'focus throw', { timeout: 300 }
+                'focus throw',
+                { timeout: 300 }
             );
 
             expect(el.open, 'open?').to.be.false;
@@ -1362,8 +1362,10 @@ export function runPickerTests(): void {
             expect(button, 'has button').to.not.be.null;
 
             // we should have SAFARI_FOCUS_RING_CLASS in the classList
-            expect(button.classList.contains(SAFARI_FOCUS_RING_CLASS), 'has focus ring?').to.be
-                .true;
+            expect(
+                button.classList.contains(SAFARI_FOCUS_RING_CLASS),
+                'has focus ring?'
+            ).to.be.true;
 
             // picker should still have focus
             expect(document.activeElement).to.equal(el);
@@ -1398,8 +1400,10 @@ export function runPickerTests(): void {
             expect(el.open, 'open?').to.be.false;
 
             // we should not have SAFARI_FOCUS_RING_CLASS in the classList
-            expect(button.classList.contains(SAFARI_FOCUS_RING_CLASS), 'has focus ring?').to.be
-                .false;
+            expect(
+                button.classList.contains(SAFARI_FOCUS_RING_CLASS),
+                'has focus ring?'
+            ).to.be.false;
         });
     });
     describe('grouped', async () => {
@@ -2038,19 +2042,26 @@ export function runPickerTests(): void {
             const picker: Picker = this.el;
             const displayedIconBefore =
                 picker.shadowRoot.querySelector<Icon>('#icon > sp-icon');
-            expect(displayedIconBefore).to.be.ok;
+            expect(displayedIconBefore, 'displayed icon should exist').to.be.ok;
             const displayedIconSrcBefore = displayedIconBefore?.src;
-            expect(displayedIconSrcBefore).to.be.a.string;
+            expect(
+                displayedIconSrcBefore,
+                'displayed icon src should be a string'
+            ).to.be.a.string;
             const value = picker.value;
-            expect(value).to.be.a.string;
+            expect(value, 'picker value should be a string').to.be.a.string;
             const selectedItem = picker.querySelector<MenuItem>(
                 `sp-menu-item[value="${value}"]`
             );
-            expect(selectedItem).to.be.ok;
+            expect(selectedItem, 'selected item should exist').to.be.ok;
             const selectedItemIcon = selectedItem?.querySelector('sp-icon');
-            expect(selectedItemIcon).to.be.ok;
+            expect(selectedItemIcon, 'selected item icon should exist').to.be
+                .ok;
             const selectedItemIconSrcBefore = selectedItemIcon?.src;
-            expect(selectedItemIconSrcBefore).to.be.a.string;
+            expect(
+                selectedItemIconSrcBefore,
+                'selected item icon src should be a string'
+            ).to.be.a.string;
             expect(displayedIconSrcBefore).to.equal(selectedItemIconSrcBefore);
 
             // Change the icon src of the selected item.
@@ -2058,20 +2069,31 @@ export function runPickerTests(): void {
             if (selectedItemIcon) {
                 selectedItemIcon.setAttribute('src', newSrc);
             }
+            await elementUpdated(picker);
             const selectedItemIconSrcAfter = selectedItemIcon?.src;
-            expect(selectedItemIconSrcAfter).to.equal(newSrc);
+            expect(
+                selectedItemIconSrcAfter,
+                'selected item icon src after change should match new src'
+            ).to.equal(newSrc);
 
             // Give the picker a chance to update. Chromium, Firefox, and Webkit require 3 frames.
             await nextFrame();
             await nextFrame();
             await nextFrame();
+            await nextFrame(); // Add an extra frame for stability
 
             // Check that the displayed icon matches the selected item's icon.
             const displayedIconAfter =
                 picker.shadowRoot.querySelector<Icon>('#icon > sp-icon');
-            expect(displayedIconAfter).to.be.ok;
+            expect(
+                displayedIconAfter,
+                'displayed icon after change should exist'
+            ).to.be.ok;
             const displayedIconSrcAfter = displayedIconAfter?.src;
-            expect(displayedIconSrcAfter).to.be.a.string;
+            expect(
+                displayedIconSrcAfter,
+                'displayed icon src after change should be a string'
+            ).to.be.a.string;
             expect(displayedIconSrcAfter).to.equal(newSrc);
         });
     });

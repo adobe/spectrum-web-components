@@ -240,15 +240,33 @@ describe('TabsOverflow', () => {
             'sp-tabs-overflow'
         ) as TabsOverflow;
 
+        // Wait for overflow state to stabilize
+        await waitUntil(
+            () => tabsOverflow['overflowState'].canScrollLeft === true,
+            'Waiting for initial overflow state'
+        );
+
         expect(tabsOverflow['overflowState'].canScrollLeft).to.be.true;
         expect(tabsOverflow['overflowState'].canScrollRight).to.be.false;
 
         await scrollToEnd(el, LEFT_BUTTON_SELECTOR, 'rtl');
 
+        // Wait for overflow state to update after scrolling
+        await waitUntil(
+            () => tabsOverflow['overflowState'].canScrollRight === true,
+            'Waiting for overflow state after left scroll'
+        );
+
         expect(tabsOverflow['overflowState'].canScrollLeft).to.be.false;
         expect(tabsOverflow['overflowState'].canScrollRight).to.be.true;
 
         await scrollToEnd(el, RIGHT_BUTTON_SELECTOR, 'rtl');
+
+        // Wait for overflow state to update after scrolling back
+        await waitUntil(
+            () => tabsOverflow['overflowState'].canScrollLeft === true,
+            'Waiting for overflow state after right scroll'
+        );
 
         expect(tabsOverflow['overflowState'].canScrollLeft).to.be.true;
         expect(tabsOverflow['overflowState'].canScrollRight).to.be.false;
