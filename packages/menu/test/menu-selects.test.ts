@@ -480,8 +480,10 @@ describe('Menu w/ groups [selects]', () => {
                 event.preventDefault();
                 preventSpy();
             });
-            const change = oneEvent(el, 'change');
+            let change = oneEvent(el, 'change');
             item1a.click();
+            await change;
+            change = oneEvent(el, 'change');
             item1b.click();
             await change;
             expect(preventSpy.callCount).to.equal(1);
