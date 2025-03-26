@@ -1,17 +1,5 @@
 # Change Log
 
-## 1.5.0-beta.0
-
-### Patch Changes
-
--   Updated dependencies []:
-    -   @spectrum-web-components/help-text@1.5.0-beta.0
-    -   @spectrum-web-components/icon@1.5.0-beta.0
-    -   @spectrum-web-components/icons-ui@1.5.0-beta.0
-    -   @spectrum-web-components/icons-workflow@1.5.0-beta.0
-    -   @spectrum-web-components/base@1.5.0-beta.0
-    -   @spectrum-web-components/shared@1.5.0-beta.0
-
 ## 1.4.0
 
 ### Patch Changes

@@ -1,21 +1,5 @@
 # Change Log
 
-## 1.5.0-beta.0
-
-### Patch Changes
-
--   Updated dependencies []:
-    -   @spectrum-web-components/action-button@1.5.0-beta.0
-    -   @spectrum-web-components/icon@1.5.0-beta.0
-    -   @spectrum-web-components/icons-ui@1.5.0-beta.0
-    -   @spectrum-web-components/menu@1.5.0-beta.0
-    -   @spectrum-web-components/overlay@1.5.0-beta.0
-    -   @spectrum-web-components/picker-button@1.5.0-beta.0
-    -   @spectrum-web-components/popover@1.5.0-beta.0
-    -   @spectrum-web-components/progress-circle@1.5.0-beta.0
-    -   @spectrum-web-components/textfield@1.5.0-beta.0
-    -   @spectrum-web-components/base@1.5.0-beta.0
-
 ## 1.4.0
 
 ### Patch Changes
