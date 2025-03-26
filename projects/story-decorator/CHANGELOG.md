@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.5.0-beta.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/field-label@1.5.0-beta.0
+    -   @spectrum-web-components/menu@1.5.0-beta.0
+    -   @spectrum-web-components/overlay@1.5.0-beta.0
+    -   @spectrum-web-components/picker@1.5.0-beta.0
+    -   @spectrum-web-components/switch@1.5.0-beta.0
+    -   @spectrum-web-components/base@1.5.0-beta.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0-beta.0
+    -   @spectrum-web-components/theme@1.5.0-beta.0
+
 ## 1.4.0
 
 ### Patch Changes

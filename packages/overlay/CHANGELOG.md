@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.5.0-beta.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/action-button@1.5.0-beta.0
+    -   @spectrum-web-components/base@1.5.0-beta.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0-beta.0
+    -   @spectrum-web-components/shared@1.5.0-beta.0
+    -   @spectrum-web-components/theme@1.5.0-beta.0
+
 ## 1.4.0
 
 ### Minor Changes

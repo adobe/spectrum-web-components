@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/vrt-compare",
-    "version": "1.4.0",
+    "version": "1.5.0-beta.0",
     "publishConfig": {
         "access": "public"
     },
@@ -60,15 +60,15 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-bar": "1.4.0",
-        "@spectrum-web-components/action-button": "1.4.0",
-        "@spectrum-web-components/action-group": "1.4.0",
-        "@spectrum-web-components/base": "1.4.0",
-        "@spectrum-web-components/icons-workflow": "1.4.0",
-        "@spectrum-web-components/shared": "1.4.0",
-        "@spectrum-web-components/split-view": "1.4.0",
-        "@spectrum-web-components/styles": "1.4.0",
-        "@spectrum-web-components/theme": "1.4.0"
+        "@spectrum-web-components/action-bar": "1.5.0-beta.0",
+        "@spectrum-web-components/action-button": "1.5.0-beta.0",
+        "@spectrum-web-components/action-group": "1.5.0-beta.0",
+        "@spectrum-web-components/base": "1.5.0-beta.0",
+        "@spectrum-web-components/icons-workflow": "1.5.0-beta.0",
+        "@spectrum-web-components/shared": "1.5.0-beta.0",
+        "@spectrum-web-components/split-view": "1.5.0-beta.0",
+        "@spectrum-web-components/styles": "1.5.0-beta.0",
+        "@spectrum-web-components/theme": "1.5.0-beta.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
