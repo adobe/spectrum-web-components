@@ -29,6 +29,10 @@
             "development": "./src/ProgressBar.dev.js",
             "default": "./src/ProgressBar.js"
         },
+        "./src/ProgressBarBase.js": {
+            "development": "./src/ProgressBarBase.dev.js",
+            "default": "./src/ProgressBarBase.js"
+        },
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
