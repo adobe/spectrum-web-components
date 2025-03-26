@@ -1016,3 +1016,50 @@ describe('maintains focus consistency in webkit', () => {
         expect(trigger.classList.contains(SAFARI_FOCUS_RING_CLASS)).to.be.true;
     });
 });
+
+describe('Overlay - Interactive Content', () => {
+    it('stays open when interacting with elements inside', async () => {
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-button id="trigger">Open Overlay</sp-button>
+                <sp-overlay
+                    trigger="trigger@click"
+                    type="auto"
+                    placement="bottom"
+                >
+                    <sp-popover dialog>
+                        <p>
+                            My slider in overlay element:
+                            <sp-slider
+                                label="Slider Label - Editable"
+                                editable
+                            ></sp-slider>
+                        </p>
+                    </sp-popover>
+                </sp-overlay>
+            </div>
+        `);
+
+        const trigger = el.querySelector('#trigger') as HTMLElement;
+        const overlay = el.querySelector('sp-overlay') as Overlay;
+
+        await elementUpdated(overlay);
+
+        const opened = oneEvent(overlay, 'sp-opened');
+        trigger.click();
+        await opened;
+
+        expect(overlay.open).to.be.true;
+
+        await nextFrame();
+        await nextFrame();
+
+        const slider = el.querySelector('sp-slider') as HTMLElement;
+        expect(slider).to.exist;
+
+        slider.click();
+        await nextFrame();
+        await nextFrame();
+        expect(overlay.open).to.be.true;
+    });
+});

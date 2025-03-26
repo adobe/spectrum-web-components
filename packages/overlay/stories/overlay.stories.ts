@@ -1714,3 +1714,22 @@ export const disabledOverlayTrigger = (): TemplateResult => {
 disabledOverlayTrigger.swc_vrt = {
     skip: true,
 };
+
+export const WithInteractiveContent = (): TemplateResult => {
+    return html`
+        <div>
+            <sp-button id="trigger">Open Overlay</sp-button>
+            <sp-overlay trigger="trigger@click" type="auto" placement="bottom">
+                <sp-popover dialog>
+                    <p>
+                        My slider in overlay element:
+                        <sp-slider
+                            label="Slider Label - Editable"
+                            editable
+                        ></sp-slider>
+                    </p>
+                </sp-popover>
+            </sp-overlay>
+        </div>
+    `;
+};
