@@ -120,32 +120,56 @@ export class ColorController {
             alpha: 1,
         };
 
+        // RGB color formats
         const rgbRegExpArray = [
-            /rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d*\.?\d+)\s*\)/i, // rgba(r, g, b, a) with commas
-            /rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)/i, // rgb(r, g, b) with commas
-            /^rgba\s+(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(0|0?\.\d+|1)\s*$/i, // rgba r g b a with spaces
-            /^rgb\s+(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*$/i, // rgb r g b with spaces
-            /^rgba\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(\d*\.?\d+)\s*\)$/i, // rgba(r g b a) with spaces inside
-            /^rgb\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*\)$/i, // rgb(r g b) with spaces inside
-            /rgb\(\s*(100|[0-9]{1,2}%)\s*,\s*(100|[0-9]{1,2}%)\s*,\s*(100|[0-9]{1,2}%)\s*\)/i, // rgb(r%, g%, b%) percentage values
-            /rgba\(\s*(100|[0-9]{1,2})%\s*,\s*(100|[0-9]{1,2})%\s*,\s*(100|[0-9]{1,2})%\s*,\s*(\d*\.?\d+)\s*\)/i, // rgba(r%, g%, b%, a) percentage values
+            // With commas
+            /rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d*\.?\d+)\s*\)/i, // rgba(r, g, b, a)
+            /rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)/i, // rgb(r, g, b)
+
+            // With spaces
+            /^rgba\s+(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(0|0?\.\d+|1)\s*$/i, // rgba r g b a
+            /^rgb\s+(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*$/i, // rgb r g b
+
+            // Spaces inside parentheses
+            /^rgba\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(\d*\.?\d+)\s*\)$/i, // rgba(r g b a)
+            /^rgb\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*\)$/i, // rgb(r g b)
+
+            // Percentage values
+            /rgb\(\s*(100|[0-9]{1,2}%)\s*,\s*(100|[0-9]{1,2}%)\s*,\s*(100|[0-9]{1,2}%)\s*\)/i, // rgb(r%, g%, b%)
+            /rgba\(\s*(100|[0-9]{1,2})%\s*,\s*(100|[0-9]{1,2})%\s*,\s*(100|[0-9]{1,2})%\s*,\s*(\d*\.?\d+)\s*\)/i, // rgba(r%, g%, b%, a)
         ];
+
+        // HSL color formats
         const hslRegExpArray = [
-            /hsla\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*,\s*(\d*\.?\d+)\s*\)/i, // hsla(h, s, l, a) with commas
-            /hsl\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*\)/i, // hsl(h, s, l) with commas
-            /^hsla\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*$/i, // hsla h s l a with spaces
-            /^hsl\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*$/i, // hsl h s l with spaces
-            /^hsla\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*\)$/i, // hsla(h s l a) with spaces inside
-            /^hsl\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*\)$/i, // hsl(h s l) with spaces inside
+            // With commas
+            /hsla\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*,\s*(\d*\.?\d+)\s*\)/i, // hsla(h, s, l, a)
+            /hsl\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*\)/i, // hsl(h, s, l)
+
+            // With spaces
+            /^hsla\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*$/i, // hsla h s l a
+            /^hsl\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*$/i, // hsl h s l
+
+            // Spaces inside parentheses
+            /^hsla\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*\)$/i, // hsla(h s l a)
+            /^hsl\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*\)$/i, // hsl(h s l)
         ];
+
+        // HSV color formats
         const hsvRegExpArray = [
-            /hsva\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*,\s*(\d*\.?\d+)\s*\)/i, // hsva(h, s, v, a) with commas
-            /hsv\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*\)/i, // hsv(h, s, v) with commas
-            /^hsva\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*$/i, // hsva h s v a with spaces
-            /^hsv\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*$/i, // hsv h s v with spaces
-            /^hsva\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*\)$/i, // hsva(h s v a) with spaces inside
-            /^hsv\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*\)$/i, // hsv(h s v) with spaces inside
+            // With commas
+            /hsva\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*,\s*(\d*\.?\d+)\s*\)/i, // hsva(h, s, v, a)
+            /hsv\(\s*(\d{1,3})\s*,\s*(\d{1,3}%?)\s*,\s*(\d{1,3}%?)\s*\)/i, // hsv(h, s, v)
+
+            // With spaces
+            /^hsva\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*$/i, // hsva h s v a
+            /^hsv\s+(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*$/i, // hsv h s v
+
+            // Spaces inside parentheses
+            /^hsva\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s+(\d*\.?\d+)\s*\)$/i, // hsva(h s v a)
+            /^hsv\(\s*(\d{1,3})\s+(\d{1,3}%?)\s+(\d{1,3}%?)\s*\)$/i, // hsv(h s v)
         ];
+
+        // HEX color formats
         const hexRegExpArray = [
             /^#([A-Fa-f0-9]{6})([A-Fa-f0-9]{2})?$/, // 6-digit hex with optional hex alpha
             /^#([A-Fa-f0-9]{3})([A-Fa-f0-9]{1})?$/, // 3-digit hex with optional hex alpha
