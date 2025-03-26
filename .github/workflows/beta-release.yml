@@ -39,6 +39,7 @@ jobs:
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
+                  git add .
                   git commit -am "chore: publish beta version"
                   yarn prepublishOnly
                   yarn changeset publish --no-git-tag
