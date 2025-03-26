@@ -319,6 +319,16 @@ export class MenuItem extends LikeAnchor(
      */
     private _closedViaPointer = false;
 
+    /**
+     * whether menu item's submenu is opened via keyboard
+     */
+    private _openedViaKeyboard = false;
+
+    /**
+     * whether menu item's submenu is closed via pointer leave
+     */
+    private _closedViaPointer = false;
+
     private handleClickCapture(event: Event): void | boolean {
         if (this.disabled) {
             event.preventDefault();
@@ -379,6 +389,7 @@ export class MenuItem extends LikeAnchor(
         import('@spectrum-web-components/popover/sp-popover.js');
         return html`
             <sp-overlay
+                receives-focus="false"
                 receives-focus="false"
                 .triggerElement=${this as HTMLElement}
                 ?disabled=${!this.hasSubmenu}
@@ -472,6 +483,7 @@ export class MenuItem extends LikeAnchor(
         this.setAttribute('tabindex', '-1');
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('mouseover', this.handleMouseover);
+        this.addEventListener('mouseover', this.handleMouseover);
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('pointerenter', this.closeOverlaysForRoot);
         if (!this.hasAttribute('id')) {
@@ -482,6 +494,7 @@ export class MenuItem extends LikeAnchor(
     handleMouseover(event: MouseEvent): void {
         const target = event.target as HTMLElement;
         if (target === this) {
+            this.focus();
             this.focused = false;
         }
     }
@@ -529,6 +542,7 @@ export class MenuItem extends LikeAnchor(
             return;
         }
         this.openOverlay(true);
+        this.openOverlay(true);
     }
 
     protected handleSubmenuFocus(): void {
@@ -567,6 +581,7 @@ export class MenuItem extends LikeAnchor(
 
     protected handlePointerleave(): void {
         this._closedViaPointer = true;
+        this._closedViaPointer = true;
         if (this.open && !this.recentlyLeftChild) {
             this.leaveTimeout = setTimeout(() => {
                 delete this.leaveTimeout;
@@ -603,12 +618,15 @@ export class MenuItem extends LikeAnchor(
             );
         }) as Overlay;
         if (this._openedViaKeyboard) {
+        if (this._openedViaKeyboard) {
             this.submenuElement?.focus();
+        }
         }
         this.overlayElement.parentOverlayToForceClose = parentOverlay;
     }
 
     protected cleanup(): void {
+        this._closedViaPointer = false;
         this._closedViaPointer = false;
         this.setAttribute('aria-expanded', 'false');
         this.open = false;
@@ -616,12 +634,14 @@ export class MenuItem extends LikeAnchor(
     }
 
     public async openOverlay(shouldFocus: boolean = false): Promise<void> {
+    public async openOverlay(shouldFocus: boolean = false): Promise<void> {
         if (!this.hasSubmenu || this.open || this.disabled) {
             return;
         }
         this.open = true;
         this.active = true;
         this.setAttribute('aria-expanded', 'true');
+        this._openedViaKeyboard = shouldFocus;
         this._openedViaKeyboard = shouldFocus;
         this.addEventListener('sp-closed', this.cleanup, {
             once: true,
@@ -653,7 +673,9 @@ export class MenuItem extends LikeAnchor(
             changes.has('open') &&
             !this.open &&
             !this._closedViaPointer &&
+            !this._closedViaPointer &&
             this.hasSubmenu &&
+            this.matches(':focus-within')
             this.matches(':focus-within')
         ) {
             this.focus();
