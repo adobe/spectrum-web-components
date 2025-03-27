@@ -9,8 +9,3 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-:host {
-    --spectrum-fieldgroup-margin: var(--system-field-group-margin);
-    --spectrum-fieldgroup-readonly-delimiter: var(--system-field-group-readonly-delimiter);
-}

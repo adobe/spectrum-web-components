@@ -11,6 +11,9 @@
  */
 
 :host {
+    --spectrum-asset-folder-background-color: var(--spectrum-gray-200);
+    --spectrum-asset-file-background-color: var(--spectrum-gray-25);
+    --spectrum-asset-icon-outline-color: var(--spectrum-gray-500);
     --spectrum-asset-folder-background: var(--highcontrast-asset-icon-background-color, var(--mod-asset-folder-background-color, var(--spectrum-asset-folder-background-color)));
     --spectrum-asset-file-background: var(--highcontrast-asset-icon-background-color, var(--mod-asset-file-background-color, var(--spectrum-asset-file-background-color)));
     --spectrum-asset-folder-outline: var(--mod-asset-icon-outline-color, var(--spectrum-asset-icon-outline-color));

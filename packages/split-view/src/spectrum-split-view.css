@@ -11,6 +11,9 @@
  */
 
 :host {
+    --spectrum-splitview-background-color: var(--spectrum-gray-75);
+    --spectrum-splitview-handle-background-color: var(--spectrum-gray-200);
+    --spectrum-splitview-gripper-border-radius: 2px;
     --spectrum-splitview-vertical-width: 100%;
     --spectrum-splitview-vertical-gripper-width: 50%;
     --spectrum-splitview-vertical-gripper-outer-width: 100%;

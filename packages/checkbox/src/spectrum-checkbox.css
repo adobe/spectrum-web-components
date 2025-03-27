@@ -11,6 +11,12 @@
  */
 
 :host {
+    --spectrum-checkbox-control-color-default: var(--spectrum-neutral-content-color-default);
+    --spectrum-checkbox-control-color-hover: var(--spectrum-gray-700);
+    --spectrum-checkbox-control-color-down: var(--spectrum-gray-800);
+    --spectrum-checkbox-control-color-focus: var(--spectrum-gray-700);
+    --spectrum-checkbox-checkmark-color: var(--spectrum-gray-50);
+    --spectrum-checkbox-control-corner-radius: 2px;
     --spectrum-checkbox-content-color-default: var(--spectrum-neutral-content-color-default);
     --spectrum-checkbox-content-color-hover: var(--spectrum-neutral-content-color-hover);
     --spectrum-checkbox-content-color-down: var(--spectrum-neutral-content-color-down);

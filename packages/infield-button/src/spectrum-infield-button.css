@@ -10,7 +10,21 @@
  * governing permissions and limitations under the License.
  */
 
+:host([disabled]) {
+    --spectrum-infield-button-border-color: var(--spectrum-gray-300);
+}
+
 :host {
+    --spectrum-infield-button-border-width: var(--spectrum-border-width-100);
+    --spectrum-infield-button-border-color: inherit;
+    --spectrum-infield-button-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-infield-button-border-radius-reset: 0;
+    --spectrum-infield-button-stacked-top-border-radius-start-start: var(--spectrum-infield-button-border-radius-reset);
+    --spectrum-infield-button-stacked-bottom-border-radius-end-start: var(--spectrum-infield-button-border-radius-reset);
+    --spectrum-infield-button-background-color: var(--spectrum-gray-100);
+    --spectrum-infield-button-background-color-hover: var(--spectrum-gray-200);
+    --spectrum-infield-button-background-color-down: var(--spectrum-gray-200);
+    --spectrum-infield-button-background-color-key-focus: var(--spectrum-gray-200);
     --spectrum-infield-button-height: var(--spectrum-component-height-100);
     --spectrum-infield-button-width: var(--spectrum-component-height-100);
     --spectrum-infield-button-stacked-border-radius-reset: var(--spectrum-in-field-button-fill-stacked-inner-border-rounding);

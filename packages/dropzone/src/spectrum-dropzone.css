@@ -11,6 +11,7 @@
  */
 
 :host {
+    --spectrum-drop-zone-border-color: var(--spectrum-gray-200);
     --spectrum-drop-zone-border-width: var(--spectrum-border-width-200);
     --spectrum-drop-zone-background-color: var(--spectrum-drop-zone-background-color-rgb);
     --spectrum-drop-zone-border-color-hover: var(--spectrum-accent-visual-color);

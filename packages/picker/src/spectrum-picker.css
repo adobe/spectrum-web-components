@@ -11,6 +11,20 @@
  */
 
 #button {
+    --spectrum-picker-background-color-default: var(--spectrum-gray-100);
+    --spectrum-picker-background-color-default-open: var(--spectrum-gray-200);
+    --spectrum-picker-background-color-hover: var(--spectrum-gray-200);
+    --spectrum-picker-background-color-hover-open: var(--spectrum-gray-200);
+    --spectrum-picker-background-color-active: var(--spectrum-gray-200);
+    --spectrum-picker-background-color-key-focus: var(--spectrum-gray-200);
+    --spectrum-picker-border-color-default: var(--spectrum-gray-500);
+    --spectrum-picker-border-color-default-open: var(--spectrum-gray-800);
+    --spectrum-picker-border-color-hover: var(--spectrum-gray-600);
+    --spectrum-picker-border-color-hover-open: var(--spectrum-gray-900);
+    --spectrum-picker-border-color-active: var(--spectrum-gray-700);
+    --spectrum-picker-border-color-key-focus: var(--spectrum-gray-900);
+    --spectrum-picker-border-color-disabled: var(--spectrum-gray-300);
+    --spectrum-picker-border-width: var(--spectrum-border-width-100);
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;

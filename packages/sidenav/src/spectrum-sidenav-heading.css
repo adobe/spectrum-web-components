@@ -10,6 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
+#list {
+    --spectrum-sidenav-background-hover: var(--spectrum-gray-100);
+    --spectrum-sidenav-item-background-down: var(--spectrum-gray-200);
+    --spectrum-sidenav-background-key-focus: var(--spectrum-gray-100);
+    --spectrum-sidenav-item-background-default-selected: var(--spectrum-gray-100);
+    --spectrum-sidenav-background-hover-selected: var(--spectrum-gray-200);
+    --spectrum-sidenav-item-background-down-selected: var(--spectrum-gray-200);
+    --spectrum-sidenav-background-key-focus-selected: var(--spectrum-gray-100);
+}
+
 @media (forced-colors: active) {
     #list .spectrum-Icon {
         forced-color-adjust: preserve-parent-color;

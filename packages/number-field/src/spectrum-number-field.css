@@ -10,6 +10,35 @@
  * governing permissions and limitations under the License.
  */
 
+:host([quiet]) #textfield {
+    --spectrum-stepper-buttons-border-style: none;
+    --spectrum-stepper-button-edge-to-fill: 0;
+}
+
+:host {
+    --spectrum-stepper-border-width: var(--spectrum-border-width-100);
+    --spectrum-stepper-border-color-default: var(--spectrum-gray-500);
+    --spectrum-stepper-border-color-hover: var(--spectrum-gray-600);
+    --spectrum-stepper-border-color-focus: var(--spectrum-gray-800);
+    --spectrum-stepper-border-color-focus-hover: var(--spectrum-gray-900);
+    --spectrum-stepper-border-color-keyboard-focus: var(--spectrum-gray-800);
+    --spectrum-stepper-buttons-border-style: none;
+    --spectrum-stepper-buttons-border-width: 0;
+    --spectrum-stepper-buttons-border-color: var(--spectrum-gray-500);
+    --spectrum-stepper-buttons-background-color: var(--spectrum-gray-100);
+    --spectrum-stepper-buttons-border-color-hover: var(--spectrum-gray-600);
+    --spectrum-stepper-buttons-border-color-focus: var(--spectrum-gray-800);
+    --spectrum-stepper-buttons-border-color-keyboard-focus: var(--spectrum-gray-800);
+    --spectrum-stepper-button-border-width: var(--spectrum-border-width-100);
+    --spectrum-stepper-border-color-invalid: var(--spectrum-negative-border-color-default);
+    --spectrum-stepper-border-color-focus-invalid: var(--spectrum-negative-border-color-focus);
+    --spectrum-stepper-border-color-focus-hover-invalid: var(--spectrum-negative-border-color-focus-hover);
+    --spectrum-stepper-border-color-keyboard-focus-invalid: var(--spectrum-negative-border-color-key-focus);
+    --spectrum-stepper-border-color-disabled: var(--spectrum-gray-300);
+    --spectrum-stepper-button-border-width-disabled: var(--spectrum-border-width-200);
+    --spectrum-stepper-buttons-background-color-disabled: var(--spectrum-gray-50);
+}
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-stepper-border-color: CanvasText;

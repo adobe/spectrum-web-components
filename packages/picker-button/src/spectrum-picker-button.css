@@ -11,6 +11,16 @@
  */
 
 .root {
+    --spectrum-picker-button-background-color: var(--spectrum-gray-100);
+    --spectrum-picker-button-background-color-hover: var(--spectrum-gray-200);
+    --spectrum-picker-button-background-color-down: var(--spectrum-gray-200);
+    --spectrum-picker-button-background-color-key-focus: var(--spectrum-gray-200);
+    --spectrum-picker-button-border-color: none;
+    --spectrum-picker-button-border-radius: var(--spectrum-corner-radius-75);
+    --spectrum-picker-button-border-radius-rounded-sided: var(--spectrum-corner-radius-200);
+    --spectrum-picker-button-border-radius-sided: var(--spectrum-corner-radius-75);
+    --spectrum-picker-button-border-width: 0px;
+    --spectrum-picker-button-padding: 4px;
     --spectrum-picker-button-height: var(--spectrum-component-height-100);
     --spectrum-picker-button-width: var(--spectrum-component-height-100);
     --spectrum-picker-button-gap: var(--spectrum-text-to-visual-50);

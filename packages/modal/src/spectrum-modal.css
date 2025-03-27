@@ -11,6 +11,7 @@
  */
 
 :host {
+    --spectrum-modal-background-color: var(--spectrum-background-layer-2-color);
     --spectrum-modal-confirm-entry-animation-duration: var(--mod-modal-confirm-entry-animation-duration, var(--spectrum-animation-duration-500));
     --spectrum-modal-confirm-entry-animation-delay: var(--mod-overlay-animation-duration-opened, var(--mod-modal-confirm-entry-animation-delay, var(--spectrum-animation-duration-200)));
     --spectrum-modal-confirm-exit-animation-duration: var(--mod-overlay-animation-duration, var(--mod-modal-confirm-exit-animation-duration, var(--spectrum-animation-duration-100)));

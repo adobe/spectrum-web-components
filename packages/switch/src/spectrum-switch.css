@@ -11,6 +11,17 @@
  */
 
 :host {
+    --spectrum-switch-handle-border-color-default: var(--spectrum-gray-600);
+    --spectrum-switch-handle-border-color-hover: var(--spectrum-gray-700);
+    --spectrum-switch-handle-border-color-down: var(--spectrum-gray-800);
+    --spectrum-switch-handle-border-color-focus: var(--spectrum-gray-700);
+    --spectrum-switch-handle-border-color-selected-default: var(--spectrum-gray-700);
+    --spectrum-switch-handle-border-color-selected-hover: var(--spectrum-gray-800);
+    --spectrum-switch-handle-border-color-selected-down: var(--spectrum-gray-900);
+    --spectrum-switch-handle-border-color-selected-focus: var(--spectrum-gray-800);
+    --spectrum-switch-background-color: var(--spectrum-gray-200);
+    --spectrum-switch-background-color-disabled: var(--spectrum-gray-200);
+    --spectrum-switch-handle-background-color: var(--spectrum-gray-50);
     --spectrum-switch-label-color-default: var(--spectrum-neutral-content-color-default);
     --spectrum-switch-label-color-hover: var(--spectrum-neutral-content-color-hover);
     --spectrum-switch-label-color-down: var(--spectrum-neutral-content-color-down);

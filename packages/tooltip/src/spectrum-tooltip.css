@@ -11,6 +11,7 @@
  */
 
 #tooltip {
+    --spectrum-tooltip-backgound-color-default-neutral: var(--spectrum-neutral-subdued-background-color-default);
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
