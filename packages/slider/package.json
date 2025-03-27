@@ -84,7 +84,7 @@
         "@spectrum-web-components/theme": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/slider": "6.0.1"
+        "@spectrum-css/slider": "6.3.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

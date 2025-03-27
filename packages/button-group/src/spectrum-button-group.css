@@ -12,19 +12,30 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    gap: var(--mod-buttongroup-spacing-horizontal, var(--spectrum-buttongroup-spacing-horizontal));
-    justify-content: normal;
-    justify-content: var(--mod-buttongroup-justify-content, normal);
+    --spectrum-buttongroup-spacing: var(--mod-buttongroup-spacing, var(--mod-buttongroup-spacing-horizontal, var(--spectrum-spacing-300)));
+    --spectrum-buttongroup-display: flex;
+    --spectrum-buttongroup-flex-direction: row;
+    --spectrum-buttongroup-justify-content: var(--mod-buttongroup-justify-content, normal);
+}
+
+:host([size='s']) {
+    --spectrum-buttongroup-spacing: var(--mod-buttongroup-spacing, var(--mod-buttongroup-spacing-horizontal, var(--spectrum-spacing-200)));
+}
+
+:host([vertical]) {
+    --mod-buttongroup-spacing: var(--mod-buttongroup-spacing-vertical);
+    --spectrum-buttongroup-display: inline-flex;
+    --spectrum-buttongroup-flex-direction: column;
+}
+
+:host {
+    display: var(--spectrum-buttongroup-display);
+    flex-direction: var(--spectrum-buttongroup-flex-direction);
+    gap: var(--spectrum-buttongroup-spacing);
+    justify-content: var(--spectrum-buttongroup-justify-content);
     flex-wrap: wrap;
-    display: flex;
 }
 
 ::slotted(*) {
     flex-shrink: 0;
-}
-
-:host([vertical]) {
-    gap: var(--mod-buttongroup-spacing-vertical, var(--spectrum-buttongroup-spacing-vertical));
-    flex-direction: column;
-    display: inline-flex;
 }

@@ -24,90 +24,16 @@ governing permissions and limitations under the License.
     --spectrum-clear-button-background-color-key-focus: var(
         --system-clear-button-background-color-key-focus
     );
-    --spectrum-clear-button-height: var(--system-clear-button-height);
-    --spectrum-clear-button-width: var(--system-clear-button-width);
-    --spectrum-clear-button-padding: var(--system-clear-button-padding);
-    --spectrum-clear-button-icon-color: var(--system-clear-button-icon-color);
-    --spectrum-clear-button-icon-color-hover: var(
-        --system-clear-button-icon-color-hover
-    );
-    --spectrum-clear-button-icon-color-down: var(
-        --system-clear-button-icon-color-down
-    );
-    --spectrum-clear-button-icon-color-key-focus: var(
-        --system-clear-button-icon-color-key-focus
-    );
 }
 
-:host([size='s']) {
-    --spectrum-clear-button-height: var(--system-clear-button-size-s-height);
-    --spectrum-clear-button-width: var(--system-clear-button-size-s-width);
-}
-
-:host([size='l']) {
-    --spectrum-clear-button-height: var(--system-clear-button-size-l-height);
-    --spectrum-clear-button-width: var(--system-clear-button-size-l-width);
-}
-
-:host([size='xl']) {
-    --spectrum-clear-button-height: var(--system-clear-button-size-xl-height);
-    --spectrum-clear-button-width: var(--system-clear-button-size-xl-width);
-}
-
-:host .spectrum-ClearButton--quiet {
-    --spectrum-clear-button-background-color: var(
-        --system-clear-button-quiet-background-color
-    );
+:host .spectrum-ClearButton--staticWhite {
     --spectrum-clear-button-background-color-hover: var(
-        --system-clear-button-quiet-background-color-hover
+        --system-clear-button-static-white-background-color-hover
     );
     --spectrum-clear-button-background-color-down: var(
-        --system-clear-button-quiet-background-color-down
+        --system-clear-button-static-white-background-color-down
     );
     --spectrum-clear-button-background-color-key-focus: var(
-        --system-clear-button-quiet-background-color-key-focus
-    );
-}
-
-:host([variant='overBackground']) {
-    --spectrum-clear-button-icon-color: var(
-        --system-clear-button-over-background-icon-color
-    );
-    --spectrum-clear-button-icon-color-hover: var(
-        --system-clear-button-over-background-icon-color-hover
-    );
-    --spectrum-clear-button-icon-color-down: var(
-        --system-clear-button-over-background-icon-color-down
-    );
-    --spectrum-clear-button-icon-color-key-focus: var(
-        --system-clear-button-over-background-icon-color-key-focus
-    );
-    --spectrum-clear-button-background-color: var(
-        --system-clear-button-over-background-background-color
-    );
-    --spectrum-clear-button-background-color-hover: var(
-        --system-clear-button-over-background-background-color-hover
-    );
-    --spectrum-clear-button-background-color-down: var(
-        --system-clear-button-over-background-background-color-down
-    );
-    --spectrum-clear-button-background-color-key-focus: var(
-        --system-clear-button-over-background-background-color-key-focus
-    );
-}
-
-:host([disabled]),
-:host([disabled]) {
-    --spectrum-clear-button-icon-color: var(
-        --system-clear-button-disabled-icon-color
-    );
-    --spectrum-clear-button-icon-color-hover: var(
-        --system-clear-button-disabled-icon-color-hover
-    );
-    --spectrum-clear-button-icon-color-down: var(
-        --system-clear-button-disabled-icon-color-down
-    );
-    --spectrum-clear-button-background-color: var(
-        --system-clear-button-disabled-background-color
+        --system-clear-button-static-white-background-color-key-focus
     );
 }

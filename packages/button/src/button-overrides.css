@@ -205,6 +205,9 @@ governing permissions and limitations under the License.
 }
 
 :host([static-color='white'][treatment='outline']:not([variant='secondary'])) {
+    --mod-button-background-color-default: var(
+        --system-button-static-white-outline-not-secondary-background-color-default
+    );
     --mod-button-background-color-hover: var(
         --system-button-static-white-outline-not-secondary-background-color-hover
     );
@@ -307,15 +310,6 @@ governing permissions and limitations under the License.
 }
 
 :host([static-color='black'][variant='secondary'][treatment='outline']) {
-    --mod-button-background-color-hover: var(
-        --system-button-static-black-secondary-outline-background-color-hover
-    );
-    --mod-button-background-color-down: var(
-        --system-button-static-black-secondary-outline-background-color-down
-    );
-    --mod-button-background-color-focus: var(
-        --system-button-static-black-secondary-outline-background-color-focus
-    );
     --mod-button-border-color-default: var(
         --system-button-static-black-secondary-outline-border-color-default
     );
@@ -331,6 +325,9 @@ governing permissions and limitations under the License.
 }
 
 :host([static-color='black'][treatment='outline']:not([variant='secondary'])) {
+    --mod-button-background-color-default: var(
+        --system-button-static-black-outline-not-secondary-background-color-default
+    );
     --mod-button-background-color-hover: var(
         --system-button-static-black-outline-not-secondary-background-color-hover
     );

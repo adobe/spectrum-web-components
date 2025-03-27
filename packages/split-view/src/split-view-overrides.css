@@ -12,46 +12,13 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-splitview-vertical-width: var(
-        --system-split-view-vertical-width
-    );
-    --spectrum-splitview-vertical-gripper-width: var(
-        --system-split-view-vertical-gripper-width
-    );
-    --spectrum-splitview-vertical-gripper-outer-width: var(
-        --system-split-view-vertical-gripper-outer-width
-    );
-    --spectrum-splitview-vertical-gripper-reset: var(
-        --system-split-view-vertical-gripper-reset
-    );
     --spectrum-splitview-background-color: var(
         --system-split-view-background-color
     );
-    --spectrum-splitview-content-color: var(--system-split-view-content-color);
     --spectrum-splitview-handle-background-color: var(
         --system-split-view-handle-background-color
     );
-    --spectrum-splitview-handle-background-color-hover: var(
-        --system-split-view-handle-background-color-hover
-    );
-    --spectrum-splitview-handle-background-color-down: var(
-        --system-split-view-handle-background-color-down
-    );
-    --spectrum-splitview-handle-background-color-focus: var(
-        --system-split-view-handle-background-color-focus
-    );
-    --spectrum-splitview-handle-width: var(--system-split-view-handle-width);
     --spectrum-splitview-gripper-border-radius: var(
         --system-split-view-gripper-border-radius
-    );
-    --spectrum-splitview-gripper-width: var(--system-split-view-gripper-width);
-    --spectrum-splitview-gripper-height: var(
-        --system-split-view-gripper-height
-    );
-    --spectrum-splitview-gripper-border-width-horizontal: var(
-        --system-split-view-gripper-border-width-horizontal
-    );
-    --spectrum-splitview-gripper-border-width-vertical: var(
-        --system-split-view-gripper-border-width-vertical
     );
 }

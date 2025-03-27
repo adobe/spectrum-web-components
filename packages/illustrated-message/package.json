@@ -62,7 +62,7 @@
         "@spectrum-web-components/styles": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/illustratedmessage": "8.0.1"
+        "@spectrum-css/illustratedmessage": "9.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

@@ -51,7 +51,7 @@
     "devDependencies": {
         "@adobe/spectrum-css-workflow-icons": "1.7.0",
         "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@^4.0.0",
-        "@spectrum-css/icon": "8.0.1",
+        "@spectrum-css/icon": "9.1.0",
         "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",
         "fast-glob": "^3.2.12",

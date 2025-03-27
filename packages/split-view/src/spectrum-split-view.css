@@ -12,6 +12,19 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-splitview-vertical-width: 100%;
+    --spectrum-splitview-vertical-gripper-width: 50%;
+    --spectrum-splitview-vertical-gripper-outer-width: 100%;
+    --spectrum-splitview-vertical-gripper-reset: 0;
+    --spectrum-splitview-content-color: var(--spectrum-body-color);
+    --spectrum-splitview-handle-background-color-hover: var(--spectrum-gray-400);
+    --spectrum-splitview-handle-background-color-down: var(--spectrum-gray-800);
+    --spectrum-splitview-handle-background-color-focus: var(--spectrum-focus-indicator-color);
+    --spectrum-splitview-handle-width: var(--spectrum-border-width-200);
+    --spectrum-splitview-gripper-width: var(--spectrum-border-width-400);
+    --spectrum-splitview-gripper-height: 16px;
+    --spectrum-splitview-gripper-border-width-horizontal: 3px;
+    --spectrum-splitview-gripper-border-width-vertical: var(--spectrum-border-width-400);
     display: flex;
     overflow: hidden;
 }
