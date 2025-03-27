@@ -7268,12 +7268,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/link@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/link@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/link@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/link@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/afc52ff8eadfe54f226ffd484879e4933f29351e81782942b14e1d463aa86ba9d315158088499520e044b3425b8c5b4ac2daee230871021908b65f072ece2542
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/f83e6392de126d82970808c749caaec6300cc0b371d0c1d8ce64c21c5e659c2740bd5bf9581f4578822bf52e0b1e7d717ab5a15c90c452ec89f534e355734d93
   languageName: node
   linkType: hard
 
@@ -8345,7 +8348,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/link@workspace:packages/link"
   dependencies:
-    "@spectrum-css/link": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/link": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
   languageName: unknown
