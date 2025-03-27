@@ -6974,9 +6974,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/checkbox@npm:10.1.1":
-  version: 10.1.1
-  resolution: "@spectrum-css/checkbox@npm:10.1.1"
+"@spectrum-css/checkbox@npm:10.1.2":
+  version: 10.1.2
+  resolution: "@spectrum-css/checkbox@npm:10.1.2"
   peerDependencies:
     "@spectrum-css/icon": ">=9.0.0 <10.0.0"
     "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
@@ -6985,7 +6985,7 @@ __metadata:
       optional: true
     "@spectrum-css/tokens":
       optional: true
-  checksum: 10c0/370719feb998f154d464276488cdd5d4110ef3b2eed1a63befa82cabb8d9c7c50c2e2c044666b3c4bb8d9a117daf56688549847cf0542d50fc8a905222bcf104
+  checksum: 10c0/40472415f5c2ad6128584dcc5019a8b925ad1aebc250f5b350d567b9b0e375142c761eead450a3e6442ec26d21ce55692ddc9c34c1b106b6a8c78f4b63d4056d
   languageName: node
   linkType: hard
 
@@ -7217,13 +7217,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/helptext@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/helptext@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/helptext@npm:6.0.1":
+  version: 6.0.1
+  resolution: "@spectrum-css/helptext@npm:6.0.1"
   peerDependencies:
     "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/b0d5fc91ccd1002bf65bd1add9e6d8e97276e4c484bc13be60afd8774e1baf3030e7776211aae8b28df2c043431bf2068a35e3fad22963213e98f675f95d10c1
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/5f27c33e018cc65fbc8daa0cccbc4e5d5ec057e7d089596628922323bb8ba2496708a99eae9c0aebded2f00c2a46ab6f72fcddf3d737255f067088b2904d4105
   languageName: node
   linkType: hard
 
@@ -7259,12 +7259,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/link@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/link@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/link@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/link@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/afc52ff8eadfe54f226ffd484879e4933f29351e81782942b14e1d463aa86ba9d315158088499520e044b3425b8c5b4ac2daee230871021908b65f072ece2542
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/f83e6392de126d82970808c749caaec6300cc0b371d0c1d8ce64c21c5e659c2740bd5bf9581f4578822bf52e0b1e7d717ab5a15c90c452ec89f534e355734d93
   languageName: node
   linkType: hard
 
@@ -7314,12 +7317,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/opacitycheckerboard@npm:3.0.0-s2-foundations.17":
-  version: 3.0.0-s2-foundations.17
-  resolution: "@spectrum-css/opacitycheckerboard@npm:3.0.0-s2-foundations.17"
+"@spectrum-css/opacitycheckerboard@npm:4.1.0":
+  version: 4.1.0
+  resolution: "@spectrum-css/opacitycheckerboard@npm:4.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=15.0.0-s2-foundations.0"
-  checksum: 10c0/ebed9bb7f7ca248fdd35f91debc513bc6e885f3c06d86f0759500b72182467c28a165dbb2980265ecdd926a8e259d785f3cddc98c0d487d212d37cc749ae001c
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/42f5c989660ebfa8b4f21b34993082859f828186f5527b8ba4b5ddc63dea16016b93a78726d3bedd3365d943291448e5d035c9a3f88f16635051a1a333f8ed42
   languageName: node
   linkType: hard
 
@@ -7957,7 +7963,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/checkbox@workspace:packages/checkbox"
   dependencies:
-    "@spectrum-css/checkbox": "npm:10.1.1"
+    "@spectrum-css/checkbox": "npm:10.1.2"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
     "@spectrum-web-components/icons-ui": "npm:1.4.0"
@@ -8228,7 +8234,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/help-text@workspace:packages/help-text"
   dependencies:
-    "@spectrum-css/helptext": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/helptext": "npm:6.0.1"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icons-workflow": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
@@ -8322,7 +8328,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/link@workspace:packages/link"
   dependencies:
-    "@spectrum-css/link": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/link": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
   languageName: unknown
@@ -8389,7 +8395,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/opacity-checkerboard@workspace:tools/opacity-checkerboard"
   dependencies:
-    "@spectrum-css/opacitycheckerboard": "npm:3.0.0-s2-foundations.17"
+    "@spectrum-css/opacitycheckerboard": "npm:4.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft
