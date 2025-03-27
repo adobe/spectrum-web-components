@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.4.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/button@1.4.0
+    -   @spectrum-web-components/button-group@1.4.0
+    -   @spectrum-web-components/divider@1.4.0
+    -   @spectrum-web-components/icons-workflow@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+    -   @spectrum-web-components/shared@1.4.0
+
 ## 1.3.0
 
 ### Patch Changes

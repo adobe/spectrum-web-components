@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.4.0
+
+### Minor Changes
+
+-   [#5246](https://github.com/adobe/spectrum-web-components/pull/5246) [`e247de9`](https://github.com/adobe/spectrum-web-components/commit/e247de9a2e90872120fb53a5650f237bdb18111c) Thanks [@blunteshwar](https://github.com/blunteshwar)! - Alpha values for hex color formats wil be represented using hex instead of decimal
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/color-handle@1.4.0
+    -   @spectrum-web-components/textfield@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+
 ## 1.3.0
 
 ### Patch Changes
