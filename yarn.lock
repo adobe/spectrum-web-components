@@ -248,7 +248,7 @@ __metadata:
     alex: "npm:^11.0.1"
     cem-plugin-module-file-extensions: "npm:^0.0.5"
     chromatic: "npm:^11.20.0"
-    chromedriver: "npm:^134.0.5"
+    chromedriver: "npm:^134.0.4"
     colors: "npm:^1.4.0"
     common-tags: "npm:^1.8.2"
     custom-elements-manifest: "npm:^2.0.0"
@@ -13804,7 +13804,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromedriver@npm:^134.0.5":
+"chromedriver@npm:^134.0.4":
   version: 134.0.5
   resolution: "chromedriver@npm:134.0.5"
   dependencies:
