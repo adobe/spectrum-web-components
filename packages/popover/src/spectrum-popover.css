@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-popover-border-width: var(--spectrum-border-width-100);
     pointer-events: none;
     visibility: hidden;
     opacity: 0;

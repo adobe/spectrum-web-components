@@ -12,6 +12,9 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-actiongroup-gap-size-compact: 0;
+    --spectrum-actiongroup-horizontal-spacing-compact: -1px;
+    --spectrum-actiongroup-vertical-spacing-compact: -1px;
     --spectrum-actiongroup-button-spacing-reset: 0;
     --spectrum-actiongroup-border-radius-reset: 0;
     --spectrum-actiongroup-border-radius: var(--spectrum-corner-radius-100);
