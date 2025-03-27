@@ -12,32 +12,3 @@
 
 @import url("./spectrum-progress-bar.css");
 @import url("./progress-bar-overrides.css");
-
-.fill {
-    width: 100%;
-    transform-origin: left;
-}
-
-:host([dir="rtl"]) .fill {
-    transform-origin: right;
-}
-
-@keyframes indeterminate-loop-ltr {
-    0% {
-        transform: translate(-100%);
-    }
-
-    100% {
-        transform: translate(var(--spectrum-progressbar-size-default));
-    }
-}
-
-@keyframes indeterminate-loop-rtl {
-    0% {
-        transform: translate(100%);
-    }
-
-    100% {
-        transform: translate(calc(var(--spectrum-progressbar-size-default) * -1));
-    }
-}

@@ -11,28 +11,28 @@
  */
 
 :host {
-    --spectrum-progressbar-sized-size-default: var(--spectrum-progressbar-size-2400);
+    --spectrum-progressbar-sized-size-default: var(--spectrum-progressbar-size-2400, 192px);
     --spectrum-progressbar-sized-font-size: var(--spectrum-font-size-75);
     --spectrum-progressbar-sized-thickness: var(--spectrum-progress-bar-thickness-large);
     --spectrum-progressbar-sized-spacing-top-to-text: var(--spectrum-component-top-to-text-100);
 }
 
 :host([size="s"]) {
-    --spectrum-progressbar-sized-size-default: var(--spectrum-progressbar-size-2400);
+    --spectrum-progressbar-sized-size-default: var(--spectrum-progressbar-size-2400, 192px);
     --spectrum-progressbar-sized-font-size: var(--spectrum-font-size-75);
     --spectrum-progressbar-sized-thickness: var(--spectrum-progress-bar-thickness-small);
     --spectrum-progressbar-sized-spacing-top-to-text: var(--spectrum-component-top-to-text-75);
 }
 
 :host([size="l"]) {
-    --spectrum-progressbar-sized-size-default: var(--spectrum-progressbar-size-2500);
+    --spectrum-progressbar-sized-size-default: var(--spectrum-progressbar-size-2500, 200px);
     --spectrum-progressbar-sized-font-size: var(--spectrum-font-size-100);
     --spectrum-progressbar-sized-thickness: var(--spectrum-progress-bar-thickness-large);
     --spectrum-progressbar-sized-spacing-top-to-text: var(--spectrum-component-top-to-text-200);
 }
 
 :host([size="xl"]) {
-    --spectrum-progressbar-sized-size-default: var(--spectrum-progressbar-size-2800);
+    --spectrum-progressbar-sized-size-default: var(--spectrum-progressbar-size-2800, 224px);
     --spectrum-progressbar-sized-font-size: var(--spectrum-font-size-200);
     --spectrum-progressbar-sized-thickness: var(--spectrum-progress-bar-thickness-extra-large);
     --spectrum-progressbar-sized-spacing-top-to-text: var(--spectrum-component-top-to-text-300);
@@ -48,9 +48,6 @@
     --spectrum-progressbar-corner-radius: var(--spectrum-corner-radius-100);
     --spectrum-progressbar-fill-size-indeterminate: var(--mod-progressbar-fill-size-indeterminate, 70%);
     --spectrum-progressbar-dir-indeterminate-multiplier: 1;
-    --spectrum-progressbar-size-2400: 192px;
-    --spectrum-progressbar-size-2500: 200px;
-    --spectrum-progressbar-size-2800: 224px;
     --spectrum-progressbar-line-height-cjk: var(--mod-progressbar-line-height-cjk, var(--spectrum-cjk-line-height-100));
     --spectrum-progressbar-min-size: var(--mod-progressbar-min-size, var(--spectrum-progress-bar-minimum-width));
     --spectrum-progressbar-max-size: var(--mod-progressbar-max-size, var(--spectrum-progress-bar-maximum-width));
@@ -75,6 +72,12 @@
 :host:lang(ko),
 :host:lang(zh) {
     --mod-progressbar-line-height: var(--spectrum-progressbar-line-height-cjk);
+}
+
+:host([static-color="white"]) {
+    --mod-progressbar-fill-color: var(--mod-progressbar-fill-color-static-white, var(--spectrum-progressbar-fill-color-white));
+    --mod-progressbar-text-color: var(--mod-progressbar-text-color-static-white, var(--spectrum-progressbar-label-and-value-white));
+    --mod-progressbar-track-color: var(--mod-progressbar-track-color-static-white, var(--spectrum-progressbar-static-white-track-color));
 }
 
 @media (forced-colors: active) {
@@ -104,12 +107,6 @@
 :host([side-label]) {
     flex-flow: row;
     justify-content: space-between;
-}
-
-:host([static-color="white"]) {
-    --mod-progressbar-fill-color: var(--spectrum-progressbar-fill-color-white);
-    --mod-progressbar-text-color: var(--spectrum-progressbar-label-and-value-white);
-    --mod-progressbar-track-color: var(--spectrum-progressbar-static-white-track-color);
 }
 
 .label,
@@ -159,6 +156,8 @@
     background: var(--spectrum-progressbar-fill-color);
     border: none;
     transition: width 1s;
+    inline-size: 100%;
+    transform-origin: left;
 }
 
 :host([indeterminate]) .fill {
@@ -169,6 +168,7 @@
     animation-duration: var(--spectrum-progressbar-animation-duration-indeterminate);
     animation-iteration-count: infinite;
     position: relative;
+    transform-origin: right;
 }
 
 @keyframes indeterminate-loop {
