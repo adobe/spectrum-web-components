@@ -175,7 +175,7 @@ export const TriggerOnHover = (props: Properties): TemplateResult => {
                 ?open=${open}
                 current-step=${currentStep}
                 total-steps=${totalSteps}
-                primary-cta="Next1"
+                primary-cta="Next"
                 secondary-cta="Previous"
             >
                 <div slot="title">Coachmark on hover</div>
