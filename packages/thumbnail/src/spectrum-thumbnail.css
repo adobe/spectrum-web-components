@@ -61,73 +61,20 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    --spectrum-thumbnail-size: var(
-        --mod-thumbnail-size,
-        var(--spectrum-thumbnail-sized-size)
-    );
-    --spectrum-thumbnail-border-color: var(
-        --highcontrast-thumbnail-border-color,
-        var(
-            --mod-thumbnail-border-color,
-            rgba(
-                var(--spectrum-gray-800-rgb),
-                var(--spectrum-thumbnail-border-opacity)
-            )
-        )
-    );
-    --spectrum-thumbnail-border-color-selected: var(
-        --highcontrast-thumbnail-border-color-selected,
-        var(
-            --mod-thumbnail-border-color-selected,
-            var(--spectrum-accent-color-800)
-        )
-    );
-    --spectrum-thumbnail-border-width: var(
-        --mod-thumbnail-border-width,
-        var(--spectrum-border-width-100)
-    );
-    --spectrum-thumbnail-border-width-selected: var(
-        --mod-thumbnail-border-width-selected,
-        var(--spectrum-border-width-200)
-    );
-    --spectrum-thumbnail-border-radius-default: var(
-        --mod-thumbnail-border-radius,
-        var(--spectrum-thumbnail-border-radius)
-    );
-    --spectrum-thumbnail-layer-border-color-inner: var(
-        --highcontrast-thumbnail-layer-border-color-inner,
-        var(--mod-thumbnail-layer-border-color-inner, var(--spectrum-white))
-    );
-    --spectrum-thumbnail-layer-border-color-outer: var(
-        --highcontrast-thumbnail-layer-border-color-outer,
-        var(--mod-thumbnail-layer-border-color-outer, var(--spectrum-gray-500))
-    );
-    --spectrum-thumbnail-layer-border-width-inner: var(
-        --mod-thumbnail-layer-border-width-inner,
-        var(--spectrum-border-width-400)
-    );
-    --spectrum-thumbnail-layer-border-width-outer: var(
-        --mod-thumbnail-layer-border-width-outer,
-        var(--spectrum-border-width-100)
-    );
-    --spectrum-thumbnail-focus-indicator-thickness: var(
-        --mod-thumbnail-focus-indicator-thickness,
-        var(--spectrum-focus-indicator-thickness)
-    );
-    --spectrum-thumbnail-focus-indicator-gap: var(
-        --mod-thumbnail-focus-indicator-gap,
-        var(--spectrum-focus-indicator-gap)
-    );
-    --spectrum-thumbnail-focus-indicator-color: var(
-        --highcontrast-thumbnail-focus-indicator-color,
-        var(
-            --mod-thumbnail-focus-indicator-color,
-            var(--spectrum-focus-indicator-color)
-        )
-    );
-    --spectrum-thumbnail-color-opacity-disabled: var(
-        --spectrum-thumbnail-opacity-disabled
-    );
+    --spectrum-thumbnail-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-sized-size));
+    --spectrum-thumbnail-border-color: var(--highcontrast-thumbnail-border-color, var(--mod-thumbnail-border-color, rgba(var(--spectrum-gray-800-rgb), var(--spectrum-thumbnail-border-opacity))));
+    --spectrum-thumbnail-border-color-selected: var(--highcontrast-thumbnail-border-color-selected, var(--mod-thumbnail-border-color-selected, var(--spectrum-accent-color-800)));
+    --spectrum-thumbnail-border-width: var(--mod-thumbnail-border-width, var(--spectrum-border-width-100));
+    --spectrum-thumbnail-border-width-selected: var(--mod-thumbnail-border-width-selected, var(--spectrum-border-width-200));
+    --spectrum-thumbnail-border-radius-default: var(--mod-thumbnail-border-radius, var(--spectrum-thumbnail-border-radius));
+    --spectrum-thumbnail-layer-border-color-inner: var(--highcontrast-thumbnail-layer-border-color-inner, var(--mod-thumbnail-layer-border-color-inner, var(--spectrum-white)));
+    --spectrum-thumbnail-layer-border-color-outer: var(--highcontrast-thumbnail-layer-border-color-outer, var(--mod-thumbnail-layer-border-color-outer, var(--spectrum-gray-500)));
+    --spectrum-thumbnail-layer-border-width-inner: var(--mod-thumbnail-layer-border-width-inner, var(--spectrum-border-width-400));
+    --spectrum-thumbnail-layer-border-width-outer: var(--mod-thumbnail-layer-border-width-outer, var(--spectrum-border-width-100));
+    --spectrum-thumbnail-focus-indicator-thickness: var(--mod-thumbnail-focus-indicator-thickness, var(--spectrum-focus-indicator-thickness));
+    --spectrum-thumbnail-focus-indicator-gap: var(--mod-thumbnail-focus-indicator-gap, var(--spectrum-focus-indicator-gap));
+    --spectrum-thumbnail-focus-indicator-color: var(--highcontrast-thumbnail-focus-indicator-color, var(--mod-thumbnail-focus-indicator-color, var(--spectrum-focus-indicator-color)));
+    --spectrum-thumbnail-color-opacity-disabled: var(--spectrum-thumbnail-opacity-disabled);
     inline-size: var(--spectrum-thumbnail-size);
     block-size: var(--spectrum-thumbnail-size);
     z-index: 0;
@@ -148,16 +95,12 @@ governing permissions and limitations under the License.
     z-index: 2;
     inline-size: 100%;
     block-size: 100%;
-    box-shadow: inset 0 0 0 var(--spectrum-thumbnail-border-width)
-        var(--spectrum-thumbnail-border-color);
+    box-shadow: inset 0 0 0 var(--spectrum-thumbnail-border-width) var(--spectrum-thumbnail-border-color);
     position: absolute;
 }
 
 :host([disabled]) {
-    opacity: var(
-        --mod-thumbnail-color-opacity-disabled,
-        var(--spectrum-thumbnail-color-opacity-disabled)
-    );
+    opacity: var(--mod-thumbnail-color-opacity-disabled, var(--spectrum-thumbnail-color-opacity-disabled));
 }
 
 :host([focused]) {
@@ -171,30 +114,10 @@ governing permissions and limitations under the License.
     border-color: var(--spectrum-thumbnail-focus-indicator-color);
     border-radius: var(--spectrum-thumbnail-border-radius-default);
     position: absolute;
-    inset-block-start: calc(
-        (
-                var(--spectrum-thumbnail-focus-indicator-gap) +
-                    var(--spectrum-thumbnail-focus-indicator-thickness)
-            ) * -1
-    );
-    inset-block-end: calc(
-        (
-                var(--spectrum-thumbnail-focus-indicator-gap) +
-                    var(--spectrum-thumbnail-focus-indicator-thickness)
-            ) * -1
-    );
-    inset-inline-start: calc(
-        (
-                var(--spectrum-thumbnail-focus-indicator-gap) +
-                    var(--spectrum-thumbnail-focus-indicator-thickness)
-            ) * -1
-    );
-    inset-inline-end: calc(
-        (
-                var(--spectrum-thumbnail-focus-indicator-gap) +
-                    var(--spectrum-thumbnail-focus-indicator-thickness)
-            ) * -1
-    );
+    inset-block-start: calc((var(--spectrum-thumbnail-focus-indicator-gap) + var(--spectrum-thumbnail-focus-indicator-thickness)) * -1);
+    inset-block-end: calc((var(--spectrum-thumbnail-focus-indicator-gap) + var(--spectrum-thumbnail-focus-indicator-thickness)) * -1);
+    inset-inline-start: calc((var(--spectrum-thumbnail-focus-indicator-gap) + var(--spectrum-thumbnail-focus-indicator-thickness)) * -1);
+    inset-inline-end: calc((var(--spectrum-thumbnail-focus-indicator-gap) + var(--spectrum-thumbnail-focus-indicator-thickness)) * -1);
 }
 
 :host([focused]) .image-wrapper {
@@ -220,27 +143,15 @@ governing permissions and limitations under the License.
     outline-style: solid;
     outline-color: var(--spectrum-thumbnail-border-color-selected);
     outline-width: var(--spectrum-thumbnail-border-width-selected);
-    outline-offset: calc(
-        var(--spectrum-thumbnail-border-width-selected) -
-            var(--spectrum-thumbnail-layer-border-width-inner)
-    );
+    outline-offset: calc(var(--spectrum-thumbnail-border-width-selected) - var(--spectrum-thumbnail-layer-border-width-inner));
 }
 
 .layer-inner {
-    inline-size: calc(
-        var(--spectrum-thumbnail-size) -
-            var(--spectrum-thumbnail-layer-border-width-inner) * 2
-    );
-    block-size: calc(
-        var(--spectrum-thumbnail-size) -
-            var(--spectrum-thumbnail-layer-border-width-inner) * 2
-    );
+    inline-size: calc(var(--spectrum-thumbnail-size) - var(--spectrum-thumbnail-layer-border-width-inner) * 2);
+    block-size: calc(var(--spectrum-thumbnail-size) - var(--spectrum-thumbnail-layer-border-width-inner) * 2);
     outline-style: solid;
     outline-color: var(--spectrum-thumbnail-layer-border-color-inner);
-    outline-width: calc(
-        var(--spectrum-thumbnail-layer-border-width-inner) -
-            var(--spectrum-thumbnail-layer-border-width-outer)
-    );
+    outline-width: calc(var(--spectrum-thumbnail-layer-border-width-inner) - var(--spectrum-thumbnail-layer-border-width-outer));
     justify-content: center;
     align-items: center;
     display: flex;

@@ -15,51 +15,27 @@ governing permissions and limitations under the License.
     --mod-buttongroup-justify-content: flex-end;
     box-sizing: border-box;
     inline-size: fit-content;
-    min-inline-size: var(
-        --mod-alert-dialog-min-width,
-        var(--spectrum-alert-dialog-min-width)
-    );
-    max-inline-size: var(
-        --mod-alert-dialog-max-width,
-        var(--spectrum-alert-dialog-max-width)
-    );
+    min-inline-size: var(--mod-alert-dialog-min-width, var(--spectrum-alert-dialog-min-width));
+    max-inline-size: var(--mod-alert-dialog-max-width, var(--spectrum-alert-dialog-max-width));
     max-block-size: inherit;
-    padding: var(
-        --mod-alert-dialog-padding,
-        var(--spectrum-alert-dialog-padding)
-    );
+    padding: var(--mod-alert-dialog-padding, var(--spectrum-alert-dialog-padding));
     outline: none;
     display: flex;
 }
 
 .icon {
-    inline-size: var(
-        --mod-alert-dialog-icon-size,
-        var(--spectrum-alert-dialog-icon-size)
-    );
-    block-size: var(
-        --mod-alert-dialog-icon-size,
-        var(--spectrum-alert-dialog-icon-size)
-    );
+    inline-size: var(--mod-alert-dialog-icon-size, var(--spectrum-alert-dialog-icon-size));
+    block-size: var(--mod-alert-dialog-icon-size, var(--spectrum-alert-dialog-icon-size));
     flex-shrink: 0;
-    margin-inline-start: var(
-        --mod-alert-dialog-title-to-icon,
-        var(--spectrum-alert-dialog-title-to-icon)
-    );
+    margin-inline-start: var(--mod-alert-dialog-title-to-icon, var(--spectrum-alert-dialog-title-to-icon));
 }
 
 :host([variant='warning']) {
-    --mod-icon-color: var(
-        --mod-alert-dialog-warning-icon-color,
-        var(--spectrum-alert-dialog-warning-icon-color)
-    );
+    --mod-icon-color: var(--mod-alert-dialog-warning-icon-color, var(--spectrum-alert-dialog-warning-icon-color));
 }
 
 :host([variant='error']) {
-    --mod-icon-color: var(
-        --mod-alert-dialog-error-icon-color,
-        var(--spectrum-alert-dialog-error-icon-color)
-    );
+    --mod-icon-color: var(--mod-alert-dialog-error-icon-color, var(--spectrum-alert-dialog-error-icon-color));
 }
 
 .grid {
@@ -73,72 +49,27 @@ governing permissions and limitations under the License.
 }
 
 ::slotted([slot='heading']) {
-    font-family: var(
-        --mod-alert-dialog-title-font-family,
-        var(--spectrum-alert-dialog-title-font-family)
-    );
-    font-weight: var(
-        --mod-alert-dialog-title-font-weight,
-        var(--spectrum-alert-dialog-title-font-weight)
-    );
-    font-style: var(
-        --mod-alert-dialog-title-font-style,
-        var(--spectrum-alert-dialog-title-font-style)
-    );
-    font-size: var(
-        --mod-alert-dialog-title-font-size,
-        var(--spectrum-alert-dialog-title-font-size)
-    );
-    line-height: var(
-        --mod-alert-dialog-title-line-height,
-        var(--spectrum-alert-dialog-title-line-height)
-    );
-    color: var(
-        --mod-alert-dialog-title-color,
-        var(--spectrum-alert-dialog-title-color)
-    );
+    font-family: var(--mod-alert-dialog-title-font-family, var(--spectrum-alert-dialog-title-font-family));
+    font-weight: var(--mod-alert-dialog-title-font-weight, var(--spectrum-alert-dialog-title-font-weight));
+    font-style: var(--mod-alert-dialog-title-font-style, var(--spectrum-alert-dialog-title-font-style));
+    font-size: var(--mod-alert-dialog-title-font-size, var(--spectrum-alert-dialog-title-font-size));
+    line-height: var(--mod-alert-dialog-title-line-height, var(--spectrum-alert-dialog-title-line-height));
+    color: var(--mod-alert-dialog-title-color, var(--spectrum-alert-dialog-title-color));
     margin: 0;
-    margin-block-end: var(
-        --mod-alert-dialog-title-to-divider,
-        var(--spectrum-alert-dialog-title-to-divider)
-    );
+    margin-block-end: var(--mod-alert-dialog-title-to-divider, var(--spectrum-alert-dialog-title-to-divider));
 }
 
 .content {
-    font-family: var(
-        --mod-alert-dialog-body-font-family,
-        var(--spectrum-alert-dialog-body-font-family)
-    );
-    font-weight: var(
-        --mod-alert-dialog-body-font-weight,
-        var(--spectrum-alert-dialog-body-font-weight)
-    );
-    font-style: var(
-        --mod-alert-dialog-body-font-style,
-        var(--spectrum-alert-dialog-body-font-style)
-    );
-    font-size: var(
-        --mod-alert-dialog-body-font-size,
-        var(--spectrum-alert-dialog-body-font-size)
-    );
-    line-height: var(
-        --mod-alert-dialog-body-line-height,
-        var(--spectrum-alert-dialog-body-line-height)
-    );
-    color: var(
-        --mod-alert-dialog-body-color,
-        var(--spectrum-alert-dialog-body-color)
-    );
+    font-family: var(--mod-alert-dialog-body-font-family, var(--spectrum-alert-dialog-body-font-family));
+    font-weight: var(--mod-alert-dialog-body-font-weight, var(--spectrum-alert-dialog-body-font-weight));
+    font-style: var(--mod-alert-dialog-body-font-style, var(--spectrum-alert-dialog-body-font-style));
+    font-size: var(--mod-alert-dialog-body-font-size, var(--spectrum-alert-dialog-body-font-size));
+    line-height: var(--mod-alert-dialog-body-line-height, var(--spectrum-alert-dialog-body-line-height));
+    color: var(--mod-alert-dialog-body-color, var(--spectrum-alert-dialog-body-color));
     -webkit-overflow-scrolling: touch;
     margin: 0;
-    margin-block-start: var(
-        --mod-alert-dialog-divider-to-description,
-        var(--spectrum-alert-dialog-divider-to-description)
-    );
-    margin-block-end: var(
-        --mod-alert-dialog-description-to-buttons,
-        var(--spectrum-alert-dialog-description-to-buttons)
-    );
+    margin-block-start: var(--mod-alert-dialog-divider-to-description, var(--spectrum-alert-dialog-divider-to-description));
+    margin-block-end: var(--mod-alert-dialog-description-to-buttons, var(--spectrum-alert-dialog-description-to-buttons));
     overflow-y: auto;
 }
 
