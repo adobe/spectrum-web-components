@@ -12,25 +12,31 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-dialog-confirm-divider-block-spacing-start: var(--spectrum-spacing-300);
+    --spectrum-dialog-confirm-divider-block-spacing-end: var(--spectrum-spacing-200);
+    --spectrum-dialog-confirm-description-text-color: var(--spectrum-gray-800);
+    --spectrum-dialog-confirm-description-padding: var(--spectrum-spacing-50);
+    --spectrum-dialog-confirm-gap-size: var(--spectrum-component-pill-edge-to-text-100);
+    --spectrum-dialog-confirm-buttongroup-padding-top: var(--spectrum-spacing-600);
+    --spectrum-dialog-confirm-close-button-size: var(--spectrum-component-height-100);
+    --spectrum-dialog-confirm-close-button-padding: calc(26px - var(--spectrum-component-bottom-to-text-300));
     box-sizing: border-box;
-    inline-size: fit-content;
-    min-inline-size: var(--mod-dialog-min-inline-size, var(--spectrum-dialog-min-inline-size));
+    inline-size: 480px;
+    inline-size: var(--mod-dialog-width, var(--mod-dialog-confirm-medium-width, 480px));
+    min-inline-size: 288px;
+    min-inline-size: var(--mod-dialog-min-inline-size, 288px);
     max-inline-size: 100%;
     max-block-size: inherit;
     outline: none;
     display: flex;
 }
 
-:host([size='s']) {
-    inline-size: var(--mod-dialog-confirm-small-width, var(--spectrum-dialog-confirm-small-width));
+.spectrum-Dialog--sizeS {
+    --mod-dialog-width: var(--mod-dialog-confirm-small-width, 400px);
 }
 
-:host([size='m']) {
-    inline-size: var(--mod-dialog-confirm-medium-width, var(--spectrum-dialog-confirm-medium-width));
-}
-
-:host([size='l']) {
-    inline-size: var(--mod-dialog-confirm-large-width, var(--spectrum-dialog-confirm-large-width));
+.spectrum-Dialog--sizeL {
+    --mod-dialog-width: var(--mod-dialog-confirm-large-width, 640px);
 }
 
 ::slotted([slot='hero']) {
@@ -60,9 +66,9 @@ governing permissions and limitations under the License.
 
 ::slotted([slot='heading']) {
     font-size: var(--mod-dialog-confirm-title-text-size, var(--spectrum-dialog-confirm-title-text-size));
-    font-weight: var(--mod-dialog-heading-font-weight, var(--spectrum-dialog-heading-font-weight));
-    line-height: var(--mod-dialog-confirm-title-text-line-height, var(--spectrum-dialog-confirm-title-text-line-height));
-    color: var(--mod-dialog-confirm-title-text-color, var(--spectrum-dialog-confirm-title-text-color));
+    font-weight: var(--mod-dialog-heading-font-weight, var(--spectrum-heading-sans-serif-font-weight));
+    line-height: var(--mod-dialog-confirm-title-text-line-height, var(--spectrum-line-height-100));
+    color: var(--mod-dialog-confirm-title-text-color, var(--spectrum-gray-900));
     outline: none;
     grid-area: heading;
     margin: 0;
@@ -99,7 +105,7 @@ governing permissions and limitations under the License.
 }
 
 :host([no-divider]) ::slotted([slot='heading']) {
-    padding-block-end: calc(var(--mod-dialog-confirm-divider-block-spacing-end, var(--spectrum-dialog-confirm-divider-block-spacing-end)) + var(--mod-dialog-confirm-divider-block-spacing-start, var(--spectrum-dialog-confirm-divider-block-spacing-start)) + var(--mod-dialog-confirm-divider-height, var(--spectrum-dialog-confirm-divider-height)));
+    padding-block-end: calc(var(--mod-dialog-confirm-divider-block-spacing-end, var(--spectrum-dialog-confirm-divider-block-spacing-end)) + var(--mod-dialog-confirm-divider-block-spacing-start, var(--spectrum-dialog-confirm-divider-block-spacing-start)) + var(--mod-dialog-confirm-divider-height, var(--spectrum-spacing-50)));
 }
 
 .content {
@@ -107,10 +113,10 @@ governing permissions and limitations under the License.
     -webkit-overflow-scrolling: touch;
     font-size: var(--mod-dialog-confirm-description-text-size, var(--spectrum-dialog-confirm-description-text-size));
     font-weight: var(--mod-dialog-confirm-description-font-weight, var(--spectrum-regular-font-weight));
-    line-height: var(--mod-dialog-confirm-description-text-line-height, var(--spectrum-dialog-confirm-description-text-line-height));
+    line-height: var(--mod-dialog-confirm-description-text-line-height, var(--spectrum-line-height-100));
     color: var(--mod-dialog-confirm-description-text-color, var(--spectrum-dialog-confirm-description-text-color));
     padding: calc(var(--mod-dialog-confirm-description-padding, var(--spectrum-dialog-confirm-description-padding)) * 2);
-    margin: 0 var(--mod-dialog-confirm-description-margin, var(--spectrum-dialog-confirm-description-margin));
+    margin: 0 var(--mod-dialog-confirm-description-margin, calc(var(--spectrum-spacing-50) * -1));
     outline: none;
     grid-area: content;
     overflow-y: auto;
@@ -120,7 +126,7 @@ governing permissions and limitations under the License.
     outline: none;
     flex-wrap: wrap;
     grid-area: footer;
-    padding-block-start: var(--mod-dialog-confirm-footer-padding-top, var(--spectrum-dialog-confirm-footer-padding-top));
+    padding-block-start: var(--mod-dialog-confirm-footer-padding-top, var(--spectrum-spacing-600));
     display: flex;
 }
 
@@ -202,7 +208,8 @@ governing permissions and limitations under the License.
 
 :host([mode='fullscreen']) ::slotted([slot='heading']),
 :host([mode='fullscreenTakeover']) ::slotted([slot='heading']) {
-    font-size: var(--mod-dialog-fullscreen-header-text-size, var(--spectrum-dialog-fullscreen-header-text-size));
+    font-size: 28px;
+    font-size: var(--mod-dialog-fullscreen-header-text-size, 28px);
 }
 
 :host([mode='fullscreen']) .content,

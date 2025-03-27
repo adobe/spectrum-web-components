@@ -17,15 +17,39 @@ governing permissions and limitations under the License.
     }
 }
 
+.spectrum-Code,
+.spectrum-Code--sizeM {
+    --spectrum-code-font-size: var(--spectrum-code-size-m);
+}
+
+.spectrum-Code--sizeXS {
+    --spectrum-code-font-size: var(--spectrum-code-size-xs);
+}
+
+.spectrum-Code--sizeS {
+    --spectrum-code-font-size: var(--spectrum-code-size-s);
+}
+
+.spectrum-Code--sizeL {
+    --spectrum-code-font-size: var(--spectrum-code-size-l);
+}
+
+.spectrum-Code--sizeXL {
+    --spectrum-code-font-size: var(--spectrum-code-size-xl);
+}
+
 .spectrum-Code {
+    --spectrum-code-font-family: var(--spectrum-code-font-family-stack);
+    --spectrum-code-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
+    --spectrum-code-font-color: var(--spectrum-code-color);
     font-family: var(--mod-code-font-family, var(--spectrum-code-font-family));
     font-style: var(--mod-code-font-style, var(--spectrum-code-font-style));
     font-weight: var(--mod-code-font-weight, var(--spectrum-code-font-weight));
     font-size: var(--mod-code-font-size, var(--spectrum-code-font-size));
     line-height: var(--mod-code-line-height, var(--spectrum-code-line-height));
     color: var(--highcontrast-code-font-color, var(--mod-code-font-color, var(--spectrum-code-font-color)));
-    margin-block-start: var(--mod-code-margin-start, var(--spectrum-code-margin-end, 0));
-    margin-block-end: var(--mod-code-margin-end, var(--spectrum-code-margin-end, 0));
+    margin-block-start: var(--mod-code-margin-start, 0);
+    margin-block-end: var(--mod-code-margin-end, 0);
 }
 
 .spectrum-Code .spectrum-Code-strong,
