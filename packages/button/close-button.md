@@ -8,84 +8,54 @@ An `<sp-close-button>` is a special extension of the `BaseButton` class that inc
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/button?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/button)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/Zjc3o94DWuBkT4ve3dny/src/index.ts)
 
-```
+```zsh
 yarn add @spectrum-web-components/button
 ```
 
 Import the side effectful registration of `<sp-close-button>` as follows:
 
-```
+```ts
 import '@spectrum-web-components/button/sp-clear-button.js';
 ```
 
 When looking to leverage the `CloseButton` base class as a type and/or for extension purposes, do so via:
 
-```
+```ts
 import { ClearButton } from '@spectrum-web-components/button';
 ```
 
 ### Anatomy
 
-#### Content
+```html
+<sp-close-button>Close Dialog</sp-close-button>
+```
 
-`<sp-button>` elements can be provided a visible label,
-a label and an icon, or just an icon.
+#### Label
 
-An icon is provided by placing an icon element in the `icon` slot.
-
-If the button is `icon-only`, a non-visible label
-can be provided via the `label` attribute on an `<sp-button>`
-or on an `<sp-icon*>` element child to appropriately
-fulfill the accessibility contract of the button.
+The label for an `<sp-close-button>` element can be set via it's default slot or with the `label` attribute.
 
 <sp-tabs selected="label" auto label="Labelling a button">
-<sp-tab value="label">Label only</sp-tab>
-<sp-tab-panel value="label">
+<sp-tab value="slot">Default slot</sp-tab>
+<sp-tab-panel value="slot">
 
 ```html demo
-<sp-button variant="primary">Label only</sp-button>
+<sp-close-button>Close</sp-close-button>
 ```
 
 </sp-tab-panel>
-<sp-tab value="icon-label">Icon + label</sp-tab>
-<sp-tab-panel value="icon-label">
+<sp-tab value="attribute">Label attribute</sp-tab>
+<sp-tab-panel value="attribute">
 
 ```html demo
-<sp-button variant="primary">
-    <sp-icon-help slot="icon"></sp-icon-help>
-    Icon + Label
-</sp-button>
+<sp-close-button label="Close"></sp-close-button>
 ```
 
 </sp-tab-panel>
-<sp-tab value="svg-label">SVG Icon + label</sp-tab>
-<sp-tab-panel value="svg-label">
+<sp-tab value="attribute">Label attribute</sp-tab>
+<sp-tab-panel value="attribute">
 
 ```html demo
-<sp-button variant="primary">
-    <svg
-        slot="icon"
-        viewBox="0 0 36 36"
-        focusable="false"
-        aria-hidden="true"
-        role="img"
-    >
-        <path
-            d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
-        ></path>
-    </svg>
-    SVG Icon + Label
-</sp-button>
-```
-
-</sp-tab-panel>
-<sp-tab value="icon-only">Icon only</sp-tab>
-<sp-tab-panel value="icon-only">
-
-```html demo
-<sp-button variant="primary" label="Icon only">
-    <sp-icon-help slot="icon"></sp-icon-help>
-</sp-button>
+<sp-close-button></sp-close-button>
 ```
 
 </sp-tab-panel>
@@ -100,7 +70,7 @@ fulfill the accessibility contract of the button.
 <sp-tab-panel value="s">
 
 ```html demo
-<sp-button size="s">Small</sp-button>
+<sp-close-button size="s">Small</sp-close-button>
 ```
 
 </sp-tab-panel>
@@ -108,7 +78,7 @@ fulfill the accessibility contract of the button.
 <sp-tab-panel value="m">
 
 ```html demo
-<sp-button size="m">Medium</sp-button>
+<sp-close-button size="m">Medium</sp-close-button>
 ```
 
 </sp-tab-panel>
@@ -116,7 +86,7 @@ fulfill the accessibility contract of the button.
 <sp-tab-panel value="l">
 
 ```html demo
-<sp-button size="l">Large</sp-button>
+<sp-close-button size="l">Large</sp-close-button>
 ```
 
 </sp-tab-panel>
@@ -124,7 +94,7 @@ fulfill the accessibility contract of the button.
 <sp-tab-panel value="xl">
 
 ```html demo
-<sp-button size="xl">Extra Large</sp-button>
+<sp-close-button size="xl">Extra Large</sp-close-button>
 ```
 
 </sp-tab-panel>
@@ -140,16 +110,16 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 <sp-tab-panel value="accent">
 
 ```html demo
-<sp-button-group style="min-width: max-content">
-    <sp-button variant="accent">Label only</sp-button>
-    <sp-button variant="accent">
+<sp-close-button-group style="min-width: max-content">
+    <sp-close-button variant="accent">Label only</sp-close-button>
+    <sp-close-button variant="accent">
         <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
-    </sp-button>
-    <sp-button variant="accent" label="Icon only" icon-only>
+    </sp-close-button>
+    <sp-close-button variant="accent" label="Icon only" icon-only>
         <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
+    </sp-close-button>
+</sp-close-button-group>
 ```
 
 </sp-tab-panel>
@@ -157,16 +127,16 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 <sp-tab-panel value="primary">
 
 ```html demo
-<sp-button-group style="min-width: max-content">
-    <sp-button variant="primary">Label only</sp-button>
-    <sp-button variant="primary">
+<sp-close-button-group style="min-width: max-content">
+    <sp-close-button variant="primary">Label only</sp-close-button>
+    <sp-close-button variant="primary">
         <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
-    </sp-button>
-    <sp-button variant="primary" label="Icon only" icon-only>
+    </sp-close-button>
+    <sp-close-button variant="primary" label="Icon only" icon-only>
         <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
+    </sp-close-button>
+</sp-close-button-group>
 ```
 
 </sp-tab-panel>
@@ -174,16 +144,16 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 <sp-tab-panel value="secondary">
 
 ```html demo
-<sp-button-group style="min-width: max-content">
-    <sp-button variant="secondary">Label only</sp-button>
-    <sp-button variant="secondary">
+<sp-close-button-group style="min-width: max-content">
+    <sp-close-button variant="secondary">Label only</sp-close-button>
+    <sp-close-button variant="secondary">
         <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
-    </sp-button>
-    <sp-button variant="secondary" label="Icon only" icon-only>
+    </sp-close-button>
+    <sp-close-button variant="secondary" label="Icon only" icon-only>
         <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
+    </sp-close-button>
+</sp-close-button-group>
 ```
 
 </sp-tab-panel>
@@ -191,16 +161,16 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 <sp-tab-panel value="negative">
 
 ```html demo
-<sp-button-group style="min-width: max-content">
-    <sp-button variant="negative">Label only</sp-button>
-    <sp-button variant="negative">
+<sp-close-button-group style="min-width: max-content">
+    <sp-close-button variant="negative">Label only</sp-close-button>
+    <sp-close-button variant="negative">
         <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
-    </sp-button>
-    <sp-button variant="negative" label="Icon only" icon-only>
+    </sp-close-button>
+    <sp-close-button variant="negative" label="Icon only" icon-only>
         <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
+    </sp-close-button>
+</sp-close-button-group>
 ```
 
 </sp-tab-panel>
@@ -208,16 +178,16 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 <sp-tab-panel value="black">
 
 ```html demo
-<sp-button-group style="min-width: max-content">
-    <sp-button static-color="black">Label only</sp-button>
-    <sp-button static-color="black">
+<sp-close-button-group style="min-width: max-content">
+    <sp-close-button static-color="black">Label only</sp-close-button>
+    <sp-close-button static-color="black">
         <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
-    </sp-button>
-    <sp-button static-color="black" label="Icon only" icon-only>
+    </sp-close-button>
+    <sp-close-button static-color="black" label="Icon only" icon-only>
         <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
+    </sp-close-button>
+</sp-close-button-group>
 ```
 
 </sp-tab-panel>
@@ -225,16 +195,16 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
 <sp-tab-panel value="white">
 
 ```html demo
-<sp-button-group style="min-width: max-content">
-    <sp-button static-color="white">Label only</sp-button>
-    <sp-button static-color="white">
+<sp-close-button-group style="min-width: max-content">
+    <sp-close-button static-color="white">Label only</sp-close-button>
+    <sp-close-button static-color="white">
         <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
-    </sp-button>
-    <sp-button static-color="white" label="Icon only" icon-only>
+    </sp-close-button>
+    <sp-close-button static-color="white" label="Icon only" icon-only>
         <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
+    </sp-close-button>
+</sp-close-button-group>
 ```
 
 </sp-tab-panel>
@@ -249,11 +219,17 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 <sp-tab-panel value="fill">
 
 ```html demo
-<sp-button-group style="min-width: max-content">
-    <sp-button treatment="fill" variant="primary">Primary, Fill</sp-button>
-    <sp-button treatment="fill" variant="secondary">Secondary, Fill</sp-button>
-    <sp-button treatment="fill" variant="negative">Negative, Fill</sp-button>
-</sp-button-group>
+<sp-close-button-group style="min-width: max-content">
+    <sp-close-button treatment="fill" variant="primary">
+        Primary, Fill
+    </sp-close-button>
+    <sp-close-button treatment="fill" variant="secondary">
+        Secondary, Fill
+    </sp-close-button>
+    <sp-close-button treatment="fill" variant="negative">
+        Negative, Fill
+    </sp-close-button>
+</sp-close-button-group>
 ```
 
 </sp-tab-panel>
@@ -261,17 +237,17 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 <sp-tab-panel value="outline">
 
 ```html demo
-<sp-button-group style="min-width: max-content">
-    <sp-button treatment="outline" variant="primary">
+<sp-close-button-group style="min-width: max-content">
+    <sp-close-button treatment="outline" variant="primary">
         Primary, Outline
-    </sp-button>
-    <sp-button treatment="outline" variant="secondary">
+    </sp-close-button>
+    <sp-close-button treatment="outline" variant="secondary">
         Secondary, Outline
-    </sp-button>
-    <sp-button treatment="outline" variant="negative">
+    </sp-close-button>
+    <sp-close-button treatment="outline" variant="negative">
         Negative, Outline
-    </sp-button>
-</sp-button-group>
+    </sp-close-button>
+</sp-close-button-group>
 ```
 
 </sp-tab-panel>
@@ -279,23 +255,25 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 <sp-tab-panel value="outline-black">
 
 ```html demo
-<sp-button-group
+<sp-close-button-group
     style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
 >
-    <sp-button treatment="outline" static-color="black">Label only</sp-button>
-    <sp-button treatment="outline" static-color="black">
+    <sp-close-button treatment="outline" static-color="black">
+        Label only
+    </sp-close-button>
+    <sp-close-button treatment="outline" static-color="black">
         <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
-    </sp-button>
-    <sp-button
+    </sp-close-button>
+    <sp-close-button
         treatment="outline"
         static-color="black"
         label="Icon only"
         icon-only
     >
         <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
+    </sp-close-button>
+</sp-close-button-group>
 ```
 
 </sp-tab-panel>
@@ -303,23 +281,25 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 <sp-tab-panel value="outline-white">
 
 ```html demo
-<sp-button-group
+<sp-close-button-group
     style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
 >
-    <sp-button treatment="outline" static-color="white">Label only</sp-button>
-    <sp-button treatment="outline" static-color="white">
+    <sp-close-button treatment="outline" static-color="white">
+        Label only
+    </sp-close-button>
+    <sp-close-button treatment="outline" static-color="white">
         <sp-icon-help slot="icon"></sp-icon-help>
         Icon + Label
-    </sp-button>
-    <sp-button
+    </sp-close-button>
+    <sp-close-button
         treatment="outline"
         static-color="white"
         label="Icon only"
         icon-only
     >
         <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
+    </sp-close-button>
+</sp-close-button-group>
 ```
 
 </sp-tab-panel>
@@ -327,31 +307,31 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ### States
 
-In addition to the variant, `<sp-button>` elements support two different visual states, disabled and pending, which can be applied by adding the attribute `disabled` or `pending` respectively. All `<sp-button>` variants support these states.
+In addition to the variant, `<sp-close-button>` elements support two different visual states, disabled and pending, which can be applied by adding the attribute `disabled` or `pending` respectively. All `<sp-close-button>` variants support these states.
 
 #### Disabled
 
-While disabled, `<sp-button>` elements will not respond to click events and will appear faded.
+While disabled, `<sp-close-button>` elements will not respond to click events and will appear faded.
 
 ```html
-<sp-button-group>
-    <sp-button variant="primary">Normal</sp-button>
-    <sp-button variant="primary" disabled>Disabled</sp-button>
-</sp-button-group>
+<sp-close-button-group>
+    <sp-close-button variant="primary">Normal</sp-close-button>
+    <sp-close-button variant="primary" disabled>Disabled</sp-close-button>
+</sp-close-button-group>
 ```
 
 #### Pending
 
-While in pending state, `<sp-button>` elements will not respond to click events and will appear faded with an indeterminate `<sp-progress-circle>`.
-The `<sp-button>` element's label and icon will be hidden while in pending state.
+While in pending state, `<sp-close-button>` elements will not respond to click events and will appear faded with an indeterminate `<sp-progress-circle>`.
+The `<sp-close-button>` element's label and icon will be hidden while in pending state.
 
-Note: The pending state of the `<sp-button>` element is applied after a 1s delay to avoid flashing the pending state for quick actions. You can override the delay by adding custom css var `--pending-delay` to your css.
+Note: The pending state of the `<sp-close-button>` element is applied after a 1s delay to avoid flashing the pending state for quick actions. You can override the delay by adding custom css var `--pending-delay` to your css.
 
 ```html
-<sp-button-group>
-    <sp-button variant="primary">Normal</sp-button>
-    <sp-button variant="primary" pending>Pending</sp-button>
-</sp-button-group>
+<sp-close-button-group>
+    <sp-close-button variant="primary">Normal</sp-close-button>
+    <sp-close-button variant="primary" pending>Pending</sp-close-button>
+</sp-close-button-group>
 ```
 
 ### Behaviors
@@ -359,38 +339,40 @@ Note: The pending state of the `<sp-button>` element is applied after a 1s delay
 #### Handling events
 
 Events handlers for clicks and other user actions can be registered on a
-`<sp-button>` as one would on a standard HTML `<button>` element.
+`<sp-close-button>` as one would on a standard HTML `<button>` element.
 
 ```html
-<sp-button onclick="spAlert(this, '<sp-button> clicked!')">Click me</sp-button>
+<sp-close-button onclick="spAlert(this, '<sp-close-button> clicked!')">
+    Click me
+</sp-close-button>
 ```
 
-In addition to handling events like a native `<button>` HTML element, one can also use a `<sp-button>` in place of the `<a>` HTML element by using the `href` and optional `target` attribute.
+In addition to handling events like a native `<button>` HTML element, one can also use a `<sp-close-button>` in place of the `<a>` HTML element by using the `href` and optional `target` attribute.
 
 ```html demo
-<sp-button
+<sp-close-button
     href="https://github.com/adobe/spectrum-web-components"
     target="_blank"
 >
     Click me
-</sp-button>
+</sp-close-button>
 ```
 
 #### Autofocus
 
-The `autofocus` attribute sets focus on the `<sp-button>` when the component
-mounts. This is useful for setting focus to a specific sp-button when a
+The `autofocus` attribute sets focus on the `<sp-close-button>` when the component
+mounts. This is useful for setting focus to a specific sp-close-button when a
 popover or dialog opens.
 
 ```html
-<sp-button autofocus>Confirm</sp-button>
+<sp-close-button autofocus>Confirm</sp-close-button>
 ```
 
 ### Accessibility
 
 #### Include a label
 
-A button is required to have either a visible text label or a `label` attribute on either the `<sp-button>` itself
+A button is required to have either a visible text label or a `label` attribute on either the `<sp-close-button>` itself
 or on an `<sp-icon*>` element child.
 
 #### Don't override color
@@ -411,8 +393,10 @@ To ensure maximum contrast with the background, use static black for light backg
 
 ```html demo
 <div style="background-color: #ccffee; padding: 20px">
-    <sp-button static="black">Click me</sp-button>
-    <sp-button static="black" treatment="outline">Click me</sp-button>
+    <sp-close-button static="black">Click me</sp-close-button>
+    <sp-close-button static="black" treatment="outline">
+        Click me
+    </sp-close-button>
 </div>
 ```
 
@@ -422,8 +406,10 @@ To ensure maximum contrast with the background, use static black for light backg
 
 ```html demo
 <div style="background-color: #220033; padding: 20px">
-    <sp-button static="white">Click me</sp-button>
-    <sp-button static="white" treatment="outline">Click me</sp-button>
+    <sp-close-button static="white">Click me</sp-close-button>
+    <sp-close-button static="white" treatment="outline">
+        Click me
+    </sp-close-button>
 </div>
 ```
 
