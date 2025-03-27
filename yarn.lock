@@ -6790,16 +6790,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/actionbar@npm:9.0.1":
-  version: 9.0.1
-  resolution: "@spectrum-css/actionbar@npm:9.0.1"
+"@spectrum-css/actionbar@npm:10.1.1":
+  version: 10.1.1
+  resolution: "@spectrum-css/actionbar@npm:10.1.1"
   peerDependencies:
-    "@spectrum-css/actiongroup": ">=5"
-    "@spectrum-css/closebutton": ">=5"
-    "@spectrum-css/fieldlabel": ">=8"
-    "@spectrum-css/popover": ">=7"
-    "@spectrum-css/tokens": ">=14 || >=15"
-  checksum: 10c0/7d67de4befa8215b466bd46858b1b5b8c6c5dff8c1186a602f7f421f5ebe90844e9fc3ac27b4786494e09b9b7f902b94737f2e28dd88906d88004157655dec7a
+    "@spectrum-css/actiongroup": ">=6.0.0 <7.0.0"
+    "@spectrum-css/closebutton": ">=6.0.0 <7.0.0"
+    "@spectrum-css/fieldlabel": ">=10.0.0 <11.0.0"
+    "@spectrum-css/popover": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/actiongroup":
+      optional: true
+    "@spectrum-css/closebutton":
+      optional: true
+    "@spectrum-css/fieldlabel":
+      optional: true
+    "@spectrum-css/popover":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/b35750cf35cc26355307358ea27d429ab55d2ad453217a71eb3363867158f72825b5b08212210e3447e78d7b7f17e907ff7b4129887af48fd847ead450546138
   languageName: node
   linkType: hard
 
@@ -7771,7 +7782,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-bar@workspace:packages/action-bar"
   dependencies:
-    "@spectrum-css/actionbar": "npm:9.0.1"
+    "@spectrum-css/actionbar": "npm:10.1.1"
     "@spectrum-web-components/action-group": "npm:1.4.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
