@@ -390,7 +390,13 @@ mounts. This is useful for setting focus to a specific sp-button when a
 popover or dialog opens.
 
 ```html
-<sp-button autofocus>Confirm</sp-button>
+<sp-button id="trigger">Open</sp-button>
+<sp-overlay trigger="trigger@click" placement="bottom">
+    <sp-popover>
+        <!-- Button will autofocus when open -->
+        <sp-button autofocus>Confirm</sp-button>
+    </sp-popover>
+</sp-overlay>
 ```
 
 ### Accessibility
