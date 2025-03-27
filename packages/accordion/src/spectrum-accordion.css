@@ -14,24 +14,7 @@ governing permissions and limitations under the License.
 :host {
     --spectrum-accordion-min-block-size: max(
         var(--mod-accordion-item-height, var(--spectrum-accordion-item-height)),
-        calc(
-            var(
-                    --mod-accordion-item-header-top-to-text-space,
-                    var(--spectrum-accordion-item-header-top-to-text-space)
-                ) +
-                var(
-                    --mod-accordion-item-header-bottom-to-text-space,
-                    var(--spectrum-accordion-item-header-bottom-to-text-space)
-                ) +
-                var(
-                    --mod-accordion-item-header-font-size,
-                    var(--spectrum-accordion-item-header-font-size)
-                ) *
-                var(
-                    --mod-accordion-item-header-line-height,
-                    var(--spectrum-accordion-item-header-line-height)
-                )
-        )
+        calc(var(--mod-accordion-item-header-top-to-text-space, var(--spectrum-accordion-item-header-top-to-text-space)) + var(--mod-accordion-item-header-bottom-to-text-space, var(--spectrum-accordion-item-header-bottom-to-text-space)) + var(--mod-accordion-item-header-font-size, var(--spectrum-accordion-item-header-font-size)) * var(--mod-accordion-item-header-line-height, var(--spectrum-accordion-item-header-line-height)))
     );
     margin: 0;
     padding: 0;
@@ -42,12 +25,8 @@ governing permissions and limitations under the License.
 :host:lang(ja),
 :host:lang(ko),
 :host:lang(zh) {
-    --spectrum-accordion-item-header-line-height: var(
-        --spectrum-accordion-item-header-line-height-cjk
-    );
-    --spectrum-accordion-item-content-line-height: var(
-        --spectrum-accordion-item-content-line-height-cjk
-    );
+    --spectrum-accordion-item-header-line-height: var(--spectrum-accordion-item-header-line-height-cjk);
+    --spectrum-accordion-item-content-line-height: var(--spectrum-accordion-item-content-line-height-cjk);
 }
 
 :host:dir(rtl),

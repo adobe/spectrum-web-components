@@ -19,11 +19,7 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    padding: 0
-        var(
-            --mod-actionbar-spacing-outer-edge,
-            var(--spectrum-actionbar-spacing-outer-edge)
-        );
+    padding: 0 var(--mod-actionbar-spacing-outer-edge, var(--spectrum-actionbar-spacing-outer-edge));
     z-index: 1;
     box-sizing: border-box;
     pointer-events: none;
@@ -33,12 +29,7 @@ governing permissions and limitations under the License.
 }
 
 :host([open]) {
-    block-size: calc(
-        var(
-                --mod-actionbar-spacing-outer-edge,
-                var(--spectrum-actionbar-spacing-outer-edge)
-            ) + var(--mod-actionbar-height, var(--spectrum-actionbar-height))
-    );
+    block-size: calc(var(--mod-actionbar-spacing-outer-edge, var(--spectrum-actionbar-spacing-outer-edge)) + var(--mod-actionbar-height, var(--spectrum-actionbar-height)));
     opacity: 1;
 }
 
@@ -46,39 +37,10 @@ governing permissions and limitations under the License.
     block-size: var(--mod-actionbar-height, var(--spectrum-actionbar-height));
     box-sizing: border-box;
     inline-size: 100%;
-    border-radius: var(
-        --mod-actionbar-corner-radius,
-        var(--spectrum-actionbar-corner-radius)
-    );
-    border-color: var(
-        --highcontrast-actionbar-popover-border-color,
-        var(
-            --mod-actionbar-popover-border-color,
-            var(--spectrum-actionbar-popover-border-color)
-        )
-    );
-    background-color: var(
-        --mod-actionbar-popover-background-color,
-        var(--spectrum-actionbar-popover-background-color)
-    );
-    filter: drop-shadow(
-        var(
-                --mod-actionbar-shadow-horizontal,
-                var(--spectrum-actionbar-shadow-horizontal)
-            )
-            var(
-                --mod-actionbar-shadow-vertical,
-                var(--spectrum-actionbar-shadow-vertical)
-            )
-            var(
-                --mod-actionbar-shadow-blur,
-                var(--spectrum-actionbar-shadow-blur)
-            )
-            var(
-                --mod-actionbar-shadow-color,
-                var(--spectrum-actionbar-shadow-color)
-            )
-    );
+    border-radius: var(--mod-actionbar-corner-radius, var(--spectrum-actionbar-corner-radius));
+    border-color: var(--highcontrast-actionbar-popover-border-color, var(--mod-actionbar-popover-border-color, var(--spectrum-actionbar-popover-border-color)));
+    background-color: var(--mod-actionbar-popover-background-color, var(--spectrum-actionbar-popover-background-color));
+    filter: drop-shadow(var(--mod-actionbar-shadow-horizontal, var(--spectrum-actionbar-shadow-horizontal)) var(--mod-actionbar-shadow-vertical, var(--spectrum-actionbar-shadow-vertical)) var(--mod-actionbar-shadow-blur, var(--spectrum-actionbar-shadow-blur)) var(--mod-actionbar-shadow-color, var(--spectrum-actionbar-shadow-color)));
     pointer-events: auto;
     flex-direction: row;
     margin: auto;
@@ -89,79 +51,40 @@ governing permissions and limitations under the License.
 
 .close-button {
     flex-shrink: 0;
-    margin-block-start: var(
-        --mod-actionbar-spacing-close-button-top,
-        var(--spectrum-actionbar-spacing-close-button-top)
-    );
-    margin-inline-start: var(
-        --mod-actionbar-spacing-close-button-start,
-        var(--spectrum-actionbar-spacing-close-button-start)
-    );
-    margin-inline-end: var(
-        --mod-actionbar-spacing-close-button-end,
-        var(--spectrum-actionbar-spacing-close-button-end)
-    );
+    margin-block-start: var(--mod-actionbar-spacing-close-button-top, var(--spectrum-actionbar-spacing-close-button-top));
+    margin-inline-start: var(--mod-actionbar-spacing-close-button-start, var(--spectrum-actionbar-spacing-close-button-start));
+    margin-inline-end: var(--mod-actionbar-spacing-close-button-end, var(--spectrum-actionbar-spacing-close-button-end));
 }
 
 .field-label {
-    font-size: var(
-        --mod-actionbar-item-counter-font-size,
-        var(--spectrum-actionbar-item-counter-font-size)
-    );
-    color: var(
-        --mod-actionbar-item-counter-color,
-        var(--spectrum-actionbar-item-counter-color)
-    );
-    line-height: var(
-        --mod-actionbar-item-counter-line-height,
-        var(--spectrum-actionbar-item-counter-line-height)
-    );
-    margin-block-start: var(
-        --mod-actionbar-spacing-item-counter-top,
-        var(--spectrum-actionbar-spacing-item-counter-top)
-    );
-    margin-inline-end: var(
-        --mod-actionbar-spacing-item-counter-end,
-        var(--spectrum-actionbar-spacing-item-counter-end)
-    );
+    font-size: var(--mod-actionbar-item-counter-font-size, var(--spectrum-actionbar-item-counter-font-size));
+    color: var(--mod-actionbar-item-counter-color, var(--spectrum-actionbar-item-counter-color));
+    line-height: var(--mod-actionbar-item-counter-line-height, var(--spectrum-actionbar-item-counter-line-height));
+    margin-block-start: var(--mod-actionbar-spacing-item-counter-top, var(--spectrum-actionbar-spacing-item-counter-top));
+    margin-inline-end: var(--mod-actionbar-spacing-item-counter-end, var(--spectrum-actionbar-spacing-item-counter-end));
     padding: 0;
 }
 
 .field-label:lang(ja),
 .field-label:lang(ko),
 .field-label:lang(zh) {
-    line-height: var(
-        --mod-actionbar-item-counter-line-height-cjk,
-        var(--spectrum-actionbar-item-counter-line-height-cjk)
-    );
+    line-height: var(--mod-actionbar-item-counter-line-height-cjk, var(--spectrum-actionbar-item-counter-line-height-cjk));
 }
 
 .action-group {
-    margin-block-start: var(
-        --mod-actionbar-spacing-action-group-top,
-        var(--spectrum-actionbar-spacing-action-group-top)
-    );
+    margin-block-start: var(--mod-actionbar-spacing-action-group-top, var(--spectrum-actionbar-spacing-action-group-top));
     margin-inline-start: auto;
-    margin-inline-end: var(
-        --mod-actionbar-spacing-action-group-end,
-        var(--spectrum-actionbar-spacing-action-group-end)
-    );
+    margin-inline-end: var(--mod-actionbar-spacing-action-group-end, var(--spectrum-actionbar-spacing-action-group-end));
 }
 
 :host([emphasized]) #popover {
     filter: none;
-    background-color: var(
-        --mod-actionbar-emphasized-background-color,
-        var(--spectrum-actionbar-emphasized-background-color)
-    );
+    background-color: var(--mod-actionbar-emphasized-background-color, var(--spectrum-actionbar-emphasized-background-color));
     border-color: #0000;
 }
 
 :host([emphasized]) .field-label {
-    color: var(
-        --mod-actionbar-emphasized-item-counter-color,
-        var(--spectrum-actionbar-emphasized-item-counter-color)
-    );
+    color: var(--mod-actionbar-emphasized-item-counter-color, var(--spectrum-actionbar-emphasized-item-counter-color));
 }
 
 :host([variant='sticky']) {

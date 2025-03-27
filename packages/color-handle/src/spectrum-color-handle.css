@@ -17,41 +17,12 @@ governing permissions and limitations under the License.
     box-sizing: border-box;
     inline-size: var(--mod-colorhandle-size, var(--spectrum-colorhandle-size));
     block-size: var(--mod-colorhandle-size, var(--spectrum-colorhandle-size));
-    margin-inline: calc(
-        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) / 2 * -1
-    );
-    margin-block: calc(
-        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) / 2 * -1
-    );
-    border-width: var(
-        --mod-colorhandle-border-width,
-        var(--spectrum-colorhandle-border-width)
-    );
-    border-color: var(
-        --highcontrast-colorhandle-border-color,
-        var(
-            --mod-colorhandle-border-color,
-            var(--spectrum-colorhandle-border-color)
-        )
-    );
-    box-shadow: 0 0 0
-        var(
-            --mod-colorhandle-outer-border-width,
-            var(--spectrum-colorhandle-outer-border-width)
-        )
-        var(
-            --mod-colorhandle-outer-border-color,
-            var(--spectrum-colorhandle-outer-border-color)
-        );
-    transition: all
-        var(
-            --mod-colorhandle-animation-duration,
-            var(--spectrum-colorhandle-animation-duration)
-        )
-        var(
-            --mod-colorhandle-animation-easing,
-            var(--spectrum-colorhandle-animation-easing)
-        );
+    margin-inline: calc(var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) / 2 * -1);
+    margin-block: calc(var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) / 2 * -1);
+    border-width: var(--mod-colorhandle-border-width, var(--spectrum-colorhandle-border-width));
+    border-color: var(--highcontrast-colorhandle-border-color, var(--mod-colorhandle-border-color, var(--spectrum-colorhandle-border-color)));
+    box-shadow: 0 0 0 var(--mod-colorhandle-outer-border-width, var(--spectrum-colorhandle-outer-border-width)) var(--mod-colorhandle-outer-border-color, var(--spectrum-colorhandle-outer-border-color));
+    transition: all var(--mod-colorhandle-animation-duration, var(--spectrum-colorhandle-animation-duration)) var(--mod-colorhandle-animation-easing, var(--spectrum-colorhandle-animation-easing));
     border-style: solid;
 }
 
@@ -64,66 +35,26 @@ governing permissions and limitations under the License.
 
 :host:after {
     content: '';
-    inset-inline: calc(
-        50% -
-            var(
-                --mod-colorhandle-hitarea-size,
-                var(--spectrum-colorhandle-hitarea-size)
-            ) / 2
-    );
-    inset-block: calc(
-        50% -
-            var(
-                --mod-colorhandle-hitarea-size,
-                var(--spectrum-colorhandle-hitarea-size)
-            ) / 2
-    );
-    inline-size: var(
-        --mod-colorhandle-hitarea-size,
-        var(--spectrum-colorhandle-hitarea-size)
-    );
-    block-size: var(
-        --mod-colorhandle-hitarea-size,
-        var(--spectrum-colorhandle-hitarea-size)
-    );
+    inset-inline: calc(50% - var(--mod-colorhandle-hitarea-size, var(--spectrum-colorhandle-hitarea-size)) / 2);
+    inset-block: calc(50% - var(--mod-colorhandle-hitarea-size, var(--spectrum-colorhandle-hitarea-size)) / 2);
+    inline-size: var(--mod-colorhandle-hitarea-size, var(--spectrum-colorhandle-hitarea-size));
+    block-size: var(--mod-colorhandle-hitarea-size, var(--spectrum-colorhandle-hitarea-size));
     border-radius: var(--mod-colorhandle-hitarea-border-radius, 100%);
 }
 
 :host([focused]),
 :host(:focus-visible) {
-    inline-size: var(
-        --mod-colorhandle-focused-size,
-        var(--spectrum-colorhandle-focused-size)
-    );
-    block-size: var(
-        --mod-colorhandle-focused-size,
-        var(--spectrum-colorhandle-focused-size)
-    );
-    margin-inline: calc(
-        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1
-    );
-    margin-block: calc(
-        var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1
-    );
+    inline-size: var(--mod-colorhandle-focused-size, var(--spectrum-colorhandle-focused-size));
+    block-size: var(--mod-colorhandle-focused-size, var(--spectrum-colorhandle-focused-size));
+    margin-inline: calc(var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1);
+    margin-block: calc(var(--mod-colorhandle-size, var(--spectrum-colorhandle-size)) * -1);
     outline: none;
 }
 
 :host([disabled]) {
     pointer-events: none;
-    border-color: var(
-        --highcontrast-colorhandle-border-color-disabled,
-        var(
-            --mod-colorhandle-border-color-disabled,
-            var(--spectrum-colorhandle-border-color-disabled)
-        )
-    );
-    background: var(
-        --highcontrast-colorhandle-fill-color-disabled,
-        var(
-            --mod-colorhandle-fill-color-disabled,
-            var(--spectrum-colorhandle-fill-color-disabled)
-        )
-    );
+    border-color: var(--highcontrast-colorhandle-border-color-disabled, var(--mod-colorhandle-border-color-disabled, var(--spectrum-colorhandle-border-color-disabled)));
+    background: var(--highcontrast-colorhandle-fill-color-disabled, var(--mod-colorhandle-fill-color-disabled, var(--spectrum-colorhandle-fill-color-disabled)));
     box-shadow: none;
 }
 
@@ -134,15 +65,7 @@ governing permissions and limitations under the License.
 .inner {
     inline-size: 100%;
     block-size: 100%;
-    box-shadow: inset 0 0 0
-        var(
-            --mod-colorhandle-inner-border-width,
-            var(--spectrum-colorhandle-inner-border-width)
-        )
-        var(
-            --mod-colorhandle-inner-border-color,
-            var(--spectrum-colorhandle-inner-border-color)
-        );
+    box-shadow: inset 0 0 0 var(--mod-colorhandle-inner-border-width, var(--spectrum-colorhandle-inner-border-width)) var(--mod-colorhandle-inner-border-color, var(--spectrum-colorhandle-inner-border-color));
     background-color: var(--spectrum-picked-color);
     border-radius: 100%;
 }

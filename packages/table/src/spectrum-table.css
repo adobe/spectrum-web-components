@@ -42,33 +42,10 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    --mod-thumbnail-size: var(
-        --mod-table-thumbnail-size,
-        var(--spectrum-table-thumbnail-size)
-    );
-    --spectrum-table-cell-background-color: var(
-        --highcontrast-table-row-background-color,
-        var(
-            --mod-table-row-background-color,
-            var(--spectrum-table-row-background-color)
-        )
-    );
-    --spectrum-table-selected-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color,
-        var(
-            --mod-table-selected-row-background-color-non-emphasized,
-            var(--spectrum-table-selected-row-background-color-non-emphasized)
-        )
-    );
-    --spectrum-table-selected-cell-background-color-focus: var(
-        --highcontrast-table-selected-row-background-color-focus,
-        var(
-            --mod-table-selected-row-background-color-non-emphasized-focus,
-            var(
-                --spectrum-table-selected-row-background-color-non-emphasized-focus
-            )
-        )
-    );
+    --mod-thumbnail-size: var(--mod-table-thumbnail-size, var(--spectrum-table-thumbnail-size));
+    --spectrum-table-cell-background-color: var(--highcontrast-table-row-background-color, var(--mod-table-row-background-color, var(--spectrum-table-row-background-color)));
+    --spectrum-table-selected-cell-background-color: var(--highcontrast-table-selected-row-background-color, var(--mod-table-selected-row-background-color-non-emphasized, var(--spectrum-table-selected-row-background-color-non-emphasized)));
+    --spectrum-table-selected-cell-background-color-focus: var(--highcontrast-table-selected-row-background-color-focus, var(--mod-table-selected-row-background-color-non-emphasized-focus, var(--spectrum-table-selected-row-background-color-non-emphasized-focus)));
 }
 
 :host:dir(rtl),
@@ -86,250 +63,85 @@ governing permissions and limitations under the License.
 }
 
 :host([density='compact']) {
-    --spectrum-table-min-row-height: var(
-        --mod-table-min-row-height--compact,
-        var(--spectrum-table-row-height-medium-compact)
-    );
-    --spectrum-table-row-top-to-text: var(
-        --mod-table-row-top-to-text--compact,
-        var(--spectrum-table-row-top-to-text-medium-compact)
-    );
-    --spectrum-table-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--compact,
-        var(--spectrum-table-row-bottom-to-text-medium-compact)
-    );
-    --spectrum-table-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--compact,
-        var(--spectrum-table-row-checkbox-to-top-medium-compact)
-    );
-    --spectrum-table-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-compact,
-        var(--spectrum-table-thumbnail-to-top-minimum-medium-compact)
-    );
-    --spectrum-table-thumbnail-size: var(
-        --mod-table-thumbnail-size-compact,
-        var(--spectrum-thumbnail-size-200)
-    );
+    --spectrum-table-min-row-height: var(--mod-table-min-row-height--compact, var(--spectrum-table-row-height-medium-compact));
+    --spectrum-table-row-top-to-text: var(--mod-table-row-top-to-text--compact, var(--spectrum-table-row-top-to-text-medium-compact));
+    --spectrum-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--compact, var(--spectrum-table-row-bottom-to-text-medium-compact));
+    --spectrum-table-row-checkbox-block-spacing: var(--mod-table-row-checkbox-block-spacing--compact, var(--spectrum-table-row-checkbox-to-top-medium-compact));
+    --spectrum-table-thumbnail-block-spacing: var(--mod-table-thumbnail-block-spacing-compact, var(--spectrum-table-thumbnail-to-top-minimum-medium-compact));
+    --spectrum-table-thumbnail-size: var(--mod-table-thumbnail-size-compact, var(--spectrum-thumbnail-size-200));
 }
 
 :host([density='compact'][size='s']) {
-    --spectrum-table-min-row-height: var(
-        --mod-table-min-row-height--compact,
-        var(--spectrum-table-row-height-small-compact)
-    );
-    --spectrum-table-row-top-to-text: var(
-        --mod-table-row-top-to-text--compact,
-        var(--spectrum-table-row-top-to-text-small-compact)
-    );
-    --spectrum-table-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--compact,
-        var(--spectrum-table-row-bottom-to-text-small-compact)
-    );
-    --spectrum-table-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--compact,
-        var(--spectrum-table-row-checkbox-to-top-small-compact)
-    );
-    --spectrum-table-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-compact,
-        var(--spectrum-table-thumbnail-to-top-minimum-small-compact)
-    );
-    --spectrum-table-thumbnail-size: var(
-        --mod-table-thumbnail-size-compact,
-        var(--spectrum-thumbnail-size-50)
-    );
+    --spectrum-table-min-row-height: var(--mod-table-min-row-height--compact, var(--spectrum-table-row-height-small-compact));
+    --spectrum-table-row-top-to-text: var(--mod-table-row-top-to-text--compact, var(--spectrum-table-row-top-to-text-small-compact));
+    --spectrum-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--compact, var(--spectrum-table-row-bottom-to-text-small-compact));
+    --spectrum-table-row-checkbox-block-spacing: var(--mod-table-row-checkbox-block-spacing--compact, var(--spectrum-table-row-checkbox-to-top-small-compact));
+    --spectrum-table-thumbnail-block-spacing: var(--mod-table-thumbnail-block-spacing-compact, var(--spectrum-table-thumbnail-to-top-minimum-small-compact));
+    --spectrum-table-thumbnail-size: var(--mod-table-thumbnail-size-compact, var(--spectrum-thumbnail-size-50));
 }
 
 :host([density='compact'][size='l']) {
-    --spectrum-table-min-row-height: var(
-        --mod-table-min-row-height--compact,
-        var(--spectrum-table-row-height-large-compact)
-    );
-    --spectrum-table-row-top-to-text: var(
-        --mod-table-row-top-to-text--compact,
-        var(--spectrum-table-row-top-to-text-large-compact)
-    );
-    --spectrum-table-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--compact,
-        var(--spectrum-table-row-bottom-to-text-large-compact)
-    );
-    --spectrum-table-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--compact,
-        var(--spectrum-table-row-checkbox-to-top-large-compact)
-    );
-    --spectrum-table-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-compact,
-        var(--spectrum-table-thumbnail-to-top-minimum-large-compact)
-    );
-    --spectrum-table-thumbnail-size: var(
-        --mod-table-thumbnail-size-compact,
-        var(--spectrum-thumbnail-size-300)
-    );
+    --spectrum-table-min-row-height: var(--mod-table-min-row-height--compact, var(--spectrum-table-row-height-large-compact));
+    --spectrum-table-row-top-to-text: var(--mod-table-row-top-to-text--compact, var(--spectrum-table-row-top-to-text-large-compact));
+    --spectrum-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--compact, var(--spectrum-table-row-bottom-to-text-large-compact));
+    --spectrum-table-row-checkbox-block-spacing: var(--mod-table-row-checkbox-block-spacing--compact, var(--spectrum-table-row-checkbox-to-top-large-compact));
+    --spectrum-table-thumbnail-block-spacing: var(--mod-table-thumbnail-block-spacing-compact, var(--spectrum-table-thumbnail-to-top-minimum-large-compact));
+    --spectrum-table-thumbnail-size: var(--mod-table-thumbnail-size-compact, var(--spectrum-thumbnail-size-300));
 }
 
 :host([density='compact'][size='xl']) {
-    --spectrum-table-min-row-height: var(
-        --mod-table-min-row-height--compact,
-        var(--spectrum-table-row-height-extra-large-compact)
-    );
-    --spectrum-table-row-top-to-text: var(
-        --mod-table-row-top-to-text--compact,
-        var(--spectrum-table-row-top-to-text-extra-large-compact)
-    );
-    --spectrum-table-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--compact,
-        var(--spectrum-table-row-bottom-to-text-extra-large-compact)
-    );
-    --spectrum-table-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--compact,
-        var(--spectrum-table-row-checkbox-to-top-extra-large-compact)
-    );
-    --spectrum-table-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-compact,
-        var(--spectrum-table-thumbnail-to-top-minimum-extra-large-compact)
-    );
-    --spectrum-table-thumbnail-size: var(
-        --mod-table-thumbnail-size-compact,
-        var(--spectrum-thumbnail-size-500)
-    );
+    --spectrum-table-min-row-height: var(--mod-table-min-row-height--compact, var(--spectrum-table-row-height-extra-large-compact));
+    --spectrum-table-row-top-to-text: var(--mod-table-row-top-to-text--compact, var(--spectrum-table-row-top-to-text-extra-large-compact));
+    --spectrum-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--compact, var(--spectrum-table-row-bottom-to-text-extra-large-compact));
+    --spectrum-table-row-checkbox-block-spacing: var(--mod-table-row-checkbox-block-spacing--compact, var(--spectrum-table-row-checkbox-to-top-extra-large-compact));
+    --spectrum-table-thumbnail-block-spacing: var(--mod-table-thumbnail-block-spacing-compact, var(--spectrum-table-thumbnail-to-top-minimum-extra-large-compact));
+    --spectrum-table-thumbnail-size: var(--mod-table-thumbnail-size-compact, var(--spectrum-thumbnail-size-500));
 }
 
 :host([density='spacious']) {
-    --spectrum-table-min-row-height: var(
-        --mod-table-min-row-height--spacious,
-        var(--spectrum-table-row-height-medium-spacious)
-    );
-    --spectrum-table-row-top-to-text: var(
-        --mod-table-row-top-to-text--spacious,
-        var(--spectrum-table-row-top-to-text-medium-spacious)
-    );
-    --spectrum-table-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--spacious,
-        var(--spectrum-table-row-bottom-to-text-medium-spacious)
-    );
-    --spectrum-table-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--spacious,
-        var(--spectrum-table-row-checkbox-to-top-medium-spacious)
-    );
-    --spectrum-table-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-spacious,
-        var(--spectrum-table-thumbnail-to-top-minimum-medium-spacious)
-    );
-    --spectrum-table-thumbnail-size: var(
-        --mod-table-thumbnail-size-spacious,
-        var(--spectrum-thumbnail-size-500)
-    );
+    --spectrum-table-min-row-height: var(--mod-table-min-row-height--spacious, var(--spectrum-table-row-height-medium-spacious));
+    --spectrum-table-row-top-to-text: var(--mod-table-row-top-to-text--spacious, var(--spectrum-table-row-top-to-text-medium-spacious));
+    --spectrum-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--spacious, var(--spectrum-table-row-bottom-to-text-medium-spacious));
+    --spectrum-table-row-checkbox-block-spacing: var(--mod-table-row-checkbox-block-spacing--spacious, var(--spectrum-table-row-checkbox-to-top-medium-spacious));
+    --spectrum-table-thumbnail-block-spacing: var(--mod-table-thumbnail-block-spacing-spacious, var(--spectrum-table-thumbnail-to-top-minimum-medium-spacious));
+    --spectrum-table-thumbnail-size: var(--mod-table-thumbnail-size-spacious, var(--spectrum-thumbnail-size-500));
 }
 
 :host([density='spacious'][size='s']) {
-    --spectrum-table-min-row-height: var(
-        --mod-table-min-row-height--spacious,
-        var(--spectrum-table-row-height-small-spacious)
-    );
-    --spectrum-table-row-top-to-text: var(
-        --mod-table-row-top-to-text--spacious,
-        var(--spectrum-table-row-top-to-text-small-spacious)
-    );
-    --spectrum-table-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--spacious,
-        var(--spectrum-table-row-bottom-to-text-small-spacious)
-    );
-    --spectrum-table-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--spacious,
-        var(--spectrum-table-row-checkbox-to-top-small-spacious)
-    );
-    --spectrum-table-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-spacious,
-        var(--spectrum-table-thumbnail-to-top-minimum-small-spacious)
-    );
-    --spectrum-table-thumbnail-size: var(
-        --mod-table-thumbnail-size-spacious,
-        var(--spectrum-thumbnail-size-300)
-    );
+    --spectrum-table-min-row-height: var(--mod-table-min-row-height--spacious, var(--spectrum-table-row-height-small-spacious));
+    --spectrum-table-row-top-to-text: var(--mod-table-row-top-to-text--spacious, var(--spectrum-table-row-top-to-text-small-spacious));
+    --spectrum-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--spacious, var(--spectrum-table-row-bottom-to-text-small-spacious));
+    --spectrum-table-row-checkbox-block-spacing: var(--mod-table-row-checkbox-block-spacing--spacious, var(--spectrum-table-row-checkbox-to-top-small-spacious));
+    --spectrum-table-thumbnail-block-spacing: var(--mod-table-thumbnail-block-spacing-spacious, var(--spectrum-table-thumbnail-to-top-minimum-small-spacious));
+    --spectrum-table-thumbnail-size: var(--mod-table-thumbnail-size-spacious, var(--spectrum-thumbnail-size-300));
 }
 
 :host([density='spacious'][size='l']) {
-    --spectrum-table-min-row-height: var(
-        --mod-table-min-row-height--spacious,
-        var(--spectrum-table-row-height-large-spacious)
-    );
-    --spectrum-table-row-top-to-text: var(
-        --mod-table-row-top-to-text--spacious,
-        var(--spectrum-table-row-top-to-text-large-spacious)
-    );
-    --spectrum-table-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--spacious,
-        var(--spectrum-table-row-bottom-to-text-large-spacious)
-    );
-    --spectrum-table-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--spacious,
-        var(--spectrum-table-row-checkbox-to-top-large-spacious)
-    );
-    --spectrum-table-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-spacious,
-        var(--spectrum-table-thumbnail-to-top-minimum-large-spacious)
-    );
-    --spectrum-table-thumbnail-size: var(
-        --mod-table-thumbnail-size-spacious,
-        var(--spectrum-thumbnail-size-700)
-    );
+    --spectrum-table-min-row-height: var(--mod-table-min-row-height--spacious, var(--spectrum-table-row-height-large-spacious));
+    --spectrum-table-row-top-to-text: var(--mod-table-row-top-to-text--spacious, var(--spectrum-table-row-top-to-text-large-spacious));
+    --spectrum-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--spacious, var(--spectrum-table-row-bottom-to-text-large-spacious));
+    --spectrum-table-row-checkbox-block-spacing: var(--mod-table-row-checkbox-block-spacing--spacious, var(--spectrum-table-row-checkbox-to-top-large-spacious));
+    --spectrum-table-thumbnail-block-spacing: var(--mod-table-thumbnail-block-spacing-spacious, var(--spectrum-table-thumbnail-to-top-minimum-large-spacious));
+    --spectrum-table-thumbnail-size: var(--mod-table-thumbnail-size-spacious, var(--spectrum-thumbnail-size-700));
 }
 
 :host([density='spacious'][size='xl']) {
-    --spectrum-table-min-row-height: var(
-        --mod-table-min-row-height--spacious,
-        var(--spectrum-table-row-height-extra-large-spacious)
-    );
-    --spectrum-table-row-top-to-text: var(
-        --mod-table-row-top-to-text--spacious,
-        var(--spectrum-table-row-top-to-text-extra-large-spacious)
-    );
-    --spectrum-table-row-bottom-to-text: var(
-        --mod-table-row-bottom-to-text--spacious,
-        var(--spectrum-table-row-bottom-to-text-extra-large-spacious)
-    );
-    --spectrum-table-row-checkbox-block-spacing: var(
-        --mod-table-row-checkbox-block-spacing--spacious,
-        var(--spectrum-table-row-checkbox-to-top-extra-large-spacious)
-    );
-    --spectrum-table-thumbnail-block-spacing: var(
-        --mod-table-thumbnail-block-spacing-spacious,
-        var(--spectrum-table-thumbnail-to-top-minimum-extra-large-spacious)
-    );
-    --spectrum-table-thumbnail-size: var(
-        --mod-table-thumbnail-size-spacious,
-        var(--spectrum-thumbnail-size-800)
-    );
+    --spectrum-table-min-row-height: var(--mod-table-min-row-height--spacious, var(--spectrum-table-row-height-extra-large-spacious));
+    --spectrum-table-row-top-to-text: var(--mod-table-row-top-to-text--spacious, var(--spectrum-table-row-top-to-text-extra-large-spacious));
+    --spectrum-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--spacious, var(--spectrum-table-row-bottom-to-text-extra-large-spacious));
+    --spectrum-table-row-checkbox-block-spacing: var(--mod-table-row-checkbox-block-spacing--spacious, var(--spectrum-table-row-checkbox-to-top-extra-large-spacious));
+    --spectrum-table-thumbnail-block-spacing: var(--mod-table-thumbnail-block-spacing-spacious, var(--spectrum-table-thumbnail-to-top-minimum-extra-large-spacious));
+    --spectrum-table-thumbnail-size: var(--mod-table-thumbnail-size-spacious, var(--spectrum-thumbnail-size-800));
 }
 
 :host([emphasized]) {
-    --spectrum-table-selected-cell-background-color: var(
-        --highcontrast-table-selected-row-background-color,
-        var(
-            --mod-table-selected-row-background-color,
-            var(--spectrum-table-selected-row-background-color)
-        )
-    );
-    --spectrum-table-selected-cell-background-color-focus: var(
-        --highcontrast-table-selected-row-background-color-focus,
-        var(
-            --mod-table-selected-row-background-color-focus,
-            var(--spectrum-table-selected-row-background-color-focus)
-        )
-    );
+    --spectrum-table-selected-cell-background-color: var(--highcontrast-table-selected-row-background-color, var(--mod-table-selected-row-background-color, var(--spectrum-table-selected-row-background-color)));
+    --spectrum-table-selected-cell-background-color-focus: var(--highcontrast-table-selected-row-background-color-focus, var(--mod-table-selected-row-background-color-focus, var(--spectrum-table-selected-row-background-color-focus)));
 }
 
 :host([quiet]) {
     --spectrum-table-border-radius: var(--mod-table-border-radius--quiet, 0px);
-    --spectrum-table-outer-border-inline-width: var(
-        --mod-table-outer-border-inline-width--quiet,
-        0px
-    );
-    --spectrum-table-header-background-color: var(
-        --mod-table-header-background-color--quiet,
-        var(--spectrum-transparent-white-100)
-    );
-    --spectrum-table-row-background-color: var(
-        --mod-table-row-background-color--quiet,
-        var(--spectrum-transparent-white-100)
-    );
+    --spectrum-table-outer-border-inline-width: var(--mod-table-outer-border-inline-width--quiet, 0px);
+    --spectrum-table-header-background-color: var(--mod-table-header-background-color--quiet, var(--spectrum-transparent-white-100));
+    --spectrum-table-row-background-color: var(--mod-table-row-background-color--quiet, var(--spectrum-transparent-white-100));
 }
