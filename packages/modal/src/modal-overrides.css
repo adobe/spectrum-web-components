@@ -12,5 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-modal-background-color: var(--system-modal-background-color);
+  --spectrum-modal-background-color: var(--system-modal-background-color);
 }
+
