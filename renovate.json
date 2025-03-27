@@ -4,15 +4,16 @@
     "timezone": "America/Los_Angeles",
     "schedule": ["after 12pm on thursday"],
     "semanticCommitScope": "",
-    "allowedCommands": [
-        "^yarn build$",
-        "^yarn lint",
-        "^yarn test$",
-        "^yarn constraints",
-        "^yarn install"
-    ],
-    "postUpgradeTasks": {
-        "commands": ["yarn build", "yarn constraints --fix", "yarn install"],
-        "executionMode": "branch"
-    }
+    "labels": ["dependencies"],
+    "packageRules": [
+        {
+            "matchPackageNames": ["@spectrum-css/*"],
+            "labels": ["Spectrum CSS"],
+            "postUpgradeTasks": {
+                "commands": ["yarn build"],
+                "executionMode": "branch",
+                "fileFilters": ["packages/*/src/*.css", "tools/**/*.css"]
+            }
+        }
+    ]
 }
