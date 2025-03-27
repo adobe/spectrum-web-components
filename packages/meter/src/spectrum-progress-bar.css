@@ -11,29 +11,28 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host,
-.spectrum-ProgressBar--sizeM {
+:host {
     --spectrum-progressbar-sized-size-default: var(--spectrum-progressbar-size-2400);
     --spectrum-progressbar-sized-font-size: var(--spectrum-font-size-75);
     --spectrum-progressbar-sized-thickness: var(--spectrum-progress-bar-thickness-large);
     --spectrum-progressbar-sized-spacing-top-to-text: var(--spectrum-component-top-to-text-100);
 }
 
-.spectrum-ProgressBar--sizeS {
+:host([size="s"]) {
     --spectrum-progressbar-sized-size-default: var(--spectrum-progressbar-size-2400);
     --spectrum-progressbar-sized-font-size: var(--spectrum-font-size-75);
     --spectrum-progressbar-sized-thickness: var(--spectrum-progress-bar-thickness-small);
     --spectrum-progressbar-sized-spacing-top-to-text: var(--spectrum-component-top-to-text-75);
 }
 
-.spectrum-ProgressBar--sizeL {
+:host([size="l"]) {
     --spectrum-progressbar-sized-size-default: var(--spectrum-progressbar-size-2500);
     --spectrum-progressbar-sized-font-size: var(--spectrum-font-size-100);
     --spectrum-progressbar-sized-thickness: var(--spectrum-progress-bar-thickness-large);
     --spectrum-progressbar-sized-spacing-top-to-text: var(--spectrum-component-top-to-text-200);
 }
 
-.spectrum-ProgressBar--sizeXL {
+:host([size="xl"]) {
     --spectrum-progressbar-sized-size-default: var(--spectrum-progressbar-size-2800);
     --spectrum-progressbar-sized-font-size: var(--spectrum-font-size-200);
     --spectrum-progressbar-sized-thickness: var(--spectrum-progress-bar-thickness-extra-large);
