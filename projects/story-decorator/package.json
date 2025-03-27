@@ -9,9 +9,9 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/story-decorator"
+        "directory": "projects/story-decorator"
     },
-    "author": "",
+    "author": "Adobe",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
@@ -84,5 +84,6 @@
         "./sp-*.js",
         "./**/*.dev.js",
         "./sp-*.ts"
-    ]
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
 }

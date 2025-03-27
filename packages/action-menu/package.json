@@ -11,7 +11,7 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/action-menu"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/action-menu",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
@@ -55,10 +55,16 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
-        "lit-html"
+        "lit-html",
+        "component",
+        "css"
     ],
     "dependencies": {
         "@spectrum-web-components/action-button": "1.4.0",
