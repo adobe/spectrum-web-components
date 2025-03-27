@@ -33,10 +33,6 @@
             "development": "./src/Slider.dev.js",
             "default": "./src/Slider.js"
         },
-        "./src/SliderBase.js": {
-            "development": "./src/SliderBase.dev.js",
-            "default": "./src/SliderBase.js"
-        },
         "./src/SliderHandle.js": {
             "development": "./src/SliderHandle.dev.js",
             "default": "./src/SliderHandle.js"
@@ -78,13 +74,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@internationalized/number": "^3.6.0",
-        "@lit-labs/observers": "^2.0.2",
         "@spectrum-web-components/base": "^1.2.0",
         "@spectrum-web-components/field-label": "^1.2.0",
         "@spectrum-web-components/number-field": "^1.2.0",
-        "@spectrum-web-components/reactive-controllers": "^1.2.0",
         "@spectrum-web-components/shared": "^1.2.0",
+        "@spectrum-web-components/swan": "workspace:*",
         "@spectrum-web-components/theme": "^1.2.0"
     },
     "devDependencies": {

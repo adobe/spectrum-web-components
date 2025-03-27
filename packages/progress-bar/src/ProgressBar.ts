@@ -19,7 +19,7 @@ import {
 
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import styles from './progress-bar.css.js';
-import { ProgressBarBase } from './ProgressBarBase.js';
+import { ProgressBarBase } from '@spectrum-web-components/swan/progress-bar/ProgressBarBase.js';
 
 /**
  * @element sp-progress-bar

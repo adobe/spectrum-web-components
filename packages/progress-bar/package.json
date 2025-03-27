@@ -29,10 +29,6 @@
             "development": "./src/ProgressBar.dev.js",
             "default": "./src/ProgressBar.js"
         },
-        "./src/ProgressBarBase.js": {
-            "development": "./src/ProgressBarBase.dev.js",
-            "default": "./src/ProgressBarBase.js"
-        },
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
@@ -65,7 +61,8 @@
         "@spectrum-web-components/base": "^1.2.0",
         "@spectrum-web-components/field-label": "^1.2.0",
         "@spectrum-web-components/reactive-controllers": "^1.2.0",
-        "@spectrum-web-components/shared": "^1.2.0"
+        "@spectrum-web-components/shared": "^1.2.0",
+        "@spectrum-web-components/swan": "workspace:*"
     },
     "devDependencies": {
         "@spectrum-css/progressbar": "5.0.0-s2-foundations.19"

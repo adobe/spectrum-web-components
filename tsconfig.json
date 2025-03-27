@@ -21,7 +21,10 @@
         "sourceMap": true,
         "target": "es2018",
         "types": ["mocha", "chai", "sinon", "node", "swc"],
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "paths": {
+            "@spectrum-web-components/swan/*": ["../swan/src/components/*"]
+        }
     },
     "include": ["./global.d.ts"]
 }

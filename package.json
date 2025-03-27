@@ -435,7 +435,8 @@
         "packages/*",
         "projects/*",
         "tools/*",
-        "react/*"
+        "react/*",
+        "swan"
     ],
     "packageManager": "yarn@4.6.0"
 }

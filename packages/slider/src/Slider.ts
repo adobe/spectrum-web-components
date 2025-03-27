@@ -24,9 +24,9 @@ import {
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
-import { SliderBase } from './SliderBase.js';
+import { SliderBase } from '@spectrum-web-components/swan/slider/SliderBase.js';
 import sliderStyles from './slider.css.js';
-import { ModelValue } from './HandleController.js';
+import { ModelValue } from '@spectrum-web-components/swan/slider/HandleController.js';
 
 /**
  * @element sp-slider

@@ -16,7 +16,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 
-import { AccordionBase } from './AccordionBase.js';
+import { AccordionBase } from '@spectrum-web-components/swan/accordion/AccordionBase.js';
 import styles from './accordion.css.js';
 
 /**

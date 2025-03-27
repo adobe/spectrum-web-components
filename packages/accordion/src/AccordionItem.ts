@@ -19,7 +19,7 @@ import { when } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
-import { AccordionItemBase } from './AccordionItemBase.js';
+import { AccordionItemBase } from '@spectrum-web-components/swan/accordion/AccordionItemBase.js';
 import styles from './accordion-item.css.js';
 
 const chevronIcon: Record<string, () => TemplateResult> = {

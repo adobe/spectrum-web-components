@@ -227,8 +227,9 @@ if (window.__swc.DEBUG) {
         ): void => {
             const { localName = 'base' } = element || {};
             const id = `${localName}:${type}:${level}` as BrandedSWCWarningID;
-            if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id))
+            if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id)) {
                 return;
+            }
             /* c8 ignore next 3 */
             if (window.__swc.ignoreWarningLocalNames[localName]) return;
             if (window.__swc.ignoreWarningTypes[type]) return;

@@ -9,7 +9,19 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export { variants } from './SliderBase.js';
+export { variants } from '@spectrum-web-components/swan/slider/SliderBase.js';
+// SliderBase is now only available directly from swan
+export {
+    SliderHandle,
+    type HandleMin,
+    type HandleMax,
+    type HandleValues,
+    defaultNormalization,
+    type SliderNormalization,
+} from '@spectrum-web-components/swan/slider/SliderHandle.js';
+export {
+    HandleController,
+    type ModelValue,
+    type HandleValueDictionary,
+} from '@spectrum-web-components/swan/slider/HandleController.js';
 export * from './Slider.js';
-export * from './SliderHandle.js';
-export * from './HandleController.js';

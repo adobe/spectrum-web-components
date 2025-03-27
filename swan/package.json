@@ -1,0 +1,59 @@
+{
+    "name": "@spectrum-web-components/swan",
+    "version": "1.0.0-pre.1",
+    "private": true,
+    "type": "module",
+    "description": "Base component implementations for Spectrum Web Components",
+    "exports": {
+        "./accordion/AccordionBase.js": {
+            "types": "./dist/components/accordion/AccordionBase.d.ts",
+            "development": "./dist/components/accordion/AccordionBase.dev.js",
+            "default": "./dist/components/accordion/AccordionBase.js"
+        },
+        "./accordion/AccordionItemBase.js": {
+            "types": "./dist/components/accordion/AccordionItemBase.d.ts",
+            "development": "./dist/components/accordion/AccordionItemBase.dev.js",
+            "default": "./dist/components/accordion/AccordionItemBase.js"
+        },
+        "./progress-bar/ProgressBarBase.js": {
+            "types": "./dist/components/progress-bar/ProgressBarBase.d.ts",
+            "development": "./dist/components/progress-bar/ProgressBarBase.dev.js",
+            "default": "./dist/components/progress-bar/ProgressBarBase.js"
+        },
+        "./slider/SliderBase.js": {
+            "types": "./dist/components/slider/SliderBase.d.ts",
+            "development": "./dist/components/slider/SliderBase.dev.js",
+            "default": "./dist/components/slider/SliderBase.js"
+        },
+        "./slider/SliderHandle.js": {
+            "types": "./dist/components/slider/SliderHandle.d.ts",
+            "development": "./dist/components/slider/SliderHandle.dev.js",
+            "default": "./dist/components/slider/SliderHandle.js"
+        },
+        "./slider/HandleController.js": {
+            "types": "./dist/components/slider/HandleController.d.ts",
+            "development": "./dist/components/slider/HandleController.dev.js",
+            "default": "./dist/components/slider/HandleController.js"
+        }
+    },
+    "files": [
+        "dist",
+        "src"
+    ],
+    "scripts": {
+        "build": "rm -rf dist && tsc --outDir dist/tsc-out && node scripts/build.js && node scripts/post-build.js",
+        "build:watch": "tsc --watch"
+    },
+    "dependencies": {
+        "@internationalized/number": "^3.2.0",
+        "@lit-labs/observers": "^2.0.2",
+        "@spectrum-web-components/base": "workspace:*",
+        "@spectrum-web-components/reactive-controllers": "workspace:*",
+        "@spectrum-web-components/shared": "workspace:*"
+    },
+    "devDependencies": {
+        "@web/test-runner": "^0.18.0",
+        "esbuild": "^0.21.0",
+        "typescript": "^5.3.3"
+    }
+}

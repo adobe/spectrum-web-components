@@ -42,6 +42,12 @@ export abstract class SliderBase extends SizedMixin(
         validSizes: ['s', 'm', 'l', 'xl'],
     }
 ) {
+    /**
+     * Tag name to use when creating slider handle elements.
+     * Must be implemented by classes extending SliderBase.
+     */
+    static sliderHandleTagname: string;
+
     // Controllers
     public handleController: HandleController;
     private languageResolver: LanguageResolutionController;
@@ -115,7 +121,9 @@ export abstract class SliderBase extends SizedMixin(
     }
 
     public set editable(editable: boolean) {
-        if (editable === this.editable) return;
+        if (editable === this.editable) {
+            return;
+        }
         const oldValue = this.editable;
         this._editable = this.handleController.size < 2 ? editable : false;
         if (this.editable) {
@@ -178,8 +186,9 @@ export abstract class SliderBase extends SizedMixin(
         values
     ) => {
         const valueArray = [...values.values()];
-        if (valueArray.length === 2)
+        if (valueArray.length === 2) {
             return `${valueArray[0]} - ${valueArray[1]}`;
+        }
         return valueArray.join(', ');
     };
 

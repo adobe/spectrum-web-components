@@ -169,6 +169,7 @@ describe('ProgressBar', () => {
 
             await elementUpdated(el);
 
+            console.warn('>>> Verbose?', window.__swc.verbose);
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
             expect(

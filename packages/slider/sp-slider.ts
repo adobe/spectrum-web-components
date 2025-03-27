@@ -13,6 +13,9 @@ import './sp-slider-handle.js'; // codify sp-slider's implicit dependency on sp-
 import { Slider } from './src/Slider.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 
+// Set the tag name to use when creating slider handle elements
+Slider.sliderHandleTagname = 'sp-slider-handle';
+
 defineElement('sp-slider', Slider);
 
 declare global {
