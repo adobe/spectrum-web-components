@@ -11,7 +11,7 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "tools/theme"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/theme",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
