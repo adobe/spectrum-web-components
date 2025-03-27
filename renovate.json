@@ -8,11 +8,7 @@
     "packageRules": [
         {
             "matchPackageNames": ["@spectrum-css/*"],
-            "labels": ["Spectrum CSS"],
-            "postUpgradeTasks": {
-                "commands": ["yarn ci"],
-                "executionMode": "branch"
-            }
+            "labels": ["Spectrum CSS"]
         }
     ]
 }
