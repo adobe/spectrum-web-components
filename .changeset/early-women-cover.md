@@ -1,4 +1,5 @@
 ---
+'@spectrum-web-components/progress-bar': patch
 '@spectrum-web-components/meter': patch
 '@spectrum-web-components/styles': patch
 ---
