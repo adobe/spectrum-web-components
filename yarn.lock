@@ -6775,13 +6775,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/accordion@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/accordion@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/accordion@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/accordion@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/0a1130fe21b27fdef9866726859073f3e96943948a7d8a28b636afbae730f0cdfb5ee13b934aa7cfd80a878bf8a2535d1dea5b9b90a0a88b09fa763e6f402d5a
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/9f1d78de42d510204935de0e08b33b32bf8a090f5ee0b94869f0a0e7c3859eb66b47da4fee080d6c79fc8f46a6b84faa5e2587b596813ad493ba768bbc8546bb
   languageName: node
   linkType: hard
 
@@ -7207,13 +7212,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/fieldlabel@npm:9.0.0-s2-foundations.16":
-  version: 9.0.0-s2-foundations.16
-  resolution: "@spectrum-css/fieldlabel@npm:9.0.0-s2-foundations.16"
+"@spectrum-css/fieldlabel@npm:10.1.0":
+  version: 10.1.0
+  resolution: "@spectrum-css/fieldlabel@npm:10.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/a18acdd1b10a513ca9f0f1b91ca21057a04d483db17f0e4322ee5aaab50d86240dbb40f79f87b21d6ded28d59ed68019715a36236453cc6403ae22bf103b32ce
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/cbec138c6e841c03dee15d81604ca625139ce7737077a2c1265bb622dabbc2b9db5b8c32ac919f9e4ae4f25635e345411e6e1e8effbaf7ae11211cfe2df1444c
   languageName: node
   linkType: hard
 
@@ -7699,7 +7709,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/accordion@workspace:packages/accordion"
   dependencies:
-    "@spectrum-css/accordion": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/accordion": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
     "@spectrum-web-components/icons-ui": "npm:1.4.0"
@@ -8209,7 +8219,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/field-label@workspace:packages/field-label"
   dependencies:
-    "@spectrum-css/fieldlabel": "npm:9.0.0-s2-foundations.16"
+    "@spectrum-css/fieldlabel": "npm:10.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
     "@spectrum-web-components/icons-ui": "npm:1.4.0"
