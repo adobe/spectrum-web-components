@@ -14,24 +14,15 @@ governing permissions and limitations under the License.
 :host {
     justify-content: flex-start;
     align-items: flex-start;
-    gap: var(
-        --mod-swatchgroup-spacing-regular,
-        var(--spectrum-swatchgroup-spacing-regular)
-    );
+    gap: var(--mod-swatchgroup-spacing-regular, var(--spectrum-swatchgroup-spacing-regular));
     flex-flow: wrap;
     display: inline-flex;
 }
 
 :host([density='compact']) {
-    gap: var(
-        --mod-swatchgroup-spacing-compact,
-        var(--spectrum-swatchgroup-spacing-compact)
-    );
+    gap: var(--mod-swatchgroup-spacing-compact, var(--spectrum-swatchgroup-spacing-compact));
 }
 
 :host([density='spacious']) {
-    gap: var(
-        --mod-swatchgroup-spacing-spacious,
-        var(--spectrum-swatchgroup-spacing-spacious)
-    );
+    gap: var(--mod-swatchgroup-spacing-spacious, var(--spectrum-swatchgroup-spacing-spacious));
 }

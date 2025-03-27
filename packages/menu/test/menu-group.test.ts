@@ -252,8 +252,9 @@ describe('Menu group', () => {
 
         expect(firstItem.getAttribute('aria-checked')).to.equal('true');
         expect(secondItem.getAttribute('aria-checked')).to.equal('false');
-
+        let change = oneEvent(el, 'change');
         secondItem.click();
+        await change;
         await elementUpdated(el);
         await elementUpdated(firstItem);
         await elementUpdated(secondItem);
@@ -263,8 +264,9 @@ describe('Menu group', () => {
         expect(secondItem.getAttribute('aria-checked')).to.equal('true');
         expect(el.value).to.equal('Second');
         expect(el.selectedItems.length).to.equal(1);
-
+        change = oneEvent(el, 'change');
         inheritItem1.click();
+        await change;
         await elementUpdated(el);
         await elementUpdated(inheritItem1);
         await elementUpdated(secondItem);
@@ -275,8 +277,9 @@ describe('Menu group', () => {
         expect(inheritItem1.getAttribute('aria-checked')).to.equal('true');
         expect(el.value).to.equal('Inherit1');
         expect(el.selectedItems.length).to.equal(1);
-
+        change = oneEvent(el, 'change');
         noneItem2.click();
+        await change;
         await elementUpdated(el);
         await elementUpdated(noneGroup);
         await elementUpdated(noneItem2);
@@ -284,8 +287,9 @@ describe('Menu group', () => {
         expect(noneItem2.selected, 'none item not selected').to.be.false;
         expect(el.value).to.equal('Inherit1');
         expect(el.selectedItems.length).to.equal(1);
-
+        change = oneEvent(el, 'change');
         singleItem2.click();
+        await change;
         await elementUpdated(singleGroup);
         await elementUpdated(singleItem1);
         await elementUpdated(singleItem2);
@@ -298,8 +302,9 @@ describe('Menu group', () => {
         expect(el.selectedItems.length).to.equal(1);
         //expect(singleGroup.value).to.equal('Inherit1')
         expect(singleGroup.selectedItems.length).to.equal(1);
-
+        change = oneEvent(el, 'change');
         multiItem2.click();
+        await change;
         await elementUpdated(el);
         await elementUpdated(multiItem2);
         expect(multiItem1.selected).to.be.true;

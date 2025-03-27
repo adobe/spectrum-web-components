@@ -3,5 +3,17 @@
     "extends": ["config:recommended"],
     "timezone": "America/Los_Angeles",
     "schedule": ["after 12pm on thursday"],
-    "semanticCommitScope": ""
+    "semanticCommitScope": "",
+    "labels": ["dependencies"],
+    "packageRules": [
+        {
+            "matchPackageNames": ["@spectrum-css/*"],
+            "labels": ["Spectrum CSS"],
+            "postUpgradeTasks": {
+                "commands": ["yarn build"],
+                "executionMode": "branch",
+                "fileFilters": ["packages/*/src/*.css", "tools/**/*.css"]
+            }
+        }
+    ]
 }

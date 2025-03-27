@@ -47,6 +47,8 @@ import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+
 import '../../../projects/story-decorator/src/types.js';
 
 import { Button } from '@spectrum-web-components/button';
@@ -1612,6 +1614,51 @@ export const triggeredByOptimization = (): TemplateResult => {
     `;
 };
 
+export const pickerInDialog = (): TemplateResult => {
+    return html`
+        <sp-button variant="primary" id="mybutton">Button popover</sp-button>
+        <sp-overlay trigger="mybutton@click" type="modal" placement="bottom">
+            <sp-popover tip>
+                <sp-dialog no-divider>
+                    <sp-field-label for="picker-value">
+                        Open picker, then try clicking outside to close it:
+                    </sp-field-label>
+                    <sp-picker
+                        label="Select a Country with a very long label, too long in fact"
+                        value="item-2"
+                        id="picker-value"
+                    >
+                        <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                        <sp-menu-item value="item-2">
+                            Select inverse
+                        </sp-menu-item>
+                        <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                        <sp-menu-item value="item-4">
+                            Select and mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item value="item-5">
+                            Save selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled value="item-6">
+                            Make work path
+                        </sp-menu-item>
+                    </sp-picker>
+                </sp-dialog>
+            </sp-popover>
+        </sp-overlay>
+    `;
+};
+
+pickerInDialog.swc_vrt = {
+    skip: true,
+};
+
+pickerInDialog.args = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
 export const disabledOverlayTrigger = (): TemplateResult => {
     return html`
         ${storyStyles}
@@ -1713,4 +1760,23 @@ export const disabledOverlayTrigger = (): TemplateResult => {
 
 disabledOverlayTrigger.swc_vrt = {
     skip: true,
+};
+
+export const WithInteractiveContent = (): TemplateResult => {
+    return html`
+        <div>
+            <sp-button id="trigger">Open Overlay</sp-button>
+            <sp-overlay trigger="trigger@click" type="auto" placement="bottom">
+                <sp-popover dialog>
+                    <p>
+                        My slider in overlay element:
+                        <sp-slider
+                            label="Slider Label - Editable"
+                            editable
+                        ></sp-slider>
+                    </p>
+                </sp-popover>
+            </sp-overlay>
+        </div>
+    `;
 };
