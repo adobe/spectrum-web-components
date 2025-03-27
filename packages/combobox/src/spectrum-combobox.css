@@ -54,7 +54,7 @@ governing permissions and limitations under the License.
     --mod-textfield-text-color-disabled: var(--mod-combobox-font-color-disabled);
     --mod-textfield-border-width: var(--mod-combobox-border-width, var(--spectrum-combobox-border-width));
     --mod-textfield-border-color: var(--mod-combobox-border-color-default, var(--spectrum-combobox-border-color-default));
-    --mod-textfield-border-color-disabled: var(--mod-combobox-border-color-disabled);
+    --mod-textfield-border-color-disabled: var(--mod-combobox-border-color-disabled, var(--spectrum-combobox-border-color-disabled));
     --mod-textfield-border-color-focus: var(--mod-combobox-border-color-focus, var(--spectrum-combobox-border-color-focus));
     --mod-textfield-border-color-focus-hover: var(--mod-combobox-border-color-focus-hover, var(--spectrum-combobox-border-color-focus-hover));
     --mod-textfield-border-color-hover: var(--mod-combobox-border-color-hover, var(--spectrum-combobox-border-color-hover));
@@ -70,12 +70,12 @@ governing permissions and limitations under the License.
     --mod-picker-button-background-color: var(--mod-combobox-background-color-default);
     --mod-picker-button-background-color-disabled: var(--mod-combobox-background-color-disabled);
     --mod-picker-button-font-color-disabled: var(--mod-combobox-font-color-disabled);
+    --mod-picker-button-border-color-disabled: var(--mod-combobox-border-color-disabled, var(--spectrum-combobox-border-color-disabled));
     --spectrum-combobox-readonly-input-background-color: var(--spectrum-gray-50);
-    --spectrum-combobox-readonly-input-border-color: var(--spectrum-gray-500);
     --spectrum-combobox-readonly-border-color-invalid-default: var(--spectrum-negative-border-color-default);
     --spectrum-combobox-readonly-background-color-disabled: var(--spectrum-disabled-background-color);
     --spectrum-combobox-readonly-text-color-disabled: var(--spectrum-disabled-content-color);
-    --spectrum-combobox-border-color-disabled: var(--spectrum-disabled-border-color);
+    --spectrum-combobox-readonly-border-color-disabled: var(--spectrum-disabled-border-color);
 }
 
 :host,
@@ -141,6 +141,7 @@ governing permissions and limitations under the License.
     --spectrum-combobox-spacing-inline-start-edge-to-text: var(--spectrum-field-edge-to-text-quiet);
     --spectrum-combobox-spacing-label-to-combobox: var(--spectrum-field-label-to-component-quiet-medium);
     --spectrum-combobox-button-inline-offset: calc(var(--mod-combobox-block-size, var(--spectrum-combobox-block-size)) / 2 - var(--mod-combobox-icon-size, var(--spectrum-combobox-icon-size)) / 2);
+    --mod-textfield-border-color-disabled: var(--mod-combobox-border-color-disabled, initial);
     --mod-picker-button-background-color-quiet: transparent;
     --mod-picker-button-border-color-quiet: transparent;
 }
@@ -208,8 +209,9 @@ governing permissions and limitations under the License.
 
 :host([disabled]) .is-readOnly:not(.spectrum-Combobox--quiet) #input:read-only {
     background-color: var(--mod-textfield-background-color-disabled, var(--spectrum-combobox-readonly-background-color-disabled));
-    color: var(--highcontrast-textfield-text-color-disabled, var(--mod-textfield-text-color-disabled, var(--spectrum-combobox-readonly-text-color-disabled)));
     border-color: #0000;
+    border-color: var(--mod-combobox-readonly-border-color-disabled, var(--spectrum-combobox-readonly-border-color-disabled, transparent));
+    color: var(--highcontrast-textfield-text-color-disabled, var(--mod-textfield-text-color-disabled, var(--spectrum-combobox-readonly-text-color-disabled)));
 }
 
 .progress-circle {
@@ -393,7 +395,7 @@ governing permissions and limitations under the License.
 
 :host([quiet][disabled]) #textfield.is-readOnly #input:read-only {
     color: var(--highcontrast-textfield-text-color-disabled, var(--mod-textfield-text-color-disabled, var(--spectrum-combobox-readonly-text-color-disabled)));
-    border-color: var(--mod-textfield-border-color-disabled, var(--spectrum-combobox-border-color-disabled));
+    border-color: var(--mod-textfield-border-color-disabled, var(--spectrum-combobox-readonly-border-color-disabled));
 }
 
 :host([quiet]) #input {
