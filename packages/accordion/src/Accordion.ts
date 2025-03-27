@@ -23,6 +23,7 @@ import {
     queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
+import { css, CSSResultArray, html, PropertyValues, SizedMixin, SpectrumElement, TemplateResult, } from '@spectrum-web-components/base';
 
 import { AccordionItem } from './AccordionItem.js';
 
