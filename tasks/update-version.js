@@ -25,30 +25,24 @@ if (!existsSync(versionFile)) {
 }
 
 try {
-    gv.check(
-        versionFile,
-        function (error, isByGv) {
-            if (error) {
-                throw error;
-            }
-            console.log('isByGenversion', isByGv, versionFile);
-            if (isByGv) {
-                gv.generate(
-                    versionFile,
-                    {
-                        useSemicolon: true,
-                        useEs6Syntax: true,
-                    },
-                    (error) => {
-                        if (error) {
-                            throw error;
-                        }
-                        console.log('Generated version file with ES6 export.');
-                    }
-                );
-            }
+    gv.check(versionFile, function (error, isByGv) {
+        if (error) {
+            throw error;
         }
-    );
+        console.log('isByGenversion', isByGv, versionFile);
+        if (isByGv) {
+            gv.generate(
+                versionFile,
+                { useSemicolon: true, useEs6Syntax: true },
+                (error) => {
+                    if (error) {
+                        throw error;
+                    }
+                    console.log('Generated version file with ES6 export.');
+                }
+            );
+        }
+    });
 } catch (error) {
     console.warn('Warning: Error updating version.js:', error.message);
     process.exit(0);
