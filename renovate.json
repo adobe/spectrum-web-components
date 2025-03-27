@@ -10,9 +10,8 @@
             "matchPackageNames": ["@spectrum-css/*"],
             "labels": ["Spectrum CSS"],
             "postUpgradeTasks": {
-                "commands": ["yarn build"],
-                "executionMode": "branch",
-                "fileFilters": ["packages/*/src/*.css", "tools/**/*.css"]
+                "commands": ["yarn ci"],
+                "executionMode": "branch"
             }
         }
     ]
