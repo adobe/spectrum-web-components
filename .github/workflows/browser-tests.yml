@@ -27,6 +27,16 @@ jobs:
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
 
+            - name: Check ChromeDriver Version
+              if: matrix.browser == 'chrome'
+              run: |
+                  echo "Checking ChromeDriver version..."
+                  npx chromedriver --version
+                  echo "Checking Chrome version..."
+                  google-chrome --version
+                  echo "Checking tachometer chromedriver version..."
+                  yarn tachometer --version
+
             - name: Tachometer the changed packages
               run: yarn test:changed --browser=${{ matrix.browser }}
 
