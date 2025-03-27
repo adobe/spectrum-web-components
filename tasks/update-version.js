@@ -11,15 +11,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { execSync } from 'child_process';
 import { existsSync } from 'fs';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
+import gv from 'genversion';
 
-const versionFile = resolve(
-    dirname(fileURLToPath(import.meta.url)),
-    '../tools/base/src/version.js'
-);
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const versionFile = resolve(__dirname, '../tools/base/src/version.js');
 
 if (!existsSync(versionFile)) {
     console.warn(`Warning: Version file not found at ${versionFile}`);
@@ -27,10 +25,30 @@ if (!existsSync(versionFile)) {
 }
 
 try {
-    execSync(`yarn genversion --es6 --semi ${versionFile}`, {
-        stdio: 'inherit',
-    });
-    console.log('Successfully updated version.js');
+    gv.check(
+        versionFile,
+        function (error, isByGv) {
+            if (error) {
+                throw error;
+            }
+            console.log('isByGenversion', isByGv, versionFile);
+            if (isByGv) {
+                gv.generate(
+                    versionFile,
+                    {
+                        useSemicolon: true,
+                        useEs6Syntax: true,
+                    },
+                    (error) => {
+                        if (error) {
+                            throw error;
+                        }
+                        console.log('Generated version file with ES6 export.');
+                    }
+                );
+            }
+        }
+    );
 } catch (error) {
     console.warn('Warning: Error updating version.js:', error.message);
     process.exit(0);
