@@ -33,9 +33,7 @@
             "development": "./src/AccordionItem.dev.js",
             "default": "./src/AccordionItem.js"
         },
-        "./src/accordion-item-overrides.css.js": "./src/accordion-item-overrides.css.js",
         "./src/accordion-item.css.js": "./src/accordion-item.css.js",
-        "./src/accordion-overrides.css.js": "./src/accordion-overrides.css.js",
         "./src/accordion.css.js": "./src/accordion.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -75,7 +73,7 @@
         "@spectrum-web-components/shared": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/accordion": "6.0.0-s2-foundations.16"
+        "@spectrum-css/accordion": "7.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

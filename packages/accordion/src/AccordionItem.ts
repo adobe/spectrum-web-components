@@ -19,7 +19,10 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import { when } from '@spectrum-web-components/base/src/directives.js';
+import {
+    classMap,
+    when,
+} from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
@@ -27,36 +30,28 @@ import styles from './accordion-item.css.js';
 
 const chevronIcon: Record<string, () => TemplateResult> = {
     s: () => html`
-        <span class="iconContainer">
-            <sp-icon-chevron100
-                class="indicator spectrum-UIIcon-ChevronRight75"
-                slot="icon"
-            ></sp-icon-chevron100>
-        </span>
+        <sp-icon-chevron100
+            class="spectrum-Accordion-itemIndicator spectrum-UIIcon-ChevronRight75"
+            slot="icon"
+        ></sp-icon-chevron100>
     `,
     m: () => html`
-        <span class="iconContainer">
-            <sp-icon-chevron100
-                class="indicator spectrum-UIIcon-ChevronRight100"
-                slot="icon"
-            ></sp-icon-chevron100>
-        </span>
+        <sp-icon-chevron100
+            class="spectrum-Accordion-itemIndicator spectrum-UIIcon-ChevronRight100"
+            slot="icon"
+        ></sp-icon-chevron100>
     `,
     l: () => html`
-        <span class="iconContainer">
-            <sp-icon-chevron100
-                class="indicator spectrum-UIIcon-ChevronRight200"
-                slot="icon"
-            ></sp-icon-chevron100>
-        </span>
+        <sp-icon-chevron100
+            class="spectrum-Accordion-itemIndicator spectrum-UIIcon-ChevronRight200"
+            slot="icon"
+        ></sp-icon-chevron100>
     `,
     xl: () => html`
-        <span class="iconContainer">
-            <sp-icon-chevron100
-                class="indicator spectrum-UIIcon-ChevronRight300"
-                slot="icon"
-            ></sp-icon-chevron100>
-        </span>
+        <sp-icon-chevron100
+            class="spectrum-Accordion-itemIndicator spectrum-UIIcon-ChevronRight300"
+            slot="icon"
+        ></sp-icon-chevron100>
     `,
 };
 
@@ -108,25 +103,44 @@ export class AccordionItem extends SizedMixin(Focusable, {
     }
 
     protected renderChevronIcon = (): TemplateResult => {
-        return chevronIcon[this.size || 'm']();
+        return html`
+            <span class="spectrum-Accordion-itemIconContainer">
+                ${chevronIcon[this.size || 'm']()}
+            </span>
+        `;
     };
 
     protected override render(): TemplateResult {
         return html`
-            <h3 id="heading">
-                ${when(this.size, this.renderChevronIcon)}
-                <button
-                    id="header"
-                    @click=${this.onClick}
-                    aria-expanded=${this.open}
-                    aria-controls="content"
-                    ?disabled=${this.disabled}
+            <div
+                class=${classMap({
+                    'spectrum-Accordion-item': true,
+                    'is-open': this.open && !this.disabled,
+                    'is-disabled': this.disabled,
+                })}
+                role="presentation"
+            >
+                <h3 id="heading" class="spectrum-Accordion-itemHeading">
+                    <button
+                        id="header"
+                        class="spectrum-Accordion-itemHeader"
+                        @click=${this.onClick}
+                        aria-expanded=${this.open ? 'true' : 'false'}
+                        aria-controls="content"
+                        ?disabled=${this.disabled}
+                    >
+                        ${this.label}
+                    </button>
+                    ${when(this.size, this.renderChevronIcon)}
+                </h3>
+                <div
+                    id="content"
+                    role="region"
+                    aria-labelledby="header"
+                    class="spectrum-Accordion-itemContent"
                 >
-                    ${this.label}
-                </button>
-            </h3>
-            <div id="content" role="region" aria-labelledby="header">
-                <slot></slot>
+                    <slot></slot>
+                </div>
             </div>
         `;
     }
