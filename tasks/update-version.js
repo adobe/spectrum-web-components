@@ -22,8 +22,8 @@ const versionFile = resolve(
 );
 
 if (!existsSync(versionFile)) {
-    console.error(`Error: Version file not found at ${versionFile}`);
-    process.exit(1);
+    console.warn(`Warning: Version file not found at ${versionFile}`);
+    process.exit(0);
 }
 
 try {
@@ -32,6 +32,6 @@ try {
     });
     console.log('Successfully updated version.js');
 } catch (error) {
-    console.error('Error updating version.js:', error.message);
-    process.exit(1);
+    console.warn('Warning: Error updating version.js:', error.message);
+    process.exit(0);
 }
