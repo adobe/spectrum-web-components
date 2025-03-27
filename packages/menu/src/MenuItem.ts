@@ -482,7 +482,6 @@ export class MenuItem extends LikeAnchor(
     handleMouseover(event: MouseEvent): void {
         const target = event.target as HTMLElement;
         if (target === this) {
-            this.focus();
             this.focused = false;
         }
     }
@@ -558,6 +557,7 @@ export class MenuItem extends LikeAnchor(
             delete this.leaveTimeout;
             return;
         }
+        this.focus();
         this.openOverlay();
     }
 
