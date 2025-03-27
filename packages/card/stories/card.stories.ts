@@ -20,16 +20,29 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/link/sp-link.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export default {
     component: 'sp-card',
     title: 'Card',
     args: {
         horizontal: false,
+        toggles: false,
     },
     argTypes: {
         horizontal: {
             name: 'horizontal',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        toggles: {
+            name: 'toggles',
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
@@ -44,6 +57,7 @@ export default {
 
 export interface StoryArgs {
     horizontal?: boolean;
+    toggles?: boolean;
     size?: 's' | 'm';
     onClick?: ((event: Event) => void) | undefined;
 }
@@ -54,6 +68,7 @@ export const Default = (args: StoryArgs): TemplateResult => {
             heading="Card Heading"
             subheading="JPG"
             ?horizontal=${args.horizontal}
+            ?toggles=${args.toggles}
             style="width: 200px;"
         >
             <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
@@ -69,13 +84,12 @@ export const SmallQuiet = (args: StoryArgs): TemplateResult => {
         <sp-card
             heading="Card Heading"
             subheading="JPG"
-            toggles
+            ?toggles=${args.toggles !== undefined ? args.toggles : true}
             ?horizontal=${args.horizontal}
             style="width: 200px;"
             href="https://opensource.adobe.com/spectrum-web-components"
             variant="quiet"
             size="s"
-            toggles
             @click=${(event: Event) => {
                 const composedTarget = event.composedPath()[0] as HTMLElement;
                 if (composedTarget.id !== 'like-anchor') return;
@@ -116,7 +130,7 @@ export const href = (args: StoryArgs): TemplateResult => {
         <sp-card
             heading="Card Heading"
             subheading="JPG"
-            toggles
+            ?toggles=${args.toggles !== undefined ? args.toggles : true}
             ?horizontal=${args.horizontal}
             style="width: 200px;"
             href="https://opensource.adobe.com/spectrum-web-components"
@@ -160,6 +174,7 @@ export const actions = (args: StoryArgs): TemplateResult => {
             heading="Card Heading"
             subheading="JPG"
             ?horizontal=${args.horizontal}
+            ?toggles=${args.toggles}
             style="width: 200px;"
         >
             <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
@@ -189,6 +204,7 @@ export const Gallery = (args: StoryArgs): TemplateResult => {
             heading="Card Heading"
             subheading="JPG"
             ?horizontal=${args.horizontal}
+            ?toggles=${args.toggles}
         >
             <img
                 slot="preview"
@@ -207,6 +223,7 @@ export const noPreviewImage = (args: StoryArgs): TemplateResult => {
             heading="Card Heading"
             subheading="No preview image"
             ?horizontal=${args.horizontal}
+            ?toggles=${args.toggles}
             style="width: 200px;"
         >
             <div slot="footer">Footer</div>
@@ -222,6 +239,7 @@ export const Quiet = (args: StoryArgs): TemplateResult => {
                 heading="Card Heading"
                 subheading="JPG"
                 ?horizontal=${args.horizontal}
+                ?toggles=${args.toggles}
                 style="width: 208px; height: 264px"
             >
                 <img src=${portrait} alt="Demo Graphic" slot="preview" />
@@ -239,6 +257,7 @@ export const quietFile = (args: StoryArgs): TemplateResult => {
                 subheading="JPG"
                 asset="file"
                 ?horizontal=${args.horizontal}
+                ?toggles=${args.toggles}
                 style="width: 208px; height: 264px"
             >
                 <img src=${portrait} alt="Demo Graphic" slot="preview" />
@@ -257,6 +276,7 @@ export const quietFolder = (args: StoryArgs): TemplateResult => {
                 subheading="JPG"
                 asset="folder"
                 ?horizontal=${args.horizontal}
+                ?toggles=${args.toggles}
                 style="width: 208px; height: 264px"
             >
                 <img src=${portrait} alt="Demo Graphic" slot="preview" />
@@ -275,6 +295,7 @@ export const quietActions = (args: StoryArgs): TemplateResult => {
                 heading="Card Heading"
                 subheading="JPG"
                 ?horizontal=${args.horizontal}
+                ?toggles=${args.toggles}
                 style="width: 208px; height: 264px"
             >
                 <img src=${portrait} alt="Demo Graphic" slot="preview" />
@@ -304,6 +325,7 @@ export const Horizontal = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-card
             ?horizontal=${args.horizontal}
+            ?toggles=${args.toggles}
             heading="Card Heading"
             subheading="JPG"
         >
@@ -322,6 +344,7 @@ export const horizontalWithHREF = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-card
             ?horizontal=${args.horizontal}
+            ?toggles=${args.toggles}
             heading="Card Heading"
             subheading="JPG"
             href="https://opensource.adobe.com/spectrum-web-components"
@@ -342,8 +365,9 @@ export const smallQuiet = (args: StoryArgs): TemplateResult => {
     return html`
         <div>
             <sp-card
-                size=${args.size}
+                size=${ifDefined(args.size)}
                 ?horizontal=${args.horizontal}
+                ?toggles=${args.toggles}
                 heading="Card Heading"
                 subheading="JPG"
                 variant="quiet"
@@ -389,6 +413,7 @@ export const SlottedHeading = (args: StoryArgs): TemplateResult => {
                 --spectrum-alias-single-line-width: 100%;
             "
             ?horizontal=${args.horizontal}
+            ?toggles=${args.toggles}
         >
             <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
             <sp-textfield
@@ -414,4 +439,34 @@ export const SlottedHeading = (args: StoryArgs): TemplateResult => {
             </sp-action-menu>
         </sp-card>
     `;
+};
+
+export const toggles = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-card
+            ?horizontal=${args.horizontal}
+            ?toggles=${args.toggles}
+            heading="Card Heading"
+            subheading="JPG"
+        >
+            <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
+            <sp-action-menu
+                label="More Actions"
+                slot="actions"
+                placement="bottom-end"
+                quiet
+            >
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+                <sp-menu-item>Feather...</sp-menu-item>
+                <sp-menu-item>Select and Mask...</sp-menu-item>
+                <sp-menu-divider></sp-menu-divider>
+                <sp-menu-item>Save Selection</sp-menu-item>
+                <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-action-menu>
+        </sp-card>
+    `;
+};
+toggles.args = {
+    toggles: true,
 };
