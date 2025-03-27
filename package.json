@@ -26,6 +26,7 @@
         "changeset-publish": "yarn prepublishOnly && yarn changeset version && yarn install && yarn lint:versions --fix && yarn update-version && yarn changeset publish --no-git-tag && yarn push-to-remote && yarn create-git-tag && yarn postpublish",
         "update-version": "node ./tasks/update-version.js",
         "chromatic": "chromatic --build-script-name storybook:build # note that --project-token must be set in your env variables",
+        "ci": "yarn build",
         "create-git-tag": "node --no-warnings tasks/create-git-tag.js",
         "custom-element-json": "node tasks/custom-element-json.js",
         "docs:analyze": "cem analyze --globs \"packages/**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --exclude \"**/icons/**\" --exclude \"**/elements/**\" --outdir projects/documentation --litelement",
