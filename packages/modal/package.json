@@ -11,13 +11,13 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/modal"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/modal",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "src/modal.css.js",
-    "module": "src/modal.css.js",
+    "main": "./src/modal.css.js",
+    "module": "./src/modal.css.js",
     "type": "module",
     "exports": {
         ".": "./src/modal-wrapper.css.js",
@@ -38,10 +38,16 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
-        "lit-html"
+        "lit-html",
+        "component",
+        "css"
     ],
     "dependencies": {
         "@spectrum-web-components/base": "1.4.0"
