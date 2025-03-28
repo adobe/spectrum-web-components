@@ -12,34 +12,112 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { execSync } from 'child_process';
+import { existsSync, readdirSync, readFileSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+/**
+ * Get package names from changeset files that don't exist in the main branch
+ * @returns {Array<string>} Array of package names without the @spectrum-web-components/ prefix
+ */
 export const getChangedPackages = () => {
-    let command;
+    let changedPackages = [];
+    const changesetDir = '.changeset';
 
     try {
-        // Execute the command to list changed packages since the last commit on origin/main
-        command = execSync(
-            'yarn changeset status --since origin/main --json'
+        // Check if .changeset directory exists
+        if (!existsSync(changesetDir)) {
+            console.log('No .changeset directory found');
+            return [];
+        }
+
+        // 1. Get list of changeset files in main branch
+        console.log('Fetching changeset files from main branch...');
+        let mainChangesetFiles = [];
+        try {
+            // Make sure main branch is available
+            execSync('git fetch origin main:main', { stdio: 'pipe' });
+
+            // Get list of changeset files in main
+            const mainChangesetOutput = execSync(
+                'git ls-tree -r --name-only main .changeset/',
+                { encoding: 'utf8' }
+            );
+
+            mainChangesetFiles = mainChangesetOutput
+                .split('\n')
+                .filter((file) => file.endsWith('.md'))
+                .map((file) => path.basename(file));
+
+            console.log(
+                `Found ${mainChangesetFiles.length} changeset files in main branch.`
+            );
+        } catch (gitError) {
+            console.warn(
+                `Warning: Could not get changeset files from main: ${gitError.message}`
+            );
+            mainChangesetFiles = [];
+        }
+
+        // 2. Get all .md files in the current .changeset directory
+        const currentChangesetFiles = readdirSync(changesetDir).filter(
+            (file) => file.endsWith('.md') && file.toLowerCase() !== 'readme.md'
+        );
+
+        console.log(
+            `Found ${currentChangesetFiles.length} changeset files in current branch.`
+        );
+
+        // 3. Filter out files that exist in main branch
+        const newChangesetFiles = currentChangesetFiles.filter(
+            (file) => !mainChangesetFiles.includes(file)
+        );
+
+        console.log(
+            `Found ${newChangesetFiles.length} new changeset files not in main branch.`
+        );
+
+        // 4. Process each new changeset file
+        const packages = new Set();
+
+        newChangesetFiles.forEach((file) => {
+            const filePath = path.join(changesetDir, file);
+            try {
+                const content = readFileSync(filePath, 'utf8');
+
+                // Extract package names using regex
+                const packageRegex =
+                    /'@spectrum-web-components\/([a-z0-9-]+)'\s*:\s*(major|minor|patch)/g;
+                let match;
+
+                while ((match = packageRegex.exec(content)) !== null) {
+                    const packageName = match[1];
+                    // Filter out icons packages and projects
+                    if (
+                        !packageName.startsWith('icons-') &&
+                        !packageName.includes('projects')
+                    ) {
+                        packages.add(packageName);
+                    }
+                }
+            } catch (readError) {
+                console.error(`Error reading ${file}:`, readError.message);
+            }
+        });
+
+        changedPackages = Array.from(packages);
+        console.log(
+            `Found ${changedPackages.length} changed packages in new changesets.`
         );
     } catch (error) {
-        console.log(error.message);
-        console.log(error.stdout.toString());
-        return [];
+        console.error('Error processing changeset files:', error.message);
     }
 
-    const packageList = JSON.parse(command.toString()).reduce((acc, item) => {
-        // Remove the '@spectrum-web-components/' prefix from the package name
-        const name = item.name.replace('@spectrum-web-components/', '');
-        if (
-            // Exclude packages located in the 'projects' directory as here are no benchmarks available
-            item.location.search('projects') === -1 &&
-            // Exclude packages that start with 'icons-' as they are long-running tests
-            !name.startsWith('icons-')
-        ) {
-            acc.push(name);
-        }
-        return acc;
-    }, []);
-
-    return packageList;
+    return changedPackages;
 };
+
+// Allow script to be run directly
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+    const packages = getChangedPackages();
+    console.log(JSON.stringify(packages, null, 2));
+}
