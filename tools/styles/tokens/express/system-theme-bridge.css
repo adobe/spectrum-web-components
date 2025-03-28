@@ -199,7 +199,6 @@
         --spectrum-negative-background-color-default
     );
     --system-alert-banner-font-color: var(--spectrum-white);
-    --system-asset-transition-duration: var(--spectrum-animation-duration-100);
     --system-asset-folder-background-color: var(--spectrum-gray-300);
     --system-asset-file-background-color: var(--spectrum-gray-50);
     --system-asset-icon-outline-color: var(--spectrum-gray-500);
