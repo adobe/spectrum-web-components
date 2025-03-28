@@ -12,6 +12,10 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-asset-folder-background: var(--highcontrast-asset-icon-background-color, var(--mod-asset-folder-background-color, var(--spectrum-asset-folder-background-color)));
+    --spectrum-asset-file-background: var(--highcontrast-asset-icon-background-color, var(--mod-asset-file-background-color, var(--spectrum-asset-file-background-color)));
+    --spectrum-asset-folder-outline: var(--mod-asset-icon-outline-color, var(--spectrum-asset-icon-outline-color));
+    --spectrum-asset-file-outline: var(--mod-asset-icon-outline-color, var(--spectrum-asset-icon-outline-color));
     inline-size: 100%;
     block-size: 100%;
     justify-content: center;
@@ -23,7 +27,7 @@ governing permissions and limitations under the License.
     max-inline-size: 100%;
     max-block-size: 100%;
     object-fit: contain;
-    transition: opacity var(--spectrum-asset-transition-duration);
+    transition: opacity var(--spectrum-animation-duration-100);
 }
 
 .file,
@@ -36,21 +40,23 @@ governing permissions and limitations under the License.
 }
 
 .folderBackground {
-    fill: var(--highcontrast-asset-folder-background-color, var(--mod-asset-folder-background-color, var(--spectrum-asset-folder-background-color)));
+    fill: var(--spectrum-asset-folder-background);
 }
 
 .fileBackground {
-    fill: var(--highcontrast-asset-file-background-color, var(--mod-asset-file-background-color, var(--spectrum-asset-file-background-color)));
+    fill: var(--spectrum-asset-file-background);
 }
 
-.fileOutline,
 .folderOutline {
-    fill: var(--mod-asset-icon-outline-color, var(--spectrum-asset-icon-outline-color));
+    fill: var(--spectrum-asset-folder-outline);
+}
+
+.fileOutline {
+    fill: var(--spectrum-asset-file-outline);
 }
 
 @media (forced-colors: active) {
     :host {
-        --highcontrast-asset-folder-background-color: currentColor;
-        --highcontrast-asset-file-background-color: currentColor;
+        --highcontrast-asset-icon-background-color: currentColor;
     }
 }
