@@ -61,7 +61,7 @@
         "@spectrum-web-components/base": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/asset": "6.0.1"
+        "@spectrum-css/asset": "7.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

@@ -6887,12 +6887,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/asset@npm:6.0.1":
-  version: 6.0.1
-  resolution: "@spectrum-css/asset@npm:6.0.1"
+"@spectrum-css/asset@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/asset@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14 || >=15"
-  checksum: 10c0/1314b9c0c07e3c001357f8372cdbd60a0391ca7a6205a67bc60096c14a797500afd357e84b7e6488b0de43b5cc09ae5679eeba2b51b5039ee4bce3d4f473da5b
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/fc6c81de545f4c2fd2d248b9f2bb6d32f6ac46dcba4376474de58af9ae35bd5df7c9f36edf30c4ddb22d0af56e55cbca3f30075ed5c34cb75ce2042a4d8e3ffb
   languageName: node
   linkType: hard
 
@@ -7833,7 +7836,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/asset@workspace:packages/asset"
   dependencies:
-    "@spectrum-css/asset": "npm:6.0.1"
+    "@spectrum-css/asset": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft
