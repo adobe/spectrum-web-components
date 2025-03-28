@@ -34,11 +34,6 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron50.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
 import '@spectrum-web-components/infield-button/sp-infield-button.js';
-import {
-    isAndroid,
-    isIOS,
-    isIPhone,
-} from '@spectrum-web-components/shared/src/platform.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
 import styles from './number-field.css.js';
 
@@ -380,11 +375,9 @@ export class NumberField extends TextfieldBase {
         const inputEvent = new Event('input', { bubbles: true, composed: true });
         this.inputElement.readOnly = true;
         this.inputElement.dispatchEvent(inputEvent);
-        this.inputElement.readOnly = false;
         this.indeterminate = false;
-        if (!isIOS() && !isAndroid()) {
-            this.focus();
-        }
+        this.focus();
+        this.inputElement.readOnly = false;
     }
 
     private increment(factor = 1): void {
