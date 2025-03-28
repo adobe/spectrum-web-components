@@ -37,7 +37,7 @@ export async function sendMouseTo(
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
 
-    await sendMouse({
+    return await sendMouse({
         steps: [
             {
                 type: type,
@@ -47,7 +47,7 @@ export async function sendMouseTo(
     });
 }
 
-export function sendMouseFrom(
+export async function sendMouseFrom(
     elementOrRect: HTMLElement | DOMRect,
     type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move'
 ): Promise<unknown> {
@@ -58,7 +58,7 @@ export function sendMouseFrom(
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height * 2;
 
-    return sendMouse({
+    return await sendMouse({
         steps: [
             {
                 type: type,
