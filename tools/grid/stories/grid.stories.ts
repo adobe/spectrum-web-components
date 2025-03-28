@@ -110,11 +110,10 @@ const handleChange = (event: Event & { currentTarget: Grid }): void => {
         !!event.currentTarget.selected.length ? 'flex' : 'none'
     );
     selected.textContent = '' + event.currentTarget.selected.length;
-    ids.textContent =
+    ids.textContent = `[${
         '' +
-        event.currentTarget.selected
-            .map((selection) => selection.id)
-            .join(', ');
+        event.currentTarget.selected.map((selection) => selection.id).join(', ')
+    }]`;
 };
 
 const handleActionBarChange = (event: Event): void => {
@@ -147,12 +146,16 @@ export const Default = (): TemplateResult => {
             aria-colcount=${1}
         ></sp-grid>
         <sp-action-bar variant="fixed">
-            <sp-checkbox @click=${handleActionBarChange} checked>
+            <sp-checkbox
+                style="margin-block-start: calc(var(--spectrum-checkbox-top-to-control-small) * -1);"
+                @click=${handleActionBarChange}
+                checked
+            >
                 <span class="selected"></span>
                 Selected
                 <span class="ids"></span>
             </sp-checkbox>
-            <sp-action-group quiet>
+            <sp-action-group quiet slot="buttons">
                 <sp-action-button>
                     <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
                 </sp-action-button>
