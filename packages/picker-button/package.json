@@ -65,7 +65,7 @@
         "@spectrum-web-components/shared": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/pickerbutton": "6.0.0-s2-foundations.16"
+        "@spectrum-css/pickerbutton": "6.1.2"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
