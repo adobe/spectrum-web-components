@@ -60,6 +60,11 @@ import { Grid } from '@spectrum-web-components/grid';
             width: 200,
             height: 300,
         };
+        grid.role = 'grid';
+        grid.ariaLabel = 'Select images';
+        grid.ariaMultiSelectable = 'true';
+        grid.ariaRowCount = `${grid.items.length}`;
+        grid.ariaColCount = 1;
 
         grid.renderItem = (
             item,
@@ -78,6 +83,10 @@ import { Grid } from '@spectrum-web-components/grid';
             card.value = `card-${index}`
             card.selected = selected;
             card.key = index;
+            card.role = 'row';
+            card.label = `Card Heading ${index}`;
+            card.ariaSelected = selected;
+            card.ariaRowIndex = `${index + 1}`;
             img.alt = '';
             img.slot = 'preview';
             img.src = `https://picsum.photos/id/${index}/200/300`;
@@ -118,6 +127,11 @@ import { Grid } from '@spectrum-web-components/grid';
             width: 200,
             height: 300,
         };
+        grid.role = 'grid';
+        grid.ariaLabel = 'Select images';
+        grid.ariaMultiSelectable = 'true';
+        grid.ariaRowCount = `${grid.items.length}`;
+        grid.ariaColCount = 1;
 
         grid.renderItem = (
             item,
@@ -136,6 +150,10 @@ import { Grid } from '@spectrum-web-components/grid';
             card.value = `card-${index}`
             card.selected = selected;
             card.key = index;
+            card.role = 'row';
+            card.label = `Card Heading ${index}`;
+            card.ariaSelected = selected;
+            card.ariaRowIndex = `${index + 1}`;
             img.alt = '';
             img.slot = 'preview';
             img.src = `https://picsum.photos/id/${index}/200/300`;
