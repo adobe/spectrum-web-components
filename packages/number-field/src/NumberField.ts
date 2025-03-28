@@ -293,10 +293,6 @@ export class NumberField extends TextfieldBase {
     private change!: (event: PointerEvent) => void;
     private safty!: number;
     private languageResolver = new LanguageResolutionController(this);
-    
-    // Properties for mobile keyboard prevention
-    private inStepperInteraction = false;
-    private stepperInteractionTimeout!: number;
 
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
@@ -431,16 +427,6 @@ export class NumberField extends TextfieldBase {
 
     protected override onFocus(): void {
         super.onFocus();
-        
-        if (this.inStepperInteraction && (isIOS() || isAndroid())) {
-            // Prevent keyboard using blur/focus technique
-            this.inputElement.blur();
-            requestAnimationFrame(() => {
-                // Re-focus without triggering keyboard
-                this.inputElement.focus({ preventScroll: true });
-            });
-        }
-        
         this._trackingValue = this.inputValue;
         this.keyboardFocused = !this.readonly && true;
         this.addEventListener('wheel', this.onScroll, { passive: false });
@@ -869,19 +855,19 @@ export class NumberField extends TextfieldBase {
 
     private preventKeyboardOnMobile(): void {
         if (isIOS() || isAndroid()) {
-            // Use a flag to track that we're in a stepper interaction
-            this.inStepperInteraction = true;
-            
-            // Still focus the element for accessibility
+            // Save current input value
+
+            // Temporarily set input to readonly to prevent keyboard
+            const previousReadOnly = this.inputElement.readOnly;
+            this.inputElement.readOnly = true;
+
+            // Focus the element (won't show keyboard due to readonly)
             this.focus();
-            
-            // Clear any existing timeout
-            clearTimeout(this.stepperInteractionTimeout);
-            
-            // Reset the flag after interactions have stopped
-            this.stepperInteractionTimeout = setTimeout(() => {
-                this.inStepperInteraction = false;
-            }, 1000) as unknown as number;
+
+            // Restore readonly state after a short delay
+            setTimeout(() => {
+                this.inputElement.readOnly = previousReadOnly;
+            }, 100);
         } else {
             this.focus();
         }
