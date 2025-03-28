@@ -5,10 +5,13 @@
     "schedule": ["after 12pm on thursday"],
     "semanticCommitScope": "",
     "labels": ["dependencies"],
+    "updateInternalDeps": true,
     "packageRules": [
         {
             "matchPackageNames": ["@spectrum-css/*"],
-            "labels": ["Spectrum CSS"]
+            "labels": ["dependencies", "Spectrum CSS"],
+            "reviewers": ["team:spectrum-css-maintainers"],
+            "separateMajorMinor": false
         }
     ]
 }
