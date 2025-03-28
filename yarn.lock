@@ -7429,16 +7429,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/progressbar@npm:5.0.0-s2-foundations.19":
-  version: 5.0.0-s2-foundations.19
-  resolution: "@spectrum-css/progressbar@npm:5.0.0-s2-foundations.19"
+"@spectrum-css/progressbar@npm:5.0.1":
+  version: 5.0.1
+  resolution: "@spectrum-css/progressbar@npm:5.0.1"
   peerDependencies:
     "@spectrum-css/fieldlabel": ">=8"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/tokens": ">=14 || >=15"
   peerDependenciesMeta:
     "@spectrum-css/fieldlabel":
       optional: true
-  checksum: 10c0/69018cd13d65b40edadee6b5f00cc3160f5c974181a68785db889fbc6259923c0d34e6a607ba9de2715b348203569e8831df1eedb5bda426b0287231372452da
+  checksum: 10c0/b822c219d905b10cec3debacf07f4921eb21c2696b1f1779dc02b96b9f1cdfa288cf8e60ced8aafd2ee67b73307fb03fc81a21466629929bd82852d6465a03fd
   languageName: node
   linkType: hard
 
@@ -8402,7 +8402,7 @@ __metadata:
   resolution: "@spectrum-web-components/meter@workspace:packages/meter"
   dependencies:
     "@spectrum-css/meter": "npm:0.0.0-s2-foundations.2"
-    "@spectrum-css/progressbar": "npm:5.0.0-s2-foundations.19"
+    "@spectrum-css/progressbar": "npm:5.0.1"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/field-label": "npm:1.4.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.4.0"
@@ -8508,7 +8508,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/progress-bar@workspace:packages/progress-bar"
   dependencies:
-    "@spectrum-css/progressbar": "npm:5.0.0-s2-foundations.19"
+    "@spectrum-css/progressbar": "npm:5.0.1"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/field-label": "npm:1.4.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.4.0"

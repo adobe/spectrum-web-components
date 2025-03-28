@@ -64,7 +64,7 @@
         "@spectrum-web-components/shared": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/progressbar": "5.0.0-s2-foundations.19"
+        "@spectrum-css/progressbar": "5.0.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
