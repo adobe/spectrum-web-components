@@ -26,6 +26,45 @@ import { TemplateResult } from '@spectrum-web-components/base';
 
 import { sendMouse } from './plugins/browser.js';
 
+export async function sendMouseTo(
+    elementOrRect: HTMLElement | DOMRect,
+    type: string = 'move'
+): Promise<void> {
+    const rect =
+        elementOrRect instanceof HTMLElement
+            ? elementOrRect.getBoundingClientRect()
+            : elementOrRect;
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    await sendMouse({
+        steps: [
+            {
+                type: type,
+                position: [x, y],
+            },
+        ],
+    });
+}
+
+export function sendMouseFrom(
+    element: HTMLElement,
+    type: string = 'move'
+): Promise<void> {
+    const rect = element.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height * 2;
+
+    return sendMouse({
+        steps: [
+            {
+                type: type,
+                position: [x, y],
+            },
+        ],
+    });
+}
+
 export async function testForLitDevWarnings(
     fixture: () => Promise<HTMLElement>
 ): Promise<void> {
