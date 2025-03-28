@@ -112,7 +112,7 @@
         "@rollup/plugin-json": "^6.0.1",
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@sindresorhus/slugify": "^2.1.1",
-        "@spectrum-web-components/eslint-plugin": "file:./linters/eslint",
+        "@spectrum-web-components/eslint-plugin": "1.4.0",
         "@storybook/addon-a11y": "^7.5.0",
         "@storybook/addon-designs": "^8.0.0",
         "@storybook/addon-essentials": "^7.5.0",
