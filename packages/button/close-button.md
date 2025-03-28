@@ -125,7 +125,7 @@ Events handlers for clicks and other user actions can be registered on a
 #### Autofocus
 
 The `autofocus` attribute sets focus on the `<sp-close-button>` when the component
-mounts. This is useful for setting focus to a specific sp-close-button when a
+mounts. This is useful for setting focus to a specific `sp-close-button` when a
 popover or dialog opens.
 
 ```html
