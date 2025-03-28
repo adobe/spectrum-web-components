@@ -113,3 +113,5 @@ chromatic.config.json
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versio;/
+
+.specstory
