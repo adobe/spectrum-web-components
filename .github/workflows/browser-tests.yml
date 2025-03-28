@@ -85,5 +85,6 @@ jobs:
                   script: |
                       const { buildTachometerComment } = await import('${{ github.workspace }}/tasks/build-tachometer-comment.js');
                       const body = buildTachometerComment();
+                      console.log(body);
                       const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Tachometer results', body);
