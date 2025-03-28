@@ -28,8 +28,8 @@ import { sendMouse } from './plugins/browser.js';
 
 export async function sendMouseTo(
     elementOrRect: HTMLElement | DOMRect,
-    type: string = 'move'
-): Promise<void> {
+    type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move'
+): Promise<unknown> {
     const rect =
         elementOrRect instanceof HTMLElement
             ? elementOrRect.getBoundingClientRect()
@@ -48,10 +48,13 @@ export async function sendMouseTo(
 }
 
 export function sendMouseFrom(
-    element: HTMLElement,
-    type: string = 'move'
-): Promise<void> {
-    const rect = element.getBoundingClientRect();
+    elementOrRect: HTMLElement | DOMRect,
+    type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move'
+): Promise<unknown> {
+    const rect =
+        elementOrRect instanceof HTMLElement
+            ? elementOrRect.getBoundingClientRect()
+            : elementOrRect;
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height * 2;
 
