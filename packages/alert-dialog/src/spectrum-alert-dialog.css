@@ -12,6 +12,26 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-alert-dialog-min-width: var(--spectrum-alert-dialog-minimum-width);
+    --spectrum-alert-dialog-max-width: var(--spectrum-alert-dialog-maximum-width);
+    --spectrum-alert-dialog-icon-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-alert-dialog-warning-icon-color: var(--spectrum-notice-visual-color);
+    --spectrum-alert-dialog-error-icon-color: var(--spectrum-negative-visual-color);
+    --spectrum-alert-dialog-title-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-alert-dialog-title-font-weight: var(--spectrum-heading-sans-serif-font-weight);
+    --spectrum-alert-dialog-title-font-style: var(--spectrum-heading-sans-serif-font-style);
+    --spectrum-alert-dialog-title-font-size: var(--spectrum-alert-dialog-title-size);
+    --spectrum-alert-dialog-title-line-height: var(--spectrum-heading-line-height);
+    --spectrum-alert-dialog-title-color: var(--spectrum-heading-color);
+    --spectrum-alert-dialog-body-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-alert-dialog-body-font-weight: var(--spectrum-body-sans-serif-font-weight);
+    --spectrum-alert-dialog-body-font-style: var(--spectrum-body-sans-serif-font-style);
+    --spectrum-alert-dialog-body-font-size: var(--spectrum-alert-dialog-description-size);
+    --spectrum-alert-dialog-body-line-height: var(--spectrum-line-height-100);
+    --spectrum-alert-dialog-body-color: var(--spectrum-body-color);
+    --spectrum-alert-dialog-title-to-divider: var(--spectrum-spacing-200);
+    --spectrum-alert-dialog-divider-to-description: var(--spectrum-spacing-300);
+    --spectrum-alert-dialog-title-to-icon: var(--spectrum-spacing-300);
     --mod-buttongroup-justify-content: flex-end;
     box-sizing: border-box;
     inline-size: fit-content;

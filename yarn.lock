@@ -6860,22 +6860,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/alertdialog@npm:3.0.0-s2-foundations.15":
-  version: 3.0.0-s2-foundations.15
-  resolution: "@spectrum-css/alertdialog@npm:3.0.0-s2-foundations.15"
+"@spectrum-css/alertdialog@npm:4.1.0":
+  version: 4.1.0
+  resolution: "@spectrum-css/alertdialog@npm:4.1.0"
   peerDependencies:
-    "@spectrum-css/buttongroup": ">=7"
-    "@spectrum-css/divider": ">=3"
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/modal": ">=5"
-    "@spectrum-css/tokens": ">=14"
-    "@spectrum-css/underlay": ">=4"
+    "@spectrum-css/buttongroup": ">=9.0.0 <10.0.0"
+    "@spectrum-css/divider": ">=5.0.0 <6.0.0"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/modal": ">=7.0.0 <8.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+    "@spectrum-css/underlay": ">=6.0.0 <7.0.0"
   peerDependenciesMeta:
     "@spectrum-css/buttongroup":
       optional: true
+    "@spectrum-css/divider":
+      optional: true
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/986c6b1c5282e9cf4bae218c6c2a0f88dc58a2f60da8823de83c21da69335b326202b19268880b4c990aa26ce4d7be8c45b323beecd81089811db6f2b985a2cf
+    "@spectrum-css/modal":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+    "@spectrum-css/underlay":
+      optional: true
+  checksum: 10c0/26f704146ebe316d85f099fc5965a15c9b9a203e95456258c5bbd87300d381f5b6ce76aa248461b3424b39f247eaf104dcc88431df83c9735c34105cd400f60d
   languageName: node
   linkType: hard
 
@@ -7811,7 +7819,7 @@ __metadata:
   resolution: "@spectrum-web-components/alert-dialog@workspace:packages/alert-dialog"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/alertdialog": "npm:3.0.0-s2-foundations.15"
+    "@spectrum-css/alertdialog": "npm:4.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
     "@spectrum-web-components/button-group": "npm:1.4.0"
