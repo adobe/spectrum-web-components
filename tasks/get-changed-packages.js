@@ -18,7 +18,7 @@ export const getChangedPackages = () => {
 
     try {
         // Execute the command to list changed packages since the last commit
-        command = execSync('yarn changeset status --since HEAD~1 --json', {
+        command = execSync('yarn changeset status --json', {
             encoding: 'utf8',
         });
     } catch (error) {
