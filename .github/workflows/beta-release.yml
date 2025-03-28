@@ -28,6 +28,8 @@ jobs:
                   yarn changeset pre enter beta
                   # Apply the changeset with specific beta tag
                   yarn changeset version
+                  yarn lint:versions --fix
+                  yarn update-version
 
             - name: Configure NPM for changeset publish
               env:

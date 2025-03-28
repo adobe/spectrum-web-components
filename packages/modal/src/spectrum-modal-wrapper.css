@@ -20,7 +20,7 @@ governing permissions and limitations under the License.
     visibility: hidden;
     pointer-events: none;
     z-index: 1;
-    transition: visibility 0s linear var(--mod-modal-transition-animation-duration, var(--spectrum-modal-transition-animation-duration));
+    transition: visibility 0s linear var(--mod-modal-transition-animation-duration, var(--spectrum-animation-duration-100));
     justify-content: center;
     align-items: center;
     display: flex;
