@@ -380,7 +380,7 @@ export class NumberField extends TextfieldBase {
             new Event('input', { bubbles: true, composed: true })
         );
         this.indeterminate = false;
-        this.preventKeyboardOnMobile();
+        this.focus();
     }
 
     private increment(factor = 1): void {
@@ -850,26 +850,6 @@ export class NumberField extends TextfieldBase {
         ) {
             // Normalize keyboard focus entry between unit and non-unit bearing Number Fields
             this.setSelectionRange(0, this.displayValue.length);
-        }
-    }
-
-    private preventKeyboardOnMobile(): void {
-        if (isIOS() || isAndroid()) {
-            // Save current input value
-
-            // Temporarily set input to readonly to prevent keyboard
-            const previousReadOnly = this.inputElement.readOnly;
-            this.inputElement.readOnly = true;
-
-            // Focus the element (won't show keyboard due to readonly)
-            this.focus();
-
-            // Restore readonly state after a short delay
-            setTimeout(() => {
-                this.inputElement.readOnly = previousReadOnly;
-            }, 100);
-        } else {
-            this.focus();
         }
     }
 }
