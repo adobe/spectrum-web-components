@@ -720,6 +720,9 @@ export class NumberField extends TextfieldBase {
                           class="buttons"
                           @focusin=${this.handleFocusin}
                           @focusout=${this.handleFocusout}
+                          @mousedown=${(e: MouseEvent) => {
+                              e.preventDefault();
+                          }}
                           ${streamingListener({
                               start: ['pointerdown', this.handlePointerdown],
                               streamInside: [
