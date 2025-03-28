@@ -12,26 +12,5 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-modal-confirm-exit-animation-delay: var(
-        --system-modal-confirm-exit-animation-delay
-    );
-    --spectrum-modal-fullscreen-margin: var(--system-modal-fullscreen-margin);
-    --spectrum-modal-max-height: var(--system-modal-max-height);
-    --spectrum-modal-max-width: var(--system-modal-max-width);
     --spectrum-modal-background-color: var(--system-modal-background-color);
-    --spectrum-modal-confirm-border-radius: var(
-        --system-modal-confirm-border-radius
-    );
-    --spectrum-modal-confirm-exit-animation-duration: var(
-        --system-modal-confirm-exit-animation-duration
-    );
-    --spectrum-modal-confirm-entry-animation-duration: var(
-        --system-modal-confirm-entry-animation-duration
-    );
-    --spectrum-modal-confirm-entry-animation-delay: var(
-        --system-modal-confirm-entry-animation-delay
-    );
-    --spectrum-modal-transition-animation-duration: var(
-        --system-modal-transition-animation-duration
-    );
 }
