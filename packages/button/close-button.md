@@ -1,6 +1,6 @@
 ## Overview
 
-An `<sp-close-button>` is a special extension of the `BaseButton` class that includes icons and styling for buttons used to close a modal or dialog.
+An `<sp-close-button>` is a special extension of the `ButtonBase` class that includes icons and styling for buttons used to close a modal or dialog.
 
 ### Usage
 
