@@ -6899,12 +6899,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/avatar@npm:8.0.0-s2-foundations.15":
-  version: 8.0.0-s2-foundations.15
-  resolution: "@spectrum-css/avatar@npm:8.0.0-s2-foundations.15"
+"@spectrum-css/avatar@npm:9.1.0":
+  version: 9.1.0
+  resolution: "@spectrum-css/avatar@npm:9.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/6b1b32c4cf806427ad4d948c418e7cdf14817e54ee846acb1e513d330a3aed860be4cca499eb2e5ee86bfa103bf7cb5bdd9ca01ef094834ae23457926bec6aae
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/e292004b55f185ec6c816e718273b897a9668c965959f4fe95314963520b303b70baa3d3ee981c0db49e101d1d3b3701f92bea909dd2ff1efa05d62149fdaeb4
   languageName: node
   linkType: hard
 
@@ -7845,7 +7848,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/avatar@workspace:packages/avatar"
   dependencies:
-    "@spectrum-css/avatar": "npm:8.0.0-s2-foundations.15"
+    "@spectrum-css/avatar": "npm:9.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
   languageName: unknown
