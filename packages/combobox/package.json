@@ -70,7 +70,7 @@
         "@spectrum-web-components/textfield": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/combobox": "4.0.0-s2-foundations.21"
+        "@spectrum-css/combobox": "4.1.2"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
