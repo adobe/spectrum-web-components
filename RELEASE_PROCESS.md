@@ -5,7 +5,7 @@ Users with permissions in the `@spectrum-web-components` organization on NPM can
 1. Merge all pull requests to be included in the release and wait for the `main` branch to show that it has completed the required CI jobs.
 2. `git checkout main && git fetch && git pull && git clean -dfX`
 3. Run `nvm use` assumes a Node Version Manager install, and confirm your on an operable version of Node.
-4. `yarn install`
+4. `yarn install && yarn build` to install all dependencies and build the pre-processed assets for publication.
 5. `npm whoami` ensure that you are logged in with the user account for the public NPM registry
 6. `yarn changeset-publish`
 7. Scan the version summary for any unexpected changes.
@@ -25,7 +25,7 @@ The docs site will publish automatically if the `#publish` string is included in
 
 If publishing fails with an error, check the [list of tags](https://github.com/adobe/spectrum-web-components/tags) to see if new tags have been released for your publishing attempt. If they were, run `yarn changeset-publish` again.
 
-### Publishing the docs site manually
+## Publishing the docs site manually
 
 Navigate to SWC's [Actions](https://github.com/adobe/spectrum-web-components/actions) and click the `Build & publish site` link under the _Workflows_ heading.
 
