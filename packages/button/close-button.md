@@ -96,11 +96,11 @@ The label for an `<sp-close-button>` element can be set via it's default slot or
 
 ### States
 
-In addition to the variant, `<sp-close-button>` elements support two different visual states, disabled and pending, which can be applied by adding the attribute `disabled` or `pending` respectively. All `<sp-close-button>` variants support these states.
+In addition to the variant, the `<sp-close-button>` element supports a disabled state, which can be applied by adding the attribute `disabled`.
 
 #### Disabled
 
-While disabled, `<sp-close-button>` elements will not respond to click events and will appear faded.
+While disabled, the `<sp-close-button>` element will not respond to click events and will appear faded.
 
 ```html
 <sp-button-group>
