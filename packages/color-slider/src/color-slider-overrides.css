@@ -11,20 +11,3 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-color-slider-handle-margin-block: var(
-        --system-color-slider-handle-margin-block
-    );
-    --spectrum-color-slider-border-color-rgba: var(
-        --system-color-slider-border-color-rgba
-    );
-    --spectrum-color-slider-checkerboard-size: var(
-        --system-color-slider-checkerboard-size
-    );
-    --spectrum-color-slider-checkerboard-dark-color: var(
-        --system-color-slider-checkerboard-dark-color
-    );
-    --spectrum-color-slider-checkerboard-light-color: var(
-        --system-color-slider-checkerboard-light-color
-    );
-}

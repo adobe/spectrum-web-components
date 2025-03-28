@@ -163,20 +163,18 @@ async function processComponent(componentPath) {
      */
     for await (const conversion of conversions) {
         // The default package file is index.css but index-base.css contains the base styles compatible with theme switching.
-        let sourcePath = require
-            .resolve(conversion.inPackage)
-            .replace('index.css', 'index-base.css');
+        let sourcePath = require.resolve(conversion.inPackage);
 
         let sourceCSS = '';
 
-        // try to find the index-base.css file
-        try {
-            sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
-        } catch (error) {
+        // Prefer the index-base.css file first if it exists
+        if (fs.existsSync(sourcePath.replace('index.css', 'index-base.css'))) {
             // if failed, try to find the index.css file
-            sourcePath = require.resolve(conversion.inPackage);
-            sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
+            sourcePath = sourcePath.replace('index.css', 'index-base.css');
         }
+
+        // Fetch the CSS
+        sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
 
         const outputPath = path.join(
             ...(Array.isArray(conversion.outPackage)
