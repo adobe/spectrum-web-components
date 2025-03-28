@@ -24,7 +24,7 @@ jobs:
             - name: Checkout PR branch
               uses: actions/checkout@v4
               with:
-                  fetch-depth: 0  # Get full history
+                  fetch-depth: 0 # Get full history
 
             - name: Fetch main branch
               run: |
@@ -85,6 +85,5 @@ jobs:
                   script: |
                       const { buildTachometerComment } = await import('${{ github.workspace }}/tasks/build-tachometer-comment.js');
                       const body = buildTachometerComment();
-                      console.log(body);
                       const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
                       commentOrUpdate(github, context, '## Tachometer results', body);
