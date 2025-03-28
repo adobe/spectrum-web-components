@@ -74,7 +74,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
      * should also be `aria-pressed='true'`
      */
     @property({ type: Boolean, reflect: true })
-    public selected = false;
+    public selected = true;
 
     /**
      * Whether to automatically manage the `selected`
