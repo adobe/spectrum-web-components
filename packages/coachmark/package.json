@@ -83,7 +83,7 @@
     },
     "devDependencies": {
         "@spectrum-css/coachindicator": "3.0.0-s2-foundations.16",
-        "@spectrum-css/coachmark": "8.0.0-s2-foundations.17"
+        "@spectrum-css/coachmark": "8.0.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
