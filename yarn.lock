@@ -248,7 +248,7 @@ __metadata:
     alex: "npm:^11.0.1"
     cem-plugin-module-file-extensions: "npm:^0.0.5"
     chromatic: "npm:^11.20.0"
-    chromedriver: "npm:^134.0.3"
+    chromedriver: "npm:^134.0.5"
     colors: "npm:^1.4.0"
     common-tags: "npm:^1.8.2"
     custom-elements-manifest: "npm:^2.0.0"
@@ -283,10 +283,11 @@ __metadata:
     node-fetch: "npm:^3.1.0"
     npm-run-all2: "npm:^6.0.0"
     patch-package: "npm:^8.0.0"
+    pinst: "npm:^3.0.0"
     prettier: "npm:^3.0.0"
     prettier-plugin-package: "npm:^1.3.0"
     pretty-bytes: "npm:^6.1.1"
-    pretty-quick: "npm:^4.0.0"
+    pretty-quick: "npm:^4.1.1"
     re-template-tag: "npm:^2.0.1"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
@@ -297,7 +298,7 @@ __metadata:
     stylelint: "npm:^16.15.0"
     stylelint-config-standard: "npm:^37.0.0"
     stylelint-header: "npm:^2.1.0"
-    tachometer: "npm:^0.7.0"
+    tachometer: "npm:^0.7.1"
     tar-stream: "npm:^3.0.0"
     terser: "npm:^4.8.1"
     typescript: "npm:^5.3.3"
@@ -6774,13 +6775,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/accordion@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/accordion@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/accordion@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/accordion@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/0a1130fe21b27fdef9866726859073f3e96943948a7d8a28b636afbae730f0cdfb5ee13b934aa7cfd80a878bf8a2535d1dea5b9b90a0a88b09fa763e6f402d5a
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/9f1d78de42d510204935de0e08b33b32bf8a090f5ee0b94869f0a0e7c3859eb66b47da4fee080d6c79fc8f46a6b84faa5e2587b596813ad493ba768bbc8546bb
   languageName: node
   linkType: hard
 
@@ -7096,20 +7102,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/combobox@npm:4.0.0-s2-foundations.21":
-  version: 4.0.0-s2-foundations.21
-  resolution: "@spectrum-css/combobox@npm:4.0.0-s2-foundations.21"
+"@spectrum-css/combobox@npm:4.1.2":
+  version: 4.1.2
+  resolution: "@spectrum-css/combobox@npm:4.1.2"
   peerDependencies:
-    "@spectrum-css/menu": ">=7"
-    "@spectrum-css/pickerbutton": ">=5"
-    "@spectrum-css/popover": ">=7"
-    "@spectrum-css/progresscircle": ">=3"
-    "@spectrum-css/textfield": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/menu": ">=9.0.0 <10.0.0"
+    "@spectrum-css/pickerbutton": ">=6.0.0 <7.0.0"
+    "@spectrum-css/popover": ">=8.0.0 <9.0.0"
+    "@spectrum-css/progresscircle": ">=5.0.0 <6.0.0"
+    "@spectrum-css/textfield": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
+    "@spectrum-css/menu":
+      optional: true
+    "@spectrum-css/pickerbutton":
+      optional: true
+    "@spectrum-css/popover":
+      optional: true
     "@spectrum-css/progresscircle":
       optional: true
-  checksum: 10c0/3837cf52d59a1c641d8020fca6f1592547ee68875a363439e1dd2ae150f268c388a163303d5751249c850e92886f27db4d7df83c37e7d0fe046633a4c4059426
+    "@spectrum-css/textfield":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/1410f56520c90c0204cb64f142fa6ec108eb201161fdea66cbebcc048873db3de49209fe725b6d5f29f20978365ed53ddde12815734ab3e0aa0743692d642b3c
   languageName: node
   linkType: hard
 
@@ -7206,13 +7222,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/fieldlabel@npm:9.0.0-s2-foundations.16":
-  version: 9.0.0-s2-foundations.16
-  resolution: "@spectrum-css/fieldlabel@npm:9.0.0-s2-foundations.16"
+"@spectrum-css/fieldlabel@npm:10.1.0":
+  version: 10.1.0
+  resolution: "@spectrum-css/fieldlabel@npm:10.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/a18acdd1b10a513ca9f0f1b91ca21057a04d483db17f0e4322ee5aaab50d86240dbb40f79f87b21d6ded28d59ed68019715a36236453cc6403ae22bf103b32ce
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/cbec138c6e841c03dee15d81604ca625139ce7737077a2c1265bb622dabbc2b9db5b8c32ac919f9e4ae4f25635e345411e6e1e8effbaf7ae11211cfe2df1444c
   languageName: node
   linkType: hard
 
@@ -7355,15 +7376,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/pickerbutton@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/pickerbutton@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/pickerbutton@npm:6.1.2":
+  version: 6.1.2
+  resolution: "@spectrum-css/pickerbutton@npm:6.1.2"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/menu": ">=7"
-    "@spectrum-css/popover": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/09c014918e5b26942d896631d356c12d6abafe3fc3f6dfc1c2461e7c5676f395de2718f8c39e9083e014551d7cdb023e94365e1645a8c80cbd37a8972e51ba13
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/menu": ">=9.0.0 <10.0.0"
+    "@spectrum-css/popover": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/menu":
+      optional: true
+    "@spectrum-css/popover":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/28f7804ac03f8fa7b55e2c4adc0a7577119d9cc28c6c1d103b81d74b785ba616f18e63abea9bacc4de959e46d87fd07fcf957ea7280d83f6485c55694eeb0f42
   languageName: node
   linkType: hard
 
@@ -7577,16 +7607,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/textfield@npm:8.0.0-s2-foundations.17":
-  version: 8.0.0-s2-foundations.17
-  resolution: "@spectrum-css/textfield@npm:8.0.0-s2-foundations.17"
+"@spectrum-css/textfield@npm:8.1.1":
+  version: 8.1.1
+  resolution: "@spectrum-css/textfield@npm:8.1.1"
   peerDependencies:
-    "@spectrum-css/helptext": ">=5"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/helptext": ">=7.0.0 <8.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/helptext":
       optional: true
-  checksum: 10c0/2c5db59e6a645671897cdb72937c4fde7645b16e9f6812d21953bd90b8ef5b6f46099e8ffd8614cdfcd340a548930e4d0ebf02f4ca6c869c270d2652efeda00f
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/1f54e4fb2bdc232283dfbe4d9b2ee855b26f15949817f99f7f44b2249d15900bcfdd2bcb029f68f1ba47a927deaeb8c2a17bc80a68f0b5f68df4cf7e560898b4
   languageName: node
   linkType: hard
 
@@ -7698,7 +7730,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/accordion@workspace:packages/accordion"
   dependencies:
-    "@spectrum-css/accordion": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/accordion": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
     "@spectrum-web-components/icons-ui": "npm:1.4.0"
@@ -8078,7 +8110,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/combobox@workspace:packages/combobox"
   dependencies:
-    "@spectrum-css/combobox": "npm:4.0.0-s2-foundations.21"
+    "@spectrum-css/combobox": "npm:4.1.2"
     "@spectrum-web-components/action-button": "npm:1.4.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
@@ -8208,7 +8240,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/field-label@workspace:packages/field-label"
   dependencies:
-    "@spectrum-css/fieldlabel": "npm:9.0.0-s2-foundations.16"
+    "@spectrum-css/fieldlabel": "npm:10.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
     "@spectrum-web-components/icons-ui": "npm:1.4.0"
@@ -8417,7 +8449,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/picker-button@workspace:packages/picker-button"
   dependencies:
-    "@spectrum-css/pickerbutton": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/pickerbutton": "npm:6.1.2"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
@@ -8671,7 +8703,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/textfield@workspace:packages/textfield"
   dependencies:
-    "@spectrum-css/textfield": "npm:8.0.0-s2-foundations.17"
+    "@spectrum-css/textfield": "npm:8.1.1"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/help-text": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
@@ -13807,9 +13839,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromedriver@npm:^134.0.3":
-  version: 134.0.3
-  resolution: "chromedriver@npm:134.0.3"
+"chromedriver@npm:^134.0.5":
+  version: 134.0.5
+  resolution: "chromedriver@npm:134.0.5"
   dependencies:
     "@testim/chrome-version": "npm:^1.1.4"
     axios: "npm:^1.7.4"
@@ -13820,7 +13852,7 @@ __metadata:
     tcp-port-used: "npm:^1.0.2"
   bin:
     chromedriver: bin/chromedriver
-  checksum: 10c0/2d522ed1ed7b28b2b5c6869c255040ef76044a4d0ad25e64af643ef6c9177554e9bde03c9864be3d15ba9c9eb4803bf6a2ddffdb531ae9d76ca9141f1001d391
+  checksum: 10c0/990da7589e607d369b8281b39dea215665b464d8edcb8fab449f1aa82b1512c12b6cf33cce8fe76627694e41d312fd63189cd93bc9c67ce08801c5edf950ad55
   languageName: node
   linkType: hard
 
@@ -20668,7 +20700,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ignore@npm:^5.0.0, ignore@npm:^5.1.4, ignore@npm:^5.2.0, ignore@npm:^5.2.4, ignore@npm:^5.3.0, ignore@npm:^5.3.1":
+"ignore@npm:^5.0.0, ignore@npm:^5.1.4, ignore@npm:^5.2.0, ignore@npm:^5.2.4, ignore@npm:^5.3.1":
   version: 5.3.1
   resolution: "ignore@npm:5.3.1"
   checksum: 10c0/703f7f45ffb2a27fb2c5a8db0c32e7dee66b33a225d28e8db4e1be6474795f606686a6e3bcc50e1aa12f2042db4c9d4a7d60af3250511de74620fbed052ea4cd
@@ -22349,7 +22381,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonwebtoken@npm:9.0.2":
+"jsonwebtoken@npm:9.0.2, jsonwebtoken@npm:^9.0.0":
   version: 9.0.2
   resolution: "jsonwebtoken@npm:9.0.2"
   dependencies:
@@ -22364,24 +22396,6 @@ __metadata:
     ms: "npm:^2.1.1"
     semver: "npm:^7.5.4"
   checksum: 10c0/d287a29814895e866db2e5a0209ce730cbc158441a0e5a70d5e940eb0d28ab7498c6bf45029cc8b479639bca94056e9a7f254e2cdb92a2f5750c7f358657a131
-  languageName: node
-  linkType: hard
-
-"jsonwebtoken@npm:^8.5.1":
-  version: 8.5.1
-  resolution: "jsonwebtoken@npm:8.5.1"
-  dependencies:
-    jws: "npm:^3.2.2"
-    lodash.includes: "npm:^4.3.0"
-    lodash.isboolean: "npm:^3.0.3"
-    lodash.isinteger: "npm:^4.0.4"
-    lodash.isnumber: "npm:^3.0.3"
-    lodash.isplainobject: "npm:^4.0.6"
-    lodash.isstring: "npm:^4.0.1"
-    lodash.once: "npm:^4.0.0"
-    ms: "npm:^2.1.1"
-    semver: "npm:^5.6.0"
-  checksum: 10c0/c5ad937b6fa23a230efa8ed8ca3c0da8ebfdd377bafc3e8432a11b03ef90e733400a00b26c0dfee47db44a2e64b88b154b57e9926a92990f98dd25aaed15006e
   languageName: node
   linkType: hard
 
@@ -27450,10 +27464,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picomatch@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "picomatch@npm:3.0.1"
-  checksum: 10c0/70ec738569f1864658378b7abdab8939d15dae0718c1df994eae3346fd33daf6a3c1ff4e0c1a0cd1e2c0319130985b63a2cff34d192f2f2acbb78aca76111736
+"picomatch@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "picomatch@npm:4.0.2"
+  checksum: 10c0/7c51f3ad2bb42c776f49ebf964c644958158be30d0a510efd5a395e8d49cb5acfed5b82c0c5b365523ce18e6ab85013c9ebe574f60305892ec3fa8eee8304ccc
   languageName: node
   linkType: hard
 
@@ -27531,6 +27545,15 @@ __metadata:
   bin:
     pino: bin.js
   checksum: 10c0/698eb2ebfcc4252da9d035fcf9c999bf27615b66ebc47f9b3d7e942750e50ebe38429e6457abcf8014d70125964ddf114e696cb8225b480d9930271708e3fb52
+  languageName: node
+  linkType: hard
+
+"pinst@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "pinst@npm:3.0.0"
+  bin:
+    pinst: bin.js
+  checksum: 10c0/abb1ed62ea2acb2207a7a860715bdb26ecbde74ede8fad5f6200194f3e22db25e2b7a49af05e5cc7fc05384709c651e0000323f0077d7239060c4b68c8acd428
   languageName: node
   linkType: hard
 
@@ -28724,22 +28747,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pretty-quick@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "pretty-quick@npm:4.0.0"
+"pretty-quick@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "pretty-quick@npm:4.1.1"
   dependencies:
-    execa: "npm:^5.1.1"
     find-up: "npm:^5.0.0"
-    ignore: "npm:^5.3.0"
+    ignore: "npm:^7.0.3"
     mri: "npm:^1.2.0"
-    picocolors: "npm:^1.0.0"
-    picomatch: "npm:^3.0.1"
-    tslib: "npm:^2.6.2"
+    picocolors: "npm:^1.1.1"
+    picomatch: "npm:^4.0.2"
+    tinyexec: "npm:^0.3.2"
+    tslib: "npm:^2.8.1"
   peerDependencies:
     prettier: ^3.0.0
   bin:
     pretty-quick: lib/cli.mjs
-  checksum: 10c0/f92f5f6a4c7b8e5c87c405d09f883e49d538bbb117a8d8623102f25900fc2d4617314d30c5320c6278fa9ac2da15e74076e08319a797a5d0028b43d6c5da591b
+  checksum: 10c0/c0362aff7d7679f58c044891047e7bbb03d461543aa30b1c57fef9400fa8c4d1daef4aa2b146a9c9072ce050c60860a88eb64b3fd722826dc56616f7cd1d6011
   languageName: node
   linkType: hard
 
@@ -32330,9 +32353,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tachometer@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "tachometer@npm:0.7.0"
+"tachometer@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "tachometer@npm:0.7.1"
   dependencies:
     ansi-escape-sequences: "npm:^6.0.1"
     command-line-args: "npm:^5.0.2"
@@ -32342,7 +32365,7 @@ __metadata:
     get-stream: "npm:^6.0.0"
     got: "npm:^12.1.0"
     jsonschema: "npm:^1.4.0"
-    jsonwebtoken: "npm:^8.5.1"
+    jsonwebtoken: "npm:^9.0.0"
     jstat: "npm:^1.9.2"
     koa: "npm:^2.11.0"
     koa-bodyparser: "npm:^4.2.1"
@@ -32364,7 +32387,7 @@ __metadata:
   bin:
     tach: bin/tach.js
     tachometer: bin/tach.js
-  checksum: 10c0/34f3995bface35b0154e3983b2bff749ed7566bec921596bd40d8fdfc572cbc5cd43a2cf1f8af8b623f5a80cc689d5dd850342039fbd09cc2a703cde0424f650
+  checksum: 10c0/85d63918b44d4b873de6e3c09a8268c3bbe20b4c76689e7bafa8f1450d043bd30ad889a74030f8973b4175892d879e4e27c2308d67346b0c1844c3b38442f658
   languageName: node
   linkType: hard
 
@@ -32772,7 +32795,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyexec@npm:^0.3.0":
+"tinyexec@npm:^0.3.0, tinyexec@npm:^0.3.2":
   version: 0.3.2
   resolution: "tinyexec@npm:0.3.2"
   checksum: 10c0/3efbf791a911be0bf0821eab37a3445c2ba07acc1522b1fa84ae1e55f10425076f1290f680286345ed919549ad67527d07281f1c19d584df3b74326909eb1f90
@@ -33069,7 +33092,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2, tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0, tslib@npm:^2.6.2":
+"tslib@npm:2, tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0, tslib@npm:^2.6.2, tslib@npm:^2.8.1":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
