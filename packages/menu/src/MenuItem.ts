@@ -555,6 +555,7 @@ export class MenuItem extends LikeAnchor(
         if (this.leaveTimeout) {
             clearTimeout(this.leaveTimeout);
             delete this.leaveTimeout;
+            this.recentlyLeftChild = false;
             return;
         }
         this.focus();
@@ -591,9 +592,7 @@ export class MenuItem extends LikeAnchor(
     }
 
     protected async handleSubmenuPointerleave(): Promise<void> {
-        requestAnimationFrame(() => {
-            this.recentlyLeftChild = false;
-        });
+        this.recentlyLeftChild = false;
     }
 
     protected handleSubmenuOpen(event: Event): void {
