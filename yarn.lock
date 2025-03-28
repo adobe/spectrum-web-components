@@ -7214,14 +7214,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/fieldgroup@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/fieldgroup@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/fieldgroup@npm:6.0.1":
+  version: 6.0.1
+  resolution: "@spectrum-css/fieldgroup@npm:6.0.1"
   peerDependencies:
     "@spectrum-css/checkbox": ">=9"
     "@spectrum-css/helptext": ">=5"
     "@spectrum-css/radio": ">=9"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/tokens": ">=14 || >=15"
   peerDependenciesMeta:
     "@spectrum-css/checkbox":
       optional: true
@@ -7229,7 +7229,7 @@ __metadata:
       optional: true
     "@spectrum-css/radio":
       optional: true
-  checksum: 10c0/146b4f3d3fd30a32178c907defd2eec54389a55e8ece7dd6f4d84acc2ca1c8b0af6841a49f649e34f146c102c406836f33e316a034e0634984ff124434b14881
+  checksum: 10c0/8cd88744e799383ccbe772956447962ed5d9b44f26d742ca3cb66e6f5311dc4477990f1d5b2475fe696d32c042377d80cd8b4107de74b2a74d7790511c51327c
   languageName: node
   linkType: hard
 
@@ -8244,7 +8244,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/field-group@workspace:packages/field-group"
   dependencies:
-    "@spectrum-css/fieldgroup": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/fieldgroup": "npm:6.0.1"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/help-text": "npm:1.4.0"
   languageName: unknown
