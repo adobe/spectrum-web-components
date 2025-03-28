@@ -1,6 +1,6 @@
 ## Overview
 
-An `<sp-clear-button>` is a special extension of the `BaseButton` class that includes icons and styling for buttons used to clear a form.
+An `<sp-clear-button>` is a special extension of the `ButtonBase` class that includes icons and styling for buttons used to clear a form.
 
 ### Usage
 
