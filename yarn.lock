@@ -6911,16 +6911,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/badge@npm:5.0.0-s2-foundations.15":
-  version: 5.0.0-s2-foundations.15
-  resolution: "@spectrum-css/badge@npm:5.0.0-s2-foundations.15"
+"@spectrum-css/badge@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@spectrum-css/badge@npm:6.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/02047ce5bf0fdd2304f62124b7c1e0bd480f021f2e2c4a288f82a3a7a2d2e9c648c66a0b67b946282dafa59042fdcd861fe42c8cf91472243db3b53547254419
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/cc46ebc7a41ef508e3ff1022fcdd7f5d36b9f3e6d5eb3ea65a4a7a58947fef9d85ae4d52192a389679fff9f9b7c96e4eb96dcc44f0e7ab746eeca8ed680959ad
   languageName: node
   linkType: hard
 
@@ -7858,7 +7860,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/badge@workspace:packages/badge"
   dependencies:
-    "@spectrum-css/badge": "npm:5.0.0-s2-foundations.15"
+    "@spectrum-css/badge": "npm:6.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
   languageName: unknown
