@@ -27,7 +27,13 @@ governing permissions and limitations under the License.
     --spectrum-combobox-border-color-key-focus: var(
         --system-combobox-border-color-key-focus
     );
+    --spectrum-combobox-readonly-input-border-color: var(
+        --system-combobox-readonly-input-border-color
+    );
     --spectrum-combobox-background-color-disabled: var(
         --system-combobox-background-color-disabled
+    );
+    --spectrum-combobox-border-color-disabled: var(
+        --system-combobox-border-color-disabled
     );
 }

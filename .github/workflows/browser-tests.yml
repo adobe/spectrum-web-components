@@ -23,9 +23,25 @@ jobs:
 
             - name: Checkout PR branch
               uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0 # Get full history
+
+            - name: Fetch main branch
+              run: |
+                  git fetch origin main:main
 
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
+
+            - name: Check ChromeDriver Version
+              if: matrix.browser == 'chrome'
+              run: |
+                  echo "Checking ChromeDriver version..."
+                  npx chromedriver --version
+                  echo "Checking Chrome version..."
+                  google-chrome --version
+                  echo "Checking tachometer chromedriver version..."
+                  yarn tachometer --version
 
             - name: Tachometer the changed packages
               run: yarn test:changed --browser=${{ matrix.browser }}

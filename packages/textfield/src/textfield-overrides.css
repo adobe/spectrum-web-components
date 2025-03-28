@@ -12,6 +12,12 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-textfield-background-color: var(
+        --system-textfield-background-color
+    );
+    --spectrum-textfield-background-color-disabled: var(
+        --system-textfield-background-color-disabled
+    );
     --spectrum-textfield-border-color: var(--system-textfield-border-color);
     --spectrum-textfield-border-color-hover: var(
         --system-textfield-border-color-hover
@@ -25,8 +31,35 @@ governing permissions and limitations under the License.
     --spectrum-textfield-border-color-keyboard-focus: var(
         --system-textfield-border-color-keyboard-focus
     );
+    --spectrum-textfield-border-color-disabled: var(
+        --system-textfield-border-color-disabled
+    );
     --spectrum-textfield-border-width: var(--system-textfield-border-width);
-    --spectrum-textfield-background-color: var(
-        --system-textfield-background-color
+    --spectrum-textfield-icon-spacing-block-invalid: var(
+        --system-textfield-icon-spacing-block-invalid
+    );
+}
+
+:host([size='s']) #textfield#textfield {
+    --spectrum-textfield-icon-spacing-block-invalid: var(
+        --system-textfield-size-s-icon-spacing-block-invalid
+    );
+}
+
+:host([size='l']) #textfield#textfield {
+    --spectrum-textfield-icon-spacing-block-invalid: var(
+        --system-textfield-size-l-icon-spacing-block-invalid
+    );
+}
+
+:host([size='xl']) #textfield#textfield {
+    --spectrum-textfield-icon-spacing-block-invalid: var(
+        --system-textfield-size-xl-icon-spacing-block-invalid
+    );
+}
+
+:host([quiet]) #textfield {
+    --spectrum-textfield-border-color-disabled: var(
+        --system-textfield-quiet-border-color-disabled
     );
 }
