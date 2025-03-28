@@ -105,8 +105,6 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     private shouldProxyClick(): boolean {
         let handled = false;
         if (this.anchorElement) {
-            // click HTML anchor element by proxy
-            this.anchorElement.click();
             handled = true;
             // if the button type is `submit` or `reset`
         } else if (this.type !== 'button') {
