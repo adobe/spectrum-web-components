@@ -12,12 +12,64 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { execSync } from 'child_process';
+import { existsSync, readdirSync, readFileSync } from 'fs';
+import path from 'path';
 
+/**
+ * Get changed packages by directly reading .changeset files
+ * This avoids using 'yarn changeset status' which can have formatting issues
+ * @returns {Array<string>} Array of package names without the @spectrum-web-components/ prefix
+ */
 export const getChangedPackages = () => {
     let changedPackages = [];
+    const changesetDir = '.changeset';
 
     try {
-        // Use --json flag and add encoding option
+        // Method 1: Read changeset files directly
+        if (existsSync(changesetDir)) {
+            const packages = new Set();
+
+            // Get all .md files that are not README.md
+            const files = readdirSync(changesetDir).filter(
+                (file) =>
+                    file.endsWith('.md') && file.toLowerCase() !== 'readme.md'
+            );
+
+            // Process each file
+            files.forEach((file) => {
+                const filePath = path.join(changesetDir, file);
+                try {
+                    const content = readFileSync(filePath, 'utf8');
+
+                    // Extract package names using regex
+                    const packageRegex =
+                        /'@spectrum-web-components\/([a-z0-9-]+)'\s*:\s*(major|minor|patch)/g;
+                    let match;
+
+                    while ((match = packageRegex.exec(content)) !== null) {
+                        const packageName = match[1];
+                        if (
+                            !packageName.startsWith('icons-') &&
+                            !packageName.includes('projects')
+                        ) {
+                            packages.add(packageName);
+                        }
+                    }
+                } catch (readError) {
+                    console.error(`Error reading ${file}:`, readError.message);
+                }
+            });
+
+            if (packages.size > 0) {
+                changedPackages = Array.from(packages);
+                return changedPackages;
+            }
+        }
+
+        // Method 2 (Fallback): Try using changeset status command
+        console.log(
+            'No changeset files found, trying changeset status command...'
+        );
         const command = execSync('yarn changeset status --json', {
             encoding: 'utf8',
             stdio: ['pipe', 'pipe', 'ignore'], // Suppress stderr
@@ -40,8 +92,10 @@ export const getChangedPackages = () => {
                 return acc;
             }, []);
         } catch (parseError) {
-            console.error('Error parsing JSON:', parseError.message);
-            console.log('Raw output:', command);
+            console.error(
+                'Error parsing changeset output:',
+                parseError.message
+            );
 
             // Extract package names using regex as fallback
             const packageRegex = /@spectrum-web-components\/([a-z-]+)/g;
@@ -57,11 +111,7 @@ export const getChangedPackages = () => {
             changedPackages = Array.from(packages);
         }
     } catch (error) {
-        console.error('Error running changeset status:', error.message);
-        if (error.stdout) {
-            console.log('stdout:', error.stdout.toString());
-        }
-
+        console.error('Error getting changed packages:', error.message);
         // Additional fallback options could go here
     }
 
