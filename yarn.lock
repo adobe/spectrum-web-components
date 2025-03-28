@@ -5736,13 +5736,13 @@ __metadata:
   linkType: hard
 
 "@playwright/test@npm:^1.44.0":
-  version: 1.49.1
-  resolution: "@playwright/test@npm:1.49.1"
+  version: 1.51.1
+  resolution: "@playwright/test@npm:1.51.1"
   dependencies:
-    playwright: "npm:1.49.1"
+    playwright: "npm:1.51.1"
   bin:
     playwright: cli.js
-  checksum: 10c0/2fca0bb7b334f7a23c7c5dfa5dbe37b47794c56f39b747c8d74a2f95c339e7902a296f2f1dd32c47bdd723cfa92cee05219f1a5876725dc89a1871b9137a286d
+  checksum: 10c0/bdb98f3df58f60b5c62e6d5c79c30910404d1855afea0803af0efd6dc63f90c473dbf92ff7dc212f1459f1d32c85dc44a60f70c2e0ea604f975b953d59523234
   languageName: node
   linkType: hard
 
@@ -6860,31 +6860,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/alertdialog@npm:3.0.0-s2-foundations.15":
-  version: 3.0.0-s2-foundations.15
-  resolution: "@spectrum-css/alertdialog@npm:3.0.0-s2-foundations.15"
+"@spectrum-css/alertdialog@npm:4.1.0":
+  version: 4.1.0
+  resolution: "@spectrum-css/alertdialog@npm:4.1.0"
   peerDependencies:
-    "@spectrum-css/buttongroup": ">=7"
-    "@spectrum-css/divider": ">=3"
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/modal": ">=5"
-    "@spectrum-css/tokens": ">=14"
-    "@spectrum-css/underlay": ">=4"
+    "@spectrum-css/buttongroup": ">=9.0.0 <10.0.0"
+    "@spectrum-css/divider": ">=5.0.0 <6.0.0"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/modal": ">=7.0.0 <8.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+    "@spectrum-css/underlay": ">=6.0.0 <7.0.0"
   peerDependenciesMeta:
     "@spectrum-css/buttongroup":
       optional: true
+    "@spectrum-css/divider":
+      optional: true
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/986c6b1c5282e9cf4bae218c6c2a0f88dc58a2f60da8823de83c21da69335b326202b19268880b4c990aa26ce4d7be8c45b323beecd81089811db6f2b985a2cf
+    "@spectrum-css/modal":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+    "@spectrum-css/underlay":
+      optional: true
+  checksum: 10c0/26f704146ebe316d85f099fc5965a15c9b9a203e95456258c5bbd87300d381f5b6ce76aa248461b3424b39f247eaf104dcc88431df83c9735c34105cd400f60d
   languageName: node
   linkType: hard
 
-"@spectrum-css/asset@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/asset@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/asset@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/asset@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/929a8c8d6feac737508bd94702dc0df2f35a8c63b940c7da31f3e4f1be0f8f5d8d491b29628a49189f99f0f58780caf48d2ee4e96bbb322503ea45e8c593122a
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/fc6c81de545f4c2fd2d248b9f2bb6d32f6ac46dcba4376474de58af9ae35bd5df7c9f36edf30c4ddb22d0af56e55cbca3f30075ed5c34cb75ce2042a4d8e3ffb
   languageName: node
   linkType: hard
 
@@ -7811,7 +7822,7 @@ __metadata:
   resolution: "@spectrum-web-components/alert-dialog@workspace:packages/alert-dialog"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/alertdialog": "npm:3.0.0-s2-foundations.15"
+    "@spectrum-css/alertdialog": "npm:4.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
     "@spectrum-web-components/button-group": "npm:1.4.0"
@@ -7825,7 +7836,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/asset@workspace:packages/asset"
   dependencies:
-    "@spectrum-css/asset": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/asset": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft
@@ -27647,27 +27658,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.49.1":
-  version: 1.49.1
-  resolution: "playwright-core@npm:1.49.1"
+"playwright-core@npm:1.51.1":
+  version: 1.51.1
+  resolution: "playwright-core@npm:1.51.1"
   bin:
     playwright-core: cli.js
-  checksum: 10c0/990b619c75715cd98b2c10c1180a126e3a454b247063b8352bc67792fe01183ec07f31d30c8714c3768cefed12886d1d64ac06da701f2baafc2cad9b439e3919
+  checksum: 10c0/4f004d9dea5ecbd76b84c858fa4880ed955600b6cda972a3e8093ea47e150ce20bf2ea806e73e740497d34f4b61b080c208339a661fc75ad04d8f00bedcc21e0
   languageName: node
   linkType: hard
 
-"playwright@npm:1.49.1":
-  version: 1.49.1
-  resolution: "playwright@npm:1.49.1"
+"playwright@npm:1.51.1":
+  version: 1.51.1
+  resolution: "playwright@npm:1.51.1"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.49.1"
+    playwright-core: "npm:1.51.1"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10c0/2368762c898920d4a0a5788b153dead45f9c36c3f5cf4d2af5228d0b8ea65823e3bbe998877950a2b9bb23a211e4633996f854c6188769dc81a25543ac818ab5
+  checksum: 10c0/2aea553b8b1086ee419e72c9d4f4117686e6bdb5e09e0f47dfe563ce0f0bd79c4ee79dd9c8a0f023a2fb7803b81d4fdc552887410d16c036be07f21ab72b3f46
   languageName: node
   linkType: hard
 

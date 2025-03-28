@@ -56,7 +56,6 @@ const crossIcon: Record<string, () => TemplateResult> = {
  * @element sp-clear-button
  *
  * @slot - text label of the Clear Button
- * @slot icon - The icon to use for Clear Button
  */
 export class ClearButton extends SizedMixin(StyledButton, {
     noDefaultSize: true,
