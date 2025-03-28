@@ -36,6 +36,7 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
 import '@spectrum-web-components/infield-button/sp-infield-button.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
 import styles from './number-field.css.js';
+import { isIOS } from '@spectrum-web-components/shared';
 
 
 export const FRAMES_PER_CHANGE = 5;
