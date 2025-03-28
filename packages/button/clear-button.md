@@ -96,11 +96,11 @@ The label for an `<sp-clear-button>` element can be set via it's default slot or
 
 ### States
 
-In addition to the variant, `<sp-clear-button>` elements support two different visual states, disabled and pending, which can be applied by adding the attribute `disabled` or `pending` respectively. All `<sp-clear-button>` variants support these states.
+In addition to the variant, the `<sp-clear-button>` elements supports a disabled state, which can be applied by adding the attribute `disabled`.
 
 #### Disabled
 
-While disabled, `<sp-clear-button>` elements will not respond to click events and will appear faded.
+While disabled, the `<sp-clear-button>` element will not respond to click events and will appear faded.
 
 ```html
 <sp-button-group>
