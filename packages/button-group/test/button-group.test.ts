@@ -14,15 +14,15 @@ import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import { ButtonGroup } from '..';
-import { buttons, buttonsVertical } from '../stories/button-group.stories.js';
+import { Buttons, ButtonsVertical } from '../stories/button-group.stories.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Buttongroup', () => {
     testForLitDevWarnings(
-        async () => await fixture<ButtonGroup>(buttons(buttons.args))
+        async () => await fixture<ButtonGroup>(Buttons.render(Buttons.args))
     );
     it('loads default button-group accessibly with sp-button', async () => {
-        const el = await fixture<ButtonGroup>(buttons(buttons.args));
+        const el = await fixture<ButtonGroup>(Buttons.render(Buttons.args));
 
         await elementUpdated(el);
 
@@ -30,7 +30,7 @@ describe('Buttongroup', () => {
     });
     it('loads default button-group[vertial] accessibly with sp-button', async () => {
         const el = await fixture<ButtonGroup>(
-            buttonsVertical(buttonsVertical.args)
+            ButtonsVertical.render(ButtonsVertical.args)
         );
 
         await elementUpdated(el);
@@ -38,7 +38,7 @@ describe('Buttongroup', () => {
         await expect(el).to.be.accessible();
     });
     it(`manages its children's size`, async () => {
-        const el = await fixture<ButtonGroup>(buttons(buttons.args));
+        const el = await fixture<ButtonGroup>(Buttons.render(Buttons.args));
         await elementUpdated(el);
 
         let children = el.querySelectorAll('sp-button');

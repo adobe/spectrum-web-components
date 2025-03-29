@@ -19,14 +19,14 @@ import type {
     SwatchShape,
 } from '../src/Swatch.js';
 
-type Properties = {
+export interface Properties {
     color: string;
     border: SwatchBorder | 'normal';
     rounding: SwatchRounding | 'normal';
     shape: SwatchShape | 'normal';
     mixedValue?: boolean;
     nothing?: boolean;
-};
+}
 
 export default {
     title: 'Swatch',
@@ -95,45 +95,80 @@ const template = ({
     `;
 };
 
-export const Default = (args: Properties): TemplateResult => template(args);
-export const gradient = (args: Properties): TemplateResult => template(args);
-gradient.args = {
-    color: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)',
+export const Default = {
+    render: (args: Properties): TemplateResult => template(args),
 };
-export const opacity = (args: Properties): TemplateResult => template(args);
-opacity.args = {
-    color: 'rgba(255, 0, 0, 0.3)',
+
+export const gradient = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        color: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)',
+    },
 };
-export const mixedValue = (args: Properties): TemplateResult => template(args);
-mixedValue.args = {
-    mixedValue: true,
-    color: '',
+
+export const opacity = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        color: 'rgba(255, 0, 0, 0.3)',
+    },
 };
-export const nothing = (args: Properties): TemplateResult => template(args);
-nothing.args = {
-    nothing: true,
-    color: '',
+
+export const mixedValue = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        mixedValue: true,
+        color: '',
+    },
 };
-export const borderLight = (args: Properties): TemplateResult => template(args);
-borderLight.args = {
-    border: 'light',
+
+export const nothing = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        nothing: true,
+        color: '',
+    },
 };
-export const borderNone = (args: Properties): TemplateResult => template(args);
-borderNone.args = {
-    border: 'none',
+
+export const borderLight = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        border: 'light',
+    },
 };
-export const roundingNone = (args: Properties): TemplateResult =>
-    template(args);
-roundingNone.args = {
-    rounding: 'none',
+
+export const borderNone = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        border: 'none',
+    },
 };
-export const roundingFull = (args: Properties): TemplateResult =>
-    template(args);
-roundingFull.args = {
-    rounding: 'full',
+
+export const roundingNone = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        rounding: 'none',
+    },
 };
-export const shapeRectangle = (args: Properties): TemplateResult =>
-    template(args);
-shapeRectangle.args = {
-    shape: 'rectangle',
+
+export const roundingFull = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        rounding: 'full',
+    },
+};
+
+export const shapeRectangle = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        shape: 'rectangle',
+    },
 };

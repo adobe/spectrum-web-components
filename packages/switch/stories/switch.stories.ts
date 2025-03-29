@@ -36,7 +36,7 @@ export default {
     },
 };
 
-export interface StoryArgs {
+export interface Properties {
     Autofocus?: boolean;
     checked?: boolean;
     Disabled?: boolean;
@@ -47,13 +47,15 @@ export interface StoryArgs {
     [prop: string]: unknown;
 }
 
-function renderSwitch(args: StoryArgs): TemplateResult {
+function renderSwitch(args: Properties): TemplateResult {
     return html`
         <sp-switch ${spreadProps(args)}>Switch</sp-switch>
     `;
 }
 
-export const Default = (args: StoryArgs): TemplateResult => renderSwitch(args);
+export const Default = {
+    render: (args: Properties): TemplateResult => renderSwitch(args),
+};
 
 export const Checked = (): TemplateResult => {
     return html`

@@ -82,58 +82,60 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const deletable = (args: Props): TemplateResult => {
-    return html`
-        <sp-tags @delete=${args.onDelete}>
-            <sp-tag deletable>Tag 1</sp-tag>
-            <sp-tag invalid deletable>Tag 2</sp-tag>
-            <sp-tag disabled deletable>Tag 3</sp-tag>
-        </sp-tags>
-        <br />
-        <br />
-        <sp-tags @delete=${args.onDelete}>
-            <sp-tag deletable>
-                Tag 1
-                <sp-avatar
-                    slot="avatar"
-                    label="Tag 1"
-                    src=${avatar}
-                ></sp-avatar>
-            </sp-tag>
-            <sp-tag invalid deletable>
-                Tag 2
-                <sp-avatar
-                    slot="avatar"
-                    label="Tag 1"
-                    src=${avatar}
-                ></sp-avatar>
-            </sp-tag>
-            <sp-tag disabled deletable>
-                Tag 3
-                <sp-avatar
-                    slot="avatar"
-                    label="Tag 1"
-                    src=${avatar}
-                ></sp-avatar>
-            </sp-tag>
-        </sp-tags>
-        <br />
-        <br />
-        <sp-tags @delete=${args.onDelete}>
-            <sp-tag deletable>
-                Tag 1
-                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
-            </sp-tag>
-            <sp-tag invalid deletable>
-                Tag 2
-                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
-            </sp-tag>
-            <sp-tag disabled deletable>
-                Tag 3
-                <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
-            </sp-tag>
-        </sp-tags>
-    `;
+export const deletable = {
+    render: (args: Props): TemplateResult => {
+        return html`
+            <sp-tags @delete=${args.onDelete}>
+                <sp-tag deletable>Tag 1</sp-tag>
+                <sp-tag invalid deletable>Tag 2</sp-tag>
+                <sp-tag disabled deletable>Tag 3</sp-tag>
+            </sp-tags>
+            <br />
+            <br />
+            <sp-tags @delete=${args.onDelete}>
+                <sp-tag deletable>
+                    Tag 1
+                    <sp-avatar
+                        slot="avatar"
+                        label="Tag 1"
+                        src=${avatar}
+                    ></sp-avatar>
+                </sp-tag>
+                <sp-tag invalid deletable>
+                    Tag 2
+                    <sp-avatar
+                        slot="avatar"
+                        label="Tag 1"
+                        src=${avatar}
+                    ></sp-avatar>
+                </sp-tag>
+                <sp-tag disabled deletable>
+                    Tag 3
+                    <sp-avatar
+                        slot="avatar"
+                        label="Tag 1"
+                        src=${avatar}
+                    ></sp-avatar>
+                </sp-tag>
+            </sp-tags>
+            <br />
+            <br />
+            <sp-tags @delete=${args.onDelete}>
+                <sp-tag deletable>
+                    Tag 1
+                    <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+                </sp-tag>
+                <sp-tag invalid deletable>
+                    Tag 2
+                    <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+                </sp-tag>
+                <sp-tag disabled deletable>
+                    Tag 3
+                    <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>
+                </sp-tag>
+            </sp-tags>
+        `;
+    },
 };
 
 export const readonly = (): TemplateResult => {

@@ -74,7 +74,7 @@ export default {
     },
 };
 
-interface Properties {
+export interface Properties {
     content?: string;
     disabled?: boolean;
     icon?: boolean;
@@ -93,40 +93,52 @@ const Template = (args: Properties): TemplateResult => html`
     </sp-help-text>
 `;
 
-export const neutral = (args: Properties = {}): TemplateResult =>
-    Template({
-        ...args,
-        content: 'Passwords must be at least 8 characters.',
-    });
-neutral.args = {
-    variant: 'neutral',
+export const neutral = {
+    render: (args: Properties = {}): TemplateResult =>
+        Template({
+            ...args,
+            content: 'Passwords must be at least 8 characters.',
+        }),
+
+    args: {
+        variant: 'neutral',
+    },
 };
 
-export const negative = (args: Properties = {}): TemplateResult =>
-    Template({
-        ...args,
-        content: 'Create a password with at least 8 characters.',
-    });
-negative.args = {
-    variant: 'negative',
+export const negative = {
+    render: (args: Properties = {}): TemplateResult =>
+        Template({
+            ...args,
+            content: 'Create a password with at least 8 characters.',
+        }),
+
+    args: {
+        variant: 'negative',
+    },
 };
 
-export const negativeIcon = (args: Properties = {}): TemplateResult =>
-    Template({
-        ...args,
-        content: 'Create a password with at least 8 characters.',
-    });
-negativeIcon.args = {
-    icon: true,
-    variant: 'negative',
+export const negativeIcon = {
+    render: (args: Properties = {}): TemplateResult =>
+        Template({
+            ...args,
+            content: 'Create a password with at least 8 characters.',
+        }),
+
+    args: {
+        icon: true,
+        variant: 'negative',
+    },
 };
 
-export const disabled = (args: Properties = {}): TemplateResult =>
-    Template({
-        ...args,
-        content: 'Passwords must be at least 8 characters.',
-    });
-disabled.args = {
-    disabled: true,
-    variant: 'neutral',
+export const disabled = {
+    render: (args: Properties = {}): TemplateResult =>
+        Template({
+            ...args,
+            content: 'Passwords must be at least 8 characters.',
+        }),
+
+    args: {
+        disabled: true,
+        variant: 'neutral',
+    },
 };

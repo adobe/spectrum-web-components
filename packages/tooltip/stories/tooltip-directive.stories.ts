@@ -25,7 +25,7 @@ export default {
     title: 'Tooltip Directive',
 };
 
-interface Properties {
+export interface Properties {
     open?: boolean;
     placement?: Placement;
     text?: string;
@@ -34,106 +34,112 @@ interface Properties {
     delayed?: boolean;
 }
 
-export const Default = ({
-    open,
-    placement,
-    text,
-    variant,
-}: Properties): TemplateResult => {
-    return html`
-        <sp-button
-            ${tooltip(
-                () => html`
-                    ${text || 'Tooltip'}
-                `,
-                {
-                    open,
-                    overlayOptions: { placement },
-                    variant,
-                }
-            )}
-        >
-            Hover me
-        </sp-button>
-    `;
-};
-Default.args = {
-    open: true,
-    placement: 'top',
-    variant: '',
-    text: 'Tooltip',
-};
-Default.argTypes = {
-    open: {
-        name: 'open',
-        type: { name: 'boolean', required: false },
-        description: 'Whether the tooltip is open.',
-        table: {
-            type: { summary: 'boolean' },
-            defaultValue: { summary: false },
-        },
-        control: {
-            type: 'boolean',
-        },
+export const Default = {
+    render: ({
+        open,
+        placement,
+        text,
+        variant,
+    }: Properties): TemplateResult => {
+        return html`
+            <sp-button
+                ${tooltip(
+                    () => html`
+                        ${text || 'Tooltip'}
+                    `,
+                    {
+                        open,
+                        overlayOptions: { placement },
+                        variant,
+                    }
+                )}
+            >
+                Hover me
+            </sp-button>
+        `;
     },
-    placement: {
-        name: 'placement',
-        type: { name: 'string', required: false },
-        description: 'The placement of the tooltip in relation to its parent',
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: 'top' },
-        },
-        control: {
-            type: 'inline-radio',
-            options: [
-                'auto',
-                'auto-start',
-                'auto-end',
-                'top',
-                'bottom',
-                'right',
-                'left',
-                'top-start',
-                'top-end',
-                'bottom-start',
-                'bottom-end',
-                'right-start',
-                'right-end',
-                'left-start',
-                'left-end',
-                'none',
-            ],
-        },
-    },
-    text: {
-        name: 'text',
-        type: { name: 'string', required: false },
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: '' },
-        },
-        control: 'text',
-    },
-    variant: {
-        name: 'variant',
-        type: { name: 'string', required: false },
-        description: 'The style of the tooltip.',
-        table: {
-            type: { summary: 'string' },
-            defaultValue: { summary: '' },
-        },
-        control: {
-            type: 'inline-radio',
-            options: ['info', 'positive', 'negative', ''],
-        },
-    },
-};
-Default.swc_vrt = {
-    skip: true,
-};
 
-Default.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+    args: {
+        open: true,
+        placement: 'top',
+        variant: '',
+        text: 'Tooltip',
+    },
+
+    argTypes: {
+        open: {
+            name: 'open',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the tooltip is open.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        placement: {
+            name: 'placement',
+            type: { name: 'string', required: false },
+            description:
+                'The placement of the tooltip in relation to its parent',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: 'top' },
+            },
+            control: {
+                type: 'inline-radio',
+                options: [
+                    'auto',
+                    'auto-start',
+                    'auto-end',
+                    'top',
+                    'bottom',
+                    'right',
+                    'left',
+                    'top-start',
+                    'top-end',
+                    'bottom-start',
+                    'bottom-end',
+                    'right-start',
+                    'right-end',
+                    'left-start',
+                    'left-end',
+                    'none',
+                ],
+            },
+        },
+        text: {
+            name: 'text',
+            type: { name: 'string', required: false },
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
+            },
+            control: 'text',
+        },
+        variant: {
+            name: 'variant',
+            type: { name: 'string', required: false },
+            description: 'The style of the tooltip.',
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: '' },
+            },
+            control: {
+                type: 'inline-radio',
+                options: ['info', 'positive', 'negative', ''],
+            },
+        },
+    },
+
+    swc_vrt: {
+        skip: true,
+    },
+
+    parameters: {
+        // Disables Chromatic's snapshotting on a global level
+        chromatic: { disableSnapshot: true },
+    },
 };

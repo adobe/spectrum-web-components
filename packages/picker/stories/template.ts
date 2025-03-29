@@ -23,7 +23,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-export interface StoryArgs {
+export interface Properties {
     disabled?: boolean;
     invalid?: boolean;
     open?: boolean;
@@ -36,13 +36,13 @@ export interface StoryArgs {
 }
 
 export const handleChange =
-    ({ onChange }: StoryArgs) =>
+    ({ onChange }: Properties) =>
     (event: Event): void => {
         const picker = event.target as Picker;
         if (onChange) onChange(picker.value);
     };
 
-export const Template = (args: StoryArgs): TemplateResult => html`
+export const Template = (args: Properties): TemplateResult => html`
     <sp-field-label for="picker-1" size=${ifDefined(args.size)}>
         Where do you live?
     </sp-field-label>

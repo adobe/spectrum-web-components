@@ -25,15 +25,6 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-// export const alpha = (): TemplateResult => {
-//     return html`
-//         <sp-color-slider
-//             style="--sp-color-slider-gradient: rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%;"
-//             color="rgba(0, 0, 0, 1)"
-//         ></sp-color-slider>
-//     `;
-// };
-
 export const disabled = (): TemplateResult => {
     return html`
         <sp-color-slider disabled></sp-color-slider>
@@ -46,12 +37,23 @@ export const vertical = (): TemplateResult => {
     `;
 };
 
-export const canvas = (): TemplateResult => {
-    return html`
-        <sp-color-slider color="rgb(255, 0, 0)">
-            <canvas slot="gradient" role="presentation"></canvas>
-        </sp-color-slider>
-    `;
+export const Canvas = {
+    render: (): TemplateResult => {
+        return html`
+            <sp-color-slider color="rgb(255, 0, 0)">
+                <canvas slot="gradient" role="presentation"></canvas>
+            </sp-color-slider>
+        `;
+    },
+
+    decorators: [
+        (story: () => TemplateResult): TemplateResult => {
+            return html`
+                ${story()}
+                <slider-canvas-writer></slider-canvas-writer>
+            `;
+        },
+    ],
 };
 
 class CanvasWriter extends HTMLElement {
@@ -109,15 +111,6 @@ class CanvasWriter extends HTMLElement {
 }
 
 customElements.define('slider-canvas-writer', CanvasWriter);
-
-canvas.decorators = [
-    (story: () => TemplateResult): TemplateResult => {
-        return html`
-            ${story()}
-            <slider-canvas-writer></slider-canvas-writer>
-        `;
-    },
-];
 
 export const image = (): TemplateResult => {
     return html`

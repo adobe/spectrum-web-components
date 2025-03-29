@@ -26,24 +26,37 @@ export default {
         treatment,
     },
     argTypes,
+    tags: ['!dev'],
 };
 
-export const s = (args: Properties): TemplateResult => renderButtonSet(args);
-s.args = {
-    size: 's',
+export const s = {
+    render: (args: Properties): TemplateResult => renderButtonSet(args),
+
+    args: {
+        size: 's',
+    },
 };
 
-export const m = (args: Properties): TemplateResult => renderButtonSet(args);
-m.args = {
-    size: 'm',
+export const m = {
+    render: (args: Properties): TemplateResult => renderButtonSet(args),
+
+    args: {
+        size: 'm',
+    },
 };
 
-export const l = (args: Properties): TemplateResult => renderButtonSet(args);
-l.args = {
-    size: 'l',
+export const l = {
+    render: (args: Properties): TemplateResult => renderButtonSet(args),
+
+    args: {
+        size: 'l',
+    },
 };
 
-export const XL = (args: Properties): TemplateResult => renderButtonSet(args);
-XL.args = {
-    size: 'xl',
+export const XL = {
+    render: (args: Properties): TemplateResult => renderButtonSet(args),
+
+    args: {
+        size: 'xl',
+    },
 };

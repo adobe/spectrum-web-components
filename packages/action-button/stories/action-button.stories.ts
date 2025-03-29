@@ -36,20 +36,24 @@ function renderButtonsSelected(args: Properties): TemplateResult {
     `;
 }
 
-export const toggles = (args: Properties): TemplateResult =>
-    renderButtonsSelected(args);
-toggles.args = {
-    toggles: true,
-    icon: html`
-        <sp-icon-edit hidden slot="icon"></sp-icon-edit>
-    `,
+export const toggles = {
+    render: (args: Properties): TemplateResult => renderButtonsSelected(args),
+
+    args: {
+        toggles: true,
+        icon: html`
+            <sp-icon-edit hidden slot="icon"></sp-icon-edit>
+        `,
+    },
 };
 
-export const href = (args: Properties): TemplateResult =>
-    renderButtonsSelected(args);
-href.args = {
-    href: 'https://github.com/adobe/spectrum-web-components',
-    icon: html`
-        <sp-icon-edit hidden slot="icon"></sp-icon-edit>
-    `,
+export const href = {
+    render: (args: Properties): TemplateResult => renderButtonsSelected(args),
+
+    args: {
+        href: 'https://github.com/adobe/spectrum-web-components',
+        icon: html`
+            <sp-icon-edit hidden slot="icon"></sp-icon-edit>
+        `,
+    },
 };

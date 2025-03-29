@@ -53,15 +53,15 @@ import {
     testForLitDevWarnings,
     tEvent,
 } from '../../../test/testing-helpers.js';
-import { M as pending } from '../stories/picker-pending.stories.js';
+import { M as Pending } from '../stories/picker-pending.stories.js';
 import {
     Default,
-    disabled,
-    dynamicIcons,
-    iconsOnly,
-    noVisibleLabel,
-    slottedLabel,
-    tooltip,
+    Disabled,
+    DynamicIcons,
+    IconsOnly,
+    NoVisibleLabel,
+    SlottedLabel,
+    Tooltip as TooltipStory,
 } from '../stories/picker.stories.js';
 
 export type TestablePicker = { optionsMenu: Menu };
@@ -102,7 +102,7 @@ export function runPickerTests(): void {
         it('accessible with "<sp-field-label>"', async function () {
             const test = await fixture<HTMLDivElement>(html`
                 <div>
-                    ${Default({
+                    ${Default.render({
                         onChange: () => {
                             return;
                         },
@@ -146,7 +146,7 @@ export function runPickerTests(): void {
         it('accessible with "label" attribute', async () => {
             const test = await fixture<HTMLDivElement>(html`
                 <div>
-                    ${noVisibleLabel({
+                    ${NoVisibleLabel.render({
                         onChange: () => {
                             return;
                         },
@@ -188,7 +188,7 @@ export function runPickerTests(): void {
         it('accessible with "label" slot', async function () {
             const test = await fixture<HTMLDivElement>(html`
                 <div>
-                    ${slottedLabel({
+                    ${SlottedLabel.render({
                         onChange: () => {
                             return;
                         },
@@ -1655,7 +1655,7 @@ export function runPickerTests(): void {
     testForLitDevWarnings(async () => await pickerFixture());
     it('manages its "name" value in the accessibility tree when [icons-only]', async () => {
         const test = await fixture<HTMLDivElement>(html`
-            <div>${iconsOnly({})}</div>
+            <div>${IconsOnly.render({})}</div>
         `);
         const el = test.querySelector('sp-picker') as Picker;
 
@@ -1878,7 +1878,7 @@ export function runPickerTests(): void {
     });
     it('closes tooltip on button blur', async () => {
         const test = await styledFixture(html`
-            <div>${tooltip(tooltip.args)}</div>
+            <div>${TooltipStory.render(TooltipStory.args)}</div>
         `);
         const el = test.querySelector('sp-picker') as Picker;
         await elementUpdated(el);
@@ -1936,7 +1936,7 @@ export function runPickerTests(): void {
     describe('disabled', function () {
         beforeEach(async function () {
             const test = await fixture(html`
-                <div>${disabled(disabled.args)}</div>
+                <div>${Disabled.render(Disabled.args)}</div>
             `);
             this.label = test.querySelector('sp-field-label') as FieldLabel;
             this.el = test.querySelector('sp-picker') as Picker;
@@ -1989,7 +1989,7 @@ export function runPickerTests(): void {
     describe('pending', function () {
         beforeEach(async function () {
             const test = await fixture(html`
-                <div>${pending({ pending: true })}</div>
+                <div>${Pending.render({ pending: true })}</div>
             `);
             this.label = test.querySelector('sp-field-label') as FieldLabel;
             this.el = test.querySelector('sp-picker') as Picker;
@@ -2032,7 +2032,7 @@ export function runPickerTests(): void {
     describe('dynamic icons', function () {
         beforeEach(async function () {
             const test = await fixture(html`
-                <div>${dynamicIcons(dynamicIcons.args)}</div>
+                <div>${DynamicIcons.render(DynamicIcons.args)}</div>
             `);
             this.el = test.querySelector('sp-picker') as Picker;
             await elementUpdated(this.el);

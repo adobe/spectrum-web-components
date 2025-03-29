@@ -22,14 +22,14 @@ import { Button } from '@spectrum-web-components/button';
 import { Overlay } from '@spectrum-web-components/overlay';
 import {
     Default,
-    insertionOptions,
+    OverlayWithInsertionOptions,
 } from '../stories/overlay-directive.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { fixture } from '../../../test/testing-helpers.js';
 
 describe('Overlay Directive', () => {
     it('opens declaratively', async function () {
-        const test = await fixture<Button>(Default({ open: true }));
+        const test = await fixture<Button>(Default.render({ open: true }));
         await oneEvent(test, 'sp-opened');
 
         const el = test.nextElementSibling as Overlay;
@@ -37,7 +37,7 @@ describe('Overlay Directive', () => {
         expect(el.open).to.be.true;
     });
     it('opens without options', async function () {
-        const test = await fixture<Button>(Default());
+        const test = await fixture<Button>(Default.render());
         const opened = oneEvent(test, 'sp-opened');
         test.click();
         await opened;
@@ -51,7 +51,7 @@ describe('Overlay Directive', () => {
             <div
                 style="width: 100%; height: 100vh; display: grid; place-content: center;"
             >
-                ${insertionOptions()}
+                ${OverlayWithInsertionOptions.render()}
             </div>
         `);
 
@@ -131,7 +131,9 @@ describe('Overlay Directive', () => {
             <div
                 style="width: 100%; height: 100vh; display: grid; place-content: center;"
             >
-                ${insertionOptions(insertionOptions.args)}
+                ${OverlayWithInsertionOptions.render(
+                    OverlayWithInsertionOptions.args
+                )}
             </div>
         `);
 

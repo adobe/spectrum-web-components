@@ -34,91 +34,95 @@ export default {
     },
 };
 
-interface StoryArgs {
+export interface Properties {
     indeterminate?: boolean;
 }
 
-export const Default = ({ indeterminate }: StoryArgs = {}): TemplateResult => {
-    return html`
-        <div
-            style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;"
-        >
-            <sp-progress-circle
-                progress="27"
-                size="s"
-                ?indeterminate=${indeterminate}
-                label="Loading progress demo"
-            ></sp-progress-circle>
-            <sp-progress-circle
-                progress="27"
-                ?indeterminate=${indeterminate}
-                label="Loading progress demo"
-            ></sp-progress-circle>
-            <sp-progress-circle
-                progress="27"
-                size="l"
-                ?indeterminate=${indeterminate}
-                label="Loading progress demo"
-            ></sp-progress-circle>
-        </div>
-    `;
-};
-Default.args = {
-    indeterminate: false,
+export const Default = {
+    render: ({ indeterminate }: Properties = {}): TemplateResult => {
+        return html`
+            <div
+                style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;"
+            >
+                <sp-progress-circle
+                    progress="27"
+                    size="s"
+                    ?indeterminate=${indeterminate}
+                    label="Loading progress demo"
+                ></sp-progress-circle>
+                <sp-progress-circle
+                    progress="27"
+                    ?indeterminate=${indeterminate}
+                    label="Loading progress demo"
+                ></sp-progress-circle>
+                <sp-progress-circle
+                    progress="27"
+                    size="l"
+                    ?indeterminate=${indeterminate}
+                    label="Loading progress demo"
+                ></sp-progress-circle>
+            </div>
+        `;
+    },
+
+    args: {
+        indeterminate: false,
+    },
 };
 
-export const staticWhite = ({
-    indeterminate,
-}: StoryArgs = {}): TemplateResult => {
-    return html`
-        <div
-            style="width: 250px; height: 150px; background-color: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: space-around;"
-        >
+export const staticWhite = {
+    render: ({ indeterminate }: Properties = {}): TemplateResult => {
+        return html`
+            <div
+                style="width: 250px; height: 150px; background-color: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: space-around;"
+            >
+                <sp-progress-circle
+                    progress="53"
+                    static-color="white"
+                    size="s"
+                    ?indeterminate=${indeterminate}
+                    label="Loading progress demo"
+                ></sp-progress-circle>
+                <sp-progress-circle
+                    progress="53"
+                    static-color="white"
+                    ?indeterminate=${indeterminate}
+                    label="Loading progress demo"
+                ></sp-progress-circle>
+                <sp-progress-circle
+                    progress="53"
+                    static-color="white"
+                    size="l"
+                    ?indeterminate=${indeterminate}
+                    label="Loading progress demo"
+                ></sp-progress-circle>
+            </div>
+        `;
+    },
+
+    args: {
+        indeterminate: false,
+    },
+};
+
+export const inButton = {
+    render: ({ indeterminate }: Properties = {}): TemplateResult => html`
+        <style>
+            sp-progress-circle[slot='icon'] {
+                align-self: center;
+                margin-block: 0;
+            }
+        </style>
+        <sp-button variant="black" style="color: white">
             <sp-progress-circle
                 progress="53"
                 static-color="white"
                 size="s"
                 ?indeterminate=${indeterminate}
-                label="Loading progress demo"
+                slot="icon"
+                label="Processing"
             ></sp-progress-circle>
-            <sp-progress-circle
-                progress="53"
-                static-color="white"
-                ?indeterminate=${indeterminate}
-                label="Loading progress demo"
-            ></sp-progress-circle>
-            <sp-progress-circle
-                progress="53"
-                static-color="white"
-                size="l"
-                ?indeterminate=${indeterminate}
-                label="Loading progress demo"
-            ></sp-progress-circle>
-        </div>
-    `;
+            Processing...
+        </sp-button>
+    `,
 };
-staticWhite.args = {
-    indeterminate: false,
-};
-
-export const inButton = ({
-    indeterminate,
-}: StoryArgs = {}): TemplateResult => html`
-    <style>
-        sp-progress-circle[slot='icon'] {
-            align-self: center;
-            margin-block: 0;
-        }
-    </style>
-    <sp-button variant="black" style="color: white">
-        <sp-progress-circle
-            progress="53"
-            static-color="white"
-            size="s"
-            ?indeterminate=${indeterminate}
-            slot="icon"
-            label="Processing"
-        ></sp-progress-circle>
-        Processing...
-    </sp-button>
-`;

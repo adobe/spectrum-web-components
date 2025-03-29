@@ -20,6 +20,7 @@ import '@spectrum-web-components/swatch/sp-swatch.js';
 export default {
     title: 'Swatch/Sizes',
     component: 'sp-swatch',
+    tags: ['!dev'],
 };
 
 const template = ({

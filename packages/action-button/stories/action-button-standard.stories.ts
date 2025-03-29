@@ -18,27 +18,42 @@ export default {
     title: 'Action Button/Standard',
 };
 
-export const XS = (args: Properties): TemplateResult => renderButtons(args);
-XS.args = {
-    size: 'xs',
+export const XS = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'xs',
+    },
 };
 
-export const s = (args: Properties): TemplateResult => renderButtons(args);
-s.args = {
-    size: 's',
+export const s = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 's',
+    },
 };
 
-export const m = (args: Properties): TemplateResult => renderButtons(args);
-m.args = {
-    size: 'm',
+export const m = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'm',
+    },
 };
 
-export const l = (args: Properties): TemplateResult => renderButtons(args);
-l.args = {
-    size: 'l',
+export const l = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'l',
+    },
 };
 
-export const XL = (args: Properties): TemplateResult => renderButtons(args);
-XL.args = {
-    size: 'xl',
+export const XL = {
+    render: (args: Properties): TemplateResult => renderButtons(args),
+
+    args: {
+        size: 'xl',
+    },
 };

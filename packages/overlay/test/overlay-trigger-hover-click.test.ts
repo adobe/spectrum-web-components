@@ -28,7 +28,10 @@ import { TriggerInteractions } from '@spectrum-web-components/overlay/src/overla
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { clickAndHoverTargets, deep } from '../stories/overlay.stories.js';
+import {
+    ClickAndHoverTargets,
+    DeepOverlay,
+} from '../stories/overlay.stories.js';
 import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
 import { Tooltip } from '@spectrum-web-components/tooltip/src/Tooltip.js';
 import { sendKeys } from '@web/test-runner-commands';
@@ -133,7 +136,7 @@ describe('Overlay Trigger - Hover and Click', () => {
         root.style.height = '100vh';
         root.style.display = 'grid';
         root.style.placeContent = 'center';
-        const test = await fixture(clickAndHoverTargets(), {
+        const test = await fixture(ClickAndHoverTargets.render(), {
             parentNode: root,
         });
 
@@ -208,7 +211,7 @@ describe('Overlay Trigger - Hover and Click', () => {
     });
     it('does not close ancestor "click" overlays on `click`', async () => {
         const test = await fixture<HTMLDivElement>(html`
-            <div>${deep()}</div>
+            <div>${DeepOverlay.render()}</div>
         `);
         const el = test.querySelector('overlay-trigger') as OverlayTrigger;
         const trigger = test.querySelector('sp-button') as Button;

@@ -11,35 +11,52 @@ governing permissions and limitations under the License.
 */
 import { TemplateResult } from '@spectrum-web-components/base';
 
-import { argTypes, StoryArgs, Template } from './index.js';
+import { argTypes, Properties, Template } from './index.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
 
 export default {
     title: 'Picker Button/Sizes',
     component: 'sp-picker-button',
-    ...argTypes,
+    argTypes,
+    tags: ['!dev'],
 };
 
-export const s = (args: StoryArgs): TemplateResult => Template(args);
-s.args = { size: 's' };
+export const SizeS = {
+    render: (args: Properties): TemplateResult => Template(args),
+    args: { size: 's' },
+};
 
-export const m = (args: StoryArgs): TemplateResult => Template(args);
-m.args = { size: 'm' };
+export const SizeM = {
+    render: (args: Properties): TemplateResult => Template(args),
+    args: { size: 'm' },
+};
 
-export const l = (args: StoryArgs): TemplateResult => Template(args);
-l.args = { size: 'l' };
+export const SizeL = {
+    render: (args: Properties): TemplateResult => Template(args),
+    args: { size: 'l' },
+};
 
-export const XL = (args: StoryArgs): TemplateResult => Template(args);
-XL.args = { size: 'xl' };
+export const SizeXL = {
+    render: (args: Properties): TemplateResult => Template(args),
+    args: { size: 'xl' },
+};
 
-export const sLabel = (args: StoryArgs): TemplateResult => Template(args);
-sLabel.args = { size: 's', label: true };
+export const SizeSLabel = {
+    render: (args: Properties): TemplateResult => Template(args),
+    args: { size: 's', label: true },
+};
 
-export const mLabel = (args: StoryArgs): TemplateResult => Template(args);
-mLabel.args = { size: 'm', label: true };
+export const SizeMLabel = {
+    render: (args: Properties): TemplateResult => Template(args),
+    args: { size: 'm', label: true },
+};
 
-export const lLabel = (args: StoryArgs): TemplateResult => Template(args);
-lLabel.args = { size: 'l', label: true };
+export const SizeLLabel = {
+    render: (args: Properties): TemplateResult => Template(args),
+    args: { size: 'l', label: true },
+};
 
-export const XLLabel = (args: StoryArgs): TemplateResult => Template(args);
-XLLabel.args = { size: 'xl', label: true };
+export const SizeXLLabel = {
+    render: (args: Properties): TemplateResult => Template(args),
+    args: { size: 'xl', label: true },
+};

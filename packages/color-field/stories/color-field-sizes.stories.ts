@@ -18,6 +18,7 @@ import { ColorFieldMarkup } from './template.js';
 export default {
     component: 'sp-color-field',
     title: 'Color Field/Sizes',
+    tags: ['!dev'],
 };
 
 export const s = (): TemplateResult => ColorFieldMarkup({ size: 's' });

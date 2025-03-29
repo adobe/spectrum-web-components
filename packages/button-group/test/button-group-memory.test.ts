@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { buttons } from '../stories/button-group.stories.js';
+import { Buttons } from '../stories/button-group.stories.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-testForMemoryLeaks(buttons({}));
+testForMemoryLeaks(Buttons.render({}));

@@ -17,31 +17,46 @@ export default {
     component: 'sp-tabs-overflow',
 };
 
-export const s = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
+export const s = {
+    render: (args: OverflowProperties): TemplateResult => {
+        return renderTabsOverflowExample(args);
+    },
+
+    args: {
+        size: 's',
+        includeTabPanel: true,
+    },
 };
-s.args = {
-    size: 's',
-    includeTabPanel: true,
+
+export const m = {
+    render: (args: OverflowProperties): TemplateResult => {
+        return renderTabsOverflowExample(args);
+    },
+
+    args: {
+        size: 'm',
+        includeTabPanel: true,
+    },
 };
-export const m = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
+
+export const l = {
+    render: (args: OverflowProperties): TemplateResult => {
+        return renderTabsOverflowExample(args);
+    },
+
+    args: {
+        size: 'l',
+        pincludeTabPanelanel: true,
+    },
 };
-m.args = {
-    size: 'm',
-    includeTabPanel: true,
-};
-export const l = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
-};
-l.args = {
-    size: 'l',
-    pincludeTabPanelanel: true,
-};
-export const XL = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
-};
-XL.args = {
-    size: 'xl',
-    includeTabPanel: true,
+
+export const XL = {
+    render: (args: OverflowProperties): TemplateResult => {
+        return renderTabsOverflowExample(args);
+    },
+
+    args: {
+        size: 'xl',
+        includeTabPanel: true,
+    },
 };

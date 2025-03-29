@@ -18,6 +18,22 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { NumberField } from '@spectrum-web-components/number-field/src/NumberField.js';
 
+export interface Properties {
+    disabled?: boolean;
+    indeterminate?: boolean;
+    invalid?: boolean;
+    value?: number;
+    placeholder?: string;
+    max?: number;
+    min?: number;
+    hideStepper?: boolean;
+    readonly?: boolean;
+    step?: number;
+    onChange?: (value: number) => void;
+    onInput?: (value: number) => void;
+    [prop: string]: unknown;
+}
+
 export default {
     title: 'Number Field',
     component: 'sp-number-field',
@@ -172,100 +188,61 @@ export default {
     },
 };
 
-interface StoryArgs {
-    disabled?: boolean;
-    indeterminate?: boolean;
-    invalid?: boolean;
-    value?: number;
-    placeholder?: string;
-    max?: number;
-    min?: number;
-    hideStepper?: boolean;
-    readonly?: boolean;
-    step?: number;
-    onChange?: (value: number) => void;
-    onInput?: (value: number) => void;
-    [prop: string]: unknown;
-}
+export const Default = {
+    render: (args: Properties = {}): TemplateResult => {
+        const onChange =
+            (args.onChange as (value: number) => void) ||
+            (() => {
+                return;
+            });
+        const onInput =
+            (args.onInput as (value: number) => void) ||
+            (() => {
+                return;
+            });
+        return html`
+            <sp-field-label for="default">Enter a number</sp-field-label>
+            <sp-number-field
+                id="default"
+                ...=${spreadProps(args)}
+                @input=${(event: Event) =>
+                    onInput((event.target as NumberField).value)}
+                @change=${(event: Event) =>
+                    onChange((event.target as NumberField).value)}
+                style=${ifDefined(args.quiet ? undefined : 'width: 150px')}
+            ></sp-number-field>
+        `;
+    },
 
-export const Default = (args: StoryArgs = {}): TemplateResult => {
-    const onChange =
-        (args.onChange as (value: number) => void) ||
-        (() => {
-            return;
-        });
-    const onInput =
-        (args.onInput as (value: number) => void) ||
-        (() => {
-            return;
-        });
-    return html`
-        <sp-field-label for="default">Enter a number</sp-field-label>
-        <sp-number-field
-            id="default"
-            ...=${spreadProps(args)}
-            @input=${(event: Event) =>
-                onInput((event.target as NumberField).value)}
-            @change=${(event: Event) =>
-                onChange((event.target as NumberField).value)}
-            style=${ifDefined(args.quiet ? undefined : 'width: 150px')}
-        ></sp-number-field>
-    `;
+    args: {
+        value: 100,
+    },
 };
 
-Default.args = {
-    value: 100,
+export const Quiet = {
+    render: Default.render,
+
+    args: {
+        quiet: true,
+        value: 100,
+    },
 };
 
-export const quiet = (args: StoryArgs = {}): TemplateResult => Default(args);
+export const Indeterminate = {
+    render: Default.render,
 
-quiet.args = {
-    quiet: true,
-    value: 100,
+    args: {
+        value: 100,
+        indeterminate: true,
+    },
 };
 
-export const indeterminate = (args: StoryArgs = {}): TemplateResult =>
-    Default(args);
-
-indeterminate.args = {
-    value: 100,
-    indeterminate: true,
-};
-
-export const decimals = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-field-label for="decimals">
-            Enter a number with visible decimals
-        </sp-field-label>
-        <sp-number-field
-            id="decimals"
-            style="width: 200px"
-            ...=${spreadProps(args)}
-            @change=${args.onChange}
-            @input=${args.onInput}
-            .formatOptions=${{
-                signDisplay: 'exceptZero',
-                minimumFractionDigits: 1,
-                maximumFractionDigits: 2,
-            } as unknown as Intl.NumberFormatOptions}
-        ></sp-number-field>
-    `;
-};
-
-decimals.args = {
-    value: 19.274,
-};
-
-export const germanDecimals = (args: StoryArgs): TemplateResult => {
-    let currentDir = 'ltr';
-    if (window.__swc_hack_knobs__) {
-        currentDir = window.__swc_hack_knobs__.defaultDirection;
-    }
-    return html`
-        <sp-field-label for="decimals">
-            Enter a number with visible decimals
-        </sp-field-label>
-        <sp-theme lang="de" dir="${currentDir}">
+export const Decimals = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-field-label for="decimals">
+                Enter a number with visible decimals
+            </sp-field-label>
             <sp-number-field
                 id="decimals"
                 style="width: 200px"
@@ -278,226 +255,290 @@ export const germanDecimals = (args: StoryArgs): TemplateResult => {
                     maximumFractionDigits: 2,
                 } as unknown as Intl.NumberFormatOptions}
             ></sp-number-field>
-        </sp-theme>
-    `;
+        `;
+    },
+
+    args: {
+        value: 19.274,
+    },
 };
 
-germanDecimals.args = {
-    value: 19.274,
-};
-
-export const percents = (args: StoryArgs = {}): TemplateResult => {
-    return html`
-        <sp-field-label for="percents">Enter a percentage</sp-field-label>
-        <sp-number-field
-            id="percents"
-            style="width: 200px"
-            ...=${spreadProps(args)}
-            @change=${args.onChange}
-            .formatOptions=${{
-                style: 'percent',
-                unitDisplay: 'narrow',
-            } as unknown as Intl.NumberFormatOptions}
-        ></sp-number-field>
-    `;
-};
-
-percents.args = {
-    value: 0.372,
-};
-
-export const currency = (args: StoryArgs = {}): TemplateResult => {
-    return html`
-        <sp-field-label for="currency">Enter a value in Euros</sp-field-label>
-        <sp-number-field
-            style="width: 200px"
-            ...=${spreadProps(args)}
-            @change=${args.onChange}
-            .formatOptions=${{
-                style: 'currency',
-                currency: 'EUR',
-                currencyDisplay: 'code',
-                currencySign: 'accounting',
-            } as unknown as Intl.NumberFormatOptions}
-        ></sp-number-field>
-    `;
-};
-
-currency.args = {
-    value: 23.19,
-};
-
-export const units = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-field-label for="units">Enter a lengths in inches</sp-field-label>
-        <sp-number-field
-            id="units"
-            style="width: 200px"
-            ...=${spreadProps(args)}
-            @change=${args.onChange}
-            .formatOptions=${{
-                style: 'unit',
-                unit: 'inch',
-                unitDisplay: 'long',
-            } as unknown as Intl.NumberFormatOptions}
-        ></sp-number-field>
-    `;
-};
-
-units.args = {
-    value: 24,
-};
-
-export const pixels = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-field-label for="units">Enter a lengths in pixels</sp-field-label>
-        <sp-number-field
-            id="units"
-            style="width: 200px"
-            .formatOptions=${{
-                style: 'unit',
-                unit: 'px',
-            }}
-            ...=${spreadProps(args)}
-            @change=${args.onChange}
-        ></sp-number-field>
-    `;
-};
-
-pixels.args = {
-    value: 800,
-};
-
-export const minMax = (args: StoryArgs): TemplateResult => html`
-    <sp-field-label for="min-max">
-        Enter a value between 0 and 255
-    </sp-field-label>
-    <sp-number-field
-        id="min-max"
-        style="width: 200px"
-        ...=${spreadProps(args)}
-        @change=${args.onChange}
-    ></sp-number-field>
-`;
-
-minMax.args = {
-    value: 4,
-    min: 0,
-    max: 255,
-};
-
-export const hideStepper = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-field-label for="hideStepper">
-            Enter a number without the stepper UI
-        </sp-field-label>
-        <sp-number-field
-            id="hideStepper"
-            ...=${spreadProps(args)}
-            @change=${args.onChange}
-        ></sp-number-field>
-    `;
-};
-hideStepper.args = {
-    hideStepper: true,
-    value: 67,
-};
-
-export const hideStepperQuiet = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-field-label for="hideStepper">
-            Enter a number without the stepper UI
-        </sp-field-label>
-        <sp-number-field
-            id="hideStepper"
-            ...=${spreadProps(args)}
-            @change=${args.onChange}
-        ></sp-number-field>
-    `;
-};
-hideStepperQuiet.args = {
-    hideStepper: true,
-    value: 67,
-    quiet: true,
-};
-
-export const disabled = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-field-label for="disabled">
-            This Number Field is disabled
-        </sp-field-label>
-        <sp-number-field
-            id="disabled"
-            ...=${spreadProps(args)}
-            @change=${args.onChange}
-        ></sp-number-field>
-    `;
-};
-disabled.args = {
-    disabled: true,
-    value: 892,
-};
-
-export const readOnly = (args: StoryArgs): TemplateResult => {
-    return html`
-        <sp-field-label for="readonly">
-            You can only read the following value
-        </sp-field-label>
-        <sp-number-field
-            id="readonly"
-            ...=${spreadProps(args)}
-            @change=${args.onChange}
-        ></sp-number-field>
-    `;
-};
-readOnly.args = {
-    readonly: true,
-    value: '15',
-};
-
-export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
-    const onChange =
-        (args.onChange as (value: number) => void) ||
-        (() => {
-            return;
-        });
-    const onInput =
-        (args.onInput as (value: number) => void) ||
-        (() => {
-            return;
-        });
-    return html`
-        <style>
-            .scroller {
-                height: 140px;
-                width: 200px;
-                overflow-y: scroll;
-                padding: 10px;
-                background: var(--spectrum-gray-50);
-            }
-
-            .scroller > div {
-                height: 1000px;
-            }
-        </style>
-        <div class="scroller">
-            <div>
-                <sp-field-label for="default">Enter a number</sp-field-label>
+export const GermanDecimals = {
+    render: (args: Properties): TemplateResult => {
+        let currentDir = 'ltr';
+        if (window.__swc_hack_knobs__) {
+            currentDir = window.__swc_hack_knobs__.defaultDirection;
+        }
+        return html`
+            <sp-field-label for="decimals">
+                Enter a number with visible decimals
+            </sp-field-label>
+            <sp-theme lang="de" dir="${currentDir}">
                 <sp-number-field
-                    id="default"
+                    id="decimals"
+                    style="width: 200px"
                     ...=${spreadProps(args)}
-                    @input=${(event: Event) =>
-                        onInput((event.target as NumberField).value)}
-                    @change=${(event: Event) =>
-                        onChange((event.target as NumberField).value)}
-                    style="width: 150px"
+                    @change=${args.onChange}
+                    @input=${args.onInput}
+                    .formatOptions=${{
+                        signDisplay: 'exceptZero',
+                        minimumFractionDigits: 1,
+                        maximumFractionDigits: 2,
+                    } as unknown as Intl.NumberFormatOptions}
                 ></sp-number-field>
-                <p>
-                    This box should not scroll when the focus is inside the
-                    number field and field value is changed by using the mouse
-                    wheel.
-                </p>
+            </sp-theme>
+        `;
+    },
+
+    args: {
+        value: 19.274,
+    },
+};
+
+export const Percents = {
+    render: (args: Properties = {}): TemplateResult => {
+        return html`
+            <sp-field-label for="percents">Enter a percentage</sp-field-label>
+            <sp-number-field
+                id="percents"
+                style="width: 200px"
+                ...=${spreadProps(args)}
+                @change=${args.onChange}
+                .formatOptions=${{
+                    style: 'percent',
+                    unitDisplay: 'narrow',
+                } as unknown as Intl.NumberFormatOptions}
+            ></sp-number-field>
+        `;
+    },
+
+    args: {
+        value: 0.372,
+    },
+};
+
+export const Currency = {
+    render: (args: Properties = {}): TemplateResult => {
+        return html`
+            <sp-field-label for="currency">
+                Enter a value in Euros
+            </sp-field-label>
+            <sp-number-field
+                style="width: 200px"
+                ...=${spreadProps(args)}
+                @change=${args.onChange}
+                .formatOptions=${{
+                    style: 'currency',
+                    currency: 'EUR',
+                    currencyDisplay: 'code',
+                    currencySign: 'accounting',
+                } as unknown as Intl.NumberFormatOptions}
+            ></sp-number-field>
+        `;
+    },
+
+    args: {
+        value: 23.19,
+    },
+};
+
+export const Units = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-field-label for="units">
+                Enter a lengths in inches
+            </sp-field-label>
+            <sp-number-field
+                id="units"
+                style="width: 200px"
+                ...=${spreadProps(args)}
+                @change=${args.onChange}
+                .formatOptions=${{
+                    style: 'unit',
+                    unit: 'inch',
+                    unitDisplay: 'long',
+                } as unknown as Intl.NumberFormatOptions}
+            ></sp-number-field>
+        `;
+    },
+
+    args: {
+        value: 24,
+    },
+};
+
+export const Pixels = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-field-label for="units">
+                Enter a lengths in pixels
+            </sp-field-label>
+            <sp-number-field
+                id="units"
+                style="width: 200px"
+                .formatOptions=${{
+                    style: 'unit',
+                    unit: 'px',
+                }}
+                ...=${spreadProps(args)}
+                @change=${args.onChange}
+            ></sp-number-field>
+        `;
+    },
+
+    args: {
+        value: 800,
+    },
+};
+
+export const MinMax = {
+    render: (args: Properties): TemplateResult => html`
+        <sp-field-label for="min-max">
+            Enter a value between 0 and 255
+        </sp-field-label>
+        <sp-number-field
+            id="min-max"
+            style="width: 200px"
+            ...=${spreadProps(args)}
+            @change=${args.onChange}
+        ></sp-number-field>
+    `,
+
+    args: {
+        value: 4,
+        min: 0,
+        max: 255,
+    },
+};
+
+export const HideStepper = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-field-label for="hideStepper">
+                Enter a number without the stepper UI
+            </sp-field-label>
+            <sp-number-field
+                id="hideStepper"
+                ...=${spreadProps(args)}
+                @change=${args.onChange}
+            ></sp-number-field>
+        `;
+    },
+
+    args: {
+        hideStepper: true,
+        value: 67,
+    },
+};
+
+export const HideStepperQuiet = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-field-label for="hideStepper">
+                Enter a number without the stepper UI
+            </sp-field-label>
+            <sp-number-field
+                id="hideStepper"
+                ...=${spreadProps(args)}
+                @change=${args.onChange}
+            ></sp-number-field>
+        `;
+    },
+
+    args: {
+        hideStepper: true,
+        value: 67,
+        quiet: true,
+    },
+};
+
+export const Disabled = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-field-label for="disabled">
+                This Number Field is disabled
+            </sp-field-label>
+            <sp-number-field
+                id="disabled"
+                ...=${spreadProps(args)}
+                @change=${args.onChange}
+            ></sp-number-field>
+        `;
+    },
+
+    args: {
+        disabled: true,
+        value: 892,
+    },
+};
+
+export const ReadOnly = {
+    render: (args: Properties): TemplateResult => {
+        return html`
+            <sp-field-label for="readonly">
+                You can only read the following value
+            </sp-field-label>
+            <sp-number-field
+                id="readonly"
+                ...=${spreadProps(args)}
+                @change=${args.onChange}
+            ></sp-number-field>
+        `;
+    },
+
+    args: {
+        readonly: true,
+        value: '15',
+    },
+};
+
+export const ScrollingContainer = {
+    render: (args: Properties = {}): TemplateResult => {
+        const onChange =
+            (args.onChange as (value: number) => void) ||
+            (() => {
+                return;
+            });
+        const onInput =
+            (args.onInput as (value: number) => void) ||
+            (() => {
+                return;
+            });
+        return html`
+            <style>
+                .scroller {
+                    height: 140px;
+                    width: 200px;
+                    overflow-y: scroll;
+                    padding: 10px;
+                    background: var(--spectrum-gray-50);
+                }
+
+                .scroller > div {
+                    height: 1000px;
+                }
+            </style>
+            <div class="scroller">
+                <div>
+                    <sp-field-label for="default">
+                        Enter a number
+                    </sp-field-label>
+                    <sp-number-field
+                        id="default"
+                        ...=${spreadProps(args)}
+                        @input=${(event: Event) =>
+                            onInput((event.target as NumberField).value)}
+                        @change=${(event: Event) =>
+                            onChange((event.target as NumberField).value)}
+                        style="width: 150px"
+                    ></sp-number-field>
+                    <p>
+                        This box should not scroll when the focus is inside the
+                        number field and field value is changed by using the
+                        mouse wheel.
+                    </p>
+                </div>
             </div>
-        </div>
-    `;
+        `;
+    },
 };

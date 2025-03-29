@@ -21,14 +21,14 @@ import type {
 } from '../src/Swatch.js';
 import { SwatchGroup } from '../src/SwatchGroup.js';
 
-type Properties = {
+export interface Properties {
     border: SwatchBorder | 'normal';
     density?: 'normal' | 'spacious' | 'compact';
     rounding?: SwatchRounding | 'normal';
     selected?: string[];
     selects?: 'none' | 'single' | 'multiple';
     shape?: SwatchShape | 'normal';
-};
+}
 
 export default {
     title: 'Swatch group',
@@ -178,55 +178,86 @@ const template = ({
     `;
 };
 
-export const Default = (args: Properties): TemplateResult => template(args);
-Default.args = {} as Properties;
-export const densityCompact = (args: Properties): TemplateResult =>
-    template(args);
-densityCompact.args = {
-    density: 'compact',
-} as Properties;
-export const densitySpacious = (args: Properties): TemplateResult =>
-    template(args);
-densitySpacious.args = {
-    density: 'spacious',
-} as Properties;
-export const selectsSingle = (args: Properties): TemplateResult =>
-    template(args);
-selectsSingle.args = {
-    selects: 'single',
-    selected: ['--spectrum-yellow-500'],
-} as Properties;
-export const selectsMultiple = (args: Properties): TemplateResult =>
-    template(args);
-selectsMultiple.args = {
-    selects: 'multiple',
-    selected: [
-        '--spectrum-celery-500',
-        '--spectrum-red-500',
-        '--spectrum-purple-500',
-        '--spectrum-blue-500',
-    ],
-} as Properties;
-export const borderLight = (args: Properties): TemplateResult => template(args);
-borderLight.args = {
-    border: 'light',
-} as Properties;
-export const borderNone = (args: Properties): TemplateResult => template(args);
-borderNone.args = {
-    border: 'none',
-} as Properties;
-export const roundingNone = (args: Properties): TemplateResult =>
-    template(args);
-roundingNone.args = {
-    rounding: 'none',
-} as Properties;
-export const roundingFull = (args: Properties): TemplateResult =>
-    template(args);
-roundingFull.args = {
-    rounding: 'full',
-} as Properties;
-export const shapeRectangle = (args: Properties): TemplateResult =>
-    template(args);
-shapeRectangle.args = {
-    shape: 'rectangle',
-} as Properties;
+export const Default = {
+    render: (args: Properties): TemplateResult => template(args),
+    args: {} as Properties,
+};
+
+export const densityCompact = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        density: 'compact',
+    } as Properties,
+};
+
+export const densitySpacious = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        density: 'spacious',
+    } as Properties,
+};
+
+export const selectsSingle = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        selects: 'single',
+        selected: ['--spectrum-yellow-500'],
+    } as Properties,
+};
+
+export const selectsMultiple = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        selects: 'multiple',
+        selected: [
+            '--spectrum-celery-500',
+            '--spectrum-red-500',
+            '--spectrum-purple-500',
+            '--spectrum-blue-500',
+        ],
+    } as Properties,
+};
+
+export const borderLight = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        border: 'light',
+    } as Properties,
+};
+
+export const borderNone = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        border: 'none',
+    } as Properties,
+};
+
+export const roundingNone = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        rounding: 'none',
+    } as Properties,
+};
+
+export const roundingFull = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        rounding: 'full',
+    } as Properties,
+};
+
+export const shapeRectangle = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    args: {
+        shape: 'rectangle',
+    } as Properties,
+};

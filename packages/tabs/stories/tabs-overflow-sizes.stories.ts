@@ -15,29 +15,45 @@ import { OverflowProperties, renderTabsOverflowExample } from './index.js';
 export default {
     title: 'Tabs Overflow/Sizes',
     component: 'sp-tabs-overflow',
+    tags: ['!dev'],
 };
 
-export const s = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
+export const s = {
+    render: (args: OverflowProperties): TemplateResult => {
+        return renderTabsOverflowExample(args);
+    },
+
+    args: {
+        size: 's',
+    },
 };
-s.args = {
-    size: 's',
+
+export const m = {
+    render: (args: OverflowProperties): TemplateResult => {
+        return renderTabsOverflowExample(args);
+    },
+
+    args: {
+        size: 'm',
+    },
 };
-export const m = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
+
+export const l = {
+    render: (args: OverflowProperties): TemplateResult => {
+        return renderTabsOverflowExample(args);
+    },
+
+    args: {
+        size: 'l',
+    },
 };
-m.args = {
-    size: 'm',
-};
-export const l = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
-};
-l.args = {
-    size: 'l',
-};
-export const XL = (args: OverflowProperties): TemplateResult => {
-    return renderTabsOverflowExample(args);
-};
-XL.args = {
-    size: 'xl',
+
+export const XL = {
+    render: (args: OverflowProperties): TemplateResult => {
+        return renderTabsOverflowExample(args);
+    },
+
+    args: {
+        size: 'xl',
+    },
 };

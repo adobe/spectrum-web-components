@@ -151,7 +151,7 @@ export default {
     },
 };
 
-interface Properties {
+export interface Properties {
     placement?: Placement;
     offset?: number;
     triggerOn?: OverlayContentTypes;
@@ -234,57 +234,65 @@ const template = ({
     `;
 };
 
-export const Default = ({ open }: Properties = {}): TemplateResult => {
-    const renderPopover = (): TemplateResult => html`
-        <sp-popover>
-            <sp-dialog no-divider>Popover content goes here</sp-dialog>
-        </sp-popover>
-    `;
-    const options = typeof open !== 'undefined' ? { open } : undefined;
-    return html`
-        <sp-button ${trigger(renderPopover, options)}>Open Popover</sp-button>
-    `;
-};
-
-Default.swc_vrt = {
-    skip: true,
-};
-
-Default.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
-};
-
-export const configured = (args: Properties): TemplateResult => template(args);
-
-configured.swc_vrt = {
-    skip: true,
-};
-
-configured.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
-};
-
-export const insertionOptions = (args: Properties = {}): TemplateResult => html`
-    ${template(args)}
-    <div id="other-element"></div>
-`;
-
-insertionOptions.args = {
-    insertionOptions: {
-        el: () => document.querySelector('#other-element'),
-        where: 'afterbegin',
+export const Default = {
+    render: ({ open }: Properties = {}): TemplateResult => {
+        const renderPopover = (): TemplateResult => html`
+            <sp-popover>
+                <sp-dialog no-divider>Popover content goes here</sp-dialog>
+            </sp-popover>
+        `;
+        const options = typeof open !== 'undefined' ? { open } : undefined;
+        return html`
+            <sp-button ${trigger(renderPopover, options)}>
+                Open Popover
+            </sp-button>
+        `;
     },
-} as Properties;
 
-insertionOptions.swc_vrt = {
-    skip: true,
+    swc_vrt: {
+        skip: true,
+    },
+
+    parameters: {
+        // Disables Chromatic's snapshotting on a global level
+        chromatic: { disableSnapshot: true },
+    },
 };
 
-insertionOptions.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+export const configured = {
+    render: (args: Properties): TemplateResult => template(args),
+
+    swc_vrt: {
+        skip: true,
+    },
+
+    parameters: {
+        // Disables Chromatic's snapshotting on a global level
+        chromatic: { disableSnapshot: true },
+    },
+};
+
+export const OverlayWithInsertionOptions = {
+    render: (args: Properties = {}): TemplateResult => html`
+        ${template(args)}
+        <div id="other-element"></div>
+    `,
+
+    args: {
+        insertionOptions: {
+            el: () => document.querySelector('#other-element'),
+            where: 'afterbegin',
+        },
+    } as Properties,
+
+    swc_vrt: {
+        skip: true,
+    },
+
+    parameters: {
+        // Disables Chromatic's snapshotting on a global level
+        chromatic: { disableSnapshot: true },
+    },
 };
 
 class ManagedOverlayTrigger extends LitElement {
@@ -361,15 +369,17 @@ class ManagedOverlayTrigger extends LitElement {
 
 customElements.define('managed-overlay-trigger', ManagedOverlayTrigger);
 
-export const managedOverlayTrigger = (): TemplateResult => html`
-    <managed-overlay-trigger></managed-overlay-trigger>
-`;
+export const managedOverlayTrigger = {
+    render: (): TemplateResult => html`
+        <managed-overlay-trigger></managed-overlay-trigger>
+    `,
 
-managedOverlayTrigger.swc_vrt = {
-    skip: true,
-};
+    swc_vrt: {
+        skip: true,
+    },
 
-managedOverlayTrigger.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+    parameters: {
+        // Disables Chromatic's snapshotting on a global level
+        chromatic: { disableSnapshot: true },
+    },
 };

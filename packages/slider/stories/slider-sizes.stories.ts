@@ -16,6 +16,7 @@ import '@spectrum-web-components/slider/sp-slider.js';
 export default {
     component: 'sp-slider',
     title: 'Slider/Sizes',
+    tags: ['!dev'],
 };
 
 const template = ({

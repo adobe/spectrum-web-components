@@ -16,7 +16,7 @@ import {
     argTypes,
     chevronDown,
     chevronUp,
-    StoryArgs,
+    Properties,
     Template,
 } from './index.js';
 
@@ -25,23 +25,39 @@ export default {
     component: 'sp-infield-button',
     argTypes,
     args,
+    tags: ['!dev'],
 };
 
-export const s = (args: StoryArgs): TemplateResult => Template(args);
-s.args = {
-    size: 's',
+export const s = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        size: 's',
+    },
 };
-export const m = (args: StoryArgs): TemplateResult => Template(args);
-m.args = {
-    size: 'm',
+
+export const m = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        size: 'm',
+    },
 };
-export const l = (args: StoryArgs): TemplateResult => Template(args);
-l.args = {
-    size: 'l',
+
+export const l = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        size: 'l',
+    },
 };
-export const XL = (args: StoryArgs): TemplateResult => Template(args);
-XL.args = {
-    size: 'xl',
+
+export const XL = {
+    render: (args: Properties): TemplateResult => Template(args),
+
+    args: {
+        size: 'xl',
+    },
 };
 
 export const stackedS = (): TemplateResult => html`
@@ -58,6 +74,7 @@ export const stackedS = (): TemplateResult => html`
         label: 'Decrease',
     })}
 `;
+
 export const stackedM = (): TemplateResult => html`
     ${Template({
         block: 'start',
@@ -72,6 +89,7 @@ export const stackedM = (): TemplateResult => html`
         label: 'Decrease',
     })}
 `;
+
 export const stackedL = (): TemplateResult => html`
     ${Template({
         block: 'start',
@@ -86,6 +104,7 @@ export const stackedL = (): TemplateResult => html`
         label: 'Decrease',
     })}
 `;
+
 export const stackedXL = (): TemplateResult => html`
     ${Template({
         block: 'start',
