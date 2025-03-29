@@ -62,7 +62,7 @@
         "@spectrum-web-components/shared": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/progresscircle": "4.0.0-s2-foundations.16"
+        "@spectrum-css/progresscircle": "5.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

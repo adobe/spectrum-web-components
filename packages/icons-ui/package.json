@@ -49,7 +49,7 @@
         "@spectrum-web-components/iconset": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/ui-icons": "^1.1.2",
+        "@spectrum-css/ui-icons": "1.1.2",
         "@spectrum-css/ui-icons-s2": "npm:@spectrum-css/ui-icons@2.0.0-s2-foundations.10",
         "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",

@@ -1,14 +1,14 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #textfield {
@@ -35,8 +35,6 @@ governing permissions and limitations under the License.
     --spectrum-search-color-key-focus: var(--spectrum-neutral-content-color-key-focus);
     --spectrum-search-border-width: var(--spectrum-border-width-100);
     --spectrum-search-color-disabled: var(--spectrum-disabled-content-color);
-    --spectrum-search-background-color-disabled: var(--spectrum-disabled-background-color);
-    --spectrum-search-border-color-disabled: var(--spectrum-disabled-background-color);
     --mod-textfield-font-family: var(--mod-search-font-family, var(--spectrum-search-font-family));
     --mod-textfield-font-weight: var(--mod-search-font-weight, var(--spectrum-search-font-weight));
     --mod-textfield-corner-radius: var(--mod-search-border-radius, var(--spectrum-search-border-radius));

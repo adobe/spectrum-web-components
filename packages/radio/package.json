@@ -73,7 +73,7 @@
         "@spectrum-web-components/shared": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/radio": "10.0.0-s2-foundations.17"
+        "@spectrum-css/radio": "10.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

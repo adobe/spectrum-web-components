@@ -33,7 +33,7 @@ type ReplacementComponent = {
     replace: SelectorComponent;
 };
 
-type ComplexSelectorConversion = {
+export type ComplexSelectorConversion = {
     find: SelectorComponent[];
     /**
      * Remove Selector Components from the final selector so that it matches the
@@ -52,7 +52,7 @@ type ComplexSelectorConversion = {
     replace: ('take' | ReplacementComponent)[];
 };
 
-type SelectorConversion = ReplacementComponent & {
+export type SelectorConversion = ReplacementComponent & {
     find: SelectorComponent;
 };
 
@@ -63,11 +63,7 @@ type SelectorComponentWithRegex = SelectorComponent & {
     regex?: RegExp;
 };
 
-type Conversion = {
-    /**
-     * By defaults `.spectrum`, `.spectrum--dark`, etc. are excluded
-     */
-    allowThemeRules?: boolean;
+export type Conversion = {
     components: (SelectorConversion | ComplexSelectorConversion)[];
     /**
      * Selectors exactly matching the array of Selector Components present will be excluded
@@ -93,10 +89,6 @@ type Conversion = {
      * Exclude Selectors that do not feature the Selector Components included herein
      */
     requireComponentPresence?: SelectorComponentWithRegex[];
-    /**
-     * Create a system-overrides.css file that acts as a bridge between different themes
-     */
-    systemOverrides?: boolean;
 };
 
 export type SpectrumCSSConverter = {
