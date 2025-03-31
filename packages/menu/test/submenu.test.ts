@@ -57,19 +57,6 @@ const selectsWithKeyboardData = [
     },
 ] as SelectsWithKeyboardTest[];
 
-/*
-type overlay = {
-    state?: string;
-}
-
-const overlayState = function(el?: ActionMenu | MenuItem): string {
-    const overlay = el?.overlayElement as overlay;
-    if (!overlay) {
-        return 'no overlay';
-    }
-    return  overlay && overlay.state ? overlay.state : 'no state';
-}*/
-
 describe('Submenu', () => {
     function selectWithPointer(): void {
         it('with pointer', async function () {
@@ -94,6 +81,44 @@ describe('Submenu', () => {
             expect(
                 this.rootChanged.withArgs('Has submenu').calledOnce,
                 'root changed'
+            ).to.be.true;
+        });
+    }
+    function selectsWithBoth(testData: SelectsWithKeyboardTest): void {
+        it(`with pointer and keyboard: ${testData.dir}`, async function () {
+            expect(this.rootItem.open).to.be.false;
+
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            await sendMouseTo(this.rootItem);
+            await opened;
+            const item1 = document.querySelector('.submenu-item-1') as MenuItem;
+            const item2 = document.querySelector('.submenu-item-2') as MenuItem;
+
+            expect(this.rootItem.open, `submenu should open`).to.be.true;
+            expect(document.activeElement).not.to.equal(item1);
+
+            const prev = this.rootItem.previousElementSibling as MenuItem;
+
+            // arrow up should move focus away from the submenu
+            // but submenu stays open while pointer is over it
+            await sendKeys({
+                press: 'ArrowUp',
+            });
+            expect(document.activeElement).to.equal(prev);
+            expect(prev.focused, `focus is on previous item`).to.be.true;
+            expect(this.rootItem.open, `submenu should stay open`).to.be.true;
+
+            const closed = oneEvent(this.rootItem, 'sp-closed');
+            await sendMouseTo(item2, 'click');
+            await closed;
+
+            expect(
+                this.submenuChanged.withArgs('Two').calledOnce,
+                `submenu changed ${this.submenuChanged.callCount} times`
+            ).to.be.true;
+            expect(
+                this.rootChanged.withArgs('Has submenu').calledOnce,
+                `root changed ${this.submenuChanged.callCount} times`
             ).to.be.true;
         });
     }
@@ -418,6 +443,7 @@ describe('Submenu', () => {
             selectWithPointer();
             selectsWithKeyboardData.map((testData) => {
                 selectsWithKeyboard(testData);
+                selectsWithBoth(testData);
             });
         });
         closesOnPointerLeave();
@@ -458,6 +484,7 @@ describe('Submenu', () => {
             selectWithPointer();
             selectsWithKeyboardData.map((testData) => {
                 selectsWithKeyboard(testData);
+                selectsWithBoth(testData);
             });
         });
         closesOnPointerLeave();

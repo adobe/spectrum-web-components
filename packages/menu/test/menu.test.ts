@@ -313,56 +313,6 @@ describe('Menu', () => {
         );
     });
 
-    it('handles hover and keyboard input', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu>
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item>Select Inverse</sp-menu-item>
-            </sp-menu>
-        `);
-
-        await waitUntil(
-            () => el.childItems.length == 2,
-            'expected menu to manage 2 items'
-        );
-
-        const firstItem = el.querySelector(
-            'sp-menu-item:nth-of-type(1)'
-        ) as MenuItem;
-        const secondItem = el.querySelector(
-            'sp-menu-item:nth-of-type(2)'
-        ) as MenuItem;
-
-        el.focus();
-        await elementUpdated(el);
-
-        expect(document.activeElement).to.equal(firstItem);
-        expect(firstItem.focused, 'first item focused').to.be.true;
-        const rect = secondItem.getBoundingClientRect();
-
-        await sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'move',
-                },
-            ],
-        });
-
-        expect(document.activeElement, 'active element after hover').to.equal(
-            secondItem
-        );
-        expect(secondItem.focused, 'second item focused').to.be.true;
-
-        await sendKeys({ press: 'ArrowUp' });
-
-        expect(document.activeElement).to.equal(firstItem);
-        expect(firstItem.focused, 'first item focused').to.be.true;
-    });
-
     it('handle focus and late descendant additions', async () => {
         const el = await fixture<Menu>(html`
             <sp-menu>
