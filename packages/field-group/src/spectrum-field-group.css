@@ -9,38 +9,3 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-.group {
-    --spectrum-fieldgroup-margin: var(--spectrum-spacing-300);
-    flex-flow: column wrap;
-    display: flex;
-}
-
-.spectrum-FieldGroup--toplabel {
-    flex-direction: column;
-}
-
-.spectrum-FieldGroup--sidelabel {
-    flex-direction: row;
-}
-
-.group {
-    flex-flow: column wrap;
-    display: flex;
-}
-
-:host([vertical]) .group {
-    flex-direction: column;
-}
-
-:host([horizontal]) .group {
-    flex-direction: row;
-}
-
-:host([horizontal]) .group slot:not([name])::slotted(:not(:last-child)) {
-    margin-inline-end: var(--spectrum-spacing-300);
-}
-
-:host([horizontal]) .group .spectrum-HelpText {
-    flex-basis: 100%;
-}
