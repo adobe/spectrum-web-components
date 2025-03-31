@@ -7265,20 +7265,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/dropzone@npm:7.0.1":
-  version: 7.0.1
-  resolution: "@spectrum-css/dropzone@npm:7.0.1"
+"@spectrum-css/dropzone@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@spectrum-css/dropzone@npm:8.1.0"
   peerDependencies:
-    "@spectrum-css/actionbutton": ">=6"
-    "@spectrum-css/illustratedmessage": ">=7"
-    "@spectrum-css/link": ">=5"
-    "@spectrum-css/tokens": ">=14 || >=15"
+    "@spectrum-css/actionbutton": ">=7.0.0 <8.0.0"
+    "@spectrum-css/illustratedmessage": ">=9.0.0 <10.0.0"
+    "@spectrum-css/link": ">=7.0.0 <8.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/actionbutton":
       optional: true
+    "@spectrum-css/illustratedmessage":
+      optional: true
     "@spectrum-css/link":
       optional: true
-  checksum: 10c0/cabd7d1db0fe2cffe2238c5e1bc99076c56ee462b16babd2db13a20a3535b35cc6c9c773c7113f39811cb509eccdd694d3f56f4c2ecf7fe037bb40dfd3100b3f
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/1f4fee98374f5c76fc8d8b9b74f746e6554bdb66a7d19f7f9ef07af159e6de8656c048d5bb1d86b1e13030172e0100256ad8b59df0e73db188d940591bdc9469
   languageName: node
   linkType: hard
 
@@ -7350,13 +7354,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/illustratedmessage@npm:8.0.1":
-  version: 8.0.1
-  resolution: "@spectrum-css/illustratedmessage@npm:8.0.1"
+"@spectrum-css/illustratedmessage@npm:9.1.0":
+  version: 9.1.0
+  resolution: "@spectrum-css/illustratedmessage@npm:9.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14 || >=15"
-    "@spectrum-css/typography": ">=6"
-  checksum: 10c0/7abe65b9e8a54181503810b632ff26f75cbd559665412867c01e37878b61db9c53973658dedc4685d0d3394952241caaf7470a84c70d7d997fdb85e29b4824ad
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+    "@spectrum-css/typography": ">=8.0.0 <9.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+    "@spectrum-css/typography":
+      optional: true
+  checksum: 10c0/3a9f61f978bc82feb8c9466a3fa72234b82922f1f2dd7604dece31263d654890216d1a91315e02f34cfb9351fd9e0129bb747039b46d58fc1911900512c86e35
   languageName: node
   linkType: hard
 
@@ -8338,7 +8347,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/dropzone@workspace:packages/dropzone"
   dependencies:
-    "@spectrum-css/dropzone": "npm:7.0.1"
+    "@spectrum-css/dropzone": "npm:8.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft
@@ -8469,7 +8478,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/illustrated-message@workspace:packages/illustrated-message"
   dependencies:
-    "@spectrum-css/illustratedmessage": "npm:8.0.1"
+    "@spectrum-css/illustratedmessage": "npm:9.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/styles": "npm:1.4.0"
   languageName: unknown

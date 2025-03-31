@@ -14,6 +14,7 @@
 '@spectrum-web-components/color-slider': patch
 '@spectrum-web-components/color-wheel': patch
 '@spectrum-web-components/divider': patch
+'@spectrum-web-components/drop-zone': patch
 '@spectrum-web-components/field-label': patch
 '@spectrum-web-components/help-text': patch
 '@spectrum-web-components/illustrated-message': patch
