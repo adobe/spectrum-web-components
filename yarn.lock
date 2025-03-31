@@ -7074,30 +7074,45 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/coachindicator@npm:3.0.1":
-  version: 3.0.1
-  resolution: "@spectrum-css/coachindicator@npm:3.0.1"
+"@spectrum-css/coachindicator@npm:4.1.0":
+  version: 4.1.0
+  resolution: "@spectrum-css/coachindicator@npm:4.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14 || >=15"
-  checksum: 10c0/376a470deaff9c18b832cfa1c3b9ecfe77e20f7ef6d13f3785f861add603d0251a28275bd7641e9be79ab48b3947a8d0a4bcb4d3605c18605570ade72c3461a6
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/1f3349129c6b53a0146ab14f1b8be85101a1c6fe400badd4f86aadad646864284880814353c3ee0dfe434c709f783234b611a0259be90b45ce16df68b399163a
   languageName: node
   linkType: hard
 
-"@spectrum-css/coachmark@npm:8.0.0-s2-foundations.17":
-  version: 8.0.0-s2-foundations.17
-  resolution: "@spectrum-css/coachmark@npm:8.0.0-s2-foundations.17"
+"@spectrum-css/coachmark@npm:9.1.1":
+  version: 9.1.1
+  resolution: "@spectrum-css/coachmark@npm:9.1.1"
   peerDependencies:
-    "@spectrum-css/actionbutton": ">=6"
-    "@spectrum-css/actionmenu": ">=6"
-    "@spectrum-css/button": ">=13"
-    "@spectrum-css/buttongroup": ">=7"
-    "@spectrum-css/menu": ">=7"
-    "@spectrum-css/popover": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/actionbutton": ">=7.0.0 <8.0.0"
+    "@spectrum-css/actionmenu": ">=7.0.0 <8.0.0"
+    "@spectrum-css/button": ">=14.0.0 <15.0.0"
+    "@spectrum-css/buttongroup": ">=9.0.0 <10.0.0"
+    "@spectrum-css/menu": ">=9.0.0 <10.0.0"
+    "@spectrum-css/popover": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
+    "@spectrum-css/actionbutton":
+      optional: true
+    "@spectrum-css/actionmenu":
+      optional: true
     "@spectrum-css/button":
       optional: true
-  checksum: 10c0/e3359c555872a2ae9b2e867bb056363bb07f0c7bb63e8ddbe1ffd64556e5b6686ceaf5baf6f1dd792879ae0bf320d67d3c7c7e989a92f3fb87c7b344c257a2fb
+    "@spectrum-css/buttongroup":
+      optional: true
+    "@spectrum-css/menu":
+      optional: true
+    "@spectrum-css/popover":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/51ceac74a01ffdcba4e7d111e5130872e8218ddc37f42e43e88062f1b59e0118b6c00bf61378b4fad8a83ea6c261edc571f4878203f062a9251969cd5a56d5a5
   languageName: node
   linkType: hard
 
@@ -8154,8 +8169,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/coachmark@workspace:packages/coachmark"
   dependencies:
-    "@spectrum-css/coachindicator": "npm:3.0.1"
-    "@spectrum-css/coachmark": "npm:8.0.0-s2-foundations.17"
+    "@spectrum-css/coachindicator": "npm:4.1.0"
+    "@spectrum-css/coachmark": "npm:9.1.1"
     "@spectrum-web-components/asset": "npm:1.4.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
