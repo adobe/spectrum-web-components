@@ -11,6 +11,7 @@
  */
 
 .group {
+    --spectrum-fieldgroup-margin: var(--spectrum-spacing-300);
     flex-flow: column wrap;
     display: flex;
 }
