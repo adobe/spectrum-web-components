@@ -198,13 +198,22 @@ export const complexFastPage = (): TemplateResult => html`
             </sp-overlay>
 
             <sp-button id="pageTrigger">open page</sp-button>
-            <sp-overlay trigger="pageTrigger@click" type="page">
-                <sp-dialog-wrapper
-                    headline="Full screen menu"
-                    mode="fullscreenTakeover"
-                    cancel-label="Close"
-                >
-                    <p>I am a page type overlay.</p>
+            <sp-overlay trigger="pageTrigger@click" type="auto">
+                <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+                    <p>I am a modal type overlay.</p>
+                    Enter your email
+                    <sp-action-button
+                        onClick="
+                this.dispatchEvent(
+                    new Event('close', {
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+            "
+                    >
+                        Sign in
+                    </sp-action-button>
                 </sp-dialog-wrapper>
             </sp-overlay>
             <style>
@@ -220,7 +229,6 @@ export const complexFastPage = (): TemplateResult => html`
                 <sp-popover class="chat-container">
                     <sp-dialog dismissable>
                         <span slot="heading">Chat Window</span>
-
                         <sp-action-button>Send</sp-action-button>
                     </sp-dialog>
                 </sp-popover>
@@ -270,8 +278,8 @@ export const complexSlowPage = (): TemplateResult => html`
                 }
             </style>
 
-            <sp-button id="trigger">open manual</sp-button>
-            <sp-overlay trigger="trigger@click" type="manual">
+            <sp-button id="manualTrigger">open manual</sp-button>
+            <sp-overlay trigger="manualTrigger@click" type="manual">
                 <sp-popover class="chat-container">
                     <sp-dialog dismissable>
                         <span slot="heading">Chat Window</span>
