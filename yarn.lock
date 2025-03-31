@@ -7384,12 +7384,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/typography@npm:7.0.1":
-  version: 7.0.1
-  resolution: "@spectrum-css/typography@npm:7.0.1"
+"@spectrum-css/typography@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@spectrum-css/typography@npm:8.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14.5.0 || >=15"
-  checksum: 10c0/385f127ae498c5b7fafa4cad754fec1470018d060da3fd28b5b005640fa23dbbfd0da1f080f9e4c38750398b68ae1e3c33c39a69dc0758ef6abe5edfc67bc747
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/ed61f1856faaef788077c16612b911660e49eb49442aa900106020baa1ab9d7e723593abca0d97835c570992f4ff0bf90c01e432d3c273cceee7695c159ba0bb
   languageName: node
   linkType: hard
 
@@ -8329,7 +8332,7 @@ __metadata:
     "@spectrum-css/expressvars": "npm:^3.0.9"
     "@spectrum-css/tokens": "npm:15.0.0"
     "@spectrum-css/tokens-v2": "npm:@spectrum-css/tokens@16.0.1"
-    "@spectrum-css/typography": "npm:7.0.1"
+    "@spectrum-css/typography": "npm:8.1.0"
     "@spectrum-css/vars": "npm:^9.0.8"
     "@spectrum-web-components/base": "npm:1.6.0"
     lit: "npm:^2.5.0 || ^3.1.3"
