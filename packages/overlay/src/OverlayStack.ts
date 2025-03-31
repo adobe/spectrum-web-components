@@ -34,7 +34,23 @@ class OverlayStack {
         this.document.addEventListener('pointerdown', this.handlePointerdown);
         this.document.addEventListener('pointerup', this.handlePointerup);
         this.document.addEventListener('keydown', this.handleKeydown);
+        this.document.addEventListener('scroll', this.handleScroll, {
+            capture: true,
+        });
     }
+
+    private handleScroll = (event: Event): void => {
+        // Don't close pickers on document scroll
+        this.stack.forEach((overlay) => {
+            if (
+                overlay.type === 'auto' &&
+                overlay.triggerElement instanceof HTMLElement &&
+                overlay.triggerElement.closest('sp-picker, sp-action-menu')
+            ) {
+                event.stopPropagation();
+            }
+        });
+    };
 
     private closeOverlay(overlay: Overlay): void {
         const overlayIndex = this.stack.indexOf(overlay);
