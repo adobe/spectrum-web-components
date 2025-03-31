@@ -11,8 +11,32 @@
  */
 
 :host {
+    --spectrum-dialog-fullscreen-header-text-size: 28px;
+    --spectrum-dialog-min-inline-size: 288px;
+    --spectrum-dialog-confirm-small-width: 400px;
+    --spectrum-dialog-confirm-medium-width: 480px;
+    --spectrum-dialog-confirm-large-width: 640px;
+    --spectrum-dialog-confirm-divider-block-spacing-start: var(--spectrum-spacing-300);
+    --spectrum-dialog-confirm-divider-block-spacing-end: var(--spectrum-spacing-200);
+    --spectrum-dialog-confirm-description-text-color: var(--spectrum-gray-800);
+    --spectrum-dialog-confirm-title-text-color: var(--spectrum-gray-900);
+    --spectrum-dialog-confirm-description-text-line-height: var(--spectrum-line-height-100);
+    --spectrum-dialog-confirm-title-text-line-height: var(--spectrum-line-height-100);
+    --spectrum-dialog-heading-font-weight: var(--spectrum-heading-sans-serif-font-weight);
+    --spectrum-dialog-confirm-description-padding: var(--spectrum-spacing-50);
+    --spectrum-dialog-confirm-description-margin: calc(var(--spectrum-spacing-50) * -1);
+    --spectrum-dialog-confirm-footer-padding-top: var(--spectrum-spacing-600);
+    --spectrum-dialog-confirm-gap-size: var(--spectrum-component-pill-edge-to-text-100);
+    --spectrum-dialog-confirm-buttongroup-padding-top: var(--spectrum-spacing-600);
+    --spectrum-dialog-confirm-close-button-size: var(--spectrum-component-height-100);
+    --spectrum-dialog-confirm-close-button-padding: calc(26px - var(--spectrum-component-bottom-to-text-300));
+    --spectrum-dialog-confirm-divider-height: var(--spectrum-spacing-50);
+}
+
+:host,
+:host([size="m"]) {
     box-sizing: border-box;
-    inline-size: fit-content;
+    inline-size: var(--mod-dialog-confirm-medium-width, var(--spectrum-dialog-confirm-medium-width));
     min-inline-size: var(--mod-dialog-min-inline-size, var(--spectrum-dialog-min-inline-size));
     max-inline-size: 100%;
     max-block-size: inherit;
@@ -20,15 +44,13 @@
     display: flex;
 }
 
+.spectrum-Dialog--sizeS,
 :host([size="s"]) {
     inline-size: var(--mod-dialog-confirm-small-width, var(--spectrum-dialog-confirm-small-width));
 }
 
-:host([size="m"]) {
-    inline-size: var(--mod-dialog-confirm-medium-width, var(--spectrum-dialog-confirm-medium-width));
-}
-
-:host([size="l"]) {
+:host([size="l"]),
+.spectrum-Dialog--sizeL {
     inline-size: var(--mod-dialog-confirm-large-width, var(--spectrum-dialog-confirm-large-width));
 }
 
@@ -44,6 +66,8 @@
 
 .grid {
     grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
+    grid-template-rows: auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto 1fr auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
+    inline-size: 100%;
     grid-template-areas:
         "hero hero hero hero hero hero"
         ". . . . . ."
@@ -52,8 +76,6 @@
         ". content content content content ."
         ". footer footer buttonGroup buttonGroup ."
         ". . . . . .";
-    grid-template-rows: auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto 1fr auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
-    inline-size: 100%;
     display: grid;
 }
 
@@ -142,6 +164,7 @@
 
 :host([dismissable]) .grid {
     grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto 1fr auto minmax(0, auto) minmax(0, var(--mod-dialog-confirm-close-button-size, var(--spectrum-dialog-confirm-close-button-size))) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
+    grid-template-rows: auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto 1fr auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     grid-template-areas:
         "hero hero hero hero hero hero hero"
         ". . . . . closeButton closeButton"
@@ -150,7 +173,6 @@
         ". content content content content content ."
         ". footer footer buttonGroup buttonGroup buttonGroup ."
         ". . . . . . .";
-    grid-template-rows: auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto 1fr auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
 }
 
 :host([dismissable]) .grid .button-group {
