@@ -140,11 +140,3 @@ textarea {
     resize: none;
     overflow: hidden;
 }
-
-/* fix for hover styles not being applied in high contrast mode */
-@media (hover: hover) {
-    .input:hover,
-    #textfield:hover .input {
-        border-color: inherit;
-    }
-}
