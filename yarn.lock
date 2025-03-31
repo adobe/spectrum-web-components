@@ -7221,12 +7221,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/divider@npm:4.0.1":
-  version: 4.0.1
-  resolution: "@spectrum-css/divider@npm:4.0.1"
+"@spectrum-css/divider@npm:5.1.0":
+  version: 5.1.0
+  resolution: "@spectrum-css/divider@npm:5.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14 || >=15"
-  checksum: 10c0/848afaa204e3d4309591cf7fc9afc23f2aeea9000d9bbf2404870a3fcec55a94dc55708a4ccda35e7d5d1aef15227f443f280e467deee5088870f876442b91f9
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/5235195a5cb1089f6a7c1e7f39437dfdfdef18e98e3dbf1ce5126bde3f22ecc962497c8b5dc03536cf01dd5ea150ba5842b1df4251947ae8dccb93837a2f0bf2
   languageName: node
   linkType: hard
 
@@ -8264,7 +8267,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/divider@workspace:packages/divider"
   dependencies:
-    "@spectrum-css/divider": "npm:4.0.1"
+    "@spectrum-css/divider": "npm:5.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft

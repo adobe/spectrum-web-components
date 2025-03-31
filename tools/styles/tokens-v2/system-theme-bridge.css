@@ -774,26 +774,12 @@
         26px - var(--spectrum-component-bottom-to-text-300)
     );
     --system-dialog-confirm-divider-height: var(--spectrum-spacing-50);
-    --system-divider-background-color-small: var(--spectrum-gray-200);
-    --system-divider-background-color-medium: var(--spectrum-gray-200);
-    --system-divider-background-color-large: var(--spectrum-gray-800);
-    --system-divider-background-color-small-static-white: var(
-        --spectrum-transparent-white-400
+    --system-divider-background-color: var(--spectrum-gray-200);
+    --system-divider-background-color-static-white: var(
+        --spectrum-transparent-white-200
     );
-    --system-divider-background-color-medium-static-white: var(
-        --spectrum-transparent-white-400
-    );
-    --system-divider-background-color-large-static-white: var(
-        --spectrum-transparent-white-900
-    );
-    --system-divider-background-color-small-static-black: var(
-        --spectrum-transparent-black-400
-    );
-    --system-divider-background-color-medium-static-black: var(
-        --spectrum-transparent-black-400
-    );
-    --system-divider-background-color-large-static-black: var(
-        --spectrum-transparent-black-900
+    --system-divider-background-color-static-black: var(
+        --spectrum-transparent-black-200
     );
     --system-drop-zone-padding: var(--spectrum-spacing-400);
     --system-drop-zone-illustration-to-heading: var(--spectrum-spacing-400);
