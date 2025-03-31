@@ -65,7 +65,7 @@
         "@spectrum-web-components/underlay": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/tray": "4.0.0-s2-foundations.15"
+        "@spectrum-css/tray": "4.0.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
