@@ -174,6 +174,60 @@ page.args = {
     placement: 'right',
     type: 'page',
 };
+export const complexFastPage = (): TemplateResult => html`
+    <div style="padding: 20px;">
+        <span>
+            <sp-button style="margin: 20px;" id="trigger">open modal</sp-button>
+            <sp-overlay trigger="trigger@click" type="modal">
+                <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+                    <p>I am a modal type overlay.</p>
+                    Enter your email
+                    <sp-action-button
+                        onClick="
+                this.dispatchEvent(
+                    new Event('close', {
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+            "
+                    >
+                        Sign in
+                    </sp-action-button>
+                </sp-dialog-wrapper>
+            </sp-overlay>
+
+            <sp-button id="pageTrigger">open page</sp-button>
+            <sp-overlay trigger="pageTrigger@click" type="page">
+                <sp-dialog-wrapper
+                    headline="Full screen menu"
+                    mode="fullscreenTakeover"
+                    cancel-label="Close"
+                >
+                    <p>I am a page type overlay.</p>
+                </sp-dialog-wrapper>
+            </sp-overlay>
+            <style>
+                .chat-container {
+                    position: fixed;
+                    bottom: 1em;
+                    left: 1em;
+                }
+            </style>
+
+            <sp-button id="trigger">open manual</sp-button>
+            <sp-overlay trigger="trigger@click" type="manual">
+                <sp-popover class="chat-container">
+                    <sp-dialog dismissable>
+                        <span slot="heading">Chat Window</span>
+
+                        <sp-action-button>Send</sp-action-button>
+                    </sp-dialog>
+                </sp-popover>
+            </sp-overlay>
+        </span>
+    </div>
+`;
 
 export const complexSlowPage = (): TemplateResult => html`
     <div style="padding: 20px;">
@@ -207,6 +261,26 @@ export const complexSlowPage = (): TemplateResult => html`
                 >
                     <p>I am a page type overlay.</p>
                 </sp-dialog-wrapper>
+            </sp-overlay>
+            <style>
+                .chat-container {
+                    position: fixed;
+                    bottom: 1em;
+                    left: 1em;
+                }
+            </style>
+
+            <sp-button id="trigger">open manual</sp-button>
+            <sp-overlay trigger="trigger@click" type="manual">
+                <sp-popover class="chat-container">
+                    <sp-dialog dismissable>
+                        <span slot="heading">Chat Window</span>
+                        <sp-textfield
+                            placeholder="Enter your message"
+                        ></sp-textfield>
+                        <sp-action-button>Send</sp-action-button>
+                    </sp-dialog>
+                </sp-popover>
             </sp-overlay>
         </span>
         ${Array(50)
