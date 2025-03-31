@@ -7707,22 +7707,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/tray@npm:4.0.0-s2-foundations.15":
-  version: 4.0.0-s2-foundations.15
-  resolution: "@spectrum-css/tray@npm:4.0.0-s2-foundations.15"
+"@spectrum-css/tray@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@spectrum-css/tray@npm:4.0.1"
   peerDependencies:
     "@spectrum-css/button": ">=13"
     "@spectrum-css/dialog": ">=10"
     "@spectrum-css/divider": ">=3"
     "@spectrum-css/icon": ">=7"
     "@spectrum-css/modal": ">=5"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/tokens": ">=14 || >=15"
   peerDependenciesMeta:
     "@spectrum-css/dialog":
       optional: true
     "@spectrum-css/divider":
       optional: true
-  checksum: 10c0/60c678c60492592db935e7c88d81f275650663a2b48b191933abfa0bf7a647accc91d8f04afbbe8a301d02f9f9ccaebdd0cf344cfa10fbc043fdc7e5e814595e
+  checksum: 10c0/f992f16493b549ea3609300cd3066384e4d2af1d315ebd3a7a268bef023fea184a428cb5d46fce38413d3d265ef89c3e60d143e75bee39540fa0d18efecb7d2b
   languageName: node
   linkType: hard
 
@@ -8811,7 +8811,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/tray@workspace:packages/tray"
   dependencies:
-    "@spectrum-css/tray": "npm:4.0.0-s2-foundations.15"
+    "@spectrum-css/tray": "npm:4.0.1"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/modal": "npm:1.4.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.4.0"
