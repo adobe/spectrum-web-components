@@ -6973,13 +6973,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/buttongroup@npm:8.0.1":
-  version: 8.0.1
-  resolution: "@spectrum-css/buttongroup@npm:8.0.1"
+"@spectrum-css/buttongroup@npm:9.1.0":
+  version: 9.1.0
+  resolution: "@spectrum-css/buttongroup@npm:9.1.0"
   peerDependencies:
-    "@spectrum-css/button": ">=13"
-    "@spectrum-css/tokens": ">=14 || >=15"
-  checksum: 10c0/9d33cf98d5a6f1a01913644fa8c3adecb33c081dbc1e1376f75ba52b9b73ede3a62e692f85a8cd5ff9203c6afd0c2a3f749aa8794f28e77b22986cabc5a28273
+    "@spectrum-css/button": ">=14.0.0 <15.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/button":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/530b77aface399747558252d3fd1b14bc9e2a450a987be433af644165652de8abdc78eafe209c0e3414399e59a43264cfc8ac20556f92d4e343db3339d6274a7
   languageName: node
   linkType: hard
 
@@ -8013,7 +8018,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/button-group@workspace:packages/button-group"
   dependencies:
-    "@spectrum-css/buttongroup": "npm:8.0.1"
+    "@spectrum-css/buttongroup": "npm:9.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
   languageName: unknown
