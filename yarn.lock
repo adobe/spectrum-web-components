@@ -7087,12 +7087,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorloupe@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/colorloupe@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/colorloupe@npm:6.0.1":
+  version: 6.0.1
+  resolution: "@spectrum-css/colorloupe@npm:6.0.1"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/9f85d77c07202dc06c1ef571ca6d2e4e1ca227b71fb1dab0e085924daaf9e215450515dd5c429bb4422aee155065e18e0399392953e052482884a1a7d02a5f79
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/87817c8755629596227a7c027086005221acf7c2ccd699e9d8d3dbeaf467f414a55a8bec98669cfe65cb4356211ef7efdb5df11828506a96d2d669b4baa06024
   languageName: node
   linkType: hard
 
@@ -8100,7 +8100,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-loupe@workspace:packages/color-loupe"
   dependencies:
-    "@spectrum-css/colorloupe": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/colorloupe": "npm:6.0.1"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:1.4.0"
   languageName: unknown
