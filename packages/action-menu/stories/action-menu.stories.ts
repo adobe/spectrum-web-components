@@ -174,7 +174,7 @@ interface StoryArgs {
     visibleLabel?: string;
     disabled?: boolean;
     open?: boolean;
-    customIcon?: string | TemplateResult;
+    customIcon?: string | undefined;
     selects?: 'single';
     selected?: boolean;
     quiet?: boolean;
@@ -299,9 +299,7 @@ tooltipDescriptionAndPlacement.args = {
 
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
 customIcon.args = {
-    customIcon: html`
-        <sp-icon-settings slot="icon"></sp-icon-settings>
-    `,
+    customIcon: `<sp-icon-settings slot="icon"></sp-icon-settings>`,
     visibleLabel: '',
 };
 

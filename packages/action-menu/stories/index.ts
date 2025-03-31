@@ -11,7 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
+    ifDefined,
+    unsafeHTML,
+} from '@spectrum-web-components/base/src/directives.js';
 
 import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -32,7 +35,7 @@ export const ActionMenuMarkup = ({
     quiet = false,
     staticValue = '',
     visibleLabel = '',
-    customIcon = '' as string | TemplateResult,
+    customIcon = '' as string,
     size = 'm' as 'm' | 's' | 'l' | 'xl' | 'xxl',
     selects = '' as 'single',
     selected = false,
@@ -62,7 +65,7 @@ export const ActionMenuMarkup = ({
                 align === 'end' ? 'float: inline-end;' : undefined
             )}
         >
-            ${customIcon ? customIcon : nothing}
+            ${customIcon ? unsafeHTML(customIcon) : nothing}
             ${visibleLabel
                 ? html`
                       <span slot="label">${visibleLabel}</span>
