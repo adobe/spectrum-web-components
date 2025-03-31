@@ -692,22 +692,7 @@
     --system-coach-mark-buttongroup-spacing-horizontal: var(
         --spectrum-spacing-100
     );
-    --system-color-wheel-width: var(--spectrum-color-wheel-width);
-    --system-color-wheel-min-width: var(--spectrum-color-wheel-minimum-width);
-    --system-color-wheel-height: var(--spectrum-color-wheel-width);
-    --system-color-wheel-border-color: var(--spectrum-transparent-black-200);
-    --system-color-wheel-border-width: var(--spectrum-border-width-100);
-    --system-color-wheel-fill-color-disabled: var(
-        --spectrum-disabled-background-color
-    );
-    --system-color-wheel-track-width: var(--spectrum-color-control-track-width);
-    --system-color-wheel-colorarea-margin: var(
-        --spectrum-color-wheel-color-area-margin
-    );
-    --system-color-wheel-colorhandle-position: calc(
-        var(--system-color-wheel-width) / 2 -
-            var(--system-color-wheel-track-width) / 2
-    );
+    --system-color-wheel-border-color: var(--spectrum-transparent-black-300);
     --system-combobox-border-color-default: var(--spectrum-gray-500);
     --system-combobox-border-color-hover: var(--spectrum-gray-600);
     --system-combobox-border-color-focus: var(--spectrum-gray-800);
