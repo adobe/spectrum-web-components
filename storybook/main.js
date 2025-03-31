@@ -15,16 +15,8 @@ import { merge } from 'webpack-merge';
 /** @type { import('@storybook/web-components-webpack5').StorybookConfig } */
 export default {
     stories: [
-        {
-            directory: '../packages',
-            files: '*/stories/*.stories.js',
-            titlePrefix: 'Components',
-        },
-        {
-            directory: '../tools',
-            files: '*/stories/*.stories.js',
-            titlePrefix: 'Tools',
-        },
+        '../packages/*/stories/*.stories.js',
+        '../tools/*/stories/*.stories.js',
     ],
     addons: [
         '@storybook/addon-links',
@@ -37,8 +29,6 @@ export default {
             : []),
         // https://geometricpanda.github.io/storybook-addon-badges/
         '@geometricpanda/storybook-addon-badges',
-        // https://www.chromatic.com/docs/visual-tests-addon/
-        // '@chromatic-com/storybook',
     ],
     framework: {
         name: '@storybook/web-components-webpack5',
@@ -47,11 +37,6 @@ export default {
             fsCache: true,
             lazyCompilation: true,
         },
-    },
-    core: {
-        // Disabled callback due to Adobe privacy policy
-        disableTelemetry: true,
-        disableWhatsNewNotifications: true,
     },
     async webpackFinal(config) {
         return merge(config, {
