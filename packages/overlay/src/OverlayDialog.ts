@@ -87,6 +87,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         // You can neither "reopen" a <dialog> or open one that is not on the DOM.
                         return;
                     }
+
                     this.dialogEl.showModal();
                 };
             const finish = (el: OpenableElement, index: number) => (): void => {
@@ -174,6 +175,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
              * Focus should be handled natively in `<dialog>` elements when leveraging `.showModal()`, but it's NOT.
              * - webkit bug: https://bugs.webkit.org/show_bug.cgi?id=255507
              * - firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1828398
+             * (NEW 2025) There seems to exist some movement here: https://github.com/whatwg/html/issues/9245
              **/
             this.applyFocus(targetOpenState, focusEl);
         }
