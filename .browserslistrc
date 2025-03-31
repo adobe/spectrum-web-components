@@ -1,7 +1,0 @@
-defaults
-last 2 Chrome versions
-last 2 Firefox versions
-last 2 Safari versions
-last 2 iOS versions
-not IE 11
-maintained node versions
