@@ -6983,15 +6983,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/card@npm:10.0.0-s2-foundations.20":
-  version: 10.0.0-s2-foundations.20
-  resolution: "@spectrum-css/card@npm:10.0.0-s2-foundations.20"
+"@spectrum-css/card@npm:10.0.1":
+  version: 10.0.1
+  resolution: "@spectrum-css/card@npm:10.0.1"
   peerDependencies:
     "@spectrum-css/actionbutton": ">=6"
     "@spectrum-css/asset": ">=5"
     "@spectrum-css/checkbox": ">=9"
     "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/quickaction": ">=3"
+    "@spectrum-css/tokens": ">=14.5.0 || >=15"
     "@spectrum-css/typography": ">=6"
   peerDependenciesMeta:
     "@spectrum-css/actionbutton":
@@ -7002,9 +7003,11 @@ __metadata:
       optional: true
     "@spectrum-css/icon":
       optional: true
+    "@spectrum-css/quickaction":
+      optional: true
     "@spectrum-css/typography":
       optional: true
-  checksum: 10c0/909716cc29c2ae9c61c0cca4194e7047693c5e9de03303e19f5e85818d6ad6da692e1c8da39292cf3c680e8b9337ddf792775c33192790391a00ed30b3e4cb78
+  checksum: 10c0/6408da1af613a8f90275942faa9a93504f07cb99f74e80f73f7418d5a998566c9efa4615ccaef8ba280aca96873c0034fb1505190e1e0ba0ca4e2ed41dde573b
   languageName: node
   linkType: hard
 
@@ -8026,7 +8029,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/card@workspace:packages/card"
   dependencies:
-    "@spectrum-css/card": "npm:10.0.0-s2-foundations.20"
+    "@spectrum-css/card": "npm:10.0.1"
     "@spectrum-web-components/asset": "npm:1.4.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/checkbox": "npm:1.4.0"
