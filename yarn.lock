@@ -7707,22 +7707,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/tray@npm:4.0.1":
-  version: 4.0.1
-  resolution: "@spectrum-css/tray@npm:4.0.1"
+"@spectrum-css/tray@npm:5.1.0":
+  version: 5.1.0
+  resolution: "@spectrum-css/tray@npm:5.1.0"
   peerDependencies:
-    "@spectrum-css/button": ">=13"
-    "@spectrum-css/dialog": ">=10"
-    "@spectrum-css/divider": ">=3"
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/modal": ">=5"
-    "@spectrum-css/tokens": ">=14 || >=15"
+    "@spectrum-css/button": ">=14.0.0 <15.0.0"
+    "@spectrum-css/dialog": ">=12.0.0 <13.0.0"
+    "@spectrum-css/divider": ">=5.0.0 <6.0.0"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/modal": ">=7.0.0 <8.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
+    "@spectrum-css/button":
+      optional: true
     "@spectrum-css/dialog":
       optional: true
     "@spectrum-css/divider":
       optional: true
-  checksum: 10c0/f992f16493b549ea3609300cd3066384e4d2af1d315ebd3a7a268bef023fea184a428cb5d46fce38413d3d265ef89c3e60d143e75bee39540fa0d18efecb7d2b
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/modal":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/d67afa1d131ed81115fa6683026ce95c435002a1fda5ea0ccf1697e8e6946becd3daeb713bf6873fc9c98ac86e2193fa41cfc66ff098be4aee28a1f23a4c68c1
   languageName: node
   linkType: hard
 
@@ -8811,7 +8819,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/tray@workspace:packages/tray"
   dependencies:
-    "@spectrum-css/tray": "npm:4.0.1"
+    "@spectrum-css/tray": "npm:5.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/modal": "npm:1.4.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.4.0"

@@ -3009,18 +3009,6 @@
     --system-tooltip-background-color-default: var(
         --system-tooltip-backgound-color-default-neutral
     );
-    --system-tray-exit-animation-delay: 0s;
-    --system-tray-entry-animation-delay: 0.16s;
-    --system-tray-max-inline-size: 375px;
-    --system-tray-spacing-edge-to-safe-zone: 64px;
-    --system-tray-entry-animation-duration: var(
-        --spectrum-animation-duration-500
-    );
-    --system-tray-exit-animation-duration: var(
-        --spectrum-animation-duration-100
-    );
-    --system-tray-corner-radius: var(--spectrum-corner-radius-100);
-    --system-tray-background-color: var(--spectrum-background-layer-2-color);
     --system-underlay-background-entry-animation-delay: var(
         --spectrum-animation-duration-0
     );
