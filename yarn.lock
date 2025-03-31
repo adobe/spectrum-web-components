@@ -7143,20 +7143,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorwheel@npm:5.0.1":
-  version: 5.0.1
-  resolution: "@spectrum-css/colorwheel@npm:5.0.1"
+"@spectrum-css/colorwheel@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@spectrum-css/colorwheel@npm:6.1.0"
   peerDependencies:
-    "@spectrum-css/colorarea": ">=5"
-    "@spectrum-css/colorhandle": ">=8"
-    "@spectrum-css/colorloupe": ">=5"
-    "@spectrum-css/tokens": ">=14 || >=15"
+    "@spectrum-css/colorarea": ">=7.0.0 <8.0.0"
+    "@spectrum-css/colorhandle": ">=10.0.0 <11.0.0"
+    "@spectrum-css/colorloupe": ">=7.0.0 <8.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/colorarea":
       optional: true
+    "@spectrum-css/colorhandle":
+      optional: true
     "@spectrum-css/colorloupe":
       optional: true
-  checksum: 10c0/377cc3080a5345c026442075178384ddec68fa12c0270504539c0706f5332c63e7682304e0fb6fde7006dd5116d7aae7f882cd3dc16ff2fd454b0e837b423cd8
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/cb5b3d6063c2e7a98e539c31be0c3a39f8686e4ff42fe3531c086beadbe985b4f9aeb66bc53d2b845d3cc8324661f4cbe1cb1ca2205d8d90445f5f400917735f
   languageName: node
   linkType: hard
 
@@ -8173,7 +8177,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-wheel@workspace:packages/color-wheel"
   dependencies:
-    "@spectrum-css/colorwheel": "npm:5.0.1"
+    "@spectrum-css/colorwheel": "npm:6.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/color-handle": "npm:1.4.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.4.0"
