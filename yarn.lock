@@ -6926,19 +6926,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/breadcrumb@npm:10.0.0-s2-foundations.15":
-  version: 10.0.0-s2-foundations.15
-  resolution: "@spectrum-css/breadcrumb@npm:10.0.0-s2-foundations.15"
+"@spectrum-css/breadcrumb@npm:10.0.1":
+  version: 10.0.1
+  resolution: "@spectrum-css/breadcrumb@npm:10.0.1"
   peerDependencies:
     "@spectrum-css/actionbutton": ">=6"
     "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/tokens": ">=14 || >=15"
   peerDependenciesMeta:
     "@spectrum-css/actionbutton":
       optional: true
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/5ac3a09b7b4c46ba4c4bd6d2fd9f486918da88f5b067356a7e009dd4a6710c269f0b099cdd68b2e0dc7b46ff00384ffee48ea32d3a7a0e72eb0b561744add3a3
+  checksum: 10c0/2b8fff39b7b33ba5f492687228cba6ed7adbe075c113c08e11e16e8d110538e4921a35dfaf45f5f271afc1b201dc2fdf5cf1fe450a320666efb9ddffeddb96b3
   languageName: node
   linkType: hard
 
@@ -7878,7 +7878,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/breadcrumbs@workspace:packages/breadcrumbs"
   dependencies:
-    "@spectrum-css/breadcrumb": "npm:10.0.0-s2-foundations.15"
+    "@spectrum-css/breadcrumb": "npm:10.0.1"
     "@spectrum-web-components/action-menu": "npm:1.4.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icons-workflow": "npm:1.4.0"
