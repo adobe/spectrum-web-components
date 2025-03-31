@@ -7039,9 +7039,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/coachmark@npm:8.0.0-s2-foundations.17":
-  version: 8.0.0-s2-foundations.17
-  resolution: "@spectrum-css/coachmark@npm:8.0.0-s2-foundations.17"
+"@spectrum-css/coachmark@npm:8.0.1":
+  version: 8.0.1
+  resolution: "@spectrum-css/coachmark@npm:8.0.1"
   peerDependencies:
     "@spectrum-css/actionbutton": ">=6"
     "@spectrum-css/actionmenu": ">=6"
@@ -7049,11 +7049,11 @@ __metadata:
     "@spectrum-css/buttongroup": ">=7"
     "@spectrum-css/menu": ">=7"
     "@spectrum-css/popover": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/tokens": ">=14 || >=15"
   peerDependenciesMeta:
     "@spectrum-css/button":
       optional: true
-  checksum: 10c0/e3359c555872a2ae9b2e867bb056363bb07f0c7bb63e8ddbe1ffd64556e5b6686ceaf5baf6f1dd792879ae0bf320d67d3c7c7e989a92f3fb87c7b344c257a2fb
+  checksum: 10c0/46393e05a80b5fa470d9791ea41d57ad676ab98e0c3abab782f0e52f5f6e583580bb5dd3f1749d2dfd44f33b8cfa4faeb266725a9ba9d24f84b34e33e2ad783f
   languageName: node
   linkType: hard
 
@@ -8044,7 +8044,7 @@ __metadata:
   resolution: "@spectrum-web-components/coachmark@workspace:packages/coachmark"
   dependencies:
     "@spectrum-css/coachindicator": "npm:3.0.0-s2-foundations.16"
-    "@spectrum-css/coachmark": "npm:8.0.0-s2-foundations.17"
+    "@spectrum-css/coachmark": "npm:8.0.1"
     "@spectrum-web-components/asset": "npm:1.4.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
