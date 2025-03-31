@@ -12,19 +12,5 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-colorwheel-width: var(--system-color-wheel-width);
-    --spectrum-colorwheel-min-width: var(--system-color-wheel-min-width);
-    --spectrum-colorwheel-height: var(--system-color-wheel-height);
     --spectrum-colorwheel-border-color: var(--system-color-wheel-border-color);
-    --spectrum-colorwheel-border-width: var(--system-color-wheel-border-width);
-    --spectrum-colorwheel-fill-color-disabled: var(
-        --system-color-wheel-fill-color-disabled
-    );
-    --spectrum-colorwheel-track-width: var(--system-color-wheel-track-width);
-    --spectrum-colorwheel-colorarea-margin: var(
-        --system-color-wheel-colorarea-margin
-    );
-    --spectrum-colorwheel-colorhandle-position: var(
-        --system-color-wheel-colorhandle-position
-    );
 }
