@@ -74,7 +74,7 @@
         "@spectrum-web-components/menu": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/breadcrumb": "10.0.0-s2-foundations.15"
+        "@spectrum-css/breadcrumb": "10.0.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
