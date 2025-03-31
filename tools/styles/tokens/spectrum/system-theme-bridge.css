@@ -30,19 +30,19 @@
         --spectrum-disabled-border-color
     );
     --system-action-button-content-color-selected: var(--spectrum-gray-75);
-    --system-action-button-size-m-border-radius: var(
+    --system-action-button-size-m-border-radius-default: var(
         --spectrum-corner-radius-100
     );
-    --system-action-button-size-xs-border-radius: var(
+    --system-action-button-size-xs-border-radius-default: var(
         --spectrum-corner-radius-100
     );
-    --system-action-button-size-s-border-radius: var(
+    --system-action-button-size-s-border-radius-default: var(
         --spectrum-corner-radius-100
     );
-    --system-action-button-size-l-border-radius: var(
+    --system-action-button-size-l-border-radius-default: var(
         --spectrum-corner-radius-100
     );
-    --system-action-button-size-xl-border-radius: var(
+    --system-action-button-size-xl-border-radius-default: var(
         --spectrum-corner-radius-100
     );
     --system-action-button-quiet-background-color-default: transparent;

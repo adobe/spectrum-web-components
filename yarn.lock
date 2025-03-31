@@ -284,8 +284,8 @@ __metadata:
     npm-run-all2: "npm:^6.0.0"
     patch-package: "npm:^8.0.0"
     pinst: "npm:^3.0.0"
-    prettier: "npm:^3.5.3"
-    prettier-plugin-package: "npm:^1.4.0"
+    prettier: "npm:^3.0.0"
+    prettier-plugin-package: "npm:^1.3.0"
     pretty-bytes: "npm:^6.1.1"
     pretty-quick: "npm:^4.1.1"
     re-template-tag: "npm:^2.0.1"
@@ -28992,7 +28992,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-package@npm:^1.4.0":
+"prettier-plugin-package@npm:^1.3.0":
   version: 1.4.0
   resolution: "prettier-plugin-package@npm:1.4.0"
   peerDependencies:
@@ -29016,15 +29016,6 @@ __metadata:
   bin:
     prettier: bin/prettier.cjs
   checksum: 10c0/ea327f37a7d46f2324a34ad35292af2ad4c4c3c3355da07313339d7e554320f66f65f91e856add8530157a733c6c4a897dc41b577056be5c24c40f739f5ee8c6
-  languageName: node
-  linkType: hard
-
-"prettier@npm:^3.5.3":
-  version: 3.5.3
-  resolution: "prettier@npm:3.5.3"
-  bin:
-    prettier: bin/prettier.cjs
-  checksum: 10c0/3880cb90b9dc0635819ab52ff571518c35bd7f15a6e80a2054c05dbc8a3aa6e74f135519e91197de63705bcb38388ded7e7230e2178432a1468005406238b877
   languageName: node
   linkType: hard
 
