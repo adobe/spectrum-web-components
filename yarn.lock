@@ -7074,12 +7074,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/coachindicator@npm:3.0.0-s2-foundations.16":
-  version: 3.0.0-s2-foundations.16
-  resolution: "@spectrum-css/coachindicator@npm:3.0.0-s2-foundations.16"
+"@spectrum-css/coachindicator@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@spectrum-css/coachindicator@npm:3.0.1"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/ebbb62b3514c6e13db9347972f0aa8009cc12c23356d8c8c1d230713429850df14a221258f7ed1db2a240929cb6bb208afcaf0184e44b81c265e3748c55f159c
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/376a470deaff9c18b832cfa1c3b9ecfe77e20f7ef6d13f3785f861add603d0251a28275bd7641e9be79ab48b3947a8d0a4bcb4d3605c18605570ade72c3461a6
   languageName: node
   linkType: hard
 
@@ -8154,7 +8154,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/coachmark@workspace:packages/coachmark"
   dependencies:
-    "@spectrum-css/coachindicator": "npm:3.0.0-s2-foundations.16"
+    "@spectrum-css/coachindicator": "npm:3.0.1"
     "@spectrum-css/coachmark": "npm:8.0.0-s2-foundations.17"
     "@spectrum-web-components/asset": "npm:1.4.0"
     "@spectrum-web-components/base": "npm:1.4.0"
