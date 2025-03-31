@@ -9,11 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { playwrightLauncher } from '@web/test-runner-playwright';
-import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
+
 import fs from 'fs';
 import path from 'path';
-import fg from 'fast-glob';
+
+import { playwrightLauncher } from '@web/test-runner-playwright';
+import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 
 export const chromium = playwrightLauncher({
     product: 'chromium',
@@ -277,32 +278,3 @@ export const configuredVisualRegressionPlugin = () =>
             );
         },
     });
-
-export function watchSWC() {
-    return {
-        name: 'watch-swc-plugin',
-        async serverStart({ fileWatcher }) {
-            // register SWC output files to be watched
-            const files = await fg(
-                [
-                    '{packages,projects,tools}/**/*.js',
-                    '{packages,projects,tools}/**/spectrum-*.css',
-                ],
-                {
-                    ignore: [
-                        '**/*.map',
-                        '**/*.vrt.js',
-                        '**/spectrum-config.js',
-                    ],
-                }
-            );
-            for (const file of files) {
-                fileWatcher.add(process.cwd() + file);
-            }
-            // Use the following for reviewing the file changes that are reacted to here...
-            // fileWatcher.on('change', (path) => {
-            //     console.log(`Process change in: ${path}`);
-            // });
-        },
-    };
-}
