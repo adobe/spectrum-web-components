@@ -7265,20 +7265,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/dropzone@npm:7.0.0-s2-foundations.16":
-  version: 7.0.0-s2-foundations.16
-  resolution: "@spectrum-css/dropzone@npm:7.0.0-s2-foundations.16"
+"@spectrum-css/dropzone@npm:7.0.1":
+  version: 7.0.1
+  resolution: "@spectrum-css/dropzone@npm:7.0.1"
   peerDependencies:
     "@spectrum-css/actionbutton": ">=6"
     "@spectrum-css/illustratedmessage": ">=7"
     "@spectrum-css/link": ">=5"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/tokens": ">=14 || >=15"
   peerDependenciesMeta:
     "@spectrum-css/actionbutton":
       optional: true
     "@spectrum-css/link":
       optional: true
-  checksum: 10c0/950c672d0d17e5fed6001326891daff5d87dd92845b05ee5a8ce6d5b17ef54a71894df6cc27e7fe65af5a4f22ca8d803c96a9ff3951ee10471c90340d53232af
+  checksum: 10c0/cabd7d1db0fe2cffe2238c5e1bc99076c56ee462b16babd2db13a20a3535b35cc6c9c773c7113f39811cb509eccdd694d3f56f4c2ecf7fe037bb40dfd3100b3f
   languageName: node
   linkType: hard
 
@@ -8338,7 +8338,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/dropzone@workspace:packages/dropzone"
   dependencies:
-    "@spectrum-css/dropzone": "npm:7.0.0-s2-foundations.16"
+    "@spectrum-css/dropzone": "npm:7.0.1"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft
