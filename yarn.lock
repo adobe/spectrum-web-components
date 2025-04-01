@@ -7069,17 +7069,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorhandle@npm:9.0.0-s2-foundations.16":
-  version: 9.0.0-s2-foundations.16
-  resolution: "@spectrum-css/colorhandle@npm:9.0.0-s2-foundations.16"
+"@spectrum-css/colorhandle@npm:10.1.0":
+  version: 10.1.0
+  resolution: "@spectrum-css/colorhandle@npm:10.1.0"
   peerDependencies:
-    "@spectrum-css/colorloupe": ">=5"
-    "@spectrum-css/opacitycheckerboard": ">=2"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/colorloupe": ">=7.0.0 <8.0.0"
+    "@spectrum-css/opacitycheckerboard": ">=4.0.0 <5.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/colorloupe":
       optional: true
-  checksum: 10c0/895bc696127cc1e286770b4617692c4f377b449f680b67ef95fd3d666a9216666621ea29f8510979527d66be352c22f6b4d86633106290580d8c98713f73a761
+    "@spectrum-css/opacitycheckerboard":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/a7f1072037a6f38db68f970b60329d5a71f0124283c5395820eb268aa82ef9c94f70e1d2f8291f063a77d701074740563f2d5b9336125617a6b4d29689582d41
   languageName: node
   linkType: hard
 
@@ -8085,7 +8089,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-handle@workspace:packages/color-handle"
   dependencies:
-    "@spectrum-css/colorhandle": "npm:9.0.0-s2-foundations.16"
+    "@spectrum-css/colorhandle": "npm:10.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/color-loupe": "npm:1.4.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:1.4.0"
