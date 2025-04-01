@@ -1425,8 +1425,10 @@ export function runPickerTests(): void {
 
             const picker = el.querySelector('sp-picker') as Picker;
             await elementUpdated(picker);
-            await nextFrame();
-            await nextFrame();
+            await waitUntil(
+                () => picker.updateComplete,
+                'Waiting for picker to update'
+            );
 
             expect(picker.open).to.be.false;
 
@@ -1442,8 +1444,10 @@ export function runPickerTests(): void {
             }
 
             // Wait a bit to ensure no close event is fired
-            await nextFrame();
-            await nextFrame();
+            await waitUntil(
+                () => picker.open === true,
+                'Waiting for picker to remain open after scroll'
+            );
 
             expect(picker.open).to.be.true;
         });
