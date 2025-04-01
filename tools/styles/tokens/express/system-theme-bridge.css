@@ -2958,28 +2958,6 @@
     --system-tooltip-background-color-default: var(
         --system-tooltip-backgound-color-default-neutral
     );
-    --system-underlay-background-entry-animation-delay: var(
-        --spectrum-animation-duration-0
-    );
-    --system-underlay-background-exit-animation-ease: var(
-        --spectrum-animation-ease-in
-    );
-    --system-underlay-background-entry-animation-ease: var(
-        --spectrum-animation-ease-out
-    );
-    --system-underlay-background-entry-animation-duration: var(
-        --spectrum-animation-duration-600
-    );
-    --system-underlay-background-exit-animation-duration: var(
-        --spectrum-animation-duration-300
-    );
-    --system-underlay-background-exit-animation-delay: var(
-        --spectrum-animation-duration-200
-    );
-    --system-underlay-background-color: rgba(
-        var(--spectrum-black-rgb),
-        var(--spectrum-overlay-opacity)
-    );
     --system-heading-sans-serif-font-family: var(
         --spectrum-sans-font-family-stack
     );

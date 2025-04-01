@@ -5,6 +5,7 @@
 '@spectrum-web-components/color-loupe': patch
 '@spectrum-web-components/styles': patch
 '@spectrum-web-components/tray': patch
+'@spectrum-web-components/underlay': patch
 ---
 
 Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
