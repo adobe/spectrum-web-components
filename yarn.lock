@@ -6790,16 +6790,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/actionbar@npm:9.0.0-s2-foundations.16":
-  version: 9.0.0-s2-foundations.16
-  resolution: "@spectrum-css/actionbar@npm:9.0.0-s2-foundations.16"
+"@spectrum-css/actionbar@npm:10.1.1":
+  version: 10.1.1
+  resolution: "@spectrum-css/actionbar@npm:10.1.1"
   peerDependencies:
-    "@spectrum-css/actiongroup": ">=5"
-    "@spectrum-css/closebutton": ">=5"
-    "@spectrum-css/fieldlabel": ">=8"
-    "@spectrum-css/popover": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/1c53a53303bb207ae668f097c58213305a8a15deb05ff285e439782766bd6c8bb25f121a08e6ce4b36541d0783f66cf60845747cf11e44e1089d31703a9ae569
+    "@spectrum-css/actiongroup": ">=6.0.0 <7.0.0"
+    "@spectrum-css/closebutton": ">=6.0.0 <7.0.0"
+    "@spectrum-css/fieldlabel": ">=10.0.0 <11.0.0"
+    "@spectrum-css/popover": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/actiongroup":
+      optional: true
+    "@spectrum-css/closebutton":
+      optional: true
+    "@spectrum-css/fieldlabel":
+      optional: true
+    "@spectrum-css/popover":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/b35750cf35cc26355307358ea27d429ab55d2ad453217a71eb3363867158f72825b5b08212210e3447e78d7b7f17e907ff7b4129887af48fd847ead450546138
   languageName: node
   linkType: hard
 
@@ -7069,26 +7080,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorhandle@npm:9.0.0-s2-foundations.16":
-  version: 9.0.0-s2-foundations.16
-  resolution: "@spectrum-css/colorhandle@npm:9.0.0-s2-foundations.16"
+"@spectrum-css/colorhandle@npm:10.1.0":
+  version: 10.1.0
+  resolution: "@spectrum-css/colorhandle@npm:10.1.0"
   peerDependencies:
-    "@spectrum-css/colorloupe": ">=5"
-    "@spectrum-css/opacitycheckerboard": ">=2"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/colorloupe": ">=7.0.0 <8.0.0"
+    "@spectrum-css/opacitycheckerboard": ">=4.0.0 <5.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/colorloupe":
       optional: true
-  checksum: 10c0/895bc696127cc1e286770b4617692c4f377b449f680b67ef95fd3d666a9216666621ea29f8510979527d66be352c22f6b4d86633106290580d8c98713f73a761
+    "@spectrum-css/opacitycheckerboard":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/a7f1072037a6f38db68f970b60329d5a71f0124283c5395820eb268aa82ef9c94f70e1d2f8291f063a77d701074740563f2d5b9336125617a6b4d29689582d41
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorloupe@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/colorloupe@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/colorloupe@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/colorloupe@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/9f85d77c07202dc06c1ef571ca6d2e4e1ca227b71fb1dab0e085924daaf9e215450515dd5c429bb4422aee155065e18e0399392953e052482884a1a7d02a5f79
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/f9958d64296fbcba4f909eadff82cb6d3e8f4a59f230b9fa319ba9b50f53b69e33c4afbe8677ef2ea31f34062802e08f5e5d4fb9bbfe3f1719e8787a8f7dd009
   languageName: node
   linkType: hard
 
@@ -7764,7 +7782,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-bar@workspace:packages/action-bar"
   dependencies:
-    "@spectrum-css/actionbar": "npm:9.0.0-s2-foundations.16"
+    "@spectrum-css/actionbar": "npm:10.1.1"
     "@spectrum-web-components/action-group": "npm:1.4.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
@@ -8085,7 +8103,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-handle@workspace:packages/color-handle"
   dependencies:
-    "@spectrum-css/colorhandle": "npm:9.0.0-s2-foundations.16"
+    "@spectrum-css/colorhandle": "npm:10.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/color-loupe": "npm:1.4.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:1.4.0"
@@ -8096,7 +8114,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-loupe@workspace:packages/color-loupe"
   dependencies:
-    "@spectrum-css/colorloupe": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/colorloupe": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:1.4.0"
   languageName: unknown

@@ -1,5 +1,7 @@
 ---
 '@spectrum-web-components/accordion': patch
+'@spectrum-web-components/action-bar': patch
+'@spectrum-web-components/color-loupe': patch
 '@spectrum-web-components/styles': patch
 ---
 
