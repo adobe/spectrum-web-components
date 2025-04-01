@@ -450,27 +450,18 @@ readOnly.args = {
 export const validationIcons = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="validation">
-            Invalid Number Field without Stepper
+            You can only read the following value
         </sp-field-label>
         <sp-number-field
             id="validation"
             ...=${spreadProps(args)}
             @change=${args.onChange}
         ></sp-number-field>
-        <sp-field-label for="validation">
-            Valid Number Field with Stepper
-        </sp-field-label>
-        <sp-number-field id="validation" valid></sp-number-field>
-        <sp-field-label for="validation">
-            Invalid Number Field with Stepper
-        </sp-field-label>
-        <sp-number-field id="validation" invalid></sp-number-field>
     `;
 };
 validationIcons.args = {
     invalid: true,
     value: '15',
-    hideStepper: true,
 };
 
 export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
