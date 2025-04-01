@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.4.0
+
+### Patch Changes
+
+-   [#5213](https://github.com/adobe/spectrum-web-components/pull/5213) [`82212f4`](https://github.com/adobe/spectrum-web-components/commit/82212f4b67c0514120652e3923cc87f1378809e7) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Updated the attribute name from `forcePopover` to `force-popover` in the Picker and Action menu documentation
+
+-   Updated dependencies [[`2a0422e`](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b667a9f236858f8cc9dca261ba27f9f), [`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98), [`1fc141c`](https://github.com/adobe/spectrum-web-components/commit/1fc141cefc01b8a98910c43a1e4ffaa61e952225), [`82212f4`](https://github.com/adobe/spectrum-web-components/commit/82212f4b67c0514120652e3923cc87f1378809e7)]:
+    -   @spectrum-web-components/picker@1.4.0
+    -   @spectrum-web-components/action-button@1.4.0
+    -   @spectrum-web-components/icon@1.4.0
+    -   @spectrum-web-components/icons-workflow@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+    -   @spectrum-web-components/shared@1.4.0
+
 ## 1.3.0
 
 ### Minor Changes

@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.4.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/clear-button@1.4.0
+    -   @spectrum-web-components/close-button@1.4.0
+    -   @spectrum-web-components/icon@1.4.0
+    -   @spectrum-web-components/icons-ui@1.4.0
+    -   @spectrum-web-components/progress-circle@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+    -   @spectrum-web-components/reactive-controllers@1.4.0
+    -   @spectrum-web-components/shared@1.4.0
+
 ## 1.3.0
 
 ### Patch Changes

@@ -1,5 +1,21 @@
 # Change Log
 
+## 1.4.0
+
+### Patch Changes
+
+-   Updated dependencies [[`2a0422e`](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b667a9f236858f8cc9dca261ba27f9f), [`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98), [`46cd782`](https://github.com/adobe/spectrum-web-components/commit/46cd7828f65491fc08790e5ba0aec412ee89199d), [`6618422`](https://github.com/adobe/spectrum-web-components/commit/6618422848df234e420eed95f4a5a30557e1e46f), [`70f5f6f`](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d)]:
+    -   @spectrum-web-components/menu@1.4.0
+    -   @spectrum-web-components/action-button@1.4.0
+    -   @spectrum-web-components/overlay@1.4.0
+    -   @spectrum-web-components/popover@1.4.0
+    -   @spectrum-web-components/icon@1.4.0
+    -   @spectrum-web-components/icons-ui@1.4.0
+    -   @spectrum-web-components/picker-button@1.4.0
+    -   @spectrum-web-components/progress-circle@1.4.0
+    -   @spectrum-web-components/textfield@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+
 ## 1.3.0
 
 ### Patch Changes

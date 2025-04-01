@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.4.0
+
+### Patch Changes
+
+-   Updated dependencies [[`3cca7ea`](https://github.com/adobe/spectrum-web-components/commit/3cca7eacf127c3fd759953db38a2b5a561bfb8dc)]:
+    -   @spectrum-web-components/styles@1.4.0
+    -   @spectrum-web-components/asset@1.4.0
+    -   @spectrum-web-components/checkbox@1.4.0
+    -   @spectrum-web-components/divider@1.4.0
+    -   @spectrum-web-components/icons-workflow@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+    -   @spectrum-web-components/shared@1.4.0
+
 ## 1.3.0
 
 ### Patch Changes

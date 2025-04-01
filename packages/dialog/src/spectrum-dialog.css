@@ -14,10 +14,7 @@ governing permissions and limitations under the License.
 :host {
     box-sizing: border-box;
     inline-size: fit-content;
-    min-inline-size: var(
-        --mod-dialog-min-inline-size,
-        var(--spectrum-dialog-min-inline-size)
-    );
+    min-inline-size: var(--mod-dialog-min-inline-size, var(--spectrum-dialog-min-inline-size));
     max-inline-size: 100%;
     max-block-size: inherit;
     outline: none;
@@ -25,53 +22,29 @@ governing permissions and limitations under the License.
 }
 
 :host([size='s']) {
-    inline-size: var(
-        --mod-dialog-confirm-small-width,
-        var(--spectrum-dialog-confirm-small-width)
-    );
+    inline-size: var(--mod-dialog-confirm-small-width, var(--spectrum-dialog-confirm-small-width));
 }
 
 :host([size='m']) {
-    inline-size: var(
-        --mod-dialog-confirm-medium-width,
-        var(--spectrum-dialog-confirm-medium-width)
-    );
+    inline-size: var(--mod-dialog-confirm-medium-width, var(--spectrum-dialog-confirm-medium-width));
 }
 
 :host([size='l']) {
-    inline-size: var(
-        --mod-dialog-confirm-large-width,
-        var(--spectrum-dialog-confirm-large-width)
-    );
+    inline-size: var(--mod-dialog-confirm-large-width, var(--spectrum-dialog-confirm-large-width));
 }
 
 ::slotted([slot='hero']) {
-    block-size: var(
-        --mod-dialog-confirm-hero-height,
-        var(--spectrum-dialog-confirm-hero-height)
-    );
+    block-size: var(--mod-dialog-confirm-hero-height, var(--spectrum-dialog-confirm-hero-height));
     background-position: 50%;
     background-size: cover;
-    border-start-start-radius: var(
-        --mod-dialog-confirm-border-radius,
-        var(--spectrum-dialog-confirm-border-radius)
-    );
-    border-start-end-radius: var(
-        --mod-dialog-confirm-border-radius,
-        var(--spectrum-dialog-confirm-border-radius)
-    );
+    border-start-start-radius: var(--mod-dialog-confirm-border-radius, var(--spectrum-dialog-confirm-border-radius));
+    border-start-end-radius: var(--mod-dialog-confirm-border-radius, var(--spectrum-dialog-confirm-border-radius));
     grid-area: hero;
     overflow: hidden;
 }
 
 .grid {
-    grid-template-columns: var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        ) auto 1fr auto minmax(0, auto) var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        );
+    grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     grid-template-areas:
         'hero hero hero hero hero hero'
         '. . . . . .'
@@ -80,41 +53,20 @@ governing permissions and limitations under the License.
         '. content content content content .'
         '. footer footer buttonGroup buttonGroup .'
         '. . . . . .';
-    grid-template-rows: auto var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        ) auto auto 1fr auto var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        );
+    grid-template-rows: auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto 1fr auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     inline-size: 100%;
     display: grid;
 }
 
 ::slotted([slot='heading']) {
-    font-size: var(
-        --mod-dialog-confirm-title-text-size,
-        var(--spectrum-dialog-confirm-title-text-size)
-    );
-    font-weight: var(
-        --mod-dialog-heading-font-weight,
-        var(--spectrum-dialog-heading-font-weight)
-    );
-    line-height: var(
-        --mod-dialog-confirm-title-text-line-height,
-        var(--spectrum-dialog-confirm-title-text-line-height)
-    );
-    color: var(
-        --mod-dialog-confirm-title-text-color,
-        var(--spectrum-dialog-confirm-title-text-color)
-    );
+    font-size: var(--mod-dialog-confirm-title-text-size, var(--spectrum-dialog-confirm-title-text-size));
+    font-weight: var(--mod-dialog-heading-font-weight, var(--spectrum-dialog-heading-font-weight));
+    line-height: var(--mod-dialog-confirm-title-text-line-height, var(--spectrum-dialog-confirm-title-text-line-height));
+    color: var(--mod-dialog-confirm-title-text-color, var(--spectrum-dialog-confirm-title-text-color));
     outline: none;
     grid-area: heading;
     margin: 0;
-    padding-inline-end: var(
-        --mod-dialog-confirm-gap-size,
-        var(--spectrum-dialog-confirm-gap-size)
-    );
+    padding-inline-end: var(--mod-dialog-confirm-gap-size, var(--spectrum-dialog-confirm-gap-size));
 }
 
 .no-header::slotted([slot='heading']) {
@@ -134,27 +86,12 @@ governing permissions and limitations under the License.
 .divider {
     inline-size: 100%;
     grid-area: divider;
-    margin-block-start: var(
-        --mod-dialog-confirm-divider-block-spacing-end,
-        var(--spectrum-dialog-confirm-divider-block-spacing-end)
-    );
-    margin-block-end: var(
-        --mod-dialog-confirm-divider-block-spacing-start,
-        var(--spectrum-dialog-confirm-divider-block-spacing-start)
-    );
+    margin-block-start: var(--mod-dialog-confirm-divider-block-spacing-end, var(--spectrum-dialog-confirm-divider-block-spacing-end));
+    margin-block-end: var(--mod-dialog-confirm-divider-block-spacing-start, var(--spectrum-dialog-confirm-divider-block-spacing-start));
 }
 
 :host([mode='fullscreen']) [name='heading'] + .divider {
-    margin-block-end: calc(
-        var(
-                --mod-dialog-confirm-divider-block-spacing-start,
-                var(--spectrum-dialog-confirm-divider-block-spacing-start)
-            ) -
-            var(
-                --mod-dialog-confirm-description-padding,
-                var(--spectrum-dialog-confirm-description-padding)
-            ) * 2
-    );
+    margin-block-end: calc(var(--mod-dialog-confirm-divider-block-spacing-start, var(--spectrum-dialog-confirm-divider-block-spacing-start)) - var(--mod-dialog-confirm-description-padding, var(--spectrum-dialog-confirm-description-padding)) * 2);
 }
 
 :host([no-divider]) .divider {
@@ -162,52 +99,18 @@ governing permissions and limitations under the License.
 }
 
 :host([no-divider]) ::slotted([slot='heading']) {
-    padding-block-end: calc(
-        var(
-                --mod-dialog-confirm-divider-block-spacing-end,
-                var(--spectrum-dialog-confirm-divider-block-spacing-end)
-            ) +
-            var(
-                --mod-dialog-confirm-divider-block-spacing-start,
-                var(--spectrum-dialog-confirm-divider-block-spacing-start)
-            ) +
-            var(
-                --mod-dialog-confirm-divider-height,
-                var(--spectrum-dialog-confirm-divider-height)
-            )
-    );
+    padding-block-end: calc(var(--mod-dialog-confirm-divider-block-spacing-end, var(--spectrum-dialog-confirm-divider-block-spacing-end)) + var(--mod-dialog-confirm-divider-block-spacing-start, var(--spectrum-dialog-confirm-divider-block-spacing-start)) + var(--mod-dialog-confirm-divider-height, var(--spectrum-dialog-confirm-divider-height)));
 }
 
 .content {
     box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
-    font-size: var(
-        --mod-dialog-confirm-description-text-size,
-        var(--spectrum-dialog-confirm-description-text-size)
-    );
-    font-weight: var(
-        --mod-dialog-confirm-description-font-weight,
-        var(--spectrum-regular-font-weight)
-    );
-    line-height: var(
-        --mod-dialog-confirm-description-text-line-height,
-        var(--spectrum-dialog-confirm-description-text-line-height)
-    );
-    color: var(
-        --mod-dialog-confirm-description-text-color,
-        var(--spectrum-dialog-confirm-description-text-color)
-    );
-    padding: calc(
-        var(
-                --mod-dialog-confirm-description-padding,
-                var(--spectrum-dialog-confirm-description-padding)
-            ) * 2
-    );
-    margin: 0
-        var(
-            --mod-dialog-confirm-description-margin,
-            var(--spectrum-dialog-confirm-description-margin)
-        );
+    font-size: var(--mod-dialog-confirm-description-text-size, var(--spectrum-dialog-confirm-description-text-size));
+    font-weight: var(--mod-dialog-confirm-description-font-weight, var(--spectrum-regular-font-weight));
+    line-height: var(--mod-dialog-confirm-description-text-line-height, var(--spectrum-dialog-confirm-description-text-line-height));
+    color: var(--mod-dialog-confirm-description-text-color, var(--spectrum-dialog-confirm-description-text-color));
+    padding: calc(var(--mod-dialog-confirm-description-padding, var(--spectrum-dialog-confirm-description-padding)) * 2);
+    margin: 0 var(--mod-dialog-confirm-description-margin, var(--spectrum-dialog-confirm-description-margin));
     outline: none;
     grid-area: content;
     overflow-y: auto;
@@ -217,10 +120,7 @@ governing permissions and limitations under the License.
     outline: none;
     flex-wrap: wrap;
     grid-area: footer;
-    padding-block-start: var(
-        --mod-dialog-confirm-footer-padding-top,
-        var(--spectrum-dialog-confirm-footer-padding-top)
-    );
+    padding-block-start: var(--mod-dialog-confirm-footer-padding-top, var(--spectrum-dialog-confirm-footer-padding-top));
     display: flex;
 }
 
@@ -232,14 +132,8 @@ governing permissions and limitations under the License.
 .button-group {
     grid-area: buttonGroup;
     justify-content: flex-end;
-    padding-block-start: var(
-        --mod-dialog-confirm-buttongroup-padding-top,
-        var(--spectrum-dialog-confirm-buttongroup-padding-top)
-    );
-    padding-inline-start: var(
-        --mod-dialog-confirm-gap-size,
-        var(--spectrum-dialog-confirm-gap-size)
-    );
+    padding-block-start: var(--mod-dialog-confirm-buttongroup-padding-top, var(--spectrum-dialog-confirm-buttongroup-padding-top));
+    padding-inline-start: var(--mod-dialog-confirm-gap-size, var(--spectrum-dialog-confirm-gap-size));
     display: flex;
 }
 
@@ -248,19 +142,7 @@ governing permissions and limitations under the License.
 }
 
 :host([dismissable]) .grid {
-    grid-template-columns: var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        ) auto 1fr auto minmax(0, auto) minmax(
-            0,
-            var(
-                --mod-dialog-confirm-close-button-size,
-                var(--spectrum-dialog-confirm-close-button-size)
-            )
-        ) var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        );
+    grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto 1fr auto minmax(0, auto) minmax(0, var(--mod-dialog-confirm-close-button-size, var(--spectrum-dialog-confirm-close-button-size))) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     grid-template-areas:
         'hero hero hero hero hero hero hero'
         '. . . . . closeButton closeButton'
@@ -269,13 +151,7 @@ governing permissions and limitations under the License.
         '. content content content content content .'
         '. footer footer buttonGroup buttonGroup buttonGroup .'
         '. . . . . . .';
-    grid-template-rows: auto var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        ) auto auto 1fr auto var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        );
+    grid-template-rows: auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto 1fr auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
 }
 
 :host([dismissable]) .grid .button-group {
@@ -283,24 +159,15 @@ governing permissions and limitations under the License.
 }
 
 :host([dismissable]) .grid .footer {
-    color: var(
-        --mod-dialog-confirm-description-text-color,
-        var(--spectrum-dialog-confirm-description-text-color)
-    );
+    color: var(--mod-dialog-confirm-description-text-color, var(--spectrum-dialog-confirm-description-text-color));
     grid-area: footer / footer / buttonGroup / buttonGroup;
 }
 
 .close-button {
     grid-area: closeButton;
     place-self: start end;
-    margin-block-start: var(
-        --mod-dialog-confirm-close-button-padding,
-        var(--spectrum-dialog-confirm-close-button-padding)
-    );
-    margin-inline-end: var(
-        --mod-dialog-confirm-close-button-padding,
-        var(--spectrum-dialog-confirm-close-button-padding)
-    );
+    margin-block-start: var(--mod-dialog-confirm-close-button-padding, var(--spectrum-dialog-confirm-close-button-padding));
+    margin-inline-end: var(--mod-dialog-confirm-close-button-padding, var(--spectrum-dialog-confirm-close-button-padding));
 }
 
 :host([mode='fullscreen']) {
@@ -322,20 +189,8 @@ governing permissions and limitations under the License.
 
 :host([mode='fullscreen']) .grid,
 :host([mode='fullscreenTakeover']) .grid {
-    grid-template-columns: var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        ) 1fr auto auto var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        );
-    grid-template-rows: var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        ) auto auto 1fr var(
-            --mod-dialog-confirm-padding-grid,
-            var(--spectrum-dialog-confirm-padding-grid)
-        );
+    grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) 1fr auto auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
+    grid-template-rows: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto 1fr var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     grid-template-areas:
         '. . . . .'
         '. heading header buttonGroup .'
@@ -347,10 +202,7 @@ governing permissions and limitations under the License.
 
 :host([mode='fullscreen']) ::slotted([slot='heading']),
 :host([mode='fullscreenTakeover']) ::slotted([slot='heading']) {
-    font-size: var(
-        --mod-dialog-fullscreen-header-text-size,
-        var(--spectrum-dialog-fullscreen-header-text-size)
-    );
+    font-size: var(--mod-dialog-fullscreen-header-text-size, var(--spectrum-dialog-fullscreen-header-text-size));
 }
 
 :host([mode='fullscreen']) .content,
@@ -378,13 +230,7 @@ governing permissions and limitations under the License.
 
 @media screen and (width <= 700px) {
     .grid {
-        grid-template-columns: var(
-                --mod-dialog-confirm-padding-grid,
-                var(--spectrum-dialog-confirm-padding-grid)
-            ) auto 1fr auto minmax(0, auto) var(
-                --mod-dialog-confirm-padding-grid,
-                var(--spectrum-dialog-confirm-padding-grid)
-            );
+        grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
         grid-template-areas:
             'hero hero hero hero hero hero'
             '. . . . . .'
@@ -398,29 +244,11 @@ governing permissions and limitations under the License.
 
     .grid,
     :host([dismissable]) .grid {
-        grid-template-rows: auto var(
-                --mod-dialog-confirm-padding-grid,
-                var(--spectrum-dialog-confirm-padding-grid)
-            ) auto auto auto 1fr auto var(
-                --mod-dialog-confirm-padding-grid,
-                var(--spectrum-dialog-confirm-padding-grid)
-            );
+        grid-template-rows: auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto auto 1fr auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     }
 
     :host([dismissable]) .grid {
-        grid-template-columns: var(
-                --mod-dialog-confirm-padding-grid,
-                var(--spectrum-dialog-confirm-padding-grid)
-            ) auto 1fr auto minmax(0, auto) minmax(
-                0,
-                var(
-                    --mod-dialog-confirm-close-button-size,
-                    var(--spectrum-dialog-confirm-close-button-size)
-                )
-            ) var(
-                --mod-dialog-confirm-padding-grid,
-                var(--spectrum-dialog-confirm-padding-grid)
-            );
+        grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto 1fr auto minmax(0, auto) minmax(0, var(--mod-dialog-confirm-close-button-size, var(--spectrum-dialog-confirm-close-button-size))) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
         grid-template-areas:
             'hero hero hero hero hero hero hero'
             '. . . . . closeButton closeButton'
@@ -438,20 +266,8 @@ governing permissions and limitations under the License.
 
     :host([mode='fullscreen']) .grid,
     :host([mode='fullscreenTakeover']) .grid {
-        grid-template-columns: var(
-                --mod-dialog-confirm-padding-grid,
-                var(--spectrum-dialog-confirm-padding-grid)
-            ) 1fr var(
-                --mod-dialog-confirm-padding-grid,
-                var(--spectrum-dialog-confirm-padding-grid)
-            );
-        grid-template-rows: var(
-                --mod-dialog-confirm-padding-grid,
-                var(--spectrum-dialog-confirm-padding-grid)
-            ) auto auto auto 1fr auto var(
-                --mod-dialog-confirm-padding-grid,
-                var(--spectrum-dialog-confirm-padding-grid)
-            );
+        grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) 1fr var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
+        grid-template-rows: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto auto 1fr auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
         grid-template-areas:
             '. . .'
             '. heading .'
@@ -465,18 +281,12 @@ governing permissions and limitations under the License.
 
     :host([mode='fullscreen']) .button-group,
     :host([mode='fullscreenTakeover']) .button-group {
-        padding-block-start: var(
-            --mod-dialog-confirm-buttongroup-padding-top,
-            var(--spectrum-dialog-confirm-buttongroup-padding-top)
-        );
+        padding-block-start: var(--mod-dialog-confirm-buttongroup-padding-top, var(--spectrum-dialog-confirm-buttongroup-padding-top));
     }
 
     :host([mode='fullscreen']) ::slotted([slot='heading']),
     :host([mode='fullscreenTakeover']) ::slotted([slot='heading']) {
-        font-size: var(
-            --mod-dialog-confirm-title-text-size,
-            var(--spectrum-dialog-confirm-title-text-size)
-        );
+        font-size: var(--mod-dialog-confirm-title-text-size, var(--spectrum-dialog-confirm-title-text-size));
     }
 }
 

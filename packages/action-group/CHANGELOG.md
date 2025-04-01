@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.4.0
+
+### Patch Changes
+
+-   Updated dependencies [[`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98)]:
+    -   @spectrum-web-components/action-button@1.4.0
+    -   @spectrum-web-components/icons-workflow@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+    -   @spectrum-web-components/reactive-controllers@1.4.0
+
 ## 1.3.0
 
 ### Patch Changes
