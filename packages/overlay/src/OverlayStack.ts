@@ -40,14 +40,25 @@ class OverlayStack {
     }
 
     private handleScroll = (event: Event): void => {
-        // Don't close pickers on document scroll
+        // Update positions of all open overlays
         this.stack.forEach((overlay) => {
-            if (
-                overlay.type === 'auto' &&
-                overlay.triggerElement instanceof HTMLElement &&
-                overlay.triggerElement.closest('sp-picker, sp-action-menu')
-            ) {
-                event.stopPropagation();
+            if (overlay.open) {
+                // Don't close pickers on document scroll
+                if (
+                    overlay.type === 'auto' &&
+                    overlay.triggerElement instanceof HTMLElement &&
+                    overlay.triggerElement.closest('sp-picker, sp-action-menu')
+                ) {
+                    event.stopPropagation();
+                }
+                // Update the overlay's position by dispatching the update event
+                document.dispatchEvent(
+                    new CustomEvent('sp-update-overlays', {
+                        bubbles: true,
+                        composed: true,
+                        cancelable: true,
+                    })
+                );
             }
         });
     };
