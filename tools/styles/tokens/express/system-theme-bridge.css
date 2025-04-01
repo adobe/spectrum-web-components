@@ -726,23 +726,6 @@
     --system-coach-mark-buttongroup-spacing-horizontal: var(
         --spectrum-spacing-100
     );
-    --system-color-area-border-radius: var(
-        --spectrum-color-area-border-rounding
-    );
-    --system-color-area-border-color-rgb: 0, 0, 0;
-    --system-color-area-border-color-opacity: 0.1;
-    --system-color-area-border-color: rgba(
-        var(--system-color-area-border-color-rgb),
-        var(--system-color-area-border-color-opacity)
-    );
-    --system-color-area-disabled-background-color: var(
-        --spectrum-disabled-background-color
-    );
-    --system-color-area-border-width: var(--spectrum-color-area-border-width);
-    --system-color-area-height: var(--spectrum-color-area-height);
-    --system-color-area-width: var(--spectrum-color-area-width);
-    --system-color-area-min-width: var(--spectrum-color-area-minimum-width);
-    --system-color-area-min-height: var(--spectrum-color-area-minimum-height);
     --system-color-slider-handle-margin-block: var(
         --spectrum-component-top-to-text-75
     );

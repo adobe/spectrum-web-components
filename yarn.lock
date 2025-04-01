@@ -7075,13 +7075,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorarea@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/colorarea@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/colorarea@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/colorarea@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/colorhandle": ">=8"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/e9c860cf2cfee28f99565ca70e388af4379f7baad5556c7d2d274da76a6bdc7f8eb2a530cd9761d7b15a7c98c147f56b1fcf6547045368c76f343e611164bfe7
+    "@spectrum-css/colorhandle": ">=10.0.0 <11.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/colorhandle":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/a406aaa5aa5d0e4648d0603c6572be0a13705e2a067e6d24336af4ad66705f1b189057982a6dff48aaafa367f38e68a8ad397f98ff85a2fc40f62b697caee650
   languageName: node
   linkType: hard
 
@@ -8096,7 +8101,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-area@workspace:packages/color-area"
   dependencies:
-    "@spectrum-css/colorarea": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/colorarea": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/color-handle": "npm:1.4.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:1.4.0"
