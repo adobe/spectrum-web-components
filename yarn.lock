@@ -7762,12 +7762,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/underlay@npm:5.0.0-s2-foundations.15":
-  version: 5.0.0-s2-foundations.15
-  resolution: "@spectrum-css/underlay@npm:5.0.0-s2-foundations.15"
+"@spectrum-css/underlay@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@spectrum-css/underlay@npm:6.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/038f68b6ffd4f52926bf491d23caf0edf560e84bc21c6fef965b773041291c27944ae078196065d43d735277ceaa3543aead321cce50467fdad5439ac6c6bfa7
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/54ca74747b0cb2bd9b5eeb08ed48d242ed81d81bb3c58fdf157f8e1599e6793d195e797fac9b3a8bb21a6581cc406e49c923726531ab549a4949bf7609437684
   languageName: node
   linkType: hard
 
@@ -8848,7 +8851,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/underlay@workspace:packages/underlay"
   dependencies:
-    "@spectrum-css/underlay": "npm:5.0.0-s2-foundations.15"
+    "@spectrum-css/underlay": "npm:6.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft

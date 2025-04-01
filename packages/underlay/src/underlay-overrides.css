@@ -11,26 +11,3 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-underlay-background-entry-animation-delay: var(
-        --system-underlay-background-entry-animation-delay
-    );
-    --spectrum-underlay-background-exit-animation-ease: var(
-        --system-underlay-background-exit-animation-ease
-    );
-    --spectrum-underlay-background-entry-animation-ease: var(
-        --system-underlay-background-entry-animation-ease
-    );
-    --spectrum-underlay-background-entry-animation-duration: var(
-        --system-underlay-background-entry-animation-duration
-    );
-    --spectrum-underlay-background-exit-animation-duration: var(
-        --system-underlay-background-exit-animation-duration
-    );
-    --spectrum-underlay-background-exit-animation-delay: var(
-        --system-underlay-background-exit-animation-delay
-    );
-    --spectrum-underlay-background-color: var(
-        --system-underlay-background-color
-    );
-}
