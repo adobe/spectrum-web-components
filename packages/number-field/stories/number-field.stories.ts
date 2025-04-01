@@ -454,6 +454,22 @@ readOnly.args = {
     readonly: true,
     value: '15',
 };
+export const validationIcons = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="validation">
+            You can only read the following value
+        </sp-field-label>
+        <sp-number-field
+            id="validation"
+            ...=${spreadProps(args)}
+            @change=${args.onChange}
+        ></sp-number-field>
+    `;
+};
+validationIcons.args = {
+    invalid: true,
+    value: '15',
+};
 
 export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
     const onChange =
