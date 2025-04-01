@@ -138,7 +138,7 @@ fulfill the accessibility contract of the button.
 #### Variants
 
 There are many button variants to choose from in Spectrum. The `variant`
-attribute defaults to `accent`, but also accepts the following value: `accent`, `primary`, `secondary`, `negative`, `white`, and `black`. They display as follows:
+attribute defaults to `accent`, but also accepts the following value: `accent`, `primary`, `secondary`, `negative`. They display as follows:
 
 <sp-tabs selected="accent" auto label="Variant Attribute Options">
 <sp-tab value="accent">Accent</sp-tab>
@@ -203,40 +203,6 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
         Icon + Label
     </sp-button>
     <sp-button variant="negative" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
-```
-
-</sp-tab-panel>
-<sp-tab value="black">Black</sp-tab>
-<sp-tab-panel value="black">
-
-```html demo
-<sp-button-group style="min-width: max-content">
-    <sp-button static-color="black">Label only</sp-button>
-    <sp-button static-color="black">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button static-color="black" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
-```
-
-</sp-tab-panel>
-<sp-tab value="white">White</sp-tab>
-<sp-tab-panel value="white">
-
-```html demo
-<sp-button-group style="min-width: max-content">
-    <sp-button static-color="white">Label only</sp-button>
-    <sp-button static-color="white">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button static-color="white" label="Icon only" icon-only>
         <sp-icon-help slot="icon"></sp-icon-help>
     </sp-button>
 </sp-button-group>
@@ -415,9 +381,11 @@ To ensure maximum contrast with the background, use static black for light backg
 <sp-tab-panel value="black">
 
 ```html demo
-<div style="background-color: #ccffee; padding: 20px">
-    <sp-button static="black">Click me</sp-button>
-    <sp-button static="black" treatment="outline">Click me</sp-button>
+<div
+    style="background-color: var(--spectrum-docs-static-black-background-color); padding: 20px"
+>
+    <sp-button static-color="black">Click me</sp-button>
+    <sp-button static-color="black" treatment="outline">Click me</sp-button>
 </div>
 ```
 
@@ -426,9 +394,11 @@ To ensure maximum contrast with the background, use static black for light backg
 <sp-tab-panel value="white">
 
 ```html demo
-<div style="background-color: #220033; padding: 20px">
-    <sp-button static="white">Click me</sp-button>
-    <sp-button static="white" treatment="outline">Click me</sp-button>
+<div
+    style="background-color: var(--spectrum-docs-static-white-background-color); padding: 20px"
+>
+    <sp-button static-color="white">Click me</sp-button>
+    <sp-button static-color="white" treatment="outline">Click me</sp-button>
 </div>
 ```
 
