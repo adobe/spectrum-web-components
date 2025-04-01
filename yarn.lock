@@ -6899,41 +6899,48 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/avatar@npm:8.0.0-s2-foundations.15":
-  version: 8.0.0-s2-foundations.15
-  resolution: "@spectrum-css/avatar@npm:8.0.0-s2-foundations.15"
+"@spectrum-css/avatar@npm:9.1.0":
+  version: 9.1.0
+  resolution: "@spectrum-css/avatar@npm:9.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/6b1b32c4cf806427ad4d948c418e7cdf14817e54ee846acb1e513d330a3aed860be4cca499eb2e5ee86bfa103bf7cb5bdd9ca01ef094834ae23457926bec6aae
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/e292004b55f185ec6c816e718273b897a9668c965959f4fe95314963520b303b70baa3d3ee981c0db49e101d1d3b3701f92bea909dd2ff1efa05d62149fdaeb4
   languageName: node
   linkType: hard
 
-"@spectrum-css/badge@npm:5.0.0-s2-foundations.15":
-  version: 5.0.0-s2-foundations.15
-  resolution: "@spectrum-css/badge@npm:5.0.0-s2-foundations.15"
+"@spectrum-css/badge@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@spectrum-css/badge@npm:6.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/02047ce5bf0fdd2304f62124b7c1e0bd480f021f2e2c4a288f82a3a7a2d2e9c648c66a0b67b946282dafa59042fdcd861fe42c8cf91472243db3b53547254419
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/cc46ebc7a41ef508e3ff1022fcdd7f5d36b9f3e6d5eb3ea65a4a7a58947fef9d85ae4d52192a389679fff9f9b7c96e4eb96dcc44f0e7ab746eeca8ed680959ad
   languageName: node
   linkType: hard
 
-"@spectrum-css/breadcrumb@npm:10.0.0-s2-foundations.15":
-  version: 10.0.0-s2-foundations.15
-  resolution: "@spectrum-css/breadcrumb@npm:10.0.0-s2-foundations.15"
+"@spectrum-css/breadcrumb@npm:11.1.0":
+  version: 11.1.0
+  resolution: "@spectrum-css/breadcrumb@npm:11.1.0"
   peerDependencies:
-    "@spectrum-css/actionbutton": ">=6"
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/actionbutton": ">=7.0.0 <8.0.0"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/actionbutton":
       optional: true
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/5ac3a09b7b4c46ba4c4bd6d2fd9f486918da88f5b067356a7e009dd4a6710c269f0b099cdd68b2e0dc7b46ff00384ffee48ea32d3a7a0e72eb0b561744add3a3
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/2d4eb3df5ab59075f7c34e07082d74d081be5ff76dd1e6c5a5491b7edf3fb67061f804e1f880c582d84e99b161101f4203dabf5c3a12b115a73609760328b515
   languageName: node
   linkType: hard
 
@@ -7845,7 +7852,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/avatar@workspace:packages/avatar"
   dependencies:
-    "@spectrum-css/avatar": "npm:8.0.0-s2-foundations.15"
+    "@spectrum-css/avatar": "npm:9.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
   languageName: unknown
@@ -7855,7 +7862,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/badge@workspace:packages/badge"
   dependencies:
-    "@spectrum-css/badge": "npm:5.0.0-s2-foundations.15"
+    "@spectrum-css/badge": "npm:6.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
   languageName: unknown
@@ -7873,7 +7880,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/breadcrumbs@workspace:packages/breadcrumbs"
   dependencies:
-    "@spectrum-css/breadcrumb": "npm:10.0.0-s2-foundations.15"
+    "@spectrum-css/breadcrumb": "npm:11.1.0"
     "@spectrum-web-components/action-menu": "npm:1.4.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icons-workflow": "npm:1.4.0"
