@@ -26,38 +26,12 @@ governing permissions and limitations under the License.
 }
 
 #heading {
-    padding-inline: var(
-        --mod-sidenav-inline-padding,
-        var(--spectrum-sidenav-inline-padding)
-    );
-    color: var(
-        --mod-sidenav-header-color,
-        var(--spectrum-sidenav-header-color)
-    );
-    font-size: var(
-        --mod-sidenav-header-font-size,
-        var(--spectrum-sidenav-header-font-size)
-    );
-    font-weight: var(
-        --mod-sidenav-header-font-weight,
-        var(--spectrum-sidenav-header-font-weight)
-    );
-    font-style: var(
-        --mod-sidenav-header-font-style,
-        var(--spectrum-sidenav-header-font-style)
-    );
-    line-height: var(
-        --mod-sidenav-header-line-height,
-        var(--spectrum-sidenav-header-line-height)
-    );
-    margin-block-start: calc(
-        var(
-                --mod-sidenav-heading-top-margin,
-                var(--spectrum-sidenav-heading-top-margin)
-            ) - var(--mod-sidenav-gap, var(--spectrum-sidenav-gap))
-    );
-    margin-block-end: var(
-        --mod-sidenav-heading-bottom-margin,
-        var(--spectrum-sidenav-heading-bottom-margin)
-    );
+    padding-inline: var(--mod-sidenav-inline-padding, var(--spectrum-sidenav-inline-padding));
+    color: var(--mod-sidenav-header-color, var(--spectrum-sidenav-header-color));
+    font-size: var(--mod-sidenav-header-font-size, var(--spectrum-sidenav-header-font-size));
+    font-weight: var(--mod-sidenav-header-font-weight, var(--spectrum-sidenav-header-font-weight));
+    font-style: var(--mod-sidenav-header-font-style, var(--spectrum-sidenav-header-font-style));
+    line-height: var(--mod-sidenav-header-line-height, var(--spectrum-sidenav-header-line-height));
+    margin-block-start: calc(var(--mod-sidenav-heading-top-margin, var(--spectrum-sidenav-heading-top-margin)) - var(--mod-sidenav-gap, var(--spectrum-sidenav-gap)));
+    margin-block-end: var(--mod-sidenav-heading-bottom-margin, var(--spectrum-sidenav-heading-bottom-margin));
 }

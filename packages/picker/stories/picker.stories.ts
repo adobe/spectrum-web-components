@@ -102,7 +102,7 @@ export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
         <div style="padding: 40px">
             <h1>Force Popover on Mobile</h1>
             <p>
-                The forcePopover attribute overrides the mobile device
+                The force-popover attribute overrides the mobile device
                 functionality of rendering a tray so that a popover will always
                 render no matter the device.
             </p>
@@ -134,7 +134,7 @@ export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
             </sp-field-label>
             <sp-picker
                 id="picker-2"
-                forcePopover
+                force-popover
                 @change=${handleChange(args)}
                 label="Select an option"
             >
@@ -395,7 +395,7 @@ export const iconsNone = (args: StoryArgs): TemplateResult => {
             value="1"
             icons="none"
         >
-            <sp-menu-item value="1">
+            <sp-menu-item value="1" selected active focused>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-menu-item>
@@ -772,8 +772,11 @@ export const BackgroundClickTest = (): TemplateResult => {
             <div style="position: absolute; bottom: 50px;">
                 <sp-button
                     @click=${() => {
+                        alert(
+                            'this button should not receive a click event on menu-item selection'
+                        );
                         console.log(
-                            'this button should not have been clicked...'
+                            'this button should not receive a click event on menu-item selection'
                         );
                     }}
                     size="l"

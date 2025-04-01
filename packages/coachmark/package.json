@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/coachmark",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "publishConfig": {
         "access": "public"
     },
@@ -72,14 +72,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/asset": "1.3.0",
-        "@spectrum-web-components/base": "1.3.0",
-        "@spectrum-web-components/button": "1.3.0",
-        "@spectrum-web-components/button-group": "1.3.0",
-        "@spectrum-web-components/icon": "1.3.0",
-        "@spectrum-web-components/icons-ui": "1.3.0",
-        "@spectrum-web-components/reactive-controllers": "1.3.0",
-        "@spectrum-web-components/shared": "1.3.0"
+        "@spectrum-web-components/asset": "1.4.0",
+        "@spectrum-web-components/base": "1.4.0",
+        "@spectrum-web-components/button": "1.4.0",
+        "@spectrum-web-components/button-group": "1.4.0",
+        "@spectrum-web-components/icon": "1.4.0",
+        "@spectrum-web-components/icons-ui": "1.4.0",
+        "@spectrum-web-components/reactive-controllers": "1.4.0",
+        "@spectrum-web-components/shared": "1.4.0"
     },
     "devDependencies": {
         "@spectrum-css/coachindicator": "3.0.0-s2-foundations.16",
