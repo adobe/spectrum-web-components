@@ -23,16 +23,16 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 import type { Properties } from './index.js';
 import { args, argTypes } from './index.js';
 
-const variant = 'black';
+const staticColor = 'black';
 const treatment = 'fill';
 
 export default {
     component: 'sp-button',
     title: 'Button/Black/Fill',
-    decorators: [makeOverBackground(variant)],
+    decorators: [makeOverBackground(staticColor)],
     args: {
         ...args,
-        variant,
+        staticColor,
         treatment,
     },
     argTypes,
