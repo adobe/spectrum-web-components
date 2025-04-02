@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Adobe. All rights reserved.
+Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,15 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/**
+ * ⚠️ IMPORTANT: SOURCE OF TRUTH MOVED ⚠️
+ *
+ * The authoritative implementation is now in:
+ * swan/src/components/slider/SliderHandle.ts
+ *
+ * This file is maintained for backward compatibility ONLY.
+ * DO NOT modify this file directly; instead make changes in Swan.
+ */
+
 // Re-export for backward compatibility
-export {
-    SliderHandle,
-    type HandleMin,
-    type HandleMax,
-    type HandleValues,
-    defaultNormalization,
-    type SliderNormalization,
-} from '@spectrum-web-components/swan/slider/SliderHandle.js';
+export * from '@spectrum-web-components/swan/src/components/slider/SliderHandle.js';
 
 // This file exists only for backward compatibility with existing imports
 // Please import from '@spectrum-web-components/swan/slider/SliderHandle.js' directly

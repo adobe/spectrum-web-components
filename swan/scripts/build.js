@@ -14,6 +14,7 @@ import esbuild from 'esbuild';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 import { readdirSync, statSync } from 'fs';
+import { extensionRewritePlugin } from './extension-rewrite-plugin.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -21,8 +22,24 @@ const rootDir = resolve(__dirname, '..');
 
 // Find all component files that need to be built
 function findEntryPoints() {
+    const baseDir = resolve(rootDir, 'src/base');
     const componentsDir = resolve(rootDir, 'src/components');
     const entryPoints = [];
+
+    // Check base directory
+    if (statSync(baseDir).isDirectory()) {
+        const files = readdirSync(baseDir);
+        for (const file of files) {
+            if (
+                file.endsWith('.ts') &&
+                !file.endsWith('.d.ts') &&
+                !file.endsWith('index.ts')
+            ) {
+                entryPoints.push(`src/base/${file}`);
+            }
+        }
+    }
+
     // Walk through the components directory structure
     const componentFolders = readdirSync(componentsDir);
     for (const folder of componentFolders) {
@@ -47,6 +64,14 @@ function findEntryPoints() {
 async function buildFiles(options) {
     const entryPoints = findEntryPoints();
 
+    // Create the extension rewrite plugin with the correct output extension
+    const extensionPlugin = extensionRewritePlugin({
+        outExtension: options.outExtension || '.js',
+    });
+
+    // Add our plugin to the plugins array
+    const plugins = [extensionPlugin].concat(options.plugins || []);
+
     for (const entryPoint of entryPoints) {
         // Get the output path by replacing src with dist and .ts with .js
         const outputPath = entryPoint.replace('src/', '');
@@ -57,11 +82,13 @@ async function buildFiles(options) {
             format: 'esm',
             sourcemap: true,
             platform: 'browser',
-            external: ['@spectrum-web-components/*'],
+            // Externalize everything in node_modules
+            external: ['*'],
             outfile: `dist/${outputPath.replace('.ts', options.outExtension || '.js')}`,
             absWorkingDir: rootDir,
             minify: options.minify || false,
             define: options.define || {},
+            plugins,
         });
     }
 }

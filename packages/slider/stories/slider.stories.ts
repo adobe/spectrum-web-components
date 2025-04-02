@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/slider/sp-slider-handle.js';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -22,6 +21,7 @@ import {
 } from '@spectrum-web-components/slider';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export default {
     component: 'sp-slider',
@@ -1329,4 +1329,79 @@ WithPopover.parameters = {
             story: 'A slider with a popover that appears on hover.',
         },
     },
+};
+
+export const MinMaxWarnings = (args: StoryArgs = {}): TemplateResult => {
+    // Generate unique ID for this story instance
+    const storyInstanceId = `minmax-warnings-${Date.now()}`;
+
+    // Clear issued warnings and enable verbose mode to ensure all min/max warnings are shown
+    if (window.__swc) {
+        window.__swc.issuedWarnings.clear();
+        window.__swc.verbose = true;
+
+        // Reset verbose mode after a brief delay to allow warnings to be triggered
+        // during initial render but prevent them from appearing in subsequent stories
+        setTimeout(() => {
+            window.__swc.verbose = false;
+        }, 100);
+    }
+
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <h3>Warning Case 1: min="previous" on first handle</h3>
+            <sp-slider
+                step="1"
+                min="0"
+                max="100"
+                variant=${ifDefined(args.variant)}
+                data-story-id="${storyInstanceId}"
+            >
+                First Handle with min="previous" (Warning)
+                <sp-slider-handle
+                    slot="handle"
+                    name="first"
+                    label="First Handle"
+                    min="previous"
+                    value="20"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    name="second"
+                    label="Second Handle"
+                    value="60"
+                ></sp-slider-handle>
+            </sp-slider>
+        </div>
+
+        <div style="width: 500px; margin: 12px 20px; margin-top: 40px;">
+            <h3>Warning Case 2: max="next" on last handle</h3>
+            <sp-slider
+                step="1"
+                min="0"
+                max="100"
+                variant=${ifDefined(args.variant)}
+                data-story-id="${storyInstanceId}"
+            >
+                Last Handle with max="next" (Warning)
+                <sp-slider-handle
+                    slot="handle"
+                    name="first"
+                    label="First Handle"
+                    value="20"
+                ></sp-slider-handle>
+                <sp-slider-handle
+                    slot="handle"
+                    name="second"
+                    label="Second Handle"
+                    max="next"
+                    value="60"
+                ></sp-slider-handle>
+            </sp-slider>
+        </div>
+    `;
+};
+
+MinMaxWarnings.args = {
+    variant: 'range',
 };

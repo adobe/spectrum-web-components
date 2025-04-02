@@ -9,8 +9,9 @@
         "sourceMap": true,
         "module": "ES2020",
         "target": "ES2020",
-        "emitDeclarationOnly": false
+        "emitDeclarationOnly": false,
+        "typeRoots": ["./src/types", "../node_modules/@types"]
     },
-    "include": ["src/**/*.ts"],
+    "include": ["src/**/*.ts", "src/types/global.d.ts"],
     "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }

@@ -5,6 +5,17 @@
     "type": "module",
     "description": "Base component implementations for Spectrum Web Components",
     "exports": {
+        "./src/types/global.d.ts": "./src/types/global.d.ts",
+        "./src/base/Base.js": {
+            "types": "./dist/base/Base.d.ts",
+            "development": "./dist/base/Base.dev.js",
+            "default": "./dist/base/Base.js"
+        },
+        "./src/base/streaming-listener.js": {
+            "types": "./dist/base/streaming-listener.d.ts",
+            "development": "./dist/base/streaming-listener.dev.js",
+            "default": "./dist/base/streaming-listener.js"
+        },
         "./accordion/AccordionBase.js": {
             "types": "./dist/components/accordion/AccordionBase.d.ts",
             "development": "./dist/components/accordion/AccordionBase.dev.js",
@@ -49,7 +60,8 @@
         "@lit-labs/observers": "^2.0.2",
         "@spectrum-web-components/base": "workspace:*",
         "@spectrum-web-components/reactive-controllers": "workspace:*",
-        "@spectrum-web-components/shared": "workspace:*"
+        "@spectrum-web-components/shared": "workspace:*",
+        "lit": "^3.1.3"
     },
     "devDependencies": {
         "@web/test-runner": "^0.18.0",

@@ -10,30 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/**
- * ⚠️ IMPORTANT: SOURCE OF TRUTH MOVED ⚠️
- *
- * The authoritative source for these type definitions is now in:
- * swan/src/types/global.d.ts
- *
- * This file is maintained for backward compatibility ONLY.
- * DO NOT modify these types directly; instead make changes in Swan.
- */
-
-// Copy of definitions from swan/src/types/global.d.ts
-// Keep these in sync with the Swan definitions
-
 type ElementLocalName = string;
+
 type WarningType = 'default' | 'accessibility' | 'api';
+
 type WarningLevel = 'default' | 'low' | 'medium' | 'high' | 'deprecation';
+
 type SWCWarningOptions = {
     type?: WarningType;
     level?: WarningLevel;
     issues?: string[];
 };
+
 type BrandedSWCWarningID = `${ElementLocalName}:${WarningType}:${WarningLevel}`;
 
-// Using declaration merging to define the Window interface
 interface Window {
     __swc: {
         DEBUG: boolean;

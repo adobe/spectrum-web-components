@@ -10,6 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/**
+ * Concrete implementation of the Swan abstract base class.
+ * This component provides the rendering layer and styles, while
+ * the core logic resides in Swan's abstract class.
+ *
+ * @see swan/src/components/progress-bar/ProgressBarBase.ts for the abstract base implementation
+ */
+
 import {
     CSSResultArray,
     html,
