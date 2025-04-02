@@ -151,8 +151,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     /**
      * whether or not to support pointerdown - drag - pointerup selection strategy
-     * default is true
-     * should be false for mobile to prevent click event being captured behind the menu-tray (cz menu immediately closes on pointerup)
+     * default is false to prevent click/touch event being captured behind the menu-tray in a mobile environment (cz menu immediately closes on pointerup)
      */
     public shouldSupportDragAndSelect = false;
 
