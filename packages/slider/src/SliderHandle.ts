@@ -21,7 +21,7 @@ governing permissions and limitations under the License.
  */
 
 // Re-export for backward compatibility
-export * from '@spectrum-web-components/swan/src/components/slider/SliderHandle.js';
+export * from '@spectrum-web-components/swan/slider/SliderHandle.js';
 
 // This file exists only for backward compatibility with existing imports
 // Please import from '@spectrum-web-components/swan/slider/SliderHandle.js' directly

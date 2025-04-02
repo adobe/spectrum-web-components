@@ -13,6 +13,118 @@ This log serves several purposes:
 
 ## Migrations
 
+### Base Foundation Modules (April 2024)
+
+Several fundamental modules from the base package have been migrated to support the Swan architecture:
+
+#### define-element
+
+**Migration Details:**
+
+-   Moved implementation from `tools/base/src/define-element.ts` to `swan/src/base/define-element.ts`
+-   Created a shim in SWC that re-exports from Swan to maintain backward compatibility
+
+**Implementation Notes:**
+
+-   Provides the `defineElement` utility function for safely registering custom elements
+-   Includes debugging support to detect and warn about element redefinition
+-   Used by virtually all components in the library
+
+#### decorators
+
+**Migration Details:**
+
+-   Moved implementation from `tools/base/src/decorators.ts` to `swan/src/base/decorators.ts`
+-   Created a shim in SWC that re-exports from Swan to maintain backward compatibility
+
+**Implementation Notes:**
+
+-   Re-exports decorators from lit that are used throughout the component library
+-   Includes decorators like `@property`, `@state`, `@query`, etc.
+
+#### directive, async-directive, and html
+
+**Migration Details:**
+
+-   Moved implementations from the base package to corresponding files in swan/src/base/
+-   Created shims in original locations that re-export from Swan
+
+**Implementation Notes:**
+
+-   These modules provide core functionality from lit that is used throughout the component library
+-   The `directive` and `async-directive` modules support custom directives
+-   The `html` module exports `nothing` and `render` from lit for template rendering
+
+**Challenges Resolved:**
+
+-   Ensured proper exports configuration in package.json for all modules
+-   Maintained backward compatibility with existing imports in the codebase
+-   Verified through comprehensive testing that the migrations did not introduce regressions
+
+### condition-attribute-with-id (April 2024)
+
+The `condition-attribute-with-id` module provides utility functions for managing attribute values with IDs, commonly used for accessibility attributes like `aria-describedby`.
+
+**Migration Details:**
+
+-   Moved implementation from `tools/base/src/condition-attribute-with-id.ts` to `swan/src/base/condition-attribute-with-id.ts`
+-   Created a shim in SWC that re-exports from Swan to maintain backward compatibility
+-   Added appropriate export entries to Swan's package.json to ensure proper module resolution
+
+**Implementation Notes:**
+
+-   Contains two primary utility functions:
+    -   `conditionAttributeWithId`: Adds IDs to an attribute and returns a cleanup function
+    -   `conditionAttributeWithoutId`: Removes IDs from an attribute
+-   These utilities are used by components that need to manage ARIA attribute values, particularly for transient UI elements
+
+**Challenges Resolved:**
+
+-   Ensured proper package.json exports configuration for TypeScript resolution
+-   Maintained the same API surface to preserve backward compatibility
+
+### sizedMixin (April 2024)
+
+The `sizedMixin` module provides a mixin function that adds size management functionality to components.
+
+**Migration Details:**
+
+-   Moved implementation from `tools/base/src/sizedMixin.ts` to `swan/src/base/sizedMixin.ts`
+-   Created a shim in SWC that re-exports from Swan to maintain backward compatibility
+-   Added appropriate export entries to Swan's package.json to ensure proper module resolution
+
+**Implementation Notes:**
+
+-   The mixin is used by various components to implement different size variants (s, m, l, xl, etc.)
+-   Provides consistent size attribute management across the component library
+-   Includes utility types and constants for size handling
+
+**Challenges Resolved:**
+
+-   Ensured proper package.json exports configuration for TypeScript resolution
+-   Maintained the same API surface to preserve backward compatibility
+
+### directives (April 2024)
+
+The `directives` module provides a centralized place for re-exporting commonly used lit directives.
+
+**Migration Details:**
+
+-   Moved implementation from `tools/base/src/directives.ts` to `swan/src/base/directives.ts`
+-   Created a shim in SWC that re-exports from Swan to maintain backward compatibility
+-   Added appropriate export entries to Swan's package.json to ensure proper module resolution
+
+**Implementation Notes:**
+
+-   The module re-exports common lit directives used throughout the SWC ecosystem
+-   Used by various components for features like conditional rendering and template repeating
+-   Ensured both production and development builds correctly referenced the Swan implementation
+
+**Challenges Resolved:**
+
+-   Added proper package.json exports configuration to ensure the module could be resolved
+-   Verified package exports were working properly through tests on components that depend on directives
+
 ### Build Infrastructure: Extension Rewrite Plugin (April 2024)
 
 The extension rewrite plugin is a critical piece of the build infrastructure that handles path transformations to ensure proper module resolution.

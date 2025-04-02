@@ -23,7 +23,7 @@ governing permissions and limitations under the License.
 import {
     SpectrumMixin,
     SpectrumElement as SwanSpectrumElement,
-} from '@spectrum-web-components/swan/src/base/Base.js';
+} from '@spectrum-web-components/swan/base/Base.js';
 import { version } from '@spectrum-web-components/base/src/version.js';
 
 // Re-export the SpectrumMixin directly from Swan

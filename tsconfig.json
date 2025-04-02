@@ -23,6 +23,7 @@
         "types": ["mocha", "chai", "sinon", "node", "swc"],
         "resolveJsonModule": true,
         "paths": {
+            "@spectrum-web-components/swan/base/*": ["../swan/src/base/*"],
             "@spectrum-web-components/swan/*": ["../swan/src/components/*"]
         }
     },

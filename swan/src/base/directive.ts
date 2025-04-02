@@ -10,14 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/**
- * ⚠️ IMPORTANT: SOURCE OF TRUTH MOVED ⚠️
- *
- * The authoritative implementation is now in:
- * swan/src/base/html.ts
- *
- * This file is maintained for backward compatibility ONLY.
- * DO NOT modify this file directly; instead make changes in Swan.
- */
-
-export * from '@spectrum-web-components/swan/base/html.js';
+export * from 'lit/directive.js';

@@ -20,4 +20,4 @@ governing permissions and limitations under the License.
  * DO NOT modify this file directly; instead make changes in Swan.
  */
 
-export * from '@spectrum-web-components/swan/src/base/streaming-listener.js';
+export * from '@spectrum-web-components/swan/base/streaming-listener.js';

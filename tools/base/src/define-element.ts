@@ -10,22 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-interface CustomElementConstructor {
-    new (...params: unknown[]): HTMLElement;
-}
+/**
+ * ⚠️ IMPORTANT: SOURCE OF TRUTH MOVED ⚠️
+ *
+ * The authoritative implementation is now in:
+ * swan/src/base/define-element.ts
+ *
+ * This file is maintained for backward compatibility ONLY.
+ * DO NOT modify this file directly; instead make changes in Swan.
+ */
 
-export function defineElement(
-    name: string,
-    constructor: CustomElementConstructor
-): void {
-    if (window.__swc && window.__swc.DEBUG) {
-        if (customElements.get(name)) {
-            window.__swc.warn(
-                undefined,
-                `Attempted to redefine <${name}>. This usually indicates that multiple versions of the same web component were loaded onto a single page.`,
-                'https://opensource.adobe.com/spectrum-web-components/registry-conflicts'
-            );
-        }
-    }
-    customElements.define(name, constructor);
-}
+export * from '@spectrum-web-components/swan/base/define-element.js';

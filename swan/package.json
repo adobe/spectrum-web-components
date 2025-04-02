@@ -6,15 +6,55 @@
     "description": "Base component implementations for Spectrum Web Components",
     "exports": {
         "./src/types/global.d.ts": "./src/types/global.d.ts",
-        "./src/base/Base.js": {
+        "./base/Base.js": {
             "types": "./dist/base/Base.d.ts",
             "development": "./dist/base/Base.dev.js",
             "default": "./dist/base/Base.js"
         },
-        "./src/base/streaming-listener.js": {
+        "./base/streaming-listener.js": {
             "types": "./dist/base/streaming-listener.d.ts",
             "development": "./dist/base/streaming-listener.dev.js",
             "default": "./dist/base/streaming-listener.js"
+        },
+        "./base/directives.js": {
+            "types": "./dist/base/directives.d.ts",
+            "development": "./dist/base/directives.dev.js",
+            "default": "./dist/base/directives.js"
+        },
+        "./base/sizedMixin.js": {
+            "types": "./dist/base/sizedMixin.d.ts",
+            "development": "./dist/base/sizedMixin.dev.js",
+            "default": "./dist/base/sizedMixin.js"
+        },
+        "./base/condition-attribute-with-id.js": {
+            "types": "./dist/base/condition-attribute-with-id.d.ts",
+            "development": "./dist/base/condition-attribute-with-id.dev.js",
+            "default": "./dist/base/condition-attribute-with-id.js"
+        },
+        "./base/define-element.js": {
+            "types": "./dist/base/define-element.d.ts",
+            "development": "./dist/base/define-element.dev.js",
+            "default": "./dist/base/define-element.js"
+        },
+        "./base/decorators.js": {
+            "types": "./dist/base/decorators.d.ts",
+            "development": "./dist/base/decorators.dev.js",
+            "default": "./dist/base/decorators.js"
+        },
+        "./base/directive.js": {
+            "types": "./dist/base/directive.d.ts",
+            "development": "./dist/base/directive.dev.js",
+            "default": "./dist/base/directive.js"
+        },
+        "./base/html.js": {
+            "types": "./dist/base/html.d.ts",
+            "development": "./dist/base/html.dev.js",
+            "default": "./dist/base/html.js"
+        },
+        "./base/async-directive.js": {
+            "types": "./dist/base/async-directive.d.ts",
+            "development": "./dist/base/async-directive.dev.js",
+            "default": "./dist/base/async-directive.js"
         },
         "./accordion/AccordionBase.js": {
             "types": "./dist/components/accordion/AccordionBase.d.ts",

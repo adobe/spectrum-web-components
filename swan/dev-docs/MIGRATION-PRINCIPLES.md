@@ -103,7 +103,7 @@ When migrating files from SWC to Swan, update the TypeScript configuration:
 
     ```typescript
     // Use this
-    import { Component } from '@spectrum-web-components/swan/src/path/to/file.js';
+    import { Component } from '@spectrum-web-components/swan/[path/to/file].js';
 
     // Not this
     import { Component } from '../../../swan/src/path/to/file.js';
@@ -116,15 +116,21 @@ When migrating files from SWC to Swan, update the TypeScript configuration:
     - For each migrated file, add an entry to Swan's package.json exports:
 
     ```json
-    "./src/[path/to/file].js": {
+    "./[path/to/file].js": {
         "types": "./dist/[path/to/file].d.ts",
         "development": "./dist/[path/to/file].dev.js",
         "default": "./dist/[path/to/file].js"
     }
     ```
 
+    - Keep [path/to/file] short and logical. In particular:
+        - Don't include 'src' in the path
+        - Don't include 'components' in the path
     - The structure of this export entry is critical to ensure TypeScript resolution works properly
     - Pay special attention to the paths - they must match exactly where the files are generated in the build process
+    - Failing to add the exports entry will cause resolution errors during testing and runtime
+    - Always rebuild Swan and SWC after modifying the exports configuration
+    - Test the exports configuration by running tests on components that depend on the migrated file
 
 2. **Build Process Considerations**
 
@@ -169,3 +175,22 @@ When migrating files from SWC to Swan, update the TypeScript configuration:
         - Check the `references` section in tsconfig.json
         - Ensure all import paths include the correct `.js` extension
         - Verify that the paths match the structure in the exports map
+    - If you see "Could not resolve import" errors during testing:
+        - Verify the export path in Swan's package.json matches exactly what's being imported
+        - Check that both development and production builds include the correct export paths
+        - Rebuild both Swan and SWC to ensure all generated files are up-to-date
+        - Try running tests on a specific component that uses the migrated file to isolate the issue
+
+## Import Path Transition Plan
+
+As part of improving the Swan package structure, we're moving toward shorter, cleaner import paths by removing the `/src` segment from import paths. The package now supports both formats for backward compatibility:
+
+```typescript
+// Original import format (with /src) - STILL SUPPORTED
+import { Component } from '@spectrum-web-components/swan/src/path/to/file.js';
+
+// New import format (without /src) - PREFERRED
+import { Component } from '@spectrum-web-components/swan/path/to/file.js';
+```
+
+The package.json exports configuration supports both formats to ensure a smooth transition. New code should use the shorter paths without `/src`, while existing code will continue to work with the current paths. Future updates will eventually deprecate the longer `/src` paths.

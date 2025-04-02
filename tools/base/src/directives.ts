@@ -10,15 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export { ifDefined } from 'lit/directives/if-defined.js';
-export { repeat } from 'lit/directives/repeat.js';
-export { classMap } from 'lit/directives/class-map.js';
-export { styleMap } from 'lit/directives/style-map.js';
-export type { StyleInfo } from 'lit/directives/style-map.js';
-export { until } from 'lit/directives/until.js';
-export { live } from 'lit/directives/live.js';
-export { when } from 'lit/directives/when.js';
-export { join } from 'lit/directives/join.js';
-export { unsafeHTML } from 'lit/directives/unsafe-html.js';
-export type { Ref } from 'lit/directives/ref.js';
-export { createRef, ref } from 'lit/directives/ref.js';
+/**
+ * ⚠️ IMPORTANT: SOURCE OF TRUTH MOVED ⚠️
+ *
+ * The authoritative implementation is now in:
+ * swan/src/base/directives.ts
+ *
+ * This file is maintained for backward compatibility ONLY.
+ * DO NOT modify this file directly; instead make changes in Swan.
+ */
+
+export * from '@spectrum-web-components/swan/base/directives.js';
