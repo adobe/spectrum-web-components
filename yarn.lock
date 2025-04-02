@@ -7665,13 +7665,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/taggroup@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/taggroup@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/taggroup@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/taggroup@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/tag": ">=9"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/ec413ad55cf5dce34af5a19473149810e1cef39b695e80e11fed0fc7c955fb945d39bc1387102d09ea0b71a74f3e90532564346ca3cd863ad3803bf5212dc75b
+    "@spectrum-css/tag": ">=10.0.0 <11.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/tag":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/183da9e2e664caba3c32edea1d899fa266cd81e820244e57498a8d14677c606407b899c2178edce81b88ec7f629d10dba0cfb86355beefb8148e9fc64b5aa6dc
   languageName: node
   linkType: hard
 
@@ -8770,7 +8775,7 @@ __metadata:
   resolution: "@spectrum-web-components/tags@workspace:packages/tags"
   dependencies:
     "@spectrum-css/tag": "npm:10.0.0-s2-foundations.15"
-    "@spectrum-css/taggroup": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/taggroup": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.4.0"
