@@ -7302,13 +7302,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/helptext@npm:6.0.1":
-  version: 6.0.1
-  resolution: "@spectrum-css/helptext@npm:6.0.1"
+"@spectrum-css/helptext@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/helptext@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14 || >=15"
-  checksum: 10c0/5f27c33e018cc65fbc8daa0cccbc4e5d5ec057e7d089596628922323bb8ba2496708a99eae9c0aebded2f00c2a46ab6f72fcddf3d737255f067088b2904d4105
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/16e0a3dad0e18758c323a07abf60da37bd02acdbd23a0d5e50948cde951cb9e4a4af3765e811b8470553734568290ce48465fa4f291630ee9d11c4abe4d51efb
   languageName: node
   linkType: hard
 
@@ -8353,7 +8358,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/help-text@workspace:packages/help-text"
   dependencies:
-    "@spectrum-css/helptext": "npm:6.0.1"
+    "@spectrum-css/helptext": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icons-workflow": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
