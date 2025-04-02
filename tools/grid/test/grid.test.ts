@@ -20,7 +20,7 @@ import '@spectrum-web-components/theme/theme-light.js';
 import '@spectrum-web-components/grid/sp-grid.js';
 import { Grid } from '@spectrum-web-components/grid';
 import { Default } from '../stories/grid.stories.js';
-import { sendKeys, sendMouse } from '@web/test-runner-commands';
+import { emulateMedia, sendKeys, sendMouse } from '@web/test-runner-commands';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { isWebKit } from '@spectrum-web-components/shared';
 
@@ -31,6 +31,12 @@ describe('Grid', () => {
                 <div>${Default()}</div>
             `)
     );
+    beforeEach(() => {
+        emulateMedia({ reducedMotion: 'reduce' });
+    });
+    afterEach(() => {
+        emulateMedia({ reducedMotion: 'no-preference' });
+    });
     it('loads default grid accessibly', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>${Default()}</div>
@@ -128,9 +134,43 @@ describe('Grid', () => {
         await nextFrame();
         await nextFrame();
 
-        expect(
-            el.querySelector(el.focusableSelector) === document.activeElement
-        ).to.be.true;
+        const firstItem = el.querySelector(el.focusableSelector) as HTMLElement;
+        expect(firstItem === document.activeElement).to.be.true;
+        expect(el.tabIndex).to.equal(-1);
+
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        await nextFrame();
+        await nextFrame();
+
+        await elementUpdated(el);
+
+        let activeElement = document.activeElement as HTMLElement;
+        expect(firstItem.contains(activeElement)).to.be.true;
+        expect(activeElement.tagName).to.equal('SP-ACTION-MENU');
+        expect(activeElement.tabIndex).to.equal(-1);
+        expect(el.tabIndex).to.equal(-1);
+
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        await elementUpdated(el);
+
+        activeElement = document.activeElement as HTMLElement;
+        expect(activeElement.tagName).to.equal('SP-CARD');
+        expect(activeElement.tabIndex).to.equal(0);
+        const shadowRootActiveElement = activeElement.shadowRoot
+            ?.activeElement as HTMLElement;
+        expect(shadowRootActiveElement?.tagName).to.equal('SP-CHECKBOX');
+        expect(shadowRootActiveElement?.tabIndex).to.equal(0);
         expect(el.tabIndex).to.equal(-1);
 
         await sendKeys({
