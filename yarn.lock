@@ -7125,14 +7125,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorslider@npm:7.0.0-s2-foundations.16":
-  version: 7.0.0-s2-foundations.16
-  resolution: "@spectrum-css/colorslider@npm:7.0.0-s2-foundations.16"
+"@spectrum-css/colorslider@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@spectrum-css/colorslider@npm:8.1.0"
   peerDependencies:
-    "@spectrum-css/colorhandle": ">=8"
-    "@spectrum-css/opacitycheckerboard": ">=2"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/198cfe7d55d86a4c86445f31d912dc608f62b8d07970431ce11f4d54780e7e4f07d9d153c930657183ff5bcdfda923cd1c3f8209b048b8a86d754273ce471c0d
+    "@spectrum-css/colorhandle": ">=10.0.0 <11.0.0"
+    "@spectrum-css/opacitycheckerboard": ">=4.0.0 <5.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/colorhandle":
+      optional: true
+    "@spectrum-css/opacitycheckerboard":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/25b9f5a98b7eafd264eb21f1e6edcc0bb2cada3639e535051cf0b4ea39dfad62ac67cf70f0abb6239d17af8e80792515aad2555db3cf7406fbdd88b807c32e23
   languageName: node
   linkType: hard
 
@@ -8153,7 +8160,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-slider@workspace:packages/color-slider"
   dependencies:
-    "@spectrum-css/colorslider": "npm:7.0.0-s2-foundations.16"
+    "@spectrum-css/colorslider": "npm:8.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/color-handle": "npm:1.4.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:1.4.0"
