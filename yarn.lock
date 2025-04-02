@@ -7532,16 +7532,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/sidenav@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/sidenav@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/sidenav@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/sidenav@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/ea8956f39fe8a7516e233e9296bb65717262f80b9533fbd175f47e43c4ee4b8ba56e2f694193d676cf3072567d2489431f5473c6b200732cfd757bd1b3df45c0
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/8e748c1e7854be0b326f53a1f83342d732780042d321b0ce36cdfe3535fb56cd81acbfde815dab23ce3a5192004490888de1213cd63e7e57a6eaa0389f0bc7ed
   languageName: node
   linkType: hard
 
@@ -8655,7 +8657,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/sidenav@workspace:packages/sidenav"
   dependencies:
-    "@spectrum-css/sidenav": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/sidenav": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
