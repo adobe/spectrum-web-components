@@ -5,6 +5,7 @@
 '@spectrum-web-components/card': patch
 '@spectrum-web-components/color-area': patch
 '@spectrum-web-components/color-loupe': patch
+'@spectrum-web-components/divider': patch
 '@spectrum-web-components/styles': patch
 '@spectrum-web-components/tray': patch
 '@spectrum-web-components/underlay': patch
