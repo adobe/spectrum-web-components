@@ -7648,20 +7648,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/tag@npm:10.0.0-s2-foundations.15":
-  version: 10.0.0-s2-foundations.15
-  resolution: "@spectrum-css/tag@npm:10.0.0-s2-foundations.15"
+"@spectrum-css/tag@npm:10.1.0":
+  version: 10.1.0
+  resolution: "@spectrum-css/tag@npm:10.1.0"
   peerDependencies:
-    "@spectrum-css/avatar": ">=7"
-    "@spectrum-css/clearbutton": ">=6"
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/avatar": ">=9.0.0 <10.0.0"
+    "@spectrum-css/clearbutton": ">=7.0.0 <8.0.0"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/avatar":
       optional: true
+    "@spectrum-css/clearbutton":
+      optional: true
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/db91de565ea388ab002fc32aa93a7c1068431ae6162a5f3d99d7af33611ce2f0fd3e1f60afc7342d09d2e04125485ab5ba4f92b9595add594deb37bddbc590a9
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/d2439cecdd3982cb4e852b0edbe5fd1cdc9a721633dd7917cfa1591934cf8fdebd9f2c4213dceef00e0b7e9be4b039d9a0e0e03cfa2c154a8b3d3c81618d4cc2
   languageName: node
   linkType: hard
 
@@ -8774,7 +8778,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/tags@workspace:packages/tags"
   dependencies:
-    "@spectrum-css/tag": "npm:10.0.0-s2-foundations.15"
+    "@spectrum-css/tag": "npm:10.1.0"
     "@spectrum-css/taggroup": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
