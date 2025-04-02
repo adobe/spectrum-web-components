@@ -66,9 +66,16 @@ export class ClearButton extends SizedMixin(StyledButton, {
 
     /**
      * The visual variant to apply to this button.
+     * @deprecated Use `static-color='white'` instead.
      */
     @property({ reflect: true })
-    public variant: 'overBackground' | '' = '';
+    public variant: 'overBackground' | undefined;
+
+    /**
+     * The visual variant to apply to this button.
+     */
+    @property({ reflect: true })
+    public staticColor: 'white' | undefined;
 
     protected override get buttonContent(): TemplateResult[] {
         return [crossIcon[this.size]()];
