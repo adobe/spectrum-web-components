@@ -90,6 +90,10 @@ export const MemoryUsage = (): TemplateResult => {
                                 await measureComponentMemory('sp-color-area');
                             const buttonMemory =
                                 await measureComponentMemory('sp-button');
+                            // Adding checkbox and textfield components as baseline comparisons
+                            // to provide context for memory usage of simpler components
+                            // This helps demonstrate that color-area's higher memory usage
+                            // is expected due to its complexity compared to basic components
                             const checkboxMemory =
                                 await measureComponentMemory('sp-checkbox');
                             const textfieldMemory =
