@@ -43,14 +43,14 @@
     --spectrum-clear-button-width: var(--spectrum-component-height-300);
 }
 
-:host .spectrum-ClearButton--quiet {
+:host([quiet]) {
     --mod-clear-button-background-color: transparent;
     --mod-clear-button-background-color-hover: transparent;
     --mod-clear-button-background-color-down: transparent;
     --mod-clear-button-background-color-key-focus: transparent;
 }
 
-:host .spectrum-ClearButton--staticWhite {
+:host([static-color="white"]) {
     --mod-clear-button-icon-color: var(--spectrum-white);
     --mod-clear-button-icon-color-hover: var(--spectrum-white);
     --mod-clear-button-icon-color-down: var(--spectrum-white);
@@ -59,7 +59,6 @@
     --mod-clear-button-background-color: transparent;
 }
 
-:host([disabled]),
 :host([disabled]) {
     --mod-clear-button-icon-color: var(--mod-clear-button-icon-color-disabled, var(--spectrum-disabled-content-color));
     --mod-clear-button-icon-color-hover: var(--spectrum-disabled-content-color);
@@ -77,11 +76,11 @@
 }
 
 @media (hover: hover) {
-    :host:not(:disabled):hover {
+    :host(:hover):not(:disabled) {
         color: var(--highcontrast-clear-button-icon-color-hover, var(--mod-clear-button-icon-color-hover, var(--spectrum-clear-button-icon-color-hover)));
     }
 
-    :host:not(:disabled):hover .fill {
+    :host(:hover):not(:disabled) .fill {
         background-color: var(--mod-clear-button-background-color-hover, var(--spectrum-clear-button-background-color-hover));
     }
 }
@@ -104,7 +103,7 @@
     background-color: var(--mod-clear-button-background-color-key-focus, var(--spectrum-clear-button-background-color-key-focus));
 }
 
-.spectrum-ClearButton-icon {
+.icon {
     color: inherit;
 }
 
@@ -119,7 +118,7 @@
 }
 
 :host([variant="overBackground"]:focus-visible),
-.spectrum-ClearButton--staticWhite:focus-visible {
+:host([static-color="white"]:focus-visible) {
     outline: none;
 }
 
