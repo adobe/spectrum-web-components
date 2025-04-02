@@ -11,21 +11,3 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-colorarea-border-radius: var(--system-color-area-border-radius);
-    --spectrum-colorarea-border-color-rgb: var(
-        --system-color-area-border-color-rgb
-    );
-    --spectrum-colorarea-border-color-opacity: var(
-        --system-color-area-border-color-opacity
-    );
-    --spectrum-colorarea-border-color: var(--system-color-area-border-color);
-    --spectrum-colorarea-disabled-background-color: var(
-        --system-color-area-disabled-background-color
-    );
-    --spectrum-colorarea-border-width: var(--system-color-area-border-width);
-    --spectrum-colorarea-height: var(--system-color-area-height);
-    --spectrum-colorarea-width: var(--system-color-area-width);
-    --spectrum-colorarea-min-width: var(--system-color-area-min-width);
-    --spectrum-colorarea-min-height: var(--system-color-area-min-height);
-}
