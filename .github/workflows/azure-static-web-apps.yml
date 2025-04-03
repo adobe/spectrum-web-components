@@ -1,6 +1,6 @@
 name: Azure Static Web Apps CI/CD
 # TODO: Uncomment when ready to deploy
-on:
+on: workflow_dispatch
 #   push:
 #     branches:
 #       - main
