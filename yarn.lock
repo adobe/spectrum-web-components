@@ -7584,12 +7584,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/splitview@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/splitview@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/splitview@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/splitview@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/4d0d331699f682883c30a3efbd29a87e633a565b5e412d966f213ca50f4f7392eb17cbfba0a0d0bac1904620b356454d6cc9068acf2de27a64629c67284c4e7b
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/963412b7187be580477379eb560e0da4f7eaaf60409dd6bf97534e9a129fa6994875cc60b3d5a53b7b44dfa419fd1f670dce559b8473a1813b50a527c964e255
   languageName: node
   linkType: hard
 
@@ -8716,7 +8719,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/split-view@workspace:packages/split-view"
   dependencies:
-    "@spectrum-css/splitview": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/splitview": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft
