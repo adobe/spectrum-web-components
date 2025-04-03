@@ -38,8 +38,6 @@ export const coverallsChromium = playwrightLauncher({
             permissions: ['clipboard-read', 'clipboard-write'],
         }),
     launchOptions: {
-        executablePath:
-            '/home/runner/.cache/ms-playwright/chromium-1148/chrome-linux/chrome',
         headless: true,
     },
 });
@@ -177,26 +175,20 @@ const vrtHTML =
     </html>`;
 
 export let vrtGroups = [];
-const systemVariants = ['spectrum', 'express', 'spectrum-two'];
-const colors = ['light', 'dark'];
-const scales = ['medium', 'large'];
-const directions = ['ltr', 'rtl'];
-systemVariants.forEach((systemVariant) => {
-    colors.forEach((color) => {
-        scales.forEach((scale) => {
-            directions.forEach((dir) => {
-                const reduceMotion = true;
-                const testHTML = vrtHTML({
-                    systemVariant,
-                    color,
-                    scale,
-                    dir,
-                    reduceMotion,
-                });
+['spectrum', 'express', 'spectrum-two'].forEach((systemVariant) => {
+    ['light', 'dark'].forEach((color) => {
+        ['medium', 'large'].forEach((scale) => {
+            ['ltr', 'rtl'].forEach((dir) => {
                 vrtGroups.push({
                     name: `vrt-${systemVariant}-${color}-${scale}-${dir}`,
                     files: '(packages|tools)/*/test/*.test-vrt.js',
-                    testRunnerHtml: testHTML,
+                    testRunnerHtml: vrtHTML({
+                        systemVariant,
+                        color,
+                        scale,
+                        dir,
+                        reduceMotion: true,
+                    }),
                     browsers: [chromium],
                 });
             });
@@ -207,8 +199,9 @@ systemVariants.forEach((systemVariant) => {
 vrtGroups = [
     ...vrtGroups,
     ...packages.reduce((acc, pkg) => {
-        const skipPkgs = ['bundle', 'modal'];
-        if (!skipPkgs.includes(pkg)) {
+        // Skip the bundle and modal packages
+        // as they are not intended to be used in the VRT tests
+        if (!['bundle', 'modal'].includes(pkg)) {
             acc.push({
                 name: `vrt-${pkg}`,
                 files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
