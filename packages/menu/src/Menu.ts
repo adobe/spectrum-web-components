@@ -149,6 +149,15 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
 
+    /**
+     * Whether to support the pointerdown-drag-pointerup selection strategy.
+     * Defaults to false to prevent click/touch events from being captured
+     * behind the menu tray in mobile environments (since the menu closes
+     * immediately on pointerup).
+     */
+
+    public shouldSupportDragAndSelect = false;
+
     public get focusInItem(): MenuItem | undefined {
         return this.rovingTabindexController?.focusInElement;
     }
@@ -386,6 +395,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         );
 
         this.addEventListener('click', this.handleClick);
+        this.addEventListener('touchend', this.handlePointerup);
         this.addEventListener('focusout', this.handleFocusout);
         this.addEventListener('sp-menu-item-keydown', this.handleKeydown);
         this.addEventListener('pointerup', this.handlePointerup);
@@ -452,11 +462,18 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private handlePointerup(event: Event): void {
+        /*
+         * early return if drag and select is not supported
+         * in this case, selection will be handled by the click event
+         */
+        if (!this.shouldSupportDragAndSelect) {
+            return;
+        }
         this.pointerUpTarget = event.target;
         this.handlePointerBasedSelection(event);
     }
 
-    private handlePointerBasedSelection(event: Event): void {
+    private async handlePointerBasedSelection(event: Event): Promise<void> {
         // Only handle left clicks
         if (event instanceof MouseEvent && event.button !== 0) {
             return;
@@ -626,6 +643,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 composed: true,
             })
         );
+
         if (!applyDefault) {
             // Cancel the event & don't apply the selection
             this._selected = oldSelected;

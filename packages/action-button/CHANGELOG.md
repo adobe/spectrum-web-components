@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.4.0
+
+### Patch Changes
+
+-   [#5190](https://github.com/adobe/spectrum-web-components/pull/5190) [`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - update action button fast follows for spectrum 2
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/button@1.4.0
+    -   @spectrum-web-components/icon@1.4.0
+    -   @spectrum-web-components/icons-ui@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+    -   @spectrum-web-components/shared@1.4.0
+
 ## 1.3.0
 
 ### Patch Changes

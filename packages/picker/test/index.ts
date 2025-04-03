@@ -818,6 +818,7 @@ export function runPickerTests(): void {
             secondItem.click();
             // The `change` event is dispatched _after_ the `updateComplete` promise.
             await changed;
+            await elementUpdated(el);
             expect(
                 preventChangeSpy.calledOnce,
                 preventChangeSpy.callCount.toString()
@@ -846,10 +847,9 @@ export function runPickerTests(): void {
             expect(secondItem.selected).to.be.false;
 
             secondItem.click();
-            await waitUntil(
-                () => document.activeElement === el,
-                'focused', { timeout: 300 }
-            );
+            await waitUntil(() => document.activeElement === el, 'focused', {
+                timeout: 300,
+            });
 
             expect(el.open, 'open?').to.be.false;
             expect(el.value, 'value changed').to.equal('option-2');
@@ -883,7 +883,8 @@ export function runPickerTests(): void {
             secondItem.click();
             await waitUntil(
                 () => document.activeElement === input,
-                'focus throw', { timeout: 300 }
+                'focus throw',
+                { timeout: 300 }
             );
 
             expect(el.open, 'open?').to.be.false;
@@ -933,6 +934,7 @@ export function runPickerTests(): void {
             const opened = oneEvent(el, 'sp-opened');
             button.dispatchEvent(arrowDownEvent());
             await opened;
+            await elementUpdated(el);
 
             expect(el.open, 'open by ArrowDown').to.be.true;
             expect(el.selectedItem?.itemText).to.be.undefined;
@@ -941,6 +943,7 @@ export function runPickerTests(): void {
             const closed = oneEvent(el, 'sp-closed');
             firstItem.click();
             await closed;
+            await elementUpdated(el);
 
             expect(el.open, 'open?').to.be.false;
             expect(el.selectedItem?.itemText).to.equal('Deselect');
@@ -1031,9 +1034,11 @@ export function runPickerTests(): void {
             const button = el.button as HTMLButtonElement;
 
             el.focus();
+            const changed = oneEvent(el, 'change');
             button.dispatchEvent(arrowRightEvent());
 
             await elementUpdated(el);
+            await changed;
 
             expect(selectionSpy.callCount).to.equal(1);
             expect(selectionSpy.calledWith('Deselected'));
@@ -1362,8 +1367,10 @@ export function runPickerTests(): void {
             expect(button, 'has button').to.not.be.null;
 
             // we should have SAFARI_FOCUS_RING_CLASS in the classList
-            expect(button.classList.contains(SAFARI_FOCUS_RING_CLASS), 'has focus ring?').to.be
-                .true;
+            expect(
+                button.classList.contains(SAFARI_FOCUS_RING_CLASS),
+                'has focus ring?'
+            ).to.be.true;
 
             // picker should still have focus
             expect(document.activeElement).to.equal(el);
@@ -1394,12 +1401,55 @@ export function runPickerTests(): void {
             firstItem.click();
             await closed;
 
+            await elementUpdated(el);
+
             // expect the tray to be closed
             expect(el.open, 'open?').to.be.false;
 
             // we should not have SAFARI_FOCUS_RING_CLASS in the classList
-            expect(button.classList.contains(SAFARI_FOCUS_RING_CLASS), 'has focus ring?').to.be
-                .false;
+            expect(
+                button.classList.contains(SAFARI_FOCUS_RING_CLASS),
+                'has focus ring?'
+            ).to.be.false;
+        });
+        it('does not close on document scroll', async () => {
+            const el = await fixture(html`
+                <div style="height: 200vh; padding: 50vh 0;">
+                    <sp-picker label="Select an option" placement="right">
+                        <sp-menu-item value="option-1">Option 1</sp-menu-item>
+                        <sp-menu-item value="option-2">Option 2</sp-menu-item>
+                        <sp-menu-item value="option-3">Option 3</sp-menu-item>
+                    </sp-picker>
+                </div>
+            `);
+
+            const picker = el.querySelector('sp-picker') as Picker;
+            await elementUpdated(picker);
+            await waitUntil(
+                () => picker.updateComplete,
+                'Waiting for picker to update'
+            );
+
+            expect(picker.open).to.be.false;
+
+            const opened = oneEvent(picker, 'sp-opened');
+            picker.click();
+            await opened;
+
+            expect(picker.open).to.be.true;
+
+            // Scroll the document
+            if (document.scrollingElement) {
+                document.scrollingElement.scrollTop = 100;
+            }
+
+            // Wait a bit to ensure no close event is fired
+            await waitUntil(
+                () => picker.open === true,
+                'Waiting for picker to remain open after scroll'
+            );
+
+            expect(picker.open).to.be.true;
         });
     });
     describe('grouped', async () => {

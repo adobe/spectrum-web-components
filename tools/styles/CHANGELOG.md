@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.4.0
+
+### Patch Changes
+
+-   [#5140](https://github.com/adobe/spectrum-web-components/pull/5140) [`3cca7ea`](https://github.com/adobe/spectrum-web-components/commit/3cca7eacf127c3fd759953db38a2b5a561bfb8dc) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Contextual help now supports a custom maximum width to be set using the `--mod-spectrum-contextual-help-popover-maximum-width` custom property.
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/base@1.4.0
+
 ## 1.3.0
 
 ### Patch Changes

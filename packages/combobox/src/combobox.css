@@ -48,6 +48,25 @@ sp-popover:not(sp-overlay sp-popover) {
     margin: 0;
 }
 
+/* TODO: The following two selector blocks are meant to override the #textfield:hover styles.
+ * #textfield:hover .input was overriding the disabled border colors in S2 foundations, as well
+ * as the border colors when a combobox was focused+hovered.
+ */
+:host([disabled]) #textfield .input,
+:host([disabled]) #textfield:hover .input {
+    border-color: var(
+        --mod-combobox-border-color-disabled,
+        var(--spectrum-combobox-border-color-disabled)
+    );
+}
+
+#textfield:hover .input:focus {
+    border-color: var(
+        --mod-combobox-border-color-default,
+        var(--spectrum-combobox-border-color-focus-hover)
+    );
+}
+
 ::slotted([slot='option']) {
     display: none;
 }

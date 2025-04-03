@@ -395,7 +395,7 @@ export const iconsNone = (args: StoryArgs): TemplateResult => {
             value="1"
             icons="none"
         >
-            <sp-menu-item value="1">
+            <sp-menu-item value="1" selected active focused>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-menu-item>
@@ -772,8 +772,11 @@ export const BackgroundClickTest = (): TemplateResult => {
             <div style="position: absolute; bottom: 50px;">
                 <sp-button
                     @click=${() => {
+                        alert(
+                            'this button should not receive a click event on menu-item selection'
+                        );
                         console.log(
-                            'this button should not have been clicked...'
+                            'this button should not receive a click event on menu-item selection'
                         );
                     }}
                     size="l"

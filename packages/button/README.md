@@ -11,25 +11,27 @@ loudness for various attention-getting needs.
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/button?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/button)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/Zjc3o94DWuBkT4ve3dny/src/index.ts)
 
-```
+```zsh
 yarn add @spectrum-web-components/button
 ```
 
-Import the side effectful registration of `<sp-button>` or `<sp-clear-button>` as follows:
+Import the side effectful registration of `<sp-button>` as follows:
 
-```
+```ts
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/button/sp-clear-button.js';
-import '@spectrum-web-components/button/sp-close-button.js';
 ```
 
-When looking to leverage the `Button`, `ClearButton`, or `CloseButton` base classes as a type and/or for extension purposes, do so via:
+When looking to leverage the `Button` base classes as a type and/or for extension purposes, do so via:
 
-```
-import { Button, ClearButton, CloseButton } from '@spectrum-web-components/button';
+```ts
+import { Button } from '@spectrum-web-components/button';
 ```
 
 ### Anatomy
+
+```html
+<sp-button>Try me</sp-button>
+```
 
 #### Content
 
@@ -388,7 +390,13 @@ mounts. This is useful for setting focus to a specific sp-button when a
 popover or dialog opens.
 
 ```html
-<sp-button autofocus>Confirm</sp-button>
+<sp-button id="trigger">Open</sp-button>
+<sp-overlay trigger="trigger@click" placement="bottom">
+    <sp-popover>
+        <!-- Button will autofocus when open -->
+        <sp-button autofocus>Confirm</sp-button>
+    </sp-popover>
+</sp-overlay>
 ```
 
 ### Accessibility
