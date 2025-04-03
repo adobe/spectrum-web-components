@@ -14,7 +14,7 @@ parameters:
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: 6edd6976af8933abae447a695b94f2cbed741c5f
+        default: 476d5a0e0bb27f6caa66a4785931e78cc5a03c42
     wireit_cache_name:
         type: string
         default: wireit
