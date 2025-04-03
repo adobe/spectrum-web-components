@@ -1,8 +1,8 @@
 name: Browser Performance Tests
 
 on:
-    pull_request:
-        types: [opened, synchronize, reopened]
+    workflow_dispatch:
+    workflow_call:
 
 permissions:
     contents: read
@@ -31,8 +31,7 @@ jobs:
                   fetch-depth: 0 # Get full history
 
             - name: Fetch main branch
-              run: |
-                  git fetch origin main:main
+              run: git fetch origin main:main
 
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
@@ -41,7 +40,7 @@ jobs:
               if: matrix.browser == 'chrome'
               run: |
                   echo "Checking ChromeDriver version..."
-                  npx chromedriver --version
+                  yarn dlx chromedriver --version
                   echo "Checking Chrome version..."
                   google-chrome --version
                   echo "Checking tachometer chromedriver version..."
@@ -83,6 +82,8 @@ jobs:
 
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
+              with:
+                  skip-build: true
 
             - uses: actions/download-artifact@v4
               with:

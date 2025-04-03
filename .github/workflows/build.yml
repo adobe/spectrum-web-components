@@ -1,87 +1,30 @@
-name: Build
-#
-# This workflow validates that the commit in question can be built successfully
-# in several environments:
-#
-#   Systems:        Ubuntu, MacOS, Windows (default: macos-latest)
-#   Node versions:  20 (default)
-#   Experimental:   true/false (default: false)
-#   Ref:            The branch or tag to checkout (default: github.head_ref)
-#
-
+name: Build validation
 on:
     workflow_dispatch:
-        inputs:
-            system:
-                required: false
-                default: 'macos-latest'
-            node-version:
-                required: false
-                default: '20'
-            experimental:
-                required: false
-                default: 'false'
-            ref:
-                description: 'The branch or tag to checkout'
-                required: false
     workflow_call:
-        inputs:
-            system:
-                required: false
-                type: string
-                default: 'macos-latest'
-            node-version:
-                required: false
-                type: string
-                default: '20'
-            experimental:
-                required: false
-                type: boolean
-                default: false
-            ref:
-                description: 'The branch or tag to checkout'
-                required: false
-                type: string
-                default: ${{ github.head_ref }}
-
-permissions:
-    contents: read
-    pull-requests: write
-
-defaults:
-    run:
-        shell: bash
 
 jobs:
-    # ---------- Validate build for various environments ---------- #
     build:
+        name: Build ${{ matrix.system }}, node v${{ matrix.node-version }}
         strategy:
             fail-fast: false
             matrix:
                 system:
-                    - ${{ inputs.system }}
+                    - macos-latest
+                    - ubuntu-latest
+                    # - windows-latest
                 node-version:
-                    - ${{ inputs.node-version }}
-                experimental:
-                    - ${{ inputs.experimental }}
+                    - 20
         runs-on: ${{ matrix.system }}
-        continue-on-error: ${{ matrix.experimental }}
         timeout-minutes: 10
-        name: Build ${{ matrix.system }}, node v${{ matrix.node-version }}
         steps:
             - name: Checkout PR branch
               uses: actions/checkout@v4
-              with:
-                  ref: ${{ inputs.ref || github.head_ref }}
-                  fetch-depth: 0
 
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
               with:
                   node-version: ${{ matrix.node-version }}
-
-            - name: Build the project
-              run: yarn build
 
             # This step will evaluate the repo status and report the change
             # If there are changes, capture the changes and upload them as an artifact

@@ -5,6 +5,17 @@ inputs:
         description: 'The Node.js version to use'
         required: false
         default: '20'
+    skip-build:
+        description: 'Skip the build step'
+        required: false
+        default: 'false'
+    with-playwright:
+        description: 'Whether to install Playwright'
+        required: false
+        default: 'false'
+    browser:
+        description: 'The browser to use'
+        required: false
 runs:
     using: 'composite'
     steps:
@@ -35,6 +46,29 @@ runs:
           shell: bash
           run: yarn install --immutable
 
+        - name: Get installed Playwright version
+          if: ${{ inputs.with-playwright == 'true' }}
+          id: playwright-version
+          shell: bash
+          run: echo "version=$(npm ls @playwright/test --json | jq --raw-output '.dependencies["@playwright/test"].version')" >> $GITHUB_OUTPUT
+
+        - name: Restore Playwright cache
+          continue-on-error: true
+          if: ${{ inputs.with-playwright == 'true' }}
+          id: playwright-cache
+          uses: actions/cache@v4
+          with:
+              path: ~/.cache/ms-playwright
+              key: ${{ runner.os }}-playwright-${{ inputs.browser }}-${{ steps.playwright-version.outputs.version }}
+              restore-keys: |
+                  ${{ runner.os }}-playwright-${{ inputs.browser }}-
+
+        - name: Install Playwright
+          if: ${{ inputs.with-playwright == 'true' && steps.playwright-cache.outputs.cache-hit != 'true' }}
+          shell: bash
+          run: yarn playwright install --with-deps ${{ inputs.browser }}
+
         - name: Build the project
+          if: ${{ inputs.skip-build != 'true' }}
           shell: bash
           run: yarn build

@@ -7,11 +7,7 @@ name: PR verification
 # -------------------------------------------------------------
 
 on:
-    merge_group:
-    push:
-        branches: [main]
     pull_request:
-        branches: [main]
         types:
             - opened
             - synchronize
@@ -25,7 +21,7 @@ permissions:
     pull-requests: write
 
 concurrency:
-    group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+    group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label }}'
     cancel-in-progress: true
 
 defaults:
@@ -40,26 +36,14 @@ jobs:
         name: Verify build
         # Check that the PR is not in draft mode (or if it is, that it has the run_ci label to force a build)
         if: ${{ github.event.pull_request.draft != 'true' || contains(github.event.pull_request.labels.*.name, 'run_ci') }}
-        strategy:
-            fail-fast: false
-            matrix:
-                system:
-                    - macos-latest
-                    - ubuntu-latest
-                    # - windows-latest
-                node-version:
-                    - 20
         uses: ./.github/workflows/build.yml
-        with:
-            system: ${{ matrix.system }}
-            node-version: ${{ matrix.node-version }}
         secrets: inherit
 
-    coverage:
-        name: Code coverage
+    test:
+        name: Tests and coverage
         # Check that the PR is not in draft mode (or if it is, that it has the run_ci label to force a build)
         if: ${{ github.event.pull_request.draft != 'true' || contains(github.event.pull_request.labels.*.name, 'run_ci') }}
-        uses: ./.github/workflows/coveralls.yml
+        uses: ./.github/workflows/tests.yml
         secrets: inherit
 
     # -------------------------------------------------------------
@@ -70,3 +54,80 @@ jobs:
         if: ${{ contains(github.event.pull_request.labels.*.name, 'skip_lint') == false }}
         uses: ./.github/workflows/lint.yml
         secrets: inherit
+
+    # -------------------------------------------------------------
+    # Browser performance tests
+    # -------------------------------------------------------------
+    performance:
+        name: Performance
+        if: ${{ github.event.pull_request.draft != 'true' || contains(github.event.pull_request.labels.*.name, 'run_ci') }}
+        uses: ./.github/workflows/browser-tests.yml
+        secrets: inherit
+
+    comment-previews:
+        name: Create preview URLs and comment
+
+        # The job will only run if the pull request is from the same repository.
+        # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        runs-on: ubuntu-latest
+        outputs:
+            doc_url: ${{ steps.extract_doc_url.outputs.DOC_URL }}
+        steps:
+            - name: Checkout main
+              uses: actions/checkout@v4
+              with:
+                  ref: main
+
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
+
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+              with:
+                  skip-build: true
+
+            - name: Extract branch name
+              run: echo "BRANCH=$(npx slugify-cli ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}})" >> $GITHUB_OUTPUT
+              id: extract_branch
+
+            - name: Extract doc preview url
+              run: echo "DOC_URL=https://${{ steps.extract_branch.outputs.BRANCH }}--spectrum-wc.netlify.app/" >> $GITHUB_OUTPUT
+              id: extract_doc_url
+
+            - name: Post Previews Comment
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const { buildPreviewURLComment } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.js');
+                      const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
+                      const { getDocPreviewURL } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.js');
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
+                      commentOrUpdate(github, context, '## Branch preview', body);
+
+    smoke-tests:
+        name: Smoke tests
+        runs-on: macos-latest
+        needs: comment-previews
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
+
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+              with:
+                  skip-build: true
+                  with-playwright: true
+
+            - name: Run Playwright tests
+              run: yarn playwright test projects/documentation/e2e/published.spec.ts --reporter html
+              env:
+                  DOC_PREVIEW_URL: ${{ needs.comment-previews.outputs.doc_url }}
+                  NODE_ENV: CI
+
+            - name: Upload Playwright Report
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                  name: docs-report
+                  path: playwright-report/

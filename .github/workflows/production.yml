@@ -1,0 +1,44 @@
+name: Production validation
+
+on:
+    push:
+        branches: [main]
+
+permissions:
+    contents: read
+    pull-requests: write
+
+concurrency:
+    group: '${{ github.workflow }} @ ${{ github.head_ref || github.ref }}'
+    cancel-in-progress: false
+
+defaults:
+    run:
+        shell: bash
+
+jobs:
+    # -------------------------------------------------------------
+    # Validate build for various environments
+    # -------------------------------------------------------------
+    verify_builds:
+        name: Verify build
+        uses: ./.github/workflows/build.yml
+        secrets: inherit
+
+    # -------------------------------------------------------------
+    # Run the test suite and upload coverage
+    # -------------------------------------------------------------
+    test:
+        name: Tests and coverage
+        uses: ./.github/workflows/tests.yml
+        secrets: inherit
+
+    # -------------------------------------------------------------
+    # Publish the documentation site
+    # -------------------------------------------------------------
+    publish:
+        name: Publish
+        # We should not publish the documentation site if the tests or builds fail
+        needs: [verify_builds, test]
+        uses: ./.github/workflows/publish.yml
+        secrets: inherit
