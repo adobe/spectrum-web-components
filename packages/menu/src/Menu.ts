@@ -150,9 +150,12 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public focusInItemIndex = 0;
 
     /**
-     * whether or not to support pointerdown - drag - pointerup selection strategy
-     * default is false to prevent click/touch event being captured behind the menu-tray in a mobile environment (cz menu immediately closes on pointerup)
+     * Whether to support the pointerdown-drag-pointerup selection strategy.
+     * Defaults to false to prevent click/touch events from being captured
+     * behind the menu tray in mobile environments (since the menu closes
+     * immediately on pointerup).
      */
+
     public shouldSupportDragAndSelect = false;
 
     public get focusInItem(): MenuItem | undefined {
