@@ -32,7 +32,7 @@ import { sendMouse } from './plugins/browser.js';
 export async function sendMouseTo(
     elementOrRect: HTMLElement | DOMRect,
     type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move',
-    button?: 'left' | 'right'
+    button?: 'left' | 'right' | 'middle'
 ): Promise<unknown> {
     const rect =
         elementOrRect instanceof HTMLElement
@@ -59,7 +59,7 @@ export async function sendMouseTo(
 export async function sendMouseFrom(
     elementOrRect: HTMLElement | DOMRect,
     type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move',
-    button?: 'left' | 'right'
+    button?: 'left' | 'right' | 'middle'
 ): Promise<unknown> {
     const rect =
         elementOrRect instanceof HTMLElement

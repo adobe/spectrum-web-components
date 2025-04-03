@@ -558,6 +558,7 @@ describe('Menu', () => {
         const changeSpy = spy();
         const el = await fixture<Menu>(html`
             <sp-menu
+                id="debug"
                 selects="single"
                 @change=${() => {
                     changeSpy();
@@ -580,14 +581,14 @@ describe('Menu', () => {
         ) as MenuItem;
 
         // send right mouse click to the secondItem
-        await sendMouseTo(secondItem, 'click', 'right');
+        sendMouseTo(secondItem, 'click', 'right');
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);
         expect(changeSpy.callCount, 'no change').to.equal(0);
 
         // send middle mouse click to the secondItem
-        await sendMouseTo(secondItem, 'click');
+        await sendMouseTo(secondItem, 'click', 'middle');
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);
