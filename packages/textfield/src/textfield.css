@@ -49,6 +49,14 @@ textarea {
     forced-color-adjust: var(--swc-test-forced-color-adjust);
 }
 
+:host([focused]) #textfield:hover .input,
+:host([focused]) .input:hover {
+    border-color: var(
+        --mod-textfield-border-color-focus-hover,
+        var(--spectrum-textfield-border-color-focus-hover)
+    );
+}
+
 #sizer {
     block-size: auto;
     /* stylelint-disable-next-line declaration-property-value-keyword-no-deprecated */
