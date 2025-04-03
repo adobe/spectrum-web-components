@@ -150,11 +150,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public focusInItemIndex = 0;
 
     /**
-     * whether or not to support pointerdown - drag - pointerup selection strategy
-     * default is true
-     * should be false for mobile to prevent click event being captured behind the menu-tray (cz menu immediately closes on pointerup)
+     * Whether to support the pointerdown-drag-pointerup selection strategy.
+     * Defaults to false to prevent click/touch events from being captured
+     * behind the menu tray in mobile environments (since the menu closes
+     * immediately on pointerup).
      */
-    public shouldSupportDragAndSelect = true;
+
+    public shouldSupportDragAndSelect = false;
 
     public get focusInItem(): MenuItem | undefined {
         return this.rovingTabindexController?.focusInElement;
@@ -393,6 +395,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         );
 
         this.addEventListener('click', this.handleClick);
+        this.addEventListener('touchend', this.handlePointerup);
         this.addEventListener('mouseover', this.handleMouseover);
         this.addEventListener('focusout', this.handleFocusout);
         this.addEventListener('sp-menu-item-keydown', this.handleKeydown);
