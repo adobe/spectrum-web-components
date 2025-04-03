@@ -22,12 +22,12 @@ commands:
     downstream:
         steps:
             - checkout
-            # - restore_cache:
-            #       keys:
-            #           - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            # - restore_cache:
-            #       keys:
-            #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
+            - restore_cache:
+                  keys:
+                      - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - restore_cache:
+                  keys:
+                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
             - run:
                   name: Installing Dependencies
                   command: |
@@ -143,58 +143,6 @@ commands:
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
-    test-chromium:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Run unit tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
-            - store_test_results:
-                  path: /root/project/results/
-            - store_artifacts:
-                  path: coverage
-
-    test-chromium-memory:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Run memory tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group memory-ci
-            - store_test_results:
-                  path: /root/project/results/
-
-    test-firefox:
-        executor: node
-        parallelism: 5
-
-        steps:
-            - downstream
-            - run:
-                  name: Run tests
-                  command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
-            - store_test_results:
-                  path: /root/project/results/
-
-    test-webkit:
-        executor: node
-        parallelism: 5
-
-        steps:
-            - downstream
-            - run:
-                  name: Run tests
-                  command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
-            - store_test_results:
-                  path: /root/project/results/
-
     preview-docs:
         executor: node
         steps:
@@ -216,29 +164,6 @@ jobs:
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
                   yarn netlify deploy --alias=$branch --cwd projects/documentation
-
-    beta-docs:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
-            - run:
-                  name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
-            - run:
-                  name: Build documentation
-                  command: yarn docs:build
-            - run:
-                  name: Build Storybook
-                  command: yarn storybook:build
-            - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
-            - run: |
-                  branch=$(git symbolic-ref --short HEAD)
-                  branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=beta --cwd projects/documentation
 
     hcm-visual:
         executor: node
@@ -349,10 +274,6 @@ workflows:
     version: 2
     build:
         jobs:
-            - test-chromium
-            - test-chromium-memory
-            - test-firefox
-            - test-webkit
             - hcm-visual:
                   filters:
                       branches:
@@ -363,11 +284,6 @@ workflows:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - beta-docs:
-                  filters:
-                      branches:
-                          # Beta docs are only published from main
-                          only: main
             - visual:
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:

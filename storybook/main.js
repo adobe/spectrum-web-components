@@ -13,7 +13,32 @@ import rollupJson from '@rollup/plugin-json';
 import { mergeConfigs } from '@web/dev-server';
 import { fromRollup } from '@web/dev-server-rollup';
 import rollupCommonjs from '@rollup/plugin-commonjs';
-import { watchSWC } from '../web-test-runner.utils.js';
+import fg from 'fast-glob';
+
+const watchSWC = () => ({
+    name: 'watch-swc-plugin',
+    async serverStart({ fileWatcher }) {
+        // register SWC output files to be watched
+        const stream = fg.globStream(
+            [
+                '{packages,projects,tools}/**/*.js',
+                '{packages,projects,tools}/**/spectrum-*.css',
+            ],
+            {
+                ignore: ['**/*.map', '**/*.vrt.js', '**/spectrum-config.js'],
+                absolute: true,
+                cwd: process.cwd(),
+                onlyFiles: true,
+            }
+        );
+
+        for await (const file of stream) {
+            // add the file to the file watcher which will
+            // trigger a reload when the file changes
+            fileWatcher.add(file.toString());
+        }
+    },
+});
 
 /** @type { import('storybook-builder-wds').StorybookConfigWds } */
 const config = {
