@@ -580,7 +580,7 @@ describe('Menu', () => {
         ) as MenuItem;
 
         // send right mouse click to the secondItem
-        await sendMouseTo(secondItem);
+        await sendMouseTo(secondItem, 'click', 'right');
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);
