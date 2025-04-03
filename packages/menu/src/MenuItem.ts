@@ -309,6 +309,16 @@ export class MenuItem extends LikeAnchor(
     @property({ type: Boolean, reflect: true })
     public open = false;
 
+    /**
+     * whether menu item's submenu is opened via keyboard
+     */
+    private _openedViaKeyboard = false;
+
+    /**
+     * whether menu item's submenu is closed via pointer leave
+     */
+    private _closedViaPointer = false;
+
     private handleClickCapture(event: Event): void | boolean {
         if (this.disabled) {
             event.preventDefault();
@@ -375,6 +385,7 @@ export class MenuItem extends LikeAnchor(
                 this.open &&
                 this.dependencyManager.loaded}
                 .placement=${this.isLTR ? 'right-start' : 'left-start'}
+                receives-focus="false"
                 .offset=${[-10, -5] as [number, number]}
                 .type=${'auto'}
                 @close=${(event: Event) => event.stopPropagation()}
@@ -460,13 +471,20 @@ export class MenuItem extends LikeAnchor(
         super.firstUpdated(changes);
         this.setAttribute('tabindex', '-1');
         this.addEventListener('keydown', this.handleKeydown);
+        this.addEventListener('mouseover', this.handleMouseover);
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('pointerenter', this.closeOverlaysForRoot);
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${randomID()}`;
         }
     }
-
+    handleMouseover(event: MouseEvent): void {
+        const target = event.target as HTMLElement;
+        if (target === this) {
+            this.focus();
+            this.focused = false;
+        }
+    }
     /**
      * forward key info from keydown event to parent menu
      */
@@ -509,7 +527,7 @@ export class MenuItem extends LikeAnchor(
         if (event.composedPath().includes(this.overlayElement)) {
             return;
         }
-        this.openOverlay();
+        this.openOverlay(true);
     }
 
     protected handleSubmenuFocus(): void {
@@ -536,8 +554,10 @@ export class MenuItem extends LikeAnchor(
         if (this.leaveTimeout) {
             clearTimeout(this.leaveTimeout);
             delete this.leaveTimeout;
+            this.recentlyLeftChild = false;
             return;
         }
+        this.focus();
         this.openOverlay();
     }
 
@@ -545,6 +565,7 @@ export class MenuItem extends LikeAnchor(
     protected recentlyLeftChild = false;
 
     protected handlePointerleave(): void {
+        this._closedViaPointer = true;
         if (this.open && !this.recentlyLeftChild) {
             this.leaveTimeout = setTimeout(() => {
                 delete this.leaveTimeout;
@@ -570,22 +591,19 @@ export class MenuItem extends LikeAnchor(
     }
 
     protected async handleSubmenuPointerleave(): Promise<void> {
-        requestAnimationFrame(() => {
-            this.recentlyLeftChild = false;
-        });
+        this.recentlyLeftChild = false;
     }
 
     protected handleSubmenuOpen(event: Event): void {
-        const shouldFocus = this.matches(':focus, :focus-within') || this.focused;
-        this.focused = false;
         const parentOverlay = event.composedPath().find((el) => {
             return (
                 el !== this.overlayElement &&
                 (el as HTMLElement).localName === 'sp-overlay'
             );
         }) as Overlay;
-        if (shouldFocus)
+        if (this._openedViaKeyboard) {
             this.submenuElement?.focus();
+        }
         this.overlayElement.parentOverlayToForceClose = parentOverlay;
     }
 
@@ -595,13 +613,14 @@ export class MenuItem extends LikeAnchor(
         this.active = false;
     }
 
-    public async openOverlay(): Promise<void> {
+    public async openOverlay(shouldFocus: boolean = false): Promise<void> {
         if (!this.hasSubmenu || this.open || this.disabled) {
             return;
         }
         this.open = true;
         this.active = true;
         this.setAttribute('aria-expanded', 'true');
+        this._openedViaKeyboard = shouldFocus;
         this.addEventListener('sp-closed', this.cleanup, {
             once: true,
         });
@@ -632,7 +651,8 @@ export class MenuItem extends LikeAnchor(
             changes.has('open') &&
             !this.open &&
             this.hasSubmenu &&
-            this.hasVisibleFocusInTree()
+            !this._closedViaPointer &&
+            this.matches(':focus-within')
         ) {
             this.focus();
         }
