@@ -26,9 +26,12 @@ import { TemplateResult } from '@spectrum-web-components/base';
 
 import { sendMouse } from './plugins/browser.js';
 
+/**
+ * send mouse to the middle of a specific DOM rect or HTMLElement
+ */
 export async function sendMouseTo(
     elementOrRect: HTMLElement | DOMRect,
-    type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move'
+    type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move',
     button?: 'left' | 'right'
 ): Promise<unknown> {
     const rect =
@@ -50,10 +53,13 @@ export async function sendMouseTo(
     });
 }
 
+/**
+ * send mouse outside of a particular DOMRect or HTMLElement
+ */
 export async function sendMouseFrom(
     elementOrRect: HTMLElement | DOMRect,
     type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move',
-    button: 'left' | 'right'
+    button?: 'left' | 'right'
 ): Promise<unknown> {
     const rect =
         elementOrRect instanceof HTMLElement
