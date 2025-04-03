@@ -448,17 +448,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     // handle the click event.
     private pointerUpTarget = null as EventTarget | null;
 
-    /*private handleMouseover(event: MouseEvent): void {
-        const { target } = event;
-        const menuItem = target as MenuItem;
-        if (
-            this.childItems.includes(menuItem) &&
-            this.isFocusableElement(menuItem)
-        ) {
-            this.rovingTabindexController?.focusOnItem(menuItem);
-        }
-    }*/
-
     private handleFocusout(): void {
         if (!this.matches(':focus-within'))
             this.rovingTabindexController?.reset();
