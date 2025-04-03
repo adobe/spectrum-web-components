@@ -133,6 +133,9 @@ governing permissions and limitations under the License.
     --mod-button-border-color-default: var(
         --system-button-secondary-outline-border-color-default
     );
+    --mod-button-border-color-down: var(
+        --system-button-secondary-outline-border-color-down
+    );
 }
 
 :host([static-color='white']) {

@@ -61,6 +61,7 @@ governing permissions and limitations under the License.
 }
 
 #label {
+    text-align: center;
     place-self: center;
 }
 
@@ -249,7 +250,6 @@ governing permissions and limitations under the License.
     --mod-button-background-color-down: var(--spectrum-gray-400);
     --mod-button-border-color-default: var(--spectrum-gray-300);
     --mod-button-border-color-hover: var(--spectrum-gray-400);
-    --mod-button-border-color-down: var(--spectrum-gray-500);
     --mod-button-border-color-focus: var(--spectrum-gray-400);
     --mod-button-border-color-disabled: var(--spectrum-disabled-border-color);
     --mod-button-content-color-default: var(--spectrum-neutral-content-color-default);
@@ -360,7 +360,6 @@ governing permissions and limitations under the License.
     font-size: var(--spectrum-button-font-size);
     font-weight: var(--mod-bold-font-weight, var(--spectrum-bold-font-weight));
     gap: var(--spectrum-button-padding-label-to-icon);
-    max-inline-size: none;
     max-inline-size: var(--mod-button-max-inline-size, none);
     min-inline-size: var(--spectrum-button-min-width);
     min-block-size: var(--spectrum-button-height);
@@ -370,12 +369,7 @@ governing permissions and limitations under the License.
     background-color: var(--highcontrast-button-background-color-default, var(--mod-button-background-color-default, var(--spectrum-button-background-color-default)));
     border-style: solid;
     border-color: var(--highcontrast-button-border-color-default, var(--mod-button-border-color-default, var(--spectrum-button-border-color-default)));
-    color: inherit;
     color: var(--spectrum-button-content-color-default, inherit);
-    transition:
-        border 0.13s linear,
-        color 0.13s linear,
-        background-color 0.13s linear;
     transition:
         border var(--spectrum-button-animation-duration, 0.13s) linear,
         color var(--spectrum-button-animation-duration, 0.13s) linear,
@@ -451,16 +445,12 @@ governing permissions and limitations under the License.
 ::slotted([slot='icon']) {
     visibility: visible;
     opacity: 1;
-    transition: opacity 0.13s ease-in-out;
     transition: opacity var(--spectrum-button-animation-duration, 0.13s) ease-in-out;
 }
 
 .spectrum-ProgressCircle {
     visibility: hidden;
     opacity: 0;
-    transition:
-        opacity 0.13s ease-in-out,
-        visibility 0s linear 0.13s;
     transition:
         opacity var(--spectrum-button-animation-duration, 0.13s) ease-in-out,
         visibility 0s linear var(--spectrum-button-animation-duration, 0.13s);
@@ -475,7 +465,6 @@ governing permissions and limitations under the License.
 :host([pending]) .spectrum-ProgressCircle {
     visibility: visible;
     opacity: 1;
-    transition: opacity 0.13s ease-in-out;
     transition: opacity var(--spectrum-button-animation-duration, 0.13s) ease-in-out;
 }
 
@@ -505,13 +494,11 @@ governing permissions and limitations under the License.
 }
 
 [name='icon'] + #label {
-    text-align: start;
     text-align: var(--mod-button-text-align-with-icon, start);
 }
 
 #label {
     line-height: var(--spectrum-button-line-height);
-    text-align: center;
     text-align: var(--mod-button-text-align, center);
     align-self: start;
     padding-block-start: calc(var(--spectrum-button-top-to-text) - var(--spectrum-button-border-width));

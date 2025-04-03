@@ -263,6 +263,9 @@
     --system-button-secondary-outline-border-color-default: var(
         --spectrum-gray-300
     );
+    --system-button-secondary-outline-border-color-down: var(
+        --spectrum-gray-500
+    );
     --system-button-static-white-background-color-default: var(
         --spectrum-transparent-white-800
     );
