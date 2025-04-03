@@ -7125,31 +7125,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorslider@npm:7.0.0-s2-foundations.16":
-  version: 7.0.0-s2-foundations.16
-  resolution: "@spectrum-css/colorslider@npm:7.0.0-s2-foundations.16"
+"@spectrum-css/colorslider@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@spectrum-css/colorslider@npm:8.1.0"
   peerDependencies:
-    "@spectrum-css/colorhandle": ">=8"
-    "@spectrum-css/opacitycheckerboard": ">=2"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/198cfe7d55d86a4c86445f31d912dc608f62b8d07970431ce11f4d54780e7e4f07d9d153c930657183ff5bcdfda923cd1c3f8209b048b8a86d754273ce471c0d
+    "@spectrum-css/colorhandle": ">=10.0.0 <11.0.0"
+    "@spectrum-css/opacitycheckerboard": ">=4.0.0 <5.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/colorhandle":
+      optional: true
+    "@spectrum-css/opacitycheckerboard":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/25b9f5a98b7eafd264eb21f1e6edcc0bb2cada3639e535051cf0b4ea39dfad62ac67cf70f0abb6239d17af8e80792515aad2555db3cf7406fbdd88b807c32e23
   languageName: node
   linkType: hard
 
-"@spectrum-css/colorwheel@npm:5.0.0-s2-foundations.15":
-  version: 5.0.0-s2-foundations.15
-  resolution: "@spectrum-css/colorwheel@npm:5.0.0-s2-foundations.15"
+"@spectrum-css/colorwheel@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@spectrum-css/colorwheel@npm:6.1.0"
   peerDependencies:
-    "@spectrum-css/colorarea": ">=5"
-    "@spectrum-css/colorhandle": ">=8"
-    "@spectrum-css/colorloupe": ">=5"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/colorarea": ">=7.0.0 <8.0.0"
+    "@spectrum-css/colorhandle": ">=10.0.0 <11.0.0"
+    "@spectrum-css/colorloupe": ">=7.0.0 <8.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/colorarea":
       optional: true
+    "@spectrum-css/colorhandle":
+      optional: true
     "@spectrum-css/colorloupe":
       optional: true
-  checksum: 10c0/c553dd54cf1a461126025f4e893b5276e46290ab7c8741f8f690e88e2b8c8edf8a87a9677011dc3f4186a03f8b82f3e547c9a490101ce8ca5756fb762e039b08
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/cb5b3d6063c2e7a98e539c31be0c3a39f8686e4ff42fe3531c086beadbe985b4f9aeb66bc53d2b845d3cc8324661f4cbe1cb1ca2205d8d90445f5f400917735f
   languageName: node
   linkType: hard
 
@@ -7221,12 +7232,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/divider@npm:4.0.0-s2-foundations.16":
-  version: 4.0.0-s2-foundations.16
-  resolution: "@spectrum-css/divider@npm:4.0.0-s2-foundations.16"
+"@spectrum-css/divider@npm:5.1.0":
+  version: 5.1.0
+  resolution: "@spectrum-css/divider@npm:5.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/9035c7bf2a16f0aa212537152a9ea8bcbeadc0e15629fdeb9e565f9cb54c3bb69245799e37ffe8066bc426e9af482375e38b77e4861570e59e987ab2aa046da6
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/5235195a5cb1089f6a7c1e7f39437dfdfdef18e98e3dbf1ce5126bde3f22ecc962497c8b5dc03536cf01dd5ea150ba5842b1df4251947ae8dccb93837a2f0bf2
   languageName: node
   linkType: hard
 
@@ -7288,13 +7302,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/helptext@npm:6.0.1":
-  version: 6.0.1
-  resolution: "@spectrum-css/helptext@npm:6.0.1"
+"@spectrum-css/helptext@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/helptext@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14 || >=15"
-  checksum: 10c0/5f27c33e018cc65fbc8daa0cccbc4e5d5ec057e7d089596628922323bb8ba2496708a99eae9c0aebded2f00c2a46ab6f72fcddf3d737255f067088b2904d4105
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/16e0a3dad0e18758c323a07abf60da37bd02acdbd23a0d5e50948cde951cb9e4a4af3765e811b8470553734568290ce48465fa4f291630ee9d11c4abe4d51efb
   languageName: node
   linkType: hard
 
@@ -7513,16 +7532,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/sidenav@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/sidenav@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/sidenav@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/sidenav@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/ea8956f39fe8a7516e233e9296bb65717262f80b9533fbd175f47e43c4ee4b8ba56e2f694193d676cf3072567d2489431f5473c6b200732cfd757bd1b3df45c0
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/8e748c1e7854be0b326f53a1f83342d732780042d321b0ce36cdfe3535fb56cd81acbfde815dab23ce3a5192004490888de1213cd63e7e57a6eaa0389f0bc7ed
   languageName: node
   linkType: hard
 
@@ -7634,30 +7655,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/tag@npm:10.0.0-s2-foundations.15":
-  version: 10.0.0-s2-foundations.15
-  resolution: "@spectrum-css/tag@npm:10.0.0-s2-foundations.15"
+"@spectrum-css/tag@npm:10.1.0":
+  version: 10.1.0
+  resolution: "@spectrum-css/tag@npm:10.1.0"
   peerDependencies:
-    "@spectrum-css/avatar": ">=7"
-    "@spectrum-css/clearbutton": ">=6"
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/avatar": ">=9.0.0 <10.0.0"
+    "@spectrum-css/clearbutton": ">=7.0.0 <8.0.0"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/avatar":
       optional: true
+    "@spectrum-css/clearbutton":
+      optional: true
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/db91de565ea388ab002fc32aa93a7c1068431ae6162a5f3d99d7af33611ce2f0fd3e1f60afc7342d09d2e04125485ab5ba4f92b9595add594deb37bddbc590a9
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/d2439cecdd3982cb4e852b0edbe5fd1cdc9a721633dd7917cfa1591934cf8fdebd9f2c4213dceef00e0b7e9be4b039d9a0e0e03cfa2c154a8b3d3c81618d4cc2
   languageName: node
   linkType: hard
 
-"@spectrum-css/taggroup@npm:6.0.0-s2-foundations.15":
-  version: 6.0.0-s2-foundations.15
-  resolution: "@spectrum-css/taggroup@npm:6.0.0-s2-foundations.15"
+"@spectrum-css/taggroup@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/taggroup@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/tag": ">=9"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/ec413ad55cf5dce34af5a19473149810e1cef39b695e80e11fed0fc7c955fb945d39bc1387102d09ea0b71a74f3e90532564346ca3cd863ad3803bf5212dc75b
+    "@spectrum-css/tag": ">=10.0.0 <11.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/tag":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/183da9e2e664caba3c32edea1d899fa266cd81e820244e57498a8d14677c606407b899c2178edce81b88ec7f629d10dba0cfb86355beefb8148e9fc64b5aa6dc
   languageName: node
   linkType: hard
 
@@ -8150,7 +8180,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-slider@workspace:packages/color-slider"
   dependencies:
-    "@spectrum-css/colorslider": "npm:7.0.0-s2-foundations.16"
+    "@spectrum-css/colorslider": "npm:8.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/color-handle": "npm:1.4.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:1.4.0"
@@ -8163,7 +8193,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-wheel@workspace:packages/color-wheel"
   dependencies:
-    "@spectrum-css/colorwheel": "npm:5.0.0-s2-foundations.15"
+    "@spectrum-css/colorwheel": "npm:6.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/color-handle": "npm:1.4.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.4.0"
@@ -8264,7 +8294,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/divider@workspace:packages/divider"
   dependencies:
-    "@spectrum-css/divider": "npm:4.0.0-s2-foundations.16"
+    "@spectrum-css/divider": "npm:5.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft
@@ -8330,7 +8360,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/help-text@workspace:packages/help-text"
   dependencies:
-    "@spectrum-css/helptext": "npm:6.0.1"
+    "@spectrum-css/helptext": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icons-workflow": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
@@ -8627,7 +8657,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/sidenav@workspace:packages/sidenav"
   dependencies:
-    "@spectrum-css/sidenav": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/sidenav": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
@@ -8755,8 +8785,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/tags@workspace:packages/tags"
   dependencies:
-    "@spectrum-css/tag": "npm:10.0.0-s2-foundations.15"
-    "@spectrum-css/taggroup": "npm:6.0.0-s2-foundations.15"
+    "@spectrum-css/tag": "npm:10.1.0"
+    "@spectrum-css/taggroup": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.4.0"
