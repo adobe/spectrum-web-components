@@ -9,12 +9,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    LitElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
+import { when } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
 
 export default {
     component: 'sp-menu-item',
@@ -27,6 +32,63 @@ export const Default = (): TemplateResult => {
             <sp-menu-item>Menu Item</sp-menu-item>
         </sp-menu>
     `;
+};
+
+class CheckBoxBehindMenuItem extends LitElement {
+    private _renderMenu = true;
+
+    private _onMenuChange(_event: Event): void {
+        this._renderMenu = false;
+        this.requestUpdate();
+        console.log('On menu change, renderMenu: ', this._renderMenu);
+    }
+
+    private _onCheckboxChange(_event: Event): void {
+        console.log('On checkbox change');
+    }
+
+    private _handleReset(): void {
+        this._renderMenu = true;
+        this.requestUpdate();
+    }
+
+    protected override render(): TemplateResult {
+        return html`
+            <sp-action-button @click=${this._handleReset}>
+                Reset
+            </sp-action-button>
+            ${when(
+                this._renderMenu,
+                () => html`
+                    <sp-menu @change=${this._onMenuChange}>
+                        <sp-menu-item value="Item 1">
+                            Click left margin!
+                        </sp-menu-item>
+                    </sp-menu>
+                `
+            )}
+            ${when(
+                !this._renderMenu,
+                () => html`
+                    <sp-checkbox @change=${this._onCheckboxChange}>
+                        Should not be checked
+                    </sp-checkbox>
+                `
+            )}
+        `;
+    }
+}
+
+customElements.define('checkbox-behind-menu-item', CheckBoxBehindMenuItem);
+
+export const MenuItemWithCheckbox = (): TemplateResult => {
+    return html`
+        <checkbox-behind-menu-item></checkbox-behind-menu-item>
+    `;
+};
+
+MenuItemWithCheckbox.swc_vrt = {
+    skip: true,
 };
 
 export const noWrap = (): TemplateResult => {
