@@ -8829,6 +8829,8 @@ __metadata:
     "@spectrum-web-components/shared": "workspace:*"
     "@web/test-runner": "npm:^0.18.0"
     esbuild: "npm:^0.21.0"
+    lit: "npm:^2.5.0 || ^3.1.3"
+    prettier: "npm:^3.0.0"
     typescript: "npm:^5.3.3"
   languageName: unknown
   linkType: soft

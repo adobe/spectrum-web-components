@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2024 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,14 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/**
- * ⚠️ IMPORTANT: SOURCE OF TRUTH MOVED ⚠️
- *
- * The authoritative implementation is now in:
- * swan/src/shared/focus-visible.ts
- *
- * This file is maintained for backward compatibility ONLY.
- * DO NOT modify this file directly; instead make changes in Swan.
- */
-
-export * from '@spectrum-web-components/swan/shared/focus-visible.js';
+// This gnarly-looking implementation returns the equivalent of crypto.randomUUID().slice(0, 8).
+// It uses getRandomValues() in order to be compatible with HTTP contexts.
+export function randomID(): string {
+    return Array.from(crypto.getRandomValues(new Uint8Array(4)), (b) =>
+        `0${(b & 0xff).toString(16)}`.slice(-2)
+    ).join('');
+}

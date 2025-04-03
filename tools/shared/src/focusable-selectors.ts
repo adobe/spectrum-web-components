@@ -10,20 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const focusables = [
-    'button',
-    '[focusable]',
-    '[href]',
-    'input',
-    'label',
-    'select',
-    'textarea',
-    '[tabindex]',
-];
+/**
+ * ⚠️ IMPORTANT: SOURCE OF TRUTH MOVED ⚠️
+ *
+ * The authoritative implementation is now in:
+ * swan/src/shared/focusable-selectors.ts
+ *
+ * This file is maintained for backward compatibility ONLY.
+ * DO NOT modify this file directly; instead make changes in Swan.
+ */
 
-const userFocuable = ':not([tabindex="-1"])';
+export {
+    userFocusableSelector,
+    focusableSelector,
+} from '@spectrum-web-components/swan/shared/focusable-selectors.js';
 
-export const userFocusableSelector =
-    focusables.join(`${userFocuable}, `) + userFocuable;
-
-export const focusableSelector = focusables.join(', ');
+// This file exists only for backward compatibility with existing imports
+// Please import from '@spectrum-web-components/swan/shared/focusable-selectors.js' directly

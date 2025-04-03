@@ -24,6 +24,7 @@ const rootDir = resolve(__dirname, '..');
 function findEntryPoints() {
     const baseDir = resolve(rootDir, 'src/base');
     const componentsDir = resolve(rootDir, 'src/components');
+    const sharedDir = resolve(rootDir, 'src/shared');
     const entryPoints = [];
 
     // Check base directory
@@ -36,6 +37,20 @@ function findEntryPoints() {
                 !file.endsWith('index.ts')
             ) {
                 entryPoints.push(`src/base/${file}`);
+            }
+        }
+    }
+
+    // Check shared directory
+    if (statSync(sharedDir).isDirectory()) {
+        const files = readdirSync(sharedDir);
+        for (const file of files) {
+            if (
+                file.endsWith('.ts') &&
+                !file.endsWith('.d.ts') &&
+                !file.endsWith('index.ts')
+            ) {
+                entryPoints.push(`src/shared/${file}`);
             }
         }
     }

@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,14 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/**
- * ⚠️ IMPORTANT: SOURCE OF TRUTH MOVED ⚠️
- *
- * The authoritative implementation is now in:
- * swan/src/shared/focus-visible.ts
- *
- * This file is maintained for backward compatibility ONLY.
- * DO NOT modify this file directly; instead make changes in Swan.
- */
+const focusables = [
+    'button',
+    '[focusable]',
+    '[href]',
+    'input',
+    'label',
+    'select',
+    'textarea',
+    '[tabindex]',
+];
 
-export * from '@spectrum-web-components/swan/shared/focus-visible.js';
+const userFocuable = ':not([tabindex="-1"])';
+
+export const userFocusableSelector =
+    focusables.join(`${userFocuable}, `) + userFocuable;
+
+export const focusableSelector = focusables.join(', ');

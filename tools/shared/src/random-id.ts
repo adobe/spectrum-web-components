@@ -10,10 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-// This gnarly-looking implementation returns the equivalent of crypto.randomUUID().slice(0, 8).
-// It uses getRandomValues() in order to be compatible with HTTP contexts.
-export function randomID(): string {
-    return Array.from(crypto.getRandomValues(new Uint8Array(4)), (b) =>
-        `0${(b & 0xff).toString(16)}`.slice(-2)
-    ).join('');
-}
+/**
+ * ⚠️ IMPORTANT: SOURCE OF TRUTH MOVED ⚠️
+ *
+ * The authoritative implementation is now in:
+ * swan/src/shared/random-id.ts
+ *
+ * This file is maintained for backward compatibility ONLY.
+ * DO NOT modify this file directly; instead make changes in Swan.
+ */
+
+export * from '@spectrum-web-components/swan/shared/random-id.js';

@@ -97,7 +97,24 @@ When migrating files from SWC to Swan, update the TypeScript configuration:
 
     This reference is required in the tsconfig.json of the original package to enable TypeScript to resolve cross-project imports correctly.
 
-2. **Use Package Paths in Import Statements**
+2. **Path Mappings in Root tsconfig.json**
+
+    - When adding new module categories to Swan (e.g., `base`, `shared`, `reactive-controllers`), you must update the path mappings in the root tsconfig.json:
+
+    ```json
+    "paths": {
+        "@spectrum-web-components/swan/base/*": ["../swan/src/base/*"],
+        "@spectrum-web-components/swan/shared/*": ["../swan/src/shared/*"],
+        "@spectrum-web-components/swan/reactive-controllers/*": ["../swan/src/reactive-controllers/*"],
+        "@spectrum-web-components/swan/*": ["../swan/src/components/*"]
+    }
+    ```
+
+    - Always add more specific paths before more general ones
+    - The catch-all path (`@spectrum-web-components/swan/*`) should always be last
+    - Without these mappings, TypeScript won't be able to resolve imports from SWC to Swan
+
+3. **Use Package Paths in Import Statements**
 
     - In SWC shim files, use package paths rather than relative paths:
 
@@ -194,3 +211,55 @@ import { Component } from '@spectrum-web-components/swan/path/to/file.js';
 ```
 
 The package.json exports configuration supports both formats to ensure a smooth transition. New code should use the shorter paths without `/src`, while existing code will continue to work with the current paths. Future updates will eventually deprecate the longer `/src` paths.
+
+## File Structure Conventions
+
+1. **No Barrel Files**
+
+    - Swan does not use barrel files (index.ts) for re-exporting modules
+    - Each utility or component should be imported directly from its own file
+    - Example:
+
+    ```typescript
+    // DO NOT use barrel imports like this:
+    import {
+        firstFocusableIn,
+        getFocusableElements,
+    } from '@spectrum-web-components/swan/shared';
+
+    // Instead, import directly from specific files:
+    import { firstFocusableIn } from '@spectrum-web-components/swan/shared/first-focusable-in.js';
+    import { getFocusableElements } from '@spectrum-web-components/swan/shared/focusable.js';
+    ```
+
+2. **Use Package Paths in Import Statements**
+
+## Dependency Management
+
+1. **Version Consistency**
+
+    - Swan must use the same version ranges for shared dependencies as the main SWC project
+    - This is especially important for core libraries like Lit
+    - Example for Lit dependency in Swan's package.json:
+
+    ```json
+    "dependencies": {
+        "lit": "^2.5.0 || ^3.1.3"  // Match the version range used in SWC
+    }
+    ```
+
+    - This prevents TypeScript errors due to multiple versions of the same library being used
+    - Always check with `yarn why <package-name>` before adding a dependency to Swan
+
+2. **Workspace Dependencies**
+
+    - Use workspace references when depending on other SWC packages
+    - Example:
+
+    ```json
+    "dependencies": {
+        "@spectrum-web-components/base": "workspace:*"
+    }
+    ```
+
+    - This ensures Swan uses the local version of the package rather than a published version

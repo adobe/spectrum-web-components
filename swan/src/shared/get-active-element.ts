@@ -10,14 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/**
- * ⚠️ IMPORTANT: SOURCE OF TRUTH MOVED ⚠️
- *
- * The authoritative implementation is now in:
- * swan/src/shared/focus-visible.ts
- *
- * This file is maintained for backward compatibility ONLY.
- * DO NOT modify this file directly; instead make changes in Swan.
- */
-
-export * from '@spectrum-web-components/swan/shared/focus-visible.js';
+/* c8 ignore next 3 */
+export const getActiveElement = (el: Node): Element | null => {
+    return (el.getRootNode() as Document).activeElement;
+};

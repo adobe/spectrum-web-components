@@ -10,21 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export const getDeepElementFromPoint = (
-    x: number,
-    y: number
-): Element | null => {
-    let target = document.elementFromPoint(x, y);
-    while (target?.shadowRoot) {
-        const innerTarget = (
-            target.shadowRoot as unknown as {
-                elementFromPoint: (x: number, y: number) => Element | null;
-            }
-        ).elementFromPoint(x, y);
-        if (!innerTarget || innerTarget === target) {
-            break;
-        }
-        target = innerTarget;
-    }
-    return target;
-};
+/**
+ * ⚠️ IMPORTANT: SOURCE OF TRUTH MOVED ⚠️
+ *
+ * The authoritative implementation is now in:
+ * swan/src/shared/get-deep-element-from-point.ts
+ *
+ * This file is maintained for backward compatibility ONLY.
+ * DO NOT modify this file directly; instead make changes in Swan.
+ */
+
+export * from '@spectrum-web-components/swan/shared/get-deep-element-from-point.js';

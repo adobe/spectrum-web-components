@@ -56,6 +56,71 @@
             "development": "./dist/base/async-directive.dev.js",
             "default": "./dist/base/async-directive.js"
         },
+        "./shared/first-focusable-in.js": {
+            "types": "./dist/shared/first-focusable-in.d.ts",
+            "development": "./dist/shared/first-focusable-in.dev.js",
+            "default": "./dist/shared/first-focusable-in.js"
+        },
+        "./shared/focusable-selectors.js": {
+            "types": "./dist/shared/focusable-selectors.d.ts",
+            "development": "./dist/shared/focusable-selectors.dev.js",
+            "default": "./dist/shared/focusable-selectors.js"
+        },
+        "./shared/focus-visible.js": {
+            "types": "./dist/shared/focus-visible.d.ts",
+            "development": "./dist/shared/focus-visible.dev.js",
+            "default": "./dist/shared/focus-visible.js"
+        },
+        "./shared/focusable.js": {
+            "types": "./dist/shared/focusable.d.ts",
+            "development": "./dist/shared/focusable.dev.js",
+            "default": "./dist/shared/focusable.js"
+        },
+        "./shared/get-active-element.js": {
+            "types": "./dist/shared/get-active-element.d.ts",
+            "development": "./dist/shared/get-active-element.dev.js",
+            "default": "./dist/shared/get-active-element.js"
+        },
+        "./shared/get-deep-element-from-point.js": {
+            "types": "./dist/shared/get-deep-element-from-point.d.ts",
+            "development": "./dist/shared/get-deep-element-from-point.dev.js",
+            "default": "./dist/shared/get-deep-element-from-point.js"
+        },
+        "./shared/get-label-from-slot.js": {
+            "types": "./dist/shared/get-label-from-slot.d.ts",
+            "development": "./dist/shared/get-label-from-slot.dev.js",
+            "default": "./dist/shared/get-label-from-slot.js"
+        },
+        "./shared/observe-slot-presence.js": {
+            "types": "./dist/shared/observe-slot-presence.d.ts",
+            "development": "./dist/shared/observe-slot-presence.dev.js",
+            "default": "./dist/shared/observe-slot-presence.js"
+        },
+        "./shared/observe-slot-text.js": {
+            "types": "./dist/shared/observe-slot-text.d.ts",
+            "development": "./dist/shared/observe-slot-text.dev.js",
+            "default": "./dist/shared/observe-slot-text.js"
+        },
+        "./shared/platform.js": {
+            "types": "./dist/shared/platform.d.ts",
+            "development": "./dist/shared/platform.dev.js",
+            "default": "./dist/shared/platform.js"
+        },
+        "./shared/random-id.js": {
+            "types": "./dist/shared/random-id.d.ts",
+            "development": "./dist/shared/random-id.dev.js",
+            "default": "./dist/shared/random-id.js"
+        },
+        "./shared/like-anchor.js": {
+            "types": "./dist/shared/like-anchor.d.ts",
+            "development": "./dist/shared/like-anchor.dev.js",
+            "default": "./dist/shared/like-anchor.js"
+        },
+        "./shared/reparent-children.js": {
+            "types": "./dist/shared/reparent-children.d.ts",
+            "development": "./dist/shared/reparent-children.dev.js",
+            "default": "./dist/shared/reparent-children.js"
+        },
         "./accordion/AccordionBase.js": {
             "types": "./dist/components/accordion/AccordionBase.d.ts",
             "development": "./dist/components/accordion/AccordionBase.dev.js",
@@ -93,7 +158,8 @@
     ],
     "scripts": {
         "build": "rm -rf dist && tsc --outDir dist/tsc-out && node scripts/build.js && node scripts/post-build.js",
-        "build:watch": "tsc --watch"
+        "build:watch": "tsc --watch",
+        "format": "prettier --write \"src/**/*.ts\""
     },
     "dependencies": {
         "@internationalized/number": "^3.2.0",
@@ -101,11 +167,13 @@
         "@spectrum-web-components/base": "workspace:*",
         "@spectrum-web-components/reactive-controllers": "workspace:*",
         "@spectrum-web-components/shared": "workspace:*",
-        "lit": "^3.1.3"
+        "focus-visible": "^5.2.0",
+        "lit": "^2.5.0 || ^3.1.3"
     },
     "devDependencies": {
         "@web/test-runner": "^0.18.0",
         "esbuild": "^0.21.0",
+        "prettier": "^3.0.0",
         "typescript": "^5.3.3"
     }
 }

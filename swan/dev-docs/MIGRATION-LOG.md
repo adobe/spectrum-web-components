@@ -13,6 +13,188 @@ This log serves several purposes:
 
 ## Migrations
 
+### DOM Manipulation Utilities (April 2024)
+
+Several DOM manipulation utilities have been migrated from the shared package:
+
+**Migration Details:**
+
+-   Moved implementations from `tools/shared/src/` to `swan/src/shared/`:
+
+    -   `like-anchor.ts`: Utility for making elements behave like anchor tags
+    -   `reparent-children.ts`: Utility for moving child nodes between DOM elements
+
+-   Created shim files in original locations that re-export from Swan to maintain backward compatibility
+-   Added appropriate export entries to Swan's package.json to ensure proper module resolution
+
+**Implementation Notes:**
+
+-   Used direct file system copy to preserve exact implementation code without modifications
+-   Applied consistent pattern for shims with clear warning comments about the source of truth
+-   These utility functions have key usage across the component library:
+    -   `LikeAnchor` is used by the button component to support link-like behavior
+    -   `reparentChildren` is used by the overlay component for DOM manipulation
+
+**Testing and Verification:**
+
+-   Ran the specific test files for the utility modules in the shared package
+-   Identified and tested components that directly use these utilities:
+    -   `button` component for `LikeAnchor` functionality
+    -   `overlay` component for `reparentChildren` functionality
+-   All tests passed successfully, confirming proper migration and module resolution
+
+**Challenges Resolved:**
+
+-   Used consistent shim pattern to ensure backward compatibility
+-   Verified functionality through comprehensive testing of dependent components
+-   Confirmed proper module resolution through the Swan package exports configuration
+
+### Utility Functions (April 2024)
+
+Two utility functions have been migrated from the shared package using file system operations:
+
+**Migration Details:**
+
+-   Copied implementation files directly from `tools/shared/src/` to `swan/src/shared/` using filesystem commands:
+
+    -   `random-id.ts`: Utility for generating random IDs used by many components for accessibility
+    -   `platform.ts`: Utilities for browser detection and platform-specific behaviors
+
+-   Created shim files in original locations that re-export from Swan to maintain backward compatibility
+-   Added appropriate export entries to Swan's package.json to ensure proper module resolution
+
+**Implementation Notes:**
+
+-   Used direct file system copy to preserve exact implementation code without modifications
+-   Applied consistent pattern for shims with clear warning comments about the source of truth
+-   These utility functions have broad usage across the component library for:
+    -   Generating unique IDs for ARIA attributes (randomID)
+    -   Conditionally applying browser-specific behaviors and workarounds (platform)
+
+**Testing and Verification:**
+
+-   Ran the specific test files for the utility modules in the shared package
+-   Identified components that directly use these utilities through codebase analysis:
+    -   `overlay` component uses both randomID and platform utilities
+    -   Various other components throughout the codebase
+-   Ran tests for the overlay component to confirm proper functionality
+-   All tests passed, confirming successful migration with proper module resolution
+
+**Challenges Resolved:**
+
+-   Encountered issue where the shim file for platform.ts had both the shim code and original implementation
+-   Resolved by manually rebuilding the shim file to contain only the re-export code
+-   Ensured proper export configuration in package.json for module resolution
+
+### Slot Observation Utilities (April 2024)
+
+Several slot-related utility functions have been migrated from the shared package:
+
+**Migration Details:**
+
+-   Moved implementations from `tools/shared/src/` to `swan/src/shared/`:
+
+    -   `observe-slot-presence.ts`: Utility for detecting presence of slotted content through a mixin
+    -   `observe-slot-text.ts`: Utility for observing text content in slots through a mixin
+
+-   Created shim files in original locations that re-export from Swan to maintain backward compatibility
+-   Added appropriate export entries to Swan's package.json to ensure proper module resolution
+-   Updated import path in `observe-slot-text.ts` to reference Swan's decorators module
+
+**Implementation Notes:**
+
+-   Used a consistent pattern for all shim files with clear warning comments about the source of truth
+-   Made minor code improvements to address linting issues in the migrated files
+-   Fixed single-line if statement formatting to use braces in the `observe-slot-text.ts` module
+-   Both utilities are widely used across the component library for observing and responding to slot content changes
+
+**Testing and Verification:**
+
+-   Ran the specific test files for the slot observation utilities in the shared package
+-   Identified components that directly use these utilities through codebase analysis:
+    -   `badge` component uses both ObserveSlotPresence and ObserveSlotText
+    -   `button` component uses ObserveSlotText
+    -   Various other components like `tabs`, `action-menu`, `picker-button`, etc.
+-   Ran tests for badge and button components to confirm proper functionality with the migrated utilities
+-   All tests passed, confirming successful migration with proper module resolution
+
+**Challenges Resolved:**
+
+-   Fixed linting issues related to code style in migrated files:
+    -   Added braces to single-line if statements
+    -   Removed trailing whitespace for proper formatting
+-   Updated import path for decorators to use the Swan version
+-   Ensured proper export configuration in package.json for module resolution
+
+### DOM Utility Functions (April 2024)
+
+Several DOM-related utility functions have been migrated from the shared package:
+
+**Migration Details:**
+
+-   Moved implementations from `tools/shared/src/` to `swan/src/shared/`:
+
+    -   `get-active-element.ts`: Utility for accessing the active element within a root node
+    -   `get-deep-element-from-point.ts`: Utility for finding the deepest element at a specific point, including shadow DOM traversal
+    -   `get-label-from-slot.ts`: Utility for extracting label text from slotted content
+
+-   Created shim files in original locations that re-export from Swan to maintain backward compatibility
+-   Added appropriate export entries to Swan's package.json to ensure proper module resolution
+-   Updated migration documentation to emphasize the importance of small batch migrations
+
+**Implementation Notes:**
+
+-   Used a consistent pattern for all shim files with clear warning comments about the source of truth
+-   Made minor code improvements to address linting issues in the migrated files
+-   Applied the batch migration approach to minimize risk and simplify troubleshooting
+-   Grouped related DOM utility functions that operate as standalone helpers without interdependencies
+
+**Challenges Resolved:**
+
+-   Fixed linting issues related to code style in `get-label-from-slot.ts`, specifically adding brackets to single-line if statements
+-   Removed trailing whitespace from migrated files to address formatting errors
+-   Ensured proper export configuration in package.json for module resolution
+-   Verified that the Swan build process could handle the additional files without issues
+
+**Testing and Verification:**
+
+-   Ran the full shared package test suite to verify functionality of the migrated utilities
+-   Identified components that directly use these utilities through codebase analysis:
+    -   `progress-bar` component uses `getLabelFromSlot`
+    -   `meter` component uses `getLabelFromSlot`
+    -   `progress-circle` component uses `getLabelFromSlot`
+-   Ran specific tests for these dependent components to confirm proper functionality
+-   All tests passed, confirming successful migration with proper module resolution
+
+### Shared Modules: Focusable and Focus-Visible (April 2024)
+
+Several foundational shared modules have been migrated to Swan to support the component migration process:
+
+**Migration Details:**
+
+-   Moved implementations from `tools/shared/src/` to `swan/src/shared/`:
+
+    -   `focusable.ts`: Core focus management functionality used by many components
+    -   `focus-visible.ts`: Polyfill mixin for :focus-visible support
+    -   `focusable-selectors.ts`: CSS selectors for focusable elements
+    -   `first-focusable-in.ts`: Utilities for finding the first focusable element
+
+-   Created shim files in original locations that re-export from Swan to maintain backward compatibility
+
+**Implementation Notes:**
+
+-   Used filesystem operations to copy the files rather than reading and rewriting source code to avoid unintentional changes
+-   After copying, only updated import paths to reference Swan modules
+-   Updated internal module references (e.g., focusable.ts imports focus-visible.ts)
+-   Created proper shim files with warning comments about the migrated source of truth
+
+**Challenges Resolved:**
+
+-   **Dependency Version Issues:** Initially encountered TypeScript errors due to mismatched Lit dependency versions between Swan and SWC. Fixed by updating Swan's package.json to match the version range defined in the main project.
+-   **Redundant Implementation Code:** Discovered that shim files should not contain both the re-export and the original implementation. Fixed by removing redundant implementation code from shim files.
+-   **Verification Strategy:** Learned that it's important to test not just the shared modules themselves, but also components that depend on them (like button) to verify the migration was successful.
+-   **ESLint Configuration Differences:** Found that Swan files were subject to stricter linting rules than in their original location. Made one necessary source-level change to `focusable.ts` to fix an async Promise executor pattern that triggered the `no-async-promise-executor` rule. This change is documented in the [Source-Level Changes Log](./SOURCE-CODE-CHANGES.md).
+
 ### Base Foundation Modules (April 2024)
 
 Several fundamental modules from the base package have been migrated to support the Swan architecture:
@@ -278,6 +460,58 @@ The progress bar component visualizes the completion status of an operation.
 
 -   Maintains all original functionality while following Swan's architecture patterns
 
+### Shared Utilities (April 2024)
+
+Several shared utilities have been migrated to support the Swan architecture:
+
+#### first-focusable-in and focusable-selectors
+
+**Migration Details:**
+
+-   Moved implementations from `tools/shared/src/first-focusable-in.ts` and `tools/shared/src/focusable-selectors.ts` to corresponding files in `swan/src/shared/`
+-   Added exports entries in Swan's package.json for the migrated files
+-   Temporarily kept the original implementation in SWC for build purposes
+-   Added `format` script to Swan's package.json for easier handling of formatting errors
+
+**Implementation Notes:**
+
+-   `first-focusable-in.ts` provides utilities for finding the first focusable element in a DOM container
+-   `focusable-selectors.ts` provides CSS selectors for identifying focusable elements
+-   Both modules are commonly used by components that need to manage focus
+
+**Challenges Resolved:**
+
+-   Added formatter script to Swan to simplify fixing prettier-related linting issues
+-   Updated documentation to provide guidance on handling formatting issues during migration
+-   Successfully built Swan with the migrated modules
+
+**Next Steps:**
+
+-   Continue migrating the remaining shared modules following the established pattern
+-   Update SWC shim files to reference the Swan implementations after all migrations are complete
+
+### Dependency Version Compatibility (April 2024)
+
+During the shared package migration, we encountered TypeScript errors related to incompatible Lit versions:
+
+**Issue Details:**
+
+-   TypeScript errors when building SWC after migrating shared modules to Swan
+-   Error message: "Type 'Button' is not assignable to type 'HostWithPendingState'. Types have separate declarations of a private property '\_\_childPart'."
+-   The issue was caused by Swan and SWC using different versions of Lit
+
+**Resolution:**
+
+-   Updated Swan's package.json to use the same version range for Lit as the main SWC project
+-   Changed from `"lit": "^3.1.3"` to `"lit": "^2.5.0 || ^3.1.3"`
+-   Added documentation about maintaining version consistency between Swan and SWC
+
+**Lessons Learned:**
+
+-   Always use identical version ranges for shared dependencies between Swan and SWC
+-   Use `yarn why <package-name>` to check for multiple versions of dependencies
+-   Document version requirements in the migration principles
+
 ## General Migration Approach
 
 Throughout these migrations, we've followed these principles:
@@ -312,7 +546,14 @@ Throughout these migrations, we've followed these principles:
     - Ensure consistent handling of imports and exports
     - Maintain development and production build variants
 
-6. **Documentation**
+6. **Batch Size Management**
+
+    - Migrate in small, related batches of 1-3 modules at a time
+    - Group modules with similar functionality or dependencies when possible
+    - Complete the full migration cycle for each batch before starting the next
+    - This approach minimizes risk and makes troubleshooting easier
+
+7. **Documentation**
     - Add clear comments about source of truth locations
     - Provide migration context through inline documentation
     - Create comprehensive migration logs and principles
@@ -323,7 +564,10 @@ Each migration follows this iterative approach:
 2. Extract core logic to abstract base classes (moved to Swan)
 3. Leave rendering, styles, and component definition in SWC
 4. Create shims in SWC that reference Swan abstract base classes
-5. Test thoroughly to ensure functionality is preserved
+5. Test thoroughly to ensure functionality is preserved:
+    - Run shared module tests
+    - Identify and test representative components that use the migrated modules
+    - Verify both direct functionality and integration with dependent components
 6. Document the migration process and any challenges
 
 This carefully planned migration strategy ensures a smooth transition from the legacy SWC architecture to the more modular and maintainable Swan architecture, while minimizing disruption to consumers of the library. The end result is a clean separation where Swan provides the behavior foundation and SWC provides the implementation and presentation layer.

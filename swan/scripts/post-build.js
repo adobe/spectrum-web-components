@@ -27,6 +27,9 @@ function copyDeclarationFiles() {
     // Copy base declarations
     copyDirectoryDeclarations('base');
 
+    // Copy shared declarations
+    copyDirectoryDeclarations('shared');
+
     // eslint-disable-next-line no-console
     console.log('✓ Declaration files copied successfully');
 }

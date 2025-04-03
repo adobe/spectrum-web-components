@@ -10,25 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { SpectrumElement } from '@spectrum-web-components/base';
-import { userFocusableSelector } from './focusable-selectors.js';
+/**
+ * ⚠️ IMPORTANT: SOURCE OF TRUTH MOVED ⚠️
+ *
+ * The authoritative implementation is now in:
+ * swan/src/shared/first-focusable-in.ts
+ *
+ * This file is maintained for backward compatibility ONLY.
+ * DO NOT modify this file directly; instead make changes in Swan.
+ */
 
-export const firstFocusableIn = (
-    root: HTMLElement | ShadowRoot
-): SpectrumElement | null => {
-    const firstFocusable = root.querySelector(
-        userFocusableSelector
-    ) as SpectrumElement;
-    return firstFocusable;
-};
+export {
+    firstFocusableIn,
+    firstFocusableSlottedIn,
+} from '@spectrum-web-components/swan/shared/first-focusable-in.js';
 
-export const firstFocusableSlottedIn = (
-    root: HTMLSlotElement
-): SpectrumElement | null => {
-    const firstFocusable = root
-        .assignedElements()
-        .find((element) =>
-            element.matches(userFocusableSelector)
-        ) as SpectrumElement;
-    return firstFocusable;
-};
+// This file exists only for backward compatibility with existing imports
+// Please import from '@spectrum-web-components/swan/shared/first-focusable-in.js' directly
