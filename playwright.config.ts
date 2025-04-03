@@ -12,6 +12,9 @@ governing permissions and limitations under the License.
 
 import type { PlaywrightTestConfig } from '@playwright/test';
 const config: PlaywrightTestConfig = {
+    fullyParallel: true,
     retries: process.env.CI ? 2 : 0,
+    // Limit the number of workers on CI, use default locally
+    workers: process.env.CI ? 4 : undefined,
 };
 export default config;
