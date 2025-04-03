@@ -11,7 +11,7 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/slider"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/slider",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
@@ -68,10 +68,16 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
-        "lit-html"
+        "lit-html",
+        "component",
+        "css"
     ],
     "dependencies": {
         "@internationalized/number": "^3.6.0",
