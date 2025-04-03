@@ -27,11 +27,11 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     arrowDownEvent,
     arrowUpEvent,
     fixture,
+    sendMouseTo,
     tabEvent,
     testForLitDevWarnings,
     tEvent,
@@ -313,6 +313,52 @@ describe('Menu', () => {
         );
     });
 
+    it('handles hover and keyboard input', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item>Deselect</sp-menu-item>
+                <sp-menu-item>Select Inverse</sp-menu-item>
+            </sp-menu>
+        `);
+
+        await waitUntil(
+            () => el.childItems.length == 2,
+            'expected menu to manage 2 items'
+        );
+
+        const firstItem = el.querySelector(
+            'sp-menu-item:nth-of-type(1)'
+        ) as MenuItem;
+        const secondItem = el.querySelector(
+            'sp-menu-item:nth-of-type(2)'
+        ) as MenuItem;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(document.activeElement).to.equal(firstItem);
+        expect(firstItem.focused, 'first item focused').to.be.true;
+
+        await sendMouseTo(secondItem);
+
+        expect(document.activeElement, 'active element after hover').to.equal(
+            secondItem
+        );
+        expect(document.activeElement).to.equal(secondItem);
+        expect(
+            secondItem.focused,
+            'second item should not have focus styling on hover'
+        ).to.be.false;
+
+        await sendKeys({ press: 'ArrowUp' });
+
+        expect(document.activeElement).to.equal(firstItem);
+        expect(
+            firstItem.focused,
+            'first item shoudl have focus styling after keyboard'
+        ).to.be.true;
+    });
+
     it('handle focus and late descendant additions', async () => {
         const el = await fixture<Menu>(html`
             <sp-menu>
@@ -534,41 +580,14 @@ describe('Menu', () => {
         ) as MenuItem;
 
         // send right mouse click to the secondItem
-        const rect = secondItem.getBoundingClientRect();
-        sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'click',
-                    options: {
-                        button: 'right',
-                    },
-                },
-            ],
-        });
+        await sendMouseTo(secondItem);
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);
         expect(changeSpy.callCount, 'no change').to.equal(0);
 
         // send middle mouse click to the secondItem
-        sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'click',
-                    options: {
-                        button: 'middle',
-                    },
-                },
-            ],
-        });
+        await sendMouseTo(secondItem, 'click');
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);
