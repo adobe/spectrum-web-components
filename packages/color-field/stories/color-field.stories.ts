@@ -13,6 +13,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/color-field/sp-color-field.js';
 import { ColorFieldMarkup } from './template.js';
 import { argTypes } from './args.js';
+import { DEFAULT_COLOR, DEMO_COLORS } from './colors.js';
 
 export default {
     component: 'sp-color-field',
@@ -62,39 +63,11 @@ viewColor.args = {
     value: 'rgb(255,255,0)',
 };
 export const Multiple = (args?: Properties): TemplateResult => {
-    // Array of predefined colors in different formats
-    const colors = [
-        'rgb(255,0,0)', // Red
-        '#00FF00', // Green
-        'rgb(0,0,255)', // Blue
-        '#FFFF00', // Yellow
-        'rgb(255,0,255)', // Magenta
-        '#00FFFF', // Cyan
-        'rgb(255,165,0)', // Orange
-        '#800080', // Purple
-        'rgb(165,42,42)', // Brown
-        '#008080', // Teal
-        'rgb(255,192,203)', // Pink
-        '#32CD32', // Lime Green
-        'rgb(70,130,180)', // Steel Blue
-        '#FF6347', // Tomato
-        'rgb(128,0,0)', // Maroon
-        '#4B0082', // Indigo
-        'rgb(0,128,128)', // Dark Cyan
-        '#800000', // Dark Red
-        'rgb(0,100,0)', // Dark Green
-        '#000080', // Navy
-        'rgb(188,143,143)', // Rosy Brown
-        '#556B2F', // Dark Olive Green
-        'rgb(255,215,0)', // Gold
-        '#C0C0C0', // Silver
-    ];
-
     return html`
         <div
             style="width: 20%; padding: 20px; margin: 10px; display: flex; flex-direction: column; gap: 16px; height: 200px; overflow-y: auto;"
         >
-            ${colors.map((color, index) =>
+            ${DEMO_COLORS.map((color, index) =>
                 ColorFieldMarkup({
                     ...args,
                     label: `Color ${index + 1}`,
@@ -108,8 +81,7 @@ export const Multiple = (args?: Properties): TemplateResult => {
 
 Multiple.args = {
     viewColor: true,
-    // The value here will be overridden by the individual color values
-    value: 'rgb(255,255,0)',
+    value: DEFAULT_COLOR,
 };
 
 export const WrongInput = (args?: Properties): TemplateResult =>
