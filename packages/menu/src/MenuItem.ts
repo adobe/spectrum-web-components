@@ -386,6 +386,7 @@ export class MenuItem extends LikeAnchor(
                 this.open &&
                 this.dependencyManager.loaded}
                 .placement=${this.isLTR ? 'right-start' : 'left-start'}
+                receives-focus="false"
                 .offset=${[-10, -5] as [number, number]}
                 .type=${'auto'}
                 @close=${(event: Event) => event.stopPropagation()}
@@ -478,7 +479,6 @@ export class MenuItem extends LikeAnchor(
             this.id = `sp-menu-item-${randomID()}`;
         }
     }
-
     handleMouseover(event: MouseEvent): void {
         const target = event.target as HTMLElement;
         if (target === this) {
@@ -486,7 +486,6 @@ export class MenuItem extends LikeAnchor(
             this.focused = false;
         }
     }
-
     /**
      * forward key info from keydown event to parent menu
      */
@@ -653,8 +652,8 @@ export class MenuItem extends LikeAnchor(
         if (
             changes.has('open') &&
             !this.open &&
-            !this._closedViaPointer &&
             this.hasSubmenu &&
+            !this._closedViaPointer &&
             this.matches(':focus-within')
         ) {
             this.focus();
