@@ -14,8 +14,6 @@ jobs:
         steps:
             - name: Checkout PR branch
               uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
 
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job

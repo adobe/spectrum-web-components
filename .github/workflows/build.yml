@@ -3,14 +3,10 @@ name: Build
 # This workflow validates that the commit in question can be built successfully
 # in several environments:
 #
-#   Systems:    Ubuntu, MacOS, Windows
-#   Node:       20
-#
-# After the build is successful, the compiled assets are uploaded as an artifact
-# to the workflow run. This allows us to download the compiled assets and use
-# them in other workflows.
-#
-# Note: we need to skip the nx cache b/c it does not contain the compiled assets
+#   Systems:        Ubuntu, MacOS, Windows (default: macos-latest)
+#   Node versions:  20 (default)
+#   Experimental:   true/false (default: false)
+#   Ref:            The branch or tag to checkout (default: github.head_ref)
 #
 
 on:
@@ -85,13 +81,11 @@ jobs:
                   node-version: ${{ matrix.node-version }}
 
             - name: Build the project
-              if: always()
               run: yarn build
 
             # This step will evaluate the repo status and report the change
             # If there are changes, capture the changes and upload them as an artifact
             - name: Check if there are changes
-              if: always()
               run: |
                   if [[ -z $(git status --porcelain) ]]; then
                       echo "No changes detected"
