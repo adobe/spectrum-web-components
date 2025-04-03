@@ -118,6 +118,13 @@ textarea {
     );
 }
 
+:host([focused]) #textfield .icon.icon-search {
+    --spectrum-search-color: var(
+        --highcontrast-search-color-focus,
+        var(--mod-search-color-focus, var(--spectrum-search-color-focus))
+    );
+}
+
 :host([multiline][grows]:not([quiet])) #textfield:after {
     grid-area: unset;
     min-block-size: calc(
