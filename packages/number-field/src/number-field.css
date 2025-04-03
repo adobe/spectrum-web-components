@@ -52,6 +52,8 @@ governing permissions and limitations under the License.
 
 .input {
     font-variant-numeric: tabular-nums;
+
+    /* inline-size: var(--spectrum-stepper-width); */
 }
 
 :host([readonly]) .buttons {
@@ -87,6 +89,20 @@ governing permissions and limitations under the License.
     --mod-infield-button-border-width: var(
         --mod-infield-button-border-width-quiet,
         0
+    );
+}
+
+:host([invalid]:not([hide-stepper])) #textfield .icon {
+    --mod-textfield-icon-spacing-inline-end-invalid: calc(
+        var(--system-infield-button-top-width) +
+            var(--spectrum-textfield-icon-spacing-inline-end-invalid)
+    );
+}
+
+:host([valid]:not([hide-stepper])) #textfield .icon {
+    --mod-textfield-icon-spacing-inline-end-valid: calc(
+        var(--system-infield-button-top-width) +
+            var(--spectrum-textfield-icon-spacing-inline-end-valid)
     );
 }
 
