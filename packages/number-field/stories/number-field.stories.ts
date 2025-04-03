@@ -13,10 +13,11 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-import '@spectrum-web-components/number-field/sp-number-field.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
+import '@spectrum-web-components/number-field/sp-number-field.js';
+import '@spectrum-web-components/slider/sp-slider.js';
 import { NumberField } from '@spectrum-web-components/number-field/src/NumberField.js';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     title: 'Number Field',
@@ -464,11 +465,34 @@ export const validationIcons = (args: StoryArgs): TemplateResult => {
             ...=${spreadProps(args)}
             @change=${args.onChange}
         ></sp-number-field>
+        <sp-field-label for="validation">
+            You can only read the following value
+        </sp-field-label>
+        <sp-number-field id="validation" valid></sp-number-field>
+        <sp-field-label for="validation">
+            You can only read the following value
+        </sp-field-label>
+        <sp-number-field id="validation" invalid></sp-number-field>
+        <div
+            style="width: 500px; display: flex; align-items: center; gap: 1rem;"
+        >
+            <sp-slider
+                max="1"
+                min="0"
+                value=".5"
+                step="0.01"
+                style="flex-grow: 1;"
+            >
+                Opacity
+            </sp-slider>
+            <sp-number-field id="validation" invalid></sp-number-field>
+        </div>
     `;
 };
 validationIcons.args = {
     invalid: true,
     value: '15',
+    hideStepper: true,
 };
 
 export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
