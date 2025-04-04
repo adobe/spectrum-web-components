@@ -7596,12 +7596,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/statuslight@npm:8.0.0-s2-foundations.15":
-  version: 8.0.0-s2-foundations.15
-  resolution: "@spectrum-css/statuslight@npm:8.0.0-s2-foundations.15"
+"@spectrum-css/statuslight@npm:9.1.0":
+  version: 9.1.0
+  resolution: "@spectrum-css/statuslight@npm:9.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/a35b8b705e2394311bcbf9ecbe8f14ec9f35760eaa48065d72c745d7530f4f186bb6746e41d6862a0c568f449e694028cdedf6730415b1cd1a98be7d241e28cb
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/6de3f854ee6c68212a0b4feefb524575bf44ed80083d613bfd8fcee07c044be852f379c136f5ef103cbc5ec18ddd189e671dc178eb8fd79ccca92ab07106b83a
   languageName: node
   linkType: hard
 
@@ -8728,7 +8731,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/status-light@workspace:packages/status-light"
   dependencies:
-    "@spectrum-css/statuslight": "npm:8.0.0-s2-foundations.15"
+    "@spectrum-css/statuslight": "npm:9.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft
