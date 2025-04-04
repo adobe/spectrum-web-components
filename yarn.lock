@@ -7494,21 +7494,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/popover@npm:8.0.0-s2-foundations.17":
-  version: 8.0.0-s2-foundations.17
-  resolution: "@spectrum-css/popover@npm:8.0.0-s2-foundations.17"
+"@spectrum-css/popover@npm:8.2.0":
+  version: 8.2.0
+  resolution: "@spectrum-css/popover@npm:8.2.0"
   peerDependencies:
-    "@spectrum-css/alertdialog": ">=2"
-    "@spectrum-css/dialog": ">=10"
-    "@spectrum-css/divider": ">=3"
-    "@spectrum-css/menu": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/alertdialog": ">=4.0.0 <5.0.0"
+    "@spectrum-css/dialog": ">=12.0.0 <13.0.0"
+    "@spectrum-css/divider": ">=5.0.0 <6.0.0"
+    "@spectrum-css/menu": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
+    "@spectrum-css/alertdialog":
+      optional: true
+    "@spectrum-css/dialog":
+      optional: true
     "@spectrum-css/divider":
       optional: true
     "@spectrum-css/menu":
       optional: true
-  checksum: 10c0/03fb044f82627d69262a80e3413f3852994343ee7b7a4aa37a22618b73171dbdc4c68dc9260de217d5d0dab48cfe48e0f9a7934cff047b424672e72d03a6f0cc
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/bc271d9fdd19016b6f288949f1d4e33f384ee4692698bf4ab64d51f64f264a14b22b616051a8c94320091d2510d84b952e4a9c0b9b239a241d2bd8791086e44a
   languageName: node
   linkType: hard
 
@@ -8614,7 +8620,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/popover@workspace:packages/popover"
   dependencies:
-    "@spectrum-css/popover": "npm:8.0.0-s2-foundations.17"
+    "@spectrum-css/popover": "npm:8.2.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/overlay": "npm:1.4.0"
   languageName: unknown
