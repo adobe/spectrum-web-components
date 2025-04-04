@@ -6842,16 +6842,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/actionmenu@npm:7.0.0-s2-foundations.15":
-  version: 7.0.0-s2-foundations.15
-  resolution: "@spectrum-css/actionmenu@npm:7.0.0-s2-foundations.15"
+"@spectrum-css/actionmenu@npm:7.1.1":
+  version: 7.1.1
+  resolution: "@spectrum-css/actionmenu@npm:7.1.1"
   peerDependencies:
-    "@spectrum-css/actionbutton": ">=6"
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/menu": ">=7"
-    "@spectrum-css/popover": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/0089e04e894c4320577f8ffe80f82949151781d90ac6bea283faf7aface936c6072272222816cd8621f219caa070661296922601bc3e88e863ff45de5dae98f7
+    "@spectrum-css/actionbutton": ">=7.0.0 <8.0.0"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/menu": ">=9.0.0 <10.0.0"
+    "@spectrum-css/popover": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/actionbutton":
+      optional: true
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/menu":
+      optional: true
+    "@spectrum-css/popover":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/5b72144aab6aa01084a55639df0ecaa977f13a109da83041cb87665c66bce79c4ae241329bcd2480f4692afd1bf48cd18c8564b993ef44118d38d692dd317ed6
   languageName: node
   linkType: hard
 
@@ -7325,12 +7336,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/icon@npm:8.0.1":
-  version: 8.0.1
-  resolution: "@spectrum-css/icon@npm:8.0.1"
+"@spectrum-css/icon@npm:9.1.0":
+  version: 9.1.0
+  resolution: "@spectrum-css/icon@npm:9.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14 || >=15"
-  checksum: 10c0/a8b07fc59d8c3e9f87d2a899fa4c5dd8f5153d71617e0fe73400147b77dd5b8036e4a1893db762353965e30931969b0d3225cf1274a1e821cb585b76ceac0b7c
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/bf369f911099d2020297998c75b39ddb15c678747685eb79a5c9c12a846eada85eecc6c342b4243bcb9fafed225fe3c271985551154ddf170a00e00699b0a85a
   languageName: node
   linkType: hard
 
@@ -7509,12 +7523,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/progresscircle@npm:4.0.0-s2-foundations.16":
-  version: 4.0.0-s2-foundations.16
-  resolution: "@spectrum-css/progresscircle@npm:4.0.0-s2-foundations.16"
+"@spectrum-css/progresscircle@npm:5.1.0":
+  version: 5.1.0
+  resolution: "@spectrum-css/progresscircle@npm:5.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/37f2d3f87f934bb246cc284ec95c41802a2bec7ef56489f1214efb69442101a47f144f8c5477f7b046461faf87d8c10092b81c647a95b51d70e5d5433979d228
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/926fc10c6996e12c970b5da41d8b5cde47ff9eec311bc7b9d8d59023d81d45ae5e3e5947a14b9f2d486a4493e4dd26d6978ae60b9ea76e4e3a73544caa41e45b
   languageName: node
   linkType: hard
 
@@ -7885,7 +7902,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-menu@workspace:packages/action-menu"
   dependencies:
-    "@spectrum-css/actionmenu": "npm:7.0.0-s2-foundations.15"
+    "@spectrum-css/actionmenu": "npm:7.1.1"
     "@spectrum-web-components/action-button": "npm:1.4.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
@@ -8379,7 +8396,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/icon@workspace:packages/icon"
   dependencies:
-    "@spectrum-css/icon": "npm:8.0.1"
+    "@spectrum-css/icon": "npm:9.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/iconset": "npm:1.4.0"
   languageName: unknown
@@ -8409,7 +8426,7 @@ __metadata:
   dependencies:
     "@adobe/spectrum-css-workflow-icons": "npm:1.7.0"
     "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@^4.0.0"
-    "@spectrum-css/icon": "npm:8.0.1"
+    "@spectrum-css/icon": "npm:9.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
     case: "npm:^1.6.1"
@@ -8609,7 +8626,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/progress-circle@workspace:packages/progress-circle"
   dependencies:
-    "@spectrum-css/progresscircle": "npm:4.0.0-s2-foundations.16"
+    "@spectrum-css/progresscircle": "npm:5.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
   languageName: unknown
