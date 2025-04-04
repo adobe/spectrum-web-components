@@ -21,6 +21,7 @@
 '@spectrum-web-components/modal': patch
 '@spectrum-web-components/sidenav': patch
 '@spectrum-web-components/split-view': patch
+'@spectrum-web-components/status-light': patch
 '@spectrum-web-components/styles': patch
 '@spectrum-web-components/tags': patch
 '@spectrum-web-components/tray': patch
