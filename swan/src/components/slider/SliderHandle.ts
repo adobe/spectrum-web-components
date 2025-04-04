@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { PropertyValues } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { Focusable } from '../../shared/focusable.js';
 import {
     NumberFormatOptions,
     NumberFormatter,

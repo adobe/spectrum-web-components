@@ -16,7 +16,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { Focusable } from '../../shared/focusable.js';
 
 /**
  * Base class for AccordionItem components

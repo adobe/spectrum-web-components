@@ -11,14 +11,14 @@ governing permissions and limitations under the License.
 */
 
 import { PropertyValues, SizedMixin } from '@spectrum-web-components/base';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { Focusable } from '../../shared/focusable.js';
 import type { TemplateResult } from '@spectrum-web-components/base';
 import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+import { ObserveSlotText } from '../../shared/observe-slot-text.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import type { NumberField } from '@spectrum-web-components/number-field';
 import { HandleController, HandleValueDictionary } from './HandleController.js';
