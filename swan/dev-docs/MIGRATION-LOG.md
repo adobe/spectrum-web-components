@@ -13,6 +13,36 @@ This log serves several purposes:
 
 ## Migrations
 
+### Change in Migration Approach: Using Git Move for Phase 3 (April 2024)
+
+For Phase 3 of our migration plan (Reactive-Controllers package), we've decided to update our approach to preserve git history:
+
+**Change Details:**
+
+-   Previous phases used manual copying or filesystem operations to move files
+-   Phase 3 will use `git mv` to move files from SWC to Swan locations
+-   This preserves the complete git history of each file
+
+**Implementation Notes:**
+
+-   The command `git mv original/path/file.ts new/path/file.ts` will be used for each file
+-   After moving, import paths will be updated to reference Swan paths
+-   Only import/export statements will be modified; all other code will remain unchanged
+-   This approach makes it easier to trace the evolution of files over time
+
+**Rationale:**
+
+-   Preserving git history provides better visibility into code evolution
+-   Makes it easier to understand original authorship and intent
+-   Helps with debugging and analysis by maintaining a continuous history
+-   Will be particularly valuable if we proceed with this migration approach for production
+
+**Impact on Proof-of-Concept:**
+
+-   Earlier phases (Base and Shared packages) will not be retroactively changed
+-   This inconsistency is acceptable in the proof-of-concept phase
+-   If we proceed with production implementation, we will use the git move approach consistently
+
 ### Dependency Cleanup: Removing Direct Dependencies on SWC Packages (April 2024)
 
 After migrating modules from the SWC packages to Swan, we needed to fully decouple Swan from its original packages by removing direct dependencies on them:

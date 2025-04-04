@@ -1,5 +1,11 @@
 # Migration Plan: Moving Base, Reactive-Controllers, and Shared to Swan
 
+## Important: Proof-of-Concept Status
+
+This migration work is currently being conducted as a proof-of-concept exercise. The learnings and approaches from this effort will inform the eventual "real" migration process. As such, some aspects of this plan may change based on what we discover during this exploratory phase.
+
+If we decide to proceed with this architecture, the final migration will incorporate all lessons learned from this proof-of-concept work. This documentation serves as a record of our approach and findings for future reference.
+
 ## 1. Overall Migration Strategy
 
 1. **Phased Migration Approach**:
@@ -73,7 +79,12 @@
 1. **Files to Move**:
 
     - Most controllers from `tools/reactive-controllers/src/` to `swan/src/reactive-controllers/`
-    - Maintain exact code with only import path updates
+    - Use `git mv` to preserve git history when moving files:
+        ```bash
+        git mv tools/reactive-controllers/src/file-name.ts swan/src/reactive-controllers/file-name.ts
+        ```
+    - After moving, update import paths in the moved files to reference Swan paths
+    - Using git move preserves the full history of each file, making later analysis and debugging easier
 
 2. **Files to Leave in Place**:
 
@@ -103,14 +114,23 @@
 
 ## 3. Implementation Considerations
 
-1. **Import Path Updates**:
+1. **File Migration Method**:
+
+    - For Phase 3 and beyond, use `git mv` to move files:
+        ```bash
+        git mv original/path/file.ts new/path/file.ts
+        ```
+    - This preserves the complete git history of the file and ensures traceability
+    - After moving, only make changes to import/export statements; preserve all other code exactly as-is
+
+2. **Import Path Updates**:
 
     - Within moved files, update all internal imports to reference new Swan paths
     - Only modify import/export statements; preserve all other code exactly as-is
     - Use shorter import paths without `/src/`:
         - Example: Change `@spectrum-web-components/base` to `@spectrum-web-components/swan/base/file.js`
 
-2. **Package.json Updates**:
+3. **Package.json Updates**:
 
     - Update Swan's package.json to include necessary dependencies
     - Maintain version compatibility with existing packages
@@ -119,13 +139,13 @@
         - Don't include 'src' in the path
         - Don't include 'components' in the path unless necessary for organization
 
-3. **Build Configuration**:
+4. **Build Configuration**:
 
     - Ensure Swan's build process correctly handles all moved files
     - Configure TypeScript paths and export maps to match original structure
     - Verify that TypeScript declaration files (.d.ts) are properly generated
 
-4. **Batch Size Management**:
+5. **Batch Size Management**:
     - Migrate in small, related batches of 1-3 modules at a time
     - Prefer to group modules with similar functionality or dependencies
     - Complete the full migration cycle (implementation, shim creation, testing) for each batch before starting the next
