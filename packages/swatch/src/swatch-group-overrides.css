@@ -11,14 +11,3 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-swatchgroup-spacing-compact: var(
-        --system-swatch-group-spacing-compact
-    );
-    --spectrum-swatchgroup-spacing-regular: var(
-        --system-swatch-group-spacing-regular
-    );
-    --spectrum-swatchgroup-spacing-spacious: var(
-        --system-swatch-group-spacing-spacious
-    );
-}
