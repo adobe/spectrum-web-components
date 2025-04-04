@@ -31,7 +31,43 @@ governing permissions and limitations under the License.
     }
 }
 
+:host,
+:host([size='s']) {
+    --spectrum-swatch-size: var(--spectrum-swatch-size-small);
+    --spectrum-swatch-disabled-icon-size: var(--spectrum-workflow-icon-size-75);
+    --spectrum-swatch-slash-thickness: var(--spectrum-swatch-slash-thickness-small);
+}
+
+:host([size='xs']) {
+    --spectrum-swatch-size: var(--spectrum-swatch-size-extra-small);
+    --spectrum-swatch-disabled-icon-size: var(--spectrum-workflow-icon-size-50);
+    --spectrum-swatch-slash-thickness: var(--spectrum-swatch-slash-thickness-extra-small);
+}
+
 :host {
+    --spectrum-swatch-size: var(--spectrum-swatch-size-medium);
+    --spectrum-swatch-disabled-icon-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-swatch-slash-thickness: var(--spectrum-swatch-slash-thickness-medium);
+}
+
+:host([size='l']) {
+    --spectrum-swatch-size: var(--spectrum-swatch-size-large);
+    --spectrum-swatch-disabled-icon-size: var(--spectrum-workflow-icon-size-200);
+    --spectrum-swatch-slash-thickness: var(--spectrum-swatch-slash-thickness-large);
+}
+
+:host {
+    --spectrum-swatch-focus-indicator-border-radius: 8px;
+    --spectrum-swatch-icon-border-color: rgba(var(--spectrum-black-rgb), var(--spectrum-swatch-disabled-icon-border-opacity));
+    --spectrum-swatch-disabled-icon-color: var(--spectrum-white);
+    --spectrum-swatch-border-thickness: var(--spectrum-border-width-100);
+    --spectrum-swatch-border-thickness-selected: var(--spectrum-border-width-200);
+    --spectrum-swatch-focus-indicator-thickness: var(--spectrum-focus-indicator-thickness);
+    --spectrum-swatch-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
+    --spectrum-swatch-border-color-selected: var(--spectrum-gray-900);
+    --spectrum-swatch-dash-icon-color: var(--spectrum-gray-800);
+    --spectrum-swatch-slash-icon-color: var(--spectrum-red-900);
+    --spectrum-swatch-focus-indicator-color: var(--spectrum-focus-indicator-color);
     inline-size: var(--mod-swatch-size, var(--spectrum-swatch-size));
     block-size: var(--mod-swatch-size, var(--spectrum-swatch-size));
     -webkit-user-select: none;
@@ -54,7 +90,7 @@ governing permissions and limitations under the License.
 }
 
 :host([selected]) {
-    background-color: var(--highcontrast-swatch-background-color-selected, var(--mod-swatch-inner-border-color-selected, var(--spectrum-swatch-inner-border-color-selected)));
+    background: var(--highcontrast-swatch-background-color-selected, var(--mod-swatch-inner-border-color-selected, var(--spectrum-swatch-inner-border-color-selected)));
 }
 
 :host([selected]) .fill {
@@ -77,7 +113,7 @@ governing permissions and limitations under the License.
 }
 
 :host .is-image .fill:before {
-    background-color: initial;
+    background: none;
 }
 
 :host([mixed-value]) .fill {
@@ -91,8 +127,8 @@ governing permissions and limitations under the License.
 }
 
 :host([nothing]) .fill {
-    background-color: initial;
-    background-color: var(--spectrum-picked-color, transparent);
+    background: none;
+    background: var(--spectrum-picked-color, transparent);
     background-image: none;
 }
 
@@ -156,24 +192,22 @@ governing permissions and limitations under the License.
 .fill:before {
     content: '';
     z-index: 0;
+    background: none;
+    background: var(--spectrum-picked-color, transparent);
     box-shadow: inset 0 0 0 var(--mod-swatch-border-thickness, var(--spectrum-swatch-border-thickness)) var(--highcontrast-swatch-border-color, var(--mod-swatch-border-color, var(--spectrum-swatch-border-color)));
     border-radius: var(--mod-swatch-border-radius, var(--spectrum-swatch-border-radius));
     position: absolute;
     inset: 0;
 }
 
-:host([border='none']) .fill:before,
-.fill:before {
-    background-color: initial;
-    background-color: var(--spectrum-picked-color, transparent);
-}
-
 :host([border='none']) .fill:before {
     box-shadow: none;
+    background: none;
+    background: var(--spectrum-picked-color, transparent);
 }
 
 :host([border='light']) .fill:before {
-    box-shadow: inset 0 0 0 var(--mod-swatch-border-thickness, var(--spectrum-swatch-border-thickness)) var(--highcontrast-swatch-border-color-light, var(--mod-swatch-border-color-light, var(--spectrum-swatch-border-color-light)));
+    box-shadow: inset 0 0 0 var(--mod-swatch-border-thickness, var(--spectrum-swatch-border-thickness)) var(--mod-swatch-border-color-light, var(--spectrum-swatch-border-color-light));
 }
 
 .mixedValueIcon {
