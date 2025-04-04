@@ -63,32 +63,32 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    --spectrum-actionbutton-border-radius: var(
-        --system-action-button-size-m-border-radius
+    --spectrum-actionbutton-border-radius-default: var(
+        --system-action-button-size-m-border-radius-default
     );
 }
 
 :host([size='xs']) {
-    --spectrum-actionbutton-border-radius: var(
-        --system-action-button-size-xs-border-radius
+    --spectrum-actionbutton-border-radius-default: var(
+        --system-action-button-size-xs-border-radius-default
     );
 }
 
 :host([size='s']) {
-    --spectrum-actionbutton-border-radius: var(
-        --system-action-button-size-s-border-radius
+    --spectrum-actionbutton-border-radius-default: var(
+        --system-action-button-size-s-border-radius-default
     );
 }
 
 :host([size='l']) {
-    --spectrum-actionbutton-border-radius: var(
-        --system-action-button-size-l-border-radius
+    --spectrum-actionbutton-border-radius-default: var(
+        --system-action-button-size-l-border-radius-default
     );
 }
 
 :host([size='xl']) {
-    --spectrum-actionbutton-border-radius: var(
-        --system-action-button-size-xl-border-radius
+    --spectrum-actionbutton-border-radius-default: var(
+        --system-action-button-size-xl-border-radius-default
     );
 }
 
