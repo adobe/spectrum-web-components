@@ -7537,13 +7537,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/radio@npm:10.0.0-s2-foundations.17":
-  version: 10.0.0-s2-foundations.17
-  resolution: "@spectrum-css/radio@npm:10.0.0-s2-foundations.17"
+"@spectrum-css/radio@npm:10.1.0":
+  version: 10.1.0
+  resolution: "@spectrum-css/radio@npm:10.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/21f5459fccd2aef30b5dbc91308d13e73b75c73e72baeb20783989b2a2a8c7d88bc5abc5568440ec6fa2e069c3d37cd1c4c40b83dff9cb7e1233bc747c5a24c5
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/e45709e06f522704c70c3bcc87756a84f5bc8debee2ed05ff5a8ff2ea70d71b9e2474b9475cd78fc277fa6b2818e2a26bcd4efc0d2f2bca5c4457bab15a39d46
   languageName: node
   linkType: hard
 
@@ -8646,7 +8651,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/radio@workspace:packages/radio"
   dependencies:
-    "@spectrum-css/radio": "npm:10.0.0-s2-foundations.17"
+    "@spectrum-css/radio": "npm:10.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/field-group": "npm:1.4.0"
     "@spectrum-web-components/help-text": "npm:1.4.0"
