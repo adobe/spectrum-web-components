@@ -20,7 +20,7 @@ import {
     property,
     queryAssignedElements,
 } from '@spectrum-web-components/base/src/decorators.js';
-import styles from './table-row.css.js';
+import styles from './table-row.css' with { type: 'css' };
 import { TableCheckboxCell } from './TableCheckboxCell.js';
 
 /**

@@ -37,7 +37,7 @@ import {
     isIOS,
 } from '@spectrum-web-components/shared/src/platform.js';
 
-import styles from './color-area.css.js';
+import styles from './color-area.css' with { type: 'css' };
 
 /**
  * @element sp-color-area

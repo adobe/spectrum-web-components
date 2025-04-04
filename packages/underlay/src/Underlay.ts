@@ -18,7 +18,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import styles from './underlay.css.js';
+import styles from './underlay.css' with { type: 'css' };
 
 /**
  * @element sp-underlay

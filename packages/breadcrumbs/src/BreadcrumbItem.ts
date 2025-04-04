@@ -23,7 +23,7 @@ import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 
-import styles from './breadcrumb-item.css.js';
+import styles from './breadcrumb-item.css' with { type: 'css' };
 
 export interface BreadcrumbSelectDetail {
     value: string;
