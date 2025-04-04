@@ -13,10 +13,11 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-import '@spectrum-web-components/number-field/sp-number-field.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
+import '@spectrum-web-components/number-field/sp-number-field.js';
+import '@spectrum-web-components/slider/sp-slider.js';
 import { NumberField } from '@spectrum-web-components/number-field/src/NumberField.js';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     title: 'Number Field',
@@ -453,6 +454,31 @@ export const readOnly = (args: StoryArgs): TemplateResult => {
 readOnly.args = {
     readonly: true,
     value: '15',
+};
+export const validationIcons = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="validation">
+            Invalid Number Field without Stepper
+        </sp-field-label>
+        <sp-number-field
+            id="validation"
+            ...=${spreadProps(args)}
+            @change=${args.onChange}
+        ></sp-number-field>
+        <sp-field-label for="validation">
+            Valid Number Field with Stepper
+        </sp-field-label>
+        <sp-number-field id="validation" valid></sp-number-field>
+        <sp-field-label for="validation">
+            Invalid Number Field with Stepper
+        </sp-field-label>
+        <sp-number-field id="validation" invalid></sp-number-field>
+    `;
+};
+validationIcons.args = {
+    invalid: true,
+    value: '15',
+    hideStepper: true,
 };
 
 export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {

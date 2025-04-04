@@ -267,3 +267,15 @@ The `<sp-number-field>` component doesn't manage a default value by itself. This
         });
     });
 </script>
+
+## States
+
+Use the `required` attribute to indicate a number field value is required. Dictate the validity or invalidity state of the text entry with the `valid` or `invalid` attributes.
+
+```html
+<sp-field-label for="number-1" required>Count</sp-field-label>
+<sp-number-field id="number-1" valid value="12343"></sp-number-field>
+<br />
+<sp-field-label for="number-2" required>Size</sp-field-label>
+<sp-number-field id="number-2" invalid value="15212"></sp-number-field>
+```
