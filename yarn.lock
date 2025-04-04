@@ -7731,13 +7731,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/thumbnail@npm:7.0.0-s2-foundations.18":
-  version: 7.0.0-s2-foundations.18
-  resolution: "@spectrum-css/thumbnail@npm:7.0.0-s2-foundations.18"
+"@spectrum-css/thumbnail@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@spectrum-css/thumbnail@npm:8.1.0"
   peerDependencies:
-    "@spectrum-css/opacitycheckerboard": ">=2"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/b20a00f987dec6d8abcd9229b3aeaf596aa838ff5926e1a79ef3f41367477f36f3c6a52cfd1f79f8482c63cc35c25340dd95b85218987a326121a204e078b86b
+    "@spectrum-css/opacitycheckerboard": ">=4.0.0 <5.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/opacitycheckerboard":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/19ff215abc9d6328774a1334c3bcbea0732515d6da519226f6a739784621f3382e2cf54896519434f599396676b356c07c7a9dc86b112cf680ad3d3f349ae81f
   languageName: node
   linkType: hard
 
@@ -8846,7 +8851,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/thumbnail@workspace:packages/thumbnail"
   dependencies:
-    "@spectrum-css/thumbnail": "npm:7.0.0-s2-foundations.18"
+    "@spectrum-css/thumbnail": "npm:8.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:1.4.0"
   languageName: unknown
