@@ -32,19 +32,19 @@
     --system-action-button-border-color-focus: transparent;
     --system-action-button-border-color-disabled: transparent;
     --system-action-button-content-color-selected: var(--spectrum-gray-50);
-    --system-action-button-size-m-border-radius: var(
+    --system-action-button-size-m-border-radius-default: var(
         --spectrum-corner-radius-medium-size-medium
     );
-    --system-action-button-size-xs-border-radius: var(
+    --system-action-button-size-xs-border-radius-default: var(
         --spectrum-corner-radius-medium-size-extra-small
     );
-    --system-action-button-size-s-border-radius: var(
+    --system-action-button-size-s-border-radius-default: var(
         --spectrum-corner-radius-medium-size-small
     );
-    --system-action-button-size-l-border-radius: var(
+    --system-action-button-size-l-border-radius-default: var(
         --spectrum-corner-radius-medium-size-large
     );
-    --system-action-button-size-xl-border-radius: var(
+    --system-action-button-size-xl-border-radius-default: var(
         --spectrum-corner-radius-medium-size-extra-large
     );
     --system-action-button-quiet-background-color-default: transparent;
