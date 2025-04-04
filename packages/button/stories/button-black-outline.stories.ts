@@ -23,16 +23,16 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 import type { Properties } from './index.js';
 import { args, argTypes } from './index.js';
 
-const variant = 'black';
+const staticColor = 'black';
 const treatment = 'outline';
 
 export default {
     component: 'sp-button',
     title: 'Button/Black/Outline',
-    decorators: [makeOverBackground(variant)],
+    decorators: [makeOverBackground(staticColor)],
     args: {
         ...args,
-        variant,
+        staticColor,
         treatment,
     },
     argTypes,
@@ -40,6 +40,20 @@ export default {
 
 export const Default = (props: Properties): TemplateResult =>
     renderButtonSet(props);
+
+export const Primary = (props: Properties): TemplateResult =>
+    renderButtonSet(props);
+
+Primary.args = {
+    variant: 'primary',
+};
+
+export const Secondary = (props: Properties): TemplateResult =>
+    renderButtonSet(props);
+
+Secondary.args = {
+    variant: 'secondary',
+};
 
 export const withIcon = (props: Properties): TemplateResult =>
     renderWithIcon(props);
