@@ -16209,7 +16209,7 @@ __metadata:
     esbuild-plugin-lit-css: "npm:^3.0.0"
     lunr: "npm:^2.3.9"
     markdown-it: "npm:^14.0.0"
-    markdown-it-anchor: "npm:^8.4.1"
+    markdown-it-anchor: "npm:^9.2.0"
     markdown-it-for-inline: "npm:^2.0.1"
     posthtml: "npm:^0.16.6"
     posthtml-attrs-parser: "npm:^1.0.1"
@@ -23958,13 +23958,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it-anchor@npm:^8.4.1":
-  version: 8.6.7
-  resolution: "markdown-it-anchor@npm:8.6.7"
+"markdown-it-anchor@npm:^9.2.0":
+  version: 9.2.0
+  resolution: "markdown-it-anchor@npm:9.2.0"
   peerDependencies:
     "@types/markdown-it": "*"
     markdown-it: "*"
-  checksum: 10c0/f117866488013b7e4085a6b59d12bf62879181aef65ea2851f01ed1b763b8c052580c2c27fa8bd009421886220c6beeb373a65af9e885ce63a36ee9f8dcd0e89
+  checksum: 10c0/1873f4223f6df227a4bf93688f14def2a69bbdf144c6257d1739eab4ac3818d3ac89c5c324fbb2d92e3980641c508a8893df36496e2f84c73630f51a94ad8d9b
   languageName: node
   linkType: hard
 
