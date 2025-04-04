@@ -13,6 +13,7 @@
 '@spectrum-web-components/color-loupe': patch
 '@spectrum-web-components/color-slider': patch
 '@spectrum-web-components/color-wheel': patch
+'@spectrum-web-components/dialog': patch
 '@spectrum-web-components/divider': patch
 '@spectrum-web-components/field-label': patch
 '@spectrum-web-components/help-text': patch
