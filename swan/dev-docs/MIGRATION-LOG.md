@@ -13,6 +13,38 @@ This log serves several purposes:
 
 ## Migrations
 
+### Dependency Cleanup: Removing Direct Dependencies on SWC Packages (April 2024)
+
+After migrating modules from the SWC packages to Swan, we needed to fully decouple Swan from its original packages by removing direct dependencies on them:
+
+**Migration Details:**
+
+-   Removed direct dependencies on `@spectrum-web-components/base` and `@spectrum-web-components/shared` from Swan's package.json
+-   Updated all import paths in Swan's source code to reference:
+    -   Local Swan modules (using relative paths)
+    -   Direct Lit imports instead of importing through SWC base's barrel file
+
+**Implementation Notes:**
+
+-   The SWC base package used a barrel file (index.ts) that re-exported everything from Lit
+-   Swan does not use barrel files, so imports needed to be properly disaggregated
+-   Imports were updated to:
+    -   Import Lit types and utilities directly from 'lit'
+    -   Import Swan's base modules from relative paths (e.g., '../../base/Base.js')
+    -   Import Swan's shared modules from relative paths (e.g., '../../shared/focusable.js')
+
+**Challenges Resolved:**
+
+-   Addressed import resolution errors by properly identifying what was being re-exported from where
+-   Fixed specific typing issues where modules were not exporting expected types
+-   Added a type definition for NumberFormatOptions that was previously imported indirectly
+
+**Lessons Learned:**
+
+-   Barrel files can create hidden dependencies that must be untangled during migration
+-   It's important to remove direct dependencies on original packages to avoid circular dependencies
+-   Each migration should include a dependency cleanup phase to ensure Swan is properly decoupled
+
 ### DOM Manipulation Utilities (April 2024)
 
 Several DOM manipulation utilities have been migrated from the shared package:

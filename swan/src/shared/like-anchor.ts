@@ -9,13 +9,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import {
-    html,
-    ReactiveElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/swan/base/decorators.js';
-import { ifDefined } from '@spectrum-web-components/swan/base/directives.js';
+import { html, ReactiveElement, TemplateResult } from 'lit';
+import { property } from '../base/decorators.js';
+import { ifDefined } from '../base/directives.js';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

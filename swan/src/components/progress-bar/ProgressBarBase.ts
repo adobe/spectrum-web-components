@@ -10,16 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    PropertyValues,
-    SizedMixin,
-    SpectrumElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import {
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
+import { PropertyValues, type TemplateResult } from 'lit';
+import { SizedMixin } from '../../base/sizedMixin.js';
+import { SpectrumElement } from '../../base/Base.js';
+import { property, query } from '../../base/decorators.js';
 
 import { getLabelFromSlot } from '../../shared/get-label-from-slot.js';
 import { ObserveSlotText } from '../../shared/observe-slot-text.js';

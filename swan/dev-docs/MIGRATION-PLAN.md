@@ -9,9 +9,16 @@
     - Create shim files for backward compatibility
 
 2. **Repository Structure**:
+
     - Move implementation files to corresponding locations in Swan
     - Keep original packages with shim files that re-export from Swan
     - Do not create barrel files (index.ts) in Swan; each utility should be directly importable
+
+3. **Dependency Cleanup**:
+    - After migrating modules, update Swan's package.json to remove dependencies on original SWC packages
+    - Update all imports in Swan source files to reference local Swan modules or direct dependencies
+    - For Lit-derived types and utilities, import directly from 'lit' instead of through SWC's barrel files
+    - Verify build succeeds after dependency removal to ensure complete decoupling
 
 ## 2. Package-Specific Migration Plans
 

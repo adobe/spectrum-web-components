@@ -9,8 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { SpectrumElement } from '@spectrum-web-components/swan/base/Base.js';
-import { property } from '@spectrum-web-components/swan/base/decorators.js';
+import { SpectrumElement } from '../base/Base.js';
+import { property } from '../base/decorators.js';
 import { PropertyValues } from 'lit';
 
 import { FocusVisiblePolyfillMixin } from './focus-visible.js';

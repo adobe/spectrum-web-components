@@ -10,12 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    PropertyValues,
-    SizedMixin,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { PropertyValues, type TemplateResult } from 'lit';
+import { SizedMixin } from '../../base/sizedMixin.js';
+import { property } from '../../base/decorators.js';
 import { Focusable } from '../../shared/focusable.js';
 
 /**

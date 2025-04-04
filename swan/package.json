@@ -164,7 +164,6 @@
     "dependencies": {
         "@internationalized/number": "^3.2.0",
         "@lit-labs/observers": "^2.0.2",
-        "@spectrum-web-components/base": "workspace:*",
         "@spectrum-web-components/reactive-controllers": "workspace:*",
         "focus-visible": "^5.2.0",
         "lit": "^2.5.0 || ^3.1.3"
