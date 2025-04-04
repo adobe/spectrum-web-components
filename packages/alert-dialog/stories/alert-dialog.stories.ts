@@ -25,24 +25,24 @@ export const confirmation = (): TemplateResult => {
             <h2 slot="heading">Disclaimer</h2>
             Smart filters are nondestructive and will preserve your original
             images.
-            <sp-button
-                slot="button"
-                id="cancelButton"
-                variant="secondary"
-                treatment="outline"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Cancel
-            </sp-button>
-            <sp-button
-                slot="button"
-                id="confirmButton"
-                variant="accent"
-                treatment="fill"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Enable
-            </sp-button>
+            <sp-button-group slot="button">
+                <sp-button
+                    id="cancelButton"
+                    variant="secondary"
+                    treatment="outline"
+                    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+                >
+                    Cancel
+                </sp-button>
+                <sp-button
+                    id="confirmButton"
+                    variant="accent"
+                    treatment="fill"
+                    onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+                >
+                    Enable
+                </sp-button>
+            </sp-button-group>
         </sp-alert-dialog>
     `;
 };

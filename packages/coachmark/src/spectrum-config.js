@@ -31,10 +31,18 @@ const config = {
                     'spectrum-CoachIndicator--quiet',
                     'quiet'
                 ),
+                // @deprecated: being removed in the next major version
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-CoachIndicator--dark', 'black'],
                         ['spectrum-CoachIndicator--light', 'white'],
+                    ],
+                    'static-color'
+                ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-CoachIndicator--staticWhite', 'white'],
+                        ['spectrum-CoachIndicator--staticBlack', 'black'],
                     ],
                     'static-color'
                 ),
@@ -53,6 +61,10 @@ const config = {
                     'buttongroup-mobile'
                 ),
                 converter.classToClass('spectrum-CoachMark-menu'),
+                converter.classToClass(
+                    'spectrum-CoachMark-menu--mobile',
+                    'menu-mobile'
+                ),
                 converter.classToClass('spectrum-CoachMark-image-wrapper'),
                 converter.classToClass('spectrum-CoachMark-image'),
                 converter.classToClass('spectrum-CoachMark-header'),
