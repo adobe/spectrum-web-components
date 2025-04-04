@@ -7621,13 +7621,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/swatch@npm:7.0.0-s2-foundations.17":
-  version: 7.0.0-s2-foundations.17
-  resolution: "@spectrum-css/swatch@npm:7.0.0-s2-foundations.17"
+"@spectrum-css/swatch@npm:8.1.2":
+  version: 8.1.2
+  resolution: "@spectrum-css/swatch@npm:8.1.2"
   peerDependencies:
-    "@spectrum-css/opacitycheckerboard": ">=2"
-    "@spectrum-css/tokens": ">=14.5.0"
-  checksum: 10c0/80016a4c10276abc6376e854cff1aaa84a3499085f8b5afa80f8af365ce7cd79cf1f46f1fc74d1caf1fbf578621f327210f966b50e9c147156c2f0e0a547d73f
+    "@spectrum-css/opacitycheckerboard": ">=4.0.0 <5.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/opacitycheckerboard":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/1b9aceb3211bd9b8a60ae55ab982dd1e9f845e5d40c140692824bc3bd98ec1b24b0d809078906f318ccd92c3a79eeccf5b129391d4f89ab2588574fbc5206687
   languageName: node
   linkType: hard
 
@@ -8772,7 +8777,7 @@ __metadata:
   resolution: "@spectrum-web-components/swatch@workspace:packages/swatch"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/swatch": "npm:7.0.0-s2-foundations.17"
+    "@spectrum-css/swatch": "npm:8.1.2"
     "@spectrum-css/swatchgroup": "npm:5.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"

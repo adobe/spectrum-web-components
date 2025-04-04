@@ -83,7 +83,7 @@
         "@spectrum-web-components/shared": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/swatch": "7.0.0-s2-foundations.17",
+        "@spectrum-css/swatch": "8.1.2",
         "@spectrum-css/swatchgroup": "5.1.0"
     },
     "types": "./src/index.d.ts",
