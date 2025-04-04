@@ -7670,18 +7670,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/tabs@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/tabs@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/tabs@npm:6.1.1":
+  version: 6.1.1
+  resolution: "@spectrum-css/tabs@npm:6.1.1"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/menu": ">=7"
-    "@spectrum-css/picker": ">=8"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/menu": ">=9.0.0 <10.0.0"
+    "@spectrum-css/picker": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/f0e760eb8b8dee031e62711b2f43d08f371c400f69fb5e714dca44a697c9ea731876e3e6c0e7df834d4cd809ebcc760e3e5c4435b65b959b0928725fcb89c75b
+    "@spectrum-css/menu":
+      optional: true
+    "@spectrum-css/picker":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/6eba8fea0aa5e131197c524c971e5da9b0d6e3aba0c74c6e417464a42eb83cb28806ab3da9cd6bb5eb4c8ddd41d14c09eb90351c1c4617bffeeea3971eed305f
   languageName: node
   linkType: hard
 
@@ -8807,7 +8813,7 @@ __metadata:
   resolution: "@spectrum-web-components/tabs@workspace:packages/tabs"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/tabs": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/tabs": "npm:6.1.1"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
     "@spectrum-web-components/icons-ui": "npm:1.4.0"
