@@ -355,7 +355,7 @@ describe('Menu', () => {
         expect(document.activeElement).to.equal(firstItem);
         expect(
             firstItem.focused,
-            'first item shoudl have focus styling after keyboard'
+            'first item should have focus styling after keyboard'
         ).to.be.true;
     });
 
