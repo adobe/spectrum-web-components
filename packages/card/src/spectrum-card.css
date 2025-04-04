@@ -1,17 +1,10 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-card-border-color: var(--spectrum-gray-100);
+    --spectrum-card-border-color-hover: var(--spectrum-gray-200);
+    --spectrum-card-divider-color: var(--spectrum-gray-200);
+    --spectrum-card-preview-background-color: var(--spectrum-gray-100);
+    --spectrum-card-preview-background-color-hover: var(--spectrum-gray-200);
     --spectrum-card-background-color: var(--mod-card-background-color, var(--spectrum-background-layer-2-color));
     --spectrum-card-body-spacing: var(--mod-card-body-spacing, var(--spectrum-spacing-400));
     --spectrum-card-body-padding-block-start: var(--mod-card-body-padding-block-start, var(--spectrum-spacing-300));
@@ -22,6 +15,7 @@ governing permissions and limitations under the License.
     --spectrum-card-subtitle-padding-right: var(--mod-card-subtitle-padding-right, var(--spectrum-spacing-100));
     --spectrum-card-border-width: var(--mod-card-border-width, var(--spectrum-border-width-100));
     --spectrum-card-corner-radius: var(--mod-card-corner-radius, var(--spectrum-corner-radius-100));
+    --spectrum-card-border-color-selected: var(--mod-card-border-color-selected, var(--spectrum-blue-700));
     --spectrum-card-title-font-family: var(--mod-card-title-font-family, var(--spectrum-sans-font-family-stack));
     --spectrum-card-title-font-size: var(--mod-card-title-font-size, var(--spectrum-heading-size-xxs));
     --spectrum-card-title-font-weight: var(--mod-card-title-font-weight, var(--spectrum-heading-sans-serif-font-weight));
@@ -49,23 +43,6 @@ governing permissions and limitations under the License.
     --spectrum-card-preview-border-width-selected: var(--mod-card-preview-border-width-selected, var(--spectrum-border-width-100));
     --spectrum-card-horizontal-body-padding: var(--mod-card-horizontal-body-padding, var(--spectrum-spacing-300));
     --spectrum-card-horizontal-preview-padding: var(--mod-card-horizontal-preview-padding, var(--spectrum-spacing-200));
-}
-
-:host([variant='quiet']) {
-    --mod-card-minimum-width: var(--mod-card-minimum-width-quiet);
-    --mod-card-content-margin-top: var(--mod-card-content-margin-top-quiet, var(--spectrum-spacing-100));
-}
-
-:host([variant='gallery']) {
-    --spectrum-card-content-margin-top: var(--spectrum-spacing-100);
-}
-
-:host([drop-target]),
-:host([selected]) {
-    --spectrum-card-border-color: var(--mod-card-border-color-selected, var(--spectrum-blue-700));
-}
-
-:host {
     box-sizing: border-box;
     min-inline-size: var(--mod-card-minimum-width, var(--spectrum-card-minimum-width));
     block-size: 100%;
@@ -78,6 +55,15 @@ governing permissions and limitations under the License.
     text-decoration: none;
     display: inline-flex;
     position: relative;
+}
+
+:host([variant='quiet']) {
+    --mod-card-minimum-width: var(--mod-card-minimum-width-quiet);
+    --mod-card-content-margin-top: var(--mod-card-content-margin-top-quiet, var(--spectrum-spacing-100));
+}
+
+:host([variant='gallery']) {
+    --spectrum-card-content-margin-top: var(--spectrum-spacing-100);
 }
 
 :host:after,

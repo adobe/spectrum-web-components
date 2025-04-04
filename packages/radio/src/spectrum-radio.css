@@ -1,42 +1,71 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-@media (forced-colors: active) {
-    :host {
-        --highcontrast-radio-neutral-content-color: CanvasText;
-        --highcontrast-radio-neutral-content-color-hover: CanvasText;
-        --highcontrast-radio-neutral-content-color-down: CanvasText;
-        --highcontrast-radio-neutral-content-color-focus: CanvasText;
-        --highcontrast-radio-button-border-color-default: ButtonText;
-        --highcontrast-radio-button-border-color-hover: Highlight;
-        --highcontrast-radio-button-border-color-down: ButtonText;
-        --highcontrast-radio-button-border-color-focus: Highlight;
-        --highcontrast-radio-emphasized-accent-color: ButtonText;
-        --highcontrast-radio-emphasized-accent-color-hover: Highlight;
-        --highcontrast-radio-emphasized-accent-color-down: ButtonText;
-        --highcontrast-radio-emphasized-accent-color-focus: Highlight;
-        --highcontrast-radio-button-checked-border-color-default: Highlight;
-        --highcontrast-radio-button-checked-border-color-hover: Highlight;
-        --highcontrast-radio-button-checked-border-color-down: Highlight;
-        --highcontrast-radio-button-checked-border-color-focus: Highlight;
-        --highcontrast-radio-disabled-content-color: GrayText;
-        --highcontrast-radio-disabled-border-color: GrayText;
-        --highcontrast-radio-focus-indicator-color: CanvasText;
-    }
+:host {
+    --spectrum-radio-button-background-color: var(--spectrum-gray-25);
+    --spectrum-radio-neutral-content-color: var(--spectrum-neutral-content-color-default);
+    --spectrum-radio-neutral-content-color-hover: var(--spectrum-neutral-content-color-hover);
+    --spectrum-radio-neutral-content-color-down: var(--spectrum-neutral-content-color-down);
+    --spectrum-radio-neutral-content-color-focus: var(--spectrum-neutral-content-color-key-focus);
+    --spectrum-radio-focus-indicator-thickness: var(--spectrum-focus-indicator-thickness);
+    --spectrum-radio-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
+    --spectrum-radio-focus-indicator-color: var(--spectrum-focus-indicator-color);
+    --spectrum-radio-disabled-content-color: var(--spectrum-disabled-content-color);
+    --spectrum-radio-disabled-border-color: var(--spectrum-disabled-content-color);
+    --spectrum-radio-emphasized-accent-color: var(--spectrum-accent-content-color-default);
+    --spectrum-radio-emphasized-accent-color-hover: var(--spectrum-accent-content-color-hover);
+    --spectrum-radio-emphasized-accent-color-down: var(--spectrum-accent-content-color-down);
+    --spectrum-radio-emphasized-accent-color-focus: var(--spectrum-accent-content-color-key-focus);
+    --spectrum-radio-button-border-color-default: var(--spectrum-neutral-content-color-default);
+    --spectrum-radio-button-border-color-hover: var(--spectrum-neutral-content-color-hover);
+    --spectrum-radio-button-border-color-down: var(--spectrum-neutral-content-color-down);
+    --spectrum-radio-button-border-color-focus: var(--spectrum-neutral-content-color-key-focus);
+    --spectrum-radio-line-height: var(--spectrum-line-height-100);
+    --spectrum-radio-animation-duration: var(--spectrum-animation-duration-100);
+    --spectrum-radio-height: var(--spectrum-component-height-100);
+    --spectrum-radio-button-control-size: var(--spectrum-radio-button-control-size-medium);
+    --spectrum-radio-text-to-control: var(--spectrum-text-to-control-100);
+    --spectrum-radio-label-top-to-text: var(--spectrum-component-top-to-text-100);
+    --spectrum-radio-label-bottom-to-text: var(--spectrum-component-bottom-to-text-100);
+    --spectrum-radio-button-top-to-control: var(--spectrum-radio-button-top-to-control-medium);
+    --spectrum-radio-font-size: var(--spectrum-font-size-100);
+    --spectrum-radio-border-width: var(--spectrum-border-width-200);
+    --spectrum-radio-text-font-weight: var(--spectrum-regular-font-weight);
+    --spectrum-radio-text-font-style: var(--spectrum-default-font-style);
+}
 
-    #button:after {
-        forced-color-adjust: none;
-    }
+:host(:lang(ja)),
+:host(:lang(ko)),
+:host(:lang(zh)) {
+    --spectrum-radio-line-height-cjk: var(--spectrum-cjk-line-height-100);
+}
+
+:host([size='s']) {
+    --spectrum-radio-height: var(--spectrum-component-height-75);
+    --spectrum-radio-button-control-size: var(--spectrum-radio-button-control-size-small);
+    --spectrum-radio-text-to-control: var(--spectrum-text-to-control-75);
+    --spectrum-radio-label-top-to-text: var(--spectrum-component-top-to-text-75);
+    --spectrum-radio-label-bottom-to-text: var(--spectrum-component-bottom-to-text-75);
+    --spectrum-radio-button-top-to-control: var(--spectrum-radio-button-top-to-control-small);
+    --spectrum-radio-font-size: var(--spectrum-font-size-75);
+}
+
+:host([size='l']) {
+    --spectrum-radio-height: var(--spectrum-component-height-200);
+    --spectrum-radio-button-control-size: var(--spectrum-radio-button-control-size-large);
+    --spectrum-radio-text-to-control: var(--spectrum-text-to-control-200);
+    --spectrum-radio-label-top-to-text: var(--spectrum-component-top-to-text-200);
+    --spectrum-radio-label-bottom-to-text: var(--spectrum-component-bottom-to-text-200);
+    --spectrum-radio-button-top-to-control: var(--spectrum-radio-button-top-to-control-large);
+    --spectrum-radio-font-size: var(--spectrum-font-size-200);
+}
+
+:host([size='xl']) {
+    --spectrum-radio-height: var(--spectrum-component-height-300);
+    --spectrum-radio-button-control-size: var(--spectrum-radio-button-control-size-extra-large);
+    --spectrum-radio-text-to-control: var(--spectrum-text-to-control-300);
+    --spectrum-radio-label-top-to-text: var(--spectrum-component-top-to-text-300);
+    --spectrum-radio-label-bottom-to-text: var(--spectrum-component-bottom-to-text-300);
+    --spectrum-radio-button-top-to-control: var(--spectrum-radio-button-top-to-control-extra-large);
+    --spectrum-radio-font-size: var(--spectrum-font-size-300);
 }
 
 :host {
@@ -48,14 +77,21 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
+:host(:active):not(.is-readOnly) #input:not(:disabled) + #button {
+    transform: perspective(var(--spectrum-component-size-minimum-perspective-down)) translateZ(var(--spectrum-component-size-difference-down));
+}
+
+:host .is-active #button:before,
 :host(:active) #button:before {
     border-color: var(--highcontrast-radio-button-border-color-down, var(--mod-radio-button-border-color-down, var(--spectrum-radio-button-border-color-down)));
 }
 
+:host([checked]) .is-active #input + #button:before,
 :host(:active[checked]) #input + #button:before {
-    border-color: var(--highcontrast-radio-button-checked-border-color-down, var(--mod-radio-button-checked-border-color-down, var(--spectrum-radio-button-checked-border-color-down)));
+    border-color: var(--highcontrast-radio-button-checked-border-color-down, var(--mod-radio-button-checked-border-color-down, var(--spectrum-radio-button-border-color-down)));
 }
 
+:host .is-active #label,
 :host(:active) #label {
     color: var(--highcontrast-radio-neutral-content-color-down, var(--mod-radio-neutral-content-color-down, var(--spectrum-radio-neutral-content-color-down)));
 }
@@ -73,30 +109,21 @@ governing permissions and limitations under the License.
 }
 
 :host(:focus-visible[checked]) #input + #button:before {
-    border-color: var(--highcontrast-radio-button-checked-border-color-focus, var(--mod-radio-button-checked-border-color-focus, var(--spectrum-radio-button-checked-border-color-focus)));
+    border-color: var(--highcontrast-radio-button-checked-border-color-focus, var(--mod-radio-button-checked-border-color-focus, var(--spectrum-radio-button-border-color-focus)));
 }
 
 :host(:focus-visible) #label {
     color: var(--highcontrast-radio-neutral-content-color-focus, var(--mod-radio-neutral-content-color-focus, var(--spectrum-radio-neutral-content-color-focus)));
 }
 
-:host([readonly]) #input:read-only {
-    cursor: auto;
-}
-
-:host([readonly]) #button {
-    clip: rect(1px, 1px, 1px, 1px);
-    clip-path: inset(50%);
-    position: fixed;
-    inset-block-end: 100%;
-    inset-inline-end: 100%;
+:host([readonly]) #input {
+    pointer-events: none;
 }
 
 :host([readonly][checked][disabled]) #input ~ #label,
 :host([readonly][disabled]) #input ~ #label,
 :host([readonly]) #label {
     color: var(--highcontrast-radio-neutral-content-color, var(--mod-radio-neutral-content-color, var(--spectrum-radio-neutral-content-color)));
-    margin-inline-start: 0;
 }
 
 :host([emphasized][checked]) #input + #button:before {
@@ -109,7 +136,7 @@ governing permissions and limitations under the License.
     }
 
     :host([checked]:hover) #input + #button:before {
-        border-color: var(--highcontrast-radio-button-checked-border-color-hover, var(--mod-radio-button-checked-border-color-hover, var(--spectrum-radio-button-checked-border-color-hover)));
+        border-color: var(--highcontrast-radio-button-checked-border-color-hover, var(--mod-radio-button-checked-border-color-hover, var(--spectrum-radio-button-border-color-hover)));
     }
 
     :host(:hover) #label {
@@ -161,7 +188,7 @@ governing permissions and limitations under the License.
 
 :host([checked]) #input + #button:before {
     border-width: calc(var(--spectrum-radio-button-control-size) / 2 - var(--spectrum-radio-button-selection-indicator) / 2);
-    border-color: var(--highcontrast-radio-button-checked-border-color-default, var(--mod-radio-button-checked-border-color-default, var(--spectrum-radio-button-checked-border-color-default)));
+    border-color: var(--highcontrast-radio-button-checked-border-color-default, var(--mod-radio-button-checked-border-color-default, var(--spectrum-radio-button-border-color-default)));
 }
 
 #input:focus-visible + #button:after {
@@ -175,6 +202,8 @@ governing permissions and limitations under the License.
 #label {
     text-align: start;
     font-size: var(--mod-radio-font-size, var(--spectrum-radio-font-size));
+    font-weight: var(--spectrum-radio-text-font-weight);
+    font-style: var(--spectrum-radio-text-font-style);
     color: var(--highcontrast-radio-neutral-content-color, var(--mod-radio-neutral-content-color, var(--spectrum-radio-neutral-content-color)));
     line-height: var(--mod-radio-line-height, var(--spectrum-radio-line-height));
     transition: color var(--mod-radio-animation-duration, var(--spectrum-radio-animation-duration)) ease-in-out;
@@ -205,7 +234,7 @@ governing permissions and limitations under the License.
     box-sizing: border-box;
     inline-size: var(--mod-radio-button-control-size, var(--spectrum-radio-button-control-size));
     block-size: var(--mod-radio-button-control-size, var(--spectrum-radio-button-control-size));
-    background-color: var(--highcontrast-radio-button-background-color, var(--mod-radio-button-background-color, var(--spectrum-radio-button-background-color)));
+    background-color: var(--mod-radio-button-background-color, var(--spectrum-radio-button-background-color));
     border-width: var(--mod-radio-border-width, var(--spectrum-radio-border-width));
     border-color: var(--highcontrast-radio-button-border-color-default, var(--mod-radio-button-border-color-default, var(--spectrum-radio-button-border-color-default)));
     transition:
@@ -233,4 +262,42 @@ governing permissions and limitations under the License.
 :host:dir(rtl) #button:after,
 :host([dir='rtl']) #button:after {
     transform: translateX(50%) translateY(-50%);
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-radio-neutral-content-color: CanvasText;
+        --highcontrast-radio-neutral-content-color-hover: CanvasText;
+        --highcontrast-radio-neutral-content-color-down: CanvasText;
+        --highcontrast-radio-neutral-content-color-focus: CanvasText;
+        --highcontrast-radio-button-border-color-default: ButtonText;
+        --highcontrast-radio-button-border-color-hover: Highlight;
+        --highcontrast-radio-button-border-color-down: ButtonText;
+        --highcontrast-radio-button-border-color-focus: Highlight;
+        --highcontrast-radio-emphasized-accent-color: Highlight;
+        --highcontrast-radio-emphasized-accent-color-hover: Highlight;
+        --highcontrast-radio-emphasized-accent-color-down: ButtonText;
+        --highcontrast-radio-emphasized-accent-color-focus: Highlight;
+        --highcontrast-radio-button-checked-border-color-default: Highlight;
+        --highcontrast-radio-button-checked-border-color-hover: Highlight;
+        --highcontrast-radio-button-checked-border-color-down: Highlight;
+        --highcontrast-radio-button-checked-border-color-focus: Highlight;
+        --highcontrast-radio-disabled-content-color: GrayText;
+        --highcontrast-radio-disabled-border-color: GrayText;
+        --highcontrast-radio-focus-indicator-color: CanvasText;
+    }
+
+    #button:after {
+        forced-color-adjust: none;
+    }
+
+    :host([readonly]) #input + #button:before {
+        border-color: var(--highcontrast-radio-button-border-color-default);
+    }
+
+    @media (hover: hover) {
+        :host([readonly]:hover) #input + #button:before {
+            border-color: var(--highcontrast-radio-button-border-color-default);
+        }
+    }
 }

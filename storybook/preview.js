@@ -20,25 +20,6 @@ const cem = await import('./custom-elements.json', {
 setCustomElementsManifest(cem);
 
 export const globalTypes = {
-    system: {
-        title: 'Design context',
-        description: 'The variation of Spectrum to use in the component',
-        defaultValue: 'spectrum',
-        type: 'string',
-        showName: true,
-        toolbar: {
-            items: [
-                {
-                    value: 'spectrum-two',
-                    title: 'Spectrum 2',
-                    right: 'default',
-                },
-                { value: 'spectrum', title: 'Spectrum 1', right: 'legacy' },
-                { value: 'express', title: 'Express' },
-            ],
-            dynamicTitle: true,
-        },
-    },
     color: {
         title: 'Color',
         description: 'Controls the color context of the component',

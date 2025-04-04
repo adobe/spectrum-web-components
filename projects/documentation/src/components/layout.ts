@@ -23,12 +23,7 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/theme/sp-theme.js';
-import type {
-    Color,
-    Scale,
-    SystemVariant,
-    Theme,
-} from '@spectrum-web-components/theme';
+import type { Color, Scale, Theme } from '@spectrum-web-components/theme';
 import type { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -54,12 +49,9 @@ import {
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
-const SWC_THEME_THEME_KEY = 'swc-docs:theme:theme';
-const SWC_THEME_SYSTEM_KEY = 'swc-docs:theme:system';
 const SWC_THEME_DIR_KEY = 'swc-docs:theme:dir';
 const COLOR_FALLBACK = matchMedia(DARK_MODE).matches ? 'dark' : 'light';
 const SCALE_FALLBACK = matchMedia(IS_MOBILE).matches ? 'large' : 'medium';
-const SYSTEM_FALLBACK = 'spectrum';
 const DIR_FALLBACK = 'ltr';
 const DEFAULT_COLOR = (
     window.localStorage
@@ -71,13 +63,6 @@ const DEFAULT_SCALE = (
         ? localStorage.getItem(SWC_THEME_SCALE_KEY) || SCALE_FALLBACK
         : SCALE_FALLBACK
 ) as Scale;
-const DEFAULT_SYSTEM = (
-    window.localStorage
-        ? localStorage.getItem(SWC_THEME_THEME_KEY) ||
-          localStorage.getItem(SWC_THEME_SYSTEM_KEY) ||
-          SYSTEM_FALLBACK
-        : SYSTEM_FALLBACK
-) as SystemVariant;
 const DEFAULT_DIR = (
     window.localStorage
         ? localStorage.getItem(SWC_THEME_DIR_KEY) || DIR_FALLBACK
@@ -86,67 +71,27 @@ const DEFAULT_DIR = (
 
 const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
 
-const lazyStyleFragment = (
-    name: Color | Scale,
-    system: SystemVariant
-): void => {
-    const fragmentName = `${name}-${system}`;
-    switch (fragmentName) {
-        case 'dark-spectrum' || 'darkest-spectrum':
+const lazyStyleFragment = (name: Color | Scale): void => {
+    switch (name) {
+        case 'dark':
             import('@spectrum-web-components/theme/theme-dark.js');
             break;
-        case 'light-spectrum' || 'lightest-spectrum':
+        case 'light':
             import('@spectrum-web-components/theme/theme-light.js');
             break;
-        case 'medium-spectrum':
+        case 'medium':
             import('@spectrum-web-components/theme/scale-medium.js');
             break;
-        case 'large-spectrum':
+        case 'large':
             import('@spectrum-web-components/theme/scale-large.js');
-            break;
-        case 'dark-express' || 'darkest-express':
-            import('@spectrum-web-components/theme/express/theme-dark.js');
-            break;
-        case 'light-express' || 'lightest-express':
-            import('@spectrum-web-components/theme/express/theme-light.js');
-            break;
-        case 'medium-express':
-            import('@spectrum-web-components/theme/express/scale-medium.js');
-            break;
-        case 'large-express':
-            import('@spectrum-web-components/theme/express/scale-large.js');
-            break;
-        case 'light-spectrum-two':
-            import(
-                '@spectrum-web-components/theme/spectrum-two/theme-light-core-tokens.js'
-            );
-            break;
-        case 'dark-spectrum-two':
-            import(
-                '@spectrum-web-components/theme/spectrum-two/theme-dark-core-tokens.js'
-            );
-            break;
-        case 'medium-spectrum-two':
-            import(
-                '@spectrum-web-components/theme/spectrum-two/scale-medium-core-tokens.js'
-            );
-            break;
-        case 'large-spectrum-two':
-            import(
-                '@spectrum-web-components/theme/spectrum-two/scale-large-core-tokens.js'
-            );
             break;
     }
 };
 
 const loadDefaults = () => {
-    if (
-        DEFAULT_COLOR !== COLOR_FALLBACK ||
-        DEFAULT_SCALE !== SCALE_FALLBACK ||
-        DEFAULT_SYSTEM !== SYSTEM_FALLBACK
-    ) {
-        lazyStyleFragment(DEFAULT_COLOR, DEFAULT_SYSTEM);
-        lazyStyleFragment(DEFAULT_SCALE, DEFAULT_SYSTEM);
+    if (DEFAULT_COLOR !== COLOR_FALLBACK || DEFAULT_SCALE !== SCALE_FALLBACK) {
+        lazyStyleFragment(DEFAULT_COLOR);
+        lazyStyleFragment(DEFAULT_SCALE);
     }
 };
 
@@ -183,13 +128,7 @@ export class LayoutElement extends LitElement {
     private isNarrow = isNarrowMediaQuery.matches;
 
     @property({ attribute: false })
-    public theme: SystemVariant = DEFAULT_SYSTEM;
-
-    @property({ attribute: false })
     public scale: Scale = DEFAULT_SCALE;
-
-    @property({ attribute: false })
-    public system: SystemVariant = DEFAULT_SYSTEM;
 
     @queryAsync('sp-theme')
     private themeRoot!: Theme;
@@ -221,10 +160,6 @@ export class LayoutElement extends LitElement {
 
     private updateScale(event: Event) {
         this.scale = (event.target as Picker).value as Scale;
-    }
-
-    private updateSystem(event: Event) {
-        this.system = (event.target as Picker).value as SystemVariant;
     }
 
     private updateDirection(event: Event) {
@@ -344,21 +279,6 @@ export class LayoutElement extends LitElement {
         return html`
             <div class="manage-theme" role="form" aria-label="Settings">
                 <div class="theme-control">
-                    <sp-field-label for="theme-system">System</sp-field-label>
-                    <sp-picker
-                        id="theme-system"
-                        quiet
-                        value=${this.system}
-                        @change=${this.updateSystem}
-                    >
-                        <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
-                        <sp-menu-item value="express">Express</sp-menu-item>
-                        <sp-menu-item value="spectrum-two">
-                            Spectrum 2
-                        </sp-menu-item>
-                    </sp-picker>
-                </div>
-                <div class="theme-control">
                     <sp-field-label for="theme-color">Color</sp-field-label>
                     <sp-picker
                         id="theme-color"
@@ -440,7 +360,6 @@ export class LayoutElement extends LitElement {
             <sp-theme
                 .color=${this.color}
                 .scale=${this.scale}
-                .system=${this.system}
                 dir=${this.dir}
                 id="app"
                 @sp-track-theme=${this.handleTrackTheme}
@@ -505,20 +424,12 @@ export class LayoutElement extends LitElement {
                 loadStyleFragments = true;
             }
         }
-        if (changes.has('system')) {
-            if (window.localStorage) {
-                localStorage.setItem(SWC_THEME_SYSTEM_KEY, this.system);
-            }
-            if (changes.get('system')) {
-                loadStyleFragments = true;
-            }
-        }
         if (changes.has('dir') && window.localStorage) {
             localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
         }
         if (loadStyleFragments) {
-            lazyStyleFragment(this.color, this.system);
-            lazyStyleFragment(this.scale, this.system);
+            lazyStyleFragment(this.color);
+            lazyStyleFragment(this.scale);
         }
     }
 }

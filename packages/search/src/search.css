@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-search.css');
-@import url('./search-overrides.css');
 
 :host {
     --mod-textfield-spacing-inline: var(

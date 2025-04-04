@@ -54,41 +54,23 @@ const spectrumIconsPath = path.resolve(
     )
 );
 
-// define the target icon sizes for each scale
-const scales = {
-    medium: { width: 18, height: 18 },
-    large: { width: 24, height: 24 },
-};
+const outputFd = fs.openSync(
+    path.join(__dirname, '..', 'packages', 'icons', 'src', `icons.svg.ts`),
+    'w'
+);
 
-// process the scales
-Object.keys(scales).forEach((scaleKey) => {
-    console.log(`processing scale ${scaleKey}...`);
+fs.writeSync(
+    outputFd,
+    'import { svg } from \'@spectrum-web-components/base\'; export default svg`<svg xmlns="http://www.w3.org/2000/svg">'
+);
 
-    const scale = scales[scaleKey];
-    const srcPath = path.join(spectrumIconsPath, scaleKey);
-    const outputPath = path.join(
-        __dirname,
-        '..',
-        'packages',
-        'icons',
-        'src',
-        `icons-${scaleKey}.svg.ts`
-    );
-    let outputFd = fs.openSync(outputPath, 'w');
-
-    fs.writeSync(
-        outputFd,
-        'import { svg } from \'@spectrum-web-components/base\'; export default svg`<svg xmlns="http://www.w3.org/2000/svg">'
-    );
-
-    fs.readdirSync(srcPath).forEach((iconFile) => {
-        const srcIconPath = path.join(srcPath, iconFile);
-        console.log(`\ticon ${iconFile}`);
-        processIcon(srcIconPath, outputFd, scale.width, scale.height);
-    });
-
-    fs.writeSync(outputFd, '</svg>`;');
-    fs.closeSync(outputFd);
+fs.readdirSync(spectrumIconsPath).forEach((iconFile) => {
+    const srcIconPath = path.join(spectrumIconsPath, iconFile);
+    console.log(`\ticon ${iconFile}`);
+    processIcon(srcIconPath, outputFd, 18, 18);
 });
+
+fs.writeSync(outputFd, '</svg>`;');
+fs.closeSync(outputFd);
 
 console.log('complete.');

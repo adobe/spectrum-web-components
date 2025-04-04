@@ -32,7 +32,6 @@ export interface Item extends TableItem {
     sets: {
         light: string;
         dark: string;
-        darkest: string;
         wireframe: string;
     };
 }
@@ -64,7 +63,7 @@ export class CssTable extends SpectrumElement {
     copiedText = '';
 
     @property({ type: String, attribute: 'color-theme' })
-    colorTheme: 'light' | 'dark' | 'darkest' | 'wireframe' = 'light';
+    colorTheme: 'light' | 'dark' | 'wireframe' = 'light';
 
     @property({ type: Array })
     public items: Item[] = [];

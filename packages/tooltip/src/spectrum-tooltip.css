@@ -1,24 +1,8 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #tooltip {
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
-    transition:
-        transform 0.13s ease-in-out,
-        opacity 0.13s ease-in-out,
-        visibility 0s linear 0.13s;
     transition:
         transform var(--mod-overlay-animation-duration, var(--spectrum-animation-duration-100, 0.13s)) ease-in-out,
         opacity var(--mod-overlay-animation-duration, var(--spectrum-animation-duration-100, 0.13s)) ease-in-out,
@@ -29,25 +13,32 @@ governing permissions and limitations under the License.
     pointer-events: auto;
     visibility: visible;
     opacity: 1;
-    transition-delay: 0s;
     transition-delay: var(--mod-overlay-animation-duration-opened, var(--spectrum-animation-duration-0, 0s));
 }
 
-@media (forced-colors: active) {
-    #tooltip {
-        border: 1px solid #0000;
-    }
-
-    #tip {
-        --highcontrast-tooltip-background-color-default: CanvasText;
-        --highcontrast-tooltip-background-color-informative: CanvasText;
-        --highcontrast-tooltip-background-color-positive: CanvasText;
-        --highcontrast-tooltip-background-color-negative: CanvasText;
-        forced-color-adjust: none;
-    }
-}
-
 #tooltip {
+    --spectrum-tooltip-animation-duration: var(--spectrum-animation-duration-100);
+    --spectrum-tooltip-animation-distance: var(--spectrum-spacing-75);
+    --spectrum-tooltip-margin: 0px;
+    --spectrum-tooltip-height: var(--spectrum-component-height-75);
+    --spectrum-tooltip-max-inline-size: var(--spectrum-tooltip-maximum-width);
+    --spectrum-tooltip-border-radius: var(--spectrum-corner-radius-400);
+    --spectrum-tooltip-font-size: var(--spectrum-font-size-75);
+    --spectrum-tooltip-line-height: 1.2;
+    --spectrum-tooltip-cjk-line-height: var(--spectrum-cjk-line-height-100);
+    --spectrum-tooltip-font-weight: var(--spectrum-regular-font-weight);
+    --spectrum-tooltip-spacing-inline: var(--spectrum-component-edge-to-text-75);
+    --spectrum-tooltip-spacing-block-start: var(--spectrum-component-top-to-text-75);
+    --spectrum-tooltip-spacing-block-end: var(--spectrum-component-bottom-to-text-75);
+    --spectrum-tooltip-content-color: var(--spectrum-gray-25);
+    --spectrum-tooltip-background-color-default: var(--spectrum-neutral-background-color-default);
+    --spectrum-tooltip-background-color-informative: var(--spectrum-informative-background-color-default);
+    --spectrum-tooltip-background-color-negative: var(--spectrum-negative-background-color-default);
+    --spectrum-tooltip-tip-block-size: var(--spectrum-tooltip-tip-height);
+    --spectrum-tooltip-tip-height-percentage: 100%;
+    --spectrum-tooltip-tip-antialiasing-inset: 0.5px;
+    --spectrum-tooltip-pointer-corner-spacing: var(--mod-tooltip-border-radius, var(--spectrum-tooltip-border-radius));
+    --highcontrast-tooltip-border-width: 0px;
     box-sizing: border-box;
     vertical-align: top;
     inline-size: auto;
@@ -83,38 +74,31 @@ governing permissions and limitations under the License.
 }
 
 :host([variant='info']) #tooltip {
-    background-color: var(--highcontrast-tooltip-background-color-informative, var(--mod-tooltip-background-color-informative, var(--spectrum-tooltip-background-color-informative)));
-}
-
-:host([variant='positive']) #tooltip {
-    background-color: var(--highcontrast-tooltip-background-color-positive, var(--mod-tooltip-background-color-positive, var(--spectrum-tooltip-background-color-positive)));
+    background-color: var(--highcontrast-tooltip-background-color-default, var(--mod-tooltip-background-color-informative, var(--spectrum-tooltip-background-color-informative)));
 }
 
 :host([variant='negative']) #tooltip {
-    background-color: var(--highcontrast-tooltip-background-color-negative, var(--mod-tooltip-background-color-negative, var(--spectrum-tooltip-background-color-negative)));
+    background-color: var(--highcontrast-tooltip-background-color-default, var(--mod-tooltip-background-color-negative, var(--spectrum-tooltip-background-color-negative)));
 }
 
 #tip {
     block-size: var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size));
     inline-size: var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size));
-    inset-block-start: 100%;
+    inset-block-start: calc(100% - var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size)) * 0.5 - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset)) + var(--highcontrast-tooltip-border-width));
+    left: calc(50% - var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size)) * 0.5);
     background-color: var(--highcontrast-tooltip-background-color-default, var(--mod-tooltip-background-color-default, var(--spectrum-tooltip-background-color-default)));
-    clip-path: polygon(0 calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))), 50% var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage)), 100% calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))));
+    clip-path: polygon(0 0, 100% var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage)), 0 100%);
+    border-radius: 0 0 0 var(--mod-tooltip-tip-corner-radius, var(--spectrum-tooltip-tip-corner-radius));
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    transform: rotate(-45deg);
 }
 
 :host([variant='info']) #tooltip #tip {
-    background-color: var(--highcontrast-tooltip-background-color-informative, var(--mod-tooltip-background-color-informative, var(--spectrum-tooltip-background-color-informative)));
-}
-
-:host([variant='positive']) #tooltip #tip {
-    background-color: var(--highcontrast-tooltip-background-color-positive, var(--mod-tooltip-background-color-positive, var(--spectrum-tooltip-background-color-positive)));
+    background-color: var(--highcontrast-tooltip-background-color-default, var(--mod-tooltip-background-color-informative, var(--spectrum-tooltip-background-color-informative)));
 }
 
 :host([variant='negative']) #tooltip #tip {
-    background-color: var(--highcontrast-tooltip-background-color-negative, var(--mod-tooltip-background-color-negative, var(--spectrum-tooltip-background-color-negative)));
+    background-color: var(--highcontrast-tooltip-background-color-default, var(--mod-tooltip-background-color-negative, var(--spectrum-tooltip-background-color-negative)));
 }
 
 :host([placement*='top']) #tooltip #tip,
@@ -122,7 +106,8 @@ governing permissions and limitations under the License.
 .spectrum-Tooltip--top-left #tip,
 .spectrum-Tooltip--top-right #tip,
 .spectrum-Tooltip--top-start #tip {
-    inset-block-start: 100%;
+    inset-block-start: calc(100% - var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size)) * 0.5 - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset)) + var(--highcontrast-tooltip-border-width));
+    transform: rotate(-45deg);
 }
 
 :host([placement*='bottom']) #tooltip #tip,
@@ -130,19 +115,8 @@ governing permissions and limitations under the License.
 .spectrum-Tooltip--bottom-left #tip,
 .spectrum-Tooltip--bottom-right #tip,
 .spectrum-Tooltip--bottom-start #tip {
-    clip-path: polygon(50% calc(100% - var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage))), 0 calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))), 100% calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))));
-    inset-block: auto 100%;
-}
-
-.spectrum-Tooltip--bottom-end #tip,
-.spectrum-Tooltip--bottom-left #tip,
-.spectrum-Tooltip--bottom-right #tip,
-.spectrum-Tooltip--bottom-start #tip,
-.spectrum-Tooltip--top-end #tip,
-.spectrum-Tooltip--top-left #tip,
-.spectrum-Tooltip--top-right #tip,
-.spectrum-Tooltip--top-start #tip {
-    transform: none;
+    inset-block: auto calc(100% - var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size)) * 0.5 - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset)) + var(--highcontrast-tooltip-border-width));
+    transform: rotate(135deg);
 }
 
 .spectrum-Tooltip--bottom-left #tip,
@@ -193,8 +167,7 @@ governing permissions and limitations under the License.
 .spectrum-Tooltip--start #tip,
 .spectrum-Tooltip--start-bottom #tip,
 .spectrum-Tooltip--start-top #tip {
-    inset-block-start: 50%;
-    transform: translateY(-50%);
+    inset-block-start: calc(50% - var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size)) * 0.5);
 }
 
 .spectrum-Tooltip--end-bottom #tip,
@@ -206,7 +179,6 @@ governing permissions and limitations under the License.
 .spectrum-Tooltip--start-bottom #tip,
 .spectrum-Tooltip--start-top #tip {
     inset-block-start: auto;
-    transform: none;
 }
 
 .spectrum-Tooltip--end #tip,
@@ -215,8 +187,8 @@ governing permissions and limitations under the License.
 :host([placement*='right']) #tooltip #tip,
 .spectrum-Tooltip--right-bottom #tip,
 .spectrum-Tooltip--right-top #tip {
-    clip-path: polygon(calc(100% - var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage))) 50%, calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 100%, calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 0);
-    inset-inline: auto 100%;
+    inset-inline: auto calc(100% - var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size)) * 0.5 - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset)) + var(--highcontrast-tooltip-border-width));
+    transform: rotate(45deg);
 }
 
 :host([placement*='left']) #tooltip #tip,
@@ -225,8 +197,8 @@ governing permissions and limitations under the License.
 .spectrum-Tooltip--start #tip,
 .spectrum-Tooltip--start-bottom #tip,
 .spectrum-Tooltip--start-top #tip {
-    clip-path: polygon(calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 0, calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 100%, var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage)) 50%);
-    inset-inline-start: 100%;
+    inset-inline-start: calc(100% - var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size)) * 0.5 - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset)) + var(--highcontrast-tooltip-border-width));
+    transform: rotate(-135deg);
 }
 
 .spectrum-Tooltip--end-top #tip,
@@ -255,9 +227,9 @@ governing permissions and limitations under the License.
 :host([dir='rtl'][placement*='left']) #tooltip #tip,
 :host([dir='rtl']) .spectrum-Tooltip--left-bottom #tip,
 :host([dir='rtl']) .spectrum-Tooltip--left-top #tip {
-    clip-path: polygon(calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 0, calc(0% - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 100%, var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage)) 50%);
-    left: 100%;
     right: auto;
+    left: calc(100% - var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size)) * 0.5 - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset)) + var(--highcontrast-tooltip-border-width));
+    transform: rotate(-135deg);
 }
 
 :host([placement*='right']) #tooltip #tip:dir(rtl),
@@ -272,19 +244,9 @@ governing permissions and limitations under the License.
 :host([dir='rtl']) .spectrum-Tooltip--start #tip,
 :host([dir='rtl']) .spectrum-Tooltip--start-bottom #tip,
 :host([dir='rtl']) .spectrum-Tooltip--start-top #tip {
-    clip-path: polygon(var(--mod-tooltip-tip-height-percentage, var(--spectrum-tooltip-tip-height-percentage)) 50%, calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 100%, calc(100% + var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset))) 0);
     left: auto;
-    right: 100%;
-}
-
-::slotted([slot='icon']) {
-    inline-size: var(--mod-tooltip-icon-width, var(--spectrum-tooltip-icon-width));
-    block-size: var(--mod-tooltip-icon-height, var(--spectrum-tooltip-icon-height));
-    flex-shrink: 0;
-    align-self: flex-start;
-    margin-block-start: var(--mod-tooltip-icon-spacing-block-start, var(--spectrum-tooltip-icon-spacing-block-start));
-    margin-inline-start: calc(var(--mod-tooltip-icon-spacing-inline-start, var(--spectrum-tooltip-icon-spacing-inline-start)) - var(--mod-tooltip-spacing-inline, var(--spectrum-tooltip-spacing-inline)));
-    margin-inline-end: var(--mod-tooltip-icon-spacing-inline-end, var(--spectrum-tooltip-icon-spacing-inline-end));
+    right: calc(100% - var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-square-size)) * 0.5 - var(--mod-tooltip-tip-antialiasing-inset, var(--spectrum-tooltip-tip-antialiasing-inset)) + var(--highcontrast-tooltip-border-width));
+    transform: rotate(45deg);
 }
 
 #label {
@@ -391,4 +353,15 @@ governing permissions and limitations under the License.
 :host([dir='rtl'][open]) .spectrum-Tooltip--end-top,
 :host([dir='rtl'][open]) .spectrum-Tooltip--end {
     transform: translateX(calc(var(--mod-tooltip-animation-distance, var(--spectrum-tooltip-animation-distance)) * -1));
+}
+
+@media (forced-colors: active) {
+    #tooltip {
+        --highcontrast-tooltip-border-width: 1px;
+        border: var(--highcontrast-tooltip-border-width) solid CanvasText;
+    }
+
+    #tip {
+        --highcontrast-tooltip-background-color-default: CanvasText;
+    }
 }

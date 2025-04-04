@@ -1,16 +1,41 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-swatch-focus-indicator-border-radius: var(--mod-swatch-focus-indicator-border-radius, 8px);
+    --spectrum-swatch-icon-border-color: var(--mod-swatch-icon-border-color, #00000082);
+    --spectrum-swatch-size: var(--mod-swatch-size, var(--spectrum-swatch-size-small));
+    --spectrum-swatch-border-radius: var(--mod-swatch-border-radius, var(--spectrum-corner-radius-100));
+    --spectrum-swatch-border-thickness: var(--mod-swatch-border-thickness, var(--spectrum-border-width-100));
+    --spectrum-swatch-border-thickness-selected: var(--mod-swatch-border-thickness-selected, var(--spectrum-border-width-200));
+    --spectrum-swatch-disabled-icon-size: var(--mod-swatch-disabled-icon-size, var(--spectrum-workflow-icon-size-75));
+    --spectrum-swatch-slash-thickness: var(--mod-swatch-slash-thickness, var(--spectrum-swatch-slash-thickness-small));
+    --spectrum-swatch-focus-indicator-thickness: var(--mod-swatch-focus-indicator-thickness, var(--spectrum-focus-indicator-thickness));
+    --spectrum-swatch-focus-indicator-gap: var(--mod-swatch-focus-indicator-gap, var(--spectrum-focus-indicator-gap));
+    --spectrum-swatch-border-color-selected: var(--highcontrast-swatch-border-color-selected, var(--mod-swatch-border-color-selected, var(--spectrum-gray-900)));
+    --spectrum-swatch-inner-border-color-selected: var(--highcontrast-swatch-background-color-selected, var(--mod-swatch-inner-border-color-selected, var(--spectrum-gray-25)));
+    --spectrum-swatch-disabled-icon-color: var(--highcontrast-swatch-disabled-icon-color, var(--mod-swatch-disabled-icon-color, var(--spectrum-white)));
+    --spectrum-swatch-dash-icon-color: var(--spectrum-gray-800);
+    --spectrum-swatch-slash-icon-color: var(--highcontrast-swatch-fill-foreground-color, var(--mod-swatch-slash-icon-color, var(--spectrum-red-900)));
+    --spectrum-swatch-focus-indicator-color: var(--highcontrast-swatch-focus-indicator-color, var(--mod-swatch-focus-indicator-color, var(--spectrum-focus-indicator-color)));
+}
+
+:host([size='xs']) {
+    --spectrum-swatch-size: var(--mod-swatch-size, var(--spectrum-swatch-size-extra-small));
+    --spectrum-swatch-disabled-icon-size: var(--mod-swatch-disabled-icon-size, var(--spectrum-workflow-icon-size-50));
+    --spectrum-swatch-slash-thickness: var(--mod-swatch-slash-thickness, var(--spectrum-swatch-slash-thickness-extra-small));
+}
+
+:host {
+    --spectrum-swatch-size: var(--mod-swatch-size, var(--spectrum-swatch-size-medium));
+    --spectrum-swatch-disabled-icon-size: var(--mod-swatch-disabled-icon-size, var(--spectrum-workflow-icon-size-100));
+    --spectrum-swatch-slash-thickness: var(--mod-swatch-slash-thickness, var(--spectrum-swatch-slash-thickness-medium));
+}
+
+:host([size='l']) {
+    --spectrum-swatch-size: var(--mod-swatch-size, var(--spectrum-swatch-size-large));
+    --spectrum-swatch-disabled-icon-size: var(--mod-swatch-disabled-icon-size, var(--spectrum-workflow-icon-size-200));
+    --spectrum-swatch-slash-thickness: var(--mod-swatch-slash-thickness, var(--spectrum-swatch-slash-thickness-large));
+}
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-swatch-disabled-icon-color: GrayText;
@@ -32,8 +57,8 @@ governing permissions and limitations under the License.
 }
 
 :host {
-    inline-size: var(--mod-swatch-size, var(--spectrum-swatch-size));
-    block-size: var(--mod-swatch-size, var(--spectrum-swatch-size));
+    inline-size: var(--spectrum-swatch-size);
+    block-size: var(--spectrum-swatch-size);
     -webkit-user-select: none;
     user-select: none;
     outline: none;
@@ -44,25 +69,25 @@ governing permissions and limitations under the License.
 }
 
 .disabledIcon {
-    inline-size: var(--mod-swatch-disabled-icon-size, var(--spectrum-swatch-disabled-icon-size));
-    block-size: var(--mod-swatch-disabled-icon-size, var(--spectrum-swatch-disabled-icon-size));
+    inline-size: var(--spectrum-swatch-disabled-icon-size);
+    block-size: var(--spectrum-swatch-disabled-icon-size);
 }
 
 :host,
 :host:before {
-    border-radius: var(--mod-swatch-border-radius, var(--spectrum-swatch-border-radius));
+    border-radius: var(--spectrum-swatch-border-radius);
 }
 
 :host([selected]) {
-    background-color: var(--highcontrast-swatch-background-color-selected, var(--mod-swatch-inner-border-color-selected, var(--spectrum-swatch-inner-border-color-selected)));
+    background: var(--spectrum-swatch-inner-border-color-selected);
 }
 
 :host([selected]) .fill {
     clip-path: polygon(
-        calc(var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2) calc(var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2),
-        calc(100% - var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2) calc(var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2),
-        calc(100% - var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2) calc(100% - var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2),
-        calc(var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2) calc(100% - var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2)
+        calc(var(--spectrum-swatch-border-thickness-selected) * 2) calc(var(--spectrum-swatch-border-thickness-selected) * 2),
+        calc(100% - var(--spectrum-swatch-border-thickness-selected) * 2) calc(var(--spectrum-swatch-border-thickness-selected) * 2),
+        calc(100% - var(--spectrum-swatch-border-thickness-selected) * 2) calc(100% - var(--spectrum-swatch-border-thickness-selected) * 2),
+        calc(var(--spectrum-swatch-border-thickness-selected) * 2) calc(100% - var(--spectrum-swatch-border-thickness-selected) * 2)
     );
     border-radius: 0;
 }
@@ -77,11 +102,10 @@ governing permissions and limitations under the License.
 }
 
 :host .is-image .fill:before {
-    background-color: initial;
+    background: none;
 }
 
 :host([mixed-value]) .fill {
-    background: none;
     background: var(--spectrum-picked-color, transparent);
 }
 
@@ -91,16 +115,15 @@ governing permissions and limitations under the License.
 }
 
 :host([nothing]) .fill {
-    background-color: initial;
-    background-color: var(--spectrum-picked-color, transparent);
+    background: var(--spectrum-picked-color, transparent);
     background-image: none;
 }
 
 :host([nothing]) .fill:after {
-    inline-size: var(--mod-swatch-slash-thickness, var(--spectrum-swatch-slash-thickness));
+    inline-size: var(--spectrum-swatch-slash-thickness);
     content: '';
     block-size: 200%;
-    background: var(--highcontrast-swatch-fill-foreground-color, var(--mod-swatch-slash-icon-color, var(--spectrum-swatch-slash-icon-color)));
+    background: var(--spectrum-swatch-slash-icon-color);
     position: absolute;
     transform: rotate(-45deg);
 }
@@ -116,9 +139,9 @@ governing permissions and limitations under the License.
 
 :host:before {
     content: '';
-    border-width: var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected));
+    border-width: var(--spectrum-swatch-border-thickness-selected);
     border-style: solid;
-    border-color: var(--highcontrast-swatch-border-color-selected, var(--mod-swatch-border-color-selected, var(--spectrum-swatch-border-color-selected)));
+    border-color: var(--spectrum-swatch-border-color-selected);
     opacity: 0;
     pointer-events: none;
     position: absolute;
@@ -127,12 +150,12 @@ governing permissions and limitations under the License.
 
 :host:after {
     content: '';
-    inset: calc(var(--mod-swatch-focus-indicator-gap, var(--spectrum-swatch-focus-indicator-gap)) * -2);
+    inset: calc(var(--spectrum-swatch-focus-indicator-gap) * -2);
     opacity: 0;
-    border-width: var(--mod-swatch-focus-indicator-thickness, var(--spectrum-swatch-focus-indicator-thickness));
+    border-width: var(--spectrum-swatch-focus-indicator-thickness);
     border-style: solid;
-    border-color: var(--highcontrast-swatch-focus-indicator-color, var(--mod-swatch-focus-indicator-color, var(--spectrum-swatch-focus-indicator-color)));
-    border-radius: var(--mod-swatch-focus-indicator-border-radius, var(--spectrum-swatch-focus-indicator-border-radius));
+    border-color: var(--spectrum-swatch-focus-indicator-color);
+    border-radius: var(--spectrum-swatch-focus-indicator-border-radius);
     transition: opacity var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-in-out;
     position: absolute;
 }
@@ -145,7 +168,6 @@ governing permissions and limitations under the License.
     inline-size: 100%;
     block-size: 100%;
     box-sizing: border-box;
-    border-radius: var(--mod-swatch-border-radius, var(--spectrum-swatch-border-radius));
     justify-content: center;
     align-items: center;
     display: flex;
@@ -153,32 +175,31 @@ governing permissions and limitations under the License.
     overflow: hidden;
 }
 
+.fill,
+.fill:before {
+    border-radius: var(--mod-swatch-border-radius, var(--spectrum-swatch-border-radius));
+}
+
 .fill:before {
     content: '';
     z-index: 0;
+    background: var(--spectrum-picked-color, transparent);
     box-shadow: inset 0 0 0 var(--mod-swatch-border-thickness, var(--spectrum-swatch-border-thickness)) var(--highcontrast-swatch-border-color, var(--mod-swatch-border-color, var(--spectrum-swatch-border-color)));
-    border-radius: var(--mod-swatch-border-radius, var(--spectrum-swatch-border-radius));
     position: absolute;
     inset: 0;
 }
 
-:host([border='none']) .fill:before,
-.fill:before {
-    background-color: initial;
-    background-color: var(--spectrum-picked-color, transparent);
-}
-
 :host([border='none']) .fill:before {
     box-shadow: none;
+    background: var(--spectrum-picked-color, transparent);
 }
 
 :host([border='light']) .fill:before {
-    box-shadow: inset 0 0 0 var(--mod-swatch-border-thickness, var(--spectrum-swatch-border-thickness)) var(--highcontrast-swatch-border-color-light, var(--mod-swatch-border-color-light, var(--spectrum-swatch-border-color-light)));
+    box-shadow: inset 0 0 0 var(--spectrum-swatch-border-thickness) var(--mod-swatch-border-color-light, var(--spectrum-swatch-border-color-light));
 }
 
 .mixedValueIcon {
     pointer-events: none;
-    color: #0000;
     color: var(--spectrum-picked-color, transparent);
     display: none;
 }
@@ -186,22 +207,22 @@ governing permissions and limitations under the License.
 .disabledIcon {
     z-index: 1;
     pointer-events: none;
-    color: var(--highcontrast-swatch-disabled-icon-color, var(--mod-swatch-disabled-icon-color, var(--spectrum-swatch-disabled-icon-color)));
-    stroke: var(--highcontrast-swatch-disabled-icon-color, var(--mod-swatch-disabled-icon-color, var(--spectrum-swatch-disabled-icon-color)));
+    color: var(--spectrum-swatch-disabled-icon-color);
+    stroke: var(--spectrum-swatch-disabled-icon-color);
     display: none;
     position: relative;
 }
 
 .disabledIcon path:first-child {
-    fill: var(--highcontrast-swatch-disabled-icon-color, var(--mod-swatch-disabled-icon-color, var(--spectrum-swatch-disabled-icon-color)));
+    fill: var(--spectrum-swatch-disabled-icon-color);
 }
 
 .disabledIcon path:last-child {
-    fill: var(--mod-swatch-icon-border-color, var(--spectrum-swatch-icon-border-color));
+    fill: var(--spectrum-swatch-icon-border-color);
 }
 
 :host([shape='rectangle']) {
-    inline-size: calc(var(--mod-swatch-size, var(--spectrum-swatch-size)) * 2);
+    inline-size: calc(var(--spectrum-swatch-size) * 2);
 }
 
 :host([rounding='none']),
@@ -225,7 +246,7 @@ governing permissions and limitations under the License.
 }
 
 :host([rounding='full'][selected]:not([shape='rectangle'])) .fill {
-    clip-path: circle(calc(50% - var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2) at 50% 50%);
+    clip-path: circle(calc(50% - var(--spectrum-swatch-border-thickness-selected) * 2) at 50% 50%);
 }
 
 ::slotted([slot='image']) {

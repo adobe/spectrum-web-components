@@ -1,21 +1,11 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-avatar-color-opacity: 1;
     --spectrum-avatar-inline-size: var(--spectrum-avatar-size-100);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-100);
     --spectrum-avatar-border-radius: var(--spectrum-avatar-block-size);
+    --spectrum-avatar-border-thickness: var(--spectrum-avatar-border-width);
+    --spectrum-avatar-border-color-default: var(--spectrum-avatar-border-color);
     --spectrum-avatar-focus-indicator-thickness: var(--spectrum-focus-indicator-thickness);
     --spectrum-avatar-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
     --spectrum-avatar-focus-indicator-color: var(--spectrum-focus-indicator-color);
@@ -67,6 +57,46 @@ governing permissions and limitations under the License.
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-700);
 }
 
+.spectrum-Avatar--size800 {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-800);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-800);
+}
+
+.spectrum-Avatar--size900 {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-900);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-900);
+}
+
+.spectrum-Avatar--size1000 {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-1000);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-1000);
+}
+
+.spectrum-Avatar--size1100 {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-1100);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-1100);
+}
+
+.spectrum-Avatar--size1200 {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-1200);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-1200);
+}
+
+.spectrum-Avatar--size1300 {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-1300);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-1300);
+}
+
+.spectrum-Avatar--size1400 {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-1400);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-1400);
+}
+
+.spectrum-Avatar--size1500 {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-1500);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-1500);
+}
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-avatar-focus-indicator-color: CanvasText;
@@ -77,11 +107,13 @@ governing permissions and limitations under the License.
     inline-size: var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size));
     block-size: var(--mod-avatar-block-size, var(--spectrum-avatar-block-size));
     border-radius: var(--mod-avatar-border-radius, var(--spectrum-avatar-border-radius));
+    border-style: solid;
+    border-width: var(--spectrum-avatar-border-thickness);
+    border-color: var(--spectrum-avatar-border-color-default);
     -webkit-user-drag: none;
     -webkit-user-select: none;
     user-select: none;
     opacity: var(--mod-avatar-color-opacity, var(--spectrum-avatar-color-opacity));
-    border-width: 0;
     outline: none;
     display: inline-block;
     position: relative;
@@ -108,7 +140,7 @@ governing permissions and limitations under the License.
 }
 
 .link {
-    outline: 0;
+    outline: solid #0000;
 }
 
 .image {

@@ -64,10 +64,7 @@ export const Default = ({
 }): TemplateResult => {
     return html`
         ${storyStyles}
-        <sp-theme
-            color="${color}"
-            system=${window.__swc_hack_knobs__.defaultSystemVariant}
-        >
+        <sp-theme color="${color}">
             <div id="example">
                 <div>
                     <sp-slider
@@ -104,12 +101,7 @@ export const displayFlex = (): TemplateResult => html`
             flex: 1 0;
         }
     </style>
-    <sp-theme
-        id="flex-theme"
-        color="dark"
-        theme=${window.__swc_hack_knobs__.defaultSystemVariant}
-        system=${window.__swc_hack_knobs__.defaultSystemVariant}
-    >
+    <sp-theme id="flex-theme" color="dark">
         <sp-button>Start</sp-button>
         <sp-button id="middle-button">Middle</sp-button>
         <sp-button>End</sp-button>
@@ -146,11 +138,7 @@ export const nestedTheme = ({
     const inner = outer === 'light' ? 'dark' : 'light';
     return html`
         ${storyStyles}
-        <sp-theme
-            color="${outer}"
-            theme=${window.__swc_hack_knobs__.defaultSystemVariant}
-            system=${window.__swc_hack_knobs__.defaultSystemVariant}
-        >
+        <sp-theme color="${outer}">
             <div id="outer">
                 <div>
                     <sp-slider
@@ -169,12 +157,7 @@ export const nestedTheme = ({
                     </sp-button>
                     <sp-button variant="accent">Continue</sp-button>
                 </sp-button-group>
-                <sp-theme
-                    color="${inner}"
-                    dir="ltr"
-                    theme=${window.__swc_hack_knobs__.defaultSystemVariant}
-                    system=${window.__swc_hack_knobs__.defaultSystemVariant}
-                >
+                <sp-theme color="${inner}" dir="ltr">
                     <div id="inner">
                         <div>
                             <sp-slider
@@ -226,11 +209,7 @@ export const reverseColorNestedTheme = ({
                 margin-top: 2em;
             }
         </style>
-        <sp-theme
-            color="${inner}"
-            theme=${window.__swc_hack_knobs__.defaultSystemVariant}
-            system=${window.__swc_hack_knobs__.defaultSystemVariant}
-        >
+        <sp-theme color="${inner}">
             <div id="outer">
                 <div>
                     <sp-slider
@@ -249,12 +228,7 @@ export const reverseColorNestedTheme = ({
                     </sp-button>
                     <sp-button variant="accent">Continue</sp-button>
                 </sp-button-group>
-                <sp-theme
-                    color="${outer}"
-                    dir="rtl"
-                    theme=${window.__swc_hack_knobs__.defaultSystemVariant}
-                    system=${window.__swc_hack_knobs__.defaultSystemVariant}
-                >
+                <sp-theme color="${outer}" dir="rtl">
                     <div id="inner">
                         <div>
                             <sp-slider

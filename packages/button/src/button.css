@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-button.css');
-@import url('./button-overrides.css');
 
 @media (forced-colors: active) {
     :host([treatment][disabled]) {

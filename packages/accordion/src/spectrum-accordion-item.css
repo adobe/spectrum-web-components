@@ -1,15 +1,3 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     z-index: inherit;
@@ -46,8 +34,11 @@ governing permissions and limitations under the License.
     inset-block-start: max(0px, calc((var(--mod-accordion-min-block-size, var(--spectrum-accordion-min-block-size)) - var(--mod-accordion-disclosure-indicator-height, var(--spectrum-accordion-disclosure-indicator-height))) / 2));
 }
 
-.iconContainer:dir(rtl),
 :host([dir='rtl']) .iconContainer {
+    transform: scaleX(-1);
+}
+
+.iconContainer:dir(rtl) {
     transform: scaleX(-1);
 }
 
@@ -114,15 +105,15 @@ governing permissions and limitations under the License.
 :host([disabled]) #header,
 :host([disabled]) #header:focus-visible {
     color: var(--mod-accordion-item-header-disabled-color, var(--spectrum-accordion-item-header-disabled-color));
-    background-color: initial;
+    background-color: #0000;
 }
 
 @media (hover: hover) {
     #header:hover {
+        color: var(--mod-accordion-item-header-color-hover, var(--spectrum-accordion-item-header-color-hover));
         background-color: var(--mod-accordion-background-color-hover, var(--spectrum-accordion-background-color-hover));
     }
 
-    #header:hover,
     #header:hover + .iconContainer {
         color: var(--mod-accordion-item-header-color-hover, var(--spectrum-accordion-item-header-color-hover));
     }
@@ -133,7 +124,7 @@ governing permissions and limitations under the License.
 
     :host([disabled]) #header:hover {
         color: var(--mod-accordion-item-header-disabled-color, var(--spectrum-accordion-item-header-disabled-color));
-        background-color: initial;
+        background-color: #0000;
     }
 }
 
@@ -156,7 +147,6 @@ governing permissions and limitations under the License.
 
 :host([open]) > #heading > .iconContainer > .indicator,
 :host([open]) > .iconContainer > .indicator {
-    transform: rotate(90deg);
     transform: var(--spectrum-logical-rotation,) rotate(90deg);
 }
 

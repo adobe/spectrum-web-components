@@ -11,8 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-number-field.css');
-@import url('./number-field-overrides.css');
-
 
 .input {
     font-variant-numeric: tabular-nums;

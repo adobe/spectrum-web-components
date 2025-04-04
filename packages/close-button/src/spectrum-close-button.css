@@ -1,34 +1,21 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
     box-sizing: border-box;
-    font-family: var(--mod-button-font-family, var(--mod-sans-font-family-stack, var(--spectrum-sans-font-family-stack)));
+    font-family: var(--mod-button-font-family, var(--spectrum-sans-font-family-stack));
+    vertical-align: top;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: var(--mod-button-line-height, var(--mod-line-height-100, var(--spectrum-line-height-100)));
+    line-height: var(--mod-button-line-height, var(--spectrum-line-height-100));
     text-transform: none;
-    vertical-align: top;
     -webkit-appearance: button;
     transition:
-        background var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
-        border-color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
-        color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
-        box-shadow var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out;
-    border-style: solid;
+        background var(--mod-button-animation-duration, var(--spectrum-animation-duration-100)) ease-out,
+        border-color var(--mod-button-animation-duration, var(--spectrum-animation-duration-100)) ease-out,
+        color var(--mod-button-animation-duration, var(--spectrum-animation-duration-100)) ease-out,
+        box-shadow var(--mod-button-animation-duration, var(--spectrum-animation-duration-100)) ease-out;
     margin: 0;
     -webkit-text-decoration: none;
     text-decoration: none;
@@ -50,6 +37,62 @@ governing permissions and limitations under the License.
     -webkit-appearance: none;
 }
 
+:host {
+    --spectrum-closebutton-border-radius: var(--spectrum-corner-radius-full);
+    --spectrum-closebutton-icon-color-default: var(--spectrum-neutral-content-color-default);
+    --spectrum-closebutton-icon-color-hover: var(--spectrum-neutral-content-color-hover);
+    --spectrum-closebutton-icon-color-down: var(--spectrum-neutral-content-color-down);
+    --spectrum-closebutton-icon-color-focus: var(--spectrum-neutral-content-color-key-focus);
+    --spectrum-closebutton-icon-color-disabled: var(--spectrum-disabled-content-color);
+    --spectrum-closebutton-focus-indicator-thickness: var(--spectrum-focus-indicator-thickness);
+    --spectrum-closebutton-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
+    --spectrum-closebutton-focus-indicator-color: var(--spectrum-focus-indicator-color);
+    --spectrum-closebutton-size: var(--spectrum-component-height-100);
+    --spectrum-closebutton-animation-duration: var(--spectrum-animation-duration-100);
+    --spectrum-closebutton-background-color-default: transparent;
+    --spectrum-closebutton-background-color-hover: var(--spectrum-gray-100);
+    --spectrum-closebutton-background-color-down: var(--spectrum-gray-100);
+    --spectrum-closebutton-background-color-focus: var(--spectrum-gray-100);
+}
+
+:host([size='s']) {
+    --spectrum-closebutton-size: var(--spectrum-component-height-75);
+}
+
+:host([size='l']) {
+    --spectrum-closebutton-size: var(--spectrum-component-height-200);
+}
+
+:host([size='xl']) {
+    --spectrum-closebutton-size: var(--spectrum-component-height-300);
+}
+
+:host([static-color='white']) {
+    --spectrum-closebutton-icon-color-default: var(--spectrum-transparent-white-800);
+    --spectrum-closebutton-icon-color-hover: var(--spectrum-transparent-white-900);
+    --spectrum-closebutton-icon-color-down: var(--spectrum-transparent-white-900);
+    --spectrum-closebutton-icon-color-focus: var(--spectrum-transparent-white-900);
+    --spectrum-closebutton-icon-color-disabled: var(--spectrum-disabled-static-white-background-color);
+    --spectrum-closebutton-background-color-default: transparent;
+    --spectrum-closebutton-background-color-hover: var(--spectrum-transparent-white-100);
+    --spectrum-closebutton-background-color-down: var(--spectrum-transparent-white-100);
+    --spectrum-closebutton-background-color-focus: var(--spectrum-transparent-white-100);
+    --spectrum-closebutton-focus-indicator-color: var(--spectrum-static-white-focus-indicator-color);
+}
+
+:host([static-color='black']) {
+    --spectrum-closebutton-icon-color-default: var(--spectrum-transparent-black-800);
+    --spectrum-closebutton-icon-color-hover: var(--spectrum-transparent-black-900);
+    --spectrum-closebutton-icon-color-down: var(--spectrum-transparent-black-900);
+    --spectrum-closebutton-icon-color-focus: var(--spectrum-transparent-black-900);
+    --spectrum-closebutton-icon-color-disabled: var(--spectrum-disabled-static-black-background-color);
+    --spectrum-closebutton-background-color-default: transparent;
+    --spectrum-closebutton-background-color-hover: var(--spectrum-transparent-black-100);
+    --spectrum-closebutton-background-color-down: var(--spectrum-transparent-black-100);
+    --spectrum-closebutton-background-color-focus: var(--spectrum-transparent-black-100);
+    --spectrum-closebutton-focus-indicator-color: var(--spectrum-static-black-focus-indicator-color);
+}
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-closebutton-icon-color-disabled: GrayText;
@@ -68,24 +111,16 @@ governing permissions and limitations under the License.
             margin var(--mod-closebutton-animation-duraction, var(--spectrum-closebutton-animation-duration)) ease-out;
     }
 
-    :host([static-color='black']) {
-        --highcontrast-closebutton-static-background-color-default: ButtonFace;
-        --highcontrast-closebutton-icon-color-default: Highlight;
-        --highcontrast-closebutton-icon-color-disabled: GrayText;
-    }
-
     :host([static-color='white']) {
-        --highcontrast-closebutton-static-background-color-default: ButtonFace;
-        --highcontrast-closebutton-icon-color-default: Highlight;
         --highcontrast-closebutton-icon-color-disabled: Highlight;
     }
 }
 
 :host {
-    block-size: var(--mod-closebutton-height, var(--spectrum-closebutton-size));
-    inline-size: var(--mod-closebutton-width, var(--spectrum-closebutton-size));
+    block-size: var(--mod-closebutton-size, var(--spectrum-closebutton-size));
+    inline-size: var(--mod-closebutton-size, var(--spectrum-closebutton-size));
     color: inherit;
-    border-radius: var(--mod-closebutton-border-radius, var(--spectrum-closebutton-size));
+    border-radius: var(--mod-closebutton-border-radius, var(--spectrum-closebutton-border-radius));
     transition: border-color var(--mod-closebutton-animation-duration, var(--spectrum-closebutton-animation-duration)) ease-in-out;
     margin-inline: var(--mod-closebutton-margin-inline);
     justify-content: center;
@@ -104,7 +139,7 @@ governing permissions and limitations under the License.
     pointer-events: none;
     content: '';
     margin: calc(var(--mod-closebutton-focus-indicator-gap, var(--spectrum-closebutton-focus-indicator-gap)) * -1);
-    border-radius: calc(var(--mod-closebutton-size, var(--spectrum-closebutton-size)) + var(--mod-closebutton-focus-indicator-gap, var(--spectrum-closebutton-focus-indicator-gap)));
+    border-radius: calc(var(--mod-closebutton-border-radius, var(--spectrum-closebutton-border-radius)) + var(--mod-closebutton-focus-indicator-gap, var(--spectrum-closebutton-focus-indicator-gap)));
     transition: box-shadow var(--mod-closebutton-animation-duration, var(--spectrum-closebutton-animation-duration)) ease-in-out;
     position: absolute;
     inset-block: 0;
@@ -122,6 +157,16 @@ governing permissions and limitations under the License.
 
 :host(:not([disabled])) {
     background-color: var(--highcontrast-closebutton-background-color-default, var(--mod-closebutton-background-color-default, var(--spectrum-closebutton-background-color-default)));
+}
+
+@media (hover: hover) {
+    :host(:not([disabled]):hover) {
+        background-color: var(--mod-closebutton-background-color-hover, var(--spectrum-closebutton-background-color-hover));
+    }
+
+    :host(:not([disabled]):hover) .icon {
+        color: var(--highcontrast-closebutton-icon-color-hover, var(--mod-closebutton-icon-color-hover, var(--spectrum-closebutton-icon-color-hover)));
+    }
 }
 
 :host(:not([disabled]):is(:active, [active])) {
@@ -157,69 +202,6 @@ governing permissions and limitations under the License.
 
 :host([disabled]) .icon {
     color: var(--highcontrast-closebutton-icon-color-disabled, var(--mod-closebutton-icon-color-disabled, var(--spectrum-closebutton-icon-color-disabled)));
-}
-
-:host([static-color='black']:not([disabled])),
-:host([static-color='white']:not([disabled])) {
-    background-color: var(--highcontrast-closebutton-static-background-color-default, var(--mod-closebutton-static-background-color-default, var(--spectrum-closebutton-static-background-color-default)));
-}
-
-@media (hover: hover) {
-    :host(:not([disabled]):hover) {
-        background-color: var(--mod-closebutton-background-color-hover, var(--spectrum-closebutton-background-color-hover));
-    }
-
-    :host(:not([disabled]):hover) .icon {
-        color: var(--highcontrast-closebutton-icon-color-hover, var(--mod-closebutton-icon-color-hover, var(--spectrum-closebutton-icon-color-hover)));
-    }
-
-    :host([static-color='black']:not([disabled]):hover),
-    :host([static-color='white']:not([disabled]):hover) {
-        background-color: var(--highcontrast-closebutton-static-background-color-hover, var(--mod-closebutton-static-background-color-hover, var(--spectrum-closebutton-static-background-color-hover)));
-    }
-
-    :host([static-color='black']:not([disabled]):hover) .icon,
-    :host([static-color='white']:not([disabled]):hover) .icon {
-        color: var(--highcontrast-closebutton-icon-color-default, var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default)));
-    }
-}
-
-:host([static-color='black']:not([disabled]):is(:active, [active])),
-:host([static-color='white']:not([disabled]):is(:active, [active])) {
-    background-color: var(--highcontrast-closebutton-static-background-color-down, var(--mod-closebutton-static-background-color-down, var(--spectrum-closebutton-static-background-color-down)));
-}
-
-:host([static-color='black']:not([disabled]):is(:active, [active])) .icon,
-:host([static-color='white']:not([disabled]):is(:active, [active])) .icon {
-    color: var(--highcontrast-closebutton-icon-color-default, var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default)));
-}
-
-:host([static-color='black'][focused]:not([disabled])),
-:host([static-color='black']:not([disabled]):focus-visible),
-:host([static-color='white'][focused]:not([disabled])),
-:host([static-color='white']:not([disabled]):focus-visible) {
-    background-color: var(--highcontrast-closebutton-static-background-color-focus, var(--mod-closebutton-static-background-color-focus, var(--spectrum-closebutton-static-background-color-focus)));
-}
-
-:host([static-color='black'][focused]:not([disabled])) .icon,
-:host([static-color='black'][focused]:not([disabled])) .icon,
-:host([static-color='black']:not([disabled]):focus) .icon,
-:host([static-color='black']:not([disabled]):focus-visible) .icon,
-:host([static-color='white'][focused]:not([disabled])) .icon,
-:host([static-color='white'][focused]:not([disabled])) .icon,
-:host([static-color='white']:not([disabled]):focus) .icon,
-:host([static-color='white']:not([disabled]):focus-visible) .icon {
-    color: var(--highcontrast-closebutton-icon-color-default, var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default)));
-}
-
-:host([static-color='black']:not([disabled])) .icon,
-:host([static-color='white']:not([disabled])) .icon {
-    color: var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default));
-}
-
-:host([static-color='black'][disabled]) .icon,
-:host([static-color='white'][disabled]) .icon {
-    color: var(--highcontrast-closebutton-icon-disabled, var(--mod-closebutton-icon-color-disabled, var(--spectrum-closebutton-icon-color-disabled)));
 }
 
 .icon {

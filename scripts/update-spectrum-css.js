@@ -22,16 +22,6 @@ const targetTag = process.argv[2];
 
 async function updateDependency(packageName, depType, packageJSON, targetTag) {
     if (packageName.startsWith('@spectrum-css')) {
-        // We are skipping these packages because we have two different versions of them (latest and s2-foundations)
-        // and targetting the s2-foundations tag will update the latest version of these packages
-        // We have to update the version in the package.json manually for these packages
-        if (
-            packageName.includes('tokens') ||
-            packageName.includes('ui-icons')
-        ) {
-            return false;
-        }
-
         const currentVersion = packageJSON[depType][packageName];
         const targetVersion = await latestVersion(packageName, {
             version: targetTag || 'latest',

@@ -25,8 +25,6 @@ import {
 import { DARK_MODE } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/theme/src/spectrum-two/themes.js';
-import '@spectrum-web-components/theme/src/express/themes.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -34,12 +32,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/switch/sp-switch.js';
 import { Picker } from '@spectrum-web-components/picker';
 import { Switch } from '@spectrum-web-components/switch';
-import {
-    Color,
-    Scale,
-    SystemVariant,
-    Theme,
-} from '@spectrum-web-components/theme';
+import { Color, Scale, Theme } from '@spectrum-web-components/theme';
 import './types.js';
 import { type Locale, Locales } from './locales.js';
 
@@ -48,10 +41,6 @@ const urlParams = new URLSearchParams(queryString);
 
 export let dir: 'ltr' | 'rtl' =
     (urlParams.get('sp_dir') as 'ltr' | 'rtl') || 'ltr';
-export const theme: SystemVariant =
-    (urlParams.get('sp_theme') as SystemVariant) || 'spectrum';
-export let system: SystemVariant =
-    (urlParams.get('sp_system') as SystemVariant) || 'spectrum';
 export let color: Color =
     (urlParams.get('sp_color') as Color) ||
     (matchMedia(DARK_MODE).matches ? 'dark' : 'light');
@@ -62,7 +51,6 @@ export const locale = urlParams.get('sp_locale') || 'en-US';
 export const direction = urlParams.get('sp_direction') || 'ltr';
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
-    defaultSystemVariant: system,
     defaultColor: color,
     defaultScale: scale,
     defaultDirection: dir,
@@ -157,10 +145,6 @@ export class StoryDecorator extends SpectrumElement {
     }
 
     @property({ type: String })
-    public system: SystemVariant =
-        window.__swc_hack_knobs__.defaultSystemVariant;
-
-    @property({ type: String })
     public color: Color = window.__swc_hack_knobs__.defaultColor;
 
     @property({ type: String })
@@ -197,12 +181,6 @@ export class StoryDecorator extends SpectrumElement {
         const { value } = target as Picker;
         const { checked } = target as Switch;
         switch (id) {
-            case 'system':
-                this.system =
-                    system =
-                    window.__swc_hack_knobs__.defaultSystemVariant =
-                        value as SystemVariant;
-                break;
             case 'color':
                 this.color =
                     color =
@@ -238,10 +216,7 @@ export class StoryDecorator extends SpectrumElement {
     }
 
     public get backgroundStyle() {
-        if (this.system === 'spectrum-two') {
-            return `background-color: var(--spectrum-gray-50)`;
-        }
-        return `background-color: var(--spectrum-gray-100);`;
+        return `background-color: var(--spectrum-gray-50)`;
     }
 
     protected handleKeydown(event: KeyboardEvent): void {
@@ -260,7 +235,6 @@ export class StoryDecorator extends SpectrumElement {
     protected override render(): TemplateResult {
         return html`
             <sp-theme
-                system=${this.system}
                 color=${this.color}
                 scale=${this.scale}
                 dir=${this.direction}
@@ -309,29 +283,9 @@ export class StoryDecorator extends SpectrumElement {
     private get manageTheme(): TemplateResult {
         return html`
             <div class="manage-theme" part="controls">
-                ${this.systemControl} ${this.colorControl} ${this.scaleControl}
-                ${this.localeControl} ${this.dirControl}
-                ${this.reduceMotionControl}
+                ${this.colorControl} ${this.scaleControl} ${this.localeControl}
+                ${this.dirControl} ${this.reduceMotionControl}
             </div>
-        `;
-    }
-
-    private get systemControl(): TemplateResult {
-        return html`
-            <sp-field-label side-aligned="start" for="system">
-                System
-            </sp-field-label>
-            <sp-picker
-                id="system"
-                placement="top"
-                quiet
-                .value=${this.system}
-                @change=${this.updateTheme}
-            >
-                <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
-                <sp-menu-item value="express">Express</sp-menu-item>
-                <sp-menu-item value="spectrum-two">Spectrum 2</sp-menu-item>
-            </sp-picker>
         `;
     }
 

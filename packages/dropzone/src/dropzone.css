@@ -11,11 +11,10 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-dropzone.css');
-@import url('./dropzone-overrides.css');
 
-/* 
+/*
  * Host is inline-block by default which caused all the computed styling to be wrong.
- * We need it as a block 
+ * We need it as a block
  */
 :host {
     display: block;

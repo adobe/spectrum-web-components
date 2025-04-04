@@ -137,7 +137,7 @@ async function ensureComponentStable(root: Element): Promise<void> {
  *
  * @param tests - Collection of stories to test
  * @param name - Name of the component being tested
- * @param color - Theme color (lightest, light, dark, darkest)
+ * @param color - Theme color (light, dark)
  * @param scale - Component scale (medium, large)
  * @param dir - Text direction (ltr, rtl)
  */
@@ -324,7 +324,7 @@ export const regressVisuals = async (name: string, stories: TestsType) => {
             test(stories, name, color, scale, dir);
         } else {
             // Otherwise test all combinations
-            const colors: Color[] = ['lightest', 'light', 'dark', 'darkest'];
+            const colors: Color[] = ['light', 'dark'];
             const scales: Scale[] = ['medium', 'large'];
             const directions: ('ltr' | 'rtl')[] = ['ltr', 'rtl'];
 

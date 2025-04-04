@@ -74,10 +74,7 @@ const elements = {
     'sp-help-text': () =>
         import('@spectrum-web-components/help-text/sp-help-text.js'),
     'sp-icon': () => import('@spectrum-web-components/icon/sp-icon.js'),
-    'sp-icons-medium': () =>
-        import('@spectrum-web-components/icons/sp-icons-medium.js'),
-    'sp-icons-large': () =>
-        import('@spectrum-web-components/icons/sp-icons-large.js'),
+    'sp-icons': () => import('@spectrum-web-components/icons/sp-icons.js'),
     'sp-illustrated-message': () =>
         import(
             '@spectrum-web-components/illustrated-message/sp-illustrated-message.js'

@@ -1,20 +1,24 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-avatar-opacity-disabled: 0.3;
     --spectrum-tag-animation-duration: var(--spectrum-animation-duration-100);
     --spectrum-tag-border-width: var(--spectrum-border-width-100);
+    --spectrum-tag-background-color: var(--spectrum-gray-50);
+    --spectrum-tag-background-color-hover: var(--spectrum-gray-50);
+    --spectrum-tag-background-color-active: var(--spectrum-gray-100);
+    --spectrum-tag-background-color-focus: var(--spectrum-gray-50);
+    --spectrum-tag-size-small-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-tag-size-medium-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-tag-size-large-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-tag-border-color: var(--spectrum-gray-700);
+    --spectrum-tag-border-color-hover: var(--spectrum-gray-800);
+    --spectrum-tag-border-color-active: var(--spectrum-gray-900);
+    --spectrum-tag-border-color-focus: var(--spectrum-gray-800);
+    --spectrum-tag-content-color: var(--spectrum-neutral-subdued-content-color-default);
+    --spectrum-tag-content-color-hover: var(--spectrum-neutral-subdued-content-color-hover);
+    --spectrum-tag-content-color-active: var(--spectrum-neutral-subdued-content-color-down);
+    --spectrum-tag-content-color-focus: var(--spectrum-neutral-subdued-content-color-key-focus);
+    --spectrum-tag-content-color-selected: var(--spectrum-gray-25);
     --spectrum-tag-focus-ring-thickness: var(--spectrum-focus-indicator-thickness);
     --spectrum-tag-focus-ring-gap: var(--spectrum-focus-indicator-gap);
     --spectrum-tag-focus-ring-color: var(--spectrum-focus-indicator-color);

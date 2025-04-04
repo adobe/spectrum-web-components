@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-card.css');
-@import url('./card-overrides.css');
 
 :host([href]:not([href=''])) {
     cursor: pointer;
@@ -35,7 +34,7 @@ governing permissions and limitations under the License.
     margin-right: auto;
 }
 
-/* The description slot has a psuedo-element that also needs to receive the font styling. 
+/* The description slot has a psuedo-element that also needs to receive the font styling.
 We need to add the declaration to the slot as well */
 slot[name='description'] {
     font-size: var(
@@ -81,7 +80,7 @@ sp-popover {
 }
 
 /**
- * Allow that the heading element will take specified use of the available width whether 
+ * Allow that the heading element will take specified use of the available width whether
  * "actions" are supplied to the element or not.
  **/
 .title {

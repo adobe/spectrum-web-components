@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-action-button.css');
-@import url('./action-button-overrides.css');
 
 ::slotted([slot='icon']) {
     flex-shrink: 0;

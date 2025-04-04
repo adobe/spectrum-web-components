@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
+import '@spectrum-web-components/icons/sp-icons.js';
 import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 async function test(): Promise<void> {
-    const iconset = document.createElement('sp-icons-medium');
+    const iconset = document.createElement('sp-icons');
     document.body.append(iconset);
     await iconset.updateComplete;
 

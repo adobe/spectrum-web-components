@@ -1,20 +1,51 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-@media (forced-colors: active) {
-    :host {
-        --highcontrast-link-text-color: LinkText;
-    }
+a {
+    --spectrum-link-focus-indicator-color: var(--spectrum-focus-indicator-color);
+    --spectrum-link-focus-indicator-thickness: var(--spectrum-focus-indicator-thickness);
+    --spectrum-link-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
+    --spectrum-link-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-link-default-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-link-line-height: var(--spectrum-line-height-100);
+    --spectrum-link-line-height-cjk: var(--spectrum-cjk-line-height-100);
+    --spectrum-link-font-size: var(--spectrum-font-size-100);
+    --spectrum-link-font-style: var(--spectrum-default-font-style);
+    --spectrum-link-font-weight: var(--spectrum-medium-font-weight);
+    --spectrum-link-text-underline-thickness: var(--spectrum-text-underline-thickness);
+    --spectrum-link-text-underline-gap: var(--spectrum-text-underline-gap);
+    --spectrum-link-inline-font-weight: var(--spectrum-regular-font-weight);
+    background-color: initial;
+    -webkit-text-decoration-skip: objects;
+    text-decoration-skip: objects;
+    transition: color var(--mod-link-animation-duration, var(--spectrum-animation-duration-100)) ease-in-out;
+    cursor: pointer;
+    color: var(--highcontrast-link-text-color, var(--mod-link-text-color, var(--spectrum-accent-content-color-default)));
+    font-family: var(--spectrum-link-default-font-family);
+    font-weight: var(--spectrum-link-font-weight);
+    font-size: var(--spectrum-link-font-size);
+    font-style: var(--spectrum-link-font-style);
+    line-height: var(--spectrum-link-line-height);
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    text-decoration-thickness: var(--spectrum-link-text-underline-thickness);
+    text-underline-offset: var(--spectrum-link-text-underline-gap);
+    outline: none;
+}
+
+a:active {
+    --mod-link-text-color: var(--mod-link-text-color-active, var(--spectrum-accent-content-color-down));
+}
+
+a:focus-visible {
+    --mod-link-text-color: var(--mod-link-text-color-focus, var(--spectrum-accent-content-color-key-focus));
+    outline: var(--spectrum-link-focus-indicator-thickness) solid var(--highcontrast-link-focus-indicator-color, var(--spectrum-link-focus-indicator-color));
+    padding: var(--spectrum-link-focus-indicator-gap);
+    border-radius: var(--spectrum-link-corner-radius);
+}
+
+a:lang(ja),
+a:lang(ko),
+a:lang(zh) {
+    line-height: var(--mod-link-line-height-cjk, var(--spectrum-link-line-height-cjk));
 }
 
 :host([variant='secondary']) a {
@@ -24,29 +55,6 @@ governing permissions and limitations under the License.
     --mod-link-text-color-focus: var(--mod-link-text-color-secondary-focus, var(--spectrum-neutral-content-color-key-focus));
 }
 
-a {
-    background-color: initial;
-    -webkit-text-decoration-skip: objects;
-    text-decoration-skip: objects;
-    transition: color var(--mod-link-animation-duration, var(--spectrum-animation-duration-100)) ease-in-out;
-    cursor: pointer;
-    color: var(--highcontrast-link-text-color, var(--mod-link-text-color, var(--mod-link-text-color-primary-default, var(--spectrum-accent-content-color-default))));
-    outline: none;
-    -webkit-text-decoration: underline;
-    text-decoration: underline;
-}
-
-a:active {
-    --mod-link-text-color: var(--mod-link-text-color-active, var(--mod-link-text-color-primary-active, var(--spectrum-accent-content-color-down)));
-}
-
-a:focus-visible {
-    --mod-link-text-color: var(--mod-link-text-color-focus, var(--mod-link-text-color-primary-focus, var(--spectrum-accent-content-color-key-focus)));
-    -webkit-text-decoration: underline double;
-    text-decoration: underline double;
-    text-decoration-color: inherit;
-}
-
 :host([quiet]) a {
     -webkit-text-decoration: none;
     text-decoration: none;
@@ -54,13 +62,17 @@ a:focus-visible {
 
 @media (hover: hover) {
     a:hover {
-        --mod-link-text-color: var(--mod-link-text-color-hover, var(--mod-link-text-color-primary-hover, var(--spectrum-accent-content-color-hover)));
+        --mod-link-text-color: var(--mod-link-text-color-hover, var(--spectrum-accent-content-color-hover));
     }
 
     :host([quiet]) a:hover {
         -webkit-text-decoration: underline;
         text-decoration: underline;
     }
+}
+
+.spectrum-Link--inline {
+    --spectrum-link-font-weight: var(--mod-link-inline-font-weight, var(--spectrum-link-inline-font-weight));
 }
 
 :host([static-color='white']) a {
@@ -75,4 +87,11 @@ a:focus-visible {
     --mod-link-text-color-hover: var(--mod-link-text-color-black, var(--spectrum-black));
     --mod-link-text-color-active: var(--mod-link-text-color-black, var(--spectrum-black));
     --mod-link-text-color-focus: var(--mod-link-text-color-black, var(--spectrum-black));
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-link-text-color: LinkText;
+        --highcontrast-link-focus-indicator-color: LinkText;
+    }
 }

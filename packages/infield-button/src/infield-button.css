@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-infield-button.css');
-@import url('./infield-button-overrides.css');
 
 :host {
     box-sizing: border-box;

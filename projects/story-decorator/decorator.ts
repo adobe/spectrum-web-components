@@ -65,10 +65,6 @@ export const swcThemeDecoratorWithConfig =
 
         // Update window.__swc_hack_knobs__ values with current context globals
         if (context?.globals) {
-            if (context.globals.system) {
-                window.__swc_hack_knobs__.defaultSystemVariant =
-                    context.globals.system;
-            }
             if (context.globals.color) {
                 window.__swc_hack_knobs__.defaultColor = context.globals.color;
             }

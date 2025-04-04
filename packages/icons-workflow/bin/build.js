@@ -19,28 +19,13 @@ import prettier from 'prettier';
 import Case from 'case';
 import { fileURLToPath } from 'url';
 
-import systemsIconMapping from './icons-mapping.json' assert { type: 'json' };
+import iconMapping from './icons-mapping.json' assert { type: 'json' };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const rootDir = path.join(__dirname, '../../../');
 
-const disclaimer = `
-/*
-Copyright 2024 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/`;
-
-const S1IConsPackageDir = '@adobe/spectrum-css-workflow-icons/dist/18';
-const S2IConsPackageDir =
-    '@adobe/spectrum-css-workflow-icons-s2/dist/assets/svg';
+const iconsPackageDir = '@adobe/spectrum-css-workflow-icons/dist/assets/svg';
 const keepColors = '';
 
 const ensureDirectoryExists = (dirPath) => {
@@ -61,12 +46,7 @@ directories.forEach(ensureDirectoryExists);
 
 fs.writeFileSync(
     path.join(rootDir, 'packages', 'icons-workflow', 'src', 'icons.ts'),
-    disclaimer,
-    'utf-8'
-);
-fs.writeFileSync(
-    path.join(rootDir, 'packages', 'icons-workflow', 'src', 'icons-s2.ts'),
-    disclaimer,
+    '',
     'utf-8'
 );
 const manifestPath = path.join(
@@ -76,14 +56,14 @@ const manifestPath = path.join(
     'stories',
     'icon-manifest.ts'
 );
-fs.writeFileSync(manifestPath, disclaimer, 'utf-8');
+fs.writeFileSync(manifestPath, '', 'utf-8');
 let manifestImports = `import {
     html,
     TemplateResult
 } from '@spectrum-web-components/base';\r\n`;
 let manifestListings = `\r\nexport const iconManifest = [\r\n`;
 
-const defaultIconImport = `import { DefaultIcon as AlternateIcon } from '../DefaultIcon.js';\r\n`;
+const defaultIconImport = `import { DefaultIcon } from '../DefaultIcon.js';\r\n`;
 
 // Temporary replacements for a few icon names that have different names in the new S2 icon set
 const replacements = {
@@ -168,10 +148,8 @@ async function buildIcons(icons, tag, iconsNameList) {
         });
 
         const iconLiteral = `
-        ${disclaimer}
-    
         import {tag as html, TemplateResult} from '../custom-tag.js';
-    
+
         export {setCustomTemplateLiteralTag} from '../custom-tag.js';
         export const ${ComponentName}Icon = ({
         width = 24,
@@ -223,51 +201,38 @@ async function buildIcons(icons, tag, iconsNameList) {
 
         const iconElementName = `sp-icon-${Case.kebab(ComponentName)}`;
 
-        const currenVersionIconImport = `import { ${ComponentName}Icon as CurrentIcon } from '../${tag}/${id}.js';\r\n`;
-
         // check if the icon is present in the other version
-        let otherVersionIconImport = defaultIconImport;
+        let iconImport = defaultIconImport;
+        let className = `DefaultIcon`;
 
-        const alternateTag = tag === 'icons' ? 'icons-s2' : 'icons';
-        // if there is a mapping icon found from the above iconset update otherVersionIconImport
-        if (systemsIconMapping[ComponentName]) {
-            otherVersionIconImport = `import { ${systemsIconMapping[ComponentName]}Icon as AlternateIcon } from '../${alternateTag}/${systemsIconMapping[ComponentName]}.js';\r\n`;
+        // if there is a mapping icon found from the above iconset update iconImport
+        if (iconMapping[ComponentName]) {
+            className = `${iconMapping[ComponentName]}Icon`;
+            iconImport = `import { ${className} } from '../icons/${iconMapping[ComponentName]}.js';\r\n`;
         } else if (iconsNameList.includes(ComponentName)) {
+            className = `${ComponentName}Icon`;
             // if there is a no mapping icon found reset to DefaultIcon
-            otherVersionIconImport = `import { ${ComponentName}Icon as AlternateIcon } from '../${alternateTag}/${id}.js';\r\n`;
+            iconImport = `import { ${ComponentName}Icon } from '../icons/${id}.js';\r\n`;
         }
 
-        const spectrumVersion = tag === 'icons' ? 1 : 2;
-
         const iconElement = `
-        ${disclaimer}
-        
         import {
             html,
             TemplateResult
         } from '@spectrum-web-components/base';
-        import {
-            IconBase
-        } from '@spectrum-web-components/icon';
-        import {
-            setCustomTemplateLiteralTag
-        } from '../custom-tag.js';
-        
-        ${currenVersionIconImport}
-        ${otherVersionIconImport}
-        
+        import { IconBase } from '@spectrum-web-components/icon';
+        import { setCustomTemplateLiteralTag } from '../custom-tag.js';
+
+        ${iconImport}
+
         /**
          * @element ${iconElementName}
          */
         export class Icon${ComponentName} extends IconBase {
             protected override render(): TemplateResult {
                 setCustomTemplateLiteralTag(html);
-    
-                if(this.spectrumVersion === ${spectrumVersion}){
-                    return CurrentIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
-                }
-                return AlternateIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
-    
+                return ${className}({ hidden: !this.label, title: this.label }) as TemplateResult;
+
             }
         }
         `;
@@ -301,13 +266,11 @@ async function buildIcons(icons, tag, iconsNameList) {
             });
 
         const iconRegistration = `
-        ${disclaimer}
-    
         import { Icon${ComponentName} } from '../src/elements/Icon${id}.js';
         import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
-    
+
         defineElement('${iconElementName}', Icon${ComponentName});
-    
+
         declare global {
             interface HTMLElementTagNameMap {
                 '${iconElementName}': Icon${ComponentName};
@@ -351,23 +314,15 @@ async function buildIcons(icons, tag, iconsNameList) {
     });
 }
 
-const iconsV1 = (
-    await fg(`${rootDir}/node_modules/${S1IConsPackageDir}/**.svg`)
-).sort();
-
 const iconsV2 = (
-    await fg(`${rootDir}/node_modules/${S2IConsPackageDir}/**.svg`)
+    await fg(`${rootDir}/node_modules/${iconsPackageDir}/**.svg`)
 ).sort();
 
-const iconsV1NameList = iconsV1.map((i) => {
-    return getComponentName(i);
-});
 const iconsV2NameList = iconsV2.map((i) => {
     return getComponentName(i);
 });
 
-await buildIcons(iconsV1, 'icons', iconsV2NameList);
-await buildIcons(iconsV2, 'icons-s2', iconsV1NameList);
+await buildIcons(iconsV2, 'icons', iconsV2NameList);
 
 const exportString = `\r\nexport { setCustomTemplateLiteralTag } from './custom-tag.js';\r\n`;
 fs.appendFileSync(

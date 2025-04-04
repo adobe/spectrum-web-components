@@ -14,12 +14,12 @@ import { TemplateResult } from '@spectrum-web-components/base';
 
 import { IconsetSVG } from '@spectrum-web-components/iconset/src/iconset-svg.js';
 
-import iconsSVG from './icons-medium.svg.js';
+import iconsSVG from './icons.svg.js';
 
 /**
- * @element sp-icons-medium
+ * @element sp-icons
  */
-export class IconsMedium extends IconsetSVG {
+export class IconsBase extends IconsetSVG {
     public constructor() {
         super();
         this.name = 'ui'; // default iconset name for these icons

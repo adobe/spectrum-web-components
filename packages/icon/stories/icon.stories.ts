@@ -10,13 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/icon/sp-icon.js';
 import { back } from './images';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
-import '@spectrum-web-components/icons/sp-icons-large.js';
+import '@spectrum-web-components/icons/sp-icons.js';
 
-const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl'];
+const sizes: ('l' | 'm' | 's' | 'xxs' | 'xs' | 'xl' | 'xxl' | undefined)[] = [
+    'xxs',
+    'xs',
+    's',
+    'm',
+    'l',
+    'xl',
+    'xxl',
+];
 
 export default {
     component: 'sp-icon',
@@ -25,21 +33,10 @@ export default {
 
 export const Medium = (): TemplateResult => {
     return html`
-        <sp-icons-medium></sp-icons-medium>
+        <sp-icons></sp-icons>
         ${sizes.map(
             (size) => html`
-                <sp-icon size=${size} name="ui:Chevron200"></sp-icon>
-            `
-        )}
-    `;
-};
-
-export const Large = (): TemplateResult => {
-    return html`
-        <sp-icons-large></sp-icons-large>
-        ${sizes.map(
-            (size) => html`
-                <sp-icon size=${size} name="ui:Chevron400"></sp-icon>
+                <sp-icon size=${ifDefined(size)} name="ui:Chevron200"></sp-icon>
             `
         )}
     `;

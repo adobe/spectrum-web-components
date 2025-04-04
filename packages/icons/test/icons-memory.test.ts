@@ -10,9 +10,9 @@ governing permissions and limitations under the License.
 */
 
 import { html } from '@open-wc/testing';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
+import '@spectrum-web-components/icons/sp-icons.js';
 import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
 testForMemoryLeaks(html`
-    <sp-icons-medium></sp-icons-medium>
+    <sp-icons></sp-icons>
 `);

@@ -8,27 +8,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/icons/sp-icons-large.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
-import { IconsLarge, IconsMedium } from '../';
-import IconsetSVG from '../src/icons-large.svg.js';
+import '@spectrum-web-components/icons/sp-icons.js';
+import { IconsBase } from '../';
+import IconsetSVG from '../src/icons.svg.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { stub } from 'sinon';
 
 describe('icons', () => {
-    it('large', async () => {
-        const el = await fixture<IconsLarge>(html`
-            <sp-icons-large></sp-icons-large>
-        `);
-
-        await elementUpdated(el);
-
-        expect(el).to.not.equal(undefined);
-        expect(el.getIconList().length).to.be.above(0);
-    });
-    it('medium', async () => {
-        const el = await fixture<IconsMedium>(html`
-            <sp-icons-medium></sp-icons-medium>
+    it('render', async () => {
+        const el = await fixture<IconsBase>(html`
+            <sp-icons></sp-icons>
         `);
 
         await elementUpdated(el);
@@ -37,8 +26,8 @@ describe('icons', () => {
         expect(el.getIconList().length).to.be.above(0);
     });
     it('listens to slotchange events', async () => {
-        const el = await fixture<IconsMedium>(html`
-            <sp-icons-medium>${IconsetSVG}</sp-icons-medium>
+        const el = await fixture<IconsBase>(html`
+            <sp-icons>${IconsetSVG}</sp-icons>
         `);
 
         await elementUpdated(el);
@@ -62,9 +51,9 @@ describe('dev mode', () => {
         consoleWarnStub.restore();
     });
 
-    it('warns in devMode for deprecated usage - medium', async () => {
-        const el = await fixture<IconsMedium>(html`
-            <sp-icons-medium>${IconsetSVG}</sp-icons-medium>
+    it('warns in devMode for deprecated usage', async () => {
+        const el = await fixture<IconsBase>(html`
+            <sp-icons>${IconsetSVG}</sp-icons>
         `);
 
         await elementUpdated(el);
@@ -77,28 +66,7 @@ describe('dev mode', () => {
         ).to.be.true;
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
             data: {
-                localName: 'sp-icons-medium',
-                type: 'api',
-                level: 'deprecation',
-            },
-        });
-    });
-    it('warns in devMode for deprecated usage - large', async () => {
-        const el = await fixture<IconsLarge>(html`
-            <sp-icons-large>${IconsetSVG}</sp-icons-large>
-        `);
-
-        await elementUpdated(el);
-        expect(consoleWarnStub.called).to.be.true;
-
-        const spyCall = consoleWarnStub.getCall(0);
-        expect(
-            (spyCall.args.at(0) as string).includes('deprecated'),
-            'confirm deprecated variant warning'
-        ).to.be.true;
-        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
-            data: {
-                localName: 'sp-icons-large',
+                localName: 'sp-icons',
                 type: 'api',
                 level: 'deprecation',
             },

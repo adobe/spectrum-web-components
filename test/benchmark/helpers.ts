@@ -14,7 +14,7 @@ import { html, LitElement, render, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/scale-large.js';
-import '@spectrum-web-components/theme/theme-lightest.js';
+import '@spectrum-web-components/theme/theme-light.js';
 
 declare global {
     interface Window {
@@ -145,7 +145,7 @@ export const measureFixtureCreation = async (
     const templates = new Array<TemplateResult>(opts.numRenders).fill(template);
     const renderContainer = document.createElement('sp-theme');
     renderContainer.scale = 'large';
-    renderContainer.color = 'lightest';
+    renderContainer.color = 'light';
 
     document.body.appendChild(renderContainer);
     const start = window.tachometerStart === 'page' ? 0 : performance.now();

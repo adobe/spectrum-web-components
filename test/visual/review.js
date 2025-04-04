@@ -18,7 +18,7 @@ import { hideBin } from 'yargs/helpers';
 import crypto from 'crypto';
 import slugify from '@sindresorhus/slugify';
 
-const { commit, system, branch } = yargs(hideBin(process.argv)).argv;
+const { commit, branch } = yargs(hideBin(process.argv)).argv;
 
 const getHash = (context) => {
     const md5 = crypto.createHash('md5');
@@ -27,35 +27,21 @@ const getHash = (context) => {
 };
 
 const vrts = [];
-const themes = ['Spectrum', 'Express', 'Spectrum-two'];
-const scales = ['Medium', 'Large'];
-const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
-const directions = ['LTR', 'RTL'];
 vrts.push([
     `High Contrast Mode | Medium | LTR`,
     `https://${getHash(`${branch}-hcm`)}--spectrum-w-c.netlify.app/review/`,
 ]);
-themes.map((theme) =>
-    colors.map((color) => {
-        if (
-            theme === 'Spectrum-two' &&
-            (color === 'Lightest' || color === 'Darkest')
-        ) {
-            return;
-        }
-        scales.map((scale) =>
-            directions.map((direction) => {
-                const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
-                vrts.push([
-                    `${theme} | ${color} | ${scale} | ${direction}`,
-                    `https://${getHash(
-                        context
-                    )}--spectrum-w-c.netlify.app/review/`,
-                ]);
-            })
-        );
-    })
-);
+['Light', 'Dark'].map((color) => {
+    ['Medium', 'Large'].map((scale) =>
+        ['LTR', 'RTL'].map((direction) => {
+            const context = `${branch}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+            vrts.push([
+                `${color} | ${scale} | ${direction}`,
+                `https://${getHash(context)}--spectrum-w-c.netlify.app/review/`,
+            ]);
+        })
+    );
+});
 
 function cleanURL(url) {
     return url.replace('test/visual/', '../');
@@ -180,7 +166,6 @@ async function main() {
             branch,
             preview: `https://${slugify(branch)}--spectrum-w-c.netlify.app`,
             commit,
-            system,
             vrts,
         },
         tests,

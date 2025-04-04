@@ -1,32 +1,20 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #button {
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
-    font-family: var(--mod-button-font-family, var(--mod-sans-font-family-stack, var(--spectrum-sans-font-family-stack)));
+    font-family: var(--mod-button-font-family, var(--spectrum-sans-font-family-stack));
+    vertical-align: top;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: var(--mod-button-line-height, var(--mod-line-height-100, var(--spectrum-line-height-100)));
+    line-height: var(--mod-button-line-height, var(--spectrum-line-height-100));
     text-transform: none;
-    vertical-align: top;
     -webkit-appearance: button;
     transition:
-        background var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
-        border-color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
-        color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
-        box-shadow var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out;
+        background var(--mod-button-animation-duration, var(--spectrum-animation-duration-100)) ease-out,
+        border-color var(--mod-button-animation-duration, var(--spectrum-animation-duration-100)) ease-out,
+        color var(--mod-button-animation-duration, var(--spectrum-animation-duration-100)) ease-out,
+        box-shadow var(--mod-button-animation-duration, var(--spectrum-animation-duration-100)) ease-out;
     justify-content: center;
     align-items: center;
     margin: 0;
@@ -38,7 +26,8 @@ governing permissions and limitations under the License.
 }
 
 #button::-moz-focus-inner {
-    border-style: none;
+    border: 0;
+    margin-block: -2px;
     padding: 0;
 }
 
@@ -47,27 +36,39 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    --spectrum-picker-background-color-default: var(--spectrum-gray-100);
+    --spectrum-picker-background-color-default-open: var(--spectrum-gray-200);
+    --spectrum-picker-background-color-hover: var(--spectrum-gray-200);
+    --spectrum-picker-background-color-hover-open: var(--spectrum-gray-200);
+    --spectrum-picker-background-color-active: var(--spectrum-gray-200);
+    --spectrum-picker-background-color-key-focus: var(--spectrum-gray-200);
+    --spectrum-picker-border-color-default: var(--spectrum-gray-500);
+    --spectrum-picker-border-color-default-open: var(--spectrum-gray-800);
+    --spectrum-picker-border-color-hover: var(--spectrum-gray-600);
+    --spectrum-picker-border-color-hover-open: var(--spectrum-gray-900);
+    --spectrum-picker-border-color-active: var(--spectrum-gray-700);
+    --spectrum-picker-border-color-key-focus: var(--spectrum-gray-900);
+    --spectrum-picker-border-width: var(--spectrum-border-width-100);
     --spectrum-picker-font-size: var(--spectrum-font-size-100);
     --spectrum-picker-font-weight: var(--spectrum-regular-font-weight);
     --spectrum-picker-placeholder-font-style: var(--spectrum-default-font-style);
     --spectrum-picker-line-height: var(--spectrum-line-height-100);
+    --spectrum-picker-line-height-cjk: var(--spectrum-cjk-line-height-100);
     --spectrum-picker-block-size: var(--spectrum-component-height-100);
-    --spectrum-picker-inline-size: var(--spectrum-field-width);
-    --spectrum-picker-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-picker-min-inline-size: calc(var(--spectrum-picker-minimum-width-multiplier) * var(--mod-picker-block-size, var(--spectrum-picker-block-size)));
+    --spectrum-picker-border-radius: var(--spectrum-corner-radius-medium-size-medium);
     --spectrum-picker-spacing-top-to-text: var(--spectrum-component-top-to-text-100);
     --spectrum-picker-spacing-bottom-to-text: var(--spectrum-component-bottom-to-text-100);
     --spectrum-picker-spacing-edge-to-text: var(--spectrum-component-edge-to-text-100);
-    --spectrum-picker-spacing-edge-to-text-quiet: var(--spectrum-field-edge-to-text-quiet);
     --spectrum-picker-spacing-label-to-picker: var(--spectrum-field-label-to-component);
-    --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-100);
-    --spectrum-picker-spacing-text-to-icon-inline-end: var(--spectrum-field-text-to-alert-icon-medium);
-    --spectrum-picker-spacing-icon-to-disclosure-icon: var(--spectrum-picker-visual-to-disclosure-icon-medium);
     --spectrum-picker-spacing-label-to-picker-quiet: var(--spectrum-field-label-to-component-quiet-medium);
-    --spectrum-picker-spacing-top-to-alert-icon: var(--spectrum-field-top-to-alert-icon-medium);
+    --spectrum-picker-spacing-starting-icon-to-text: var(--spectrum-text-to-visual-100);
+    --spectrum-picker-spacing-text-to-icon-inline-end: var(--spectrum-text-to-visual-100);
+    --spectrum-picker-spacing-icon-to-disclosure-icon: var(--spectrum-picker-visual-to-disclosure-icon-medium);
+    --spectrum-picker-spacing-top-to-alert-icon: var(--spectrum-component-top-to-workflow-icon-100);
     --spectrum-picker-spacing-top-to-progress-circle: var(--spectrum-field-top-to-progress-circle-medium);
     --spectrum-picker-spacing-top-to-disclosure-icon: var(--spectrum-field-top-to-disclosure-icon-100);
     --spectrum-picker-spacing-edge-to-disclosure-icon: var(--spectrum-field-end-edge-to-disclosure-icon-100);
-    --spectrum-picker-spacing-edge-to-disclosure-icon-quiet: var(--spectrum-picker-end-edge-to-disclousure-icon-quiet);
     --spectrum-picker-animation-duration: var(--spectrum-animation-duration-100);
     --spectrum-picker-font-color-default: var(--spectrum-neutral-content-color-default);
     --spectrum-picker-font-color-default-open: var(--spectrum-neutral-content-color-focus);
@@ -88,6 +89,7 @@ governing permissions and limitations under the License.
     --spectrum-picker-border-color-error-active: var(--spectrum-negative-border-color-down);
     --spectrum-picker-border-color-error-key-focus: var(--spectrum-negative-border-color-key-focus);
     --spectrum-picker-icon-color-error: var(--spectrum-negative-visual-color);
+    --spectrum-picker-border-color-disabled: var(--spectrum-gray-300);
     --spectrum-picker-background-color-disabled: var(--spectrum-disabled-background-color);
     --spectrum-picker-font-color-disabled: var(--spectrum-disabled-content-color);
     --spectrum-picker-icon-color-disabled: var(--spectrum-disabled-content-color);
@@ -96,80 +98,96 @@ governing permissions and limitations under the License.
     --spectrum-picker-focus-indicator-color: var(--spectrum-focus-indicator-color);
 }
 
+:host([open]) #button + .spectrum-Popover--bottom-start {
+    --spectrum-picker-spacing-picker-to-popover: var(--spectrum-component-to-menu-medium);
+}
+
 :host([size='s']) {
     --spectrum-picker-font-size: var(--spectrum-font-size-75);
     --spectrum-picker-block-size: var(--spectrum-component-height-75);
+    --spectrum-picker-inline-size: var(--spectrum-field-default-width-small);
+    --spectrum-picker-border-radius: var(--spectrum-corner-radius-medium-size-small);
     --spectrum-picker-spacing-top-to-text: var(--spectrum-component-top-to-text-75);
     --spectrum-picker-spacing-bottom-to-text: var(--spectrum-component-bottom-to-text-75);
     --spectrum-picker-spacing-edge-to-text: var(--spectrum-component-edge-to-text-75);
-    --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-75);
-    --spectrum-picker-spacing-text-to-icon-inline-end: var(--spectrum-field-text-to-alert-icon-small);
+    --spectrum-picker-spacing-starting-icon-to-text: var(--spectrum-text-to-visual-75);
+    --spectrum-picker-spacing-text-to-icon-inline-end: var(--spectrum-text-to-visual-75);
     --spectrum-picker-spacing-icon-to-disclosure-icon: var(--spectrum-picker-visual-to-disclosure-icon-small);
     --spectrum-picker-spacing-label-to-picker-quiet: var(--spectrum-field-label-to-component-quiet-small);
-    --spectrum-picker-spacing-top-to-alert-icon: var(--spectrum-field-top-to-alert-icon-small);
+    --spectrum-picker-spacing-top-to-alert-icon: var(--spectrum-component-top-to-workflow-icon-75);
     --spectrum-picker-spacing-top-to-progress-circle: var(--spectrum-field-top-to-progress-circle-small);
     --spectrum-picker-spacing-top-to-disclosure-icon: var(--spectrum-field-top-to-disclosure-icon-75);
     --spectrum-picker-spacing-edge-to-disclosure-icon: var(--spectrum-field-end-edge-to-disclosure-icon-75);
 }
 
+:host([size='s'][open]) + .spectrum-Popover--bottom-start {
+    --spectrum-picker-spacing-picker-to-popover: var(--spectrum-component-to-menu-small);
+}
+
 :host([size='l']) {
     --spectrum-picker-font-size: var(--spectrum-font-size-200);
+    --spectrum-picker-inline-size: var(--spectrum-field-default-width-large);
     --spectrum-picker-block-size: var(--spectrum-component-height-200);
+    --spectrum-picker-border-radius: var(--spectrum-corner-radius-medium-size-large);
     --spectrum-picker-spacing-top-to-text: var(--spectrum-component-top-to-text-200);
     --spectrum-picker-spacing-bottom-to-text: var(--spectrum-component-bottom-to-text-200);
     --spectrum-picker-spacing-edge-to-text: var(--spectrum-component-edge-to-text-200);
-    --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-200);
-    --spectrum-picker-spacing-text-to-icon-inline-end: var(--spectrum-field-text-to-alert-icon-large);
+    --spectrum-picker-spacing-starting-icon-to-text: var(--spectrum-text-to-visual-200);
+    --spectrum-picker-spacing-text-to-icon-inline-end: var(--spectrum-text-to-visual-200);
     --spectrum-picker-spacing-icon-to-disclosure-icon: var(--spectrum-picker-visual-to-disclosure-icon-large);
     --spectrum-picker-spacing-label-to-picker-quiet: var(--spectrum-field-label-to-component-quiet-large);
-    --spectrum-picker-spacing-top-to-alert-icon: var(--spectrum-field-top-to-alert-icon-large);
+    --spectrum-picker-spacing-top-to-alert-icon: var(--spectrum-component-top-to-workflow-icon-200);
     --spectrum-picker-spacing-top-to-progress-circle: var(--spectrum-field-top-to-progress-circle-large);
     --spectrum-picker-spacing-top-to-disclosure-icon: var(--spectrum-field-top-to-disclosure-icon-200);
     --spectrum-picker-spacing-edge-to-disclosure-icon: var(--spectrum-field-end-edge-to-disclosure-icon-200);
 }
 
+:host([size='l'][open]) + .spectrum-Popover--bottom-start {
+    --spectrum-picker-spacing-picker-to-popover: var(--spectrum-component-to-menu-large);
+}
+
 :host([size='xl']) {
     --spectrum-picker-font-size: var(--spectrum-font-size-300);
+    --spectrum-picker-inline-size: var(--spectrum-field-default-width-extra-large);
     --spectrum-picker-block-size: var(--spectrum-component-height-300);
+    --spectrum-picker-border-radius: var(--spectrum-corner-radius-medium-size-extra-large);
     --spectrum-picker-spacing-top-to-text: var(--spectrum-component-top-to-text-300);
     --spectrum-picker-spacing-bottom-to-text: var(--spectrum-component-bottom-to-text-300);
     --spectrum-picker-spacing-edge-to-text: var(--spectrum-component-edge-to-text-300);
-    --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-300);
-    --spectrum-picker-spacing-text-to-icon-inline-end: var(--spectrum-field-text-to-alert-icon-extra-large);
+    --spectrum-picker-spacing-starting-icon-to-text: var(--spectrum-text-to-visual-300);
+    --spectrum-picker-spacing-text-to-icon-inline-end: var(--spectrum-text-to-visual-300);
     --spectrum-picker-spacing-icon-to-disclosure-icon: var(--spectrum-picker-visual-to-disclosure-icon-extra-large);
     --spectrum-picker-spacing-label-to-picker-quiet: var(--spectrum-field-label-to-component-quiet-extra-large);
-    --spectrum-picker-spacing-top-to-alert-icon: var(--spectrum-field-top-to-alert-icon-extra-large);
+    --spectrum-picker-spacing-top-to-alert-icon: var(--spectrum-component-top-to-workflow-icon-300);
     --spectrum-picker-spacing-top-to-progress-circle: var(--spectrum-field-top-to-progress-circle-extra-large);
     --spectrum-picker-spacing-top-to-disclosure-icon: var(--spectrum-field-top-to-disclosure-icon-300);
     --spectrum-picker-spacing-edge-to-disclosure-icon: var(--spectrum-field-end-edge-to-disclosure-icon-300);
 }
 
-@media (forced-colors: active) {
-    :host {
-        --highcontrast-picker-focus-indicator-color: Highlight;
-        --highcontrast-picker-border-color-default: ButtonBorder;
-        --highcontrast-picker-border-color-hover: Highlight;
-        --highcontrast-picker-border-color-disabled: GrayText;
-        --highcontrast-picker-content-color-default: ButtonText;
-        --highcontrast-picker-content-color-disabled: GrayText;
-        --highcontrast-picker-background-color: ButtonFace;
-    }
+:host([size='xl'][open]) + .spectrum-Popover--bottom-start {
+    --spectrum-picker-spacing-picker-to-popover: var(--spectrum-component-to-menu-extra-large);
+}
 
-    #button.is-keyboardFocused,
-    #button:focus-visible {
-        --highcontrast-picker-border-color-hover: ButtonText;
-    }
-
-    #button .label,
-    #button:after {
-        forced-color-adjust: none;
-    }
+:host([quiet]) #button {
+    --spectrum-picker-background-color-default: transparent;
+    --spectrum-picker-background-color-default-open: transparent;
+    --spectrum-picker-background-color-hover: transparent;
+    --spectrum-picker-background-color-hover-open: transparent;
+    --spectrum-picker-background-color-active: transparent;
+    --spectrum-picker-background-color-key-focus: transparent;
+    --spectrum-picker-background-color-disabled: transparent;
+    --spectrum-picker-border-color-disabled: transparent;
+    --spectrum-picker-min-inline-size: var(--mod-picker-min-inline-size-quiet, 0);
+    --spectrum-picker-inline-size: var(--mod-picker-inline-size-quiet, auto);
+    --spectrum-picker-spacing-edge-to-text: var(--mod-picker-spacing-edge-to-text-quiet, var(--spectrum-field-edge-to-text-quiet));
+    --spectrum-picker-spacing-edge-to-disclosure-icon: var(--mod-picker-spacing-edge-to-disclosure-icon-quiet, var(--spectrum-picker-end-edge-to-disclousure-icon-quiet));
+    --spectrum-picker-spacing-label-to-picker: var(--mod-picker-spacing-label-to-picker-quiet, var(--spectrum-picker-spacing-label-to-picker-quiet));
 }
 
 #button {
     box-sizing: border-box;
     max-inline-size: 100%;
-    min-inline-size: calc(var(--spectrum-picker-minimum-width-multiplier) * var(--mod-picker-block-size, var(--spectrum-picker-block-size)));
+    min-inline-size: var(--mod-picker-min-inline-size, var(--spectrum-picker-min-inline-size));
     inline-size: var(--mod-picker-inline-size, var(--spectrum-picker-inline-size));
     block-size: var(--mod-picker-block-size, var(--spectrum-picker-block-size));
     border-width: var(--mod-picker-border-width, var(--spectrum-picker-border-width));
@@ -208,13 +226,14 @@ governing permissions and limitations under the License.
 #button:active {
     background-color: var(--highcontrast-picker-background-color, var(--mod-picker-background-color-active, var(--spectrum-picker-background-color-active)));
     border-color: var(--highcontrast-picker-border-color-default, var(--mod-picker-border-active, var(--spectrum-picker-border-color-active)));
+    transform: perspective(max(var(--spectrum-downstate-height), var(--spectrum-downstate-width) * var(--spectrum-component-size-width-ratio-down))) translateZ(var(--spectrum-component-size-difference-down));
 }
 
 #button:active:after {
     border-color: #0000;
 }
 
-#button.placeholder:active .label {
+#button:active .label.placeholder {
     color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-active, var(--spectrum-picker-font-color-active)));
 }
 
@@ -241,13 +260,13 @@ governing permissions and limitations under the License.
     color: var(--highcontrast-picker-content-color-default, var(--mod-picker-icon-color-key-focus, var(--spectrum-picker-icon-color-key-focus)));
 }
 
-:host([open]) #button:not(.spectrum-Picker--quiet, :disabled, .is-disabled) {
+:host([open]) #button:not(.spectrum-Picker--quiet, :disabled, .is-disabled, .is-loading) {
     color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-default-open, var(--spectrum-picker-font-color-default-open)));
     background-color: var(--highcontrast-picker-background-color, var(--mod-picker-background-color-default-open, var(--spectrum-picker-background-color-default-open)));
     border-color: var(--highcontrast-picker-border-color-default, var(--mod-picker-border-default-open, var(--spectrum-picker-border-color-default-open)));
 }
 
-:host([open]) #button:not(.spectrum-Picker--quiet, :disabled, .is-disabled) .picker {
+:host([open]) #button:not(.spectrum-Picker--quiet, :disabled, .is-disabled, .is-loading) .picker {
     color: var(--highcontrast-picker-content-color-default, var(--mod-picker-icon-color-default-open, var(--spectrum-picker-icon-color-default-open)));
 }
 
@@ -272,18 +291,9 @@ governing permissions and limitations under the License.
     border-color: var(--highcontrast-picker-border-color-default, var(--mod-picker-border-color-error-key-focus, var(--spectrum-picker-border-color-error-key-focus)));
 }
 
-:host([pending]) #button .picker {
-    color: var(--highcontrast-picker-content-color-disabled, var(--mod-picker-icon-color-disabled, var(--spectrum-picker-icon-color-disabled)));
-}
-
-:host([invalid]) #button .label,
-:host([pending]) #button .label {
-    margin-inline-end: var(--mod-picker-spacing-text-to-icon-inline-end, var(--mod-picker-spacing-text-to-alert-icon-inline-start, var(--spectrum-picker-spacing-text-to-icon-inline-end)));
-}
-
 .icon {
     flex-shrink: 0;
-    margin-inline-end: var(--mod-picker-spacing-text-to-icon, var(--spectrum-picker-spacing-text-to-icon));
+    margin-inline-end: var(--mod-picker-spacing-starting-icon-to-text, var(--spectrum-picker-spacing-starting-icon-to-text));
 }
 
 .label {
@@ -294,8 +304,9 @@ governing permissions and limitations under the License.
     text-overflow: ellipsis;
     text-align: start;
     flex: auto;
-    padding-block-start: var(--mod-picker-spacing-top-to-text, var(--spectrum-picker-spacing-top-to-text));
-    padding-block-end: calc(var(--mod-picker-spacing-bottom-to-text, var(--spectrum-picker-spacing-bottom-to-text)) - var(--mod-picker-border-width, var(--spectrum-picker-border-width)));
+    margin-block-start: var(--mod-picker-spacing-top-to-text, var(--spectrum-picker-spacing-top-to-text));
+    margin-block-end: calc(var(--mod-picker-spacing-bottom-to-text, var(--spectrum-picker-spacing-bottom-to-text)) - var(--mod-picker-border-width, var(--spectrum-picker-border-width)));
+    margin-inline-end: var(--mod-picker-spacing-text-to-icon-inline-end, var(--spectrum-picker-spacing-text-to-icon-inline-end));
     overflow: hidden;
 }
 
@@ -306,15 +317,54 @@ governing permissions and limitations under the License.
     color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-default, var(--spectrum-picker-font-color-default)));
 }
 
+@media (hover: hover) {
+    #button:hover {
+        color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-hover, var(--spectrum-picker-font-color-hover)));
+        background-color: var(--highcontrast-picker-background-color, var(--mod-picker-background-color-hover, var(--spectrum-picker-background-color-hover)));
+        border-color: var(--highcontrast-picker-border-color-hover, var(--mod-picker-border-color-hover, var(--spectrum-picker-border-color-hover)));
+    }
+
+    #button:hover .picker {
+        color: var(--highcontrast-picker-content-color-default, var(--mod-picker-icon-color-hover, var(--spectrum-picker-icon-color-hover)));
+    }
+
+    :host([open]) #button:not(.spectrum-Picker--quiet, :disabled, .is-disabled, .is-loading):hover {
+        color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-hover-open, var(--spectrum-picker-font-color-hover-open)));
+        background-color: var(--highcontrast-picker-background-color, var(--mod-picker-background-color-hover-open, var(--spectrum-picker-background-color-hover-open)));
+        border-color: var(--highcontrast-picker-border-color-hover, var(--mod-picker-border-color-hover-open, var(--spectrum-picker-border-color-hover-open)));
+    }
+
+    :host([open]) #button:not(.spectrum-Picker--quiet, :disabled, .is-disabled, .is-loading):hover .picker {
+        color: var(--highcontrast-picker-content-color-default, var(--mod-picker-icon-color-hover-open, var(--spectrum-picker-icon-color-hover-open)));
+    }
+
+    :host([invalid]) #button:not(:disabled, .is-disabled):hover {
+        border-color: var(--highcontrast-picker-border-color-hover, var(--mod-picker-border-color-error-hover, var(--spectrum-picker-border-color-error-hover)));
+    }
+
+    :host([invalid][open]) #button:not(:disabled, .is-disabled):hover {
+        border-color: var(--highcontrast-picker-border-color-hover, var(--mod-picker-border-color-error-hover-open, var(--spectrum-picker-border-color-error-hover-open)));
+    }
+
+    .label.placeholder:hover {
+        color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-hover, var(--spectrum-picker-font-color-hover)));
+    }
+}
+
 .label.placeholder:active {
     color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-active, var(--spectrum-picker-font-color-active)));
 }
 
+#button:lang(ja) .label,
+#button:lang(ko) .label,
+#button:lang(zh) .label {
+    line-height: var(--mod-picker-line-height-cjk, var(--spectrum-picker-line-height-cjk));
+}
+
 .picker {
     vertical-align: top;
-    transition: color var(--mod-picker-animation-duration, var(--spectrum-picker-animation-duration)) ease-out;
-    margin-inline-start: var(--mod-picker-spacing-icon-to-disclosure-icon, var(--spectrum-picker-spacing-icon-to-disclosure-icon));
     margin-block: var(--mod-picker-spacing-top-to-disclosure-icon, var(--spectrum-picker-spacing-top-to-disclosure-icon));
+    transition: color var(--mod-picker-animation-duration, var(--spectrum-picker-animation-duration)) ease-out;
     color: var(--highcontrast-picker-content-color-default, var(--mod-picker-icon-color-default, var(--spectrum-picker-icon-color-default)));
     flex-shrink: 0;
     display: inline-block;
@@ -331,84 +381,34 @@ governing permissions and limitations under the License.
     margin-block-end: calc(var(--mod-picker-spacing-top-to-alert-icon, var(--spectrum-picker-spacing-top-to-alert-icon)) - var(--mod-picker-border-width, var(--spectrum-picker-border-width)));
 }
 
+#button .progress-circle,
+.validation-icon {
+    margin-inline-end: var(--mod-picker-spacing-icon-to-disclosure-icon, var(--spectrum-picker-spacing-icon-to-disclosure-icon));
+}
+
 #button .progress-circle {
     margin-block-start: calc(var(--mod-picker-spacing-top-to-progress-circle, var(--spectrum-picker-spacing-top-to-progress-circle)) - var(--mod-picker-border-width, var(--spectrum-picker-border-width)));
     margin-block-end: calc(var(--mod-picker-spacing-top-to-progress-circle, var(--spectrum-picker-spacing-top-to-progress-circle)) - var(--mod-picker-border-width, var(--spectrum-picker-border-width)));
 }
 
-.label ~ .picker {
-    margin-inline-start: var(--mod-picker-spacing-text-to-icon, var(--spectrum-picker-spacing-text-to-icon));
+:host([open]) #button + .spectrum-Popover--bottom-start {
+    transform: translateY(var(--mod-picker-spacing-picker-to-popover, var(--spectrum-picker-spacing-picker-to-popover)));
 }
 
 :host([quiet]) #button {
-    inline-size: auto;
-    min-inline-size: 0;
-    padding-inline: var(--mod-picker-spacing-edge-to-text-quiet, var(--spectrum-picker-spacing-edge-to-text-quiet));
     color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-default, var(--spectrum-picker-font-color-default)));
-    background-color: initial;
-    background-color: var(--highcontrast-picker-background-color, transparent);
     border: none;
     border-radius: 0;
-    margin-block-start: calc(var(--mod-picker-spacing-label-to-picker-quiet, var(--spectrum-picker-spacing-label-to-picker-quiet)) + 1px);
 }
 
 :host([quiet]) #button.label-inline {
     margin-block-start: 0;
 }
 
-:host([quiet]) #button .picker {
-    margin-inline-end: var(--mod-picker-spacing-edge-to-disclosure-icon-quiet, var(--spectrum-picker-spacing-edge-to-disclosure-icon-quiet));
-}
-
 :host([quiet]) #button:after {
     block-size: auto;
     inline-size: auto;
     border: none;
-}
-
-@media (hover: hover) {
-    #button:hover {
-        color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-hover, var(--spectrum-picker-font-color-hover)));
-        background-color: var(--highcontrast-picker-background-color, var(--mod-picker-background-color-hover, var(--spectrum-picker-background-color-hover)));
-        border-color: var(--highcontrast-picker-border-color-hover, var(--mod-picker-border-color-hover, var(--spectrum-picker-border-color-hover)));
-    }
-
-    #button:hover .picker {
-        color: var(--highcontrast-picker-content-color-default, var(--mod-picker-icon-color-hover, var(--spectrum-picker-icon-color-hover)));
-    }
-
-    :host([open]) #button:not(.spectrum-Picker--quiet, :disabled, .is-disabled):hover {
-        color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-hover-open, var(--spectrum-picker-font-color-hover-open)));
-        background-color: var(--highcontrast-picker-background-color, var(--mod-picker-background-color-hover-open, var(--spectrum-picker-background-color-hover-open)));
-        border-color: var(--highcontrast-picker-border-color-hover, var(--mod-picker-border-color-hover-open, var(--spectrum-picker-border-color-hover-open)));
-    }
-
-    :host([open]) #button:not(.spectrum-Picker--quiet, :disabled, .is-disabled):hover .picker {
-        color: var(--highcontrast-picker-content-color-default, var(--mod-picker-icon-color-hover-open, var(--spectrum-picker-icon-color-hover-open)));
-    }
-
-    :host([invalid]) #button:not(:disabled, .is-disabled):hover {
-        border-color: var(--highcontrast-picker-border-color-hover, var(--mod-picker-border-color-error-hover, var(--spectrum-picker-border-color-error-hover)));
-    }
-
-    :host([invalid][open]) #button:not(:disabled, .is-disabled):hover {
-        border-color: var(--highcontrast-picker-border-color-hover, var(--mod-picker-border-color-error-hover-open, var(--spectrum-picker-border-color-error-hover-open)));
-    }
-
-    .label.placeholder:hover {
-        color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-hover, var(--spectrum-picker-font-color-hover)));
-    }
-
-    :host([quiet]) #button:hover {
-        background-color: initial;
-        background-color: var(--highcontrast-picker-background-color, transparent);
-    }
-}
-
-:host([quiet]) #button.is-keyboardFocused,
-:host([quiet]) #button:focus-visible {
-    background-color: initial;
-    background-color: var(--highcontrast-picker-background-color, transparent);
 }
 
 :host([quiet]) #button.is-keyboardFocused:after,
@@ -419,14 +419,6 @@ governing permissions and limitations under the License.
     border-radius: 0;
 }
 
-:host([quiet][open]) #button,
-:host([quiet][disabled]) #button#button,
-:host([quiet]) #button#button:disabled,
-:host([quiet]) #button:active {
-    background-color: initial;
-    background-color: var(--highcontrast-picker-background-color, transparent);
-}
-
 .label-inline {
     vertical-align: top;
     display: inline-flex;
@@ -435,9 +427,14 @@ governing permissions and limitations under the License.
 :host([disabled]) #button,
 #button:disabled {
     cursor: default;
-    background-color: var(--highcontrast-picker-background-color, var(--mod-picker-background-color-disabled, var(--spectrum-picker-background-color-disabled)));
     border-color: var(--highcontrast-picker-border-color-disabled, var(--spectrum-picker-border-color-disabled));
     color: var(--highcontrast-picker-content-color-disabled, var(--mod-picker-font-color-disabled, var(--spectrum-picker-font-color-disabled)));
+    transform: none;
+}
+
+:host([disabled]:not([quiet])) #button,
+:host(:not([quiet])) #button:disabled {
+    background-color: var(--highcontrast-picker-background-color, var(--mod-picker-background-color-disabled, var(--spectrum-picker-background-color-disabled)));
 }
 
 :host([disabled]) #button .icon,
@@ -452,4 +449,34 @@ governing permissions and limitations under the License.
 :host([disabled]) #button .label.placeholder,
 #button:disabled .label.placeholder {
     color: var(--highcontrast-picker-content-color-disabled, var(--mod-picker-font-color-disabled, var(--spectrum-picker-font-color-disabled)));
+}
+
+:host([pending]) #button {
+    transform: none;
+}
+
+:host([pending]) #button .picker {
+    color: var(--highcontrast-picker-content-color-disabled, var(--mod-picker-icon-color-disabled, var(--spectrum-picker-icon-color-disabled)));
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-picker-focus-indicator-color: Highlight;
+        --highcontrast-picker-border-color-default: ButtonBorder;
+        --highcontrast-picker-border-color-hover: Highlight;
+        --highcontrast-picker-border-color-disabled: GrayText;
+        --highcontrast-picker-content-color-default: ButtonText;
+        --highcontrast-picker-content-color-disabled: GrayText;
+        --highcontrast-picker-background-color: ButtonFace;
+    }
+
+    #button.is-keyboardFocused,
+    #button:focus-visible {
+        --highcontrast-picker-border-color-hover: ButtonText;
+    }
+
+    #button .label,
+    #button:after {
+        forced-color-adjust: none;
+    }
 }

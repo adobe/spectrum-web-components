@@ -1,35 +1,19 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-@media (forced-colors: active) {
-    :host {
-        --highcontrast-colorwheel-border-color-disabled: GrayText;
-        --highcontrast-colorwheel-fill-color-disabled: Canvas;
-        forced-color-adjust: none;
-    }
-}
-
 :host {
-    --spectrum-colorwheel-width: var(--mod-colorwheel-width, var(--spectrum-color-wheel-width));
-    --spectrum-colorwheel-height: var(--mod-colorwheel-height, var(--spectrum-color-wheel-width));
-    --spectrum-colorwheel-fill-color-disabled: var(--mod-colorwheel-fill-color-disabled, var(--spectrum-disabled-background-color));
-    --spectrum-colorwheel-border-width: var(--mod-colorwheel-border-width, var(--spectrum-border-width-100));
-    --spectrum-colorwheel-track-width: var(--mod-colorwheel-track-width, var(--spectrum-color-control-track-width));
-    --_track-width: var(--spectrum-colorwheel-track-width);
+    --spectrum-colorwheel-inline-size: var(--spectrum-color-wheel-width);
+    --spectrum-colorwheel-block-size: var(--spectrum-color-wheel-width);
+    --spectrum-colorwheel-min-inline-size: var(--spectrum-color-wheel-minimum-width);
+    --spectrum-colorwheel-border-color-rgb: var(--spectrum-gray-1000-rgb);
+    --spectrum-colorwheel-border-opacity: var(--spectrum-color-wheel-border-opacity);
+    --spectrum-colorwheel-border-color: rgba(var(--spectrum-colorwheel-border-color-rgb), var(--spectrum-colorwheel-border-opacity));
+    --spectrum-colorwheel-border-width: var(--spectrum-border-width-100);
+    --spectrum-colorwheel-track-width: var(--spectrum-color-control-track-width);
+    --spectrum-colorwheel-fill-color-disabled: var(--spectrum-disabled-background-color);
+    --_track-width: var(--mod-colorwheel-track-width, var(--spectrum-colorwheel-track-width));
     --_border-width: var(--spectrum-colorwheel-border-width);
-    min-inline-size: var(--mod-colorwheel-min-width, var(--spectrum-color-wheel-minimum-width));
-    inline-size: var(--spectrum-colorwheel-width);
-    block-size: var(--spectrum-colorwheel-height);
+    min-inline-size: var(--mod-colorwheel-min-inline-size, var(--spectrum-colorwheel-min-inline-size));
+    inline-size: var(--mod-colorwheel-inline-size, var(--spectrum-colorwheel-inline-size));
+    block-size: var(--mod-colorwheel-block-size, var(--spectrum-colorwheel-block-size));
     -webkit-user-select: none;
     user-select: none;
     cursor: default;
@@ -37,16 +21,44 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host([focused]) {
+:host:before {
+    inline-size: calc(var(--mod-colorwheel-inline-size, var(--spectrum-colorwheel-inline-size)) - var(--spectrum-colorwheel-border-width) * 4);
+    block-size: calc(var(--mod-colorwheel-inline-size, var(--spectrum-colorwheel-inline-size)) - var(--spectrum-colorwheel-border-width) * 4);
+    inset: var(--spectrum-colorwheel-border-width);
+}
+
+:host:after,
+:host:before {
+    content: '';
+    border-width: var(--spectrum-colorwheel-border-width);
+    border-style: solid;
+    border-color: var(--mod-colorwheel-border-color, var(--spectrum-colorwheel-border-color));
     z-index: 1;
+    border-radius: 100%;
+    position: absolute;
+}
+
+:host:after {
+    inset: calc(var(--mod-colorwheel-track-width, var(--spectrum-colorwheel-track-width)) - var(--spectrum-colorwheel-border-width) * 2);
+}
+
+:host([focused]) {
+    z-index: 2;
 }
 
 :host([disabled]) {
     pointer-events: none;
 }
 
+:host([disabled]) .inner:before,
+:host([disabled]):after,
+:host([disabled]):before {
+    border-color: #0000;
+    border-color: var(--highcontrast-colorwheel-border-color-disabled, transparent);
+}
+
 :host([dragged]) {
-    z-index: 1;
+    z-index: 2;
 }
 
 .inner {
@@ -62,7 +74,6 @@ governing permissions and limitations under the License.
 .colorarea-container {
     block-size: auto;
     inline-size: 100%;
-    margin: var(--mod-colorwheel-colorarea-margin, var(--spectrum-color-wheel-color-area-margin));
     justify-content: center;
     align-items: center;
     display: flex;
@@ -81,21 +92,9 @@ governing permissions and limitations under the License.
 }
 
 .handle {
-    transform: translate(calc(var(--spectrum-colorwheel-width) / 2 - var(--spectrum-colorwheel-track-width) / 2));
+    transform: translate(calc(var(--mod-colorwheel-inline-size, var(--spectrum-colorwheel-inline-size)) / 2 - var(--mod-colorwheel-track-width, var(--mod-colorwheel-track-width, var(--spectrum-colorwheel-track-width))) / 2));
     inset-block-start: 50%;
     inset-inline: 50%;
-}
-
-.border {
-    background-color: var(--mod-colorwheel-border-color, var(--spectrum-colorwheel-border-color));
-    inline-size: var(--spectrum-colorwheel-width);
-    block-size: var(--spectrum-colorwheel-height);
-    clip-path: path(evenodd, var(--mod-colorwheel-path-borders, var(--spectrum-colorwheel-path-borders)));
-    position: relative;
-}
-
-:host([disabled]) .border {
-    background-color: var(--highcontrast-colorwheel-border-color-disabled, var(--spectrum-colorwheel-fill-color-disabled));
 }
 
 .wheel {
@@ -108,5 +107,13 @@ governing permissions and limitations under the License.
 
 :host([disabled]) .wheel {
     pointer-events: none;
-    background: var(--highcontrast-colorwheel-fill-color-disabled, var(--spectrum-colorwheel-fill-color-disabled));
+    background: var(--highcontrast-colorwheel-fill-color-disabled, var(--mod-colorwheel-fill-color-disabled, var(--spectrum-colorwheel-fill-color-disabled)));
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-colorwheel-border-color-disabled: GrayText;
+        --highcontrast-colorwheel-fill-color-disabled: Canvas;
+        forced-color-adjust: none;
+    }
 }

@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-swatch.css');
-@import url('./swatch-overrides.css');
 
 /**
  * Begin work around for https://github.com/adobe/spectrum-css/issues/1460

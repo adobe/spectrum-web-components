@@ -9,9 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { IconsBase } from './src/IconsBase.js';
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 
-import darkStyles from './src/theme-darkest-core-tokens.css.js';
-import { Theme } from './src/Theme.js';
-import './core-tokens.js';
+defineElement('sp-icons', IconsBase);
 
-Theme.registerThemeFragment('darkest', 'color', darkStyles);
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-icons': IconsBase;
+    }
+}

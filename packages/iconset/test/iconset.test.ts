@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { waitForPredicate } from '../../../test/testing-helpers.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
+import '@spectrum-web-components/icons/sp-icons.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import { IconsMedium } from '@spectrum-web-components/icons';
+import { IconsBase } from '@spectrum-web-components/icons';
 import { Icon } from '@spectrum-web-components/icon';
 import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
@@ -21,12 +21,12 @@ import { stub } from 'sinon';
 
 describe('Iconset', () => {
     after(() => {
-        const sets = [...document.querySelectorAll('sp-icons-medium')];
+        const sets = [...document.querySelectorAll('sp-icons')];
         sets.map((set) => set.remove());
     });
     it('warns in Dev Mode of deprecation', async () => {
         const consoleWarnStub = stub(console, 'warn');
-        const el = document.createElement('sp-icons-medium');
+        const el = document.createElement('sp-icons');
         document.body.append(el);
 
         await elementUpdated(el);
@@ -39,7 +39,7 @@ describe('Iconset', () => {
         ).to.be.true;
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
             data: {
-                localName: 'sp-icons-medium',
+                localName: 'sp-icons',
                 type: 'api',
                 level: 'deprecation',
             },
@@ -48,7 +48,7 @@ describe('Iconset', () => {
     });
 
     it('will re-register with new name', async () => {
-        const icons = document.createElement('sp-icons-medium');
+        const icons = document.createElement('sp-icons');
         document.body.append(icons);
         icons.name = 'first-name';
 
@@ -74,7 +74,7 @@ describe('Iconset', () => {
         expect(registry.getIconset('ui')).to.be.undefined;
     });
     it('will not re-register on (dis)connect without a name', async () => {
-        const icons = document.createElement('sp-icons-medium');
+        const icons = document.createElement('sp-icons');
         document.body.append(icons);
 
         const registry = IconsetRegistry.getInstance();
@@ -92,10 +92,10 @@ describe('Iconset', () => {
         expect(registry.getIconset('ui')).to.be.undefined;
     });
     it('renders after adding and removing a second iconset of same name', async () => {
-        const icons = document.createElement('sp-icons-medium');
+        const icons = document.createElement('sp-icons');
         document.body.append(icons);
 
-        const icons2 = document.createElement('sp-icons-medium');
+        const icons2 = document.createElement('sp-icons');
         document.body.append(icons2);
 
         icons2.remove();
@@ -106,11 +106,9 @@ describe('Iconset', () => {
             })
         );
 
-        const el = await fixture<Icon>(
-            html`
-                <sp-icon name="ui:Chevron200"></sp-icon>
-            `
-        );
+        const el = await fixture<Icon>(html`
+            <sp-icon name="ui:Chevron200"></sp-icon>
+        `);
 
         let svg = el.shadowRoot
             ? el.shadowRoot.querySelector('[role="img"]')
@@ -130,17 +128,15 @@ describe('Iconset', () => {
     });
 
     it('can be after `<sp-icon/>` in the DOM order', async () => {
-        const el = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-icon name="ui:Chevron200"></sp-icon>
-                    <sp-icons-medium></sp-icons-medium>
-                </div>
-            `
-        );
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-icon name="ui:Chevron200"></sp-icon>
+                <sp-icons></sp-icons>
+            </div>
+        `);
 
         const icon = el.querySelector('sp-icon') as Icon;
-        const iconSet = el.querySelector('sp-icons-medium') as IconsMedium;
+        const iconSet = el.querySelector('sp-icons') as IconsBase;
 
         await elementUpdated(iconSet);
         await elementUpdated(icon);

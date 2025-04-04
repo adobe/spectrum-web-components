@@ -1,41 +1,24 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-@media (forced-colors: active) {
-    :host {
-        --highcontrast-colorarea-border-color-disabled: GrayText;
-        --highcontrast-colorarea-border-color: Canvas;
-        --highcontrast-colorarea-fill-color-disabled: Canvas;
-    }
-
-    .gradient,
-    :host([disabled]) {
-        forced-color-adjust: none;
-    }
-}
-
 :host {
-    --spectrum-colorarea-border-color: #0000001a;
+    --spectrum-colorarea-border-radius: var(--spectrum-color-area-border-rounding);
+    --spectrum-colorarea-border-color-rgb: var(--spectrum-gray-1000-rgb);
+    --spectrum-colorarea-border-color: rgba(var(--spectrum-colorarea-border-color-rgb), var(--spectrum-color-area-border-opacity));
+    --spectrum-colorarea-border-width: var(--spectrum-color-area-border-width);
+    --spectrum-colorarea-disabled-background-color: var(--spectrum-disabled-background-color);
+    --spectrum-colorarea-height: var(--spectrum-color-area-height);
+    --spectrum-colorarea-width: var(--spectrum-color-area-width);
+    --spectrum-colorarea-min-width: var(--spectrum-color-area-minimum-width);
+    --spectrum-colorarea-min-height: var(--spectrum-color-area-minimum-height);
     cursor: default;
     -webkit-user-select: none;
     user-select: none;
-    min-inline-size: var(--mod-colorarea-min-width, var(--spectrum-color-area-minimum-width));
-    min-block-size: var(--mod-colorarea-min-height, var(--spectrum-color-area-minimum-height));
-    inline-size: var(--mod-colorarea-width, var(--spectrum-color-area-width));
-    block-size: var(--mod-colorarea-height, var(--spectrum-color-area-height));
+    min-inline-size: var(--mod-colorarea-min-width, var(--spectrum-colorarea-min-width));
+    min-block-size: var(--mod-colorarea-min-height, var(--spectrum-colorarea-min-height));
+    inline-size: var(--mod-colorarea-width, var(--spectrum-colorarea-width));
+    block-size: var(--mod-colorarea-height, var(--spectrum-colorarea-height));
     box-sizing: border-box;
-    border-radius: var(--mod-colorarea-border-radius, var(--spectrum-color-area-border-rounding));
-    border: var(--mod-colorarea-border-width, var(--spectrum-color-area-border-width)) solid var(--highcontrast-colorarea-border-color, var(--mod-colorarea-border-color, var(--spectrum-colorarea-border-color)));
+    border-radius: var(--mod-colorarea-border-radius, var(--spectrum-colorarea-border-radius));
+    border: var(--mod-colorarea-border-width, var(--spectrum-colorarea-border-width)) solid var(--highcontrast-colorarea-border-color, var(--mod-colorarea-border-color, var(--spectrum-colorarea-border-color)));
     display: inline-block;
     position: relative;
 }
@@ -46,8 +29,8 @@ governing permissions and limitations under the License.
 
 :host([disabled]) {
     pointer-events: none;
-    background: var(--highcontrast-colorarea-fill-color-disabled, var(--mod-colorarea-disabled-background-color, var(--spectrum-disabled-background-color)));
-    border: var(--mod-colorarea-border-width, var(--spectrum-color-area-border-width)) solid var(--highcontrast-colorarea-border-color-disabled);
+    background: var(--highcontrast-colorarea-fill-color-disabled, var(--mod-colorarea-disabled-background-color, var(--spectrum-colorarea-disabled-background-color)));
+    border: var(--mod-colorarea-border-width, var(--spectrum-colorarea-border-width)) solid var(--highcontrast-colorarea-border-color-disabled);
 }
 
 :host([disabled]) .gradient {
@@ -55,7 +38,7 @@ governing permissions and limitations under the License.
 }
 
 .handle {
-    transform: translate(calc(var(--mod-colorarea-width, var(--spectrum-color-area-width)) - var(--spectrum-color-area-border-width)));
+    transform: translate(calc(var(--mod-colorarea-width, var(--spectrum-colorarea-width)) - var(--spectrum-colorarea-border-width)));
     inset-block-start: 0;
 }
 
@@ -67,7 +50,7 @@ governing permissions and limitations under the License.
 .gradient {
     inline-size: 100%;
     block-size: 100%;
-    border-radius: var(--mod-colorarea-border-radius, var(--spectrum-color-area-border-rounding));
+    border-radius: calc(var(--mod-colorarea-border-radius, var(--spectrum-colorarea-border-radius)) - var(--mod-colorarea-border-width, var(--spectrum-colorarea-border-width)));
 }
 
 .slider {
@@ -80,4 +63,17 @@ governing permissions and limitations under the License.
     position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-colorarea-border-color-disabled: GrayText;
+        --highcontrast-colorarea-border-color: Canvas;
+        --highcontrast-colorarea-fill-color-disabled: Canvas;
+    }
+
+    .gradient,
+    :host([disabled]) {
+        forced-color-adjust: none;
+    }
 }
