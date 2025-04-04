@@ -802,8 +802,6 @@
     --system-drop-zone-heading-font-size-cjk: var(
         --spectrum-drop-zone-cjk-title-size
     );
-    --system-field-group-margin: var(--spectrum-spacing-300);
-    --system-field-group-readonly-delimiter: ',';
     --system-infield-button-border-width: 0;
     --system-infield-button-border-color: transparent;
     --system-infield-button-border-radius: var(--spectrum-corner-radius-75);
