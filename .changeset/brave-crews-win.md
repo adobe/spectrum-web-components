@@ -1,6 +1,7 @@
 ---
 '@spectrum-web-components/accordion': patch
 '@spectrum-web-components/action-bar': patch
+'@spectrum-web-components/alert-banner': patch
 '@spectrum-web-components/alert-dialog': patch
 '@spectrum-web-components/asset': patch
 '@spectrum-web-components/avatar': patch
