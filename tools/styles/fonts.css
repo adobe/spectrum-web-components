@@ -41,6 +41,24 @@
     );
 }
 
+@media (forced-colors: active) {
+    .spectrum-Heading {
+        --highcontrast-heading-font-color: Text;
+    }
+
+    .spectrum-Body {
+        --highcontrast-body-font-color: Text;
+    }
+
+    .spectrum-Detail {
+        --highcontrast-detail-font-color: Text;
+    }
+
+    .spectrum-Code {
+        --highcontrast-code-font-color: Text;
+    }
+}
+
 .spectrum-Heading {
     font-family: var(
         --mod-heading-sans-serif-font-family,
