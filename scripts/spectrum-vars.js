@@ -123,7 +123,9 @@ const processTypography = async (
     usedVariables = undefined
 ) => {
     const baseData = fs.readFileSync(baseSrcPath, 'utf8');
-    const overridesData = fs.readFileSync(overridesSrcPath, 'utf8');
+    const overridesData = overridesSrcPath
+        ? fs.readFileSync(overridesSrcPath, 'utf8')
+        : '';
     const data = baseData + overridesData;
     const result = await processCSSData(data, identifier, from, usedVariables);
     fs.writeFileSync(dstPath, result, 'utf8');
@@ -214,8 +216,15 @@ async function processSpectrumVars() {
             'typography',
             'dist'
         );
-        const baseSrcPath = path.join(typographyPath, 'index-base.css');
-        const overridesSrcPath = path.join(typographyPath, 'index-theme.css');
+        let baseSrcPath = path.join(typographyPath, 'index-base.css');
+        if (!fs.existsSync(baseSrcPath)) {
+            baseSrcPath = baseSrcPath.replace('index-base.css', 'index.css');
+        }
+
+        let overridesSrcPath = path.join(typographyPath, 'index-theme.css');
+        if (!fs.existsSync(overridesSrcPath)) {
+            overridesSrcPath = undefined;
+        }
         const dstPath = path.resolve(
             path.join(__dirname, '..', 'tools', 'styles', 'typography.css')
         );
