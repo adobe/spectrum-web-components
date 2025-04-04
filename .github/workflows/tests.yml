@@ -1,0 +1,109 @@
+name: Tests
+on:
+    workflow_dispatch:
+    workflow_call:
+
+jobs:
+    tests:
+        # Note: Coverages are not supported for WebKit and Firefox, only Chromium
+        name: ${{ matrix.browser }} (${{ matrix.group }})
+        runs-on: macos-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                group: [no-memory-ci, memory-ci]
+                browser: [chromium]
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
+
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+              with:
+                  with-playwright: true
+                  browser: ${{ matrix.browser }}
+
+            - name: Run unit tests with coverage
+              run: yarn web-test-runner --config web-test-runner.config.ci-${{ matrix.browser }}.js --group ${{ matrix.group }} --coverage
+              continue-on-error: true
+
+            - name: Upload coverage to Coveralls
+              uses: coverallsapp/github-action@v2
+              with:
+                  flag-name: run-${{ matrix.browser }}-${{ matrix.group }}
+                  parallel: true
+
+            - uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: test-report-${{ matrix.browser }}-${{ matrix.group }}
+                  path: results/
+
+    # Split the firefox and webkit unit tests into 4 sets to run in parallel
+    unit-tests:
+        name: ${{ matrix.browser }}
+        runs-on: macos-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                browser: [firefox, webkit]
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
+
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+              with:
+                  with-playwright: true
+                  browser: ${{ matrix.browser }}
+
+            - name: Run unit tests
+              run: yarn web-test-runner --config web-test-runner.config.ci-${{ matrix.browser }}.js --group unit-ci
+              continue-on-error: true
+
+            - uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: test-report-${{ matrix.browser }}
+                  path: results/
+
+    merge-test-results:
+        name: Merge test results
+        needs: [tests, unit-tests]
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
+
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+              with:
+                  skip-build: true
+
+            - name: Download blob reports from GitHub Actions Artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: all-test-reports
+                  pattern: test-report-*
+                  merge-multiple: true
+
+            - name: Merge into HTML Report
+              run: yarn playwright merge-reports --reporter html ./all-test-reports
+
+            - name: Upload HTML report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: test-report-summary
+                  path: playwright-report
+
+    coverage-results:
+        name: Coverage results
+        needs: [tests]
+        if: ${{ always() }}
+        runs-on: ubuntu-latest
+        steps:
+            - name: Coveralls finished
+              uses: coverallsapp/github-action@v2
+              with:
+                  parallel-finished: true
+                  carryforward: 'run-chromium-no-memory-ci,run-chromium-memory-ci'
