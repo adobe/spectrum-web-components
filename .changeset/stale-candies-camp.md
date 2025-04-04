@@ -1,4 +1,6 @@
 ---
+'@spectrum-web-components/status-light': patch
+'@spectrum-web-components/styles': patch
 '@spectrum-web-components/tooltip': patch
 '@spectrum-web-components/toast': patch
 ---
