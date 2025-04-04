@@ -7641,12 +7641,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/switch@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/switch@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/switch@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@spectrum-css/switch@npm:6.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/f983bb72de9a8f9e6c3c4c97cf996c78cc302d811359656f1e13bb5bd243d7794f688b391f71fc66f8e658077b7f495b57d9c7fcad19eb6ee54d4373340715d2
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/6a6ee80f090a79566ec6c9ccaac7fa29683d059090ce946ade75000436577b96a4810079d4ff4e9c8736585649b44f29a715fed85fd1970c4a5757d51549bf38
   languageName: node
   linkType: hard
 
@@ -8782,7 +8785,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/switch@workspace:packages/switch"
   dependencies:
-    "@spectrum-css/switch": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/switch": "npm:6.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/checkbox": "npm:1.4.0"
   languageName: unknown
