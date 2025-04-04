@@ -6842,16 +6842,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/actionmenu@npm:7.0.0-s2-foundations.15":
-  version: 7.0.0-s2-foundations.15
-  resolution: "@spectrum-css/actionmenu@npm:7.0.0-s2-foundations.15"
+"@spectrum-css/actionmenu@npm:7.1.1":
+  version: 7.1.1
+  resolution: "@spectrum-css/actionmenu@npm:7.1.1"
   peerDependencies:
-    "@spectrum-css/actionbutton": ">=6"
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/menu": ">=7"
-    "@spectrum-css/popover": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/0089e04e894c4320577f8ffe80f82949151781d90ac6bea283faf7aface936c6072272222816cd8621f219caa070661296922601bc3e88e863ff45de5dae98f7
+    "@spectrum-css/actionbutton": ">=7.0.0 <8.0.0"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/menu": ">=9.0.0 <10.0.0"
+    "@spectrum-css/popover": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/actionbutton":
+      optional: true
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/menu":
+      optional: true
+    "@spectrum-css/popover":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/5b72144aab6aa01084a55639df0ecaa977f13a109da83041cb87665c66bce79c4ae241329bcd2480f4692afd1bf48cd18c8564b993ef44118d38d692dd317ed6
   languageName: node
   linkType: hard
 
@@ -7885,7 +7896,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-menu@workspace:packages/action-menu"
   dependencies:
-    "@spectrum-css/actionmenu": "npm:7.0.0-s2-foundations.15"
+    "@spectrum-css/actionmenu": "npm:7.1.1"
     "@spectrum-web-components/action-button": "npm:1.4.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
