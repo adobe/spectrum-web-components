@@ -162,19 +162,18 @@ async function processComponent(componentPath) {
      * @type { import('./spectrum-css-converter').SpectrumCSSConverter}
      */
     for await (const conversion of conversions) {
-        // The default package file is index.css but index-base.css contains the base styles compatible with theme switching.
-        let sourcePath = require
-            .resolve(conversion.inPackage)
-            .replace('index.css', 'index-base.css');
-
+        // The default package file is index.css
+        const sourcePath = require.resolve(conversion.inPackage);
         let sourceCSS = '';
 
-        // try to find the index-base.css file
-        try {
-            sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
-        } catch (error) {
+        // index-base.css contains the base styles compatible with theme switching
+        if (fs.existsSync(sourcePath.replace('index.css', 'index-base.css'))) {
+            sourceCSS = fs.readFileSync(
+                sourcePath.replace('index.css', 'index-base.css'),
+                'utf-8'
+            );
+        } else {
             // if failed, try to find the index.css file
-            sourcePath = require.resolve(conversion.inPackage);
             sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
         }
 
