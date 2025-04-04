@@ -7523,12 +7523,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/progresscircle@npm:4.0.0-s2-foundations.16":
-  version: 4.0.0-s2-foundations.16
-  resolution: "@spectrum-css/progresscircle@npm:4.0.0-s2-foundations.16"
+"@spectrum-css/progresscircle@npm:5.1.0":
+  version: 5.1.0
+  resolution: "@spectrum-css/progresscircle@npm:5.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/37f2d3f87f934bb246cc284ec95c41802a2bec7ef56489f1214efb69442101a47f144f8c5477f7b046461faf87d8c10092b81c647a95b51d70e5d5433979d228
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/926fc10c6996e12c970b5da41d8b5cde47ff9eec311bc7b9d8d59023d81d45ae5e3e5947a14b9f2d486a4493e4dd26d6978ae60b9ea76e4e3a73544caa41e45b
   languageName: node
   linkType: hard
 
@@ -8623,7 +8626,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/progress-circle@workspace:packages/progress-circle"
   dependencies:
-    "@spectrum-css/progresscircle": "npm:4.0.0-s2-foundations.16"
+    "@spectrum-css/progresscircle": "npm:5.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/shared": "npm:1.4.0"
   languageName: unknown
