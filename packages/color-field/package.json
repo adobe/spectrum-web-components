@@ -29,6 +29,7 @@
             "development": "./src/ColorField.dev.js",
             "default": "./src/ColorField.js"
         },
+        "./src/color-field.css.js": "./src/color-field.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
