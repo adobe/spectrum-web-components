@@ -373,9 +373,9 @@ When migrating files from SWC to Swan, update the TypeScript configuration:
 
     - Always build Swan first, then build SWC
     - Swan's build process must generate declaration files (.d.ts) for all migrated files
-    - Check that Swan's post-build scripts properly handle the directory structure where your files are located
-    - If TypeScript declaration files aren't being generated properly, you may need to update Swan's build scripts
-    - Remember that declaration files must be copied to the correct location for TypeScript to find them
+    - The build system now automatically detects and processes files from any directory structure within src/
+    - No manual updates to the build scripts are needed when adding new files or directories
+    - Always ensure your exports are correctly configured in package.json
 
 3. **Handling Library Dependencies**
     - Migrating utility files (like directives or streaming-listener) may require updating multiple parts of the build chain

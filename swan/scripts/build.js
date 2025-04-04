@@ -25,76 +25,42 @@ function isIndexFile(filename) {
     return filename === 'index.ts';
 }
 
-// Find all component files that need to be built
-function findEntryPoints() {
-    const baseDir = resolve(rootDir, 'src/base');
-    const componentsDir = resolve(rootDir, 'src/components');
-    const sharedDir = resolve(rootDir, 'src/shared');
-    const reactiveControllersDir = resolve(rootDir, 'src/reactive-controllers');
+// Function to check if a file is a valid TypeScript source file
+function isValidSourceFile(filename) {
+    return (
+        filename.endsWith('.ts') &&
+        !filename.endsWith('.d.ts') &&
+        !isIndexFile(filename)
+    );
+}
+
+// Recursively scan a directory for valid TypeScript files
+function scanDirectory(dirPath, basePath = rootDir) {
     const entryPoints = [];
-
-    // Check base directory
-    if (statSync(baseDir).isDirectory()) {
-        const files = readdirSync(baseDir);
-        for (const file of files) {
-            if (
-                file.endsWith('.ts') &&
-                !file.endsWith('.d.ts') &&
-                !isIndexFile(file)
-            ) {
-                entryPoints.push(`src/base/${file}`);
-            }
-        }
+    if (!statSync(dirPath).isDirectory()) {
+        return entryPoints;
     }
 
-    // Check shared directory
-    if (statSync(sharedDir).isDirectory()) {
-        const files = readdirSync(sharedDir);
-        for (const file of files) {
-            if (
-                file.endsWith('.ts') &&
-                !file.endsWith('.d.ts') &&
-                !isIndexFile(file)
-            ) {
-                entryPoints.push(`src/shared/${file}`);
-            }
-        }
-    }
+    const files = readdirSync(dirPath);
+    for (const file of files) {
+        const fullPath = resolve(dirPath, file);
+        const relativePath = fullPath.replace(`${basePath}/`, '');
 
-    // Check reactive-controllers directory
-    if (statSync(reactiveControllersDir).isDirectory()) {
-        const files = readdirSync(reactiveControllersDir);
-
-        for (const file of files) {
-            if (
-                file.endsWith('.ts') &&
-                !file.endsWith('.d.ts') &&
-                !isIndexFile(file)
-            ) {
-                entryPoints.push(`src/reactive-controllers/${file}`);
-            }
-        }
-    }
-
-    // Walk through the components directory structure
-    const componentFolders = readdirSync(componentsDir);
-    for (const folder of componentFolders) {
-        const folderPath = resolve(componentsDir, folder);
-        if (statSync(folderPath).isDirectory()) {
-            const files = readdirSync(folderPath);
-            for (const file of files) {
-                if (
-                    file.endsWith('.ts') &&
-                    !file.endsWith('.d.ts') &&
-                    !isIndexFile(file)
-                ) {
-                    entryPoints.push(`src/components/${folder}/${file}`);
-                }
-            }
+        if (statSync(fullPath).isDirectory()) {
+            // Recursively scan subdirectories
+            entryPoints.push(...scanDirectory(fullPath, basePath));
+        } else if (isValidSourceFile(file)) {
+            entryPoints.push(relativePath);
         }
     }
 
     return entryPoints;
+}
+
+// Find all component files that need to be built
+function findEntryPoints() {
+    const srcDir = resolve(rootDir, 'src');
+    return scanDirectory(srcDir);
 }
 
 // Process each entry point individually to preserve structure

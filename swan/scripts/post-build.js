@@ -21,77 +21,53 @@ const rootDir = resolve(__dirname, '..');
 
 // Copy declaration files from tsc-out to their correct locations
 function copyDeclarationFiles() {
-    // Copy component declarations
-    copyDirectoryDeclarations('components');
+    const tscOutDir = path.join(rootDir, 'dist/tsc-out');
 
-    // Copy base declarations
-    copyDirectoryDeclarations('base');
+    // Skip if the source directory doesn't exist
+    if (!fs.existsSync(tscOutDir)) {
+        return;
+    }
 
-    // Copy shared declarations
-    copyDirectoryDeclarations('shared');
-
-    // Copy reactive-controllers declarations
-    copyDirectoryDeclarations('reactive-controllers');
+    // Recursively process all directories
+    processDirectory(tscOutDir, path.join(rootDir, 'dist'));
 
     // eslint-disable-next-line no-console
     console.log('✓ Declaration files copied successfully');
 }
 
-// Copy declaration files for a specific directory
-function copyDirectoryDeclarations(dirName) {
-    const sourceDir = path.join(rootDir, `dist/tsc-out/${dirName}`);
-    const targetDir = path.join(rootDir, `dist/${dirName}`);
-
+// Recursively process a directory and copy declaration files
+function processDirectory(sourceDir, targetBaseDir) {
     try {
-        // Skip if source directory doesn't exist
-        if (!fs.existsSync(sourceDir)) {
-            return;
-        }
+        // Get the relative path from tsc-out to create the same structure in dist
+        const relativePath = path.relative(
+            path.join(rootDir, 'dist/tsc-out'),
+            sourceDir
+        );
+        const targetDir = path.join(targetBaseDir, relativePath);
 
-        // Make sure the target directory exists
+        // Create target directory if it doesn't exist
         if (!fs.existsSync(targetDir)) {
             fs.mkdirSync(targetDir, { recursive: true });
         }
 
-        // For 'components' directory, we need to process subdirectories
-        if (dirName === 'components') {
-            // Walk through all subdirectories in the sourceDir
-            const components = fs.readdirSync(sourceDir);
-            for (const component of components) {
-                const componentSourceDir = path.join(sourceDir, component);
-                const componentTargetDir = path.join(targetDir, component);
+        // Read all items in the current directory
+        const items = fs.readdirSync(sourceDir);
 
-                // Make sure the component target directory exists
-                if (!fs.existsSync(componentTargetDir)) {
-                    fs.mkdirSync(componentTargetDir, { recursive: true });
-                }
+        for (const item of items) {
+            const sourcePath = path.join(sourceDir, item);
+            const targetPath = path.join(targetDir, item);
 
-                // Copy all declaration files
-                const files = fs.readdirSync(componentSourceDir);
-                for (const file of files) {
-                    if (file.endsWith('.d.ts') || file.endsWith('.d.ts.map')) {
-                        fs.copyFileSync(
-                            path.join(componentSourceDir, file),
-                            path.join(componentTargetDir, file)
-                        );
-                    }
-                }
-            }
-        } else {
-            // For non-component directories like 'base', copy directly without subdirectories
-            const files = fs.readdirSync(sourceDir);
-            for (const file of files) {
-                if (file.endsWith('.d.ts') || file.endsWith('.d.ts.map')) {
-                    fs.copyFileSync(
-                        path.join(sourceDir, file),
-                        path.join(targetDir, file)
-                    );
-                }
+            if (fs.statSync(sourcePath).isDirectory()) {
+                // Recursively process subdirectories
+                processDirectory(sourcePath, targetBaseDir);
+            } else if (item.endsWith('.d.ts') || item.endsWith('.d.ts.map')) {
+                // Copy declaration files
+                fs.copyFileSync(sourcePath, targetPath);
             }
         }
     } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(`Error copying declaration files for ${dirName}:`, error);
+        console.error(`Error processing directory ${sourceDir}:`, error);
     }
 }
 

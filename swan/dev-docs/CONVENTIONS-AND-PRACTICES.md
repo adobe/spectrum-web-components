@@ -11,8 +11,14 @@ This document outlines the standard development practices, conventions, and work
 ## Build Processes
 
 -   **Building SWC packages**
+
     -   SWC packages are not built individually; they're always built together by running `yarn build` from the project root
     -   Individual package builds are not supported and may lead to inconsistent behavior
+
+-   **Swan build automation**
+    -   Swan's build system automatically detects and processes all TypeScript files in the src/ directory
+    -   No manual updates to build scripts are needed when adding new files or directories
+    -   Simply add new TypeScript files to the appropriate location in the src/ directory, and they'll be included in the build
 
 ## Testing
 

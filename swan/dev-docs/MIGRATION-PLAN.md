@@ -141,8 +141,9 @@ If we decide to proceed with this architecture, the final migration will incorpo
 
 4. **Build Configuration**:
 
-    - Ensure Swan's build process correctly handles all moved files
-    - Configure TypeScript paths and export maps to match original structure
+    - The build system now automatically detects and processes files from any directory structure within src/
+    - No manual updates to build scripts are needed when adding new files or directories
+    - Configure TypeScript paths and export maps to match original structure in package.json
     - Verify that TypeScript declaration files (.d.ts) are properly generated
 
 5. **Batch Size Management**:
