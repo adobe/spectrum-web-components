@@ -1,4 +1,6 @@
 ---
+'@spectrum-web-components/illustrated-message': patch
+'@spectrum-web-components/styles': patch
 '@spectrum-web-components/tooltip': patch
 '@spectrum-web-components/toast': patch
 ---
