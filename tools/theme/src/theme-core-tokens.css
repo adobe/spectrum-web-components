@@ -16,6 +16,8 @@ governing permissions and limitations under the License.
 @import url('@spectrum-web-components/styles/typography.css');
 
 :host {
+    --context: spectrum;
+
     display: block;
 
     --spectrum-font-family: var(--spectrum-sans-font-family-stack);
