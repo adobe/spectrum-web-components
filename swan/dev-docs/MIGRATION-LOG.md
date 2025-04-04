@@ -13,6 +13,51 @@ This log serves several purposes:
 
 ## Migrations
 
+### Phase 3 Complete: Reactive-Controllers Package Migration (April 2024)
+
+We have successfully completed Phase 3 of our migration plan, moving the reactive-controllers package to Swan:
+
+**Migration Details:**
+
+-   Used the `git mv` approach to preserve complete git history
+-   Migrated the following controllers to Swan:
+    -   `ColorController`
+    -   `DependencyManger`
+    -   `ElementResolution`
+    -   `FocusGroup`
+    -   `LanguageResolution`
+    -   `MatchMedia`
+    -   `RovingTabindex`
+    -   `SystemContextResolution`
+-   Left `PendingState` in its original location due to progress-circle dependency as per migration plan
+-   Created shims in the original locations that re-export from Swan
+
+**Implementation Notes:**
+
+-   Applied the git-move migration strategy documented in our [step-by-step guide](./MIGRATION-PRINCIPLES.md#git-move-migration-step-by-step-guide)
+-   Fixed minor linting issues in migrated files, particularly adding braces to single-line if statements
+-   Updated package.json with proper export entries for all controllers
+-   Fixed build process issues related to index.ts detection that affected RovingTabindex
+
+**Testing and Verification:**
+
+-   Ran focused tests on the reactive-controllers package: `yarn test:focus reactive-controllers`
+-   Verified all 39 tests passed across Firefox, Chromium, and Webkit
+-   Confirmed proper generation of JavaScript files and declaration files
+
+**Challenges Resolved:**
+
+-   Fixed an issue in the build process where files containing "index" in their name (e.g., RovingTabindex) were incorrectly identified as index files
+-   Improved build script to properly handle file identification with exact matching rather than substring checks
+-   Addressed circular dependency risks by maintaining proper migration order (copy, move, restore, update, build, shim)
+-   Verified that all files were being processed correctly through the build pipeline
+
+**Next Steps:**
+
+-   Proceed with the remaining migration phases as outlined in the migration plan
+-   Apply the learned techniques and best practices to future migrations
+-   Continue monitoring for any potential issues in components that depend on reactive-controllers
+
 ### Change in Migration Approach: Using Git Move for Phase 3 (April 2024)
 
 For Phase 3 of our migration plan (Reactive-Controllers package), we've decided to update our approach to preserve git history:
@@ -635,6 +680,10 @@ Each migration follows this iterative approach:
 This carefully planned migration strategy ensures a smooth transition from the legacy SWC architecture to the more modular and maintainable Swan architecture, while minimizing disruption to consumers of the library. The end result is a clean separation where Swan provides the behavior foundation and SWC provides the implementation and presentation layer.
 
 ## Migration Techniques
+
+### Git Move Process
+
+Starting with Phase 3 (reactive-controllers), we adopted a `git mv` approach to preserve the complete git history of files. For a detailed step-by-step guide on how to perform migrations using `git mv` while avoiding circular dependencies, refer to the [Git Move Migration: Step-by-Step Guide](./MIGRATION-PRINCIPLES.md#git-move-migration-step-by-step-guide) section in our Migration Principles document.
 
 ### Temporary Files During Migration
 

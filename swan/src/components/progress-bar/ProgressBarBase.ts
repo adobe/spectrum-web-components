@@ -17,7 +17,7 @@ import { property, query } from '../../base/decorators.js';
 
 import { getLabelFromSlot } from '../../shared/get-label-from-slot.js';
 import { ObserveSlotText } from '../../shared/observe-slot-text.js';
-import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
+import { LanguageResolutionController } from '../../reactive-controllers/LanguageResolution.js';
 
 /**
  * Base class for ProgressBar components

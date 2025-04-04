@@ -121,6 +121,46 @@
             "development": "./dist/shared/reparent-children.dev.js",
             "default": "./dist/shared/reparent-children.js"
         },
+        "./reactive-controllers/MatchMedia.js": {
+            "types": "./dist/reactive-controllers/MatchMedia.d.ts",
+            "development": "./dist/reactive-controllers/MatchMedia.dev.js",
+            "default": "./dist/reactive-controllers/MatchMedia.js"
+        },
+        "./reactive-controllers/RovingTabindex.js": {
+            "types": "./dist/reactive-controllers/RovingTabindex.d.ts",
+            "development": "./dist/reactive-controllers/RovingTabindex.dev.js",
+            "default": "./dist/reactive-controllers/RovingTabindex.js"
+        },
+        "./reactive-controllers/FocusGroup.js": {
+            "types": "./dist/reactive-controllers/FocusGroup.d.ts",
+            "development": "./dist/reactive-controllers/FocusGroup.dev.js",
+            "default": "./dist/reactive-controllers/FocusGroup.js"
+        },
+        "./reactive-controllers/ElementResolution.js": {
+            "types": "./dist/reactive-controllers/ElementResolution.d.ts",
+            "development": "./dist/reactive-controllers/ElementResolution.dev.js",
+            "default": "./dist/reactive-controllers/ElementResolution.js"
+        },
+        "./reactive-controllers/LanguageResolution.js": {
+            "types": "./dist/reactive-controllers/LanguageResolution.d.ts",
+            "development": "./dist/reactive-controllers/LanguageResolution.dev.js",
+            "default": "./dist/reactive-controllers/LanguageResolution.js"
+        },
+        "./reactive-controllers/SystemContextResolution.js": {
+            "types": "./dist/reactive-controllers/SystemContextResolution.d.ts",
+            "development": "./dist/reactive-controllers/SystemContextResolution.dev.js",
+            "default": "./dist/reactive-controllers/SystemContextResolution.js"
+        },
+        "./reactive-controllers/DependencyManger.js": {
+            "types": "./dist/reactive-controllers/DependencyManger.d.ts",
+            "development": "./dist/reactive-controllers/DependencyManger.dev.js",
+            "default": "./dist/reactive-controllers/DependencyManger.js"
+        },
+        "./reactive-controllers/ColorController.js": {
+            "types": "./dist/reactive-controllers/ColorController.d.ts",
+            "development": "./dist/reactive-controllers/ColorController.dev.js",
+            "default": "./dist/reactive-controllers/ColorController.js"
+        },
         "./accordion/AccordionBase.js": {
             "types": "./dist/components/accordion/AccordionBase.d.ts",
             "development": "./dist/components/accordion/AccordionBase.dev.js",
@@ -164,7 +204,7 @@
     "dependencies": {
         "@internationalized/number": "^3.2.0",
         "@lit-labs/observers": "^2.0.2",
-        "@spectrum-web-components/reactive-controllers": "workspace:*",
+        "colorjs.io": "^0.5.2",
         "focus-visible": "^5.2.0",
         "lit": "^2.5.0 || ^3.1.3"
     },

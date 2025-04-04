@@ -14,7 +14,7 @@ import { PropertyValues, type TemplateResult } from 'lit';
 import { SpectrumElement } from '../../base/Base.js';
 import { SizedMixin } from '../../base/sizedMixin.js';
 import { property, queryAssignedNodes } from '../../base/decorators.js';
-import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
+import { FocusGroupController } from '../../reactive-controllers/FocusGroup.js';
 
 import type { AccordionItemBase } from './AccordionItemBase.js';
 

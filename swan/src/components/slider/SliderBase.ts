@@ -25,7 +25,7 @@ import { NumberFormatter } from '@internationalized/number';
 import {
     LanguageResolutionController,
     languageResolverUpdatedSymbol,
-} from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
+} from '../../reactive-controllers/LanguageResolution.js';
 
 export const variants = ['filled', 'ramp', 'range', 'tick'];
 

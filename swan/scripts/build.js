@@ -20,11 +20,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const rootDir = resolve(__dirname, '..');
 
+// Function to properly check if a file is an index.ts file
+function isIndexFile(filename) {
+    return filename === 'index.ts';
+}
+
 // Find all component files that need to be built
 function findEntryPoints() {
     const baseDir = resolve(rootDir, 'src/base');
     const componentsDir = resolve(rootDir, 'src/components');
     const sharedDir = resolve(rootDir, 'src/shared');
+    const reactiveControllersDir = resolve(rootDir, 'src/reactive-controllers');
     const entryPoints = [];
 
     // Check base directory
@@ -34,7 +40,7 @@ function findEntryPoints() {
             if (
                 file.endsWith('.ts') &&
                 !file.endsWith('.d.ts') &&
-                !file.endsWith('index.ts')
+                !isIndexFile(file)
             ) {
                 entryPoints.push(`src/base/${file}`);
             }
@@ -48,9 +54,24 @@ function findEntryPoints() {
             if (
                 file.endsWith('.ts') &&
                 !file.endsWith('.d.ts') &&
-                !file.endsWith('index.ts')
+                !isIndexFile(file)
             ) {
                 entryPoints.push(`src/shared/${file}`);
+            }
+        }
+    }
+
+    // Check reactive-controllers directory
+    if (statSync(reactiveControllersDir).isDirectory()) {
+        const files = readdirSync(reactiveControllersDir);
+
+        for (const file of files) {
+            if (
+                file.endsWith('.ts') &&
+                !file.endsWith('.d.ts') &&
+                !isIndexFile(file)
+            ) {
+                entryPoints.push(`src/reactive-controllers/${file}`);
             }
         }
     }
@@ -65,13 +86,14 @@ function findEntryPoints() {
                 if (
                     file.endsWith('.ts') &&
                     !file.endsWith('.d.ts') &&
-                    !file.endsWith('index.ts')
+                    !isIndexFile(file)
                 ) {
                     entryPoints.push(`src/components/${folder}/${file}`);
                 }
             }
         }
     }
+
     return entryPoints;
 }
 

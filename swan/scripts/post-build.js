@@ -30,6 +30,9 @@ function copyDeclarationFiles() {
     // Copy shared declarations
     copyDirectoryDeclarations('shared');
 
+    // Copy reactive-controllers declarations
+    copyDirectoryDeclarations('reactive-controllers');
+
     // eslint-disable-next-line no-console
     console.log('✓ Declaration files copied successfully');
 }

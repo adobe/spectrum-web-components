@@ -25,6 +25,9 @@
         "paths": {
             "@spectrum-web-components/swan/base/*": ["../swan/src/base/*"],
             "@spectrum-web-components/swan/shared/*": ["../swan/src/shared/*"],
+            "@spectrum-web-components/swan/reactive-controllers/*": [
+                "../swan/src/reactive-controllers/*"
+            ],
             "@spectrum-web-components/swan/*": ["../swan/src/components/*"]
         }
     },
