@@ -404,87 +404,15 @@
     --system-clear-button-background-color-hover: transparent;
     --system-clear-button-background-color-down: transparent;
     --system-clear-button-background-color-key-focus: transparent;
-    --system-clear-button-height: var(--spectrum-component-height-100);
-    --system-clear-button-width: var(--spectrum-component-height-100);
-    --system-clear-button-padding: var(--spectrum-in-field-button-edge-to-fill);
-    --system-clear-button-icon-color: var(
-        --spectrum-neutral-content-color-default
+    --system-clear-button-static-white-background-color-hover: var(
+        --spectrum-transparent-white-400
     );
-    --system-clear-button-icon-color-hover: var(
-        --spectrum-neutral-content-color-hover
+    --system-clear-button-static-white-background-color-down: var(
+        --spectrum-transparent-white-500
     );
-    --system-clear-button-icon-color-down: var(
-        --spectrum-neutral-content-color-down
+    --system-clear-button-static-white-background-color-key-focus: var(
+        --spectrum-transparent-white-400
     );
-    --system-clear-button-icon-color-key-focus: var(
-        --spectrum-neutral-content-color-key-focus
-    );
-    --system-clear-button-size-s-height: var(--spectrum-component-height-75);
-    --system-clear-button-size-s-width: var(--spectrum-component-height-75);
-    --system-clear-button-size-l-height: var(--spectrum-component-height-200);
-    --system-clear-button-size-l-width: var(--spectrum-component-height-200);
-    --system-clear-button-size-xl-height: var(--spectrum-component-height-300);
-    --system-clear-button-size-xl-width: var(--spectrum-component-height-300);
-    --system-clear-button-quiet-background-color: var(
-        --spectrum-clear-button-background-color-quiet,
-        transparent
-    );
-    --system-clear-button-quiet-background-color-hover: var(
-        --spectrum-clear-button-background-color-hover-quiet,
-        transparent
-    );
-    --system-clear-button-quiet-background-color-down: var(
-        --spectrum-clear-button-background-color-down-quiet,
-        transparent
-    );
-    --system-clear-button-quiet-background-color-key-focus: var(
-        --spectrum-clear-button-background-color-key-focus-quiet,
-        transparent
-    );
-    --system-clear-button-over-background-icon-color: var(
-        --spectrum-clear-button-icon-color-over-background,
-        var(--spectrum-white)
-    );
-    --system-clear-button-over-background-icon-color-hover: var(
-        --spectrum-clear-button-icon-color-hover-over-background,
-        var(--spectrum-white)
-    );
-    --system-clear-button-over-background-icon-color-down: var(
-        --spectrum-clear-button-icon-color-down-over-background,
-        var(--spectrum-white)
-    );
-    --system-clear-button-over-background-icon-color-key-focus: var(
-        --spectrum-clear-button-icon-color-key-focus-over-background,
-        var(--spectrum-white)
-    );
-    --system-clear-button-over-background-background-color: var(
-        --spectrum-clear-button-background-color-over-background,
-        transparent
-    );
-    --system-clear-button-over-background-background-color-hover: var(
-        --spectrum-clear-button-background-color-hover-over-background,
-        var(--spectrum-transparent-white-400)
-    );
-    --system-clear-button-over-background-background-color-down: var(
-        --spectrum-clear-button-background-color-hover-over-background,
-        var(--spectrum-transparent-white-500)
-    );
-    --system-clear-button-over-background-background-color-key-focus: var(
-        --spectrum-clear-button-background-color-hover-over-background,
-        var(--spectrum-transparent-white-400)
-    );
-    --system-clear-button-disabled-icon-color: var(
-        --spectrum-disabled-content-color
-    );
-    --system-clear-button-disabled-icon-color-hover: var(
-        --spectrum-clear-button-icon-color-hover-disabled,
-        var(--spectrum-disabled-content-color)
-    );
-    --system-clear-button-disabled-icon-color-down: var(
-        --spectrum-clear-button-icon-color-down-disabled,
-        var(--spectrum-disabled-content-color)
-    );
-    --system-clear-button-disabled-background-color: transparent;
     --system-close-button-background-color-default: transparent;
     --system-close-button-background-color-hover: var(--spectrum-gray-100);
     --system-close-button-background-color-down: var(--spectrum-gray-200);

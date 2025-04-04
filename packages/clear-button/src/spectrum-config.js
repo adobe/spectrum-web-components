@@ -11,9 +11,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { converterFor } from '../../../tasks/process-spectrum-utils.js';
+import {
+    builder,
+    converterFor,
+} from '../../../tasks/process-spectrum-utils.js';
 
 const converter = converterFor('spectrum-ClearButton');
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const notDisabled = (type = 'pseudoClass') => ({
+    type: 'pseudo-class',
+    kind: 'not',
+    selectors: builder[type]?.('disabled'),
+});
 
 /**
  * @type { import('../../../tasks/spectrum-css-converter').SpectrumCSSConverter }
@@ -24,13 +34,15 @@ const config = {
             inPackage: '@spectrum-css/clearbutton',
             outPackage: 'clear-button',
             fileName: 'clear-button',
+            excludeByComponents: [
+                // is-disabled is a duplicate of the :disabled pseudo-class
+                builder.class('is-disabled'),
+            ],
             components: [
                 converter.classToHost(),
+                converter.classToAttribute('spectrum-ClearButton--quiet'),
                 {
-                    find: {
-                        type: 'pseudo-class',
-                        kind: 'active',
-                    },
+                    find: builder.pseudoClass('active'),
                     replace: {
                         type: 'pseudo-class',
                         kind: 'is',
@@ -52,14 +64,12 @@ const config = {
                     hoist: true,
                 },
                 converter.pseudoToAttribute('disabled', 'disabled'),
-                converter.classToAttribute('is-disabled', 'disabled'),
                 ...converter.enumerateAttributes(
                     [
-                        ['spectrum-ClearButton--cta'],
-                        ['spectrum-ClearButton--primary'],
-                        ['spectrum-ClearButton--secondary'],
-                        ['spectrum-ClearButton--overBackground'],
-                        ['spectrum-ClearButton--warning', 'negative'],
+                        [
+                            'spectrum-ClearButton--overBackground',
+                            'overBackground',
+                        ],
                     ],
                     'variant'
                 ),
@@ -75,12 +85,41 @@ const config = {
                 ),
                 converter.classToClass('spectrum-Icon', 'icon'),
                 converter.classToClass('spectrum-ClearButton-fill'),
-            ],
-            excludeByComponents: [
+                converter.classToClass('spectrum-ClearButton-icon'),
+                ...converter.enumerateAttributes(
+                    [['spectrum-ClearButton--staticWhite', 'white']],
+                    'static-color'
+                ),
                 {
-                    type: 'pseudo-element',
-                    kind: 'custom',
-                    name: '-moz-focus-inner',
+                    find: builder.pseudoClass('hover'),
+                    replace: builder.pseudoClass('hover'),
+                    hoist: true,
+                },
+                {
+                    find: notDisabled(),
+                    replace: notDisabled('attribute'),
+                    hoist: true,
+                },
+                {
+                    find: [notDisabled(), builder.pseudoClass('focus-visible')],
+                    replace: [
+                        builder.pseudoClass('focus-visible'),
+                        notDisabled('attribute'),
+                    ],
+                    hoist: true,
+                },
+                {
+                    find: [notDisabled(), builder.pseudoClass('focus-within')],
+                    replace: [
+                        builder.attribute('focus-within'),
+                        notDisabled('attribute'),
+                    ],
+                    hoist: true,
+                },
+                {
+                    find: notDisabled(),
+                    replace: notDisabled('attribute'),
+                    hoist: true,
                 },
             ],
         },
