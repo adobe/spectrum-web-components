@@ -7064,13 +7064,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/closebutton@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/closebutton@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/closebutton@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@spectrum-css/closebutton@npm:6.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/72c6c72e3099bbe86806031a2d797124b379e74967354f8882139a362a0f0c77a96fee8d50cbf3c938906158720543b78f34a7181de9da5d7df4664e94a64538
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/6764236c5b36c50f9d9a5f76174b19d1300a32cc28df70f43718b11b6ecfba61ece94adbc51cc7d8e5e99861ddc644402a9daabd16ed8e8205b68ef91aa7fae0
   languageName: node
   linkType: hard
 
@@ -8145,7 +8150,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/close-button@workspace:packages/close-button"
   dependencies:
-    "@spectrum-css/closebutton": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/closebutton": "npm:6.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
   languageName: unknown
   linkType: soft
