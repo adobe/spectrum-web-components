@@ -1494,6 +1494,9 @@
     --system-stepper-border-color-focus-invalid: transparent;
     --system-stepper-border-color-focus-hover-invalid: transparent;
     --system-stepper-border-color-keyboard-focus-invalid: transparent;
+    --system-stepper-border-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
     --system-stepper-button-border-width-disabled: 0;
     --system-stepper-buttons-background-color-disabled: var(
         --spectrum-disabled-background-color
