@@ -1470,8 +1470,8 @@
     --system-stepper-border-color-default: var(--spectrum-gray-500);
     --system-stepper-border-color-hover: var(--spectrum-gray-600);
     --system-stepper-border-color-focus: var(--spectrum-gray-800);
-    --system-stepper-border-color-focus-hover: var(--spectrum-gray-800);
-    --system-stepper-border-color-keyboard-focus: var(--spectrum-gray-900);
+    --system-stepper-border-color-focus-hover: var(--spectrum-gray-900);
+    --system-stepper-border-color-keyboard-focus: var(--spectrum-gray-800);
     --system-stepper-buttons-border-style: none;
     --system-stepper-buttons-border-width: 0;
     --system-stepper-buttons-border-color: var(--spectrum-gray-500);
@@ -1479,7 +1479,7 @@
     --system-stepper-buttons-border-color-hover: var(--spectrum-gray-600);
     --system-stepper-buttons-border-color-focus: var(--spectrum-gray-800);
     --system-stepper-buttons-border-color-keyboard-focus: var(
-        --spectrum-gray-900
+        --spectrum-gray-800
     );
     --system-stepper-button-border-width: var(--spectrum-border-width-100);
     --system-stepper-border-color-invalid: var(
@@ -1494,6 +1494,7 @@
     --system-stepper-border-color-keyboard-focus-invalid: var(
         --spectrum-negative-border-color-key-focus
     );
+    --system-stepper-border-color-disabled: transparent;
     --system-stepper-button-border-width-disabled: var(
         --spectrum-border-width-100
     );
