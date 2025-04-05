@@ -75,6 +75,7 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    display: table-cell;
     position: relative;
 }
 
@@ -90,10 +91,6 @@ governing permissions and limitations under the License.
 :host .spectrum-Table-checkboxCell .spectrum-Table-checkbox {
     margin-block-start: calc(var(--mod-table-header-checkbox-block-spacing, var(--spectrum-table-header-checkbox-block-spacing)) - var(--mod-table-border-width, var(--spectrum-table-border-width)));
     margin-block-end: var(--mod-table-header-checkbox-block-spacing, var(--spectrum-table-header-checkbox-block-spacing));
-}
-
-:host {
-    display: table-cell;
 }
 
 :host .spectrum-Table-scroller {
