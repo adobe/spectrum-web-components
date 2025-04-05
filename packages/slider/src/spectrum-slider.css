@@ -453,6 +453,11 @@ governing permissions and limitations under the License.
     background: var(--highcontrast-slider-track-color-static, var(--mod-slider-track-color, var(--spectrum-slider-track-color)));
 }
 
+.track ~ .track:before {
+    border-start-end-radius: var(--mod-slider-track-corner-radius, var(--spectrum-slider-track-corner-radius));
+    border-end-end-radius: var(--mod-slider-track-corner-radius, var(--spectrum-slider-track-corner-radius));
+}
+
 .track:not(:has(~ .spectrum-Slider-fill)):before {
     background: var(--highcontrast-slider-track-color, var(--mod-slider-track-color, var(--spectrum-slider-track-color)));
 }
@@ -508,6 +513,8 @@ governing permissions and limitations under the License.
 
 :host([variant='range']) .track:not(:first-of-type, :last-of-type):before {
     background: var(--highcontrast-slider-filled-track-fill-color, var(--mod-slider-track-fill-color, var(--spectrum-slider-track-fill-color)));
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
 }
 
 :host([disabled]),
@@ -595,11 +602,9 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
     }
 
-    :host([focus-within]) .js-focus-within:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls,
     :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls.handle-highlight,
     :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls:active,
-    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls:focus-within,
-    :host([focus-within]):not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range).js-focus-within #controls {
+    :host:not(.is-disabled, .spectrum-Slider--filled, .spectrum-Slider--range) #controls:focus-within {
         --highcontrast-slider-track-color: Highlight;
         --highcontrast-slider-handle-border-color: Highlight;
         --highcontrast-slider-ramp-track-color: Highlight;
