@@ -402,7 +402,7 @@
     --system-radio-button-border-color-hover: var(--spectrum-gray-700);
     --system-radio-button-border-color-down: var(--spectrum-gray-800);
     --system-radio-button-border-color-focus: var(--spectrum-gray-700);
-    --system-radio-button-background-color: var(--spectrum-gray-75);
+    --system-radio-button-background-color: var(--spectrum-gray-50);
     --system-search-border-color-default: var(--spectrum-gray-500);
     --system-search-border-color-hover: var(--spectrum-gray-600);
     --system-search-border-color-focus: var(--spectrum-gray-800);
