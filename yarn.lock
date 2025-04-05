@@ -7385,9 +7385,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/menu@npm:9.1.1":
-  version: 9.1.1
-  resolution: "@spectrum-css/menu@npm:9.1.1"
+"@spectrum-css/menu@npm:9.2.0":
+  version: 9.2.0
+  resolution: "@spectrum-css/menu@npm:9.2.0"
   peerDependencies:
     "@spectrum-css/checkbox": ">=10.0.0 <11.0.0"
     "@spectrum-css/divider": ">=5.0.0 <6.0.0"
@@ -7408,7 +7408,7 @@ __metadata:
       optional: true
     "@spectrum-css/tray":
       optional: true
-  checksum: 10c0/3f0a4692daedce04df5100e9fdba3fc12b40eb1a90d9a190d264eaa4d908f38b15006d4e1ea21c65011c866a497f7f5d2a9b715bc15c457e25f4245e767ba8c5
+  checksum: 10c0/981206b82fad85b5be1d45b731d6e4558e1f71a4c84847aed0f4b9870cc737cdf88aa144c68a2bab88465ac4ab7fb70bd68f58b70ceed1b720f71c9ab3be4c51
   languageName: node
   linkType: hard
 
@@ -8500,7 +8500,7 @@ __metadata:
   resolution: "@spectrum-web-components/menu@workspace:packages/menu"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/menu": "npm:9.1.1"
+    "@spectrum-css/menu": "npm:9.2.0"
     "@spectrum-web-components/action-button": "npm:1.4.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/divider": "npm:1.4.0"
