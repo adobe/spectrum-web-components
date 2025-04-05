@@ -398,11 +398,11 @@
     --system-progress-circle-track-border-color: var(--spectrum-gray-300);
     --system-progress-circle-track-border-color-over-background: var(--spectrum-transparent-white-300);
     --system-progress-circle-fill-border-color-over-background: var(--spectrum-transparent-white-900);
+    --system-radio-button-background-color: var(--spectrum-gray-50);
     --system-radio-button-border-color-default: var(--spectrum-gray-800);
     --system-radio-button-border-color-hover: var(--spectrum-gray-900);
     --system-radio-button-border-color-down: var(--spectrum-gray-900);
     --system-radio-button-border-color-focus: var(--spectrum-gray-900);
-    --system-radio-button-background-color: var(--spectrum-gray-75);
     --system-search-border-color-default: var(--spectrum-gray-400);
     --system-search-border-color-hover: var(--spectrum-gray-500);
     --system-search-border-color-focus: var(--spectrum-gray-800);
