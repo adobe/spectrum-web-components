@@ -489,34 +489,6 @@
     --system-close-button-background-color-hover: var(--spectrum-gray-100);
     --system-close-button-background-color-down: var(--spectrum-gray-200);
     --system-close-button-background-color-focus: var(--spectrum-gray-100);
-    --system-close-button-icon-color-default: var(
-        --spectrum-neutral-content-color-default
-    );
-    --system-close-button-icon-color-hover: var(
-        --spectrum-neutral-content-color-hover
-    );
-    --system-close-button-icon-color-down: var(
-        --spectrum-neutral-content-color-down
-    );
-    --system-close-button-icon-color-focus: var(
-        --spectrum-neutral-content-color-key-focus
-    );
-    --system-close-button-icon-color-disabled: var(
-        --spectrum-disabled-content-color
-    );
-    --system-close-button-focus-indicator-thickness: var(
-        --spectrum-focus-indicator-thickness
-    );
-    --system-close-button-focus-indicator-gap: var(
-        --spectrum-focus-indicator-gap
-    );
-    --system-close-button-focus-indicator-color: var(
-        --spectrum-focus-indicator-color
-    );
-    --system-close-button-animation-duration: var(
-        --spectrum-animation-duration-100
-    );
-    --system-close-button-static-white-static-background-color-default: transparent;
     --system-close-button-static-white-static-background-color-hover: var(
         --spectrum-transparent-white-400
     );
@@ -526,16 +498,6 @@
     --system-close-button-static-white-static-background-color-focus: var(
         --spectrum-transparent-white-400
     );
-    --system-close-button-static-white-icon-color-default: var(
-        --spectrum-white
-    );
-    --system-close-button-static-white-icon-color-disabled: var(
-        --spectrum-disabled-static-white-content-color
-    );
-    --system-close-button-static-white-focus-indicator-color: var(
-        --spectrum-static-white-focus-indicator-color
-    );
-    --system-close-button-static-black-static-background-color-default: transparent;
     --system-close-button-static-black-static-background-color-hover: var(
         --spectrum-transparent-black-400
     );
@@ -545,20 +507,6 @@
     --system-close-button-static-black-static-background-color-focus: var(
         --spectrum-transparent-black-400
     );
-    --system-close-button-static-black-icon-color-default: var(
-        --spectrum-black
-    );
-    --system-close-button-static-black-icon-color-disabled: var(
-        --spectrum-disabled-static-black-content-color
-    );
-    --system-close-button-static-black-focus-indicator-color: var(
-        --spectrum-static-black-focus-indicator-color
-    );
-    --system-close-button-size-s-size: var(--spectrum-component-height-75);
-    --system-close-button-size: var(--spectrum-component-height-100);
-    --system-close-button-size-m-size: var(--spectrum-component-height-100);
-    --system-close-button-size-l-size: var(--spectrum-component-height-200);
-    --system-close-button-size-xl-size: var(--spectrum-component-height-300);
     --system-coach-indicator-ring-border-size: var(--spectrum-border-width-200);
     --system-coach-indicator-min-inline-size: calc(
         var(--spectrum-coach-indicator-ring-diameter) * 3
