@@ -8,6 +8,7 @@
 '@spectrum-web-components/badge': patch
 '@spectrum-web-components/button-group': patch
 '@spectrum-web-components/card': patch
+'@spectrum-web-components/close-button': patch
 '@spectrum-web-components/color-area': patch
 '@spectrum-web-components/color-handle': patch
 '@spectrum-web-components/color-loupe': patch
