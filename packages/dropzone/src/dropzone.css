@@ -13,9 +13,9 @@ governing permissions and limitations under the License.
 @import url('./spectrum-dropzone.css');
 @import url('./dropzone-overrides.css');
 
-/* 
+/*
  * Host is inline-block by default which caused all the computed styling to be wrong.
- * We need it as a block 
+ * We need it as a block
  */
 :host {
     display: block;
@@ -39,9 +39,8 @@ governing permissions and limitations under the License.
         var(--spectrum-drop-zone-body-line-height)
     );
     font-style: var(
-        --spectrum-drop-zone-body-font-style,
+        --mod-drop-zone-body-font-style,
         var(--spectrum-drop-zone-body-font-style)
     );
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-block: 0;
 }
