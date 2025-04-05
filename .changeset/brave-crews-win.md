@@ -19,6 +19,7 @@
 '@spectrum-web-components/illustrated-message': patch
 '@spectrum-web-components/link': patch
 '@spectrum-web-components/modal': patch
+'@spectrum-web-components/radio': patch
 '@spectrum-web-components/sidenav': patch
 '@spectrum-web-components/split-view': patch
 '@spectrum-web-components/styles': patch
