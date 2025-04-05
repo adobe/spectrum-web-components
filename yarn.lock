@@ -7360,16 +7360,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/infieldbutton@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/infieldbutton@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/infieldbutton@npm:6.1.1":
+  version: 6.1.1
+  resolution: "@spectrum-css/infieldbutton@npm:6.1.1"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/icon":
       optional: true
-  checksum: 10c0/50b46795ee77d54622727a315a40bc6fa64132e31f1f1a844c5cc653f972ba0adc555b73dc689ae85201122978cab9a77fd624ea25cf5516f85543af0dcd3133
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/0a80b0ab9d31e3c1730a059b9ba7e7534ae0fe83803a8cda1c34c7556b4bc79a06deb3d5536e80034dd4571fe5fbc1f0f4bd214f61b16970216811c6409c5d9d
   languageName: node
   linkType: hard
 
@@ -8479,7 +8481,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/infield-button@workspace:packages/infield-button"
   dependencies:
-    "@spectrum-css/infieldbutton": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/infieldbutton": "npm:6.1.1"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
   languageName: unknown
