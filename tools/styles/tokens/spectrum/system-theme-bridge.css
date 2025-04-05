@@ -1247,6 +1247,12 @@
     --system-search-border-color-focus-hover: var(--spectrum-gray-900);
     --system-search-border-color-key-focus: var(--spectrum-gray-900);
     --system-search-background-color: var(--spectrum-gray-50);
+    --system-search-background-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --system-search-border-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
     --system-search-border-radius: var(--spectrum-corner-radius-100);
     --system-search-size-m-border-radius: var(--spectrum-corner-radius-100);
     --system-search-edge-to-visual: var(
@@ -1266,6 +1272,10 @@
     --system-search-size-xl-border-radius: var(--spectrum-corner-radius-100);
     --system-search-size-xl-edge-to-visual: var(
         --spectrum-component-edge-to-visual-300
+    );
+    --system-search-quiet-background-color-disabled: transparent;
+    --system-search-quiet-border-color-disabled: var(
+        --spectrum-disabled-border-color
     );
     --system-side-nav-background-hover: var(--spectrum-gray-200);
     --system-side-nav-item-background-down: var(--spectrum-gray-300);

@@ -1247,6 +1247,12 @@
     --system-search-border-color-focus-hover: var(--spectrum-gray-900);
     --system-search-border-color-key-focus: var(--spectrum-gray-900);
     --system-search-background-color: var(--spectrum-gray-50);
+    --system-search-background-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --system-search-border-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
     --system-search-border-radius: calc(
         var(--spectrum-component-height-100) / 2
     );
@@ -1276,6 +1282,10 @@
     );
     --system-search-size-xl-edge-to-visual: var(
         --spectrum-component-pill-edge-to-visual-300
+    );
+    --system-search-quiet-background-color-disabled: transparent;
+    --system-search-quiet-border-color-disabled: var(
+        --spectrum-disabled-border-color
     );
     --system-side-nav-background-hover: var(--spectrum-gray-200);
     --system-side-nav-item-background-down: var(--spectrum-gray-300);
