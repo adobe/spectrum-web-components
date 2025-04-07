@@ -1317,26 +1317,9 @@
     --system-slider-size-xl-handle-border-radius: calc(
         var(--spectrum-corner-radius-200) * 4
     );
-    --system-split-view-vertical-width: 100%;
-    --system-split-view-vertical-gripper-width: 50%;
-    --system-split-view-vertical-gripper-outer-width: 100%;
-    --system-split-view-vertical-gripper-reset: 0;
     --system-split-view-background-color: var(--spectrum-gray-100);
-    --system-split-view-content-color: var(--spectrum-body-color);
     --system-split-view-handle-background-color: var(--spectrum-gray-300);
-    --system-split-view-handle-background-color-hover: var(--spectrum-gray-400);
-    --system-split-view-handle-background-color-down: var(--spectrum-gray-800);
-    --system-split-view-handle-background-color-focus: var(
-        --spectrum-focus-indicator-color
-    );
-    --system-split-view-handle-width: var(--spectrum-border-width-200);
     --system-split-view-gripper-border-radius: var(--spectrum-corner-radius-75);
-    --system-split-view-gripper-width: var(--spectrum-border-width-400);
-    --system-split-view-gripper-height: 16px;
-    --system-split-view-gripper-border-width-horizontal: 3px;
-    --system-split-view-gripper-border-width-vertical: var(
-        --spectrum-border-width-400
-    );
     --system-status-light-corner-radius: 50%;
     --system-status-light-font-weight: 400;
     --system-status-light-border-width: var(--spectrum-border-width-100);
