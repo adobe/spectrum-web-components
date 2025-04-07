@@ -87,8 +87,16 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         // You can neither "reopen" a <dialog> or open one that is not on the DOM.
                         return;
                     }
-
-                    this.dialogEl.showModal();
+                    /**
+                     * Using show() instead of showModal() for performance reasons.
+                     * showModal() is a slow operation because it makes all other elements
+                     * on the page inert, which can be very expensive for complex DOMs.
+                     *
+                     * TODO: This means we lose the automatic focus-trapping behavior of modal dialogs.
+                     *
+                     */
+                    console.log('show dialog', this.dialogEl);
+                    this.dialogEl.show();
                 };
             const finish = (el: OpenableElement, index: number) => (): void => {
                 if (this.open !== targetOpenState) {
@@ -176,6 +184,10 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
              * - webkit bug: https://bugs.webkit.org/show_bug.cgi?id=255507
              * - firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1828398
              * (NEW 2025) There seems to exist some movement here: https://github.com/whatwg/html/issues/9245
+             *
+             * PRXXXX - We're using dialog.show() instead of dialog.showModal() to avoid the
+             * performance impact of making elements inert. When using show(), no automatic
+             * focus management is applied by the browser.
              **/
             this.applyFocus(targetOpenState, focusEl);
         }
