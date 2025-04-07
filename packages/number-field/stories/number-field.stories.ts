@@ -209,7 +209,7 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
                 onInput((event.target as NumberField).value)}
             @change=${(event: Event) =>
                 onChange((event.target as NumberField).value)}
-            style=${ifDefined(args.quiet ? undefined : 'width: 150px')}
+            style=${ifDefined(args.quiet ? undefined : '')}
         ></sp-number-field>
     `;
 };
@@ -240,7 +240,6 @@ export const decimals = (args: StoryArgs): TemplateResult => {
         </sp-field-label>
         <sp-number-field
             id="decimals"
-            style="width: 200px"
             ...=${spreadProps(args)}
             @change=${args.onChange}
             @input=${args.onInput}
@@ -269,7 +268,6 @@ export const germanDecimals = (args: StoryArgs): TemplateResult => {
         <sp-theme lang="de" dir="${currentDir}">
             <sp-number-field
                 id="decimals"
-                style="width: 200px"
                 ...=${spreadProps(args)}
                 @change=${args.onChange}
                 @input=${args.onInput}
@@ -292,7 +290,6 @@ export const percents = (args: StoryArgs = {}): TemplateResult => {
         <sp-field-label for="percents">Enter a percentage</sp-field-label>
         <sp-number-field
             id="percents"
-            style="width: 200px"
             ...=${spreadProps(args)}
             @change=${args.onChange}
             .formatOptions=${{
@@ -311,7 +308,6 @@ export const currency = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-field-label for="currency">Enter a value in Euros</sp-field-label>
         <sp-number-field
-            style="width: 200px"
             ...=${spreadProps(args)}
             @change=${args.onChange}
             .formatOptions=${{
@@ -333,7 +329,6 @@ export const units = (args: StoryArgs): TemplateResult => {
         <sp-field-label for="units">Enter a lengths in inches</sp-field-label>
         <sp-number-field
             id="units"
-            style="width: 200px"
             ...=${spreadProps(args)}
             @change=${args.onChange}
             .formatOptions=${{
@@ -354,7 +349,6 @@ export const pixels = (args: StoryArgs): TemplateResult => {
         <sp-field-label for="units">Enter a lengths in pixels</sp-field-label>
         <sp-number-field
             id="units"
-            style="width: 200px"
             .formatOptions=${{
                 style: 'unit',
                 unit: 'px',
@@ -375,7 +369,6 @@ export const minMax = (args: StoryArgs): TemplateResult => html`
     </sp-field-label>
     <sp-number-field
         id="min-max"
-        style="width: 200px"
         ...=${spreadProps(args)}
         @change=${args.onChange}
     ></sp-number-field>
@@ -516,7 +509,6 @@ export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
                         onInput((event.target as NumberField).value)}
                     @change=${(event: Event) =>
                         onChange((event.target as NumberField).value)}
-                    style="width: 150px"
                 ></sp-number-field>
                 <p>
                     This box should not scroll when the focus is inside the
