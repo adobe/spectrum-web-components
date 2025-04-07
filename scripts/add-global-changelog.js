@@ -15,14 +15,11 @@ import fs from 'fs';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { version as newVersion } from '../tools/base/src/version.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoUrl = 'https://github.com/adobe/spectrum-web-components';
 
-const pkg = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf-8')
-);
-const newVersion = pkg.version;
 const newTag = `v${newVersion}`;
 const prevTag = execSync('git tag --sort=-creatordate')
     .toString()
@@ -33,6 +30,23 @@ const prevTag = execSync('git tag --sort=-creatordate')
 if (!prevTag) {
     console.error('No previous tag found.');
     process.exit(1);
+}
+
+// Read the existing CHANGELOG.md early to check for existing entries
+const changelogPath = path.resolve(__dirname, '../CHANGELOG.md');
+let existingChangelog = fs.existsSync(changelogPath)
+    ? fs.readFileSync(changelogPath, 'utf-8')
+    : '';
+
+// Check if this version already has an entry in the changelog
+const versionEntryPattern = new RegExp(
+    `# \\[${newVersion.replace(/\./g, '\\.')}\\]`
+);
+if (versionEntryPattern.test(existingChangelog)) {
+    console.log(
+        `⚠️ Version ${newVersion} already has an entry in the CHANGELOG. Skipping update.`
+    );
+    process.exit(0);
 }
 
 const date = new Date().toISOString().split('T')[0];
@@ -79,15 +93,28 @@ if (features.length) {
     newEntry += `### Features\n\n${features.join('\n')}\n\n`;
 }
 
-// Prepend to existing CHANGELOG.md
-const changelogPath = path.resolve(__dirname, '../CHANGELOG.md');
-const existingChangelog = fs.existsSync(changelogPath)
-    ? fs.readFileSync(changelogPath, 'utf-8')
-    : '';
+// Preserve the header if it exists
+let headerText = '';
+const headerMatch = existingChangelog.match(
+    /^(# Change Log\n\n[\s\S]+?(?=\n\n# \[))/
+);
+if (headerMatch) {
+    headerText = headerMatch[1];
+    existingChangelog = existingChangelog.substring(headerMatch[0].length);
+} else if (existingChangelog.startsWith('# Change Log')) {
+    // Handle case where there might not be any versions yet
+    const simpleHeaderMatch = existingChangelog.match(
+        /^(# Change Log\n\n[\s\S]+?)(?=\n\n|$)/
+    );
+    if (simpleHeaderMatch) {
+        headerText = simpleHeaderMatch[1];
+        existingChangelog = existingChangelog.substring(headerText.length);
+    }
+}
 
 fs.writeFileSync(
     changelogPath,
-    `${newEntry.trim()}\n\n${existingChangelog}`,
+    `${headerText}\n\n${newEntry.trim()}\n\n${existingChangelog.trim()}`,
     'utf-8'
 );
 console.log(`✅ CHANGELOG updated for ${newVersion}`);
