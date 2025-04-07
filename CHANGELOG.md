@@ -77,7 +77,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **contextual-help**: allow setting a max-width to popover (#5140) ([`3cca7eacf1`](https://github.com/adobe/spectrum-web-components/commit/3cca7eacf1))
+-   **sp-contextual-help**: stays open when interacting with elements inside.([#5248](https://github.com/adobe/spectrum-web-components/issues/5248)) ([3cca7ea](https://github.com/adobe/spectrum-web-components/commit/3cca7eacf127c3fd759953db38a2b5a561bfb8dc))
 
 # [1.3.0](https://github.com/adobe/spectrum-web-components/compare/v1.2.0...v1.3.0) (2025-03-13)
 
