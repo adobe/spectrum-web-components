@@ -14,7 +14,39 @@ governing permissions and limitations under the License.
 @import url('./number-field-overrides.css');
 
 :host {
-    inline-size: unset;
+    --spectrum-stepper-width: calc(
+        var(--mod-stepper-height, var(--spectrum-stepper-height)) *
+            var(
+                --mod-stepper-min-width-multiplier,
+                var(--spectrum-text-field-minimum-width-multiplier)
+            ) +
+            var(
+                --mod-stepper-button-width,
+                var(--spectrum-stepper-button-width)
+            ) +
+            var(
+                --mod-stepper-border-width,
+                var(--spectrum-stepper-border-width)
+            ) * 2
+    );
+
+    inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
+}
+
+:host([size='s']) {
+    --spectrum-stepper-width: calc(var(--spectrum-stepper-width) / 5 * 4);
+}
+
+:host([size='l']) {
+    --spectrum-stepper-width: calc(var(--spectrum-stepper-width) * 1.25);
+}
+
+:host([size='xl']) {
+    --spectrum-stepper-width: calc(var(--spectrum-stepper-width) * 1.25 * 1.25);
+}
+
+#textfield {
+    inline-size: 100%;
 }
 
 .input {
