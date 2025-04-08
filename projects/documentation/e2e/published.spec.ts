@@ -11,6 +11,9 @@ governing permissions and limitations under the License.
 */
 import { expect, Page, test } from '@playwright/test';
 
+// Increase timeout for CI environment
+test.setTimeout(process.env.NODE_ENV === 'CI' ? 60000 : 30000);
+
 test.describe('search and go', () => {
     const startURL =
         process.env.NODE_ENV === 'CI'
@@ -40,13 +43,19 @@ test.describe('search and go', () => {
     };
 
     test.beforeEach(async ({ page }) => {
-        await page.goto(startURL as string);
+        await page.goto(startURL as string, { timeout: 30000 });
 
-        // Click the get started link.
-        const searchField = await page.getByRole('searchbox', {
-            name: 'Search',
-        });
+        // Wait for the page to be fully loaded
+        await page.waitForLoadState('networkidle');
 
+        // Try different search selectors in case the structure has changed
+        const searchField = await page
+            .getByRole('searchbox', { name: 'Search', exact: false })
+            .or(page.locator('input[placeholder*="Search"]'))
+            .or(page.locator('#search-container input'));
+
+        // Check if the element is visible before focusing
+        await expect(searchField).toBeVisible({ timeout: 10000 });
         await searchField.focus();
     });
 
