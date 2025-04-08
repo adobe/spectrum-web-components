@@ -87,16 +87,25 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         // You can neither "reopen" a <dialog> or open one that is not on the DOM.
                         return;
                     }
-                    /**
-                     * Using show() instead of showModal() for performance reasons.
-                     * showModal() is a slow operation because it makes all other elements
-                     * on the page inert, which can be very expensive for complex DOMs.
-                     *
-                     * TODO: This means we lose the automatic focus-trapping behavior of modal dialogs.
-                     *
-                     */
-                    console.log('show dialog', this.dialogEl);
-                    this.dialogEl.show();
+
+                    if (
+                        this.dialogWrapper &&
+                        'showPopover' in this.dialogWrapper
+                    ) {
+                        // Show both the wrapper popover and the dialog
+                        this.dialogWrapper.showPopover();
+
+                        /**
+                         *
+                         * TODO: focus-trap + block body scroll
+                         *
+                         * Using show() instead of showModal() for performance reasons.
+                         * showModal() is a slow operation because it makes all other elements
+                         * on the page inert, which can be very expensive for complex DOMs.
+                         *
+                         */
+                        this.dialogEl.show();
+                    }
                 };
             const finish = (el: OpenableElement, index: number) => (): void => {
                 if (this.open !== targetOpenState) {
@@ -160,6 +169,13 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         },
                         { once: true }
                     );
+
+                    if (
+                        this.dialogWrapper &&
+                        'hidePopover' in this.dialogWrapper
+                    ) {
+                        this.dialogWrapper.hidePopover();
+                    }
                     this.dialogEl.close();
                 } else {
                     reportChange();

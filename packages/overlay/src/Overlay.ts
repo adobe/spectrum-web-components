@@ -113,6 +113,12 @@ export class Overlay extends ComputedOverlayBase {
         hidePopover(): void;
     };
 
+    @query('.dialog-wrapper')
+    override dialogWrapper?: HTMLElement & {
+        showPopover(): void;
+        hidePopover(): void;
+    };
+
     /**
      * Indicates whether the overlay is currently functional or not.
      *
@@ -1051,22 +1057,24 @@ export class Overlay extends ComputedOverlayBase {
          * to ensure that the overlay stacks above most other elements during fallback delivery.
          */
         return html`
-            <dialog
-                class="dialog"
-                part="dialog"
-                placement=${ifDefined(
-                    this.requiresPositioning
-                        ? this.placement || 'right'
-                        : undefined
-                )}
-                style=${styleMap(this.dialogStyleMap)}
-                @close=${this.handleBrowserClose}
-                @cancel=${this.handleBrowserClose}
-                @beforetoggle=${this.handleBeforetoggle}
-                ?is-visible=${this.state !== 'closed'}
-            >
-                ${this.renderContent()}
-            </dialog>
+            <div class="dialog-wrapper" popover="manual">
+                <dialog
+                    class="dialog"
+                    part="dialog"
+                    placement=${ifDefined(
+                        this.requiresPositioning
+                            ? this.placement || 'right'
+                            : undefined
+                    )}
+                    style=${styleMap(this.dialogStyleMap)}
+                    @close=${this.handleBrowserClose}
+                    @cancel=${this.handleBrowserClose}
+                    @beforetoggle=${this.handleBeforetoggle}
+                    ?is-visible=${this.state !== 'closed'}
+                >
+                    ${this.renderContent()}
+                </dialog>
+            </div>
         `;
     }
 

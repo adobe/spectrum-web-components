@@ -132,6 +132,10 @@ export class AbstractOverlay extends SpectrumElement {
         showPopover(): void;
         hidePopover(): void;
     };
+    dialogWrapper?: HTMLElement & {
+        showPopover(): void;
+        hidePopover(): void;
+    };
     /* c8 ignore next 6 */
     get disabled(): boolean {
         return false;
