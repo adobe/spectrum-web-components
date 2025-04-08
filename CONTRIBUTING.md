@@ -1,134 +1,250 @@
-# How to Contribute to Spectrum Web Components
+Welcome! We’re excited you’re interested in improving Spectrum Web Components. Whether you’re reporting bugs, adding new features, writing documentation, or helping other users, your contributions make this project better for everyone.
 
-First off, thanks for taking the time to contribute!
+Here you’ll find a broad overview of how you can get involved. Please read through these guidelines to help keep the contribution process smooth and to ensure we’re all on the same page.
 
-The following are a set of guidelines for contributing to Spectrum Web Components, which is hosted on the [Adobe Spectrum Web Components repository](https://github.com/adobe/spectrum-web-components). These are guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request if the need arises while contributing to the library.
+-   [1. Community \& Support](#1-community--support)
+    -   [1.1. External Contributors](#11-external-contributors)
+    -   [1.2. Internal Contributors](#12-internal-contributors)
+-   [2. Ways to Contribute](#2-ways-to-contribute)
+-   [3. Contributor License Agreement](#3-contributor-license-agreement)
+-   [4. Code of Conduct](#4-code-of-conduct)
+-   [5. Using the Issue Tracker](#5-using-the-issue-tracker)
+    -   [5.1. Before Submitting A Bug Report](#51-before-submitting-a-bug-report)
+-   [6. Bug Reports](#6-bug-reports)
+    -   [6.1. Issue Severity Classification](#61-issue-severity-classification)
+-   [7. Feature Requests/New Component](#7-feature-requestsnew-component)
+-   [8. Pull Requests](#8-pull-requests)
+-   [9. Branches](#9-branches)
+-   [10. Developing Locally](#10-developing-locally)
+-   [11. Testing](#11-testing)
+-   [12. Documentation](#12-documentation)
+-   [13. Best Practices \& Guidelines](#13-best-practices--guidelines)
+    -   [13.1. Code Formatting](#131-code-formatting)
+    -   [13.2. Accessibility](#132-accessibility)
+    -   [13.3. Commit Guidelines](#133-commit-guidelines)
+-   [14. Thank You](#14-thank-you)
 
-## Code Of Conduct
+---
 
-This project adheres to the Adobe [code of conduct](CODE_OF_CONDUCT.md). By participating,
-you are expected to uphold this code. Please report unacceptable behavior to
-[Grp-opensourceoffice@adobe.com](mailto:Grp-opensourceoffice@adobe.com).
+# 1. Community & Support
 
-## TL;DR
+A fantastic first step to contributing is joining our community discussions. This is where you can:
 
-> **Note:** [Please don't file an issue to ask a question.](https://github.com/adobe/spectrum-web-components/discussions) You'll get faster results by using the resources below.
+-   Ask questions and troubleshoot with other users.
+-   Propose new ideas or get feedback on your own.
+-   Stay informed about what’s coming next.
 
-We have an official message board with a detailed FAQ and where the community chimes in with helpful advice if you have questions.
+## 1.1. External Contributors
 
--   [Spectrum Web Components FAQ](https://github.com/adobe/spectrum-web-components/discussions/categories/q-a): Your question may have been asked before, take a quick look at the FAQ to see previous questions that may help you.
--   [Github Discussions, the official Spectrum Web Components message board](https://github.com/adobe/spectrum-web-components/discussions): If you don't see a previously asked question, feel free to reach out to the team in the message board.
+If you need support or have a question about how something works, GitHub Discussions is the best place to start.
 
-## How Can I Contribute?
+## 1.2. Internal Contributors
 
-### Contributor License Agreement
+If you work for Adobe, our slack channel #spectrum_web_components has some great workflows to get you started. Be sure to read the Welcome Canvas when you join.
 
-All third-party contributions to this project must be accompanied by a signed contributor
-license agreement. [Sign our CLA](http://opensource.adobe.com/cla.html).
+---
 
-### Security Issues
+# 2. Ways to Contribute
 
-Do not open up a GitHub issue if the bug is a security vulnerability in Spectrum Web Components, and instead to refer to our [security policy](https://helpx.adobe.com/security/alertus.html).
+There’s a common misconception that you need to code in order to contribute. In reality, there are many different ways to help:
 
-## Did you find a bug?
+-   Filing well-structured bug reports that show what’s broken and how to reproduce it.
+-   Suggesting new features that improve the current design system.
+-   Improving our documentation to make it clearer for the next person.
+-   Reviewing pull requests from other community members and sharing feedback.
+-   Helping other users on GitHub Discussions.
+-   Advocating for the project on social media or at meetups.
 
-### Before Submitting A Bug Report
+Of course, contributing code is also welcome from fixing a bug to building a brand-new component. All types of contributions help keep Spectrum Web Components thriving.
 
--   Check the [Issue Discussions](https://github.com/adobe/spectrum-web-components/issues).
--   You might be able to find the cause of the problem and fix things yourself. Most importantly, check if you can reproduce the problem [in the latest version of Spectrum Web Components](https://studio.webcomponents.dev/workspace/adobe).
+---
 
--   Perform a [search](https://github.com/adobe/spectrum-web-components/issues) to see if the problem has already been reported. If it has and the issue is still open, add a comment to the existing issue instead of opening a new one.
+# 3. Contributor License Agreement
 
-### Report bugs using Github's [issues](https://github.com/adobe/spectrum-web-components/issues)
+We require all external contributors to sign our Contributor License Agreement (CLA). If you haven’t signed it before making your first contribution, please do so—otherwise, we can’t merge your changes.
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/adobe/spectrum-web-components/issues/new/choose); it's that easy!
+---
 
-### Write bug reports with detail, background, and sample code
+# 4. Code of Conduct
 
-Create an issue on the repository and provide the following information by filling in [the template](https://github.com/adobe/spectrum-web-components/blob/main/.github/ISSUE_TEMPLATE/bug_report.yaml).
+Spectrum Web Components abides by the Adobe Code of Conduct. By participating, you agree to treat all community members kindly and respectfully. We’re committed to fostering a welcoming, inclusive environment.
+Should any behavior fall short of these expectations, please report it to <Grp-opensourceoffice@adobe.com>.
 
--   A quick summary and/or background
--   Steps to reproduce -
-    -   Please be specific!
-    -   Please reproduce your issue in an isolated or abstract environment, preferrably [webcomponents.dev](https://studio.webcomponents.dev/workspace/adobe). Screenshots or videos from your local development environment are often not sufficient to help us determine if the issue originates from our library.
--   What you would expect to happen
--   What actually happens
--   Notes (for example why you think this might be happening, or stuff you tried that didn't work)
--   Issue severity
+---
 
-### Issue severity classification
+# 5. Using the Issue Tracker
 
-Providing the correct issue severity classification helps us adequately assess and prioritize your issue.
+We use GitHub Issues for two purposes:
 
-Please be aware of our issue severity classification criteria:
+1. Bug Reports
+2. Feature Requests (after initial discussion)
 
-<!-- prettier-ignore -->
-| Severity Level | Description | Examples |
-|---|---|---|
-| **SEV 1** | A critical design or functionality issue that breaks the design system, causes significant usability problems, or exposes critical security vulnerabilities. This issue impacts all users and/or essential workflows, making users unable to complete any tasks. Requires immediate attention. | Broken navigation system, complete unresponsiveness on all devices, components not rendering, inaccessible primary actions, security vulnerabilities.<br><br>Accessibility: The end user is not able to complete core tasks or activities (e.g., key navigational elements not accessible via keyboard, missing or incorrect form labels that prevent screen reader users from completing forms or actions, critical color contrast issues that prevent users from reading or interacting with essential content). |
-| **SEV 2** | A significant problem affecting the design, usability, or functionality of the system or components for a subset of users. This issue causes major disruptions and prevent users from completing tasks or workflows.<br><br>Accessibility: Does not conform with WCAG 2.1 Level AA criteria and blocks core user tasks (no known workaround). | Content that is out of view or unreachable by customers, critical buttons or links not functioning, or actions that cannot be submitted. Unintentional breaking changes causing disruptions in production environments.<br><br>Accessibility: Issue with a component or controller with widespread use and blocks core user tasks (no known workaround). |
-| **SEV 3** | A design or functionality issue that causes noticeable errors or minor usability problems for users which either cause confusion or degrade the user experience, but do not prevent task completion.<br><br>Accessibility: Does not conform with WCAG 2.1 Level AA criteria and is either non-blocking for core user tasks or blocking for non-core user tasks. | Misleading labels, inconsistent component behavior, unexpected interactions, decreases in system performance.<br><br>Accessibility: Workarounds are available and discoverable for the end user to complete core user tasks, or the end user is not able to complete non-core user tasks (e.g., inadequate ARIA labels, improper focus management, insufficient color contrast for non-critical elements). |
-| **SEV 4** | A minor design flaw that affects user experience, but doesn't have a serious impact on overall usability or functionality. This issue does not prevent users from completing tasks.<br><br>Accessibility: Does not conform with WCAG 2.1 Level AA criteria but has lower user impact. | Minor visual inconsistencies, non-critical content misalignment, or minor layout issues.<br><br>Accessibility: A WCAG violation is present in areas not frequently visited by end users, or it has a lower impact on overall accessibility and usability. |
-| **SEV 5** | A low-level design inconsistency or minor issue that slightly affects usability or aesthetic, with minimal impact on users. | Slight color deviations, minor typographical errors, or small spacing inconsistencies that do not impact functionality. |
+If you’re having a usage issue or need support, do not open an issue. Instead, reference the Community & Support section. This helps us keep issues focused on actual bugs and actionable tasks.
 
-## Do you intend to add a new feature or change an existing one?
+## 5.1. Before Submitting A Bug Report
 
--   Suggest your change in the [ideas list](https://github.com/adobe/spectrum-web-components/discussions/categories/ideas) and start writing code.
+1. Check the Open Issues to see if the problem has already been reported.
+    1. TIP: Apply the component label to make your search process more straightforward.
+2. If it has and the issue is still open, add a comment to the existing issue instead of opening a new one.
+3. Check if you can reproduce the problem in the latest version of Spectrum Web Components.
+4. If there are no related open issues and it is reproducible in isolation, then open a Bug Report.
 
--   Do not open an issue on GitHub until you have collected positive feedback about the change. You can start on [Adding your idea here](https://github.com/adobe/spectrum-web-components/discussions/categories/ideas) under Ideas
+---
 
--   Once your Idea or request is submitted, you can create an [issue](https://github.com/adobe/spectrum-web-components/issues/new/choose) with the New Component or a Feature Request template.
+# 6. Bug Reports
 
--   Please make sure that your PR follows our [best practices](https://opensource.adobe.com/spectrum-web-components/migrations/2021-8-11/#using-lit%402.0-inside-of-lit-html-and%2For-litelement) and [styleguide](https://spectrum.corp.adobe.com/page/design-tokens/#Usage-guidelines) before you submit for review
+When you file a bug, please use the `Bug Report` template provided in GitHub. Include the following information:
 
-## Branching Strategy
+1. A concise summary of the problem.
+2. Relevant components involved in the issue.
+3. Issue Severity based on our classifications defined below.
+4. What you expected vs. what actually happened, along with any errors logged in the console.
+5. Steps to reproduce the issue, preferably in an isolated environment, so that we can narrow down where the bug is originating from. (e.g., webcomponents.dev or CodePen). Be detailed if you write out the steps!
+6. Relevant environment details (OS, browser, library version).
 
-### Branch Naming Convention:
+Clear bug reports speed up the triage process, help us replicate the issue, and keep the project robust.
 
--   Use `[username]/[issue]` format for branches.
--   `[username]` identifies the contributor.
--   `[issue]` refers to the associated issue or feature number.
+## 6.1. Issue Severity Classification
 
-For e.g: Be descriptive after the /, like `john-doe/123-fix-bug`.
+Providing the correct issue severity classification helps us adequately assess and prioritize your issue. We reserve the right to adjust the severity of your bug during triage.
+Below is our issue severity classification criteria:
 
-## Create your first Pull Request
+| Severity Level | Description                                                                                                                                                                                                                                                                                                                                                     | Examples                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 🔥 SEV 1       | A critical design or functionality issue that breaks the design system, causes significant usability problems, or exposes critical security vulnerabilities. This issue impacts all users and/or essential workflows, making users unable to complete any tasks. Requires immediate attention.                                                                  | Broken navigation system, complete unresponsiveness on all devices, components not rendering, inaccessible primary actions, security vulnerabilities.<br><br>Accessibility: The end user is not able to complete core tasks or activities (e.g., key navigational elements not accessible via keyboard, missing or incorrect form labels that prevent screen reader users from completing forms or actions, critical color contrast issues that prevent users from reading or interacting with essential content). |
+| 🔴 SEV 2       | A significant problem affecting the design, usability, or functionality of the system or components for a subset of users. This issue causes major disruptions and prevent users from completing tasks or workflows.<br><br>Accessibility: Does not conform with WCAG 2.1 Level AA criteria and blocks core user tasks (no known workaround).                   | Content that is out of view or unreachable by customers, critical buttons or links not functioning, or actions that cannot be submitted. Unintentional breaking changes causing disruptions in production environments.<br><br>Accessibility: Issue with a component or controller with widespread use and blocks core user tasks (no known workaround).                                                                                                                                                           |
+| 🟠 SEV 3       | A design or functionality issue that causes noticeable errors or minor usability problems for users which either cause confusion or degrade the user experience, but do not prevent task completion.<br><br>Accessibility: Does not conform with WCAG 2.1 Level AA criteria and is either non-blocking for core user tasks or blocking for non-core user tasks. | Misleading labels, inconsistent component behavior, unexpected interactions, decreases in system performance.<br><br>Accessibility: Workarounds are available and discoverable for the end user to complete core user tasks, or the end user is not able to complete non-core user tasks (e.g., inadequate ARIA labels, improper focus management, insufficient color contrast for non-critical elements).                                                                                                         |
+| 🟡 SEV 4       | A minor design flaw that affects user experience, but doesn't have a serious impact on overall usability or functionality. This issue does not prevent users from completing tasks.<br><br>Accessibility: Does not conform with WCAG 2.1 Level AA criteria but has lower user impact.                                                                           | Minor visual inconsistencies, non-critical content misalignment, or minor layout issues.<br><br>Accessibility: A WCAG violation is present in areas not frequently visited by end users, or it has a lower impact on overall accessibility and usability.                                                                                                                                                                                                                                                          |
+| 🟢 SEV 5       | A low-level design inconsistency or minor issue that slightly affects usability or aesthetic, with minimal impact on users.                                                                                                                                                                                                                                     | Slight color deviations, minor typographical errors, or small spacing inconsistencies that do not impact functionality.                                                                                                                                                                                                                                                                                                                                                                                            |
 
--   Follow all instructions in [the template](https://github.com/adobe/spectrum-web-components/blob/main/.github/PULL_REQUEST_TEMPLATE.md)
--   After you submit your pull request, verify that all [status checks](https://help.github.com/articles/about-status-checks/) are passing.
+---
 
-## Git Commit Messages
+# 7. Feature Requests/New Component
 
-### Commitlint
+Is there something you wish the project did differently? Have a new component in mind? We love hearing new ideas and are eager to collaborate!
 
-We use [Commitlint](https://github.com/conventional-changelog/commitlint/#what-is-commitlint) to help manage the semantic versions across the various packages in this library. Please be sure that you take this into consideration when submitting PRs to this repository. Generally, your commits should look like the following:
+-   Start with a discussion: Share your idea in Discussions to gather feedback and see if it aligns with project goals.
+-   Open a feature request issue: After some positive initial conversation, open an issue using the `Feature Request` or `New Component` template with details and potential use cases.
 
-```bash
-type(scope?): subject #scope is optional, but should reference the package you are updating
-```
+---
 
-We maintain a specific standard of commit messages while committing to the respository. See [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary)
+# 8. Pull Requests
 
-## Browser support
+If you plan to fix a bug, create a feature, or improve documentation, we recommend:
 
-When contributing to our system or filing an issue, please consider the target browsers we support.
+1. Clone the Repo
+    - Click “<> Code” in the GitHub UI to copy the repository to your machine.
+    - Follow the README instructions for setup and the CONTRIBUTING guide
+2. Create a Descriptive Branch
+    - Use a clear name like `username/fix-header-bug` or `feature/new-sidebar-component`.
+    - Reference [Branches section](#9-branches)
+3. Commit Your Changes
+    - Follow Conventional Commits for structured commit messages.
+    - We use Commitlint to help manage the semantic versions across the various packages in this library.
+    - Generally, your commits should look like the following:
+      type(component?): subject
+      //component is optional, but should reference the package you are updating
+4. Open a Draft PR
+    - Opening a draft pull request early is a great way to get feedback before finalizing your work. Mark it as “Draft” if you aren’t ready for a full review.
+5. Complete the PR Template
+    1. Fill out the PR template to the best of your ability
+    2. When adding related issues to your PR, make sure to use the proper keywords so that the issues automatically close upon merging the PR.
+    3. If a PR does not include a completed template, it will delay the review and you will be asked to complete it before a maintainer looks at it.
+6. Ensure all CI checks and tests are passing
+    - PRs with failing checks will NOT be merged
+    - VRT checks golden hash should not be updated until an approver has commented that they look good.
+7. Mark PR Ready for Review
+    - The maintainers will be automatically add as reviewers and notified
+8. Solicit Feedback
+    - Once the PR is live, maintainers and contributors will review your changes. You might receive suggestions or requests for adjustments.
+9. Merge & Release
+    - After your PR is approved and passes all checks, a maintainer will merge your PR. We’ll update release notes as needed so everyone knows about the change.
 
-We support the latest 2 major versions of these browsers for desktop:
+> Note: If your contribution is small (e.g., correcting a typo or fixing a tiny bug), you don’t necessarily need to open an issue first. Just create the PR!
 
--   Google Chrome
--   Mozilla Firefox
--   Microsoft Edge
--   Apple Safari for macOS
+---
 
-We do not support Microsoft Internet Explorer.
+# 9. Branches
 
-We support all viewport sizes across supported desktop browsers.
+We keep things straightforward with branching:
 
-While our components are designed to be responsive and mobile-friendly, we do not yet fully support mobile browsers due to limited testing in mobile hardware. We encourage contributors to keep mobile compatibility in mind and to test updates on mobile devices when possible.
+-   `[username]/[short-description]` (e.g., `alex/fix-dropdown-bug`) is often all you need.
+-   If your work references a known issue, you could also incorporate the issue number (e.g., `alex/123-bug-fix`).
 
-## Do you want to contribute to the Spectrum Web Components documentation?
+Avoid editing distribution files (if present). Make changes to the source files, then allow the build system to generate any bundled or output files automatically.
 
-Please read [Contributing Guidelines for documentation](https://github.com/adobe/spectrum-web-components#documentation)
+---
 
-Thanks! :heart: :heart: :heart:
+# 10. Developing Locally
 
-The Spectrum Web Components Team
+Read the steps outlined in the README.md to get your environment set up.
+
+If you encounter hurdles, feel free to ask for help in your pull request or in the community forum.
+
+---
+
+# 11. Testing
+
+Quality and stability are important. We require writing tests for any fixes or features you introduce. This helps ensure:
+
+-   Bugs don’t resurface later.
+-   New features work as intended for all users.
+-   Overall library reliability remains high.
+
+Read about our testing guidance in the README.md.
+
+If you’re unsure how to write tests for certain parts of the library, don’t hesitate to ask maintainers for guidance. We appreciate every effort to keep the code solid!
+
+---
+
+# 12. Documentation
+
+In addition to well-tested code, documentation is crucial. Whenever you add or change a feature,include documentation for it in the relevant areas:
+
+-   **README.md**: Each component has a README within its directory. Ensure your changes are included here. This file is used in our generated documentation site.
+-   **Comment Annotations**: We use comment-based documentation (JSDocs) so that references are generated automatically where possible.
+
+Accessible, helpful docs are a huge win for everyone, especially newcomers.
+
+---
+
+# 13. Best Practices & Guidelines
+
+## 13.1. Code Formatting
+
+We rely on automated tools like Prettier or ESLint to enforce style preferences. Setting up these tools in your editor saves time and prevents minor style conflicts from slowing down reviews.
+
+## 13.2. Accessibility
+
+Since Spectrum Web Components is used by a diverse audience, we pay close attention to accessibility. Please keep features inclusive by:
+
+-   Using semantic markup when possible.
+-   Properly labeling interactive elements.
+-   Ensuring focus states and keyboard navigation are well supported.
+
+If you’re unsure about an accessibility detail, open a discussion or ask in your PR.
+
+## 13.3. Commit Guidelines
+
+As mentioned previously, we use Conventional Commit syntax:
+
+    type(component?): subject
+    //component is optional, but should reference the package you are updating
+
+Examples:
+
+-   `feat(sp-card): add shadow styles for theme consistency`
+-   `fix(sp-action-menu): correct arrow key navigation in nested menus`
+-   `docs: clarify how to submit bug reports`
+
+This helps us track changes in a predictable way and automate versioning.
+
+---
+
+# 14. Thank You
+
+We appreciate everyone who invests time, energy, and expertise into Spectrum Web Components. Your contributions—big or small—help this library evolve to serve a broader audience and remain at a high standard of quality.
+
+If you have any suggestions for improving these guidelines, feel free to open a pull request or bring it up in our community discussions. We’re always eager to make the contribution experience better.
+
+Happy contributing!
