@@ -239,9 +239,8 @@ export const complexFastPage = (): TemplateResult => html`
 
 export const complexSlowPage = (): TemplateResult => html`
     <div style="padding: 20px;">
-        <span>
             <div
-                style="width: 100px; height: 100px; background: gray; z-index:1; position: relative;"
+                style="width: 100px; height: 100px; z-index:1; background: gray; position: relative;"
             >
                 <sp-button style="margin: 20px;" id="trigger">
                     open modal
@@ -267,9 +266,8 @@ export const complexSlowPage = (): TemplateResult => html`
                             Sign in
                         </sp-action-button>
                     </sp-dialog-wrapper>
-                </sp-overlay>
-            </div>
-            <sp-button id="pageTrigger">open page</sp-button>
+                </sp-overlay>        </div>
+                <sp-button id="pageTrigger">open page</sp-button>
             <sp-overlay trigger="pageTrigger@click" type="page">
                 <sp-dialog-wrapper
                     headline="Full screen menu"
@@ -300,6 +298,7 @@ export const complexSlowPage = (): TemplateResult => html`
                 </sp-popover>
             </sp-overlay>
         </span>
+
         <div
             style="margin: auto; width: 100px; height: 100px; background-color: red; z-index:2; position: relative;"
         >

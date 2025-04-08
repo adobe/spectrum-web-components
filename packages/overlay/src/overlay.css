@@ -202,6 +202,11 @@ slot[name='longpress-describedby-descriptor'] {
     }
 }
 
+.dialog-wrapper[popover]:popover-open {
+    background: none;
+    border: none;
+}
+
 .dialog:open:not(:modal):not(:popover-open) {
     z-index: calc(
         var(--swc-overlay-z-index-base, 1000) + var(--swc-overlay-open-count)
