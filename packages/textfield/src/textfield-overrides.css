@@ -40,19 +40,19 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([size='s']) #textfield#textfield {
+:host([size='s']) #textfield {
     --spectrum-textfield-icon-spacing-block-invalid: var(
         --system-textfield-size-s-icon-spacing-block-invalid
     );
 }
 
-:host([size='l']) #textfield#textfield {
+:host([size='l']) #textfield {
     --spectrum-textfield-icon-spacing-block-invalid: var(
         --system-textfield-size-l-icon-spacing-block-invalid
     );
 }
 
-:host([size='xl']) #textfield#textfield {
+:host([size='xl']) #textfield {
     --spectrum-textfield-icon-spacing-block-invalid: var(
         --system-textfield-size-xl-icon-spacing-block-invalid
     );

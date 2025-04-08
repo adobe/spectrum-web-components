@@ -33,7 +33,7 @@ governing permissions and limitations under the License.
     inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
 }
 
-:host([size='s']) {
+/* :host([size='s']) {
     --spectrum-stepper-width: calc(var(--spectrum-stepper-width) / 5 * 4);
 }
 
@@ -43,7 +43,7 @@ governing permissions and limitations under the License.
 
 :host([size='xl']) {
     --spectrum-stepper-width: calc(var(--spectrum-stepper-width) * 1.25 * 1.25);
-}
+} */
 
 #textfield {
     inline-size: 100%;
