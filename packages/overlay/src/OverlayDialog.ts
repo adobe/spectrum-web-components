@@ -24,11 +24,14 @@ import {
 } from './events.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
+import { FocusTrap } from 'focus-trap';
 
 export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
     constructor: T
 ): T & Constructor<SpectrumElement> {
     class OverlayWithDialog extends constructor {
+        private _focusTrap: FocusTrap | null = null;
+
         protected override async manageDialogOpen(): Promise<void> {
             const targetOpenState = this.open;
             await nextFrame();
@@ -40,7 +43,35 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             if (this.open !== targetOpenState) {
                 return;
             }
-            await this.dialogApplyFocus(targetOpenState, focusEl);
+            const focusTrap = await import('focus-trap');
+            this._focusTrap = focusTrap.createFocusTrap(this.dialogEl, {
+                initialFocus: focusEl || undefined,
+                tabbableOptions: {
+                    getShadowRoot: true,
+                },
+                returnFocusOnDeactivate: true,
+            });
+            console.log('manageDialogOpen');
+            console.log('focusEl', focusEl);
+
+            // Wait for the next two animation frames to ensure the DOM is updated.
+
+            // If the open state has changed during the delay, do not proceed.
+            if (targetOpenState === this.open && !this.open) {
+                // If the overlay is closing and the trigger element is still focused, return focus to the trigger element.
+                if (
+                    this.contains(
+                        (this.getRootNode() as Document).activeElement
+                    )
+                ) {
+                    (this.triggerElement as HTMLElement).focus();
+                }
+                return;
+            }
+            if (this.open && targetOpenState) {
+                this._focusTrap.activate();
+            }
+            //  await this.dialogApplyFocus(targetOpenState, focusEl);
         }
 
         protected async dialogMakeTransition(
@@ -176,6 +207,9 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     ) {
                         this.dialogWrapper.hidePopover();
                     }
+                    console.log('deactivate');
+
+                    this._focusTrap?.deactivate();
                     this.dialogEl.close();
                 } else {
                     reportChange();
@@ -191,22 +225,22 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             return focusEl;
         }
 
-        protected async dialogApplyFocus(
-            targetOpenState: boolean,
-            focusEl: HTMLElement | null
-        ): Promise<void> {
-            /**
-             * Focus should be handled natively in `<dialog>` elements when leveraging `.showModal()`, but it's NOT.
-             * - webkit bug: https://bugs.webkit.org/show_bug.cgi?id=255507
-             * - firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1828398
-             * (NEW 2025) There seems to exist some movement here: https://github.com/whatwg/html/issues/9245
-             *
-             * PRXXXX - We're using dialog.show() instead of dialog.showModal() to avoid the
-             * performance impact of making elements inert. When using show(), no automatic
-             * focus management is applied by the browser.
-             **/
-            this.applyFocus(targetOpenState, focusEl);
-        }
+        // protected async dialogApplyFocus(
+        //     targetOpenState: boolean,
+        //     focusEl: HTMLElement | null
+        // ): Promise<void> {
+        //     /**
+        //      * Focus should be handled natively in `<dialog>` elements when leveraging `.showModal()`, but it's NOT.
+        //      * - webkit bug: https://bugs.webkit.org/show_bug.cgi?id=255507
+        //      * - firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1828398
+        //      * (NEW 2025) There seems to exist some movement here: https://github.com/whatwg/html/issues/9245
+        //      *
+        //      * PRXXXX - We're using dialog.show() instead of dialog.showModal() to avoid the
+        //      * performance impact of making elements inert. When using show(), no automatic
+        //      * focus management is applied by the browser.
+        //      **/
+        //    this.applyFocus(targetOpenState, focusEl);
+        // }
     }
     return OverlayWithDialog;
 }
