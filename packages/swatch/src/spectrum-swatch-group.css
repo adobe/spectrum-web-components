@@ -12,17 +12,20 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-swatchgroup-spacing: var(--spectrum-spacing-75);
     justify-content: flex-start;
     align-items: flex-start;
-    gap: var(--mod-swatchgroup-spacing-regular, var(--spectrum-swatchgroup-spacing-regular));
+    gap: var(--mod-swatchgroup-spacing-regular, var(--spectrum-swatchgroup-spacing));
     flex-flow: wrap;
     display: inline-flex;
 }
 
 :host([density='compact']) {
-    gap: var(--mod-swatchgroup-spacing-compact, var(--spectrum-swatchgroup-spacing-compact));
+    --mod-swatchgroup-spacing-regular: var(--mod-swatchgroup-spacing-compact);
+    --spectrum-swatchgroup-spacing: var(--spectrum-spacing-50);
 }
 
 :host([density='spacious']) {
-    gap: var(--mod-swatchgroup-spacing-spacious, var(--spectrum-swatchgroup-spacing-spacious));
+    --mod-swatchgroup-spacing-regular: var(--mod-swatchgroup-spacing-spacious);
+    --spectrum-swatchgroup-spacing: var(--spectrum-spacing-100);
 }
