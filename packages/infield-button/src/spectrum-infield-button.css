@@ -32,7 +32,7 @@ governing permissions and limitations under the License.
     --mod-infield-button-background-color: var(--mod-infield-button-background-color-disabled, var(--spectrum-disabled-background-color));
     --mod-infield-button-background-color-hover: var(--mod-infield-button-background-color-hover-disabled, var(--spectrum-disabled-background-color));
     --mod-infield-button-background-color-down: var(--mod-infield-button-background-color-down-disabled, var(--spectrum-disabled-background-color));
-    --mod-infield-button-border-color: var(--mod-infield-button-border-color-disabled, var(--spectrum-disabled-background-color));
+    --mod-infield-button-border-color: var(--mod-infield-button-border-color-disabled, var(--spectrum-infield-button-border-color));
     --mod-infield-button-icon-color: var(--mod-infield-button-icon-color-disabled, var(--spectrum-disabled-content-color));
     --mod-infield-button-icon-color-hover: var(--mod-infield-button-icon-color-hover-disabled, var(--spectrum-disabled-content-color));
     --mod-infield-button-icon-color-down: var(--mod-infield-button-icon-color-down-disabled, var(--spectrum-disabled-content-color));

@@ -813,6 +813,7 @@
     --system-infield-button-background-color-key-focus: var(
         --spectrum-gray-200
     );
+    --system-infield-button-disabled-border-color: var(--spectrum-gray-300);
     --system-menu-item-background-color-hover: rgba(
         var(--spectrum-gray-1000-rgb),
         var(--spectrum-transparent-black-200-opacity)
@@ -1108,7 +1109,7 @@
     --system-search-border-color-hover: var(--spectrum-gray-600);
     --system-search-border-color-focus: var(--spectrum-gray-800);
     --system-search-border-color-focus-hover: var(--spectrum-gray-900);
-    --system-search-border-color-key-focus: var(--spectrum-gray-900);
+    --system-search-border-color-key-focus: var(--spectrum-gray-800);
     --system-search-background-color: var(--spectrum-gray-25);
     --system-search-background-color-disabled: var(--spectrum-gray-25);
     --system-search-border-color-disabled: var(--spectrum-gray-300);
