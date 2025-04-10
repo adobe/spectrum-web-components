@@ -65,7 +65,7 @@ export const buildPreviewURLComment = (ref) => {
         previewLinks.push(`
 - [${system} | ${color} | ${scale} | ${direction}](https://${createHash(
             context
-        )}--spectrum-w-c.netlify.app/review/)`);
+        )}--spectrum-wc.netlify.app/review/)`);
     });
 
     // Add a high contrast mode preview link
@@ -73,13 +73,13 @@ export const buildPreviewURLComment = (ref) => {
         `
 - [High Contrast Mode | Medium | LTR](https://${createHash(
             `${branch}-hcm`
-        )}--spectrum-w-c.netlify.app/review/)`
+        )}--spectrum-wc.netlify.app/review/)`
     );
 
     let comment = `## Branch preview
 
-- [Documentation Site](https://${branchSlug}--spectrum-w-c.netlify.app/)
-- [Storybook](https://${branchSlug}--spectrum-w-c.netlify.app/storybook/)
+- [Documentation Site](https://${branchSlug}--spectrum-wc.netlify.app/)
+- [Storybook](https://${branchSlug}--spectrum-wc.netlify.app/storybook/)
 
 
 

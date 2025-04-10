@@ -12,62 +12,10 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-actionbar-height: var(--system-action-bar-height);
-    --spectrum-actionbar-corner-radius: var(--system-action-bar-corner-radius);
-    --spectrum-actionbar-item-counter-font-size: var(
-        --system-action-bar-item-counter-font-size
-    );
-    --spectrum-actionbar-item-counter-line-height: var(
-        --system-action-bar-item-counter-line-height
-    );
-    --spectrum-actionbar-item-counter-color: var(
-        --system-action-bar-item-counter-color
-    );
-    --spectrum-actionbar-item-counter-line-height-cjk: var(
-        --system-action-bar-item-counter-line-height-cjk
-    );
     --spectrum-actionbar-popover-background-color: var(
         --system-action-bar-popover-background-color
     );
     --spectrum-actionbar-popover-border-color: var(
         --system-action-bar-popover-border-color
     );
-    --spectrum-actionbar-emphasized-background-color: var(
-        --system-action-bar-emphasized-background-color
-    );
-    --spectrum-actionbar-emphasized-item-counter-color: var(
-        --system-action-bar-emphasized-item-counter-color
-    );
-    --spectrum-actionbar-spacing-outer-edge: var(
-        --system-action-bar-spacing-outer-edge
-    );
-    --spectrum-actionbar-spacing-close-button-top: var(
-        --system-action-bar-spacing-close-button-top
-    );
-    --spectrum-actionbar-spacing-close-button-start: var(
-        --system-action-bar-spacing-close-button-start
-    );
-    --spectrum-actionbar-spacing-close-button-end: var(
-        --system-action-bar-spacing-close-button-end
-    );
-    --spectrum-actionbar-spacing-item-counter-top: var(
-        --system-action-bar-spacing-item-counter-top
-    );
-    --spectrum-actionbar-spacing-item-counter-end: var(
-        --system-action-bar-spacing-item-counter-end
-    );
-    --spectrum-actionbar-spacing-action-group-top: var(
-        --system-action-bar-spacing-action-group-top
-    );
-    --spectrum-actionbar-spacing-action-group-end: var(
-        --system-action-bar-spacing-action-group-end
-    );
-    --spectrum-actionbar-shadow-horizontal: var(
-        --system-action-bar-shadow-horizontal
-    );
-    --spectrum-actionbar-shadow-vertical: var(
-        --system-action-bar-shadow-vertical
-    );
-    --spectrum-actionbar-shadow-blur: var(--system-action-bar-shadow-blur);
-    --spectrum-actionbar-shadow-color: var(--system-action-bar-shadow-color);
 }

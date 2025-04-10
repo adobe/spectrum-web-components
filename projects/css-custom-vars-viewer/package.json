@@ -3,7 +3,7 @@
     "version": "1.4.0",
     "description": "Demo app created with Spectrum Web Components, following open-wc guidelines",
     "license": "Apache-2.0",
-    "author": "najikahalsema",
+    "author": "Adobe",
     "main": "dist/src/index.js",
     "module": "dist/src/index.js",
     "private": true,
@@ -67,5 +67,24 @@
         "tslib": "^2.3.1",
         "typescript": "^5.3.3"
     },
-    "customElements": "custom-elements.json"
+    "customElements": "custom-elements.json",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "projects/css-custom-vars-viewer"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html"
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
 }
