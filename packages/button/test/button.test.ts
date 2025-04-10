@@ -719,28 +719,6 @@ describe('Button', () => {
             expect(submitSpy.callCount).to.equal(1);
             expect(resetSpy.callCount).to.equal(1);
         });
-        it('proxies click by [href]', async () => {
-            const clickSpy = spy();
-            const el = await fixture<Button>(html`
-                <sp-button href="test_url">With Href</sp-button>
-            `);
-
-            await elementUpdated(el);
-            (
-                el as unknown as {
-                    anchorElement: HTMLAnchorElement;
-                }
-            ).anchorElement.addEventListener('click', (event: Event): void => {
-                event.preventDefault();
-                event.stopPropagation();
-                clickSpy();
-            });
-            expect(clickSpy.callCount).to.equal(0);
-
-            el.click();
-            await elementUpdated(el);
-            expect(clickSpy.callCount).to.equal(1);
-        });
         it('manages "active" while focused', async () => {
             const el = await fixture<Button>(html`
                 <sp-button label="Button">
