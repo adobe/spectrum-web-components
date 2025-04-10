@@ -15,11 +15,8 @@ governing permissions and limitations under the License.
 @import '@spectrum-web-components/styles/tokens/spectrum/custom-vars.css';
 @import '@spectrum-web-components/styles/tokens/spectrum/system-theme-bridge.css';
 @import '@spectrum-web-components/styles/src/spectrum-heading.css';
-@import '@spectrum-web-components/styles/src/heading-overrides.css';
 @import '@spectrum-web-components/styles/src/spectrum-body.css';
-@import '@spectrum-web-components/styles/src/body-overrides.css';
 @import '@spectrum-web-components/styles/src/spectrum-code.css';
-@import '@spectrum-web-components/styles/src/code-overrides.css';
 @import '@spectrum-web-components/opacity-checkerboard/src/spectrum-opacity-checkerboard.css';
 @import './inline-alert.css';
 @import './fonts.css';

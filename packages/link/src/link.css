@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-link.css');
-@import url('./link-overrides.css');
 
 :host {
     display: inline;

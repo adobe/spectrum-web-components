@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-color-area.css');
-@import url('./color-area-overrides.css');
 
 :host {
     touch-action: none;
@@ -39,7 +38,7 @@ governing permissions and limitations under the License.
 }
 
 .slider[orient='vertical'] {
-    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    /* stylelint-disable-next-line declaration-property-value-no-unknown -- Experimental keyword expected */
     appearance: slider-vertical;
 }
 

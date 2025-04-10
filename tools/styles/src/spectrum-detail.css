@@ -1,14 +1,14 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Typography .spectrum-Detail {
@@ -22,7 +22,30 @@ governing permissions and limitations under the License.
     }
 }
 
+.spectrum-Detail,
+.spectrum-Detail--sizeM {
+    --spectrum-detail-font-size: var(--spectrum-detail-size-m);
+}
+
+.spectrum-Detail--sizeS {
+    --spectrum-detail-font-size: var(--spectrum-detail-size-s);
+}
+
+.spectrum-Detail--sizeL {
+    --spectrum-detail-font-size: var(--spectrum-detail-size-l);
+}
+
+.spectrum-Detail--sizeXL {
+    --spectrum-detail-font-size: var(--spectrum-detail-size-xl);
+}
+
 .spectrum-Detail {
+    --spectrum-detail-sans-serif-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-detail-serif-font-family: var(--spectrum-serif-font-family-stack);
+    --spectrum-detail-cjk-font-family: var(--spectrum-cjk-font-family-stack);
+    --spectrum-detail-margin-start: calc(var(--mod-detail-font-size, var(--spectrum-detail-font-size)) * var(--spectrum-detail-margin-top-multiplier));
+    --spectrum-detail-margin-end: calc(var(--mod-detail-font-size, var(--spectrum-detail-font-size)) * var(--spectrum-detail-margin-bottom-multiplier));
+    --spectrum-detail-font-color: var(--spectrum-detail-color);
     font-family: var(--mod-detail-sans-serif-font-family, var(--spectrum-detail-sans-serif-font-family));
     font-style: var(--mod-detail-sans-serif-font-style, var(--spectrum-detail-sans-serif-font-style));
     font-weight: var(--mod-detail-sans-serif-font-weight, var(--spectrum-detail-sans-serif-font-weight));
