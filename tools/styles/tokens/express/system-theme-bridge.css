@@ -822,6 +822,7 @@
     --system-infield-button-background-color-key-focus: var(
         --spectrum-gray-300
     );
+    --system-infield-button-disabled-border-color: var(--spectrum-gray-200);
     --system-menu-item-background-color-hover: rgba(
         var(--spectrum-gray-900-rgb),
         var(--spectrum-transparent-black-200-opacity)

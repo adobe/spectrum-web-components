@@ -43,3 +43,9 @@ governing permissions and limitations under the License.
         --system-infield-button-background-color-key-focus
     );
 }
+
+:host([disabled]) {
+    --spectrum-infield-button-border-color: var(
+        --system-infield-button-disabled-border-color
+    );
+}
