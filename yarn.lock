@@ -7777,13 +7777,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/tooltip@npm:7.0.0-s2-foundations.15":
-  version: 7.0.0-s2-foundations.15
-  resolution: "@spectrum-css/tooltip@npm:7.0.0-s2-foundations.15"
+"@spectrum-css/tooltip@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@spectrum-css/tooltip@npm:7.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/9ff18b52abba9eed53507869c777e85bdfc78e0fe4a99cbe639538c9ed8434f7e2e1b1af725396bd3c6bbd5067b1196c644e31e2b613c874350cef2f8133e977
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/96541bbe65300a4f0d7c0696424ac8f1dbe6f7f58a8a912cb9c62bd5599496c33ffdb8b343db6cbd8bd6141655b5061de8db7b90b8f990cb96dd047a6c8665cc
   languageName: node
   linkType: hard
 
@@ -8879,7 +8884,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/tooltip@workspace:packages/tooltip"
   dependencies:
-    "@spectrum-css/tooltip": "npm:7.0.0-s2-foundations.15"
+    "@spectrum-css/tooltip": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/overlay": "npm:1.4.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.4.0"
