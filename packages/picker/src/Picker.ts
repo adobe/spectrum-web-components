@@ -61,6 +61,7 @@ import type { FieldLabel } from '@spectrum-web-components/field-label';
 import { DesktopController } from './DesktopController.js';
 import { MobileController } from './MobileController.js';
 import { strategies } from './strategies.js';
+import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
@@ -80,9 +81,11 @@ export const DESCRIPTION_ID = 'option-picker';
  * @fires change - Announces that the `value` of the element has changed
  * @fires sp-opened - Announces that the overlay has been opened
  */
-export class PickerBase extends SizedMixin(SpectrumElement, {
-    noDefaultSize: true,
-}) {
+export class PickerBase extends ManageHelpText(
+    SizedMixin(SpectrumElement, {
+        noDefaultSize: true,
+    })
+) {
     static override shadowRootOptions = {
         ...SpectrumElement.shadowRootOptions,
         delegatesFocus: true,
@@ -594,6 +597,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             >
                 ${this.buttonContent}
             </button>
+            ${this.renderHelpText(this.invalid)}
             <slot
                 aria-hidden="true"
                 name="tooltip"
@@ -720,6 +724,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             >
                 ${accessibleMenu}
             </sp-popover>
+            ${this.renderHelpText(this.invalid)}
         `;
     }
 
