@@ -213,7 +213,7 @@ governing permissions and limitations under the License.
         --mod-stepper-buttons-background-color: transparent;
     }
 
-    :host(:hover) #textfield:not(.is-invalid, .is-disabled) {
+    :host(:hover) #textfield:not(.is-invalid, .is-disabled, .is-focused) {
         --mod-infield-button-border-color: var(--mod-stepper-buttons-border-color-hover, var(--spectrum-stepper-buttons-border-color-hover));
     }
 
