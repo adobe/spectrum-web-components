@@ -10,8 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement, ReactiveElement } from 'lit';
+import { adoptStyles, CSSResultOrNative, LitElement, ReactiveElement } from 'lit';
+import StyleObserver from 'style-observer';
+import type { StyleObserverCallback } from 'style-observer';
+import { createContext } from '@lit/context';
+import { provide } from '@lit/context';
 import { version } from '@spectrum-web-components/base/src/version.js';
+
+export { consume, provide } from '@lit/context';
+
+export type SystemThemes = 'spectrum'|'express'|'spectrum-two';
+export type SystemThemeConfig = Map<SystemThemes, CSSResultOrNative | null>;
+
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;
@@ -23,7 +33,11 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
+export const systemContext = createContext<SystemThemes>('spectrum');
+
 export interface SpectrumInterface {
+    systemTheming: SystemThemeConfig;
+    system: SystemThemes;
     shadowRoot: ShadowRoot;
     isLTR: boolean;
     hasVisibleFocusInTree(): boolean;
@@ -62,6 +76,28 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 ): T & Constructor<SpectrumInterface> {
     class SpectrumMixinElement extends constructor {
         /**
+         * @todo This should have a way to add a super call to the constructor
+         */
+        private styleProcessing: StyleObserverCallback = (records) => {
+            // Get the value of the context CSS custom property
+            records.forEach((record, idx) => {
+                // There should only be one record
+                if (idx > 0) return;
+
+                this.system = record.value as SystemThemes;
+            });
+        };
+
+        private styleObserver: InstanceType<typeof StyleObserver> = new StyleObserver(this.styleProcessing, '--context');
+        public get systemTheming(): SystemThemeConfig {
+            return new Map([
+                ['spectrum', null],
+                ['express', null],
+                ['spectrum-two', null],
+            ]);
+        }
+
+        /**
          * @private
          */
         public override shadowRoot!: ShadowRoot;
@@ -77,6 +113,41 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
          */
         public get isLTR(): boolean {
             return this.dir === 'ltr';
+        }
+
+        /**
+         * @description The system context of the element. This is used to determine the
+         * styling, markup, and/or API of the element and allows for the element to report on deprecations.
+         * @memberof SpectrumMixinElement
+         */
+        @provide({context: systemContext})
+        public system: SystemThemes = 'spectrum';
+
+        protected override update(changes: Map<PropertyKey, unknown>): void {
+            super.update(changes);
+            if (changes.has(this.system)) {
+              this.forceSystemUpdate(changes.get(this.system) as SystemThemes);
+            }
+        }
+
+        /**
+         * @description Forces the element to update its system context and swap themes if system theming is available.
+         * @param {(SystemThemes|undefined)} system - The optional system context to force the element to update to.
+         * @memberof SpectrumMixinElement
+         */
+        public forceSystemUpdate(system: SystemThemes|undefined = undefined): void {
+            const updateValue = system || this.system;
+
+            // Swap themes if system theming is available
+            let theme: CSSResultOrNative | null;
+            if (this.systemTheming && this.systemTheming.has(updateValue) && this.systemTheming.get(updateValue)) {
+                theme = this.systemTheming.get(updateValue)!;
+                this.updateComplete.then(() => {
+                    if (theme !== null && this.shadowRoot) {
+                        adoptStyles(this.shadowRoot, [theme!]);
+                    }
+                });
+            }
         }
 
         public hasVisibleFocusInTree(): boolean {
@@ -165,6 +236,13 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 }
                 this._dirParent = dirParent as HTMLElement;
             }
+
+            // Initialize the system context
+            this.system = this.style.getPropertyValue('--context') as SystemThemes;
+
+            // Set up the styleObserver to watch for changes to the context CSS custom property
+            this.styleObserver.observe(this);
+
             super.connectedCallback();
         }
 
@@ -180,8 +258,12 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 }
                 this.removeAttribute('dir');
             }
+
+            // Stop observing context
+            this.styleObserver.unobserve(this);
         }
     }
+
     return SpectrumMixinElement;
 }
 
