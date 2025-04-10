@@ -368,7 +368,7 @@ governing permissions and limitations under the License.
     color: var(--highcontrast-textfield-text-color-disabled, var(--mod-textfield-text-color-disabled, var(--spectrum-textfield-text-color-disabled)));
 }
 
-.input:read-only,
+:host([readonly]) .input,
 :host([readonly]) #textfield .input {
     background-color: initial;
     color: var(--highcontrast-textfield-text-color-readonly, var(--mod-textfield-text-color-readonly, var(--spectrum-textfield-text-color-readonly)));
@@ -376,7 +376,7 @@ governing permissions and limitations under the License.
     outline: none;
 }
 
-.input:read-only::placeholder,
+:host([readonly]) .input::placeholder,
 :host([readonly]) #textfield .input::placeholder {
     color: var(--highcontrast-textfield-text-color-readonly, var(--mod-textfield-text-color-readonly, var(--spectrum-textfield-text-color-readonly)));
     background-color: initial;

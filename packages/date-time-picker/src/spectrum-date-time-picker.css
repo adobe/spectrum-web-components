@@ -1,0 +1,241 @@
+/*
+Copyright 2023 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-datepicker-border-radius: var(--mod-datepicker-border-radius, var(--spectrum-corner-radius-100));
+    --spectrum-datepicker-border-radius-quiet: var(--mod-datepicker-border-radius-quiet, 0);
+    --spectrum-datepicker-border-width: var(--spectrum-border-width-100);
+    --spectrum-datepicker-min-width: var(--mod-datepicker-min-width, var(--spectrum-field-width));
+    --spectrum-datepicker-icon-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-datepicker-pickerbutton-border-color: var(--highcontrast-datepicker-pickerbutton-border-color, var(--mod-datepicker-pickerbutton-border-color, var(--spectrum-gray-500)));
+    --spectrum-datepicker-pickerbutton-border-color-invalid: var(--highcontrast-datepicker-pickerbutton-border-color, var(--mod-datepicker-pickerbutton-border-color-invalid, var(--spectrum-negative-border-color-default)));
+    --spectrum-datepicker-pickerbutton-width: calc(var(--spectrum-field-edge-to-disclosure-icon-100) * 2 + var(--spectrum-workflow-icon-size-100));
+    --spectrum-datepicker-quiet-button-offset: var(--mod-datepicker-quiet-button-offset, var(--spectrum-text-to-visual-100));
+    --spectrum-datepicker-icon-to-text: var(--spectrum-component-edge-to-text-100);
+    --spectrum-datepicker-pickerbutton-width-quiet: calc(var(--spectrum-datepicker-pickerbutton-width) - var(--spectrum-datepicker-quiet-button-offset));
+    --spectrum-datepicker-focus-ring-gap: var(--mod-datepicker-focus-ring-gap, var(--spectrum-focus-indicator-gap));
+    --spectrum-datepicker-focus-thickness: var(--mod-datepicker-focus-thickness, var(--spectrum-focus-indicator-thickness));
+    --spectrum-datepicker-focus-animation: var(--mod-datepicker-focus-animation, var(--spectrum-animation-duration-100));
+    --spectrum-datepicker-focus-ring-width: var(--mod-datepicker-focus-ring-width, var(--spectrum-border-width-100));
+    --spectrum-datepicker-focus-ring-color: var(--highcontrast-datepicker-focus-ring-color, var(--mod-datepicker-focus-ring-color, var(--spectrum-focus-indicator-color)));
+    --spectrum-datepicker-focus-line-gap: var(--mod-datepicker-focus-line-gap, var(--spectrum-spacing-75));
+    --spectrum-datepicker-invalid-quiet-color: var(--mod-datepicker-invalid-quiet-color, var(--spectrum-negative-border-color-default));
+    --spectrum-datepicker-quiet-border-color-hover: var(--mod-datepicker-quiet-border-color-hover, var(--spectrum-gray-500));
+    --spectrum-datepicker-border-color-disabled: var(--mod-datepicker-border-color-disabled, var(--spectrum-disabled-border-color));
+    --spectrum-datepicker-dash-font-size: var(--mod-datepicker-dash-font-size, var(--spectrum-font-size-100));
+    --spectrum-datepicker-dash-color: var(--highcontrast-datepicker-dash-color, var(--mod-datepicker-dash-color, var(--spectrum-neutral-content-color-default)));
+    --spectrum-datepicker-range-dash-padding-top: var(--mod-datepicker-range-dash-padding-top, 0);
+    --spectrum-datepicker-range-dash-marin-inline-start: var(--mod-datepicker-range-dash-margin-left, calc(var(--spectrum-datepicker-dash-font-size) * -0.5));
+    --spectrum-datepicker-range-input-width-first: var(--mod-datepicker-range-input-width-first, calc(var(--spectrum-datepicker-initial-width) - var(--spectrum-datepicker-generic-padding) * 2));
+    --spectrum-datepicker-input-width-base: calc(var(--spectrum-datepicker-range-input-width-first) + var(--spectrum-datepicker-icon-size));
+    --spectrum-datepicker-input-width: var(--mod-datepicker-input-width, calc(var(--spectrum-datepicker-input-width-base) + var(--spectrum-datepicker-initial-height)));
+    --spectrum-datepicker-range-input-width-quiet-first: var(--mod-datepicker-range-input-width-quiet-first, calc(var(--spectrum-datepicker-width-quiet-first) + var(--spectrum-datepicker-width-quiet-second)));
+    --spectrum-datepicker-input-width-quiet: var(--mod-datepicker-input-width-quiet, calc(var(--spectrum-datepicker-range-input-width-quiet-first) + var(--spectrum-datepicker-icon-size) + var(--spectrum-datepicker-initial-height)));
+    --spectrum-datepicker-datetime-input-width-first: var(--mod-datepicker-datetime-input-width-first, calc(var(--spectrum-datepicker-input-width-base) + var(--spectrum-datepicker-datetime-width-first)));
+    --spectrum-datepicker-datetime-input-width: var(--mod-datepicker-datetime-input-width, calc(var(--spectrum-datepicker-datetime-input-width-first) + var(--spectrum-datepicker-icon-size) + var(--spectrum-datepicker-initial-height)));
+    --spectrum-datepicker-datetime-quiet-input-width-first: var(--mod-datepicker-datetime-quiet-input-width-first, calc(var(--spectrum-datepicker-input-width-base) + var(--spectrum-datepicker-input-datetime-width)));
+    --spectrum-datepicker-datetime-quiet-input-width: var(--mod-datepicker-datetime-quiet-input-width, calc(var(--spectrum-datepicker-datetime-quiet-input-width-first) + var(--spectrum-datepicker-icon-size) + var(--spectrum-datepicker-initial-height)));
+    --spectrum-datepicker-padding-inline-end: var(--mod-datepicker-padding-inline, calc(var(--spectrum-datepicker-pickerbutton-width) + var(--spectrum-component-edge-to-text-100) - var(--spectrum-datepicker-border-width) * 2));
+    --spectrum-datepicker-padding-inline-end-quiet: var(--mod-datepicker-padding-inline-quiet, calc(var(--spectrum-datepicker-pickerbutton-width) + var(--spectrum-component-edge-to-text-100) - var(--spectrum-datepicker-quiet-button-offset)));
+    --spectrum-datepicker-padding-inline-end-invalid-quiet: var(--mod-datepicker-padding-inline-end-invalid-quiet, calc(var(--spectrum-datepicker-pickerbutton-width-quiet) + var(--spectrum-datepicker-icon-size) + var(--spectrum-datepicker-icon-to-text)));
+    min-inline-size: var(--spectrum-datepicker-min-width);
+    border-radius: var(--spectrum-datepicker-border-radius);
+    flex-flow: row;
+    display: inline-flex;
+    position: relative;
+}
+
+:host([disabled]) {
+    --mod-datepicker-dash-color: var(--mod-datepicker-dash-color-disabled, var(--spectrum-disabled-content-color));
+}
+
+:host([invalid]) {
+    --mod-textfield-icon-spacing-inline-end-invalid: calc(var(--spectrum-datepicker-pickerbutton-width) + var(--spectrum-datepicker-invalid-icon-to-button));
+    --mod-textfield-icon-spacing-inline-end-quiet-invalid: calc(var(--spectrum-datepicker-pickerbutton-width-quiet) + var(--spectrum-datepicker-invalid-icon-to-button-quiet));
+}
+
+:host(:not([quiet], [disabled])) {
+    --mod-picker-button-border-color: var(--spectrum-datepicker-pickerbutton-border-color);
+}
+
+:host([invalid]:not([quiet], [disabled])) {
+    --mod-picker-button-border-color: var(--spectrum-datepicker-pickerbutton-border-color-invalid);
+}
+
+.input {
+    inline-size: 100%;
+    flex: 1;
+    padding-inline-end: var(--spectrum-datepicker-padding-inline-end);
+}
+
+.input.spectrum-DatePicker-startField {
+    border-inline-end: 0;
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+    padding-inline-end: var(--mod-datepicker-generic-padding, var(--spectrum-datepicker-generic-padding));
+}
+
+.input.spectrum-DatePicker-endField {
+    border-inline-start: 0;
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    padding-inline-start: var(--mod-datepicker-generic-padding, var(--spectrum-datepicker-generic-padding));
+}
+
+sp-picker-button {
+    position: absolute;
+    inset-inline-end: 0;
+}
+
+.spectrum-DatePicker-rangeDash {
+    color: var(--spectrum-datepicker-dash-color);
+    line-height: var(--mod-datepicker-dash-line-height, var(--spectrum-datepicker-dash-line-height));
+    flex: initial;
+    inline-size: 0;
+    z-index: 1;
+    padding-block-start: var(--spectrum-datepicker-range-dash-padding-top);
+}
+
+.spectrum-DatePicker-rangeDash:before {
+    content: '–';
+    margin-block: 0;
+    margin-inline: var(--spectrum-datepicker-range-dash-marin-inline-start);
+    text-align: center;
+    vertical-align: middle;
+    inline-size: var(--spectrum-datepicker-dash-font-size);
+    display: inline-block;
+    overflow: hidden;
+}
+
+:host([quiet]) {
+    --mod-datepicker-border-radius: var(--spectrum-datepicker-border-radius-quiet);
+    --mod-datepicker-padding-inline: var(--spectrum-datepicker-padding-inline-end-quiet);
+    --mod-picker-button-border-color-disabled: var(--spectrum-datepicker-border-color-disabled);
+    --mod-picker-button-background-color-hover-disabled: var(--spectrum-datepicker-border-color-disabled);
+}
+
+:host([quiet][invalid]) .input:not(.spectrum-DatePicker-startField) {
+    padding-inline-end: var(--spectrum-datepicker-padding-inline-end-invalid-quiet);
+}
+
+@media (hover: hover) {
+    :host(:hover):not([focused], [disabled], [invalid]) {
+        --mod-picker-button-border-color: var(--spectrum-datepicker-quiet-border-color-hover);
+    }
+}
+
+:host([quiet][invalid]) {
+    --mod-picker-button-border-color: var(--spectrum-datepicker-invalid-quiet-color);
+}
+
+:host([quiet]) sp-picker-button {
+    inline-size: auto;
+    inset-inline-end: calc(var(--spectrum-datepicker-quiet-button-offset) * -1);
+}
+
+:host([quiet]) sp-picker-button:not(.is-open) {
+    --mod-picker-button-border-color-disabled: transparent;
+}
+
+:host([quiet]) sp-picker-button:not(:disabled, .is-open) {
+    --mod-picker-button-background-color: transparent;
+}
+
+.spectrum-DatePicker--range {
+    --mod-datepicker-border-radius: var(--spectrum-datepicker-border-radius);
+}
+
+.spectrum-DatePicker--range:after {
+    pointer-events: none;
+    content: '';
+    margin: calc(var(--spectrum-datepicker-focus-ring-gap) * -1);
+    border-radius: calc(var(--spectrum-datepicker-border-radius) + var(--spectrum-datepicker-focus-ring-gap));
+    transition:
+        box-shadow var(--spectrum-datepicker-focus-animation) ease-in-out,
+        border-color var(--spectrum-datepicker-focus-animation) ease-in-out;
+    border-color: #0000;
+    position: absolute;
+    inset: 0;
+}
+
+:host([focused]) .spectrum-DatePicker--range:not(.spectrum-DatePicker--quiet):after {
+    box-shadow: 0 0 0 var(--spectrum-datepicker-focus-ring-width) var(--spectrum-datepicker-focus-ring-color);
+}
+
+:host([focused]) .spectrum-DatePicker--range:not(.spectrum-DatePicker--quiet) #textfield:after {
+    display: none;
+}
+
+:host([quiet]) .spectrum-DatePicker--range {
+    --mod-datepicker-border-radius: var(--spectrum-datepicker-border-radius-quiet);
+}
+
+:host([quiet][focused]) .spectrum-DatePicker--range:after {
+    box-shadow: none;
+    border-block-end: var(--spectrum-datepicker-focus-thickness) solid var(--spectrum-datepicker-focus-ring-color);
+    border-radius: 0;
+    margin: 0;
+    inset-block-end: calc(var(--spectrum-datepicker-focus-line-gap) * -1);
+}
+
+:host([quiet]) .spectrum-DatePicker--range #textfield {
+    min-inline-size: 0;
+    inline-size: var(--spectrum-datepicker-input-width-quiet);
+}
+
+:host([quiet]) .spectrum-DatePicker--range #textfield:first-of-type {
+    inline-size: var(--spectrum-datepicker-range-input-width-quiet-first);
+}
+
+.spectrum-DatePicker--range.spectrum-DatePicker--datetimeRange #textfield {
+    inline-size: var(--spectrum-datepicker-datetime-input-width);
+    min-inline-size: 0;
+}
+
+.spectrum-DatePicker--range.spectrum-DatePicker--datetimeRange #textfield:first-of-type {
+    inline-size: var(--spectrum-datepicker-datetime-input-width-first);
+}
+
+:host([quiet]) .spectrum-DatePicker--range.spectrum-DatePicker--datetimeRange #textfield {
+    inline-size: var(--spectrum-datepicker-datetime-quiet-input-width);
+}
+
+:host([quiet]) .spectrum-DatePicker--range.spectrum-DatePicker--datetimeRange #textfield:first-of-type {
+    inline-size: var(--spectrum-datepicker-datetime-quiet-input-width-first);
+}
+
+.spectrum-DatePicker--range #textfield {
+    flex: initial;
+    min-inline-size: 0;
+    inline-size: var(--spectrum-datepicker-input-width);
+}
+
+.spectrum-DatePicker--range #textfield:first-of-type {
+    inline-size: var(--spectrum-datepicker-range-input-width-first);
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-datepicker-dash-color: CanvasText;
+        --highcontrast-datepicker-focus-ring-color: Highlight;
+        --highcontrast-datepicker-pickerbutton-border-color: Highlight;
+    }
+
+    :host([disabled]) {
+        --highcontrast-datepicker-dash-color: GrayText;
+    }
+
+    :host([quiet][invalid]) {
+        --highcontrast-datepicker-pickerbutton-border-color: Highlight;
+    }
+}

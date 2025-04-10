@@ -34,18 +34,16 @@ import {
 import { sendKeys } from '@web/test-runner-commands';
 
 const createTabs = async (): Promise<Tabs> => {
-    const tabs = await fixture<Tabs>(
-        html`
-            <sp-tabs selected="first">
-                <sp-tab label="Tab 1" value="first"></sp-tab>
-                <sp-tab label="Tab 2" value="second"></sp-tab>
-                <sp-tab label="Tab 3" value="third"></sp-tab>
-                <sp-tab-panel value="first">First tab content</sp-tab-panel>
-                <sp-tab-panel value="second">Second tab content</sp-tab-panel>
-                <sp-tab-panel value="third">Third tab content</sp-tab-panel>
-            </sp-tabs>
-        `
-    );
+    const tabs = await fixture<Tabs>(html`
+        <sp-tabs selected="first">
+            <sp-tab label="Tab 1" value="first"></sp-tab>
+            <sp-tab label="Tab 2" value="second"></sp-tab>
+            <sp-tab label="Tab 3" value="third"></sp-tab>
+            <sp-tab-panel value="first">First tab content</sp-tab-panel>
+            <sp-tab-panel value="second">Second tab content</sp-tab-panel>
+            <sp-tab-panel value="third">Third tab content</sp-tab-panel>
+        </sp-tabs>
+    `);
     await elementUpdated(tabs);
     return tabs;
 };
@@ -63,15 +61,13 @@ describe('Tabs', () => {
     });
 
     it('loads accessibly w/o panels', async () => {
-        const tabs = await fixture<Tabs>(
-            html`
-                <sp-tabs selected="first">
-                    <sp-tab value="first">Tab 1</sp-tab>
-                    <sp-tab value="second">Tab 2</sp-tab>
-                    <sp-tab value="third">Tab 3</sp-tab>
-                </sp-tabs>
-            `
-        );
+        const tabs = await fixture<Tabs>(html`
+            <sp-tabs selected="first">
+                <sp-tab value="first">Tab 1</sp-tab>
+                <sp-tab value="second">Tab 2</sp-tab>
+                <sp-tab value="third">Tab 3</sp-tab>
+            </sp-tabs>
+        `);
 
         const tabList = tabs.querySelectorAll('sp-tab');
 
@@ -157,15 +153,13 @@ describe('Tabs', () => {
     });
 
     it('autofocuses', async () => {
-        const tabs = await fixture<Tabs>(
-            html`
-                <sp-tabs selected="second" autofocus>
-                    <sp-tab label="Tab 1" value="first"></sp-tab>
-                    <sp-tab label="Tab 2" value="second"></sp-tab>
-                    <sp-tab label="Tab 3" value="third"></sp-tab>
-                </sp-tabs>
-            `
-        );
+        const tabs = await fixture<Tabs>(html`
+            <sp-tabs selected="second" autofocus>
+                <sp-tab label="Tab 1" value="first"></sp-tab>
+                <sp-tab label="Tab 2" value="second"></sp-tab>
+                <sp-tab label="Tab 3" value="third"></sp-tab>
+            </sp-tabs>
+        `);
 
         await elementUpdated(tabs);
 
@@ -178,15 +172,13 @@ describe('Tabs', () => {
     });
 
     it('auto', async () => {
-        const el = await fixture<Tabs>(
-            html`
-                <sp-tabs selected="second" auto>
-                    <sp-tab label="Tab 1" value="first"></sp-tab>
-                    <sp-tab label="Tab 2" value="second"></sp-tab>
-                    <sp-tab label="Tab 3" value="third"></sp-tab>
-                </sp-tabs>
-            `
-        );
+        const el = await fixture<Tabs>(html`
+            <sp-tabs selected="second" auto>
+                <sp-tab label="Tab 1" value="first"></sp-tab>
+                <sp-tab label="Tab 2" value="second"></sp-tab>
+                <sp-tab label="Tab 3" value="third"></sp-tab>
+            </sp-tabs>
+        `);
 
         await elementUpdated(el);
 
@@ -427,11 +419,9 @@ describe('Tabs', () => {
             }
         }
         customElements.define('tab-test-el', TabTestEl);
-        const el = await fixture<TabTestEl>(
-            html`
-                <tab-test-el></tab-test-el>
-            `
-        );
+        const el = await fixture<TabTestEl>(html`
+            <tab-test-el></tab-test-el>
+        `);
 
         await elementUpdated(el);
         const rootNode = el.shadowRoot as ShadowRoot;
@@ -528,14 +518,12 @@ describe('Tabs', () => {
             .true;
     });
     it('selects through slotted DOM', async () => {
-        const el = await fixture<Tabs>(
-            html`
-                <sp-tabs selected="first">
-                    <sp-tab value="first">Tab 1</sp-tab>
-                    <sp-tab value="second"><span>Tab 2</span></sp-tab>
-                </sp-tabs>
-            `
-        );
+        const el = await fixture<Tabs>(html`
+            <sp-tabs selected="first">
+                <sp-tab value="first">Tab 1</sp-tab>
+                <sp-tab value="second"><span>Tab 2</span></sp-tab>
+            </sp-tabs>
+        `);
         const span = el.querySelector('span') as HTMLSpanElement;
         await elementUpdated(el);
 
@@ -547,14 +535,12 @@ describe('Tabs', () => {
         expect(el.selected).to.equal('second');
     });
     it('updates selection indicator in response to tab updates', async () => {
-        const el = await fixture<Tabs>(
-            html`
-                <sp-tabs selected="first">
-                    <sp-tab value="first">Tab 1</sp-tab>
-                    <sp-tab value="second">Tab 2</sp-tab>
-                </sp-tabs>
-            `
-        );
+        const el = await fixture<Tabs>(html`
+            <sp-tabs selected="first">
+                <sp-tab value="first">Tab 1</sp-tab>
+                <sp-tab value="second">Tab 2</sp-tab>
+            </sp-tabs>
+        `);
         const selected = el.querySelector('[value="first"]') as Tab;
         await elementUpdated(el);
 

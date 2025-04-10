@@ -174,7 +174,7 @@ export class StoryDecorator extends SpectrumElement {
     public reduceMotion = window.__swc_hack_knobs__.defaultReduceMotion;
 
     @property({ type: String })
-    public override lang: Locale = window.__swc_hack_knobs__.defaultLocale;
+    public locale: Locale = window.__swc_hack_knobs__.defaultLocale;
 
     @property({ type: Boolean, reflect: true })
     public screenshot = screenshot;
@@ -231,7 +231,7 @@ export class StoryDecorator extends SpectrumElement {
                         checked as boolean;
                 break;
             case 'locale':
-                this.lang = window.__swc_hack_knobs__.defaultLocale =
+                this.locale = window.__swc_hack_knobs__.defaultLocale =
                     value as Locale;
                 break;
         }
@@ -263,6 +263,7 @@ export class StoryDecorator extends SpectrumElement {
                 system=${this.system}
                 color=${this.color}
                 scale=${this.scale}
+                lang=${this.locale}
                 dir=${this.direction}
                 style=${this.backgroundStyle}
                 part="container"
@@ -386,7 +387,7 @@ export class StoryDecorator extends SpectrumElement {
                 label="Locale"
                 placement="top"
                 quiet
-                .value=${this.lang}
+                .value=${this.locale}
                 @change=${this.updateTheme}
             >
                 ${(Object.keys(Locales) as Locale[]).map(renderLocaleOption)}
