@@ -42,9 +42,6 @@ governing permissions and limitations under the License.
 
 :host(:not([head-cell])) {
     border-block-start: var(--mod-table-border-width, var(--spectrum-table-border-width)) solid var(--highcontrast-table-divider-color, var(--mod-table-divider-color, var(--spectrum-table-divider-color)));
-}
-
-:host(:not([head-cell])) {
     box-sizing: border-box;
     font-size: var(--mod-table-row-font-size, var(--spectrum-table-row-font-size));
     font-weight: var(--mod-table-row-font-weight, var(--spectrum-table-row-font-weight));
@@ -60,6 +57,7 @@ governing permissions and limitations under the License.
 
 :host(:not([head-cell])),
 :host([head-cell]) {
+    display: table-cell;
     position: relative;
 }
 
@@ -93,9 +91,4 @@ governing permissions and limitations under the License.
 :host(:host[head-cell]) sp-checkbox {
     margin-block-start: calc(var(--mod-table-header-checkbox-block-spacing, var(--spectrum-table-header-checkbox-block-spacing)) - var(--mod-table-border-width, var(--spectrum-table-border-width)));
     margin-block-end: var(--mod-table-header-checkbox-block-spacing, var(--spectrum-table-header-checkbox-block-spacing));
-}
-
-:host(:not([head-cell])),
-:host([head-cell]) {
-    display: table-cell;
 }

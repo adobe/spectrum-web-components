@@ -7650,23 +7650,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/table@npm:7.0.0-s2-foundations.17":
-  version: 7.0.0-s2-foundations.17
-  resolution: "@spectrum-css/table@npm:7.0.0-s2-foundations.17"
+"@spectrum-css/table@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@spectrum-css/table@npm:8.1.0"
   peerDependencies:
-    "@spectrum-css/button": ">=13"
-    "@spectrum-css/checkbox": ">=9"
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/thumbnail": ">=6"
-    "@spectrum-css/tokens": ">=14"
+    "@spectrum-css/button": ">=14.0.0 <15.0.0"
+    "@spectrum-css/checkbox": ">=10.0.0 <11.0.0"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/thumbnail": ">=8.0.0 <9.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
   peerDependenciesMeta:
     "@spectrum-css/button":
       optional: true
     "@spectrum-css/checkbox":
       optional: true
+    "@spectrum-css/icon":
+      optional: true
     "@spectrum-css/thumbnail":
       optional: true
-  checksum: 10c0/a1f4f2252a626def5676d528973fb57eb16598a9593996a26dc2392add2a455a6955106b47b2a96778cef55f66711b2dc40f4a8499d57171e24e0bae5a869f2c
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/16c9fb01ae47be0573046d6b5dfb07c8df1a892b3487f8c08400946b974721be5d7e9ccf1452e6ce072e4e575db8eba88bcdaf8e2cf4d82dfed2d801b308f530
   languageName: node
   linkType: hard
 
@@ -8794,7 +8798,7 @@ __metadata:
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
     "@lit-labs/virtualizer": "npm:^2.0.12"
-    "@spectrum-css/table": "npm:7.0.0-s2-foundations.17"
+    "@spectrum-css/table": "npm:8.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/checkbox": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
