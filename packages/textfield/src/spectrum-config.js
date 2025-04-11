@@ -46,45 +46,36 @@ export default {
                 // Default to `size='m'` without needing the attribute
                 converter.classToHost('spectrum-Textfield--sizeM'),
                 {
-                    find: [
-                        builder.class('spectrum-Textfield--sizeS'),
-                    ],
+                    find: [builder.class('spectrum-Textfield--sizeS')],
                     replace: [
                         {
                             replace: builder.id('textfield'),
                         },
                         {
                             replace: builder.attribute('size', 's'),
-                        }
-                        
+                        },
                     ],
                 },
                 {
-                    find: [
-                        builder.class('spectrum-Textfield--sizeL'),
-                    ],
+                    find: [builder.class('spectrum-Textfield--sizeL')],
                     replace: [
                         {
                             replace: builder.id('textfield'),
                         },
                         {
                             replace: builder.attribute('size', 'l'),
-                        }
-                        
+                        },
                     ],
                 },
                 {
-                    find: [
-                        builder.class('spectrum-Textfield--sizeXL'),
-                    ],
+                    find: [builder.class('spectrum-Textfield--sizeXL')],
                     replace: [
                         {
                             replace: builder.id('textfield'),
                         },
                         {
                             replace: builder.attribute('size', 'xl'),
-                        }
-                        
+                        },
                     ],
                 },
                 ...converter.enumerateAttributes(
@@ -116,6 +107,7 @@ export default {
                 converter.classToAttribute('is-invalid', 'invalid'),
                 converter.classToAttribute('is-disabled', 'disabled'),
                 converter.classToAttribute('is-readOnly', 'readonly'),
+                converter.pseudoToAttribute('read-only', 'readonly'),
             ],
         },
     ],

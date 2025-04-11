@@ -71,6 +71,20 @@ export const globalTypes = {
             dynamicTitle: true,
         },
     },
+    locale: {
+        title: 'Locale',
+        description: 'The locale to use for the component',
+        defaultValue: 'en-US',
+        toolbar: {
+            icon: 'globe',
+            items: Object.keys(Locales).map((key) => ({
+                value: key,
+                title: Locales[key],
+            })),
+            showName: true,
+            dynamicTitle: true,
+        },
+    },
     textDirection: {
         title: 'Text direction',
         description: 'Direction of the content flow',

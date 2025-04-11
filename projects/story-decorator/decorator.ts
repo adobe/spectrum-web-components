@@ -35,25 +35,30 @@ export const swcThemeDecoratorWithConfig =
         story: () => TemplateResult,
         context: StoryContext<Renderer, Parameters>
     ) => {
-        if (!bundled) {
-            requestAnimationFrame(() => {
-                document.documentElement.setAttribute('lang', 'en');
-                const decorator = document.querySelector(
-                    'sp-story-decorator'
-                ) as HTMLElement;
-                render(story(), decorator);
-            });
-        }
+        // Needed so that the `sp-language-context` event can be caught by decorator's `sp-theme`
+        requestAnimationFrame(() => {
+            document.documentElement.setAttribute('lang', 'en-US');
+            const decorator = document.querySelector(
+                'sp-story-decorator'
+            ) as HTMLElement;
+            render(bundled ? story() : html``, decorator);
+        });
 
+        const isGlobalSettingDefined = (setting: string): boolean => {
+            return context?.globals?.[setting] !== undefined;
+        };
+
+        const globalSettings = [
+            'system',
+            'color',
+            'scale',
+            'textDirection',
+            'reducedMotion',
+            'locale',
+        ];
         let hideNavStyles;
-        // If the global settings exist, hide the bottom toolbar
-        if (
-            context?.globals?.system ||
-            context?.globals?.color ||
-            context?.globals?.scale ||
-            context?.globals?.textDirection ||
-            context?.globals?.reduceMotion
-        ) {
+
+        if (globalSettings.every(isGlobalSettingDefined)) {
             hideNavStyles = html`
                 <style>
                     sp-story-decorator::part(controls) {
@@ -102,12 +107,11 @@ export const swcThemeDecoratorWithConfig =
                 system=${context?.globals?.system}
                 color=${context?.globals?.color}
                 scale=${context?.globals?.scale}
+                locale=${context?.globals?.locale}
                 lang=${context?.globals?.lang}
                 .direction=${context?.globals?.textDirection}
                 ?reduce-motion=${context?.globals?.reduceMotion}
-            >
-                ${bundled ? story() : html``}
-            </sp-story-decorator>
+            ></sp-story-decorator>
         `;
     };
 

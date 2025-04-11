@@ -85,7 +85,9 @@ describe('Combobox accessibility', () => {
         const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                node.name === 'Pick something' && !node.value && node.role === 'combobox'
+                node.name === 'Pick something' &&
+                !node.value &&
+                node.role === 'combobox'
         );
         // by default, is there a combobox that has `name` as the label?
         expect(a11yNode, '`name` is the label text').to.not.be.null;
@@ -108,11 +110,7 @@ describe('Combobox accessibility', () => {
 
         expect(
             node,
-            `node not available: ${JSON.stringify(
-                snapshot,
-                null,
-                '  '
-            )}`
+            `node not available: ${JSON.stringify(snapshot, null, '  ')}`
         ).to.not.be.null;
     });
     it('manages its "name" value in the accessibility tree', async () => {
@@ -131,7 +129,9 @@ describe('Combobox accessibility', () => {
         const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                node.name === 'Combobox' && !node.value && node.role === 'combobox'
+                node.name === 'Combobox' &&
+                !node.value &&
+                node.role === 'combobox'
         );
         // by default, is there a combobox that has `name` as the label?
         expect(a11yNode, '`name` is the label text').to.not.be.null;
@@ -154,11 +154,7 @@ describe('Combobox accessibility', () => {
 
         expect(
             node,
-            `node not available: ${JSON.stringify(
-                snapshot,
-                null,
-                '  '
-            )}`
+            `node not available: ${JSON.stringify(snapshot, null, '  ')}`
         ).to.not.be.null;
     });
     it('manages its "description" value with slotted <sp-tooltip>', async () => {
