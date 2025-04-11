@@ -26,6 +26,8 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-anchor-select.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-polygon-select.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
 import '@spectrum-web-components/table/sp-table-head.js';
@@ -246,15 +248,12 @@ export const complexSlowPage = (): TemplateResult => html`
                     open modal
                 </sp-button>
                 <sp-overlay trigger="trigger@click" type="modal">
-                    <sp-dialog-wrapper
-                        headline="Signin form"
-                        dismissable
-                        underlay
-                    >
-                        <p>I am a modal type overlay.</p>
-                        Enter your email
-                        <sp-action-button
-                            onClick="
+                <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+        <p>I am a modal type overlay.</p>
+        <sp-field-label>Enter your email</sp-field-label>
+        <sp-textfield placeholder="test@gmail.com"></sp-textfield>
+        <sp-action-button
+            onClick="
                 this.dispatchEvent(
                     new Event('close', {
                         bubbles: true,
@@ -262,10 +261,10 @@ export const complexSlowPage = (): TemplateResult => html`
                     })
                 );
             "
-                        >
-                            Sign in
-                        </sp-action-button>
-                    </sp-dialog-wrapper>
+        >
+            Sign in
+        </sp-action-button>
+    </sp-dialog-wrapper>
                 </sp-overlay>        </div>
                 <sp-button id="pageTrigger">open page</sp-button>
             <sp-overlay trigger="pageTrigger@click" type="page">
