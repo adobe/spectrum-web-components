@@ -116,15 +116,12 @@ const processCSS = async (
 
 const processTypography = async (
     baseSrcPath,
-    overridesSrcPath,
     dstPath,
     identifier,
     from,
     usedVariables = undefined
 ) => {
-    const baseData = fs.readFileSync(baseSrcPath, 'utf8');
-    const overridesData = fs.readFileSync(overridesSrcPath, 'utf8');
-    const data = baseData + overridesData;
+    const data = fs.readFileSync(baseSrcPath, 'utf8');
     const result = await processCSSData(data, identifier, from, usedVariables);
     fs.writeFileSync(dstPath, result, 'utf8');
 
@@ -214,20 +211,12 @@ async function processSpectrumVars() {
             'typography',
             'dist'
         );
-        const baseSrcPath = path.join(typographyPath, 'index-base.css');
-        const overridesSrcPath = path.join(typographyPath, 'index-theme.css');
+        const baseSrcPath = path.join(typographyPath, 'index.css');
         const dstPath = path.resolve(
             path.join(__dirname, '..', 'tools', 'styles', 'typography.css')
         );
         console.log(`processing typography`);
-        processes.push(
-            processTypography(
-                baseSrcPath,
-                overridesSrcPath,
-                dstPath,
-                'typography'
-            )
-        );
+        processes.push(processTypography(baseSrcPath, dstPath, 'typography'));
     }
 
     await Promise.all(processes).then(() => {
