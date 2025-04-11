@@ -64,6 +64,8 @@ The alert dialog supports different variants to convey the nature and importance
 <sp-tab value="confirmation">Confirmation</sp-tab>
 <sp-tab-panel value="confirmation">
 
+Confirmation is the default variant for alert dialogs. Use a confirmation variant for asking a user to confirm a choice.
+
 ```html
 <sp-alert-dialog variant="confirmation">
     <h2 slot="heading">Disclaimer</h2>
