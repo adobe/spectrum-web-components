@@ -24,11 +24,36 @@ import {
 } from './events.js';
 import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
+import { FocusTrap } from 'focus-trap';
 
+/**
+ * A mixin that adds dialog behavior to an overlay element.
+ *
+ * @template T - Constructor type extending AbstractOverlay
+ * @param {T} constructor - The constructor to extend
+ * @returns {T & Constructor<SpectrumElement>} - The extended constructor
+ */
 export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
     constructor: T
 ): T & Constructor<SpectrumElement> {
     class OverlayWithDialog extends constructor {
+        /**
+         * Focus trap to keep focus within the dialog
+         * @private
+         */
+        private _focusTrap: FocusTrap | null = null;
+
+        /**
+         * Escape key event listener for closing the dialog
+         * @private
+         */
+        private _escListener: ((event: KeyboardEvent) => void) | null = null;
+
+        /**
+         * Manages opening and closing the dialog
+         * @protected
+         * @returns {Promise<void>}
+         */
         protected override async manageDialogOpen(): Promise<void> {
             const targetOpenState = this.open;
             await nextFrame();
@@ -40,9 +65,42 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             if (this.open !== targetOpenState) {
                 return;
             }
-            await this.dialogApplyFocus(targetOpenState, focusEl);
+            const focusTrap = await import('focus-trap');
+            this._focusTrap = focusTrap.createFocusTrap(this.dialogEl, {
+                initialFocus: focusEl || undefined,
+                tabbableOptions: {
+                    getShadowRoot: true,
+                },
+                returnFocusOnDeactivate: true,
+            });
+
+            // If the open state has changed during the delay, do not proceed.
+            if (targetOpenState === this.open && !this.open) {
+                // If the overlay is closing and the trigger element is still focused, return focus to the trigger element.
+                if (
+                    this.contains(
+                        (this.getRootNode() as Document).activeElement
+                    )
+                ) {
+                    (this.triggerElement as HTMLElement).focus();
+                }
+                return;
+            }
+            if (this.open && targetOpenState) {
+                this._focusTrap.activate();
+                if (this.type === 'modal') {
+                    this.setupEscapeListener();
+                }
+            }
         }
 
+        /**
+         * Handles the transition of dialog elements when opening or closing
+         *
+         * @protected
+         * @param {boolean} targetOpenState - Whether the dialog should open or close
+         * @returns {Promise<HTMLElement | null>} - The element to focus after transition
+         */
         protected async dialogMakeTransition(
             targetOpenState: boolean
         ): Promise<HTMLElement | null> {
@@ -52,6 +110,8 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                 async (): Promise<void> => {
                     el.open = targetOpenState;
                     if (!targetOpenState) {
+                        this.cleanupFocusTrap();
+                        this.removeEscapeListener();
                         const close = (): void => {
                             el.removeEventListener('close', close);
                             finish(el, index);
@@ -87,7 +147,25 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         // You can neither "reopen" a <dialog> or open one that is not on the DOM.
                         return;
                     }
-                    this.dialogEl.showModal();
+
+                    if (
+                        this.dialogWrapper &&
+                        'showPopover' in this.dialogWrapper
+                    ) {
+                        // Show both the wrapper popover and the dialog
+                        this.dialogWrapper.showPopover();
+
+                        /**
+                         *
+                         * TODO: focus-trap + block body scroll
+                         *
+                         * Using show() instead of showModal() for performance reasons.
+                         * showModal() is a slow operation because it makes all other elements
+                         * on the page inert, which can be very expensive for complex DOMs.
+                         *
+                         */
+                        this.dialogEl.show();
+                    }
                 };
             const finish = (el: OpenableElement, index: number) => (): void => {
                 if (this.open !== targetOpenState) {
@@ -151,6 +229,13 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         },
                         { once: true }
                     );
+
+                    if (
+                        this.dialogWrapper &&
+                        'hidePopover' in this.dialogWrapper
+                    ) {
+                        this.dialogWrapper.hidePopover();
+                    }
                     this.dialogEl.close();
                 } else {
                     reportChange();
@@ -166,16 +251,63 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             return focusEl;
         }
 
-        protected async dialogApplyFocus(
-            targetOpenState: boolean,
-            focusEl: HTMLElement | null
-        ): Promise<void> {
-            /**
-             * Focus should be handled natively in `<dialog>` elements when leveraging `.showModal()`, but it's NOT.
-             * - webkit bug: https://bugs.webkit.org/show_bug.cgi?id=255507
-             * - firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1828398
-             **/
-            this.applyFocus(targetOpenState, focusEl);
+        /**
+         * Cleans up the focus trap when dialog is closing
+         * @private
+         */
+        private cleanupFocusTrap(): void {
+            if (this._focusTrap) {
+                this._focusTrap.deactivate();
+                this._focusTrap = null;
+            }
+        }
+
+        /**
+         * Handles component disconnection from the DOM
+         * @override
+         */
+        override disconnectedCallback(): void {
+            this.cleanupFocusTrap();
+            this.removeEscapeListener();
+            super.disconnectedCallback();
+        }
+
+        /**
+         * Sets up the escape key listener for closing modal dialogs
+         * @private
+         */
+        private setupEscapeListener(): void {
+            if (this._escListener) {
+                return;
+            }
+
+            this._escListener = (event: KeyboardEvent): void => {
+                if (
+                    event.key === 'Escape' &&
+                    this.open &&
+                    this.type === 'modal'
+                ) {
+                    event.preventDefault();
+                    this.open = false;
+                }
+            };
+
+            document.addEventListener('keydown', this._escListener, {
+                capture: true,
+            });
+        }
+
+        /**
+         * Removes the escape key listener when dialog is closed
+         * @private
+         */
+        private removeEscapeListener(): void {
+            if (this._escListener) {
+                document.removeEventListener('keydown', this._escListener, {
+                    capture: true,
+                });
+                this._escListener = null;
+            }
         }
     }
     return OverlayWithDialog;

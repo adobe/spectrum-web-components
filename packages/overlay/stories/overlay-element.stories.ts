@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -25,6 +26,16 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-anchor-select.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-polygon-select.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/table/sp-table.js';
+import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
+import '@spectrum-web-components/table/sp-table-head.js';
+import '@spectrum-web-components/table/sp-table-head-cell.js';
+import '@spectrum-web-components/table/sp-table-body.js';
+import '@spectrum-web-components/table/sp-table-row.js';
+import '@spectrum-web-components/table/sp-table-cell.js';
+
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-rect-select.js';
 import { Placement } from '@floating-ui/dom';
 import { OverlayTypes } from '../src/overlay-types.js';
@@ -164,6 +175,241 @@ page.args = {
     interaction: 'click',
     placement: 'right',
     type: 'page',
+};
+export const complexFastPage = (): TemplateResult => html`
+    <div style="padding: 20px;">
+        <span>
+            <sp-button style="margin: 20px;" id="trigger">open modal</sp-button>
+            <sp-overlay trigger="trigger@click" type="modal">
+                <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+                    <p>I am a modal type overlay.</p>
+                    Enter your email
+                    <sp-action-button
+                        onClick="
+                this.dispatchEvent(
+                    new Event('close', {
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+            "
+                    >
+                        Sign in
+                    </sp-action-button>
+                </sp-dialog-wrapper>
+            </sp-overlay>
+
+            <sp-button id="pageTrigger">open page</sp-button>
+            <sp-overlay trigger="pageTrigger@click" type="auto">
+                <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+                    <p>I am a modal type overlay.</p>
+                    Enter your email
+                    <sp-action-button
+                        onClick="
+                this.dispatchEvent(
+                    new Event('close', {
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+            "
+                    >
+                        Sign in
+                    </sp-action-button>
+                </sp-dialog-wrapper>
+            </sp-overlay>
+            <style>
+                .chat-container {
+                    position: fixed;
+                    bottom: 1em;
+                    left: 1em;
+                }
+            </style>
+
+            <sp-button id="trigger">open manual</sp-button>
+            <sp-overlay trigger="trigger@click" type="manual">
+                <sp-popover class="chat-container">
+                    <sp-dialog dismissable>
+                        <span slot="heading">Chat Window</span>
+                        <sp-action-button>Send</sp-action-button>
+                    </sp-dialog>
+                </sp-popover>
+            </sp-overlay>
+        </span>
+    </div>
+`;
+
+export const complexSlowPage = (): TemplateResult => html`
+    <div style="padding: 20px;">
+            <div
+                style="width: 100px; height: 100px; z-index:1; background: gray; position: relative;"
+            >
+                <sp-button style="margin: 20px;" id="trigger">
+                    open modal
+                </sp-button>
+                <sp-overlay trigger="trigger@click" type="modal">
+                <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+        <p>I am a modal type overlay.</p>
+        <sp-field-label>Enter your email</sp-field-label>
+        <sp-textfield placeholder="test@gmail.com"></sp-textfield>
+        <sp-action-button
+            onClick="
+                this.dispatchEvent(
+                    new Event('close', {
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+            "
+        >
+            Sign in
+        </sp-action-button>
+    </sp-dialog-wrapper>
+                </sp-overlay>        </div>
+                <sp-button id="pageTrigger">open page</sp-button>
+            <sp-overlay trigger="pageTrigger@click" type="page">
+                <sp-dialog-wrapper
+                    headline="Full screen menu"
+                    mode="fullscreenTakeover"
+                    cancel-label="Close"
+                >
+                    <p>I am a page type overlay.</p>
+                </sp-dialog-wrapper>
+            </sp-overlay>
+            <style>
+                .chat-container {
+                    position: fixed;
+                    bottom: 1em;
+                    left: 1em;
+                }
+            </style>
+
+            <sp-button id="manualTrigger">open manual</sp-button>
+            <sp-overlay trigger="manualTrigger@click" type="manual">
+                <sp-popover class="chat-container">
+                    <sp-dialog dismissable>
+                        <span slot="heading">Chat Window</span>
+                        <sp-textfield
+                            placeholder="Enter your message"
+                        ></sp-textfield>
+                        <sp-action-button>Send</sp-action-button>
+                    </sp-dialog>
+                </sp-popover>
+            </sp-overlay>
+        </span>
+
+        <div
+            style="margin: auto; width: 100px; height: 100px; background-color: red; z-index:2; position: relative;"
+        >
+            element with large z-index
+        </div>
+        ${Array(50)
+            .fill(0)
+            .map(
+                () => html`
+                    <div style="margin-bottom: 20px;">
+                        <sp-table>
+                            <sp-table-head>
+                                <sp-table-head-cell>
+                                    Column Title
+                                </sp-table-head-cell>
+                                <sp-table-head-cell>
+                                    Column Title
+                                </sp-table-head-cell>
+                                <sp-table-head-cell>
+                                    Column Title
+                                </sp-table-head-cell>
+                            </sp-table-head>
+                            <sp-table-body style="height: 200px">
+                                <sp-table-row value="row1" class="row1">
+                                    <sp-table-cell>
+                                        Row Item Alpha
+                                    </sp-table-cell>
+                                    <sp-table-cell>
+                                        Row Item Alpha
+                                    </sp-table-cell>
+                                    <sp-table-cell>
+                                        Row Item Alpha
+                                    </sp-table-cell>
+                                </sp-table-row>
+                                <sp-table-row value="row2" class="row2">
+                                    <sp-table-cell>
+                                        Row Item Bravo
+                                    </sp-table-cell>
+                                    <sp-table-cell>
+                                        Row Item Bravo
+                                    </sp-table-cell>
+                                    <sp-table-cell>
+                                        Row Item Bravo
+                                    </sp-table-cell>
+                                </sp-table-row>
+                                <sp-table-row value="row3" class="row3">
+                                    <sp-table-cell>
+                                        Row Item Charlie
+                                    </sp-table-cell>
+                                    <sp-table-cell>
+                                        Row Item Charlie
+                                    </sp-table-cell>
+                                    <sp-table-cell>
+                                        Row Item Charlie
+                                    </sp-table-cell>
+                                </sp-table-row>
+                                <sp-table-row value="row4" class="row4">
+                                    <sp-table-cell>
+                                        Row Item Delta
+                                    </sp-table-cell>
+                                    <sp-table-cell>
+                                        Row Item Delta
+                                    </sp-table-cell>
+                                    <sp-table-cell>
+                                        Row Item Delta
+                                    </sp-table-cell>
+                                </sp-table-row>
+                                <sp-table-row value="row5" class="row5">
+                                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                                </sp-table-row>
+                            </sp-table-body>
+                        </sp-table>
+                        <sp-action-group>
+                            <sp-action-button>
+                                <sp-icon-anchor-select
+                                    slot="icon"
+                                ></sp-icon-anchor-select>
+                            </sp-action-button>
+                            <sp-action-button>
+                                <sp-icon-polygon-select
+                                    slot="icon"
+                                ></sp-icon-polygon-select>
+                            </sp-action-button>
+                            <sp-slider
+                                value="5"
+                                step="0.5"
+                                min="0"
+                                max="20"
+                                label="Control"
+                            ></sp-slider>
+                        </sp-action-group>
+                        <sp-menu-group>
+                            <span slot="header">Menu Group</span>
+                            <sp-menu-item>Option 1</sp-menu-item>
+                            <sp-menu-item>Option 2</sp-menu-item>
+                            <sp-menu-divider></sp-menu-divider>
+                            <sp-menu-item>Option 3</sp-menu-item>
+                        </sp-menu-group>
+                    </div>
+                `
+            )}
+    </div>
+`;
+
+complexSlowPage.swc_vrt = {
+    skip: true,
+};
+
+complexSlowPage.parameters = {
+    chromatic: { disableSnapshot: true },
 };
 
 export const click = (args: Properties): TemplateResult => Template(args);
