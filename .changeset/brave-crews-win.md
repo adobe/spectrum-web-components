@@ -23,6 +23,7 @@
 '@spectrum-web-components/split-view': patch
 '@spectrum-web-components/styles': patch
 '@spectrum-web-components/tags': patch
+'@spectrum-web-components/toast': patch
 '@spectrum-web-components/tray': patch
 '@spectrum-web-components/underlay': patch
 ---

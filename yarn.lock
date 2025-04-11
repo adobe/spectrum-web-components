@@ -7751,15 +7751,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/toast@npm:11.0.0-s2-foundations.15":
-  version: 11.0.0-s2-foundations.15
-  resolution: "@spectrum-css/toast@npm:11.0.0-s2-foundations.15"
+"@spectrum-css/toast@npm:11.1.0":
+  version: 11.1.0
+  resolution: "@spectrum-css/toast@npm:11.1.0"
   peerDependencies:
-    "@spectrum-css/button": ">=13"
-    "@spectrum-css/closebutton": ">=5"
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/6016515f993d09cc10671a0a73b48c8ca4aeecc09656eea64fa39bcfcc8ac99858b881b4b90db5ef5c64260631fd2c1239dbebf1d25116ddfd70d7b3abd5246c
+    "@spectrum-css/button": ">=14.0.0 <15.0.0"
+    "@spectrum-css/closebutton": ">=6.0.0 <7.0.0"
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/button":
+      optional: true
+    "@spectrum-css/closebutton":
+      optional: true
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/57cfbede496256fab633ee07f732555927b0006bcfd3a606b7282a3e483f4d8349e50bc2e09f9bb8f65cfb24fc50b2625ff89ae177b52fd308205cc699ea9815
   languageName: node
   linkType: hard
 
@@ -8866,7 +8875,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/toast@workspace:packages/toast"
   dependencies:
-    "@spectrum-css/toast": "npm:11.0.0-s2-foundations.15"
+    "@spectrum-css/toast": "npm:11.1.0"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
