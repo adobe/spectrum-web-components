@@ -21,7 +21,7 @@ import '@spectrum-web-components/alert-banner/sp-alert-banner.js';
 
 The alert dialog consists of several key parts:
 
-#### Message
+#### Content
 
 The message in its default slot.
 
@@ -31,7 +31,7 @@ The message in its default slot.
 </sp-alert-banner>
 ```
 
-#### Button
+#### Buttons
 
 An optional action using `slot="action"`:
 
@@ -61,7 +61,9 @@ Use the `dismissible` attribute to include an icon-only close button used to dis
 
 The `<sp-alert-banner>` supports different variants to convey the nature of the message:
 
-##### Info
+<sp-tabs selected="info" auto label="Variants">
+<sp-tab value="info">Info</sp-tab>
+<sp-tab-panel value="info">
 
 Use `variant="info"` for informational messages.
 
@@ -74,7 +76,9 @@ Use `variant="info"` for informational messages.
 </sp-alert-banner>
 ```
 
-##### Info
+</sp-tab-panel>
+<sp-tab value="negative">Negative</sp-tab>
+<sp-tab-panel value="negative">
 
 Use `variant="negative"` for error or warning messages.
 
@@ -83,6 +87,9 @@ Use `variant="negative"` for error or warning messages.
     Connection interrupted. Check your network to continue
 </sp-alert-banner>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Behaviors
 
