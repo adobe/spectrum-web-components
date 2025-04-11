@@ -24,9 +24,6 @@ jobs:
             - name: Get current package version and latest beta number
               id: version-info
               run: |
-                  CURRENT_VERSION=$(node -p "require('./tools/bundle/package.json').version")
-                  echo "Current version: $CURRENT_VERSION"
-
                   # Fetch the latest beta version
                   LATEST_BETA=$(npm view @spectrum-web-components/bundle --tag beta version || echo "none")
                   echo "Latest beta: $LATEST_BETA"
@@ -43,7 +40,6 @@ jobs:
 
                   echo "Next beta number: $NEXT_BETA_NUMBER"
                   echo "next_beta_number=$NEXT_BETA_NUMBER" >> $GITHUB_OUTPUT
-                  echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
 
             - name: Update package versions for beta release
               env:
