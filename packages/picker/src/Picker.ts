@@ -311,7 +311,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     };
 
     protected async keyboardOpen(): Promise<void> {
-        this.toggle(true);
+        this.toggle(true, true);
     }
 
     protected async setValueFromItem(
@@ -368,12 +368,12 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         item.selected = value;
     }
 
-    public toggle(target?: boolean): void {
+    public toggle(target?: boolean, focusOnOpen?: boolean): void {
         if (this.readonly || this.pending || this.disabled) {
             return;
         }
         const open = typeof target !== 'undefined' ? target : !this.open;
-        if (open && !this.open)
+        if (open && !this.open && focusOnOpen)
             this.addEventListener(
                 'sp-opened',
                 () => this.optionsMenu?.focusOnFirstSelectedItem(),
