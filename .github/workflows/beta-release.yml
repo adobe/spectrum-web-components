@@ -25,7 +25,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                  yarn changeset version --snapshot
+                  yarn changeset version --snapshot beta
                   yarn lint:versions --fix
                   yarn update-version
 
