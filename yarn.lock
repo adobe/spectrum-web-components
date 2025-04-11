@@ -6814,9 +6814,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/actionbutton@npm:7.1.2":
-  version: 7.1.2
-  resolution: "@spectrum-css/actionbutton@npm:7.1.2"
+"@spectrum-css/actionbutton@npm:7.1.3":
+  version: 7.1.3
+  resolution: "@spectrum-css/actionbutton@npm:7.1.3"
   peerDependencies:
     "@spectrum-css/icon": ">=9.0.0 <10.0.0"
     "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
@@ -6825,7 +6825,7 @@ __metadata:
       optional: true
     "@spectrum-css/tokens":
       optional: true
-  checksum: 10c0/f77bd14ac5cadf821ac6b0d0359550293d62caa52dfac1eb88182e6b2431f24c36664851f20ef6848394587e7481f8b897961d1cd9180e7f64a441be7768eab0
+  checksum: 10c0/21fea89ddf250145082ee8dd8d3837edd461f22879ded0d2b9dab1195bb845c8fabf7c497c0757b6a304338fcdb6d8be6dc1a95d71bebf09cd9f2bd27fde9216
   languageName: node
   linkType: hard
 
@@ -7886,7 +7886,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-button@workspace:packages/action-button"
   dependencies:
-    "@spectrum-css/actionbutton": "npm:7.1.2"
+    "@spectrum-css/actionbutton": "npm:7.1.3"
     "@spectrum-web-components/base": "npm:1.4.0"
     "@spectrum-web-components/button": "npm:1.4.0"
     "@spectrum-web-components/icon": "npm:1.4.0"
