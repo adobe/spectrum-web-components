@@ -19,19 +19,30 @@ import '@spectrum-web-components/alert-banner/sp-alert-banner.js';
 
 ### Anatomy
 
-An alert banner consists of contents from its default slot, an optional action using its `slot="action"`.
+The alert dialog consists of several key parts:
+
+#### Message
+
+The message in its default slot.
 
 ```html
 <sp-alert-banner open>
     All documents in this folder have been archived
 </sp-alert-banner>
+```
 
+#### Button
+
+An optional action using `slot="action"`:
+
+```html
 <sp-alert-banner open>
     Your trial has expired
     <sp-button treatment="outline" static-color="white" slot="action">
         Buy now
     </sp-button>
 </sp-alert-banner>
+<bd></bd>
 ```
 
 ### Options
