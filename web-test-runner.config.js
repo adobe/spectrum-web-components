@@ -158,6 +158,8 @@ export default {
         },
         {
             name: 'unit-ci',
+            files: ['packages/*/test/*.test.js'],
+            fullyParallel: true,
         },
         {
             name: 'no-memory-ci',

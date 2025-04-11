@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { playwrightLauncher } from '@web/test-runner-playwright';
-import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 import fs from 'fs';
 import path from 'path';
-import fg from 'fast-glob';
+
+import { playwrightLauncher } from '@web/test-runner-playwright';
+import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 
 export const chromium = playwrightLauncher({
     product: 'chromium',
@@ -37,8 +37,6 @@ export const coverallsChromium = playwrightLauncher({
             permissions: ['clipboard-read', 'clipboard-write'],
         }),
     launchOptions: {
-        executablePath:
-            '/home/runner/.cache/ms-playwright/chromium-1148/chrome-linux/chrome',
         headless: true,
     },
 });
@@ -176,26 +174,20 @@ const vrtHTML =
     </html>`;
 
 export let vrtGroups = [];
-const systemVariants = ['spectrum', 'express', 'spectrum-two'];
-const colors = ['light', 'dark'];
-const scales = ['medium', 'large'];
-const directions = ['ltr', 'rtl'];
-systemVariants.forEach((systemVariant) => {
-    colors.forEach((color) => {
-        scales.forEach((scale) => {
-            directions.forEach((dir) => {
-                const reduceMotion = true;
-                const testHTML = vrtHTML({
-                    systemVariant,
-                    color,
-                    scale,
-                    dir,
-                    reduceMotion,
-                });
+['spectrum', 'express', 'spectrum-two'].forEach((systemVariant) => {
+    ['light', 'dark'].forEach((color) => {
+        ['medium', 'large'].forEach((scale) => {
+            ['ltr', 'rtl'].forEach((dir) => {
                 vrtGroups.push({
                     name: `vrt-${systemVariant}-${color}-${scale}-${dir}`,
                     files: '(packages|tools)/*/test/*.test-vrt.js',
-                    testRunnerHtml: testHTML,
+                    testRunnerHtml: vrtHTML({
+                        systemVariant,
+                        color,
+                        scale,
+                        dir,
+                        reduceMotion: true,
+                    }),
                     browsers: [chromium],
                 });
             });
@@ -206,8 +198,9 @@ systemVariants.forEach((systemVariant) => {
 vrtGroups = [
     ...vrtGroups,
     ...packages.reduce((acc, pkg) => {
-        const skipPkgs = ['bundle', 'modal'];
-        if (!skipPkgs.includes(pkg)) {
+        // Skip the bundle and modal packages
+        // as they are not intended to be used in the VRT tests
+        if (!['bundle', 'modal'].includes(pkg)) {
             acc.push({
                 name: `vrt-${pkg}`,
                 files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
@@ -277,32 +270,3 @@ export const configuredVisualRegressionPlugin = () =>
             );
         },
     });
-
-export function watchSWC() {
-    return {
-        name: 'watch-swc-plugin',
-        async serverStart({ fileWatcher }) {
-            // register SWC output files to be watched
-            const files = await fg(
-                [
-                    '{packages,projects,tools}/**/*.js',
-                    '{packages,projects,tools}/**/spectrum-*.css',
-                ],
-                {
-                    ignore: [
-                        '**/*.map',
-                        '**/*.vrt.js',
-                        '**/spectrum-config.js',
-                    ],
-                }
-            );
-            for (const file of files) {
-                fileWatcher.add(process.cwd() + file);
-            }
-            // Use the following for reviewing the file changes that are reacted to here...
-            // fileWatcher.on('change', (path) => {
-            //     console.log(`Process change in: ${path}`);
-            // });
-        },
-    };
-}
