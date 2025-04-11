@@ -65,6 +65,7 @@ jobs:
               run: |
                   git add .
                   git commit -am "chore: publish beta version"
+                  yarn changeset pre exit
                   yarn prepublishOnly
                   yarn changeset publish --no-git-tag --tag beta
                   git reset --hard HEAD^
