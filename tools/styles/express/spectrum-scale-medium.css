@@ -272,7 +272,6 @@
     --spectrum-alias-avatar-size-100: var(--spectrum-global-dimension-size-250);
     --spectrum-alias-avatar-size-400: var(--spectrum-global-dimension-size-350);
     --spectrum-alias-avatar-size-600: var(--spectrum-global-dimension-size-450);
-    --spectrum-colorwheel-min-width: var(--spectrum-global-dimension-size-2400);
     --spectrum-dialog-confirm-title-text-size: var(
         --spectrum-alias-heading-s-text-size
     );

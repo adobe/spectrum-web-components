@@ -21,6 +21,7 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    --spectrum-color-slider-border-color-default: rgba(var(--spectrum-gray-900-rgb), var(--spectrum-color-slider-border-opacity));
     --mod-colorhandle-hitarea-border-radius: var(--mod-color-slider-handle-hitarea-border-radius, 0px);
     min-inline-size: var(--mod-color-slider-minimum-length, var(--spectrum-color-slider-minimum-length));
     inline-size: var(--mod-color-slider-length, var(--spectrum-color-slider-length));
@@ -63,7 +64,7 @@ governing permissions and limitations under the License.
 }
 
 .checkerboard {
-    --spectrum-color-slider-border-color-local: var(--highcontrast-color-slider-border-color, var(--mod-color-slider-border-color, var(--spectrum-color-slider-border-color-rgba)));
+    --spectrum-color-slider-border-color-local: var(--highcontrast-color-slider-border-color, var(--mod-color-slider-border-color, var(--spectrum-color-slider-border-color-default)));
 }
 
 .checkerboard:before {

@@ -14,10 +14,6 @@ governing permissions and limitations under the License.
 @import url('./spectrum-menu.css');
 
 :host {
-    /**
-     * Remove when Spectrum CSS supports this correctly
-     */
-    display: inline-flex;
     flex-direction: column;
 
     /**

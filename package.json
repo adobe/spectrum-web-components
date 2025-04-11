@@ -438,5 +438,25 @@
         "tools/*",
         "react/*"
     ],
-    "packageManager": "yarn@4.6.0"
+    "packageManager": "yarn@4.6.0",
+    "license": "Apache-2.0",
+    "author": "Adobe",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html"
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
 }
