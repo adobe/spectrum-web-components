@@ -26,16 +26,11 @@ import { FieldLabel } from '@spectrum-web-components/field-label';
 
 ### Anatomy
 
-```html
-<sp-field-label for="email">Email address</sp-field-label>
-<sp-textfield id="email" placeholder="user@adobe.com"></sp-textfield>
-```
-
 Field labels can be associated with form elements by using the `for` attribute, which should reference the `id` of the related input element.
 
 ```html demo
-<sp-field-label for="email-demo">Email address</sp-field-label>
-<sp-textfield id="email-demo" placeholder="user@adobe.com"></sp-textfield>
+<sp-field-label for="email">Email address</sp-field-label>
+<sp-textfield id="email" placeholder="user@adobe.com"></sp-textfield>
 ```
 
 Field labels can also be used to label a group of related inputs:
@@ -58,10 +53,11 @@ Field labels can also be used to label a group of related inputs:
 <sp-tab-panel value="s">
 
 ```html demo
-<sp-field-label for="lifestory-0" size="s">Life Story</sp-field-label>
+<sp-field-label for="lifestory-0" size="s">Life Story (Small)</sp-field-label>
 <sp-textfield
     placeholder="Enter your life story"
     id="lifestory-0"
+    size="s"
 ></sp-textfield>
 ```
 
@@ -70,10 +66,11 @@ Field labels can also be used to label a group of related inputs:
 <sp-tab-panel value="m">
 
 ```html demo
-<sp-field-label for="lifestory-1" size="m">Life Story</sp-field-label>
+<sp-field-label for="lifestory-1" size="m">Life Story (Medium)</sp-field-label>
 <sp-textfield
     placeholder="Enter your life story"
     id="lifestory-1"
+    size="m"
 ></sp-textfield>
 ```
 
@@ -82,10 +79,11 @@ Field labels can also be used to label a group of related inputs:
 <sp-tab-panel value="l">
 
 ```html demo
-<sp-field-label for="lifestory-2" size="l">Life Story</sp-field-label>
+<sp-field-label for="lifestory-2" size="l">Life Story (Large)</sp-field-label>
 <sp-textfield
     placeholder="Enter your life story"
     id="lifestory-2"
+    size="l"
 ></sp-textfield>
 ```
 
@@ -94,10 +92,13 @@ Field labels can also be used to label a group of related inputs:
 <sp-tab-panel value="xl">
 
 ```html demo
-<sp-field-label for="lifestory-3" size="xl">Life Story</sp-field-label>
+<sp-field-label for="lifestory-3" size="xl">
+    Life Story (Extra Large)
+</sp-field-label>
 <sp-textfield
     placeholder="Enter your life story"
     id="lifestory-3"
+    size="xl"
 ></sp-textfield>
 ```
 
