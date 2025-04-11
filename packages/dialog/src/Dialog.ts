@@ -31,7 +31,7 @@ import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 import { AlertDialog } from '@spectrum-web-components/alert-dialog/src/AlertDialog.js';
 import { classMap } from '@spectrum-web-components/base/src/directives.js';
 import type { CloseButton } from '@spectrum-web-components/button';
-import styles from './dialog.css.js';
+import styles from './dialog.css' with { type: 'css' };
 
 /**
  * @element sp-dialog
