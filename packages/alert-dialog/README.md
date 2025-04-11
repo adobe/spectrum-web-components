@@ -27,9 +27,9 @@ import { AlertDialog } from '@spectrum-web-components/alert-dialog';
 
 The alert dialog consists of several key parts:
 
--   A heading that describes the purpose of the dialog
--   Content that provides additional context
--   Action buttons that allow users to respond
+-   A heading, using `slot="heading"`, that describes the purpose of the dialog
+-   Content, using the default slot, that provides additional context
+-   Action buttons, using `slot="button"`, that allow users to respond
 
 ```html
 <sp-alert-dialog variant="confirmation">
@@ -60,7 +60,9 @@ The alert dialog consists of several key parts:
 
 The alert dialog supports different variants to convey the nature and importance of the message:
 
-##### Confirmation
+<sp-tabs selected="confirmation" auto label="Variants">
+<sp-tab value="confirmation">Confirmation</sp-tab>
+<sp-tab-panel value="confirmation">
 
 ```html
 <sp-alert-dialog variant="confirmation">
@@ -87,7 +89,9 @@ The alert dialog supports different variants to convey the nature and importance
 </sp-alert-dialog>
 ```
 
-##### Information
+</sp-tab-panel>
+<sp-tab value="information">Information</sp-tab>
+<sp-tab-panel value="information">
 
 Information alert dialogs communicate important information that a user needs to acknowledge. Before using this kind of alert dialog, make sure it’s the appropriate communication channel for the message instead of a toast or a more lightweight messaging option.
 
@@ -117,7 +121,9 @@ Information alert dialogs communicate important information that a user needs to
 </sp-alert-dialog>
 ```
 
-##### Warning
+</sp-tab-panel>
+<sp-tab value="warning">Warning</sp-tab>
+<sp-tab-panel value="warning">
 
 Warning alert dialogs communicate important information to users in relation to an issue that needs to be acknowledged, but does not block the user from moving forward.
 
@@ -147,7 +153,9 @@ Warning alert dialogs communicate important information to users in relation to 
 </sp-alert-dialog>
 ```
 
-##### Error
+</sp-tab-panel>
+<sp-tab value="error">Error</sp-tab>
+<sp-tab-panel value="error">
 
 Error alert dialogs communicate critical information about an issue that a user needs to acknowledge.
 
@@ -169,7 +177,9 @@ Error alert dialogs communicate critical information about an issue that a user 
 </sp-alert-dialog>
 ```
 
-##### Destructive
+</sp-tab-panel>
+<sp-tab value="destructive">Destructive</sp-tab>
+<sp-tab-panel value="destructive">
 
 Destructive alert dialogs are for when a user needs to confirm an action that will impact their data or experience in a potentially negative way, such as deleting files or contacts.
 
@@ -195,6 +205,9 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
     </sp-button>
 </sp-alert-dialog>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Behaviors
 
