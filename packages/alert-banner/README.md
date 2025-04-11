@@ -61,31 +61,28 @@ Use the `dismissible` attribute to include an icon-only close button used to dis
 
 The `<sp-alert-banner>` supports different variants to convey the nature of the message:
 
--   **Info**: For informational messages.
--   **Negative**: For error or warning messages.
+##### Info
 
-<sp-tabs selected="info" auto label="Variants">
-<sp-tab value="info">info</sp-tab>
-<sp-tab-panel value="info">
-  ```html
-  <sp-alert-banner open variant="info" dismissible>
-      Your trial will expire in 3 days
-      <sp-button treatment="outline" static-color="white" slot="action">
-          Buy now
-      </sp-button>
-  </sp-alert-banner>
-  ```
-</sp-tab-panel>
-<sp-tab value="negative">negative</sp-tab>
-<sp-tab-panel value="negative">
-  
-  ```html
-  <sp-alert-banner open variant="negative" dismissible>
-      Connection interrupted. Check your network to continue
-  </sp-alert-banner>
-  ```
-</sp-tab-panel>
-</sp-tabs>
+Use `variant="info"` for informational messages.
+
+```html
+<sp-alert-banner open variant="info" dismissible>
+    Your trial will expire in 3 days
+    <sp-button treatment="outline" static-color="white" slot="action">
+        Buy now
+    </sp-button>
+</sp-alert-banner>
+```
+
+##### Info
+
+Use `variant="negative"` for error or warning messages.
+
+```html
+<sp-alert-banner open variant="negative" dismissible>
+    Connection interrupted. Check your network to continue
+</sp-alert-banner>
+```
 
 ### Behaviors
 
