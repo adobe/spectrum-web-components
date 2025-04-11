@@ -26,13 +26,34 @@ import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
 import { FocusTrap } from 'focus-trap';
 
+/**
+ * A mixin that adds dialog behavior to an overlay element.
+ *
+ * @template T - Constructor type extending AbstractOverlay
+ * @param {T} constructor - The constructor to extend
+ * @returns {T & Constructor<SpectrumElement>} - The extended constructor
+ */
 export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
     constructor: T
 ): T & Constructor<SpectrumElement> {
     class OverlayWithDialog extends constructor {
+        /**
+         * Focus trap to keep focus within the dialog
+         * @private
+         */
         private _focusTrap: FocusTrap | null = null;
+
+        /**
+         * Escape key event listener for closing the dialog
+         * @private
+         */
         private _escListener: ((event: KeyboardEvent) => void) | null = null;
 
+        /**
+         * Manages opening and closing the dialog
+         * @protected
+         * @returns {Promise<void>}
+         */
         protected override async manageDialogOpen(): Promise<void> {
             const targetOpenState = this.open;
             await nextFrame();
@@ -73,6 +94,13 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             }
         }
 
+        /**
+         * Handles the transition of dialog elements when opening or closing
+         *
+         * @protected
+         * @param {boolean} targetOpenState - Whether the dialog should open or close
+         * @returns {Promise<HTMLElement | null>} - The element to focus after transition
+         */
         protected async dialogMakeTransition(
             targetOpenState: boolean
         ): Promise<HTMLElement | null> {
@@ -223,6 +251,10 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             return focusEl;
         }
 
+        /**
+         * Cleans up the focus trap when dialog is closing
+         * @private
+         */
         private cleanupFocusTrap(): void {
             if (this._focusTrap) {
                 this._focusTrap.deactivate();
@@ -230,12 +262,20 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             }
         }
 
+        /**
+         * Handles component disconnection from the DOM
+         * @override
+         */
         override disconnectedCallback(): void {
             this.cleanupFocusTrap();
             this.removeEscapeListener();
             super.disconnectedCallback();
         }
 
+        /**
+         * Sets up the escape key listener for closing modal dialogs
+         * @private
+         */
         private setupEscapeListener(): void {
             if (this._escListener) {
                 return;
@@ -257,9 +297,15 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             });
         }
 
+        /**
+         * Removes the escape key listener when dialog is closed
+         * @private
+         */
         private removeEscapeListener(): void {
             if (this._escListener) {
-                document.removeEventListener('keydown', this._escListener);
+                document.removeEventListener('keydown', this._escListener, {
+                    capture: true,
+                });
                 this._escListener = null;
             }
         }
