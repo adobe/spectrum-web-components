@@ -24,11 +24,11 @@ jobs:
             - name: Get current package version and latest beta number
               id: version-info
               run: |
-                  CURRENT_VERSION=$(node -p "require('./package.json').version")
+                  CURRENT_VERSION=$(node -p "require('./packages/button/package.json').version")
                   echo "Current version: $CURRENT_VERSION"
 
                   # Fetch the latest beta version
-                  LATEST_BETA=$(npm view @adobe/spectrum-web-components --tag beta version || echo "none")
+                  LATEST_BETA=$(npm view @spectrum-web-components/button --tag beta version || echo "none")
                   echo "Latest beta: $LATEST_BETA"
 
                   if [[ $LATEST_BETA == *beta* ]]; then
