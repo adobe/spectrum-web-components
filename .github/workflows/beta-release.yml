@@ -21,11 +21,36 @@ jobs:
                   git config --global user.email "support+actions@github.com"
                   git config --global user.name "github-actions-bot"
 
+            - name: Get current package version and latest beta number
+              id: version-info
+              run: |
+                  CURRENT_VERSION=$(node -p "require('./package.json').version")
+                  echo "Current version: $CURRENT_VERSION"
+
+                  # Fetch the latest beta version
+                  LATEST_BETA=$(npm view @adobe/spectrum-web-components --tag beta version || echo "none")
+                  echo "Latest beta: $LATEST_BETA"
+
+                  if [[ $LATEST_BETA == *beta* ]]; then
+                    # Extract beta number
+                    BETA_NUMBER=$(echo $LATEST_BETA | grep -oP 'beta\.\K\d+')
+                    # Increment the beta number
+                    NEXT_BETA_NUMBER=$((BETA_NUMBER + 1))
+                  else
+                    # Start with beta.0 if no beta version exists
+                    NEXT_BETA_NUMBER=0
+                  fi
+
+                  echo "Next beta number: $NEXT_BETA_NUMBER"
+                  echo "next_beta_number=$NEXT_BETA_NUMBER" >> $GITHUB_OUTPUT
+                  echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
             - name: Update package versions for beta release
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NEXT_BETA_NUMBER: ${{ steps.version-info.outputs.next_beta_number }}
               run: |
-                  yarn changeset pre enter beta
+                  yarn changeset pre enter beta.$NEXT_BETA_NUMBER
                   # Apply the changeset with specific beta tag
                   yarn changeset version
                   yarn lint:versions --fix
@@ -44,5 +69,5 @@ jobs:
                   git add .
                   git commit -am "chore: publish beta version"
                   yarn prepublishOnly
-                  yarn changeset publish --no-git-tag
+                  yarn changeset publish --no-git-tag --tag beta
                   git reset --hard HEAD^
