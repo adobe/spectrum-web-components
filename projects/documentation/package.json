@@ -55,7 +55,7 @@
         "rollup-plugin-minify-html-literals": "^1.2.6",
         "rollup-plugin-styles": "^4.0.0",
         "rollup-plugin-visualizer": "^5.12.0",
-        "rollup-plugin-workbox": "^8.1.0",
+        "rollup-plugin-workbox": "^8.1.2",
         "wireit": "^0.14.3"
     },
     "sideEffects": [
