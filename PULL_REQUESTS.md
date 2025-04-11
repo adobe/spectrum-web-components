@@ -93,8 +93,9 @@ Incomplete templates will delay the review process.
 -   `needs-changes`: PR requires changes based on review feedback
 -   `needs-tests`: PR is missing necessary tests
 -   `needs-docs`: PR requires documentation updates
+-   `needs-self-review`: PR requires that the author does a self-review of code to answer preliminary questions
+-   `needs-style-review`: PR needs to be checked by CSS and/or Design
 -   `breaking-change`: PR contains changes that break backward compatibility
--   `good-first-issue`: Good for newcomers to the project
 -   `help-wanted`: Extra attention is needed on this PR
 -   `on-hold`: PR is blocked and/or needs more discussion.
 -   `Spectrum CSS`: Contains a version bump of Spectrum CSS and will require a review by CSS expert
