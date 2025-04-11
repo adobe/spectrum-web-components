@@ -506,7 +506,7 @@ governing permissions and limitations under the License.
     overflow-y: hidden;
 }
 
-:host([quiet]):after {
+:host([quiet]) #textfield:after {
     content: '';
     pointer-events: none;
     inline-size: 100%;
@@ -516,7 +516,7 @@ governing permissions and limitations under the License.
     inset-inline-start: 0;
 }
 
-:host([quiet][focused]):after {
+:host([quiet][focused]) #textfield:after {
     background-color: var(--highcontrast-textfield-focus-indicator-color, var(--mod-textfield-focus-indicator-color, var(--spectrum-textfield-focus-indicator-color)));
 }
 
